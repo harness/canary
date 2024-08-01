@@ -31,6 +31,9 @@ importers:
       '@uiw/react-markdown-preview':
         specifier: ^4.1.15
         version: 4.1.15(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      caret-xy:
+        specifier: ^2.0.3
+        version: 2.0.3
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -4530,6 +4533,9 @@ packages:
 
   capital-case@1.0.4:
     resolution: {integrity: sha512-ds37W8CytHgwnhGGTi88pcPyR15qoNkOpYwmMMfnWqqWgESapLqvDx6huFjQ5vqWSn2Z06173XNA7LtMOeUh1A==}
+
+  caret-xy@2.0.3:
+    resolution: {integrity: sha512-iZySCshCBnQcwdYCFbfCvAorpMe/ghXqEOyDdCpOcYR6OtJu6bdnm3OTyCxlWtA7IAss4TQqcc0XO6EksKKJUw==}
 
   ccount@2.0.1:
     resolution: {integrity: sha512-eyrF0jiFpY+3drT6383f1qhkbGsLSifNAjA61IUjZjmLCWjItY6LB9ft9YhoDgwfmclB2zhu51Lc7+95b8NRAg==}
@@ -12784,6 +12790,8 @@ snapshots:
       no-case: 3.0.4
       tslib: 2.6.3
       upper-case-first: 2.0.2
+
+  caret-xy@2.0.3: {}
 
   ccount@2.0.1: {}
 

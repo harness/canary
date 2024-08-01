@@ -1,0 +1,60 @@
+x-mentions {
+  --border: none;
+  --bg: #fff;
+  --bg-selected: #eee;
+  --fg-selected: #0f749d;
+  --bg-highlighted: transparent;
+  --box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 2px 4px rgba(16, 22, 26, 0.2), 0 8px 24px rgba(16, 22, 26, 0.2); /* blueprint style */
+  --max-height: 300px;
+  --list-margin: 5px 0;
+  --item-padding: 5px 20px;
+  --zindex: 2147483647;
+
+  max-height: var(--max-height);
+  overflow: auto;
+  transform: translateY(5px); /* move down 5px */
+  z-index: var(--zindex);
+  position: fixed;
+  display: none;
+  border: var(--border);
+  background-color: var(--bg);
+  box-shadow: var(--box-shadow);
+  border-radius: 4px;
+}
+
+x-mentions ul {
+  margin: var(--list-margin);
+  padding: 0;
+}
+
+x-mentions ul li {
+  padding: var(--item-padding);
+  margin: 0;
+  list-style: none;
+}
+
+x-mentions ul li mark {
+  font-weight: bold;
+  color: inherit;
+  background: var(--bg-highlighted);
+  margin: 0;
+  padding: 0;
+}
+
+x-mentions ul li:hover,
+x-mentions ul li[aria-selected],
+x-mentions ul:hover li[aria-selected]:hover {
+  cursor: pointer;
+  background: var(--bg-selected);
+  color: var(--fg-selected);
+}
+
+x-mentions ul:hover li[aria-selected] {
+  background: var(--bg);
+  color: inherit;
+}
+
+x-mentions span[loading] {
+  display: inline-block;
+  padding: var(--item-padding);
+}

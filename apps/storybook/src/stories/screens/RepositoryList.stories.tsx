@@ -156,7 +156,7 @@ export function RepositoryList() {
                           <TableRow className="flex">
                             <TableCell className="flex flex-col flex-1 gap-1 px-4 py-3">
                               <div>
-                                <p className="inline ont-normal text-primary">{repo.name}</p>
+                                <p className="inline font-normal text-primary">{repo.name}</p>
                                 <Badge
                                   className={`select-none bg-transparent rounded-2xl text-[12px] font-light ml-2.5 py-1 px-2 leading-none text-[#71dbd3] border-[#1d3333] bg-[#111c1d] hover:bg-inherit ${
                                     repo.private && 'border-[#242428] bg-[#151518] text-[#93939f]'
@@ -200,84 +200,6 @@ export function RepositoryList() {
                   <EntityListPagination />
                 </EntityList.Footer>
               </EntityList.Root>
-              {/* <div className="flex flex-row space-x-2">
-                <div className="flex-1 flex flex-row space-x-1">
-                  <Input
-                    type="search"
-                    placeholder="Search ..."
-                    className="leading-4 border-[#242429] placeholder:text-[#93939F] w-64"
-                  />
-                  <NavigationMenu>
-                    <NavigationMenuList>
-                      <NavigationMenuItem>
-                        <NavigationMenuTrigger className="text-[#C9C9CF]">Filter</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <NavigationMenuLink>Link</NavigationMenuLink>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                  <NavigationMenu>
-                    <NavigationMenuList>
-                      <NavigationMenuItem>
-                        <NavigationMenuTrigger className="text-[#C9C9CF]">Sort</NavigationMenuTrigger>
-                        <NavigationMenuContent>
-                          <NavigationMenuLink>Link</NavigationMenuLink>
-                        </NavigationMenuContent>
-                      </NavigationMenuItem>
-                    </NavigationMenuList>
-                  </NavigationMenu>
-                </div>
-                <div className="flex-none">
-                  <Button className="rounded-[4px] px-6">New Repository</Button>
-                </div>
-              </div>
-              <div className="border rounded-md mb-16">
-                <Table>
-                  <TableBody>
-                    {repos.map(repo => (
-                      <TableRow className="text-gray-500 flex">
-                        <TableCell className="flex flex-col flex-1 gap-1 px-4 py-3.5">
-                          <div className="font-medium text-gray-50">
-                            {repo.name}
-                            <Badge
-                              className={`select-none bg-transparent border-white rounded-2xl text-[12px] font-medium ml-2.5 py-1 px-2 leading-none text-[#71dbd3] border-[#1d3333] bg-[#111c1d] ${
-                                repo.private && 'border-[#242428] bg-[#151518] text-[#93939f]'
-                              }`}>
-                              {repo.private ? 'Private' : 'Public'}
-                            </Badge>
-                          </div>
-                          <div className="flex gap-2 text-xs">
-                            <span className="whitespace-nowrap overflow-hidden text-ellipsis max-w-96">
-                              {repo.description || <i>No Description</i>}
-                            </span>
-                          </div>
-                        </TableCell>
-                        <TableCell className="flex flex-col gap-1 px-4 py-3.5 justify-end">
-                          <div className="font-normal whitespace-nowrap text-[13px] select-none">
-                            <span className="mr-1">updated</span>
-                            <span className="text-foreground">2 hours ago</span>
-                          </div>
-                          <div className="flex gap-2 text-xs justify-end">
-                            <span className="flex gap-1 items-center">
-                              <Star strokeWidth="1.5" />
-                              <span className="text-white">{repo.stars}</span>
-                            </span>
-                            <span className="flex gap-1 items-center">
-                              <GitFork strokeWidth="1.5" />
-                              <span className="text-white">{repo.forks}</span>
-                            </span>
-                            <span className="flex gap-1 items-center">
-                              <GitPullRequest strokeWidth="1.5" />
-                              <span className="text-white">{repo.pulls}</span>
-                            </span>
-                          </div>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div> */}
             </Section.Root>
           </View.Root>
         </Container.Content>

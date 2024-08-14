@@ -1,11 +1,6 @@
-import { Button } from '@harnessio/canary'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import HomePage from '../components/home-page'
 
-export default function HomePage() {
-  return (
-    <div>
-      <p>Home</p>
-    </div>
-  )
+export default function HomePageView() {
+  return <HomePage />
 }

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import PipelineList from './pull-request-list-page'
+import PipelineList from '../components/pipeline-list'
 
 export default function PipelineListPage() {
   return (

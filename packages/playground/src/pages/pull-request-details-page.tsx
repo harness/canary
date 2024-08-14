@@ -1,9 +1,6 @@
 import React from 'react'
+import PullRequestDetails from '../components/pull-request-details'
 
 export default function PullRequestDetailsPage() {
-  return (
-    <div>
-      <p>Pull request details page</p>
-    </div>
-  )
+  return <PullRequestDetails />
 }

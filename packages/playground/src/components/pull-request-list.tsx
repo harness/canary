@@ -1,6 +1,5 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import PullRequestList from '../components/pull-request-list'
 
 const mockPullRequests = [
   { id: '1', name: 'Pull Request One', description: 'This is the first pull request.' },
@@ -8,8 +7,16 @@ const mockPullRequests = [
   { id: '3', name: 'Pull Request Three', description: 'This is the third pull request.' }
 ]
 
-function PullRequestListPage() {
-  return <PullRequestList />
+export default function PullRequestList() {
+  return (
+    <div>
+      <ul>
+        {mockPullRequests.map(pr => (
+          <li key={pr.id}>
+            <Link to={pr.id}>Pull request {pr.id}</Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
 }
-
-export default PullRequestListPage

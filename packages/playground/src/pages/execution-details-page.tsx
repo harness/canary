@@ -1,5 +1,6 @@
 import React from 'react'
+import ExecutionDetails from '../components/execution-details'
 
-export default function ExecutionDetails() {
-  return <div>Execution Details</div>
+export default function ExecutionDetailsPage() {
+  return <ExecutionDetails />
 }

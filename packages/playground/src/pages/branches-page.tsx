@@ -1,9 +1,6 @@
 import React from 'react'
+import Branches from '../components/branches'
 
 export default function BranchesPage() {
-  return (
-    <div>
-      <p>Branches page</p>
-    </div>
-  )
+  return <Branches />
 }

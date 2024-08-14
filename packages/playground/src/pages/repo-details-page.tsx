@@ -1,8 +1,8 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import RepoDetails from '../components/repo-details'
 
 const RepoDetailsPage: React.FC = () => {
-  return <h1>Repository Details</h1>
+  return <RepoDetails />
 }
 
 export default RepoDetailsPage

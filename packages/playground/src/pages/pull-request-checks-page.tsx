@@ -1,9 +1,6 @@
 import React from 'react'
+import PullRequestChecks from '../components/pull-request-checks'
 
 export default function ChecksPage() {
-  return (
-    <div>
-      <p>Checks page</p>
-    </div>
-  )
+  return <PullRequestChecks />
 }

@@ -24,7 +24,7 @@ import PullRequestConversationPage from './pages/pull-request-conversation-page'
 import PullRequestChangesPage from './pages/pull-request-changes-page'
 import PullRequestChecksPage from './pages/pull-request-checks-page'
 import PipelineEdit from './pages/pipeline-edit-page'
-import PullRequestsCommitsListPage from './pages/pull-requests-commits-list-page'
+import PullRequestCommitsPage from './pages/pull-request-commits-page'
 
 const router = createBrowserRouter([
   {
@@ -105,7 +105,7 @@ const router = createBrowserRouter([
               },
               {
                 path: 'commits',
-                element: <PullRequestsCommitsListPage />
+                element: <PullRequestCommitsPage />
               },
               {
                 path: 'checks',

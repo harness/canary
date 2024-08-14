@@ -1,5 +1,11 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 
 export default function RepoDetails() {
-    return <div>Repo Details</div>
+  return (
+    <>
+      <Outlet />
+      <div>Repo Details</div>
+    </>
+  )
 }

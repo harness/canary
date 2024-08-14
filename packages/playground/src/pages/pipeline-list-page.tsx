@@ -1,12 +1,12 @@
 import React from 'react'
 import PipelineList from '../components/pipeline-list/pipeline-list'
-
-const pipelines = []
+import { Outlet } from 'react-router-dom'
 
 export default function PipelineListPage() {
   return (
-    <div>
+    <>
+      <Outlet />
       <PipelineList />
-    </div>
+    </>
   )
 }

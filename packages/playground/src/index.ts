@@ -1,1 +1,1 @@
-export * from './components/execution-list/execution-list'
+export * from './components/execution-list'

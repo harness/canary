@@ -14,6 +14,7 @@ import {
   PaginationNext
 } from '@harnessio/canary'
 import PipelineList from '../components/pipeline-list'
+import PaddingListLayout from '../layouts/PaddingListLayout'
 
 const mockPipelines = [
   {
@@ -97,8 +98,8 @@ const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
 
 function RepoPipelineListPage() {
   return (
-    // TODO: get layout componentized, this wrapper div is just for quick presentation!
-    <div className="px-6 pb-16 max-w-[1200px] min-w-[770px] mx-auto">
+    //Wrapper component for padding and list layout-Jessie
+    <PaddingListLayout>
       <ListActions.Root>
         <ListActions.Left>
           <SearchBox.Root placeholder="Search" />
@@ -151,7 +152,7 @@ function RepoPipelineListPage() {
           </PaginationContent>
         </Pagination>
       </ListPagination.Root>
-    </div>
+    </PaddingListLayout>
   )
 }
 

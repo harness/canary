@@ -14,6 +14,7 @@ import {
   PaginationNext
 } from '@harnessio/canary'
 import ExecutionList from '../components/execution-list'
+import PaddingListLayout from '../layouts/PaddingListLayout'
 
 const mockExecutions = [
   {
@@ -91,8 +92,8 @@ const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
 
 function ExecutionListPage() {
   return (
-    // TODO: get layout componentized, this wrapper div is just for quick presentation!
-    <div className="px-16 py-16 max-w-[1200px] min-w-[770px] mx-auto">
+    //Wrapper component for padding and list layout-Jessie
+    <PaddingListLayout>
       <Text size={5} weight={'medium'}>
         Executions
       </Text>
@@ -148,7 +149,7 @@ function ExecutionListPage() {
           </PaginationContent>
         </Pagination>
       </ListPagination.Root>
-    </div>
+    </PaddingListLayout>
   )
 }
 

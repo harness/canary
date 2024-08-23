@@ -23,7 +23,7 @@ export const ExecutionDetails: React.FC<ExecutionProps> = (): React.ReactElement
   const stages = execution.stages
   if (!stages || !stages.length) return <Text>No stages found</Text>
   return (
-    <Layout.Horizontal>
+    <Layout.Horizontal className="px-8">
       {/* Hardcoded height added temporarily */}
       <div className="w-2/3">
         <StageExecution stage={stages[0]} />

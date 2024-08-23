@@ -10,10 +10,11 @@ import {
   Icon,
   StackedList
 } from '@harnessio/canary'
+import PaddingListLayout from '../layouts/PaddingListLayout'
 
 function PullRequestListPage() {
   return (
-    <div className="w-full max-w-[860px] min-h-full mx-auto px-5 py-5 mb-16">
+    <PaddingListLayout className="max-w-[860px]">
       <StackedList.Root className="border-none">
         <div className="flex">
           <div className="grid w-full grid-flow-col grid-cols-1 auto-cols-auto items-center gap-0">
@@ -65,7 +66,7 @@ function PullRequestListPage() {
           <PullRequestList />
         </div>
       </StackedList.Root>
-    </div>
+    </PaddingListLayout>
   )
 }
 

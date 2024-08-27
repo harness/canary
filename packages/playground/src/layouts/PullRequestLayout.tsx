@@ -1,7 +1,8 @@
 // RepoLayout.tsx
 import React from 'react'
-import { NavLink, Outlet, useParams } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { PullRequestHeader } from '../components/pull-request/pull-request-conversation-header'
+import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 
 const mockedPullRequest = {
   number: 1,
@@ -35,36 +36,56 @@ const mockedPullRequest = {
 }
 
 const PullRequestLayout: React.FC = () => {
-  const { repoId } = useParams<{ repoId: string }>()
-  const { prId } = useParams<{ prId: string }>()
-
   return (
-    <div className={'flex flex-col pt-2 pl-8'}>
-      <PullRequestHeader data={mockedPullRequest} />
-
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <NavLink
-          to={`/repos/${repoId}/pull-requests/${prId}`}
-          style={({ isActive }) => ({ color: isActive ? 'green' : 'inherit' })}
-          end>
-          Index
-        </NavLink>
-        <NavLink to={`conversation`} style={({ isActive }) => ({ color: isActive ? 'green' : 'inherit' })}>
-          Conversation
-        </NavLink>
-        <NavLink to={`changes`} style={({ isActive }) => ({ color: isActive ? 'green' : 'inherit' })}>
-          Changes
-        </NavLink>
-        <NavLink to={`checks`} style={({ isActive }) => ({ color: isActive ? 'green' : 'inherit' })}>
-          Checks
-        </NavLink>
-        <NavLink to={`commits`} style={({ isActive }) => ({ color: isActive ? 'green' : 'inherit' })}>
-          Commits
-        </NavLink>
+    <>
+      <div className="px-8 pt-8">
+        <PullRequestHeader data={mockedPullRequest} />
       </div>
-      <hr style={{ marginTop: '20px', marginBottom: '20px' }} />
-      <Outlet />
-    </div>
+      <Tabs variant="tabnav" defaultValue="conversation">
+        <TabsList>
+          <NavLink to={`conversation`}>
+            <TabsTrigger value="conversation">
+              <Icon size={16} name="comments" />
+              Conversation
+              <Badge variant="outline" size="xs">
+                1
+              </Badge>
+            </TabsTrigger>
+          </NavLink>
+          <NavLink to={`commits`}>
+            <TabsTrigger value="commits">
+              <Icon size={16} name="tube-sign" />
+              Commits
+              <Badge variant="outline" size="xs">
+                2
+              </Badge>
+            </TabsTrigger>
+          </NavLink>
+          <NavLink to={`changes`}>
+            <TabsTrigger value="pull-requests">
+              <Icon size={14} name="changes" />
+              Changes
+              <Badge variant="outline" size="xs">
+                2
+              </Badge>
+            </TabsTrigger>
+          </NavLink>
+          <NavLink to={`checks`}>
+            <TabsTrigger value="checks">
+              <Icon size={14} name="checks" />
+              Checks
+              <Badge variant="outline" size="xs">
+                9
+              </Badge>
+            </TabsTrigger>
+          </NavLink>
+        </TabsList>
+      </Tabs>
+      <Spacer size={5} />
+      <div className="px-8">
+        <Outlet />
+      </div>
+    </>
   )
 }
 

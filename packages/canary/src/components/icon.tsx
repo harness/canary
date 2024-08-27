@@ -28,6 +28,8 @@ import NoDataFolder from '../icons/no-data-folder.svg'
 import NoDataMerge from '../icons/no-data-merge.svg'
 import NoDataCog from '../icons/no-data-cog.svg'
 import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
+import Changes from '../icons/changes.svg'
+import Checks from '../icons/checks.svg'
 // import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
@@ -59,7 +61,9 @@ const IconNameMap = {
   'no-data-folder': NoDataFolder,
   'no-data-merge': NoDataMerge,
   'no-data-cog': NoDataCog,
-  'no-search-magnifying-glass': NoSearchMagnifyingGlass
+  'no-search-magnifying-glass': NoSearchMagnifyingGlass,
+  changes: Changes,
+  checks: Checks
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

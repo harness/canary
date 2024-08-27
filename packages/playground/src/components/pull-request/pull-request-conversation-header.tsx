@@ -15,7 +15,7 @@
  */
 
 import React, { useMemo } from 'react'
-import { Badge } from '@harnessio/canary'
+import { Badge, Button, Text } from '@harnessio/canary'
 import { GitFork } from '@harnessio/icons-noir'
 import moment from 'moment'
 
@@ -40,45 +40,59 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
   // Format the parsed date as relative time from now
   const formattedTime = parsedDate.fromNow()
+
   return (
-    <div className="flex flex-col pb-8">
+    <div className="flex flex-col gap-2 pb-8">
       <div className="flex pt-1 pb-1 items-center">
-        <h1 className=" text-white text-xl font-[500] truncate" title={original}>
-          {original} <span className="text-tertiary-background  text-g">#{number}</span>
-        </h1>
+        <Text size={5} weight={'medium'} className="text-primary">
+          {original}
+          &nbsp;&nbsp;
+          <span className="text-tertiary-background font-normal">#{number}</span>
+        </Text>
       </div>
       <div className="">
         <div className="flex space-x-2 text-tertiary-background ">
-          <div className="flex items-center align-middle text-center">
+          <div className="flex gap-2.5 items-center align-middle text-center">
             {/* TODO:add status in badge or create a component to handle status */}
             {merged ? (
               <Badge
-                className={`select-none bg-transparent rounded-2xl text-[12px] font-light mr-2 py-1 px-2 leading-none text-ai border-border  hover:bg-inherit`}>
+                disableHover
+                size="default"
+                className={`select-none bg-emerald-300/20 text-emerald-400 font-medium`}>
                 {'Merged'}
               </Badge>
             ) : (
               <Badge
-                className={`select-none rounded-2xl text-[12px] font-light mr-2 py-1 px-2 leading-none text-success border-border bg-transparent hover:bg-inherit`}>
+                disableHover
+                size="default"
+                className={`select-none bg-emerald-300/10 text-emerald-400 rounded-full border border-emerald-400/20 font-medium`}>
                 {'Open'}
               </Badge>
             )}
-            <strong className="text-white font-[500]">{author?.display_name || author?.email || ''} </strong>
-            <span className=" pl-1 font-light">{merged ? 'merged' : ' wants to merge'}</span>
-            <strong className="text-white font-semibold pl-1"> {stats?.commits}</strong>
-            <span className=" pl-1 font-light">{stats?.commits === 1 ? 'commit' : 'commits'}</span>
-            <span className=" pl-1  font-light">into</span>
-            <strong className=" flex items-center font-light pl-1 ml-2 rounded-lg text-sm text-foreground bg-accent px-2 py-0.5 border border-primary-foreground">
-              <GitFork className="pr-1" />
-              {target_branch}
-            </strong>
-            <span className=" pl-1 font-light">from</span>
-            <strong className=" flex items-center  pl-1 ml-2  rounded-lg font-light text-sm text-foreground bg-accent px-2 py-0.5 border border-primary-foreground ">
-              <GitFork className="pr-1" /> {source_branch}
-            </strong>
-          </div>
-          <div className="flex items-center">
-            <div className="h-2.5 align-middle w-px bg-white mt-0.5 pt-2"></div>
-            <div className={`pl-2 time text-xs`}>{formattedTime}</div>
+            <div className="flex gap-2">
+              <Text
+                size={2}
+                className="text-tertiary-background inline-flex flex-wrap gap-1 items-center"
+                weight="normal">
+                <span className="text-primary">{author?.display_name || author?.email || ''}</span>
+                <span>{merged ? 'merged' : ' wants to merge'}</span>
+                <span className="text-primary">
+                  {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
+                </span>
+                <span>into</span>
+                <Button variant="secondary" size="xs">
+                  <GitFork className="pr-1" />
+                  {target_branch}
+                </Button>{' '}
+                <span>from</span>
+                <Button variant="secondary" size="xs">
+                  <GitFork className="pr-1" />
+                  {source_branch}
+                </Button>
+                <span>&nbsp;|&nbsp;</span>
+                <span className="time">{formattedTime}</span>
+              </Text>
+            </div>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { ThemeProvider } from './components/theme-provider'
 import RootLayout from './layouts/RootLayout'
@@ -17,7 +17,6 @@ import SignInPage from './pages/signin-page'
 import ExecutionListPage from './pages/execution-list-page'
 import ExecutionDetailsPage from './pages/execution-details-page'
 import PullRequestListPage from './pages/pull-request-list-page'
-import PullRequestDetailsPage from './pages/pull-request-details-page'
 import CommitsListPage from './pages/commits-list-page'
 import BranchesPage from './pages/branches-page'
 import CommitsDetailsPage from './pages/commits-details-page'
@@ -90,7 +89,7 @@ const router = createBrowserRouter([
             children: [
               {
                 index: true,
-                element: <PullRequestDetailsPage />
+                element: <Navigate to="conversation" />
               },
               {
                 path: 'conversation',

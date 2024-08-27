@@ -8,7 +8,8 @@ const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
     variant: {
       default: 'h-9 rounded-lg bg-muted p-1 justify-center',
       underline: 'h-11 gap-4 justify-center',
-      navigation: 'h-[44px] border-b gap-6 justify-start w-full px-8'
+      navigation: 'h-[44px] border-b gap-6 justify-start w-full px-8',
+      tabnav: 'h-[36px] gap-0 justify-start w-full'
     }
   },
   defaultVariants: {
@@ -26,7 +27,9 @@ const tabsTriggerVariants = cva(
         underline:
           'px-0 font-normal h-11 border-b-2 border-b-transparent border-solid m-0 data-[state=active]:text-primary data-[state=active]:border-primary',
         navigation:
-          'px-0 font-normal text-xs text-tertiary-background hover:text-primary ease-in-out duration-150 h-[44px] border-b border-b-transparent border-solid m-0 data-[state=active]:text-primary data-[state=active]:border-tertiary-background'
+          'px-0 font-normal text-xs text-tertiary-background hover:text-primary ease-in-out duration-150 h-[44px] border-b border-b-transparent border-solid m-0 data-[state=active]:text-primary data-[state=active]:border-tertiary-background',
+        tabnav:
+          'items-center gap-2 duration-0 bg-background px-3 font-normal text-sm text-tertiary-background hover:text-primary h-[36px] border-t-0 border-l-0 border-r-0 border-b rounded-tl-md rounded-tr-md m-0 data-[state=active]:text-primary [&svg]:data-[state=active]:brightness-200 data-[state=active]:border-t data-[state=active]:border-r data-[state=active]:border-l data-[state=active]:border-b-0'
       }
     },
     defaultVariants: {
@@ -42,7 +45,8 @@ const tabsContentVariants = cva(
       variant: {
         default: '',
         underline: '',
-        navigation: ''
+        navigation: '',
+        tabnav: ''
       }
     },
     defaultVariants: {
@@ -62,7 +66,17 @@ interface TabsProps
 const Tabs = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsProps>(
   ({ children, variant, ...props }, ref) => (
     <TabsPrimitive.Root ref={ref} {...props}>
-      <TabsContext.Provider value={{ variant }}>{children}</TabsContext.Provider>
+      <TabsContext.Provider value={{ variant }}>
+        {variant === 'tabnav' ? (
+          <div className="grid grid-flow-col grid-cols-[auto_auto_1fr] items-end">
+            <div className="w-8 h-[36px] border-b" />
+            {children}
+            <div className="h-[36px] border-b" />
+          </div>
+        ) : (
+          children
+        )}
+      </TabsContext.Provider>
     </TabsPrimitive.Root>
   )
 )

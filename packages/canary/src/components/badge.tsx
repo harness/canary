@@ -15,20 +15,37 @@ const badgeVariants = cva(
       },
       size: {
         default: 'px-2.5 py-0.5 text-xs font-semibold',
-        sm: 'px-2 py-0 text-[12px] font-normal'
+        lg: 'px-3 py-1 text-xs font-normal',
+        sm: 'px-2 py-0 text-[12px] font-normal',
+        xs: 'px-1.5 py-0 text-[11px] font-light'
+      },
+      hover: {
+        enabled: '', // Default hover styles are applied
+        disabled: 'hover:bg-transparent hover:shadow-none' // No hover effect
       }
     },
     defaultVariants: {
       variant: 'default',
-      size: 'default'
+      size: 'default',
+      hover: 'enabled' // Default hover behavior enabled
     }
   }
 )
 
-export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {}
+export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement>, VariantProps<typeof badgeVariants> {
+  disableHover?: boolean // Add this prop to control hover behavior
+}
 
-function Badge({ className, variant, size, ...props }: BadgeProps) {
-  return <div className={cn(badgeVariants({ variant, size }), className)} {...props} />
+function Badge({ className, variant, size, disableHover, ...props }: BadgeProps) {
+  return (
+    <div
+      className={cn(
+        badgeVariants({ variant, size, hover: disableHover ? 'disabled' : 'enabled' }), // Apply hover variant based on prop
+        className
+      )}
+      {...props}
+    />
+  )
 }
 
 export { Badge, badgeVariants }

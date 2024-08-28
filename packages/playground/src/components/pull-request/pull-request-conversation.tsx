@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import PullRequestSideBar from './pull-request-side-bar'
+import PullRequestOverview from './pull-request-overview'
 import { processReviewDecision, useActivityFilters, useDateFilters } from './utils'
 import { mockReviewers } from './mocks/mockReviewer'
 import PullRequestFilters from './pull-request-filters'
@@ -41,6 +42,7 @@ export default function PullRequestConversation() {
             setActivityFilter={setActivityFilter}
             setDateOrderSort={setDateOrderSort}
           />
+          <PullRequestOverview />
         </div>
         <PullRequestSideBar
           // repoMetadata={undefined}

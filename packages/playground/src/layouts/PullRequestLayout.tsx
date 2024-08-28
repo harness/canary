@@ -38,51 +38,49 @@ const mockedPullRequest = {
 const PullRequestLayout: React.FC = () => {
   return (
     <>
-      <div className="px-8 pt-8">
+      <div className="px-16 pt-8 w-full">
         <PullRequestHeader data={mockedPullRequest} />
-      </div>
-      <Tabs variant="tabnav" defaultValue="conversation">
-        <TabsList>
-          <NavLink to={`conversation`}>
-            <TabsTrigger value="conversation">
-              <Icon size={16} name="comments" />
-              Conversation
-              <Badge variant="outline" size="xs">
-                1
-              </Badge>
-            </TabsTrigger>
-          </NavLink>
-          <NavLink to={`commits`}>
-            <TabsTrigger value="commits">
-              <Icon size={16} name="tube-sign" />
-              Commits
-              <Badge variant="outline" size="xs">
-                2
-              </Badge>
-            </TabsTrigger>
-          </NavLink>
-          <NavLink to={`changes`}>
-            <TabsTrigger value="pull-requests">
-              <Icon size={14} name="changes" />
-              Changes
-              <Badge variant="outline" size="xs">
-                2
-              </Badge>
-            </TabsTrigger>
-          </NavLink>
-          <NavLink to={`checks`}>
-            <TabsTrigger value="checks">
-              <Icon size={14} name="checks" />
-              Checks
-              <Badge variant="outline" size="xs">
-                9
-              </Badge>
-            </TabsTrigger>
-          </NavLink>
-        </TabsList>
-      </Tabs>
-      <Spacer size={5} />
-      <div className="px-8">
+        <Tabs variant="tabnav" defaultValue="conversation">
+          <TabsList>
+            <NavLink to={`conversation`}>
+              <TabsTrigger value="conversation">
+                <Icon size={16} name="comments" />
+                Conversation
+                <Badge variant="outline" size="xs">
+                  1
+                </Badge>
+              </TabsTrigger>
+            </NavLink>
+            <NavLink to={`commits`}>
+              <TabsTrigger value="commits">
+                <Icon size={16} name="tube-sign" />
+                Commits
+                <Badge variant="outline" size="xs">
+                  2
+                </Badge>
+              </TabsTrigger>
+            </NavLink>
+            <NavLink to={`changes`}>
+              <TabsTrigger value="pull-requests">
+                <Icon size={14} name="changes" />
+                Changes
+                <Badge variant="outline" size="xs">
+                  2
+                </Badge>
+              </TabsTrigger>
+            </NavLink>
+            <NavLink to={`checks`}>
+              <TabsTrigger value="checks">
+                <Icon size={14} name="checks" />
+                Checks
+                <Badge variant="outline" size="xs">
+                  9
+                </Badge>
+              </TabsTrigger>
+            </NavLink>
+          </TabsList>
+        </Tabs>
+        <Spacer size={5} />
         <Outlet />
       </div>
     </>

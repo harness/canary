@@ -68,10 +68,11 @@ const Tabs = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsP
     <TabsPrimitive.Root ref={ref} {...props}>
       <TabsContext.Provider value={{ variant }}>
         {variant === 'tabnav' ? (
-          <div className="grid grid-flow-col grid-cols-[auto_auto_1fr] items-end">
-            <div className="w-8 h-[36px] border-b" />
+          <div className="relative w-full grid grid-flow-col grid-cols-[auto_1fr] items-end">
             {children}
             <div className="h-[36px] border-b" />
+            <div className="absolute right-full w-[9999px] h-[36px] border-b" />
+            <div className="absolute left-full w-[9999px] h-[36px] border-b" />
           </div>
         ) : (
           children

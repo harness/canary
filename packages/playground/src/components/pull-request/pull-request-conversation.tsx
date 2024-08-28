@@ -11,6 +11,7 @@ import { mockChangesData } from './mocks/mockChangesData'
 import { mockChecksSucceededInfo, mockChecksFailedInfo } from './mocks/mockCheckInfo'
 import { mockCommentResolvedInfo, mockCommentUnresolvedInfo } from './mocks/mockCommentInfo'
 import mockOverviewData from './mocks/mockOverviewData'
+import { Spacer } from '@harnessio/canary'
 
 export default function PullRequestConversation() {
   const dateFilters = useDateFilters()
@@ -25,7 +26,7 @@ export default function PullRequestConversation() {
   return (
     <div>
       <div className="grid grid-flow-col grid-cols-[1fr_220px] gap-x-8">
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col">
           <PullRequestPanel
             changesInfo={changesData}
             checksInfo={checksInfo}
@@ -35,6 +36,7 @@ export default function PullRequestConversation() {
             pullReqMetadata={mockPullReqMetadata}
             PRStateLoading={false}
           />
+          <Spacer size={7} />
           <PullRequestFilters
             activityFilters={activityFilters}
             dateFilters={dateFilters}
@@ -43,6 +45,7 @@ export default function PullRequestConversation() {
             setActivityFilter={setActivityFilter}
             setDateOrderSort={setDateOrderSort}
           />
+          <Spacer size={5} />
           <PullRequestOverview data={mockOverviewData} />
         </div>
         <PullRequestSideBar

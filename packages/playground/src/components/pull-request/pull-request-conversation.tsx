@@ -10,6 +10,7 @@ import { mockChecksSuccessData } from './mocks/mockChecksData'
 import { mockChangesData } from './mocks/mockChangesData'
 import { mockChecksSucceededInfo, mockChecksFailedInfo } from './mocks/mockCheckInfo'
 import { mockCommentResolvedInfo, mockCommentUnresolvedInfo } from './mocks/mockCommentInfo'
+import mockOverviewData from './mocks/mockOverviewData'
 
 export default function PullRequestConversation() {
   const dateFilters = useDateFilters()
@@ -42,7 +43,7 @@ export default function PullRequestConversation() {
             setActivityFilter={setActivityFilter}
             setDateOrderSort={setDateOrderSort}
           />
-          <PullRequestOverview />
+          <PullRequestOverview data={mockOverviewData} />
         </div>
         <PullRequestSideBar
           // repoMetadata={undefined}

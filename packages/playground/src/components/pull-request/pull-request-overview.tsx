@@ -1,6 +1,5 @@
 import React from 'react'
 import { Card, Text } from '@harnessio/canary'
-import mockOverviewData from './mocks/mockOverviewData'
 
 // Define types for the props of TimelineItem component
 interface TimelineItemProps {
@@ -53,7 +52,4 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({ data }) => {
   )
 }
 
-// Export PullRequestOverview with dummy data
-const App: React.FC = () => <PullRequestOverview data={mockOverviewData} />
-
-export default App
+export default PullRequestOverview

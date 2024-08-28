@@ -5,7 +5,7 @@ import { Icon } from './icon'
 interface ProjectProps {
   projects: {
     title: string
-    icon: React.ReactElement<SVGSVGElement>
+    icon?: React.ReactElement<SVGSVGElement>
   }[]
   name: string
   avatar: React.ReactElement<SVGSVGElement>
@@ -28,7 +28,7 @@ function Root({ projects, avatar, name }: ProjectProps) {
       <DropdownMenuContent align="end" className="w-[180px] p-0 mt-3">
         {projects.map((project, project_idx) => (
           <DropdownMenuItem key={project_idx}>
-            {project.icon}
+            {project.icon && project.icon}
             {project.title}
           </DropdownMenuItem>
         ))}

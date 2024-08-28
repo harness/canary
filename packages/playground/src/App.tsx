@@ -9,7 +9,6 @@ import PullRequestLayout from './layouts/PullRequestLayout'
 import ErrorPage from './pages/error-page'
 import HomePage from './pages/home-page'
 import RepoListPage from './pages/repo-list-page'
-import RepoDetailsPage from './pages/repo-details-page'
 import PipelineListPage from './pages/pipeline-list-page'
 import PipelineDetailsPage from './pages/pipeline-details-page'
 import SignUpPage from './pages/signup-page'
@@ -51,7 +50,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <RepoDetailsPage />
+            element: <Navigate to="pipelines" />
           },
           {
             path: 'pipelines',

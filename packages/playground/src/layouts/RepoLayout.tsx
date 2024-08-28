@@ -39,11 +39,8 @@ const RepoLayout: React.FC = () => {
           <></>
         </Topbar.Right>
       </Topbar.Root>
-      <Tabs variant="navigation" defaultValue="index">
+      <Tabs variant="navigation" defaultValue="pipelines">
         <TabsList>
-          <NavLink to={`/repos/${repoId}`}>
-            <TabsTrigger value="index">Index</TabsTrigger>
-          </NavLink>
           <NavLink to={`pipelines`}>
             <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
           </NavLink>

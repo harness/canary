@@ -38,7 +38,8 @@ const mockedPullRequest = {
 const PullRequestLayout: React.FC = () => {
   return (
     <>
-      <div className="px-16 pt-8 w-full">
+      <div className="px-8 pb-8 max-w-[1200px] mx-auto">
+        <Spacer size={7} />
         <PullRequestHeader data={mockedPullRequest} />
         <Tabs variant="tabnav" defaultValue="conversation">
           <TabsList>
@@ -80,7 +81,7 @@ const PullRequestLayout: React.FC = () => {
             </NavLink>
           </TabsList>
         </Tabs>
-        <Spacer size={5} />
+        <Spacer size={7} />
         <Outlet />
       </div>
     </>

@@ -1,7 +1,7 @@
 import React from 'react'
 import cx from 'classnames'
-import { Plus, CheckCircleSolid, WarningTriangleSolid, Clock, ChatBubbleQuestionSolid } from '@harnessio/icons-noir'
-import { Button, Avatar, AvatarFallback } from '@harnessio/canary'
+import { CheckCircleSolid, WarningTriangleSolid, Clock, ChatBubbleQuestionSolid } from '@harnessio/icons-noir'
+import { Button, Avatar, AvatarFallback, Icon, Text } from '@harnessio/canary'
 import { EnumPullReqReviewDecision, PullReqReviewDecision, ReviewerData } from './interfaces'
 import { getInitials } from '../../utils/utils'
 
@@ -21,10 +21,12 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
   // TODO: add toaster error message
   //   const { showError } = useToaster()
   return (
-    <div className="pl-16">
+    <div>
       <div className="flex flex-col">
         <div className="flex items-center">
-          <div className=" text-white font-[500] text-sm">Reviewers</div>
+          <Text size={2} weight="medium">
+            Reviewers
+          </Text>
           <div className="flex-grow"></div>
           {/* TODO: how to handle dropdown or add new button */}
           {/* <ReviewerSelect
@@ -38,12 +40,11 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
                 }
               }}
             /> */}
-          <Button className="py-1 " size="sm" variant="outline">
-            <Plus className="pr-1" />
-            Add
+          <Button size="sm" variant="ghost" className="px-2 py-1">
+            <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </div>
-        <div className="pt-2 pb-4">
+        <div className="pt-2 pb-4 flex flex-col gap-3">
           {reviewers && reviewers.length !== 0 && reviewers !== null ? (
             reviewers.map(
               (reviewer: {
@@ -60,11 +61,11 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
                 return (
                   <div key={reviewer.reviewer.id} className="flex items-center space-x-2 mr-1">
                     <Avatar
-                      className={cx('w-6 h-6 rounded-full', {
+                      className={cx('w-7 h-7 rounded-full', {
                         'p-0': updatedReviewDecision !== PullReqReviewDecision.changeReq
                       })}>
                       <AvatarFallback>
-                        <span className="text-sm"> {getInitials(reviewer.reviewer.display_name)}</span>
+                        <span className="text-xs"> {getInitials(reviewer.reviewer.display_name)}</span>
                       </AvatarFallback>
                     </Avatar>
                     <div className="truncate reviewerName">{reviewer.reviewer.display_name}</div>

@@ -22,16 +22,26 @@ export default function PullRequestConversation() {
   const commentsInfo = !ruleViolation ? mockCommentResolvedInfo : mockCommentUnresolvedInfo
   return (
     <div>
-      <div className="grid grid-cols-[70%_30%]">
-        <PullRequestPanel
-          changesInfo={changesData}
-          checksInfo={checksInfo}
-          commentsInfo={commentsInfo}
-          ruleViolation={ruleViolation}
-          checks={mockChecksSuccessData}
-          pullReqMetadata={mockPullReqMetadata}
-          PRStateLoading={false}
-        />
+      <div className="grid grid-flow-col grid-cols-[1fr_220px] gap-x-8">
+        <div className="flex flex-col gap-10">
+          <PullRequestPanel
+            changesInfo={changesData}
+            checksInfo={checksInfo}
+            commentsInfo={commentsInfo}
+            ruleViolation={ruleViolation}
+            checks={mockChecksSuccessData}
+            pullReqMetadata={mockPullReqMetadata}
+            PRStateLoading={false}
+          />
+          <PullRequestFilters
+            activityFilters={activityFilters}
+            dateFilters={dateFilters}
+            activityFilter={activityFilter}
+            dateOrderSort={dateOrderSort}
+            setActivityFilter={setActivityFilter}
+            setDateOrderSort={setDateOrderSort}
+          />
+        </div>
         <PullRequestSideBar
           // repoMetadata={undefined}
           pullRequestMetadata={undefined}
@@ -40,16 +50,6 @@ export default function PullRequestConversation() {
             throw new Error('Function not implemented.')
           }}
           reviewers={mockReviewers}
-        />
-      </div>
-      <div className="grid grid-cols-[70%_30%]">
-        <PullRequestFilters
-          activityFilters={activityFilters}
-          dateFilters={dateFilters}
-          activityFilter={activityFilter}
-          dateOrderSort={dateOrderSort}
-          setActivityFilter={setActivityFilter}
-          setDateOrderSort={setDateOrderSort}
         />
       </div>
     </div>

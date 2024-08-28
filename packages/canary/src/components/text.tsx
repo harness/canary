@@ -40,6 +40,12 @@ const textVariants = cva('text-base', {
       semibold: 'font-semibold',
       bold: 'font-bold'
     },
+    color: {
+      primary: 'text-primary',
+      secondary: 'text-secondary',
+      tertiary: 'text-tertiary',
+      tertiaryBackground: 'text-tertiary-background'
+    },
     wrap: {
       wrap: 'text-wrap',
       nowrap: 'text-nowrap',
@@ -89,15 +95,33 @@ interface TextProps extends React.ComponentProps<'span'> {
   weight?: 'normal' | 'medium' | 'semibold' | 'bold'
 
   /**
+   * Sets the color property.
+   */
+  color?: 'primary' | 'secondary' | 'tertiary' | 'tertiaryBackground'
+
+  /**
    * Controls the wrapping behavior of the text.
    */
   wrap?: 'wrap' | 'nowrap' | 'pretty' | 'balance'
 }
 
-const Text = ({ className, children, as, asChild, align, size, weight, trim, truncate, wrap, ...props }: TextProps) => {
+const Text = ({
+  className,
+  children,
+  as,
+  asChild,
+  align,
+  size = 2,
+  weight = 'normal',
+  color = 'primary',
+  trim,
+  truncate,
+  wrap,
+  ...props
+}: TextProps) => {
   const Comp = asChild ? Slot : as ? as.toString() : 'span'
   return (
-    <Comp className={cn(textVariants({ align, size, weight, trim, truncate, wrap }), className)} {...props}>
+    <Comp className={cn(textVariants({ align, size, weight, color, trim, truncate, wrap }), className)} {...props}>
       {children}
     </Comp>
   )

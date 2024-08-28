@@ -1,9 +1,19 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@harnessio/canary'
+import {
+  Text,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  Button,
+  Icon
+} from '@harnessio/canary'
 import React from 'react'
+
 interface FilterOption {
   label: string
   value: string
 }
+
 export interface PullRequestFilterProps<T extends FilterOption> {
   activityFilters: T[]
   dateFilters: T[]
@@ -22,33 +32,41 @@ const PullRequestFilters = <T extends FilterOption>({
   setDateOrderSort
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className={'mt-2 py-2 flex space-x-2 pt-4 justify-between border-b border-b-border'}>
-      <div className="">Overview</div>
-      <div className="flex">
-        <Select defaultValue={activityFilter.value}>
-          <SelectTrigger className="w-fit border-none px-1 text-white text-xs focus:ring-[0px]">
-            <SelectValue placeholder="Select..." />
-          </SelectTrigger>
-          <SelectContent>
+    <div className="pb-3 grid grid-cols-[1fr_auto] items-center border-b">
+      <Text size={4} weight="medium">
+        Overview
+      </Text>
+      <div className="flex gap-4 items-center">
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" size="default" padding="sm" className="entity-list-action">
+              {activityFilter.label}&nbsp;
+              <Icon name="chevron-down" size={12} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
             {activityFilters.map(filter => (
-              <SelectItem key={filter.value} value={filter.value} onClick={() => setActivityFilter(filter)}>
+              <DropdownMenuItem key={filter.value} onClick={() => setActivityFilter(filter)}>
                 {filter.label}
-              </SelectItem>
+              </DropdownMenuItem>
             ))}
-          </SelectContent>
-        </Select>
-        <Select defaultValue={dateOrderSort.value}>
-          <SelectTrigger className="w-fit border-none px-1 text-white text-xs focus:ring-[0px]">
-            <SelectValue placeholder="Select..." />
-          </SelectTrigger>
-          <SelectContent>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <Button variant="ghost" size="default" padding="sm" className="entity-list-action">
+              {dateOrderSort.label}&nbsp;
+              <Icon name="chevron-down" size={12} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
             {dateFilters.map(filter => (
-              <SelectItem key={filter.value} value={filter.value} onClick={() => setDateOrderSort(filter)}>
+              <DropdownMenuItem key={filter.value} onClick={() => setDateOrderSort(filter)}>
                 {filter.label}
-              </SelectItem>
+              </DropdownMenuItem>
             ))}
-          </SelectContent>
-        </Select>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   )

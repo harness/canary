@@ -34,3 +34,7 @@ body,
   --indent-color: transparent !important;
   --indent-color-active: transparent !important;
 }
+
+.highlightYaml {
+  background-color: #244c27;
+}

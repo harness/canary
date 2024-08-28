@@ -1,5 +1,5 @@
 import React from 'react'
-import { Icon, Text, Button, cn } from '@harnessio/canary'
+import { Icon, Text, Button, cn, IconProps } from '@harnessio/canary'
 import PlaygroundListSettings from '../components/playground/list-settings'
 import { NavLink } from 'react-router-dom'
 
@@ -37,7 +37,7 @@ const NoListData: React.FC<NoListDataProps> = ({
       className={cn('w-full h-full flex flex-col place-content-center place-items-center', {
         'py-20 pb-24': insideTabView
       })}>
-      {iconName && <Icon name={iconName} size={iconSize} />}
+      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
       <div className="flex flex-col gap-4 place-content-center place-items-center ">
         <Text size={5} weight="medium">
           {title}

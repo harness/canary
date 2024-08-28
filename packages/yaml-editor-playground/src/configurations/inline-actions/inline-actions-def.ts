@@ -1,16 +1,15 @@
-import { PathSelector } from '@harnessio/yaml-editor/dist/types/selectors'
-import { YamlEditorProps } from '../../../../yaml-editor/src/components/YamlEditor'
-import { SelectorType } from '../../../../yaml-editor/src/types/selectors'
-import { InlineAction } from '@harnessio/yaml-editor/src/types/inline-actions'
+import { PathSelector, InlineAction, SelectorType } from '@harnessio/yaml-editor'
 
 export type InlineActionArgsType = {
   entityType: 'stage' | 'step' | 'inputs' | 'input' | 'pipeline'
   action: 'edit' | 'delete' | 'add' | 'manage'
 }
-export const inlineActionExample: {
+export const getInlineActionExample = (args: {
+  setSelectedPath: (path: string) => void
+}): {
   selectors: PathSelector[]
   actions: InlineAction<InlineActionArgsType>[]
-}[] = [
+}[] => [
   {
     selectors: [{ type: SelectorType.ContainsPath, basePath: '', paths: [/^inputs$/] }],
     actions: [
@@ -37,6 +36,12 @@ export const inlineActionExample: {
         data: {
           action: 'delete',
           entityType: 'input'
+        }
+      },
+      {
+        title: 'Select',
+        onClick: eventData => {
+          args.setSelectedPath(eventData.path)
         }
       }
     ]
@@ -105,6 +110,12 @@ export const inlineActionExample: {
         title: 'Delete | << step',
         onClick: data => {
           console.log(data)
+        }
+      },
+      {
+        title: 'Select',
+        onClick: eventData => {
+          args.setSelectedPath(eventData.path)
         }
       }
     ]

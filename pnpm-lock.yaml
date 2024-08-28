@@ -530,12 +530,6 @@ importers:
       '@harnessio/icons-noir':
         specifier: workspace:*
         version: link:../icons-noir
-      '@harnessio/svg-icon':
-        specifier: workspace:*
-        version: link:../svg-icon
-      '@harnessio/svg-icon-react':
-        specifier: workspace:*
-        version: link:../svg-icon-react
       '@harnessio/unified-pipeline':
         specifier: workspace:*
         version: link:../unified-pipeline

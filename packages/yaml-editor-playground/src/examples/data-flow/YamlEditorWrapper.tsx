@@ -1,14 +1,10 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { ThemeDefinition, YamlEditor } from '@harnessio/yaml-editor'
 import { useDataContext } from './DataProvider'
 import unifiedSchema from '../../configurations/schema/unified.json'
 import { harnessDarkTheme, harnessLightTheme } from '../../configurations/theme/theme'
 import { stageApproval } from '../../configurations/pipeline/stage-approval'
-
-import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
-import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
-import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
-import { inlineActionExample } from '../../configurations/inline-actions/inline-actions-def'
+import { getInlineActionExample } from '../../configurations/inline-actions/inline-actions-def'
 
 const themes: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
@@ -29,6 +25,21 @@ const themeConfig = {
 export const YamlEditorWrapper: React.FC<React.PropsWithChildren> = ({ children }) => {
   const { yamlRevision, setYamlRevision } = useDataContext()
   const [showYamlEditor, setShowYamlEditor] = useState(true)
+  const [selectedPath, setSelectedPath] = useState<string | undefined>('pipeline.stages.0.steps.0')
+
+  const inlineActionExample = useMemo(() => getInlineActionExample({ setSelectedPath }), [setSelectedPath])
+
+  const selection = useMemo(
+    () =>
+      selectedPath
+        ? {
+            path: selectedPath,
+            className: 'highlightYaml',
+            revealInCenter: true
+          }
+        : undefined,
+    [selectedPath]
+  )
 
   return (
     <>
@@ -51,11 +62,13 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren> = ({ children 
           <YamlEditor
             onYamlRevisionChange={(value, data) => {
               setYamlRevision(value ?? { yaml: '', revisionId: 0 })
+              setSelectedPath(undefined)
             }}
             yamlRevision={yamlRevision}
             schemaConfig={schemaConfig}
             inlineActions={inlineActionExample}
             themeConfig={themeConfig}
+            selection={selection}
           />
         )}
       </div>

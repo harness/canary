@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "clean": "clean-dist",
-    "build": "tsc && esbuild src/*.{ts,tsx} --allow-overwrite --minify --outdir=dist --format=esm",
+    "build": "tsc && esbuild src/*.tsx --allow-overwrite --minify --outdir=dist --format=esm",
     "lint": "eslint ./src",
     "prepublishOnly": "pnpm build"
   },

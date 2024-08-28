@@ -192,7 +192,7 @@ const StepPalettePanel = (): JSX.Element => {
       <StepsPalette.Header>
         {/* <StepBreadcrumb title="Deploy to Dev" subTitle="Add Step" /> */}
         <StepsPalette.Title>Add Step</StepsPalette.Title>
-        <Input placeholder="Search" leftIcon={<Search />} />
+        <Input placeholder="Search" left={<Search />} />
         <StepPaletteFilters />
       </StepsPalette.Header>
       <StepsPaletteContent.Root>

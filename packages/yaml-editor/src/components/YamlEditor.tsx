@@ -11,6 +11,7 @@ import { useProblems } from '../hooks/useProblems'
 import { useYamlEditorContext } from './YamlProvider'
 import { ThemeDefinition } from '../types/themes'
 import { useCodeLenses } from '../hooks/useCodeLens'
+import { useDecoration } from '../hooks/useDecoration'
 
 loader.config({ monaco })
 
@@ -29,10 +30,15 @@ export interface YamlEditorProps<T> {
   schemaConfig?: { schema: any; uri: string }
   inlineActions?: { selectors: PathSelector[]; actions: InlineAction<T>[] }[]
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  selection?: {
+    path: string
+    className: string
+    revealInCenter?: boolean
+  }
 }
 
 export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
-  const { yamlRevision, schemaConfig, inlineActions, themeConfig, onYamlRevisionChange } = props
+  const { yamlRevision, schemaConfig, inlineActions, themeConfig, onYamlRevisionChange, selection } = props
   const monaco = useMonaco()
   const [instanceId] = useState('yaml')
   const { editor, setEditor } = useYamlEditorContext()
@@ -78,6 +84,8 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const { theme } = useTheme({ monacoRef, themeConfig, editor })
 
   useProblems({ monacoRef })
+
+  useDecoration({ editorRef, selection })
 
   return (
     <>

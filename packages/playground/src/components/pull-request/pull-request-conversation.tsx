@@ -36,7 +36,7 @@ export default function PullRequestConversation() {
             pullReqMetadata={mockPullReqMetadata}
             PRStateLoading={false}
           />
-          <Spacer size={7} />
+          <Spacer size={9} />
           <PullRequestFilters
             activityFilters={activityFilters}
             dateFilters={dateFilters}
@@ -45,7 +45,7 @@ export default function PullRequestConversation() {
             setActivityFilter={setActivityFilter}
             setDateOrderSort={setDateOrderSort}
           />
-          <Spacer size={5} />
+          <Spacer size={6} />
           <PullRequestOverview data={mockOverviewData} />
         </div>
         <PullRequestSideBar

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Text } from '@harnessio/canary'
+import { Card, Input, Text } from '@harnessio/canary'
 
 interface TimelineItemProps {
   header: {
@@ -48,10 +48,16 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ header, content, icon, isLa
     </div>
     <div className="col-start-2 row-start-2">
       {/* Remove h-32, only for show */}
-      <Card className="bg-transparent rounded-md px-4 py-4 h-32">
-        <Text size={2} color="primary" className="hidden">
-          {content}
-        </Text>
+      <Card className="bg-transparent rounded-md">
+        <div className="flex h-32  px-4 py-4">
+          <Text size={2} color="primary" className="hidden">
+            {content}
+          </Text>
+        </div>
+        <div className="flex items-center gap-3 border-t px-4 py-4">
+          <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+          <Input placeholder={'Reply here'} />
+        </div>
       </Card>
     </div>
     {!isLast && <div className="z-10 absolute left-[12px] top-0 bottom-0 w-[1px] border-l" />}

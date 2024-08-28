@@ -61,7 +61,8 @@
     "react-dom": "^18.2.0",
     "react-keywords": "^1.0.0",
     "yaml": "^2.5.0",
-    "yaml-loader": "^0.8.1"
+    "yaml-loader": "^0.8.1",
+    "clipboard-copy": "^3.1.0"
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.9",

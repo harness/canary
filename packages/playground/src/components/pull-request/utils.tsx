@@ -14,7 +14,7 @@ export function useActivityFilters() {
   return useMemo(
     () => [
       {
-        label: 'Show Everything',
+        label: 'Show everything',
         value: PRCommentFilterType.SHOW_EVERYTHING
       },
       {

@@ -5,6 +5,7 @@ import { processReviewDecision, useActivityFilters, useDateFilters } from './uti
 import { mockReviewers } from './mocks/mockReviewer'
 import PullRequestFilters from './pull-request-filters'
 import PullRequestPanel from './pull-request-panel'
+import PullRequestCommentBox from './pull-request-comment-box'
 import { mockPullReqMetadata } from './mocks/mockPullReqMetadata'
 import { mockChecksSuccessData } from './mocks/mockChecksData'
 import { mockChangesData } from './mocks/mockChangesData'
@@ -47,6 +48,9 @@ export default function PullRequestConversation() {
           />
           <Spacer size={6} />
           <PullRequestOverview data={mockOverviewData} />
+          <Spacer size={9} />
+          <PullRequestCommentBox />
+          <Spacer size={9} />
         </div>
         <PullRequestSideBar
           // repoMetadata={undefined}

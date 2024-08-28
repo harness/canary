@@ -43,7 +43,9 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
             'p-0': updatedReviewDecision !== PullReqReviewDecision.changeReq
           })}>
           <AvatarFallback>
-            <span className="text-xs">{getInitials(reviewer.display_name)}</span>
+            <Text size={1} color="tertiaryBackground">
+              {getInitials(reviewer.display_name)}
+            </Text>
           </AvatarFallback>
         </Avatar>
         <div className="truncate reviewerName">{reviewer.display_name}</div>
@@ -75,7 +77,9 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
           />
         ))
       ) : (
-        <div className="text-tertiary-background text-sm font-[500]">No reviewers</div>
+        <Text size={2} weight="medium" color="tertiaryBackground">
+          No reviewers
+        </Text>
       )}
     </div>
   )

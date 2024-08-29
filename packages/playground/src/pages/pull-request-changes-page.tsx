@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PullRequestChanges from '../components/pull-request/pull-request-changes'
-import PlaygroundPullRequestCommitsSettingsProps from '../components/playground/pull-request-commits-settings'
+import PlaygroundPullRequestChangesSettings from '../components/playground/pull-request-changes-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoData from '../components/no-list-data'
 
@@ -26,7 +26,7 @@ export default function PullRequestChangesPage() {
           title="No changes yet"
           description={['There are no changes for this pull request yet.']}
         />
-        <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+        <PlaygroundPullRequestChangesSettings loadState={loadState} setLoadState={setLoadState} />
       </>
     )
   }
@@ -34,7 +34,7 @@ export default function PullRequestChangesPage() {
   return (
     <>
       {renderContent()}
-      <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+      <PlaygroundPullRequestChangesSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

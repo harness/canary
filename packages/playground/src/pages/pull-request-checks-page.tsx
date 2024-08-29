@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PullRequestChecks from '../components/pull-request/pull-request-checks'
-import PlaygroundPullRequestCommitsSettingsProps from '../components/playground/pull-request-commits-settings'
+import PlaygroundPullRequestChecksSettings from '../components/playground/pull-request-checks-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoData from '../components/no-list-data'
 
@@ -26,7 +26,7 @@ export default function PullRequestChecksPage() {
           title="No checks yet"
           description={['There are no checks for this pull request yet.']}
         />
-        <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+        <PlaygroundPullRequestChecksSettings loadState={loadState} setLoadState={setLoadState} />
       </>
     )
   }
@@ -34,7 +34,7 @@ export default function PullRequestChecksPage() {
   return (
     <>
       {renderContent()}
-      <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+      <PlaygroundPullRequestChecksSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

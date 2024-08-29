@@ -6,7 +6,7 @@ import { mockChecksSuccessData } from '../data/mockChecksData'
 import { mockChangesData } from '../data/mockChangesData'
 import { mockChecksSucceededInfo, mockChecksFailedInfo } from '../data/mockCheckInfo'
 import { mockCommentResolvedInfo, mockCommentUnresolvedInfo } from '../data/mockCommentInfo'
-import PlaygroundPullRequestCommitsSettingsProps from '../components/playground/pull-request-commits-settings'
+import PlaygroundPullRequestConversationSettings from '../components/playground/pull-request-conversation-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoData from '../components/no-list-data'
 import PullRequestPanel from '../components/pull-request/pull-request-panel'
@@ -32,7 +32,7 @@ export default function PullRequestConversationPage() {
     return (
       <>
         <SkeletonList />
-        <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+        <PlaygroundPullRequestConversationSettings loadState={loadState} setLoadState={setLoadState} />
       </>
     )
   }
@@ -45,7 +45,7 @@ export default function PullRequestConversationPage() {
           title="No activity yet"
           description={['There is no activity for this pull request yet.']}
         />
-        <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+        <PlaygroundPullRequestConversationSettings loadState={loadState} setLoadState={setLoadState} />
       </>
     )
   }
@@ -92,7 +92,7 @@ export default function PullRequestConversationPage() {
           />
         }
       />
-      <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+      <PlaygroundPullRequestConversationSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

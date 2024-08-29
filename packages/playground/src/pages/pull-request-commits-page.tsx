@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
   Spacer
 } from '@harnessio/canary'
-import PlaygroundPullRequestCommitsSettingsProps from '../components/playground/pull-request-commits-settings'
+import PlaygroundPullRequestCommitsSettings from '../components/playground/pull-request-commits-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoData from '../components/no-list-data'
 
@@ -38,7 +38,7 @@ export default function PullRequestCommitsPage() {
           title="No commits yet"
           description={['There are no commits for this pull request yet.']}
         />
-        <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+        <PlaygroundPullRequestCommitsSettings loadState={loadState} setLoadState={setLoadState} />
       </>
     )
   }
@@ -87,7 +87,7 @@ export default function PullRequestCommitsPage() {
           </Pagination>
         </ListPagination.Root>
       )}
-      <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
+      <PlaygroundPullRequestCommitsSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

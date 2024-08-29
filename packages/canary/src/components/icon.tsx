@@ -31,6 +31,7 @@ import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
 import Changes from '../icons/changes.svg'
 import Checks from '../icons/checks.svg'
 import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
+import Clone from '../icons/clone.svg'
 // import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
@@ -65,7 +66,8 @@ const IconNameMap = {
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   changes: Changes,
   checks: Checks,
-  'vertical-ellipsis': VerticalEllipsis
+  'vertical-ellipsis': VerticalEllipsis,
+  clone: Clone
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

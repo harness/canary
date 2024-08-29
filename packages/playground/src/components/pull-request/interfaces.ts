@@ -138,3 +138,41 @@ export interface TypesCheckPayload {
 }
 export type EnumCheckPayloadKind = '' | 'markdown' | 'pipeline' | 'raw'
 export type EnumCheckStatus = 'error' | 'failure' | 'pending' | 'running' | 'success'
+
+export interface TypesCommit {
+  author?: TypesSignature
+  committer?: TypesSignature
+  message?: string
+  parent_shas?: string[]
+  sha?: string
+  stats?: TypesCommitStats
+  title?: string
+}
+export interface TypesCommitStats {
+  files?: TypesCommitFileStats[]
+  total?: TypesChangeStats
+}
+
+export interface TypesChangeStats {
+  changes?: number
+  deletions?: number
+  insertions?: number
+}
+
+export interface TypesCommitFileStats {
+  changes?: number
+  deletions?: number
+  insertions?: number
+  old_path?: string
+  path?: string
+  status?: string
+}
+
+export interface TypesSignature {
+  identity?: TypesIdentity
+  when?: string
+}
+export interface TypesIdentity {
+  email?: string
+  name?: string
+}

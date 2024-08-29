@@ -16,6 +16,7 @@ import PullRequestOverview from '../components/pull-request/pull-request-overvie
 import PullRequestCommentBox from '../components/pull-request/pull-request-comment-box'
 import PullRequestSideBar from '../components/pull-request/pull-request-side-bar'
 import { processReviewDecision, useActivityFilters, useDateFilters } from '../components/pull-request/utils'
+import Floating2ColumnLayout from '../layouts/Floating2ColumnLayout'
 
 export default function PullRequestConversationPage() {
   const [loadState, setLoadState] = useState('data-loaded')
@@ -51,42 +52,46 @@ export default function PullRequestConversationPage() {
 
   return (
     <>
-      <div className="grid grid-flow-col grid-cols-[1fr_220px] gap-x-8">
-        <div className="flex flex-col">
-          <PullRequestPanel
-            changesInfo={mockChangesData}
-            checksInfo={checksInfo}
-            commentsInfo={commentsInfo}
-            ruleViolation={ruleViolation}
-            checks={mockChecksSuccessData}
-            pullReqMetadata={mockPullReqMetadata}
-            PRStateLoading={false}
+      <Floating2ColumnLayout
+        leftColumn={
+          <>
+            <PullRequestPanel
+              changesInfo={mockChangesData}
+              checksInfo={checksInfo}
+              commentsInfo={commentsInfo}
+              ruleViolation={ruleViolation}
+              checks={mockChecksSuccessData}
+              pullReqMetadata={mockPullReqMetadata}
+              PRStateLoading={false}
+            />
+            <Spacer size={9} />
+            <PullRequestFilters
+              activityFilters={activityFilters}
+              dateFilters={dateFilters}
+              activityFilter={activityFilter}
+              dateOrderSort={dateOrderSort}
+              setActivityFilter={setActivityFilter}
+              setDateOrderSort={setDateOrderSort}
+            />
+            <Spacer size={6} />
+            <PullRequestOverview data={mockOverviewData} />
+            <Spacer size={9} />
+            <PullRequestCommentBox />
+            <Spacer size={9} />
+          </>
+        }
+        rightColumn={
+          <PullRequestSideBar
+            // repoMetadata={undefined}
+            pullRequestMetadata={undefined}
+            processReviewDecision={processReviewDecision}
+            refetchReviewers={function (): void {
+              throw new Error('Function not implemented.')
+            }}
+            reviewers={mockReviewers}
           />
-          <Spacer size={9} />
-          <PullRequestFilters
-            activityFilters={activityFilters}
-            dateFilters={dateFilters}
-            activityFilter={activityFilter}
-            dateOrderSort={dateOrderSort}
-            setActivityFilter={setActivityFilter}
-            setDateOrderSort={setDateOrderSort}
-          />
-          <Spacer size={6} />
-          <PullRequestOverview data={mockOverviewData} />
-          <Spacer size={9} />
-          <PullRequestCommentBox />
-          <Spacer size={9} />
-        </div>
-        <PullRequestSideBar
-          // repoMetadata={undefined}
-          pullRequestMetadata={undefined}
-          processReviewDecision={processReviewDecision}
-          refetchReviewers={function (): void {
-            throw new Error('Function not implemented.')
-          }}
-          reviewers={mockReviewers}
-        />
-      </div>
+        }
+      />
       <PlaygroundPullRequestCommitsSettingsProps loadState={loadState} setLoadState={setLoadState} />
     </>
   )

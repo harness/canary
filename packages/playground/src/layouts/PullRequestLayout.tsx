@@ -3,6 +3,7 @@ import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { PullRequestHeader } from '../components/pull-request/pull-request-conversation-header'
 import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+import Floating1ColumnLayout from './Floating1ColumnLayout'
 
 const mockedPullRequest = {
   number: 1,
@@ -38,7 +39,7 @@ const mockedPullRequest = {
 const PullRequestLayout: React.FC = () => {
   return (
     <>
-      <div className="px-8 pb-8 max-w-[1200px] mx-auto">
+      <Floating1ColumnLayout>
         <Spacer size={7} />
         <PullRequestHeader data={mockedPullRequest} />
         <Tabs variant="tabnav" defaultValue="conversation">
@@ -83,7 +84,7 @@ const PullRequestLayout: React.FC = () => {
         </Tabs>
         <Spacer size={7} />
         <Outlet />
-      </div>
+      </Floating1ColumnLayout>
     </>
   )
 }

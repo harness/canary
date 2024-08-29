@@ -13,22 +13,17 @@ export default function PullRequestChecksPage() {
         return <PullRequestChecks />
       case 'loading':
         return <SkeletonList />
+      case 'no-data':
+        return (
+          <NoData
+            iconName="no-data-folder"
+            title="No checks yet"
+            description={['There are no checks for this pull request yet.']}
+          />
+        )
       default:
         return null
     }
-  }
-
-  if (loadState == 'no-data') {
-    return (
-      <>
-        <NoData
-          iconName="no-data-folder"
-          title="No checks yet"
-          description={['There are no checks for this pull request yet.']}
-        />
-        <PlaygroundPullRequestChecksSettings loadState={loadState} setLoadState={setLoadState} />
-      </>
-    )
   }
 
   return (

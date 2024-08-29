@@ -25,22 +25,17 @@ export default function PullRequestCommitsPage() {
         return <PullRequestCommits data={mockCommitData} />
       case 'loading':
         return <SkeletonList />
+      case 'no-data':
+        return (
+          <NoData
+            iconName="no-data-folder"
+            title="No commits yet"
+            description={['There are no commits for this pull request yet.']}
+          />
+        )
       default:
         return null
     }
-  }
-
-  if (loadState == 'no-data') {
-    return (
-      <>
-        <NoData
-          iconName="no-data-folder"
-          title="No commits yet"
-          description={['There are no commits for this pull request yet.']}
-        />
-        <PlaygroundPullRequestCommitsSettings loadState={loadState} setLoadState={setLoadState} />
-      </>
-    )
   }
 
   return (

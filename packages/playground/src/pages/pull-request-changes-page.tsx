@@ -13,22 +13,17 @@ export default function PullRequestChangesPage() {
         return <PullRequestChanges />
       case 'loading':
         return <SkeletonList />
+      case 'no-data':
+        return (
+          <NoData
+            iconName="no-data-folder"
+            title="No changes yet"
+            description={['There are no changes for this pull request yet.']}
+          />
+        )
       default:
         return null
     }
-  }
-
-  if (loadState == 'no-data') {
-    return (
-      <>
-        <NoData
-          iconName="no-data-folder"
-          title="No changes yet"
-          description={['There are no changes for this pull request yet.']}
-        />
-        <PlaygroundPullRequestChangesSettings loadState={loadState} setLoadState={setLoadState} />
-      </>
-    )
   }
 
   return (

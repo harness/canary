@@ -16,7 +16,7 @@ import PullRequestOverview from '../components/pull-request/pull-request-overvie
 import PullRequestCommentBox from '../components/pull-request/pull-request-comment-box'
 import PullRequestSideBar from '../components/pull-request/pull-request-side-bar'
 import { processReviewDecision, useActivityFilters, useDateFilters } from '../components/pull-request/utils'
-import Floating2ColumnLayout from '../layouts/Floating2ColumnLayout'
+import FullWidth2ColumnLayout from '../layouts/FullWidth2ColumnLayout'
 
 export default function PullRequestConversationPage() {
   const [loadState, setLoadState] = useState('data-loaded')
@@ -52,7 +52,7 @@ export default function PullRequestConversationPage() {
 
   return (
     <>
-      <Floating2ColumnLayout
+      <FullWidth2ColumnLayout
         leftColumn={
           <>
             <PullRequestPanel

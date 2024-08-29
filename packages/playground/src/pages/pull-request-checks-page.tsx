@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PullRequestChecks from '../components/pull-request/pull-request-checks'
 import PlaygroundPullRequestChecksSettings from '../components/playground/pull-request-checks-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
-import NoData from '../components/no-list-data'
+import NoData from '../components/no-data'
 
 export default function PullRequestChecksPage() {
   const [loadState, setLoadState] = useState('loading') // Change to data-loaded when component work is finished

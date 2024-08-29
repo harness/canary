@@ -17,7 +17,7 @@ import ExecutionList from '../components/execution-list'
 import PaddingListLayout from '../layouts/PaddingListLayout'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoSearchResults from '../components/no-search-results'
-import NoData from '../components/no-list-data'
+import NoData from '../components/no-data'
 import PlaygroundListSettings from '../components/playground/list-settings'
 
 const mockExecutions = [

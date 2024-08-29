@@ -40,7 +40,7 @@ const PullRequestLayout: React.FC = () => {
   return (
     <>
       <Floating1ColumnLayout>
-        <Spacer size={7} />
+        <Spacer size={8} />
         <PullRequestHeader data={mockedPullRequest} />
         <Tabs variant="tabnav" defaultValue="conversation">
           <TabsList>
@@ -82,7 +82,7 @@ const PullRequestLayout: React.FC = () => {
             </NavLink>
           </TabsList>
         </Tabs>
-        <Spacer size={7} />
+        <Spacer size={8} />
         <Outlet />
       </Floating1ColumnLayout>
     </>

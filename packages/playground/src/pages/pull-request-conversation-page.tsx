@@ -8,7 +8,7 @@ import { mockChecksSucceededInfo, mockChecksFailedInfo } from '../data/mockCheck
 import { mockCommentResolvedInfo, mockCommentUnresolvedInfo } from '../data/mockCommentInfo'
 import PlaygroundPullRequestConversationSettings from '../components/playground/pull-request-conversation-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
-import NoData from '../components/no-list-data'
+import NoData from '../components/no-data'
 import PullRequestPanel from '../components/pull-request/pull-request-panel'
 import { Spacer } from '@harnessio/canary'
 import PullRequestFilters from '../components/pull-request/pull-request-filters'

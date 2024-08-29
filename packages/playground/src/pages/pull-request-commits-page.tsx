@@ -14,7 +14,7 @@ import {
 } from '@harnessio/canary'
 import PlaygroundPullRequestCommitsSettings from '../components/playground/pull-request-commits-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
-import NoData from '../components/no-list-data'
+import NoData from '../components/no-data'
 
 export default function PullRequestCommitsPage() {
   const [loadState, setLoadState] = useState('data-loaded')

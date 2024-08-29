@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PullRequestChanges from '../components/pull-request/pull-request-changes'
 import PlaygroundPullRequestChangesSettings from '../components/playground/pull-request-changes-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
-import NoData from '../components/no-list-data'
+import NoData from '../components/no-data'
 
 export default function PullRequestChangesPage() {
   const [loadState, setLoadState] = useState('loading') // Change to data-loaded when component work is finished

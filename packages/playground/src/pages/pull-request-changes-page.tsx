@@ -5,7 +5,7 @@ import SkeletonList from '../components/loaders/skeleton-list'
 import NoData from '../components/no-list-data'
 
 export default function PullRequestChangesPage() {
-  const [loadState, setLoadState] = useState('data-loaded')
+  const [loadState, setLoadState] = useState('loading') // Change to data-loaded when component work is finished
 
   const renderContent = () => {
     switch (loadState) {

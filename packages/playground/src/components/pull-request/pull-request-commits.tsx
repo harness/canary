@@ -11,8 +11,8 @@ import {
   PaginationPrevious
 } from '@harnessio/canary'
 import { TypesCommit } from './interfaces'
-import { formatDate } from './utils'
 import CommitListItem from '../commit-list-item'
+import { formatDate } from '../../utils/utils'
 
 export default function PullRequestCommits() {
   const data = mockCommitData

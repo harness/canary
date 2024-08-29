@@ -28,23 +28,27 @@ function CommitActions({ sha, enableCopy }: CommitActionButtonProps) {
   }, [copied])
 
   return (
-    <div>
-      <div className="flex border rounded-lg py-0.5 px-2 items-center">
-        {/* TODO: add link to commit details page */}
-        {/* <Link to={href}> */}
-        <Text className="text-tertiary-background">{sha.substring(0, 6)}</Text>
+    <div className="grid grid-flow-col grid-col-[1fr_auto] border rounded-md">
+      <div className="flex items-center px-2 py-0.5">
+        <Text size={1} className="text-tertiary-background">
+          {sha.substring(0, 6)}
+        </Text>
         {/* </Link> */}
-        {enableCopy && (
-          <div
-            className="border-l ml-1 pl-1 pointer-events-auto"
-            onClick={() => {
-              setCopied(true)
-              copy(sha)
-            }}>
-            {copied ? <Icon name="tick" /> : <Icon name="clone" className="text-tertiary-background" />}
-          </div>
-        )}
       </div>
+      {enableCopy && (
+        <div
+          className="flex items-center border-l px-1 py-0.5 pointer-events-auto"
+          onClick={() => {
+            setCopied(true)
+            copy(sha)
+          }}>
+          {copied ? (
+            <Icon size={14} name="tick" />
+          ) : (
+            <Icon name="clone" size={14} className="text-tertiary-background" />
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -1,9 +1,8 @@
 import React from 'react'
 import { Icon, Text, Button, cn, IconProps } from '@harnessio/canary'
-import PlaygroundListSettings from '../components/playground/list-settings'
 import { NavLink } from 'react-router-dom'
 
-export interface NoListDataProps {
+export interface NoDataProps {
   title: string
   iconName?: 'no-data-folder' | 'no-search-magnifying-glass' | 'no-data-merge' | 'no-data-cog'
   iconSize?: number
@@ -17,13 +16,11 @@ export interface NoListDataProps {
     to?: string
   }
   insideTabView?: boolean
-  listState?: string
-  setListState?: React.Dispatch<React.SetStateAction<string>>
+  loadState?: string
+  setLoadState?: React.Dispatch<React.SetStateAction<string>>
 }
 
-const NoListData: React.FC<NoListDataProps> = ({
-  listState,
-  setListState,
+const NoData: React.FC<NoDataProps> = ({
   iconName,
   iconSize = 112,
   title,
@@ -66,9 +63,8 @@ const NoListData: React.FC<NoListDataProps> = ({
           </div>
         )}
       </div>
-      {listState && setListState && <PlaygroundListSettings listState={listState} setListState={setListState} />}
     </div>
   )
 }
 
-export default NoListData
+export default NoData

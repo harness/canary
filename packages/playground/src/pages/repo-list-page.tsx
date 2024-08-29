@@ -18,7 +18,7 @@ import {
 import PaddingListLayout from '../layouts/PaddingListLayout'
 import PlaygroundListSettings from '../components/playground/list-settings'
 import SkeletonList from '../components/loaders/skeleton-list'
-import NoListData from '../components/no-list-data'
+import NoData from '../components/no-list-data'
 import NoSearchResults from '../components/no-search-results'
 
 const mockRepos = [
@@ -99,10 +99,10 @@ const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' },
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
 function RepoListPage() {
-  const [listState, setListState] = useState('data-loaded')
+  const [loadState, setLoadState] = useState('data-loaded')
 
   const renderListContent = () => {
-    switch (listState) {
+    switch (loadState) {
       case 'data-loaded':
         return <RepoList repos={mockRepos} />
       case 'loading':
@@ -122,17 +122,21 @@ function RepoListPage() {
     }
   }
 
-  if (listState == 'no-data') {
+  if (loadState == 'no-data') {
     return (
-      <NoListData
-        listState={listState}
-        setListState={setListState}
-        iconName="no-data-folder"
-        title="No repositories yet"
-        description={['There are no repositories in this project yet.', 'Create new or import an existing repository.']}
-        primaryButton={{ label: 'Create repository' }}
-        secondaryButton={{ label: 'Import repository' }}
-      />
+      <>
+        <NoData
+          iconName="no-data-folder"
+          title="No repositories yet"
+          description={[
+            'There are no repositories in this project yet.',
+            'Create new or import an existing repository.'
+          ]}
+          primaryButton={{ label: 'Create repository' }}
+          secondaryButton={{ label: 'Import repository' }}
+        />
+        <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />
+      </>
     )
   }
 
@@ -156,7 +160,7 @@ function RepoListPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        {listState == 'data-loaded' && (
+        {loadState == 'data-loaded' && (
           <ListPagination.Root>
             <Pagination>
               <PaginationContent>
@@ -197,7 +201,7 @@ function RepoListPage() {
           </ListPagination.Root>
         )}
       </PaddingListLayout>
-      <PlaygroundListSettings listState={listState} setListState={setListState} />
+      <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

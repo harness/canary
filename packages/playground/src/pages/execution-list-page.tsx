@@ -17,7 +17,7 @@ import ExecutionList from '../components/execution-list'
 import PaddingListLayout from '../layouts/PaddingListLayout'
 import SkeletonList from '../components/loaders/skeleton-list'
 import NoSearchResults from '../components/no-search-results'
-import NoListData from '../components/no-list-data'
+import NoData from '../components/no-list-data'
 import PlaygroundListSettings from '../components/playground/list-settings'
 
 const mockExecutions = [
@@ -95,10 +95,10 @@ const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { nam
 const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
 
 function ExecutionListPage() {
-  const [listState, setListState] = useState('data-loaded')
+  const [loadState, setLoadState] = useState('data-loaded')
 
   const renderListContent = () => {
-    switch (listState) {
+    switch (loadState) {
       case 'data-loaded':
         return <ExecutionList executions={mockExecutions} />
       case 'loading':
@@ -118,20 +118,21 @@ function ExecutionListPage() {
     }
   }
 
-  if (listState == 'no-data') {
+  if (loadState == 'no-data') {
     return (
-      <NoListData
-        listState={listState}
-        setListState={setListState}
-        iconName="no-data-cog"
-        title="No executions yet"
-        description={[
-          "Your pipeline executions will appear here once they're completed.",
-          'Start your pipeline to see the results.'
-        ]}
-        primaryButton={{ label: 'Create pipeline' }}
-        secondaryButton={{ label: 'Import pipeline' }}
-      />
+      <>
+        <NoData
+          iconName="no-data-cog"
+          title="No executions yet"
+          description={[
+            "Your pipeline executions will appear here once they're completed.",
+            'Start your pipeline to see the results.'
+          ]}
+          primaryButton={{ label: 'Create pipeline' }}
+          secondaryButton={{ label: 'Import pipeline' }}
+        />
+        <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />
+      </>
     )
   }
 
@@ -155,7 +156,7 @@ function ExecutionListPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        {listState == 'data-loaded' && (
+        {loadState == 'data-loaded' && (
           <ListPagination.Root>
             <Pagination>
               <PaginationContent>
@@ -196,7 +197,7 @@ function ExecutionListPage() {
           </ListPagination.Root>
         )}
       </PaddingListLayout>
-      <PlaygroundListSettings listState={listState} setListState={setListState} />
+      <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )
 }

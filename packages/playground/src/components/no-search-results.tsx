@@ -1,7 +1,7 @@
 import React from 'react'
-import NoListData, { NoListDataProps } from './no-list-data'
+import NoData, { NoDataProps } from './no-list-data'
 
-interface NoSearchResultsProps extends Omit<NoListDataProps, 'iconSize'> {
+interface NoSearchResultsProps extends Omit<NoDataProps, 'iconSize'> {
   iconSize?: number
 }
 
@@ -15,7 +15,7 @@ const NoSearchResults: React.FC<NoSearchResultsProps> = ({
 }) => {
   return (
     <div className="w-full h-full flex flex-col justify-center items-center border rounded-md py-20 pb-24">
-      <NoListData
+      <NoData
         iconName={iconName}
         iconSize={iconSize}
         title={title}

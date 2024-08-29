@@ -10,12 +10,15 @@ import {
 } from '@harnessio/canary'
 import React from 'react'
 
-interface PlaygroundListSettingsProps {
+interface PlaygroundPullRequestCommitsSettingsProps {
   loadState: string
   setLoadState: (state: string) => void
 }
 
-const PlaygroundListSettings: React.FC<PlaygroundListSettingsProps> = ({ loadState, setLoadState }) => {
+const PlaygroundPullRequestCommitsSettings: React.FC<PlaygroundPullRequestCommitsSettingsProps> = ({
+  loadState,
+  setLoadState
+}) => {
   return (
     <div className="group fixed right-0 bottom-0 z-50 py-3 px-4">
       <DropdownMenu>
@@ -27,7 +30,7 @@ const PlaygroundListSettings: React.FC<PlaygroundListSettingsProps> = ({ loadSta
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
             <Text weight="bold" size={2}>
-              List states
+              Pull request commits states
             </Text>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -46,15 +49,10 @@ const PlaygroundListSettings: React.FC<PlaygroundListSettingsProps> = ({ loadSta
             className={loadState === 'no-data' ? 'text-emerald-500' : ''}>
             No data
           </DropdownMenuItem>
-          <DropdownMenuItem
-            onClick={() => setLoadState('no-search-matches')}
-            className={loadState === 'no-search-matches' ? 'text-emerald-500' : ''}>
-            No search results
-          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
   )
 }
 
-export default PlaygroundListSettings
+export default PlaygroundPullRequestCommitsSettings

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Icon, StackedList, Text } from '@harnessio/canary'
+import { Icon, StackedList, Text, NodeGroup } from '@harnessio/canary'
 import copy from 'clipboard-copy'
 import { TypesCommit } from './pull-request/interfaces'
 interface CommitLineItemProps {
@@ -28,7 +28,7 @@ function CommitActions({ sha, enableCopy }: CommitActionButtonProps) {
 
   return (
     <div>
-      <div className="flex border rounded-lg py-0.5 px-2">
+      <div className="flex border rounded-lg py-0.5 px-2 items-center">
         {/* TODO: add link to commit details page */}
         {/* <Link to={href}> */}
         <Text className="text-tertiary-background">{sha.substring(0, 6)}</Text>
@@ -50,17 +50,12 @@ function CommitActions({ sha, enableCopy }: CommitActionButtonProps) {
 
 const CommitListItem = ({ header, commitData }: CommitLineItemProps) => {
   return (
-    <div className="relative grid items-center grid-cols-[26px_1fr] grid-rows-[auto_1fr] gap-x-3 gap-y-2 pb-8">
-      <div className="col-start-1 row-start-1">
-        <div className="relative z-20 h-6 w-6 rounded-full flex place-content-center place-items-center p-1 border border-tertiary-background/30 bg-background text-primary">
-          <Icon name="chaos-engineering" size={14} />
-        </div>
-      </div>
-      <div className="col-start-2 row-start-1">
-        {/* Ensure that header has at least one item */}
-        {header && <div className="inline-flex gap-1.5 items-center">{`Commits on ${header}`}</div>}
-      </div>
-      <div className="col-start-2 row-start-2">
+    <NodeGroup.Root>
+      <NodeGroup.Icon>
+        <Icon name="chaos-engineering" size={14} />
+      </NodeGroup.Icon>
+      <NodeGroup.Title>{header && <Text color="tertiaryBackground">Commits on {header}</Text>}</NodeGroup.Title>
+      <NodeGroup.Content>
         {commitData && commitData.length > 0 && (
           <StackedList.Root className="pointer-events-none">
             {commitData.map((commit, repo_idx) => (
@@ -92,9 +87,9 @@ const CommitListItem = ({ header, commitData }: CommitLineItemProps) => {
             ))}
           </StackedList.Root>
         )}
-      </div>
-      {<div className="z-10 absolute left-[12px] top-0 bottom-0 w-[1px] border-l" />}
-    </div>
+      </NodeGroup.Content>
+      <NodeGroup.Connector />
+    </NodeGroup.Root>
   )
 }
 

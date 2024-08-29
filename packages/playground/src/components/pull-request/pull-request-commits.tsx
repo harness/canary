@@ -1,22 +1,14 @@
 import React, { useMemo } from 'react'
-import { mockCommitData } from './mocks/mockCommitData'
-import {
-  ListPagination,
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  Spacer
-} from '@harnessio/canary'
 import { TypesCommit } from './interfaces'
 import CommitListItem from '../commit-list-item'
 import { formatDate } from '../../utils/utils'
 
-export default function PullRequestCommits() {
-  const data = mockCommitData
+interface CommitProps {
+  data?: TypesCommit[]
+}
+
+export default function PullRequestCommits({ ...props }: CommitProps) {
+  const data = props.data
   const commitsGroupedByDate: Record<string, TypesCommit[]> = useMemo(
     () =>
       data?.reduce(
@@ -29,51 +21,12 @@ export default function PullRequestCommits() {
       ) || {},
     [data]
   )
+
   return (
     <div>
       {Object.entries(commitsGroupedByDate).map(([date, commitData]) => (
         <CommitListItem header={date} commitData={commitData} />
       ))}
-      <Spacer size={8} />
-      {/* TODO: actually add pagination when apis are implemented */}
-      <ListPagination.Root>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious size="sm" href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive size="sm_icon" href="#">
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                2
-              </PaginationLink>
-            </PaginationItem>
-
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                <PaginationEllipsis />
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                4
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                5
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext size="sm" href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </ListPagination.Root>
     </div>
   )
 }

@@ -17,24 +17,29 @@ const AccordionItem = React.forwardRef<React.ElementRef<typeof AccordionPrimitiv
 )
 AccordionItem.displayName = 'AccordionItem'
 
-// Define a type for the AccordionTrigger props, including hideChevron
+// Define a type for the AccordionTrigger props, including hideChevron and leftChevron
 type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   hideChevron?: boolean
+  leftChevron?: boolean
 }
 
 const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, hideChevron = false, children, ...props }, ref) => (
+  ({ className, hideChevron = false, leftChevron = false, children, ...props }, ref) => (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          'flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all [&[data-state=open]>svg]:rotate-180',
-          { 'cursor-default': hideChevron },
+          'flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all',
+          {
+            'cursor-default': hideChevron,
+            'flex-row-reverse': leftChevron
+          },
           className
         )}
         {...props}>
+        {!hideChevron && !leftChevron && <Icon name="chevron-down" className="h-2.5 w-2.5 shrink-0 text-primary" />}
         {children}
-        {!hideChevron && <Icon name="chevron-down" className="h-2.5 w-2.5 shrink-0 text-primary" />}
+        {!hideChevron && leftChevron && <Icon name="chevron-down" className="h-2.5 w-2.5 shrink-0 text-primary" />}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )

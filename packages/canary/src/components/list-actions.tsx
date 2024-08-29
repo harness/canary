@@ -26,7 +26,9 @@ function Dropdown({ title, items }: DropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center text-tertiary-background gap-1.5 hover:text-primary cursor-pointer ease-in-out duration-100">
-        <Text size={2}>{title}</Text>
+        <Text size={2} className="text-primary/80">
+          {title}
+        </Text>
         <Icon name="chevron-down" size={12} />
       </DropdownMenuTrigger>
       {items && (

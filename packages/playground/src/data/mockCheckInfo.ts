@@ -1,4 +1,4 @@
-import { EnumCheckStatus } from '../interfaces'
+import { EnumCheckStatus } from '../components/pull-request/interfaces'
 
 export const mockChecksSucceededInfo = {
   header: 'All checks have succeeded',

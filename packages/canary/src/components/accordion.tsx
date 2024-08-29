@@ -32,7 +32,7 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
           'flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all',
           {
             'cursor-default': hideChevron,
-            'flex-row-reverse': leftChevron
+            'flex-row-reverse gap-3': leftChevron
           },
           className
         )}

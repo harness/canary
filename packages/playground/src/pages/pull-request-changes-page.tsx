@@ -41,31 +41,38 @@ export default function PullRequestChangesPage() {
     'Conflicts resolved'
   ]
 
-  if (loadState == 'loading') {
-    return <SkeletonList />
+  const renderContent = () => {
+    switch (loadState) {
+      case 'data-loaded':
+        return <PullRequestChanges data={pullRequestData} />
+      case 'loading':
+        return <SkeletonList />
+      case 'no-data':
+        return (
+          <NoData
+            iconName="no-data-folder"
+            title="No changes yet"
+            description={['There are no changes for this pull request yet.']}
+          />
+        )
+      default:
+        return null
+    }
   }
 
-  if (loadState == 'no-data') {
-    return (
-      <NoData
-        iconName="no-data-folder"
-        title="No changes yet"
-        description={['There are no changes for this pull request yet.']}
-      />
-    )
-  }
+  return (
+    <>
+      {loadState == 'data-loaded' && (
+        <>
+          <FilterSortViewDropdowns />
+          <Spacer aria-setsize={5} />
+        </>
+      )}
 
-  if (loadState == 'data-loaded') {
-    return (
-      <>
-        <FilterSortViewDropdowns />
-        <Spacer aria-setsize={5} />
-        <PullRequestChanges data={pullRequestData} />
-        <Spacer size={5} />
-        <PlaygroundPullRequestChangesSettings loadState={loadState} setLoadState={setLoadState} />
-      </>
-    )
-  }
+      {renderContent()}
+      <PlaygroundPullRequestChangesSettings loadState={loadState} setLoadState={setLoadState} />
+    </>
+  )
 
   return null
 }

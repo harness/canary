@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Input, Text } from '@harnessio/canary'
+import { Card, Input, NodeGroup, Text } from '@harnessio/canary'
 
 interface TimelineItemProps {
   header: {
@@ -36,17 +36,13 @@ const ItemHeader: React.FC<ItemHeaderProps> = React.memo(({ avatar, name, descri
 ))
 
 const TimelineItem: React.FC<TimelineItemProps> = ({ header, content, icon, isLast }) => (
-  <div className="relative grid items-center grid-cols-[26px_1fr] grid-rows-[auto_1fr] gap-x-3 gap-y-2 pb-8">
-    <div className="col-start-1 row-start-1">
-      <div className="relative z-20 h-6 w-6 rounded-full flex place-content-center place-items-center p-1 border border-tertiary-background/30 bg-background text-primary">
-        {icon}
-      </div>
-    </div>
-    <div className="col-start-2 row-start-1">
+  <NodeGroup.Root>
+    <NodeGroup.Icon>{icon}</NodeGroup.Icon>
+    <NodeGroup.Title>
       {/* Ensure that header has at least one item */}
       {header.length > 0 && <ItemHeader {...header[0]} />}
-    </div>
-    <div className="col-start-2 row-start-2">
+    </NodeGroup.Title>
+    <NodeGroup.Content>
       {/* Remove h-32, only for show */}
       <Card className="bg-transparent rounded-md">
         <div className="flex h-32  px-4 py-4">
@@ -59,9 +55,9 @@ const TimelineItem: React.FC<TimelineItemProps> = ({ header, content, icon, isLa
           <Input placeholder={'Reply here'} />
         </div>
       </Card>
-    </div>
-    {!isLast && <div className="z-10 absolute left-[12px] top-0 bottom-0 w-[1px] border-l" />}
-  </div>
+    </NodeGroup.Content>
+    {!isLast && <NodeGroup.Connector />}
+  </NodeGroup.Root>
 )
 
 interface PullRequestOverviewProps {

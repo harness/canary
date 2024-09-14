@@ -25,6 +25,7 @@ import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import RepoPipelineListPage from './pages/repo-pipeline-list-page'
 import RepoExecutionListPage from './pages/repo-execution-list-page'
 import CreatePipelinePage from './pages/create-pipeline-page'
+import { SearchProvider } from './contexts/SearchProvider'
 
 const router = createBrowserRouter([
   {
@@ -171,7 +172,9 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="dark">
       <TooltipProvider>
-        <RouterProvider router={router} />
+        <SearchProvider>
+          <RouterProvider router={router} />
+        </SearchProvider>
       </TooltipProvider>
     </ThemeProvider>
   )

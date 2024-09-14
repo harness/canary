@@ -1,6 +1,7 @@
+import tailwindcssAnimate from 'tailwindcss-animate'
+
 /** @type {import('tailwindcss').Config} */
-// eslint-disable-next-line no-undef
-module.exports = {
+const config = {
   darkMode: ['class'],
   content: ['./src/**/*.{ts,tsx}'],
   prefix: '',
@@ -101,18 +102,33 @@ module.exports = {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        moveClockwise: {
+          '0%': { transform: 'translate(var(--circle-start-x), var(--circle-start-y))' }, // Top-left corner
+          '25%': { transform: 'translate(var(--circle-end-x), var(--circle-start-y))' }, // Top-right corner
+          '50%': { transform: 'translate(var(--circle-end-x), var(--circle-end-y))' }, // Bottom-right corner
+          '75%': { transform: 'translate(var(--circle-start-x), var(--circle-end-y))' }, // Bottom-left corner
+          '100%': { transform: 'translate(var(--circle-start-x), var(--circle-start-y))' } // Back to Top-left corner
+        },
+        moveAntiClockwise: {
+          '0%': { transform: 'translate(var(--circle-end-x), var(--circle-end-y))' }, // Bottom-right corner
+          '25%': { transform: 'translate(var(--circle-start-x), var(--circle-end-y))' }, // Bottom-left corner
+          '50%': { transform: 'translate(var(--circle-start-x), var(--circle-start-y))' }, // Top-left corner
+          '75%': { transform: 'translate(var(--circle-end-x), var(--circle-start-y))' }, // Top-right corner
+          '100%': { transform: 'translate(var(--circle-end-x), var(--circle-end-y))' } // Back to Bottom-right corner
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'clockwise-slow': 'moveClockwise 60s ease-in-out infinite',
+        'anticlockwise-slow': 'moveAntiClockwise 60s ease-in-out infinite'
       }
     }
   },
   plugins: [
-    // eslint-disable-next-line no-undef
-    require('tailwindcss-animate'),
-    function ({ addUtilities }) {
+    tailwindcssAnimate,
+    ({ addUtilities }) => {
       addUtilities({
         '.tabnav-active': {
           boxShadow:
@@ -125,3 +141,5 @@ module.exports = {
     }
   ]
 }
+
+export default config

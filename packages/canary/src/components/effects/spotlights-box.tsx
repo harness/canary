@@ -1,5 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Icon } from '../icon'
+import { cn } from '@/lib/utils'
 
 interface PageProps {
   children: React.ReactNode
@@ -9,97 +10,69 @@ interface PageProps {
   highlightBottom?: string
 }
 
-function Root({ highlightTop = '', highlightBottom = '', logo, logoSize = 84, children }: PageProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+function Root({ logo, logoSize = 84, children }: PageProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const circle1Ref = useRef<HTMLDivElement>(null)
+  const circle2Ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    const canvas = canvasRef.current
-    if (canvas) {
-      const ctx = canvas.getContext('2d')
-      if (ctx) {
-        let animationFrameId: number
-        const circles = [
-          { x: 24, y: 0, color: highlightTop, radius: 24, dx: 0.1, dy: 0.1, dr: 0.01 }, // top-left
-          {
-            x: canvas.width - 24,
-            y: canvas.height - 24,
-            color: highlightBottom,
-            radius: 24,
-            dx: -0.1,
-            dy: -0.1,
-            dr: -0.01
-          } // bottom-right
-        ]
+    const updateCircleDimensions = () => {
+      const width = circle1Ref.current?.offsetWidth || 0
+      const height = circle1Ref.current?.offsetHeight || 0
+      const circleRadius = Math.min(width, height) / 2
 
-        const draw = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height)
-          circles.forEach(circle => {
-            ctx.beginPath()
-            ctx.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI)
-            ctx.fillStyle = circle.color
-            ctx.filter = 'blur(12px)'
-            ctx.fill()
-          })
-        }
+      // Set CSS variables for animations
+      if (circle1Ref.current && circle2Ref.current) {
+        circle1Ref.current.style.setProperty('--circle-start-x', `-${circleRadius}px`)
+        circle1Ref.current.style.setProperty('--circle-start-y', `-${circleRadius}px`)
+        circle1Ref.current.style.setProperty('--circle-end-x', `${circleRadius}px`)
+        circle1Ref.current.style.setProperty('--circle-end-y', `${circleRadius}px`)
 
-        const update = () => {
-          circles.forEach(circle => {
-            circle.x += circle.dx
-            circle.y += circle.dy
-            circle.radius += circle.dr
-
-            if (circle.x - circle.radius <= 0 || circle.x + circle.radius >= canvas.width) {
-              circle.dx *= -1
-            }
-            if (circle.y - circle.radius <= 0 || circle.y + circle.radius >= canvas.height) {
-              circle.dy *= -1
-            }
-            if (circle.radius <= 23 || circle.radius >= 25) {
-              circle.dr *= -1
-            }
-          })
-        }
-
-        const animate = () => {
-          if (isHovered) {
-            update()
-            draw()
-            animationFrameId = requestAnimationFrame(animate)
-          }
-        }
-
-        // Initial draw
-        draw()
-
-        // Start animation on hover
-        if (isHovered) {
-          animate()
-        }
-
-        // Cleanup on unmount and hover state change
-        return () => {
-          cancelAnimationFrame(animationFrameId)
-        }
+        circle2Ref.current.style.setProperty('--circle-start-x', `${circleRadius}px`)
+        circle2Ref.current.style.setProperty('--circle-start-y', `${circleRadius}px`)
+        circle2Ref.current.style.setProperty('--circle-end-x', `-${circleRadius}px`)
+        circle2Ref.current.style.setProperty('--circle-end-y', `-${circleRadius}px`)
       }
     }
-  }, [isHovered])
+
+    updateCircleDimensions()
+    window.addEventListener('resize', updateCircleDimensions)
+
+    return () => {
+      window.removeEventListener('resize', updateCircleDimensions)
+    }
+  }, [])
 
   return (
     <div
-      className="group w-full h-[220px] relative border-primary/5 border rounded-lg overflow-hidden cursor-pointer ease-in-out duration-150"
+      className="relative w-full h-[220px] overflow-hidden rounded-md border border-primary/5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}>
-      <canvas
-        ref={canvasRef}
-        width="100%"
-        height="100%"
-        className="absolute inset-0 h-full w-full brightness-110 group-hover:brightness-125 rounded-lg ease-in-out duration-150"
-      />
-      <div className="absolute inset-[1px] bg-background/40 rounded-lg" />
+      {/* Circle 1 */}
+      <div
+        ref={circle1Ref}
+        className={cn(
+          'circle-1 bg-[radial-gradient(50%_50%_at_50%_50%,_hsl(var(--green))_0%,_transparent_100%)] absolute w-full h-full',
+          isHovered ? 'animate-clockwise-slow' : ''
+        )}></div>
+
+      {/* Circle 2 */}
+      <div
+        ref={circle2Ref}
+        className={cn(
+          'circle-2 bg-[radial-gradient(50%_50%_at_50%_50%,_hsl(var(--mint))_0%,_transparent_100%)] absolute w-full h-full',
+          isHovered ? 'animate-anticlockwise-slow' : ''
+        )}></div>
+
+      {/* Overlay */}
+      <div className="absolute inset-[1px] bg-black/70 rounded-[5px]"></div>
+
+      {/* Logo */}
       <div className="absolute inset-0 flex items-center justify-center">
         {logo && <Icon name={logo} size={logoSize} />}
       </div>
+
+      {/* Children */}
       {children}
     </div>
   )

@@ -25,10 +25,16 @@ const preview = {
   decorators: [
     withThemeByClassName({
       themes: {
-        light: '',
+        "Harness Open Source: Light": 'harness-open-source-light',
+        "Harness Open Source: Dark": 'harness-open-source-dark',
+        "Harness Theme: Light": 'harness-theme-light',
+        "Harness Theme: Dark": 'harness-theme-dark',
+        "UI core: Light": 'ui-core-light',
+        "UI core: Dark": 'ui-core-dark',
+        light: 'light',
         dark: 'dark'
       },
-      defaultTheme: 'dark'
+      defaultTheme: "Harness Open Source: Light"
     })
   ]
 }

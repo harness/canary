@@ -1,0 +1,804 @@
+/* Non color variables */
+:root {
+  --figma___component-pagination-border-radius: 8px; /* ✦ Theme/Component/Pagination/Border-radius/UI Core/Mode 1 */
+  --figma___component-pagination-gap: 1px; /* ✦ Theme/Component/Pagination/Gap/UI Core/Mode 1 */
+  --figma___component-switch-thumb-size-1: 12px; /* ✦ Theme/Component/Switch/Thumb Size/1/UI Core/Mode 1 */
+  --figma___component-switch-thumb-size-2: 16px; /* ✦ Theme/Component/Switch/Thumb Size/2/UI Core/Mode 1 */
+  --figma___component-switch-thumb-size-3: 20px; /* ✦ Theme/Component/Switch/Thumb Size/3/UI Core/Mode 1 */
+  --figma___component-textfield-gap: 4px; /* ✦ Theme/Component/Textfield/Gap/UI Core/Mode 1 */
+  --figma___padding-main-content-padding: 0px; /* ✦ Theme/Padding/Main content padding/UI Core/Mode 1 */
+  --figma___radius-1: 3px; /* ✦ Theme/Radius/1/UI Core/Mode 1 */
+  --figma___radius-2: 4px; /* ✦ Theme/Radius/2/UI Core/Mode 1 */
+  --figma___radius-3: 6px; /* ✦ Theme/Radius/3/UI Core/Mode 1 */
+  --figma___radius-4: 8px; /* ✦ Theme/Radius/4/UI Core/Mode 1 */
+  --figma___radius-5: 12px; /* ✦ Theme/Radius/5/UI Core/Mode 1 */
+  --figma___radius-6: 16px; /* ✦ Theme/Radius/6/UI Core/Mode 1 */
+  --figma___radius-main-content-radius: 0px; /* ✦ Theme/Radius/Main content radius/UI Core/Mode 1 */
+  --figma___radius-full: 9999px; /* ✦ Theme/Radius/full/UI Core/Mode 1 */
+}
+
+/* Color variables - light mode */
+.ui-core-light {
+  --figma___colors-alerts-status-error-1: 4 73% 96% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/1/UI Core/Light */
+  --figma___colors-alerts-status-error-2: 5 74% 94% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/2/UI Core/Light */
+  --figma___colors-alerts-status-error-3: 4 74% 85% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/3/UI Core/Light */
+  --figma___colors-alerts-status-error-4: 4 75% 75% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/4/UI Core/Light */
+  --figma___colors-alerts-status-error-5: 4 82% 63% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/5/UI Core/Light */
+  --figma___colors-alerts-status-error-6: 4 78% 52% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/6/UI Core/Light */
+  --figma___colors-alerts-status-error-7: 4 77% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/7/UI Core/Light */
+  --figma___colors-alerts-status-error-8: 4 79% 45% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/8/UI Core/Light */
+  --figma___colors-alerts-status-error-9: 3 79% 43% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/9/UI Core/Light */
+  --figma___colors-alerts-status-error-10: 3 84% 38% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/10/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-1: 4 73% 96% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/1/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-2: 5 74% 94% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/2/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-3: 4 74% 85% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/3/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-4: 4 75% 75% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/4/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-5: 4 82% 63% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/5/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-6: 4 78% 52% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/6/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-7: 4 77% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/7/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-8: 4 79% 45% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/8/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-9: 3 79% 43% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/9/UI Core/Light */
+  --figma___colors-alerts-status-error-alpha-10: 3 84% 38% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/10/UI Core/Light */
+  --figma___colors-alerts-status-info-1: 240 100% 95% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/1/UI Core/Light */
+  --figma___colors-alerts-status-info-2: 241 100% 90% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/2/UI Core/Light */
+  --figma___colors-alerts-status-info-3: 241 100% 84% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/3/UI Core/Light */
+  --figma___colors-alerts-status-info-4: 241 100% 80% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/4/UI Core/Light */
+  --figma___colors-alerts-status-info-5: 240 100% 76% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/5/UI Core/Light */
+  --figma___colors-alerts-status-info-6: 241 82% 66% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/6/UI Core/Light */
+  --figma___colors-alerts-status-info-7: 241 90% 64% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/7/UI Core/Light */
+  --figma___colors-alerts-status-info-8: 241 69% 57% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/8/UI Core/Light */
+  --figma___colors-alerts-status-info-9: 240 51% 46% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/9/UI Core/Light */
+  --figma___colors-alerts-status-info-10: 241 54% 38% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/10/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-1: 240 100% 95% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/1/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-2: 241 100% 90% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/2/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-3: 241 100% 84% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/3/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-4: 241 100% 80% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/4/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-5: 240 100% 76% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/5/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-6: 241 82% 66% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/6/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-7: 241 90% 64% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/7/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-8: 241 69% 57% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/8/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-9: 240 51% 46% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/9/UI Core/Light */
+  --figma___colors-alerts-status-info-alpha-10: 241 54% 38% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/10/UI Core/Light */
+  --figma___colors-alerts-status-success-1: 112 58% 93% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/1/UI Core/Light */
+  --figma___colors-alerts-status-success-2: 112 56% 89% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/2/UI Core/Light */
+  --figma___colors-alerts-status-success-3: 113 55% 82% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/3/UI Core/Light */
+  --figma___colors-alerts-status-success-4: 114 55% 75% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/4/UI Core/Light */
+  --figma___colors-alerts-status-success-5: 117 54% 68% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/5/UI Core/Light */
+  --figma___colors-alerts-status-success-6: 122 53% 55% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/6/UI Core/Light */
+  --figma___colors-alerts-status-success-7: 122 44% 46% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/7/UI Core/Light */
+  --figma___colors-alerts-status-success-8: 122 58% 38% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/8/UI Core/Light */
+  --figma___colors-alerts-status-success-9: 121 66% 31% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/9/UI Core/Light */
+  --figma___colors-alerts-status-success-10: 121 51% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/10/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-1: 140 95% 39% / 0.02; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/1/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-2: 139 98% 37% / 0.09; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/2/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-3: 139 98% 37% / 0.09; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/3/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-4: 139 99% 33% / 0.13; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/4/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-5: 141 100% 30% / 0.2; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/5/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-6: 142 99% 29% / 0.29; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/6/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-7: 151 100% 29% / 0.64; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/7/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-8: 151 100% 28% / 0.81; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/8/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-9: 153 100% 21% / 0.91; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/9/UI Core/Light */
+  --figma___colors-alerts-status-success-alpha-10: 155 100% 7% / 0.9; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/10/UI Core/Light */
+  --figma___colors-alerts-status-warning-1: 27 100% 96% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/1/UI Core/Light */
+  --figma___colors-alerts-status-warning-2: 24 100% 95% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/2/UI Core/Light */
+  --figma___colors-alerts-status-warning-3: 25 100% 87% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/3/UI Core/Light */
+  --figma___colors-alerts-status-warning-4: 25 100% 79% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/4/UI Core/Light */
+  --figma___colors-alerts-status-warning-5: 25 100% 71% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/5/UI Core/Light */
+  --figma___colors-alerts-status-warning-6: 25 100% 58% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/6/UI Core/Light */
+  --figma___colors-alerts-status-warning-7: 24 100% 57% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/7/UI Core/Light */
+  --figma___colors-alerts-status-warning-8: 22 100% 56% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/8/UI Core/Light */
+  --figma___colors-alerts-status-warning-9: 20 100% 55% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/9/UI Core/Light */
+  --figma___colors-alerts-status-warning-10: 17 100% 53% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/10/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-1: 27 100% 96% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/1/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-2: 24 100% 95% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/2/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-3: 25 100% 87% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/3/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-4: 25 100% 79% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/4/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-5: 25 100% 71% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/5/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-6: 25 100% 58% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/6/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-7: 24 100% 57% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/7/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-8: 22 100% 56% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/8/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-9: 20 100% 55% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/9/UI Core/Light */
+  --figma___colors-alerts-status-warning-alpha-10: 17 100% 53% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/10/UI Core/Light */
+  --figma___colors-charts-ai-violet-1: 258 100% 98% / 1; /* ✦ Theme/Colors/Charts/AI Violet/1/UI Core/Light */
+  --figma___colors-charts-ai-violet-2: 256 70% 95% / 1; /* ✦ Theme/Colors/Charts/AI Violet/2/UI Core/Light */
+  --figma___colors-charts-ai-violet-3: 256 68% 89% / 1; /* ✦ Theme/Colors/Charts/AI Violet/3/UI Core/Light */
+  --figma___colors-charts-ai-violet-4: 256 69% 84% / 1; /* ✦ Theme/Colors/Charts/AI Violet/4/UI Core/Light */
+  --figma___colors-charts-ai-violet-5: 256 68% 78% / 1; /* ✦ Theme/Colors/Charts/AI Violet/5/UI Core/Light */
+  --figma___colors-charts-ai-violet-6: 256 68% 73% / 1; /* ✦ Theme/Colors/Charts/AI Violet/6/UI Core/Light */
+  --figma___colors-charts-ai-violet-7: 256 68% 62% / 1; /* ✦ Theme/Colors/Charts/AI Violet/7/UI Core/Light */
+  --figma___colors-charts-ai-violet-8: 256 68% 56% / 1; /* ✦ Theme/Colors/Charts/AI Violet/8/UI Core/Light */
+  --figma___colors-charts-ai-violet-9: 256 68% 51% / 1; /* ✦ Theme/Colors/Charts/AI Violet/9/UI Core/Light */
+  --figma___colors-charts-ai-violet-10: 256 60% 46% / 1; /* ✦ Theme/Colors/Charts/AI Violet/10/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-1: 258 100% 98% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/1/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-2: 256 70% 95% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/2/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-3: 256 68% 89% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/3/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-4: 256 69% 84% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/4/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-5: 256 68% 78% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/5/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-6: 256 68% 73% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/6/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-7: 256 68% 62% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/7/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-8: 256 68% 56% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/8/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-9: 256 68% 51% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/9/UI Core/Light */
+  --figma___colors-charts-ai-violet-alpha-10: 256 60% 46% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/10/UI Core/Light */
+  --figma___colors-charts-blue-1: 240 100% 95% / 1; /* ✦ Theme/Colors/Charts/Blue/1/UI Core/Light */
+  --figma___colors-charts-blue-2: 241 100% 90% / 1; /* ✦ Theme/Colors/Charts/Blue/2/UI Core/Light */
+  --figma___colors-charts-blue-3: 241 100% 84% / 1; /* ✦ Theme/Colors/Charts/Blue/3/UI Core/Light */
+  --figma___colors-charts-blue-4: 241 100% 80% / 1; /* ✦ Theme/Colors/Charts/Blue/4/UI Core/Light */
+  --figma___colors-charts-blue-5: 240 100% 76% / 1; /* ✦ Theme/Colors/Charts/Blue/5/UI Core/Light */
+  --figma___colors-charts-blue-6: 241 82% 66% / 1; /* ✦ Theme/Colors/Charts/Blue/6/UI Core/Light */
+  --figma___colors-charts-blue-7: 241 90% 64% / 1; /* ✦ Theme/Colors/Charts/Blue/7/UI Core/Light */
+  --figma___colors-charts-blue-8: 241 69% 57% / 1; /* ✦ Theme/Colors/Charts/Blue/8/UI Core/Light */
+  --figma___colors-charts-blue-9: 240 51% 46% / 1; /* ✦ Theme/Colors/Charts/Blue/9/UI Core/Light */
+  --figma___colors-charts-blue-10: 241 54% 38% / 1; /* ✦ Theme/Colors/Charts/Blue/10/UI Core/Light */
+  --figma___colors-charts-blue-alpha-1: 195 100% 97% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/1/UI Core/Light */
+  --figma___colors-charts-blue-alpha-2: 192 96% 90% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/2/UI Core/Light */
+  --figma___colors-charts-blue-alpha-3: 194 100% 82% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/3/UI Core/Light */
+  --figma___colors-charts-blue-alpha-4: 195 91% 60% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/4/UI Core/Light */
+  --figma___colors-charts-blue-alpha-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/5/UI Core/Light */
+  --figma___colors-charts-blue-alpha-6: 202 100% 45% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/6/UI Core/Light */
+  --figma___colors-charts-blue-alpha-7: 206 98% 42% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/7/UI Core/Light */
+  --figma___colors-charts-blue-alpha-8: 213 100% 32% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/8/UI Core/Light */
+  --figma___colors-charts-blue-alpha-9: 213 82% 22% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/9/UI Core/Light */
+  --figma___colors-charts-blue-alpha-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/10/UI Core/Light */
+  --figma___colors-charts-indigo-1: 240 33% 99% / 1; /* ✦ Theme/Colors/Charts/Indigo/1/UI Core/Light */
+  --figma___colors-charts-indigo-2: 223 100% 99% / 1; /* ✦ Theme/Colors/Charts/Indigo/2/UI Core/Light */
+  --figma___colors-charts-indigo-3: 224 100% 97% / 1; /* ✦ Theme/Colors/Charts/Indigo/3/UI Core/Light */
+  --figma___colors-charts-indigo-4: 222 92% 95% / 1; /* ✦ Theme/Colors/Charts/Indigo/4/UI Core/Light */
+  --figma___colors-charts-indigo-5: 225 85% 92% / 1; /* ✦ Theme/Colors/Charts/Indigo/5/UI Core/Light */
+  --figma___colors-charts-indigo-6: 224 81% 88% / 1; /* ✦ Theme/Colors/Charts/Indigo/6/UI Core/Light */
+  --figma___colors-charts-indigo-7: 226 70% 55% / 1; /* ✦ Theme/Colors/Charts/Indigo/7/UI Core/Light */
+  --figma___colors-charts-indigo-8: 226 59% 51% / 1; /* ✦ Theme/Colors/Charts/Indigo/8/UI Core/Light */
+  --figma___colors-charts-indigo-9: 226 55% 45% / 1; /* ✦ Theme/Colors/Charts/Indigo/9/UI Core/Light */
+  --figma___colors-charts-indigo-10: 226 63% 17% / 1; /* ✦ Theme/Colors/Charts/Indigo/10/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-1: 240 93% 26% / 0.01; /* ✦ Theme/Colors/Charts/Indigo Alpha/1/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-2: 223 100% 51% / 0.03; /* ✦ Theme/Colors/Charts/Indigo Alpha/2/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-3: 224 100% 50% / 0.06; /* ✦ Theme/Colors/Charts/Indigo Alpha/3/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-4: 222 98% 48% / 0.1; /* ✦ Theme/Colors/Charts/Indigo Alpha/4/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-5: 225 98% 46% / 0.15; /* ✦ Theme/Colors/Charts/Indigo Alpha/5/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-6: 224 99% 45% / 0.22; /* ✦ Theme/Colors/Charts/Indigo Alpha/6/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-7: 226 100% 41% / 0.76; /* ✦ Theme/Colors/Charts/Indigo Alpha/7/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-8: 226 100% 37% / 0.77; /* ✦ Theme/Colors/Charts/Indigo Alpha/8/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-9: 225 100% 14% / 0.88; /* ✦ Theme/Colors/Charts/Indigo Alpha/9/UI Core/Light */
+  --figma___colors-charts-indigo-alpha-10: 225 100% 14% / 0.88; /* ✦ Theme/Colors/Charts/Indigo Alpha/10/UI Core/Light */
+  --figma___colors-charts-mint-1: 168 71% 99% / 1; /* ✦ Theme/Colors/Charts/Mint/1/UI Core/Light */
+  --figma___colors-charts-mint-2: 164 88% 97% / 1; /* ✦ Theme/Colors/Charts/Mint/2/UI Core/Light */
+  --figma___colors-charts-mint-3: 164 79% 93% / 1; /* ✦ Theme/Colors/Charts/Mint/3/UI Core/Light */
+  --figma___colors-charts-mint-4: 165 73% 88% / 1; /* ✦ Theme/Colors/Charts/Mint/4/UI Core/Light */
+  --figma___colors-charts-mint-5: 166 60% 83% / 1; /* ✦ Theme/Colors/Charts/Mint/5/UI Core/Light */
+  --figma___colors-charts-mint-6: 166 44% 67% / 1; /* ✦ Theme/Colors/Charts/Mint/6/UI Core/Light */
+  --figma___colors-charts-mint-7: 167 70% 72% / 1; /* ✦ Theme/Colors/Charts/Mint/7/UI Core/Light */
+  --figma___colors-charts-mint-8: 167 62% 69% / 1; /* ✦ Theme/Colors/Charts/Mint/8/UI Core/Light */
+  --figma___colors-charts-mint-9: 172 50% 31% / 1; /* ✦ Theme/Colors/Charts/Mint/9/UI Core/Light */
+  --figma___colors-charts-mint-10: 171 51% 17% / 1; /* ✦ Theme/Colors/Charts/Mint/10/UI Core/Light */
+  --figma___colors-charts-mint-alpha-1: 168 95% 43% / 0.02; /* ✦ Theme/Colors/Charts/Mint Alpha/1/UI Core/Light */
+  --figma___colors-charts-mint-alpha-2: 164 99% 47% / 0.06; /* ✦ Theme/Colors/Charts/Mint Alpha/2/UI Core/Light */
+  --figma___colors-charts-mint-alpha-3: 164 99% 44% / 0.13; /* ✦ Theme/Colors/Charts/Mint Alpha/3/UI Core/Light */
+  --figma___colors-charts-mint-alpha-4: 165 100% 42% / 0.2; /* ✦ Theme/Colors/Charts/Mint Alpha/4/UI Core/Light */
+  --figma___colors-charts-mint-alpha-5: 166 100% 38% / 0.27; /* ✦ Theme/Colors/Charts/Mint Alpha/5/UI Core/Light */
+  --figma___colors-charts-mint-alpha-6: 166 99% 33% / 0.35; /* ✦ Theme/Colors/Charts/Mint Alpha/6/UI Core/Light */
+  --figma___colors-charts-mint-alpha-7: 167 100% 41% / 0.47; /* ✦ Theme/Colors/Charts/Mint Alpha/7/UI Core/Light */
+  --figma___colors-charts-mint-alpha-8: 167 100% 38% / 0.5; /* ✦ Theme/Colors/Charts/Mint Alpha/8/UI Core/Light */
+  --figma___colors-charts-mint-alpha-9: 172 100% 18% / 0.85; /* ✦ Theme/Colors/Charts/Mint Alpha/9/UI Core/Light */
+  --figma___colors-charts-mint-alpha-10: 171 100% 10% / 0.91; /* ✦ Theme/Colors/Charts/Mint Alpha/10/UI Core/Light */
+  --figma___colors-charts-orange-1: 27 100% 96% / 1; /* ✦ Theme/Colors/Charts/Orange/1/UI Core/Light */
+  --figma___colors-charts-orange-2: 24 100% 95% / 1; /* ✦ Theme/Colors/Charts/Orange/2/UI Core/Light */
+  --figma___colors-charts-orange-3: 25 100% 87% / 1; /* ✦ Theme/Colors/Charts/Orange/3/UI Core/Light */
+  --figma___colors-charts-orange-4: 25 100% 79% / 1; /* ✦ Theme/Colors/Charts/Orange/4/UI Core/Light */
+  --figma___colors-charts-orange-5: 25 100% 71% / 1; /* ✦ Theme/Colors/Charts/Orange/5/UI Core/Light */
+  --figma___colors-charts-orange-6: 25 100% 58% / 1; /* ✦ Theme/Colors/Charts/Orange/6/UI Core/Light */
+  --figma___colors-charts-orange-7: 24 100% 57% / 1; /* ✦ Theme/Colors/Charts/Orange/7/UI Core/Light */
+  --figma___colors-charts-orange-8: 22 100% 56% / 1; /* ✦ Theme/Colors/Charts/Orange/8/UI Core/Light */
+  --figma___colors-charts-orange-9: 20 100% 55% / 1; /* ✦ Theme/Colors/Charts/Orange/9/UI Core/Light */
+  --figma___colors-charts-orange-10: 17 100% 53% / 1; /* ✦ Theme/Colors/Charts/Orange/10/UI Core/Light */
+  --figma___colors-charts-orange-alpha-1: 27 100% 96% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/1/UI Core/Light */
+  --figma___colors-charts-orange-alpha-2: 24 100% 95% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/2/UI Core/Light */
+  --figma___colors-charts-orange-alpha-3: 25 100% 87% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/3/UI Core/Light */
+  --figma___colors-charts-orange-alpha-4: 25 100% 79% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/4/UI Core/Light */
+  --figma___colors-charts-orange-alpha-5: 25 100% 71% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/5/UI Core/Light */
+  --figma___colors-charts-orange-alpha-6: 25 100% 58% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/6/UI Core/Light */
+  --figma___colors-charts-orange-alpha-7: 24 100% 57% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/7/UI Core/Light */
+  --figma___colors-charts-orange-alpha-8: 22 100% 56% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/8/UI Core/Light */
+  --figma___colors-charts-orange-alpha-9: 20 100% 55% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/9/UI Core/Light */
+  --figma___colors-charts-orange-alpha-10: 17 100% 53% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/10/UI Core/Light */
+  --figma___colors-charts-yellow-1: 45 100% 96% / 1; /* ✦ Theme/Colors/Charts/Yellow/1/UI Core/Light */
+  --figma___colors-charts-yellow-2: 45 96% 89% / 1; /* ✦ Theme/Colors/Charts/Yellow/2/UI Core/Light */
+  --figma___colors-charts-yellow-3: 44 98% 77% / 1; /* ✦ Theme/Colors/Charts/Yellow/3/UI Core/Light */
+  --figma___colors-charts-yellow-4: 42 99% 65% / 1; /* ✦ Theme/Colors/Charts/Yellow/4/UI Core/Light */
+  --figma___colors-charts-yellow-5: 45 98% 60% / 1; /* ✦ Theme/Colors/Charts/Yellow/5/UI Core/Light */
+  --figma___colors-charts-yellow-6: 46 98% 61% / 1; /* ✦ Theme/Colors/Charts/Yellow/6/UI Core/Light */
+  --figma___colors-charts-yellow-7: 45 98% 60% / 1; /* ✦ Theme/Colors/Charts/Yellow/7/UI Core/Light */
+  --figma___colors-charts-yellow-8: 41 100% 55% / 1; /* ✦ Theme/Colors/Charts/Yellow/8/UI Core/Light */
+  --figma___colors-charts-yellow-9: 41 100% 50% / 1; /* ✦ Theme/Colors/Charts/Yellow/9/UI Core/Light */
+  --figma___colors-charts-yellow-10: 41 98% 45% / 1; /* ✦ Theme/Colors/Charts/Yellow/10/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-1: 45 100% 96% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/1/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-2: 45 96% 89% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/2/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-3: 44 98% 77% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/3/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-4: 42 99% 65% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/4/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-5: 45 98% 60% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/5/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-6: 46 98% 61% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/6/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-7: 45 98% 60% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/7/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-8: 41 100% 55% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/8/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-9: 41 100% 50% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/9/UI Core/Light */
+  --figma___colors-charts-yellow-alpha-10: 41 98% 45% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/10/UI Core/Light */
+  --figma___colors-default-black-fixed: 0 0% 0% / 1; /* ✦ Theme/Colors/Default/Black (fixed)/UI Core/Light */
+  --figma___colors-default-brand-color: 194 100% 45% / 1; /* ✦ Theme/Colors/Default/Brand Color/UI Core/Light */
+  --figma___colors-default-dark-to-white: 0 0% 0% / 1; /* ✦ Theme/Colors/Default/Dark-to-white/UI Core/Light */
+  --figma___colors-default-white-fixed: 0 0% 100% / 1; /* ✦ Theme/Colors/Default/White (fixed)/UI Core/Light */
+  --figma___colors-default-white-to-dark: 0 0% 100% / 1; /* ✦ Theme/Colors/Default/White-to-dark/UI Core/Light */
+  --figma___colors-module-ccm-100: 180 100% 96% / 1; /* ✦ Theme/Colors/Module/CCM/100/UI Core/Light */
+  --figma___colors-module-ccm-200: 181 99% 40% / 1; /* ✦ Theme/Colors/Module/CCM/200/UI Core/Light */
+  --figma___colors-module-ccm-300: 179 56% 32% / 1; /* ✦ Theme/Colors/Module/CCM/300/UI Core/Light */
+  --figma___colors-module-cd-100: 102 100% 97% / 1; /* ✦ Theme/Colors/Module/CD/100/UI Core/Light */
+  --figma___colors-module-cd-200: 110 40% 50% / 1; /* ✦ Theme/Colors/Module/CD/200/UI Core/Light */
+  --figma___colors-module-cd-300: 110 62% 32% / 1; /* ✦ Theme/Colors/Module/CD/300/UI Core/Light */
+  --figma___colors-module-ce-100: 334 100% 97% / 1; /* ✦ Theme/Colors/Module/CE/100/UI Core/Light */
+  --figma___colors-module-ce-200: 335 100% 50% / 1; /* ✦ Theme/Colors/Module/CE/200/UI Core/Light */
+  --figma___colors-module-ce-300: 335 100% 30% / 1; /* ✦ Theme/Colors/Module/CE/300/UI Core/Light */
+  --figma___colors-module-ci-100: 201 100% 94% / 1; /* ✦ Theme/Colors/Module/CI/100/UI Core/Light */
+  --figma___colors-module-ci-200: 200 88% 56% / 1; /* ✦ Theme/Colors/Module/CI/200/UI Core/Light */
+  --figma___colors-module-ci-300: 203 94% 37% / 1; /* ✦ Theme/Colors/Module/CI/300/UI Core/Light */
+  --figma___colors-module-ff-100: 41 81% 94% / 1; /* ✦ Theme/Colors/Module/FF/100/UI Core/Light */
+  --figma___colors-module-ff-200: 29 86% 54% / 1; /* ✦ Theme/Colors/Module/FF/200/UI Core/Light */
+  --figma___colors-module-ff-300: 26 91% 39% / 1; /* ✦ Theme/Colors/Module/FF/300/UI Core/Light */
+  --figma___colors-module-srm-100: 261 100% 97% / 1; /* ✦ Theme/Colors/Module/SRM/100/UI Core/Light */
+  --figma___colors-module-srm-200: 262 95% 75% / 1; /* ✦ Theme/Colors/Module/SRM/200/UI Core/Light */
+  --figma___colors-module-srm-300: 262 55% 49% / 1; /* ✦ Theme/Colors/Module/SRM/300/UI Core/Light */
+  --figma___colors-module-ssca-100: 0 100% 97% / 1; /* ✦ Theme/Colors/Module/SSCA/100/UI Core/Light */
+  --figma___colors-module-ssca-200: 0 58% 53% / 1; /* ✦ Theme/Colors/Module/SSCA/200/UI Core/Light */
+  --figma___colors-module-ssca-300: 0 98% 36% / 1; /* ✦ Theme/Colors/Module/SSCA/300/UI Core/Light */
+  --figma___colors-module-sto-100: 228 100% 96% / 1; /* ✦ Theme/Colors/Module/STO/100/UI Core/Light */
+  --figma___colors-module-sto-200: 216 100% 64% / 1; /* ✦ Theme/Colors/Module/STO/200/UI Core/Light */
+  --figma___colors-module-sto-300: 245 90% 53% / 1; /* ✦ Theme/Colors/Module/STO/300/UI Core/Light */
+  --figma___colors-neutral-gray-1: 210 25% 98% / 1; /* ✦ Theme/Colors/Neutral/Gray/1/UI Core/Light */
+  --figma___colors-neutral-gray-2: 240 41% 97% / 1; /* ✦ Theme/Colors/Neutral/Gray/2/UI Core/Light */
+  --figma___colors-neutral-gray-3: 235 19% 87% / 1; /* ✦ Theme/Colors/Neutral/Gray/3/UI Core/Light */
+  --figma___colors-neutral-gray-4: 237 14% 73% / 1; /* ✦ Theme/Colors/Neutral/Gray/4/UI Core/Light */
+  --figma___colors-neutral-gray-5: 238 13% 62% / 1; /* ✦ Theme/Colors/Neutral/Gray/5/UI Core/Light */
+  --figma___colors-neutral-gray-6: 235 11% 47% / 1; /* ✦ Theme/Colors/Neutral/Gray/6/UI Core/Light */
+  --figma___colors-neutral-gray-7: 234 11% 35% / 1; /* ✦ Theme/Colors/Neutral/Gray/7/UI Core/Light */
+  --figma___colors-neutral-gray-8: 236 11% 25% / 1; /* ✦ Theme/Colors/Neutral/Gray/8/UI Core/Light */
+  --figma___colors-neutral-gray-9: 240 11% 15% / 1; /* ✦ Theme/Colors/Neutral/Gray/9/UI Core/Light */
+  --figma___colors-neutral-gray-10: 240 8% 5% / 1; /* ✦ Theme/Colors/Neutral/Gray/10/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-1: 210 25% 98% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/1/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-2: 240 41% 97% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/2/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-3: 235 19% 87% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/3/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-4: 237 14% 73% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/4/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-5: 238 13% 62% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/5/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-6: 235 11% 47% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/6/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-7: 234 11% 35% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/7/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-8: 236 11% 25% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/8/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-9: 240 11% 15% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/9/UI Core/Light */
+  --figma___colors-neutral-gray-alpha-10: 240 8% 5% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/10/UI Core/Light */
+  --figma___colors-primary-primary-accent-1: 195 100% 97% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/1/UI Core/Light */
+  --figma___colors-primary-primary-accent-2: 192 96% 90% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/2/UI Core/Light */
+  --figma___colors-primary-primary-accent-3: 194 100% 82% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/3/UI Core/Light */
+  --figma___colors-primary-primary-accent-4: 195 91% 60% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/4/UI Core/Light */
+  --figma___colors-primary-primary-accent-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/5/UI Core/Light */
+  --figma___colors-primary-primary-accent-6: 202 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/6/UI Core/Light */
+  --figma___colors-primary-primary-accent-7: 206 98% 42% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/7/UI Core/Light */
+  --figma___colors-primary-primary-accent-8: 213 100% 32% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/8/UI Core/Light */
+  --figma___colors-primary-primary-accent-9: 213 82% 22% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/9/UI Core/Light */
+  --figma___colors-primary-primary-accent-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/10/UI Core/Light */
+  --figma___colors-primary-primary-alpha-1: 195 100% 97% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/1/UI Core/Light */
+  --figma___colors-primary-primary-alpha-2: 192 96% 90% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/2/UI Core/Light */
+  --figma___colors-primary-primary-alpha-3: 194 100% 82% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/3/UI Core/Light */
+  --figma___colors-primary-primary-alpha-4: 195 91% 60% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/4/UI Core/Light */
+  --figma___colors-primary-primary-alpha-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/5/UI Core/Light */
+  --figma___colors-primary-primary-alpha-6: 202 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/6/UI Core/Light */
+  --figma___colors-primary-primary-alpha-7: 206 98% 42% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/7/UI Core/Light */
+  --figma___colors-primary-primary-alpha-8: 213 100% 32% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/8/UI Core/Light */
+  --figma___colors-primary-primary-alpha-9: 213 82% 22% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/9/UI Core/Light */
+  --figma___colors-primary-primary-alpha-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/10/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-1: 330 100% 98% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 1/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-10: 331 83% 43% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 10/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-2: 328 100% 97% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 2/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-3: 332 100% 90% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 3/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-4: 331 100% 84% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 4/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-5: 332 100% 77% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 5/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-6: 331 100% 64% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 6/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-7: 331 91% 59% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 7/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-8: 331 85% 55% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 8/UI Core/Light */
+  --figma___colors-secondary-crimson-crimson-9: 331 75% 49% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 9/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-1: 330 100% 98% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 1/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-10: 331 75% 49% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 10/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-11: 331 83% 43% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 11/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-2: 328 100% 97% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 2/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-3: 332 100% 90% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 3/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-4: 331 100% 84% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 4/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-5: 332 100% 77% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 5/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-6: 331 100% 64% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 6/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-8: 331 91% 59% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 8/UI Core/Light */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-9: 331 85% 55% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 9/UI Core/Light */
+  --figma___colors-secondary-lime-1: 87 67% 94% / 1; /* ✦ Theme/Colors/Secondary/Lime/1/UI Core/Light */
+  --figma___colors-secondary-lime-2: 89 67% 92% / 1; /* ✦ Theme/Colors/Secondary/Lime/2/UI Core/Light */
+  --figma___colors-secondary-lime-3: 88 50% 76% / 1; /* ✦ Theme/Colors/Secondary/Lime/3/UI Core/Light */
+  --figma___colors-secondary-lime-4: 88 60% 65% / 1; /* ✦ Theme/Colors/Secondary/Lime/4/UI Core/Light */
+  --figma___colors-secondary-lime-5: 88 50% 60% / 1; /* ✦ Theme/Colors/Secondary/Lime/5/UI Core/Light */
+  --figma___colors-secondary-lime-6: 79 100% 36% / 1; /* ✦ Theme/Colors/Secondary/Lime/6/UI Core/Light */
+  --figma___colors-secondary-lime-7: 88 54% 45% / 1; /* ✦ Theme/Colors/Secondary/Lime/7/UI Core/Light */
+  --figma___colors-secondary-lime-8: 92 48% 42% / 1; /* ✦ Theme/Colors/Secondary/Lime/8/UI Core/Light */
+  --figma___colors-secondary-lime-9: 95 49% 36% / 1; /* ✦ Theme/Colors/Secondary/Lime/9/UI Core/Light */
+  --figma___colors-secondary-lime-10: 103 40% 34% / 1; /* ✦ Theme/Colors/Secondary/Lime/10/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-1: 87 67% 94% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/1/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-2: 89 67% 92% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/2/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-3: 88 50% 76% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/3/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-4: 88 60% 65% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/4/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-5: 88 50% 60% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/5/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-6: 79 100% 36% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/6/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-7: 88 54% 45% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/7/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-8: 92 48% 42% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/8/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-9: 95 49% 36% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/9/UI Core/Light */
+  --figma___colors-secondary-lime-alpha-10: 103 40% 34% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/10/UI Core/Light */
+  --figma___colors-secondary-purple-1: 262 100% 94% / 1; /* ✦ Theme/Colors/Secondary/Purple/1/UI Core/Light */
+  --figma___colors-secondary-purple-2: 262 100% 91% / 1; /* ✦ Theme/Colors/Secondary/Purple/2/UI Core/Light */
+  --figma___colors-secondary-purple-3: 262 100% 85% / 1; /* ✦ Theme/Colors/Secondary/Purple/3/UI Core/Light */
+  --figma___colors-secondary-purple-4: 262 100% 81% / 1; /* ✦ Theme/Colors/Secondary/Purple/4/UI Core/Light */
+  --figma___colors-secondary-purple-5: 262 95% 75% / 1; /* ✦ Theme/Colors/Secondary/Purple/5/UI Core/Light */
+  --figma___colors-secondary-purple-6: 261 60% 56% / 1; /* ✦ Theme/Colors/Secondary/Purple/6/UI Core/Light */
+  --figma___colors-secondary-purple-7: 262 55% 49% / 1; /* ✦ Theme/Colors/Secondary/Purple/7/UI Core/Light */
+  --figma___colors-secondary-purple-8: 262 60% 42% / 1; /* ✦ Theme/Colors/Secondary/Purple/8/UI Core/Light */
+  --figma___colors-secondary-purple-9: 262 57% 36% / 1; /* ✦ Theme/Colors/Secondary/Purple/9/UI Core/Light */
+  --figma___colors-secondary-purple-10: 270 86% 30% / 1; /* ✦ Theme/Colors/Secondary/Purple/10/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-1: 262 100% 94% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/1/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-2: 262 100% 91% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/2/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-3: 262 100% 85% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/3/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-4: 262 100% 81% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/4/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-5: 262 95% 75% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/5/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-6: 261 60% 56% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/6/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-7: 262 55% 49% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/7/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-8: 262 60% 42% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/8/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-9: 262 57% 36% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/9/UI Core/Light */
+  --figma___colors-secondary-purple-alpha-10: 270 86% 30% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/10/UI Core/Light */
+  --figma___colors-secondary-teal-1: 183 96% 91% / 1; /* ✦ Theme/Colors/Secondary/Teal/1/UI Core/Light */
+  --figma___colors-secondary-teal-2: 183 97% 87% / 1; /* ✦ Theme/Colors/Secondary/Teal/2/UI Core/Light */
+  --figma___colors-secondary-teal-3: 182 74% 81% / 1; /* ✦ Theme/Colors/Secondary/Teal/3/UI Core/Light */
+  --figma___colors-secondary-teal-4: 184 71% 68% / 1; /* ✦ Theme/Colors/Secondary/Teal/4/UI Core/Light */
+  --figma___colors-secondary-teal-5: 184 70% 58% / 1; /* ✦ Theme/Colors/Secondary/Teal/5/UI Core/Light */
+  --figma___colors-secondary-teal-6: 184 90% 44% / 1; /* ✦ Theme/Colors/Secondary/Teal/6/UI Core/Light */
+  --figma___colors-secondary-teal-7: 184 97% 41% / 1; /* ✦ Theme/Colors/Secondary/Teal/7/UI Core/Light */
+  --figma___colors-secondary-teal-8: 184 94% 39% / 1; /* ✦ Theme/Colors/Secondary/Teal/8/UI Core/Light */
+  --figma___colors-secondary-teal-9: 184 95% 37% / 1; /* ✦ Theme/Colors/Secondary/Teal/9/UI Core/Light */
+  --figma___colors-secondary-teal-10: 184 92% 35% / 1; /* ✦ Theme/Colors/Secondary/Teal/10/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-1: 183 96% 91% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/1/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-2: 183 97% 87% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/2/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-3: 182 74% 81% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/3/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-4: 184 71% 68% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/4/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-5: 184 70% 58% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/5/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-6: 184 90% 44% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/6/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-7: 184 97% 41% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/7/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-8: 184 94% 39% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/8/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-9: 184 95% 37% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/9/UI Core/Light */
+  --figma___colors-secondary-teal-alpha-10: 184 92% 35% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/10/UI Core/Light */
+  --figma___overlays-black-alpha-1: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/1/UI Core/Light */
+  --figma___overlays-black-alpha-2: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/2/UI Core/Light */
+  --figma___overlays-black-alpha-3: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/3/UI Core/Light */
+  --figma___overlays-black-alpha-4: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/4/UI Core/Light */
+  --figma___overlays-black-alpha-5: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/5/UI Core/Light */
+  --figma___overlays-black-alpha-6: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/6/UI Core/Light */
+  --figma___overlays-black-alpha-7: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/7/UI Core/Light */
+  --figma___overlays-black-alpha-8: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/8/UI Core/Light */
+  --figma___overlays-black-alpha-9: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/9/UI Core/Light */
+  --figma___overlays-black-alpha-10: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/10/UI Core/Light */
+  --figma___overlays-white-alpha-1: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/1/UI Core/Light */
+  --figma___overlays-white-alpha-2: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/2/UI Core/Light */
+  --figma___overlays-white-alpha-3: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/3/UI Core/Light */
+  --figma___overlays-white-alpha-4: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/4/UI Core/Light */
+  --figma___overlays-white-alpha-5: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/5/UI Core/Light */
+  --figma___overlays-white-alpha-6: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/6/UI Core/Light */
+  --figma___overlays-white-alpha-7: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/7/UI Core/Light */
+  --figma___overlays-white-alpha-8: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/8/UI Core/Light */
+  --figma___overlays-white-alpha-9: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/9/UI Core/Light */
+  --figma___overlays-white-alpha-10: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/10/UI Core/Light */
+  --figma___semantic-background-backdrop: 212 72% 10% / 0.75; /* ✦ Theme/Semantic/Background/Backdrop/UI Core/Light */
+  --figma___semantic-background-cards-and-rows-default: 0 0% 100% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Default/UI Core/Light */
+  --figma___semantic-background-cards-and-rows-hover: 216 100% 99% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Hover/UI Core/Light */
+  --figma___semantic-background-cards-and-rows-primary-blue-selected: 206 98% 42% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Primary-blue-selected/UI Core/Light */
+  --figma___semantic-background-cards-and-rows-selected: 216 100% 99% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Selected/UI Core/Light */
+  --figma___semantic-background-header-page-header: 0 0% 100% / 1; /* ✦ Theme/Semantic/Background/Header/Page Header/UI Core/Light */
+  --figma___semantic-background-header-table-header: 0 0% 100% / 1; /* ✦ Theme/Semantic/Background/Header/Table Header/UI Core/Light */
+  --figma___semantic-background-paper: 216 100% 99% / 1; /* ✦ Theme/Semantic/Background/Paper/UI Core/Light */
+  --figma___semantic-background-primary: 216 100% 99% / 1; /* ✦ Theme/Semantic/Background/Primary/UI Core/Light */
+  --figma___semantic-background-solid: 0 0% 100% / 1; /* ✦ Theme/Semantic/Background/Solid/UI Core/Light */
+  --figma___semantic-border-disabled: 235 19% 87% / 1; /* ✦ Theme/Semantic/Border/Disabled/UI Core/Light */
+  --figma___semantic-border-hover: 213 100% 32% / 1; /* ✦ Theme/Semantic/Border/Hover/UI Core/Light */
+  --figma___semantic-border-primary: 235 19% 87% / 1; /* ✦ Theme/Semantic/Border/Primary/UI Core/Light */
+  --figma___semantic-border-secondary: 240 41% 97% / 1; /* ✦ Theme/Semantic/Border/Secondary/UI Core/Light */
+  --figma___semantic-border-selected: 206 98% 42% / 1; /* ✦ Theme/Semantic/Border/Selected/UI Core/Light */
+  --figma___semantic-text-disabled: 237 14% 73% / 1; /* ✦ Theme/Semantic/Text/Disabled/UI Core/Light */
+  --figma___semantic-text-links: 206 98% 42% / 1; /* ✦ Theme/Semantic/Text/Links/UI Core/Light */
+  --figma___semantic-text-secondary: 236 11% 25% / 1; /* ✦ Theme/Semantic/Text/Secondary/UI Core/Light */
+  --figma___semantic-text-tertiary: 235 11% 47% / 1; /* ✦ Theme/Semantic/Text/Tertiary/UI Core/Light */
+  --figma___semantic-text-primary: 240 8% 5% / 1; /* ✦ Theme/Semantic/Text/primary/UI Core/Light */
+}
+
+/* Color variables - dark mode */
+.ui-core-dark {
+  --figma___colors-alerts-status-error-1: 0 67% 12% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/1/UI Core/Dark */
+  --figma___colors-alerts-status-error-2: 0 67% 18% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/2/UI Core/Dark */
+  --figma___colors-alerts-status-error-3: 0 67% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/3/UI Core/Dark */
+  --figma___colors-alerts-status-error-4: 0 68% 30% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/4/UI Core/Dark */
+  --figma___colors-alerts-status-error-5: 0 68% 36% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/5/UI Core/Dark */
+  --figma___colors-alerts-status-error-6: 0 68% 42% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/6/UI Core/Dark */
+  --figma___colors-alerts-status-error-7: 0 67% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/7/UI Core/Dark */
+  --figma___colors-alerts-status-error-8: 0 78% 55% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/8/UI Core/Dark */
+  --figma___colors-alerts-status-error-9: 0 100% 62% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/9/UI Core/Dark */
+  --figma___colors-alerts-status-error-10: 0 100% 70% / 1; /* ✦ Theme/Colors/Alerts & Status/Error/10/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-1: 0 67% 12% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/1/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-2: 0 67% 18% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/2/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-3: 0 67% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/3/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-4: 0 68% 30% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/4/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-5: 0 68% 36% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/5/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-6: 0 68% 42% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/6/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-7: 0 67% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/7/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-8: 0 78% 55% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/8/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-9: 0 100% 62% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/9/UI Core/Dark */
+  --figma___colors-alerts-status-error-alpha-10: 0 100% 70% / 1; /* ✦ Theme/Colors/Alerts & Status/Error Alpha/10/UI Core/Dark */
+  --figma___colors-alerts-status-info-1: 241 53% 23% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/1/UI Core/Dark */
+  --figma___colors-alerts-status-info-2: 241 52% 28% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/2/UI Core/Dark */
+  --figma___colors-alerts-status-info-3: 241 51% 33% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/3/UI Core/Dark */
+  --figma___colors-alerts-status-info-4: 241 49% 39% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/4/UI Core/Dark */
+  --figma___colors-alerts-status-info-5: 241 48% 44% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/5/UI Core/Dark */
+  --figma___colors-alerts-status-info-6: 239 48% 52% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/6/UI Core/Dark */
+  --figma___colors-alerts-status-info-7: 240 59% 59% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/7/UI Core/Dark */
+  --figma___colors-alerts-status-info-8: 240 74% 67% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/8/UI Core/Dark */
+  --figma___colors-alerts-status-info-9: 240 100% 77% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/9/UI Core/Dark */
+  --figma___colors-alerts-status-info-10: 240 100% 83% / 1; /* ✦ Theme/Colors/Alerts & Status/Info/10/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-1: 241 53% 23% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/1/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-2: 241 52% 28% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/2/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-3: 241 51% 33% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/3/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-4: 241 49% 39% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/4/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-5: 241 48% 44% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/5/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-6: 239 48% 52% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/6/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-7: 240 59% 59% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/7/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-8: 240 74% 67% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/8/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-9: 240 100% 77% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/9/UI Core/Dark */
+  --figma___colors-alerts-status-info-alpha-10: 240 100% 83% / 1; /* ✦ Theme/Colors/Alerts & Status/Info Alpha/10/UI Core/Dark */
+  --figma___colors-alerts-status-success-1: 122 64% 11% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/1/UI Core/Dark */
+  --figma___colors-alerts-status-success-2: 127 73% 15% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/2/UI Core/Dark */
+  --figma___colors-alerts-status-success-3: 123 67% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/3/UI Core/Dark */
+  --figma___colors-alerts-status-success-4: 122 55% 32% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/4/UI Core/Dark */
+  --figma___colors-alerts-status-success-5: 122 50% 36% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/5/UI Core/Dark */
+  --figma___colors-alerts-status-success-6: 124 36% 52% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/6/UI Core/Dark */
+  --figma___colors-alerts-status-success-7: 121 42% 62% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/7/UI Core/Dark */
+  --figma___colors-alerts-status-success-8: 118 49% 70% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/8/UI Core/Dark */
+  --figma___colors-alerts-status-success-9: 117 62% 79% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/9/UI Core/Dark */
+  --figma___colors-alerts-status-success-10: 119 66% 85% / 1; /* ✦ Theme/Colors/Alerts & Status/Success/10/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-1: 120 100% 44% / 0; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/1/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-2: 120 100% 49% / 0.02; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/2/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-3: 149 100% 49% / 0.07; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/3/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-4: 154 100% 50% / 0.11; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/4/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-5: 153 99% 53% / 0.15; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/5/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-6: 155 99% 55% / 0.2; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/6/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-7: 151 100% 63% / 0.5; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/7/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-8: 151 100% 62% / 0.61; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/8/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-9: 151 100% 64% / 0.82; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/9/UI Core/Dark */
+  --figma___colors-alerts-status-success-alpha-10: 144 100% 87% / 0.94; /* ✦ Theme/Colors/Alerts & Status/Success Alpha/10/UI Core/Dark */
+  --figma___colors-alerts-status-warning-1: 32 67% 12% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/1/UI Core/Dark */
+  --figma___colors-alerts-status-warning-2: 30 69% 18% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/2/UI Core/Dark */
+  --figma___colors-alerts-status-warning-3: 27 69% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/3/UI Core/Dark */
+  --figma___colors-alerts-status-warning-4: 26 68% 30% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/4/UI Core/Dark */
+  --figma___colors-alerts-status-warning-5: 17 68% 36% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/5/UI Core/Dark */
+  --figma___colors-alerts-status-warning-6: 18 68% 42% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/6/UI Core/Dark */
+  --figma___colors-alerts-status-warning-7: 19 67% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/7/UI Core/Dark */
+  --figma___colors-alerts-status-warning-8: 19 79% 54% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/8/UI Core/Dark */
+  --figma___colors-alerts-status-warning-9: 19 100% 60% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/9/UI Core/Dark */
+  --figma___colors-alerts-status-warning-10: 19 100% 64% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning/10/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-1: 32 67% 12% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/1/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-2: 30 69% 18% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/2/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-3: 27 69% 24% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/3/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-4: 26 68% 30% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/4/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-5: 17 68% 36% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/5/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-6: 18 68% 42% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/6/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-7: 19 67% 48% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/7/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-8: 19 79% 54% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/8/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-9: 19 100% 60% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/9/UI Core/Dark */
+  --figma___colors-alerts-status-warning-alpha-10: 19 100% 64% / 1; /* ✦ Theme/Colors/Alerts & Status/Warning Alpha/10/UI Core/Dark */
+  --figma___colors-charts-ai-violet-1: 256 82% 30% / 1; /* ✦ Theme/Colors/Charts/AI Violet/1/UI Core/Dark */
+  --figma___colors-charts-ai-violet-2: 254 74% 37% / 1; /* ✦ Theme/Colors/Charts/AI Violet/2/UI Core/Dark */
+  --figma___colors-charts-ai-violet-3: 254 68% 42% / 1; /* ✦ Theme/Colors/Charts/AI Violet/3/UI Core/Dark */
+  --figma___colors-charts-ai-violet-4: 254 64% 48% / 1; /* ✦ Theme/Colors/Charts/AI Violet/4/UI Core/Dark */
+  --figma___colors-charts-ai-violet-5: 252 70% 59% / 1; /* ✦ Theme/Colors/Charts/AI Violet/5/UI Core/Dark */
+  --figma___colors-charts-ai-violet-6: 251 73% 64% / 1; /* ✦ Theme/Colors/Charts/AI Violet/6/UI Core/Dark */
+  --figma___colors-charts-ai-violet-7: 252 76% 69% / 1; /* ✦ Theme/Colors/Charts/AI Violet/7/UI Core/Dark */
+  --figma___colors-charts-ai-violet-8: 251 80% 74% / 1; /* ✦ Theme/Colors/Charts/AI Violet/8/UI Core/Dark */
+  --figma___colors-charts-ai-violet-9: 252 85% 79% / 1; /* ✦ Theme/Colors/Charts/AI Violet/9/UI Core/Dark */
+  --figma___colors-charts-ai-violet-10: 253 100% 84% / 1; /* ✦ Theme/Colors/Charts/AI Violet/10/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-1: 256 82% 30% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/1/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-2: 254 74% 37% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/2/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-3: 254 68% 42% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/3/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-4: 254 64% 48% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/4/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-5: 252 70% 59% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/5/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-6: 251 73% 64% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/6/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-7: 252 76% 69% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/7/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-8: 251 80% 74% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/8/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-9: 252 85% 79% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/9/UI Core/Dark */
+  --figma___colors-charts-ai-violet-alpha-10: 253 100% 84% / 1; /* ✦ Theme/Colors/Charts/AI Violet Alpha/10/UI Core/Dark */
+  --figma___colors-charts-blue-1: 241 53% 23% / 1; /* ✦ Theme/Colors/Charts/Blue/1/UI Core/Dark */
+  --figma___colors-charts-blue-2: 241 52% 28% / 1; /* ✦ Theme/Colors/Charts/Blue/2/UI Core/Dark */
+  --figma___colors-charts-blue-3: 241 51% 33% / 1; /* ✦ Theme/Colors/Charts/Blue/3/UI Core/Dark */
+  --figma___colors-charts-blue-4: 241 49% 39% / 1; /* ✦ Theme/Colors/Charts/Blue/4/UI Core/Dark */
+  --figma___colors-charts-blue-5: 241 48% 44% / 1; /* ✦ Theme/Colors/Charts/Blue/5/UI Core/Dark */
+  --figma___colors-charts-blue-6: 239 48% 52% / 1; /* ✦ Theme/Colors/Charts/Blue/6/UI Core/Dark */
+  --figma___colors-charts-blue-7: 240 59% 59% / 1; /* ✦ Theme/Colors/Charts/Blue/7/UI Core/Dark */
+  --figma___colors-charts-blue-8: 240 74% 67% / 1; /* ✦ Theme/Colors/Charts/Blue/8/UI Core/Dark */
+  --figma___colors-charts-blue-9: 240 100% 77% / 1; /* ✦ Theme/Colors/Charts/Blue/9/UI Core/Dark */
+  --figma___colors-charts-blue-10: 240 100% 83% / 1; /* ✦ Theme/Colors/Charts/Blue/10/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-1: 215 46% 20% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/1/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-2: 216 50% 12% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/2/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-3: 214 58% 16% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/3/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-4: 213 67% 21% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/4/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/5/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-6: 212 72% 25% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/6/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-7: 206 100% 50% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/7/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-8: 206 100% 62% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/8/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-9: 205 100% 71% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/9/UI Core/Dark */
+  --figma___colors-charts-blue-alpha-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Charts/Blue Alpha/10/UI Core/Dark */
+  --figma___colors-charts-indigo-1: 226 25% 10% / 1; /* ✦ Theme/Colors/Charts/Indigo/1/UI Core/Dark */
+  --figma___colors-charts-indigo-2: 230 36% 13% / 1; /* ✦ Theme/Colors/Charts/Indigo/2/UI Core/Dark */
+  --figma___colors-charts-indigo-3: 228 43% 18% / 1; /* ✦ Theme/Colors/Charts/Indigo/3/UI Core/Dark */
+  --figma___colors-charts-indigo-4: 228 45% 21% / 1; /* ✦ Theme/Colors/Charts/Indigo/4/UI Core/Dark */
+  --figma___colors-charts-indigo-5: 227 48% 24% / 1; /* ✦ Theme/Colors/Charts/Indigo/5/UI Core/Dark */
+  --figma___colors-charts-indigo-6: 225 51% 29% / 1; /* ✦ Theme/Colors/Charts/Indigo/6/UI Core/Dark */
+  --figma___colors-charts-indigo-7: 226 70% 55% / 1; /* ✦ Theme/Colors/Charts/Indigo/7/UI Core/Dark */
+  --figma___colors-charts-indigo-8: 230 74% 63% / 1; /* ✦ Theme/Colors/Charts/Indigo/8/UI Core/Dark */
+  --figma___colors-charts-indigo-9: 235 100% 80% / 1; /* ✦ Theme/Colors/Charts/Indigo/9/UI Core/Dark */
+  --figma___colors-charts-indigo-10: 236 94% 93% / 1; /* ✦ Theme/Colors/Charts/Indigo/10/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-1: 240 100% 49% / 0.04; /* ✦ Theme/Colors/Charts/Indigo Alpha/1/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-2: 232 100% 50% / 0.09; /* ✦ Theme/Colors/Charts/Indigo Alpha/2/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-3: 228 100% 57% / 0.18; /* ✦ Theme/Colors/Charts/Indigo Alpha/3/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-4: 228 99% 59% / 0.24; /* ✦ Theme/Colors/Charts/Indigo Alpha/4/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-5: 227 99% 60% / 0.29; /* ✦ Theme/Colors/Charts/Indigo Alpha/5/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-6: 225 100% 61% / 0.37; /* ✦ Theme/Colors/Charts/Indigo Alpha/6/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-7: 226 100% 63% / 0.85; /* ✦ Theme/Colors/Charts/Indigo Alpha/7/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-8: 230 100% 70% / 0.9; /* ✦ Theme/Colors/Charts/Indigo Alpha/8/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-9: 236 100% 94% / 1; /* ✦ Theme/Colors/Charts/Indigo Alpha/9/UI Core/Dark */
+  --figma___colors-charts-indigo-alpha-10: 236 100% 94% / 1; /* ✦ Theme/Colors/Charts/Indigo Alpha/10/UI Core/Dark */
+  --figma___colors-charts-mint-1: 173 52% 6% / 1; /* ✦ Theme/Colors/Charts/Mint/1/UI Core/Dark */
+  --figma___colors-charts-mint-2: 174 51% 8% / 1; /* ✦ Theme/Colors/Charts/Mint/2/UI Core/Dark */
+  --figma___colors-charts-mint-3: 176 52% 11% / 1; /* ✦ Theme/Colors/Charts/Mint/3/UI Core/Dark */
+  --figma___colors-charts-mint-4: 173 56% 13% / 1; /* ✦ Theme/Colors/Charts/Mint/4/UI Core/Dark */
+  --figma___colors-charts-mint-5: 173 57% 15% / 1; /* ✦ Theme/Colors/Charts/Mint/5/UI Core/Dark */
+  --figma___colors-charts-mint-6: 173 60% 24% / 1; /* ✦ Theme/Colors/Charts/Mint/6/UI Core/Dark */
+  --figma___colors-charts-mint-7: 167 70% 72% / 1; /* ✦ Theme/Colors/Charts/Mint/7/UI Core/Dark */
+  --figma___colors-charts-mint-8: 163 80% 77% / 1; /* ✦ Theme/Colors/Charts/Mint/8/UI Core/Dark */
+  --figma___colors-charts-mint-9: 167 70% 58% / 1; /* ✦ Theme/Colors/Charts/Mint/9/UI Core/Dark */
+  --figma___colors-charts-mint-10: 156 71% 86% / 1; /* ✦ Theme/Colors/Charts/Mint/10/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-1: 120 100% 44% / 0; /* ✦ Theme/Colors/Charts/Mint Alpha/1/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-2: 165 100% 49% / 0.03; /* ✦ Theme/Colors/Charts/Mint Alpha/2/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-3: 174 100% 50% / 0.07; /* ✦ Theme/Colors/Charts/Mint Alpha/3/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-4: 172 100% 50% / 0.11; /* ✦ Theme/Colors/Charts/Mint Alpha/4/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-5: 172 100% 50% / 0.15; /* ✦ Theme/Colors/Charts/Mint Alpha/5/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-6: 173 100% 50% / 0.21; /* ✦ Theme/Colors/Charts/Mint Alpha/6/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-7: 167 100% 78% / 0.91; /* ✦ Theme/Colors/Charts/Mint Alpha/7/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-8: 163 100% 81% / 0.95; /* ✦ Theme/Colors/Charts/Mint Alpha/8/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-9: 167 100% 66% / 0.86; /* ✦ Theme/Colors/Charts/Mint Alpha/9/UI Core/Dark */
+  --figma___colors-charts-mint-alpha-10: 155 100% 90% / 0.96; /* ✦ Theme/Colors/Charts/Mint Alpha/10/UI Core/Dark */
+  --figma___colors-charts-orange-1: 32 67% 12% / 1; /* ✦ Theme/Colors/Charts/Orange/1/UI Core/Dark */
+  --figma___colors-charts-orange-2: 30 69% 18% / 1; /* ✦ Theme/Colors/Charts/Orange/2/UI Core/Dark */
+  --figma___colors-charts-orange-3: 27 69% 24% / 1; /* ✦ Theme/Colors/Charts/Orange/3/UI Core/Dark */
+  --figma___colors-charts-orange-4: 26 68% 30% / 1; /* ✦ Theme/Colors/Charts/Orange/4/UI Core/Dark */
+  --figma___colors-charts-orange-5: 17 68% 36% / 1; /* ✦ Theme/Colors/Charts/Orange/5/UI Core/Dark */
+  --figma___colors-charts-orange-6: 18 68% 42% / 1; /* ✦ Theme/Colors/Charts/Orange/6/UI Core/Dark */
+  --figma___colors-charts-orange-7: 19 67% 48% / 1; /* ✦ Theme/Colors/Charts/Orange/7/UI Core/Dark */
+  --figma___colors-charts-orange-8: 19 79% 54% / 1; /* ✦ Theme/Colors/Charts/Orange/8/UI Core/Dark */
+  --figma___colors-charts-orange-9: 19 100% 60% / 1; /* ✦ Theme/Colors/Charts/Orange/9/UI Core/Dark */
+  --figma___colors-charts-orange-10: 19 100% 64% / 1; /* ✦ Theme/Colors/Charts/Orange/10/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-1: 32 67% 12% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/1/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-2: 30 69% 18% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/2/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-3: 27 69% 24% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/3/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-4: 26 68% 30% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/4/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-5: 17 68% 36% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/5/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-6: 18 68% 42% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/6/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-7: 19 67% 48% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/7/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-8: 19 79% 54% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/8/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-9: 19 100% 60% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/9/UI Core/Dark */
+  --figma___colors-charts-orange-alpha-10: 19 100% 64% / 1; /* ✦ Theme/Colors/Charts/Orange Alpha/10/UI Core/Dark */
+  --figma___colors-charts-yellow-1: 54 100% 8% / 1; /* ✦ Theme/Colors/Charts/Yellow/1/UI Core/Dark */
+  --figma___colors-charts-yellow-2: 54 100% 17% / 1; /* ✦ Theme/Colors/Charts/Yellow/2/UI Core/Dark */
+  --figma___colors-charts-yellow-3: 54 100% 25% / 1; /* ✦ Theme/Colors/Charts/Yellow/3/UI Core/Dark */
+  --figma___colors-charts-yellow-4: 54 100% 33% / 1; /* ✦ Theme/Colors/Charts/Yellow/4/UI Core/Dark */
+  --figma___colors-charts-yellow-5: 54 100% 41% / 1; /* ✦ Theme/Colors/Charts/Yellow/5/UI Core/Dark */
+  --figma___colors-charts-yellow-6: 55 100% 48% / 1; /* ✦ Theme/Colors/Charts/Yellow/6/UI Core/Dark */
+  --figma___colors-charts-yellow-7: 55 92% 58% / 1; /* ✦ Theme/Colors/Charts/Yellow/7/UI Core/Dark */
+  --figma___colors-charts-yellow-8: 54 92% 69% / 1; /* ✦ Theme/Colors/Charts/Yellow/8/UI Core/Dark */
+  --figma___colors-charts-yellow-9: 53 91% 79% / 1; /* ✦ Theme/Colors/Charts/Yellow/9/UI Core/Dark */
+  --figma___colors-charts-yellow-10: 47 89% 89% / 1; /* ✦ Theme/Colors/Charts/Yellow/10/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-1: 54 100% 8% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/1/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-2: 54 100% 17% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/2/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-3: 54 100% 25% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/3/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-4: 54 100% 33% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/4/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-5: 54 100% 41% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/5/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-6: 55 100% 48% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/6/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-7: 55 92% 58% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/7/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-8: 54 92% 69% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/8/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-9: 53 91% 79% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/9/UI Core/Dark */
+  --figma___colors-charts-yellow-alpha-10: 47 89% 89% / 1; /* ✦ Theme/Colors/Charts/Yellow Alpha/10/UI Core/Dark */
+  --figma___colors-default-black-fixed: 210 25% 98% / 1; /* ✦ Theme/Colors/Default/Black (fixed)/UI Core/Dark */
+  --figma___colors-default-brand-color: 194 100% 45% / 1; /* ✦ Theme/Colors/Default/Brand Color/UI Core/Dark */
+  --figma___colors-default-dark-to-white: 210 25% 98% / 1; /* ✦ Theme/Colors/Default/Dark-to-white/UI Core/Dark */
+  --figma___colors-default-white-fixed: 0 0% 0% / 1; /* ✦ Theme/Colors/Default/White (fixed)/UI Core/Dark */
+  --figma___colors-default-white-to-dark: 0 0% 0% / 1; /* ✦ Theme/Colors/Default/White-to-dark/UI Core/Dark */
+  --figma___colors-module-ccm-100: 179 56% 32% / 1; /* ✦ Theme/Colors/Module/CCM/100/UI Core/Dark */
+  --figma___colors-module-ccm-200: 181 99% 40% / 1; /* ✦ Theme/Colors/Module/CCM/200/UI Core/Dark */
+  --figma___colors-module-ccm-300: 180 100% 96% / 1; /* ✦ Theme/Colors/Module/CCM/300/UI Core/Dark */
+  --figma___colors-module-cd-100: 110 62% 32% / 1; /* ✦ Theme/Colors/Module/CD/100/UI Core/Dark */
+  --figma___colors-module-cd-200: 110 40% 50% / 1; /* ✦ Theme/Colors/Module/CD/200/UI Core/Dark */
+  --figma___colors-module-cd-300: 102 100% 97% / 1; /* ✦ Theme/Colors/Module/CD/300/UI Core/Dark */
+  --figma___colors-module-ce-100: 335 100% 30% / 1; /* ✦ Theme/Colors/Module/CE/100/UI Core/Dark */
+  --figma___colors-module-ce-200: 335 100% 50% / 1; /* ✦ Theme/Colors/Module/CE/200/UI Core/Dark */
+  --figma___colors-module-ce-300: 334 100% 97% / 1; /* ✦ Theme/Colors/Module/CE/300/UI Core/Dark */
+  --figma___colors-module-ci-100: 203 94% 37% / 1; /* ✦ Theme/Colors/Module/CI/100/UI Core/Dark */
+  --figma___colors-module-ci-200: 200 88% 56% / 1; /* ✦ Theme/Colors/Module/CI/200/UI Core/Dark */
+  --figma___colors-module-ci-300: 201 100% 94% / 1; /* ✦ Theme/Colors/Module/CI/300/UI Core/Dark */
+  --figma___colors-module-ff-100: 26 91% 39% / 1; /* ✦ Theme/Colors/Module/FF/100/UI Core/Dark */
+  --figma___colors-module-ff-200: 29 86% 54% / 1; /* ✦ Theme/Colors/Module/FF/200/UI Core/Dark */
+  --figma___colors-module-ff-300: 41 81% 94% / 1; /* ✦ Theme/Colors/Module/FF/300/UI Core/Dark */
+  --figma___colors-module-srm-100: 262 55% 49% / 1; /* ✦ Theme/Colors/Module/SRM/100/UI Core/Dark */
+  --figma___colors-module-srm-200: 262 95% 75% / 1; /* ✦ Theme/Colors/Module/SRM/200/UI Core/Dark */
+  --figma___colors-module-srm-300: 261 100% 97% / 1; /* ✦ Theme/Colors/Module/SRM/300/UI Core/Dark */
+  --figma___colors-module-ssca-100: 0 98% 36% / 1; /* ✦ Theme/Colors/Module/SSCA/100/UI Core/Dark */
+  --figma___colors-module-ssca-200: 0 58% 53% / 1; /* ✦ Theme/Colors/Module/SSCA/200/UI Core/Dark */
+  --figma___colors-module-ssca-300: 0 100% 97% / 1; /* ✦ Theme/Colors/Module/SSCA/300/UI Core/Dark */
+  --figma___colors-module-sto-100: 245 90% 53% / 1; /* ✦ Theme/Colors/Module/STO/100/UI Core/Dark */
+  --figma___colors-module-sto-200: 216 100% 64% / 1; /* ✦ Theme/Colors/Module/STO/200/UI Core/Dark */
+  --figma___colors-module-sto-300: 228 100% 96% / 1; /* ✦ Theme/Colors/Module/STO/300/UI Core/Dark */
+  --figma___colors-neutral-gray-1: 0 0% 7% / 1; /* ✦ Theme/Colors/Neutral/Gray/1/UI Core/Dark */
+  --figma___colors-neutral-gray-2: 0 0% 11% / 1; /* ✦ Theme/Colors/Neutral/Gray/2/UI Core/Dark */
+  --figma___colors-neutral-gray-3: 0 0% 16% / 1; /* ✦ Theme/Colors/Neutral/Gray/3/UI Core/Dark */
+  --figma___colors-neutral-gray-4: 0 0% 23% / 1; /* ✦ Theme/Colors/Neutral/Gray/4/UI Core/Dark */
+  --figma___colors-neutral-gray-5: 0 0% 29% / 1; /* ✦ Theme/Colors/Neutral/Gray/5/UI Core/Dark */
+  --figma___colors-neutral-gray-6: 0 0% 35% / 1; /* ✦ Theme/Colors/Neutral/Gray/6/UI Core/Dark */
+  --figma___colors-neutral-gray-7: 0 0% 42% / 1; /* ✦ Theme/Colors/Neutral/Gray/7/UI Core/Dark */
+  --figma___colors-neutral-gray-8: 0 0% 54% / 1; /* ✦ Theme/Colors/Neutral/Gray/8/UI Core/Dark */
+  --figma___colors-neutral-gray-9: 0 0% 69% / 1; /* ✦ Theme/Colors/Neutral/Gray/9/UI Core/Dark */
+  --figma___colors-neutral-gray-10: 0 0% 82% / 1; /* ✦ Theme/Colors/Neutral/Gray/10/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-1: 0 0% 7% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/1/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-2: 0 0% 11% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/2/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-3: 0 0% 16% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/3/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-4: 0 0% 23% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/4/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-5: 0 0% 29% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/5/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-6: 0 0% 35% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/6/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-7: 0 0% 42% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/7/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-8: 0 0% 54% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/8/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-9: 0 0% 69% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/9/UI Core/Dark */
+  --figma___colors-neutral-gray-alpha-10: 0 0% 82% / 1; /* ✦ Theme/Colors/Neutral/Gray Alpha/10/UI Core/Dark */
+  --figma___colors-primary-primary-accent-1: 215 46% 20% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/1/UI Core/Dark */
+  --figma___colors-primary-primary-accent-2: 216 50% 12% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/2/UI Core/Dark */
+  --figma___colors-primary-primary-accent-3: 214 58% 16% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/3/UI Core/Dark */
+  --figma___colors-primary-primary-accent-4: 213 67% 21% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/4/UI Core/Dark */
+  --figma___colors-primary-primary-accent-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/5/UI Core/Dark */
+  --figma___colors-primary-primary-accent-6: 212 72% 25% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/6/UI Core/Dark */
+  --figma___colors-primary-primary-accent-7: 206 100% 50% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/7/UI Core/Dark */
+  --figma___colors-primary-primary-accent-8: 206 100% 62% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/8/UI Core/Dark */
+  --figma___colors-primary-primary-accent-9: 205 100% 71% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/9/UI Core/Dark */
+  --figma___colors-primary-primary-accent-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Primary/Primary Accent/10/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-1: 215 46% 20% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/1/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-2: 216 50% 12% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/2/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-3: 214 58% 16% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/3/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-4: 213 67% 21% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/4/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-5: 194 100% 45% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/5/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-6: 212 72% 25% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/6/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-7: 206 100% 50% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/7/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-8: 206 100% 62% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/8/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-9: 205 100% 71% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/9/UI Core/Dark */
+  --figma___colors-primary-primary-alpha-10: 212 72% 10% / 1; /* ✦ Theme/Colors/Primary/Primary Alpha/10/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-1: 330 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 1/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-10: 327 79% 95% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 10/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-2: 330 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 2/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-3: 330 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 3/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-4: 330 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 4/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-5: 330 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 5/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-6: 332 67% 52% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 6/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-7: 335 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 7/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-8: 326 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 8/UI Core/Dark */
+  --figma___colors-secondary-crimson-crimson-9: 331 67% 88% / 1; /* ✦ Theme/Colors/Secondary/Crimson/Crimson 9/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-1: 330 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 1/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-10: 331 67% 88% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 10/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-11: 327 79% 95% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 11/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-2: 330 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 2/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-3: 330 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 3/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-4: 330 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 4/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-5: 330 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 5/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-6: 332 67% 52% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 6/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-8: 335 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 8/UI Core/Dark */
+  --figma___colors-secondary-crimson-alpha-crimson-alpha-9: 326 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Crimson Alpha/Crimson Alpha 9/UI Core/Dark */
+  --figma___colors-secondary-lime-1: 84 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Lime/1/UI Core/Dark */
+  --figma___colors-secondary-lime-2: 84 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Lime/2/UI Core/Dark */
+  --figma___colors-secondary-lime-3: 83 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Lime/3/UI Core/Dark */
+  --figma___colors-secondary-lime-4: 83 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Lime/4/UI Core/Dark */
+  --figma___colors-secondary-lime-5: 82 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Lime/5/UI Core/Dark */
+  --figma___colors-secondary-lime-6: 95 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Lime/6/UI Core/Dark */
+  --figma___colors-secondary-lime-7: 100 61% 75% / 1; /* ✦ Theme/Colors/Secondary/Lime/7/UI Core/Dark */
+  --figma___colors-secondary-lime-8: 120 34% 85% / 1; /* ✦ Theme/Colors/Secondary/Lime/8/UI Core/Dark */
+  --figma___colors-secondary-lime-9: 120 33% 92% / 1; /* ✦ Theme/Colors/Secondary/Lime/9/UI Core/Dark */
+  --figma___colors-secondary-lime-10: 120 53% 97% / 1; /* ✦ Theme/Colors/Secondary/Lime/10/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-1: 84 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/1/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-2: 84 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/2/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-3: 83 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/3/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-4: 83 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/4/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-5: 82 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/5/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-6: 95 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/6/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-7: 100 61% 75% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/7/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-8: 120 34% 85% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/8/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-9: 120 33% 92% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/9/UI Core/Dark */
+  --figma___colors-secondary-lime-alpha-10: 120 53% 97% / 1; /* ✦ Theme/Colors/Secondary/Lime Alpha/10/UI Core/Dark */
+  --figma___colors-secondary-purple-1: 264 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Purple/1/UI Core/Dark */
+  --figma___colors-secondary-purple-2: 264 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Purple/2/UI Core/Dark */
+  --figma___colors-secondary-purple-3: 264 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Purple/3/UI Core/Dark */
+  --figma___colors-secondary-purple-4: 264 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Purple/4/UI Core/Dark */
+  --figma___colors-secondary-purple-5: 264 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Purple/5/UI Core/Dark */
+  --figma___colors-secondary-purple-6: 264 67% 52% / 1; /* ✦ Theme/Colors/Secondary/Purple/6/UI Core/Dark */
+  --figma___colors-secondary-purple-7: 265 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Purple/7/UI Core/Dark */
+  --figma___colors-secondary-purple-8: 258 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Purple/8/UI Core/Dark */
+  --figma___colors-secondary-purple-9: 253 85% 89% / 1; /* ✦ Theme/Colors/Secondary/Purple/9/UI Core/Dark */
+  --figma___colors-secondary-purple-10: 273 79% 95% / 1; /* ✦ Theme/Colors/Secondary/Purple/10/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-1: 264 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/1/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-2: 264 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/2/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-3: 264 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/3/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-4: 264 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/4/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-5: 264 100% 40% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/5/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-6: 264 67% 52% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/6/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-7: 265 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/7/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-8: 258 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/8/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-9: 253 85% 89% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/9/UI Core/Dark */
+  --figma___colors-secondary-purple-alpha-10: 273 79% 95% / 1; /* ✦ Theme/Colors/Secondary/Purple Alpha/10/UI Core/Dark */
+  --figma___colors-secondary-teal-1: 180 100% 15% / 1; /* ✦ Theme/Colors/Secondary/Teal/1/UI Core/Dark */
+  --figma___colors-secondary-teal-2: 180 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Teal/2/UI Core/Dark */
+  --figma___colors-secondary-teal-3: 180 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Teal/3/UI Core/Dark */
+  --figma___colors-secondary-teal-4: 180 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Teal/4/UI Core/Dark */
+  --figma___colors-secondary-teal-5: 180 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Teal/5/UI Core/Dark */
+  --figma___colors-secondary-teal-6: 180 60% 50% / 1; /* ✦ Theme/Colors/Secondary/Teal/6/UI Core/Dark */
+  --figma___colors-secondary-teal-7: 180 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Teal/7/UI Core/Dark */
+  --figma___colors-secondary-teal-8: 180 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Teal/8/UI Core/Dark */
+  --figma___colors-secondary-teal-9: 180 85% 89% / 1; /* ✦ Theme/Colors/Secondary/Teal/9/UI Core/Dark */
+  --figma___colors-secondary-teal-10: 180 85% 95% / 1; /* ✦ Theme/Colors/Secondary/Teal/10/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-1: 180 100% 15% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/1/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-2: 180 100% 20% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/2/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-3: 180 100% 25% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/3/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-4: 180 100% 30% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/4/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-5: 180 100% 35% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/5/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-6: 180 60% 50% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/6/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-7: 180 66% 64% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/7/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-8: 180 77% 77% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/8/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-9: 180 85% 89% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/9/UI Core/Dark */
+  --figma___colors-secondary-teal-alpha-10: 180 85% 95% / 1; /* ✦ Theme/Colors/Secondary/Teal Alpha/10/UI Core/Dark */
+  --figma___overlays-black-alpha-1: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/1/UI Core/Dark */
+  --figma___overlays-black-alpha-2: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/2/UI Core/Dark */
+  --figma___overlays-black-alpha-3: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/3/UI Core/Dark */
+  --figma___overlays-black-alpha-4: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/4/UI Core/Dark */
+  --figma___overlays-black-alpha-5: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/5/UI Core/Dark */
+  --figma___overlays-black-alpha-6: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/6/UI Core/Dark */
+  --figma___overlays-black-alpha-7: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/7/UI Core/Dark */
+  --figma___overlays-black-alpha-8: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/8/UI Core/Dark */
+  --figma___overlays-black-alpha-9: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/9/UI Core/Dark */
+  --figma___overlays-black-alpha-10: 0 0% 100% / 1; /* ✦ Theme/Overlays/Black Alpha/10/UI Core/Dark */
+  --figma___overlays-white-alpha-1: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/1/UI Core/Dark */
+  --figma___overlays-white-alpha-2: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/2/UI Core/Dark */
+  --figma___overlays-white-alpha-3: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/3/UI Core/Dark */
+  --figma___overlays-white-alpha-4: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/4/UI Core/Dark */
+  --figma___overlays-white-alpha-5: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/5/UI Core/Dark */
+  --figma___overlays-white-alpha-6: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/6/UI Core/Dark */
+  --figma___overlays-white-alpha-7: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/7/UI Core/Dark */
+  --figma___overlays-white-alpha-8: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/8/UI Core/Dark */
+  --figma___overlays-white-alpha-9: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/9/UI Core/Dark */
+  --figma___overlays-white-alpha-10: 0 0% 100% / 1; /* ✦ Theme/Overlays/White Alpha/10/UI Core/Dark */
+  --figma___semantic-background-backdrop: 212 72% 10% / 0.75; /* ✦ Theme/Semantic/Background/Backdrop/UI Core/Dark */
+  --figma___semantic-background-cards-and-rows-default: 0 0% 0% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Default/UI Core/Dark */
+  --figma___semantic-background-cards-and-rows-hover: 240 4% 10% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Hover/UI Core/Dark */
+  --figma___semantic-background-cards-and-rows-primary-blue-selected: 206 100% 50% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Primary-blue-selected/UI Core/Dark */
+  --figma___semantic-background-cards-and-rows-selected: 240 4% 10% / 1; /* ✦ Theme/Semantic/Background/Cards and Rows/Selected/UI Core/Dark */
+  --figma___semantic-background-header-page-header: 0 0% 0% / 1; /* ✦ Theme/Semantic/Background/Header/Page Header/UI Core/Dark */
+  --figma___semantic-background-header-table-header: 0 0% 0% / 1; /* ✦ Theme/Semantic/Background/Header/Table Header/UI Core/Dark */
+  --figma___semantic-background-paper: 240 4% 10% / 1; /* ✦ Theme/Semantic/Background/Paper/UI Core/Dark */
+  --figma___semantic-background-primary: 240 4% 10% / 1; /* ✦ Theme/Semantic/Background/Primary/UI Core/Dark */
+  --figma___semantic-background-solid: 0 0% 0% / 1; /* ✦ Theme/Semantic/Background/Solid/UI Core/Dark */
+  --figma___semantic-border-disabled: 0 0% 16% / 1; /* ✦ Theme/Semantic/Border/Disabled/UI Core/Dark */
+  --figma___semantic-border-hover: 206 100% 62% / 1; /* ✦ Theme/Semantic/Border/Hover/UI Core/Dark */
+  --figma___semantic-border-primary: 0 0% 16% / 1; /* ✦ Theme/Semantic/Border/Primary/UI Core/Dark */
+  --figma___semantic-border-secondary: 0 0% 11% / 1; /* ✦ Theme/Semantic/Border/Secondary/UI Core/Dark */
+  --figma___semantic-border-selected: 206 100% 50% / 1; /* ✦ Theme/Semantic/Border/Selected/UI Core/Dark */
+  --figma___semantic-text-disabled: 0 0% 23% / 1; /* ✦ Theme/Semantic/Text/Disabled/UI Core/Dark */
+  --figma___semantic-text-links: 206 100% 50% / 1; /* ✦ Theme/Semantic/Text/Links/UI Core/Dark */
+  --figma___semantic-text-secondary: 0 0% 54% / 1; /* ✦ Theme/Semantic/Text/Secondary/UI Core/Dark */
+  --figma___semantic-text-tertiary: 0 0% 35% / 1; /* ✦ Theme/Semantic/Text/Tertiary/UI Core/Dark */
+  --figma___semantic-text-primary: 0 0% 82% / 1; /* ✦ Theme/Semantic/Text/primary/UI Core/Dark */
+}

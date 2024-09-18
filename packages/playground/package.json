@@ -4,7 +4,7 @@
   "description": "Harness Unified Pipeline Playground",
   "scripts": {
     "dev": "run-p watch:css watch",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./public/styles.css",
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "watch:css": "pnpm build:css --watch",
     "preinstall": "npx only-allow pnpm",
     "watch": "vite",
@@ -31,7 +31,7 @@
       "import": "./dist/index.js"
     },
     "./tailwind.config": "./tailwind.config.js",
-    "./styles": "./dist/style.css"
+    "./styles": "./dist/styles.css"
   },
   "style": "./dist/style.css",
   "repository": {

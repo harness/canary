@@ -1,2 +1,3 @@
-@import '@harnessio/playground/src/styles.css';
-@import '@harnessio/canary/src/styles.css';
+@import '@harnessio/playground/dist/styles.css';
+@import '@harnessio/unified-pipeline/dist/style.css';
+@import '@harnessio/canary/dist/styles.css';

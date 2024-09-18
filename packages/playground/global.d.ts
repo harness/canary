@@ -1,3 +1,10 @@
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'zero-md': {} // eslint-disable-line
+    }
+  }
+}
 declare module '*.yaml' {
   const value: Record<string, unknown>
   export default value

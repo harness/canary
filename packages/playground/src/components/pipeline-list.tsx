@@ -10,7 +10,7 @@ export enum MeterState {
   Success = 3
 }
 
-interface Pipeline {
+export interface Pipeline {
   id: string
   status?: ExecutionState
   name: string

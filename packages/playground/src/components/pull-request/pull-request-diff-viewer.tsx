@@ -247,7 +247,7 @@ const PullRequestDiffViewer = ({ data, highlight, fontsize, mode, wrap, addWidge
           <Card className="bg-transparent rounded-md">
             <div className="flex flex-col px-4 py-4">
               <div className="flex items-center space-x-2">
-                <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 <Text color="primary">adam </Text>
                 <Text size={1} color="tertiaryBackground">
                   4 hours ago
@@ -258,7 +258,7 @@ const PullRequestDiffViewer = ({ data, highlight, fontsize, mode, wrap, addWidge
               </Text>
             </div>
             <div className="flex items-center gap-3 border-t px-4 py-4">
-              <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+              <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
               <Input placeholder={'Reply here'} />
             </div>
           </Card>

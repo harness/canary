@@ -42,7 +42,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
@@ -94,7 +94,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
@@ -123,7 +123,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               // TODO: fix timeline item to handle commit update as rn it doesnt work
@@ -144,7 +144,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
@@ -171,7 +171,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
@@ -200,7 +200,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
             {
               avatar: (
                 <>
-                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 </>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,

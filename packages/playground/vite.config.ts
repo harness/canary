@@ -10,7 +10,6 @@ const external = [
   'react-dom',
   'lodash-es',
   'moment',
-  '@harnessio/icons-noir',
   '@harnessio/canary',
   '@harnessio/forms',
   '@harnessio/unified-pipeline',

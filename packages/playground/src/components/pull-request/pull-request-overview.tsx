@@ -160,7 +160,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       {
                         avatar: (
                           <>
-                            <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                            <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                           </>
                         ),
                         name: (payload?.author as PayloadAuthor)?.display_name,
@@ -198,9 +198,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           {commentItems?.map((commentItem, idx) => {
                             return (
                               <PullRequestTimelineItem
-                                icon={
-                                  <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
-                                }
+                                icon={<div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>}
                                 isLast={commentItems.length - 1 === idx}
                                 header={[
                                   {
@@ -240,7 +238,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     {
                       avatar: (
                         <>
-                          <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                          <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                         </>
                       ),
                       name: (payload?.author as PayloadAuthor)?.display_name,
@@ -253,9 +251,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       {commentItems?.map((commentItem, idx) => {
                         return (
                           <PullRequestTimelineItem
-                            icon={
-                              <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
-                            }
+                            icon={<div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>}
                             isLast={commentItems.length - 1 === idx}
                             header={[
                               {

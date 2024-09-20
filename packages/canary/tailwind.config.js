@@ -17,72 +17,72 @@ export default {
         sans: ['Inter', 'sans-serif']
       },
       colors: {
-        border: 'hsl(var(--border))',
-        'border-background': 'hsl(var(--border-background))',
-        input: 'hsl(var(--input))',
-        'input-background': 'hsl(var(--input-background))',
-        ring: 'hsl(var(--ring))',
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        border: 'hsl(var(--canary-border))',
+        'border-background': 'hsl(var(--canary-border-background))',
+        input: 'hsl(var(--canary-input))',
+        'input-background': 'hsl(var(--canary-input-background))',
+        ring: 'hsl(var(--canary-ring))',
+        background: 'hsl(var(--canary-background))',
+        foreground: 'hsl(var(--canary-foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          background: 'hsl(var(--primary-background))',
-          foreground: 'hsl(var(--primary-foreground))',
-          muted: 'hsl(var(--primary-muted))',
-          accent: 'hsl(var(--primary-accent))'
+          DEFAULT: 'hsl(var(--canary-primary))',
+          background: 'hsl(var(--canary-primary-background))',
+          foreground: 'hsl(var(--canary-primary-foreground))',
+          muted: 'hsl(var(--canary-primary-muted))',
+          accent: 'hsl(var(--canary-primary-accent))'
         },
         secondary: {
-          DEFAULT: 'hsl(var(--secondary))',
-          background: 'hsl(var(--secondary-background))',
-          foreground: 'hsl(var(--secondary-foreground))',
-          muted: 'hsl(var(--secondary-muted))'
+          DEFAULT: 'hsl(var(--canary-secondary))',
+          background: 'hsl(var(--canary-secondary-background))',
+          foreground: 'hsl(var(--canary-secondary-foreground))',
+          muted: 'hsl(var(--canary-secondary-muted))'
         },
         tertiary: {
-          DEFAULT: 'hsl(var(--tertiary))',
-          foreground: 'hsl(var(--tertiary-foreground))',
-          background: 'hsl(var(--tertiary-background))'
+          DEFAULT: 'hsl(var(--canary-tertiary))',
+          foreground: 'hsl(var(--canary-tertiary-foreground))',
+          background: 'hsl(var(--canary-tertiary-background))'
         },
         destructive: {
-          DEFAULT: 'hsl(var(--destructive))',
-          foreground: 'hsl(var(--destructive-foreground))'
+          DEFAULT: 'hsl(var(--canary-destructive))',
+          foreground: 'hsl(var(--canary-destructive-foreground))'
         },
         muted: {
-          DEFAULT: 'hsl(var(--muted))',
-          foreground: 'hsl(var(--muted-foreground))'
+          DEFAULT: 'hsl(var(--canary-muted))',
+          foreground: 'hsl(var(--canary-muted-foreground))'
         },
         accent: {
-          DEFAULT: 'hsl(var(--accent))',
-          foreground: 'hsl(var(--accent-foreground))'
+          DEFAULT: 'hsl(var(--canary-accent))',
+          foreground: 'hsl(var(--canary-accent-foreground))'
         },
         popover: {
-          DEFAULT: 'hsl(var(--popover))',
-          foreground: 'hsl(var(--popover-foreground))'
+          DEFAULT: 'hsl(var(--canary-popover))',
+          foreground: 'hsl(var(--canary-popover-foreground))'
         },
         card: {
-          DEFAULT: 'hsl(var(--card))',
-          foreground: 'hsl(var(--card-foreground))'
+          DEFAULT: 'hsl(var(--canary-card))',
+          foreground: 'hsl(var(--canary-card-foreground))'
         },
         white: {
-          DEFAULT: 'hsl(var(--white))'
+          DEFAULT: 'hsl(var(--canary-white))'
         },
         black: {
-          DEFAULT: 'hsl(var(--black))'
+          DEFAULT: 'hsl(var(--canary-black))'
         },
         success: {
-          DEFAULT: 'hsl(var(--success))'
+          DEFAULT: 'hsl(var(--canary-success))'
         },
         error: {
-          DEFAULT: 'hsl(var(--error))'
+          DEFAULT: 'hsl(var(--canary-error))'
         },
         warning: {
-          DEFAULT: 'hsl(var(--warning))'
+          DEFAULT: 'hsl(var(--canary-warning))'
         },
         ai: {
-          DEFAULT: 'hsl(var(--ai))'
+          DEFAULT: 'hsl(var(--canary-ai))'
         }
       },
       borderRadius: {
-        DEFAULT: 'var(--radius)'
+        DEFAULT: 'var(--canary-radius)'
       },
       border: {
         DEFAULT: '1px'
@@ -118,10 +118,10 @@ export default {
       addUtilities({
         '.tabnav-active': {
           boxShadow:
-            'inset 0 1px 0 0 hsl(var(--border-background)), inset 1px 0 0 0 hsl(var(--border-background)), inset -1px 0 0 0 hsl(var(--border-background))'
+            'inset 0 1px 0 0 hsl(var(--canary-border-background)), inset 1px 0 0 0 hsl(var(--canary-border-background)), inset -1px 0 0 0 hsl(var(--canary-border-background))'
         },
         '.tabnav-inactive': {
-          boxShadow: 'inset 0 -1px 0 0 hsl(var(--border-background))'
+          boxShadow: 'inset 0 -1px 0 0 hsl(var(--canary-border-background))'
         }
       })
     }

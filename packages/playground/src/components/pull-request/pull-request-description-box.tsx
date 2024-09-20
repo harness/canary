@@ -25,7 +25,7 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({ isLast, author,
         {
           avatar: (
             <>
-              <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>{' '}
+              <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>{' '}
             </>
           ),
           name: author,

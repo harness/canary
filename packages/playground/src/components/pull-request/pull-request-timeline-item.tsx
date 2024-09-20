@@ -72,7 +72,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
             {/* TODO: will have to eventually implement a commenting and reply system similiar to gitness */}
             {!hideReply && (
               <div className="flex items-center gap-3 border-t px-4 py-4">
-                <div className='h-6 w-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                <div className="h-6 w-6 rounded-full bg-tertiary-background  bg-cover"></div>
                 <Input
                   value={comment}
                   placeholder={'Reply here'}

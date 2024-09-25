@@ -1,4 +1,16 @@
-import { ListActions, Spacer, Text } from '@harnessio/canary'
+import {
+  ListActions,
+  Spacer,
+  Text,
+  ListPagination,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationLink,
+  PaginationEllipsis,
+  PaginationNext
+} from '@harnessio/canary'
 import { BranchSelector, NoData, PaddingListLayout, PullRequestCommits, SkeletonList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import {
@@ -26,8 +38,11 @@ export default function RepoCommitsPage() {
 
   const { data: commitData, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10, git_ref: normalizeGitRef(selectedBranch) }
+
+    queryParams: { page: 2, limit: 10, git_ref: normalizeGitRef(selectedBranch) }
   })
+
+  console.log(commitData)
 
   useEffect(() => {
     if (repository) {
@@ -90,6 +105,44 @@ export default function RepoCommitsPage() {
       <Spacer size={5} />
       {renderContent()}
       <Spacer size={8} />
+      <ListPagination.Root>
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious size="sm" href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink isActive size="sm_icon" href="#">
+                1
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink size="sm_icon" href="#">
+                2
+              </PaginationLink>
+            </PaginationItem>
+
+            <PaginationItem>
+              <PaginationLink size="sm_icon" href="#">
+                <PaginationEllipsis />
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink size="sm_icon" href="#">
+                4
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink size="sm_icon" href="#">
+                5
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext size="sm" href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      </ListPagination.Root>
     </PaddingListLayout>
   )
 }

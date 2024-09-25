@@ -8,7 +8,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext
 } from '@harnessio/canary'
 import { BranchSelector, NoData, PaddingListLayout, PullRequestCommits, SkeletonList } from '@harnessio/playground'
@@ -35,14 +34,24 @@ export default function RepoCommitsPage() {
     queryParams: { page: 0, limit: 10 }
   })
   const [selectedBranch, setSelectedBranch] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const { data: commitData, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
 
-    queryParams: { page: 2, limit: 10, git_ref: normalizeGitRef(selectedBranch) }
+    queryParams: { page: currentPage, limit: 10, git_ref: normalizeGitRef(selectedBranch), include_stats: true }
   })
 
-  console.log(commitData)
+  // const totalPages = commitData?.total_commits
+  const totalPages = 10
+
+  // console.log(commitData)
+  // console.log(repoMetaData)
+  // console.log(currentPage)
+
+  const handleClick = (page: number) => {
+    setCurrentPage(page)
+  }
 
   useEffect(() => {
     if (repository) {
@@ -109,36 +118,36 @@ export default function RepoCommitsPage() {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious size="sm" href="#" />
+              <PaginationPrevious
+                size="sm"
+                href="#"
+                onClick={() => currentPage > 1 && handleClick(currentPage - 1)}
+                isActive={currentPage > 1}
+              />
             </PaginationItem>
-            <PaginationItem>
-              <PaginationLink isActive size="sm_icon" href="#">
-                1
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                2
-              </PaginationLink>
-            </PaginationItem>
-
-            <PaginationItem>
+            {/* <PaginationItem>
               <PaginationLink size="sm_icon" href="#">
                 <PaginationEllipsis />
               </PaginationLink>
-            </PaginationItem>
+            </PaginationItem> */}
+            {Array.from({ length: totalPages }, (_, index) => (
+              <PaginationItem key={index}>
+                <PaginationLink
+                  isActive={currentPage === index + 1}
+                  size="sm_icon"
+                  href="#"
+                  onClick={() => handleClick(index + 1)}>
+                  {index + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
             <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                4
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                5
-              </PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext size="sm" href="#" />
+              <PaginationNext
+                size="sm"
+                href="#"
+                onClick={() => handleClick(currentPage + 1)}
+                // isActive={currentPage < totalPages}
+              />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

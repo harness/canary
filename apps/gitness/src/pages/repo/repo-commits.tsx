@@ -146,7 +146,7 @@ export default function RepoCommitsPage() {
                 size="sm"
                 href="#"
                 onClick={() => handleClick(currentPage + 1)}
-                // isActive={currentPage < totalPages}
+                isActive={currentPage < totalPages}
               />
             </PaginationItem>
           </PaginationContent>

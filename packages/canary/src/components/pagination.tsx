@@ -64,11 +64,15 @@ const PaginationPrevious = ({ isActive, className, ...props }: React.ComponentPr
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = ({ isActive, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
-    className={cn('gap-1.5 pr-2.5 text-sm font-normal bg-transparent', className)}
+    className={cn(
+      'gap-1.5 pr-2.5 text-sm font-normal bg-transparent',
+      { 'text-tertiary-background opacity-50 cursor-default': !isActive },
+      className
+    )}
     {...props}>
     <span>Next</span>
     <Icon name="arrow-long" size={12} />

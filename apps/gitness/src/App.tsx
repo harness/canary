@@ -22,6 +22,7 @@ import RepoWebhooksListPage from './pages/repo/repo-webhooks'
 import { ReposBranchesListPage } from './pages/repo/repo-branch-list'
 import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
 import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
+import { RepoFiles } from './pages/repo/repo-files'
 
 export default function App() {
   const router = createBrowserRouter([
@@ -47,8 +48,8 @@ export default function App() {
               element: <RepoSummary />
             },
             {
-              path: 'pull-requests',
-              element: <PullRequestListPage />
+              path: 'code',
+              element: <RepoFiles />
             },
             {
               path: 'pipelines',
@@ -69,6 +70,14 @@ export default function App() {
                   element: <PipelineCreate />
                 }
               ]
+            },
+            {
+              path: 'commits',
+              element: <RepoCommitsPage />
+            },
+            {
+              path: 'pull-requests',
+              element: <PullRequestListPage />
             },
             {
               path: 'pull-requests/:pullRequestId',
@@ -93,14 +102,13 @@ export default function App() {
               ]
             },
             {
-              path: 'commits',
-              element: <RepoCommitsPage />
+              path: 'webhooks',
+              element: <RepoWebhooksListPage />
             },
             {
               path: 'branches',
               element: <ReposBranchesListPage />
-            },
-            { path: 'webhooks', element: <RepoWebhooksListPage /> }
+            }
           ]
         },
         // Pipelines (OUTSIDE REPOS)

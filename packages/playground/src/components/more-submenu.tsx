@@ -46,7 +46,7 @@ export function MoreSubmenu({ showMore, handleMore, onPinItem, pinnedItems }: Mo
                 </Text>
                 <Spacer size={1} />
                 {group.items.map(item => {
-                  const isPinned = pinnedItems.some(pinned => pinned.id === item.id)
+                  const isPinned = pinnedItems?.some(pinned => pinned.id === item.id)
                   const isHovered = hoveredItemId === item.id
                   const iconName = isPinned ? (isHovered ? 'unpin' : item.iconName) : isHovered ? 'pin' : item.iconName
 

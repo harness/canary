@@ -48,7 +48,12 @@ export default function RepoCommitsPage() {
     queryParams: { page: currentPage, limit: 10, git_ref: normalizeGitRef(selectedBranch), include_stats: true }
   })
 
-  // const totalPages = commitData?.total_commits
+  // logic once we have dynamic pagination set up
+
+  // const totalPages = useMemo(() => {
+  //   if (!commitData || !commitData.total_commits) return 0
+  //   return Math.ceil(commitData.total_commits / 10)
+  // }, [commitData])
 
   useEffect(() => {
     if (repository) {

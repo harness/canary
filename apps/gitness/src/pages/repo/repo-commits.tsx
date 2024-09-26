@@ -12,6 +12,8 @@ import {
 } from '@harnessio/canary'
 import { BranchSelector, NoData, PaddingListLayout, PullRequestCommits, SkeletonList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { usePagination } from '../../framework/hooks/usePagination'
+
 import {
   TypesCommit,
   useFindRepositoryQuery,
@@ -25,6 +27,9 @@ const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' },
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
 export default function RepoCommitsPage() {
+  // lack of data: total commits
+  // hardcoded
+  const totalPages = 10
   const repoRef = useGetRepoRef()
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -33,8 +38,9 @@ export default function RepoCommitsPage() {
     repo_ref: repoRef,
     queryParams: { page: 0, limit: 10 }
   })
+  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
+
   const [selectedBranch, setSelectedBranch] = useState<string>('')
-  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const { data: commitData, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
@@ -43,15 +49,6 @@ export default function RepoCommitsPage() {
   })
 
   // const totalPages = commitData?.total_commits
-  const totalPages = 10
-
-  // console.log(commitData)
-  // console.log(repoMetaData)
-  // console.log(currentPage)
-
-  const handleClick = (page: number) => {
-    setCurrentPage(page)
-  }
 
   useEffect(() => {
     if (repository) {
@@ -62,7 +59,6 @@ export default function RepoCommitsPage() {
   const selectBranch = (branch: string) => {
     setSelectedBranch(branch)
   }
-
   const renderContent = () => {
     if (isFetchingCommits) {
       return <SkeletonList />
@@ -121,7 +117,7 @@ export default function RepoCommitsPage() {
               <PaginationPrevious
                 size="sm"
                 href="#"
-                onClick={() => currentPage > 1 && handleClick(currentPage - 1)}
+                onClick={() => currentPage > 1 && previousPage()}
                 isActive={currentPage > 1}
               />
             </PaginationItem>
@@ -145,7 +141,7 @@ export default function RepoCommitsPage() {
               <PaginationNext
                 size="sm"
                 href="#"
-                onClick={() => handleClick(currentPage + 1)}
+                onClick={() => currentPage < totalPages && nextPage()}
                 isActive={currentPage < totalPages}
               />
             </PaginationItem>

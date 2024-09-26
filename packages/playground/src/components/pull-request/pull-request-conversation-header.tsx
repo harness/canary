@@ -53,7 +53,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         <div className="flex space-x-2 text-tertiary-background ">
           <div className="flex gap-2.5 items-center align-middle text-center">
             <Badge disableHover borderRadius="full" theme={merged ? 'emphasis' : 'success'} className={`select-none`}>
-              <Icon name={merged ? 'merged' : 'merged'} size={12} />
+              <Icon name={merged ? 'pr-merged' : 'pr-open'} size={12} />
               &nbsp;{merged ? 'Merged' : 'Open'}
             </Badge>
             <div className="flex gap-2">

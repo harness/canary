@@ -1,14 +1,9 @@
 import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
+import { stringify } from 'yaml'
 import { isEmpty, isUndefined } from 'lodash-es'
 import { Skeleton } from '@harnessio/canary'
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
-// import CreatePipeline from 'pages/CreatePipeline/CreatePipeline'
-import { countProblems, monacoMarkers2Problems } from '../utils/problems-utils'
-import type { YamlProblemSeverity } from '../types/types'
-import type { InlineActionArgsType } from '../utils/inline-actions'
-import { deleteItemInArray, injectItemInArray, updateItemInArray } from '../utils/yaml-utils'
-import { Problem } from '@harnessio/playground'
-import { TypesPlugin } from '../types/api-types'
 import {
   OpenapiGetContentOutput,
   TypesPipeline,
@@ -16,8 +11,14 @@ import {
   useFindPipelineQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { useParams } from 'react-router-dom'
+import { Problem } from '@harnessio/playground'
+import { countProblems, monacoMarkers2Problems } from '../utils/problems-utils'
+import type { YamlProblemSeverity } from '../types/types'
+import type { InlineActionArgsType } from '../utils/inline-actions'
+import { deleteItemInArray, injectItemInArray, updateItemInArray } from '../utils/yaml-utils'
+import { TypesPlugin } from '../types/api-types'
 import { decodeGitContent, normalizeGitRef } from '../../../utils/git-utils'
+import { starterPipelineV1 } from '../utils/pipelines'
 
 // TODO: temp interface for params
 export interface PipelineParams extends Record<string, string> {
@@ -45,6 +46,7 @@ interface PipelineStudioDataContextProps {
     problems: Problem[]
     problemsCount: Record<YamlProblemSeverity | 'all', number>
   }
+  gitInfo: { default_branch: TypesPipeline['default_branch'] }
   // TODO: check if this should be here
   setAddStepIntention: (props: { path: string; position: InlineActionArgsType['position'] }) => void
   clearAddStepIntention: () => void
@@ -78,6 +80,7 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
   setYamlRevision: (_yamlRevision: YamlRevision) => undefined,
   //
   problems: { problems: [], problemsCount: { all: 0, error: 0, info: 0, warning: 0 } },
+  gitInfo: { default_branch: '' },
   //
   setAddStepIntention: (_props: { path: string; position: InlineActionArgsType['position'] } | null) => undefined,
   clearAddStepIntention: () => undefined,
@@ -124,16 +127,13 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
   const { pipelineId = '', repoId, spaceId } = useParams<PipelineParams>()
   const repoRef = `${spaceId}/${repoId}/+`
 
-  const { data, isLoading: fetchingPipeline } = useFindPipelineQuery({
+  const { data: pipelineData, isLoading: fetchingPipeline } = useFindPipelineQuery({
     pipeline_identifier: pipelineId,
     repo_ref: repoRef
   })
-  // TODO: style and model does not match
-  const pipelineData = (data as { content: unknown })?.content as TypesPipeline | undefined
 
   const {
-    data: pipelineYAMLFileContentRaw,
-    error: pipelineYAMLFileError,
+    data: pipelineYAMLFileContent,
     isLoading: fetchingPipelineYAMLFileContent,
     refetch: fetchPipelineYAMLFileContent
   } = useGetContentQuery(
@@ -142,12 +142,11 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
       repo_ref: repoRef,
       queryParams: { git_ref: normalizeGitRef(pipelineData?.default_branch) ?? '', include_commit: true }
     },
-    { enabled: !!pipelineData?.default_branch }
+    {
+      enabled: !!pipelineData?.default_branch,
+      retry: false
+    }
   )
-  // TODO: style and model does not match
-  const pipelineYAMLFileContent = (pipelineYAMLFileContentRaw as { content: unknown })?.content as
-    | OpenapiGetContentOutput
-    | undefined
 
   const latestCommitAuthor = useMemo(
     () => pipelineYAMLFileContent?.latest_commit?.author ?? null,
@@ -159,8 +158,11 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
   }, [pipelineYAMLFileContent?.content?.data])
 
   useEffect(() => {
-    setIsExistingPipeline(!isEmpty(decodedPipelineYaml) && !isUndefined(decodedPipelineYaml))
-  }, [decodedPipelineYaml])
+    if (fetchingPipelineYAMLFileContent === false) {
+      setIsExistingPipeline(!isEmpty(decodedPipelineYaml) && !isUndefined(decodedPipelineYaml))
+      setYamlRevision({ yaml: stringify(starterPipelineV1) })
+    }
+  }, [decodedPipelineYaml, fetchingPipelineYAMLFileContent])
 
   useEffect(() => {
     const yaml = decodeGitContent(pipelineYAMLFileContent?.content?.data)
@@ -231,21 +233,6 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
     return decodeGitContent(pipelineYAMLFileContent?.content?.data) !== yamlRevision.yaml
   }, [yamlRevision.yaml, pipelineYAMLFileContent?.content?.data])
 
-  // if (!isLoading && !yamlRevision.yaml) {
-  //   return (
-  //     <CreatePipeline
-  //       setYaml={(aiYaml: string) => {
-  //         setYamlRevision({ yaml: aiYaml })
-  //       }}
-  //     />
-  //   )
-  // }
-
-  if (pipelineYAMLFileError) {
-    // TODO
-    return <>Something went wrong</>
-  }
-
   if (fetchingPipelineYAMLFileContent || fetchingPipeline) {
     return (
       <div className="flex flex-col flex-1 gap-2 px-4 py-3 h-full items-center justify-center">
@@ -266,6 +253,7 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
         setYamlRevision,
         //
         problems: problemsData,
+        gitInfo: { default_branch: pipelineData?.default_branch || '' },
         //
         addStepIntention,
         setAddStepIntention,

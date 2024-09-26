@@ -48,6 +48,12 @@ import { SandboxSettingsAccountKeysPage } from './pages/sandbox-settings-account
 import { SandboxSettingsProjectPage } from './pages/sandbox-settings-project-page'
 import { SandboxSettingsProjectGeneralPage } from './pages/sandbox-settings-project-general-page'
 import { SandboxSettingsProjectMembersPage } from './pages/sandbox-settings-project-members-page'
+import { SandboxRepoCreatePage } from './pages/sandbox-repo-create-page'
+import { SandboxRepoSettingsPage } from './pages/sandbox-repo-settings-page'
+import { RepoSettingsGeneralPage } from './pages/repo-settings-general-page'
+import { RepoSettingsCollaborationsPage } from './pages/repo-settings-collaborations-page'
+import { RepoSettingsModerationPage } from './pages/repo-settings-moderation-page'
+import { RepoSettingsPlaceholderPage } from './pages/repo-settings-placeholder-page'
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX
@@ -65,6 +71,10 @@ const router = createBrowserRouter([
             element: <SandboxRepoListPage />
           },
           {
+            path: 'create',
+            element: <SandboxRepoCreatePage />
+          },
+          {
             path: ':repoId',
             element: <SandboxRepoSinglePage />, // Contains the nav tabs header AND inherits the breadcrumbs header
             children: [
@@ -75,11 +85,38 @@ const router = createBrowserRouter([
               {
                 path: 'code',
                 element: <SandboxRepoCodePage />
+              },
+              {
+                path: 'settings',
+                element: <SandboxRepoSettingsPage />,
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to="general" />
+                  },
+                  {
+                    path: 'general',
+                    element: <RepoSettingsGeneralPage />
+                  },
+                  {
+                    path: 'collaborations',
+                    element: <RepoSettingsCollaborationsPage />
+                  },
+                  {
+                    path: 'moderation',
+                    element: <RepoSettingsModerationPage />
+                  },
+                  {
+                    path: '*',
+                    element: <RepoSettingsPlaceholderPage />
+                  }
+                ]
               }
             ]
           }
         ]
       },
+
       {
         path: 'executions',
         element: <SandboxExecutions />,
@@ -192,7 +229,7 @@ const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Navigate to="summary" />
+            element: <Navigate to="/sandbox/repos/drone/summary" />
           },
           {
             path: 'summary',

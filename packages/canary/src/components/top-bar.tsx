@@ -2,7 +2,7 @@ import React from 'react'
 
 function Root({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full grid grid-cols-[1fr_auto] px-8 h-14 gap-6 border-b border-border-background items-center text-sm font-regular">
+    <div className="w-full grid grid-cols-[1fr_auto] px-8 h-[55px] gap-6 border-b border-border-background items-center text-sm font-regular">
       {children}
     </div>
   )

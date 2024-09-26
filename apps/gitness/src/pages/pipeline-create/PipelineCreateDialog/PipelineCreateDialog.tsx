@@ -32,7 +32,7 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
         body: { config_path: yamlPath, default_branch: branch, identifier: name }
       })
 
-      navigate(`/${spaceId}/${repoId}/pipelines/${name}/edit`)
+      navigate(`/${spaceId}/repos/${repoId}/pipelines/${name}/edit`)
     } catch (e) {
       //🚨 Handle error by showing toast
 

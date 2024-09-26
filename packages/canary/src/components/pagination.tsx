@@ -28,6 +28,7 @@ PaginationItem.displayName = 'PaginationItem'
 
 type PaginationLinkProps = {
   isActive?: boolean
+  disabled?: boolean
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
@@ -40,7 +41,8 @@ const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkP
         size: size ? size : 'sm_icon',
         borderRadius: 'full'
       }),
-      'text-[12px] font-normal',
+      'text-[12px] font-normal min-w-7 px-1.5 w-auto',
+      { 'bg-primary/15': isActive },
       className
     )}
     {...props}
@@ -48,29 +50,29 @@ const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkP
 )
 PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ isActive, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationPrevious = ({ disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
     className={cn(
-      'gap-1.5 pl-2.5 text-sm font-normal bg-transparent',
-      { 'text-tertiary-background opacity-50 cursor-default': !isActive },
+      'gap-1.5 pl-2.5 text-sm font-normal bg-transparent, cursor-pointer',
+      { 'text-tertiary-background cursor-default opacity-40 hover:bg-transparent pointer-events-none': disabled },
       className
     )}
     {...props}>
-    <Icon name="arrow-long" size={12} className="rotate-180 text-tertiary-background opacity-50" />
+    <Icon name="arrow-long" size={12} className="rotate-180 text-tertiary-background" />
     <span>Previous</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ isActive, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = ({ disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
     className={cn(
-      'gap-1.5 pr-2.5 text-sm font-normal bg-transparent',
-      { 'text-tertiary-background opacity-50 cursor-default': !isActive },
+      'gap-1.5 pr-2.5 text-sm font-normal bg-transparent, cursor-pointer',
+      { 'text-tertiary-background cursor-default opacity-40 hover:bg-transparent pointer-events-none': disabled },
       className
     )}
     {...props}>

@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useParams } from 'react-router-dom'
 import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 import { Floating1ColumnLayout, PullRequestHeader } from '@harnessio/playground'
 import { TypesPullReq, useGetPullReqQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { PathParams } from '../RouteDefinitions'
 
 const PullRequestLayout: React.FC = () => {
   const [pullRequest, setPullRequest] = useState<TypesPullReq>()
   const repoRef = useGetRepoRef()
-
+  const { pullRequestId } = useParams<PathParams>()
+  const prId = (pullRequestId && Number(pullRequestId)) || -1
   const { data: pullRequestData, isFetching } = useGetPullReqQuery({
     repo_ref: repoRef,
-    pullreq_number: 1
+    pullreq_number: prId
   })
 
   useEffect(() => {
@@ -19,7 +21,6 @@ const PullRequestLayout: React.FC = () => {
       setPullRequest(pullRequestData)
     }
   }, [pullRequestData, isFetching])
-
   return (
     <>
       <Floating1ColumnLayout>

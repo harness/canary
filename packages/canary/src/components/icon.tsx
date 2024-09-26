@@ -83,6 +83,7 @@ import SearchContent from '../icons/search-content.svg'
 import Chain from '../icons/chain.svg'
 import ShieldTick from '../icons/shield-tick.svg'
 import CloudMining from '../icons/cloud-mining.svg'
+import PRMerged from '../icons/pr-merged.svg'
 // import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
@@ -169,7 +170,8 @@ const IconNameMap = {
   'search-content': SearchContent,
   chain: Chain,
   'shield-tick': ShieldTick,
-  'cloud-mining': CloudMining
+  'cloud-mining': CloudMining,
+  'pr-merged': PRMerged
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

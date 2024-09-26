@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider, Root, Trigger, Content } from '@radix-ui/react-tooltip'
+import { Provider, Root, Trigger, Content, Arrow } from '@radix-ui/react-tooltip'
 
 import { cn } from '@/lib/utils'
 
@@ -19,4 +19,10 @@ const TooltipContent = React.forwardRef<
 ))
 TooltipContent.displayName = Content.displayName
 
-export { Root as Tooltip, Trigger as TooltipTrigger, TooltipContent, Provider as TooltipProvider }
+export {
+  Root as Tooltip,
+  Trigger as TooltipTrigger,
+  TooltipContent,
+  Provider as TooltipProvider,
+  Arrow as TooltipArrow
+}

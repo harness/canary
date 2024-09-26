@@ -15,7 +15,7 @@ import {
   PaginationEllipsis,
   PaginationNext
 } from '@harnessio/canary'
-import { ExecutionList } from '../components/execution-list'
+import { type Execution, ExecutionList } from '../components/execution-list'
 import { PaddingListLayout } from '../layouts/PaddingListLayout'
 import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoSearchResults } from '../components/no-search-results'
@@ -24,10 +24,9 @@ import { PlaygroundListSettings } from '../settings/list-settings'
 import { TopBarWidget } from '../components/layout/top-bar-widget'
 import { mockProjects } from '../data/mockProjects'
 
-const mockExecutions = [
+const mockExecutions: Execution[] = [
   {
     id: '1',
-    number: 733,
     success: true,
     name: 'removing duplicated metrics for servers and swapping to pattern math…',
     sha: '93dbd09a',
@@ -38,7 +37,6 @@ const mockExecutions = [
   },
   {
     id: '2',
-    number: 732,
     success: true,
     name: '(fix) CI-9642 update go version, remove cli warning messages',
     sha: '366177a6',
@@ -49,7 +47,6 @@ const mockExecutions = [
   },
   {
     id: '3',
-    number: 731,
     success: true,
     name: 'Bump github.com/containerd/containerd from 1.6.8 to 1.6.18',
     sha: 'da7c1c67',
@@ -60,7 +57,6 @@ const mockExecutions = [
   },
   {
     id: '4',
-    number: 730,
     success: true,
     name: '(fix) setup dependencies in drone build',
     sha: '93dbd09a',
@@ -72,7 +68,6 @@ const mockExecutions = [
 
   {
     id: '5',
-    number: 729,
     success: false,
     name: 'Add support for jpath in jsonnet (#224) * Add support for jpath in jsonnet Co-a',
     sha: 'fe54f9b1',
@@ -83,7 +78,6 @@ const mockExecutions = [
   },
   {
     id: '6',
-    number: 728,
     success: true,
     name: 'fix: use right parameter name for secrets-file',
     sha: 'b7765ad1',
@@ -180,11 +174,8 @@ function ExecutionListPage() {
                     2
                   </PaginationLink>
                 </PaginationItem>
-
                 <PaginationItem>
-                  <PaginationLink size="sm_icon" href="#">
-                    <PaginationEllipsis />
-                  </PaginationLink>
+                  <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink size="sm_icon" href="#">

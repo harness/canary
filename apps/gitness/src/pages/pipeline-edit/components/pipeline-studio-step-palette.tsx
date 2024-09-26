@@ -1,22 +1,14 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  Input,
-  Icon,
-  Button
-} from '@harnessio/canary'
-import { ListPluginsOkResponse, useListPluginsQuery } from '@harnessio/code-service-client'
+import React, { useEffect, useState } from 'react'
+import { Input, Icon, Button } from '@harnessio/canary'
+import { useListPluginsQuery } from '@harnessio/code-service-client'
 import {
   StepForm,
   StepsPalette,
   StepsPaletteContent,
   StepsPaletteItem,
-  StepPaletteFilters
+  StepPaletteFilters,
+  RUN_STEP_IDENTIFIER,
+  RUN_STEP_DESCRIPTION
 } from '@harnessio/playground'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
@@ -34,13 +26,8 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
   const [pluginsData, setPluginsData] = useState<TypesPlugin[]>([])
 
   // TODO: only 100 items
-  const { data: pluginsResponseRaw } = useListPluginsQuery({ queryParams: { limit: 100, page: 1 } })
+  const { data: pluginsResponse } = useListPluginsQuery({ queryParams: { limit: 100, page: 1 } })
 
-  // TODO: response type
-  const pluginsResponse = useMemo(
-    () => (pluginsResponseRaw as unknown as { content: ListPluginsOkResponse | undefined })?.content,
-    [pluginsResponseRaw]
-  )
   useEffect(() => {
     // TODO: Do not parse all plugins in advance  - check if its not needed (wrap inside try...catch)
     // TODO: duplicated code
@@ -50,7 +37,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
   return (
     <StepsPalette.Root>
       <StepsPalette.Header>
-        <Breadcrumb>
+        {/* <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink>Deploy to Dev</BreadcrumbLink>
@@ -60,7 +47,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
               <BreadcrumbLink>Add Step</BreadcrumbLink>
             </BreadcrumbPage>
           </BreadcrumbList>
-        </Breadcrumb>
+        </Breadcrumb> */}
 
         <StepsPalette.Title>Add Step</StepsPalette.Title>
         {/* TODO leftIcon={<Search />} */}
@@ -73,8 +60,11 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
           <StepsPaletteContent.SectionItem>
             <StepsPaletteItem.Root
               onClick={() => {
-                // TODO: duplicated run step form def
-                setCurrentStepFormDefinition({ identifier: 'run', description: 'Run step description.', type: 'step' })
+                setCurrentStepFormDefinition({
+                  identifier: RUN_STEP_IDENTIFIER,
+                  description: RUN_STEP_DESCRIPTION,
+                  type: 'step'
+                })
                 setStepDrawerOpen(StepDrawer.Form)
               }}>
               <StepsPaletteItem.Left>
@@ -85,7 +75,7 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
                   <StepsPaletteItem.Title>run</StepsPaletteItem.Title>
                   <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper>
                 </StepsPaletteItem.Header>
-                <StepsPaletteItem.Description>Run step description.</StepsPaletteItem.Description>
+                <StepsPaletteItem.Description>{RUN_STEP_DESCRIPTION}</StepsPaletteItem.Description>
               </StepsPaletteItem.Right>
             </StepsPaletteItem.Root>
           </StepsPaletteContent.SectionItem>

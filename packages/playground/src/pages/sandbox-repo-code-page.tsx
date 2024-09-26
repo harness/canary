@@ -1,23 +1,12 @@
 import React, { useState } from 'react'
 import { noop, pick } from 'lodash-es'
-import {
-  Spacer,
-  ListActions,
-  Button,
-  Text,
-  Icon,
-  ButtonGroup,
-  SearchBox,
-  Accordion,
-  AccordionTrigger,
-  AccordionItem,
-  cn
-} from '@harnessio/canary'
+import { Spacer, ListActions, Button, Text, Icon, ButtonGroup, SearchBox } from '@harnessio/canary'
 import { Summary } from '../components/repo-summary'
 import { BranchSelector } from '../components/branch-chooser'
 import { mockFiles } from '../data/mockSummaryFiiles'
-import { SandboxLayout } from '..'
+import { SandboxLayout, FileExplorer } from '..'
 import { PlaygroundSandboxLayoutSettings } from '../settings/sandbox-settings'
+import { Link } from 'react-router-dom'
 
 const mockBranchList = [
   {
@@ -39,7 +28,7 @@ const sidebarItems = [
   { id: 1, type: 'folder', name: 'build' },
   { id: 2, type: 'folder', name: 'assets' },
   { id: 3, type: 'folder', name: 'src' },
-  { id: 4, type: 'folder', name: 'utils' },
+  { id: 4, type: 'folder', name: 'utils-and-tools-misc-2024' },
   { id: 5, type: 'folder', name: 'hooks' },
   { id: 6, type: 'folder', name: 'styles' },
   { id: 7, type: 'folder', name: 'config' },
@@ -47,7 +36,7 @@ const sidebarItems = [
   { id: 9, type: 'file', name: 'index.js' },
   { id: 10, type: 'file', name: 'App.js' },
   { id: 11, type: 'file', name: 'README.md' },
-  { id: 12, type: 'file', name: 'package.json' },
+  { id: 12, type: 'file', name: 'package-1239568483438.json' },
   { id: 13, type: 'file', name: 'webpack.config.js' },
   { id: 14, type: 'file', name: '.eslintrc.js' },
   { id: 15, type: 'file', name: '.gitignore' },
@@ -77,6 +66,7 @@ const sidebarItems = [
   { id: 40, type: 'file', name: 'nginx.conf' }
 ]
 
+// Move sidebar function to playground components
 function Sidebar() {
   return (
     <div className="flex flex-col gap-5">
@@ -94,20 +84,55 @@ function Sidebar() {
         </ButtonGroup.Root>
       </div>
       <SearchBox.Root width="full" placeholder="Search" />
-      <div className="flex flex-col">
-        <Accordion type="multiple">
-          {sidebarItems.map(item => (
-            <AccordionItem key={item.id} value={item.id.toString()} className="border-none">
-              <AccordionTrigger className={cn('text-tertiary-background py-1.5', { 'text-primary': item.id === 3 })}>
-                <div className="flex gap-1.5 items-center">
-                  <Icon name={item.type} size={14} />
-                  <Text className="text-inherit">{item.name}</Text>
-                </div>
-              </AccordionTrigger>
-            </AccordionItem>
-          ))}
-        </Accordion>
-      </div>
+      <FileExplorer.Root>
+        {/* 2 nested levels of identical data for demo purposes */}
+        {sidebarItems.map((itm, itm_idx) =>
+          itm.type === 'file' ? (
+            <Link to="#">
+              <FileExplorer.FileItem key={itm.id.toString()}>{itm.name}</FileExplorer.FileItem>
+            </Link>
+          ) : (
+            <FileExplorer.FolderItem
+              key={itm.id.toString()}
+              value={itm.id.toString()}
+              isActive={itm_idx === 3}
+              content={
+                <FileExplorer.Root>
+                  {sidebarItems.map(itm =>
+                    itm.type === 'file' ? (
+                      <Link to="#">
+                        <FileExplorer.FileItem key={itm.id.toString()}>{itm.name}</FileExplorer.FileItem>
+                      </Link>
+                    ) : (
+                      <FileExplorer.FolderItem
+                        key={itm.id.toString()}
+                        value={itm.id.toString()}
+                        content={
+                          <FileExplorer.Root>
+                            {sidebarItems.map(itm =>
+                              itm.type === 'file' ? (
+                                <Link to="#">
+                                  <FileExplorer.FileItem key={itm.id.toString()}>{itm.name}</FileExplorer.FileItem>
+                                </Link>
+                              ) : (
+                                <FileExplorer.FolderItem key={itm.id.toString()} value={itm.id.toString()}>
+                                  {itm.name}
+                                </FileExplorer.FolderItem>
+                              )
+                            )}
+                          </FileExplorer.Root>
+                        }>
+                        {itm.name}
+                      </FileExplorer.FolderItem>
+                    )
+                  )}
+                </FileExplorer.Root>
+              }>
+              {itm.name}
+            </FileExplorer.FolderItem>
+          )
+        )}
+      </FileExplorer.Root>
     </div>
   )
 }

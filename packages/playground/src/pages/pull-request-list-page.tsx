@@ -258,11 +258,8 @@ function PullRequestListPage() {
                     2
                   </PaginationLink>
                 </PaginationItem>
-
                 <PaginationItem>
-                  <PaginationLink size="sm_icon" href="#">
-                    <PaginationEllipsis />
-                  </PaginationLink>
+                  <PaginationEllipsis />
                 </PaginationItem>
                 <PaginationItem>
                   <PaginationLink size="sm_icon" href="#">

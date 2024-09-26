@@ -38,10 +38,17 @@ const HeaderTitle = ({
         onClick={() => setHeaderFilter('open')}
         className={cx('flex gap-2 items-center', {
           'text-white': headerFilter === 'open',
-          'text-tertiary-background': headerFilter !== 'open'
+          'text-tertiary-background': headerFilter === 'closed'
         })}>
-        <Icon size={16} name="merged" />
-        <Text size={2} truncate>
+        <Icon size={16} name="pr-open" />
+        <Text
+          color={headerFilter === 'open' ? 'primary' : headerFilter === 'closed' ? 'tertiaryBackground' : undefined}
+          className={cx({
+            'text-white': headerFilter === 'open',
+            '!text-tertiary-background': headerFilter === 'closed'
+          })}
+          size={2}
+          truncate>
           122 Open
         </Text>
       </div>
@@ -49,10 +56,16 @@ const HeaderTitle = ({
         onClick={() => setHeaderFilter('closed')}
         className={cx('flex gap-2 items-center', {
           'text-white': headerFilter === 'closed',
-          'text-tertiary-background': headerFilter !== 'closed'
+          'text-tertiary-background': headerFilter === 'open'
         })}>
         <Icon size={12} name="tick" />
-        <Text size={2} truncate>
+        <Text
+          className={cx('flex gap-2 items-center', {
+            'text-white': headerFilter === 'closed',
+            'text-tertiary-background': headerFilter === 'open'
+          })}
+          size={2}
+          truncate>
           8,128 Closed
         </Text>
       </div>
@@ -71,19 +84,22 @@ const colorMapping: { [key: string]: { border: string; text: string; bg: string 
 const Title = ({
   success,
   title,
-  labels
+  labels,
+  state
 }: {
+  state?: string
   success: boolean
   title: string
   labels: { text: string; color: string }[]
 }) => {
   return (
     <div className="flex gap-2 items-center">
-      {typeof success === 'boolean' ? (
-        <Icon size={16} name={success ? 'merged' : 'pr-draft'} />
-      ) : (
-        <div className="w-4 h-4 rounded-full bg-primary/5 border border-muted border-dotted" />
-      )}
+      <Icon
+        size={16}
+        className={cx({ 'text-success': state === 'open' })}
+        name={state === 'open' ? 'pr-open' : success ? 'pr-merge' : state === 'closed' ? 'pr-closed' : 'pr-draft'}
+      />
+
       <Text size={2} truncate>
         {title}
       </Text>
@@ -171,7 +187,6 @@ export function PullRequestList({ pullRequests, LinkComponent }: PageProps) {
       }),
     [headerFilter]
   )
-
   return (
     <>
       {filteredData && filteredData.length > 0 && (
@@ -191,6 +206,7 @@ export function PullRequestList({ pullRequests, LinkComponent }: PageProps) {
                       title={
                         pullRequest.name && (
                           <Title
+                            state={pullRequest.state}
                             success={pullRequest.merged ? true : false}
                             title={pullRequest.name}
                             labels={pullRequest.labels || []}

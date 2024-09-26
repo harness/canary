@@ -1,7 +1,6 @@
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { cn } from '../lib/utils'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import moment from 'moment'
 import { NavArrowRight, NavArrowDown, Circle, CheckCircleSolid, XmarkCircleSolid } from '@harnessio/icons-noir'
 import React, { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
@@ -9,12 +8,15 @@ enum Status {
   QUEUED,
   IN_PROGRESS,
   SUCCESS,
-  FAILED
+  FAILED,
+  SKIPPED,
+  UNKNOWN
 }
 
 type ExecutionDetail = {
   status: Status
-  duration?: number
+  /* formatted duration */
+  duration?: string
 }
 
 const getStatusIcon = (status: Status): React.ReactElement => {
@@ -27,16 +29,12 @@ const getStatusIcon = (status: Status): React.ReactElement => {
       return <CheckCircleSolid color="#63E9A6" size="16" />
     case Status.FAILED:
       return <XmarkCircleSolid color="#db6662" size="16" />
+    case Status.SKIPPED:
+      return <Circle size="16" />
+    case Status.UNKNOWN:
     default:
       return <></>
   }
-}
-
-const formatDuration = (seconds: number): string => {
-  const duration = moment.duration(seconds, 'seconds')
-  const minutes = String(duration.minutes()).padStart(2, '0')
-  const secs = String(duration.seconds()).padStart(2, '0')
-  return `${minutes}:${secs}`
 }
 
 type TreeViewElement = {
@@ -232,7 +230,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
                 {element}&nbsp;<span className="text-[#787887]">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="text-[#93939F]">{duration ? formatDuration(duration) : '--'}</span>
+            <span className="text-[#93939F]">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
         <AccordionPrimitive.Content className="text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative overflow-hidden h-full">
@@ -307,7 +305,7 @@ const File = forwardRef<
               <div className="flex self-center h-4 w-4 mr-1">{getStatusIcon(status)}</div>
               <span className="ml-1 font-normal text-sm">{children}</span>
             </div>
-            <span className="text-[#93939F]">{duration ? formatDuration(duration) : '--'}</span>
+            <span className="text-[#93939F]">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

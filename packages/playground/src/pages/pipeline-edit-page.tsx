@@ -50,7 +50,7 @@ import { StepsPaletteContent } from '../components/pipeline-studio/step-palette/
 import { StepsPaletteItem } from '../components/pipeline-studio/step-palette/step-palette-item'
 import { stepPaletteItems } from '../assets/stepPaletteItems'
 import { inputComponentFactory } from '../components/form-inputs/factory/factory'
-import { runStepFormDefinition } from '../assets/form/runStepFormDefinition'
+import { runStepFormDefinition } from '../assets/form/run-step'
 
 MonacoGlobals.set({
   ILanguageFeaturesService,

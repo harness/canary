@@ -2,14 +2,14 @@ import React from 'react'
 import { Tabs, TabsContent, TabsList, TabsTrigger, Input, Button, Text, ScrollArea } from '@harnessio/canary'
 import { Copy, Edit, Download } from '@harnessio/icons-noir'
 import ConsoleLogs from './console-logs'
-import { data } from '../../pages/mocks/execution/mockStepLogs'
 import { Layout } from '../layout/layout'
 import { ExecutionState, ExecutionStatus } from './execution-status'
-import { getDuration } from '../../utils/TimeUtils'
+import { getFormattedDuration } from '../../utils/TimeUtils'
 import { KeyValuePair, KeyValueTable } from './key-value-table'
+import { LivelogLine } from './types'
 
 export interface StepProps {
-  name: string
+  name?: string
   status: ExecutionState
   started?: number
   stopped?: number
@@ -19,7 +19,7 @@ export interface StepProps {
 
 interface StepExecutionProps {
   step: StepProps
-  stepIndex: number
+  logs: LivelogLine[]
 }
 
 enum StepExecutionTab {
@@ -47,14 +47,18 @@ const StepExecutionToolbar: React.FC = () => {
   )
 }
 
-export const StepExecution: React.FC<StepExecutionProps> = ({ step, stepIndex }) => {
+export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs }) => {
+  if (!step) return null
   const inputTable = step?.inputs || []
   const outputTable = step?.outputs || []
   return (
     <Layout.Vertical>
       <Layout.Horizontal className="flex justify-between items-center">
-        <Text className="text-lg">{step.name}</Text>
-        <ExecutionStatus.Badge status={step.status} duration={getDuration(step.started, step.stopped)} />
+        <Text className="text-lg">{step?.name}</Text>
+        <ExecutionStatus.Badge
+          status={step?.status}
+          duration={getFormattedDuration(step?.started ?? 0, step?.stopped ?? 0)}
+        />
       </Layout.Horizontal>
       <Tabs defaultValue={StepExecutionTab.LOG} className="w-full h-full mt-2">
         <Layout.Vertical gap="space-y-3">
@@ -70,7 +74,7 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, stepIndex })
           </Layout.Horizontal>
           <TabsContent value={StepExecutionTab.LOG}>
             <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
-              <ConsoleLogs logs={data[stepIndex]} />
+              <ConsoleLogs logs={logs} />
             </ScrollArea>
           </TabsContent>
           <TabsContent value={StepExecutionTab.INPUT}>

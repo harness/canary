@@ -19,26 +19,50 @@ AccordionItem.displayName = 'AccordionItem'
 type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   hideChevron?: boolean
   leftChevron?: boolean
+  rotateChevron?: boolean
+  chevronClass?: string
 }
 
 const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
-  ({ className, hideChevron = false, leftChevron = false, children, ...props }, ref) => (
+  (
+    {
+      className,
+      hideChevron = false,
+      leftChevron = false,
+      rotateChevron = 'false',
+      chevronClass = '',
+      children,
+      ...props
+    },
+    ref
+  ) => (
     <AccordionPrimitive.Header className="flex">
       <AccordionPrimitive.Trigger
         ref={ref}
         className={cn(
-          'flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all',
+          'group flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all',
           '[&>svg]:data-[state=open]:rotate-180 [&>svg]:ease-in-out [&>svg]:duration-100',
           {
             'cursor-default': hideChevron,
-            'flex-row-reverse gap-3': leftChevron
+            'gap-3': leftChevron,
+            '[&>svg]:-rotate-90 [&>svg]:data-[state=open]:-rotate-0': rotateChevron
           },
           className
         )}
         {...props}>
-        {/* {!hideChevron && leftChevron && <Icon name="chevron-down" className="h-2.5 w-2.5 shrink-0 text-primary" />} */}
+        {leftChevron && !hideChevron && (
+          <Icon
+            name="chevron-down"
+            className={cn('chevron-down h-2.5 w-2.5 min-w-2.5 shrink-0 text-primary', chevronClass)}
+          />
+        )}
         {children}
-        {!hideChevron && <Icon name="chevron-down" className="chevron-down h-2.5 w-2.5 shrink-0 text-primary" />}
+        {!leftChevron && !hideChevron && (
+          <Icon
+            name="chevron-down"
+            className={cn('chevron-down h-2.5 w-2.5 min-w-2.5 shrink-0 text-primary', chevronClass)}
+          />
+        )}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )

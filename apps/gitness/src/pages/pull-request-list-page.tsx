@@ -17,6 +17,7 @@ import { Link } from 'react-router-dom'
 import { PaddingListLayout, SkeletonList, PullRequestList, NoData } from '@harnessio/playground'
 import { TypesPullReq, useListPullReqQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { timeAgoFromEpochTime } from './pipeline-edit/utils/time-utils'
 
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
@@ -145,17 +146,17 @@ function PullRequestListPage() {
       <PullRequestList
         LinkComponent={LinkComponent}
         pullRequests={pullrequests?.map((item: TypesPullReq) => ({
-          number: item.number,
           author: item?.author?.display_name,
           name: item?.title,
           // TODO: fix review required when its actually there
           reviewRequired: true,
           merged: item.merged,
           comments: item.stats?.conversations,
+          number: item?.number,
           // TODO: add label information to display associated labels for each pull request
           // labels: item?.labels?.map((key: string, color: string) => ({ text: key, color: color })),
           // TODO: fix 2 hours ago in timestamp
-          timestamp: '2 hours ago',
+          timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
           source_branch: item?.source_branch,
           state: item?.state
         }))}

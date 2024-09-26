@@ -16,7 +16,10 @@ const Topbar = {
 
     return (
       <div
-        className={cx(`w-full grid ${gridCols} px-5 h-14 gap-6 border-b items-center text-sm font-regular`, className)}>
+        className={cx(
+          `w-full grid ${gridCols} px-5 h-[55px] gap-6 border-b items-center text-sm font-regular`,
+          className
+        )}>
         {children}
       </div>
     )

@@ -1,11 +1,10 @@
 import { Icon, StackedList, Text } from '@harnessio/canary'
 import React from 'react'
 
-interface Execution {
+export interface Execution {
   id: string
   success?: boolean
   name: string
-  number: number
   sha?: string
   description?: string
   version?: string

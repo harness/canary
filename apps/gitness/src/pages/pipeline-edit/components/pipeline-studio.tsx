@@ -89,7 +89,9 @@ export default function PipelineEdit() {
             setCurrentStepFormDefinition(null)
           }
         }}>
-        <SheetContent className="p-0">{renderSheetContent()}</SheetContent>
+        <SheetContent onOpenAutoFocus={e => e.preventDefault()} hideCloseButton={true} className="p-0">
+          {renderSheetContent()}
+        </SheetContent>
       </Sheet>
     ),
     [stepDrawerOpen, setStepDrawerOpen]

@@ -12,6 +12,9 @@ const RepoLayout: React.FC = () => {
           <NavLink to={`summary`}>
             <TabsTrigger value="summary">Summary</TabsTrigger>
           </NavLink>
+          <NavLink to={`code`}>
+            <TabsTrigger value="code">Files</TabsTrigger>
+          </NavLink>
           <NavLink to={`pipelines`}>
             <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
           </NavLink>

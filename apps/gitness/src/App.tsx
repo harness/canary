@@ -18,8 +18,12 @@ import { RepoSummary } from './pages/repo/repo-summary'
 import CreateProject from './pages/create-project'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import RepoCommitsPage from './pages/repo/repo-commits'
+import { Execution } from './pages/execution/execution-details'
 import RepoWebhooksListPage from './pages/repo/repo-webhooks'
 import { ReposBranchesListPage } from './pages/repo/repo-branch-list'
+import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
+import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
+import { RepoFiles } from './pages/repo/repo-files'
 
 export default function App() {
   const router = createBrowserRouter([
@@ -45,8 +49,8 @@ export default function App() {
               element: <RepoSummary />
             },
             {
-              path: 'pull-requests',
-              element: <PullRequestListPage />
+              path: 'code',
+              element: <RepoFiles />
             },
             {
               path: 'pipelines',
@@ -56,6 +60,7 @@ export default function App() {
                   path: ':pipelineId',
                   children: [
                     { index: true, element: <ExecutionsListPage /> },
+                    { path: 'executions/:executionId', element: <Execution /> },
                     {
                       path: 'edit',
                       element: <PipelineEditPage />
@@ -69,28 +74,43 @@ export default function App() {
               ]
             },
             {
+              path: 'commits',
+              element: <RepoCommitsPage />
+            },
+            {
+              path: 'pull-requests',
+              element: <PullRequestListPage />
+            },
+            {
               path: 'pull-requests/:pullRequestId',
               element: <PullRequestLayout />,
               children: [
                 {
                   index: true,
-                  element: <Navigate to="commits" />
+                  element: <Navigate to="conversation" />
                 },
                 {
                   path: 'commits',
                   element: <PullRequestCommitsPage />
+                },
+                {
+                  path: 'conversation',
+                  element: (
+                    <PullRequestDataProvider>
+                      <PullRequestConversationPage />
+                    </PullRequestDataProvider>
+                  )
                 }
               ]
             },
             {
-              path: 'commits',
-              element: <RepoCommitsPage />
+              path: 'webhooks',
+              element: <RepoWebhooksListPage />
             },
             {
               path: 'branches',
               element: <ReposBranchesListPage />
-            },
-            { path: 'webhooks', element: <RepoWebhooksListPage /> }
+            }
           ]
         },
         // Pipelines (OUTSIDE REPOS)
@@ -109,7 +129,7 @@ export default function App() {
           element: <ExecutionsListPage />
         },
         {
-          path: ':spaceId/:repoId',
+          path: ':spaceId/repos/:repoId',
           element: <RepoLayout />,
           children: [
             {
@@ -129,7 +149,7 @@ export default function App() {
               element: <PipelineCreate />
             },
             {
-              path: 'pipelines/:pipelineId/execution/:executionId',
+              path: 'pipelines/:pipelineId/executions/:executionId',
               element: <div>Execution page</div>
             }
           ]

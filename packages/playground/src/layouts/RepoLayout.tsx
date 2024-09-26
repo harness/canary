@@ -7,6 +7,7 @@ import { mockProjects } from '../data/mockProjects'
 
 const RepoLayout: React.FC = () => {
   const { executionId } = useParams<{ executionId: string }>()
+  const { repoId } = useParams<{ repoId: string }>()
 
   return (
     <>
@@ -14,8 +15,11 @@ const RepoLayout: React.FC = () => {
       {!executionId && (
         <Tabs variant="navigation" defaultValue="summary">
           <TabsList>
-            <NavLink to={`summary`}>
+            <NavLink to={`/sandbox/repos/${repoId}/summary`}>
               <TabsTrigger value="summary">Summary</TabsTrigger>
+            </NavLink>
+            <NavLink to={`/sandbox/repos/${repoId}/code`}>
+              <TabsTrigger value="code">Files</TabsTrigger>
             </NavLink>
             <NavLink to={`pipelines`}>
               <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
@@ -31,6 +35,9 @@ const RepoLayout: React.FC = () => {
             </NavLink>
             <NavLink to={`branches`}>
               <TabsTrigger value="branches">Branches</TabsTrigger>
+            </NavLink>
+            <NavLink to={`/sandbox/repos/${repoId}/settings`}>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>

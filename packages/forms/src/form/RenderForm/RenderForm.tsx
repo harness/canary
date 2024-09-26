@@ -9,13 +9,13 @@ export interface RenderFormProps {
   className?: string
 }
 
-export function RenderForm(props: RenderFormProps): React.ReactElement {
+export const RenderForm = React.forwardRef<HTMLDivElement, RenderFormProps>((props, ref): React.ReactElement => {
   const { inputs, className, factory } = props
 
   return (
-    <div className={className}>
+    <div className={className} ref={ref}>
       {inputs.hero}
       <RenderInputs items={inputs.inputs} factory={factory} />
     </div>
   )
-}
+})

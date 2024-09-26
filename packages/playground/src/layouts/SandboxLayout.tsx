@@ -120,8 +120,16 @@ function Main({
   )
 }
 
-function Content({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn('px-8 py-5 pb-24', className)}>{children}</div>
+interface ContentProps {
+  children: React.ReactNode
+  maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
+  className?: string
+}
+
+function Content({ children, maxWidth, className }: ContentProps) {
+  const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
+
+  return <div className={cn('px-8 py-5 pb-24', widthClass, className)}>{children}</div>
 }
 
 function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: ColumnsProps) {

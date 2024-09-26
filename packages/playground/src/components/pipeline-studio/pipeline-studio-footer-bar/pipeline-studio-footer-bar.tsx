@@ -75,7 +75,7 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
       {lastCommittedAt && lastCommittedBy && (
         <div className="flex text-[12px] text-tertiary-background">
           Last edited
-          <span className="text-primary">&nbsp;{lastCommittedAt}&nbsp;</span> ago by
+          <span className="text-primary">&nbsp;{lastCommittedAt}&nbsp;</span> by
           <span className="text-primary">&nbsp;{lastCommittedBy}&nbsp;</span>
         </div>
       )}

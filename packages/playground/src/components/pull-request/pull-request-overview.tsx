@@ -3,9 +3,11 @@ import { Avatar, AvatarFallback, AvatarImage, Button, Icon, Text } from '@harnes
 import {
   CommentItem,
   EnumPullReqActivityType,
+  GeneralPayload,
   orderSortDate,
   PayloadAuthor,
   PayloadCodeComment,
+  PayloadCreated,
   PRCommentFilterType,
   TypesPullReq,
   TypesPullReqActivity
@@ -53,7 +55,7 @@ export const activityToCommentItem = (activity: TypesPullReqActivity): CommentIt
   updated: activity.updated as number,
   deleted: activity.deleted as number,
   outdated: !!activity.code_comment?.outdated,
-  content: (activity.text || activity.payload?.message) as string,
+  content: (activity.text || (activity.payload as GeneralPayload)?.message) as string,
   payload: activity
 })
 
@@ -175,7 +177,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         ),
                         name: (payload?.author as PayloadAuthor)?.display_name,
                         // TODO: fix comment to tell between comment or code comment?
-                        description: `reviewed ${timeAgo(payload?.created ?? Date.now())}`
+                        description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                       }
                     ]}
                     content={
@@ -215,7 +217,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     <AvatarFallback>
                                       <Text size={1} color="tertiaryBackground">
                                         {/* TODO: fix fallback string */}
-                                        {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                                        {getInitials(
+                                          ((commentItem as TypesPullReqActivity)?.author as PayloadAuthor)
+                                            ?.display_name || ''
+                                        )}
                                       </Text>
                                     </AvatarFallback>
                                   </Avatar>
@@ -223,9 +228,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 isLast={commentItems.length - 1 === idx}
                                 header={[
                                   {
-                                    name: (payload?.author as PayloadAuthor)?.display_name,
+                                    name: ((commentItem as TypesPullReqActivity)?.author as PayloadAuthor)
+                                      ?.display_name,
                                     // TODO: fix comment to tell between comment or code comment?
-                                    description: `${timeAgo(payload?.created ?? Date.now())}`
+                                    description:
+                                      commentItem.created && `${timeAgo((commentItem as PayloadCreated)?.created)}`
                                   }
                                 ]}
                                 hideReply
@@ -271,7 +278,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       ),
                       name: (payload?.author as PayloadAuthor)?.display_name,
                       // TODO: fix comment to tell between comment or code comment?
-                      description: `commented ${timeAgo(payload?.created ?? Date.now())}`
+                      description: payload?.created && `commented ${timeAgo(payload?.created)}`
                     }
                   ]}
                   content={
@@ -286,7 +293,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 <AvatarFallback>
                                   <Text size={1} color="tertiaryBackground">
                                     {/* TODO: fix fallback string */}
-                                    {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                                    {getInitials(
+                                      ((commentItem as TypesPullReqActivity)?.author as PayloadAuthor).display_name ||
+                                        ''
+                                    )}
                                   </Text>
                                 </AvatarFallback>
                               </Avatar>
@@ -294,9 +304,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             isLast={commentItems.length - 1 === idx}
                             header={[
                               {
-                                name: (payload?.author as PayloadAuthor)?.display_name,
+                                name: ((commentItem as TypesPullReqActivity)?.author as PayloadAuthor)?.display_name,
                                 // TODO: fix comment to tell between comment or code comment?
-                                description: `${timeAgo(payload?.created ?? Date.now())}`
+                                description:
+                                  commentItem?.created && `${timeAgo((commentItem as PayloadCreated)?.created)}`
                               }
                             ]}
                             hideReply

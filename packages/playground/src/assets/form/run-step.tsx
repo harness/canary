@@ -318,3 +318,6 @@ const inputs: IInputConfigWithConfig[] = [
 export const runStepFormDefinition: IFormDefinition<InputConfigType> = {
   inputs
 }
+export const RUN_STEP_IDENTIFIER = 'run'
+export const RUN_STEP_DESCRIPTION =
+  'Execute scripts in the shell session. The scripts can be executed on the pod/instance running a Harness Delegate or on a remote host in the infrastructure.'

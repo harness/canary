@@ -99,18 +99,16 @@ export function PipelineCreateForm({ onCancel, onSubmit }: PipelineCreateFormPro
         render={({ field }) => (
           <FormItem>
             <FormLabel className="text-primary">Branch*</FormLabel>
-            <Select
-              // 🚨 TODO: Check the type. "content" is not present in types
-              disabled={isLoading || !data?.content?.length}
-              onValueChange={field.onChange}
-              defaultValue={field.value}>
+            <Select disabled={isLoading || !data?.length} onValueChange={field.onChange} defaultValue={field.value}>
               <FormControl className="text-primary">
                 <SelectTrigger>
                   <SelectValue placeholder="Select a branch" />
                 </SelectTrigger>
               </FormControl>
               <SelectContent>
-                {data?.content?.map(branchItem => <SelectItem value={branchItem?.name}>{branchItem?.name}</SelectItem>)}
+                {data?.map(branchItem => (
+                  <SelectItem value={branchItem?.name as string}>{branchItem?.name}</SelectItem>
+                ))}
               </SelectContent>
             </Select>
             <FormMessage />

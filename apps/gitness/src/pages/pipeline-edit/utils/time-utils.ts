@@ -79,3 +79,9 @@ export const timeAgoFromEpochTime = (timestamp: number): string => {
   const diffInYears = Math.floor(diffInMonths / 12)
   return rtf.format(-diffInYears, 'year')
 }
+
+export const getDuration = (startTime?: number, endTime?: number): number => {
+  if (!endTime || !startTime) return 0
+  if (startTime > endTime) return 0
+  return endTime - startTime
+}

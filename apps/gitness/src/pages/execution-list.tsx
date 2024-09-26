@@ -43,8 +43,7 @@ export default function ExecutionsListPage() {
         return (
           <ExecutionList
             executions={executions?.map((item: TypesExecution) => ({
-              id: item?.number,
-              number: item?.number,
+              id: item?.number && `executions/${item.number}`,
               status: item?.status,
               success: item?.status === 'success',
               name: item?.message || item?.title,

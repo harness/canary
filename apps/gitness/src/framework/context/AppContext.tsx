@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react'
 import {
   CodeServiceAPIClient,
-  MembershipSpacesOkResponse,
   TypesMembershipSpace,
   membershipSpaces,
   TypesSpace
@@ -44,7 +43,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
     })
     membershipSpaces({
       queryParams: { page: 1, limit: 10, sort: 'identifier', order: 'asc' }
-    }).then((response: MembershipSpacesOkResponse) => {
+    }).then(response => {
       setSpaces(response)
     })
   }, [])

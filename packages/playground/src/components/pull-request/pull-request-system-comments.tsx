@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage, Button, Icon, Text } from '@harnes
 import {
   CommentItem,
   CommentType,
+  GeneralPayload,
   MergeStrategy,
   PayloadAuthor,
   TypesPullReq,
@@ -21,14 +22,21 @@ interface SystemCommentProps extends TypesPullReq {
 const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems, isLast, pullReqMetadata }) => {
   const payload = commentItems[0].payload
   const type = payload?.payload?.type
-  const openFromDraft = payload?.payload?.payload?.old_draft === true && payload?.payload?.payload?.new_draft === false
-  const changedToDraft = payload?.payload?.payload?.old_draft === false && payload?.payload?.payload?.new_draft === true
+  const openFromDraft =
+    (payload?.payload?.payload as GeneralPayload)?.old_draft === true &&
+    (payload?.payload?.payload as GeneralPayload)?.new_draft === false
+  const changedToDraft =
+    (payload?.payload?.payload as GeneralPayload)?.old_draft === false &&
+    (payload?.payload?.payload as GeneralPayload)?.new_draft === true
 
   const getIcon = () => {
     if (openFromDraft || changedToDraft) {
       return changedToDraft ? <Icon name="pr-draft" size={12} /> : <Icon name="pr-review" size={12} />
     } else {
-      if (payload?.payload?.payload?.old === 'closed' && payload?.payload?.payload?.new === 'open') {
+      if (
+        (payload?.payload?.payload as GeneralPayload)?.old === 'closed' &&
+        (payload?.payload?.payload as GeneralPayload)?.new === 'open'
+      ) {
         return <Icon name="pr-open" size={12} />
       } else {
         return <Icon name="pr-closed" size={12} />
@@ -57,7 +65,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               description: (
                 <>
-                  {payload?.payload?.payload?.merge_method === MergeStrategy.REBASE ? (
+                  {(payload?.payload?.payload as GeneralPayload)?.merge_method === MergeStrategy.REBASE ? (
                     <Text color="tertiaryBackground">
                       rebased changes from branch
                       <Button className="ml-1 mr-1" variant="secondary" size="xs">
@@ -67,7 +75,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                       <Button className="ml-1 mr-1" variant="secondary" size="xs">
                         {pullReqMetadata?.target_branch}
                       </Button>
-                      , now at {payload?.payload?.payload?.merge_sha as string}
+                      , now at {(payload?.payload?.payload as GeneralPayload)?.merge_sha as string}
                     </Text>
                   ) : (
                     <Text color="tertiaryBackground">
@@ -81,7 +89,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                       </Button>
                       by commit
                       <Button className="ml-1 mr-1" variant="secondary" size="xs">
-                        {(payload?.payload?.payload?.merge_sha as string)?.substring(0, 6)}
+                        {((payload?.payload?.payload as GeneralPayload)?.merge_sha as string)?.substring(0, 6)}
                       </Button>
                     </Text>
                   )}
@@ -116,13 +124,13 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               // TODO: fix timeline item to handle commit update as rn it doesnt work
               description:
-                payload?.payload?.payload?.decision === 'approved'
+                (payload?.payload?.payload as GeneralPayload)?.decision === 'approved'
                   ? 'approved these changes'
                   : 'requested changes to this pull request'
             }
           ]}
           icon={
-            payload?.payload?.payload?.decision === 'approved' ? (
+            (payload?.payload?.payload as GeneralPayload)?.decision === 'approved' ? (
               <Icon name="success" size={18} />
             ) : (
               <Icon name="triangle-warning" size={18} className="text-destructive" />
@@ -150,9 +158,9 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                 </Avatar>
               ),
               // TODO: fix timeline item to handle commit update as rn it doesnt work
-              name: payload?.payload?.payload?.commit_title as string,
+              name: (payload?.payload?.payload as GeneralPayload)?.commit_title as string,
               // TODO: add modals or popovers to substring stuff
-              description: `${(payload?.payload?.payload?.new as string)?.substring(0, 6)}`
+              description: `${((payload?.payload?.payload as GeneralPayload)?.new as string)?.substring(0, 6)}`
             }
           ]}
           icon={<Icon name="tube-sign" size={14} />}
@@ -219,7 +227,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                       {changedToDraft ? 'marked pull request as draft' : 'opened pull request for review'}
                     </Text>
                   ) : (
-                    <Text color="tertiaryBackground">{`changed pull request state from ${payload?.payload?.payload?.old} to ${payload?.payload?.payload?.new}`}</Text>
+                    <Text color="tertiaryBackground">{`changed pull request state from ${(payload?.payload?.payload as GeneralPayload)?.old} to ${(payload?.payload?.payload as GeneralPayload)?.new}`}</Text>
                   )}
                 </>
               )
@@ -250,8 +258,9 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               description: (
                 <Text color="tertiaryBackground">
-                  changed title from <span className="line-through">{payload?.payload?.payload?.old as string}</span> to{' '}
-                  {payload?.payload?.payload?.new as string}
+                  changed title from{' '}
+                  <span className="line-through">{(payload?.payload?.payload as GeneralPayload)?.old as string}</span>{' '}
+                  to {(payload?.payload?.payload as GeneralPayload)?.new as string}
                 </Text>
               )
             }

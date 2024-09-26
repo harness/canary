@@ -1,15 +1,7 @@
 import React from 'react'
 import { ExecutionDetails } from '../components/execution/execution-details'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@harnessio/canary'
-export enum ExecutionTab {
-  SUMMARY = 'summary',
-  LOG = 'log',
-  INPUT = 'input',
-  POLICY = 'policy',
-  ARTIFACT = 'artifact',
-  TEST = 'test',
-  SECURITY = 'security'
-}
+import { ExecutionTab } from '../constants/ExecutionConstants'
 
 export default function ExecutionDetailsPage() {
   return (

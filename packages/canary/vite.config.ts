@@ -4,7 +4,7 @@ import dts from 'vite-plugin-dts'
 import path, { resolve } from 'path'
 import svgr from 'vite-plugin-svgr'
 
-const external = ['react', 'react-dom', 'lodash-es', 'moment', '@harnessio/icons-noir', 'react-hook-form']
+const external = ['react', 'react-dom', 'lodash-es', '@harnessio/icons-noir', 'react-hook-form']
 
 // https://vitejs.dev/config/
 export default defineConfig({

@@ -26,10 +26,15 @@ export const BranchSelector = ({ ...props }: PageProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size={size} className="flex gap-1.5 items-center px-3 bg-muted">
-          <Icon name="branch" size={14} className="text-tertiary-background" />
-          <Text className="text-primary/90">{name}</Text>
-          <Icon name="chevron-down" size={11} className="chevron-down ml-0 text-tertiary-background" />
+        <Button
+          variant="secondary"
+          size={size}
+          className="w-full overflow-hidden flex gap-1.5 items-center px-3 bg-muted">
+          <Icon name="branch" size={12} className="min-w-[12px] text-tertiary-background" />
+          <Text as="p" align="left" className="w-full text-primary/90 truncate">
+            {name}
+          </Text>
+          <Icon name="chevron-down" size={10} className="min-w-[10px] chevron-down ml-0 text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start">

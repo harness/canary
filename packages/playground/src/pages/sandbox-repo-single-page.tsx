@@ -1,9 +1,11 @@
 import React from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 import { SandboxLayout } from '..'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useParams } from 'react-router-dom'
 
 function SandboxRepoSinglePage() {
+  const { repoId } = useParams<{ repoId: string }>()
+
   return (
     <>
       <SandboxLayout.SubHeader>
@@ -15,20 +17,23 @@ function SandboxRepoSinglePage() {
             <NavLink to={`code`}>
               <TabsTrigger value="code">Files</TabsTrigger>
             </NavLink>
-            <NavLink to={`pipelines`}>
+            <NavLink to={`/repos/${repoId}/pipelines`}>
               <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
             </NavLink>
-            <NavLink to={`commits`}>
+            <NavLink to={`/repos/${repoId}/commits`}>
               <TabsTrigger value="commits">Commits</TabsTrigger>
             </NavLink>
-            <NavLink to={`pull-requests`}>
+            <NavLink to={`/repos/${repoId}/pull-requests`}>
               <TabsTrigger value="pull-requests">Pull Requests</TabsTrigger>
             </NavLink>
-            <NavLink to={`webhooks`}>
+            <NavLink to={`/repos/${repoId}/webhooks`}>
               <TabsTrigger value="webhooks">Webhooks</TabsTrigger>
             </NavLink>
-            <NavLink to={`branches`}>
+            <NavLink to={`/repos/${repoId}/branches`}>
               <TabsTrigger value="branches">Branches</TabsTrigger>
+            </NavLink>
+            <NavLink to={`/sandbox/repos/${repoId}/settings`}>
+              <TabsTrigger value="settings">Settings</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>

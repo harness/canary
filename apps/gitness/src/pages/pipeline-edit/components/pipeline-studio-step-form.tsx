@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { parse } from 'yaml'
 import { get, set } from 'lodash-es'
 import { Button } from '@harnessio/canary'
@@ -12,10 +12,15 @@ import {
 } from '@harnessio/forms'
 import { Icon } from '@harnessio/canary'
 import { ListPluginsOkResponse, useListPluginsQuery } from '@harnessio/code-service-client'
-import { runStepFormDefinition } from '@harnessio/playground'
-import { StepForm, StepFormSection, inputComponentFactory } from '@harnessio/playground'
+import {
+  StepForm,
+  StepFormSection,
+  inputComponentFactory,
+  runStepFormDefinition,
+  RUN_STEP_DESCRIPTION,
+  RUN_STEP_IDENTIFIER
+} from '@harnessio/playground'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
-import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { ApiInputs, addNameInput, apiInput2IInputDefinition } from '../utils/step-form-utils'
 
 interface PipelineStudioStepFormProps {
@@ -32,7 +37,6 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
     editStepIntention,
     setCurrentStepFormDefinition
   } = usePipelineDataContext()
-  const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
@@ -60,15 +64,18 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
       const step = get(yamlJson, editStepIntention.path)
 
       // TODO: abstract this
-      if (step.run) {
+      if (step[RUN_STEP_IDENTIFIER]) {
         // transform step value for form value
         const transformers = getTransformers(runStepFormDefinition)
 
         const stepValue = inputTransformValues(step, transformers)
         setDefaultStepValues(stepValue)
 
-        // TODO: duplicated run step form def
-        setCurrentStepFormDefinition({ identifier: 'run', description: 'Run step description.', type: 'step' })
+        setCurrentStepFormDefinition({
+          identifier: RUN_STEP_IDENTIFIER,
+          description: RUN_STEP_DESCRIPTION,
+          type: 'step'
+        })
       } else {
         setDefaultStepValues(step)
         const editStep = plugins.find(plugin => plugin.identifier === step?.spec?.name)
@@ -84,7 +91,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
 
   if (currentStepFormDefinition?.identifier) {
     // TODO: abstract this
-    if (currentStepFormDefinition?.identifier === 'run') {
+    if (currentStepFormDefinition?.identifier === RUN_STEP_IDENTIFIER) {
       formDefinition = runStepFormDefinition
     } else {
       // eslint-disable-next-line  @typescript-eslint/no-explicit-any
@@ -98,6 +105,17 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
     }
   }
 
+  const formRef = useRef<HTMLDivElement | null>(null)
+  // NOTE: custom focus implementation to select first field in the form
+  useEffect(() => {
+    if (formRef.current && formDefinition.inputs.length > 0) {
+      const firstEl = formRef.current?.querySelector(
+        `input[name="${formDefinition.inputs[0].path}"]`
+      ) as HTMLInputElement | null
+      firstEl?.focus()
+    }
+  }, [formRef, formDefinition])
+
   return (
     <RootForm
       defaultValues={defaultStepValues}
@@ -110,7 +128,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
       onSubmit={values => {
         let stepValue = values
         // TODO: abstract this
-        if (currentStepFormDefinition?.identifier !== 'run') {
+        if (currentStepFormDefinition?.identifier !== RUN_STEP_IDENTIFIER) {
           set(stepValue, 'type', 'plugin')
           set(stepValue, 'spec.name', currentStepFormDefinition?.identifier)
         } else {
@@ -139,7 +157,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
           <StepForm.Header>
             {/* {<StepBreadcrumb title="Deploy to Dev" subTitle="Run" />} */}
             <StepForm.Title>
-              <Button
+              {/* <Button
                 className="px-2 mr-2"
                 size="sm"
                 variant="ghost"
@@ -147,14 +165,13 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
                   setStepDrawerOpen(StepDrawer.Collection)
                 }}>
                 <Icon name="arrow-long" className="rotate-180" />
-              </Button>
+              </Button> */}
               Run Step
             </StepForm.Title>
             <StepForm.Description>{currentStepFormDefinition?.description}</StepForm.Description>
-            <StepForm.Actions>
-              AI Button placeholder
-              {/* <AIButton label="AI Autofill" /> */}
-            </StepForm.Actions>
+            {/* <StepForm.Actions>
+              <AIButton label="AI Autofill" />
+            </StepForm.Actions> */}
           </StepForm.Header>
           <StepFormSection.Root>
             <StepFormSection.Header>
@@ -162,7 +179,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
               {/* <StepFormSection.Description>Read documentation to learn more.</StepFormSection.Description> */}
             </StepFormSection.Header>
             <StepFormSection.Form>
-              <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
+              <RenderForm ref={formRef} className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
             </StepFormSection.Form>
           </StepFormSection.Root>
           <StepForm.Footer>

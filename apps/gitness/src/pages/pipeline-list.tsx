@@ -5,7 +5,6 @@ import {
   ListPagination,
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -18,12 +17,15 @@ import { useListPipelinesQuery, TypesPipeline } from '@harnessio/code-service-cl
 import { PipelineList, MeterState, PaddingListLayout, SkeletonList } from '@harnessio/playground'
 import { ExecutionState } from '../types'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { usePagination } from '../framework/hooks/usePagination'
 
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
 
 export default function PipelinesPage() {
+  // hardcoded
+  const totalPages = 10
   const repoRef = useGetRepoRef()
   const { data: pipelines, isFetching } = useListPipelinesQuery(
     {
@@ -36,6 +38,7 @@ export default function PipelinesPage() {
       enabled: true
     }
   )
+  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
@@ -88,43 +91,41 @@ export default function PipelinesPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        <ListPagination.Root>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious size="sm" href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink isActive size="sm_icon" href="#">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  <PaginationEllipsis />
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  5
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext size="sm" href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </ListPagination.Root>
+        {(pipelines?.length ?? 0) > 0 && (
+          <ListPagination.Root>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage > 1 && previousPage()}
+                    disabled={currentPage === 1}
+                  />
+                </PaginationItem>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      isActive={currentPage === index + 1}
+                      size="sm_icon"
+                      href="#"
+                      onClick={() => handleClick(index + 1)}>
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage < totalPages && nextPage()}
+                    disabled={currentPage === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </ListPagination.Root>
+        )}
       </PaddingListLayout>
     </>
   )

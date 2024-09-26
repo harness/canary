@@ -123,7 +123,7 @@ export function ReposBranchesListPage() {
                   size="sm"
                   href="#"
                   onClick={() => currentPage > 1 && previousPage()}
-                  isActive={currentPage > 1}
+                  disabled={currentPage === 1}
                 />
               </PaginationItem>
               {/* <PaginationItem>
@@ -147,7 +147,7 @@ export function ReposBranchesListPage() {
                   size="sm"
                   href="#"
                   onClick={() => currentPage < totalPages && nextPage()}
-                  isActive={currentPage < totalPages}
+                  disabled={currentPage === totalPages}
                 />
               </PaginationItem>
             </PaginationContent>

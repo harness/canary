@@ -115,6 +115,7 @@ export default function RepoCommitsPage() {
       <Spacer size={5} />
       {renderContent()}
       <Spacer size={8} />
+
       <ListPagination.Root>
         <Pagination>
           <PaginationContent>
@@ -123,14 +124,9 @@ export default function RepoCommitsPage() {
                 size="sm"
                 href="#"
                 onClick={() => currentPage > 1 && previousPage()}
-                isActive={currentPage > 1}
+                disabled={currentPage === 1}
               />
             </PaginationItem>
-            {/* <PaginationItem>
-              <PaginationLink size="sm_icon" href="#">
-                <PaginationEllipsis />
-              </PaginationLink>
-            </PaginationItem> */}
             {Array.from({ length: totalPages }, (_, index) => (
               <PaginationItem key={index}>
                 <PaginationLink
@@ -147,7 +143,7 @@ export default function RepoCommitsPage() {
                 size="sm"
                 href="#"
                 onClick={() => currentPage < totalPages && nextPage()}
-                isActive={currentPage < totalPages}
+                disabled={currentPage === totalPages}
               />
             </PaginationItem>
           </PaginationContent>

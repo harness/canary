@@ -4,7 +4,6 @@ import {
   ListPagination,
   Pagination,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -17,6 +16,8 @@ import { useListReposQuery, RepoRepositoryOutput } from '@harnessio/code-service
 import { PaddingListLayout, SkeletonList, RepoList } from '@harnessio/playground'
 import { Link } from 'react-router-dom'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { usePagination } from '../../framework/hooks/usePagination'
+
 import Header from '../../components/Header'
 import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
 
@@ -27,8 +28,11 @@ const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
 export default function ReposListPage() {
+  // hardcoded
+  const totalPages = 10
   const space = useGetSpaceURLParam()
   const { isFetching, data } = useListReposQuery({ queryParams: {}, space_ref: `${space}/+` })
+  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const renderListContent = () => {
     if (isFetching) {
@@ -77,43 +81,41 @@ export default function ReposListPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        <ListPagination.Root>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious size="sm" href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink isActive size="sm_icon" href="#">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  <PaginationEllipsis />
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  5
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext size="sm" href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </ListPagination.Root>
+        {(data?.length ?? 0) > 0 && (
+          <ListPagination.Root>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage > 1 && previousPage()}
+                    disabled={currentPage === 1}
+                  />
+                </PaginationItem>
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      isActive={currentPage === index + 1}
+                      size="sm_icon"
+                      href="#"
+                      onClick={() => handleClick(index + 1)}>
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage < totalPages && nextPage()}
+                    disabled={currentPage === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </ListPagination.Root>
+        )}
       </PaddingListLayout>
     </>
   )

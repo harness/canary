@@ -8,7 +8,6 @@ import {
   PaginationItem,
   PaginationPrevious,
   PaginationLink,
-  PaginationEllipsis,
   PaginationNext,
   Button,
   Text
@@ -17,14 +16,18 @@ import { Link } from 'react-router-dom'
 import { PaddingListLayout, SkeletonList, PullRequestList, NoData } from '@harnessio/playground'
 import { TypesPullReq, useListPullReqQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { usePagination } from '../framework/hooks/usePagination'
 import { timeAgoFromEpochTime } from './pipeline-edit/utils/time-utils'
 
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
 function PullRequestListPage() {
+  // hardcoded
+  const totalPages = 10
   const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
   const repoRef = useGetRepoRef()
+  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const { data: pullrequests, isFetching } = useListPullReqQuery(
     {
@@ -187,45 +190,46 @@ function PullRequestListPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-
-        <ListPagination.Root>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious size="sm" href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink isActive size="sm_icon" href="#">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  <PaginationEllipsis />
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  5
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext size="sm" href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </ListPagination.Root>
+        {(pullrequests?.length ?? 0) > 0 && (
+          <ListPagination.Root>
+            <Pagination>
+              <PaginationContent>
+                <PaginationItem>
+                  <PaginationPrevious
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage > 1 && previousPage()}
+                    disabled={currentPage === 1}
+                  />
+                </PaginationItem>
+                {/* <PaginationItem>
+              <PaginationLink size="sm_icon" href="#">
+                <PaginationEllipsis />
+              </PaginationLink>
+            </PaginationItem> */}
+                {Array.from({ length: totalPages }, (_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationLink
+                      isActive={currentPage === index + 1}
+                      size="sm_icon"
+                      href="#"
+                      onClick={() => handleClick(index + 1)}>
+                      {index + 1}
+                    </PaginationLink>
+                  </PaginationItem>
+                ))}
+                <PaginationItem>
+                  <PaginationNext
+                    size="sm"
+                    href="#"
+                    onClick={() => currentPage < totalPages && nextPage()}
+                    disabled={currentPage === totalPages}
+                  />
+                </PaginationItem>
+              </PaginationContent>
+            </Pagination>
+          </ListPagination.Root>
+        )}
       </PaddingListLayout>
     </>
   )

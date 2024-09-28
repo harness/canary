@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const usePagination = (initialPage: number = 1, totalPages: number) => {
+export const usePagination = (initialPage: number = 1, totalPages: number = 1) => {
   const [currentPage, setCurrentPage] = useState<number>(initialPage)
 
   const handleClick = (page: number) => {

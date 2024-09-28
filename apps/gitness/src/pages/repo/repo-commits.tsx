@@ -54,6 +54,7 @@ export default function RepoCommitsPage() {
   //   if (!commitData || !commitData.total_commits) return 0
   //   return Math.ceil(commitData.total_commits / 10)
   // }, [commitData])
+  // console.log(repository)
 
   useEffect(() => {
     if (repository) {

@@ -1,22 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Spacer,
-  ListActions,
-  ListPagination,
-  SearchBox,
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationLink,
-  PaginationEllipsis,
-  PaginationNext,
-  Button,
-  Text
-} from '@harnessio/canary'
+import { Spacer, ListActions, SearchBox, Button, Text } from '@harnessio/canary'
 import { Link } from 'react-router-dom'
 import { PaddingListLayout } from '../layouts/PaddingListLayout'
 import { PullRequestList } from '../components/pull-request/pull-request-list'
+import { PaginationComponent } from '../components/pagination'
+
 import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoSearchResults } from '../components/no-search-results'
 import { NoData } from '../components/no-data'
@@ -242,41 +230,13 @@ function PullRequestListPage() {
         {renderListContent()}
         <Spacer size={8} />
         {loadState == 'data-loaded' && (
-          <ListPagination.Root>
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious size="sm" href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink isActive size="sm_icon" href="#">
-                    1
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink size="sm_icon" href="#">
-                    2
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink size="sm_icon" href="#">
-                    4
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink size="sm_icon" href="#">
-                    5
-                  </PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext size="sm" href="#" />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </ListPagination.Root>
+          <PaginationComponent
+            totalPages={10}
+            currentPage={5}
+            nextPage={() => {}}
+            previousPage={() => {}}
+            handleClick={() => {}}
+          />
         )}
       </PaddingListLayout>
       <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />

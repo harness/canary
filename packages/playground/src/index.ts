@@ -58,6 +58,7 @@ export * from './components/form-inputs/common/InputError'
 export * from './components/form-inputs/common/InputLabel'
 export * from './components/form-inputs/common/InputWrapper'
 export * from './components/webhook-list'
+export * from './components/pagination'
 
 export * from './pages/signin-page'
 export * from './pages/create-project-page'

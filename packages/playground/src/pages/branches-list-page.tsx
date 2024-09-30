@@ -3,21 +3,8 @@ import { BranchesList } from '../components/branches-list'
 import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { PaddingListLayout } from '../layouts/PaddingListLayout'
-import {
-  Button,
-  ListActions,
-  ListPagination,
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-  SearchBox,
-  Spacer,
-  Text
-} from '@harnessio/canary'
+import { Button, ListActions, SearchBox, Spacer, Text } from '@harnessio/canary'
+import { PaginationComponent } from '../components/pagination'
 import PlaygroundBranchesSettings from '../settings/branches-settings'
 import { mockBranchData } from '../data/mockBranchData'
 
@@ -76,45 +63,15 @@ export default function BranchesListPage() {
       {renderContent()}
       <Spacer size={8} />
       {loadState === 'data-loaded' && (
-        <ListPagination.Root>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious size="sm" href="#" />
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink isActive size="sm_icon" href="#">
-                  1
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  2
-                </PaginationLink>
-              </PaginationItem>
-
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  <PaginationEllipsis />
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  4
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink size="sm_icon" href="#">
-                  5
-                </PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext size="sm" href="#" />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </ListPagination.Root>
+        <PaginationComponent
+          totalPages={10}
+          currentPage={5}
+          nextPage={() => {}}
+          previousPage={() => {}}
+          handleClick={() => {}}
+        />
       )}
+
       <PlaygroundBranchesSettings loadState={loadState} setLoadState={setLoadState} />
     </PaddingListLayout>
   )

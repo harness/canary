@@ -40,8 +40,6 @@ export function ReposBranchesListPage() {
   //lack of data : avatarUrl: string, checking status , behindAhead{behind: num, ahead:num}, pullRequest{sha: string, branch number : 145}
   //TODO: fetching behindAhead data
 
-  console.log(brancheslistData)
-
   const renderContent = () => {
     if (isLoading) {
       return <SkeletonList />

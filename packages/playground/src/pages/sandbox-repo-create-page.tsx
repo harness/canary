@@ -16,12 +16,12 @@ import {
   Text,
   Textarea
 } from '@harnessio/canary'
-import { useForm, Controller } from 'react-hook-form'
+import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { FormField } from '../index'
 
-interface DataProps {
+export interface CreateRepoProps {
   name: string
   description: string
   gitignore: string
@@ -31,7 +31,7 @@ interface DataProps {
 }
 interface SandboxRepoCreatePageProps {
   isLoading?: boolean
-  onFormSubmit: (data: DataProps) => void
+  onFormSubmit: (data: CreateRepoProps) => void
   apiError?: string | null
 }
 const formSchema = z.object({
@@ -40,7 +40,7 @@ const formSchema = z.object({
   gitignore: z.string().min(1, { message: 'Please select a file' }),
   license: z.string().min(1, { message: 'Please select a license' }),
   access: z.string().min(1, { message: 'Please select who has access' }),
-  readme: z.boolean().optional()
+  readme: z.boolean()
 })
 
 const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, isLoading = false, apiError }) => {
@@ -49,11 +49,11 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
     handleSubmit,
     control,
     formState: { errors }
-  } = useForm({
+  } = useForm<CreateRepoProps>({
     resolver: zodResolver(formSchema)
   })
 
-  const onSubmit = (data: DataProps) => {
+  const onSubmit: SubmitHandler<CreateRepoProps> = data => {
     onFormSubmit(data)
     // console.log(data)
   }

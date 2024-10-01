@@ -16,6 +16,7 @@ import { LandingPage } from './pages/landing-page'
 import { AppProvider } from './framework/context/AppContext'
 import { RepoSummary } from './pages/repo/repo-summary'
 import CreateProject from './pages/create-project'
+import { CreateRepo } from './pages/repo/repo-create-page'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import RepoCommitsPage from './pages/repo/repo-commits'
 import { Execution } from './pages/execution/execution-details'
@@ -35,6 +36,10 @@ export default function App() {
         {
           path: ':spaceId/repos',
           element: <ReposListPage />
+        },
+        {
+          path: ':spaceId/repos/create',
+          element: <CreateRepo />
         },
         {
           path: ':spaceId/repos/:repoId',

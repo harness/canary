@@ -210,7 +210,7 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
                 control={control}
                 defaultValue={false}
                 render={({ field }) => (
-                  <RadioGroup id="access" defaultValue="1" {...register('initialize')}>
+                  <RadioGroup id="access" defaultValue="1" {...register('readme')}>
                     <FormField.Option
                       control={<Checkbox id="readme" checked={field.value} onCheckedChange={field.onChange} />}
                       id="readme"

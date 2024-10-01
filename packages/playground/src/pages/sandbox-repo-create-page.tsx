@@ -55,7 +55,6 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
 
   const onSubmit: SubmitHandler<CreateRepoProps> = data => {
     onFormSubmit(data)
-    // console.log(data)
   }
 
   return (

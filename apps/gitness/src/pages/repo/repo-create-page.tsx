@@ -1,26 +1,8 @@
-// import { useState } from 'react'
-import { SandboxLayout, FormField, SandboxRepoCreatePage } from '@harnessio/playground'
-import {
-  Button,
-  ButtonGroup,
-  Checkbox,
-  Input,
-  RadioGroup,
-  RadioGroupItem,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Spacer,
-  Text,
-  Textarea
-} from '@harnessio/canary'
-import { z } from 'zod'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useState } from 'react'
+import { SandboxRepoCreatePage } from '@harnessio/playground'
 import Header from '../../components/Header'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useNavigate } from 'react-router-dom'
 
 import {
   useCreateRepositoryMutation,
@@ -29,44 +11,31 @@ import {
   CreateRepositoryErrorResponse
 } from '@harnessio/code-service-client'
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }),
-  description: z.string().min(1, { message: 'Please provide a description' }),
-  gitignore: z.string().min(1, { message: 'Please select a file' }),
-  license: z.string().min(1, { message: 'Please select a license' }),
-  access: z.string().min(1, { message: 'Please select who has access' })
-})
-
 interface DataProps {
   name: string
   description: string
   gitignore: string
   license: string
   access: string
+  readme: boolean
 }
 
 export const CreateRepo = () => {
   const createRepositoryMutation = useCreateRepositoryMutation({})
-  const spaceID = useGetSpaceURLParam()
-  // const [apiError, setApiError] = useState<string | null>(null)
+  const spaceId = useGetSpaceURLParam()
+  const navigate = useNavigate()
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors }
-  } = useForm({
-    resolver: zodResolver(formSchema)
-  })
+  const [apiError, setApiError] = useState<string | null>(null)
 
-  const onSubmit = (data: DataProps) => {
+  const handleFormSubmit = (data: DataProps) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: 'main',
-      parent_ref: spaceID,
+      parent_ref: spaceId,
       description: data.description,
       // git_ignore: data.gitignore,
       // license: data.license,
       is_public: data.access === '1',
+      // readme: data.readme,
       readme: true,
       identifier: data.name
     }
@@ -78,17 +47,15 @@ export const CreateRepo = () => {
       },
       {
         onSuccess: (data: CreateRepositoryOkResponse) => {
-          // Handle success (show a success message, redirect, etc.)
-          // setApiError(null)
-          console.log(data)
+          setApiError(null)
+          navigate(`/${spaceId}/repos/${data?.identifier}`)
+
+          // console.log(data)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           console.error('Error creating repository:', error)
           const message = error.message || 'An unknown error occurred.'
-          // setApiError(message)
-          console.log(message)
-
-          // Handle error (show an error message)
+          setApiError(message)
         }
       }
     )
@@ -98,185 +65,12 @@ export const CreateRepo = () => {
     <>
       <Header />
       {/* <SandboxLayout.Main hasLeftPanel hasHeader> */}
-      <SandboxLayout.Content maxWidth="2xl">
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
-          Create a new repository
-        </Text>
-        <Spacer size={3} />
-        <Text size={2} as="p" className="text-primary/80 max-w-[100%]">
-          A repository contains all project files, including the revision history. Already have a project repository
-          elsewhere? Import a repository.
-        </Text>
-        <Spacer size={8} />
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {/* Name */}
-          <FormField.Root>
-            <FormField.Label htmlFor="name">Name</FormField.Label>
-            <FormField.Control>
-              <Input id="name" {...register('name')} placeholder="Enter repository name" autoFocus />
-            </FormField.Control>
-            {errors.name && (
-              <FormField.Message theme={FormField.MessageTheme.ERROR}>
-                {errors.name.message?.toString()}
-              </FormField.Message>
-            )}
-          </FormField.Root>
 
-          {/* Description */}
-          <FormField.Root>
-            <FormField.Label htmlFor="description">Description</FormField.Label>
-            <FormField.Control>
-              <Textarea
-                id="description"
-                {...register('description')}
-                placeholder="Enter a description of this repository..."
-              />
-            </FormField.Control>
-            {errors.description && (
-              <FormField.Message theme={FormField.MessageTheme.ERROR}>
-                {errors.description.message?.toString()}
-              </FormField.Message>
-            )}
-          </FormField.Root>
-
-          {/* Separator */}
-          <FormField.Root>
-            <FormField.Separator dashed />
-          </FormField.Root>
-
-          {/* Git Ignore */}
-          <FormField.Root>
-            <FormField.Label htmlFor="gitignore">Add a .gitignore</FormField.Label>
-            <FormField.Control>
-              <Controller
-                name="gitignore"
-                control={control}
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger id="gitignore">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">.gitignore option 1</SelectItem>
-                      <SelectItem value="2">.gitignore option 2</SelectItem>
-                      <SelectItem value="3">.gitignore option 3</SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </FormField.Control>
-            {errors.gitignore && (
-              <FormField.Message theme={FormField.MessageTheme.ERROR}>
-                {errors.gitignore.message?.toString()}
-              </FormField.Message>
-            )}
-          </FormField.Root>
-
-          {/* License*/}
-          <FormField.Root>
-            <FormField.Label htmlFor="license">Choose a license</FormField.Label>
-            <FormField.Control>
-              <Controller
-                name="license"
-                control={control}
-                render={({ field }) => (
-                  <Select onValueChange={field.onChange} value={field.value}>
-                    <SelectTrigger id="license">
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="1">License option 1</SelectItem>
-                      <SelectItem value="2">License option 2</SelectItem>
-                      <SelectItem value="3">License option 3</SelectItem>
-                    </SelectContent>
-                  </Select>
-                )}
-              />
-            </FormField.Control>
-            <FormField.Caption>A license tells others what they can and can't do with your code.</FormField.Caption>
-            {errors.license && (
-              <FormField.Message theme={FormField.MessageTheme.ERROR}>
-                {errors.license.message?.toString()}
-              </FormField.Message>
-            )}
-          </FormField.Root>
-
-          <FormField.Root>
-            <FormField.Separator dashed />
-          </FormField.Root>
-
-          {/* Access*/}
-          <FormField.Root box shaded>
-            <FormField.Label htmlFor="access">Who has access?</FormField.Label>
-            <FormField.Control>
-              <Controller
-                name="access"
-                control={control}
-                render={({ field }) => (
-                  <RadioGroup onValueChange={field.onChange} value={field.value}>
-                    <FormField.Option
-                      control={<RadioGroupItem value="1" id="1" />}
-                      id="1"
-                      label="Public"
-                      description="Anyone with access to the environment can clone this repo."
-                    />
-                    <FormField.Option
-                      control={<RadioGroupItem value="2" id="2" />}
-                      id="2"
-                      label="Private"
-                      description="You choose who can see and commit to this repository."
-                    />
-                  </RadioGroup>
-                )}
-              />
-            </FormField.Control>
-            {errors.access && (
-              <FormField.Message theme={FormField.MessageTheme.ERROR}>
-                {errors.access.message?.toString()}
-              </FormField.Message>
-            )}
-          </FormField.Root>
-
-          {/* Initialize*/}
-          <FormField.Root box shaded>
-            <FormField.Label htmlFor="access">Initialize this repository with...</FormField.Label>
-            <FormField.Control>
-              <RadioGroup id="access" defaultValue="1" {...register('initialize')}>
-                <FormField.Option
-                  control={<Checkbox id="readme" />}
-                  id="readme"
-                  label="Add a README file"
-                  description="This is where you can write a long description for your project."
-                />
-              </RadioGroup>
-            </FormField.Control>
-          </FormField.Root>
-
-          {/* Separator */}
-          <FormField.Root>
-            <FormField.Separator />
-          </FormField.Root>
-
-          {/* Buttons */}
-          <FormField.Root>
-            <FormField.Control>
-              <ButtonGroup.Root>
-                {/* <Button size="sm">Create repository</Button> */}
-                <Button size="sm" type="submit" disabled={createRepositoryMutation.isLoading}>
-                  {createRepositoryMutation.isLoading ? 'Creating...' : 'Create repository'}
-                </Button>
-
-                <Button variant="outline" size="sm">
-                  Cancel
-                </Button>
-              </ButtonGroup.Root>
-            </FormField.Control>
-          </FormField.Root>
-        </form>
-      </SandboxLayout.Content>
-      {/* </SandboxLayout.Main> */}
-      <SandboxRepoCreatePage />
+      <SandboxRepoCreatePage
+        onFormSubmit={handleFormSubmit}
+        isLoading={createRepositoryMutation.isLoading}
+        apiError={apiError}
+      />
     </>
   )
 }

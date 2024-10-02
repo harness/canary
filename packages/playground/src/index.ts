@@ -83,6 +83,5 @@ export * as FormFieldSet from './components/form-field-set'
 export * as SandboxLayout from './layouts/SandboxLayout'
 export * from './pages/sandbox-repo-create-page'
 export * from './layouts/SandboxRoot'
-export * from './layouts/SandboxRepo'
 
 export * from './configs/canary-outlets'

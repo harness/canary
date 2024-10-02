@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { ThemeProvider, RootLayout } from '@harnessio/playground'
+import { ThemeProvider, RootLayout, SandboxRoot } from '@harnessio/playground'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
 import PipelineListPage from './pages/pipeline-list'
@@ -25,12 +25,15 @@ import { ReposBranchesListPage } from './pages/repo/repo-branch-list'
 import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
 import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
 import { RepoFiles } from './pages/repo/repo-files'
+import { SandboxRepoHeader } from './pages/repo-sandbox/repo-sandbox-header'
+import ReposSandboxListPage from './pages/repo-sandbox/repo-sandbox-list'
 
 export default function App() {
   const router = createBrowserRouter([
     {
       path: '/',
       element: <RootLayout />,
+
       children: [
         { index: true, element: <LandingPage /> },
         {
@@ -168,6 +171,26 @@ export default function App() {
     {
       path: '/signin',
       element: <SignInPage />
+    },
+    {
+      path: '/sandbox',
+      element: <SandboxRoot />,
+      children: [
+        {
+          path: 'spaces',
+          element: <SandboxRepoHeader />,
+          children: [
+            {
+              path: ':spaceId/repos',
+              element: <ReposSandboxListPage />
+            },
+            {
+              path: ':spaceId/repos/create',
+              element: <CreateRepo />
+            }
+          ]
+        }
+      ]
     }
   ])
 

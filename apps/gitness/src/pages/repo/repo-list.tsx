@@ -76,7 +76,7 @@ export default function ReposListPage() {
             <ListActions.Dropdown title="Filter" items={filterOptions} />
             <ListActions.Dropdown title="Sort" items={sortOptions} />
             <ListActions.Dropdown title="View" items={viewOptions} />
-            <Button variant="default" onClick={() => navigate(`/${space}/repos/create`)}>
+            <Button variant="default" onClick={() => navigate(`/sandbox/spaces/${space}/repos/create`)}>
               Create Repo
             </Button>
           </ListActions.Right>

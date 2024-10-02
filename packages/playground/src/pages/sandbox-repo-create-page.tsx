@@ -36,8 +36,9 @@ export type FormFields = z.infer<typeof formSchema> // Automatically generate a 
 
 interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
+  apiError?: string | null
 }
-const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit }) => {
+const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, apiError }) => {
   const {
     register,
     handleSubmit,
@@ -206,6 +207,14 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
                 )}
               </FormFieldSet.ControlGroup>
             </FormFieldSet.Root>
+            {apiError && (
+              <>
+                <Spacer size={2} />
+                <Text size={1} className="text-destructive">
+                  {apiError?.toString()}
+                </Text>
+              </>
+            )}
 
             {/* SUBMIT BUTTONS */}
             <FormFieldSet.Root>

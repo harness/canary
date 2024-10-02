@@ -76,7 +76,6 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
   const onSubmit: SubmitHandler<FormFields> = data => {
     setIsSubmitting(true)
     setTimeout(() => {
-      console.log(data)
       onFormSubmit(data)
       reset()
       setIsSubmitting(false)

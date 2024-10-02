@@ -32,7 +32,7 @@ const formSchema = z.object({
   access: z.enum(['1', '2'], { errorMap: () => ({ message: 'Please select who has access' }) })
 })
 
-type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
 
 interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
@@ -79,8 +79,8 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
       onFormSubmit(data)
       reset()
       setIsSubmitting(false)
-      setIsSubmitted(true) // Set submitted state to true
-      setTimeout(() => setIsSubmitted(false), 2000) // Reset the submitted state after 2 seconds
+      setIsSubmitted(true)
+      setTimeout(() => setIsSubmitted(false), 2000)
     }, 2000)
   }
 

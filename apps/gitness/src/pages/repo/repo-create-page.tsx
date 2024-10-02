@@ -1,5 +1,5 @@
 // import { useState } from 'react'
-import { SandboxRepoCreatePage } from '@harnessio/playground'
+import { SandboxRepoCreatePage, FormFields } from '@harnessio/playground'
 
 import Header from '../../components/Header'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -11,20 +11,20 @@ import {
   CreateRepositoryErrorResponse
 } from '@harnessio/code-service-client'
 
-interface DataProps {
-  name: string
-  description: string
-  gitignore: string
-  license: string
-  access: string
-}
+// interface DataProps {
+//   name: string
+//   description: string
+//   gitignore: string
+//   license: string
+//   access: string
+// }
 
 export const CreateRepo = () => {
   const createRepositoryMutation = useCreateRepositoryMutation({})
   const spaceID = useGetSpaceURLParam()
   // const [apiError, setApiError] = useState<string | null>(null)
 
-  const onSubmit = (data: DataProps) => {
+  const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: 'main',
       parent_ref: spaceID,

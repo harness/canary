@@ -14,7 +14,7 @@ import {
 } from '@harnessio/canary'
 import { useListReposQuery, RepoRepositoryOutput } from '@harnessio/code-service-client'
 import { PaddingListLayout, SkeletonList, RepoList } from '@harnessio/playground'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { usePagination } from '../../framework/hooks/usePagination'
 
@@ -30,6 +30,7 @@ const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode
 export default function ReposListPage() {
   // hardcoded
   const totalPages = 10
+  const navigate = useNavigate()
   const space = useGetSpaceURLParam()
   const { isFetching, data } = useListReposQuery({ queryParams: {}, space_ref: `${space}/+` })
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
@@ -75,7 +76,9 @@ export default function ReposListPage() {
             <ListActions.Dropdown title="Filter" items={filterOptions} />
             <ListActions.Dropdown title="Sort" items={sortOptions} />
             <ListActions.Dropdown title="View" items={viewOptions} />
-            <Button variant="default">Create Repo</Button>
+            <Button variant="default" onClick={() => navigate(`/${space}/repos/create`)}>
+              Create Repo
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={5} />

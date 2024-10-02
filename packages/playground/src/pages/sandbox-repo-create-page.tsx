@@ -19,6 +19,7 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
 import { FormFieldSet } from '../index'
 import { MessageTheme } from '../components/form-field-set'
 
@@ -33,7 +34,10 @@ const formSchema = z.object({
 
 type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
 
-function SandboxRepoCreatePage() {
+interface SandboxRepoCreatePageProps {
+  onFormSubmit: (data: FormFields) => void
+}
+const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit }) => {
   const {
     register,
     handleSubmit,
@@ -72,6 +76,7 @@ function SandboxRepoCreatePage() {
     setIsSubmitting(true)
     setTimeout(() => {
       console.log(data)
+      onFormSubmit(data)
       reset()
       setIsSubmitting(false)
       setIsSubmitted(true) // Set submitted state to true

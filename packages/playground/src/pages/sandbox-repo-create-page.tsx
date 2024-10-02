@@ -36,9 +36,10 @@ export type FormFields = z.infer<typeof formSchema> // Automatically generate a 
 
 interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
+  onFormCancel: () => void
   apiError?: string | null
 }
-const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, apiError }) => {
+const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, apiError, onFormCancel }) => {
   const {
     register,
     handleSubmit,
@@ -85,7 +86,7 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
   }
 
   const handleCancel = () => {
-    console.log('Cancel button clicked')
+    onFormCancel()
   }
 
   return (

@@ -48,10 +48,14 @@ export const CreateRepo = () => {
     )
   }
 
+  const onCancel = () => {
+    navigate(`/${spaceId}/repos`)
+  }
+
   return (
     <>
       <Header />
-      <SandboxRepoCreatePage onFormSubmit={onSubmit} apiError={apiError} />
+      <SandboxRepoCreatePage onFormSubmit={onSubmit} onFormCancel={onCancel} apiError={apiError} />
     </>
   )
 }

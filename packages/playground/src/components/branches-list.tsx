@@ -128,7 +128,7 @@ export const BranchesList = ({ branches }: PageProps) => {
                     <div className="flex gap-1.5 items-center justify-center">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
                       <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                        #{shortSha}
+                        {shortSha}
                       </Text>
                     </div>
                   </TableCell>

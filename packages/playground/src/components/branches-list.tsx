@@ -57,8 +57,8 @@ export const BranchesList = ({ branches }: PageProps) => {
             <span className="w-[50%] px-1.5 border-r-2 border-gray-20 text-right">Behind</span>
             <span className="w-[50%] px-1.5 text-left">Ahead</span>
           </TableHead>
-          {/* since we don't have the data for pull request, we can temporary hide this column */}
-          <TableHead className="hidden">Pull request</TableHead>
+          {/* since we don't have the data for pull request, we can change data to Commit to match the original gitness */}
+          {branches[0]?.sha && <TableHead className="text-center">Commit</TableHead>}
           <TableHead>
             <></>
           </TableHead>
@@ -121,15 +121,17 @@ export const BranchesList = ({ branches }: PageProps) => {
                     )}
                   </div>
                 </TableCell>
-                {/* pull request: hidden without data */}
-                <TableCell className="hidden">
-                  <div className="flex gap-1.5 items-center">
-                    <Icon name="open-pr" size={11} className="text-success" />
-                    <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                      #{branch.sha}
-                    </Text>
-                  </div>
-                </TableCell>
+                {/* change commit data instead: SHA */}
+                {branch.sha && (
+                  <TableCell>
+                    <div className="flex gap-1.5 items-center">
+                      {/* <Icon name="open-pr" size={11} className="text-success" /> */}
+                      <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
+                        #{branch.sha}
+                      </Text>
+                    </div>
+                  </TableCell>
+                )}
                 <TableCell className="content-center">
                   <div className="flex gap-1.5 items-center justify-end">
                     <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />

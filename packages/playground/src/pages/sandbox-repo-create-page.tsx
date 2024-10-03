@@ -38,11 +38,15 @@ interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
   onFormCancel: () => void
   apiError: string | null
+  isLoading: boolean
+  isSuccess: boolean
 }
 const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
   onFormSubmit,
   apiError = null,
-  onFormCancel
+  onFormCancel,
+  isLoading,
+  isSuccess
 }) => {
   const {
     register,
@@ -67,7 +71,6 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
@@ -77,24 +80,16 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
   const handleAccessChange = (value: '1' | '2') => {
     setValue('access', value, { shouldValidate: true })
   }
+
   useEffect(() => {
-    if (apiError === null) {
+    if (isSuccess === true) {
       reset()
       setIsSubmitted(true)
-
-      setTimeout(() => {
-        setIsSubmitted(false)
-      }, 2000)
     }
-  }, [apiError])
+  }, [isSuccess])
 
   const onSubmit: SubmitHandler<FormFields> = data => {
-    setIsSubmitting(true)
     onFormSubmit(data)
-
-    setTimeout(() => {
-      setIsSubmitting(false)
-    }, 2000)
   }
 
   const handleCancel = () => {
@@ -234,8 +229,8 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
                 <ButtonGroup.Root>
                   {!isSubmitted ? (
                     <>
-                      <Button type="submit" size="sm" disabled={!isValid || isSubmitting}>
-                        {!isSubmitting ? 'Create repository' : 'Creating repository...'}
+                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                        {!isLoading ? 'Create repository' : 'Creating repository...'}
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={handleCancel}>
                         Cancel

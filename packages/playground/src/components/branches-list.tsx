@@ -67,6 +67,7 @@ export const BranchesList = ({ branches }: PageProps) => {
       <TableBody>
         {branches &&
           branches.map(branch => {
+            const shortSha = branch.sha.slice(0, 7)
             return (
               <TableRow>
                 {/* branch name */}
@@ -123,11 +124,11 @@ export const BranchesList = ({ branches }: PageProps) => {
                 </TableCell>
                 {/* change commit data instead: SHA */}
                 {branch.sha && (
-                  <TableCell>
-                    <div className="flex gap-1.5 items-center">
+                  <TableCell className="content-center">
+                    <div className="flex gap-1.5 items-center justify-center">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
-                      <Text wrap="nowrap" size={1} truncate className="text-tertiary-background text-center">
-                        #{branch.sha}
+                      <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
+                        #{shortSha}
                       </Text>
                     </div>
                   </TableCell>

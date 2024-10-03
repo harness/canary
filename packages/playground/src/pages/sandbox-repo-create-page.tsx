@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SandboxLayout } from '..'
 import {
   Button,
@@ -37,9 +37,13 @@ export type FormFields = z.infer<typeof formSchema> // Automatically generate a 
 interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
   onFormCancel: () => void
-  apiError?: string | null
+  apiError: string | null
 }
-const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, apiError, onFormCancel }) => {
+const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
+  onFormSubmit,
+  apiError = null,
+  onFormCancel
+}) => {
   const {
     register,
     handleSubmit,
@@ -64,7 +68,7 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
   const licenseValue = watch('license')
 
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false) // New state for tracking submission status
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -73,15 +77,23 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
   const handleAccessChange = (value: '1' | '2') => {
     setValue('access', value, { shouldValidate: true })
   }
+  useEffect(() => {
+    if (apiError === null) {
+      reset()
+      setIsSubmitted(true)
+
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 2000)
+    }
+  }, [apiError])
 
   const onSubmit: SubmitHandler<FormFields> = data => {
     setIsSubmitting(true)
+    onFormSubmit(data)
+
     setTimeout(() => {
-      onFormSubmit(data)
-      reset()
       setIsSubmitting(false)
-      setIsSubmitted(true)
-      setTimeout(() => setIsSubmitted(false), 2000)
     }, 2000)
   }
 

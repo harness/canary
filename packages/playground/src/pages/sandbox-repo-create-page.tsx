@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { SandboxLayout } from '..'
 import {
   Button,
@@ -37,9 +37,17 @@ export type FormFields = z.infer<typeof formSchema> // Automatically generate a 
 interface SandboxRepoCreatePageProps {
   onFormSubmit: (data: FormFields) => void
   onFormCancel: () => void
-  apiError?: string | null
+  apiError: string | null
+  isLoading: boolean
+  isSuccess: boolean
 }
-const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSubmit, apiError, onFormCancel }) => {
+const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({
+  onFormSubmit,
+  apiError = null,
+  onFormCancel,
+  isLoading,
+  isSuccess
+}) => {
   const {
     register,
     handleSubmit,
@@ -63,8 +71,7 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
   const gitignoreValue = watch('gitignore')
   const licenseValue = watch('license')
 
-  const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false) // New state for tracking submission status
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -74,15 +81,15 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
     setValue('access', value, { shouldValidate: true })
   }
 
-  const onSubmit: SubmitHandler<FormFields> = data => {
-    setIsSubmitting(true)
-    setTimeout(() => {
-      onFormSubmit(data)
+  useEffect(() => {
+    if (isSuccess === true) {
       reset()
-      setIsSubmitting(false)
       setIsSubmitted(true)
-      setTimeout(() => setIsSubmitted(false), 2000)
-    }, 2000)
+    }
+  }, [isSuccess])
+
+  const onSubmit: SubmitHandler<FormFields> = data => {
+    onFormSubmit(data)
   }
 
   const handleCancel = () => {
@@ -222,8 +229,8 @@ const SandboxRepoCreatePage: React.FC<SandboxRepoCreatePageProps> = ({ onFormSub
                 <ButtonGroup.Root>
                   {!isSubmitted ? (
                     <>
-                      <Button type="submit" size="sm" disabled={!isValid || isSubmitting}>
-                        {!isSubmitting ? 'Create repository' : 'Creating repository...'}
+                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                        {!isLoading ? 'Create repository' : 'Creating repository...'}
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={handleCancel}>
                         Cancel

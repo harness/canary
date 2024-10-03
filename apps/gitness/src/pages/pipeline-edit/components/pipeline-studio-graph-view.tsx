@@ -6,7 +6,10 @@ import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioVie
 import { InteractionContextProvider } from '../context/InteractionContextProvider'
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
-  const { yamlRevision, setEditStepIntention } = usePipelineDataContext()
+  const {
+    state: { yamlRevision },
+    setEditStepIntention
+  } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [nodes, setNodes] = useState<Node[]>([])

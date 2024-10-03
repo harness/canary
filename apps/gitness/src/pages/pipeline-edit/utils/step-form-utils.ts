@@ -1,4 +1,4 @@
-import { IInputDefinition } from '@harnessio/forms'
+import { IInputDefinition, unsetEmptyArrayOutputTransformer, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
 import { generateFriendlyName } from './common-utils'
 import { InputType, UIInputWithConfigsForArray } from '@harnessio/playground'
 
@@ -25,6 +25,24 @@ export interface ApiInputs {
   [key: string]: ApiInput
 }
 
+function apiInputType2FormInputType(type: string) {
+  if (type === 'string') return 'text'
+
+  return type
+}
+
+function getDefaultOutputTransformer(inputType: string): IInputDefinition<unknown>['outputTransform'] {
+  switch (inputType) {
+    case 'text':
+      return unsetEmptyStringOutputTransformer()
+    case 'array':
+    case 'list':
+      return unsetEmptyArrayOutputTransformer()
+    default:
+      return undefined
+  }
+}
+
 export function apiInput2IInputDefinition(inputName: string, input: ApiInput, prefix?: string): IInputDefinition {
   let arrayInput: UIInputWithConfigsForArray | undefined
   if (input.type === 'array') {
@@ -33,12 +51,14 @@ export function apiInput2IInputDefinition(inputName: string, input: ApiInput, pr
     }
   }
 
+  const inputType = apiInputType2FormInputType(input.type)
+
   return {
     label: generateFriendlyName(inputName),
     path: prefix ? `${prefix}.${inputName}` : inputName,
     description: input.description,
-    // TODO: add mapper for this
-    inputType: input.type === 'string' ? 'text' : input.type,
+    inputType,
+    outputTransform: getDefaultOutputTransformer(inputType),
     //required: input.required,
     ...(arrayInput ? { inputConfig: { input: arrayInput } } : {})
   }

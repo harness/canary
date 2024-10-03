@@ -17,7 +17,7 @@ MonacoGlobals.set({
 
 const PipelineStudioYamlView = (): JSX.Element => {
   const {
-    yamlRevision,
+    state: { yamlRevision },
     setYamlRevision,
     setAddStepIntention,
     setEditStepIntention,

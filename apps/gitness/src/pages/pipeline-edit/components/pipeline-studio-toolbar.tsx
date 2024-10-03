@@ -10,7 +10,9 @@ export const PipelineStudioToolbar = ({
   view: VisualYamlValue
   setView: (view: VisualYamlValue) => void
 }) => {
-  const { isYamlValid } = usePipelineDataContext()
+  const {
+    state: { isYamlValid }
+  } = usePipelineDataContext()
 
   return (
     <Topbar.Root className={cx({ ['border-b-0 bg-transparent']: view === 'visual' })}>

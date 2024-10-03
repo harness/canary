@@ -93,3 +93,8 @@ export type extractInfoForCodeOwnerContentProps = Pick<
   | 'changeReqReviewer'
   | 'changeReqEvaluations'
 >
+
+export enum orderSortDate {
+  ASC = 'asc',
+  DESC = 'desc'
+}

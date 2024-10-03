@@ -6,13 +6,12 @@ import {
   StepsPalette,
   StepsPaletteContent,
   StepsPaletteItem,
-  StepPaletteFilters,
-  RUN_STEP_IDENTIFIER,
-  RUN_STEP_DESCRIPTION
+  StepPaletteFilters
 } from '@harnessio/playground'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { TypesPlugin } from '../types/api-types'
+import { harnessSteps } from '../utils/harness-steps'
 
 interface PipelineStudioStepFormProps {
   requestClose: () => void
@@ -20,7 +19,10 @@ interface PipelineStudioStepFormProps {
 
 const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose } = props
-  const { addStepIntention, setCurrentStepFormDefinition } = usePipelineDataContext()
+  const {
+    state: { addStepIntention },
+    setCurrentStepFormDefinition
+  } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [pluginsData, setPluginsData] = useState<TypesPlugin[]>([])
@@ -56,29 +58,32 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
       </StepsPalette.Header>
       <StepsPaletteContent.Root>
         <StepsPaletteContent.Section>
-          <StepsPaletteContent.SectionHeader>Run</StepsPaletteContent.SectionHeader>
-          <StepsPaletteContent.SectionItem>
-            <StepsPaletteItem.Root
-              onClick={() => {
-                setCurrentStepFormDefinition({
-                  identifier: RUN_STEP_IDENTIFIER,
-                  description: RUN_STEP_DESCRIPTION,
-                  type: 'step'
-                })
-                setStepDrawerOpen(StepDrawer.Form)
-              }}>
-              <StepsPaletteItem.Left>
-                <Icon name="harness-plugin" size={36} />
-              </StepsPaletteItem.Left>
-              <StepsPaletteItem.Right>
-                <StepsPaletteItem.Header>
-                  <StepsPaletteItem.Title>run</StepsPaletteItem.Title>
-                  <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper>
-                </StepsPaletteItem.Header>
-                <StepsPaletteItem.Description>{RUN_STEP_DESCRIPTION}</StepsPaletteItem.Description>
-              </StepsPaletteItem.Right>
-            </StepsPaletteItem.Root>
-          </StepsPaletteContent.SectionItem>
+          <StepsPaletteContent.SectionHeader>Harness</StepsPaletteContent.SectionHeader>
+
+          {harnessSteps.map(harnessStep => (
+            <StepsPaletteContent.SectionItem>
+              <StepsPaletteItem.Root
+                onClick={() => {
+                  setCurrentStepFormDefinition({
+                    identifier: harnessStep.identifier,
+                    description: harnessStep.description,
+                    type: 'step'
+                  })
+                  setStepDrawerOpen(StepDrawer.Form)
+                }}>
+                <StepsPaletteItem.Left>
+                  <Icon name="harness-plugin" size={36} />
+                </StepsPaletteItem.Left>
+                <StepsPaletteItem.Right>
+                  <StepsPaletteItem.Header>
+                    <StepsPaletteItem.Title>{harnessStep.identifier}</StepsPaletteItem.Title>
+                    <StepsPaletteItem.BadgeWrapper>verified</StepsPaletteItem.BadgeWrapper>
+                  </StepsPaletteItem.Header>
+                  <StepsPaletteItem.Description>{harnessStep.description}</StepsPaletteItem.Description>
+                </StepsPaletteItem.Right>
+              </StepsPaletteItem.Root>
+            </StepsPaletteContent.SectionItem>
+          ))}
         </StepsPaletteContent.Section>
         <StepsPaletteContent.Section>
           <StepsPaletteContent.SectionHeader>Plugins</StepsPaletteContent.SectionHeader>

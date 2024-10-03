@@ -1,13 +1,16 @@
 import React from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 import { SandboxLayout } from '..'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 function SandboxSettingsProjectPage() {
+  const location = useLocation()
+  const activeTab = location.pathname.split('/').pop() || 'general'
+
   return (
     <>
       <SandboxLayout.SubHeader>
-        <Tabs variant="navigation" defaultValue="general">
+        <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`general`}>
               <TabsTrigger value="general">General</TabsTrigger>

@@ -19,7 +19,7 @@ const AppContext = createContext<AppContextType | undefined>(undefined)
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [spaces, setSpaces] = useState<TypesMembershipSpace[]>([])
 
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     new CodeServiceAPIClient({
       urlInterceptor: (url: string) => `${BASE_URL_PREFIX}${url}`,
       requestInterceptor: (request: Request): Request => {

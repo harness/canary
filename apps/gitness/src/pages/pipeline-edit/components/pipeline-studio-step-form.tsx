@@ -11,14 +11,15 @@ import {
   outputTransformValues
 } from '@harnessio/forms'
 import { Icon } from '@harnessio/canary'
-import { ListPluginsOkResponse, useListPluginsQuery } from '@harnessio/code-service-client'
+import { useListPluginsQuery } from '@harnessio/code-service-client'
 import {
   StepForm,
   StepFormSection,
   inputComponentFactory,
   runStepFormDefinition,
   RUN_STEP_DESCRIPTION,
-  RUN_STEP_IDENTIFIER
+  RUN_STEP_IDENTIFIER,
+  TEMPLATE_STEP_IDENTIFIER
 } from '@harnessio/playground'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { ApiInputs, addNameInput, apiInput2IInputDefinition } from '../utils/step-form-utils'
@@ -30,32 +31,27 @@ interface PipelineStudioStepFormProps {
 export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.Element => {
   const { requestClose } = props
   const {
-    yamlRevision,
+    state: { yamlRevision, currentStepFormDefinition, addStepIntention, editStepIntention },
     requestYamlModifications,
-    currentStepFormDefinition,
-    addStepIntention,
-    editStepIntention,
     setCurrentStepFormDefinition
   } = usePipelineDataContext()
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
   // TODO: only 100 items
-  const { data: pluginsResponseRaw } = useListPluginsQuery(
+  const { data: pluginsResponse } = useListPluginsQuery(
     { queryParams: { limit: 100, page: 1 } },
     { enabled: !!editStepIntention }
   )
-  // TODO: response type
-  const pluginsResponse = useMemo(
-    () => (pluginsResponseRaw as unknown as { content: ListPluginsOkResponse | undefined })?.content,
-    [pluginsResponseRaw]
-  )
-  // TODO
-  const plugins = useMemo(() => {
-    // TODO: Do not parse all plugins in advance  - check if its not needed (wrap inside try...catch)
-    // TODO: duplicated code
 
-    return pluginsResponse?.map(d => ({ ...d, spec: JSON.parse(d.spec ?? '') })) ?? []
+  const plugins = useMemo(() => {
+    // TODO: Do not parse all plugins in advance
+    // TODO: duplicated code
+    try {
+      return pluginsResponse?.map(d => ({ ...d, spec: JSON.parse(d.spec ?? '') })) ?? []
+    } catch (_ex) {
+      // TODO
+    }
   }, [pluginsResponse])
 
   useEffect(() => {
@@ -76,10 +72,12 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
           description: RUN_STEP_DESCRIPTION,
           type: 'step'
         })
-      } else {
+      } else if (step[TEMPLATE_STEP_IDENTIFIER]) {
         setDefaultStepValues(step)
-        const editStep = plugins.find(plugin => plugin.identifier === step?.spec?.name)
+        const editStep = plugins.find(plugin => plugin.identifier === step.template.uses)
         setCurrentStepFormDefinition(editStep ?? null)
+      } else {
+        // TODO: unknown state
       }
     }
   }, [editStepIntention, plugins])
@@ -98,10 +96,10 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
       const inputs = (currentStepFormDefinition?.spec as any)?.spec?.inputs as ApiInputs
 
       const formInputs: IFormDefinition['inputs'] = Object.keys(inputs ?? {}).map(inputName => {
-        return apiInput2IInputDefinition(inputName, inputs[inputName], 'spec.inputs')
+        return apiInput2IInputDefinition(inputName, inputs[inputName], 'template.with')
       })
 
-      formDefinition = { inputs: addNameInput(formInputs, 'name') }
+      formDefinition = { inputs: addNameInput(formInputs, 'template.name') }
     }
   }
 
@@ -126,14 +124,13 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
       })}
       mode="onSubmit"
       onSubmit={values => {
-        let stepValue = values
+        const transformers = getTransformers(formDefinition)
+        const stepValue = outputTransformValues(values, transformers)
+
         // TODO: abstract this
+        // if its plugin/template
         if (currentStepFormDefinition?.identifier !== RUN_STEP_IDENTIFIER) {
-          set(stepValue, 'type', 'plugin')
-          set(stepValue, 'spec.name', currentStepFormDefinition?.identifier)
-        } else {
-          const transformers = getTransformers(runStepFormDefinition)
-          stepValue = outputTransformValues(values, transformers)
+          set(stepValue, 'template.uses', currentStepFormDefinition?.identifier)
         }
 
         if (addStepIntention) {

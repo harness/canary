@@ -4,7 +4,9 @@ import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 
 export const PipelineStudioPanel = (): JSX.Element => {
-  const { problems } = usePipelineDataContext()
+  const {
+    state: { problemsCount }
+  } = usePipelineDataContext()
   const { setPanelOpen } = usePipelineViewContext()
 
   return (
@@ -13,9 +15,9 @@ export const PipelineStudioPanel = (): JSX.Element => {
         <TabsList className="bg-transparent ml-4">
           <TabsTrigger value="problems">
             Problems
-            {problems.problemsCount.all > 0 && (
+            {problemsCount.all > 0 && (
               <Badge className="rounded-full font-normal text-xs p-2 h-5 ml-2 bg-red-950 text-red-400">
-                {problems.problemsCount.all}
+                {problemsCount.all}
               </Badge>
             )}
           </TabsTrigger>

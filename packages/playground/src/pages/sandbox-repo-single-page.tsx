@@ -1,18 +1,20 @@
 import React from 'react'
 import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 import { SandboxLayout } from '..'
-import { NavLink, Outlet, useParams } from 'react-router-dom'
+import { NavLink, Outlet, useLocation, useParams } from 'react-router-dom'
 
 function SandboxRepoSinglePage() {
   const { repoId } = useParams<{ repoId: string }>()
+  const location = useLocation()
+  const activeTab = location.pathname.split('/').pop() || 'summary'
 
   return (
     <>
       <SandboxLayout.SubHeader>
-        <Tabs variant="navigation" defaultValue="summary">
+        <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`summary`}>
-              <TabsTrigger value="/summary">Summary</TabsTrigger>
+              <TabsTrigger value="summary">Summary</TabsTrigger>
             </NavLink>
             <NavLink to={`code`}>
               <TabsTrigger value="code">Files</TabsTrigger>

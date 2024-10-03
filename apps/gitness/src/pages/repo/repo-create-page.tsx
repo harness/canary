@@ -54,8 +54,14 @@ export const CreateRepo = () => {
 
   return (
     <>
-      {/* <Header /> */}
-      <SandboxRepoCreatePage onFormSubmit={onSubmit} onFormCancel={onCancel} apiError={apiError} />
+      <Header />
+      <SandboxRepoCreatePage
+        onFormSubmit={onSubmit}
+        onFormCancel={onCancel}
+        apiError={apiError}
+        isLoading={createRepositoryMutation.isLoading}
+        isSuccess={createRepositoryMutation.isSuccess}
+      />
     </>
   )
 }

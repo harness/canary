@@ -9,14 +9,15 @@ import { PipelineParams, usePipelineDataContext } from '../context/PipelineStudi
 
 const PipelineStudioHeaderActions = (): JSX.Element => {
   const {
-    pipelineData,
-    pipelineYAMLFileContent,
-    fetchPipelineYAMLFileContent,
-    fetchingPipelineYAMLFileContent,
-    yamlRevision,
-    isExistingPipeline,
-    isDirty,
-    gitInfo
+    state: {
+      pipelineData,
+      pipelineFileContent,
+      fetchingPipelineFileContent,
+      yamlRevision,
+      isExistingPipeline,
+      isDirty
+    },
+    fetchPipelineFileContent
   } = usePipelineDataContext()
 
   const navigate = useNavigate()
@@ -32,7 +33,7 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
           action: isExistingPipeline ? 'UPDATE' : 'CREATE',
           path: pipelineData?.config_path,
           payload: yamlRevision.yaml,
-          sha: isExistingPipeline ? pipelineYAMLFileContent?.sha : ''
+          sha: isExistingPipeline ? pipelineFileContent?.sha : ''
         }
       ],
       branch: pipelineData?.default_branch || '',
@@ -45,7 +46,7 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
         if (execute) {
           handleRun()
         } else {
-          fetchPipelineYAMLFileContent?.()
+          fetchPipelineFileContent?.()
         }
         // TODO: toast
       })
@@ -61,7 +62,7 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
     createExecutionAsync({
       pipeline_identifier: pipelineData?.identifier ?? '',
       repo_ref: repoRef,
-      queryParams: { branch: gitInfo?.default_branch }
+      queryParams: { branch: pipelineData?.default_branch }
     })
       .then(response => {
         const executionId = response.number
@@ -101,7 +102,7 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
     // NOTE: absolute positioning in the top right corner of the page
     <div className="absolute right-0 top-0 w-fit">
       <div className="flex items-center gap-x-3 h-14 px-4">
-        {!fetchingPipelineYAMLFileContent && (
+        {!fetchingPipelineFileContent && (
           <>
             <Button variant="ghost" size="sm">
               Settings

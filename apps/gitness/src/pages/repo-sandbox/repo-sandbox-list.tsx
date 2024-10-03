@@ -12,7 +12,6 @@ import {
   Spacer,
   Text
 } from '@harnessio/canary'
-import { useState } from 'react'
 import { useListReposQuery, RepoRepositoryOutput } from '@harnessio/code-service-client'
 import { SkeletonList, RepoList, SandboxLayout } from '@harnessio/playground'
 import { Link, useNavigate } from 'react-router-dom'
@@ -31,7 +30,6 @@ export default function ReposSandboxListPage() {
   const totalPages = 10
   const navigate = useNavigate()
   const space = useGetSpaceURLParam()
-  const [loadState, _] = useState('float')
 
   const { isFetching, data } = useListReposQuery({ queryParams: {}, space_ref: `${space}/+` })
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
@@ -63,27 +61,7 @@ export default function ReposSandboxListPage() {
 
   return (
     <>
-      {loadState.includes('sub') && (
-        <SandboxLayout.LeftSubPanel hasHeader>
-          <SandboxLayout.Content>
-            <Text as="p" size={2} className="text-primary/70">
-              SubMenu
-            </Text>
-            <Text as="p" size={2} className="text-primary/70">
-              2,000 pixels tall
-            </Text>
-            <div className="h-[2000px]" />
-            <Text as="p" size={2} className="text-primary/70">
-              End of SubMenu
-            </Text>
-          </SandboxLayout.Content>
-        </SandboxLayout.LeftSubPanel>
-      )}
-      <SandboxLayout.Main
-        hasHeader
-        hasLeftPanel
-        hasLeftSubPanel={loadState.includes('sub')}
-        fullWidth={loadState.includes('full')}>
+      <SandboxLayout.Main hasHeader hasLeftPanel>
         <SandboxLayout.Content>
           <Spacer size={10} />
           <Text size={5} weight={'medium'}>

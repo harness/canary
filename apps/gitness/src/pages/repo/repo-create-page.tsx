@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { SandboxRepoCreatePage, FormFields } from '@harnessio/playground'
 import { useNavigate } from 'react-router-dom'
 
-// import Header from '../../components/Header'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
 import {
@@ -54,7 +53,6 @@ export const CreateRepo = () => {
 
   return (
     <>
-      <Header />
       <SandboxRepoCreatePage
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}

@@ -24,9 +24,18 @@ import {
 import { SandboxLayout, FormFieldSet } from '..'
 import { MessageTheme } from '../components/form-field-set'
 
+interface PageProps {
+  onFormSubmit: (data: InputProps) => void
+}
+interface InputProps {
+  projectName: string
+  identifier: string
+  projectURL: string
+}
+
 // Define form schema for Project Settings
 const projectSettingsSchema = z.object({
-  companyName: z.string().min(1, { message: 'Please provide a company name' }),
+  projectName: z.string().min(1, { message: 'Please provide a company name' }),
   identifier: z.string().min(1, { message: 'Please provide an identifier' }),
   projectURL: z.string().url({ message: 'Please provide a valid URL' })
 })
@@ -34,7 +43,7 @@ const projectSettingsSchema = z.object({
 // Define TypeScript type
 type ProjectSettingsFields = z.infer<typeof projectSettingsSchema>
 
-function SandboxSettingsProjectGeneralPage() {
+function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
   // Project Settings form handling
   const {
     register,
@@ -45,7 +54,7 @@ function SandboxSettingsProjectGeneralPage() {
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onChange',
     defaultValues: {
-      companyName: 'Acme Inc.',
+      projectName: 'Acme Inc.',
       identifier: 'FOA',
       projectURL: 'https://acme.com'
     }
@@ -67,6 +76,7 @@ function SandboxSettingsProjectGeneralPage() {
       resetProjectSettingsForm(data) // Reset to the current values
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
+    onFormSubmit(data)
   }
 
   // Delete project handler
@@ -115,15 +125,15 @@ function SandboxSettingsProjectGeneralPage() {
               </FormFieldSet.ControlGroup>
             </FormFieldSet.ControlGroup>
 
-            {/* COMPANY NAME */}
+            {/* PROJECT NAME */}
             <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label htmlFor="companyName" required>
-                Company Name
+              <FormFieldSet.Label htmlFor="projectName" required>
+                Project Name
               </FormFieldSet.Label>
-              <Input id="companyName" {...register('companyName')} placeholder="Enter company name" />
-              {errors.companyName && (
+              <Input id="projectName" {...register('projectName')} placeholder="Enter project name" />
+              {errors.projectName && (
                 <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                  {errors.companyName.message?.toString()}
+                  {errors.projectName.message?.toString()}
                 </FormFieldSet.Message>
               )}
             </FormFieldSet.ControlGroup>

@@ -6,9 +6,6 @@ import {
   Spacer,
   Text,
   Icon,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
@@ -22,10 +19,6 @@ import { SandboxLayout, FormFieldSet, MessageTheme } from '@harnessio/playground
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import { SandboxSettingsProjectGeneralPage } from '@harnessio/playground'
-
-// get event name in project name
-// get event description in project description
 
 interface PageProps {
   data: InputProps
@@ -54,7 +47,8 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
     register,
     handleSubmit,
     reset: resetProjectSettingsForm,
-    formState: { errors, isValid, dirtyFields }
+    formState: { errors, isValid, dirtyFields },
+    watch
   } = useForm<ProjectSettingsFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onChange',
@@ -84,6 +78,13 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
     onFormSubmit(formData)
   }
 
+  // Watch the verification value
+  const verificationValue = watch('verification')
+
+  const typeCheck = (value: string) => {
+    return value === 'DELETE'
+  }
+
   // Delete project handler
   const handleDelete = () => {
     setIsDeleting(true)
@@ -108,7 +109,7 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormFieldSet.Root>
             {/* COMPANY LOGO */}
-            <FormFieldSet.ControlGroup className="w-auto flex flex-row gap-x-6 items-center justify-start">
+            {/* <FormFieldSet.ControlGroup className="w-auto flex flex-row gap-x-6 items-center justify-start">
               <Avatar size="80" className="h-20 w-20 rounded-full bg-primary/[0.02] shadow-md">
                 <AvatarImage src="/images/company-logo.jpg" />
                 <AvatarFallback>
@@ -116,8 +117,9 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                     A
                   </Text>
                 </AvatarFallback>
-              </Avatar>
-              <FormFieldSet.ControlGroup>
+              </Avatar> */}
+            {/* //not in the gitness app */}
+            {/* <FormFieldSet.ControlGroup>
                 <FormFieldSet.Label htmlFor="companyLogo">Company logo</FormFieldSet.Label>
                 <ButtonGroup.Root spacing="3">
                   <Button variant="outline" size="sm">
@@ -127,8 +129,8 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                     <Icon name="trash" size={14} />
                   </Button>
                 </ButtonGroup.Root>
-              </FormFieldSet.ControlGroup>
-            </FormFieldSet.ControlGroup>
+              </FormFieldSet.ControlGroup> */}
+            {/* </FormFieldSet.ControlGroup> */}
 
             {/* PROJECT NAME */}
             <FormFieldSet.ControlGroup>
@@ -229,7 +231,7 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
-                <AlertDialogHeader>
+                <AlertDialogHeader className="text-left">
                   <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This will permanently delete your project and remove all data. All repositories in this project will
@@ -248,7 +250,9 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   {!isDeleting && !deleteSuccess && (
-                    <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancel</AlertDialogCancel>
+                    <AlertDialogCancel className="mt-0" onClick={() => setIsDialogOpen(false)}>
+                      Cancel
+                    </AlertDialogCancel>
                   )}
                   {deleteSuccess ? (
                     <Button size="default" theme="success" className="self-start pointer-events-none">
@@ -261,7 +265,7 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                       theme="error"
                       className="self-start"
                       onClick={handleDelete}
-                      disabled={isDeleting}>
+                      disabled={!typeCheck(verificationValue) || isDeleting}>
                       {isDeleting ? 'Deleting project...' : 'Yes, delete project'}
                     </Button>
                   )}

@@ -50,7 +50,8 @@ function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
     register,
     handleSubmit,
     reset: resetProjectSettingsForm,
-    formState: { errors, isValid, dirtyFields }
+    formState: { errors, isValid, dirtyFields },
+    watch
   } = useForm<ProjectSettingsFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onChange',
@@ -78,6 +79,13 @@ function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
     onFormSubmit(data)
+  }
+
+  // Watch the verification value
+  const verificationValue = watch('verification')
+
+  const typeCheck = (value: string) => {
+    return value === 'DELETE'
   }
 
   // Delete project handler
@@ -242,7 +250,7 @@ function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
                       theme="error"
                       className="self-start"
                       onClick={handleDelete}
-                      disabled={isDeleting}>
+                      disabled={!typeCheck(verificationValue) || isDeleting}>
                       {isDeleting ? 'Deleting project...' : 'Yes, delete project'}
                     </Button>
                   )}

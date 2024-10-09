@@ -5,7 +5,9 @@ import {
   RootLayout,
   SandboxRoot,
   SandboxSettings,
-  SandboxSettingsAccountPage
+  SandboxSettingsAccountPage,
+  SandboxSettingsProjectPage,
+  SandboxSettingsProjectMembersPage
 } from '@harnessio/playground'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
@@ -38,6 +40,7 @@ import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settin
 import { FileViewer } from './components/FileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { Logout } from './pages/logout'
+import { ProjectSettingsGeneralPage } from './pages/project-settings/projsettings-general-page'
 
 export default function App() {
   const router = createBrowserRouter([
@@ -240,7 +243,6 @@ export default function App() {
         {
           path: 'settings',
           element: <SandboxSettings />,
-
           children: [
             {
               path: 'profile',
@@ -257,6 +259,36 @@ export default function App() {
                 {
                   path: 'keys',
                   element: <SettingsProfileKeysPage />
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: ':spaceId/sandbox',
+      element: <SandboxRoot />,
+      children: [
+        {
+          path: 'settings',
+          element: <SandboxSettings />,
+          children: [
+            {
+              path: 'project',
+              element: <SandboxSettingsProjectPage />,
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="general" />
+                },
+                {
+                  path: 'general',
+                  element: <ProjectSettingsGeneralPage />
+                },
+                {
+                  path: 'members',
+                  element: <SandboxSettingsProjectMembersPage />
                 }
               ]
             }

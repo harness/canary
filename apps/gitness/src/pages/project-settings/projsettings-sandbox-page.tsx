@@ -41,7 +41,8 @@ interface InputProps {
 const projectSettingsSchema = z.object({
   projectName: z.string().min(1, { message: 'Please provide a company name' }),
   identifier: z.string().min(1, { message: 'Please provide an identifier' }),
-  projectURL: z.string().url({ message: 'Please provide a valid URL' })
+  projectURL: z.string().url({ message: 'Please provide a valid URL' }),
+  verification: z.string().min(1, { message: 'Please type the DELETE to verify' })
 })
 
 // Define TypeScript type
@@ -234,6 +235,16 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, data }: PageProps) =>
                     This will permanently delete your project and remove all data. All repositories in this project will
                     also be deleted. This action cannot be undone.
                   </AlertDialogDescription>
+                  {/* input delete verification */}
+                  <FormFieldSet.Label htmlFor="verification" required>
+                    To confirm this, type “DELETE”
+                  </FormFieldSet.Label>
+                  <Input id="verification" {...register('verification')} placeholder="" />
+                  {errors.projectName && (
+                    <FormFieldSet.Message theme={MessageTheme.ERROR}>
+                      {errors.projectName.message?.toString()}
+                    </FormFieldSet.Message>
+                  )}
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   {!isDeleting && !deleteSuccess && (

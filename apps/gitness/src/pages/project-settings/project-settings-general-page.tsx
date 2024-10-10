@@ -7,7 +7,7 @@ import {
   useUpdateSpaceMutation,
   useDeleteSpaceMutation
 } from '@harnessio/code-service-client'
-import { ProjectSettingsSandboxPage } from './projsettings-sandbox-page'
+import { ProjectSettingsSandboxPage } from './project-settings-sandbox-page'
 import { redirect } from 'react-router-dom'
 
 export const ProjectSettingsGeneralPage = () => {
@@ -21,11 +21,6 @@ export const ProjectSettingsGeneralPage = () => {
     identifier: space?.identifier ?? '',
     description: space?.description ?? ''
   }
-
-  //move space -> identifier, uid
-  //update space -> description
-  console.log(spaceData, 'spaceData')
-  console.log(spaces, 'spaces')
 
   const updateDescription = useUpdateSpaceMutation(
     {

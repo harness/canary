@@ -30,7 +30,7 @@ interface FormProjDeleteProps {
   isDeleting: boolean
 }
 //delete project form with dialog
-export const FormProjDelete = ({ handleDeleteProject, isDeleteSuccess, isDeleting }: FormProjDeleteProps) => {
+export const FormDialogProjectDelete = ({ handleDeleteProject, isDeleteSuccess, isDeleting }: FormProjDeleteProps) => {
   const {
     register,
     formState: { errors },

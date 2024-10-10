@@ -40,7 +40,7 @@ import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settin
 import { FileViewer } from './components/FileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { Logout } from './pages/logout'
-import { ProjectSettingsGeneralPage } from './pages/project-settings/projsettings-general-page'
+import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
 
 export default function App() {
   const router = createBrowserRouter([

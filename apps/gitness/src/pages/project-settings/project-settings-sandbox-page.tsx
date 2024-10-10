@@ -4,7 +4,7 @@ import { SandboxLayout, FormFieldSet, MessageTheme } from '@harnessio/playground
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FormProjDelete } from './components/FormProjDelete'
+import { FormDialogProjectDelete } from './components/FormDialogProjectDelete'
 
 interface PageProps {
   spaceData: InputProps
@@ -23,7 +23,6 @@ interface InputProps {
 const projectSettingsSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a project name' }),
   description: z.string().min(1, { message: 'Please provide an description' })
-  // projectURL: z.string().url({ message: 'Please provide a valid URL' }),
 })
 
 // Define TypeScript type
@@ -40,7 +39,7 @@ export const ProjectSettingsSandboxPage = ({
   const {
     register,
     handleSubmit,
-    // reset: resetProjectSettingsForm,
+    // reset: resetProjectSettingsForm, // will use this to reset the form after api call has projectName
     resetField,
     setValue,
     formState: { errors, isValid, isDirty }
@@ -68,7 +67,7 @@ export const ProjectSettingsSandboxPage = ({
       console.log('Project settings updated:', formData)
       setIsSubmitting(false)
       setSubmitted(true)
-      // resetProjectSettingsForm(formData) // Reset to the current values
+      // resetProjectSettingsForm(formData) // TODO:will use this to reset the form after api call has projectName
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
 
@@ -81,17 +80,17 @@ export const ProjectSettingsSandboxPage = ({
     setIsCancelDisabled(true)
   }, [spaceData?.description, setValue])
 
+  // Manually set the identifier if it's disabled
+  useEffect(() => {
+    setValue('identifier', spaceData?.identifier ?? '') // Ensure identifier is set even when disabled
+  }, [spaceData?.identifier, setValue])
+
   const handleDescriptionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value
     setProDescription(newDescription)
     setValue('description', newDescription, { shouldValidate: true, shouldDirty: true }) // Update form state
     setIsCancelDisabled(false)
   }
-
-  // Manually set the identifier if it's disabled
-  useEffect(() => {
-    setValue('identifier', spaceData?.identifier ?? '') // Ensure identifier is set even when disabled
-  }, [spaceData?.identifier, setValue])
 
   // Reset only the description field on cancel
   const handleCancel = () => {
@@ -182,7 +181,7 @@ export const ProjectSettingsSandboxPage = ({
         </FormFieldSet.Root>
 
         {/* DELETE PROJECT */}
-        <FormProjDelete
+        <FormDialogProjectDelete
           handleDeleteProject={handleDeleteProject}
           isDeleteSuccess={isDeleteSuccess}
           isDeleting={isDeleting}

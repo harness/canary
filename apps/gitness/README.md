@@ -30,3 +30,12 @@ To set up and run Gitness locally, follow these steps:
    ```bash
    pnpm dev
    ```
+
+4. **Docker Setup:**
+
+   ```bash
+   docker build -t <tag> .
+   docker run -p 5678:8080 -e API_URL=http://localhost:3000 -n ui <tag>
+   ```
+
+   UI will be available at `http://localhost:5678`. This assumes the BE is running on `http://localhost:3000`.

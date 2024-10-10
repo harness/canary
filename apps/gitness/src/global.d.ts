@@ -17,3 +17,7 @@ declare module 'monaco-editor/esm/vs/editor/standalone/browser/standaloneService
     get: (id: unknown) => { documentSymbolProvider: unknown }
   }
 }
+
+declare interface Window {
+  apiUrl?: string
+}

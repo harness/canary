@@ -16,7 +16,7 @@ interface AppContextType {
   currentUser?: TypesUser
 }
 
-const BASE_URL_PREFIX = '/api/v1'
+const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 

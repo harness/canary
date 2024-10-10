@@ -1,12 +1,6 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
-import {
-  ThemeProvider,
-  RootLayout,
-  SandboxRoot,
-  SandboxSettings,
-  SandboxSettingsAccountPage
-} from '@harnessio/playground'
+import { ThemeProvider, SandboxRoot, SandboxSettings, SandboxSettingsAccountPage } from '@harnessio/playground'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
 import PipelineListPage from './pages/pipeline-list'
@@ -38,12 +32,13 @@ import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settin
 import { FileViewer } from './components/FileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { Logout } from './pages/logout'
+import { AppLayout } from './components/AppLayout'
 
 export default function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout />,
+      element: <AppLayout />,
 
       children: [
         { index: true, element: <LandingPage /> },

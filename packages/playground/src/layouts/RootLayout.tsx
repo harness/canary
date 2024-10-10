@@ -1,16 +1,9 @@
-import { Navbar, Icon, NavbarProjectChooser, NavbarUser, IconProps } from '@harnessio/canary'
+import { Navbar, Icon, NavbarProjectChooser, NavbarUser } from '@harnessio/canary'
 import React, { useState } from 'react'
 import { Outlet, NavLink, useLocation, Link } from 'react-router-dom'
 import { MoreSubmenu } from '../components/more-submenu'
 import { navbarSubmenuData } from '../data/mockNavbarSubmenuData'
-
-interface NavbarItem {
-  id: number
-  title: string
-  iconName: IconProps['name']
-  description: string
-  to?: string
-}
+import { NavbarItem } from './types'
 
 export const RootLayout: React.FC = () => {
   const location = useLocation()
@@ -24,6 +17,7 @@ export const RootLayout: React.FC = () => {
       icon: <Icon name="repositories" size={12} />,
       to: '/repos'
     },
+
     {
       text: 'Pipelines',
       icon: <Icon name="pipelines" size={12} />,
@@ -114,6 +108,7 @@ export const RootLayout: React.FC = () => {
                     <Icon name="harness" size={20} className="text-primary" />
                   </Link>
                 }
+                enableSearch
               />
             </Navbar.Header>
             <Navbar.Content>
@@ -174,7 +169,7 @@ export const RootLayout: React.FC = () => {
             </Navbar.Content>
             <Navbar.Footer>
               <NavLink to="/sandbox/settings/profile/general" className="p-2 hover:bg-tertiary">
-                <NavbarUser.Root />
+                <NavbarUser.Root username="Steven M." isAdmin url="../images/user-avatar.svg" />
               </NavLink>
             </Navbar.Footer>
           </Navbar.Root>

@@ -89,7 +89,7 @@ export const ProjectSettingsSandboxPage = ({
   const handleDescriptionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value
     setProDescription(newDescription)
-    setValue('description', newDescription, { shouldValidate: true, shouldDirty: true }) // Update form state
+    setValue('description', newDescription, { shouldValidate: true, shouldDirty: true })
     setIsCancelDisabled(false)
   }
 

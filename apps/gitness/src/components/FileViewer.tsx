@@ -1,6 +1,17 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { SkeletonList, Summary, FileProps, SummaryItemType, NoData } from '@harnessio/playground'
+import { Link, useParams } from 'react-router-dom'
+import {
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  ButtonGroup,
+  cn,
+  Icon,
+  ListActions,
+  Spacer,
+  Text
+} from '@harnessio/canary'
+import { SkeletonList, Summary, FileProps, SummaryItemType, NoData, SandboxLayout } from '@harnessio/playground'
 import {
   useGetContentQuery,
   pathDetails,
@@ -13,12 +24,37 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
 import { PathParams } from '../RouteDefinitions'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
+import FileContentViewer from './FileContentViewer'
+
+interface PathParts {
+  path: string
+  parentPath: string
+}
+function splitPathWithParents(fullResourcePath: string) {
+  const pathParts = fullResourcePath?.split('/')
+  const result: PathParts[] = []
+  if (pathParts.length) {
+    let parentPath = ''
+
+    pathParts.map((path, index) => {
+      parentPath += (index === 0 ? '' : '/') + path
+
+      result.push({
+        path: path,
+        parentPath: parentPath
+      })
+    })
+  }
+  return result
+}
 
 export const FileViewer: React.FC = () => {
   const repoRef = useGetRepoRef()
-  const { gitRef, resourcePath } = useParams<PathParams>()
+  const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
   const subResourcePath = useParams()['*'] || ''
+  const repoPath = `/${spaceId}/repos/${repoId}/code/${gitRef}`
   const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
+  const pathParts = splitPathWithParents(fullResourcePath || '')
   const [files, setFiles] = useState<FileProps[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -115,5 +151,68 @@ export const FileViewer: React.FC = () => {
         />
       )
   }
-  return repoDetails?.type === 'dir' ? renderListContent() : <>CODE VIEWER / EDITOR</>
+
+  return (
+    <SandboxLayout.Main fullWidth hasLeftSubPanel>
+      <SandboxLayout.Content>
+        <ListActions.Root>
+          <ListActions.Left>
+            <ButtonGroup.Root spacing="2">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to={repoPath}>
+                    <Text size={2} color="tertiaryBackground" className="hover:text-foreground">
+                      {repoId}
+                    </Text>
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <Text size={2} color="tertiaryBackground">
+                /
+              </Text>
+              {pathParts?.map((path, index) => {
+                return (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to={repoPath + '/~/' + path.parentPath}>
+                          <Text
+                            size={2}
+                            color="tertiaryBackground"
+                            className={cn('hover:text-foreground', {
+                              'text-primary': index === pathParts?.length - 1
+                            })}>
+                            {path.path}
+                          </Text>
+                        </Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {index < pathParts?.length - 1 && (
+                      <Text size={2} color="tertiaryBackground">
+                        /
+                      </Text>
+                    )}
+                  </>
+                )
+              })}
+            </ButtonGroup.Root>
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button variant="outline" size="sm">
+              Add file&nbsp;&nbsp;
+              <Icon name="chevron-down" size={11} className="chevron-down" />
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={5} />
+        {repoDetails?.type === 'dir' ? (
+          renderListContent()
+        ) : repoDetails?.content?.data ? (
+          <FileContentViewer repoContent={repoDetails} />
+        ) : (
+          <></>
+        )}
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
+  )
 }

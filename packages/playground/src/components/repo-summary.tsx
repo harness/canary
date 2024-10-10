@@ -42,7 +42,7 @@ interface PageProps {
   files?: FileProps[]
 }
 
-const TopTitle = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
+export const TopTitle = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
   const { user, lastCommitMessage } = file
 
   return (
@@ -65,7 +65,7 @@ const TopTitle = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage'
   )
 }
 
-const TopDetails = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
+export const TopDetails = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
   const { sha, timestamp } = file
   return (
     <ButtonGroup.Root verticalAlign="center" spacing="2">

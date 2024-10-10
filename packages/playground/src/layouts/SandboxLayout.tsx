@@ -45,7 +45,7 @@ function LeftSubPanel({
   return (
     <section
       className={cn(
-        'fixed left-[220px] top-0 bottom-0 z-40 w-[248px] border-r border-border-background overflow-y-auto',
+        'fixed left-[220px] top-0 bottom-0 z-40 w-[300px] border-r border-border-background overflow-y-auto',
         paddingTopClass,
         className
       )}
@@ -95,11 +95,11 @@ function Main({
 
   const paddingLeftClass =
     hasLeftPanel && hasLeftSubPanel
-      ? 'pl-[calc(220px+248px)]'
+      ? 'pl-[calc(220px+300px)]'
       : hasLeftPanel
         ? 'pl-[220px]'
         : hasLeftSubPanel
-          ? 'pl-[248px]'
+          ? 'pl-[300px]'
           : ''
 
   if (fullWidth) {

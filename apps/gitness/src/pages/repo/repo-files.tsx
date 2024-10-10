@@ -1,16 +1,19 @@
 import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Outlet } from 'react-router-dom'
-import { Button, ButtonGroup, Icon, ListActions, Spacer, Text } from '@harnessio/canary'
-import { BranchSelector, SandboxLayout, Filter } from '@harnessio/playground'
-import { useListBranchesQuery, useFindRepositoryQuery } from '@harnessio/code-service-client'
+import { Button, ButtonGroup, Icon } from '@harnessio/canary'
+import { BranchSelector, SandboxLayout } from '@harnessio/playground'
+import { useListBranchesQuery, useFindRepositoryQuery, useGetContentQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import Explorer from '../../components/FileExplorer'
+import { normalizeGitRef } from '../../utils/git-utils'
 
 export const RepoFiles: React.FC = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, gitRef } = useParams<PathParams>()
   const navigate = useNavigate()
+
+  const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -19,7 +22,11 @@ export const RepoFiles: React.FC = () => {
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
 
-  const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')
+  const { data: repoDetails } = useGetContentQuery({
+    path: '',
+    repo_ref: repoRef,
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(selectedBranch) }
+  })
 
   const branchList = branches?.map(item => ({
     name: item?.name
@@ -52,10 +59,13 @@ export const RepoFiles: React.FC = () => {
             </Button>
           </ButtonGroup.Root>
         </div>
-
-        <Filter />
-
-        <Explorer selectedBranch={selectedBranch} />
+        {/* <Filter /> */}
+        {/*  Add back when search api is available  
+          <SearchBox.Root width="full" placeholder="Search" /> 
+        */}
+        {repoDetails?.content?.entries?.length && (
+          <Explorer repoDetails={repoDetails} selectedBranch={selectedBranch} />
+        )}
       </div>
     )
   }
@@ -67,30 +77,7 @@ export const RepoFiles: React.FC = () => {
           <Sidebar />
         </SandboxLayout.Content>
       </SandboxLayout.LeftSubPanel>
-      <SandboxLayout.Main fullWidth hasLeftSubPanel>
-        <SandboxLayout.Content>
-          <ListActions.Root>
-            <ListActions.Left>
-              <ButtonGroup.Root spacing="2">
-                <Text size={2} color="tertiaryBackground">
-                  {repository?.identifier}
-                </Text>
-                <Text size={2} color="tertiaryBackground">
-                  /
-                </Text>
-              </ButtonGroup.Root>
-            </ListActions.Left>
-            <ListActions.Right>
-              <Button variant="outline" size="sm">
-                Add file&nbsp;&nbsp;
-                <Icon name="chevron-down" size={11} className="chevron-down" />
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-          <Spacer size={5} />
-          <Outlet />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
+      <Outlet />
     </>
   )
 }

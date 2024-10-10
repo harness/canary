@@ -4,7 +4,7 @@ export type PathParams = {
   pipelineId?: string
   executionId?: string
   pullRequestId?: string
-  gitRef: string
+  gitRef?: string
   resourcePath?: string
 }
 

@@ -44,6 +44,9 @@ importers:
       '@tanstack/react-query':
         specifier: 4.36.1
         version: 4.36.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      clipboard-copy:
+        specifier: ^3.1.0
+        version: 3.2.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
@@ -56,6 +59,9 @@ importers:
       jotai:
         specifier: ^2.6.3
         version: 2.9.3(@types/react@18.3.3)(react@18.3.1)
+      lang-map:
+        specifier: ^0.4.0
+        version: 0.4.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -6214,6 +6220,7 @@ packages:
   eslint@8.57.0:
     resolution: {integrity: sha512-dZ6+mexnaTIbSBZWgou51U6OmzIhYM2VcNdtiTtI7qPNZm35Akpr0f6vtw3w1Kmn5PYo+tZVfh13WrhpS6oLqQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+    deprecated: This version is no longer supported. Please see https://eslint.org/version-support for other options.
     hasBin: true
 
   eslint@9.6.0:
@@ -7427,6 +7434,13 @@ packages:
 
   kolorist@1.8.0:
     resolution: {integrity: sha512-Y+60/zizpJ3HRH8DCss+q95yr6145JXZo46OTpFvDZWLfRCE4qChOyk1b26nMaNpfHHgxagk9dXT5OP0Tfe+dQ==}
+
+  lang-map@0.4.0:
+    resolution: {integrity: sha512-oiSqZIEUnWdFeDNsp4HId4tAxdFbx5iMBOwA3666Fn2L8Khj8NiD9xRvMsGmKXopPVkaDFtSv3CJOmXFUB0Hcg==}
+    engines: {node: '>=0.10.0'}
+
+  language-map@1.5.0:
+    resolution: {integrity: sha512-n7gFZpe+DwEAX9cXVTw43i3wiudWDDtSn28RmdnS/HCPr284dQI/SztsamWanRr75oSlKSaGbV2nmWCTzGCoVg==}
 
   launch-editor@2.8.0:
     resolution: {integrity: sha512-vJranOAJrI/llyWGRQqiDM+adrw+k83fvmmx3+nV47g3+36xM15jE+zyZ6Ffel02+xSvuM0b2GDRosXZkbb6wA==}
@@ -17763,6 +17777,12 @@ snapshots:
   kleur@4.1.5: {}
 
   kolorist@1.8.0: {}
+
+  lang-map@0.4.0:
+    dependencies:
+      language-map: 1.5.0
+
+  language-map@1.5.0: {}
 
   launch-editor@2.8.0:
     dependencies:

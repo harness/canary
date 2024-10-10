@@ -160,7 +160,18 @@ export const ProjectSettingsSandboxPage = ({
               <ButtonGroup.Root>
                 {!submitted ? (
                   <>
-                    <Button size="sm" type="submit" disabled={isSaveButtonDisabled}>
+                    <Button
+                      size="sm"
+                      type="submit"
+                      disabled={isSaveButtonDisabled}
+                      className={`${
+                        isSubmitting
+                          ? 'cursor-wait'
+                          : isSaveButtonDisabled
+                            ? 'cursor-not-allowed opacity-50'
+                            : 'cursor-pointer'
+                      }`}
+                      style={{ pointerEvents: isSaveButtonDisabled || isSubmitting ? 'initial' : 'auto' }}>
                       {isSubmitting ? 'Saving...' : 'Save changes'}
                     </Button>
                     <Button
@@ -168,6 +179,8 @@ export const ProjectSettingsSandboxPage = ({
                       variant="outline"
                       type="button"
                       onClick={handleCancel}
+                      className={`${isCancelDisabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'}`}
+                      style={{ pointerEvents: isCancelDisabled ? 'initial' : 'auto' }}
                       disabled={isCancelDisabled}>
                       Cancel
                     </Button>

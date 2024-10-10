@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, ButtonGroup, Input, Spacer, Text, Icon } from '@harnessio/canary'
 import { SandboxLayout, FormFieldSet, MessageTheme } from '@harnessio/playground'
 import { useForm, SubmitHandler } from 'react-hook-form'
@@ -40,7 +40,8 @@ export const ProjectSettingsSandboxPage = ({
   const {
     register,
     handleSubmit,
-    reset: resetProjectSettingsForm,
+    // reset: resetProjectSettingsForm,
+    resetField,
     setValue,
     formState: { errors, isValid, isDirty }
   } = useForm<ProjectSettingsFields>({
@@ -55,6 +56,7 @@ export const ProjectSettingsSandboxPage = ({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [prodescription, setProDescription] = useState(spaceData?.description)
+  const [isCancelDisabled, setIsCancelDisabled] = useState(true)
 
   const isSaveButtonDisabled = !isValid || isSubmitting || !isDirty
 
@@ -66,23 +68,37 @@ export const ProjectSettingsSandboxPage = ({
       console.log('Project settings updated:', formData)
       setIsSubmitting(false)
       setSubmitted(true)
-      resetProjectSettingsForm(formData) // Reset to the current values
+      // resetProjectSettingsForm(formData) // Reset to the current values
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
 
     onFormSubmit(formData)
   }
 
+  useEffect(() => {
+    setValue('description', spaceData?.description ?? '') // Sync description from parent
+    setProDescription(spaceData?.description ?? '') // Update local state as well
+    setIsCancelDisabled(true)
+  }, [spaceData?.description, setValue])
+
   const handleDescriptionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDescription = e.target.value
     setProDescription(newDescription)
     setValue('description', newDescription, { shouldValidate: true, shouldDirty: true }) // Update form state
+    setIsCancelDisabled(false)
   }
 
   // Manually set the identifier if it's disabled
-  React.useEffect(() => {
+  useEffect(() => {
     setValue('identifier', spaceData?.identifier ?? '') // Ensure identifier is set even when disabled
   }, [spaceData?.identifier, setValue])
+
+  // Reset only the description field on cancel
+  const handleCancel = () => {
+    resetField('description', { defaultValue: spaceData.description })
+    setProDescription(spaceData?.description ?? '')
+    setIsCancelDisabled(true)
+  }
 
   return (
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
@@ -141,7 +157,12 @@ export const ProjectSettingsSandboxPage = ({
                     <Button size="sm" type="submit" disabled={isSaveButtonDisabled}>
                       {isSubmitting ? 'Saving...' : 'Save changes'}
                     </Button>
-                    <Button size="sm" variant="outline" type="button" onClick={() => resetProjectSettingsForm()}>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      type="button"
+                      onClick={handleCancel}
+                      disabled={isCancelDisabled}>
                       Cancel
                     </Button>
                   </>

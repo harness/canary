@@ -3,7 +3,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useAppContext } from '../../framework/context/AppContext'
 import {
   OpenapiUpdateSpaceRequest,
-  TypesMembershipSpace,
+  TypesSpace,
   useUpdateSpaceMutation,
   useDeleteSpaceMutation
 } from '@harnessio/code-service-client'
@@ -15,25 +15,28 @@ export const ProjectSettingsGeneralPage = () => {
   const [isDeleting, setIsDeleting] = useState(false)
   const spaceId = useGetSpaceURLParam()
   const { spaces } = useAppContext()
-  const space = spaces.find((space: TypesMembershipSpace) => space?.space?.identifier === spaceId)
+  const space = spaces.find((space: TypesSpace) => space?.identifier === spaceId)
 
   const spaceData = {
-    identifier: space?.space?.identifier ?? '',
-    description: space?.space?.description ?? ''
+    identifier: space?.identifier ?? '',
+    description: space?.description ?? ''
   }
-  //I have one form submit but two inputchange has different api call, one is updateProject antoher is updateSpace
 
   //move space -> identifier, uid
   //update space -> description
   console.log(spaceData, 'spaceData')
+  console.log(spaces, 'spaces')
 
   const updateDescription = useUpdateSpaceMutation(
     {
-      space_ref: space?.space?.path
+      space_ref: space?.path
     }, // props passed to the mutation
     {
       onSuccess: data => {
         console.log('Settings updated successfully', data)
+        if (space) {
+          space.description = data?.description
+        }
         redirect(`/`)
       },
       onError: error => {
@@ -50,7 +53,7 @@ export const ProjectSettingsGeneralPage = () => {
     console.log(descriptionData, 'description')
     // Call the mutate function to trigger the API call
     updateDescription.mutate({
-      space_ref: space?.space?.path,
+      space_ref: space?.path,
       body: requestBody
     })
   }
@@ -66,7 +69,7 @@ export const ProjectSettingsGeneralPage = () => {
   const handleFormSubmit = (formData: { description: string }) => {
     // Trigger API calls here, no need for useEffect
     updateDescription.mutate({
-      space_ref: space?.space?.path,
+      space_ref: space?.path,
       body: {
         description: formData?.description
       }
@@ -76,7 +79,7 @@ export const ProjectSettingsGeneralPage = () => {
   // Define the delete API call here
   const deleteSpaceMutation = useDeleteSpaceMutation(
     {
-      space_ref: space?.space?.path
+      space_ref: space?.path
     },
     {
       onSuccess: () => {
@@ -96,7 +99,7 @@ export const ProjectSettingsGeneralPage = () => {
   // Create the delete handler function
   const handleDeleteProject = () => {
     deleteSpaceMutation.mutate(
-      { space_ref: space?.space?.path },
+      { space_ref: space?.path },
       {
         onSettled: () => setIsDeleting(false) // Ensure isDeleting is reset after the mutation completes
       }

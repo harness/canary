@@ -12,7 +12,8 @@ import {
   CreatePublicKeyRequestBody,
   CreatePublicKeyOkResponse,
   CreatePublicKeyErrorResponse,
-  ListPublicKeyErrorResponse
+  ListPublicKeyErrorResponse,
+  useDeletePublicKeyMutation
 } from '@harnessio/code-service-client'
 import { TokenCreateDialog } from './token-create/token-create-dialog'
 import { TokenFormType } from './token-create/token-create-form'
@@ -23,7 +24,8 @@ import { TokensList, KeysList } from '@harnessio/playground'
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
 
-  const TEMP_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
+  const TEMP_FETCH_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
+  const TEMP_DELETE_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
 
   const [publicKeys, setPublicKeys] = useState<KeysList[]>([])
   const [tokens, setTokens] = useState<TokensList[]>([])
@@ -31,7 +33,7 @@ export const SettingsProfileKeysPage = () => {
   const [openSuccessTokenDialog, setSuccessTokenDialog] = useState(false)
   const [saveSshKeyDialog, setSshKeyDialog] = useState(false)
   const [apiError, setApiError] = useState<{
-    type: 'keyFetch' | 'tokenFetch' | 'keyCreate' | 'tokenCreate'
+    type: 'keyFetch' | 'tokenFetch' | 'keyCreate' | 'tokenCreate' | 'tokenDelete' | 'keyDelete'
     message: string
   } | null>(null)
 
@@ -74,7 +76,7 @@ export const SettingsProfileKeysPage = () => {
 
   // TODO: replace with actual query hook once its fixed
   const fetchTokens = () => {
-    fetch(TEMP_USER_TOKENS_API_PATH)
+    fetch(TEMP_FETCH_USER_TOKENS_API_PATH)
       .then(resp => resp.json())
       .then(res => {
         setTokens(res)
@@ -86,6 +88,24 @@ export const SettingsProfileKeysPage = () => {
   useEffect(() => {
     fetchTokens()
   }, [])
+
+  const deleteToken = (tokenId: string) => {
+    fetch(`${TEMP_DELETE_USER_TOKENS_API_PATH}/${tokenId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => {
+        if (response.status === 204) {
+          fetchTokens()
+          setApiError(null)
+        } else {
+          throw new Error(`Error: ${response.status}`)
+        }
+      })
+      .catch(err => setApiError({ type: 'tokenDelete', message: err.message }))
+  }
 
   const createTokenMutation = useCreateTokenMutation(
     { body: {} },
@@ -125,6 +145,24 @@ export const SettingsProfileKeysPage = () => {
     }
   )
 
+  const deletePublicKeyMutation = useDeletePublicKeyMutation(
+    { public_key_identifier: '' },
+    {
+      onSuccess: (_data, variables) => {
+        setPublicKeys(prevKeys => prevKeys.filter(key => key.identifier !== variables.public_key_identifier))
+        setApiError(null)
+      },
+      onError: error => {
+        const message = error.message || 'An unknown error occurred.'
+        setApiError({ type: 'keyDelete', message: message })
+      }
+    }
+  )
+
+  const handleDeletePublicKey = (publicKeyIdentifier: string) => {
+    deletePublicKeyMutation.mutate({ public_key_identifier: publicKeyIdentifier })
+  }
+
   const handleCreateToken = (tokenData: { identifier: string; lifetime: string }) => {
     const body: CreateTokenRequestBody = {
       identifier: tokenData.identifier
@@ -155,6 +193,8 @@ export const SettingsProfileKeysPage = () => {
         openTokenDialog={openTokenDialog}
         openSshKeyDialog={openSshKeyDialog}
         error={apiError}
+        deleteToken={deleteToken}
+        deletePublicKey={handleDeletePublicKey}
       />
       <TokenCreateDialog
         open={openCreateTokenDialog}

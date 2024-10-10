@@ -14,6 +14,8 @@ interface SandboxSettingsAccountKeysPageProps {
   tokens: TokensList[]
   openTokenDialog: () => void
   openSshKeyDialog: () => void
+  deleteToken: (id: string) => void
+  deletePublicKey: (id: string) => void
   error: { type: string; message: string } | null
 }
 const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPageProps> = ({
@@ -21,6 +23,8 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
   tokens,
   openTokenDialog,
   openSshKeyDialog,
+  deleteToken,
+  deletePublicKey,
   error
 }) => {
   return (

@@ -55,12 +55,10 @@ export const ProjectSettingsGeneralPage = () => {
     })
   }
 
-  // Function to handle description input change
   const handleDescriptionChange = (newDescription: string) => {
     handleUpdateDescription({ description: newDescription })
   }
 
-  //handle form submit
   const handleFormSubmit = (formData: { description: string }) => {
     updateDescription.mutate({
       space_ref: space?.path,
@@ -70,7 +68,7 @@ export const ProjectSettingsGeneralPage = () => {
     })
   }
 
-  // Define the delete API call here
+  // delete API call here
   const deleteSpaceMutation = useDeleteSpaceMutation(
     {
       space_ref: space?.path
@@ -91,7 +89,6 @@ export const ProjectSettingsGeneralPage = () => {
     }
   )
 
-  // Create the delete handler function
   const handleDeleteProject = () => {
     deleteSpaceMutation.mutate(
       { space_ref: space?.path },

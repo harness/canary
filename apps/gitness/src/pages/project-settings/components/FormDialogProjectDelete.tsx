@@ -17,7 +17,6 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-// Define TypeScript type
 const projectDeleteSchema = z.object({
   verification: z.string().min(1, { message: 'Please type the DELETE to verify' })
 })
@@ -39,16 +38,14 @@ export const FormDialogProjectDelete = ({ handleDeleteProject, isDeleteSuccess, 
     resolver: zodResolver(projectDeleteSchema)
   })
 
-  const [isDialogOpen, setIsDialogOpen] = useState(false) // State to control alert dialog
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
 
-  // Watch the verification value
   const verificationValue = watch('verification')
 
   const typeCheck = (value: string) => {
     return value === 'DELETE'
   }
 
-  // Delete project handler
   const handleDelete = () => {
     handleDeleteProject()
     if (isDeleteSuccess) {

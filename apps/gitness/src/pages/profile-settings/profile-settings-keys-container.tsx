@@ -15,14 +15,17 @@ import {
   ListPublicKeyErrorResponse
 } from '@harnessio/code-service-client'
 import { TokenCreateDialog } from './token-create/token-create-dialog'
+import { TokenFormType } from './token-create/token-create-form'
 import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenSuccessDialog } from './token-create/token-success-dialog'
-import { TokensList } from '@harnessio/playground'
+import { TokensList, KeysList } from '@harnessio/playground'
 
 export const SettingsProfileKeysPage = () => {
+  const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
+
   const TEMP_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
 
-  const [publicKeys, setPublicKeys] = useState<ListPublicKeyOkResponse>([])
+  const [publicKeys, setPublicKeys] = useState<KeysList[]>([])
   const [tokens, setTokens] = useState<TokensList[]>([])
   const [openCreateTokenDialog, setCreateTokenDialog] = useState(false)
   const [openSuccessTokenDialog, setSuccessTokenDialog] = useState(false)
@@ -32,11 +35,7 @@ export const SettingsProfileKeysPage = () => {
     message: string
   } | null>(null)
 
-  const [createdTokenData, setCreatedTokenData] = useState<{
-    identifier: string
-    lifetime: string
-    token: string
-  } | null>(null)
+  const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
 
   const closeSuccessTokenDialog = () => setSuccessTokenDialog(false)
 
@@ -132,7 +131,7 @@ export const SettingsProfileKeysPage = () => {
     }
 
     if (tokenData.lifetime.toLowerCase() !== 'never') {
-      const convertedLifetime = parseInt(tokenData.lifetime, 10) * 24 * 60 * 60 * 1000 * 1000000
+      const convertedLifetime = parseInt(tokenData.lifetime, 10) * CONVERT_DAYS_TO_NANO_SECONDS
       body.lifetime = convertedLifetime
     }
 

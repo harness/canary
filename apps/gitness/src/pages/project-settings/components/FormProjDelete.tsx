@@ -76,7 +76,7 @@ export const FormProjDelete = () => {
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
-            <AlertDialogHeader>
+            <AlertDialogHeader className="text-left">
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
                 This will permanently delete your project and remove all data. All repositories in this project will
@@ -95,7 +95,9 @@ export const FormProjDelete = () => {
             </AlertDialogHeader>
             <AlertDialogFooter>
               {!isDeleting && !deleteSuccess && (
-                <AlertDialogCancel onClick={() => setIsDialogOpen(false)}>Cancel</AlertDialogCancel>
+                <AlertDialogCancel className="mt-0" onClick={() => setIsDialogOpen(false)}>
+                  Cancel
+                </AlertDialogCancel>
               )}
               {deleteSuccess ? (
                 <Button size="default" theme="success" className="self-start pointer-events-none">

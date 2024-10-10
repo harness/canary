@@ -13,6 +13,8 @@ interface PageProps {
   handleDeleteProject: () => void
   isDeleteSuccess: boolean
   isDeleting: boolean
+  updateError: string | null
+  deleteError: string | null
 }
 interface InputProps {
   identifier: string
@@ -33,7 +35,9 @@ export const ProjectSettingsSandboxPage = ({
   spaceData,
   handleDeleteProject,
   isDeleteSuccess,
-  isDeleting
+  isDeleting,
+  updateError,
+  deleteError
 }: PageProps) => {
   // Project Settings form handling
   const {
@@ -65,7 +69,6 @@ export const ProjectSettingsSandboxPage = ({
     setIsSubmitting(true)
 
     setTimeout(() => {
-      console.log('Project settings updated:', formData)
       setIsSubmitting(false)
       setSubmitted(true)
       // TODO:will use this to reset the form after api call has projectName
@@ -148,6 +151,8 @@ export const ProjectSettingsSandboxPage = ({
                   {errors.description.message?.toString()}
                 </FormFieldSet.Message>
               )}
+              {updateError && <FormFieldSet.Message theme={MessageTheme.ERROR}>{updateError}</FormFieldSet.Message>}
+              {deleteError && <FormFieldSet.Message theme={MessageTheme.ERROR}>{deleteError}</FormFieldSet.Message>}
             </FormFieldSet.ControlGroup>
 
             {/*BUTTON CONTROL: SAVE & CANCEL*/}

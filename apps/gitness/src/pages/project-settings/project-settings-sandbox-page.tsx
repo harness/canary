@@ -39,7 +39,8 @@ export const ProjectSettingsSandboxPage = ({
   const {
     register,
     handleSubmit,
-    // reset: resetProjectSettingsForm, // will use this to reset the form after api call has projectName
+    // TODO: will use this to reset the form after api call has projectName
+    // reset: resetProjectSettingsForm,
     resetField,
     setValue,
     formState: { errors, isValid, isDirty }
@@ -67,7 +68,8 @@ export const ProjectSettingsSandboxPage = ({
       console.log('Project settings updated:', formData)
       setIsSubmitting(false)
       setSubmitted(true)
-      // resetProjectSettingsForm(formData) // TODO:will use this to reset the form after api call has projectName
+      // TODO:will use this to reset the form after api call has projectName
+      // resetProjectSettingsForm(formData)
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
 
@@ -75,12 +77,11 @@ export const ProjectSettingsSandboxPage = ({
   }
 
   useEffect(() => {
-    setValue('description', spaceData?.description ?? '') // Sync description from parent
-    setProDescription(spaceData?.description ?? '') // Update local state as well
+    setValue('description', spaceData?.description ?? '')
+    setProDescription(spaceData?.description ?? '')
     setIsCancelDisabled(true)
   }, [spaceData?.description, setValue])
 
-  // Manually set the identifier if it's disabled
   useEffect(() => {
     setValue('identifier', spaceData?.identifier ?? '') // Ensure identifier is set even when disabled
   }, [spaceData?.identifier, setValue])
@@ -92,7 +93,7 @@ export const ProjectSettingsSandboxPage = ({
     setIsCancelDisabled(false)
   }
 
-  // Reset only the description field on cancel
+  // temporary solution: Reset only the description field on cancel excluding the project name
   const handleCancel = () => {
     resetField('description', { defaultValue: spaceData.description })
     setProDescription(spaceData?.description ?? '')
@@ -120,7 +121,8 @@ export const ProjectSettingsSandboxPage = ({
                 {...register('identifier')}
                 placeholder="Enter project name"
                 disabled
-                // onChange={handleProjectNameInputChange}
+                //TODO: onChange={handleProjectNameInputChange}
+                //wait for the api call to update the project name
               />
               {errors.identifier && (
                 <FormFieldSet.Message theme={MessageTheme.ERROR}>

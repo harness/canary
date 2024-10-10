@@ -39,7 +39,6 @@ export const FormDialogProjectDelete = ({ handleDeleteProject, isDeleteSuccess, 
     resolver: zodResolver(projectDeleteSchema)
   })
 
-  //   const [deleteSuccess, setDeleteSuccess] = useState(false) // State for successful deletion
   const [isDialogOpen, setIsDialogOpen] = useState(false) // State to control alert dialog
 
   // Watch the verification value

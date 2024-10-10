@@ -1,14 +1,21 @@
+import { useState } from 'react'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useAppContext } from '../../framework/context/AppContext'
-import { OpenapiUpdateSpaceRequest, TypesMembershipSpace, useUpdateSpaceMutation } from '@harnessio/code-service-client'
+import {
+  OpenapiUpdateSpaceRequest,
+  TypesMembershipSpace,
+  useUpdateSpaceMutation,
+  useDeleteSpaceMutation
+} from '@harnessio/code-service-client'
 import { ProjectSettingsSandboxPage } from './projsettings-sandbox-page'
+import { redirect } from 'react-router-dom'
 
 export const ProjectSettingsGeneralPage = () => {
+  const [isDeleteSuccess, setIsDeleteSuccess] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const spaceId = useGetSpaceURLParam()
   const { spaces } = useAppContext()
   const space = spaces.find((space: TypesMembershipSpace) => space?.space?.identifier === spaceId)
-
-  console.log(space)
 
   const spaceData = {
     identifier: space?.space?.identifier ?? '',
@@ -26,7 +33,8 @@ export const ProjectSettingsGeneralPage = () => {
     }, // props passed to the mutation
     {
       onSuccess: data => {
-        console.log('General settings updated successfully', data)
+        console.log('Settings updated successfully', data)
+        redirect(`/`)
       },
       onError: error => {
         console.error('Error updating settings', error)
@@ -65,13 +73,44 @@ export const ProjectSettingsGeneralPage = () => {
     })
   }
 
-  //prevent double rendering
+  // Define the delete API call here
+  const deleteSpaceMutation = useDeleteSpaceMutation(
+    {
+      space_ref: space?.space?.path
+    },
+    {
+      onSuccess: () => {
+        setIsDeleting(true)
+        setTimeout(() => {
+          setIsDeleting(false)
+          setIsDeleteSuccess(true) // Mark deletion as successful
+          window.location.href = '/'
+        }, 2000)
+      },
+      onError: error => {
+        console.error('Error deleting project:', error)
+      }
+    }
+  )
+
+  // Create the delete handler function
+  const handleDeleteProject = () => {
+    deleteSpaceMutation.mutate(
+      { space_ref: space?.space?.path },
+      {
+        onSettled: () => setIsDeleting(false) // Ensure isDeleting is reset after the mutation completes
+      }
+    )
+  }
 
   return (
     <ProjectSettingsSandboxPage
       spaceData={spaceData}
       onFormSubmit={handleFormSubmit} //what should I use on handleFormSubmit to update two data with different api call
       onHandleDescription={handleDescriptionChange}
+      handleDeleteProject={handleDeleteProject}
+      isDeleteSuccess={isDeleteSuccess}
+      isDeleting={isDeleting}
     />
   )
 }

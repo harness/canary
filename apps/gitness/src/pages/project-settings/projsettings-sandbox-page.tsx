@@ -10,6 +10,9 @@ interface PageProps {
   spaceData: InputProps
   onFormSubmit: (formData: InputProps) => void
   onHandleDescription: (newDescription: string) => void
+  handleDeleteProject: () => void
+  isDeleteSuccess: boolean
+  isDeleting: boolean
 }
 interface InputProps {
   identifier: string
@@ -26,7 +29,13 @@ const projectSettingsSchema = z.object({
 // Define TypeScript type
 type ProjectSettingsFields = z.infer<typeof projectSettingsSchema>
 
-export const ProjectSettingsSandboxPage = ({ onFormSubmit, spaceData }: PageProps) => {
+export const ProjectSettingsSandboxPage = ({
+  onFormSubmit,
+  spaceData,
+  handleDeleteProject,
+  isDeleteSuccess,
+  isDeleting
+}: PageProps) => {
   // Project Settings form handling
   const {
     register,
@@ -152,7 +161,11 @@ export const ProjectSettingsSandboxPage = ({ onFormSubmit, spaceData }: PageProp
         </FormFieldSet.Root>
 
         {/* DELETE PROJECT */}
-        <FormProjDelete />
+        <FormProjDelete
+          handleDeleteProject={handleDeleteProject}
+          isDeleteSuccess={isDeleteSuccess}
+          isDeleting={isDeleting}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -24,11 +24,13 @@ const projectDeleteSchema = z.object({
 
 type ProjectDeleteFields = z.infer<typeof projectDeleteSchema>
 
-{
-  /* DELETE PROJECT SETTINGS + ALERT DIALOG */
+interface FormProjDeleteProps {
+  handleDeleteProject: () => void
+  isDeleteSuccess: boolean
+  isDeleting: boolean
 }
-
-export const FormProjDelete = () => {
+//delete project form with dialog
+export const FormProjDelete = ({ handleDeleteProject, isDeleteSuccess, isDeleting }: FormProjDeleteProps) => {
   const {
     register,
     formState: { errors },
@@ -37,8 +39,7 @@ export const FormProjDelete = () => {
     resolver: zodResolver(projectDeleteSchema)
   })
 
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [deleteSuccess, setDeleteSuccess] = useState(false) // State for successful deletion
+  //   const [deleteSuccess, setDeleteSuccess] = useState(false) // State for successful deletion
   const [isDialogOpen, setIsDialogOpen] = useState(false) // State to control alert dialog
 
   // Watch the verification value
@@ -50,15 +51,12 @@ export const FormProjDelete = () => {
 
   // Delete project handler
   const handleDelete = () => {
-    setIsDeleting(true)
-    setTimeout(() => {
-      setIsDeleting(false)
-      setDeleteSuccess(true) // Mark deletion as successful
+    handleDeleteProject()
+    if (isDeleteSuccess) {
       setTimeout(() => {
         setIsDialogOpen(false) // Close the dialog
-        window.location.href = '/' // Redirect to home page
       }, 2000) // Redirect after 2 seconds
-    }, 2000)
+    }
   }
 
   return (
@@ -94,12 +92,12 @@ export const FormProjDelete = () => {
               )}
             </AlertDialogHeader>
             <AlertDialogFooter>
-              {!isDeleting && !deleteSuccess && (
+              {!isDeleting && !isDeleteSuccess && (
                 <AlertDialogCancel className="mt-0" onClick={() => setIsDialogOpen(false)}>
                   Cancel
                 </AlertDialogCancel>
               )}
-              {deleteSuccess ? (
+              {isDeleteSuccess ? (
                 <Button size="default" theme="success" className="self-start pointer-events-none">
                   Project deleted&nbsp;&nbsp;
                   <Icon name="tick" size={14} />

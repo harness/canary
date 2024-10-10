@@ -1,4 +1,5 @@
 import { YAMLSeq, parseDocument } from 'yaml'
+import { updateYamlDocAtPath } from './yaml-doc-utils'
 
 // TODO: split this to addToArray and insertInArray
 export function injectItemInArray(
@@ -36,10 +37,11 @@ export function injectItemInArray(
 
 export function updateItemInArray(yaml: string, injectData: { path: string; item: unknown }): string {
   const { path, item } = injectData
+  const pathArr = path.split('.')
 
   const doc = parseDocument(yaml)
 
-  doc.setIn(path.split('.'), item)
+  updateYamlDocAtPath(pathArr, item, doc)
 
   return doc.toString()
 }

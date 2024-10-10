@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "preinstall": "npx only-allow pnpm",
     "pre-commit": "lint-staged",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "vitest"
   },
   "dependencies": {
     "@harnessio/canary": "workspace:*",
@@ -40,6 +41,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/react": "^13.4.0",
     "@types/event-source-polyfill": "^1.0.0",
     "@types/lodash-es": "^4.17.12",
     "@types/pluralize": "^0.0.33",
@@ -56,7 +59,8 @@
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
-    "vite-plugin-monaco-editor": "^1.1.0"
+    "vite-plugin-monaco-editor": "^1.1.0",
+    "vitest": "^2.1.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -150,7 +150,7 @@ function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
             {/* IDENTIFIER */}
             <FormFieldSet.ControlGroup>
               <FormFieldSet.Label htmlFor="identifier" required>
-                Identifier
+                Description
               </FormFieldSet.Label>
               <Input id="identifier" {...register('identifier')} placeholder="Enter unique identifier" />
               {errors.identifier && (

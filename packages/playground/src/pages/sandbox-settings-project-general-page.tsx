@@ -24,28 +24,39 @@ import {
 import { SandboxLayout, FormFieldSet } from '..'
 import { MessageTheme } from '../components/form-field-set'
 
+interface PageProps {
+  onFormSubmit: (data: InputProps) => void
+}
+interface InputProps {
+  projectName: string
+  identifier: string
+  projectURL: string
+}
+
 // Define form schema for Project Settings
 const projectSettingsSchema = z.object({
-  companyName: z.string().min(1, { message: 'Please provide a company name' }),
+  projectName: z.string().min(1, { message: 'Please provide a company name' }),
   identifier: z.string().min(1, { message: 'Please provide an identifier' }),
-  projectURL: z.string().url({ message: 'Please provide a valid URL' })
+  projectURL: z.string().url({ message: 'Please provide a valid URL' }),
+  verification: z.string().min(1, { message: 'Please type the DELETE to verify' })
 })
 
 // Define TypeScript type
 type ProjectSettingsFields = z.infer<typeof projectSettingsSchema>
 
-function SandboxSettingsProjectGeneralPage() {
+function SandboxSettingsProjectGeneralPage({ onFormSubmit }: PageProps) {
   // Project Settings form handling
   const {
     register,
     handleSubmit,
     reset: resetProjectSettingsForm,
-    formState: { errors, isValid, dirtyFields }
+    formState: { errors, isValid, dirtyFields },
+    watch
   } = useForm<ProjectSettingsFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onChange',
     defaultValues: {
-      companyName: 'Acme Inc.',
+      projectName: 'Acme Inc.',
       identifier: 'FOA',
       projectURL: 'https://acme.com'
     }
@@ -67,6 +78,14 @@ function SandboxSettingsProjectGeneralPage() {
       resetProjectSettingsForm(data) // Reset to the current values
       setTimeout(() => setSubmitted(false), 2000)
     }, 2000)
+    onFormSubmit(data)
+  }
+
+  // Watch the verification value
+  const verificationValue = watch('verification')
+
+  const typeCheck = (value: string) => {
+    return value === 'DELETE'
   }
 
   // Delete project handler
@@ -115,15 +134,15 @@ function SandboxSettingsProjectGeneralPage() {
               </FormFieldSet.ControlGroup>
             </FormFieldSet.ControlGroup>
 
-            {/* COMPANY NAME */}
+            {/* PROJECT NAME */}
             <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label htmlFor="companyName" required>
-                Company Name
+              <FormFieldSet.Label htmlFor="projectName" required>
+                Project Name
               </FormFieldSet.Label>
-              <Input id="companyName" {...register('companyName')} placeholder="Enter company name" />
-              {errors.companyName && (
+              <Input id="projectName" {...register('projectName')} placeholder="Enter project name" />
+              {errors.projectName && (
                 <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                  {errors.companyName.message?.toString()}
+                  {errors.projectName.message?.toString()}
                 </FormFieldSet.Message>
               )}
             </FormFieldSet.ControlGroup>
@@ -131,7 +150,7 @@ function SandboxSettingsProjectGeneralPage() {
             {/* IDENTIFIER */}
             <FormFieldSet.ControlGroup>
               <FormFieldSet.Label htmlFor="identifier" required>
-                Identifier
+                Description
               </FormFieldSet.Label>
               <Input id="identifier" {...register('identifier')} placeholder="Enter unique identifier" />
               {errors.identifier && (
@@ -205,6 +224,16 @@ function SandboxSettingsProjectGeneralPage() {
                     This will permanently delete your project and remove all data. All repositories in this project will
                     also be deleted. This action cannot be undone.
                   </AlertDialogDescription>
+                  {/* input delete verification */}
+                  <FormFieldSet.Label htmlFor="verification" required>
+                    To confirm this, type “DELETE”
+                  </FormFieldSet.Label>
+                  <Input id="verification" {...register('verification')} placeholder="" />
+                  {errors.projectName && (
+                    <FormFieldSet.Message theme={MessageTheme.ERROR}>
+                      {errors.projectName.message?.toString()}
+                    </FormFieldSet.Message>
+                  )}
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   {!isDeleting && !deleteSuccess && (
@@ -221,7 +250,7 @@ function SandboxSettingsProjectGeneralPage() {
                       theme="error"
                       className="self-start"
                       onClick={handleDelete}
-                      disabled={isDeleting}>
+                      disabled={!typeCheck(verificationValue) || isDeleting}>
                       {isDeleting ? 'Deleting project...' : 'Yes, delete project'}
                     </Button>
                   )}

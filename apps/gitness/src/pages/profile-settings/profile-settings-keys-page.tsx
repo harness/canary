@@ -48,7 +48,9 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             </FormFieldSet.Legend>
             <FormFieldSet.ControlGroup>
               <>
-                {(!error || error.type !== 'tokenFetch') && <ProfileTokensList tokens={tokens} />}
+                {(!error || error.type !== 'tokenFetch') && (
+                  <ProfileTokensList tokens={tokens} deleteToken={deleteToken} />
+                )}
                 {error && error.type === 'tokenFetch' && (
                   <>
                     <Spacer size={2} />
@@ -76,7 +78,9 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             </FormFieldSet.SubLegend>
             <FormFieldSet.ControlGroup>
               <>
-                {(!error || error.type !== 'keyFetch') && <ProfileKeysList publicKeys={publicKeys} />}
+                {(!error || error.type !== 'keyFetch') && (
+                  <ProfileKeysList publicKeys={publicKeys} deletePublicKey={deletePublicKey} />
+                )}
                 {error && error.type === 'keyFetch' && (
                   <>
                     <Spacer size={2} />

@@ -6,7 +6,7 @@ import { Icon } from '@harnessio/canary'
 export interface KeysList {
   created?: number
   verified?: number | null
-  identifier?: string
+  identifier: string
   usage?: string
   fingerprint?: string
   comment?: string
@@ -15,9 +15,10 @@ export interface KeysList {
 
 interface PageProps {
   publicKeys: KeysList[]
+  deletePublicKey: (id: string) => void
 }
 
-export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys }) => {
+export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, deletePublicKey }) => {
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -52,8 +53,8 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys }) => {
                 </div> */}
               </TableCell>
               <TableCell className="content-center">
-                <div className="flex gap-1.5 items-center justify-end">
-                  <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
+                <div className="flex gap-1.5 items-center justify-end" onClick={() => deletePublicKey(key.identifier)}>
+                  <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
               </TableCell>
             </TableRow>

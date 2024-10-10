@@ -1,5 +1,5 @@
 import React from 'react'
-import { Spacer, Text } from '@harnessio/canary'
+import { Spacer, Text, Button } from '@harnessio/canary'
 import {
   FormFieldSet,
   SandboxLayout,
@@ -12,8 +12,17 @@ import {
 interface SandboxSettingsAccountKeysPageProps {
   publicKeys: KeysList[]
   tokens: TokensList[]
+  openTokenDialog: () => void
+  openSshKeyDialog: () => void
+  error: { type: string; message: string } | null
 }
-const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPageProps> = ({ publicKeys, tokens }) => {
+const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPageProps> = ({
+  publicKeys,
+  tokens,
+  openTokenDialog,
+  openSshKeyDialog,
+  error
+}) => {
   return (
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
       <SandboxLayout.Content maxWidth="2xl">
@@ -25,9 +34,26 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
         <form>
           <FormFieldSet.Root>
             {/* PERSONAL ACCESS TOKEN */}
-            <FormFieldSet.Legend>Personal access token</FormFieldSet.Legend>
+            <FormFieldSet.Legend>
+              <span className="flex justify-between">
+                Personal access token
+                <Button type="button" variant="outline" className="text-primary" onClick={openTokenDialog}>
+                  Add new token
+                </Button>
+              </span>
+            </FormFieldSet.Legend>
             <FormFieldSet.ControlGroup>
-              <ProfileTokensList tokens={tokens} />
+              <>
+                {(!error || error.type !== 'tokenFetch') && <ProfileTokensList tokens={tokens} />}
+                {error && error.type === 'tokenFetch' && (
+                  <>
+                    <Spacer size={2} />
+                    <Text size={1} className="text-destructive">
+                      {error.message}
+                    </Text>
+                  </>
+                )}
+              </>
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
           <FormFieldSet.Root>
@@ -37,10 +63,25 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             {/* PERSONAL ACCESS TOKEN */}
             <FormFieldSet.Legend>My SSH keys</FormFieldSet.Legend>
             <FormFieldSet.SubLegend>
-              SSH keys allow you to establish a secure connection to your code repository.
+              <span className="flex justify-between">
+                SSH keys allow you to establish a secure connection to your code repository.
+                <Button variant="outline" className="text-primary" type="button" onClick={openSshKeyDialog}>
+                  Add new SSH key
+                </Button>
+              </span>
             </FormFieldSet.SubLegend>
             <FormFieldSet.ControlGroup>
-              <ProfileKeysList publicKeys={publicKeys} />
+              <>
+                {(!error || error.type !== 'keyFetch') && <ProfileKeysList publicKeys={publicKeys} />}
+                {error && error.type === 'keyFetch' && (
+                  <>
+                    <Spacer size={2} />
+                    <Text size={1} className="text-destructive">
+                      {error.message}
+                    </Text>
+                  </>
+                )}
+              </>
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
         </form>

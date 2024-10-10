@@ -65,6 +65,7 @@ export * from './components/pagination'
 export * from './components/profile-settings-keys-list'
 export * from './components/profile-settings-tokens-list'
 export * from './components/filter'
+export * from './components/copy-button'
 
 export * from './pages/signin-page'
 export * from './pages/create-project-page'

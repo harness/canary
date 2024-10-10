@@ -22,7 +22,7 @@ export const CopyButton = ({ name }: { name: string }) => {
   const changeIcon = copied ? 'tick' : 'clone'
 
   return (
-    <Button variant="ghost" size="xs" onClick={() => setCopied(true)}>
+    <Button variant="ghost" size="xs" type="button" onClick={() => setCopied(true)}>
       <Icon name={changeIcon} size={16} className={iconCopyStyle} />
     </Button>
   )

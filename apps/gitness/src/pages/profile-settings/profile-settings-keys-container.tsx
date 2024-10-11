@@ -136,7 +136,7 @@ export const SettingsProfileKeysPage = () => {
         closeTokenDialog()
         setCreatedTokenData(tokenData)
         setSuccessTokenDialog(true)
-        setTokens(prevTokens => [...prevTokens, newToken.token])
+        setTokens(prevTokens => [...prevTokens, newToken.token as TokensList])
       },
       onError: (error: CreateTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'

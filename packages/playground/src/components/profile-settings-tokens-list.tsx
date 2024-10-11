@@ -6,8 +6,8 @@ import { timeAgo } from '../utils/utils'
 export interface TokensList {
   principal_id?: number
   type?: string
-  identifier: string
-  expires_at?: number
+  identifier?: string
+  expires_at?: number | null
   issued_at?: number
   created_by?: number
   uid?: string
@@ -15,8 +15,7 @@ export interface TokensList {
 
 interface PageProps {
   tokens: TokensList[]
-  // deleteToken: (identifier: string) => void
-  openAlertDeleteDialog: (id: string, type: string) => void
+  openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
 }
 
 export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDeleteDialog }) => {
@@ -51,7 +50,7 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
                   className="flex gap-1.5 items-center justify-end cursor-pointer"
                   // onClick={() => deleteToken(token.identifier)}>
                   onClick={() => {
-                    openAlertDeleteDialog({ identifier: token.identifier, type: 'token' })
+                    openAlertDeleteDialog({ identifier: token.identifier!, type: 'token' })
                   }}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>

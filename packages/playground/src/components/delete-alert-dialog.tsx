@@ -6,16 +6,19 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  Button
+  Button,
+  Text,
+  Spacer
 } from '@harnessio/canary'
 
 interface DeleteTokenAlertDialogProps {
   open: boolean
   onClose: () => void
-  identifier: string
+  identifier?: string
   deleteFn: (id: string) => void
-  type: string
-  isLoading: boolean
+  type?: string
+  isLoading?: boolean
+  error?: { type: string; message: string } | null
 }
 export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
   open,
@@ -23,7 +26,8 @@ export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
   identifier,
   deleteFn,
   type,
-  isLoading
+  isLoading,
+  error
 }) => {
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
@@ -34,6 +38,16 @@ export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
             This will permanently delete your {type} and remove all data. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
+        <>
+          {error && (error.type === 'tokenDelete' || error.type === 'keyDelete') && (
+            <>
+              <Text size={1} className="text-destructive">
+                {error.message}
+              </Text>
+              <Spacer size={4} />
+            </>
+          )}
+        </>
         <AlertDialogFooter>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
             Cancel
@@ -45,7 +59,7 @@ export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
             variant="destructive"
             disabled={isLoading}
             onClick={() => {
-              deleteFn(identifier)
+              deleteFn(identifier!)
             }}>
             {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>

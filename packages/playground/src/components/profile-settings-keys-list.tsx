@@ -6,7 +6,7 @@ import { Icon } from '@harnessio/canary'
 export interface KeysList {
   created?: number
   verified?: number | null
-  identifier: string
+  identifier?: string
   usage?: string
   fingerprint?: string
   comment?: string
@@ -15,7 +15,7 @@ export interface KeysList {
 
 interface PageProps {
   publicKeys: KeysList[]
-  openAlertDeleteDialog: (identifier: string, type: string) => void
+  openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
 }
 
 export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDeleteDialog }) => {
@@ -55,14 +55,11 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDele
               <TableCell className="content-center">
                 <div
                   className="flex gap-1.5 items-center justify-end cursor-pointer"
-                  // onClick={() => deletePublicKey(key.identifier)}>
                   onClick={() => {
-                    console.log('here')
-                    openAlertDeleteDialog({ identifier: key.identifier, type: 'key' })
+                    openAlertDeleteDialog({ identifier: key.identifier!, type: 'key' })
                   }}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
-                {/* <DeleteTokenAlertDialog identifier={key.identifier} name="key" deleteFn={deletePublicKey} /> */}
               </TableCell>
             </TableRow>
           ))

@@ -7,13 +7,21 @@ import { mockKeys } from './mocks/profile-settings/mockKeyList'
 import { mockTokens } from './mocks/profile-settings/mockTokensList'
 import { TokenCreateDialog } from '../components/token-create-dialog'
 import { SshKeyCreateDialog } from '../components/ssh-key-create-dialog'
+import { DeleteTokenAlertDialog } from '..'
 
 function SandboxSettingsAccountKeysPage() {
   const [openCreateTokenDialog, setCreateTokenDialog] = useState(false)
   const [saveSshKeyDialog, setSshKeyDialog] = useState(false)
+  const [isAlertDeleteDialogOpen, setIsAlertDeleteDialogOpen] = useState(false)
+  const [alertParams, setAlertParams] = useState<{ identifier: string; type: string }>()
 
   const closeSshKeyDialog = () => setSshKeyDialog(false)
   const closeTokenDialog = () => setCreateTokenDialog(false)
+  const closeAlertDeleteDialog = () => setIsAlertDeleteDialogOpen(false)
+  const openAlertDeleteDialog = (params: { identifier: string; type: string }) => {
+    setIsAlertDeleteDialogOpen(true)
+    setAlertParams(params)
+  }
 
   return (
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
@@ -39,7 +47,10 @@ function SandboxSettingsAccountKeysPage() {
               </span>
             </FormFieldSet.Legend>
             <FormFieldSet.ControlGroup>
-              <ProfileTokensList tokens={mockTokens} deleteToken={() => {}} />
+              <ProfileTokensList
+                tokens={mockTokens}
+                openAlertDeleteDialog={() => openAlertDeleteDialog({ identifier: '', type: 'token' })}
+              />
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
           <FormFieldSet.Root>
@@ -57,12 +68,21 @@ function SandboxSettingsAccountKeysPage() {
               </span>
             </FormFieldSet.SubLegend>
             <FormFieldSet.ControlGroup>
-              <ProfileKeysList publicKeys={mockKeys} deletePublicKey={() => {}} />
+              <ProfileKeysList
+                publicKeys={mockKeys}
+                openAlertDeleteDialog={() => openAlertDeleteDialog({ identifier: '', type: 'key' })}
+              />
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
         </form>
         <TokenCreateDialog open={openCreateTokenDialog} onClose={closeTokenDialog} />
         <SshKeyCreateDialog open={saveSshKeyDialog} onClose={closeSshKeyDialog} />
+        <DeleteTokenAlertDialog
+          open={isAlertDeleteDialogOpen}
+          onClose={closeAlertDeleteDialog}
+          deleteFn={() => {}}
+          {...alertParams}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

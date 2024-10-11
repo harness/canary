@@ -112,7 +112,11 @@ export function TokenCreateForm() {
               </SelectTrigger>
               <SelectContent>
                 {expirationOptions.map(expirationOption => {
-                  return <SelectItem value={expirationOption.value}>{expirationOption.label}</SelectItem>
+                  return (
+                    <SelectItem key={expirationOption.value} value={expirationOption.value}>
+                      {expirationOption.label}
+                    </SelectItem>
+                  )
                 })}
               </SelectContent>
             </Select>

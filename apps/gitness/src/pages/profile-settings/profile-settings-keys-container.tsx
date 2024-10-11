@@ -198,7 +198,6 @@ export const SettingsProfileKeysPage = () => {
         openTokenDialog={openTokenDialog}
         openSshKeyDialog={openSshKeyDialog}
         error={apiError}
-        // deleteToken={handleDeleteToken}
         deleteToken={handleDeleteToken}
         deletePublicKey={handleDeletePublicKey}
       />

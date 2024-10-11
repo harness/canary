@@ -1,5 +1,5 @@
 import { TokenCreateForm } from './token-create-form'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@harnessio/canary'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@harnessio/canary'
 import React from 'react'
 interface TokenCreateDialogProps {
   open: boolean
@@ -13,9 +13,7 @@ export const TokenCreateDialog: React.FC<TokenCreateDialogProps> = ({ open, onCl
         <DialogHeader>
           <DialogTitle className="text-left">Create a token</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <TokenCreateForm />
-        </DialogDescription>
+        <TokenCreateForm />
       </DialogContent>
     </Dialog>
   )

@@ -8,7 +8,7 @@
     "pretty": "pnpm -r pretty",
     "publish:all": "pnpm publish -r --access public",
     "build-storybook": "pnpm --filter canary-storybook build-storybook",
-    "dev": "pnpm --parallel --filter canary-storybook --filter @harnessio/canary --filter @harnessio/unified-pipeline dev",
+    "dev": "pnpm --parallel --filter canary-storybook --filter @harnessio/canary --filter @harnessio/unified-pipeline --filter design dev",
     "preinstall": "npx only-allow pnpm",
     "dryrun": "pnpm install && pnpm deps && pnpm build && pnpm build-storybook && pnpm lint",
     "pre-commit": "pnpm run -r pre-commit",

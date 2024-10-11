@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
 import { SandboxLayout } from '../index'
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { Icon, IconProps, Navbar, NavbarProjectChooser, NavbarUser } from '@harnessio/canary'
+import { Icon, Navbar, NavbarProjectChooser, NavbarUser } from '@harnessio/canary'
 import { MoreSubmenu } from '../components/more-submenu'
 import { navbarSubmenuData } from '../data/mockNavbarSubmenuData'
-
-interface NavbarItem {
-  id: number
-  title: string
-  iconName: IconProps['name']
-  description: string
-  to?: string
-}
+import { NavbarItem } from './types'
 
 export const SandboxRoot: React.FC = () => {
   const [showMore, setShowMore] = useState<boolean>(false)
@@ -111,6 +104,7 @@ export const SandboxRoot: React.FC = () => {
                   <Icon name="harness" size={20} className="text-primary" />
                 </Link>
               }
+              enableSearch
             />
           </Navbar.Header>
           <Navbar.Content>
@@ -171,7 +165,7 @@ export const SandboxRoot: React.FC = () => {
           </Navbar.Content>
           <Navbar.Footer>
             <NavLink to="/sandbox/settings/profile/general" className="p-2 hover:bg-tertiary">
-              <NavbarUser.Root />
+              <NavbarUser.Root username="Steven M." isAdmin url="../images/user-avatar.svg" />
             </NavLink>
           </Navbar.Footer>
         </Navbar.Root>

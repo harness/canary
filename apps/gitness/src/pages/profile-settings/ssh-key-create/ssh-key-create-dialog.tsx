@@ -1,5 +1,5 @@
 import { SshKeyCreateForm, SshKeyFormType } from './ssh-key-create-form'
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@harnessio/canary'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@harnessio/canary'
 
 interface SshKeyCreateDialogProps {
   open: boolean
@@ -15,9 +15,7 @@ export const SshKeyCreateDialog: React.FC<SshKeyCreateDialogProps> = ({ open, on
         <DialogHeader>
           <DialogTitle className="text-left">New SSH key</DialogTitle>
         </DialogHeader>
-        <DialogDescription>
-          <SshKeyCreateForm handleCreateSshKey={handleCreateSshKey} onClose={onClose} error={error} />
-        </DialogDescription>
+        <SshKeyCreateForm handleCreateSshKey={handleCreateSshKey} onClose={onClose} error={error} />
       </DialogContent>
     </Dialog>
   )

@@ -48,13 +48,11 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
               <TableCell className="content-center">
                 <div
                   className="flex gap-1.5 items-center justify-end cursor-pointer"
-                  // onClick={() => deleteToken(token.identifier)}>
                   onClick={() => {
                     openAlertDeleteDialog({ identifier: token.identifier!, type: 'token' })
                   }}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
-                {/* <DeleteTokenAlertDialog identifier={token.identifier} name="token" deleteFn={deleteToken} /> */}
               </TableCell>
             </TableRow>
           ))

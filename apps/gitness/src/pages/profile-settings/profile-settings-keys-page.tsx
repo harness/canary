@@ -8,7 +8,6 @@ import {
   ProfileTokensList,
   TokensList
 } from '@harnessio/playground'
-// import { isError } from 'lodash-es'
 import { AlertDeleteParams } from './profile-settings-keys-container'
 
 interface SandboxSettingsAccountKeysPageProps {
@@ -17,8 +16,6 @@ interface SandboxSettingsAccountKeysPageProps {
   openTokenDialog: () => void
   openSshKeyDialog: () => void
   openAlertDeleteDialog: (data: AlertDeleteParams) => void
-  // deleteToken: (id: string) => void
-  // deletePublicKey: (id: string) => void
   error: { type: string; message: string } | null
 }
 const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPageProps> = ({
@@ -27,7 +24,6 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
   openTokenDialog,
   openSshKeyDialog,
   openAlertDeleteDialog,
-  // deletePublicKey,
   error
 }) => {
   return (
@@ -52,10 +48,7 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             <FormFieldSet.ControlGroup>
               <>
                 {(!error || error.type !== 'tokenFetch') && (
-                  <ProfileTokensList
-                    tokens={tokens}
-                    /*deleteToken={deleteToken}*/ openAlertDeleteDialog={openAlertDeleteDialog}
-                  />
+                  <ProfileTokensList tokens={tokens} openAlertDeleteDialog={openAlertDeleteDialog} />
                 )}
                 {error && error.type === 'tokenFetch' && (
                   <>

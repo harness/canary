@@ -20,7 +20,7 @@ function SandboxSettingsAccountKeysPage() {
       <SandboxLayout.Content maxWidth="2xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
-          Keys and tokens
+          Keys and Tokens
         </Text>
         <Spacer size={6} />
         <form>

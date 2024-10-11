@@ -8,14 +8,17 @@ import {
   ProfileTokensList,
   TokensList
 } from '@harnessio/playground'
+// import { isError } from 'lodash-es'
+import { AlertDeleteParams } from './profile-settings-keys-container'
 
 interface SandboxSettingsAccountKeysPageProps {
   publicKeys: KeysList[]
   tokens: TokensList[]
   openTokenDialog: () => void
   openSshKeyDialog: () => void
-  deleteToken: (id: string) => void
-  deletePublicKey: (id: string) => void
+  openAlertDeleteDialog: (data: AlertDeleteParams) => void
+  // deleteToken: (id: string) => void
+  // deletePublicKey: (id: string) => void
   error: { type: string; message: string } | null
 }
 const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPageProps> = ({
@@ -23,8 +26,8 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
   tokens,
   openTokenDialog,
   openSshKeyDialog,
-  deleteToken,
-  deletePublicKey,
+  openAlertDeleteDialog,
+  // deletePublicKey,
   error
 }) => {
   return (
@@ -49,7 +52,10 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             <FormFieldSet.ControlGroup>
               <>
                 {(!error || error.type !== 'tokenFetch') && (
-                  <ProfileTokensList tokens={tokens} deleteToken={deleteToken} />
+                  <ProfileTokensList
+                    tokens={tokens}
+                    /*deleteToken={deleteToken}*/ openAlertDeleteDialog={openAlertDeleteDialog}
+                  />
                 )}
                 {error && error.type === 'tokenFetch' && (
                   <>
@@ -79,7 +85,7 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
             <FormFieldSet.ControlGroup>
               <>
                 {(!error || error.type !== 'keyFetch') && (
-                  <ProfileKeysList publicKeys={publicKeys} deletePublicKey={deletePublicKey} />
+                  <ProfileKeysList publicKeys={publicKeys} openAlertDeleteDialog={openAlertDeleteDialog} />
                 )}
                 {error && error.type === 'keyFetch' && (
                   <>

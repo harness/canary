@@ -25,7 +25,12 @@ import { TokenCreateDialog } from './token-create/token-create-dialog'
 import { TokenFormType } from './token-create/token-create-form'
 import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenSuccessDialog } from './token-create/token-success-dialog'
-import { TokensList, KeysList } from '@harnessio/playground'
+import { TokensList, KeysList, DeleteTokenAlertDialog } from '@harnessio/playground'
+
+export interface AlertDeleteParams {
+  identifier: string
+  type: string
+}
 
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
@@ -35,6 +40,9 @@ export const SettingsProfileKeysPage = () => {
   const [openCreateTokenDialog, setCreateTokenDialog] = useState(false)
   const [openSuccessTokenDialog, setSuccessTokenDialog] = useState(false)
   const [saveSshKeyDialog, setSshKeyDialog] = useState(false)
+  const [isAlertDeleteDialogOpen, setIsAlertDeleteDialogOpen] = useState(false)
+  const [alertParams, setAlertParams] = useState<AlertDeleteParams | null>(null)
+
   const [apiError, setApiError] = useState<{
     type: 'keyFetch' | 'tokenFetch' | 'keyCreate' | 'tokenCreate' | 'tokenDelete' | 'keyDelete'
     message: string
@@ -55,6 +63,12 @@ export const SettingsProfileKeysPage = () => {
     setApiError(null)
   }
   const closeSshKeyDialog = () => setSshKeyDialog(false)
+
+  const closeAlertDeleteDialog = () => setIsAlertDeleteDialogOpen(false)
+  const openAlertDeleteDialog = ({ identifier, type }: AlertDeleteParams) => {
+    setIsAlertDeleteDialogOpen(true)
+    setAlertParams({ identifier, type })
+  }
 
   const queryParams: ListPublicKeyQueryQueryParams = {
     page: 1,
@@ -197,9 +211,10 @@ export const SettingsProfileKeysPage = () => {
         tokens={tokens}
         openTokenDialog={openTokenDialog}
         openSshKeyDialog={openSshKeyDialog}
+        openAlertDeleteDialog={openAlertDeleteDialog}
         error={apiError}
-        deleteToken={handleDeleteToken}
-        deletePublicKey={handleDeletePublicKey}
+        // deleteToken={handleDeleteToken}
+        // deletePublicKey={handleDeletePublicKey}
       />
       <TokenCreateDialog
         open={openCreateTokenDialog}
@@ -221,6 +236,12 @@ export const SettingsProfileKeysPage = () => {
           tokenData={createdTokenData}
         />
       )}
+      <DeleteTokenAlertDialog
+        open={isAlertDeleteDialogOpen}
+        onClose={closeAlertDeleteDialog}
+        deleteFn={alertParams?.type === 'key' ? handleDeletePublicKey : handleDeleteToken}
+        {...alertParams}
+      />
     </>
   )
 }

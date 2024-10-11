@@ -39,6 +39,8 @@ import { FileViewer } from './components/FileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { Logout } from './pages/logout'
 
+// import { DeleteTokenAlertDialog } from './pages/profile-settings/token-delete/token-delete-dialog'
+
 export default function App() {
   const router = createBrowserRouter([
     {
@@ -257,6 +259,7 @@ export default function App() {
                 {
                   path: 'keys',
                   element: <SettingsProfileKeysPage />
+                  // element: <DeleteTokenAlertDialog />
                 }
               ]
             }

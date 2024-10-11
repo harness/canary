@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
 import { Icon } from '@harnessio/canary'
 import { timeAgo } from '../utils/utils'
+import { DeleteTokenAlertDialog } from './token-delete-alert-dialog'
 
 export interface TokensList {
   principal_id?: number
@@ -15,10 +16,11 @@ export interface TokensList {
 
 interface PageProps {
   tokens: TokensList[]
-  deleteToken: (identifier: string) => void
+  // deleteToken: (identifier: string) => void
+  openAlertDeleteDialog: (id: string, type: string) => void
 }
 
-export const ProfileTokensList: React.FC<PageProps> = ({ tokens, deleteToken }) => {
+export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDeleteDialog }) => {
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -48,9 +50,13 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, deleteToken }) 
               <TableCell className="content-center">
                 <div
                   className="flex gap-1.5 items-center justify-end cursor-pointer"
-                  onClick={() => deleteToken(token.identifier)}>
+                  // onClick={() => deleteToken(token.identifier)}>
+                  onClick={() => {
+                    openAlertDeleteDialog({ identifier: token.identifier, type: 'token' })
+                  }}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
+                {/* <DeleteTokenAlertDialog identifier={token.identifier} name="token" deleteFn={deleteToken} /> */}
               </TableCell>
             </TableRow>
           ))

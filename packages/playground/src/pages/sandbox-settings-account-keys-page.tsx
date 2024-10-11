@@ -27,7 +27,7 @@ function SandboxSettingsAccountKeysPage() {
           <FormFieldSet.Root>
             {/* PERSONAL ACCESS TOKEN */}
             <FormFieldSet.Legend>
-              <div className="flex justify-between">
+              <span className="flex justify-between">
                 Personal access token
                 <Button
                   type="button"
@@ -36,10 +36,10 @@ function SandboxSettingsAccountKeysPage() {
                   onClick={() => setCreateTokenDialog(true)}>
                   Add new token
                 </Button>
-              </div>
+              </span>
             </FormFieldSet.Legend>
             <FormFieldSet.ControlGroup>
-              <ProfileTokensList tokens={mockTokens} />
+              <ProfileTokensList tokens={mockTokens} deleteToken={() => {}} />
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
           <FormFieldSet.Root>
@@ -49,15 +49,15 @@ function SandboxSettingsAccountKeysPage() {
             {/* PERSONAL ACCESS TOKEN */}
             <FormFieldSet.Legend>My SSH keys</FormFieldSet.Legend>
             <FormFieldSet.SubLegend>
-              <div className="flex justify-between">
+              <span className="flex justify-between">
                 SSH keys allow you to establish a secure connection to your code repository.
                 <Button variant="outline" className="text-primary" type="button" onClick={() => setSshKeyDialog(true)}>
                   Add new SSH key
                 </Button>
-              </div>
+              </span>
             </FormFieldSet.SubLegend>
             <FormFieldSet.ControlGroup>
-              <ProfileKeysList publicKeys={mockKeys} />
+              <ProfileKeysList publicKeys={mockKeys} deletePublicKey={() => {}} />
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>
         </form>

@@ -53,7 +53,9 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, deletePublicK
                 </div> */}
               </TableCell>
               <TableCell className="content-center">
-                <div className="flex gap-1.5 items-center justify-end" onClick={() => deletePublicKey(key.identifier)}>
+                <div
+                  className="flex gap-1.5 items-center justify-end cursor-pointer"
+                  onClick={() => deletePublicKey(key.identifier)}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
               </TableCell>

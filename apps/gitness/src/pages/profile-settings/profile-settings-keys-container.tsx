@@ -1,5 +1,5 @@
 import { SandboxSettingsAccountKeysPage } from './profile-settings-keys-page'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
   useListPublicKeyQuery,
   ListPublicKeyQueryQueryParams,
@@ -13,7 +13,13 @@ import {
   CreatePublicKeyOkResponse,
   CreatePublicKeyErrorResponse,
   ListPublicKeyErrorResponse,
-  useDeletePublicKeyMutation
+  useDeletePublicKeyMutation,
+  useDeleteTokenMutation,
+  DeleteTokenErrorResponse,
+  DeleteTokenOkResponse,
+  useListTokensQuery,
+  ListTokensOkResponse,
+  ListTokensErrorResponse
 } from '@harnessio/code-service-client'
 import { TokenCreateDialog } from './token-create/token-create-dialog'
 import { TokenFormType } from './token-create/token-create-form'
@@ -23,9 +29,6 @@ import { TokensList, KeysList } from '@harnessio/playground'
 
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
-
-  const TEMP_FETCH_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
-  const TEMP_DELETE_USER_TOKENS_API_PATH = '/api/v1/user/tokens'
 
   const [publicKeys, setPublicKeys] = useState<KeysList[]>([])
   const [tokens, setTokens] = useState<TokensList[]>([])
@@ -60,6 +63,22 @@ export const SettingsProfileKeysPage = () => {
     order: 'asc'
   }
 
+  useListTokensQuery(
+    {},
+    {
+      onSuccess: (data: ListTokensOkResponse) => {
+        console.log(data)
+        setTokens(data)
+        setApiError(null)
+      },
+
+      onError: (error: ListTokensErrorResponse) => {
+        const message = error.message || 'An unknown error occurred.'
+        setApiError({ type: 'tokenFetch', message: message })
+      }
+    }
+  )
+
   useListPublicKeyQuery(
     { queryParams },
     {
@@ -74,38 +93,19 @@ export const SettingsProfileKeysPage = () => {
     }
   )
 
-  // TODO: replace with actual query hook once its fixed
-  const fetchTokens = () => {
-    fetch(TEMP_FETCH_USER_TOKENS_API_PATH)
-      .then(resp => resp.json())
-      .then(res => {
-        setTokens(res)
+  const deleteTokenMutation = useDeleteTokenMutation(
+    {},
+    {
+      onSuccess: (_data: DeleteTokenOkResponse, variables) => {
+        setTokens(prevTokens => prevTokens.filter(token => token.identifier !== variables.token_identifier))
         setApiError(null)
-      })
-      .catch(err => setApiError({ type: 'tokenFetch', message: err }))
-  }
-
-  useEffect(() => {
-    fetchTokens()
-  }, [])
-
-  const deleteToken = (tokenId: string) => {
-    fetch(`${TEMP_DELETE_USER_TOKENS_API_PATH}/${tokenId}`, {
-      method: 'DELETE',
-      headers: {
-        'Content-Type': 'application/json'
+      },
+      onError: (error: DeleteTokenErrorResponse) => {
+        const message = error.message || 'An unknown error occurred.'
+        setApiError({ type: 'tokenDelete', message: message })
       }
-    })
-      .then(response => {
-        if (response.status === 204) {
-          fetchTokens()
-          setApiError(null)
-        } else {
-          throw new Error(`Error: ${response.status}`)
-        }
-      })
-      .catch(err => setApiError({ type: 'tokenDelete', message: err.message }))
-  }
+    }
+  )
 
   const createTokenMutation = useCreateTokenMutation(
     { body: {} },
@@ -122,7 +122,7 @@ export const SettingsProfileKeysPage = () => {
         closeTokenDialog()
         setCreatedTokenData(tokenData)
         setSuccessTokenDialog(true)
-        fetchTokens()
+        setTokens(prevTokens => [...prevTokens, newToken.token])
       },
       onError: (error: CreateTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
@@ -185,6 +185,11 @@ export const SettingsProfileKeysPage = () => {
 
     createSshKeyMutation.mutate({ body })
   }
+
+  const handleDeleteToken = (tokenId: string) => {
+    deleteTokenMutation.mutate({ token_identifier: tokenId })
+  }
+
   return (
     <>
       <SandboxSettingsAccountKeysPage
@@ -193,7 +198,8 @@ export const SettingsProfileKeysPage = () => {
         openTokenDialog={openTokenDialog}
         openSshKeyDialog={openSshKeyDialog}
         error={apiError}
-        deleteToken={deleteToken}
+        // deleteToken={handleDeleteToken}
+        deleteToken={handleDeleteToken}
         deletePublicKey={handleDeletePublicKey}
       />
       <TokenCreateDialog

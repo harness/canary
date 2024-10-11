@@ -46,7 +46,9 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, deleteToken }) 
               <TableCell>{token.expires_at ? new Date(token.expires_at).toLocaleString() : 'No Expiration'}</TableCell>
               <TableCell>{timeAgo(new Date(token.issued_at!).getTime())}</TableCell>
               <TableCell className="content-center">
-                <div className="flex gap-1.5 items-center justify-end" onClick={() => deleteToken(token.identifier)}>
+                <div
+                  className="flex gap-1.5 items-center justify-end cursor-pointer"
+                  onClick={() => deleteToken(token.identifier)}>
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
               </TableCell>

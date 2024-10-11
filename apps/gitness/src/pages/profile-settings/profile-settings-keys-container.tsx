@@ -81,7 +81,6 @@ export const SettingsProfileKeysPage = () => {
     {},
     {
       onSuccess: (data: ListTokensOkResponse) => {
-        console.log(data)
         setTokens(data)
         setApiError(null)
       },

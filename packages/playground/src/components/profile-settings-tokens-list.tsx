@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
 import { Icon } from '@harnessio/canary'
 import { timeAgo } from '../utils/utils'
-import { DeleteTokenAlertDialog } from './token-delete-alert-dialog'
 
 export interface TokensList {
   principal_id?: number

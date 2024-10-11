@@ -113,6 +113,7 @@ export const SettingsProfileKeysPage = () => {
       onSuccess: (_data: DeleteTokenOkResponse, variables) => {
         setTokens(prevTokens => prevTokens.filter(token => token.identifier !== variables.token_identifier))
         setApiError(null)
+        setIsAlertDeleteDialogOpen(false)
       },
       onError: (error: DeleteTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
@@ -165,6 +166,7 @@ export const SettingsProfileKeysPage = () => {
       onSuccess: (_data, variables) => {
         setPublicKeys(prevKeys => prevKeys.filter(key => key.identifier !== variables.public_key_identifier))
         setApiError(null)
+        setIsAlertDeleteDialogOpen(false)
       },
       onError: error => {
         const message = error.message || 'An unknown error occurred.'
@@ -213,8 +215,6 @@ export const SettingsProfileKeysPage = () => {
         openSshKeyDialog={openSshKeyDialog}
         openAlertDeleteDialog={openAlertDeleteDialog}
         error={apiError}
-        // deleteToken={handleDeleteToken}
-        // deletePublicKey={handleDeletePublicKey}
       />
       <TokenCreateDialog
         open={openCreateTokenDialog}
@@ -240,6 +240,8 @@ export const SettingsProfileKeysPage = () => {
         open={isAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}
         deleteFn={alertParams?.type === 'key' ? handleDeletePublicKey : handleDeleteToken}
+        error={apiError}
+        isLoading={alertParams?.type === 'key' ? deletePublicKeyMutation.isLoading : deleteTokenMutation.isLoading}
         {...alertParams}
       />
     </>

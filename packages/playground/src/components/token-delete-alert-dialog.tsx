@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -6,8 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  Button,
-  Icon
+  Button
 } from '@harnessio/canary'
 
 interface DeleteTokenAlertDialogProps {
@@ -16,23 +15,18 @@ interface DeleteTokenAlertDialogProps {
   identifier: string
   deleteFn: (id: string) => void
   type: string
+  isLoading: boolean
 }
 export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
   open,
   onClose,
   identifier,
   deleteFn,
-  type
+  type,
+  isLoading
 }) => {
-  //   const [isDialogOpen, setIsDialogOpen] = useState(false)
-
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
-      {/* <AlertDialogTrigger asChild>
-        <div className="flex gap-1.5 items-center justify-end cursor-pointer" onClick={() => setIsDialogOpen(true)}>
-          <Icon name="trash" size={14} className="text-tertiary-background" />
-        </div>
-      </AlertDialogTrigger> */}
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
@@ -41,30 +35,20 @@ export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Button variant="outline" onClick={onClose}>
+          <Button variant="outline" onClick={onClose} disabled={isLoading}>
             Cancel
           </Button>
-          {/* )} */}
-          {/* {deleteSuccess ? (
-            <Button size="default" theme="success" className="self-start pointer-events-none">
-              Project deleted&nbsp;&nbsp;
-              <Icon name="tick" size={14} />
-            </Button>
-          ) : ( */}
           <Button
             size="default"
             theme="error"
             className="self-start"
             variant="destructive"
+            disabled={isLoading}
             onClick={() => {
               deleteFn(identifier)
-              onClose()
-            }} /*disabled={isDeleting}*/
-          >
-            {/* {isDeleting ? 'Deleting project...' : 'Yes, delete project'} */}
-            {`Yes, delete ${type}`}
+            }}>
+            {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>
-          {/* )} */}
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

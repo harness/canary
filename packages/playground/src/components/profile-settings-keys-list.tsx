@@ -2,7 +2,6 @@ import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
 import { timeAgo } from '../utils/utils'
 import { Icon } from '@harnessio/canary'
-import { DeleteTokenAlertDialog } from './token-delete-alert-dialog'
 
 export interface KeysList {
   created?: number
@@ -16,7 +15,6 @@ export interface KeysList {
 
 interface PageProps {
   publicKeys: KeysList[]
-  // deletePublicKey: (id: string) => void
   openAlertDeleteDialog: (identifier: string, type: string) => void
 }
 

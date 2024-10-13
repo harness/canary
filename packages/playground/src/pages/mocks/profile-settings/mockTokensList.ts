@@ -1,4 +1,4 @@
-import { TokensList } from '../../../components/profile-settings-tokens-list'
+import { TokensList } from '../../../components/profile-settings/types'
 
 export const mockTokens: TokensList[] = [
   {

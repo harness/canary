@@ -14,7 +14,7 @@ import {
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { FormFieldSet } from '../index'
+import { FormFieldSet } from '../../index'
 
 const formSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a name' }),

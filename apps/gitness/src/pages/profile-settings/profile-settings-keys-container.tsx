@@ -27,7 +27,7 @@ import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenSuccessDialog } from './token-create/token-success-dialog'
 import { TokensList, KeysList, DeleteTokenAlertDialog } from '@harnessio/playground'
 
-export interface AlertDeleteParams {
+interface AlertDeleteParams {
   identifier: string
   type: string
 }

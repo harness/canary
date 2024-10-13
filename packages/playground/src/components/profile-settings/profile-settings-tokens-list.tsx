@@ -1,17 +1,8 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
 import { Icon } from '@harnessio/canary'
-import { timeAgo } from '../utils/utils'
-
-export interface TokensList {
-  principal_id?: number
-  type?: string
-  identifier?: string
-  expires_at?: number | null
-  issued_at?: number
-  created_by?: number
-  uid?: string
-}
+import { timeAgo } from '../../utils/utils'
+import { TokensList } from './types'
 
 interface PageProps {
   tokens: TokensList[]

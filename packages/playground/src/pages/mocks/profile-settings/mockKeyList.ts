@@ -1,4 +1,4 @@
-import { KeysList } from '../../../components/profile-settings-keys-list'
+import { KeysList } from '../../../components/profile-settings/types'
 
 export const mockKeys: KeysList[] = [
   {

@@ -1,17 +1,8 @@
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
-import { timeAgo } from '../utils/utils'
+import { timeAgo } from '../../utils/utils'
 import { Icon } from '@harnessio/canary'
-
-export interface KeysList {
-  created?: number
-  verified?: number | null
-  identifier?: string
-  usage?: string
-  fingerprint?: string
-  comment?: string
-  type?: string
-}
+import { KeysList } from './types'
 
 interface PageProps {
   publicKeys: KeysList[]

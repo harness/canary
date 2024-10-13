@@ -26,11 +26,7 @@ import { TokenFormType } from './token-create/token-create-form'
 import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenSuccessDialog } from './token-create/token-success-dialog'
 import { TokensList, KeysList, DeleteTokenAlertDialog } from '@harnessio/playground'
-
-interface AlertDeleteParams {
-  identifier: string
-  type: string
-}
+import { ApiErrorType, AlertDeleteParams } from './types'
 
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
@@ -44,7 +40,7 @@ export const SettingsProfileKeysPage = () => {
   const [alertParams, setAlertParams] = useState<AlertDeleteParams | null>(null)
 
   const [apiError, setApiError] = useState<{
-    type: 'keyFetch' | 'tokenFetch' | 'keyCreate' | 'tokenCreate' | 'tokenDelete' | 'keyDelete'
+    type: ApiErrorType
     message: string
   } | null>(null)
 
@@ -87,7 +83,7 @@ export const SettingsProfileKeysPage = () => {
 
       onError: (error: ListTokensErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'tokenFetch', message: message })
+        setApiError({ type: ApiErrorType.TokenFetch, message: message })
       }
     }
   )
@@ -101,7 +97,7 @@ export const SettingsProfileKeysPage = () => {
       },
       onError: (error: ListPublicKeyErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'keyFetch', message: message })
+        setApiError({ type: ApiErrorType.KeyFetch, message: message })
       }
     }
   )
@@ -116,7 +112,7 @@ export const SettingsProfileKeysPage = () => {
       },
       onError: (error: DeleteTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'tokenDelete', message: message })
+        setApiError({ type: ApiErrorType.TokenDelete, message: message })
       }
     }
   )
@@ -140,7 +136,7 @@ export const SettingsProfileKeysPage = () => {
       },
       onError: (error: CreateTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'tokenCreate', message: message })
+        setApiError({ type: ApiErrorType.TokenCreate, message: message })
       }
     }
   )
@@ -154,7 +150,7 @@ export const SettingsProfileKeysPage = () => {
       },
       onError: (error: CreatePublicKeyErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'keyCreate', message: message })
+        setApiError({ type: ApiErrorType.KeyCreate, message: message })
       }
     }
   )
@@ -169,7 +165,7 @@ export const SettingsProfileKeysPage = () => {
       },
       onError: error => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'keyDelete', message: message })
+        setApiError({ type: ApiErrorType.KeyDelete, message: message })
       }
     }
   )

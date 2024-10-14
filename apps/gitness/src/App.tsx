@@ -13,6 +13,7 @@ import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
 import PipelineListPage from './pages/pipeline-list'
 import { SignIn } from './pages/signin'
+import { SignUp } from './pages/signup'
 import PullRequestListPage from './pages/pull-request-list-page'
 import ExecutionsListPage from './pages/execution-list'
 import ReposListPage from './pages/repo/repo-list'
@@ -217,6 +218,10 @@ export default function App() {
     {
       path: '/signin',
       element: <SignIn />
+    },
+    {
+      path: '/signup',
+      element: <SignUp />
     },
     {
       path: '/logout',

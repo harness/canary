@@ -16,12 +16,15 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
+import { Link } from 'react-router-dom'
 
 interface PageProps {
-  handleSignIn?: () => void
+  isLoading?: boolean
+  handleSignUp: (data: SignUpDataProps) => void
+  error?: string
 }
 
-interface DataProps {
+export interface SignUpDataProps {
   userId?: string
   email?: string
   password?: string
@@ -35,31 +38,27 @@ const signUpSchema = z.object({
   confirmPassword: z.string()
 })
 
-export function SignUpPage({ handleSignIn }: PageProps) {
+export function SignUpPage({ isLoading, handleSignUp, error }: PageProps) {
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors }
   } = useForm({
     resolver: zodResolver(signUpSchema)
   })
-  const [isLoading, setIsLoading] = useState(false)
 
   // Watch password and confirmPassword fields
   const password = watch('password', '')
   const confirmPassword = watch('confirmPassword', '')
 
-  const onSubmit = (data: DataProps) => {
+  const onSubmit = (data: SignUpDataProps) => {
     if (data.password !== data.confirmPassword) {
-      // Manually set error for confirmPassword
       return
     }
-
-    setIsLoading(true)
-    setTimeout(() => {
-      setIsLoading(false)
-    }, 2000)
+    handleSignUp(data)
+    reset()
   }
 
   return (
@@ -137,7 +136,6 @@ export function SignUpPage({ handleSignIn }: PageProps) {
               type="password"
               {...register('confirmPassword')}
               placeholder="Re-enter your password"
-              className="form-input"
             />
             {errors.confirmPassword && (
               <>
@@ -153,16 +151,25 @@ export function SignUpPage({ handleSignIn }: PageProps) {
               </Text>
             )}
             <Spacer size={8} />
-            <Button variant="default" borderRadius="full" type="submit" loading={isLoading} className="w-full">
+            {error && (
+              <>
+                <Text size={1} className="text-destructive">
+                  {error}
+                </Text>
+                <Spacer size={4} />
+              </>
+            )}
+
+            <Button variant="default" borderRadius="full" type="submit" isLoading={isLoading} className="w-full">
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
           </form>
           <Spacer size={4} />
           <Text size={1} color="tertiaryBackground" weight="normal" align="center" className="block">
             Already have an account?{' '}
-            <a className="text-primary" onClick={handleSignIn}>
-              Sign in
-            </a>
+            <Link to="/signin">
+              <a className="text-primary">Sign in</a>
+            </Link>
           </Text>
         </CardContent>
       </Card>

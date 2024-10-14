@@ -69,6 +69,7 @@ export * from './components/filter'
 export * from './components/copy-button'
 
 export * from './pages/signin-page'
+export * from './pages/signup-page'
 export * from './pages/create-project-page'
 export * from './pages/create-pipeline-page'
 export * from './utils/utils'

@@ -16,9 +16,9 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
+import { Link } from 'react-router-dom'
 
 interface PageProps {
-  handleSignUp?: () => void
   handleSignIn: (data: DataProps) => void
   isLoading?: boolean
 }
@@ -33,7 +33,7 @@ const signInSchema = z.object({
   password: z.string().min(6, { message: 'Password must be at least 6 characters' })
 })
 
-export function SignInPage({ handleSignUp, handleSignIn, isLoading }: PageProps) {
+export function SignInPage({ handleSignIn, isLoading }: PageProps) {
   const {
     register,
     handleSubmit,
@@ -104,9 +104,9 @@ export function SignInPage({ handleSignUp, handleSignIn, isLoading }: PageProps)
           <Spacer size={4} />
           <Text size={1} color="tertiaryBackground" weight="normal" align="center" className="block">
             Don't have an account?{' '}
-            <a className="text-primary" onClick={handleSignUp}>
-              Sign up
-            </a>
+            <Link to="/signup">
+              <a className="text-primary">Sign up</a>
+            </Link>
           </Text>
         </CardContent>
       </Card>

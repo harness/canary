@@ -104,8 +104,8 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
           <Spacer size={4} />
           <Text size={1} color="tertiaryBackground" weight="normal" align="center" className="block">
             Don't have an account?{' '}
-            <Link to="/signup">
-              <a className="text-primary">Sign up</a>
+            <Link to="/signup" className="text-primary">
+              Sign up
             </Link>
           </Text>
         </CardContent>

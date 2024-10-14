@@ -160,15 +160,15 @@ export function SignUpPage({ isLoading, handleSignUp, error }: PageProps) {
               </>
             )}
 
-            <Button variant="default" borderRadius="full" type="submit" isLoading={isLoading} className="w-full">
+            <Button variant="default" borderRadius="full" type="submit" className="w-full">
               {isLoading ? 'Signing up...' : 'Sign up'}
             </Button>
           </form>
           <Spacer size={4} />
           <Text size={1} color="tertiaryBackground" weight="normal" align="center" className="block">
             Already have an account?{' '}
-            <Link to="/signin">
-              <a className="text-primary">Sign in</a>
+            <Link to="/signin" className="text-primary">
+              Sign in
             </Link>
           </Text>
         </CardContent>

@@ -38,7 +38,7 @@ export default function LandingPage() {
       case 'create-project':
         return <CreateProjectPage onFormSubmit={noop} />
       case 'sign-in':
-        return <SignInPage /*handleSignUp={handleSignUp}*/ handleSignIn={handleSignIn} />
+        return <SignInPage handleSignIn={handleSignIn} />
       case 'sign-up':
         return <SignUpPage handleSignUp={handleSignUp} />
       case 'password-forgot':

@@ -55,6 +55,7 @@ import { RepoSettingsCollaborationsPage } from './pages/repo-settings-collaborat
 import { RepoSettingsModerationPage } from './pages/repo-settings-moderation-page'
 import { RepoSettingsPlaceholderPage } from './pages/repo-settings-placeholder-page'
 import { SandboxSettingsAccountGeneralPage } from './pages/sandbox-settings-account-general-page'
+import { SignInPage } from './pages/signin-page'
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX
@@ -208,6 +209,10 @@ const router = createBrowserRouter([
         element: <SandboxLandingPage />
       }
     ]
+  },
+  {
+    path: 'signin',
+    element: <SignInPage handleSignIn={noop} />
   },
   {
     path: '/',

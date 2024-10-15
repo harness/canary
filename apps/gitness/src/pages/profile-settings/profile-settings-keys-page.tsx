@@ -8,7 +8,7 @@ import {
   ProfileTokensList,
   TokensList
 } from '@harnessio/playground'
-import { AlertDeleteParams } from './profile-settings-keys-container'
+import { AlertDeleteParams } from './types'
 
 interface SandboxSettingsAccountKeysPageProps {
   publicKeys: KeysList[]
@@ -28,7 +28,7 @@ const SandboxSettingsAccountKeysPage: React.FC<SandboxSettingsAccountKeysPagePro
 }) => {
   return (
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
-      <SandboxLayout.Content maxWidth="2xl">
+      <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
           Keys and Tokens

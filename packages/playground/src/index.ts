@@ -72,9 +72,12 @@ export * from './components/copy-button'
 export * from './components/profile-settings/delete-alert-dialog'
 
 export * from './pages/signin-page'
+export * from './pages/forgot-password-page'
 export * from './pages/signup-page'
 export * from './pages/create-project-page'
 export * from './pages/create-pipeline-page'
+export * from './pages/new-password-page'
+export * from './pages/otp-page'
 export * from './utils/utils'
 
 export * as ShaBadge from './components/sha-badge'

@@ -11,7 +11,7 @@ interface PageProps {
   isLoading?: boolean
 }
 
-export interface DataProps {
+export interface NewPasswordDataProps {
   password?: string
   confirmPassword?: string
 }
@@ -77,7 +77,6 @@ export function NewPasswordPage({ handleSignIn, isLoading }: PageProps) {
               type="password"
               {...register('confirmPassword')}
               placeholder="Confirm password"
-              className="form-input"
             />
             {errors.confirmPassword && (
               <>

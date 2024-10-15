@@ -7,7 +7,10 @@ import {
   SandboxSettings,
   SandboxSettingsAccountPage,
   SandboxSettingsProjectPage,
-  SandboxSettingsProjectMembersPage
+  SandboxSettingsProjectMembersPage,
+  ForgotPasswordPage,
+  NewPasswordPage,
+  OTPPage
 } from '@harnessio/playground'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
@@ -228,6 +231,18 @@ export default function App() {
     {
       path: '/signup',
       element: <SignUp />
+    },
+    {
+      path: '/forgot',
+      element: <ForgotPasswordPage />
+    },
+    {
+      path: 'otp',
+      element: <OTPPage />
+    },
+    {
+      path: 'new-password',
+      element: <NewPasswordPage />
     },
     {
       path: '/logout',

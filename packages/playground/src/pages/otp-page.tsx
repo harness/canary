@@ -24,7 +24,7 @@ interface PageProps {
   isLoading?: boolean
 }
 
-export interface DataProps {
+export interface OtpPageDataProps {
   email?: string
 }
 

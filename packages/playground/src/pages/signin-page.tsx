@@ -78,9 +78,16 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
               </>
             )}
             <Spacer size={4} />
-            <Label htmlFor="password" variant="sm">
-              Password
-            </Label>
+            <div className="flex justify-between">
+              <Label htmlFor="password" variant="sm">
+                Password
+              </Label>
+              <Link to="/forgot">
+                <Button variant="link" size="xs" className="text-secondary-muted">
+                  Forgot password?
+                </Button>
+              </Link>
+            </div>
             <Spacer size={1} />
             <Input
               id="password"

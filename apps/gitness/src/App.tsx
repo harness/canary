@@ -2,8 +2,8 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 import {
   ThemeProvider,
-  RootLayout,
-  SandboxRoot,
+  // RootLayout,
+  // SandboxRoot,
   SandboxSettings,
   SandboxSettingsAccountPage,
   SandboxSettingsProjectPage,
@@ -12,6 +12,8 @@ import {
   NewPasswordPage,
   OTPPage
 } from '@harnessio/playground'
+import SnadboxRootWraper from './components/SandboxRootWrapper'
+import RootLayoutWrapper from './components/RootLayoutWrapper'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
 import PipelineListPage from './pages/pipeline-list'
@@ -59,7 +61,7 @@ export default function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <RootLayout />,
+      element: <RootLayoutWrapper />,
 
       children: [
         { index: true, element: <LandingPage /> },
@@ -250,7 +252,7 @@ export default function App() {
     },
     {
       path: '/sandbox',
-      element: <SandboxRoot />,
+      element: <SnadboxRootWraper />,
       children: [
         {
           path: 'spaces',
@@ -357,7 +359,7 @@ export default function App() {
     },
     {
       path: ':spaceId/sandbox',
-      element: <SandboxRoot />,
+      element: <SnadboxRootWraper />,
       children: [
         {
           path: 'settings',

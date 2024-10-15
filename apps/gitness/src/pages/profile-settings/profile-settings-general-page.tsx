@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, ButtonGroup, Input, Spacer, Text, Icon, Avatar, AvatarImage, AvatarFallback } from '@harnessio/canary'
-import { SandboxLayout, FormFieldSet, SkeletonList } from '@harnessio/playground'
+import { SandboxLayout, FormFieldSet, SkeletonList, getInitials } from '@harnessio/playground'
 
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Please provide your name' }),
@@ -57,6 +57,7 @@ const SandboxSettingsAccountGeneralPage: React.FC<SandboxSettingsAccountGeneralP
 
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
+  const TRUNCATE_INITIALS_LEN = 2
 
   const {
     register: registerProfile,
@@ -120,15 +121,6 @@ const SandboxSettingsAccountGeneralPage: React.FC<SandboxSettingsAccountGeneralP
     }
   }, [passwordUpdateSuccess])
 
-  const extractInitials = (name: string): string => {
-    const parts = name.trim().split(/\s+/)
-    if (parts.length === 1) {
-      return parts[0].charAt(0).toUpperCase()
-    } else {
-      return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase()
-    }
-  }
-
   // Profile form submit handler
   const onProfileSubmit: SubmitHandler<ProfileFields> = data => {
     const { username: _, ...updatedData } = data
@@ -167,7 +159,7 @@ const SandboxSettingsAccountGeneralPage: React.FC<SandboxSettingsAccountGeneralP
                 <AvatarImage src="/images/anon.jpg" />
                 <AvatarFallback>
                   <Text size={5} weight="medium" color="tertiaryBackground">
-                    {extractInitials(userData.name)}
+                    {getInitials(userData.name, TRUNCATE_INITIALS_LEN)}
                   </Text>
                 </AvatarFallback>
               </Avatar>

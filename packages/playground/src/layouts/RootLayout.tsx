@@ -12,7 +12,21 @@ interface NavbarItem {
   to?: string
 }
 
-export const RootLayout: React.FC = () => {
+interface TypesUser {
+  admin?: boolean
+  blocked?: boolean
+  created?: number
+  display_name?: string
+  email?: string
+  uid?: string
+  updated?: number
+}
+
+interface RootLayoutProps {
+  currentUser: TypesUser | undefined
+}
+
+export const RootLayout: React.FC<RootLayoutProps> = ({ currentUser }) => {
   const location = useLocation()
   const hideNavbarPaths = ['/signin', '/signup']
   const showNavbar = !hideNavbarPaths.includes(location.pathname)
@@ -174,7 +188,11 @@ export const RootLayout: React.FC = () => {
             </Navbar.Content>
             <Navbar.Footer>
               <NavLink to="/sandbox/settings/profile/general" className="p-2 hover:bg-tertiary">
-                <NavbarUser.Root />
+                <NavbarUser.Root
+                  username={currentUser ? currentUser.display_name : 'Steven M.'}
+                  isAdmin={currentUser ? currentUser.admin : false}
+                  url={currentUser ? undefined : '../images/user-avatar.svg'}
+                />{' '}
               </NavLink>
             </Navbar.Footer>
           </Navbar.Root>

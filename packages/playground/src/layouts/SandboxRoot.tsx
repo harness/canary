@@ -4,6 +4,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom'
 import { Icon, IconProps, Navbar, NavbarProjectChooser, NavbarUser } from '@harnessio/canary'
 import { MoreSubmenu } from '../components/more-submenu'
 import { navbarSubmenuData } from '../data/mockNavbarSubmenuData'
+import { TypesUser } from './types'
 
 interface NavbarItem {
   id: number
@@ -11,16 +12,6 @@ interface NavbarItem {
   iconName: IconProps['name']
   description: string
   to?: string
-}
-
-interface TypesUser {
-  admin?: boolean
-  blocked?: boolean
-  created?: number
-  display_name?: string
-  email?: string
-  uid?: string
-  updated?: number
 }
 
 interface SandboxRootProps {

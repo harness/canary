@@ -2,8 +2,6 @@ import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 import {
   ThemeProvider,
-  // RootLayout,
-  // SandboxRoot,
   SandboxSettings,
   SandboxSettingsAccountPage,
   SandboxSettingsProjectPage,

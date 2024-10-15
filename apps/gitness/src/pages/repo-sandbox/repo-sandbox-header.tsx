@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { SandboxLayout } from '@harnessio/playground'
 import { Topbar, Text } from '@harnessio/canary'
@@ -12,38 +12,42 @@ const SandboxRepoHeader: React.FC = () => {
   const navigate = useNavigate()
   const space = useGetSpaceURLParam()
   const { spaces } = useAppContext()
+  const [projects, setProjects] = useState<Project[]>([{ id: 'create-project', name: 'Create project' }])
+  const [selectedProject, setSelectedProject] = useState<Project | undefined>(undefined)
 
-  const projectsItem =
-    spaces?.map((space: TypesMembershipSpace) => ({
-      id: space?.space?.id,
-      name: space?.space?.path
-    })) || []
+  useEffect(() => {
+    if (spaces.length > 0) {
+      setProjects((existingProjects: Project[]) =>
+        /* dedupe items */
+        Array.from(
+          new Map(
+            [...spaces.map(space => ({ id: space.id, name: space.path })), ...existingProjects].map(project => [
+              project.id,
+              project
+            ])
+          ).values()
+        )
+      )
+    }
+  }, [spaces])
 
-  if (projectsItem.length === 0) {
-    return (
-      <SandboxLayout.Header>
-        <Topbar.Root>
-          <Topbar.Left>
-            <Text size={2} weight="medium" className="text-primary">
-              Please create a new project
-            </Text>
-          </Topbar.Left>
-        </Topbar.Root>
-      </SandboxLayout.Header>
-    )
-  }
+  useEffect(() => setSelectedProject(projects.find(item => item.name === space)), [space, projects])
 
   return (
     <>
       <SandboxLayout.Header>
         <TopBarWidget
-          projects={projectsItem}
-          onSelectProject={(selectedProject: Project) => {
-            if (selectedProject?.name) {
-              navigate(`/sandbox/spaces/${selectedProject.name}/repos`)
+          projects={projects}
+          onSelectProject={(project: Project) => {
+            setSelectedProject(project)
+            if (project?.id === 'create-project') {
+              navigate('/create-project')
+            } else if (project?.name) {
+              navigate(`/${project.name}/repos`)
             }
           }}
-          preselectedProject={projectsItem.find(item => item.name === space)}
+          selectedProject={selectedProject}
+          preselectedProject={selectedProject}
         />
       </SandboxLayout.Header>
       <Outlet />

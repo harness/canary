@@ -8,7 +8,6 @@ import { noop } from 'lodash-es'
 import { Link } from 'react-router-dom'
 
 interface PageProps {
-  handleSignUp?: () => void
   isLoading?: boolean
 }
 
@@ -20,7 +19,7 @@ const forgotPasswordSchema = z.object({
   email: z.string().email({ message: 'Invalid email address' })
 })
 
-export function ForgotPasswordPage({ handleSignUp, isLoading }: PageProps) {
+export function ForgotPasswordPage({ isLoading }: PageProps) {
   const {
     register,
     handleSubmit,

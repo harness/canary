@@ -237,11 +237,11 @@ export default function App() {
       element: <ForgotPasswordPage />
     },
     {
-      path: 'otp',
+      path: '/otp',
       element: <OTPPage />
     },
     {
-      path: 'new-password',
+      path: '/new-password',
       element: <NewPasswordPage />
     },
     {

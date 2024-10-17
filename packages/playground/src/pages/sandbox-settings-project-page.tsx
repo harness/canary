@@ -5,7 +5,7 @@ import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 function SandboxSettingsProjectPage() {
   const location = useLocation()
-  const activeTab = location.pathname.split('/').pop() || 'general'
+  const activeTab = location.pathname.includes('member') ? 'members' : 'general'
 
   return (
     <>

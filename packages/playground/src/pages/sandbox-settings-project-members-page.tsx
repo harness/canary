@@ -5,6 +5,7 @@ import { mockMemberData } from '../data/mockMembersData'
 import { MembersList } from '../components/members-list'
 import { PlaygroundListSettings } from '../settings/list-settings'
 import { PaginationComponent } from '../components/pagination'
+import { useNavigate } from 'react-router-dom'
 
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
@@ -18,6 +19,7 @@ type MembersProps = {
 }
 
 function SandboxSettingsProjectMembersPage() {
+  const navigate = useNavigate()
   const [loadState, setLoadState] = useState('data-loaded')
 
   const renderMemberListContent = () => {
@@ -59,6 +61,10 @@ function SandboxSettingsProjectMembersPage() {
     )
   }
 
+  const handleInviteClick = () => {
+    navigate('/sandbox/settings/project/create-new-member')
+  }
+
   return (
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
       <SandboxLayout.Content maxWidth="3xl">
@@ -77,7 +83,9 @@ function SandboxSettingsProjectMembersPage() {
           <ListActions.Right>
             <ListActions.Dropdown title="All Team Roles" items={filterOptions} />
             <ListActions.Dropdown title="Last added" items={sortOptions} />
-            <Button variant="default">Invite New Members</Button>
+            <Button variant="default" onClick={handleInviteClick}>
+              Invite New Members
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={5} />

@@ -11,7 +11,7 @@ import {
   Spacer,
   Text
 } from '@harnessio/canary'
-import { useListPipelinesQuery, TypesPipeline } from '@harnessio/code-service-client'
+import { useListPipelinesQuery, TypesPipeline, ListPipelinesOkResponse } from '@harnessio/code-service-client'
 import {
   PipelineList,
   MeterState,
@@ -25,6 +25,7 @@ import {
 import { ExecutionState } from '../types'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { usePagination } from '../framework/hooks/usePagination'
+import { usePagedContent } from '../hooks/usePagedContent'
 import { PathParams } from '../RouteDefinitions'
 
 export default function PipelinesPage() {
@@ -35,7 +36,7 @@ export default function PipelinesPage() {
 
   const { query } = useCommonFilter()
 
-  const { data: pipelines, isFetching } = useListPipelinesQuery(
+  const { data, isFetching } = useListPipelinesQuery(
     {
       repo_ref: repoRef,
       queryParams: { page: 0, limit: 10, query: query?.trim(), latest: true }
@@ -46,6 +47,7 @@ export default function PipelinesPage() {
       enabled: true
     }
   )
+  const { content: pipelines } = usePagedContent<ListPipelinesOkResponse>(data)
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>

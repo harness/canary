@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Button,
@@ -11,7 +12,12 @@ import {
   Spacer,
   Text
 } from '@harnessio/canary'
-import { useListReposQuery, RepoRepositoryOutput, ListReposQueryQueryParams } from '@harnessio/code-service-client'
+import {
+  useListReposQuery,
+  RepoRepositoryOutput,
+  ListReposQueryQueryParams,
+  ListReposOkResponse
+} from '@harnessio/code-service-client'
 import {
   PaddingListLayout,
   SkeletonList,
@@ -21,10 +27,12 @@ import {
   NoData,
   NoSearchResults
 } from '@harnessio/playground'
+
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { usePagination } from '../../framework/hooks/usePagination'
 import Header from '../../components/Header'
 import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
+import { usePagedContent } from '../../hooks/usePagedContent'
 
 const sortOptions = [
   { name: 'Created', value: 'created' },
@@ -35,17 +43,19 @@ const sortOptions = [
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
 export default function ReposListPage() {
-  // hardcoded
-  const totalPages = 10
   const space = useGetSpaceURLParam()
+  const [page, setPage] = useState<number>(1)
 
   const { query, sort } = useCommonFilter<ListReposQueryQueryParams['sort']>()
 
-  const { isFetching, data: repositories } = useListReposQuery({
-    queryParams: { sort, query },
-    space_ref: `${space}/+`
-  })
-  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
+  const { isFetching, data } = useListReposQuery({ queryParams: { sort, query, page }, space_ref: `${space}/+` })
+  const { content: repositories } = usePagedContent<ListReposOkResponse>(data)
+  console.log(data)
+  const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, 0)
+
+  useEffect(() => {
+    setPage(currentPage)
+  }, [currentPage])
 
   const renderListContent = () => {
     if (isFetching) return <SkeletonList />
@@ -82,21 +92,21 @@ export default function ReposListPage() {
     return (
       <RepoList
         LinkComponent={LinkComponent}
-        repos={repositories?.map((repo: RepoRepositoryOutput) => {
-          return {
-            id: repo.id,
-            name: repo.identifier,
-            description: repo.description,
-            private: !repo.is_public,
-            stars: 0,
-            forks: repo.num_forks,
-            pulls: repo.num_pulls,
-            timestamp: repo.updated && timeAgoFromEpochTime(repo.updated)
-          }
-        })}
+        repos={repositories?.map((repo: RepoRepositoryOutput) => ({
+          id: repo?.id ? String(repo.id) : '',
+          name: repo?.identifier || '',
+          description: repo.description,
+          private: !repo.is_public,
+          stars: 0,
+          forks: repo?.num_forks || 0,
+          pulls: repo?.num_pulls || 0,
+          timestamp: repo?.updated ? timeAgoFromEpochTime(repo.updated) : ''
+        }))}
       />
     )
   }
+
+  const repositoriesExist = repositories?.length
 
   return (
     <>
@@ -106,7 +116,7 @@ export default function ReposListPage() {
          * Show if repositories exist.
          * Additionally, show if query(search) is applied.
          */}
-        {(query || repositories?.length) && (
+        {(query || repositoriesExist) && (
           <>
             <Text size={5} weight={'medium'}>
               Repositories
@@ -125,7 +135,7 @@ export default function ReposListPage() {
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        {repositories?.length && (
+        {repositoriesExist && (
           <ListPagination.Root>
             <Pagination>
               <PaginationContent>

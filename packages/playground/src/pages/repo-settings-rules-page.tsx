@@ -24,7 +24,7 @@ import { MessageTheme } from '../components/form-field-set'
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
-  targetPatterns: z.string().min(1, 'Description is required'),
+  targetPatterns: z.string().min(1, 'Patterns are required'),
   includePatterns: z.enum(['', '1', '2', '3']),
   toggleValue: z.boolean(),
   bypassValue: z.string().optional(),
@@ -38,16 +38,14 @@ const formSchema = z.object({
     })
   )
 })
-export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
-
-interface RepoSettingsGeneralFormProps {
-  /* onFormSubmit?: (data: FormFields) => void
-  onFormCancel?: () => void
-  apiError?: string | null
-  isLoading?: boolean
-  isSuccess?: boolean*/
-  isLoading?: boolean
-}
+export type FormFields = z.infer<typeof formSchema>
+// interface RepoSettingsRulesPageProps {
+//   onFormSubmit?: (data: FormFields) => void
+//   onFormCancel?: () => void
+//   apiError?: string | null
+//   isLoading?: boolean
+//   isSuccess?: boolean
+// }
 const rules = [
   {
     id: 'request-approval',
@@ -121,9 +119,6 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
     setIsSubmitted(true)
     console.log(data)
     reset()
-    setTimeout(() => {
-      setIsSubmitted(false)
-    }, 2000)
   }
   return (
     <>
@@ -143,7 +138,7 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
                     className="flex gap-1.5 items-center justify-end cursor-pointer"
                     onClick={() => setValue('toggleValue', !watch('toggleValue'))}>
                     {' '}
-                    <Icon name={toggleValue ? 'toggle-active' : 'toggle-inactive'} size={toggleValue ? 30 : 50} />
+                    <Icon name={toggleValue ? 'toggle-active' : 'toggle-inactive'} size={30} />
                   </div>
                 }
                 right
@@ -270,7 +265,7 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
                     id={rule.id}
                     checked={rulesValue[index]?.checked}
                     onCheckedChange={checked => {
-                      const updatedRules = rulesValue.map((r, i) =>
+                      const updatedRules = rulesValue.map(r =>
                         r.id === rule.id ? { ...r, checked: checked === true } : r
                       )
                       setValue('rules', updatedRules)

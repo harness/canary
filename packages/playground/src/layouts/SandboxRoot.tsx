@@ -172,6 +172,9 @@ export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser }) => {
               <NavLink to="/sandbox/settings/project">
                 <Navbar.Item text="Project settings" icon={<Icon name="cog-6" size={12} />} />
               </NavLink>
+              <NavLink to="/sandbox/settings/user-mamagement">
+                <Navbar.Item text="User Management" icon={<Icon name="cog-6" size={12} />} />
+              </NavLink>
             </Navbar.AccordionGroup>
           </Navbar.Content>
           <Navbar.Footer>

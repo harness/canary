@@ -55,6 +55,9 @@ import { RepoSettingsCollaborationsPage } from './pages/repo-settings-collaborat
 import { RepoSettingsModerationPage } from './pages/repo-settings-moderation-page'
 import { RepoSettingsPlaceholderPage } from './pages/repo-settings-placeholder-page'
 import { SandboxSettingsAccountGeneralPage } from './pages/sandbox-settings-account-general-page'
+import { SandboxSettingsCreateNewMemberPage } from './pages/sandbox-settings-create-new-member-page'
+import { SandboxSettingsUserManagementPage } from './pages/sandbox-settings-user-management-page'
+import { SandboxSettingsCreateNewUserPage } from './pages/sandbox-settings-create-new-user-page'
 import { SignInPage } from './pages/signin-page'
 
 const router = createBrowserRouter([
@@ -199,6 +202,28 @@ const router = createBrowserRouter([
               {
                 path: 'members',
                 element: <SandboxSettingsProjectMembersPage />
+              },
+              {
+                path: 'create-new-member',
+                element: <SandboxSettingsCreateNewMemberPage />
+              }
+            ]
+          },
+          {
+            path: 'user-mamagement',
+            element: <SandboxSettingsProjectPage />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="users" />
+              },
+              {
+                path: 'users',
+                element: <SandboxSettingsUserManagementPage />
+              },
+              {
+                path: 'create-new-user',
+                element: <SandboxSettingsCreateNewUserPage />
               }
             ]
           }

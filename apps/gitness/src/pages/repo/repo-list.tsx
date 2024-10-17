@@ -41,10 +41,11 @@ export default function ReposListPage() {
 
   const { query, sort } = useCommonFilter<ListReposQueryQueryParams['sort']>()
 
-  const { isFetching, data: repositories } = useListReposQuery({
+  const { isFetching, data } = useListReposQuery({
     queryParams: { sort, query },
     space_ref: `${space}/+`
   })
+  const { content: repositories } = data || {}
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const renderListContent = () => {

@@ -18,7 +18,7 @@
   },
   "dependencies": {
     "@harnessio/canary": "workspace:*",
-    "@harnessio/code-service-client": "1.3.18",
+    "@harnessio/code-service-client": "2.0.0",
     "@harnessio/forms": "workspace:*",
     "@harnessio/playground": "workspace:*",
     "@harnessio/unified-pipeline": "workspace:*",

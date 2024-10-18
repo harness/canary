@@ -12,7 +12,13 @@ import {
   SelectValue,
   Text,
   Textarea,
-  Checkbox
+  Checkbox,
+  Switch,
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem
 } from '@harnessio/canary'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,25 +26,28 @@ import { z } from 'zod'
 
 import { FormFieldSet } from '../index'
 import { MessageTheme } from '../components/form-field-set'
+import { rules } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-data'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
   targetPatterns: z.string().min(1, 'Patterns are required'),
-  includePatterns: z.enum(['', '1', '2', '3']),
   toggleValue: z.boolean(),
   bypassValue: z.string().optional(),
-  access: z.enum(['1', '2'], {}),
+  access: z.enum(['1', '2']),
   defaultBranchValue: z.boolean().optional(),
   editPermissionsValue: z.boolean().optional(),
   rules: z.array(
     z.object({
       id: z.string(),
-      checked: z.boolean()
+      checked: z.boolean(),
+      submenu: z.array(z.string()),
+      selectOptions: z.string()
     })
   )
 })
 export type FormFields = z.infer<typeof formSchema>
+
 // interface RepoSettingsRulesPageProps {
 //   onFormSubmit?: (data: FormFields) => void
 //   onFormCancel?: () => void
@@ -46,40 +55,8 @@ export type FormFields = z.infer<typeof formSchema>
 //   isLoading?: boolean
 //   isSuccess?: boolean
 // }
-const rules = [
-  {
-    id: 'request-approval',
-    label: 'Request approval of new changes',
-    description: 'Require re-approval when there are new changes in the pull request'
-  },
-  {
-    id: 'change-requests',
-    label: 'Require resolution of change requests',
-    description: 'All change requests on a pull request must be resolved before it can be merged'
-  },
-  {
-    id: 'comment-resolution',
-    label: 'Require comment resolution',
-    description: 'All comments on a pull request must be resolved before it can be merged'
-  },
-  {
-    id: 'status-checks',
-    label: 'Require status checks to pass',
-    description: 'Selected status checks must pass before a pull request can be merged'
-  },
-  {
-    id: 'merge-strategies',
-    label: 'Limit merge strategies',
-    description: 'Limit which merge strategies are available to merge a pull request'
-  },
-  {
-    id: 'auto-delete',
-    label: 'Auto delete branch on merge',
-    description: 'Automatically delete the source branch of a pull request after it is merged'
-  }
-]
 
-export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoading = false }) => {
+export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({ isLoading = false }) => {
   const {
     register,
     handleSubmit,
@@ -99,21 +76,49 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
       editPermissionsValue: false,
       bypassValue: '',
       access: '1',
-      rules: rules.map(rule => ({ id: rule.id, checked: false }))
+      rules: rules.map(rule => ({ id: rule.id, checked: false, submenu: [], selectOptions: '' }))
     }
   })
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const [selectedOption, setSelectedOption] = useState('Include')
 
+  const handleCheckboxChange = (ruleId: string, checked: boolean) => {
+    const updatedRules = rulesValue.map(r => (r.id === ruleId ? { ...r, checked } : r))
+    setValue('rules', updatedRules)
+  }
+  const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
+    const updatedRules = rulesValue.map(rule => {
+      if (rule.id === ruleId) {
+        const updatedSubmenu = checked
+          ? [...(rule.submenu || []), submenuId]
+          : (rule.submenu || []).filter(id => id !== submenuId)
+        return { ...rule, submenu: updatedSubmenu }
+      }
+      return rule
+    })
+    setValue('rules', updatedRules)
+  }
+
+  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string) => {
+    const updatedRules = rulesValue.map(rule => {
+      if (rule.id === ruleId) {
+        return { ...rule, selectOptions: selectedOptions }
+      }
+      return rule
+    })
+    setValue('rules', updatedRules)
+  }
   const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
-  const includePatterns = watch('includePatterns')
   const toggleValue = watch('toggleValue')
   const bypassValue = watch('bypassValue')
   const defaultBranchValue = watch('defaultBranchValue')
   const editPermissionsValue = watch('editPermissionsValue')
   const rulesValue = watch('rules')
+
+  console.log(rulesValue)
 
   const onSubmit: SubmitHandler<FormFields> = data => {
     setIsSubmitted(true)
@@ -134,11 +139,13 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
                 label
                 secondary
                 title={
-                  <div
-                    className="flex gap-1.5 items-center justify-end cursor-pointer"
-                    onClick={() => setValue('toggleValue', !watch('toggleValue'))}>
+                  <div className="flex gap-1.5 items-center justify-end cursor-pointer">
                     {' '}
-                    <Icon name={toggleValue ? 'toggle-active' : 'toggle-inactive'} size={30} />
+                    <Switch
+                      {...register('toggleValue')}
+                      checked={toggleValue}
+                      onCheckedChange={() => setValue('toggleValue', !watch('toggleValue'))}
+                    />
                   </div>
                 }
                 right
@@ -185,23 +192,26 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
                   Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
                 </Text>{' '}
               </div>
-              <div className="flex-[1]">
-                <Select value={includePatterns} onValueChange={value => handleSelectChange('includePatterns', value)}>
-                  <SelectTrigger id="includePatterns">
-                    <SelectValue placeholder="Include" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="1">option 1</SelectItem>
-                    <SelectItem value="2">option 2</SelectItem>
-                    <SelectItem value="3">option 3</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-              {errors.includePatterns && (
-                <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                  {errors.includePatterns.message?.toString()}
-                </FormFieldSet.Message>
-              )}
+              <Button
+                onClick={() => {}}
+                variant="split"
+                type="button"
+                className="pl-0 pr-0"
+                dropdown={
+                  <DropdownMenu>
+                    <DropdownMenuTrigger insideSplitButton>
+                      <Icon name="chevron-down" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="mt-1">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem onSelect={() => setSelectedOption('Include')}>Include</DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => setSelectedOption('Exclude')}>Exclude</DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                }>
+                {selectedOption}
+              </Button>
 
               {errors.targetPatterns && (
                 <FormFieldSet.Message theme={MessageTheme.ERROR}>
@@ -257,25 +267,60 @@ export const RepoSettingsRulesPage: React.FC<{ isLoading: boolean }> = ({ isLoad
           <FormFieldSet.ControlGroup className="max-w-sm">
             <FormFieldSet.Label>Rules: select all that apply</FormFieldSet.Label>
             {rules.map((rule, index) => (
-              <FormFieldSet.Option
-                key={rule.id}
-                className="mt-0"
-                control={
-                  <Checkbox
-                    id={rule.id}
-                    checked={rulesValue[index]?.checked}
-                    onCheckedChange={checked => {
-                      const updatedRules = rulesValue.map(r =>
-                        r.id === rule.id ? { ...r, checked: checked === true } : r
-                      )
-                      setValue('rules', updatedRules)
-                    }}
-                  />
-                }
-                id={rule.id}
-                label={rule.label}
-                description={rule.description}
-              />
+              <div key={rule.id}>
+                <FormFieldSet.Option
+                  className="mt-0"
+                  control={
+                    <Checkbox
+                      id={rule.id}
+                      checked={rulesValue[index]?.checked}
+                      onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                    />
+                  }
+                  id={rule.id}
+                  label={rule.label}
+                  description={rule.description}
+                />
+
+                {/* Conditionally render the submenu if this rule has a submenu and is checked */}
+                {rule.hasSubmenu && rulesValue[index].checked && (
+                  <div className="pl-6 mt-2">
+                    {rule.submenuOptions.map(subOption => (
+                      <FormFieldSet.Option
+                        key={subOption.id}
+                        control={
+                          <Checkbox
+                            id={subOption.id}
+                            checked={rulesValue[index].submenu?.includes(subOption.id)}
+                            onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
+                          />
+                        }
+                        id={subOption.id}
+                        label={subOption.label}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {rule.hasSelect && rulesValue[index].checked && (
+                  <div className="pl-6 mt-2">
+                    <Select
+                      value={rulesValue[index].selectOptions}
+                      onValueChange={value => handleSelectChangeForRule(rule.id, value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select status checks" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {rule.selectOptions.map(option => (
+                          <SelectItem key={option.id} value={option.id}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+              </div>
             ))}
           </FormFieldSet.ControlGroup>
           <FormFieldSet.Root>

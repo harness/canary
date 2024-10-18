@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
-import { Button, ButtonGroup, Icon } from '@harnessio/canary'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import React, { useState, useReducer, useEffect } from 'react'
+import { Button, ButtonGroup, Icon, useZodForm } from '@harnessio/canary'
+import { SubmitHandler } from 'react-hook-form'
 import {
   BranchSettingsRuleToggleField,
   BranchSettingsRuleNameField,
@@ -12,20 +11,13 @@ import {
   BranchSettingsRuleEditPermissionsField,
   BranchSettingsRuleListField
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-fields'
+import { branchSettingsReducer } from '../components/repo-settings/repo-branch-settings-rules/reducers/repo-branch-settings-reducer'
 import { FormFieldSet } from '../index'
 import { branchRules } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-data'
 import {
   RepoBranchSettingsFormFields,
   repoBranchSettingsFormSchema
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
-
-// interface RepoSettingsRulesPageProps {
-//   onFormSubmit?: (data: FormFields) => void
-//   onFormCancel?: () => void
-//   apiError?: string | null
-//   isLoading?: boolean
-//   isSuccess?: boolean
-// }
 
 export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({ isLoading = false }) => {
   const {
@@ -35,8 +27,8 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
     watch,
     reset,
     formState: { errors, isValid }
-  } = useForm<RepoBranchSettingsFormFields>({
-    resolver: zodResolver(repoBranchSettingsFormSchema),
+  } = useZodForm({
+    schema: repoBranchSettingsFormSchema,
     mode: 'onChange',
     defaultValues: {
       name: '',
@@ -47,15 +39,26 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
       editPermissionsValue: false,
       bypassValue: '',
       access: '1',
-      rules: branchRules.map(rule => ({ key: rule.id, id: rule.id, checked: false, submenu: [], selectOptions: '' }))
+      rules: []
     }
   })
+  const [rules, dispatch] = useReducer(
+    branchSettingsReducer,
+    branchRules.map(rule => ({
+      id: rule.id,
+      checked: false,
+      submenu: [],
+      selectOptions: ''
+    }))
+  )
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
-    console.log(data)
+    const formData = { ...data, rules }
+
+    console.log(formData)
     reset()
   }
   return (
@@ -74,7 +77,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
             setValue={setValue}
             watch={watch}
           />
-          <BranchSettingsRuleListField setValue={setValue} watch={watch} />
+          <BranchSettingsRuleListField rules={rules} dispatch={dispatch} />
 
           <FormFieldSet.Root>
             <FormFieldSet.ControlGroup>

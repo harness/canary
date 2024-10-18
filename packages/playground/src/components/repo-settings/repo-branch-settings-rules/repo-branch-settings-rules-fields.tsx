@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import {
   Input,
   Textarea,
@@ -20,16 +20,8 @@ import {
   Switch
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form'
-import { RepoBranchSettingsFormFields } from './repo-branch-settings-rules-schema'
 import { branchRules } from './repo-branch-settings-rules-data'
-
-interface FieldProps {
-  register?: UseFormRegister<RepoBranchSettingsFormFields>
-  errors?: FieldErrors<RepoBranchSettingsFormFields>
-  watch?: UseFormWatch<RepoBranchSettingsFormFields>
-  setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
-}
+import { FieldProps, Rule, Dispatch } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -195,33 +187,19 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
   </FormFieldSet.ControlGroup>
 )
 
-export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setValue }) => {
+export const BranchSettingsRuleListField: React.FC<{ rules: Rule[]; dispatch: Dispatch }> = ({ rules, dispatch }) => {
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
-    const updatedRules = watch!('rules').map(r => (r.id === ruleId ? { ...r, checked } : r))
-    setValue!('rules', updatedRules)
+    dispatch({ type: 'TOGGLE_RULE', ruleId, checked })
   }
+
   const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
-    const updatedRules = watch!('rules').map(rule => {
-      if (rule.id === ruleId) {
-        const updatedSubmenu = checked
-          ? [...(rule.submenu || []), submenuId]
-          : (rule.submenu || []).filter(id => id !== submenuId)
-        return { ...rule, submenu: updatedSubmenu }
-      }
-      return rule
-    })
-    setValue!('rules', updatedRules)
+    dispatch({ type: 'TOGGLE_SUBMENU', ruleId, submenuId, checked })
   }
 
   const handleSelectChangeForRule = (ruleId: string, selectedOptions: string) => {
-    const updatedRules = watch!('rules').map(rule => {
-      if (rule.id === ruleId) {
-        return { ...rule, selectOptions: selectedOptions }
-      }
-      return rule
-    })
-    setValue!('rules', updatedRules)
+    dispatch({ type: 'SET_SELECT_OPTION', ruleId, selectedOptions })
   }
+
   return (
     <FormFieldSet.ControlGroup className="max-w-sm">
       <FormFieldSet.Label>Rules: select all that apply</FormFieldSet.Label>
@@ -232,7 +210,7 @@ export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setVa
             control={
               <Checkbox
                 id={rule.id}
-                checked={watch!('rules')[index]?.checked}
+                checked={rules[index]?.checked}
                 onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
               />
             }
@@ -242,7 +220,7 @@ export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setVa
           />
 
           {/* Conditionally render the submenu if this rule has a submenu and is checked */}
-          {rule.hasSubmenu && watch!('rules')[index].checked && (
+          {rule.hasSubmenu && rules[index].checked && (
             <div className="pl-8 mb-4">
               {rule.submenuOptions.map(subOption => (
                 <FormFieldSet.Option
@@ -251,7 +229,7 @@ export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setVa
                   control={
                     <Checkbox
                       id={subOption.id}
-                      checked={watch!('rules')[index].submenu?.includes(subOption.id)}
+                      checked={rules[index].submenu?.includes(subOption.id)}
                       onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
                     />
                   }
@@ -262,10 +240,10 @@ export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setVa
             </div>
           )}
 
-          {rule.hasSelect && watch!('rules')[index].checked && (
+          {rule.hasSelect && rules[index].checked && (
             <div className="pl-8 mb-4 mt-2">
               <Select
-                value={watch!('rules')[index].selectOptions}
+                value={rules[index].selectOptions}
                 onValueChange={value => handleSelectChangeForRule(rule.id, value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select status checks" />

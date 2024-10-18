@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-export const formSchema = z.object({
+export const repoBranchSettingsFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
   targetPatterns: z.string().min(1, 'Patterns are required'),
@@ -19,4 +19,4 @@ export const formSchema = z.object({
   )
 })
 
-export type FormFields = z.infer<typeof formSchema>
+export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>

@@ -19,7 +19,7 @@ export const RepoSettingsGeneralRules = () => {
       {/* <Spacer size={6} /> */}
       <ListActions.Root>
         <ListActions.Left>
-          <SearchBox.Root placeholder="Search repositories" />
+          <SearchBox.Root placeholder="Search" />
         </ListActions.Left>
         <ListActions.Right>
           <Button variant="outline" onClick={() => {}}>

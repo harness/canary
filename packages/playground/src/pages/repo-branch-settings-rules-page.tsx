@@ -13,7 +13,7 @@ import {
   BranchSettingsRuleListField
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-fields'
 import { FormFieldSet } from '../index'
-import { rules } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-data'
+import { branchRules } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-data'
 import {
   RepoBranchSettingsFormFields,
   repoBranchSettingsFormSchema
@@ -47,7 +47,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
       editPermissionsValue: false,
       bypassValue: '',
       access: '1',
-      rules: rules.map(rule => ({ key: rule.id, id: rule.id, checked: false, submenu: [], selectOptions: '' }))
+      rules: branchRules.map(rule => ({ key: rule.id, id: rule.id, checked: false, submenu: [], selectOptions: '' }))
     }
   })
 

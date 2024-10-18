@@ -22,7 +22,7 @@ import {
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form'
 import { RepoBranchSettingsFormFields } from './repo-branch-settings-rules-schema'
-import { rules } from './repo-branch-settings-rules-data'
+import { branchRules } from './repo-branch-settings-rules-data'
 
 interface FieldProps {
   register?: UseFormRegister<RepoBranchSettingsFormFields>
@@ -225,7 +225,7 @@ export const BranchSettingsRuleListField: React.FC<FieldProps> = ({ watch, setVa
   return (
     <FormFieldSet.ControlGroup className="max-w-sm">
       <FormFieldSet.Label>Rules: select all that apply</FormFieldSet.Label>
-      {rules.map((rule, index) => (
+      {branchRules.map((rule, index) => (
         <div key={rule.id}>
           <FormFieldSet.Option
             className="mt-0"

@@ -1,4 +1,4 @@
-export const rules = [
+export const branchRules = [
   {
     id: 'request-approval',
     label: 'Request approval of new changes',

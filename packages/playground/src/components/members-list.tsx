@@ -12,11 +12,7 @@ import {
   AvatarImage,
   AvatarFallback,
   Badge,
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
   Button,
-  Separator,
   AlertDialog,
   AlertDialogTrigger,
   AlertDialogContent,
@@ -25,7 +21,14 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogCancel,
-  Spacer
+  Spacer,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger
 } from '@harnessio/canary'
 import { getInitials } from '../utils/utils'
 import { FormEditDialog } from './form-member-edit-dialog'
@@ -67,39 +70,35 @@ export const MembersList = ({ members }: PageProps) => {
   }
 
   const moreActionsTooltip = ({ member }: { member: MembersProps }) => {
-    const [isOpen, setIsOpen] = useState(false)
-
     return (
-      <Tooltip open={isOpen} onOpenChange={open => setIsOpen(open)} delayDuration={0}>
-        <TooltipTrigger asChild>
-          <Button variant="ghost" size="xs" onClick={() => setIsOpen(true)}>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="xs">
             <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
           </Button>
-        </TooltipTrigger>
-        <TooltipContent className="shadow-sm py-2 bg-primary-background border border-gray-800 rounded-[10px]">
-          <div className="w-[180px]">
-            <Button
-              theme="muted"
-              className="bg-transparent w-full hover:bg-tertiary-background/5 justify-start"
-              onClick={() => openEditDialog(member)}>
-              <Icon name="edit-pen" className="mr-2" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="shadow-sm py-2 bg-primary-background border border-gray-800 rounded-[10px] w-[180px]">
+          <DropdownMenuGroup>
+            <DropdownMenuItem className="cursor-pointer" onSelect={() => openEditDialog(member)}>
+              <DropdownMenuShortcut className="ml-0">
+                <Icon name="edit-pen" className="mr-2" />
+              </DropdownMenuShortcut>
               Edit
-            </Button>
-            <Separator className="w-full h-px bg-tertiary-background/10" orientation="horizontal" decorative={true} />
-            <Button
-              theme="error"
-              className="bg-transparent w-full hover:bg-tertiary-background/5 justify-start"
-              onClick={() => setIsDialogDeleteOpen(true)}>
-              <Icon name="trash" className="mr-2" />
-              Remove Member
-            </Button>
-          </div>
-          {/* FormEditDialog for Role Editing */}
-          {isDialogEditOpen && (
-            <FormEditDialog member={member} onSave={handleRoleSave} onClose={() => setIsDialogEditOpen(false)} />
-          )}
-        </TooltipContent>
-      </Tooltip>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              className="cursor-pointer text-red-400 hover:text-red-400"
+              onSelect={() => {
+                setIsDialogDeleteOpen(true)
+              }}>
+              <DropdownMenuShortcut className="ml-0">
+                <Icon name="trash" className="mr-2 text-red-400" />
+              </DropdownMenuShortcut>
+              Remove member
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
     )
   }
 
@@ -119,15 +118,8 @@ export const MembersList = ({ members }: PageProps) => {
     }
 
     return (
-      // <form onSubmit={handleDelete}>
-      //   <FormFieldSet.Root box shaded>
-      //     <FormFieldSet.ControlGroup>
       <AlertDialog open={isDialogDeleteOpen} onOpenChange={setIsDialogDeleteOpen}>
-        <AlertDialogTrigger asChild>
-          {/* <Button size="sm" theme="error" className="self-start">
-                  Remove member
-                </Button> */}
-        </AlertDialogTrigger>
+        <AlertDialogTrigger asChild></AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -151,15 +143,9 @@ export const MembersList = ({ members }: PageProps) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-      //     </FormFieldSet.ControlGroup>
-      //   </FormFieldSet.Root>
-      // </form>
     )
   }
 
-  // cosnt FormEditMemberDialog = () => {
-
-  // }
   return (
     <>
       <Table variant="asStackedList" className="border-0">
@@ -232,6 +218,7 @@ export const MembersList = ({ members }: PageProps) => {
             })}
         </TableBody>
       </Table>
+      {/* Delete Dialog */}
       {isDialogDeleteOpen && <FormDeleteMemberDialog />}
       {/* Edit Dialog */}
       {isDialogEditOpen && editMember && (

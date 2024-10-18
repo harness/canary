@@ -87,7 +87,7 @@ export const MembersList = ({ members }: PageProps) => {
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem
-              className="cursor-pointer text-red-400 hover:text-red-400"
+              className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400"
               onSelect={() => {
                 setIsDialogDeleteOpen(true)
               }}>

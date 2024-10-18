@@ -62,24 +62,19 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormFieldSet.Root>
-          <BranchSettingsRuleToggleField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleNameField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleDescriptionField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleTargetPatternsField
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            watch={watch}
-          />
+          <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
+          <BranchSettingsRuleNameField register={register} errors={errors} />
+          <BranchSettingsRuleDescriptionField register={register} errors={errors} />
+          <BranchSettingsRuleTargetPatternsField register={register} errors={errors} />
           <BranchSettingsRuleDefaultBranchField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleBypassListField register={register} errors={errors} setValue={setValue} watch={watch} />
+          <BranchSettingsRuleBypassListField setValue={setValue} watch={watch} />
           <BranchSettingsRuleEditPermissionsField
             register={register}
             errors={errors}
             setValue={setValue}
             watch={watch}
           />
-          <BranchSettingsRuleListField register={register} errors={errors} setValue={setValue} watch={watch} />
+          <BranchSettingsRuleListField setValue={setValue} watch={watch} />
 
           <FormFieldSet.Root>
             <FormFieldSet.ControlGroup>

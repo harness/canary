@@ -26,7 +26,8 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   stickyScroll: { enabled: false },
   renderWhitespace: 'none',
   renderLineHighlight: 'none',
-  minimap: { enabled: false }
+  minimap: { enabled: false },
+  scrollBeyondLastLine: false
 }
 
 export interface BlameEditorProps<T> {
@@ -178,7 +179,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
       />
       <Editor
         height={'75vh'}
-        className={`monaco-editor-${instanceId.current}`}
+        className={`monaco-editor-${instanceId.current} border-l border-r border-b border-border-background`}
         language={language}
         theme={theme}
         options={defaultOptions}

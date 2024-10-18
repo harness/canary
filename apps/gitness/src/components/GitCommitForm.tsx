@@ -10,17 +10,26 @@ import {
   Input,
   RadioGroup,
   RadioGroupItem,
+  Spacer,
+  Text,
   Textarea,
   useZodForm
 } from '@harnessio/canary'
 import { z } from 'zod'
 import { GitCommitFormType } from '../types'
-import { FormFieldSet } from '@harnessio/playground'
+import { FormFieldSet, Layout } from '@harnessio/playground'
+import { UsererrorError } from '@harnessio/code-service-client'
+import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
 
 interface GitCommitFormProps {
   onCancel: () => void
   onSubmit: (formValues: GitCommitFormType) => Promise<void>
   commitTitlePlaceHolder: string
+  error?: UsererrorError
+  disableCTA: boolean
+  dryRun: (commitToGitRef: CommitToGitRefOption) => void
+  violation: boolean
+  bypassable: boolean
 }
 
 export enum CommitToGitRefOption {
@@ -47,7 +56,17 @@ const gitCommitSchema = z
     }
   })
 
-export function GitCommitForm({ onCancel, onSubmit, commitTitlePlaceHolder }: GitCommitFormProps) {
+export function GitCommitForm({
+  onCancel,
+  onSubmit,
+  commitTitlePlaceHolder,
+  error,
+  disableCTA,
+  dryRun,
+  violation,
+  bypassable
+}: GitCommitFormProps) {
+  const { setAllStates } = useRuleViolationCheck()
   const form = useZodForm({
     schema: gitCommitSchema,
     defaultValues: {
@@ -93,19 +112,39 @@ export function GitCommitForm({ onCancel, onSubmit, commitTitlePlaceHolder }: Gi
         render={({ field }) => (
           <FormItem>
             <FormControl>
-              <RadioGroup value={field.value} id="commitToGitRef" onValueChange={field.onChange}>
+              <RadioGroup
+                value={field.value}
+                id="commitToGitRef"
+                onValueChange={value => {
+                  dryRun(value as CommitToGitRefOption)
+                  field.onChange(value)
+                }}>
                 <FormFieldSet.Option
                   control={<RadioGroupItem value={CommitToGitRefOption.DIRECTLY} id="directly" />}
                   id="directly"
                   label="Commit to Master directly"
                   description=""
                 />
+                {violation && form.getValues().commitToGitRef === CommitToGitRefOption.DIRECTLY && (
+                  <Text size={1} className="text-destructive pl-8">
+                    {bypassable
+                      ? 'Some rules will be bypassed to commit directly'
+                      : "Some rules don't allow you to commit directly"}
+                  </Text>
+                )}
                 <FormFieldSet.Option
                   control={<RadioGroupItem value={CommitToGitRefOption.NEW_BRANCH} id="new-branch" />}
                   id="new-branch"
                   label="Create a new branch for this commit and start a pull request"
                   description=""
                 />
+                {violation && form.getValues().commitToGitRef === CommitToGitRefOption.NEW_BRANCH && (
+                  <Text size={1} className="text-destructive pl-8">
+                    {bypassable
+                      ? 'Some rules will be bypassed to commit by creating branch'
+                      : "Some rules don't allow you to create new branch for commit"}
+                  </Text>
+                )}
               </RadioGroup>
             </FormControl>
             <FormMessage />
@@ -127,6 +166,9 @@ export function GitCommitForm({ onCancel, onSubmit, commitTitlePlaceHolder }: Gi
                       {...field}
                       placeholder="New Branch Name"
                       left={<Icon name="branch" size={24} className="min-w-[12px] text-tertiary-background pr-2" />}
+                      onChange={() => {
+                        setAllStates({ violation: false, bypassable: false, bypassed: false })
+                      }}
                     />
                   </div>
                 </FormControl>
@@ -137,11 +179,33 @@ export function GitCommitForm({ onCancel, onSubmit, commitTitlePlaceHolder }: Gi
         </div>
       )}
 
+      {error?.message && (
+        <>
+          <Layout.Horizontal className="items-center">
+            <Icon name="triangle-warning" className="text-destructive" />
+            <Text size={1} className="text-destructive">
+              {error?.message}
+            </Text>
+          </Layout.Horizontal>
+          <Spacer size={4} />
+        </>
+      )}
+
       <div className="flex gap-3 justify-end">
         <Button onClick={onCancel} className="text-primary" variant="outline">
           Cancel
         </Button>
-        <Button type="submit">Commit</Button>
+        {!bypassable ? (
+          <Button type="submit" disabled={disableCTA}>
+            Commit
+          </Button>
+        ) : (
+          <Button variant="destructive" type="submit">
+            {form.getValues().commitToGitRef === CommitToGitRefOption.NEW_BRANCH
+              ? 'Bypass rules and commit via new branch'
+              : 'Bypass rules and commit directly'}
+          </Button>
+        )}
       </div>
     </Form>
   )

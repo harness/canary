@@ -16,6 +16,7 @@ import {
 } from '@harnessio/canary'
 import React from 'react'
 import { getInitials } from '../utils/utils'
+import { useNavigate } from 'react-router-dom'
 
 export enum SummaryItemType {
   Folder = 0,
@@ -35,6 +36,7 @@ export interface FileProps {
   timestamp: string
   user?: UserProps
   sha?: string
+  path: string
 }
 
 interface PageProps {
@@ -84,6 +86,7 @@ export const TopDetails = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommi
 
 export const Summary = ({ ...props }: PageProps) => {
   const { latestFile, files } = props
+  const navigate = useNavigate()
 
   return (
     <>
@@ -111,7 +114,7 @@ export const Summary = ({ ...props }: PageProps) => {
         {files && files.length > 0 ? (
           <TableBody>
             {files.map(file => (
-              <TableRow key={file.id}>
+              <TableRow key={file.id} onClick={() => navigate(file.path)}>
                 <TableCell>
                   <ButtonGroup.Root direction="horizontal" verticalAlign="center" spacing="1.5">
                     {file.type === SummaryItemType.File ? (

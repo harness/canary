@@ -28,11 +28,15 @@ import {
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
+import { useParams } from 'react-router-dom'
+import { PathParams } from '../../RouteDefinitions'
 
 export const RepoSummary: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<FileProps[]>([])
   const repoRef = useGetRepoRef()
+
+  const { spaceId, repoId, gitRef } = useParams<PathParams>()
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -107,7 +111,8 @@ export const RepoSummary: React.FC = () => {
                     lastCommitMessage: item?.last_commit?.message || '',
                     timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
                     user: { name: item?.last_commit?.author?.identity?.name },
-                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha)
+                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                    path: `/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${item?.path}`
                   }) as FileProps
               )
             )

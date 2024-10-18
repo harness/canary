@@ -26,7 +26,10 @@ import { FieldProps, Rule, Dispatch, BypassUsersList } from './types'
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
     <StackedList.Item disableHover isHeader>
-      <StackedList.Field title="Enable the rule" description="Eget vestibulum eu lacinia ultrices id et morbi." />
+      <StackedList.Field
+        title="Enable the rule"
+        description="By enabling the toggle, the branch rule will be enforced."
+      />
       <StackedList.Field
         label
         secondary

@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState } from 'react'
 import {
   Input,
   Textarea,
@@ -21,7 +21,7 @@ import {
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
-import { FieldProps, Rule, Dispatch } from './types'
+import { FieldProps, Rule, Dispatch, BypassOption } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -146,7 +146,11 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
   </FormFieldSet.ControlGroup>
 )
 
-export const BranchSettingsRuleBypassListField: React.FC<FieldProps> = ({ watch, setValue }) => (
+export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOptions: BypassOption[] }> = ({
+  watch,
+  setValue,
+  bypassOptions
+}) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="bypassValue">Bypass list</FormFieldSet.Label>
     <Select
@@ -156,9 +160,11 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps> = ({ watch,
         <SelectValue placeholder="Select users" />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value="1">user 1</SelectItem>
-        <SelectItem value="2">user 2</SelectItem>
-        <SelectItem value="3">user 3</SelectItem>
+        {bypassOptions.map(option => (
+          <SelectItem key={option.value} value={option.value}>
+            {option.label}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   </FormFieldSet.ControlGroup>

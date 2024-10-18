@@ -21,3 +21,8 @@ export interface FieldProps {
   watch?: UseFormWatch<RepoBranchSettingsFormFields>
   setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
 }
+
+export interface BypassOption {
+  value: string
+  label: string
+}

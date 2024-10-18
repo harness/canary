@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useState, useReducer } from 'react'
 import { Button, ButtonGroup, Icon, useZodForm } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
@@ -18,7 +18,7 @@ import {
   RepoBranchSettingsFormFields,
   repoBranchSettingsFormSchema
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
-
+import { mockBypassUserData } from './mocks/repo-branch-settings/mockBypassUserData'
 export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({ isLoading = false }) => {
   const {
     register,
@@ -70,7 +70,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
           <BranchSettingsRuleDescriptionField register={register} errors={errors} />
           <BranchSettingsRuleTargetPatternsField register={register} errors={errors} />
           <BranchSettingsRuleDefaultBranchField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleBypassListField setValue={setValue} watch={watch} />
+          <BranchSettingsRuleBypassListField setValue={setValue} watch={watch} bypassOptions={mockBypassUserData} />
           <BranchSettingsRuleEditPermissionsField
             register={register}
             errors={errors}

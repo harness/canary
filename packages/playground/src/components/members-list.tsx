@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Icon,
   Table,
@@ -11,7 +11,13 @@ import {
   Avatar,
   AvatarImage,
   AvatarFallback,
-  Badge
+  Badge,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+  TooltipArrow,
+  Button,
+  Separator
 } from '@harnessio/canary'
 import { getInitials } from '../utils/utils'
 
@@ -25,6 +31,33 @@ interface MembersProps {
 
 interface PageProps {
   members: MembersProps[]
+}
+
+export const moreActionsTooltip = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <Tooltip open={isOpen} onOpenChange={open => setIsOpen(open)} delayDuration={0}>
+      <TooltipTrigger asChild>
+        <Button variant="ghost" size="xs" onClick={() => setIsOpen(true)}>
+          <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent className="shadow-sm py-2 bg-black border-muted">
+        <div className="w-[180px]">
+          <Button theme="muted" className="bg-transparent w-full hover:bg-tertiary-background/5 justify-start">
+            <Icon name="edit-pen" className="mr-2" />
+            Edit
+          </Button>
+          <Separator className="w-full h-px bg-tertiary-background/10" orientation="horizontal" decorative={true} />
+          <Button theme="error" className="bg-transparent w-full hover:bg-tertiary-background/5 justify-start">
+            <Icon name="trash" className="mr-2" />
+            Remove Member
+          </Button>
+        </div>
+        <TooltipArrow offset={5} width={12} height={7} className="fill-accent" />
+      </TooltipContent>
+    </Tooltip>
+  )
 }
 
 export const MembersList = ({ members }: PageProps) => {
@@ -92,9 +125,7 @@ export const MembersList = ({ members }: PageProps) => {
                   </TableCell>
                 )}
                 <TableCell className="content-center my-6">
-                  <div className="flex gap-1.5 items-center justify-end">
-                    <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-                  </div>
+                  <div className="flex gap-1.5 items-center justify-end">{moreActionsTooltip()}</div>
                 </TableCell>
               </TableRow>
             )

@@ -36,7 +36,7 @@ const roleSelector = [
 ]
 
 function SandboxSettingsCreateNewMemberPage() {
-  // Project Settings form handling
+  // new member form handling
   const {
     register,
     handleSubmit,
@@ -62,11 +62,11 @@ function SandboxSettingsCreateNewMemberPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
-  // Form submit handler for project settings
+  // Form submit handler
   const onSubmit: SubmitHandler<NewMemberFields> = data => {
     setIsSubmitting(true)
     setTimeout(() => {
-      console.log('Project settings updated:', data)
+      console.log('New member updated:', data)
       setIsSubmitting(false)
       setSubmitted(true)
       resetNewMemberForm(data) // Reset to the current values

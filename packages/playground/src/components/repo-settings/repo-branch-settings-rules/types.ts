@@ -22,7 +22,7 @@ export interface FieldProps {
   setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
 }
 
-export interface BypassOption {
+export interface BypassUsersList {
   value: string
   label: string
 }

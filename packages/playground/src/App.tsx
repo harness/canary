@@ -56,7 +56,11 @@ import { RepoSettingsModerationPage } from './pages/repo-settings-moderation-pag
 import { RepoSettingsPlaceholderPage } from './pages/repo-settings-placeholder-page'
 import { SandboxSettingsAccountGeneralPage } from './pages/sandbox-settings-account-general-page'
 import { SignInPage } from './pages/signin-page'
+<<<<<<< HEAD
 import { SandboxPullRequestCompare } from './layouts/SandboxPullRequestCompareLayout'
+=======
+import { RepoSettingsRulesPage } from './pages/repo-settings-rules-page'
+>>>>>>> e435946f (rebase commit)
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX
@@ -121,6 +125,10 @@ const router = createBrowserRouter([
                   {
                     path: 'moderation',
                     element: <RepoSettingsModerationPage />
+                  },
+                  {
+                    path: 'rules',
+                    element: <RepoSettingsRulesPage />
                   },
                   {
                     path: '*',

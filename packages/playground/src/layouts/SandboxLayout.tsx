@@ -45,7 +45,7 @@ function LeftSubPanel({
   return (
     <section
       className={cn(
-        'fixed left-[220px] top-0 bottom-0 z-40 w-[300px] border-r border-border-background overflow-y-auto',
+        'fixed left-[220px] top-0 bottom-0 z-40 w-[248px] border-r border-border-background overflow-y-auto',
         paddingTopClass,
         className
       )}
@@ -55,9 +55,19 @@ function LeftSubPanel({
   )
 }
 
-function Header({ children, className }: { children: React.ReactNode; className?: string }) {
+function Header({
+  children,
+  className,
+  hasLeftPanel = true // Default value set to true
+}: {
+  children: React.ReactNode
+  className?: string
+  hasLeftPanel?: boolean
+}) {
+  const leftClass = hasLeftPanel ? 'left-[220px]' : 'left-0'
+
   return (
-    <header className={cn('h-[55px] fixed top-0 left-[220px] right-0 z-40 bg-background', className)} role="banner">
+    <header className={cn('h-[55px] fixed top-0 right-0 z-40 bg-background', leftClass, className)} role="banner">
       {children}
     </header>
   )
@@ -95,11 +105,11 @@ function Main({
 
   const paddingLeftClass =
     hasLeftPanel && hasLeftSubPanel
-      ? 'pl-[calc(220px+300px)]'
+      ? 'pl-[calc(220px+248px)]'
       : hasLeftPanel
         ? 'pl-[220px]'
         : hasLeftSubPanel
-          ? 'pl-[300px]'
+          ? 'pl-[248px]'
           : ''
 
   if (fullWidth) {
@@ -122,14 +132,25 @@ function Main({
 
 interface ContentProps {
   children: React.ReactNode
+  fullHeight?: boolean
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
+  padding?: 'default' | 'none' | 'no-extra-bottom'
   className?: string
 }
 
-function Content({ children, maxWidth, className }: ContentProps) {
+function Content({ children, maxWidth, fullHeight, padding, className }: ContentProps) {
   const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
+  const paddingClass = {
+    default: 'px-8 py-5 pb-24',
+    none: 'p-0',
+    'no-extra-bottom': 'px-8 py-5'
+  }
 
-  return <div className={cn('px-8 py-5 pb-24', widthClass, className)}>{children}</div>
+  return (
+    <div className={cn(paddingClass[padding || 'default'], { 'h-full': fullHeight }, widthClass, className)}>
+      {children}
+    </div>
+  )
 }
 
 function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: ColumnsProps) {

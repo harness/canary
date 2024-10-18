@@ -189,9 +189,7 @@ const IconNameMap = {
   'ssh-key': SshKey,
   'green-dot': GreenCircle,
   'green-tick': GreenTick,
-  'cancel-grey': CancelGrey,
-  'toggle-active': ToggleActive,
-  'toggle-inactive': ToggleInactive
+  'cancel-grey': CancelGrey
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

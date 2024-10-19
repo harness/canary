@@ -8,10 +8,16 @@ export type Rule = {
   selectOptions: string
 }
 
+export enum ActionType {
+  TOGGLE_RULE = 'TOGGLE_RULE',
+  TOGGLE_SUBMENU = 'TOGGLE_SUBMENU',
+  SET_SELECT_OPTION = 'SET_SELECT_OPTION'
+}
+
 export type Action =
-  | { type: 'TOGGLE_RULE'; ruleId: string; checked: boolean }
-  | { type: 'TOGGLE_SUBMENU'; ruleId: string; submenuId: string; checked: boolean }
-  | { type: 'SET_SELECT_OPTION'; ruleId: string; selectedOptions: string }
+  | { type: ActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
+  | { type: ActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
+  | { type: ActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string }
 
 export type Dispatch = (action: Action) => void
 

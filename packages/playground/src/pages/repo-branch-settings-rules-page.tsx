@@ -87,7 +87,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
                     <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                       {!isLoading ? 'Create rule' : 'Creating rule...'}
                     </Button>
-                    <Button type="button" variant="outline" size="sm" onClick={() => {}}>
+                    <Button type="button" variant="outline" size="sm">
                       Cancel
                     </Button>
                   </>

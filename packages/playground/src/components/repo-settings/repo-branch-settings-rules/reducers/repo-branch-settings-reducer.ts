@@ -1,10 +1,10 @@
-import { Rule, Action } from '../types'
+import { Rule, Action, ActionType } from '../types'
 
 export const branchSettingsReducer = (state: Rule[], action: Action): Rule[] => {
   switch (action.type) {
-    case 'TOGGLE_RULE':
+    case ActionType.TOGGLE_RULE:
       return state.map(rule => (rule.id === action.ruleId ? { ...rule, checked: action.checked } : rule))
-    case 'TOGGLE_SUBMENU':
+    case ActionType.TOGGLE_SUBMENU:
       return state.map(rule => {
         if (rule.id === action.ruleId) {
           const updatedSubmenu = action.checked
@@ -14,7 +14,7 @@ export const branchSettingsReducer = (state: Rule[], action: Action): Rule[] => 
         }
         return rule
       })
-    case 'SET_SELECT_OPTION':
+    case ActionType.SET_SELECT_OPTION:
       return state.map(rule => (rule.id === action.ruleId ? { ...rule, selectOptions: action.selectedOptions } : rule))
     default:
       return state

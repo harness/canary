@@ -35,7 +35,6 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
         secondary
         title={
           <div className="flex gap-1.5 items-center justify-end cursor-pointer">
-            {' '}
             <Switch
               {...register!('toggleValue')}
               checked={watch!('toggleValue')}
@@ -91,10 +90,9 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ re
           />
           <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%] mt-2">
             Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
-          </Text>{' '}
+          </Text>
         </div>
         <Button
-          onClick={() => {}}
           variant="split"
           type="button"
           className="pl-0 pr-0 min-w-28"

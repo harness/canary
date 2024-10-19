@@ -10,7 +10,8 @@ import {
   ForgotPasswordPage,
   NewPasswordPage,
   OTPPage,
-  SandboxRepoSettingsPage
+  SandboxRepoSettingsPage,
+  RepoSettingsGeneralPage
 } from '@harnessio/playground'
 import SnadboxRootWraper from './components/SandboxRootWrapper'
 import RootLayoutWrapper from './components/RootLayoutWrapper'
@@ -55,6 +56,7 @@ import { FileViewer } from './components/FileViewer'
 import { SandboxFileViewer } from './components/SandboxFileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
+import { RepoSettingsGeneralPageContainer } from './pages/repo-sandbox/repo-settings-general-container'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -192,7 +194,17 @@ export default function App() {
             },
             {
               path: 'settings',
-              element: <SandboxRepoSettingsPage />
+              element: <SandboxRepoSettingsPage />,
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="general" />
+                },
+                {
+                  path: 'general',
+                  element: <RepoSettingsGeneralPage />
+                }
+              ]
             }
           ]
         },
@@ -345,7 +357,17 @@ export default function App() {
                 },
                 {
                   path: 'settings',
-                  element: <SandboxRepoSettingsPage />
+                  element: <SandboxRepoSettingsPage />,
+                  children: [
+                    {
+                      index: true,
+                      element: <Navigate to="general" />
+                    },
+                    {
+                      path: 'general',
+                      element: <RepoSettingsGeneralPageContainer />
+                    }
+                  ]
                 }
               ]
             },

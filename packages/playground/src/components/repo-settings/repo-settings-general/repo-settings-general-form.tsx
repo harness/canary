@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Button,
   ButtonGroup,
@@ -44,7 +44,8 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
   onFormCancel,
   isLoading,
   isSuccess*/
-  isLoading = false
+  isLoading = false,
+  repoData
 }) => {
   const {
     register,
@@ -57,12 +58,23 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      name: '',
-      description: '',
+      name: repoData.name || '',
+      description: repoData.description || '',
       branch: '1',
-      access: '1'
+      access: repoData.isPublic ? '1' : '2'
     }
   })
+
+  console.log(repoData)
+
+  useEffect(() => {
+    reset({
+      name: repoData.name || '',
+      description: repoData.description || '',
+      branch: '1',
+      access: repoData.isPublic ? '1' : '2'
+    })
+  }, [repoData])
 
   const accessValue = watch('access')
   const branchValue = watch('branch')
@@ -98,7 +110,7 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
             <FormFieldSet.Label htmlFor="name" required>
               Name
             </FormFieldSet.Label>
-            <Input id="name" {...register('name')} placeholder="Enter repository name" autoFocus />
+            <Input id="name" {...register('name')} placeholder="Enter repository name" disabled />
             {errors.name && (
               <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors.name.message?.toString()}</FormFieldSet.Message>
             )}
@@ -130,9 +142,9 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="1">Main</SelectItem>
-                <SelectItem value="2">Branch 2</SelectItem>
-                <SelectItem value="3">Branch 3</SelectItem>
+                {repoData.branches.map(branch => {
+                  return <SelectItem value={branch.name}>{branch.name}</SelectItem>
+                })}
               </SelectContent>
             </Select>
             {errors.branch && (

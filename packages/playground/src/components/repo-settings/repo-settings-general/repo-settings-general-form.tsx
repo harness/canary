@@ -24,8 +24,8 @@ import { MessageTheme } from '../../../components/form-field-set'
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
-  description: z.string().min(1, 'Description is required'),
-  branch: z.enum(['1', '2', '3']),
+  description: z.string(),
+  branch: z.string(),
   access: z.enum(['1', '2'], {})
 })
 export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
@@ -45,7 +45,8 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
   isLoading,
   isSuccess*/
   isLoading = false,
-  repoData
+  repoData,
+  handleRepoUpdate
 }) => {
   const {
     register,
@@ -60,18 +61,16 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
     defaultValues: {
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: '1',
+      branch: repoData.defaultBranch || 'main',
       access: repoData.isPublic ? '1' : '2'
     }
   })
-
-  console.log(repoData)
 
   useEffect(() => {
     reset({
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: '1',
+      branch: repoData.defaultBranch || 'main',
       access: repoData.isPublic ? '1' : '2'
     })
   }, [repoData])
@@ -91,11 +90,13 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
   const onSubmit: SubmitHandler<FormFields> = data => {
     setIsSubmitted(true)
     console.log(data)
+    handleRepoUpdate(data)
     reset()
     setTimeout(() => {
       setIsSubmitted(false)
     }, 2000)
   }
+  const isDefaultInBranches = repoData.branches.some(branch => branch.name === repoData.defaultBranch)
 
   return (
     <>
@@ -117,9 +118,7 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
           </FormFieldSet.ControlGroup>
           {/* DESCRIPTION */}
           <FormFieldSet.ControlGroup>
-            <FormFieldSet.Label htmlFor="description" required>
-              Description
-            </FormFieldSet.Label>
+            <FormFieldSet.Label htmlFor="description">Description</FormFieldSet.Label>
             <Textarea
               id="description"
               {...register('description')}
@@ -133,7 +132,6 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
           </FormFieldSet.ControlGroup>
         </FormFieldSet.Root>
 
-        {/* GITIGNORE */}
         <FormFieldSet.Root className="max-w-[150px]">
           <FormFieldSet.ControlGroup>
             <FormFieldSet.Label htmlFor="branch">Default Branch</FormFieldSet.Label>
@@ -142,8 +140,17 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
+                {!isDefaultInBranches && repoData.defaultBranch && (
+                  <SelectItem key={repoData.defaultBranch} value={repoData.defaultBranch}>
+                    {repoData.defaultBranch}
+                  </SelectItem>
+                )}
                 {repoData.branches.map(branch => {
-                  return <SelectItem value={branch.name}>{branch.name}</SelectItem>
+                  return (
+                    <SelectItem key={branch.name} value={branch.name}>
+                      {branch.name}
+                    </SelectItem>
+                  )
                 })}
               </SelectContent>
             </Select>

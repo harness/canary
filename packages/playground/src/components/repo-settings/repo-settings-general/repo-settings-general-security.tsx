@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Text, Checkbox } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -16,7 +16,10 @@ export type FormFields = z.infer<typeof formSchema> // Automatically generate a 
 //   onFormSubmit?: (data: FormFields) => void
 //   apiError: string | null
 // }
-export const RepoSettingsSecurityForm: React.FC /*<RepoSettingsSecurityFormProps>*/ = () =>
+export const RepoSettingsSecurityForm: React.FC /*<RepoSettingsSecurityFormProps>*/ = ({
+  securityScanning,
+  handleUpdateSecuritySettings
+}) =>
   // {
   // onFormSubmit apiError = null
   // }
@@ -30,16 +33,23 @@ export const RepoSettingsSecurityForm: React.FC /*<RepoSettingsSecurityFormProps
       resolver: zodResolver(formSchema),
       mode: 'onChange',
       defaultValues: {
-        secretScanning: false
+        secretScanning: securityScanning || null
       }
     })
+
     const onCheckboxChange = (checked: boolean) => {
       setValue('secretScanning', checked)
       handleSubmit(data => {
         console.log(data)
+        handleUpdateSecuritySettings(data)
         // onFormSubmit(data)
       })()
     }
+
+    useEffect(() => {
+      setValue('secretScanning', securityScanning)
+    }, [securityScanning])
+
     return (
       <>
         <Text size={4} weight="medium">

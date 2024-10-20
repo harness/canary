@@ -8,17 +8,26 @@ import { RepoSettingsGeneralDelete } from '../components/repo-settings/repo-sett
 // interface RepoSettingsGeneralPageProps{
 //   repoData: any
 // }
-function RepoSettingsGeneralPage({ repoData }) {
+function RepoSettingsGeneralPage({
+  repoData,
+  handleRepoUpdate,
+  securityScanning,
+  handleUpdateSecuritySettings,
+  handleDeleteRepository
+}) {
   return (
     <>
       <FormFieldSet.Root>
-        <RepoSettingsGeneralForm repoData={repoData} />
+        <RepoSettingsGeneralForm repoData={repoData} handleRepoUpdate={handleRepoUpdate} />
         <FormFieldSet.Separator />
         <RepoSettingsGeneralRules />
         <FormFieldSet.Separator />
-        <RepoSettingsSecurityForm />
+        <RepoSettingsSecurityForm
+          securityScanning={securityScanning}
+          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+        />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralDelete />
+        <RepoSettingsGeneralDelete handleDeleteRepository={handleDeleteRepository} />
       </FormFieldSet.Root>
     </>
   )

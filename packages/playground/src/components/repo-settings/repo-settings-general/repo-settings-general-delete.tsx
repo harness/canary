@@ -1,7 +1,10 @@
 import React from 'react'
 import { Text, ButtonGroup, Button } from '@harnessio/canary'
 
-export const RepoSettingsGeneralDelete: React.FC<{ isLoading?: boolean }> = ({ isLoading = false }) => {
+export const RepoSettingsGeneralDelete: React.FC<{ isLoading?: boolean }> = ({
+  isLoading = false,
+  handleDeleteRepository
+}) => {
   return (
     <>
       <Text size={4} weight="medium">
@@ -13,7 +16,7 @@ export const RepoSettingsGeneralDelete: React.FC<{ isLoading?: boolean }> = ({ i
 
       <ButtonGroup.Root>
         <>
-          <Button type="submit" size="sm" disabled={isLoading} theme="error">
+          <Button type="submit" size="sm" disabled={isLoading} theme="error" onClick={handleDeleteRepository}>
             {!isLoading ? 'Delete repository' : 'Deleting repository...'}
           </Button>
         </>

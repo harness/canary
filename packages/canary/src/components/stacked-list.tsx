@@ -48,8 +48,21 @@ interface ListFieldProps extends Omit<React.ComponentProps<'div'>, 'title'>, Var
   secondary?: boolean
 }
 
-const List = ({ className, children, ...props }: React.ComponentProps<'div'>) => (
-  <div className={cn('w-full [&>div:last-child]:border-0 border rounded-md', className)} {...props}>
+interface ListProps extends React.ComponentProps<'div'> {
+  onlyTopRounded?: boolean
+  borderBackground?: boolean
+}
+
+const List: React.FC<ListProps> = ({ className, children, onlyTopRounded, borderBackground, ...props }) => (
+  <div
+    className={cn(
+      'w-full',
+      '[&>div:last-child]:border-0 border',
+      onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
+      borderBackground ? 'border-border-background' : '',
+      className
+    )}
+    {...props}>
     {children}
   </div>
 )

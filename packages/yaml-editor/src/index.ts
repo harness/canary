@@ -33,3 +33,7 @@ export type { CodeEditorProps }
 import { BlameEditor, BlameEditorProps } from './components/BlameEditor'
 export { BlameEditor }
 export type { BlameEditorProps }
+
+import { CodeDiffEditor, DiffEditorProps } from './components/DiffEditor'
+export { CodeDiffEditor }
+export type { DiffEditorProps }

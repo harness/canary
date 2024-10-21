@@ -1,22 +1,27 @@
+import { useEffect, useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Spacer } from '@harnessio/canary'
 import { GitCommitFormType } from '../types'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import {
   OpenapiCommitFilesRequest,
   TypesCommitFilesResponse,
-  useCommitFilesMutation
+  useCommitFilesMutation,
+  UsererrorError
 } from '@harnessio/code-service-client'
 import { CommitToGitRefOption, GitCommitForm } from './GitCommitForm'
 import { GitCommitAction } from '../utils/git-utils'
+import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
 
 interface CommitDialogProps {
   open: boolean
   onClose: () => void
   commitAction: GitCommitAction
   gitRef: string
+  sha?: string
+  oldResourcePath?: string
   resourcePath: string
   payload?: string
-  sha?: string
   onSuccess: (response: TypesCommitFilesResponse, isNewBranch: boolean) => void
 }
 
@@ -25,48 +30,120 @@ export default function GitCommitDialog({
   onClose,
   commitAction,
   gitRef,
+  oldResourcePath,
   resourcePath,
   payload,
   sha,
   onSuccess
 }: CommitDialogProps) {
   const repoRef = useGetRepoRef()
-
+  const [error, setError] = useState<UsererrorError>()
+  const [disableCTA, setDisableCTA] = useState(false)
+  const queryClient = useQueryClient()
+  const { violation, bypassable, bypassed, setAllStates, resetViolation } = useRuleViolationCheck()
   const { mutateAsync: commitChages } = useCommitFilesMutation({})
 
-  const commitTitle = commitAction === GitCommitAction.DELETE ? 'Delete' : 'Edit'
-  const commitTitlePlaceholder = commitTitle + ' ' + resourcePath
+  const commitTitle =
+    commitAction === GitCommitAction.DELETE
+      ? 'Delete'
+      : commitAction === GitCommitAction.MOVE
+        ? 'Move'
+        : commitAction === GitCommitAction.CREATE
+          ? 'Create'
+          : 'Edit'
+
+  const commitTitlePlaceholder =
+    commitAction === GitCommitAction.MOVE
+      ? commitTitle + ' ' + oldResourcePath + ' to ' + resourcePath
+      : commitTitle + ' ' + resourcePath
 
   const onSubmit = async (formValues: GitCommitFormType) => {
     const { message, description, commitToGitRef, newBranchName } = formValues
 
-    try {
-      const data: OpenapiCommitFilesRequest = {
-        actions: [
-          {
-            action: commitAction,
-            path: resourcePath,
-            payload: payload,
-            sha
-          }
-        ],
-        branch: gitRef,
-        new_branch: commitToGitRef === CommitToGitRefOption.NEW_BRANCH ? newBranchName : '',
-        title: message || commitTitlePlaceholder,
-        message: description,
-        bypass_rules: false //check how this works
-      }
+    const data: OpenapiCommitFilesRequest = {
+      actions: [
+        {
+          action: commitAction,
+          path: oldResourcePath || resourcePath,
+          payload: `${oldResourcePath ? `${resourcePath}\0` : ''}${payload}`,
+          sha
+        }
+      ],
+      branch: gitRef,
+      new_branch: commitToGitRef === CommitToGitRefOption.NEW_BRANCH ? newBranchName : '',
+      title: message || commitTitlePlaceholder,
+      message: description,
+      bypass_rules: bypassed
+    }
 
-      commitChages({
-        repo_ref: repoRef,
-        body: { ...data }
-      }).then(response => {
+    commitChages({
+      repo_ref: repoRef,
+      body: { ...data }
+    })
+      .then(response => {
+        if ([GitCommitAction.MOVE, GitCommitAction.CREATE].includes(commitAction)) {
+          queryClient.invalidateQueries(['folderContents', repoRef, gitRef])
+        }
         onSuccess(response, commitToGitRef === CommitToGitRefOption.NEW_BRANCH)
       })
-    } catch (e) {
-      console.log(e, 'error')
+      .catch(_error => {
+        if (_error?.status === 422) {
+          setAllStates({
+            violation: true,
+            bypassed: true,
+            bypassable: _error?.data?.violations[0]?.bypassable
+          })
+        } else {
+          setError(_error as UsererrorError)
+          console.log(_error, 'error')
+        }
+      })
+  }
+
+  const dryRun = async (commitToGitRef: CommitToGitRefOption) => {
+    resetViolation()
+    setDisableCTA(false)
+    if (commitToGitRef === CommitToGitRefOption.DIRECTLY) {
+      try {
+        const data: OpenapiCommitFilesRequest = {
+          actions: [
+            {
+              action: commitAction,
+              path: oldResourcePath || resourcePath,
+              payload: `${oldResourcePath ? `${resourcePath}\0` : ''}${payload}`,
+              sha
+            }
+          ],
+          branch: gitRef,
+          new_branch: '',
+          title: '',
+          message: '',
+          bypass_rules: false,
+          dry_run_rules: true
+        }
+
+        const response = await commitChages({
+          repo_ref: repoRef,
+          body: { ...data }
+        })
+        if (response?.rule_violations?.length) {
+          setAllStates({
+            violation: true,
+            bypassed: true,
+            bypassable: response?.rule_violations[0]?.bypassable
+          })
+          setDisableCTA(!response?.rule_violations[0]?.bypassable)
+        }
+      } catch (_error) {
+        // Todo: error via toast?
+        console.log(_error, 'error')
+      }
     }
   }
+
+  useEffect(() => {
+    dryRun(CommitToGitRefOption.DIRECTLY)
+  }, [])
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
@@ -76,7 +153,16 @@ export default function GitCommitDialog({
         </DialogHeader>
         <DialogDescription>
           <Spacer size={6} />
-          <GitCommitForm onSubmit={onSubmit} onCancel={onClose} commitTitlePlaceHolder={commitTitlePlaceholder} />
+          <GitCommitForm
+            onSubmit={onSubmit}
+            onCancel={onClose}
+            commitTitlePlaceHolder={commitTitlePlaceholder}
+            error={error}
+            disableCTA={disableCTA}
+            dryRun={dryRun}
+            violation={violation}
+            bypassable={bypassable}
+          />
         </DialogDescription>
       </DialogContent>
     </Dialog>

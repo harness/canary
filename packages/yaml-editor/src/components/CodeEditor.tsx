@@ -12,7 +12,8 @@ export interface CodeRevision {
 }
 
 const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true
+  selectOnLineNumbers: true,
+  scrollBeyondLastLine: false
 }
 
 export interface CodeEditorProps<T> {
@@ -71,7 +72,7 @@ export function CodeEditor<T>(props: CodeEditorProps<T>): JSX.Element {
   return (
     <>
       <Editor
-        className="border rounded-md"
+        className="border-l border-r border-b border-border-background"
         height={'75vh'}
         onChange={(value, data) => {
           currentRevisionRef.current = { code: value ?? '', revisionId: data.versionId }

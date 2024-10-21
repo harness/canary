@@ -8,7 +8,8 @@ import {
   RepoPathsDetailsOutput,
   GitPathDetails,
   OpenapiGetContentOutput,
-  OpenapiContentInfo
+  OpenapiContentInfo,
+  useFindRepositoryQuery
 } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
@@ -26,12 +27,23 @@ export const FileViewer: React.FC = () => {
   const pathParts = splitPathWithParents(fullResourcePath || '')
   const [files, setFiles] = useState<FileProps[]>([])
   const [loading, setLoading] = useState(false)
+  const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')
 
   const { data: repoDetails } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || '') }
   })
+
+  const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
+
+  useEffect(() => {
+    if (repository && !gitRef) {
+      setSelectedBranch(repository?.default_branch || '')
+    } else if (gitRef) {
+      setSelectedBranch(gitRef)
+    }
+  }, [repository, gitRef])
 
   const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
     if (repoDetails?.content?.entries?.length === 0) return new Map()
@@ -77,7 +89,8 @@ export const FileViewer: React.FC = () => {
                     lastCommitMessage: item?.last_commit?.message || '',
                     timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
                     user: { name: item?.last_commit?.author?.identity?.name },
-                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha)
+                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                    path: `/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${item?.path}`
                   }) as FileProps
               )
             )
@@ -166,22 +179,9 @@ export const FileViewer: React.FC = () => {
               })}
             </ButtonGroup.Root>
           </ListActions.Left>
-          {/* add if required in milestone 1
-          <ListActions.Right>
-            <Button variant="outline" size="sm">
-              Add file&nbsp;&nbsp;
-              <Icon name="chevron-down" size={11} className="chevron-down" />
-            </Button>
-          </ListActions.Right> */}
         </ListActions.Root>
         <Spacer size={5} />
-        {repoDetails?.type === 'dir' ? (
-          renderListContent()
-        ) : repoDetails?.content?.data ? (
-          <FileContentViewer repoContent={repoDetails} />
-        ) : (
-          <></>
-        )}
+        {repoDetails?.type === 'dir' ? renderListContent() : <FileContentViewer repoContent={repoDetails} />}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -28,7 +28,7 @@ import GitCommitDialog from './GitCommitDialog'
 import GitBlame from './GitBlame'
 
 interface FileContentViewerProps {
-  repoContent: OpenapiGetContentOutput
+  repoContent?: OpenapiGetContentOutput
 }
 
 export type ViewTypeValue = 'preview' | 'code' | 'blame'
@@ -124,6 +124,23 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     )
   }
 
+  const CodeView = () => {
+    return useMemo(
+      () => (
+        <CodeEditor
+          language={language}
+          codeRevision={{ code: fileContent }}
+          onCodeRevisionChange={() => {}}
+          themeConfig={themeConfig}
+          options={{
+            readOnly: true
+          }}
+        />
+      ),
+      [language, fileContent, themeConfig]
+    )
+  }
+
   return (
     <>
       <GitCommitDialog
@@ -149,7 +166,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         </StackedList.Item>
       </StackedList.Root>
       <Spacer size={5} />
-      <StackedList.Root>
+      <StackedList.Root onlyTopRounded borderBackground>
         <StackedList.Item disableHover isHeader className="py-2.5 px-3">
           <ToggleGroup
             onValueChange={(value: ViewTypeValue) => {
@@ -182,19 +199,10 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           <StackedList.Field right title={<RightDetails />} />
         </StackedList.Item>
       </StackedList.Root>
-      <Spacer size={1} />
       {language === 'markdown' && view === 'preview' ? (
         <MarkdownViewer source={fileContent} />
       ) : view === 'code' ? (
-        <CodeEditor
-          language={language}
-          codeRevision={{ code: fileContent }}
-          onCodeRevisionChange={() => {}}
-          themeConfig={themeConfig}
-          options={{
-            readOnly: true
-          }}
-        />
+        <CodeView />
       ) : (
         <GitBlame
           selectedBranch={gitRef || ''}

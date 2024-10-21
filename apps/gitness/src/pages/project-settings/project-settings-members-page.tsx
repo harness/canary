@@ -14,7 +14,7 @@ import {
   PaginationPrevious
 } from '@harnessio/canary'
 import { SandboxLayout, SkeletonList, NoData, MembersList } from '@harnessio/playground'
-import { useMembershipListQuery } from '@harnessio/code-service-client'
+import { useMembershipListQuery, TypesMembershipUser } from '@harnessio/code-service-client'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useNavigate } from 'react-router-dom'
 import { usePagination } from '../../framework/hooks/usePagination'
@@ -22,13 +22,6 @@ import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
-// type MembersProps = {
-//   display_name: string
-//   role: string
-//   email: string
-//   avatarUrl?: string
-//   timestamp?: string
-// }
 //TODO: Sort filter, not result data
 const ProjectSettingsMemebersPage = () => {
   // lack of data: total members
@@ -73,7 +66,7 @@ const ProjectSettingsMemebersPage = () => {
 
     return (
       <MembersList
-        members={members.map(member => ({
+        members={members.map((member: TypesMembershipUser) => ({
           display_name: member.added_by?.display_name,
           role: member.role,
           email: member.added_by?.email,

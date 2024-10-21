@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { FormFieldSet, SkeletonList } from '../../../index'
-
+import { ErrorTypes } from './types'
 const formSchema = z.object({
   secretScanning: z.boolean()
 })
@@ -13,7 +13,7 @@ export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
 
 export const RepoSettingsSecurityForm: React.FC<{
   securityScanning: boolean
-  apiError: { type: string; message: string | null }
+  apiError: { type: ErrorTypes; message: string } | null
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
@@ -56,6 +56,7 @@ export const RepoSettingsSecurityForm: React.FC<{
   const isDisabled =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
     isUpdatingSecuritySettings
+
   const tooltipMessage = isDisabled ? 'Cannot change settings while loading or updating.' : ''
 
   return (

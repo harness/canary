@@ -21,21 +21,20 @@ import { z } from 'zod'
 
 import { FormFieldSet, SkeletonList } from '../../../index'
 import { MessageTheme } from '../../../components/form-field-set'
-import { RepoData, AccessLevel } from './types'
+import { RepoData, AccessLevel, RepoUpdateData, ErrorTypes } from './types'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string(),
   branch: z.string(),
-  access: z.enum(['1', '2'], {})
+  access: z.enum([AccessLevel.PUBLIC, AccessLevel.PRIVATE], {})
 })
 export type RepoUpdateFormFields = z.infer<typeof formSchema>
 
 export const RepoSettingsGeneralForm: React.FC<{
   repoData: RepoData
-  isLoading?: boolean
-  handleRepoUpdate: (data: RepoUpdateFormFields) => void
-  apiError: { type: string; message: string | null }
+  handleRepoUpdate: (data: RepoUpdateData) => void
+  apiError: { type: ErrorTypes; message: string } | null
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
@@ -96,7 +95,13 @@ export const RepoSettingsGeneralForm: React.FC<{
     reset()
   }
   const isDefaultInBranches = repoData.branches.some(branch => branch.name === repoData.defaultBranch)
-  const errorTypes = new Set(['fetchRepo', 'fetchBranch', 'descriptionUpdate', 'branchUpdate', 'updateAccess'])
+  const errorTypes = new Set([
+    ErrorTypes.FETCH_REPO,
+    ErrorTypes.FETCH_BRANCH,
+    ErrorTypes.DESCRIPTION_UPDATE,
+    ErrorTypes.BRANCH_UPDATE,
+    ErrorTypes.UPDATE_ACCESS
+  ])
 
   if (isLoadingRepoData) {
     return <SkeletonList />

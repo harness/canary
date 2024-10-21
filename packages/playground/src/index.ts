@@ -45,6 +45,7 @@ export * from './components/pipeline-studio/step-palette/step-palette-content'
 export * from './components/pipeline-studio/step-palette/step-palette-item'
 export * from './components/steps/harness-steps'
 export * from './components/steps/types'
+export * from './components/repo-settings/repo-settings-general/types'
 
 export * from './components/pipeline-studio/pipeline-studio-footer-bar/pipeline-studio-footer-bar'
 export * from './components/branches-list'

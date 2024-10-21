@@ -1,4 +1,10 @@
-import { RepoSettingsGeneralPage } from '@harnessio/playground'
+import {
+  RepoSettingsGeneralPage,
+  RepoUpdateData,
+  SecurityScanning,
+  AccessLevel,
+  ErrorTypes
+} from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
@@ -51,7 +57,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     branches: []
   })
   const [securityScanning, setSecurityScanning] = useState<boolean>(false)
-  const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
+  const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
   const { isLoading: isLoadingRepoData } = useFindRepositoryQuery(
     { repo_ref: repoRef },
@@ -68,7 +74,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: FindRepositoryErrorResponse) => {
         const message = error.message || 'Error fetching repo'
-        setApiError({ type: 'fetchRepo', message })
+        setApiError({ type: ErrorTypes.FETCH_REPO, message })
       }
     }
   )
@@ -93,7 +99,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: ListBranchesErrorResponse) => {
         const message = error.message || 'Error fetching branches'
-        setApiError({ type: 'fetchBranch', message })
+        setApiError({ type: ErrorTypes.FETCH_BRANCH, message })
       }
     }
   )
@@ -110,7 +116,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: UpdateRepositoryErrorResponse) => {
         const message = error.message || 'Error updating repository description'
-        setApiError({ type: 'descriptionUpdate', message })
+        setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
       }
     }
   )
@@ -127,7 +133,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: UpdateDefaultBranchErrorResponse) => {
         const message = error.message || 'Error updating default branch'
-        setApiError({ type: 'branchUpdate', message })
+        setApiError({ type: ErrorTypes.BRANCH_UPDATE, message })
       }
     }
   )
@@ -143,7 +149,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: UpdatePublicAccessErrorResponse) => {
         const message = error.message || 'Error updating public access'
-        setApiError({ type: 'updateAccess', message })
+        setApiError({ type: ErrorTypes.UPDATE_ACCESS, message })
       }
     }
   )
@@ -157,7 +163,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: FindSecuritySettingsErrorResponse) => {
         const message = error.message || 'Error fetching security settings'
-        setApiError({ type: 'fetchSecurity', message })
+        setApiError({ type: ErrorTypes.FETCH_SECURITY, message })
       }
     }
   )
@@ -174,7 +180,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: UpdateSecuritySettingsErrorResponse) => {
         const message = error.message || 'Error updating security settings'
-        setApiError({ type: 'updateSecurity', message })
+        setApiError({ type: ErrorTypes.UPDATE_SECURITY, message })
       }
     }
   )
@@ -188,7 +194,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       },
       onError: (error: DeleteRepositoryErrorResponse) => {
         const message = error.message || 'Error deleting repository'
-        setApiError({ type: 'deleteRepo', message })
+        setApiError({ type: ErrorTypes.DELETE_REPO, message })
       }
     }
   )
@@ -199,7 +205,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   }
 
-  const handleRepoUpdate = data => {
+  const handleRepoUpdate = (data: RepoUpdateData) => {
     updateDescriptionMutation.mutate({
       body: {
         description: data.description
@@ -212,12 +218,12 @@ export const RepoSettingsGeneralPageContainer = () => {
     })
     updatePublicAccessMutation.mutate({
       body: {
-        is_public: data.access === '1'
+        is_public: data.access === AccessLevel.PUBLIC
       }
     })
   }
 
-  const handleUpdateSecuritySettings = data => {
+  const handleUpdateSecuritySettings = (data: SecurityScanning) => {
     updateSecuritySettingsMutation.mutate({
       body: {
         secret_scanning_enabled: data.secretScanning

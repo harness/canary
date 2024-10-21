@@ -1,12 +1,13 @@
 import React from 'react'
 import { Text, ButtonGroup, Button, Spacer } from '@harnessio/canary'
+import { ErrorTypes } from './types'
 
 export const RepoSettingsGeneralDelete: React.FC<{
   isLoading?: boolean
   handleDeleteRepository: () => void
-  apiError: { type: string; message: string | null }
+  apiError: { type: ErrorTypes; message: string } | null
   isDeletingRepo: boolean
-}> = ({ isLoading = false, handleDeleteRepository, apiError, isDeletingRepo }) => {
+}> = ({ handleDeleteRepository, apiError, isDeletingRepo }) => {
   return (
     <>
       <Text size={4} weight="medium">

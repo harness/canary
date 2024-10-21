@@ -202,7 +202,7 @@ export default function App() {
                 },
                 {
                   path: 'general',
-                  element: <RepoSettingsGeneralPage />
+                  element: <RepoSettingsGeneralPageContainer />
                 }
               ]
             }

@@ -12,42 +12,34 @@ import {
   SelectTrigger,
   SelectValue,
   Text,
-  Textarea
+  Textarea,
+  Spacer
 } from '@harnessio/canary'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { FormFieldSet } from '../../../index'
+import { FormFieldSet, SkeletonList } from '../../../index'
 import { MessageTheme } from '../../../components/form-field-set'
+import { RepoData, AccessLevel } from './types'
 
-// Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string(),
   branch: z.string(),
   access: z.enum(['1', '2'], {})
 })
-export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type RepoUpdateFormFields = z.infer<typeof formSchema>
 
-interface RepoSettingsGeneralFormProps {
-  /* onFormSubmit?: (data: FormFields) => void
-  onFormCancel?: () => void
-  apiError?: string | null
+export const RepoSettingsGeneralForm: React.FC<{
+  repoData: RepoData
   isLoading?: boolean
-  isSuccess?: boolean*/
-  isLoading?: boolean
-}
-export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = ({
-  /*onFormSubmit,
-  apiError = null,
-  onFormCancel,
-  isLoading,
-  isSuccess*/
-  isLoading = false,
-  repoData,
-  handleRepoUpdate
-}) => {
+  handleRepoUpdate: (data: RepoUpdateFormFields) => void
+  apiError: { type: string; message: string | null }
+  isLoadingRepoData: boolean
+  isUpdatingRepoData: boolean
+  isRepoUpdateSuccess: boolean
+}> = ({ repoData, handleRepoUpdate, apiError, isLoadingRepoData, isUpdatingRepoData, isRepoUpdateSuccess }) => {
   const {
     register,
     handleSubmit,
@@ -55,14 +47,14 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
     watch,
     reset,
     formState: { errors, isValid }
-  } = useForm<FormFields>({
+  } = useForm<RepoUpdateFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || 'main',
-      access: repoData.isPublic ? '1' : '2'
+      branch: repoData.defaultBranch || '',
+      access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     }
   })
 
@@ -70,40 +62,51 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
     reset({
       name: repoData.name || '',
       description: repoData.description || '',
-      branch: repoData.defaultBranch || 'main',
-      access: repoData.isPublic ? '1' : '2'
+      branch: repoData.defaultBranch || '',
+      access: repoData.isPublic ? AccessLevel.PUBLIC : AccessLevel.PRIVATE
     })
-  }, [repoData])
+  }, [repoData, isLoadingRepoData])
 
   const accessValue = watch('access')
   const branchValue = watch('branch')
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
-  const handleSelectChange = (fieldName: keyof FormFields, value: string) => {
+  useEffect(() => {
+    if (isSubmitted && isRepoUpdateSuccess) {
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 1000)
+    }
+  }, [isSubmitted, isRepoUpdateSuccess])
+
+  console.log(isRepoUpdateSuccess)
+
+  const handleSelectChange = (fieldName: keyof RepoUpdateFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  const handleAccessChange = (value: '1' | '2') => {
+  const handleAccessChange = (value: AccessLevel) => {
     setValue('access', value, { shouldValidate: true })
   }
-  const onSubmit: SubmitHandler<FormFields> = data => {
+  const onSubmit: SubmitHandler<RepoUpdateFormFields> = data => {
     setIsSubmitted(true)
     console.log(data)
     handleRepoUpdate(data)
     reset()
-    setTimeout(() => {
-      setIsSubmitted(false)
-    }, 2000)
   }
   const isDefaultInBranches = repoData.branches.some(branch => branch.name === repoData.defaultBranch)
+  const errorTypes = new Set(['fetchRepo', 'fetchBranch', 'descriptionUpdate', 'branchUpdate', 'updateAccess'])
+
+  if (isLoadingRepoData) {
+    return <SkeletonList />
+  }
 
   return (
     <>
       <Text size={4} weight="medium">
         General settings
       </Text>
-      {/* <Spacer size={3} /> */}
       <form onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
         <FormFieldSet.Root>
@@ -147,7 +150,7 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
                 )}
                 {repoData.branches.map(branch => {
                   return (
-                    <SelectItem key={branch.name} value={branch.name}>
+                    <SelectItem key={branch.name} value={branch.name || ''}>
                       {branch.name}
                     </SelectItem>
                   )
@@ -189,23 +192,23 @@ export const RepoSettingsGeneralForm: React.FC<RepoSettingsGeneralFormProps> = (
           </FormFieldSet.ControlGroup>
         </FormFieldSet.Root>
 
-        {/*{apiError && (
+        {apiError && errorTypes.has(apiError.type) && (
           <>
             <Spacer size={2} />
             <Text size={1} className="text-destructive">
-              {apiError?.toString()}
+              {apiError.message}
             </Text>
           </>
-        )}*/}
+        )}
 
         {/* SUBMIT BUTTONS */}
         <FormFieldSet.Root className="mb-0">
           <FormFieldSet.ControlGroup>
             <ButtonGroup.Root>
-              {!isSubmitted ? (
+              {!isSubmitted || !isRepoUpdateSuccess ? (
                 <>
-                  <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                    {!isLoading ? 'Save' : 'Saving...'}
+                  <Button type="submit" size="sm" disabled={!isValid || isUpdatingRepoData}>
+                    {!isUpdatingRepoData ? 'Save' : 'Saving...'}
                   </Button>
                 </>
               ) : (

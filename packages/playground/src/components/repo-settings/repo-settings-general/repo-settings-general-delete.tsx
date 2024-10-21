@@ -1,10 +1,12 @@
 import React from 'react'
-import { Text, ButtonGroup, Button } from '@harnessio/canary'
+import { Text, ButtonGroup, Button, Spacer } from '@harnessio/canary'
 
-export const RepoSettingsGeneralDelete: React.FC<{ isLoading?: boolean }> = ({
-  isLoading = false,
-  handleDeleteRepository
-}) => {
+export const RepoSettingsGeneralDelete: React.FC<{
+  isLoading?: boolean
+  handleDeleteRepository: () => void
+  apiError: { type: string; message: string | null }
+  isDeletingRepo: boolean
+}> = ({ isLoading = false, handleDeleteRepository, apiError, isDeletingRepo }) => {
   return (
     <>
       <Text size={4} weight="medium">
@@ -14,10 +16,19 @@ export const RepoSettingsGeneralDelete: React.FC<{ isLoading?: boolean }> = ({
         This will permanently delete this repository, and everything contained in it.{' '}
       </Text>
 
+      {apiError && apiError.type === 'deleteRepo' && (
+        <>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {apiError.message}
+          </Text>
+        </>
+      )}
+
       <ButtonGroup.Root>
         <>
-          <Button type="submit" size="sm" disabled={isLoading} theme="error" onClick={handleDeleteRepository}>
-            {!isLoading ? 'Delete repository' : 'Deleting repository...'}
+          <Button type="submit" size="sm" disabled={isDeletingRepo} theme="error" onClick={handleDeleteRepository}>
+            {!isDeletingRepo ? 'Delete repository' : 'Deleting repository...'}
           </Button>
         </>
       </ButtonGroup.Root>

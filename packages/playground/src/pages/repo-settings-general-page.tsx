@@ -4,30 +4,62 @@ import { RepoSettingsGeneralForm } from '../components/repo-settings/repo-settin
 import { RepoSettingsGeneralRules } from '../components/repo-settings/repo-settings-general/repo-settings-general-rules'
 import { RepoSettingsSecurityForm } from '../components/repo-settings/repo-settings-general/repo-settings-general-security'
 import { RepoSettingsGeneralDelete } from '../components/repo-settings/repo-settings-general/repo-settings-general-delete'
+import { RepoData } from '../components/repo-settings/repo-settings-general/types'
+import { RepoUpdateFormFields } from '../components/repo-settings/repo-settings-general/repo-settings-general-form'
+import { RepoSettingsSecurityFormFields } from '../components/repo-settings/repo-settings-general/repo-settings-general-security'
 
-// interface RepoSettingsGeneralPageProps{
-//   repoData: any
-// }
-function RepoSettingsGeneralPage({
+const RepoSettingsGeneralPage: React.FC<{
+  repoData: RepoData
+  securityScanning: boolean
+  handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
+  handleRepoUpdate: (data: RepoUpdateFormFields) => void
+  handleDeleteRepository: () => void
+  apiError: { type: string; message: string | null }
+  loadingStates: {
+    isLoadingRepoData: boolean
+    isUpdatingRepoData: boolean
+    isLoadingSecuritySettings: boolean
+    isDeletingRepo: boolean
+    isUpdatingSecuritySettings: boolean
+  }
+  isRepoUpdateSuccess: boolean
+}> = ({
   repoData,
   handleRepoUpdate,
   securityScanning,
   handleUpdateSecuritySettings,
-  handleDeleteRepository
-}) {
+  handleDeleteRepository,
+  apiError,
+  loadingStates,
+  isRepoUpdateSuccess
+}) => {
   return (
     <>
       <FormFieldSet.Root>
-        <RepoSettingsGeneralForm repoData={repoData} handleRepoUpdate={handleRepoUpdate} />
+        <RepoSettingsGeneralForm
+          repoData={repoData}
+          handleRepoUpdate={handleRepoUpdate}
+          apiError={apiError}
+          isLoadingRepoData={loadingStates.isLoadingRepoData}
+          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+          isRepoUpdateSuccess={isRepoUpdateSuccess}
+        />
         <FormFieldSet.Separator />
         <RepoSettingsGeneralRules />
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+          apiError={apiError}
+          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralDelete handleDeleteRepository={handleDeleteRepository} />
+        <RepoSettingsGeneralDelete
+          handleDeleteRepository={handleDeleteRepository}
+          apiError={apiError}
+          isDeletingRepo={loadingStates.isDeletingRepo}
+        />
       </FormFieldSet.Root>
     </>
   )

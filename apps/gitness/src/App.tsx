@@ -10,8 +10,7 @@ import {
   ForgotPasswordPage,
   NewPasswordPage,
   OTPPage,
-  SandboxRepoSettingsPage,
-  RepoSettingsGeneralPage
+  SandboxRepoSettingsPage
 } from '@harnessio/playground'
 import SnadboxRootWraper from './components/SandboxRootWrapper'
 import RootLayoutWrapper from './components/RootLayoutWrapper'

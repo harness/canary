@@ -29,7 +29,7 @@ interface PageProps {
 
 export const UsersList = ({ users }: PageProps) => {
   return (
-    <Table variant="asStackedList" className="border-0">
+    <Table variant="asStackedList">
       <TableHeader>
         <TableRow>
           <TableHead className="text-primary">Name</TableHead>

@@ -59,14 +59,11 @@ export const MembersList = ({ members }: PageProps) => {
   // Close the edit dialog
   const closeEditDialog = () => {
     setIsDialogEditOpen(false)
-    setEditMember(null)
   }
 
   const handleRoleSave = (newRole: string) => {
-    if (editMember) {
-      console.log(`Role for ${editMember.display_name} has been updated to ${newRole}`)
-      setIsDialogEditOpen(false) // Close dialog after save
-    }
+    console.log(`Role for ${editMember?.display_name} has been updated to ${newRole}`)
+    setIsDialogEditOpen(false) // Close dialog after save
   }
 
   const moreActionsTooltip = ({ member }: { member: MembersProps }) => {
@@ -89,7 +86,8 @@ export const MembersList = ({ members }: PageProps) => {
             <DropdownMenuItem
               className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400"
               onSelect={() => {
-                setIsDialogDeleteOpen(true)
+                setEditMember(member) // Set the clicked member's data
+                setIsDialogEditOpen(true) // Open the edit dialog
               }}>
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="trash" className="mr-2 text-red-400" />

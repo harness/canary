@@ -100,15 +100,15 @@ export const FormEditDialog: React.FC<FormEditDialogProps> = ({ member, onSave, 
               </FormFieldSet.Label>
               <Select
                 {...register('role', { required: 'Please select a role' })}
-                onValueChange={value => setValue('role', value, { shouldValidate: true, shouldDirty: true })}
-                value={newMemberRoleValue}>
+                value={newMemberRoleValue}
+                onValueChange={value => setValue('role', value, { shouldValidate: true, shouldDirty: true })}>
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select Role" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Admin">Admin</SelectItem>
-                  <SelectItem value="Editor">Editor</SelectItem>
-                  <SelectItem value="Viewer">Viewer</SelectItem>
+                  <SelectItem value="Contributor">Contributor</SelectItem>
+                  <SelectItem value="Reader">Reader</SelectItem>
+                  <SelectItem value="Executor">Executor</SelectItem>
                   <SelectItem value="Owner">Owner</SelectItem>
                 </SelectContent>
               </Select>

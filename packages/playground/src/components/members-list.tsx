@@ -46,9 +46,15 @@ interface PageProps {
 }
 
 export const MembersList = ({ members }: PageProps) => {
+  console.log(members)
   const [isDialogDeleteOpen, setIsDialogDeleteOpen] = useState(false)
   const [isDialogEditOpen, setIsDialogEditOpen] = useState(false)
   const [editMember, setEditMember] = useState<MembersProps | null>(null) // Store member being edited
+
+  //open delete dialog for a specific member
+  const openDeleteDialog = () => {
+    setIsDialogDeleteOpen(true)
+  }
 
   // Open the edit dialog for a specific member
   const openEditDialog = (member: MembersProps) => {
@@ -76,7 +82,13 @@ export const MembersList = ({ members }: PageProps) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="shadow-sm py-2 bg-primary-background border border-gray-800 rounded-[10px] w-[180px]">
           <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer" onSelect={() => openEditDialog(member)}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onSelect={() => {
+                openEditDialog(member)
+                setEditMember(member) // Set the clicked member's data
+                setIsDialogEditOpen(true) // Open the edit dialog
+              }}>
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="edit-pen" className="mr-2" />
               </DropdownMenuShortcut>
@@ -86,8 +98,7 @@ export const MembersList = ({ members }: PageProps) => {
             <DropdownMenuItem
               className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400"
               onSelect={() => {
-                setEditMember(member) // Set the clicked member's data
-                setIsDialogEditOpen(true) // Open the edit dialog
+                openDeleteDialog()
               }}>
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="trash" className="mr-2 text-red-400" />
@@ -146,7 +157,7 @@ export const MembersList = ({ members }: PageProps) => {
 
   return (
     <>
-      <Table variant="asStackedList" className="border-0">
+      <Table variant="asStackedList">
         <TableHeader>
           <TableRow>
             <TableHead className="text-primary">Name</TableHead>

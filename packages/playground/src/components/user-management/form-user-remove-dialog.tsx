@@ -17,11 +17,6 @@ interface UsersProps {
   admin: boolean
   uid: string
   display_name?: string // Add a default value of undefined
-  email: string
-  created: number // Add a default value of undefined
-  updated?: number
-  avatarUrl?: string
-  blocked?: boolean
 }
 
 interface FormRemoveUserDialogProps {

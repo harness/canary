@@ -9,7 +9,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       identifier: formOutput.identifier || '',
       type: 'branch',
       description: formOutput.description || '',
-      state: formOutput.state === true ? 'active' : 'inactive',
+      state: formOutput.state === true ? 'active' : 'disabled',
       pattern: {
         default: formOutput.default || false,
         exclude: [],
@@ -40,11 +40,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
               : []
           }
         }
-        // lifecycle: {
-        //   create_forbidden: true, // Assuming static
-        //   delete_forbidden: true, // Assuming static
-        //   update_forbidden: true // Assuming static
-        // }
       }
     }
 

@@ -11,13 +11,15 @@ const formSchema = z.object({
 
 export type RepoSettingsSecurityFormFields = z.infer<typeof formSchema>
 
-export const RepoSettingsSecurityForm: React.FC<{
+interface RepoSettingsSecurityFormProps {
   securityScanning: boolean
   apiError: { type: ErrorTypes; message: string } | null
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
-}> = ({
+}
+
+export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> = ({
   securityScanning,
   handleUpdateSecuritySettings,
   apiError,

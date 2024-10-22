@@ -7,22 +7,24 @@ import { RepoSettingsGeneralDelete } from '../components/repo-settings/repo-sett
 import { RepoData, RepoUpdateData, ErrorTypes } from '../components/repo-settings/repo-settings-general/types'
 import { RepoSettingsSecurityFormFields } from '../components/repo-settings/repo-settings-general/repo-settings-general-security'
 
-const RepoSettingsGeneralPage: React.FC<{
+interface ILoadingStates {
+  isLoadingRepoData: boolean
+  isUpdatingRepoData: boolean
+  isLoadingSecuritySettings: boolean
+  isDeletingRepo: boolean
+  isUpdatingSecuritySettings: boolean
+}
+interface RepoSettingsGeneralPageProps {
   repoData: RepoData
   securityScanning: boolean
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
   handleDeleteRepository: () => void
   apiError: { type: ErrorTypes; message: string } | null
-  loadingStates: {
-    isLoadingRepoData: boolean
-    isUpdatingRepoData: boolean
-    isLoadingSecuritySettings: boolean
-    isDeletingRepo: boolean
-    isUpdatingSecuritySettings: boolean
-  }
+  loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-}> = ({
+}
+const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,
   handleRepoUpdate,
   securityScanning,

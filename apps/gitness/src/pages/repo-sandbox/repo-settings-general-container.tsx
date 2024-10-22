@@ -98,7 +98,11 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const updateDescriptionMutation = useUpdateRepositoryMutation(
+  const {
+    mutate: updateDescription,
+    isLoading: updatingDescription,
+    isSuccess: updateDescriptionSuccess
+  } = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
     {
       onMutate: async newData => {
@@ -130,7 +134,11 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const updateDefaultBranchMutation = useUpdateDefaultBranchMutation(
+  const {
+    mutate: updateBranch,
+    isLoading: updatingBranch,
+    isSuccess: updateBranchSuccess
+  } = useUpdateDefaultBranchMutation(
     { repo_ref: repoRef },
     {
       onMutate: async newData => {
@@ -162,7 +170,11 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const updatePublicAccessMutation = useUpdatePublicAccessMutation(
+  const {
+    mutate: updatePublicAccess,
+    isLoading: updatingPublicAccess,
+    isSuccess: updatePublicAccessSuccess
+  } = useUpdatePublicAccessMutation(
     { repo_ref: repoRef },
     {
       onMutate: async newData => {
@@ -208,7 +220,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const updateSecuritySettingsMutation = useUpdateSecuritySettingsMutation(
+  const { mutate: updateSecuritySettings, isLoading: UpdatingSecuritySettings } = useUpdateSecuritySettingsMutation(
     { repo_ref: repoRef },
     {
       onSuccess: (data: UpdateSecuritySettingsOkResponse) => {
@@ -246,17 +258,17 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRepoUpdate = (data: RepoUpdateData) => {
-    updateDescriptionMutation.mutate({
+    updateDescription({
       body: {
         description: data.description
       }
     })
-    updateDefaultBranchMutation.mutate({
+    updateBranch({
       body: {
         name: data.branch
       }
     })
-    updatePublicAccessMutation.mutate({
+    updatePublicAccess({
       body: {
         is_public: data.access === AccessLevel.PUBLIC
       }
@@ -264,7 +276,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleUpdateSecuritySettings = (data: SecurityScanning) => {
-    updateSecuritySettingsMutation.mutate({
+    updateSecuritySettings({
       body: {
         secret_scanning_enabled: data.secretScanning
       }
@@ -272,13 +284,10 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
   const loadingStates = {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
-    isUpdatingRepoData:
-      updatePublicAccessMutation.isLoading ||
-      updateDescriptionMutation.isLoading ||
-      updateDefaultBranchMutation.isLoading,
+    isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
     isDeletingRepo: isDeletingRepo,
-    isUpdatingSecuritySettings: updateSecuritySettingsMutation.isLoading
+    isUpdatingSecuritySettings: UpdatingSecuritySettings
   }
   return (
     <RepoSettingsGeneralPage
@@ -289,11 +298,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       handleDeleteRepository={handleDeleteRepository}
       apiError={apiError}
       loadingStates={loadingStates}
-      isRepoUpdateSuccess={
-        updatePublicAccessMutation.isSuccess ||
-        updateDescriptionMutation.isSuccess ||
-        updateDefaultBranchMutation.isSuccess
-      }
+      isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
     />
   )
 }

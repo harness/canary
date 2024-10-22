@@ -16,7 +16,6 @@ export const RepoSettingsGeneralRules = () => {
       <Text size={4} weight="medium">
         Rules
       </Text>
-      {/* <Spacer size={6} /> */}
       <ListActions.Root>
         <ListActions.Left>
           <SearchBox.Root placeholder="Search" />

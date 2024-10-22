@@ -106,6 +106,7 @@ export * from './pages/sandbox-settings-account-keys-page'
 export * from './pages/sandbox-settings-account-general-page'
 export * from './pages/sandbox-repo-settings-page'
 export * from './pages/repo-settings-general-page'
+export * from './pages/repo-branch-settings-rules-page'
 
 export * from './pages/sandbox-repo-create-page'
 

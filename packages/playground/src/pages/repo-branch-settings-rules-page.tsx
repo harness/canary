@@ -19,7 +19,10 @@ import {
   repoBranchSettingsFormSchema
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
 import { mockBypassUserData } from './mocks/repo-branch-settings/mockBypassUserData'
-export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({ isLoading = false }) => {
+export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handleRuleUpdate }> = ({
+  isLoading = false,
+  handleRuleUpdate
+}) => {
   const {
     register,
     handleSubmit,
@@ -31,13 +34,13 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
     schema: repoBranchSettingsFormSchema,
     mode: 'onChange',
     defaultValues: {
-      name: '',
+      identifier: '',
       description: '',
-      targetPatterns: '',
-      toggleValue: true,
+      pattern: '',
+      state: true,
       defaultBranchValue: true,
-      editPermissionsValue: false,
-      bypassValue: '',
+      repo_owners: false,
+      bypass: '',
       access: '1',
       rules: []
     }
@@ -57,8 +60,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean }> = ({
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
     const formData = { ...data, rules }
-
-    console.log(formData)
+    handleRuleUpdate(formData)
     reset()
   }
   return (

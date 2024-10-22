@@ -21,7 +21,7 @@ import {
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
-import { FieldProps, Rule, Dispatch, BypassUsersList } from './types'
+import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -36,9 +36,9 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
         title={
           <div className="flex gap-1.5 items-center justify-end cursor-pointer">
             <Switch
-              {...register!('toggleValue')}
-              checked={watch!('toggleValue')}
-              onCheckedChange={() => setValue!('toggleValue', !watch!('toggleValue'))}
+              {...register!('state')}
+              checked={watch!('state')}
+              onCheckedChange={() => setValue!('state', !watch!('state'))}
             />
           </div>
         }
@@ -50,12 +50,12 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
 
 export const BranchSettingsRuleNameField: React.FC<FieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
-    <FormFieldSet.Label htmlFor="name" required>
+    <FormFieldSet.Label htmlFor="identifier" required>
       Name
     </FormFieldSet.Label>
-    <Input id="name" {...register!('name')} placeholder="Enter rule name" autoFocus />
-    {errors!.name && (
-      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.name.message?.toString()}</FormFieldSet.Message>
+    <Input id="name" {...register!('identifier')} placeholder="Enter rule name" autoFocus />
+    {errors!.identifier && (
+      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.identifier.message?.toString()}</FormFieldSet.Message>
     )}
   </FormFieldSet.ControlGroup>
 )
@@ -82,12 +82,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ re
       </FormFieldSet.Label>
       <div className="flex gap-4">
         <div className="flex-[2.5]">
-          <Input
-            id="target-patterns"
-            {...register!('targetPatterns')}
-            placeholder="Enter the target patterns"
-            autoFocus
-          />
+          <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" autoFocus />
           <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%] mt-2">
             Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
           </Text>
@@ -114,10 +109,8 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ re
           {selectedOption}
         </Button>
 
-        {errors!.targetPatterns && (
-          <FormFieldSet.Message theme={MessageTheme.ERROR}>
-            {errors!.targetPatterns.message?.toString()}
-          </FormFieldSet.Message>
+        {errors!.pattern && (
+          <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
         )}
       </div>
     </FormFieldSet.ControlGroup>
@@ -129,9 +122,9 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
     <FormFieldSet.Option
       control={
         <Checkbox
-          {...register!('defaultBranchValue')}
-          checked={watch!('defaultBranchValue')}
-          onCheckedChange={() => setValue!('defaultBranchValue', !watch!('defaultBranchValue'))}
+          {...register!('default')}
+          checked={watch!('default')}
+          onCheckedChange={() => setValue!('default', !watch!('default'))}
           id="default-branch"
         />
       }
@@ -139,9 +132,9 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
       label="Default Branch"
     />
 
-    {errors!.defaultBranchValue && (
+    {errors!.default && (
       <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>
-        {errors!.defaultBranchValue.message?.toString()}
+        {errors!.default.message?.toString()}
       </FormFieldSet.Message>
     )}
   </FormFieldSet.ControlGroup>
@@ -154,10 +147,8 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
 }) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="bypassValue">Bypass list</FormFieldSet.Label>
-    <Select
-      value={watch!('bypassValue')}
-      onValueChange={value => setValue!('bypassValue', value, { shouldValidate: true })}>
-      <SelectTrigger id="bypassValue">
+    <Select value={watch!('bypass')} onValueChange={value => setValue!('bypass', value, { shouldValidate: true })}>
+      <SelectTrigger id="bypass">
         <SelectValue placeholder="Select users" />
       </SelectTrigger>
       <SelectContent>
@@ -176,9 +167,9 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
     <FormFieldSet.Option
       control={
         <Checkbox
-          {...register!('editPermissionsValue')}
-          checked={watch!('editPermissionsValue')}
-          onCheckedChange={() => setValue!('editPermissionsValue', !watch!('editPermissionsValue'))}
+          {...register!('repo_owners')}
+          checked={watch!('repo_owners')}
+          onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
           id="edit-permissons"
         />
       }
@@ -186,9 +177,9 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
       label="Allow users with edit permission on the repository to bypass"
     />
 
-    {errors!.editPermissionsValue && (
+    {errors!.repo_owners && (
       <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>
-        {errors!.editPermissionsValue.message?.toString()}
+        {errors!.repo_owners.message?.toString()}
       </FormFieldSet.Message>
     )}
   </FormFieldSet.ControlGroup>
@@ -196,15 +187,15 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
 
 export const BranchSettingsRuleListField: React.FC<{ rules: Rule[]; dispatch: Dispatch }> = ({ rules, dispatch }) => {
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
-    dispatch({ type: 'TOGGLE_RULE', ruleId, checked })
+    dispatch({ type: ActionType.TOGGLE_RULE, ruleId, checked })
   }
 
   const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
-    dispatch({ type: 'TOGGLE_SUBMENU', ruleId, submenuId, checked })
+    dispatch({ type: ActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
   const handleSelectChangeForRule = (ruleId: string, selectedOptions: string) => {
-    dispatch({ type: 'SET_SELECT_OPTION', ruleId, selectedOptions })
+    dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
   }
 
   return (

@@ -55,12 +55,17 @@ export const FormRemoveUserDialog: React.FC<FormRemoveUserDialogProps> = ({ user
           {!isRemoving && !removeSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
           {removeSuccess ? (
             <Button size="default" theme="success" className="self-start pointer-events-none">
-              Users removed&nbsp;&nbsp;
+              Admin removed&nbsp;&nbsp;
               <Icon name="tick" size={14} />
             </Button>
           ) : (
-            <Button size="default" theme="error" className="self-start" onClick={handleRemove}>
-              {isRemoving ? 'Removing Member...' : 'Yes, remove Member'}
+            <Button
+              size="default"
+              theme="error"
+              className="self-start"
+              onClick={handleRemove}
+              disabled={isRemoving || removeSuccess}>
+              {isRemoving ? 'Removing Admin...' : 'Yes, removed Admin'}
             </Button>
           )}
         </AlertDialogFooter>

@@ -225,7 +225,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const deleteRepositoryMutation = useDeleteRepositoryMutation(
+  const { mutate: deleteRepository, isLoading: isDeletingRepo } = useDeleteRepositoryMutation(
     { repo_ref: repoRef },
     {
       onSuccess: (_data: DeleteRepositoryOkResponse) => {
@@ -241,7 +241,7 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   const handleDeleteRepository = () => {
     if (window.confirm('Are you sure you want to delete this repository?')) {
-      deleteRepositoryMutation.mutate({})
+      deleteRepository({})
     }
   }
 
@@ -277,7 +277,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       updateDescriptionMutation.isLoading ||
       updateDefaultBranchMutation.isLoading,
     isLoadingSecuritySettings,
-    isDeletingRepo: deleteRepositoryMutation.isLoading,
+    isDeletingRepo: isDeletingRepo,
     isUpdatingSecuritySettings: updateSecuritySettingsMutation.isLoading
   }
   return (

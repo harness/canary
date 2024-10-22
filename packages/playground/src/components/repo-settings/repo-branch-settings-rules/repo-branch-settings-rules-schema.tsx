@@ -11,7 +11,7 @@ export const repoBranchSettingsFormSchema = z.object({
     })
   ),
   state: z.boolean(),
-  bypass: z.array(z.string()),
+  bypass: z.array(z.number()),
   access: z.enum(['1', '2']),
   default: z.boolean().optional(),
   repo_owners: z.boolean().optional(),

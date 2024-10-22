@@ -180,55 +180,33 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
 }) => {
   const selectedBypassUsers = watch!('bypass') || []
 
-  const handleCheckboxChange = (option: string) => {
+  const handleCheckboxChange = (optionId: number) => {
     setValue!(
       'bypass',
-      selectedBypassUsers.includes(option)
-        ? selectedBypassUsers.filter(item => item !== option) // Remove if already selected
-        : [...selectedBypassUsers, option],
+      selectedBypassUsers.includes(optionId)
+        ? selectedBypassUsers.filter(item => item !== optionId)
+        : [...selectedBypassUsers, optionId],
       { shouldValidate: true }
     )
   }
+  const triggerText = selectedBypassUsers.length
+    ? selectedBypassUsers
+        .map(id => bypassOptions.find(option => option.id === id)?.display_name)
+        .filter(Boolean)
+        .join(', ')
+    : 'Select Users'
+
   return (
     <FormFieldSet.ControlGroup>
       <FormFieldSet.Label htmlFor="bypassValue">Bypass list</FormFieldSet.Label>
-      {/* <Select>
-        <SelectTrigger id="bypass">
-          <SelectValue
-            placeholder="Select users"
-            value={selectedBypassUsers.length > 0 ? `${selectedBypassUsers.length} user(s) selected` : 'Select users'}
-          />
-        </SelectTrigger>
-
-        <SelectContent>
-          {bypassOptions.map(option => {
-            return (
-              <SelectItem value={option.display_name}>
-                <FormFieldSet.Option
-                  className="min-h-6"
-                  control={
-                    <Checkbox
-                      id={option.id}
-                      checked={selectedBypassUsers.includes(option.display_name)}
-                      onCheckedChange={() => handleCheckboxChange(option.display_name)}
-                    />
-                  }
-                  id={option.id}
-                  label={option.display_name}
-                />
-              </SelectItem>
-            )
-          })}
-        </SelectContent>
-      </Select> */}
 
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className=" flex justify-between border rounded-md items-center">
             <Button variant="ghost w-full">
-              <Text color="tertiaryBackground">Select Users</Text>
+              <Text color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>{triggerText}</Text>
             </Button>
-            <Icon name="chevron-down" className="mr-2 transition-transform duration-200 data-[state=open]:rotate-180" />
+            <Icon name="chevron-down" className="mr-2" />
           </div>
         </DropdownMenuTrigger>
         <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
@@ -237,8 +215,9 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
           {bypassOptions.map(option => {
             return (
               <DropdownMenuCheckboxItem
-                onCheckedChange={() => handleCheckboxChange(option.display_name)}
-                checked={selectedBypassUsers.includes(option.display_name)}>
+                onCheckedChange={() => handleCheckboxChange(option.id)}
+                checked={selectedBypassUsers.includes(option.id)}
+                onSelect={event => event.preventDefault()}>
                 {option.display_name}
               </DropdownMenuCheckboxItem>
             )

@@ -37,7 +37,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       },
       definition: {
         bypass: {
-          user_ids: [Number(formOutput.bypass)],
+          user_ids: formOutput.bypass,
           repo_owners: formOutput.repo_owners || false
         },
         pullreq: {

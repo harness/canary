@@ -79,8 +79,6 @@ export const RepoSettingsGeneralForm: React.FC<{
     }
   }, [isSubmitted, isRepoUpdateSuccess])
 
-  console.log(isRepoUpdateSuccess)
-
   const handleSelectChange = (fieldName: keyof RepoUpdateFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
@@ -90,7 +88,6 @@ export const RepoSettingsGeneralForm: React.FC<{
   }
   const onSubmit: SubmitHandler<RepoUpdateFormFields> = data => {
     setIsSubmitted(true)
-    console.log(data)
     handleRepoUpdate(data)
     reset()
   }

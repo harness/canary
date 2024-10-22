@@ -3,7 +3,8 @@ import {
   RepoUpdateData,
   SecurityScanning,
   AccessLevel,
-  ErrorTypes
+  ErrorTypes,
+  RepoData
 } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -15,15 +16,11 @@ import {
   useListBranchesQuery,
   ListBranchesOkResponse,
   ListBranchesErrorResponse,
-  RepoBranch,
   useUpdateRepositoryMutation,
-  UpdateRepositoryOkResponse,
   UpdateRepositoryErrorResponse,
   useUpdateDefaultBranchMutation,
-  UpdateDefaultBranchOkResponse,
   UpdateDefaultBranchErrorResponse,
   useUpdatePublicAccessMutation,
-  UpdatePublicAccessOkResponse,
   UpdatePublicAccessErrorResponse,
   useFindSecuritySettingsQuery,
   FindSecuritySettingsOkResponse,
@@ -35,6 +32,8 @@ import {
   DeleteRepositoryOkResponse,
   DeleteRepositoryErrorResponse
 } from '@harnessio/code-service-client'
+import { useQueryClient } from '@tanstack/react-query'
+
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 
@@ -42,14 +41,9 @@ export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const spaceId = useGetSpaceURLParam()
+  const queryClient = useQueryClient()
 
-  const [repoData, setRepoData] = useState<{
-    name: string
-    description: string
-    defaultBranch: string
-    isPublic: boolean
-    branches: Omit<RepoBranch, 'commit'>[]
-  }>({
+  const [repoData, setRepoData] = useState<RepoData>({
     name: '',
     description: '',
     defaultBranch: '',
@@ -107,16 +101,31 @@ export const RepoSettingsGeneralPageContainer = () => {
   const updateDescriptionMutation = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: (data: UpdateRepositoryOkResponse) => {
+      onMutate: async newData => {
+        await queryClient.cancelQueries({ queryKey: ['findRepository', repoRef] })
+
+        const previousRepoData = repoData
+
+        // Optimistically update the description, mapping it to match repoData format
         setRepoData(prevState => ({
           ...prevState,
-          description: data.description!
+          description: newData.body.description || ''
         }))
-        setApiError(null)
+
+        // Return the previous state for rollback if needed
+        return { previousRepoData }
       },
-      onError: (error: UpdateRepositoryErrorResponse) => {
+      onError: (error: UpdateRepositoryErrorResponse, _data, context) => {
+        setRepoData(context.previousRepoData)
+
+        // Invalidate the query to refetch the data from the server
+        queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
+
         const message = error.message || 'Error updating repository description'
         setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
+      },
+      onSuccess: () => {
+        setApiError(null)
       }
     }
   )
@@ -124,32 +133,63 @@ export const RepoSettingsGeneralPageContainer = () => {
   const updateDefaultBranchMutation = useUpdateDefaultBranchMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: (data: UpdateDefaultBranchOkResponse) => {
+      onMutate: async newData => {
+        await queryClient.cancelQueries({ queryKey: ['listBranches', repoRef] })
+
+        const previousRepoData = repoData
+
+        // Optimistically update the default branch
         setRepoData(prevState => ({
           ...prevState,
-          defaultBranch: data.default_branch!
+          defaultBranch: newData.body.name || prevState.defaultBranch
         }))
-        setApiError(null)
+
+        // Return the previous state for rollback if needed
+        return { previousRepoData }
       },
-      onError: (error: UpdateDefaultBranchErrorResponse) => {
+      onError: (error: UpdateDefaultBranchErrorResponse, _data, context) => {
+        setRepoData(context.previousRepoData)
+
+        // Invalidate the query to refetch the data from the server
+        queryClient.invalidateQueries({ queryKey: ['listBranches', repoRef] })
+
         const message = error.message || 'Error updating default branch'
         setApiError({ type: ErrorTypes.BRANCH_UPDATE, message })
+      },
+      onSuccess: () => {
+        setApiError(null)
       }
     }
   )
+
   const updatePublicAccessMutation = useUpdatePublicAccessMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: (data: UpdatePublicAccessOkResponse) => {
+      onMutate: async newData => {
+        await queryClient.cancelQueries({ queryKey: ['findRepository', repoRef] })
+
+        const previousRepoData = repoData
+
+        // Optimistically update the public access
         setRepoData(prevState => ({
           ...prevState,
-          isPublic: data.is_public!
+          isPublic: newData.body.is_public !== undefined ? newData.body.is_public : prevState.isPublic
         }))
-        setApiError(null)
+
+        // Return the previous state for rollback if needed
+        return { previousRepoData }
       },
-      onError: (error: UpdatePublicAccessErrorResponse) => {
+      onError: (error: UpdatePublicAccessErrorResponse, _data, context) => {
+        setRepoData(context.previousRepoData)
+
+        // Invalidate the query to refetch the data from the server
+        queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
+
         const message = error.message || 'Error updating public access'
         setApiError({ type: ErrorTypes.UPDATE_ACCESS, message })
+      },
+      onSuccess: () => {
+        setApiError(null)
       }
     }
   )

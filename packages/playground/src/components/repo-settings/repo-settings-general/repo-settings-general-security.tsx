@@ -40,7 +40,6 @@ export const RepoSettingsSecurityForm: React.FC<{
   const onCheckboxChange = (checked: boolean) => {
     setValue('secretScanning', checked)
     handleSubmit(data => {
-      console.log(data)
       handleUpdateSecuritySettings(data)
     })()
   }

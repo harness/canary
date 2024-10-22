@@ -3,9 +3,15 @@ import { z } from 'zod'
 export const repoBranchSettingsFormSchema = z.object({
   identifier: z.string().min(1, 'Name is required'),
   description: z.string().min(1, 'Description is required'),
-  pattern: z.string().min(1, 'Patterns are required'),
+  pattern: z.string(),
+  patterns: z.array(
+    z.object({
+      pattern: z.string(),
+      option: z.enum(['Include', 'Exclude'])
+    })
+  ),
   state: z.boolean(),
-  bypass: z.string().optional(),
+  bypass: z.array(z.string()),
   access: z.enum(['1', '2']),
   default: z.boolean().optional(),
   repo_owners: z.boolean().optional(),

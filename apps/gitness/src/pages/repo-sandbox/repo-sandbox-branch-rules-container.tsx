@@ -1,10 +1,30 @@
 import { RepoBranchSettingsRulesPage } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useRuleAddMutation, RuleAddOkResponse, RuleAddErrorResponse } from '@harnessio/code-service-client'
+import {
+  useRuleAddMutation,
+  RuleAddOkResponse,
+  RuleAddErrorResponse,
+  useListPrincipalsQuery,
+  ListPrincipalsOkResponse,
+  ListPrincipalsErrorResponse
+} from '@harnessio/code-service-client'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
   const repoRef = useGetRepoRef()
-  function transformFormOutput(formOutput) {
+
+  const transformFormOutput = formOutput => {
+    const { include, exclude } = formOutput.patterns.reduce(
+      (acc, currentPattern) => {
+        if (currentPattern.option === 'Include') {
+          acc.include.push(currentPattern.pattern)
+        } else if (currentPattern.option === 'Exclude') {
+          acc.exclude.push(currentPattern.pattern)
+        }
+        return acc
+      },
+      { include: [], exclude: [] }
+    )
+
     const transformed = {
       identifier: formOutput.identifier || '',
       type: 'branch',
@@ -12,8 +32,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       state: formOutput.state === true ? 'active' : 'disabled',
       pattern: {
         default: formOutput.default || false,
-        exclude: [],
-        include: []
+        include,
+        exclude
       },
       definition: {
         bypass: {
@@ -46,7 +66,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return transformed
   }
 
-  const addRuleMutation = useRuleAddMutation(
+  const { mutate: addRule } = useRuleAddMutation(
     { repo_ref: repoRef },
     {
       onSuccess: (data: RuleAddOkResponse) => {
@@ -58,12 +78,24 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   )
 
+  const { data: principals } = useListPrincipalsQuery(
+    { queryParams: { page: 1, limit: 100, type: 'user' } }
+    // {
+    //   onSuccess: data => {
+    //     console.log('Fetched principals:', data)
+    //   },
+    //   onError: error => {
+    //     console.error('Error fetching principals:', error)
+    //   }
+    // }
+  )
+
   const handleRuleUpdate = data => {
     const formattedData = transformFormOutput(data)
-    addRuleMutation.mutate({
+    addRule({
       body: formattedData
     })
   }
 
-  return <RepoBranchSettingsRulesPage handleRuleUpdate={handleRuleUpdate} />
+  return <RepoBranchSettingsRulesPage handleRuleUpdate={handleRuleUpdate} principals={principals} />
 }

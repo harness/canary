@@ -19,9 +19,11 @@ import {
   repoBranchSettingsFormSchema
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
 import { mockBypassUserData } from './mocks/repo-branch-settings/mockBypassUserData'
-export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handleRuleUpdate }> = ({
+
+export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handleRuleUpdate; principals }> = ({
   isLoading = false,
-  handleRuleUpdate
+  handleRuleUpdate,
+  principals
 }) => {
   const {
     register,
@@ -37,10 +39,11 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
       identifier: '',
       description: '',
       pattern: '',
+      patterns: [],
       state: true,
-      defaultBranchValue: true,
+      default: false,
       repo_owners: false,
-      bypass: '',
+      bypass: [],
       access: '1',
       rules: []
     }
@@ -60,6 +63,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
     const formData = { ...data, rules }
+    console.log(formData)
     handleRuleUpdate(formData)
     reset()
   }
@@ -70,9 +74,18 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
           <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
           <BranchSettingsRuleNameField register={register} errors={errors} />
           <BranchSettingsRuleDescriptionField register={register} errors={errors} />
-          <BranchSettingsRuleTargetPatternsField register={register} errors={errors} />
+          <BranchSettingsRuleTargetPatternsField
+            watch={watch}
+            setValue={setValue}
+            register={register}
+            errors={errors}
+          />
           <BranchSettingsRuleDefaultBranchField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleBypassListField setValue={setValue} watch={watch} bypassOptions={mockBypassUserData} />
+          <BranchSettingsRuleBypassListField
+            setValue={setValue}
+            watch={watch}
+            bypassOptions={principals || mockBypassUserData}
+          />
           <BranchSettingsRuleEditPermissionsField
             register={register}
             errors={errors}
@@ -107,3 +120,5 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
     </>
   )
 }
+
+// || mockBypassUserData

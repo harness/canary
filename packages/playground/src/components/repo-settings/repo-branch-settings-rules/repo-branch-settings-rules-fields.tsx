@@ -13,11 +13,15 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuGroup,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   Button,
   Icon,
   Checkbox,
   StackedList,
-  Switch
+  Switch,
+  Badge
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
@@ -72,25 +76,54 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
   </FormFieldSet.ControlGroup>
 )
 
-export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ register, errors }) => {
-  const [selectedOption, setSelectedOption] = useState('Include')
+export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+  const [selectedOption, setSelectedOption] = useState<'Include' | 'Exclude'>('Include')
+
+  const patterns = watch!('patterns') || []
+
+  const handleAddPattern = () => {
+    const pattern = watch!('pattern')
+    if (pattern && !patterns.some(p => p.pattern === pattern)) {
+      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
+      setValue!('pattern', '')
+    }
+  }
+
+  const handleRemovePattern = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue!('patterns', updatedPatterns)
+  }
 
   return (
     <FormFieldSet.ControlGroup>
-      <FormFieldSet.Label htmlFor="target-patterns" required>
-        Target Patterns
-      </FormFieldSet.Label>
+      <FormFieldSet.Label htmlFor="target-patterns">Target Patterns</FormFieldSet.Label>
       <div className="flex gap-4">
         <div className="flex-[2.5]">
-          <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" autoFocus />
+          <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" />
           <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%] mt-2">
             Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
           </Text>
+          <div className="mt-2">
+            {patterns.map(pattern => (
+              <Badge
+                variant="outline"
+                theme={pattern.option === 'Include' ? 'success' : 'destructive'}
+                key={pattern.pattern}
+                pattern={pattern}
+                className="mx-1">
+                {pattern.pattern}
+                <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
+                  <Icon name="x-mark" size={12} className="text-current" />
+                </button>
+              </Badge>
+            ))}
+          </div>
         </div>
         <Button
           variant="split"
           type="button"
           className="pl-0 pr-0 min-w-28"
+          onClick={handleAddPattern}
           dropdown={
             <DropdownMenu key="dropdown-menu">
               <span>
@@ -144,23 +177,77 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
   watch,
   setValue,
   bypassOptions
-}) => (
-  <FormFieldSet.ControlGroup>
-    <FormFieldSet.Label htmlFor="bypassValue">Bypass list</FormFieldSet.Label>
-    <Select value={watch!('bypass')} onValueChange={value => setValue!('bypass', value, { shouldValidate: true })}>
-      <SelectTrigger id="bypass">
-        <SelectValue placeholder="Select users" />
-      </SelectTrigger>
-      <SelectContent>
-        {bypassOptions.map(option => (
-          <SelectItem key={option.value} value={option.value}>
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
-  </FormFieldSet.ControlGroup>
-)
+}) => {
+  const selectedBypassUsers = watch!('bypass') || []
+
+  const handleCheckboxChange = (option: string) => {
+    setValue!(
+      'bypass',
+      selectedBypassUsers.includes(option)
+        ? selectedBypassUsers.filter(item => item !== option) // Remove if already selected
+        : [...selectedBypassUsers, option],
+      { shouldValidate: true }
+    )
+  }
+  return (
+    <FormFieldSet.ControlGroup>
+      <FormFieldSet.Label htmlFor="bypassValue">Bypass list</FormFieldSet.Label>
+      {/* <Select>
+        <SelectTrigger id="bypass">
+          <SelectValue
+            placeholder="Select users"
+            value={selectedBypassUsers.length > 0 ? `${selectedBypassUsers.length} user(s) selected` : 'Select users'}
+          />
+        </SelectTrigger>
+
+        <SelectContent>
+          {bypassOptions.map(option => {
+            return (
+              <SelectItem value={option.display_name}>
+                <FormFieldSet.Option
+                  className="min-h-6"
+                  control={
+                    <Checkbox
+                      id={option.id}
+                      checked={selectedBypassUsers.includes(option.display_name)}
+                      onCheckedChange={() => handleCheckboxChange(option.display_name)}
+                    />
+                  }
+                  id={option.id}
+                  label={option.display_name}
+                />
+              </SelectItem>
+            )
+          })}
+        </SelectContent>
+      </Select> */}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger>
+          <div className=" flex justify-between border rounded-md items-center">
+            <Button variant="ghost w-full">
+              <Text color="tertiaryBackground">Select Users</Text>
+            </Button>
+            <Icon name="chevron-down" className="mr-2 transition-transform duration-200 data-[state=open]:rotate-180" />
+          </div>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
+          <DropdownMenuLabel>Users</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {bypassOptions.map(option => {
+            return (
+              <DropdownMenuCheckboxItem
+                onCheckedChange={() => handleCheckboxChange(option.display_name)}
+                checked={selectedBypassUsers.includes(option.display_name)}>
+                {option.display_name}
+              </DropdownMenuCheckboxItem>
+            )
+          })}
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </FormFieldSet.ControlGroup>
+  )
+}
 
 export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
   <FormFieldSet.ControlGroup className="min-h-8">

@@ -29,6 +29,11 @@ export interface FieldProps {
 }
 
 export interface BypassUsersList {
-  value: string
-  label: string
+  id: number
+  uid: string
+  display_name: string
+  email: string
+  type: 'user' | 'service' | 'serviceaccount'
+  created: number
+  updated: number
 }

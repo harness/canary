@@ -18,13 +18,14 @@ import {
   RepoBranchSettingsFormFields,
   repoBranchSettingsFormSchema
 } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
-import { mockBypassUserData } from './mocks/repo-branch-settings/mockBypassUserData'
+import { mockBypassUserData, mockStatusChecks } from './mocks/repo-branch-settings/mockData'
 
-export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handleRuleUpdate; principals }> = ({
-  isLoading = false,
-  handleRuleUpdate,
+export const RepoBranchSettingsRulesPage: React.FC<{
+  isLoading?: boolean
+  handleRuleUpdate
   principals
-}) => {
+  recentStatusChecks
+}> = ({ isLoading = false, handleRuleUpdate, principals, recentStatusChecks }) => {
   const {
     register,
     handleSubmit,
@@ -54,7 +55,7 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
       id: rule.id,
       checked: false,
       submenu: [],
-      selectOptions: ''
+      selectOptions: []
     }))
   )
 
@@ -92,7 +93,11 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
             setValue={setValue}
             watch={watch}
           />
-          <BranchSettingsRuleListField rules={rules} dispatch={dispatch} />
+          <BranchSettingsRuleListField
+            rules={rules}
+            dispatch={dispatch}
+            recentStatusChecks={recentStatusChecks || mockStatusChecks}
+          />
 
           <FormFieldSet.Root>
             <FormFieldSet.ControlGroup>
@@ -120,5 +125,3 @@ export const RepoBranchSettingsRulesPage: React.FC<{ isLoading?: boolean; handle
     </>
   )
 }
-
-// || mockBypassUserData

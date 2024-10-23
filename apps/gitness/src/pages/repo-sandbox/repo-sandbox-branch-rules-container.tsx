@@ -6,13 +6,22 @@ import {
   RuleAddErrorResponse,
   useListPrincipalsQuery,
   ListPrincipalsOkResponse,
-  ListPrincipalsErrorResponse
+  ListPrincipalsErrorResponse,
+  useListStatusCheckRecentQuery,
+  ListStatusCheckRecentOkResponse,
+  ListStatusCheckRecentErrorResponse
 } from '@harnessio/code-service-client'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
   const repoRef = useGetRepoRef()
 
   const transformFormOutput = formOutput => {
+    // Create a rules map for efficient lookups
+    const rulesMap = formOutput.rules.reduce((acc, rule) => {
+      acc[rule.id] = rule
+      return acc
+    }, {})
+
     const { include, exclude } = formOutput.patterns.reduce(
       (acc, currentPattern) => {
         if (currentPattern.option === 'Include') {
@@ -43,21 +52,18 @@ export const RepoBranchSettingsRulesPageContainer = () => {
         pullreq: {
           approvals: {
             require_code_owners: true,
-            require_latest_commit: formOutput.rules.find(rule => rule.id === 'require_latest_commit')?.checked || false,
-            require_no_change_request:
-              formOutput.rules.find(rule => rule.id === 'require_no_change_request')?.checked || false
+            require_latest_commit: rulesMap['require_latest_commit']?.checked || false,
+            require_no_change_request: rulesMap['require_no_change_request']?.checked || false
           },
           comments: {
-            require_resolve_all: formOutput.rules.find(rule => rule.id === 'comments')?.checked || false
+            require_resolve_all: rulesMap['comments']?.checked || false
           },
           merge: {
-            strategies_allowed: formOutput.rules.find(rule => rule.id === 'merge')?.submenu || [],
-            delete_branch: formOutput.rules.find(rule => rule.id === 'delete_branch')?.checked || false
+            strategies_allowed: rulesMap['merge']?.submenu || [],
+            delete_branch: rulesMap['delete_branch']?.checked || false
           },
           status_checks: {
-            require_identifiers: formOutput.rules.find(rule => rule.id === 'status_checks')?.selectOptions
-              ? [formOutput.rules.find(rule => rule.id === 'status_checks')?.selectOptions]
-              : []
+            require_identifiers: rulesMap['status_checks']?.selectOptions || []
           }
         }
       }
@@ -90,6 +96,11 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     // }
   )
 
+  const { data: recentStatusChecks } = useListStatusCheckRecentQuery({
+    repo_ref: repoRef,
+    queryParams: {}
+  })
+
   const handleRuleUpdate = data => {
     const formattedData = transformFormOutput(data)
     addRule({
@@ -97,5 +108,11 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     })
   }
 
-  return <RepoBranchSettingsRulesPage handleRuleUpdate={handleRuleUpdate} principals={principals} />
+  return (
+    <RepoBranchSettingsRulesPage
+      handleRuleUpdate={handleRuleUpdate}
+      principals={principals}
+      recentStatusChecks={recentStatusChecks}
+    />
+  )
 }

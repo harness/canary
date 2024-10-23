@@ -251,7 +251,11 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
   </FormFieldSet.ControlGroup>
 )
 
-export const BranchSettingsRuleListField: React.FC<{ rules: Rule[]; dispatch: Dispatch }> = ({ rules, dispatch }) => {
+export const BranchSettingsRuleListField: React.FC<{
+  rules: Rule[]
+  dispatch: Dispatch
+  recentStatusChecks: string[]
+}> = ({ rules, dispatch, recentStatusChecks }) => {
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
     dispatch({ type: ActionType.TOGGLE_RULE, ruleId, checked })
   }
@@ -260,8 +264,8 @@ export const BranchSettingsRuleListField: React.FC<{ rules: Rule[]; dispatch: Di
     dispatch({ type: ActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, selectedOptions: string) => {
-    dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, selectedOptions })
+  const handleSelectChangeForRule = (ruleId: string, /*selectedOptions: string[]*/ checkName: string) => {
+    dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, /*selectedOptions,*/ checkName })
   }
 
   return (
@@ -305,21 +309,37 @@ export const BranchSettingsRuleListField: React.FC<{ rules: Rule[]; dispatch: Di
           )}
 
           {rule.hasSelect && rules[index].checked && (
-            <div className="pl-8 mb-4 mt-2">
-              <Select
-                value={rules[index].selectOptions}
-                onValueChange={value => handleSelectChangeForRule(rule.id, value)}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select status checks" />
-                </SelectTrigger>
-                <SelectContent>
-                  {rule.selectOptions.map(option => (
-                    <SelectItem key={option.id} value={option.id}>
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <div className="pl-8 mb-4 mt-2 w-full">
+              <DropdownMenu>
+                <DropdownMenuTrigger className="w-full">
+                  <div className="flex justify-between border rounded-md items-center">
+                    <Button variant="ghost w-full">
+                      <Text color={rules[index].selectOptions?.length ? 'primary' : 'tertiaryBackground'}>
+                        {rules[index].selectOptions?.length
+                          ? rules[index].selectOptions.join(', ')
+                          : 'Select Status Checks'}
+                      </Text>
+                    </Button>
+                    <Icon name="chevron-down" className="mr-2" />
+                  </div>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
+                  <DropdownMenuLabel>Status Checks</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+
+                  {recentStatusChecks.map(checks => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={checks}
+                        checked={rules[index].selectOptions?.includes(checks)}
+                        onCheckedChange={() => handleSelectChangeForRule(rule.id, checks)}
+                        onSelect={e => e.preventDefault()}>
+                        {checks}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           )}
         </div>

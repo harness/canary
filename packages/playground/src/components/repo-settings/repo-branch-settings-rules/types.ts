@@ -5,7 +5,7 @@ export type Rule = {
   id: string
   checked: boolean
   submenu: string[]
-  selectOptions: string
+  selectOptions: string[]
 }
 
 export enum ActionType {
@@ -17,7 +17,7 @@ export enum ActionType {
 export type Action =
   | { type: ActionType.TOGGLE_RULE; ruleId: string; checked: boolean }
   | { type: ActionType.TOGGLE_SUBMENU; ruleId: string; submenuId: string; checked: boolean }
-  | { type: ActionType.SET_SELECT_OPTION; ruleId: string; selectedOptions: string }
+  | { type: ActionType.SET_SELECT_OPTION; ruleId: string; /*selectedOptions: string[];*/ checkName: string }
 
 export type Dispatch = (action: Action) => void
 

@@ -27,3 +27,5 @@ export const mockBypassUserData = [
     updated: 1729097885331
   }
 ]
+
+export const mockStatusChecks = ['Build Test', 'Lint Test', 'Pre-commit Checks']

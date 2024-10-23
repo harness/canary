@@ -20,7 +20,7 @@ export const repoBranchSettingsFormSchema = z.object({
       id: z.string(),
       checked: z.boolean(),
       submenu: z.array(z.string()),
-      selectOptions: z.string()
+      selectOptions: z.array(z.string())
     })
   )
 })

@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, useEffect } from 'react'
 import { Button, ButtonGroup, Icon, useZodForm, Spacer, Text } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
@@ -32,14 +32,16 @@ interface RepoBranchSettingsRulesPageProps {
   principals?: BypassUsersList[]
   recentStatusChecks?: string[]
   apiErrors?: BranchSettingsErrors
+  addRuleSuccess: boolean
 }
 
 export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPageProps> = ({
-  isLoading = false,
+  isLoading,
   handleRuleUpdate,
   principals,
   recentStatusChecks,
-  apiErrors
+  apiErrors,
+  addRuleSuccess
 }) => {
   const {
     register,
@@ -82,6 +84,13 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
     handleRuleUpdate(formData)
     reset()
   }
+  useEffect(() => {
+    if (isSubmitted && addRuleSuccess) {
+      setTimeout(() => {
+        setIsSubmitted(false)
+      }, 1000)
+    }
+  }, [isSubmitted, addRuleSuccess])
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -109,7 +118,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           />
           <BranchSettingsRuleListField rules={rules} dispatch={dispatch} recentStatusChecks={recentStatusChecks} />
 
-          {apiErrors && (
+          {apiErrors && (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule) && (
             <>
               <Spacer size={2} />
               <Text size={1} className="text-destructive">
@@ -118,10 +127,10 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
             </>
           )}
 
-          <FormFieldSet.Root>
+          <FormFieldSet.Root className="mt-0">
             <FormFieldSet.ControlGroup>
               <ButtonGroup.Root>
-                {!isSubmitted ? (
+                {!isSubmitted || !addRuleSuccess ? (
                   <>
                     <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                       {!isLoading ? 'Create rule' : 'Creating rule...'}

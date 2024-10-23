@@ -1,4 +1,4 @@
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue, Merge } from 'react-hook-form'
+import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form'
 import { repoBranchSettingsFormSchema } from './repo-branch-settings-rules-schema'
 import { z } from 'zod'
 

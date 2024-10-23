@@ -99,19 +99,20 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
             Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
           </Text>
           <div className="mt-2">
-            {patterns.map(pattern => (
-              <Badge
-                variant="outline"
-                theme={pattern.option === 'Include' ? 'success' : 'destructive'}
-                key={pattern.pattern}
-                pattern={pattern}
-                className="mx-1">
-                {pattern.pattern}
-                <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
-                  <Icon name="x-mark" size={12} className="text-current" />
-                </button>
-              </Badge>
-            ))}
+            {patterns &&
+              patterns.map(pattern => (
+                <Badge
+                  variant="outline"
+                  theme={pattern.option === 'Include' ? 'success' : 'destructive'}
+                  key={pattern.pattern}
+                  pattern={pattern}
+                  className="mx-1">
+                  {pattern.pattern}
+                  <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
+                    <Icon name="x-mark" size={12} className="text-current" />
+                  </button>
+                </Badge>
+              ))}
           </div>
         </div>
         <Button
@@ -207,16 +208,17 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
         <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
           <DropdownMenuLabel>Users</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          {bypassOptions.map(option => {
-            return (
-              <DropdownMenuCheckboxItem
-                onCheckedChange={() => handleCheckboxChange(option.id)}
-                checked={selectedBypassUsers.includes(option.id)}
-                onSelect={event => event.preventDefault()}>
-                {option.display_name}
-              </DropdownMenuCheckboxItem>
-            )
-          })}
+          {bypassOptions &&
+            bypassOptions.map(option => {
+              return (
+                <DropdownMenuCheckboxItem
+                  onCheckedChange={() => handleCheckboxChange(option.id)}
+                  checked={selectedBypassUsers.includes(option.id)}
+                  onSelect={event => event.preventDefault()}>
+                  {option.display_name}
+                </DropdownMenuCheckboxItem>
+              )
+            })}
         </DropdownMenuContent>
       </DropdownMenu>
     </FormFieldSet.ControlGroup>

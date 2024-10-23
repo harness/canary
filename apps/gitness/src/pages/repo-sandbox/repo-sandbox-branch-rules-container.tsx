@@ -69,7 +69,12 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return transformed
   }
 
-  const { mutate: addRule, error: addRuleError } = useRuleAddMutation({ repo_ref: repoRef })
+  const {
+    mutate: addRule,
+    error: addRuleError,
+    isSuccess: addRuleSuccess,
+    isLoading: addingRule
+  } = useRuleAddMutation({ repo_ref: repoRef })
 
   const { data: principals, error: principalsError } = useListPrincipalsQuery({
     queryParams: { page: 1, limit: 100, type: 'user' }
@@ -99,6 +104,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       principals={principals as BypassUsersList[]}
       recentStatusChecks={recentStatusChecks}
       apiErrors={errors}
+      addRuleSuccess={addRuleSuccess}
+      isLoading={addingRule}
     />
   )
 }

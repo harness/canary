@@ -3,11 +3,6 @@ import {
   Input,
   Textarea,
   Text,
-  Select,
-  SelectTrigger,
-  SelectItem,
-  SelectValue,
-  SelectContent,
   DropdownMenu,
   DropdownMenuItem,
   DropdownMenuTrigger,
@@ -25,7 +20,7 @@ import {
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
-import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType } from './types'
+import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType, MergeStrategy } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -254,7 +249,7 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
 export const BranchSettingsRuleListField: React.FC<{
   rules: Rule[]
   dispatch: Dispatch
-  recentStatusChecks: string[]
+  recentStatusChecks?: string[]
 }> = ({ rules, dispatch, recentStatusChecks }) => {
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
     dispatch({ type: ActionType.TOGGLE_RULE, ruleId, checked })
@@ -264,8 +259,8 @@ export const BranchSettingsRuleListField: React.FC<{
     dispatch({ type: ActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
   }
 
-  const handleSelectChangeForRule = (ruleId: string, /*selectedOptions: string[]*/ checkName: string) => {
-    dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, /*selectedOptions,*/ checkName })
+  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
+    dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, checkName })
   }
 
   return (
@@ -297,7 +292,7 @@ export const BranchSettingsRuleListField: React.FC<{
                   control={
                     <Checkbox
                       id={subOption.id}
-                      checked={rules[index].submenu?.includes(subOption.id)}
+                      checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
                       onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
                     />
                   }
@@ -327,7 +322,7 @@ export const BranchSettingsRuleListField: React.FC<{
                   <DropdownMenuLabel>Status Checks</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
-                  {recentStatusChecks.map(checks => {
+                  {recentStatusChecks?.map(checks => {
                     return (
                       <DropdownMenuCheckboxItem
                         key={checks}

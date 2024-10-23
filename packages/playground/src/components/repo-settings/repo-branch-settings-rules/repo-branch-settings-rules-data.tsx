@@ -18,12 +18,7 @@ export const branchRules = [
     id: 'status_checks',
     label: 'Require status checks to pass',
     description: 'Selected status checks must pass before a pull request can be merged',
-    hasSelect: true,
-    selectOptions: [
-      { id: 'test-check', label: 'Test Check' },
-      { id: 'build-check', label: 'Build Check' },
-      { id: 'lint-check', label: 'Lint Check' }
-    ]
+    hasSelect: true
   },
   {
     id: 'merge',

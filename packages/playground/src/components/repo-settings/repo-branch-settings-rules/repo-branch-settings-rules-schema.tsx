@@ -19,10 +19,8 @@ export const repoBranchSettingsFormSchema = z.object({
     z.object({
       id: z.string(),
       checked: z.boolean(),
-      submenu: z.array(z.string()),
+      submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
       selectOptions: z.array(z.string())
     })
   )
 })
-
-export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>

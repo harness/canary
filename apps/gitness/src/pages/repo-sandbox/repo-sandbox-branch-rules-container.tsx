@@ -1,28 +1,25 @@
-import { RepoBranchSettingsRulesPage } from '@harnessio/playground'
+import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, Rule, BypassUsersList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+
 import {
   useRuleAddMutation,
-  RuleAddOkResponse,
-  RuleAddErrorResponse,
   useListPrincipalsQuery,
-  ListPrincipalsOkResponse,
-  ListPrincipalsErrorResponse,
   useListStatusCheckRecentQuery,
-  ListStatusCheckRecentOkResponse,
-  ListStatusCheckRecentErrorResponse
+  EnumMergeMethod,
+  EnumRuleState,
+  RuleAddRequestBody
 } from '@harnessio/code-service-client'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
   const repoRef = useGetRepoRef()
 
-  const transformFormOutput = formOutput => {
-    // Create a rules map for efficient lookups
-    const rulesMap = formOutput.rules.reduce((acc, rule) => {
+  const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) => {
+    const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
       acc[rule.id] = rule
       return acc
     }, {})
 
-    const { include, exclude } = formOutput.patterns.reduce(
+    const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
       (acc, currentPattern) => {
         if (currentPattern.option === 'Include') {
           acc.include.push(currentPattern.pattern)
@@ -34,11 +31,11 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       { include: [], exclude: [] }
     )
 
-    const transformed = {
-      identifier: formOutput.identifier || '',
+    const transformed: RuleAddRequestBody = {
+      identifier: formOutput.identifier,
       type: 'branch',
-      description: formOutput.description || '',
-      state: formOutput.state === true ? 'active' : 'disabled',
+      description: formOutput.description,
+      state: (formOutput.state === true ? 'active' : 'disabled') as EnumRuleState,
       pattern: {
         default: formOutput.default || false,
         include,
@@ -59,7 +56,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
             require_resolve_all: rulesMap['comments']?.checked || false
           },
           merge: {
-            strategies_allowed: rulesMap['merge']?.submenu || [],
+            strategies_allowed: (rulesMap['merge']?.submenu || []) as EnumMergeMethod[],
             delete_branch: rulesMap['delete_branch']?.checked || false
           },
           status_checks: {
@@ -72,47 +69,36 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return transformed
   }
 
-  const { mutate: addRule } = useRuleAddMutation(
-    { repo_ref: repoRef },
-    {
-      onSuccess: (data: RuleAddOkResponse) => {
-        console.log('successsful call', data)
-      },
-      onError: (error: RuleAddErrorResponse) => {
-        console.error(error)
-      }
-    }
-  )
+  const { mutate: addRule, error: addRuleError } = useRuleAddMutation({ repo_ref: repoRef })
 
-  const { data: principals } = useListPrincipalsQuery(
-    { queryParams: { page: 1, limit: 100, type: 'user' } }
-    // {
-    //   onSuccess: data => {
-    //     console.log('Fetched principals:', data)
-    //   },
-    //   onError: error => {
-    //     console.error('Error fetching principals:', error)
-    //   }
-    // }
-  )
+  const { data: principals, error: principalsError } = useListPrincipalsQuery({
+    queryParams: { page: 1, limit: 100, type: 'user' }
+  })
 
-  const { data: recentStatusChecks } = useListStatusCheckRecentQuery({
+  const { data: recentStatusChecks, error: statusChecksError } = useListStatusCheckRecentQuery({
     repo_ref: repoRef,
     queryParams: {}
   })
 
-  const handleRuleUpdate = data => {
+  const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
     addRule({
       body: formattedData
     })
   }
 
+  const errors = {
+    principals: principalsError?.message || null,
+    statusChecks: statusChecksError?.message || null,
+    addRule: addRuleError?.message || null
+  }
+
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
-      principals={principals}
+      principals={principals as BypassUsersList[]}
       recentStatusChecks={recentStatusChecks}
+      apiErrors={errors}
     />
   )
 }

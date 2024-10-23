@@ -14,8 +14,7 @@ export const branchSettingsReducer = (state: Rule[], action: Action): Rule[] => 
         }
         return rule
       })
-    // case ActionType.SET_SELECT_OPTION:
-    //   return state.map(rule => (rule.id === action.ruleId ? { ...rule, selectOptions: action.selectedOptions } : rule))
+
     case ActionType.SET_SELECT_OPTION:
       return state.map(rule =>
         rule.id === action.ruleId

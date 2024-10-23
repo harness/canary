@@ -89,7 +89,7 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
           )}
         </FormFieldSet.ControlGroup>
 
-        {apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity') && (
+        {apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
           <>
             <Spacer size={2} />
             <Text size={1} className="text-destructive">

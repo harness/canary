@@ -53,7 +53,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           isRepoUpdateSuccess={isRepoUpdateSuccess}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralRules rules={rules} />
+        <RepoSettingsGeneralRules rules={rules} apiError={apiError} />
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}

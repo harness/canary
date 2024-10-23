@@ -1,7 +1,8 @@
 import React from 'react'
+import { RuleDataType } from './types'
 import { Button, ListActions, SearchBox, Icon, Text, StackedList } from '@harnessio/canary'
 
-const Title = ({ title, iconName }: { title: string; iconName: 'green-tick' | 'cancel-grey' }) => {
+const Title = ({ title, iconName }: { title: string | undefined; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
     <div className="flex gap-2 items-center">
       {<Icon name={iconName} />}
@@ -10,7 +11,34 @@ const Title = ({ title, iconName }: { title: string; iconName: 'green-tick' | 'c
   )
 }
 
-export const RepoSettingsGeneralRules = () => {
+const Description = ({
+  targetPatternsCount,
+  rulesAppliedCount,
+  bypassAllowed
+}: {
+  targetPatternsCount: number
+  rulesAppliedCount: number
+  bypassAllowed: boolean
+}) => {
+  return (
+    <div className="pl-[24px]">
+      {targetPatternsCount} target patterns | {rulesAppliedCount} rules applied |{' '}
+      {bypassAllowed ? (
+        <>
+          <Icon name="tick" className="text-success inline" size={15} />
+          <span> bypass allowed</span>
+        </>
+      ) : (
+        <>
+          <Icon name="x-mark" className="text-destructive inline" size={15} />
+          <span> bypass not allowed</span>
+        </>
+      )}
+    </div>
+  )
+}
+
+export const RepoSettingsGeneralRules = ({ rules }: { rules: RuleDataType[] | null }) => {
   return (
     <>
       <Text size={4} weight="medium">
@@ -29,43 +57,35 @@ export const RepoSettingsGeneralRules = () => {
       {/* <Spacer size={6} /> */}
 
       <StackedList.Root>
-        <StackedList.Item>
-          <StackedList.Field
-            title={<Title title="testtt" iconName="green-tick" />}
-            description={
-              <div className="pl-[24px]">
-                3 target patterns | 2 rules applied | <Icon name="tick" className="text-success inline" size={15} />{' '}
-                bypass allowed
-              </div>
-            }
-          />
-          <StackedList.Field
-            label
-            secondary
-            title={
-              <div className="flex gap-1.5 items-center justify-end">
-                <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-              </div>
-            }
-            right
-          />
-        </StackedList.Item>
-        <StackedList.Item>
-          <StackedList.Field
-            title={<Title title="test" iconName="cancel-grey" />}
-            description={<div className="pl-[24px]">0 target patterns | 1 rules applied</div>}
-          />
-          <StackedList.Field
-            label
-            secondary
-            title={
-              <div className="flex gap-1.5 items-center justify-end">
-                <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-              </div>
-            }
-            right
-          />
-        </StackedList.Item>
+        {rules &&
+          rules.map(rule => {
+            return (
+              <StackedList.Item key={rule.identifier}>
+                <StackedList.Field
+                  title={
+                    <Title title={rule.identifier} iconName={rule.state === 'active' ? 'green-tick' : 'cancel-grey'} />
+                  }
+                  description={
+                    <Description
+                      targetPatternsCount={rule.targetPatternsCount ?? 0}
+                      rulesAppliedCount={rule.rulesAppliedCount ?? 0}
+                      bypassAllowed={rule.bypassAllowed ?? false}
+                    />
+                  }
+                />
+                <StackedList.Field
+                  label
+                  secondary
+                  title={
+                    <div className="flex gap-1.5 items-center justify-end">
+                      <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
+                    </div>
+                  }
+                  right
+                />
+              </StackedList.Item>
+            )
+          })}
       </StackedList.Root>
     </>
   )

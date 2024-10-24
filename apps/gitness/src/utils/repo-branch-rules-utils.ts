@@ -5,7 +5,13 @@ import {
   PatternsButtonType,
   MergeStrategy
 } from '@harnessio/playground'
-import { EnumMergeMethod, EnumRuleState, RuleAddRequestBody, RuleGetOkResponse } from '@harnessio/code-service-client'
+import {
+  EnumMergeMethod,
+  EnumRuleState,
+  OpenapiRuleDefinition,
+  RuleAddRequestBody,
+  RuleGetOkResponse
+} from '@harnessio/code-service-client'
 
 const ruleIds = [
   BranchRuleId.REQUIRE_LATEST_COMMIT,
@@ -18,13 +24,14 @@ const ruleIds = [
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = definition => {
+const extractBranchRules = (data: RuleGetOkResponse) => {
   const rules = []
 
   for (const rule of ruleIds) {
     let checked = false
     let submenu: EnumMergeMethod[] = []
     let selectOptions: string[] = []
+    const definition = data?.definition as OpenapiRuleDefinition
 
     switch (rule) {
       case BranchRuleId.REQUIRE_LATEST_COMMIT:
@@ -37,11 +44,11 @@ const extractBranchRules = definition => {
         checked = definition?.pullreq?.comments?.require_resolve_all || false
         break
       case BranchRuleId.STATUS_CHECKS:
-        checked = definition?.pullreq?.status_checks?.require_identifiers?.length > 0
+        checked = (definition?.pullreq?.status_checks?.require_identifiers?.length ?? 0) > 0
         selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
         break
       case BranchRuleId.MERGE:
-        checked = definition?.pullreq?.merge?.strategies_allowed?.length > 0
+        checked = (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
         submenu = definition?.pullreq?.merge?.strategies_allowed || []
         break
       case BranchRuleId.DELETE_BRANCH:
@@ -70,7 +77,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse) => {
     ...excludedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
   ]
 
-  const rules = extractBranchRules(data.definition)
+  const rules = extractBranchRules(data)
 
   return {
     identifier: data.identifier || '',

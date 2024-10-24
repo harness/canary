@@ -94,8 +94,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     updateRule: updateRuleError?.message || null
   }
 
-  // console.log(preSetRuleData)
-
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}

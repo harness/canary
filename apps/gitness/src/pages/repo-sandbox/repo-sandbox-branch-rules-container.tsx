@@ -10,17 +10,21 @@ import {
   RuleAddRequestBody,
   useRuleGetQuery,
   RuleGetOkResponse,
-  RuleGetErrorResponse
+  RuleGetErrorResponse,
+  useRuleUpdateMutation,
+  RuleUpdateOkResponse,
+  RuleUpdateErrorResponse
 } from '@harnessio/code-service-client'
-import { useSearchParams } from 'react-router-dom'
-import { get } from 'lodash-es'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
   const [preSetRuleData, setPreSetRuleData] = useState()
-
+  const navigate = useNavigate()
   const repoRef = useGetRepoRef()
-  const [searchParams] = useSearchParams()
-  const identifier = searchParams.get('identifier')
+  const spaceId = useGetSpaceURLParam()
+  const { identifier } = useParams()
+
   const ruleIds = [
     'require_latest_commit',
     'require_no_change_request',
@@ -36,7 +40,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       {
         onSuccess: (data: RuleGetOkResponse) => {
           const transformedData = transformDataFromApi(data)
-          console.log('rules are here!!', extractBranchRules(data.definition))
           setPreSetRuleData(transformedData)
           // setApiError(null)
         },
@@ -130,9 +133,22 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const {
     mutate: addRule,
     error: addRuleError,
-    isSuccess: addRuleSuccess,
+    // isSuccess: addRuleSuccess,
     isLoading: addingRule
-  } = useRuleAddMutation({ repo_ref: repoRef })
+  } = useRuleAddMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        const repoName = repoRef.split('/')[1]
+
+        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+      },
+      onError: (error: RuleGetErrorResponse) => {
+        console.error('Error fetching rule:', error)
+        // setApiError(error.message || 'Error fetching rule')
+      }
+    }
+  )
 
   const { data: principals, error: principalsError } = useListPrincipalsQuery({
     queryParams: { page: 1, limit: 100, type: 'user' }
@@ -143,11 +159,48 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     queryParams: {}
   })
 
+  const {
+    mutate: updateRule,
+    error: updateRuleError,
+    isSuccess: updateRuleSuccess,
+    isLoading: updatingRule
+  } = useRuleUpdateMutation(
+    { repo_ref: repoRef, rule_identifier: identifier! },
+    {
+      onSuccess: () => {
+        const repoName = repoRef.split('/')[1]
+
+        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+      },
+      onError: (error: RuleGetErrorResponse) => {
+        console.error('Error fetching rule:', error)
+        // setApiError(error.message || 'Error fetching rule')
+      }
+    }
+  )
+
+  // const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
+  //   const formattedData = transformFormOutput(data)
+  //   addRule({
+  //     body: formattedData
+  //   })
+  // }
   const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
-    addRule({
-      body: formattedData
-    })
+
+    if (identifier) {
+      // Update existing rule
+      updateRule({
+        // repo_ref: repoRef,
+        // rule_identifier: identifier,
+        body: formattedData
+      })
+    } else {
+      // Add new rule
+      addRule({
+        body: formattedData
+      })
+    }
   }
 
   const errors = {
@@ -164,6 +217,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       let submenu: string[] = []
       let selectOptions: string[] = []
 
+      console.log('cinfirmong ehat strategies allowed looks like?', definition?.pullreq?.merge?.strategies_allowed)
+
       switch (rule) {
         case 'require_latest_commit':
           checked = definition?.pullreq?.approvals?.require_latest_commit || false
@@ -179,7 +234,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
           selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
           break
         case 'merge':
-          checked = definition?.pullreq?.merge?.strategies_allowed > 0
+          checked = definition?.pullreq?.merge?.strategies_allowed?.length > 0
           submenu = definition?.pullreq?.merge?.strategies_allowed || []
           break
         case 'delete_branch':
@@ -200,7 +255,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     return rules
   }
 
-  console.log('in general container', preSetRuleData)
+  console.log('in branch rules general container', preSetRuleData)
 
   return (
     <RepoBranchSettingsRulesPage
@@ -208,7 +263,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       principals={principals as BypassUsersList[]}
       recentStatusChecks={recentStatusChecks}
       apiErrors={errors}
-      addRuleSuccess={addRuleSuccess}
+      // addRuleSuccess={addRuleSuccess}
       isLoading={addingRule}
       preSetRuleData={preSetRuleData}
     />

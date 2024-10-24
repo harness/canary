@@ -316,11 +316,13 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   const handleRuleClick = identifier => {
     const repoName = repoRef.split('/')[1]
-    const queryParams = new URLSearchParams({
-      identifier: identifier
-    }).toString()
+    // const queryParams = new URLSearchParams({
+    //   identifier: identifier
+    // }).toString()
 
-    navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules?${queryParams}`)
+    const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/${identifier}`
+
+    navigate(url)
   }
   const loadingStates = {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,

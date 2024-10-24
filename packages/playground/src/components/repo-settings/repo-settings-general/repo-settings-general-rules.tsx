@@ -1,7 +1,6 @@
 import React from 'react'
 import { RuleDataType, ErrorTypes } from './types'
 import { Button, ListActions, SearchBox, Icon, Text, StackedList, Spacer } from '@harnessio/canary'
-import { Link } from 'react-router-dom'
 
 const Title = ({ title, iconName }: { title: string | undefined; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
@@ -48,7 +47,7 @@ export const RepoSettingsGeneralRules = ({
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
 }) => {
-  console.log('rules from compoenents', rules)
+  // console.log('rules from compoenents', rules)
   return (
     <>
       <Text size={4} weight="medium">

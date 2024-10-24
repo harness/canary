@@ -47,12 +47,12 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
   </StackedList.Root>
 )
 
-export const BranchSettingsRuleNameField: React.FC<FieldProps> = ({ register, errors }) => (
+export const BranchSettingsRuleNameField: React.FC<FieldProps> = ({ register, errors, disabled }) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="identifier" required>
       Name
     </FormFieldSet.Label>
-    <Input id="name" {...register!('identifier')} placeholder="Enter rule name" autoFocus />
+    <Input id="name" {...register!('identifier')} placeholder="Enter rule name" autoFocus disabled={disabled} />
     {errors!.identifier && (
       <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.identifier.message?.toString()}</FormFieldSet.Message>
     )}

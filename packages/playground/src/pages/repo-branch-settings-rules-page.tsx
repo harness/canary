@@ -33,7 +33,7 @@ interface RepoBranchSettingsRulesPageProps {
   principals?: BypassUsersList[]
   recentStatusChecks?: string[]
   apiErrors?: BranchSettingsErrors
-  addRuleSuccess: boolean
+  // addRuleSuccess: boolean
 }
 
 export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPageProps> = ({
@@ -42,10 +42,10 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   principals,
   recentStatusChecks,
   apiErrors,
-  addRuleSuccess,
+  // addRuleSuccess,
   preSetRuleData
 }) => {
-  console.log(preSetRuleData)
+  // console.log(preSetRuleData)
   const {
     register,
     handleSubmit,
@@ -79,22 +79,24 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
     }))
   )
 
+  console.log('rules shoud update every sibngle time', rules)
+
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
     const formData = { ...data, rules }
-    console.log(formData)
+    // console.log(formData)
     handleRuleUpdate(formData)
     reset()
   }
-  useEffect(() => {
-    if (isSubmitted && addRuleSuccess) {
-      setTimeout(() => {
-        setIsSubmitted(false)
-      }, 1000)
-    }
-  }, [isSubmitted, addRuleSuccess])
+  // useEffect(() => {
+  //   if (isSubmitted && addRuleSuccess) {
+  //     setTimeout(() => {
+  //       setIsSubmitted(false)
+  //     }, 1000)
+  //   }
+  // }, [isSubmitted, addRuleSuccess])
 
   useEffect(() => {
     if (preSetRuleData) {
@@ -103,7 +105,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
         description: preSetRuleData?.description || '',
         pattern: '',
         patterns: preSetRuleData?.patterns || [],
-        state: preSetRuleData?.state || true,
+        state: preSetRuleData?.state && true,
         default: preSetRuleData?.default || false,
         repo_owners: preSetRuleData?.repo_owners || false,
         bypass: preSetRuleData?.bypass || [],
@@ -126,7 +128,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormFieldSet.Root>
           <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleNameField register={register} errors={errors} />
+          <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!preSetRuleData} />
           <BranchSettingsRuleDescriptionField register={register} errors={errors} />
           <BranchSettingsRuleTargetPatternsField
             watch={watch}
@@ -160,7 +162,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           <FormFieldSet.Root className="mt-0">
             <FormFieldSet.ControlGroup>
               <ButtonGroup.Root>
-                {!isSubmitted || !addRuleSuccess ? (
+                {!isSubmitted /*|| !addRuleSuccess*/ ? (
                   <>
                     <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                       {!isLoading ? 'Create rule' : 'Creating rule...'}

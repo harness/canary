@@ -5,14 +5,9 @@ import {
   useRuleAddMutation,
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
-  // EnumMergeMethod,
-  // EnumRuleState,
-  // RuleAddRequestBody,
   useRuleGetQuery,
   RuleGetOkResponse,
   useRuleUpdateMutation
-  // RuleUpdateOkResponse,
-  // RuleUpdateErrorResponse
 } from '@harnessio/code-service-client'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

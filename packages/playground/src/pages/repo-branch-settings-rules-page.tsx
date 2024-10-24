@@ -1,5 +1,5 @@
-import React, { useState, useReducer, useEffect } from 'react'
-import { Button, ButtonGroup, Icon, useZodForm, Spacer, Text } from '@harnessio/canary'
+import React, { useReducer, useEffect } from 'react'
+import { Button, ButtonGroup, useZodForm, Spacer, Text } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
   BranchSettingsRuleToggleField,
@@ -18,7 +18,8 @@ import { repoBranchSettingsFormSchema } from '../components/repo-settings/repo-b
 import {
   RepoBranchSettingsFormFields,
   BypassUsersList,
-  ActionType
+  ActionType,
+  MergeStrategy
 } from '../components/repo-settings/repo-branch-settings-rules/types'
 
 type BranchSettingsErrors = {
@@ -103,7 +104,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
         payload: preSetRuleData?.rules?.map(rule => ({
           id: rule.id,
           checked: rule.checked || false,
-          submenu: rule.submenu || [],
+          submenu: (rule.submenu || []) as MergeStrategy[],
           selectOptions: rule.selectOptions || []
         }))
       })

@@ -78,23 +78,11 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
     }))
   )
 
-  console.log('rules shoud update every sibngle time', rules)
-
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
-
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
-    setIsSubmitted(true)
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
     reset()
   }
-  // useEffect(() => {
-  //   if (isSubmitted && addRuleSuccess) {
-  //     setTimeout(() => {
-  //       setIsSubmitted(false)
-  //     }, 1000)
-  //   }
-  // }, [isSubmitted, addRuleSuccess])
 
   useEffect(() => {
     if (preSetRuleData) {
@@ -161,7 +149,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           <FormFieldSet.Root className="mt-0">
             <FormFieldSet.ControlGroup>
               <ButtonGroup.Root>
-                {!isSubmitted /*|| !addRuleSuccess*/ ? (
+                {!preSetRuleData ? (
                   <>
                     <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                       {!isLoading ? 'Create rule' : 'Creating rule...'}
@@ -171,10 +159,14 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
                     </Button>
                   </>
                 ) : (
-                  <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                    Rule created&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
-                  </Button>
+                  <>
+                    <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                      {!isLoading ? 'Update rule' : 'Updating rule...'}
+                    </Button>
+                    <Button type="button" variant="outline" size="sm">
+                      Cancel
+                    </Button>
+                  </>
                 )}
               </ButtonGroup.Root>
             </FormFieldSet.ControlGroup>

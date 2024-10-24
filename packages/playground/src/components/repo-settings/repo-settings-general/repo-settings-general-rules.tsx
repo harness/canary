@@ -21,20 +21,23 @@ const Description = ({
   bypassAllowed: boolean
 }) => {
   return (
-    <div className="pl-[24px]">
-      {targetPatternsCount} target patterns | {rulesAppliedCount} rules applied |{' '}
+    // <div className="pl-[24px]">
+    <Text color="tertiaryBackground" as="div" className="pl-[24px] gap-1 flex items-center">
+      {targetPatternsCount} target patterns <span className="text-2xl text-tertiary">|</span> {rulesAppliedCount} rules
+      applied <span className="text-2xl text-tertiary">|</span>
       {bypassAllowed ? (
-        <>
-          <Icon name="tick" className="text-success inline" size={15} />
+        <div>
+          <Icon name="tick" className="text-success inline" size={12} />
           <span> bypass allowed</span>
-        </>
+        </div>
       ) : (
-        <>
-          <Icon name="x-mark" className="text-destructive inline" size={15} />
+        <div>
+          <Icon name="x-mark" className="text-destructive inline" size={12} />
           <span> bypass not allowed</span>
-        </>
+        </div>
       )}
-    </div>
+    </Text>
+    // </div>
   )
 }
 
@@ -47,7 +50,6 @@ export const RepoSettingsGeneralRules = ({
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
 }) => {
-  // console.log('rules from compoenents', rules)
   return (
     <>
       <Text size={4} weight="medium">

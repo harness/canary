@@ -47,7 +47,11 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
   </StackedList.Root>
 )
 
-export const BranchSettingsRuleNameField: React.FC<FieldProps> = ({ register, errors, disabled }) => (
+export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: boolean }> = ({
+  register,
+  errors,
+  disabled
+}) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="identifier" required>
       Name
@@ -94,33 +98,14 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   return (
     <FormFieldSet.ControlGroup>
       <FormFieldSet.Label htmlFor="target-patterns">Target Patterns</FormFieldSet.Label>
-      <div className="flex gap-4">
-        <div className="flex-[2.5]">
+      <div className="grid grid-rows-1 grid-cols-4">
+        <div className="col-span-3 mr-2">
           <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" />
-          <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%] mt-2">
-            Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
-          </Text>
-          <div className="mt-2">
-            {patterns &&
-              patterns.map(pattern => (
-                <Badge
-                  variant="outline"
-                  theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
-                  key={pattern.pattern}
-                  pattern={pattern}
-                  className="mx-1">
-                  {pattern.pattern}
-                  <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
-                    <Icon name="x-mark" size={12} className="text-current" />
-                  </button>
-                </Badge>
-              ))}
-          </div>
         </div>
         <Button
           variant="split"
           type="button"
-          className="pl-0 pr-0 min-w-28"
+          className="pl-0 pr-0 min-w-28 col-span-1"
           onClick={handleAddPattern}
           dropdown={
             <DropdownMenu key="dropdown-menu">
@@ -143,10 +128,35 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
           }>
           {selectedOption}
         </Button>
+        {/* <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%]">
+          Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
+        </Text> */}
+        {/* <div className="col-span-4"> */}
+
+        {/* </div> */}
 
         {errors!.pattern && (
           <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
         )}
+      </div>
+      <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%]">
+        Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
+      </Text>
+      <div className="flex flex-wrap">
+        {patterns &&
+          patterns.map(pattern => (
+            <Badge
+              variant="outline"
+              theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
+              key={pattern.pattern}
+              pattern={pattern}
+              className="mx-1 my-1 inline-flex">
+              {pattern.pattern}
+              <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
+                <Icon name="x-mark" size={12} className="text-current" />
+              </button>
+            </Badge>
+          ))}
       </div>
     </FormFieldSet.ControlGroup>
   )

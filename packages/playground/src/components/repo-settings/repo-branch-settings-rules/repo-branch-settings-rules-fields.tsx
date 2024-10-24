@@ -83,9 +83,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   const patterns = watch!('patterns') || []
 
   const handleAddPattern = () => {
-    console.log('here')
     const pattern = watch!('pattern')
-    console.log(pattern)
     if (pattern && !patterns.some(p => p.pattern === pattern)) {
       setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
       setValue!('pattern', '')

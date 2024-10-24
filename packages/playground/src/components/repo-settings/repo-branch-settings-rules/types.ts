@@ -48,3 +48,17 @@ export interface BypassUsersList {
   created: number
   updated: number
 }
+
+export enum BranchRuleId {
+  REQUIRE_LATEST_COMMIT = 'require_latest_commit',
+  REQUIRE_NO_CHANGE_REQUEST = 'require_no_change_request',
+  COMMENTS = 'comments',
+  STATUS_CHECKS = 'status_checks',
+  MERGE = 'merge',
+  DELETE_BRANCH = 'delete_branch'
+}
+
+export enum PatternsButtonType {
+  INCLUDE = 'Include',
+  EXCLUDE = 'Exclude'
+}

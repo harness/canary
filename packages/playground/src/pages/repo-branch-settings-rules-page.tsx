@@ -25,6 +25,7 @@ type BranchSettingsErrors = {
   principals: string | null
   statusChecks: string | null
   addRule: string | null
+  updateRule: string | null
 }
 
 interface RepoBranchSettingsRulesPageProps {
@@ -33,7 +34,7 @@ interface RepoBranchSettingsRulesPageProps {
   principals?: BypassUsersList[]
   recentStatusChecks?: string[]
   apiErrors?: BranchSettingsErrors
-  // addRuleSuccess: boolean
+  preSetRuleData?: RepoBranchSettingsFormFields | null
 }
 
 export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPageProps> = ({
@@ -42,10 +43,8 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   principals,
   recentStatusChecks,
   apiErrors,
-  // addRuleSuccess,
   preSetRuleData
 }) => {
-  // console.log(preSetRuleData)
   const {
     register,
     handleSubmit,
@@ -86,7 +85,6 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
     const formData = { ...data, rules }
-    // console.log(formData)
     handleRuleUpdate(formData)
     reset()
   }
@@ -150,14 +148,15 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           />
           <BranchSettingsRuleListField rules={rules} dispatch={dispatch} recentStatusChecks={recentStatusChecks} />
 
-          {apiErrors && (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule) && (
-            <>
-              <Spacer size={2} />
-              <Text size={1} className="text-destructive">
-                {apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule}
-              </Text>
-            </>
-          )}
+          {apiErrors &&
+            (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule || apiErrors.updateRule) && (
+              <>
+                <Spacer size={2} />
+                <Text size={1} className="text-destructive">
+                  {apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule}
+                </Text>
+              </>
+            )}
 
           <FormFieldSet.Root className="mt-0">
             <FormFieldSet.ControlGroup>

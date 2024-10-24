@@ -10,7 +10,6 @@ import {
   // RuleAddRequestBody,
   useRuleGetQuery,
   RuleGetOkResponse,
-  RuleGetErrorResponse,
   useRuleUpdateMutation
   // RuleUpdateOkResponse,
   // RuleUpdateErrorResponse
@@ -20,7 +19,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
-  const [preSetRuleData, setPreSetRuleData] = useState()
+  const [preSetRuleData, setPreSetRuleData] = useState<RepoBranchSettingsFormFields | null>(null)
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
   const spaceId = useGetSpaceURLParam()
@@ -34,10 +33,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
           const transformedData = transformDataFromApi(data)
           setPreSetRuleData(transformedData)
           // setApiError(null)
-        },
-        onError: (error: RuleGetErrorResponse) => {
-          console.error('Error fetching rule:', error)
-          // setApiError(error.message || 'Error fetching rule')
         }
       }
     )
@@ -46,7 +41,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const {
     mutate: addRule,
     error: addRuleError,
-    // isSuccess: addRuleSuccess,
     isLoading: addingRule
   } = useRuleAddMutation(
     { repo_ref: repoRef },
@@ -55,15 +49,12 @@ export const RepoBranchSettingsRulesPageContainer = () => {
         const repoName = repoRef.split('/')[1]
 
         navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
-      },
-      onError: (error: RuleGetErrorResponse) => {
-        console.error('Error fetching rule:', error)
-        // setApiError(error.message || 'Error fetching rule')
       }
     }
   )
 
   const { data: principals, error: principalsError } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user' }
   })
 
@@ -75,7 +66,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const {
     mutate: updateRule,
     error: updateRuleError,
-    isSuccess: updateRuleSuccess,
     isLoading: updatingRule
   } = useRuleUpdateMutation(
     { repo_ref: repoRef, rule_identifier: identifier! },
@@ -84,10 +74,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
         const repoName = repoRef.split('/')[1]
 
         navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
-      },
-      onError: (error: RuleGetErrorResponse) => {
-        console.error('Error fetching rule:', error)
-        // setApiError(error.message || 'Error fetching rule')
       }
     }
   )
@@ -98,8 +84,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     if (identifier) {
       // Update existing rule
       updateRule({
-        // repo_ref: repoRef,
-        // rule_identifier: identifier,
         body: formattedData
       })
     } else {
@@ -113,10 +97,9 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const errors = {
     principals: principalsError?.message || null,
     statusChecks: statusChecksError?.message || null,
-    addRule: addRuleError?.message || null
+    addRule: addRuleError?.message || null,
+    updateRule: updateRuleError?.message || null
   }
-
-  // console.log('in branch rules general container', preSetRuleData)
 
   return (
     <RepoBranchSettingsRulesPage
@@ -124,8 +107,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       principals={principals as BypassUsersList[]}
       recentStatusChecks={recentStatusChecks}
       apiErrors={errors}
-      // addRuleSuccess={addRuleSuccess}
-      isLoading={addingRule}
+      isLoading={addingRule || updatingRule}
       preSetRuleData={preSetRuleData}
     />
   )

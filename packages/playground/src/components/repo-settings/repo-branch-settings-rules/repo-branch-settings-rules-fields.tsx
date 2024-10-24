@@ -20,7 +20,7 @@ import {
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
-import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType, MergeStrategy } from './types'
+import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType, MergeStrategy, PatternsButtonType } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -72,7 +72,9 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 )
 
 export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
-  const [selectedOption, setSelectedOption] = useState<'Include' | 'Exclude'>('Include')
+  const [selectedOption, setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
+    PatternsButtonType.INCLUDE
+  )
 
   const patterns = watch!('patterns') || []
 
@@ -103,7 +105,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
               patterns.map(pattern => (
                 <Badge
                   variant="outline"
-                  theme={pattern.option === 'Include' ? 'success' : 'destructive'}
+                  theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
                   key={pattern.pattern}
                   pattern={pattern}
                   className="mx-1">
@@ -129,8 +131,12 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
               </span>
               <DropdownMenuContent align="end" className="mt-1">
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onSelect={() => setSelectedOption('Include')}>Include</DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSelectedOption('Exclude')}>Exclude</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
+                    Include
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
+                    Exclude
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>

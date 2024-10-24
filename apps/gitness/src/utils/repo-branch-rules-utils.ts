@@ -1,13 +1,13 @@
-import { Rule, RepoBranchSettingsFormFields } from '@harnessio/playground'
+import { Rule, RepoBranchSettingsFormFields, BranchRuleId, PatternsButtonType } from '@harnessio/playground'
 import { EnumMergeMethod, EnumRuleState, RuleAddRequestBody, RuleGetOkResponse } from '@harnessio/code-service-client'
 
 const ruleIds = [
-  'require_latest_commit',
-  'require_no_change_request',
-  'comments',
-  'status_checks',
-  'merge',
-  'delete_branch'
+  BranchRuleId.REQUIRE_LATEST_COMMIT,
+  BranchRuleId.REQUIRE_NO_CHANGE_REQUEST,
+  BranchRuleId.COMMENTS,
+  BranchRuleId.STATUS_CHECKS,
+  BranchRuleId.MERGE,
+  BranchRuleId.DELETE_BRANCH
 ]
 
 const extractBranchRules = (definition: any) => {
@@ -15,28 +15,28 @@ const extractBranchRules = (definition: any) => {
 
   for (const rule of ruleIds) {
     let checked = false
-    let submenu: string[] = []
+    let submenu: EnumMergeMethod[] = []
     let selectOptions: string[] = []
 
     switch (rule) {
-      case 'require_latest_commit':
+      case BranchRuleId.REQUIRE_LATEST_COMMIT:
         checked = definition?.pullreq?.approvals?.require_latest_commit || false
         break
-      case 'require_no_change_request':
+      case BranchRuleId.REQUIRE_NO_CHANGE_REQUEST:
         checked = definition?.pullreq?.approvals?.require_no_change_request || false
         break
-      case 'comments':
+      case BranchRuleId.COMMENTS:
         checked = definition?.pullreq?.comments?.require_resolve_all || false
         break
-      case 'status_checks':
+      case BranchRuleId.STATUS_CHECKS:
         checked = definition?.pullreq?.status_checks?.require_identifiers?.length > 0
         selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
         break
-      case 'merge':
+      case BranchRuleId.MERGE:
         checked = definition?.pullreq?.merge?.strategies_allowed?.length > 0
         submenu = definition?.pullreq?.merge?.strategies_allowed || []
         break
-      case 'delete_branch':
+      case BranchRuleId.DELETE_BRANCH:
         checked = definition?.pullreq?.merge?.delete_branch || false
         break
       default:
@@ -58,20 +58,20 @@ export const transformDataFromApi = (data: RuleGetOkResponse) => {
   const includedPatterns = data?.pattern?.include || []
   const excludedPatterns = data?.pattern?.exclude || []
   const formatPatterns = [
-    ...includedPatterns.map(pat => ({ pattern: pat, option: 'Include' })),
-    ...excludedPatterns.map(pat => ({ pattern: pat, option: 'Exclude' }))
+    ...includedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.INCLUDE })),
+    ...excludedPatterns.map(pat => ({ pattern: pat, option: PatternsButtonType.EXCLUDE }))
   ]
 
   const rules = extractBranchRules(data.definition)
 
   return {
-    identifier: data.identifier,
-    description: data.description,
-    pattern: data?.pattern?.default,
+    identifier: data.identifier || '',
+    description: data.description || '',
+    pattern: '',
     patterns: formatPatterns,
     rules: rules,
     state: data.state === 'active',
-    bypass: data?.definition?.bypass?.user_ids,
+    bypass: data?.definition?.bypass?.user_ids || [],
     access: '1',
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
@@ -86,9 +86,9 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) =>
 
   const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
     (acc, currentPattern) => {
-      if (currentPattern.option === 'Include') {
+      if (currentPattern.option === PatternsButtonType.INCLUDE) {
         acc.include.push(currentPattern.pattern)
-      } else if (currentPattern.option === 'Exclude') {
+      } else if (currentPattern.option === PatternsButtonType.EXCLUDE) {
         acc.exclude.push(currentPattern.pattern)
       }
       return acc

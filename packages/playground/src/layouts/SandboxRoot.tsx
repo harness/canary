@@ -5,6 +5,7 @@ import { Icon, IconProps, Navbar, NavbarProjectChooser, NavbarUser } from '@harn
 import { MoreSubmenu } from '../components/more-submenu'
 import { navbarSubmenuData } from '../data/mockNavbarSubmenuData'
 import { TypesUser } from './types'
+import { SettingsPanel } from '../components/settings-panel'
 
 interface NavbarItem {
   id: number
@@ -20,6 +21,7 @@ interface SandboxRootProps {
 
 export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser }) => {
   const [showMore, setShowMore] = useState<boolean>(false)
+  const [showSettings, setShowSettings] = useState<boolean>(false)
 
   const primaryMenuItems = [
     {
@@ -79,6 +81,10 @@ export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser }) => {
 
   function handleMore() {
     setShowMore(!showMore)
+  }
+
+  function handleSettings() {
+    setShowSettings(!showSettings)
   }
 
   function handlePinItem(item: NavbarItem) {
@@ -143,8 +149,14 @@ export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser }) => {
                 </NavLink>
               ))}
             </Navbar.AccordionGroup>
+            {/* System admin POC */}
+            <Navbar.Group topBorder>
+              <div onClick={() => (!showSettings ? handleSettings() : null)}>
+                <Navbar.Item text="System Administation" icon={<Icon name="cog-6" size={12} />} />
+              </div>
+            </Navbar.Group>
             {/* Sandboxed new layout examples */}
-            <Navbar.AccordionGroup title="Layout Sandbox">
+            <Navbar.AccordionGroup title="Layout Sandbox" collapsed>
               <NavLink to="/sandbox/landing">
                 <Navbar.Item text="Landing" icon={<Icon name="harness" size={12} />} />
               </NavLink>
@@ -195,6 +207,7 @@ export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser }) => {
       </SandboxLayout.LeftPanel>
       <Outlet />
       <MoreSubmenu showMore={showMore} handleMore={handleMore} onPinItem={handlePinItem} pinnedItems={pinnedItems} />
+      <SettingsPanel showSettings={showSettings} handleSettings={handleSettings} />
     </SandboxLayout.Root>
   )
 }

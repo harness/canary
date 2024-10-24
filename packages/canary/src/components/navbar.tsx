@@ -32,7 +32,8 @@ function Group({ children, title, topBorder }: { children: React.ReactNode; titl
   return (
     <div
       className={cn('w-full overflow-x-hidden p-5 py-3.5 flex flex-col gap-1.5', {
-        'border-t border-border-background pt-5': topBorder
+        'border-t border-border-background pt-5': topBorder,
+        'pt-3.5': !title
       })}>
       {title && (
         <div className="group text-primary opacity-40 mb-2">
@@ -47,10 +48,12 @@ function Group({ children, title, topBorder }: { children: React.ReactNode; titl
 function AccordionGroup({
   title,
   topBorder,
+  collapsed,
   children
 }: {
   title: string
   topBorder?: boolean
+  collapsed?: boolean
   children: React.ReactNode
 }) {
   return (
@@ -58,7 +61,7 @@ function AccordionGroup({
       className={cn('w-full overflow-x-hidden p-5 py-0.5 border-t border-border-background', {
         'border-t-0 pt-0': topBorder
       })}>
-      <Accordion type="single" collapsible defaultValue="item-1">
+      <Accordion type="single" collapsible defaultValue={collapsed ? '' : 'item-1'}>
         <AccordionItem value="item-1" className="border-none">
           <AccordionTrigger className="group text-primary opacity-40">
             <p className="text-xs font-normal group-hover:text-primary ease-in-out duration-150">{title}</p>
@@ -151,7 +154,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
         size={2}
         weight="medium"
         className={cn(
-          '-tracking-[0.02em] text-primary-muted group-hover:text-primary ease-in-out duration-100 truncate z-10',
+          '-tracking-[0.02em] text-primary-muted group-hover:text-primary ease-in-out duration-100 w-full overflow-hidden truncate z-10',
           {
             'text-primary': active
           }

@@ -116,7 +116,12 @@ export const RootLayout: React.FC<RootLayoutProps> = ({ currentUser }) => {
               <NavbarProjectChooser.Root
                 avatarLink={
                   <Link to="/">
-                    <Icon name="harness" size={20} className="text-primary" />
+                    <Icon name="harness" size={18} className="text-primary" />
+                  </Link>
+                }
+                productLink={
+                  <Link to="/">
+                    <Icon name="harness-logo-text" width={65} height={15} className="text-primary" />
                   </Link>
                 }
               />

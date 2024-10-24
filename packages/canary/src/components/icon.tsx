@@ -92,6 +92,7 @@ import SshKey from '../icons/ssh-key.svg'
 import GreenCircle from '../icons/green-circle.svg'
 import GreenTick from '../icons/green-tick-nobg.svg'
 import CancelGrey from '../icons/cancel-grey.svg'
+import HarnessLogoText from '../icons/harness-logo-text.svg'
 // import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
@@ -187,7 +188,8 @@ const IconNameMap = {
   'ssh-key': SshKey,
   'green-dot': GreenCircle,
   'green-tick': GreenTick,
-  'cancel-grey': CancelGrey
+  'cancel-grey': CancelGrey,
+  'harness-logo-text': HarnessLogoText
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

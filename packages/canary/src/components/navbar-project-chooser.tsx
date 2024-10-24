@@ -2,13 +2,13 @@ import React, { useState } from 'react'
 import { Root as SearchBox } from './search-box'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './dialog'
 import { Spacer } from './spacer'
-import { Text } from '..'
 
 interface ProjectProps {
   avatarLink: React.ReactNode
+  productLink: React.ReactNode
 }
 
-function Root({ avatarLink }: ProjectProps) {
+function Root({ avatarLink, productLink }: ProjectProps) {
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const openSearchDialog = () => {
@@ -20,12 +20,10 @@ function Root({ avatarLink }: ProjectProps) {
   }
 
   return (
-    <div className="flex flex-col w-full items-start justify-items-start">
-      <div className="h-[55px] flex items-center gap-2.5">
+    <div className="flex flex-col w-full items-start justify-items-start px-5 pb-5">
+      <div className="h-[55px] flex items-center gap-1.5">
         {avatarLink}
-        <Text size={4} color="primary" weight="bold">
-          harness
-        </Text>
+        {productLink}
       </div>
       <SearchBox
         textSize={1}
@@ -36,6 +34,7 @@ function Root({ avatarLink }: ProjectProps) {
         shortcutModifier="cmd"
         onSearch={openSearchDialog}
         showOnFocus
+        className="rounded-sm"
       />
       <Dialog open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
         <DialogContent className="max-w-[800px] h-[600px] bg-primary-background border-border">

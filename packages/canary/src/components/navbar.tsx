@@ -21,7 +21,7 @@ function Root({ className, children }: NavbarRootProps) {
 }
 
 function Header({ children }: { children: React.ReactNode }) {
-  return <div className="sticky top-0 bg-primary-background z-20 px-5 items-center grid">{children}</div>
+  return <div className="sticky top-0 bg-primary-background z-20 items-center grid">{children}</div>
 }
 
 function Content({ children }: { children: React.ReactNode }) {
@@ -31,7 +31,7 @@ function Content({ children }: { children: React.ReactNode }) {
 function Group({ children, title, topBorder }: { children: React.ReactNode; title?: string; topBorder?: boolean }) {
   return (
     <div
-      className={cn('w-full overflow-x-hidden p-5 py-3.5 flex flex-col gap-1.5', {
+      className={cn('w-full overflow-x-hidden px-5 pb-3.5 flex flex-col gap-1.5', {
         'border-t border-border-background pt-5': topBorder
       })}>
       {title && (
@@ -85,7 +85,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
     return (
       <div
         className={cn(
-          'group relative grid grid-cols-[auto_1fr] gap-3 items-center cursor-pointer group select-none py-1.5',
+          'group relative grid grid-cols-[auto_1fr] gap-3 items-center cursor-pointer group select-none py-1',
           { 'gap-0': !icon },
           className
         )}>
@@ -97,7 +97,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
         />
         <div
           className={cn(
-            'flex z-10 col-start-1 row-span-full items-center text-secondary-muted group-hover:text-primary ease-in-out duration-100 truncate',
+            'flex z-10 col-start-1 row-span-full items-center text-secondary-muted group-hover:text-primary ease-in-out duration-0 truncate',
             { 'text-primary': active }
           )}>
           {icon ? <div className="rounded-md bg-tertiary">{icon}</div> : <div />}
@@ -108,7 +108,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
             truncate
             weight="medium"
             className={cn(
-              '-tracking-[0.02em] text-primary-muted group-hover:text-primary ease-in-out duration-100 truncate z-10',
+              '-tracking-[0.02em] text-primary-muted group-hover:text-primary ease-in-out duration-0 truncate z-10',
               {
                 'text-primary': active
               }
@@ -120,7 +120,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
             truncate
             color="tertiaryBackground"
             className={cn(
-              '-tracking-[0.02em] opacity-60 group-hover:opacity-100 group-hover:text-primary/80 ease-in-out duration-100 truncate z-10',
+              '-tracking-[0.02em] opacity-60 group-hover:opacity-100 group-hover:text-primary/80 ease-in-out duration-0 truncate z-10',
               {
                 'text-primary': active
               }
@@ -134,7 +134,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
   return (
     <div
       className={cn(
-        'group flex gap-2.5 items-center cursor-pointer group select-none py-1.5',
+        'group flex gap-2.5 items-center cursor-pointer group select-none py-1',
         { 'gap-0': !icon },
         className
       )}>

@@ -18,7 +18,7 @@ const ruleIds = [
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = (definition: any) => {
+const extractBranchRules = definition => {
   const rules = []
 
   for (const rule of ruleIds) {

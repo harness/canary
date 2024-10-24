@@ -20,17 +20,16 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()
 
-  if (identifier?.length) {
-    useRuleGetQuery(
-      { repo_ref: repoRef, rule_identifier: identifier },
-      {
-        onSuccess: (data: RuleGetOkResponse) => {
-          const transformedData = transformDataFromApi(data)
-          setPreSetRuleData(transformedData)
-        }
-      }
-    )
-  }
+  useRuleGetQuery(
+    { repo_ref: repoRef, rule_identifier: identifier ?? '' },
+    {
+      onSuccess: (data: RuleGetOkResponse) => {
+        const transformedData = transformDataFromApi(data)
+        setPreSetRuleData(transformedData)
+      },
+      enabled: !!identifier
+    }
+  )
 
   const {
     mutate: addRule,
@@ -94,6 +93,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null
   }
+
+  // console.log(preSetRuleData)
 
   return (
     <RepoBranchSettingsRulesPage

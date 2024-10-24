@@ -27,7 +27,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
         onSuccess: (data: RuleGetOkResponse) => {
           const transformedData = transformDataFromApi(data)
           setPreSetRuleData(transformedData)
-          // setApiError(null)
         }
       }
     )

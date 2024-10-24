@@ -1,4 +1,10 @@
-import { Rule, RepoBranchSettingsFormFields, BranchRuleId, PatternsButtonType } from '@harnessio/playground'
+import {
+  Rule,
+  RepoBranchSettingsFormFields,
+  BranchRuleId,
+  PatternsButtonType,
+  MergeStrategy
+} from '@harnessio/playground'
 import { EnumMergeMethod, EnumRuleState, RuleAddRequestBody, RuleGetOkResponse } from '@harnessio/code-service-client'
 
 const ruleIds = [
@@ -9,6 +15,8 @@ const ruleIds = [
   BranchRuleId.MERGE,
   BranchRuleId.DELETE_BRANCH
 ]
+
+// Util to transform API response into expected-form format for branch-rules-edit
 
 const extractBranchRules = (definition: any) => {
   const rules = []
@@ -78,6 +86,8 @@ export const transformDataFromApi = (data: RuleGetOkResponse) => {
   }
 }
 
+// Util to transform form format to expected-API format for branch-rules-edit
+
 export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) => {
   const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
     acc[rule.id] = rule
@@ -121,7 +131,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) =>
           require_resolve_all: rulesMap['comments']?.checked || false
         },
         merge: {
-          strategies_allowed: (rulesMap['merge']?.submenu || []) as EnumMergeMethod[],
+          strategies_allowed: (rulesMap['merge']?.submenu || []) as MergeStrategy[],
           delete_branch: rulesMap['delete_branch']?.checked || false
         },
         status_checks: {

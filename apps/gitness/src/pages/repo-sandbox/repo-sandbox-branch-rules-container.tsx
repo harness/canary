@@ -1,17 +1,75 @@
 import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, Rule, BypassUsersList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-
+import { useState } from 'react'
 import {
   useRuleAddMutation,
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
   EnumMergeMethod,
   EnumRuleState,
-  RuleAddRequestBody
+  RuleAddRequestBody,
+  useRuleGetQuery,
+  RuleGetOkResponse,
+  RuleGetErrorResponse
 } from '@harnessio/code-service-client'
+import { useSearchParams } from 'react-router-dom'
+import { get } from 'lodash-es'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
+  const [preSetRuleData, setPreSetRuleData] = useState()
+
   const repoRef = useGetRepoRef()
+  const [searchParams] = useSearchParams()
+  const identifier = searchParams.get('identifier')
+  const ruleIds = [
+    'require_latest_commit',
+    'require_no_change_request',
+    'comments',
+    'status_checks',
+    'merge',
+    'delete_branch'
+  ]
+
+  if (identifier?.length) {
+    useRuleGetQuery(
+      { repo_ref: repoRef, rule_identifier: identifier },
+      {
+        onSuccess: (data: RuleGetOkResponse) => {
+          const transformedData = transformDataFromApi(data)
+          console.log('rules are here!!', extractBranchRules(data.definition))
+          setPreSetRuleData(transformedData)
+          // setApiError(null)
+        },
+        onError: (error: RuleGetErrorResponse) => {
+          console.error('Error fetching rule:', error)
+          // setApiError(error.message || 'Error fetching rule')
+        }
+      }
+    )
+  }
+  function transformDataFromApi(data: RuleGetOkResponse) {
+    const includedPatterns = data?.pattern?.include || []
+    const excludedPatterns = data?.pattern?.exclude || []
+    const formatPatterns = [
+      ...includedPatterns.map(pat => ({ pattern: pat, option: 'Include' })),
+      ...excludedPatterns.map(pat => ({ pattern: pat, option: 'Exclude' }))
+    ]
+
+    const rules = extractBranchRules(data.definition)
+
+    return {
+      identifier: data.identifier,
+      description: data.description,
+      pattern: data?.pattern?.default,
+      patterns: formatPatterns,
+      rules: rules,
+      state: data.state === 'active',
+      bypass: data?.definition?.bypass?.user_ids,
+      access: '1',
+      default: data?.pattern?.default,
+      repo_owners: data?.definition?.bypass?.repo_owners
+    }
+  }
 
   const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) => {
     const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
@@ -98,6 +156,52 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     addRule: addRuleError?.message || null
   }
 
+  function extractBranchRules(definition: any) {
+    const rules = []
+
+    for (const rule of ruleIds) {
+      let checked = false
+      let submenu: string[] = []
+      let selectOptions: string[] = []
+
+      switch (rule) {
+        case 'require_latest_commit':
+          checked = definition?.pullreq?.approvals?.require_latest_commit || false
+          break
+        case 'require_no_change_request':
+          checked = definition?.pullreq?.approvals?.require_no_change_request || false
+          break
+        case 'comments':
+          checked = definition?.pullreq?.comments?.require_resolve_all || false
+          break
+        case 'status_checks':
+          checked = definition?.pullreq?.status_checks?.require_identifiers?.length > 0
+          selectOptions = definition?.pullreq?.status_checks?.require_identifiers || []
+          break
+        case 'merge':
+          checked = definition?.pullreq?.merge?.strategies_allowed > 0
+          submenu = definition?.pullreq?.merge?.strategies_allowed || []
+          break
+        case 'delete_branch':
+          checked = definition?.pullreq?.merge?.delete_branch || false
+          break
+        default:
+          continue
+      }
+
+      rules.push({
+        id: rule,
+        checked,
+        submenu,
+        selectOptions
+      })
+    }
+
+    return rules
+  }
+
+  console.log('in general container', preSetRuleData)
+
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
@@ -106,6 +210,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       apiErrors={errors}
       addRuleSuccess={addRuleSuccess}
       isLoading={addingRule}
+      preSetRuleData={preSetRuleData}
     />
   )
 }

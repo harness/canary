@@ -17,7 +17,8 @@ import { branchRules } from '../components/repo-settings/repo-branch-settings-ru
 import { repoBranchSettingsFormSchema } from '../components/repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
 import {
   RepoBranchSettingsFormFields,
-  BypassUsersList
+  BypassUsersList,
+  ActionType
 } from '../components/repo-settings/repo-branch-settings-rules/types'
 
 type BranchSettingsErrors = {
@@ -41,8 +42,10 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   principals,
   recentStatusChecks,
   apiErrors,
-  addRuleSuccess
+  addRuleSuccess,
+  preSetRuleData
 }) => {
+  console.log(preSetRuleData)
   const {
     register,
     handleSubmit,
@@ -62,10 +65,10 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
       default: false,
       repo_owners: false,
       bypass: [],
-      access: '1',
       rules: []
     }
   })
+
   const [rules, dispatch] = useReducer(
     branchSettingsReducer,
     branchRules.map(rule => ({
@@ -81,6 +84,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     setIsSubmitted(true)
     const formData = { ...data, rules }
+    console.log(formData)
     handleRuleUpdate(formData)
     reset()
   }
@@ -91,6 +95,32 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
       }, 1000)
     }
   }, [isSubmitted, addRuleSuccess])
+
+  useEffect(() => {
+    if (preSetRuleData) {
+      reset({
+        identifier: preSetRuleData?.identifier || '',
+        description: preSetRuleData?.description || '',
+        pattern: '',
+        patterns: preSetRuleData?.patterns || [],
+        state: preSetRuleData?.state || true,
+        default: preSetRuleData?.default || false,
+        repo_owners: preSetRuleData?.repo_owners || false,
+        bypass: preSetRuleData?.bypass || [],
+        rules: []
+      })
+
+      dispatch({
+        type: ActionType.SET_INITIAL_RULES,
+        payload: preSetRuleData?.rules?.map(rule => ({
+          id: rule.id,
+          checked: rule.checked || false,
+          submenu: rule.submenu || [],
+          selectOptions: rule.selectOptions || []
+        }))
+      })
+    }
+  }, [preSetRuleData])
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

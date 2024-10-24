@@ -26,6 +26,8 @@ export const branchSettingsReducer = (state: Rule[], action: Action): Rule[] => 
             }
           : rule
       )
+    case ActionType.SET_INITIAL_RULES:
+      return action.payload || []
     default:
       return state
   }

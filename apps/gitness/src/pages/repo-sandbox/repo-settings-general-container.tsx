@@ -313,6 +313,15 @@ export const RepoSettingsGeneralPageContainer = () => {
       }
     })
   }
+
+  const handleRuleClick = identifier => {
+    const repoName = repoRef.split('/')[1]
+    const queryParams = new URLSearchParams({
+      identifier: identifier
+    }).toString()
+
+    navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules?${queryParams}`)
+  }
   const loadingStates = {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
@@ -331,6 +340,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       loadingStates={loadingStates}
       isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
       rules={rules}
+      handleRuleClick={handleRuleClick}
     />
   )
 }

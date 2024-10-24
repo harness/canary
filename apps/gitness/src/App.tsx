@@ -1,4 +1,5 @@
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
+import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { QueryClientProvider } from '@tanstack/react-query'
 import {
@@ -445,7 +446,9 @@ export default function App() {
       <ThemeProvider defaultTheme="dark">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
-            <RouterProvider router={router} />
+            <NuqsAdapter>
+              <RouterProvider router={router} />
+            </NuqsAdapter>
           </TooltipProvider>
         </QueryClientProvider>
       </ThemeProvider>

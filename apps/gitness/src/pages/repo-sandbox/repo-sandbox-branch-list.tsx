@@ -24,7 +24,8 @@ import {
 } from '@harnessio/code-service-client'
 import { orderSortDate } from '../../types'
 import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
-import { Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { PathParams } from '../../RouteDefinitions'
 
 const sortOptions = [
   { name: 'Date', value: 'date' },
@@ -37,6 +38,7 @@ export function RepoSandboxBranchesListPage() {
   const totalPages = 10
 
   const repoRef = useGetRepoRef()
+  const { spaceId, repoId } = useParams<PathParams>()
 
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
   const { data: repoMetadata } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -113,6 +115,9 @@ export function RepoSandboxBranchesListPage() {
 
     return (
       <BranchesList
+        defaultBranch={repoMetadata?.default_branch}
+        repoId={repoId}
+        spaceId={spaceId}
         branches={brancheslistData?.map((branch: RepoBranch, index) => {
           const { ahead: branchAhead, behind: branchBehind } = behindAhead[index] || {}
           return {

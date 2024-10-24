@@ -6,6 +6,7 @@ export type PathParams = {
   pullRequestId?: string
   gitRef?: string
   resourcePath?: string
+  diffRefs?: string
 }
 
 export const PathProps = {
@@ -15,7 +16,8 @@ export const PathProps = {
   executionId: ':executionId',
   pullRequestId: ':pullRequestId',
   gitRef: ':gitRef*',
-  resourcePath: ':resourcePath*'
+  resourcePath: ':resourcePath*',
+  diffRefs: ':diffRefs*'
 }
 
 export type PullRequestRoutePathParams = Omit<PathParams, 'pipelineId' | 'executionId' | 'gitRef'>
@@ -26,6 +28,7 @@ export interface AppRoutes {
   toPullRequestCommits: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) => string
   toPullRequestChanges: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) => string
   toPullRequestChecks: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) => string
+  toPullRequestCompare: ({ spaceId, repoId, diffRefs }: PullRequestRoutePathParams) => string
 }
 
 export const routes: AppRoutes = {
@@ -38,5 +41,10 @@ export const routes: AppRoutes = {
   toPullRequestChanges: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) =>
     `${spaceId}/repos/${repoId}/pull-requests/${pullRequestId}/changes`,
   toPullRequestChecks: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) =>
-    `${spaceId}/repos/${repoId}/pull-requests/${pullRequestId}/checks`
+    `${spaceId}/repos/${repoId}/pull-requests/${pullRequestId}/checks`,
+  toPullRequestCompare({ spaceId, repoId, diffRefs }) {
+    const basePath = `${spaceId}/repos/${repoId}/pull-requests/compare`
+    const diffPath = diffRefs ? diffRefs : ''
+    return `${basePath}/${diffPath}`
+  }
 }

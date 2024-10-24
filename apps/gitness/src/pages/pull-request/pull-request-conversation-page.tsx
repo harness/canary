@@ -6,6 +6,7 @@ import {
   EnumMergeMethod,
   mergePullReqOp,
   OpenapiMergePullReq,
+  reviewerDeletePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
   useCodeownersPullReqQuery,
@@ -243,6 +244,13 @@ export default function PullRequestConversationPage() {
   if (prLoading || prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
   }
+  const handleDeleteReviewer = (id: number) => {
+    reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
+      .then(() => {
+        refetchReviewers()
+      })
+      .catch(exception => console.warn(exception))
+  }
   return (
     <>
       <FullWidth2ColumnLayout
@@ -343,6 +351,7 @@ export default function PullRequestConversationPage() {
             pullRequestMetadata={{ source_sha: pullReqMetadata?.source_sha as string }}
             processReviewDecision={processReviewDecision}
             refetchReviewers={refetchReviewers}
+            handleDelete={handleDeleteReviewer}
             reviewers={reviewers?.map((val: TypesPullReqReviewer) => ({
               reviewer: { display_name: val.reviewer?.display_name, id: val.reviewer?.id },
               review_decision: val.review_decision,

@@ -4,7 +4,8 @@ import {
   SecurityScanning,
   AccessLevel,
   ErrorTypes,
-  RepoData
+  RepoData,
+  RuleDataType
 } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -30,7 +31,10 @@ import {
   UpdateSecuritySettingsErrorResponse,
   useDeleteRepositoryMutation,
   DeleteRepositoryOkResponse,
-  DeleteRepositoryErrorResponse
+  DeleteRepositoryErrorResponse,
+  useRuleListQuery,
+  RuleListOkResponse,
+  RuleListErrorResponse
 } from '@harnessio/code-service-client'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -50,6 +54,8 @@ export const RepoSettingsGeneralPageContainer = () => {
     isPublic: false,
     branches: []
   })
+  const [rules, setRules] = useState<RuleDataType[] | null>(null)
+
   const [securityScanning, setSecurityScanning] = useState<boolean>(false)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
 
@@ -77,7 +83,6 @@ export const RepoSettingsGeneralPageContainer = () => {
     {
       repo_ref: repoRef,
       queryParams: {
-        include_commit: false,
         order: 'asc',
         page: 1,
         limit: 100
@@ -94,6 +99,32 @@ export const RepoSettingsGeneralPageContainer = () => {
       onError: (error: ListBranchesErrorResponse) => {
         const message = error.message || 'Error fetching branches'
         setApiError({ type: ErrorTypes.FETCH_BRANCH, message })
+      }
+    }
+  )
+
+  useRuleListQuery(
+    {
+      repo_ref: repoRef,
+      queryParams: {}
+    },
+    {
+      onSuccess: (data: RuleListOkResponse) => {
+        const rulesData = data.map(rule => {
+          return {
+            targetPatternsCount: (rule.pattern?.include?.length ?? 0) + (rule.pattern?.exclude?.length ?? 0),
+            rulesAppliedCount: Object.keys(rule.definition ?? {}).length,
+            bypassAllowed: rule.definition?.bypass?.repo_owners === true,
+            identifier: rule.identifier,
+            state: rule.state ? String(rule.state) : undefined
+          }
+        })
+        setRules(rulesData)
+        setApiError(null)
+      },
+      onError: (error: RuleListErrorResponse) => {
+        const message = error.message || 'Error fetching rules'
+        setApiError({ type: ErrorTypes.FETCH_RULES, message })
       }
     }
   )
@@ -282,6 +313,14 @@ export const RepoSettingsGeneralPageContainer = () => {
       }
     })
   }
+
+  const handleRuleClick = (identifier: string) => {
+    const repoName = repoRef.split('/')[1]
+
+    const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/${identifier}`
+
+    navigate(url)
+  }
   const loadingStates = {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
@@ -299,6 +338,8 @@ export const RepoSettingsGeneralPageContainer = () => {
       apiError={apiError}
       loadingStates={loadingStates}
       isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
+      rules={rules}
+      handleRuleClick={handleRuleClick}
     />
   )
 }

@@ -4,7 +4,12 @@ import { RepoSettingsGeneralForm } from '../components/repo-settings/repo-settin
 import { RepoSettingsGeneralRules } from '../components/repo-settings/repo-settings-general/repo-settings-general-rules'
 import { RepoSettingsSecurityForm } from '../components/repo-settings/repo-settings-general/repo-settings-general-security'
 import { RepoSettingsGeneralDelete } from '../components/repo-settings/repo-settings-general/repo-settings-general-delete'
-import { RepoData, RepoUpdateData, ErrorTypes } from '../components/repo-settings/repo-settings-general/types'
+import {
+  RepoData,
+  RepoUpdateData,
+  ErrorTypes,
+  RuleDataType
+} from '../components/repo-settings/repo-settings-general/types'
 import { RepoSettingsSecurityFormFields } from '../components/repo-settings/repo-settings-general/repo-settings-general-security'
 
 interface ILoadingStates {
@@ -23,6 +28,8 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
+  rules: RuleDataType[] | null
+  handleRuleClick: (identifier: string) => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,
@@ -32,7 +39,9 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   handleDeleteRepository,
   apiError,
   loadingStates,
-  isRepoUpdateSuccess
+  isRepoUpdateSuccess,
+  rules,
+  handleRuleClick
 }) => {
   return (
     <>
@@ -46,7 +55,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           isRepoUpdateSuccess={isRepoUpdateSuccess}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralRules />
+        <RepoSettingsGeneralRules rules={rules} apiError={apiError} handleRuleClick={handleRuleClick} />
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}

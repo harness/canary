@@ -1,82 +1,53 @@
-import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, Rule, BypassUsersList } from '@harnessio/playground'
+import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, BypassUsersList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-
+import { useState } from 'react'
 import {
   useRuleAddMutation,
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
-  EnumMergeMethod,
-  EnumRuleState,
-  RuleAddRequestBody
+  useRuleGetQuery,
+  RuleGetOkResponse,
+  useRuleUpdateMutation
 } from '@harnessio/code-service-client'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
+  const [preSetRuleData, setPreSetRuleData] = useState<RepoBranchSettingsFormFields | null>(null)
+  const navigate = useNavigate()
   const repoRef = useGetRepoRef()
+  const spaceId = useGetSpaceURLParam()
+  const { identifier } = useParams()
 
-  const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) => {
-    const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
-      acc[rule.id] = rule
-      return acc
-    }, {})
-
-    const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
-      (acc, currentPattern) => {
-        if (currentPattern.option === 'Include') {
-          acc.include.push(currentPattern.pattern)
-        } else if (currentPattern.option === 'Exclude') {
-          acc.exclude.push(currentPattern.pattern)
-        }
-        return acc
+  useRuleGetQuery(
+    { repo_ref: repoRef, rule_identifier: identifier ?? '' },
+    {
+      onSuccess: (data: RuleGetOkResponse) => {
+        const transformedData = transformDataFromApi(data)
+        setPreSetRuleData(transformedData)
       },
-      { include: [], exclude: [] }
-    )
-
-    const transformed: RuleAddRequestBody = {
-      identifier: formOutput.identifier,
-      type: 'branch',
-      description: formOutput.description,
-      state: (formOutput.state === true ? 'active' : 'disabled') as EnumRuleState,
-      pattern: {
-        default: formOutput.default || false,
-        include,
-        exclude
-      },
-      definition: {
-        bypass: {
-          user_ids: formOutput.bypass,
-          repo_owners: formOutput.repo_owners || false
-        },
-        pullreq: {
-          approvals: {
-            require_code_owners: true,
-            require_latest_commit: rulesMap['require_latest_commit']?.checked || false,
-            require_no_change_request: rulesMap['require_no_change_request']?.checked || false
-          },
-          comments: {
-            require_resolve_all: rulesMap['comments']?.checked || false
-          },
-          merge: {
-            strategies_allowed: (rulesMap['merge']?.submenu || []) as EnumMergeMethod[],
-            delete_branch: rulesMap['delete_branch']?.checked || false
-          },
-          status_checks: {
-            require_identifiers: rulesMap['status_checks']?.selectOptions || []
-          }
-        }
-      }
+      enabled: !!identifier
     }
-
-    return transformed
-  }
+  )
 
   const {
     mutate: addRule,
     error: addRuleError,
-    isSuccess: addRuleSuccess,
     isLoading: addingRule
-  } = useRuleAddMutation({ repo_ref: repoRef })
+  } = useRuleAddMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        const repoName = repoRef.split('/')[1]
+
+        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+      }
+    }
+  )
 
   const { data: principals, error: principalsError } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user' }
   })
 
@@ -85,17 +56,42 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     queryParams: {}
   })
 
+  const {
+    mutate: updateRule,
+    error: updateRuleError,
+    isLoading: updatingRule
+  } = useRuleUpdateMutation(
+    { repo_ref: repoRef, rule_identifier: identifier! },
+    {
+      onSuccess: () => {
+        const repoName = repoRef.split('/')[1]
+
+        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+      }
+    }
+  )
+
   const handleRuleUpdate = (data: RepoBranchSettingsFormFields) => {
     const formattedData = transformFormOutput(data)
-    addRule({
-      body: formattedData
-    })
+
+    if (identifier) {
+      // Update existing rule
+      updateRule({
+        body: formattedData
+      })
+    } else {
+      // Add new rule
+      addRule({
+        body: formattedData
+      })
+    }
   }
 
   const errors = {
     principals: principalsError?.message || null,
     statusChecks: statusChecksError?.message || null,
-    addRule: addRuleError?.message || null
+    addRule: addRuleError?.message || null,
+    updateRule: updateRuleError?.message || null
   }
 
   return (
@@ -104,8 +100,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       principals={principals as BypassUsersList[]}
       recentStatusChecks={recentStatusChecks}
       apiErrors={errors}
-      addRuleSuccess={addRuleSuccess}
-      isLoading={addingRule}
+      isLoading={addingRule || updatingRule}
+      preSetRuleData={preSetRuleData}
     />
   )
 }

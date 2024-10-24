@@ -17,7 +17,7 @@ export const RepoSettingsGeneralDelete: React.FC<{
         This will permanently delete this repository, and everything contained in it.{' '}
       </Text>
 
-      {apiError && apiError.type === 'deleteRepo' && (
+      {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
         <>
           <Spacer size={2} />
           <Text size={1} className="text-destructive">

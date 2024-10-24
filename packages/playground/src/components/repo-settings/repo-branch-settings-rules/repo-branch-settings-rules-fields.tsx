@@ -20,7 +20,7 @@ import {
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
-import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType, MergeStrategy } from './types'
+import { FieldProps, Rule, Dispatch, BypassUsersList, ActionType, MergeStrategy, PatternsButtonType } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -47,12 +47,16 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
   </StackedList.Root>
 )
 
-export const BranchSettingsRuleNameField: React.FC<FieldProps> = ({ register, errors }) => (
+export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: boolean }> = ({
+  register,
+  errors,
+  disabled
+}) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="identifier" required>
       Name
     </FormFieldSet.Label>
-    <Input id="name" {...register!('identifier')} placeholder="Enter rule name" autoFocus />
+    <Input id="name" {...register!('identifier')} placeholder="Enter rule name" autoFocus disabled={disabled} />
     {errors!.identifier && (
       <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.identifier.message?.toString()}</FormFieldSet.Message>
     )}
@@ -72,7 +76,9 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 )
 
 export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
-  const [selectedOption, setSelectedOption] = useState<'Include' | 'Exclude'>('Include')
+  const [selectedOption, setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
+    PatternsButtonType.INCLUDE
+  )
 
   const patterns = watch!('patterns') || []
 
@@ -92,62 +98,73 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   return (
     <FormFieldSet.ControlGroup>
       <FormFieldSet.Label htmlFor="target-patterns">Target Patterns</FormFieldSet.Label>
-      <div className="flex gap-4">
-        <div className="flex-[2.5]">
-          <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" />
-          <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%] mt-2">
-            Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
-          </Text>
-          <div className="mt-2">
-            {patterns &&
-              patterns.map(pattern => (
-                <Badge
-                  variant="outline"
-                  theme={pattern.option === 'Include' ? 'success' : 'destructive'}
-                  key={pattern.pattern}
-                  pattern={pattern}
-                  className="mx-1">
-                  {pattern.pattern}
-                  <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
-                    <Icon name="x-mark" size={12} className="text-current" />
-                  </button>
-                </Badge>
-              ))}
-          </div>
+      <div className="grid grid-rows-1 grid-cols-5">
+        <div className="col-span-4 mr-2">
+          <Input
+            id="pattern"
+            {...register!('pattern')}
+            leftStyle={true}
+            left={
+              <Button
+                variant="split"
+                type="button"
+                className="pl-0 pr-0 min-w-28"
+                dropdown={
+                  <DropdownMenu key="dropdown-menu">
+                    <span>
+                      <DropdownMenuTrigger insideSplitButton>
+                        <Icon name="chevron-down" className="chevron-down" />
+                      </DropdownMenuTrigger>
+                    </span>
+                    <DropdownMenuContent align="end" className="mt-1">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
+                          Include
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
+                          Exclude
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                }>
+                {selectedOption}
+              </Button>
+            }
+          />
         </div>
-        <Button
-          variant="split"
-          type="button"
-          className="pl-0 pr-0 min-w-28"
-          onClick={handleAddPattern}
-          dropdown={
-            <DropdownMenu key="dropdown-menu">
-              <span>
-                <DropdownMenuTrigger insideSplitButton>
-                  <Icon name="chevron-down" className="chevron-down" />
-                </DropdownMenuTrigger>
-              </span>
-              <DropdownMenuContent align="end" className="mt-1">
-                <DropdownMenuGroup>
-                  <DropdownMenuItem onSelect={() => setSelectedOption('Include')}>Include</DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSelectedOption('Exclude')}>Exclude</DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          }>
-          {selectedOption}
+        <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
+          Add
         </Button>
-
         {errors!.pattern && (
           <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
         )}
+      </div>
+      <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%]">
+        Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
+      </Text>
+      <div className="flex flex-wrap">
+        {patterns &&
+          patterns.map(pattern => (
+            <Badge
+              variant="outline"
+              theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
+              key={pattern.pattern}
+              pattern={pattern}
+              className="mx-1 my-1 inline-flex">
+              {pattern.pattern}
+              <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
+                <Icon name="x-mark" size={12} className="text-current" />
+              </button>
+            </Badge>
+          ))}
       </div>
     </FormFieldSet.ControlGroup>
   )
 }
 
 export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
-  <FormFieldSet.ControlGroup className="min-h-8">
+  <FormFieldSet.ControlGroup className="min-h-8 justify-center">
     <FormFieldSet.Option
       control={
         <Checkbox
@@ -159,6 +176,7 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
       }
       id="default-branch"
       label="Default Branch"
+      className="mt-0"
     />
 
     {errors!.default && (
@@ -226,7 +244,7 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
 }
 
 export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
-  <FormFieldSet.ControlGroup className="min-h-8">
+  <FormFieldSet.ControlGroup className="min-h-8 justify-center">
     <FormFieldSet.Option
       control={
         <Checkbox
@@ -238,6 +256,7 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
       }
       id="edit-permissons"
       label="Allow users with edit permission on the repository to bypass"
+      className="mt-0"
     />
 
     {errors!.repo_owners && (

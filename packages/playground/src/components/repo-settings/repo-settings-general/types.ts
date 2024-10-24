@@ -23,7 +23,8 @@ export enum ErrorTypes {
   UPDATE_ACCESS = 'updateAccess',
   FETCH_SECURITY = 'fetchSecurity',
   UPDATE_SECURITY = 'updateSecurity',
-  DELETE_REPO = 'deleteRepo'
+  DELETE_REPO = 'deleteRepo',
+  FETCH_RULES = 'fetchRules'
 }
 export interface RepoUpdateData {
   name: string
@@ -33,4 +34,12 @@ export interface RepoUpdateData {
 }
 export interface SecurityScanning {
   secretScanning: boolean
+}
+
+export interface RuleDataType {
+  targetPatternsCount?: number
+  rulesAppliedCount?: number
+  bypassAllowed?: boolean
+  identifier?: string
+  state?: string
 }

@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { PatternsButtonType } from './types'
 
 export const repoBranchSettingsFormSchema = z.object({
   identifier: z.string().min(1, 'Name is required'),
@@ -7,12 +8,11 @@ export const repoBranchSettingsFormSchema = z.object({
   patterns: z.array(
     z.object({
       pattern: z.string(),
-      option: z.enum(['Include', 'Exclude'])
+      option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
     })
   ),
   state: z.boolean(),
   bypass: z.array(z.number()),
-  access: z.enum(['1', '2']),
   default: z.boolean().optional(),
   repo_owners: z.boolean().optional(),
   rules: z.array(

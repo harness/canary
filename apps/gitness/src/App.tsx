@@ -370,7 +370,13 @@ export default function App() {
                     },
                     {
                       path: 'rules',
-                      element: <RepoBranchSettingsRulesPageContainer />
+                      element: <RepoBranchSettingsRulesPageContainer />,
+                      children: [
+                        {
+                          path: ':identifier',
+                          element: <RepoBranchSettingsRulesPageContainer />
+                        }
+                      ]
                     }
                   ]
                 }

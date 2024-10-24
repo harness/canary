@@ -83,7 +83,9 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   const patterns = watch!('patterns') || []
 
   const handleAddPattern = () => {
+    console.log('here')
     const pattern = watch!('pattern')
+    console.log(pattern)
     if (pattern && !patterns.some(p => p.pattern === pattern)) {
       setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
       setValue!('pattern', '')
@@ -98,43 +100,44 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   return (
     <FormFieldSet.ControlGroup>
       <FormFieldSet.Label htmlFor="target-patterns">Target Patterns</FormFieldSet.Label>
-      <div className="grid grid-rows-1 grid-cols-4">
-        <div className="col-span-3 mr-2">
-          <Input id="pattern" {...register!('pattern')} placeholder="Enter the target patterns" />
+      <div className="grid grid-rows-1 grid-cols-5">
+        <div className="col-span-4 mr-2">
+          <Input
+            id="pattern"
+            {...register!('pattern')}
+            leftStyle={true}
+            left={
+              <Button
+                variant="split"
+                type="button"
+                className="pl-0 pr-0 min-w-28"
+                dropdown={
+                  <DropdownMenu key="dropdown-menu">
+                    <span>
+                      <DropdownMenuTrigger insideSplitButton>
+                        <Icon name="chevron-down" className="chevron-down" />
+                      </DropdownMenuTrigger>
+                    </span>
+                    <DropdownMenuContent align="end" className="mt-1">
+                      <DropdownMenuGroup>
+                        <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
+                          Include
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
+                          Exclude
+                        </DropdownMenuItem>
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                }>
+                {selectedOption}
+              </Button>
+            }
+          />
         </div>
-        <Button
-          variant="split"
-          type="button"
-          className="pl-0 pr-0 min-w-28 col-span-1"
-          onClick={handleAddPattern}
-          dropdown={
-            <DropdownMenu key="dropdown-menu">
-              <span>
-                <DropdownMenuTrigger insideSplitButton>
-                  <Icon name="chevron-down" className="chevron-down" />
-                </DropdownMenuTrigger>
-              </span>
-              <DropdownMenuContent align="end" className="mt-1">
-                <DropdownMenuGroup>
-                  <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
-                    Include
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
-                    Exclude
-                  </DropdownMenuItem>
-                </DropdownMenuGroup>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          }>
-          {selectedOption}
+        <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
+          Add
         </Button>
-        {/* <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%]">
-          Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
-        </Text> */}
-        {/* <div className="col-span-4"> */}
-
-        {/* </div> */}
-
         {errors!.pattern && (
           <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
         )}
@@ -163,7 +166,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
 }
 
 export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
-  <FormFieldSet.ControlGroup className="min-h-8">
+  <FormFieldSet.ControlGroup className="min-h-8 justify-center">
     <FormFieldSet.Option
       control={
         <Checkbox
@@ -175,6 +178,7 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
       }
       id="default-branch"
       label="Default Branch"
+      className="mt-0"
     />
 
     {errors!.default && (
@@ -242,7 +246,7 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
 }
 
 export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
-  <FormFieldSet.ControlGroup className="min-h-8">
+  <FormFieldSet.ControlGroup className="min-h-8 justify-center">
     <FormFieldSet.Option
       control={
         <Checkbox
@@ -254,6 +258,7 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
       }
       id="edit-permissons"
       label="Allow users with edit permission on the repository to bypass"
+      className="mt-0"
     />
 
     {errors!.repo_owners && (

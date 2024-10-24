@@ -314,11 +314,8 @@ export const RepoSettingsGeneralPageContainer = () => {
     })
   }
 
-  const handleRuleClick = identifier => {
+  const handleRuleClick = (identifier: string) => {
     const repoName = repoRef.split('/')[1]
-    // const queryParams = new URLSearchParams({
-    //   identifier: identifier
-    // }).toString()
 
     const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/${identifier}`
 

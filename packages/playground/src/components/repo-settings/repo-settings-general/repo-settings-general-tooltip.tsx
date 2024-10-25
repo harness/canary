@@ -11,7 +11,15 @@ import {
   DropdownMenuGroup
 } from '@harnessio/canary'
 
-export const RepoSettingsToolTip = ({ handleRuleClick, identifier }: {}) => {
+export const RepoSettingsToolTip = ({
+  onEdit,
+  identifier,
+  onDelete
+}: {
+  onEdit: (identifier: string) => void
+  identifier: string
+  onDelete: (identifier: string) => void
+}) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -21,7 +29,12 @@ export const RepoSettingsToolTip = ({ handleRuleClick, identifier }: {}) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem className="cursor-pointer" onSelect={() => handleRuleClick(identifier)}>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={e => {
+              e.stopPropagation()
+              onEdit(identifier)
+            }}>
             <DropdownMenuShortcut className="ml-0">
               <Icon name="edit-pen" className="mr-2" />
             </DropdownMenuShortcut>
@@ -30,8 +43,10 @@ export const RepoSettingsToolTip = ({ handleRuleClick, identifier }: {}) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer text-destructive"
-            // onSelect={() => onDelete(member)}
-          >
+            onClick={e => {
+              e.stopPropagation()
+              onDelete(identifier)
+            }}>
             <DropdownMenuShortcut className="ml-0">
               <Icon name="trash" className="mr-2 text-destructive" />
             </DropdownMenuShortcut>

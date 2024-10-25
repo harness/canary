@@ -24,7 +24,8 @@ export enum ErrorTypes {
   FETCH_SECURITY = 'fetchSecurity',
   UPDATE_SECURITY = 'updateSecurity',
   DELETE_REPO = 'deleteRepo',
-  FETCH_RULES = 'fetchRules'
+  FETCH_RULES = 'fetchRules',
+  DELETE_RULE = 'deleteRule'
 }
 export interface RepoUpdateData {
   name: string

@@ -30,6 +30,7 @@ interface RepoSettingsGeneralPageProps {
   isRepoUpdateSuccess: boolean
   rules: RuleDataType[] | null
   handleRuleClick: (identifier: string) => void
+  handleDeleteRule: (identifier: string) => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,
@@ -41,7 +42,8 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   loadingStates,
   isRepoUpdateSuccess,
   rules,
-  handleRuleClick
+  handleRuleClick,
+  handleDeleteRule
 }) => {
   return (
     <>
@@ -55,7 +57,12 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           isRepoUpdateSuccess={isRepoUpdateSuccess}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralRules rules={rules} apiError={apiError} handleRuleClick={handleRuleClick} />
+        <RepoSettingsGeneralRules
+          rules={rules}
+          apiError={apiError}
+          handleRuleClick={handleRuleClick}
+          handleDeleteRule={handleDeleteRule}
+        />
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}

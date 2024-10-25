@@ -44,11 +44,13 @@ const Description = ({
 export const RepoSettingsGeneralRules = ({
   rules,
   apiError,
-  handleRuleClick
+  handleRuleClick,
+  handleDeleteRule
 }: {
   rules: RuleDataType[] | null
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
+  handleDeleteRule: (identifier: string) => void
 }) => {
   return (
     <>
@@ -91,7 +93,11 @@ export const RepoSettingsGeneralRules = ({
                     // <div className="flex gap-1.5 items-center justify-end">
                     //   <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
                     // </div>
-                    <RepoSettingsToolTip onEdit={handleRuleClick} identifier={rule.identifier} />
+                    <RepoSettingsToolTip
+                      onEdit={handleRuleClick}
+                      onDelete={handleDeleteRule}
+                      identifier={rule.identifier}
+                    />
                   }
                   right
                 />
@@ -99,7 +105,7 @@ export const RepoSettingsGeneralRules = ({
             )
           })}
 
-        {apiError && apiError.type === ErrorTypes.FETCH_RULES && (
+        {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
           <>
             <Spacer size={2} />
             <Text size={1} className="text-destructive">

@@ -34,7 +34,10 @@ import {
   DeleteRepositoryErrorResponse,
   useRuleListQuery,
   RuleListOkResponse,
-  RuleListErrorResponse
+  RuleListErrorResponse,
+  useRuleDeleteMutation,
+  RuleDeleteOkResponse,
+  RuleDeleteErrorResponse
 } from '@harnessio/code-service-client'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -158,6 +161,40 @@ export const RepoSettingsGeneralPageContainer = () => {
 
         const message = error.message || 'Error updating repository description'
         setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
+      },
+      onSuccess: () => {
+        setApiError(null)
+      }
+    }
+  )
+
+  const { mutate: deleteRule, isLoading: isDeletingRule } = useRuleDeleteMutation(
+    { repo_ref: repoRef }, // Assuming repoRef is available in your component
+    {
+      onMutate: async variables => {
+        await queryClient.cancelQueries(['ruleList', repoRef])
+
+        const previousRulesData = rules
+
+        // Optimistically remove the rule from the list
+        setRules(currentRules =>
+          currentRules ? currentRules.filter(rule => rule.identifier !== variables.rule_identifier) : null
+        )
+
+        // Return a context object with the previous rules data
+        return { previousRulesData }
+      },
+      onError: (error: RuleDeleteErrorResponse, _variables, context) => {
+        // Rollback to previous state
+        if (context?.previousRulesData) {
+          setRules(context.previousRulesData)
+        }
+
+        // Invalidate queries to refetch data from server
+        queryClient.invalidateQueries(['ruleList', repoRef])
+
+        const message = error.message || 'Error deleting rule'
+        setApiError({ type: ErrorTypes.DELETE_RULE, message })
       },
       onSuccess: () => {
         setApiError(null)
@@ -321,6 +358,11 @@ export const RepoSettingsGeneralPageContainer = () => {
 
     navigate(url)
   }
+
+  const handleDeleteRule = (ruleIdentifier: string) => {
+    deleteRule({ rule_identifier: ruleIdentifier })
+  }
+
   const loadingStates = {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
@@ -340,6 +382,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
       rules={rules}
       handleRuleClick={handleRuleClick}
+      handleDeleteRule={handleDeleteRule}
     />
   )
 }

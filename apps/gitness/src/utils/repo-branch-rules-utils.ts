@@ -6,7 +6,6 @@ import {
   MergeStrategy
 } from '@harnessio/playground'
 import {
-  EnumMergeMethod,
   EnumRuleState,
   OpenapiRuleDefinition,
   RuleAddRequestBody,
@@ -24,12 +23,12 @@ const ruleIds = [
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = (data: RuleGetOkResponse) => {
+const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
   const rules = []
 
   for (const rule of ruleIds) {
     let checked = false
-    let submenu: EnumMergeMethod[] = []
+    let submenu: MergeStrategy[] = []
     let selectOptions: string[] = []
     const definition = data?.definition as OpenapiRuleDefinition
 
@@ -49,7 +48,7 @@ const extractBranchRules = (data: RuleGetOkResponse) => {
         break
       case BranchRuleId.MERGE:
         checked = (definition?.pullreq?.merge?.strategies_allowed?.length ?? 0) > 0
-        submenu = definition?.pullreq?.merge?.strategies_allowed || []
+        submenu = (definition?.pullreq?.merge?.strategies_allowed as MergeStrategy[]) || []
         break
       case BranchRuleId.DELETE_BRANCH:
         checked = definition?.pullreq?.merge?.delete_branch || false
@@ -69,7 +68,7 @@ const extractBranchRules = (data: RuleGetOkResponse) => {
   return rules
 }
 
-export const transformDataFromApi = (data: RuleGetOkResponse) => {
+export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSettingsFormFields => {
   const includedPatterns = data?.pattern?.include || []
   const excludedPatterns = data?.pattern?.exclude || []
   const formatPatterns = [
@@ -87,7 +86,6 @@ export const transformDataFromApi = (data: RuleGetOkResponse) => {
     rules: rules,
     state: data.state === 'active',
     bypass: data?.definition?.bypass?.user_ids || [],
-    access: '1',
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
   }
@@ -95,7 +93,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse) => {
 
 // Util to transform form format to expected-API format for branch-rules-edit
 
-export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) => {
+export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
     acc[rule.id] = rule
     return acc
@@ -138,7 +136,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields) =>
           require_resolve_all: rulesMap['comments']?.checked || false
         },
         merge: {
-          strategies_allowed: (rulesMap['merge']?.submenu || []) as MergeStrategy[],
+          strategies_allowed: (rulesMap['merge']?.submenu as MergeStrategy[]) || [],
           delete_branch: rulesMap['delete_branch']?.checked || false
         },
         status_checks: {

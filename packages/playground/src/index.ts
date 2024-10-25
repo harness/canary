@@ -112,6 +112,7 @@ export * from './pages/repo-branch-settings-rules-page'
 export * from './components/repo-settings/repo-branch-settings-rules/types'
 
 export * from './pages/sandbox-repo-create-page'
+export * from './pages/repo-settings-placeholder-page'
 
 export * from './layouts/SandboxPullRequestCompareLayout'
 

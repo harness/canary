@@ -112,6 +112,9 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   }, [preSetRuleData])
   return (
     <>
+      <Text size={5} weight="medium" as="div" className="mb-8">
+        Create a rule
+      </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormFieldSet.Root>
           <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />

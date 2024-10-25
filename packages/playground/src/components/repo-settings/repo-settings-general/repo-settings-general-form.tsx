@@ -106,6 +106,9 @@ export const RepoSettingsGeneralForm: React.FC<{
 
   return (
     <>
+      <Text size={5} weight={'medium'}>
+        Settings
+      </Text>
       <Text size={4} weight="medium">
         General settings
       </Text>

@@ -75,10 +75,10 @@ function SettingsContent() {
   return (
     <SandboxLayout.Content maxWidth="2xl">
       <Spacer size={4} />
-      <Text size={5} weight={'medium'}>
+      {/* <Text size={5} weight={'medium'}>
         Settings
-      </Text>
-      <Spacer size={8} />
+      </Text> */}
+      {/* <Spacer size={8} /> */}
       <Outlet />
     </SandboxLayout.Content>
   )

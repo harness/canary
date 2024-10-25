@@ -10,7 +10,8 @@ import {
   ForgotPasswordPage,
   NewPasswordPage,
   OTPPage,
-  SandboxRepoSettingsPage
+  SandboxRepoSettingsPage,
+  RepoSettingsPlaceholderPage
 } from '@harnessio/playground'
 import SnadboxRootWraper from './components/SandboxRootWrapper'
 import RootLayoutWrapper from './components/RootLayoutWrapper'
@@ -377,6 +378,10 @@ export default function App() {
                           element: <RepoBranchSettingsRulesPageContainer />
                         }
                       ]
+                    },
+                    {
+                      path: '*',
+                      element: <RepoSettingsPlaceholderPage />
                     }
                   ]
                 }

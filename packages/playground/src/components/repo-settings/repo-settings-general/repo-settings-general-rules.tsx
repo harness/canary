@@ -2,6 +2,8 @@ import React from 'react'
 import { RuleDataType, ErrorTypes } from './types'
 import { Button, ListActions, SearchBox, Icon, Text, StackedList, Spacer } from '@harnessio/canary'
 import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
+import { NoData } from '../../no-data'
+import { NavLink } from 'react-router-dom'
 const Title = ({ title, iconName }: { title: string | undefined; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
     <div className="flex gap-2 items-center">
@@ -54,25 +56,26 @@ export const RepoSettingsGeneralRules = ({
 }) => {
   return (
     <>
-      <Text size={4} weight="medium">
-        Rules
-      </Text>
-      <ListActions.Root>
-        <ListActions.Left>
-          <SearchBox.Root placeholder="Search" />
-        </ListActions.Left>
-        <ListActions.Right>
-          <Button variant="outline" onClick={() => {}}>
-            New branch rule
-          </Button>
-        </ListActions.Right>
-      </ListActions.Root>
-      {/* <Spacer size={6} /> */}
+      {rules && rules.length > 0 ? (
+        <>
+          <Text size={4} weight="medium">
+            Rules
+          </Text>
+          <ListActions.Root>
+            <ListActions.Left>
+              <SearchBox.Root placeholder="Search" />
+            </ListActions.Left>
+            <ListActions.Right>
+              <Button variant="outline">
+                <NavLink to="../rules">New branch rule</NavLink>
+              </Button>
+            </ListActions.Right>
+          </ListActions.Root>
 
-      <StackedList.Root>
-        {rules &&
-          rules.map(rule => {
-            return (
+          {/* <Spacer size={6} /> */}
+
+          <StackedList.Root>
+            {rules.map(rule => (
               <StackedList.Item key={rule.identifier} onClick={() => handleRuleClick(rule.identifier ?? '')}>
                 <StackedList.Field
                   title={
@@ -85,35 +88,41 @@ export const RepoSettingsGeneralRules = ({
                       bypassAllowed={rule.bypassAllowed ?? false}
                     />
                   }
+                  className="gap-0"
                 />
                 <StackedList.Field
                   label
                   secondary
                   title={
-                    // <div className="flex gap-1.5 items-center justify-end">
-                    //   <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-                    // </div>
                     <RepoSettingsToolTip
                       onEdit={handleRuleClick}
                       onDelete={handleDeleteRule}
-                      identifier={rule.identifier}
+                      identifier={rule.identifier ?? ''}
                     />
                   }
                   right
                 />
               </StackedList.Item>
-            )
-          })}
+            ))}
 
-        {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
-          <>
-            <Spacer size={2} />
-            <Text size={1} className="text-destructive">
-              {apiError.message}
-            </Text>
-          </>
-        )}
-      </StackedList.Root>
+            {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
+              <>
+                <Spacer size={2} />
+                <Text size={1} className="text-destructive">
+                  {apiError.message}
+                </Text>
+              </>
+            )}
+          </StackedList.Root>
+        </>
+      ) : (
+        <NoData
+          iconName="no-data-folder"
+          title="No rules yet"
+          description={['There are no rules in this repository yet.']}
+          primaryButton={{ label: 'Create rule', to: '../rules' }}
+        />
+      )}
     </>
   )
 }

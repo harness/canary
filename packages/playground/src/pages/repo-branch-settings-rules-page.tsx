@@ -21,6 +21,7 @@ import {
   ActionType,
   MergeStrategy
 } from '../components/repo-settings/repo-branch-settings-rules/types'
+import { NavLink } from 'react-router-dom'
 
 type BranchSettingsErrors = {
   principals: string | null
@@ -159,7 +160,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
                       {!isLoading ? 'Create rule' : 'Creating rule...'}
                     </Button>
                     <Button type="button" variant="outline" size="sm">
-                      Cancel
+                      <NavLink to="../general">Cancel</NavLink>
                     </Button>
                   </>
                 ) : (
@@ -168,7 +169,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
                       {!isLoading ? 'Update rule' : 'Updating rule...'}
                     </Button>
                     <Button type="button" variant="outline" size="sm">
-                      Cancel
+                      <NavLink to="../general">Cancel</NavLink>
                     </Button>
                   </>
                 )}

@@ -1,5 +1,7 @@
 import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, BypassUsersList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { usegetRepoId } from '../../framework/hooks/useGetRepoId'
+
 import { useState } from 'react'
 import {
   useRuleAddMutation,
@@ -17,6 +19,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const [preSetRuleData, setPreSetRuleData] = useState<RepoBranchSettingsFormFields | null>(null)
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
+  const repoName = usegetRepoId()
+
   const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()
 
@@ -64,8 +68,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
-        const repoName = repoRef.split('/')[1]
-
         navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
       }
     }

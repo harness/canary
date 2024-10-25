@@ -1,7 +1,7 @@
 import React from 'react'
 import { RuleDataType, ErrorTypes } from './types'
 import { Button, ListActions, SearchBox, Icon, Text, StackedList, Spacer } from '@harnessio/canary'
-
+import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
 const Title = ({ title, iconName }: { title: string | undefined; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
     <div className="flex gap-2 items-center">
@@ -88,9 +88,10 @@ export const RepoSettingsGeneralRules = ({
                   label
                   secondary
                   title={
-                    <div className="flex gap-1.5 items-center justify-end">
-                      <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-                    </div>
+                    // <div className="flex gap-1.5 items-center justify-end">
+                    //   <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
+                    // </div>
+                    <RepoSettingsToolTip onEdit={handleRuleClick} identifier={rule.identifier} />
                   }
                   right
                 />

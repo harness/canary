@@ -4,7 +4,7 @@ import { Button, ListActions, SearchBox, Icon, Text, StackedList, Spacer } from 
 import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
 import { NoData } from '../../no-data'
 import { NavLink } from 'react-router-dom'
-const Title = ({ title, iconName }: { title: string | undefined; iconName: 'green-tick' | 'cancel-grey' }) => {
+const Title = ({ title, iconName }: { title?: string; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
     <div className="flex gap-2 items-center">
       {<Icon name={iconName} />}

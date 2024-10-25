@@ -168,7 +168,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { mutate: deleteRule, isLoading: isDeletingRule } = useRuleDeleteMutation(
+  const { mutate: deleteRule } = useRuleDeleteMutation(
     { repo_ref: repoRef }, // Assuming repoRef is available in your component
     {
       onMutate: async variables => {

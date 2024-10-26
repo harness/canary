@@ -5,7 +5,7 @@ import { ErrorTypes } from './types'
 export const RepoSettingsGeneralDelete: React.FC<{
   isLoading?: boolean
   apiError: { type: ErrorTypes; message: string } | null
-  openRepoAlertDeleteDialog: (identifier: string) => void
+  openRepoAlertDeleteDialog: () => void
 }> = ({ openRepoAlertDeleteDialog, apiError }) => {
   return (
     <>
@@ -27,7 +27,7 @@ export const RepoSettingsGeneralDelete: React.FC<{
 
       <ButtonGroup.Root>
         <>
-          <Button type="submit" size="sm" theme="error" onClick={() => openRepoAlertDeleteDialog('')}>
+          <Button type="submit" size="sm" theme="error" onClick={() => openRepoAlertDeleteDialog()}>
             Delete repository
           </Button>
         </>

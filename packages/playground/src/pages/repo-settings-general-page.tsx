@@ -29,7 +29,7 @@ interface RepoSettingsGeneralPageProps {
   rules: RuleDataType[] | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
-  openRepoAlertDeleteDialog: (identifier: string) => void
+  openRepoAlertDeleteDialog: () => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,

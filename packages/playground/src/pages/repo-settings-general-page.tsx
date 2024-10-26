@@ -16,7 +16,6 @@ interface ILoadingStates {
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isLoadingSecuritySettings: boolean
-  isDeletingRepo: boolean
   isUpdatingSecuritySettings: boolean
 }
 interface RepoSettingsGeneralPageProps {
@@ -24,26 +23,26 @@ interface RepoSettingsGeneralPageProps {
   securityScanning: boolean
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
-  handleDeleteRepository: () => void
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
   rules: RuleDataType[] | null
   handleRuleClick: (identifier: string) => void
-  handleDeleteRule: (identifier: string) => void
+  openRulesAlertDeleteDialog: (identifier: string) => void
+  openRepoAlertDeleteDialog: (identifier: string) => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,
   handleRepoUpdate,
   securityScanning,
   handleUpdateSecuritySettings,
-  handleDeleteRepository,
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
   rules,
   handleRuleClick,
-  handleDeleteRule
+  openRulesAlertDeleteDialog,
+  openRepoAlertDeleteDialog
 }) => {
   return (
     <>
@@ -61,7 +60,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           rules={rules}
           apiError={apiError}
           handleRuleClick={handleRuleClick}
-          handleDeleteRule={handleDeleteRule}
+          openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         />
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
@@ -72,11 +71,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           isLoadingSecuritySettings={loadingStates?.isLoadingSecuritySettings}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralDelete
-          handleDeleteRepository={handleDeleteRepository}
-          apiError={apiError}
-          isDeletingRepo={loadingStates.isDeletingRepo}
-        />
+        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
       </FormFieldSet.Root>
     </>
   )

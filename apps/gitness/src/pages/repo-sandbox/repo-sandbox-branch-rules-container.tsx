@@ -1,6 +1,6 @@
 import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, BypassUsersList } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { usegetRepoId } from '../../framework/hooks/useGetRepoId'
+import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 
 import { useState } from 'react'
 import {
@@ -19,7 +19,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const [preSetRuleData, setPreSetRuleData] = useState<RepoBranchSettingsFormFields | null>(null)
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
-  const repoName = usegetRepoId()
+  const repoName = useGetRepoId()
 
   const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()

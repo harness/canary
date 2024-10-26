@@ -47,12 +47,12 @@ export const RepoSettingsGeneralRules = ({
   rules,
   apiError,
   handleRuleClick,
-  handleDeleteRule
+  openRulesAlertDeleteDialog
 }: {
   rules: RuleDataType[] | null
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
-  handleDeleteRule: (identifier: string) => void
+  openRulesAlertDeleteDialog: (identifier: string) => void
 }) => {
   return (
     <>
@@ -66,9 +66,9 @@ export const RepoSettingsGeneralRules = ({
               <SearchBox.Root placeholder="Search" />
             </ListActions.Left>
             <ListActions.Right>
-              <Button variant="outline">
-                <NavLink to="../rules">New branch rule</NavLink>
-              </Button>
+              <NavLink to="../rules">
+                <Button variant="outline">New branch rule</Button>
+              </NavLink>
             </ListActions.Right>
           </ListActions.Root>
 
@@ -96,7 +96,7 @@ export const RepoSettingsGeneralRules = ({
                   title={
                     <RepoSettingsToolTip
                       onEdit={handleRuleClick}
-                      onDelete={handleDeleteRule}
+                      onDelete={openRulesAlertDeleteDialog}
                       identifier={rule.identifier ?? ''}
                     />
                   }

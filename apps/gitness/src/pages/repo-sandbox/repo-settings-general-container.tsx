@@ -5,11 +5,12 @@ import {
   AccessLevel,
   ErrorTypes,
   RepoData,
-  RuleDataType
+  RuleDataType,
+  DeleteTokenAlertDialog,
+  AlertDeleteDialog
 } from '@harnessio/playground'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-
 import {
   useFindRepositoryQuery,
   FindRepositoryOkResponse,
@@ -40,12 +41,13 @@ import {
   RuleDeleteErrorResponse
 } from '@harnessio/code-service-client'
 import { useQueryClient } from '@tanstack/react-query'
-
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 
 export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()
+  const repoName = useGetRepoId()
   const navigate = useNavigate()
   const spaceId = useGetSpaceURLParam()
   const queryClient = useQueryClient()
@@ -61,6 +63,18 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   const [securityScanning, setSecurityScanning] = useState<boolean>(false)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
+  const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
+  const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState<boolean>(false)
+  const [alertDeleteParams, setAlertDeleteParams] = useState<string>('')
+
+  const closeRulesAlertDeleteDialog = () => setIsRulesAlertDeleteDialogOpen(false)
+  const openRulesAlertDeleteDialog = (identifier: string) => {
+    setAlertDeleteParams(identifier)
+    setIsRulesAlertDeleteDialogOpen(true)
+  }
+
+  const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
+  const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)
 
   const { isLoading: isLoadingRepoData } = useFindRepositoryQuery(
     { repo_ref: repoRef },
@@ -168,7 +182,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { mutate: deleteRule } = useRuleDeleteMutation(
+  const { mutate: deleteRule, isLoading: isDeletingRule } = useRuleDeleteMutation(
     { repo_ref: repoRef }, // Assuming repoRef is available in your component
     {
       onMutate: async variables => {
@@ -180,6 +194,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setRules(currentRules =>
           currentRules ? currentRules.filter(rule => rule.identifier !== variables.rule_identifier) : null
         )
+        setIsRulesAlertDeleteDialogOpen(false)
 
         // Return a context object with the previous rules data
         return { previousRulesData }
@@ -196,7 +211,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         const message = error.message || 'Error deleting rule'
         setApiError({ type: ErrorTypes.DELETE_RULE, message })
       },
-      onSuccess: () => {
+      onSuccess: (_data: RuleDeleteOkResponse) => {
         setApiError(null)
       }
     }
@@ -319,10 +334,8 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const handleDeleteRepository = () => {
-    if (window.confirm('Are you sure you want to delete this repository?')) {
-      deleteRepository({})
-    }
+  const handleDeleteRepository = (identifier: string) => {
+    deleteRepository({ repo_ref: identifier })
   }
 
   const handleRepoUpdate = (data: RepoUpdateData) => {
@@ -352,8 +365,6 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    const repoName = repoRef.split('/')[1]
-
     const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/${identifier}`
 
     navigate(url)
@@ -367,22 +378,41 @@ export const RepoSettingsGeneralPageContainer = () => {
     isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
-    isDeletingRepo: isDeletingRepo,
     isUpdatingSecuritySettings: UpdatingSecuritySettings
   }
   return (
-    <RepoSettingsGeneralPage
-      repoData={repoData}
-      handleRepoUpdate={handleRepoUpdate}
-      securityScanning={securityScanning}
-      handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-      handleDeleteRepository={handleDeleteRepository}
-      apiError={apiError}
-      loadingStates={loadingStates}
-      isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
-      rules={rules}
-      handleRuleClick={handleRuleClick}
-      handleDeleteRule={handleDeleteRule}
-    />
+    <>
+      <RepoSettingsGeneralPage
+        repoData={repoData}
+        handleRepoUpdate={handleRepoUpdate}
+        securityScanning={securityScanning}
+        handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+        apiError={apiError}
+        loadingStates={loadingStates}
+        isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
+        rules={rules}
+        handleRuleClick={handleRuleClick}
+        openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+        openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+      />
+      <DeleteTokenAlertDialog
+        open={isRulesAlertDeleteDialogOpen}
+        onClose={closeRulesAlertDeleteDialog}
+        deleteFn={handleDeleteRule}
+        error={apiError}
+        type="rule"
+        identifier={alertDeleteParams}
+        isLoading={isDeletingRule}
+      />
+      <AlertDeleteDialog
+        open={isRepoAlertDeleteDialogOpen}
+        onOpenChange={closeRepoAlertDeleteDialog}
+        handleDeleteRepository={handleDeleteRepository}
+        identifier={repoRef}
+        isDeletingRepo={isDeletingRepo}
+        error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError.message : null}
+        type="repository"
+      />
+    </>
   )
 }

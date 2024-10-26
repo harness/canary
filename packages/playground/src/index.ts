@@ -73,6 +73,7 @@ export * from './components/project-settings/members-list'
 export * from './components/filter'
 export * from './components/copy-button'
 export * from './components/profile-settings/delete-alert-dialog'
+export * from './components/alert-delete-dialog'
 
 export * from './pages/signin-page'
 export * from './pages/forgot-password-page'

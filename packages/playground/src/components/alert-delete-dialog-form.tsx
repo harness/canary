@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Input, Icon, ButtonGroup } from '@harnessio/canary'
+import { Button, Input, ButtonGroup } from '@harnessio/canary'
 import { FormFieldSet } from '../index'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -48,6 +48,11 @@ export const AlertDeleteDialogForm = ({
           To confirm, type “DELETE”
         </FormFieldSet.Label>
         <Input id="verification" {...register('verification')} placeholder="" />
+        {errors.verification && (
+          <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>
+            {errors.verification.message?.toString()}
+          </FormFieldSet.Message>
+        )}
         {error && <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>{error}</FormFieldSet.Message>}
         <ButtonGroup.Root className="justify-end mt-4">
           <Button variant="outline" onClick={onClose} disabled={isLoading}>

@@ -50,7 +50,7 @@ import { SandboxSettingsProjectGeneralPage } from './pages/sandbox-settings-proj
 import { SandboxSettingsProjectMembersPage } from './pages/sandbox-settings-project-members-page'
 import { SandboxRepoCreatePage } from './pages/sandbox-repo-create-page'
 import { SandboxRepoSettingsPage } from './pages/sandbox-repo-settings-page'
-import { RepoSettingsGeneralPage } from './pages/repo-settings-general-page'
+import { RepoSettingsGeneralPlaygroundContainer } from './pages/repo-settings-general-page-playground-container'
 import { RepoSettingsCollaborationsPage } from './pages/repo-settings-collaborations-page'
 import { RepoSettingsModerationPage } from './pages/repo-settings-moderation-page'
 import { RepoSettingsPlaceholderPage } from './pages/repo-settings-placeholder-page'
@@ -64,6 +64,7 @@ import SandboxPullRequestComparePage from './pages/sandbox-pull-request-compare-
 import { mockBypassUserData, mockStatusChecks } from './pages/mocks/repo-branch-settings/mockData'
 import { BypassUsersList } from './components/repo-settings/repo-branch-settings-rules/types'
 import { currentUser } from './pages/mocks/mockCurrentUserData'
+import { mockRepoData } from './pages/mocks/repo-settings/mockRepoData'
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX
@@ -110,7 +111,8 @@ const router = createBrowserRouter([
                   },
                   {
                     path: 'general',
-                    element: <RepoSettingsGeneralPage />
+                    // element: <RepoSettingsGeneralPage repoData={mockRepoData} />
+                    element: <RepoSettingsGeneralPlaygroundContainer />
                   },
                   {
                     path: 'collaborations',

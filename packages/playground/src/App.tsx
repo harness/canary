@@ -111,7 +111,6 @@ const router = createBrowserRouter([
                   },
                   {
                     path: 'general',
-                    // element: <RepoSettingsGeneralPage repoData={mockRepoData} />
                     element: <RepoSettingsGeneralPlaygroundContainer />
                   },
                   {

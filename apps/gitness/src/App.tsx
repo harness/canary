@@ -344,7 +344,7 @@ export default function App() {
                   children: [
                     { index: true, element: <PullRequestSandboxListPage /> },
                     {
-                      path: 'compare/:diffRefs*?',
+                      path: 'compare',
                       element: <CreatePullRequest />
                     }
                   ]
@@ -371,6 +371,10 @@ export default function App() {
                     },
                     {
                       path: 'rules',
+                      element: <RepoSettingsGeneralPageContainer />
+                    },
+                    {
+                      path: 'rules/create',
                       element: <RepoBranchSettingsRulesPageContainer />,
                       children: [
                         {

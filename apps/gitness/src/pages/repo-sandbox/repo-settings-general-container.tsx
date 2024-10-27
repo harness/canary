@@ -365,7 +365,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/${identifier}`
+    const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/create/${identifier}`
 
     navigate(url)
   }

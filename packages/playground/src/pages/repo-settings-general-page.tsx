@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { FormFieldSet } from '..'
 import { RepoSettingsGeneralForm } from '../components/repo-settings/repo-settings-general/repo-settings-general-form'
 import { RepoSettingsGeneralRules } from '../components/repo-settings/repo-settings-general/repo-settings-general-rules'
@@ -44,6 +44,10 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog
 }) => {
+  const rulesRef = useRef<HTMLDivElement | null>(null)
+  if (window.location.pathname.endsWith('/rules')) {
+    rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
   return (
     <>
       <FormFieldSet.Root>
@@ -56,12 +60,15 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           isRepoUpdateSuccess={isRepoUpdateSuccess}
         />
         <FormFieldSet.Separator />
-        <RepoSettingsGeneralRules
-          rules={rules}
-          apiError={apiError}
-          handleRuleClick={handleRuleClick}
-          openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-        />
+        <div ref={rulesRef}>
+          <RepoSettingsGeneralRules
+            rules={rules}
+            apiError={apiError}
+            handleRuleClick={handleRuleClick}
+            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+          />
+        </div>
+
         <FormFieldSet.Separator />
         <RepoSettingsSecurityForm
           securityScanning={securityScanning}

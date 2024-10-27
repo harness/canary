@@ -32,7 +32,7 @@ export const AlertDeleteDialog: React.FC<AlertDeleteDialogProps> = ({
         <AlertDialogHeader className="text-left">
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete your Repository and remove all data. This action cannot be undone.
+            This will permanently delete your {type} and remove all data. This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDeleteDialogForm

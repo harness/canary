@@ -61,18 +61,20 @@ export const RepoSettingsGeneralRules = ({
           <Text size={4} weight="medium">
             Rules
           </Text>
+          <Spacer size={6} />
+
           <ListActions.Root>
             <ListActions.Left>
               <SearchBox.Root placeholder="Search" />
             </ListActions.Left>
             <ListActions.Right>
-              <NavLink to="../rules">
+              <NavLink to="../rules/create">
                 <Button variant="outline">New branch rule</Button>
               </NavLink>
             </ListActions.Right>
           </ListActions.Root>
 
-          {/* <Spacer size={6} /> */}
+          <Spacer size={6} />
 
           <StackedList.Root>
             {rules.map(rule => (
@@ -120,7 +122,7 @@ export const RepoSettingsGeneralRules = ({
           iconName="no-data-folder"
           title="No rules yet"
           description={['There are no rules in this repository yet.']}
-          primaryButton={{ label: 'Create rule', to: '../rules' }}
+          primaryButton={{ label: 'Create rule', to: '../rules/create' }}
         />
       )}
     </>

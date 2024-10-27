@@ -64,7 +64,6 @@ import SandboxPullRequestComparePage from './pages/sandbox-pull-request-compare-
 import { mockBypassUserData, mockStatusChecks } from './pages/mocks/repo-branch-settings/mockData'
 import { BypassUsersList } from './components/repo-settings/repo-branch-settings-rules/types'
 import { currentUser } from './pages/mocks/mockCurrentUserData'
-import { mockRepoData } from './pages/mocks/repo-settings/mockRepoData'
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX

@@ -82,11 +82,6 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
               <Label htmlFor="password" variant="sm">
                 Password
               </Label>
-              <Link to="/forgot">
-                <Button variant="link" size="xs" className="text-secondary-muted" type="button">
-                  Forgot password?
-                </Button>
-              </Link>
             </div>
             <Spacer size={1} />
             <Input

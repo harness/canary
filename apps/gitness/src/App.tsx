@@ -205,6 +205,24 @@ export default function App() {
                 {
                   path: 'general',
                   element: <RepoSettingsGeneralPageContainer />
+                },
+                {
+                  path: 'rules',
+                  element: <RepoSettingsGeneralPageContainer />
+                },
+                {
+                  path: 'rules/create',
+                  element: <RepoBranchSettingsRulesPageContainer />,
+                  children: [
+                    {
+                      path: ':identifier',
+                      element: <RepoBranchSettingsRulesPageContainer />
+                    }
+                  ]
+                },
+                {
+                  path: '*',
+                  element: <RepoSettingsPlaceholderPage />
                 }
               ]
             }

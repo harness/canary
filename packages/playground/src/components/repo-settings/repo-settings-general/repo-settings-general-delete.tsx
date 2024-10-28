@@ -27,7 +27,7 @@ export const RepoSettingsGeneralDelete: React.FC<{
 
       <ButtonGroup.Root>
         <>
-          <Button type="submit" size="sm" theme="error" onClick={() => openRepoAlertDeleteDialog()}>
+          <Button type="submit" size="sm" theme="error" onClick={openRepoAlertDeleteDialog}>
             Delete repository
           </Button>
         </>

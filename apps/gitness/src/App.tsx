@@ -61,6 +61,7 @@ import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { RepoSettingsGeneralPageContainer } from './pages/repo-sandbox/repo-settings-general-container'
 import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { EmptyPage } from './pages/empty-page'
 
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo-sandbox/repo-sandbox-branch-rules-container'
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
@@ -491,6 +492,70 @@ export default function App() {
           ]
         }
       ]
+    },
+    {
+      path: 'chaos-engineering',
+      element: <EmptyPage pathName="Chaos Engineering" />
+    },
+    {
+      path: 'environment',
+      element: <EmptyPage pathName="Environment" />
+    },
+    {
+      path: 'secrets',
+      element: <EmptyPage pathName="Secrets" />
+    },
+    {
+      path: 'connectors',
+      element: <EmptyPage pathName="Connectors" />
+    },
+    {
+      path: 'continuous-delivery-gitops',
+      element: <EmptyPage pathName="Continuous Delivery Gitops" />
+    },
+    {
+      path: 'continuous-integration',
+      element: <EmptyPage pathName="Continuous Integration" />
+    },
+    {
+      path: 'feature-flags',
+      element: <EmptyPage pathName="Feature Flags" />
+    },
+    {
+      path: 'infrastructure-as-code',
+      element: <EmptyPage pathName="Infrastructure as Code" />
+    },
+    {
+      path: 'service-reliability',
+      element: <EmptyPage pathName="Service Reliability" />
+    },
+    {
+      path: 'internal-developer-portal',
+      element: <EmptyPage pathName="Internal Developer Portal" />
+    },
+    {
+      path: 'infrastructure-as-code',
+      element: <EmptyPage pathName="Infrastructure as Code" />
+    },
+    {
+      path: 'code-repository',
+      element: <EmptyPage pathName="Code Repository" />
+    },
+    {
+      path: 'software-engineering-insights',
+      element: <EmptyPage pathName="Software Engineering Insights" />
+    },
+    {
+      path: 'software-supply-chain-assurance',
+      element: <EmptyPage pathName="Software Supply Chain Assurance" />
+    },
+    {
+      path: 'security-testing-orchestration',
+      element: <EmptyPage pathName="Security Testing Orchestration" />
+    },
+    {
+      path: 'cloud-cost-management',
+      element: <EmptyPage pathName="Cloud Cost Management" />
     }
   ])
 

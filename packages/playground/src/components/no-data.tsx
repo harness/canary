@@ -17,11 +17,13 @@ export interface NoDataProps {
   description: string[]
   primaryButton?: {
     label: string
+    onClick?: () => void
     to?: string
   }
   secondaryButton?: {
     label: string
     to?: string
+    onClick?: () => void
   }
   insideTabView?: boolean
   loadState?: string
@@ -59,12 +61,12 @@ export const NoData: React.FC<NoDataProps> = ({
         {(primaryButton || secondaryButton) && (
           <div className="mt-3.5 flex gap-4">
             {primaryButton && (
-              <Button size="lg" asChild>
+              <Button size="lg" asChild onClick={primaryButton.onClick}>
                 <NavLink to={primaryButton.to || '/</Button>'}>{primaryButton.label}</NavLink>
               </Button>
             )}
             {secondaryButton && (
-              <Button variant="outline" size="lg" asChild>
+              <Button variant="outline" size="lg" asChild onClick={secondaryButton.onClick}>
                 <NavLink to={secondaryButton.to || '/</Button>'}>{secondaryButton.label}</NavLink>
               </Button>
             )}

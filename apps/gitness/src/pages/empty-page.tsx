@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 export const EmptyPage = ({ pathName }: { pathName: string }) => {
   const navigate = useNavigate()
-  //   console.log(navigate(-1))
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>

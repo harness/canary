@@ -112,15 +112,11 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
           </Text>
         </CardContent>
       </Card>
-      {/* <Dock.Root> */}
-      {/* <div className="-0"> */}
+
       <Text size={1} color="tertiaryBackground">
         By joining, you agree to <a className="text-primary">Terms of Service</a> and{' '}
         <a className="text-primary">Privacy Policy</a>
       </Text>
-      {/* </div> */}
-
-      {/* </Dock.Root> */}
     </Floating1ColumnLayout>
   )
 }

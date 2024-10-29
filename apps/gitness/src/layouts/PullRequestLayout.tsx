@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
-import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+import { Badge, Icon, Spacer } from '@harnessio/canary'
 import { Floating1ColumnLayout, PullRequestHeader } from '@harnessio/playground'
 import { TypesPullReq, useGetPullReqQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { PathParams } from '../RouteDefinitions'
-import useGetPullRequestTab, { PullRequestTab } from '../hooks/useGetPullRequestTab'
 
 const PullRequestLayout: React.FC = () => {
   const [pullRequest, setPullRequest] = useState<TypesPullReq>()

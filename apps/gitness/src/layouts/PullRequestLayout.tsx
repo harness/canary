@@ -16,13 +16,20 @@ const PullRequestLayout: React.FC = () => {
     repo_ref: repoRef,
     pullreq_number: prId
   })
-  const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
 
   useEffect(() => {
     if (!isFetching && pullRequestData) {
       setPullRequest(pullRequestData)
     }
   }, [pullRequestData, isFetching])
+
+  const baseClasses =
+    'inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 px-4 items-center gap-2 bg-background font-normal text-sm ease-in-out duration-150 hover:text-primary h-[36px] rounded-tl-md rounded-tr-md m-0 '
+  // data-[state=active]:text-primary [&svg]:data-[state=active]:text-primary tabnav-inactive data-[state=active]:tabnav-active
+  const getLinkClasses = (isActive: boolean) => {
+    console.log(isActive)
+    return `${baseClasses} ${isActive ? 'text-primary [&svg]:text-primary tabnav-active' : 'tabnav-inactive'}`
+  }
   return (
     <>
       <Floating1ColumnLayout>
@@ -43,47 +50,34 @@ const PullRequestLayout: React.FC = () => {
             }}
           />
         )}
-        <Tabs variant="tabnav" value={pullRequestTab?.valueOf()}>
-          <TabsList>
-            <NavLink to={`conversation`}>
-              <TabsTrigger value={PullRequestTab.CONVERSATION}>
-                <Icon size={16} name="comments" />
-                Conversation
-                <Badge variant="outline" size="xs">
-                  1
-                </Badge>
-              </TabsTrigger>
+        <div className="relative w-full grid grid-flow-col grid-cols-[auto_1fr] items-end">
+          <div className="inline-flex items-center text-muted-foreground h-[36px] gap-0 justify-start w-full">
+            <NavLink to={`conversation`} className={({ isActive }) => getLinkClasses(isActive)}>
+              <Icon size={16} name="comments" />
+              Conversation
+              <Badge variant="outline" size="xs">
+                1
+              </Badge>
             </NavLink>
-            <NavLink to={`commits`}>
-              <TabsTrigger value={PullRequestTab.COMMITS}>
-                <Icon size={16} name="tube-sign" />
-                Commits
-                <Badge variant="outline" size="xs">
-                  {pullRequest?.stats?.commits}
-                </Badge>
-              </TabsTrigger>
+            <NavLink to={`commits`} className={({ isActive }) => getLinkClasses(isActive)}>
+              <Icon size={16} name="tube-sign" />
+              Commits
+              <Badge variant="outline" size="xs">
+                {pullRequest?.stats?.commits}
+              </Badge>
             </NavLink>
-            <NavLink to={`changes`}>
-              <TabsTrigger value={PullRequestTab.CHANGES}>
-                <Icon size={14} name="changes" />
-                Changes
-                <Badge variant="outline" size="xs">
-                  {pullRequest?.stats?.files_changed}
-                </Badge>
-              </TabsTrigger>
+            <NavLink to={`changes`} className={({ isActive }) => getLinkClasses(isActive)}>
+              <Icon size={14} name="changes" />
+              Changes
+              <Badge variant="outline" size="xs">
+                {pullRequest?.stats?.files_changed}
+              </Badge>
             </NavLink>
-            {/* TODO: checks page will direct to execution details page for now */}
-            {/* <NavLink to={`checks`}>
-              <TabsTrigger value={PullRequestTab.CHECKS}>
-                <Icon size={14} name="checks" />
-                Checks
-                <Badge variant="outline" size="xs">
-                  9
-                </Badge>
-              </TabsTrigger>
-            </NavLink> */}
-          </TabsList>
-        </Tabs>
+          </div>
+          <div className="h-[36px] border-b border-border-background" />
+          <div className="absolute right-full w-[9999px] h-[36px] border-b border-border-background" />
+          <div className="absolute left-full w-[9999px] h-[36px] border-b border-border-background" />
+        </div>
         <Spacer size={8} />
         <Outlet />
       </Floating1ColumnLayout>

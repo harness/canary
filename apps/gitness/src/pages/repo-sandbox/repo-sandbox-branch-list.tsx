@@ -41,13 +41,13 @@ export function RepoSandboxBranchesListPage() {
   const { spaceId, repoId } = useParams<PathParams>()
 
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
-  const { data: repoMetadata } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { sort, query } = useCommonFilter<ListBranchesQueryQueryParams['sort']>()
 
   const {
     isLoading,
-    data: brancheslistData,
+    data: { body: brancheslistData } = {},
     isError
   } = useListBranchesQuery(
     {
@@ -61,7 +61,7 @@ export function RepoSandboxBranchesListPage() {
     }
   )
 
-  const { data: branchDivergence, mutate } = useCalculateCommitDivergenceMutation({
+  const { data: { body: branchDivergence } = {}, mutate } = useCalculateCommitDivergenceMutation({
     repo_ref: repoRef
   })
 

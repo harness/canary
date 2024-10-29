@@ -31,7 +31,7 @@ export default function ReposSandboxListPage() {
   const navigate = useNavigate()
   const space = useGetSpaceURLParam()
 
-  const { isFetching, data } = useListReposQuery({ queryParams: {}, space_ref: `${space}/+` })
+  const { isFetching, data: { body: data } = {} } = useListReposQuery({ queryParams: {}, space_ref: `${space}/+` })
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
 
   const renderListContent = () => {

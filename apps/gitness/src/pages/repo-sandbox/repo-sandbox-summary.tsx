@@ -33,9 +33,9 @@ export const RepoSandboxSummaryList: React.FC = () => {
   const [files, setFiles] = useState<FileProps[]>([])
   const repoRef = useGetRepoRef()
 
-  const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: branches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
@@ -48,14 +48,14 @@ export const RepoSandboxSummaryList: React.FC = () => {
     name: item?.name
   }))
 
-  const { data: repoSummary } = useSummaryQuery({
+  const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query }
   })
 
   const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
 
-  const { data: readmeContent } = useGetContentQuery({
+  const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
     queryParams: { include_commit: false, git_ref: normalizeGitRef(selectedBranch) }
@@ -65,7 +65,7 @@ export const RepoSandboxSummaryList: React.FC = () => {
     return decodeGitContent(readmeContent?.content?.data)
   }, [readmeContent])
 
-  const { data: repoDetails } = useGetContentQuery({
+  const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(selectedBranch) }
@@ -92,7 +92,7 @@ export const RepoSandboxSummaryList: React.FC = () => {
         body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
         repo_ref: repoRef
       })
-        .then((response: RepoPathsDetailsOutput) => {
+        .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
           if (response?.details && response.details.length > 0) {
             setFiles(
               response.details.map(

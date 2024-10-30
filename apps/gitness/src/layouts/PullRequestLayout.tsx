@@ -23,7 +23,7 @@ const PullRequestLayout: React.FC = () => {
   }, [pullRequestData, isFetching])
 
   const baseClasses =
-    'inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 px-4 items-center gap-2 bg-background font-normal text-sm ease-in-out duration-150 hover:text-primary h-[36px] rounded-tl-md rounded-tr-md m-0 '
+    'inline-flex items-center justify-center px-3 py-1 px-4 items-center gap-2 bg-background hover:text-primary h-[36px] rounded-tl-md rounded-tr-md m-0'
   const getLinkClasses = (isActive: boolean) => {
     return `${baseClasses} ${isActive ? 'text-primary [&svg]:text-primary tabnav-active' : 'tabnav-inactive'}`
   }

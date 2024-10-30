@@ -8,7 +8,7 @@ import { PathParams } from '../RouteDefinitions'
 
 const PullRequestLayout: React.FC = () => {
   const [pullRequest, setPullRequest] = useState<TypesPullReq>()
-  const { spaceId, repoId, pullRequestId } = useParams<PathParams>()
+  const { pullRequestId } = useParams<PathParams>()
   const repoRef = useGetRepoRef()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const { data: { body: pullRequestData } = {}, isFetching } = useGetPullReqQuery({
@@ -24,9 +24,7 @@ const PullRequestLayout: React.FC = () => {
 
   const baseClasses =
     'inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 px-4 items-center gap-2 bg-background font-normal text-sm ease-in-out duration-150 hover:text-primary h-[36px] rounded-tl-md rounded-tr-md m-0 '
-  // data-[state=active]:text-primary [&svg]:data-[state=active]:text-primary tabnav-inactive data-[state=active]:tabnav-active
   const getLinkClasses = (isActive: boolean) => {
-    console.log(isActive)
     return `${baseClasses} ${isActive ? 'text-primary [&svg]:text-primary tabnav-active' : 'tabnav-inactive'}`
   }
   return (

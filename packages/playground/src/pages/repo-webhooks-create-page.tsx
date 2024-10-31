@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from 'react'
+import React from 'react'
 import { Button, ButtonGroup, useZodForm, Spacer, Text } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
@@ -88,7 +88,7 @@ export const RepoWebhooksCreatePage: React.FC = ({}) => {
                 <FormFieldSet.ControlGroup>
                   <ButtonGroup.Root>
                     <>
-                      <Button type="submit" size="sm">
+                      <Button type="submit" size="sm" disabled={!isValid}>
                         Create webhook
                       </Button>
                       <Button type="button" variant="outline" size="sm">

@@ -66,7 +66,7 @@ function RepoWebhooksListPage() {
           </ListActions.Left>
           <ListActions.Right>
             <Button variant="default" asChild>
-              <Link to="#">Create webhook</Link>
+              <Link to="/sandbox/repos/drone/webhooks/create">Create webhook</Link>
             </Button>
           </ListActions.Right>
         </ListActions.Root>

@@ -7,44 +7,16 @@ import {
   WebhookDescriptionField,
   WebhookPayloadUrlField,
   WebhookSecretField,
-  WebhookSSLVerificationField
+  WebhookSSLVerificationField,
+  WebhookTriggerField,
+  WebhookEventSettingsFieldset
 } from '../components/webhooks/create-webhooks-form-fields'
+import { branchEvents, tagEvents, prEvents } from '../components/webhooks/create-webhook-form-data'
+
 import { FormFieldSet, SandboxLayout } from '../index'
 import { createWebhookFormSchema, CreateWebhookFormFields } from '../components/webhooks/create-webhooks-form-schema'
-import {
-  RepoBranchSettingsFormFields,
-  BypassUsersList,
-  ActionType,
-  MergeStrategy
-} from '../components/repo-settings/repo-branch-settings-rules/types'
-import { NavLink } from 'react-router-dom'
-
-// type BranchSettingsErrors = {
-//   principals: string | null
-//   statusChecks: string | null
-//   addRule: string | null
-//   updateRule: string | null
-// }
-
-// interface RepoBranchSettingsRulesPageProps {
-//   isLoading?: boolean
-//   handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
-//   principals?: BypassUsersList[]
-//   recentStatusChecks?: string[]
-//   apiErrors?: BranchSettingsErrors
-//   preSetRuleData?: RepoBranchSettingsFormFields | null
-// }
-
-export const RepoWebhooksCreatePage: React.FC = (
-  {
-    //   isLoading,
-    //   handleRuleUpdate,
-    //   principals,
-    //   recentStatusChecks,
-    //   apiErrors,
-    //   preSetRuleData
-  }
-) => {
+import { EventTypes } from '../components/webhooks/types'
+export const RepoWebhooksCreatePage: React.FC = ({}) => {
   const {
     register,
     handleSubmit,
@@ -56,18 +28,28 @@ export const RepoWebhooksCreatePage: React.FC = (
     schema: createWebhookFormSchema,
     mode: 'onChange',
     defaultValues: {
+      state: true,
       name: '',
       description: '',
       payloadUrl: '',
       secret: '',
-      sslVerification: '1'
-      //   trigger: '1'
+      sslVerification: '1',
+      trigger: '1',
+      branchEvents: [],
+      tagEvents: [],
+      prEvents: []
     }
   })
 
+  const eventSettingsComponents = [
+    { fieldName: 'branchEvents', events: branchEvents },
+    { fieldName: 'tagEvents', events: tagEvents },
+    { fieldName: 'prEvents', events: prEvents }
+  ]
+  const triggerValue = watch('trigger')
+
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
     console.log(data)
-    // handleRuleUpdate(formData)
     reset()
   }
 
@@ -81,63 +63,38 @@ export const RepoWebhooksCreatePage: React.FC = (
           <form onSubmit={handleSubmit(onSubmit)}>
             <FormFieldSet.Root>
               <WebhookToggleField register={register} setValue={setValue} watch={watch} />
-              <WebhookNameField register={register} errors={errors} />
+              <WebhookNameField register={register} errors={errors} disabled={false} />
               <WebhookDescriptionField register={register} errors={errors} />
               <WebhookPayloadUrlField register={register} errors={errors} />
               <WebhookSecretField register={register} errors={errors} />
-              <WebhookSSLVerificationField register={register} errors={errors} setValue={setValue} watch={watch} />
-              {/*<BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            errors={errors}
-          />
-          <BranchSettingsRuleDefaultBranchField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleBypassListField
-            setValue={setValue}
-            watch={watch}
-            bypassOptions={principals as BypassUsersList[]}
-          />
-          <BranchSettingsRuleEditPermissionsField
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            watch={watch}
-          />
-
-          {apiErrors &&
-            (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule || apiErrors.updateRule) && (
-              <>
-                <Spacer size={2} />
-                <Text size={1} className="text-destructive">
-                  {apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule}
-                </Text>
-              </>
-            )}*/}
+              <WebhookSSLVerificationField setValue={setValue} watch={watch} />
+              <WebhookTriggerField setValue={setValue} watch={watch} />
+              {triggerValue === '2' && (
+                <div className="flex justify-between">
+                  {eventSettingsComponents.map(component => (
+                    <div key={component.fieldName} className="flex flex-col">
+                      <WebhookEventSettingsFieldset
+                        setValue={setValue}
+                        watch={watch}
+                        eventList={component.events}
+                        fieldName={component.fieldName as keyof EventTypes}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
 
               <FormFieldSet.Root className="mt-0">
                 <FormFieldSet.ControlGroup>
                   <ButtonGroup.Root>
-                    {/* {!preSetRuleData ? ( */}
                     <>
-                      <Button type="submit" size="sm" /*disabled={/*!isValid*/ /*|| isLoading*/>
-                        {/* {!isLoading ? 'Create rule' : 'Creating rule...'} */}
+                      <Button type="submit" size="sm">
                         Create webhook
                       </Button>
                       <Button type="button" variant="outline" size="sm">
-                        <NavLink to="../general">Cancel</NavLink>
+                        Cancel
                       </Button>
                     </>
-                    {/*} ) : ( 
-                    // <>
-                    //   <Button type="submit" size="sm" disabled={!isValid | isLoading}>
-                    //     {!isLoading ? 'Update rule' : 'Updating rule...'}
-                    //   </Button>
-                    //   <Button type="button" variant="outline" size="sm">
-                    //     <NavLink to="../general">Cancel</NavLink>
-                    //   </Button>
-                    // </>
-                    {/* )} */}
                   </ButtonGroup.Root>
                 </FormFieldSet.ControlGroup>
               </FormFieldSet.Root>

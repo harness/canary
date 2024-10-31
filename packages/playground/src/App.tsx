@@ -25,6 +25,7 @@ import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import RepoPipelineListPage from './pages/repo-pipeline-list-page'
 import RepoExecutionListPage from './pages/repo-execution-list-page'
 import RepoWebhooksListPage from './pages/repo-webhooks-page'
+import { RepoWebhooksCreatePage } from './pages/repo-webhooks-create-page'
 import { CreatePipelinePage } from './pages/create-pipeline-page'
 import { SandboxRoot } from './layouts/SandboxRoot'
 import { SandboxRepo } from './layouts/SandboxRepo'
@@ -99,6 +100,10 @@ const router = createBrowserRouter([
               {
                 path: 'pull-requests/compare',
                 element: <SandboxPullRequestComparePage />
+              },
+              {
+                path: 'webhooks/create',
+                element: <RepoWebhooksCreatePage />
               },
               {
                 path: 'settings',
@@ -351,6 +356,10 @@ const router = createBrowserRouter([
           {
             path: 'webhooks',
             element: <RepoWebhooksListPage />
+          },
+          {
+            path: 'webhooks/create',
+            element: <RepoWebhooksCreatePage />
           },
           {
             path: 'commits',

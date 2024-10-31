@@ -74,8 +74,6 @@ function Sidebar() {
 function SettingsContent() {
   return (
     <SandboxLayout.Content maxWidth="2xl">
-      <Spacer size={4} />
-
       <Outlet />
     </SandboxLayout.Content>
   )

@@ -160,7 +160,6 @@ export const WebhookEventSettingsFieldset: React.FC<
         }
         id={`${fieldName}_${event.id}`}
         label={event.event}
-        className="mt-0"
       />
     </FormFieldSet.ControlGroup>
   ))

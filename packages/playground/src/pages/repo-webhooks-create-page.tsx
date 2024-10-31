@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonGroup, useZodForm, Spacer, Text } from '@harnessio/canary'
+import { Button, ButtonGroup, useZodForm, Text } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
   WebhookToggleField,
@@ -16,7 +16,7 @@ import { branchEvents, tagEvents, prEvents } from '../components/webhooks/create
 import { FormFieldSet, SandboxLayout } from '../index'
 import { createWebhookFormSchema, CreateWebhookFormFields } from '../components/webhooks/create-webhooks-form-schema'
 import { EventTypes } from '../components/webhooks/types'
-export const RepoWebhooksCreatePage: React.FC = ({}) => {
+export const RepoWebhooksCreatePage: React.FC = () => {
   const {
     register,
     handleSubmit,

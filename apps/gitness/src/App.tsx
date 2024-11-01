@@ -90,7 +90,7 @@ export default function App() {
     //   element: <RootLayoutWrapper />,
 
     //   children: [
-    //     { index: true, element: <LandingPage /> },
+    // { index: true, element: <LandingPage /> },
     //     {
     //       path: ':spaceId/repos',
     //       element: <ReposListPage />
@@ -331,6 +331,10 @@ export default function App() {
       path: '/',
       element: <SnadboxRootWraper />,
       children: [
+        {
+          index: true,
+          element: <LandingPage />
+        },
         {
           path: 'spaces',
           element: <SandboxRepoHeader />,

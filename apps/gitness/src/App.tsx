@@ -15,42 +15,42 @@ import {
   RepoSettingsPlaceholderPage
 } from '@harnessio/playground'
 import SnadboxRootWraper from './components/SandboxRootWrapper'
-import RootLayoutWrapper from './components/RootLayoutWrapper'
+// import RootLayoutWrapper from './components/RootLayoutWrapper'
 import { TooltipProvider } from '@harnessio/canary'
 import { queryClient } from './framework/queryClient'
 import PipelineListPage from './pages/pipeline-list'
 import SandboxPipelinesPage from './pages/sandbox-pipeline-list'
 import { SignIn } from './pages/signin'
 import { SignUp } from './pages/signup'
-import PullRequestListPage from './pages/pull-request-list-page'
+// import PullRequestListPage from './pages/pull-request-list-page'
 import PullRequestSandboxListPage from './pages/sandbox-pull-request-list-page'
 import ExecutionsListPage from './pages/execution-list'
 import SandboxExecutionsListPage from './pages/sandbox-execution-list'
-import ReposListPage from './pages/repo/repo-list'
-import PullRequestLayout from './layouts/PullRequestLayout'
+// import ReposListPage from './pages/repo/repo-list'
+// import PullRequestLayout from './layouts/PullRequestLayout'
 import PullRequestSandboxLayout from './layouts/PullRequestSandboxLayout'
 import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import RepoLayout from './layouts/RepoLayout'
 import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
 import { LandingPage } from './pages/landing-page'
 import { AppProvider } from './framework/context/AppContext'
-import { RepoSummary } from './pages/repo/repo-summary'
+// import { RepoSummary } from './pages/repo/repo-summary'
 import { RepoSandboxSummaryList } from './pages/repo-sandbox/repo-sandbox-summary'
 import CreateProject from './pages/create-project'
 import { CreateRepo } from './pages/repo/repo-create-page'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import { SandboxPipelineCreate } from './pages/pipeline-create/pipeline-create-sandbox'
-import RepoCommitsPage from './pages/repo/repo-commits'
+// import RepoCommitsPage from './pages/repo/repo-commits'
 import RepoSandboxCommitsPage from './pages/repo-sandbox/repo-sandbox-commits'
 import { Execution } from './pages/execution/execution-details'
-import RepoWebhooksListPage from './pages/repo/repo-webhooks'
+// import RepoWebhooksListPage from './pages/repo/repo-webhooks'
 import RepoSandboxWebhooksListPage from './pages/repo-sandbox/repo-sandbox-webhooks'
-import { ReposBranchesListPage } from './pages/repo/repo-branch-list'
+// import { ReposBranchesListPage } from './pages/repo/repo-branch-list'
 import { RepoSandboxBranchesListPage } from './pages/repo-sandbox/repo-sandbox-branch-list'
 import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
-import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
+// import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
 import SandboxPullRequestConversationPage from './pages/pull-request/sandbox-pull-request-conversation-page'
-import { RepoFiles } from './pages/repo/repo-files'
+// import { RepoFiles } from './pages/repo/repo-files'
 import { RepoSandboxFiles } from './pages/repo-sandbox/repo-sandbox-files'
 import { SandboxRepoHeader } from './pages/repo-sandbox/repo-sandbox-header'
 import ReposSandboxListPage from './pages/repo-sandbox/repo-sandbox-list'
@@ -62,7 +62,7 @@ import { SandboxFileViewer } from './components/SandboxFileViewer'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
 import { FileEditor } from './components/FileEditor'
-import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+// import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { RepoSettingsGeneralPageContainer } from './pages/repo-sandbox/repo-settings-general-container'
 import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -85,227 +85,6 @@ export default function App() {
   })
 
   const router = createBrowserRouter([
-    // {
-    //   path: '/',
-    //   element: <RootLayoutWrapper />,
-
-    //   children: [
-    // { index: true, element: <LandingPage /> },
-    //     {
-    //       path: ':spaceId/repos',
-    //       element: <ReposListPage />
-    //     },
-
-    //     {
-    //       path: ':spaceId/repos/:repoId',
-    //       element: <RepoLayout />,
-    //       children: [
-    //         {
-    //           index: true,
-    //           element: <RepoSummary />
-    //         },
-    //         {
-    //           path: 'summary',
-    //           element: <RepoSummary />
-    //         },
-    //         {
-    //           path: 'code',
-    //           element: (
-    //             <ExplorerPathsProvider>
-    //               <RepoFiles />
-    //             </ExplorerPathsProvider>
-    //           ),
-    //           children: [
-    //             {
-    //               index: true,
-    //               element: <FileViewer />
-    //             },
-    //             {
-    //               path: 'edit/:gitRef/~/:resourcePath*',
-    //               element: <FileEditor />
-    //             },
-    //             {
-    //               path: 'new/:gitRef/~/*',
-    //               element: <FileEditor />,
-    //               children: [
-    //                 {
-    //                   path: ':resourcePath*',
-    //                   element: <FileViewer />
-    //                 }
-    //               ]
-    //             },
-    //             {
-    //               path: ':gitRef',
-    //               element: <FileViewer />,
-    //               children: [
-    //                 {
-    //                   index: true,
-    //                   element: <FileViewer />
-    //                 },
-    //                 {
-    //                   path: '~/:resourcePath*',
-    //                   element: <FileViewer />
-    //                 }
-    //               ]
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           path: 'pipelines',
-    //           children: [
-    //             { index: true, element: <PipelineListPage /> },
-    //             {
-    //               path: ':pipelineId',
-    //               children: [
-    //                 { index: true, element: <ExecutionsListPage /> },
-    //                 { path: 'executions/:executionId', element: <Execution /> },
-    //                 {
-    //                   path: 'edit',
-    //                   element: <PipelineEditPage />
-    //                 }
-    //               ]
-    //             },
-    //             {
-    //               path: 'create',
-    //               element: <PipelineCreate />
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           path: 'commits',
-    //           element: <RepoCommitsPage />
-    //         },
-    //         {
-    //           path: 'pull-requests',
-    //           element: <PullRequestListPage />
-    //         },
-    //         {
-    //           path: 'pull-requests/:pullRequestId',
-    //           element: <PullRequestLayout />,
-    //           children: [
-    //             {
-    //               index: true,
-    //               element: <Navigate to="conversation" />
-    //             },
-    //             {
-    //               path: 'conversation',
-    //               element: (
-    //                 <PullRequestDataProvider>
-    //                   <PullRequestConversationPage />
-    //                 </PullRequestDataProvider>
-    //               )
-    //             },
-    //             {
-    //               path: 'commits',
-    //               element: <PullRequestCommitsPage />
-    //             },
-    //             {
-    //               path: 'changes',
-    //               element: (
-    //                 <PullRequestDataProvider>
-    //                   <PullRequestChangesPage />
-    //                 </PullRequestDataProvider>
-    //               )
-    //             },
-    //             {
-    //               path: 'checks',
-    //               element: <>Checks</>
-    //             }
-    //           ]
-    //         },
-    //         {
-    //           path: 'webhooks',
-    //           element: <RepoWebhooksListPage />
-    //         },
-    //         {
-    //           path: 'webhooks/create',
-    //           element: <CreateWebhookContainer />
-    //         },
-    //         {
-    //           path: 'branches',
-    //           element: <ReposBranchesListPage />
-    //         },
-    //         {
-    //           path: 'settings',
-    //           element: <SandboxRepoSettingsPage />,
-    //           children: [
-    //             {
-    //               index: true,
-    //               element: <Navigate to="general" />
-    //             },
-    //             {
-    //               path: 'general',
-    //               element: <RepoSettingsGeneralPageContainer />
-    //             },
-    //             {
-    //               path: 'rules',
-    //               element: <RepoSettingsGeneralPageContainer />
-    //             },
-    //             {
-    //               path: 'rules/create',
-    //               element: <RepoBranchSettingsRulesPageContainer />,
-    //               children: [
-    //                 {
-    //                   path: ':identifier',
-    //                   element: <RepoBranchSettingsRulesPageContainer />
-    //                 }
-    //               ]
-    //             },
-    //             {
-    //               path: '*',
-    //               element: <RepoSettingsPlaceholderPage />
-    //             }
-    //           ]
-    //         }
-    //       ]
-    //     },
-    //     // Pipelines (OUTSIDE REPOS)
-    //     //
-    //     /**
-    //      * 🚨 Root level pipelines will be disabled 🚨
-    //      * Pipelines will only be part of repos for now
-    //      */
-    //     {
-    //       path: 'pipelines',
-    //       element: <PipelineListPage />
-    //     },
-    //     // Executions (OUTSIDE REPOS)
-    //     {
-    //       path: 'executions',
-    //       element: <ExecutionsListPage />
-    //     },
-    //     {
-    //       path: ':spaceId/repos/:repoId',
-    //       element: <RepoLayout />,
-    //       children: [
-    //         {
-    //           index: true,
-    //           element: <>Repos list</>
-    //         },
-    //         {
-    //           path: 'pipelines',
-    //           element: <PipelineListPage />
-    //         },
-    //         {
-    //           path: 'pipelines/:pipelineId/edit',
-    //           element: <PipelineEditPage />
-    //         },
-    //         {
-    //           path: 'pipelines/create',
-    //           element: <PipelineCreate />
-    //         },
-    //         {
-    //           path: 'pipelines/:pipelineId/executions/:executionId',
-    //           element: <div>Execution page</div>
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       path: 'create-project',
-    //       element: <CreateProject />
-    //     }
-    //   ]
-    // },
     {
       path: '/signin',
       element: <SignIn />
@@ -370,6 +149,20 @@ export default function App() {
                         {
                           index: true,
                           element: <SandboxFileViewer />
+                        },
+                        {
+                          path: 'edit/:gitRef/~/:resourcePath*',
+                          element: <FileEditor />
+                        },
+                        {
+                          path: 'new/:gitRef/~/*',
+                          element: <FileEditor />,
+                          children: [
+                            {
+                              path: ':resourcePath*',
+                              element: <FileViewer />
+                            }
+                          ]
                         },
                         {
                           path: '~/:resourcePath*',
@@ -497,6 +290,51 @@ export default function App() {
                   ]
                 }
               ]
+            },
+            // Pipelines (OUTSIDE REPOS)
+            //
+            /**
+             * 🚨 Root level pipelines will be disabled 🚨
+             * Pipelines will only be part of repos for now
+             */
+            {
+              path: 'pipelines',
+              element: <PipelineListPage />
+            },
+            // Executions (OUTSIDE REPOS)
+            {
+              path: 'executions',
+              element: <ExecutionsListPage />
+            },
+            {
+              path: ':spaceId/repos/:repoId',
+              element: <RepoLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <>Repos list</>
+                },
+                {
+                  path: 'pipelines',
+                  element: <PipelineListPage />
+                },
+                {
+                  path: 'pipelines/:pipelineId/edit',
+                  element: <PipelineEditPage />
+                },
+                {
+                  path: 'pipelines/create',
+                  element: <PipelineCreate />
+                },
+                {
+                  path: 'pipelines/:pipelineId/executions/:executionId',
+                  element: <div>Execution page</div>
+                }
+              ]
+            },
+            {
+              path: 'create-project',
+              element: <CreateProject />
             },
             {
               path: ':spaceId/repos/create',

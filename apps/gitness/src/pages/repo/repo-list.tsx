@@ -63,7 +63,7 @@ export default function ReposListPage() {
             'There are no repositories in this project yet.',
             'Create new or import an existing repository.'
           ]}
-          primaryButton={{ label: 'Create repository', to: `/sandbox/spaces/${space}/repos/create` }}
+          primaryButton={{ label: 'Create repository', to: `/spaces/${space}/repos/create` }}
           /**
            * @TODO add "to" link when Import repository gets implemented
            */
@@ -110,7 +110,7 @@ export default function ReposListPage() {
                 <Filter sortOptions={sortOptions} />
               </div>
               <Button variant="default" asChild>
-                <Link to={`/sandbox/spaces/${space}/repos/create`}>Create Repository</Link>
+                <Link to={`/spaces/${space}/repos/create`}>Create Repository</Link>
               </Button>
             </div>
           </>

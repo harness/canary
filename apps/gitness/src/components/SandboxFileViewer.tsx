@@ -30,7 +30,7 @@ export const SandboxFileViewer: React.FC = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
   const subResourcePath = useParams()['*'] || ''
-  const repoPath = `/sandbox/spaces/${spaceId}/repos/${repoId}/code/${gitRef}`
+  const repoPath = `/spaces/${spaceId}/repos/${repoId}/code/${gitRef}`
   const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
   const pathParts = splitPathWithParents(fullResourcePath || '')
   const [files, setFiles] = useState<FileProps[]>([])

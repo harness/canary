@@ -67,7 +67,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
           <DropdownMenuGroup>
             <Link
               replace
-              to={`/sandbox/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${branchInfo.name}`}>
+              to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${branchInfo.name}`}>
               <DropdownMenuItem className="cursor-pointer">
                 <DropdownMenuShortcut className="ml-0">
                   <Icon name="pr-open" className="mr-2" />

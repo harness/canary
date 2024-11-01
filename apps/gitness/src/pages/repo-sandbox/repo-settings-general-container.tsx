@@ -324,7 +324,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     { repo_ref: repoRef },
     {
       onSuccess: ({ body: _data }) => {
-        navigate(`/sandbox/spaces/${spaceId}/repos`)
+        navigate(`/spaces/${spaceId}/repos`)
         setApiError(null)
       },
       onError: (error: DeleteRepositoryErrorResponse) => {
@@ -365,7 +365,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    const url = `/sandbox/spaces/${spaceId}/repos/${repoName}/settings/rules/create/${identifier}`
+    const url = `/spaces/${spaceId}/repos/${repoName}/settings/rules/create/${identifier}`
 
     navigate(url)
   }

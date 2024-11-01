@@ -143,7 +143,7 @@ export const FileEditor: React.FC = () => {
           if (!isNewBranch) navigate(`/${spaceId}/repos/${repoId}/code/${gitRef}/~/${fileResourcePath}`)
           else {
             navigate(
-              `/sandbox/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
+              `/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
             )
           }
         }}

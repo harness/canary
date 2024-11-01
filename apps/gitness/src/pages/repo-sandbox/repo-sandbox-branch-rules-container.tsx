@@ -44,7 +44,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       onSuccess: () => {
         const repoName = repoRef.split('/')[1]
 
-        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+        navigate(`/spaces/${spaceId}/repos/${repoName}/settings/general`)
       }
     }
   )
@@ -67,7 +67,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
-        navigate(`/sandbox/spaces/${spaceId}/repos/${repoName}/settings/general`)
+        navigate(`/spaces/${spaceId}/repos/${repoName}/settings/general`)
       }
     }
   )

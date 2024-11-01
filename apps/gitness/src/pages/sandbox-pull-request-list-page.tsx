@@ -56,7 +56,7 @@ function PullRequestSandboxListPage() {
           description={['There are no pull requests in this repository yet.']}
           primaryButton={{
             label: 'Create pull requests',
-            to: `/sandbox/spaces/${spaceId}/repos/${repoId}/pull-requests/compare`
+            to: `/spaces/${spaceId}/repos/${repoId}/pull-requests/compare`
           }}
           secondaryButton={{
             label: 'Import pull requests'
@@ -101,7 +101,7 @@ function PullRequestSandboxListPage() {
               <Filter sortOptions={SortOptions} />
             </div>
             <Button variant="default" asChild>
-              <Link to={`/sandbox/spaces/${spaceId}/repos/${repoId}/pull-requests/compare`}>New pull request</Link>
+              <Link to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare`}>New pull request</Link>
             </Button>
           </div>
 

@@ -110,6 +110,8 @@ export * from './pages/sandbox-settings-account-general-page'
 export * from './pages/sandbox-repo-settings-page'
 export * from './pages/repo-settings-general-page'
 export * from './pages/repo-branch-settings-rules-page'
+export * from './pages/repo-webhooks-create-page'
+export * from './components/webhooks/types'
 export * from './pages/sandbox-create-pipeline-page'
 export * from './components/repo-settings/repo-branch-settings-rules/types'
 

@@ -3,30 +3,30 @@ import { z } from 'zod'
 import { createWebhookFormSchema } from './create-webhooks-form-schema'
 
 export enum BranchEvents {
-  BRANCH_CREATED = 'Branch created',
-  BRANCH_UPDATED = 'Branch updated',
-  BRANCH_DELETED = 'Branch deleted'
+  BRANCH_CREATED = 'branch_created',
+  BRANCH_UPDATED = 'branch_updated',
+  BRANCH_DELETED = 'branch_deleted'
 }
 
 export enum TagEvents {
-  TAG_CREATED = 'Tag created',
-  TAG_UPDATED = 'Tag updated',
-  TAG_DELETED = 'Tag deleted'
+  TAG_CREATED = 'tag_created',
+  TAG_UPDATED = 'tag_updated',
+  TAG_DELETED = 'tag_deleted'
 }
 
 export enum PREvents {
-  PR_CREATED = 'PR created',
-  PR_UPDATED = 'PR updated',
-  PR_OPENED = 'PR opened',
-  PR_BRANCH_UPDATED = 'PR branch updated',
-  PR_CLOSED = 'PR closed',
-  PR_COMMENT_CREATED = 'PR comment created',
-  PR_MERGED = 'PR merged'
+  PR_CREATED = 'pullreq_created',
+  PR_UPDATED = 'pullreq_updated',
+  PR_OPENED = 'pullreq_reopened',
+  PR_BRANCH_UPDATED = 'pullreq_branch_updated',
+  PR_CLOSED = 'pullreq_closed',
+  PR_COMMENT_CREATED = 'pullreq_comment_created',
+  PR_MERGED = 'pullreq_merged'
 }
 
 export type CreateWebhookFormFields = z.infer<typeof createWebhookFormSchema>
 
-export interface FieldProps {
+export interface WebhookFormFieldProps {
   register?: UseFormRegister<CreateWebhookFormFields>
   errors?: FieldErrors<CreateWebhookFormFields>
   watch?: UseFormWatch<CreateWebhookFormFields>
@@ -34,7 +34,7 @@ export interface FieldProps {
 }
 
 export interface WebhookEvent {
-  id: number
+  id: string
   event: string
 }
 

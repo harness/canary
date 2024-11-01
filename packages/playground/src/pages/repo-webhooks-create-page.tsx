@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonGroup, useZodForm, Text } from '@harnessio/canary'
+import { Button, ButtonGroup, useZodForm, Text, Spacer } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
   WebhookToggleField,
@@ -12,11 +12,23 @@ import {
   WebhookEventSettingsFieldset
 } from '../components/webhooks/create-webhooks-form-fields'
 import { branchEvents, tagEvents, prEvents } from '../components/webhooks/create-webhook-form-data'
-
 import { FormFieldSet, SandboxLayout } from '../index'
-import { createWebhookFormSchema, CreateWebhookFormFields } from '../components/webhooks/create-webhooks-form-schema'
-import { EventTypes } from '../components/webhooks/types'
-export const RepoWebhooksCreatePage: React.FC = () => {
+import { createWebhookFormSchema } from '../components/webhooks/create-webhooks-form-schema'
+import { EventTypes, CreateWebhookFormFields } from '../components/webhooks/types'
+
+interface RepoWebhooksCreatePageProps {
+  onFormSubmit: (data: CreateWebhookFormFields) => void
+  onFormCancel: () => void
+  apiError: string | null
+  isLoading: boolean
+}
+
+export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
+  onFormSubmit,
+  apiError,
+  isLoading,
+  onFormCancel
+}) => {
   const {
     register,
     handleSubmit,
@@ -28,12 +40,12 @@ export const RepoWebhooksCreatePage: React.FC = () => {
     schema: createWebhookFormSchema,
     mode: 'onChange',
     defaultValues: {
-      state: true,
-      name: '',
+      enabled: true,
+      identifier: '',
       description: '',
-      payloadUrl: '',
+      url: '',
       secret: '',
-      sslVerification: '1',
+      insecure: '1',
       trigger: '1',
       branchEvents: [],
       tagEvents: [],
@@ -50,6 +62,7 @@ export const RepoWebhooksCreatePage: React.FC = () => {
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
     console.log(data)
+    onFormSubmit(data)
     reset()
   }
 
@@ -84,14 +97,23 @@ export const RepoWebhooksCreatePage: React.FC = () => {
                 </div>
               )}
 
+              {apiError && (
+                <>
+                  <Spacer size={2} />
+                  <Text size={1} className="text-destructive">
+                    {apiError?.toString()}
+                  </Text>
+                </>
+              )}
+
               <FormFieldSet.Root className="mt-0">
                 <FormFieldSet.ControlGroup>
                   <ButtonGroup.Root>
                     <>
-                      <Button type="submit" size="sm" disabled={!isValid}>
-                        Create webhook
+                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                        {isLoading ? 'Creating webhook...' : 'Create webhook'}
                       </Button>
-                      <Button type="button" variant="outline" size="sm">
+                      <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
                         Cancel
                       </Button>
                     </>

@@ -67,7 +67,7 @@ import { RepoSettingsGeneralPageContainer } from './pages/repo-sandbox/repo-sett
 import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { EmptyPage } from './pages/empty-page'
-
+import { CreateWebhookContainer } from './pages/webhooks/create-webhook-container'
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo-sandbox/repo-sandbox-branch-rules-container'
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -216,6 +216,10 @@ export default function App() {
             {
               path: 'webhooks',
               element: <RepoWebhooksListPage />
+            },
+            {
+              path: 'webhooks/create',
+              element: <CreateWebhookContainer />
             },
             {
               path: 'branches',
@@ -447,6 +451,10 @@ export default function App() {
                 {
                   path: 'webhooks',
                   element: <RepoSandboxWebhooksListPage />
+                },
+                {
+                  path: 'webhooks/create',
+                  element: <CreateWebhookContainer />
                 },
                 {
                   path: 'branches',

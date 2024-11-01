@@ -1,23 +1,23 @@
 import { WebhookEvent } from './types'
 
 export const branchEvents: WebhookEvent[] = [
-  { id: 1, event: 'Branch created' },
-  { id: 2, event: 'Branch updated' },
-  { id: 3, event: 'Branch deleted' }
+  { id: 'branch_created', event: 'Branch created' },
+  { id: 'branch_updated', event: 'Branch updated' },
+  { id: 'branch_deleted', event: 'Branch deleted' }
 ]
 
 export const tagEvents: WebhookEvent[] = [
-  { id: 4, event: 'Tag created' },
-  { id: 5, event: 'Tag updated' },
-  { id: 6, event: 'Tag deleted' }
+  { id: 'tag_created', event: 'Tag created' },
+  { id: 'tag_updated', event: 'Tag updated' },
+  { id: 'tag_deleted', event: 'Tag deleted' }
 ]
 
 export const prEvents: WebhookEvent[] = [
-  { id: 7, event: 'PR created' },
-  { id: 8, event: 'PR updated' },
-  { id: 9, event: 'PR opened' },
-  { id: 10, event: 'PR branch updated' },
-  { id: 11, event: 'PR closed' },
-  { id: 12, event: 'PR comment created' },
-  { id: 13, event: 'PR merged' }
+  { id: 'pullreq_created', event: 'PR created' },
+  { id: 'pullreq_updated', event: 'PR updated' },
+  { id: 'pullreq_reopened', event: 'PR reopened' },
+  { id: 'pullreq_branch_updated', event: 'PR branch updated' },
+  { id: 'pullreq_closed', event: 'PR closed' },
+  { id: 'pullreq_comment_created', event: 'PR comment created' },
+  { id: 'pullreq_merged', event: 'PR merged' }
 ]

@@ -23,7 +23,6 @@ function RepoSandboxWebhooksListPage() {
   const totalPages = 10
   const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
   const repoRef = useGetRepoRef()
-
   const { query } = useCommonFilter()
 
   const { data: { body: webhooks } = {}, isFetching } = useListWebhooksQuery({
@@ -45,7 +44,7 @@ function RepoSandboxWebhooksListPage() {
           iconName="no-data-webhooks"
           title="No webhooks yet"
           description={['There are no webhooks in this repository yet.', 'Create new or import an existing webhook.']}
-          primaryButton={{ label: 'Create webhook' }}
+          primaryButton={{ label: 'Create webhook', to: 'create' }}
           secondaryButton={{ label: 'Import webhook' }}
         />
       )
@@ -67,7 +66,7 @@ function RepoSandboxWebhooksListPage() {
               <Filter />
             </div>
             <Button variant="default" asChild>
-              <Link to="#">Create webhook</Link>
+              <Link to="create">Create webhook</Link>
             </Button>
           </div>
 

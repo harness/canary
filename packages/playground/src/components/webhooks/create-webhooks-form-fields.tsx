@@ -1,9 +1,9 @@
 import React from 'react'
 import { Input, Textarea, Checkbox, StackedList, Switch, RadioGroup, RadioGroupItem } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../index'
-import { WebhookEvent, FieldProps, BranchEvents, TagEvents, PREvents, EventTypes } from './types'
+import { WebhookEvent, WebhookFormFieldProps, BranchEvents, TagEvents, PREvents, EventTypes } from './types'
 
-export const WebhookToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
+export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
     <StackedList.Item disableHover isHeader>
       <StackedList.Field
@@ -16,9 +16,9 @@ export const WebhookToggleField: React.FC<FieldProps> = ({ register, watch, setV
         title={
           <div className="flex gap-1.5 items-center justify-end cursor-pointer">
             <Switch
-              {...register!('state')}
-              checked={watch!('state')}
-              onCheckedChange={() => setValue!('state', !watch!('state'))}
+              {...register!('enabled')}
+              checked={watch!('enabled')}
+              onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
             />
           </div>
         }
@@ -28,19 +28,23 @@ export const WebhookToggleField: React.FC<FieldProps> = ({ register, watch, setV
   </StackedList.Root>
 )
 
-export const WebhookNameField: React.FC<FieldProps & { disabled: boolean }> = ({ register, errors, disabled }) => (
+export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: boolean }> = ({
+  register,
+  errors,
+  disabled
+}) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="name" required>
       Name
     </FormFieldSet.Label>
-    <Input id="name" {...register!('name')} placeholder="Name your webhook" autoFocus disabled={disabled} />
-    {errors!.name && (
-      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.name.message?.toString()}</FormFieldSet.Message>
+    <Input id="name" {...register!('identifier')} placeholder="Name your webhook" autoFocus disabled={disabled} />
+    {errors!.identifier && (
+      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.identifier.message?.toString()}</FormFieldSet.Message>
     )}
   </FormFieldSet.ControlGroup>
 )
 
-export const WebhookDescriptionField: React.FC<FieldProps> = ({ register, errors }) => (
+export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="description" required>
       Description
@@ -52,19 +56,19 @@ export const WebhookDescriptionField: React.FC<FieldProps> = ({ register, errors
   </FormFieldSet.ControlGroup>
 )
 
-export const WebhookPayloadUrlField: React.FC<FieldProps> = ({ register, errors }) => (
+export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="payloadUrl" required>
       Payload URL
     </FormFieldSet.Label>
-    <Input id="payloadUrl" {...register!('payloadUrl')} placeholder="https://example.com/harness" />
-    {errors!.payloadUrl && (
-      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.payloadUrl.message?.toString()}</FormFieldSet.Message>
+    <Input id="payloadUrl" {...register!('url')} placeholder="https://example.com/harness" />
+    {errors!.url && (
+      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.url.message?.toString()}</FormFieldSet.Message>
     )}
   </FormFieldSet.ControlGroup>
 )
 
-export const WebhookSecretField: React.FC<FieldProps> = ({ register, errors }) => (
+export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
     <FormFieldSet.Label htmlFor="secret" required>
       Secret
@@ -76,19 +80,19 @@ export const WebhookSecretField: React.FC<FieldProps> = ({ register, errors }) =
   </FormFieldSet.ControlGroup>
 )
 
-export const WebhookSSLVerificationField: React.FC<FieldProps> = ({ watch, setValue }) => {
-  const sslVerificationValue = watch!('sslVerification')
+export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
+  const sslVerificationValue = watch!('insecure')
   const handleAccessChange = (value: string) => {
-    setValue!('sslVerification', value as '1' | '2')
+    setValue!('insecure', value as '1' | '2')
   }
 
   return (
     <FormFieldSet.Root className="mb-0">
       <FormFieldSet.ControlGroup>
-        <FormFieldSet.Label htmlFor="sslVerification" required>
+        <FormFieldSet.Label htmlFor="insecure" required>
           SSL Verification
         </FormFieldSet.Label>
-        <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="sslVerification">
+        <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
           <FormFieldSet.Option
             control={<RadioGroupItem value="1" id="enable-ssl" />}
             id="enable-ssl"
@@ -106,7 +110,7 @@ export const WebhookSSLVerificationField: React.FC<FieldProps> = ({ watch, setVa
   )
 }
 
-export const WebhookTriggerField: React.FC<FieldProps> = ({ watch, setValue }) => {
+export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
     setValue!('trigger', value as '1' | '2')
@@ -136,15 +140,15 @@ export const WebhookTriggerField: React.FC<FieldProps> = ({ watch, setValue }) =
 }
 
 export const WebhookEventSettingsFieldset: React.FC<
-  FieldProps & { fieldName: keyof EventTypes; eventList: WebhookEvent[] }
+  WebhookFormFieldProps & { fieldName: keyof EventTypes; eventList: WebhookEvent[] }
 > = ({ watch, setValue, eventList, fieldName }) => {
   const currentArray = (watch!(fieldName) || []) as EventTypes[typeof fieldName][]
 
-  const handleCheckboxChange = (eventName: BranchEvents | TagEvents | PREvents) => {
-    if (currentArray.includes(eventName)) {
-      setValue!(fieldName, currentArray.filter(e => e !== eventName) as BranchEvents[] | TagEvents[] | PREvents[])
+  const handleCheckboxChange = (eventId: BranchEvents | TagEvents | PREvents) => {
+    if (currentArray.includes(eventId)) {
+      setValue!(fieldName, currentArray.filter(e => e !== eventId) as BranchEvents[] | TagEvents[] | PREvents[])
     } else {
-      setValue!(fieldName, [...currentArray, eventName] as BranchEvents[] | TagEvents[] | PREvents[])
+      setValue!(fieldName, [...currentArray, eventId] as BranchEvents[] | TagEvents[] | PREvents[])
     }
   }
 
@@ -153,8 +157,8 @@ export const WebhookEventSettingsFieldset: React.FC<
       <FormFieldSet.Option
         control={
           <Checkbox
-            checked={currentArray?.includes(event.event as BranchEvents | TagEvents | PREvents)}
-            onCheckedChange={() => handleCheckboxChange(event.event as BranchEvents | TagEvents | PREvents)}
+            checked={currentArray?.includes(event.id as BranchEvents | TagEvents | PREvents)}
+            onCheckedChange={() => handleCheckboxChange(event.id as BranchEvents | TagEvents | PREvents)}
             id={`${fieldName}_${event.id}`}
           />
         }

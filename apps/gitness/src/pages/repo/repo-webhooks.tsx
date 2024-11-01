@@ -52,7 +52,7 @@ function RepoWebhooksListPage() {
           iconName="no-data-webhooks"
           title="No webhooks yet"
           description={['There are no webhooks in this repository yet.']}
-          primaryButton={{ label: 'Create webhook' }}
+          primaryButton={{ label: 'Create webhook', to: 'create' }}
         />
       )
     }
@@ -81,7 +81,7 @@ function RepoWebhooksListPage() {
                 <Filter />
               </div>
               <Button variant="default" asChild>
-                <Link to="#">Create webhook</Link>
+                <Link to="create">Create webhook</Link>
               </Button>
             </div>
           </>

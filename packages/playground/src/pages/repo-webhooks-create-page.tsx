@@ -61,7 +61,6 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   const triggerValue = watch('trigger')
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
-    console.log(data)
     onFormSubmit(data)
     reset()
   }

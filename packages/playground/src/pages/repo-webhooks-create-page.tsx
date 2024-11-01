@@ -19,7 +19,7 @@ import { EventTypes, CreateWebhookFormFields, TriggerEventsEnum } from '../compo
 interface RepoWebhooksCreatePageProps {
   onFormSubmit: (data: CreateWebhookFormFields) => void
   onFormCancel: () => void
-  apiError: string | null
+  apiError?: string | null
   isLoading: boolean
 }
 

@@ -28,7 +28,7 @@ export const CreateWebhookContainer = () => {
       description: data.description,
       url: data.url,
       enabled: data.enabled,
-      insecure: data.insecure === '1',
+      insecure: data.insecure === '2',
       triggers: [...(data.branchEvents ?? []), ...(data.tagEvents ?? []), ...(data.prEvents ?? [])]
     }
 

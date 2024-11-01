@@ -32,7 +32,15 @@ export interface WebhookFormFieldProps {
   watch?: UseFormWatch<CreateWebhookFormFields>
   setValue?: UseFormSetValue<CreateWebhookFormFields>
 }
+export enum SSLVerificationEnum {
+  ENABLE = '1',
+  DISABLED = '2'
+}
 
+export enum TriggerEventsEnum {
+  ALL_EVENTS = '1',
+  SELECTED_EVENTS = '2'
+}
 export interface WebhookEvent {
   id: string
   event: string

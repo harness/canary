@@ -79,7 +79,7 @@ export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, 
 export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
   const sslVerificationValue = watch!('insecure')
   const handleAccessChange = (value: string) => {
-    setValue!('insecure', value as '1' | '2')
+    setValue!('insecure', value)
   }
 
   return (
@@ -109,7 +109,7 @@ export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ w
 export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
-    setValue!('trigger', value as '1' | '2')
+    setValue!('trigger', value)
   }
 
   return (

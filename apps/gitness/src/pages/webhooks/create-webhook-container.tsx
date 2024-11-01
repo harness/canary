@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { RepoWebhooksCreatePage, CreateWebhookFormFields } from '@harnessio/playground'
+import { RepoWebhooksCreatePage, CreateWebhookFormFields, SSLVerificationEnum } from '@harnessio/playground'
 import { useNavigate } from 'react-router-dom'
 import { useCreateWebhookMutation, CreateWebhookErrorResponse } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -28,7 +28,7 @@ export const CreateWebhookContainer = () => {
       description: data.description,
       url: data.url,
       enabled: data.enabled,
-      insecure: data.insecure === '2',
+      insecure: data.insecure === SSLVerificationEnum.DISABLED,
       triggers: [...(data.branchEvents ?? []), ...(data.tagEvents ?? []), ...(data.prEvents ?? [])]
     }
 

@@ -11,8 +11,6 @@ export default function Header() {
   const [projects, setProjects] = useState<Project[]>([{ id: 'create-project', name: 'Create project' }])
   const [selectedProject, setSelectedProject] = useState<Project | undefined>(undefined)
 
-  console.log('spaces', spaces)
-
   useEffect(() => {
     if (spaces.length > 0) {
       setProjects((existingProjects: Project[]) =>

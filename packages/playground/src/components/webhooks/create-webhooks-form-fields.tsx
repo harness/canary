@@ -46,9 +46,7 @@ export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: bool
 
 export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
-    <FormFieldSet.Label htmlFor="description" required>
-      Description
-    </FormFieldSet.Label>
+    <FormFieldSet.Label htmlFor="description">Description</FormFieldSet.Label>
     <Textarea id="description" {...register!('description')} placeholder="Enter a description of this rule..." />
     {errors!.description && (
       <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.description.message?.toString()}</FormFieldSet.Message>
@@ -70,9 +68,7 @@ export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ regist
 
 export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <FormFieldSet.ControlGroup>
-    <FormFieldSet.Label htmlFor="secret" required>
-      Secret
-    </FormFieldSet.Label>
+    <FormFieldSet.Label htmlFor="secret">Secret</FormFieldSet.Label>
     <Input id="secret" {...register!('secret')} type="password" />
     {errors!.secret && (
       <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.secret.message?.toString()}</FormFieldSet.Message>

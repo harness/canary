@@ -17,7 +17,7 @@ export enum TagEvents {
 export enum PREvents {
   PR_CREATED = 'pullreq_created',
   PR_UPDATED = 'pullreq_updated',
-  PR_OPENED = 'pullreq_reopened',
+  PR_REOPENED = 'pullreq_reopened',
   PR_BRANCH_UPDATED = 'pullreq_branch_updated',
   PR_CLOSED = 'pullreq_closed',
   PR_COMMENT_CREATED = 'pullreq_comment_created',

@@ -36,7 +36,7 @@ export const CreateRepo = () => {
       {
         onSuccess: ({ body: data }) => {
           setApiError(null)
-          navigate(`/${spaceId}/repos/${data?.identifier}`)
+          navigate(`/spaces/${spaceId}/repos/${data?.identifier}`)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

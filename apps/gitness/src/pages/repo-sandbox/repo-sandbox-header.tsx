@@ -40,7 +40,7 @@ const SandboxRepoHeader: React.FC = () => {
           onSelectProject={(project: Project) => {
             setSelectedProject(project)
             if (project?.id === 'create-project') {
-              navigate('/create-project')
+              navigate('/spaces/create-project')
             } else if (project?.name) {
               navigate(`/spaces/${project.name}/repos`)
             }

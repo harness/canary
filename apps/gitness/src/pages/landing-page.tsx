@@ -14,7 +14,7 @@ export const LandingPage: React.FC = () => {
       .then(({ body: memberships }) => {
         const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
         setSpaces(spaceList)
-        if (spaceList.length === 0) navigate('/create-project')
+        if (spaceList.length === 0) navigate('/spaces/create-project')
         if (spaceList?.[0]?.path) navigate(`/spaces/${spaceList[0].path}/repos`)
       })
       .catch(_e => {

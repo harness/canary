@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle, Button, Input, Label, Icon, T
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-// import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
 import { SandboxLayout } from '..'
 
 interface PageProps {

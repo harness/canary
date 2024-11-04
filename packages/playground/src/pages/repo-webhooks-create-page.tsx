@@ -139,26 +139,3 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
     </>
   )
 }
-
-{
-  /* <FormFieldSet.Root className="mt-0">
-  <FormFieldSet.ControlGroup>
-    <ButtonGroup.Root>
-      <>
-        <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-          {isLoading
-            ? reset_data
-              ? 'Updating webhook...'
-              : 'Creating webhook...'
-            : reset_data
-              ? 'Update webhook'
-              : 'Create webhook'}
-        </Button>
-        <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
-          Cancel
-        </Button>
-      </>
-    </ButtonGroup.Root>
-  </FormFieldSet.ControlGroup>
-</FormFieldSet.Root> */
-}

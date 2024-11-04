@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Spacer,
@@ -13,30 +13,73 @@ import {
   PaginationNext
 } from '@harnessio/canary'
 // import { NoSearchResults } from '../components/no-search-results'
-import { Filter, NoData, SandboxLayout, SkeletonList, useCommonFilter, WebhooksList } from '@harnessio/playground'
-import { useListWebhooksQuery } from '@harnessio/code-service-client'
+import {
+  Filter,
+  NoData,
+  SandboxLayout,
+  SkeletonList,
+  useCommonFilter,
+  WebhooksList,
+  DeleteTokenAlertDialog
+} from '@harnessio/playground'
+import { useListWebhooksQuery, useDeleteWebhookMutation } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { usePagination } from '../../framework/hooks/usePagination'
+import { useQueryClient } from '@tanstack/react-query'
+
 function RepoSandboxWebhooksListPage() {
   // lack of data: total commits
   // hardcoded
   const totalPages = 10
+  const queryClient = useQueryClient()
+
   const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
   const repoRef = useGetRepoRef()
   const { query } = useCommonFilter()
+
+  const [isDeleteWebhookDialogOpen, setIsDeleteWebhookDialogOpen] = useState(false)
+  const [deleteWebhookId, setDeleteWebhookId] = useState<string | null>(null)
+  const closeDeleteWebhookDialog = () => setIsDeleteWebhookDialogOpen(false)
+  const openDeleteWebhookDialog = (id: number) => {
+    setIsDeleteWebhookDialogOpen(true)
+    setDeleteWebhookId(id.toString())
+  }
 
   const { data: { body: webhooks } = {}, isFetching } = useListWebhooksQuery({
     repo_ref: repoRef,
     queryParams: { order: 'asc', limit: 20, page: 1, query }
   })
+
+  const { mutate: deleteWebhook } = useDeleteWebhookMutation(
+    { repo_ref: repoRef, webhook_identifier: 0 },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['listWebhooks', repoRef] })
+        closeDeleteWebhookDialog()
+      }
+    }
+  )
+
   const { currentPage, previousPage, nextPage, handleClick } = usePagination(1, totalPages)
+
+  const handleDeleteWebhook = (id: string) => {
+    const webhook_identifier = parseInt(id)
+
+    deleteWebhook({ repo_ref: repoRef, webhook_identifier: webhook_identifier })
+  }
 
   const renderListContent = () => {
     if (isFetching) {
       return <SkeletonList />
     }
     if (webhooks?.length) {
-      return <WebhooksList webhooks={webhooks} LinkComponent={LinkComponent} />
+      return (
+        <WebhooksList
+          webhooks={webhooks}
+          LinkComponent={LinkComponent}
+          openDeleteWebhookDialog={openDeleteWebhookDialog}
+        />
+      )
     } else {
       return (
         <NoData
@@ -116,6 +159,13 @@ function RepoSandboxWebhooksListPage() {
           )}
         </SandboxLayout.Content>
       </SandboxLayout.Main>
+      <DeleteTokenAlertDialog
+        type="webhook"
+        open={isDeleteWebhookDialogOpen}
+        onClose={closeDeleteWebhookDialog}
+        deleteFn={handleDeleteWebhook}
+        identifier={deleteWebhookId!}
+      />
     </>
   )
 }

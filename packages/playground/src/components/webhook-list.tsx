@@ -13,6 +13,7 @@ import {
   Text
 } from '@harnessio/canary'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export enum WebhookState {
   DISABLED = 'Disabled',
@@ -30,6 +31,7 @@ interface Webhook {
 interface PageProps {
   webhooks?: Webhook[]
   LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+  openDeleteWebhookDialog: (id: number) => void
 }
 
 const Title = ({ title, enabled }: { title: string; enabled: boolean }) => {
@@ -57,7 +59,7 @@ const Title = ({ title, enabled }: { title: string; enabled: boolean }) => {
   )
 }
 
-const Action = ({ id }: { id: number }) => {
+const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhookDialog: (id: number) => void }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -67,28 +69,29 @@ const Action = ({ id }: { id: number }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         <DropdownMenuGroup>
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={e => {
-              e.stopPropagation()
-              // onEdit(identifier)
-            }}>
-            <DropdownMenuShortcut className="ml-0">
-              <Icon name="edit-pen" className="mr-2" />
-            </DropdownMenuShortcut>
-            Edit rule
-          </DropdownMenuItem>
+          <Link to={`create/${id}`}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={e => {
+                e.stopPropagation()
+              }}>
+              <DropdownMenuShortcut className="ml-0">
+                <Icon name="edit-pen" className="mr-2" />
+              </DropdownMenuShortcut>
+              Edit webhook
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem
             className="cursor-pointer text-destructive"
             onClick={e => {
               e.stopPropagation()
-              // onDelete(identifier)
+              openDeleteWebhookDialog(id)
             }}>
             <DropdownMenuShortcut className="ml-0">
               <Icon name="trash" className="mr-2 text-destructive" />
             </DropdownMenuShortcut>
-            Delete rule
+            Delete webhook
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>
@@ -96,7 +99,7 @@ const Action = ({ id }: { id: number }) => {
   )
 }
 
-export const WebhooksList = ({ webhooks, LinkComponent }: PageProps) => {
+export const WebhooksList = ({ webhooks, LinkComponent, openDeleteWebhookDialog }: PageProps) => {
   return (
     <>
       {webhooks && webhooks.length > 0 && (
@@ -108,7 +111,12 @@ export const WebhooksList = ({ webhooks, LinkComponent }: PageProps) => {
                   title={<Title title={webhook.display_name} enabled={webhook.enabled} />}
                   description={webhook.description}
                 />
-                <StackedList.Field label secondary title={<Action id={webhook.id} />} right />
+                <StackedList.Field
+                  label
+                  secondary
+                  title={<Action id={webhook.id} openDeleteWebhookDialog={openDeleteWebhookDialog} />}
+                  right
+                />
               </StackedList.Item>
             </LinkComponent>
           ))}

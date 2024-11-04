@@ -4,6 +4,10 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuGroup,
+  DropdownMenuSeparator,
+  Button,
+  DropdownMenuShortcut,
   Icon,
   StackedList,
   Text
@@ -56,11 +60,37 @@ const Title = ({ title, enabled }: { title: string; enabled: boolean }) => {
 const Action = ({ id }: { id: number }) => {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
-        <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="xs">
+          <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background cursor-pointer" />
+        </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="relative z-10">
-        <DropdownMenuItem key={id}>Edit webhook</DropdownMenuItem>
+      <DropdownMenuContent>
+        <DropdownMenuGroup>
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={e => {
+              e.stopPropagation()
+              // onEdit(identifier)
+            }}>
+            <DropdownMenuShortcut className="ml-0">
+              <Icon name="edit-pen" className="mr-2" />
+            </DropdownMenuShortcut>
+            Edit rule
+          </DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="cursor-pointer text-destructive"
+            onClick={e => {
+              e.stopPropagation()
+              // onDelete(identifier)
+            }}>
+            <DropdownMenuShortcut className="ml-0">
+              <Icon name="trash" className="mr-2 text-destructive" />
+            </DropdownMenuShortcut>
+            Delete rule
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   )

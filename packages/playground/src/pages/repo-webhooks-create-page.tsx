@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, ButtonGroup, useZodForm, Text, Spacer } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
 import {
@@ -21,13 +21,15 @@ interface RepoWebhooksCreatePageProps {
   onFormCancel: () => void
   apiError?: string | null
   isLoading: boolean
+  preSetWebHookData: CreateWebhookFormFields | null
 }
 
 export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   onFormSubmit,
   apiError,
   isLoading,
-  onFormCancel
+  onFormCancel,
+  preSetWebHookData
 }) => {
   const {
     register,
@@ -51,6 +53,18 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
     }
   })
 
+  useEffect(() => {
+    if (preSetWebHookData) {
+      setValue('identifier', preSetWebHookData.identifier)
+      setValue('description', preSetWebHookData.description)
+      setValue('url', preSetWebHookData.url)
+      setValue('enabled', preSetWebHookData.enabled)
+      setValue('insecure', preSetWebHookData.insecure)
+      setValue('trigger', preSetWebHookData.trigger)
+      setValue('triggers', preSetWebHookData.triggers)
+    }
+  }, [preSetWebHookData])
+
   const eventSettingsComponents = [
     { fieldName: 'branchEvents', events: branchEvents },
     { fieldName: 'tagEvents', events: tagEvents },
@@ -59,7 +73,6 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   const triggerValue = watch('trigger')
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
-    console.log(data)
     onFormSubmit(data)
     reset()
   }
@@ -104,7 +117,13 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                   <ButtonGroup.Root>
                     <>
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                        {isLoading ? 'Creating webhook...' : 'Create webhook'}
+                        {isLoading
+                          ? preSetWebHookData
+                            ? 'Updating webhook...'
+                            : 'Creating webhook...'
+                          : preSetWebHookData
+                            ? 'Update webhook'
+                            : 'Create webhook'}
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
                         Cancel
@@ -119,4 +138,27 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
       </SandboxLayout.Main>
     </>
   )
+}
+
+{
+  /* <FormFieldSet.Root className="mt-0">
+  <FormFieldSet.ControlGroup>
+    <ButtonGroup.Root>
+      <>
+        <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+          {isLoading
+            ? reset_data
+              ? 'Updating webhook...'
+              : 'Creating webhook...'
+            : reset_data
+              ? 'Update webhook'
+              : 'Create webhook'}
+        </Button>
+        <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
+          Cancel
+        </Button>
+      </>
+    </ButtonGroup.Root>
+  </FormFieldSet.ControlGroup>
+</FormFieldSet.Root> */
 }

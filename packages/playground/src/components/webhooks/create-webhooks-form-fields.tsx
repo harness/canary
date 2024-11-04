@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Textarea, Checkbox, StackedList, Switch, RadioGroup, RadioGroupItem } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../index'
-import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from './types'
+import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum, TriggerEventsEnum } from './types'
 
 export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -110,6 +110,9 @@ export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, se
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
     setValue!('trigger', value)
+    if (value === TriggerEventsEnum.ALL_EVENTS) {
+      setValue!('triggers', [])
+    }
   }
 
   return (

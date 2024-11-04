@@ -240,7 +240,13 @@ export default function App() {
                 },
                 {
                   path: 'webhooks/create',
-                  element: <CreateWebhookContainer />
+                  element: <CreateWebhookContainer />,
+                  children: [
+                    {
+                      path: ':webhookId',
+                      element: <CreateWebhookContainer />
+                    }
+                  ]
                 },
                 {
                   path: 'branches',

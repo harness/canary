@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { BranchEvents, TagEvents, PREvents, SSLVerificationEnum, TriggerEventsEnum } from './types'
+import { WebhookTriggerEnum, SSLVerificationEnum, TriggerEventsEnum } from './types'
 
 export const createWebhookFormSchema = z.object({
   enabled: z.boolean(),
@@ -9,7 +9,5 @@ export const createWebhookFormSchema = z.object({
   secret: z.string().optional(),
   insecure: z.string(z.nativeEnum(SSLVerificationEnum)),
   trigger: z.string(z.nativeEnum(TriggerEventsEnum)),
-  branchEvents: z.array(z.nativeEnum(BranchEvents)).optional(),
-  tagEvents: z.array(z.nativeEnum(TagEvents)).optional(),
-  prEvents: z.array(z.nativeEnum(PREvents)).optional()
+  triggers: z.array(z.nativeEnum(WebhookTriggerEnum)).optional()
 })

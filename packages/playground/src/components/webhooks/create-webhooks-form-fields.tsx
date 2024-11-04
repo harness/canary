@@ -1,7 +1,7 @@
 import React from 'react'
 import { Input, Textarea, Checkbox, StackedList, Switch, RadioGroup, RadioGroupItem } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../index'
-import { WebhookEvent, WebhookFormFieldProps, BranchEvents, TagEvents, PREvents, EventTypes } from './types'
+import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from './types'
 
 export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => (
   <StackedList.Root className="border-none">
@@ -135,16 +135,18 @@ export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, se
   )
 }
 
-export const WebhookEventSettingsFieldset: React.FC<
-  WebhookFormFieldProps & { fieldName: keyof EventTypes; eventList: WebhookEvent[] }
-> = ({ watch, setValue, eventList, fieldName }) => {
-  const currentArray = (watch!(fieldName) || []) as EventTypes[typeof fieldName][]
+export const WebhookEventSettingsFieldset: React.FC<WebhookFormFieldProps & { eventList: WebhookEvent[] }> = ({
+  watch,
+  setValue,
+  eventList
+}) => {
+  const currentArray = (watch!('triggers') || []) as WebhookTriggerEnum[]
 
-  const handleCheckboxChange = (eventId: BranchEvents | TagEvents | PREvents) => {
+  const handleCheckboxChange = (eventId: WebhookTriggerEnum) => {
     if (currentArray.includes(eventId)) {
-      setValue!(fieldName, currentArray.filter(e => e !== eventId) as BranchEvents[] | TagEvents[] | PREvents[])
+      setValue!('triggers', currentArray.filter(e => e !== eventId) as WebhookTriggerEnum[])
     } else {
-      setValue!(fieldName, [...currentArray, eventId] as BranchEvents[] | TagEvents[] | PREvents[])
+      setValue!('triggers', [...currentArray, eventId])
     }
   }
 
@@ -153,12 +155,12 @@ export const WebhookEventSettingsFieldset: React.FC<
       <FormFieldSet.Option
         control={
           <Checkbox
-            checked={currentArray?.includes(event.id as BranchEvents | TagEvents | PREvents)}
-            onCheckedChange={() => handleCheckboxChange(event.id as BranchEvents | TagEvents | PREvents)}
-            id={`${fieldName}_${event.id}`}
+            checked={currentArray?.includes(event.id as WebhookTriggerEnum)}
+            onCheckedChange={() => handleCheckboxChange(event.id as WebhookTriggerEnum)}
+            id={`${event.id}`}
           />
         }
-        id={`${fieldName}_${event.id}`}
+        id={`${event.id}`}
         label={event.event}
       />
     </FormFieldSet.ControlGroup>

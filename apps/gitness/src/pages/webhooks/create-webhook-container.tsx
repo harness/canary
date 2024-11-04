@@ -1,17 +1,14 @@
-import {
-  RepoWebhooksCreatePage,
-  CreateWebhookFormFields,
-  SSLVerificationEnum,
-  BranchEvents,
-  PREvents,
-  TagEvents
-} from '@harnessio/playground'
-import { useNavigate } from 'react-router-dom'
-import { useCreateWebhookMutation } from '@harnessio/code-service-client'
+import { useState } from 'react'
+import { RepoWebhooksCreatePage, CreateWebhookFormFields, SSLVerificationEnum } from '@harnessio/playground'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useCreateWebhookMutation, useGetWebhookQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 export const CreateWebhookContainer = () => {
   const repo_ref = useGetRepoRef()
   const navigate = useNavigate()
+  const { webhookId } = useParams()
+
+  const [preSetWebhookData, setPreSetWebhookData] = useState<CreateWebhookFormFields | null>(null)
 
   const {
     mutate: createWebHook,
@@ -26,6 +23,18 @@ export const CreateWebhookContainer = () => {
     }
   )
 
+  useGetWebhookQuery(
+    {
+      repo_ref,
+      webhook_identifier: Number(webhookId)
+    },
+    {
+      onSuccess: ({ body: data }) => {
+        console.log(data)
+      }
+    }
+  )
+
   const onSubmit = (data: CreateWebhookFormFields) => {
     const webhookRequest = {
       identifier: data.identifier,
@@ -33,11 +42,7 @@ export const CreateWebhookContainer = () => {
       url: data.url,
       enabled: data.enabled,
       insecure: data.insecure === SSLVerificationEnum.DISABLED,
-      triggers: ([] as (BranchEvents | TagEvents | PREvents)[]).concat(
-        data.branchEvents ?? [],
-        data.tagEvents ?? [],
-        data.prEvents ?? []
-      )
+      triggers: data.triggers
     }
 
     createWebHook({

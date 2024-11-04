@@ -14,7 +14,7 @@ import {
 import { branchEvents, tagEvents, prEvents } from '../components/webhooks/create-webhook-form-data'
 import { FormFieldSet, SandboxLayout } from '../index'
 import { createWebhookFormSchema } from '../components/webhooks/create-webhooks-form-schema'
-import { EventTypes, CreateWebhookFormFields, TriggerEventsEnum } from '../components/webhooks/types'
+import { CreateWebhookFormFields, TriggerEventsEnum } from '../components/webhooks/types'
 
 interface RepoWebhooksCreatePageProps {
   onFormSubmit: (data: CreateWebhookFormFields) => void
@@ -47,9 +47,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
       secret: '',
       insecure: '1',
       trigger: '1',
-      branchEvents: [],
-      tagEvents: [],
-      prEvents: []
+      triggers: []
     }
   })
 
@@ -61,6 +59,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   const triggerValue = watch('trigger')
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
+    console.log(data)
     onFormSubmit(data)
     reset()
   }
@@ -85,12 +84,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                 <div className="flex justify-between">
                   {eventSettingsComponents.map(component => (
                     <div key={component.fieldName} className="flex flex-col">
-                      <WebhookEventSettingsFieldset
-                        setValue={setValue}
-                        watch={watch}
-                        eventList={component.events}
-                        fieldName={component.fieldName as keyof EventTypes}
-                      />
+                      <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} />
                     </div>
                   ))}
                 </div>

@@ -1,5 +1,11 @@
 import { useState } from 'react'
-import { RepoWebhooksCreatePage, CreateWebhookFormFields, SSLVerificationEnum } from '@harnessio/playground'
+import {
+  RepoWebhooksCreatePage,
+  CreateWebhookFormFields,
+  SSLVerificationEnum,
+  WebhookTriggerEnum,
+  TriggerEventsEnum
+} from '@harnessio/playground'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useCreateWebhookMutation, useGetWebhookQuery } from '@harnessio/code-service-client'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -30,7 +36,16 @@ export const CreateWebhookContainer = () => {
     },
     {
       onSuccess: ({ body: data }) => {
-        console.log(data)
+        // console.log(data)
+        setPreSetWebhookData({
+          identifier: data.identifier || '',
+          description: data.description,
+          url: data.url || '',
+          enabled: data.enabled || false,
+          insecure: data.insecure ? SSLVerificationEnum.DISABLED : SSLVerificationEnum.ENABLE,
+          trigger: data?.triggers?.length ? TriggerEventsEnum.SELECTED_EVENTS : TriggerEventsEnum.ALL_EVENTS,
+          triggers: (data.triggers as WebhookTriggerEnum[]) || []
+        })
       }
     }
   )
@@ -62,6 +77,7 @@ export const CreateWebhookContainer = () => {
         onFormCancel={onCancel}
         apiError={createWebHookError ? createWebHookError.message : null}
         isLoading={creatingWebHook}
+        preSetWebHookData={preSetWebhookData}
       />
     </>
   )

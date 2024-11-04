@@ -30,7 +30,6 @@ const SandboxRepoHeader: React.FC = () => {
   }, [spaces])
 
   useEffect(() => setSelectedProject(projects.find(item => item.name === space)), [space, projects])
-  console.log(selectedProject)
 
   return (
     <>

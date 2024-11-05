@@ -92,12 +92,14 @@ export const CreateWebhookContainer = () => {
     navigate(`../webhooks`)
   }
 
+  const apiError = createWebHookError?.message || updateWebhookError?.message || null
+
   return (
     <>
       <RepoWebhooksCreatePage
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
-        apiError={createWebHookError ? createWebHookError.message : null}
+        apiError={apiError}
         isLoading={creatingWebHook || updatingWebHook}
         preSetWebHookData={preSetWebhookData}
       />

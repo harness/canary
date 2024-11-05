@@ -25,7 +25,7 @@ const badgeVariants = cva(
       },
       hover: {
         enabled: '',
-        disabled: 'hover:bg-transparent hover:shadow-none'
+        disabled: 'hover:shadow-none hover:bg-inherit'
       },
       theme: {
         default: '',

@@ -19,15 +19,15 @@ export interface PageProps {
 
 const Stats = ({ stars, forks, pulls }: { stars?: number; forks: number; pulls: number }) => (
   <div className="flex gap-3 justify-end items-center select-none font-medium">
-    <span className="flex gap-1.5 items-center">
+    <span className="flex gap-1 items-center">
       <Icon width={16} name="star" className="text-tertiary-background" />
       <span className="text-primary text-xs font-normal">{stars || 0}</span>
     </span>
-    <span className="flex gap-1.5 items-center">
+    <span className="flex gap-1 items-center">
       <Icon size={16} name="pull" className="text-tertiary-background" />
       <span className="text-primary text-xs font-normal">{forks || 0}</span>
     </span>
-    <span className="flex gap-1.5 items-center">
+    <span className="flex gap-1 items-center">
       <Icon size={16} name="pull" className="text-tertiary-background" />
       <span className="text-primary text-xs font-normal">{pulls || 0}</span>
     </span>
@@ -35,9 +35,9 @@ const Stats = ({ stars, forks, pulls }: { stars?: number; forks: number; pulls: 
 )
 
 const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => (
-  <div className="inline-flex gap-2 items-center">
+  <div className="inline-flex gap-2.5 items-center">
     {title}
-    <Badge size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
+    <Badge size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'emphasis'}>
       {isPrivate ? 'Private' : 'Public'}
     </Badge>
   </div>

@@ -78,12 +78,12 @@ function RepoListPage() {
           <ListActions.Right>
             <ListActions.Dropdown title="Filter" items={filterOptions} />
             <ListActions.Dropdown title="Sort" items={sortOptions} />
-            <Button variant="default">Create repository</Button>
+            <Button variant="default">New repository</Button>
           </ListActions.Right>
         </ListActions.Root>
-        <Spacer size={5} />
+        <Spacer className='mt-[18px]' />
         {renderListContent()}
-        <Spacer size={8} />
+        <Spacer size={6} />
         {loadState === 'data-loaded' && <PaginationComponent totalPages={10} currentPage={5} goToPage={() => {}} />}
       </PaddingListLayout>
       <PlaygroundListSettings loadState={loadState} setLoadState={setLoadState} />

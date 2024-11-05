@@ -151,7 +151,7 @@
   }
 
   body {
-    @apply bg-background text-foreground text-sm font-normal;
+    @apply bg-background text-foreground text-sm font-normal -tracking-[0.02em];
   }
 }
 

@@ -6,7 +6,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { NavArrowRight } from '@harnessio/icons-noir'
 
 const listItemVariants = cva(
-  'p-2 align-middle flex flex-row flex-1 gap-1 px-4 py-3 border-b flex-wrap justify-start items-center',
+  'align-middle flex flex-row flex-1 gap-1 px-4 pt-3 pb-[9px] border-b flex-wrap justify-start items-center',
   {
     variants: {
       disabled: {
@@ -56,7 +56,7 @@ interface ListProps extends React.ComponentProps<'div'> {
 const List: React.FC<ListProps> = ({ className, children, onlyTopRounded, borderBackground, ...props }) => (
   <div
     className={cn(
-      'w-full',
+      'w-full overflow-hidden',
       '[&>div:last-child]:border-0 border',
       onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
       borderBackground ? 'border-border-background' : '',
@@ -88,7 +88,7 @@ const ListItem = ({
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-primary/[0.01]' : '',
-        disableHover ? '' : 'hover:bg-primary/5 ease-in-out duration-150 cursor-pointer'
+        disableHover ? '' : 'hover:bg-gray-8 ease-in-out duration-150 cursor-pointer'
       )}
       {...props}>
       {thumbnail && <div className="mr-2 flex items-center">{thumbnail}</div>}

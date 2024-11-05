@@ -86,6 +86,11 @@ export default {
         divergence: {
           behind: 'hsl(var(--grey-20))',
           ahead: 'hsl(var(--grey-30))'
+        },
+        gray: {
+          8: 'hsl(var(--grey-8))',
+          10: 'hsl(var(--grey-10))',
+          active: 'hsl(240 5% 12%)'
         }
       },
       borderRadius: {

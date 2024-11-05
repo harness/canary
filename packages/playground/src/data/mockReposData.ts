@@ -1,9 +1,9 @@
 export const mockRepos = [
   {
     id: '1',
-    name: 'drone',
+    name: 'cal.com',
     description: 'Continuous Integration platform powered by Docker',
-    private: false,
+    private: true,
     stars: 0,
     forks: 0,
     pulls: 12,

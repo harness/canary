@@ -26,7 +26,6 @@ function Root({ avatarLink, productLink }: ProjectProps) {
         {productLink}
       </div>
       <SearchBox
-        textSize={1}
         width="full"
         placeholder="Search..."
         hasShortcut

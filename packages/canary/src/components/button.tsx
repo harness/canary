@@ -17,14 +17,17 @@ const buttonVariants = cva(
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         split: 'border flex items-center gap-1.5 p-0',
-        'gradient-border': 'bg-background hover:bg-accent text-primary hover:text-accent-foreground'
+        'gradient-border': 'bg-background hover:bg-accent text-primary hover:text-accent-foreground',
+        // New design variants
+        'gray-8': 'bg-gray-8 text-secondary-foreground hover:bg-gray-10',
+        'gray-active': 'bg-gray-active text-secondary-foreground shadow-[0px_2px_4px_0px_hsla(0,_0%,_0%,_0.5)]'
       },
       size: {
-        default: 'h-9 px-4 py-2',
+        default: 'h-8 px-6 py-2',
         sm: 'h-8 px-3 py-0 text-sm font-normal',
         xs: 'h-auto py-0.5 px-1.5 text-xs font-normal',
         lg: 'h-10 px-8',
-        icon: 'h-9 w-9',
+        icon: 'h-8 w-8',
         sm_icon: 'h-7 w-7',
         xs_split: 'h-auto p-0 text-xs font-medium'
       },

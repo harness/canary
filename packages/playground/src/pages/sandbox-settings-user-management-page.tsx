@@ -32,7 +32,6 @@ function SandboxSettingsUserManagementPage({
   updateUserAdmin: (userUid: string, isAdmin: boolean) => void
 }) {
   const navigate = useNavigate()
-  // const [loadState, setLoadState] = useState('data-loaded')
   const [dialogState, dispatch] = useReducer(dialogStateReducer, initialDialogState)
 
   const openDialog = (dialogType: DialogType, user: UsersProps) => {
@@ -47,55 +46,31 @@ function SandboxSettingsUserManagementPage({
   const handleDelete = () => {
     dispatch({ type: DialogActionType.START_DELETING })
     closeDialog(DialogType.DELETE)
-
-    // setTimeout(() => {
-    //   dispatch({ type: DialogActionType.DELETE_SUCCESS })
-    //   setTimeout(() => {
-    //     closeDialog(DialogType.DELETE)
-    //     dispatch({ type: DialogActionType.RESET_DELETE })
-    //   }, 2000)
-    // }, 2000)
+    dispatch({ type: DialogActionType.DELETE_SUCCESS })
+    dispatch({ type: DialogActionType.RESET_DELETE })
   }
 
   // Handler for form submission
   const handleFormSave = () => {
     dispatch({ type: DialogActionType.START_SUBMITTING })
     closeDialog(DialogType.EDIT)
-
-    // setTimeout(() => {
-    //   dispatch({ type: DialogActionType.SUBMIT_SUCCESS })
-    //   setTimeout(() => {
-    //     closeDialog(DialogType.EDIT)
-    //     dispatch({ type: DialogActionType.RESET_SUBMIT })
-    //   }, 2000)
-    // }, 2000)
+    dispatch({ type: DialogActionType.SUBMIT_SUCCESS })
+    dispatch({ type: DialogActionType.RESET_SUBMIT })
   }
 
   // Handler for admin removal
   const handleRemove = () => {
     dispatch({ type: DialogActionType.START_REMOVING })
     closeDialog(DialogType.REMOVE_ADMIN)
-
-    // setTimeout(() => {
-    //   dispatch({ type: DialogActionType.REMOVE_SUCCESS })
-    //   setTimeout(() => {
-    //     closeDialog(DialogType.REMOVE_ADMIN)
-    //     dispatch({ type: DialogActionType.RESET_REMOVE })
-    //   }, 2000)
-    // }, 2000)
+    dispatch({ type: DialogActionType.REMOVE_SUCCESS })
+    dispatch({ type: DialogActionType.RESET_REMOVE })
   }
 
   const handleAdd = () => {
     dispatch({ type: DialogActionType.START_REMOVING })
     closeDialog(DialogType.SET_ADMIN)
-
-    // setTimeout(() => {
-    //   dispatch({ type: DialogActionType.REMOVE_SUCCESS })
-    //   setTimeout(() => {
-    //     closeDialog(DialogType.SET_ADMIN)
-    //     dispatch({ type: DialogActionType.RESET_REMOVE })
-    //   }, 2000)
-    // }, 2000)
+    dispatch({ type: DialogActionType.REMOVE_SUCCESS })
+    dispatch({ type: DialogActionType.RESET_REMOVE })
   }
 
   const renderUserListContent = () => {
@@ -182,7 +157,7 @@ function SandboxSettingsUserManagementPage({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main hasLeftPanel>
       <SandboxLayout.Content maxWidth="3xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
@@ -196,7 +171,7 @@ function SandboxSettingsUserManagementPage({
           <ListActions.Right>
             <ListActions.Dropdown title="All Team Roles" items={filterOptions} />
             <ListActions.Dropdown title="Last added" items={sortOptions} />
-            <Button variant="default" onClick={handleInviteClick}>
+            <Button variant="default" onClick={handleInviteClick} disabled title="Coming soon">
               Invite New Users
             </Button>
           </ListActions.Right>

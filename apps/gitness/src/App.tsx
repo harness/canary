@@ -381,26 +381,25 @@ export default function App() {
                   element: <SettingsProfileKeysPage />
                 }
               ]
-            },
-            {
-              path: 'user-management',
-              element: <SandboxSettingsProjectPage />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="users" />
-                },
-                {
-                  path: 'users',
-                  element: <UserManagementPageContainer />
-                },
-                {
-                  path: 'create-new-user',
-                  element: <SandboxSettingsCreateNewUserPage />
-                }
-              ]
             }
+            // {
+            // path: 'user-management',
+            // element: <SandboxSettingsProjectPage />,
+            // children: [
+
+            // ]
+            // }
           ]
+        },
+
+        {
+          path: 'user-management',
+          element: <UserManagementPageContainer />
+        },
+
+        {
+          path: 'create-new-user',
+          element: <SandboxSettingsCreateNewUserPage />
         }
       ]
     },

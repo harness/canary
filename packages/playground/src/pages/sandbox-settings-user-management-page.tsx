@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
-import { Spacer, Text, ListActions, SearchBox, Button } from '@harnessio/canary'
-import { SandboxLayout } from '..'
+import { Spacer, Text, Button } from '@harnessio/canary'
+import { SandboxLayout, SkeletonList } from '..'
 import { UsersList } from '../components/user-management/users-list'
 import { useNavigate } from 'react-router-dom'
 import {
@@ -14,22 +14,35 @@ import { FormResetPasswordDialog } from '../components/user-management/form-user
 import { FormAddAdminDialog } from '../components/user-management/form-admin-add-dialog'
 import { DialogActionType, DialogType } from '../components/user-management/interfaces'
 import { UsersProps } from '../components/user-management/interfaces'
-
-const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
-const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
+import { Filter } from '..'
+import { PaginationComponent } from '../components/pagination'
+const sortOptions = [
+  { name: 'Date', value: 'created' },
+  { name: 'Email', value: 'email' },
+  { name: 'Name', value: 'id' },
+  { name: 'Last Modified', value: 'updated' }
+]
 
 function SandboxSettingsUserManagementPage({
   userData,
   handleUpdateUser,
   handleDeleteUser,
   handleUpdatePassword,
-  updateUserAdmin
+  updateUserAdmin,
+  currentPage,
+  totalPages,
+  setPage,
+  isFetching
 }: {
   userData: UsersProps[] | null
   handleUpdateUser: (data: { email: string; displayName: string; userID: string }) => void
   handleDeleteUser: (userUid: string) => void
   handleUpdatePassword: (userId: string, password: string) => void
   updateUserAdmin: (userUid: string, isAdmin: boolean) => void
+  currentPage: number
+  totalPages: number
+  setPage: (pageNum: number) => void
+  isFetching: boolean
 }) {
   const navigate = useNavigate()
   const [dialogState, dispatch] = useReducer(dialogStateReducer, initialDialogState)
@@ -74,6 +87,9 @@ function SandboxSettingsUserManagementPage({
   }
 
   const renderUserListContent = () => {
+    if (isFetching) {
+      return <SkeletonList />
+    }
     return (
       <>
         <UsersList
@@ -164,21 +180,23 @@ function SandboxSettingsUserManagementPage({
           Users
         </Text>
         <Spacer size={6} />
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchBox.Root placeholder="Search Users" />
-          </ListActions.Left>
-          <ListActions.Right>
-            <ListActions.Dropdown title="All Team Roles" items={filterOptions} />
-            <ListActions.Dropdown title="Last added" items={sortOptions} />
-            <Button variant="default" onClick={handleInviteClick} disabled title="Coming soon">
-              Invite New Users
-            </Button>
-          </ListActions.Right>
-        </ListActions.Root>
+        <div className="flex justify-between gap-5 items-center">
+          <div className="flex-1">
+            <Filter sortOptions={sortOptions} />
+          </div>
+          <Button variant="default" onClick={handleInviteClick} disabled title="Coming soon">
+            Invite New Users
+          </Button>
+        </div>
+
         <Spacer size={5} />
         {renderUserListContent()}
         <Spacer size={8} />
+        <PaginationComponent
+          totalPages={totalPages}
+          currentPage={currentPage}
+          goToPage={(pageNum: number) => setPage(pageNum)}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import { SandboxSettingsUserManagementPage } from '@harnessio/playground'
+import { SandboxSettingsUserManagementPage, useCommonFilter } from '@harnessio/playground'
 import {
   useAdminListUsersQuery,
-  AdminListUsersOkResponse,
   useAdminUpdateUserMutation,
   useAdminDeleteUserMutation,
-  useUpdateUserAdminMutation
+  useUpdateUserAdminMutation,
+  AdminListUsersQueryQueryParams
 } from '@harnessio/code-service-client'
 import { useQueryClient } from '@tanstack/react-query'
+import { parseAsInteger, useQueryState } from 'nuqs'
+import { PageResponseHeader } from '../types'
 
 export const UserManagementPageContainer = () => {
   const queryClient = useQueryClient()
 
-  const [userData, setUserData] = useState<AdminListUsersOkResponse | null>(null)
+  const { query: _currentQuery, sort } = useCommonFilter<AdminListUsersQueryQueryParams['sort']>()
+  // const [query, _] = useQueryState('query', { defaultValue: currentQuery || '' })
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const changePage = (pageNum: number) => setPage(pageNum)
 
-  useAdminListUsersQuery(
-    {
-      queryParams: {
-        page: 1,
-        limit: 30
-      }
-    },
-    {
-      onSuccess: ({ body: data }) => {
-        setUserData(data)
-      },
-      onError: error => {
-        console.error(error)
-      }
+  const { isFetching, data: { body: userData, headers } = {} } = useAdminListUsersQuery({
+    queryParams: {
+      page: page,
+      limit: 30,
+      sort: sort
     }
-  )
+  })
+
+  const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
 
   const { mutate: updateUser } = useAdminUpdateUserMutation(
     {},
@@ -102,11 +99,15 @@ export const UserManagementPageContainer = () => {
   }
   return (
     <SandboxSettingsUserManagementPage
-      userData={userData}
+      userData={userData ?? null}
       handleUpdateUser={handleUpdateUser}
       handleDeleteUser={handleDeleteUser}
       handleUpdatePassword={handleUpdatePassword}
       updateUserAdmin={handleUpdateUserAdmin}
+      totalPages={totalPages}
+      currentPage={page}
+      isFetching={isFetching}
+      setPage={changePage}
     />
   )
 }

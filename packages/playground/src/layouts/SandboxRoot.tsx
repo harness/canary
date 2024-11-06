@@ -162,9 +162,9 @@ export const SandboxRoot: React.FC<SandboxRootProps> = ({ currentUser, currentSp
           {currentUser?.admin && (
             <Navbar.Content>
               <Navbar.Group>
-                <NavLink to={`/user-management`}>
+                <NavLink to={`/users`} className="p-2 hover:bg-primary/5 rounded-md">
                   {({ isActive }) => (
-                    <Navbar.Item text="User Management" icon={<Icon name="cog-6" size={12} />} active={isActive} />
+                    <Navbar.Item text="User Management" icon={<Icon name="account" size={12} />} active={isActive} />
                   )}
                 </NavLink>
               </Navbar.Group>

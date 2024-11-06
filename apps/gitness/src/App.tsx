@@ -382,18 +382,11 @@ export default function App() {
                 }
               ]
             }
-            // {
-            // path: 'user-management',
-            // element: <SandboxSettingsProjectPage />,
-            // children: [
-
-            // ]
-            // }
           ]
         },
 
         {
-          path: 'user-management',
+          path: 'users',
           element: <UserManagementPageContainer />
         },
 

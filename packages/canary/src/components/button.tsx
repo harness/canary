@@ -20,7 +20,8 @@ const buttonVariants = cva(
         'gradient-border': 'bg-background hover:bg-accent text-primary hover:text-accent-foreground',
         // New design variants
         'gray-8': 'bg-gray-8 text-secondary-foreground hover:bg-gray-10',
-        'gray-active': 'bg-gray-active text-secondary-foreground shadow-[0px_2px_4px_0px_hsla(0,_0%,_0%,_0.5)]'
+        'gray-active':
+          'bg-gray-active text-secondary-foreground shadow-[0px_2px_4px_0px_hsla(0,0%,0%,0.5)] cursor-default'
       },
       size: {
         default: 'h-8 px-6 py-2',

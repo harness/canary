@@ -24,6 +24,7 @@ import Comments from '../icons/comments.svg'
 import Tasks from '../icons/tasks.svg'
 import Tick from '../icons/tick.svg'
 import NoDataFolder from '../icons/no-data-folder.svg'
+import NoRepository from '../icons/no-repository.svg'
 import NoDataMerge from '../icons/no-data-merge.svg'
 import NoDataCog from '../icons/no-data-cog.svg'
 import NoDataBranches from '../icons/no-data-branches.svg'
@@ -121,6 +122,7 @@ const IconNameMap = {
   tasks: Tasks,
   tick: Tick,
   'no-data-folder': NoDataFolder,
+  'no-repository': NoRepository,
   'no-data-merge': NoDataMerge,
   'no-data-cog': NoDataCog,
   'no-data-branches': NoDataBranches,

@@ -41,11 +41,11 @@ export const NoData: React.FC<NoDataProps> = ({
 }) => {
   return (
     <div
-      className={cn('w-full h-full flex flex-col place-content-center place-items-center', {
+      className={cn('w-full h-full flex flex-col gap-4 place-content-center place-items-center', {
         'py-20 pb-24': insideTabView
       })}>
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
-      <div className="flex flex-col gap-4 place-content-center place-items-center ">
+      <div className="flex flex-col gap-2.5 place-content-center place-items-center ">
         <Text size={5} weight="medium">
           {title}
         </Text>
@@ -59,14 +59,14 @@ export const NoData: React.FC<NoDataProps> = ({
           </div>
         )}
         {(primaryButton || secondaryButton) && (
-          <div className="mt-3.5 flex gap-4">
+          <div className="mt-4 flex gap-[18px]">
             {primaryButton && (
-              <Button size="lg" asChild onClick={primaryButton.onClick}>
+              <Button asChild onClick={primaryButton.onClick}>
                 <NavLink to={primaryButton.to || '/</Button>'}>{primaryButton.label}</NavLink>
               </Button>
             )}
             {secondaryButton && (
-              <Button variant="outline" size="lg" asChild onClick={secondaryButton.onClick}>
+              <Button variant="outline" asChild onClick={secondaryButton.onClick}>
                 <NavLink to={secondaryButton.to || '/</Button>'}>{secondaryButton.label}</NavLink>
               </Button>
             )}

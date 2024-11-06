@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { cn } from '@/lib/utils'
 import { ButtonProps, buttonVariants } from '@/components/button'
 import { Icon } from './icon'
@@ -85,8 +84,7 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
   <span
     aria-hidden
     className={cn('flex h-7 w-7 items-center justify-center text-[12px] font-normal bg-gray-8 rounded-full', className)}
-    {...props}
-  >
+    {...props}>
     ...
     <span className="sr-only">More pages</span>
   </span>

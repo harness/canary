@@ -49,7 +49,7 @@ function RepoListPage() {
     return (
       <>
         <NoData
-          iconName="no-data-folder"
+          iconName="no-repository"
           title="No repositories yet"
           description={[
             'There are no repositories in this project yet.',
@@ -81,7 +81,7 @@ function RepoListPage() {
             <Button variant="default">New repository</Button>
           </ListActions.Right>
         </ListActions.Root>
-        <Spacer className='mt-[18px]' />
+        <Spacer className="mt-[18px]" />
         {renderListContent()}
         <Spacer size={6} />
         {loadState === 'data-loaded' && <PaginationComponent totalPages={10} currentPage={5} goToPage={() => {}} />}

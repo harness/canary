@@ -8,7 +8,6 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
   Button,
   Badge,
   Text,
@@ -24,10 +23,10 @@ export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = 
   handleUpdatePassword
 }) => {
   const [isConfirm, setIsConfirm] = useState(false)
-  const [password, _] = useState(generateAlphaNumericHash(10))
+  const [password, _setPassword] = useState(generateAlphaNumericHash(10))
 
   const handleResetPassword = () => {
-    handleUpdatePassword(user?.uid!, password)
+    handleUpdatePassword(user!.uid!, password)
   }
 
   return (

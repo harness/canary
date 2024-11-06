@@ -7,12 +7,12 @@ import {
   useAdminDeleteUserMutation,
   useUpdateUserAdminMutation
 } from '@harnessio/code-service-client'
-// import { useAppContext } from '../framework/context/AppContext'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const UserManagementPageContainer = () => {
+  const queryClient = useQueryClient()
+
   const [userData, setUserData] = useState<AdminListUsersOkResponse | null>(null)
-  // const { currentUser } = useAppContext()
-  // console.log(currentUser)
 
   useAdminListUsersQuery(
     {
@@ -34,9 +34,8 @@ export const UserManagementPageContainer = () => {
   const { mutate: updateUser } = useAdminUpdateUserMutation(
     {},
     {
-      onSuccess: ({ body: data }) => {
-        // setUserData(data)
-        console.log(data)
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       },
       onError: error => {
         console.error(error)
@@ -47,8 +46,8 @@ export const UserManagementPageContainer = () => {
   const { mutate: deleteUser } = useAdminDeleteUserMutation(
     {},
     {
-      onSuccess: ({ body: data }) => {
-        console.log(data)
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       },
       onError: error => {
         console.error(error)
@@ -59,8 +58,8 @@ export const UserManagementPageContainer = () => {
   const { mutate: updateUserAdmin } = useUpdateUserAdminMutation(
     {},
     {
-      onSuccess: ({ body: data }) => {
-        console.log(data)
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
       },
       onError: error => {
         console.error(error)

@@ -9,7 +9,6 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
   Button,
   Icon,
   Text,
@@ -59,7 +58,10 @@ export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
               size="default"
               theme="error"
               className="self-start"
-              onClick={() => handleDeleteUser(user?.uid)}
+              onClick={() => {
+                handleDeleteUser(user!.uid!)
+                onDelete()
+              }}
               disabled={isDeleting}>
               {isDeleting ? 'Deleting user...' : 'Yes, delete user'}
             </Button>

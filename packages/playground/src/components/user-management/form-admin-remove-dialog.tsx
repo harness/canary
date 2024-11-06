@@ -8,7 +8,6 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
   Button,
   Icon,
   Badge,
@@ -59,7 +58,7 @@ export const FormRemoveAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
               theme="error"
               className="self-start"
               onClick={() => {
-                updateUserAdmin(user?.uid!, false)
+                updateUserAdmin(user!.uid!, false)
                 onRemove()
               }}
               disabled={isRemoving || removeSuccess}>

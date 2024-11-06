@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react'
 import { Spacer, Text, Button } from '@harnessio/canary'
-import { SandboxLayout, SkeletonList } from '..'
+import { SandboxLayout } from '..'
 import { UsersList } from '../components/user-management/users-list'
 import { useNavigate } from 'react-router-dom'
 import {

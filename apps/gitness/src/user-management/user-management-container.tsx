@@ -3,7 +3,9 @@ import { SandboxSettingsUserManagementPage } from '@harnessio/playground'
 import {
   useAdminListUsersQuery,
   AdminListUsersOkResponse,
-  useAdminUpdateUserMutation
+  useAdminUpdateUserMutation,
+  useAdminDeleteUserMutation,
+  useUpdateUserAdminMutation
 } from '@harnessio/code-service-client'
 // import { useAppContext } from '../framework/context/AppContext'
 
@@ -42,12 +44,71 @@ export const UserManagementPageContainer = () => {
     }
   )
 
-  const handleUpdateUser = (userId: string, data: any) => {
+  const { mutate: deleteUser } = useAdminDeleteUserMutation(
+    {},
+    {
+      onSuccess: ({ body: data }) => {
+        console.log(data)
+      },
+      onError: error => {
+        console.error(error)
+      }
+    }
+  )
+
+  const { mutate: updateUserAdmin } = useUpdateUserAdminMutation(
+    {},
+    {
+      onSuccess: ({ body: data }) => {
+        console.log(data)
+      },
+      onError: error => {
+        console.error(error)
+      }
+    }
+  )
+
+  const handleUpdateUser = (data: any) => {
+    console.log(data)
     updateUser({
-      user_uid: userId,
-      body: data
+      user_uid: data.userID,
+      body: {
+        email: data.email,
+        display_name: data.displayName
+      }
     })
   }
 
-  return <SandboxSettingsUserManagementPage userData={userData} handleUpdateUser={handleUpdateUser} />
+  const handleDeleteUser = (userUid: string) => {
+    deleteUser({
+      user_uid: userUid
+    })
+  }
+
+  const handleUpdateUserAdmin = (userUid: string, isAdmin: boolean) => {
+    updateUserAdmin({
+      user_uid: userUid,
+      body: {
+        admin: isAdmin
+      }
+    })
+  }
+
+  const handleUpdatePassword = (userId, password) => {
+    updateUser({
+      user_uid: userId,
+      body: {
+        password: password
+      }
+    })
+  }
+  return (
+    <SandboxSettingsUserManagementPage
+      userData={userData}
+      handleUpdateUser={handleUpdateUser}
+      handleDeleteUser={handleDeleteUser}
+      handleUpdatePassword={handleUpdatePassword}
+      updateUserAdmin={handleUpdateUserAdmin}
+    />
+  )
 }

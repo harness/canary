@@ -18,9 +18,17 @@ import { FormResetPasswordsDialogProps } from './interfaces'
 import { CopyButton } from '../copy-button'
 import { generateAlphaNumericHash } from '../../utils/utils'
 
-export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = ({ user, onClose }) => {
+export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = ({
+  user,
+  onClose,
+  handleUpdatePassword
+}) => {
   const [isConfirm, setIsConfirm] = useState(false)
-  const password = generateAlphaNumericHash(10)
+  const [password, _] = useState(generateAlphaNumericHash(10))
+
+  const handleResetPassword = () => {
+    handleUpdatePassword(user?.uid, password)
+  }
 
   return (
     <AlertDialog open={true} onOpenChange={onClose}>
@@ -60,7 +68,14 @@ export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = 
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>{isConfirm ? `Close` : `Cancel`}</AlertDialogCancel>
           {!isConfirm && (
-            <Button size="default" theme="secondary" className="self-start" onClick={() => setIsConfirm(true)}>
+            <Button
+              size="default"
+              theme="secondary"
+              className="self-start"
+              onClick={() => {
+                handleResetPassword()
+                setIsConfirm(true)
+              }}>
               Confirm
             </Button>
           )}

@@ -1,5 +1,4 @@
 import React from 'react'
-
 import {
   Spacer,
   AlertDialog,
@@ -12,19 +11,19 @@ import {
   AlertDialogCancel,
   Button,
   Icon,
-  Text,
-  Badge
+  Badge,
+  Text
 } from '@harnessio/canary'
-import { FormDeleterDialogProps } from './interfaces'
+import { FormRemoveUserDialogProps } from './interfaces'
 
-//Form Delete Member Dialog
-export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
+//Form Add Admin Dialog
+export const FormAddAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
   user,
   onClose,
-  onDelete,
-  isDeleting,
-  deleteSuccess,
-  handleDeleteUser
+  onRemove,
+  isRemoving,
+  removeSuccess,
+  updateUserAdmin
 }) => {
   return (
     <AlertDialog open={true} onOpenChange={onClose}>
@@ -32,22 +31,22 @@ export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you absolutely sure you want to delete
+            Are you sure you want to add
             <Badge type="admin" className="mx-2" variant="muted" disableHover={true}>
               <Text>{user?.display_name}</Text>
             </Badge>
-            ?
+            as an admin?
           </AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete the user "{user?.display_name}" from the system.
+            This will add an admin tag for "{user?.display_name}" ({user?.uid}).
           </AlertDialogDescription>
         </AlertDialogHeader>
         <Spacer size={3} />
         <AlertDialogFooter>
-          {!isDeleting && !deleteSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
-          {deleteSuccess ? (
+          {!isRemoving && !removeSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
+          {removeSuccess ? (
             <Button size="default" theme="success" className="self-start pointer-events-none flex gap-2">
-              Users deleted
+              Admin added
               <Icon name="tick" size={14} />
             </Button>
           ) : (
@@ -55,9 +54,12 @@ export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
               size="default"
               theme="error"
               className="self-start"
-              onClick={() => handleDeleteUser(user?.uid)}
-              disabled={isDeleting}>
-              {isDeleting ? 'Deleting user...' : 'Yes, delete user'}
+              onClick={() => {
+                updateUserAdmin(user?.uid, true)
+                onRemove()
+              }}
+              disabled={isRemoving || removeSuccess}>
+              {isRemoving ? 'Adding admin...' : 'Yes, add admin'}
             </Button>
           )}
         </AlertDialogFooter>

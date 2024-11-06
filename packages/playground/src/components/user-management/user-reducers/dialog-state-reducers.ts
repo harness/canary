@@ -5,6 +5,7 @@ export const initialDialogState: DialogState = {
   isDialogDeleteOpen: false,
   isDialogEditOpen: false,
   isDialogRemoveAdminOpen: false,
+  isDialogSetAdminOpen: false,
   isDialogResetPasswordOpen: false,
   isDeleting: false,
   deleteSuccess: false,

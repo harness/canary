@@ -13,13 +13,22 @@ import { FormUserEditDialog } from '../components/user-management/form-user-edit
 import { FormDeleteUserDialog } from '../components/user-management/form-user-delete-dialog'
 import { FormRemoveAdminDialog } from '../components/user-management/form-admin-remove-dialog'
 import { FormResetPasswordDialog } from '../components/user-management/form-user-reset-password'
+import { FormAddAdminDialog } from '../components/user-management/form-admin-add-dialog'
 import { DialogActionType, DialogType } from '../components/user-management/interfaces'
 import { UsersProps } from '../components/user-management/interfaces'
 
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
-function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { userData: UsersProps[] | null }) {
+function SandboxSettingsUserManagementPage({
+  userData,
+  handleUpdateUser,
+  handleDeleteUser,
+  handleUpdatePassword,
+  updateUserAdmin
+}: {
+  userData: UsersProps[] | null
+}) {
   const navigate = useNavigate()
   const [loadState, setLoadState] = useState('data-loaded')
   const [dialogState, dispatch] = useReducer(dialogStateReducer, initialDialogState)
@@ -70,6 +79,18 @@ function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { use
     }, 2000)
   }
 
+  const handleAdd = () => {
+    dispatch({ type: DialogActionType.START_REMOVING })
+
+    setTimeout(() => {
+      dispatch({ type: DialogActionType.REMOVE_SUCCESS })
+      setTimeout(() => {
+        closeDialog(DialogType.SET_ADMIN)
+        dispatch({ type: DialogActionType.RESET_REMOVE })
+      }, 2000)
+    }, 2000)
+  }
+
   const renderUserListContent = () => {
     switch (loadState) {
       case 'loading':
@@ -82,6 +103,7 @@ function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { use
               onDelete={user => openDialog(DialogType.DELETE, user)}
               onRemoveAdmin={user => openDialog(DialogType.REMOVE_ADMIN, user)}
               onResetPassword={user => openDialog(DialogType.RESET_PASSWORD, user)}
+              onSetAdmin={user => openDialog(DialogType.SET_ADMIN, user)}
               users={userData as UsersProps[]}
             />
             {/* Delete Dialog */}
@@ -95,6 +117,7 @@ function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { use
                   closeDialog(DialogType.DELETE)
                   dispatch({ type: DialogActionType.RESET_DELETE })
                 }}
+                handleDeleteUser={handleDeleteUser}
               />
             )}
             {/* Edit Dialog */}
@@ -121,6 +144,7 @@ function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { use
                   closeDialog(DialogType.REMOVE_ADMIN)
                   dispatch({ type: DialogActionType.RESET_REMOVE })
                 }}
+                updateUserAdmin={updateUserAdmin}
               />
             )}
             {dialogState.isDialogResetPasswordOpen && (
@@ -130,6 +154,20 @@ function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { use
                   closeDialog(DialogType.RESET_PASSWORD)
                   dispatch({ type: DialogActionType.RESET_PASSWORD_RESET })
                 }}
+                handleUpdatePassword={handleUpdatePassword}
+              />
+            )}
+            {dialogState.isDialogSetAdminOpen && (
+              <FormAddAdminDialog
+                isRemoving={dialogState.isRemoving}
+                removeSuccess={dialogState.removeSuccess}
+                user={dialogState.selectedUser!}
+                onRemove={handleAdd}
+                onClose={() => {
+                  closeDialog(DialogType.SET_ADMIN)
+                  dispatch({ type: DialogActionType.RESET_REMOVE })
+                }}
+                updateUserAdmin={updateUserAdmin}
               />
             )}
           </>

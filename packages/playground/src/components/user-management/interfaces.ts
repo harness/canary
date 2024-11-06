@@ -14,6 +14,7 @@ export interface DialogState {
   isDialogEditOpen: boolean
   isDialogRemoveAdminOpen: boolean
   isDialogResetPasswordOpen: boolean
+  isDialogSetAdminOpen: boolean
   isDeleting: boolean
   isSubmitting: boolean
   submitted: boolean
@@ -48,6 +49,7 @@ export enum DialogType {
   EDIT = 'edit',
   DELETE = 'delete',
   REMOVE_ADMIN = 'removeAdmin',
+  SET_ADMIN = 'setAdmin',
   RESET_PASSWORD = 'resetPassword'
 }
 
@@ -98,4 +100,5 @@ export interface FormEditDialogProps {
   user: { uid: string; email: string; display_name?: string }
   onSave: () => void
   onClose: () => void
+  handleUpdateUser: (data: any) => void
 }

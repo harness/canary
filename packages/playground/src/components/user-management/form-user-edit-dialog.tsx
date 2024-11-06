@@ -26,7 +26,8 @@ export const FormUserEditDialog: React.FC<FormEditDialogProps> = ({
   onSave,
   onClose,
   isSubmitting,
-  submitted
+  submitted,
+  handleUpdateUser
 }) => {
   const newUserSchema = z.object({
     userID: z.string().min(1, { message: 'Please provide a project name' }),
@@ -55,7 +56,8 @@ export const FormUserEditDialog: React.FC<FormEditDialogProps> = ({
   const onSubmit: SubmitHandler<MemberFields> = data => {
     onSave()
     console.log(data)
-    resetNewMemberForm(data) // Reset to the current values
+    handleUpdateUser(data)
+    resetNewMemberForm(data)
   }
 
   return (

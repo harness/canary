@@ -74,6 +74,7 @@ import SandboxPullRequestComparePage from './pages/sandbox-pull-request-compare-
 import { mockBypassUserData, mockStatusChecks } from './pages/mocks/repo-branch-settings/mockData'
 import { BypassUsersList } from './components/repo-settings/repo-branch-settings-rules/types'
 import { currentUser } from './pages/mocks/mockCurrentUserData'
+import { mockUsersData } from './data/mockUsersData'
 
 const router = createBrowserRouter([
   // TEMPORARY LAYOUT SANDBOX
@@ -150,7 +151,14 @@ const router = createBrowserRouter([
               },
               {
                 path: 'webhooks/create',
-                element: <RepoWebhooksCreatePage onFormSubmit={noop} onFormCancel={noop} isLoading={false} />
+                element: (
+                  <RepoWebhooksCreatePage
+                    onFormSubmit={noop}
+                    onFormCancel={noop}
+                    isLoading={false}
+                    preSetWebHookData={null}
+                  />
+                )
               },
               {
                 path: 'pipelines',
@@ -320,33 +328,37 @@ const router = createBrowserRouter([
                 element: <SandboxSettingsCreateNewMemberPage />
               }
             ]
-          },
-          {
-            path: 'user-management',
-            element: <SandboxSettingsProjectPage />,
-            children: [
-              {
-                index: true,
-                element: <Navigate to="users" />
-              },
-              {
-                path: 'users',
-                element: <SandboxSettingsUserManagementPage />
-              },
-              {
-                path: 'create-new-user',
-                element: <SandboxSettingsCreateNewUserPage />
-              }
-            ]
           }
         ]
       },
+
       {
         path: 'landing',
         element: <SandboxLandingPage />
+      },
+      {
+        path: 'users',
+        element: (
+          <SandboxSettingsUserManagementPage
+            userData={mockUsersData}
+            handleDeleteUser={noop}
+            handleUpdatePassword={noop}
+            handleUpdateUser={noop}
+            updateUserAdmin={noop}
+            currentPage={1}
+            totalPages={1}
+            setPage={noop}
+          />
+        )
+      },
+
+      {
+        path: 'create-new-user',
+        element: <SandboxSettingsCreateNewUserPage />
       }
     ]
   },
+
   {
     path: 'signin',
     element: <SignInPage handleSignIn={noop} />
@@ -447,7 +459,14 @@ const router = createBrowserRouter([
           },
           {
             path: 'webhooks/create',
-            element: <RepoWebhooksCreatePage onFormSubmit={noop} onFormCancel={noop} isLoading={false} />
+            element: (
+              <RepoWebhooksCreatePage
+                onFormSubmit={noop}
+                onFormCancel={noop}
+                isLoading={false}
+                preSetWebHookData={null}
+              />
+            )
           },
           {
             path: 'commits',

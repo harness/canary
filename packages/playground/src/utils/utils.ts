@@ -76,7 +76,11 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
  * @param timestamp
  * @returns formatted timestamp
  */
-export const timeAgo = (timestamp: number): string => {
+export const timeAgo = (timestamp?: number | null): string => {
+  // Fallback for null/undefined timestamps
+  if (timestamp === null || timestamp === undefined) {
+    return 'Unknown time'
+  }
   const date = new Date(timestamp)
   const now = new Date()
 

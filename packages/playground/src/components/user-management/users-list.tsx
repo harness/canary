@@ -155,7 +155,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
                 <TableCell className="content-center my-6">
                   <div className="flex gap-1.5 items-center justify-end">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                      {timeAgo(user.created!)}
+                      {timeAgo(user.created)}
                     </Text>
                   </div>
                 </TableCell>

@@ -31,8 +31,7 @@ function SandboxSettingsUserManagementPage({
   updateUserAdmin,
   currentPage,
   totalPages,
-  setPage,
-  isFetching
+  setPage
 }: {
   userData: UsersProps[] | null
   handleUpdateUser: (data: { email: string; displayName: string; userID: string }) => void
@@ -42,7 +41,6 @@ function SandboxSettingsUserManagementPage({
   currentPage: number
   totalPages: number
   setPage: (pageNum: number) => void
-  isFetching: boolean
 }) {
   const navigate = useNavigate()
   const [dialogState, dispatch] = useReducer(dialogStateReducer, initialDialogState)
@@ -87,9 +85,6 @@ function SandboxSettingsUserManagementPage({
   }
 
   const renderUserListContent = () => {
-    if (isFetching) {
-      return <SkeletonList />
-    }
     return (
       <>
         <UsersList

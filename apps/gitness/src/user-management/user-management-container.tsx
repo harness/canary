@@ -18,7 +18,7 @@ export const UserManagementPageContainer = () => {
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const changePage = (pageNum: number) => setPage(pageNum)
 
-  const { isFetching, data: { body: userData, headers } = {} } = useAdminListUsersQuery({
+  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
     queryParams: {
       page: page,
       limit: 30,
@@ -106,7 +106,6 @@ export const UserManagementPageContainer = () => {
       updateUserAdmin={handleUpdateUserAdmin}
       totalPages={totalPages}
       currentPage={page}
-      isFetching={isFetching}
       setPage={changePage}
     />
   )

@@ -126,6 +126,8 @@ export * from './pages/sandbox-settings-project-page'
 export * from './pages/sandbox-settings-project-general-page'
 export * from './pages/sandbox-settings-project-members-page'
 export * from './pages/sandbox-settings-create-new-member-page'
+export * from './pages/sandbox-settings-user-management-page'
+export * from './pages/sandbox-settings-create-new-user-page'
 
 export * from './layouts/SandboxRoot'
 export * from './layouts/SandboxSettings'

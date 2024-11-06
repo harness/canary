@@ -54,6 +54,7 @@ export const FormUserEditDialog: React.FC<FormEditDialogProps> = ({
   // Form edit submit handler
   const onSubmit: SubmitHandler<MemberFields> = data => {
     onSave()
+    console.log(data)
     resetNewMemberForm(data) // Reset to the current values
   }
 

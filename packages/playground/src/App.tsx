@@ -322,7 +322,7 @@ const router = createBrowserRouter([
             ]
           },
           {
-            path: 'user-mamagement',
+            path: 'user-management',
             element: <SandboxSettingsProjectPage />,
             children: [
               {

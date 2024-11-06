@@ -1,7 +1,6 @@
 import React, { useState, useReducer } from 'react'
 import { Spacer, Text, ListActions, SearchBox, Button } from '@harnessio/canary'
 import { SandboxLayout, SkeletonList, NoData } from '..'
-import { mockUsersData } from '../data/mockUsersData'
 import { UsersList } from '../components/user-management/users-list'
 import { PlaygroundListSettings } from '../settings/list-settings'
 import { PaginationComponent } from '../components/pagination'
@@ -20,7 +19,7 @@ import { UsersProps } from '../components/user-management/interfaces'
 const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 
-function SandboxSettingsUserManagementPage() {
+function SandboxSettingsUserManagementPage({ userData, handleUpdateUser }: { userData: UsersProps[] | null }) {
   const navigate = useNavigate()
   const [loadState, setLoadState] = useState('data-loaded')
   const [dialogState, dispatch] = useReducer(dialogStateReducer, initialDialogState)
@@ -49,7 +48,6 @@ function SandboxSettingsUserManagementPage() {
   // Handler for form submission
   const handleFormSave = () => {
     dispatch({ type: DialogActionType.START_SUBMITTING })
-
     setTimeout(() => {
       dispatch({ type: DialogActionType.SUBMIT_SUCCESS })
       setTimeout(() => {
@@ -84,7 +82,7 @@ function SandboxSettingsUserManagementPage() {
               onDelete={user => openDialog(DialogType.DELETE, user)}
               onRemoveAdmin={user => openDialog(DialogType.REMOVE_ADMIN, user)}
               onResetPassword={user => openDialog(DialogType.RESET_PASSWORD, user)}
-              users={mockUsersData as UsersProps[]}
+              users={userData as UsersProps[]}
             />
             {/* Delete Dialog */}
             {dialogState.isDialogDeleteOpen && (
@@ -110,6 +108,7 @@ function SandboxSettingsUserManagementPage() {
                   closeDialog(DialogType.EDIT)
                   dispatch({ type: DialogActionType.RESET_SUBMIT })
                 }}
+                handleUpdateUser={handleUpdateUser}
               />
             )}
             {dialogState.isDialogRemoveAdminOpen && (

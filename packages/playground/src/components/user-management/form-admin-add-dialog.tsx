@@ -8,7 +8,6 @@ import {
   AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel,
   Button,
   Icon,
   Badge,
@@ -43,7 +42,11 @@ export const FormAddAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
         </AlertDialogHeader>
         <Spacer size={3} />
         <AlertDialogFooter>
-          {!isRemoving && !removeSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
+          {!isRemoving && !removeSuccess && (
+            <Button variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+          )}
           {removeSuccess ? (
             <Button size="default" theme="success" className="self-start pointer-events-none flex gap-2">
               Admin added

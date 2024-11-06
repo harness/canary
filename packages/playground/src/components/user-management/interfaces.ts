@@ -79,11 +79,13 @@ export interface FormRemoveUserDialogProps {
   onRemove: () => void
   isRemoving: boolean
   removeSuccess: boolean
+  updateUserAdmin: (uid: string, admin: boolean) => void
 }
 
 export interface FormResetPasswordsDialogProps {
   user: UsersProps | null
   onClose: () => void
+  handleUpdatePassword: (userId: string, password: string) => void
 }
 
 export interface FormDeleterDialogProps {
@@ -92,13 +94,14 @@ export interface FormDeleterDialogProps {
   onDelete: () => void
   isDeleting: boolean
   deleteSuccess: boolean
+  handleDeleteUser: (userUid: string) => void
 }
 
 export interface FormEditDialogProps {
   isSubmitting: boolean
   submitted: boolean
-  user: { uid: string; email: string; display_name?: string }
+  user: { uid?: string; email?: string; display_name?: string }
   onSave: () => void
   onClose: () => void
-  handleUpdateUser: (data: any) => void
+  handleUpdateUser: (data: { email: string; displayName: string; userID: string }) => void
 }

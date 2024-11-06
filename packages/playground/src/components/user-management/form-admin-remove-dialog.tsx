@@ -43,7 +43,11 @@ export const FormRemoveAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
         </AlertDialogHeader>
         <Spacer size={3} />
         <AlertDialogFooter>
-          {!isRemoving && !removeSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
+          {!isRemoving && !removeSuccess && (
+            <Button variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+          )}
           {removeSuccess ? (
             <Button size="default" theme="success" className="self-start pointer-events-none flex gap-2">
               Admin removed
@@ -55,7 +59,7 @@ export const FormRemoveAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
               theme="error"
               className="self-start"
               onClick={() => {
-                updateUserAdmin(user?.uid, false)
+                updateUserAdmin(user?.uid!, false)
                 onRemove()
               }}
               disabled={isRemoving || removeSuccess}>

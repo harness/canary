@@ -131,9 +131,9 @@ export const FormUserEditDialog: React.FC<FormEditDialogProps> = ({
                 <ButtonGroup.Root>
                   {!submitted ? (
                     <>
-                      <AlertDialogCancel onClick={onClose} disabled={!isValid || isSubmitting}>
+                      <Button variant="outline" onClick={onClose} disabled={!isValid || isSubmitting}>
                         Cancel
-                      </AlertDialogCancel>
+                      </Button>
                       <Button type="submit" theme="primary" disabled={!isValid || isSubmitting || !isDirty}>
                         {isSubmitting ? 'Saving...' : 'Save'}
                       </Button>

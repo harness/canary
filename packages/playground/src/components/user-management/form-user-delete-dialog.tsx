@@ -44,7 +44,11 @@ export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
         </AlertDialogHeader>
         <Spacer size={3} />
         <AlertDialogFooter>
-          {!isDeleting && !deleteSuccess && <AlertDialogCancel onClick={onClose}>Cancel</AlertDialogCancel>}
+          {!isDeleting && !deleteSuccess && (
+            <Button variant="outline" onClick={onClose}>
+              Cancel
+            </Button>
+          )}
           {deleteSuccess ? (
             <Button size="default" theme="success" className="self-start pointer-events-none flex gap-2">
               Users deleted

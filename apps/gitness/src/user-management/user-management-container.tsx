@@ -68,8 +68,7 @@ export const UserManagementPageContainer = () => {
     }
   )
 
-  const handleUpdateUser = (data: any) => {
-    console.log(data)
+  const handleUpdateUser = (data: { email: string; displayName: string; userID: string }) => {
     updateUser({
       user_uid: data.userID,
       body: {
@@ -94,7 +93,7 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handleUpdatePassword = (userId, password) => {
+  const handleUpdatePassword = (userId: string, password: string) => {
     updateUser({
       user_uid: userId,
       body: {

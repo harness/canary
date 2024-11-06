@@ -51,7 +51,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
             <DropdownMenuItem
               className="cursor-pointer"
               onSelect={() => {
-                user.admin ? onRemoveAdmin(user) : onSetAdmin(user)
+                return user.admin ? onRemoveAdmin(user) : onSetAdmin(user)
               }}>
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="trash" className="mr-2" />
@@ -118,7 +118,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
                   <div className="flex items-center gap-4">
                     <Avatar size="10">
                       {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
-                      <AvatarFallback className="text-xs p-1 text-center">{getInitials(user.uid, 2)}</AvatarFallback>
+                      <AvatarFallback className="text-xs p-1 text-center">{getInitials(user.uid!, 2)}</AvatarFallback>
                     </Avatar>
                     <Text size={2} weight="medium" wrap="nowrap" truncate className="text-primary">
                       {user.display_name}
@@ -155,7 +155,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
                 <TableCell className="content-center my-6">
                   <div className="flex gap-1.5 items-center justify-end">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                      {timeAgo(user.created)}
+                      {timeAgo(user.created!)}
                     </Text>
                   </div>
                 </TableCell>

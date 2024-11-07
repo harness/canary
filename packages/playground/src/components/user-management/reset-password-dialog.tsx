@@ -15,7 +15,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { CopyButton } from '../copy-button'
 
-export const ResetPasswordDialog: React.FC = ({ onClose, password }) => {
+export const ResetPasswordDialog = ({ onClose, password }: { onClose: () => void; password: string }) => {
   const navigate = useNavigate()
   return (
     <AlertDialog open={true} onOpenChange={onClose}>

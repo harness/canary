@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -6,6 +6,7 @@ import { Button, ButtonGroup, Input, Spacer, Text, Icon } from '@harnessio/canar
 import { SandboxLayout, FormFieldSet } from '..'
 import { MessageTheme } from '../components/form-field-set'
 import { InfoCircle } from '@harnessio/icons-noir'
+import { useNavigate } from 'react-router-dom'
 
 const newUserSchema = z.object({
   uid: z.string().min(1, { message: 'Please provide a user ID' }),
@@ -13,14 +14,21 @@ const newUserSchema = z.object({
   display_name: z.string().min(1, { message: 'Please provide a display name' })
 })
 
-type NewUserFields = z.infer<typeof newUserSchema>
+export type NewUserFields = z.infer<typeof newUserSchema>
 
-function SandboxSettingsCreateNewUserPage({ handleCreateUser }: { handleCreateUser: (data: any) => void }) {
+function SandboxSettingsCreateNewUserPage({
+  handleCreateUser,
+  isLoading,
+  apiError
+}: {
+  handleCreateUser: (data: NewUserFields) => void
+  isLoading: boolean
+  apiError: string | null
+}) {
   // Project Settings form handling
   const {
     register,
     handleSubmit,
-    reset: resetNewUserForm,
     formState: { errors, isValid }
   } = useForm<NewUserFields>({
     resolver: zodResolver(newUserSchema),
@@ -32,16 +40,11 @@ function SandboxSettingsCreateNewUserPage({ handleCreateUser }: { handleCreateUs
     }
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
+  const navigate = useNavigate()
 
   // Form submit handler for project settings
   const onSubmit: SubmitHandler<NewUserFields> = data => {
     handleCreateUser(data)
-  }
-
-  const handleCancel = () => {
-    resetNewUserForm()
   }
 
   return (
@@ -99,24 +102,32 @@ function SandboxSettingsCreateNewUserPage({ handleCreateUser }: { handleCreateUs
               )}
             </FormFieldSet.ControlGroup>
 
+            {apiError && (
+              <>
+                <Text size={1} className="text-destructive">
+                  {apiError?.toString()}
+                </Text>
+              </>
+            )}
+
             {/* SAVE BUTTON */}
             <FormFieldSet.ControlGroup type="button">
               <ButtonGroup.Root>
-                {!submitted ? (
-                  <>
-                    <Button size="sm" type="submit" disabled={!isValid || isSubmitting}>
-                      {isSubmitting ? 'Inviting...' : 'Invite New User'}
-                    </Button>
-                    <Button size="sm" variant="outline" type="button" onClick={handleCancel} disabled={isSubmitting}>
-                      Cancel
-                    </Button>
-                  </>
-                ) : (
-                  <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                    Saved&nbsp;&nbsp;
-                    <Icon name="tick" size={14} />
+                <>
+                  <Button size="sm" type="submit" disabled={!isValid || isLoading}>
+                    {isLoading ? 'Inviting...' : 'Invite New User'}
                   </Button>
-                )}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    type="button"
+                    onClick={() => {
+                      navigate('../users')
+                    }}
+                    disabled={isLoading}>
+                    Cancel
+                  </Button>
+                </>
               </ButtonGroup.Root>
             </FormFieldSet.ControlGroup>
           </FormFieldSet.Root>

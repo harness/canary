@@ -4,7 +4,7 @@ import { FormFieldSet, MessageTheme } from '../../index'
 import { WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum, TriggerEventsEnum } from './types'
 
 export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => (
-  <StackedList.Root className="border-none">
+  <StackedList.Root className="border-none bg-tertiary/2" borderBackground>
     <StackedList.Item disableHover isHeader>
       <StackedList.Field
         title="Enable the webhook"

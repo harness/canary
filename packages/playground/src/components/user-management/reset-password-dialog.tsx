@@ -14,10 +14,18 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { CopyButton } from '../copy-button'
 
-export const ResetPasswordDialog = ({ onClose, password }: { onClose: () => void; password: string }) => {
+export const ResetPasswordDialog = ({
+  isOpen,
+  onClose,
+  password
+}: {
+  isOpen: boolean
+  onClose: () => void
+  password: string
+}) => {
   const navigate = useNavigate()
   return (
-    <AlertDialog open={true} onOpenChange={onClose}>
+    <AlertDialog open={isOpen} onOpenChange={onClose}>
       <AlertDialogTrigger asChild></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

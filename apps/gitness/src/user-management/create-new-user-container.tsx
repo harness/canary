@@ -36,7 +36,11 @@ export const CreateNewUserContainer = () => {
         isLoading={creatingUser}
         apiError={createUserError?.message || null}
       />
-      {openPasswordDialog && <ResetPasswordDialog onClose={() => setOpenPasswordDialog(false)} password={password} />}
+      <ResetPasswordDialog
+        isOpen={openPasswordDialog}
+        onClose={() => setOpenPasswordDialog(false)}
+        password={password}
+      />
     </>
   )
 }

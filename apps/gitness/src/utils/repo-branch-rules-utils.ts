@@ -9,7 +9,8 @@ import {
   EnumRuleState,
   OpenapiRuleDefinition,
   RuleAddRequestBody,
-  RuleGetOkResponse
+  RuleGetOkResponse,
+  OpenapiRule
 } from '@harnessio/code-service-client'
 
 const ruleIds = [
@@ -147,4 +148,17 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
   }
 
   return transformed
+}
+
+export const getTotalRulesApplied = (obj: OpenapiRule) => {
+  let totalRules = 0
+  const transformRules = transformDataFromApi(obj)['rules']
+
+  for (const rule of transformRules) {
+    if (rule.checked === true) {
+      totalRules++
+    }
+  }
+
+  return totalRules
 }

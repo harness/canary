@@ -164,7 +164,7 @@ function SandboxSettingsUserManagementPage({
   }
 
   const handleInviteClick = () => {
-    navigate('../create-new-user')
+    navigate('../users/create')
   }
 
   return (

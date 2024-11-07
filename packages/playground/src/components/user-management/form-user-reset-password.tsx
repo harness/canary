@@ -11,7 +11,7 @@ import {
   Button,
   Badge,
   Text,
-  Icon
+  Input
 } from '@harnessio/canary'
 import { FormResetPasswordsDialogProps } from './interfaces'
 import { CopyButton } from '../copy-button'
@@ -46,24 +46,20 @@ export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = 
             </AlertDialogTitle>
           )}
           <AlertDialogDescription>
-            {isConfirm
-              ? `Your password has been generated. Please make sure to copy and store your password somewhere safe, you won't be able to see it again.`
-              : `This will give you a new password to support "${user?.display_name}" (${user?.uid}) to reset the current
-            password.`}
-            {isConfirm && (
-              <div className="grid grid-cols-10 gap-3 items-center mt-7">
-                <div className="col-span-9 border-2 py-1 px-2 grid grid-cols-6 items-center rounded-md">
-                  <Text size={2} weight="medium" className="text-muted-foreground col-span-5">
-                    {password}
-                  </Text>
-                  <CopyButton name={password} className="col-span-1 justify-end" />
-                </div>
-                <Icon name="success" className="items-center col-span-1" />
-              </div>
+            {isConfirm ? (
+              <Text as="div" color="tertiaryBackground" className="mb-4">
+                Your password has been generated. Please make sure to copy and store your password somewhere safe, you
+                won't be able to see it again.
+              </Text>
+            ) : (
+              <Text as="div" color="tertiaryBackground" className="mb-4">
+                This will give you a new password to support {user?.display_name} ({user?.uid}) to reset the current
+                password.
+              </Text>
             )}
+            {isConfirm && <Input id="identifier" value={password} readOnly right={<CopyButton name={password} />} />}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <Spacer size={3} />
         <AlertDialogFooter>
           <Button variant="outline" onClick={onClose}>
             {isConfirm ? `Close` : `Cancel`}

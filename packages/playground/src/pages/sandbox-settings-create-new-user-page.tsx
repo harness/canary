@@ -6,18 +6,16 @@ import { Button, ButtonGroup, Input, Spacer, Text, Icon } from '@harnessio/canar
 import { SandboxLayout, FormFieldSet } from '..'
 import { MessageTheme } from '../components/form-field-set'
 import { InfoCircle } from '@harnessio/icons-noir'
-import { useNavigate } from 'react-router-dom'
 
 const newUserSchema = z.object({
-  userID: z.string().min(1, { message: 'Please provide a user ID' }),
+  uid: z.string().min(1, { message: 'Please provide a user ID' }),
   email: z.string().email({ message: 'Please enter a valid email address' }),
-  displayName: z.string().optional()
+  display_name: z.string().min(1, { message: 'Please provide a display name' })
 })
 
 type NewUserFields = z.infer<typeof newUserSchema>
 
-function SandboxSettingsCreateNewUserPage() {
-  const navigate = useNavigate()
+function SandboxSettingsCreateNewUserPage({ handleCreateUser }: { handleCreateUser: (data: any) => void }) {
   // Project Settings form handling
   const {
     register,
@@ -28,9 +26,9 @@ function SandboxSettingsCreateNewUserPage() {
     resolver: zodResolver(newUserSchema),
     mode: 'onChange',
     defaultValues: {
-      userID: '',
+      uid: '',
       email: '',
-      displayName: ''
+      display_name: ''
     }
   })
 
@@ -39,20 +37,11 @@ function SandboxSettingsCreateNewUserPage() {
 
   // Form submit handler for project settings
   const onSubmit: SubmitHandler<NewUserFields> = data => {
-    setIsSubmitting(true)
-    console.log(data)
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setSubmitted(true)
-      resetNewUserForm(data) // Reset to the current values
-      setTimeout(() => setSubmitted(false), 2000)
-      navigate('../users')
-    }, 2000)
+    handleCreateUser(data)
   }
 
   const handleCancel = () => {
     resetNewUserForm()
-    navigate('../users')
   }
 
   return (
@@ -60,14 +49,14 @@ function SandboxSettingsCreateNewUserPage() {
       <SandboxLayout.Content maxWidth="2xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
-          Add a new User
+          Add a new user
         </Text>
         <Spacer size={6} />
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormFieldSet.Root>
             {/* USER ID */}
-            <FormFieldSet.ControlGroup>
-              <div className="flex items-center">
+            <FormFieldSet.ControlGroup className="gap-0">
+              <span className="flex items-center">
                 <FormFieldSet.Label htmlFor="memberName" required>
                   User ID
                 </FormFieldSet.Label>
@@ -75,13 +64,12 @@ function SandboxSettingsCreateNewUserPage() {
                 <Text size={1} className="text-tertiary-background ml-1">
                   User ID cannot be changed once created
                 </Text>
-              </div>
+              </span>
+              <Spacer size={2} />
 
-              <Input id="memberName" {...register('userID')} placeholder="Enter user name" />
-              {errors.userID && (
-                <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                  {errors.userID.message?.toString()}
-                </FormFieldSet.Message>
+              <Input id="memberName" {...register('uid')} placeholder="Enter user name" />
+              {errors.uid && (
+                <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors.uid.message?.toString()}</FormFieldSet.Message>
               )}
             </FormFieldSet.ControlGroup>
 
@@ -100,11 +88,13 @@ function SandboxSettingsCreateNewUserPage() {
 
             {/* ROLE */}
             <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label htmlFor="displayName">Display Name</FormFieldSet.Label>
-              <Input id="displayName" {...register('displayName')} placeholder="Enter display name" />
-              {errors.displayName && (
+              <FormFieldSet.Label htmlFor="displayName" required>
+                Display Name
+              </FormFieldSet.Label>
+              <Input id="displayName" {...register('display_name')} placeholder="Enter display name" />
+              {errors.display_name && (
                 <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                  {errors.displayName.message?.toString()}
+                  {errors.display_name.message?.toString()}
                 </FormFieldSet.Message>
               )}
             </FormFieldSet.ControlGroup>
@@ -117,12 +107,7 @@ function SandboxSettingsCreateNewUserPage() {
                     <Button size="sm" type="submit" disabled={!isValid || isSubmitting}>
                       {isSubmitting ? 'Inviting...' : 'Invite New User'}
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      type="button"
-                      onClick={handleCancel}
-                      disabled={!isValid || isSubmitting}>
+                    <Button size="sm" variant="outline" type="button" onClick={handleCancel} disabled={isSubmitting}>
                       Cancel
                     </Button>
                   </>

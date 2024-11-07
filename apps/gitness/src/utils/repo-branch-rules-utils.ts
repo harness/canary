@@ -149,26 +149,26 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {
-        create_forbidden: rulesMap['create_forbidden']?.checked || false,
-        delete_forbidden: rulesMap['delete_forbidden']?.checked || false,
-        update_forbidden: rulesMap['update_forbidden']?.checked || false
+        create_forbidden: rulesMap[BranchRuleId.BLOCK_BRANCH_CREATION]?.checked || false,
+        delete_forbidden: rulesMap[BranchRuleId.BLOCK_BRANCH_DELETION]?.checked || false,
+        update_forbidden: rulesMap[BranchRuleId.REQUIRE_PULL_REQUEST]?.checked || false
       },
       pullreq: {
         approvals: {
           require_code_owners: true,
-          require_latest_commit: rulesMap['require_latest_commit']?.checked || false,
-          require_no_change_request: rulesMap['require_no_change_request']?.checked || false,
-          require_minimum_count: parseInt(rulesMap['require_minimum_count'].input) || 0
+          require_latest_commit: rulesMap[BranchRuleId.REQUIRE_LATEST_COMMIT]?.checked || false,
+          require_no_change_request: rulesMap[BranchRuleId.REQUIRE_NO_CHANGE_REQUEST]?.checked || false,
+          require_minimum_count: parseInt(rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].input) || 0
         },
         comments: {
-          require_resolve_all: rulesMap['comments']?.checked || false
+          require_resolve_all: rulesMap[BranchRuleId.COMMENTS]?.checked || false
         },
         merge: {
-          strategies_allowed: (rulesMap['merge']?.submenu as MergeStrategy[]) || [],
-          delete_branch: rulesMap['delete_branch']?.checked || false
+          strategies_allowed: (rulesMap[BranchRuleId.MERGE]?.submenu as MergeStrategy[]) || [],
+          delete_branch: rulesMap[BranchRuleId.DELETE_BRANCH]?.checked || false
         },
         status_checks: {
-          require_identifiers: rulesMap['status_checks']?.selectOptions || []
+          require_identifiers: rulesMap[BranchRuleId.STATUS_CHECKS]?.selectOptions || []
         }
       }
     }

@@ -355,8 +355,8 @@ const router = createBrowserRouter([
       },
 
       {
-        path: 'create-new-user',
-        element: <SandboxSettingsCreateNewUserPage />
+        path: 'users/create',
+        element: <SandboxSettingsCreateNewUserPage handleCreateUser={noop} isLoading={false} apiError={null} />
       }
     ]
   },

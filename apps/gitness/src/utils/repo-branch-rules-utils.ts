@@ -158,7 +158,9 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
           require_code_owners: true,
           require_latest_commit: rulesMap[BranchRuleId.REQUIRE_LATEST_COMMIT]?.checked || false,
           require_no_change_request: rulesMap[BranchRuleId.REQUIRE_NO_CHANGE_REQUEST]?.checked || false,
-          require_minimum_count: parseInt(rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].input) || 0
+          require_minimum_count: rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].checked
+            ? parseInt(rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].input) || 0
+            : 0
         },
         comments: {
           require_resolve_all: rulesMap[BranchRuleId.COMMENTS]?.checked || false

@@ -368,7 +368,6 @@ export const BranchSettingsRuleListField: React.FC<{
               <Input
                 id="name"
                 placeholder="Enter minimum number of reviewers"
-                autoFocus
                 value={rules[index].input || ''}
                 onChange={e => handleInputChange(rule.id, e.target.value)}
               />

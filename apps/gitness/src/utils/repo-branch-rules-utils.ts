@@ -80,7 +80,8 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
       id: rule,
       checked,
       submenu,
-      selectOptions
+      selectOptions,
+      input
     })
   }
 

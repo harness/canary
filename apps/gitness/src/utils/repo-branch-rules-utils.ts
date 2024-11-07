@@ -119,8 +119,6 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     return acc
   }, {})
 
-  console.log('rulesMap', rulesMap)
-
   const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
     (acc, currentPattern) => {
       if (currentPattern.option === PatternsButtonType.INCLUDE) {

@@ -8,14 +8,15 @@ import {
 } from '@harnessio/code-service-client'
 import { parseAsInteger, useQueryState } from 'nuqs'
 import { PageResponseHeader } from '../types'
+import { useQueryClient } from '@tanstack/react-query'
 
 export const UserManagementPageContainer = () => {
   const { query: _currentQuery, sort } = useCommonFilter<AdminListUsersQueryQueryParams['sort']>()
   // const [query, _] = useQueryState('query', { defaultValue: currentQuery || '' })
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const changePage = (pageNum: number) => setPage(pageNum)
-
-  const { data: { body: userData, headers } = {}, refetch: refetchUsers } = useAdminListUsersQuery({
+  const queryClient = useQueryClient()
+  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
     queryParams: {
       page: page,
       limit: 30,
@@ -60,14 +61,14 @@ export const UserManagementPageContainer = () => {
         display_name: data.displayName
       }
     })
-    refetchUsers()
+    queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
   }
 
   const handleDeleteUser = async (userUid: string) => {
     await deleteUser({
       user_uid: userUid
     })
-    refetchUsers()
+    queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
   }
 
   const handleUpdateUserAdmin = async (userUid: string, isAdmin: boolean) => {
@@ -77,7 +78,7 @@ export const UserManagementPageContainer = () => {
         admin: isAdmin
       }
     })
-    refetchUsers()
+    queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
   }
 
   const handleUpdatePassword = async (userId: string, password: string) => {
@@ -87,7 +88,7 @@ export const UserManagementPageContainer = () => {
         password: password
       }
     })
-    refetchUsers()
+    queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
   }
   return (
     <SandboxSettingsUserManagementPage

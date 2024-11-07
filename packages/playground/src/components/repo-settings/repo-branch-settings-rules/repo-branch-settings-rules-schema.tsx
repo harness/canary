@@ -20,7 +20,8 @@ export const repoBranchSettingsFormSchema = z.object({
       id: z.string(),
       checked: z.boolean(),
       submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
-      selectOptions: z.array(z.string())
+      selectOptions: z.array(z.string()),
+      input: z.string()
     })
   )
 })

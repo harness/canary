@@ -284,6 +284,10 @@ export const BranchSettingsRuleListField: React.FC<{
     dispatch({ type: ActionType.SET_SELECT_OPTION, ruleId, checkName })
   }
 
+  const handleInputChange = (ruleId: string, value: string) => {
+    dispatch({ type: ActionType.SET_INPUT_VALUE, ruleId, value })
+  }
+
   return (
     <FormFieldSet.ControlGroup className="max-w-sm">
       <FormFieldSet.Label>Rules: select all that apply</FormFieldSet.Label>
@@ -356,6 +360,18 @@ export const BranchSettingsRuleListField: React.FC<{
                   })}
                 </DropdownMenuContent>
               </DropdownMenu>
+            </div>
+          )}
+
+          {rule.hasInput && rules[index].checked && (
+            <div className="pl-8 mt-2">
+              <Input
+                id="name"
+                placeholder="Enter minimum number of reviewers"
+                autoFocus
+                value={rules[index].input || ''}
+                onChange={e => handleInputChange(rule.id, e.target.value)}
+              />
             </div>
           )}
         </div>

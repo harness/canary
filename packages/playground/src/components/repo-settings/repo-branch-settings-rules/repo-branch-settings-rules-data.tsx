@@ -36,5 +36,26 @@ export const branchRules = [
     id: BranchRuleId.DELETE_BRANCH,
     label: 'Auto delete branch on merge',
     description: 'Automatically delete the source branch of a pull request after it is merged'
+  },
+  {
+    id: BranchRuleId.BLOCK_BRANCH_CREATION,
+    label: 'Block branch creation',
+    description: 'Only allow users with bypass permission to create matching branches'
+  },
+  {
+    id: BranchRuleId.BLOCK_BRANCH_DELETION,
+    label: 'Block branch deletion',
+    description: 'Only allow users with bypass permission to delete matching branches'
+  },
+  {
+    id: BranchRuleId.REQUIRE_PULL_REQUEST,
+    label: 'Require pull request',
+    description: 'Do not allow any changes to matching branches without a pull request'
+  },
+  {
+    id: BranchRuleId.REQUIRE_CODE_REVIEW,
+    label: 'Require a minimum number of reviewers',
+    description: 'Require approval on pull requests from a minimum number of reviewers',
+    hasInput: true
   }
 ]

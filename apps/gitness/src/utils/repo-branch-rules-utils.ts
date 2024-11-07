@@ -19,7 +19,11 @@ const ruleIds = [
   BranchRuleId.COMMENTS,
   BranchRuleId.STATUS_CHECKS,
   BranchRuleId.MERGE,
-  BranchRuleId.DELETE_BRANCH
+  BranchRuleId.DELETE_BRANCH,
+  BranchRuleId.BLOCK_BRANCH_CREATION,
+  BranchRuleId.BLOCK_BRANCH_DELETION,
+  BranchRuleId.REQUIRE_PULL_REQUEST,
+  BranchRuleId.REQUIRE_CODE_REVIEW
 ]
 
 // Util to transform API response into expected-form format for branch-rules-edit
@@ -31,6 +35,7 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
     let checked = false
     let submenu: MergeStrategy[] = []
     let selectOptions: string[] = []
+    let input: string = ''
     const definition = data?.definition as OpenapiRuleDefinition
 
     switch (rule) {
@@ -53,6 +58,19 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
         break
       case BranchRuleId.DELETE_BRANCH:
         checked = definition?.pullreq?.merge?.delete_branch || false
+        break
+      case BranchRuleId.BLOCK_BRANCH_CREATION:
+        checked = definition?.lifecycle?.create_forbidden || false
+        break
+      case BranchRuleId.BLOCK_BRANCH_DELETION:
+        checked = definition?.lifecycle?.delete_forbidden || false
+        break
+      case BranchRuleId.REQUIRE_PULL_REQUEST:
+        checked = definition?.lifecycle?.update_forbidden || false
+        break
+      case BranchRuleId.REQUIRE_CODE_REVIEW:
+        checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
+        input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
         break
       default:
         continue
@@ -100,6 +118,8 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     return acc
   }, {})
 
+  console.log('rulesMap', rulesMap)
+
   const { include, exclude } = formOutput.patterns.reduce<{ include: string[]; exclude: string[] }>(
     (acc, currentPattern) => {
       if (currentPattern.option === PatternsButtonType.INCLUDE) {
@@ -127,11 +147,17 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
         user_ids: formOutput.bypass,
         repo_owners: formOutput.repo_owners || false
       },
+      lifecycle: {
+        create_forbidden: rulesMap['create_forbidden']?.checked || false,
+        delete_forbidden: rulesMap['delete_forbidden']?.checked || false,
+        update_forbidden: rulesMap['update_forbidden']?.checked || false
+      },
       pullreq: {
         approvals: {
           require_code_owners: true,
           require_latest_commit: rulesMap['require_latest_commit']?.checked || false,
-          require_no_change_request: rulesMap['require_no_change_request']?.checked || false
+          require_no_change_request: rulesMap['require_no_change_request']?.checked || false,
+          require_minimum_count: parseInt(rulesMap['require_minimum_count'].input) || 0
         },
         comments: {
           require_resolve_all: rulesMap['comments']?.checked || false

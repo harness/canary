@@ -38,6 +38,9 @@ export const branchSettingsReducer = (state: Rule[], action: Action): Rule[] => 
           : rule
       )
 
+    case ActionType.SET_INPUT_VALUE:
+      return state.map(rule => (rule.id === action.ruleId ? { ...rule, input: action.value } : rule))
+
     case ActionType.SET_INITIAL_RULES:
       return action.payload || []
 

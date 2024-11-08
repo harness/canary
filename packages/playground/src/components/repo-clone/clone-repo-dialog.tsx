@@ -10,10 +10,7 @@ export const CloneRepoDialog = () => {
       <PopoverTrigger asChild>
         <Button variant="default">Clone repository</Button>
       </PopoverTrigger>
-      <PopoverContent
-        className="min-w-[400px] max-w-[500px] bg-primary-background border-border"
-        side="bottom"
-        align="end">
+      <PopoverContent className="min-w-[400px] bg-primary-background border-border" side="bottom" align="end">
         <Text className="text-lg text-left mb-2">Git clone URL</Text>
         <Tabs variant="underline" value={currentTab} onValueChange={setCurrentTab} className="mb-2">
           <TabsList>

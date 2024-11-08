@@ -19,6 +19,7 @@ export * from './layouts/Floating1ColumnLayout'
 export * from './components/loaders/skeleton-list'
 export * from './layouts/RootLayout'
 export * from './components/repo-list'
+export * from './components/repo-clone/clone-repo-dialog'
 export { default as RepoLayout } from './layouts/RepoLayout'
 
 export * from './components/execution-list'

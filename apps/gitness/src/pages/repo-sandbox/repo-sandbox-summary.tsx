@@ -23,7 +23,8 @@ import {
   MarkdownViewer,
   Filter,
   useCommonFilter,
-  SandboxLayout
+  SandboxLayout,
+  CloneRepoDialog
 } from '@harnessio/playground'
 import {
   useListBranchesQuery,
@@ -212,7 +213,7 @@ export const RepoSandboxSummaryList: React.FC = () => {
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  <Button variant="default">Clone repository</Button>
+                  <CloneRepoDialog />
                 </ButtonGroup.Root>
               </ListActions.Right>
             </ListActions.Root>

@@ -104,7 +104,11 @@ function SandboxRepoSummaryPage() {
                       Add file&nbsp;&nbsp;
                       <Icon name="chevron-down" size={11} className="chevron-down" />
                     </Button>
-                    <CloneRepoDialog />
+                    <CloneRepoDialog
+                      sshUrl="ssh://git@localhost:3022/sample-proj/sample-repo.git"
+                      httpsUrl="http://localhost:3000/git/sample-proj/sample-repo.git"
+                      handleCreateToken={noop}
+                    />
                   </ButtonGroup.Root>
                 </ListActions.Right>
               </ListActions.Root>

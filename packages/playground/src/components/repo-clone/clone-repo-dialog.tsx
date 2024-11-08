@@ -2,7 +2,15 @@ import { CloneRepoForm } from './clone-repo-form'
 import { Tabs, TabsList, TabsTrigger, Popover, PopoverContent, PopoverTrigger, Button, Text } from '@harnessio/canary'
 import React, { useState } from 'react'
 
-export const CloneRepoDialog = () => {
+export const CloneRepoDialog = ({
+  httpsUrl,
+  sshUrl,
+  handleCreateToken
+}: {
+  sshUrl: string
+  httpsUrl: string
+  handleCreateToken: () => void
+}) => {
   const [currentTab, setCurrentTab] = useState('https')
 
   return (
@@ -23,9 +31,10 @@ export const CloneRepoDialog = () => {
           </TabsList>
         </Tabs>
         <CloneRepoForm
-          sshUrl="ssh://git@localhost:3022/pwproj/canary.git"
-          httpsUrl="http://localhost:3000/git/pwproj/canary.git"
+          sshUrl={sshUrl}
+          httpsUrl={httpsUrl}
           currentTab={currentTab}
+          handleCreateToken={handleCreateToken}
         />
       </PopoverContent>
     </Popover>

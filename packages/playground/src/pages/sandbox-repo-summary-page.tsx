@@ -63,7 +63,6 @@ const mockBranchList = [
 
 function SandboxRepoSummaryPage() {
   const [loadState, setLoadState] = useState('float')
-  const [isCloneDialogOpen, setIsCloneDialogOpen] = useState(false)
 
   return (
     <>

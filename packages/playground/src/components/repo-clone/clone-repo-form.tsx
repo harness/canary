@@ -18,7 +18,7 @@ export function CloneRepoForm({ httpsUrl, sshUrl, currentTab }: CloneRepoFormTyp
   const {
     register,
 
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<CloneRepoFormType>({
     resolver: zodResolver(cloneRepoFormSchema),
     mode: 'onChange',

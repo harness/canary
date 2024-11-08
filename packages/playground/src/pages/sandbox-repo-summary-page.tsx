@@ -17,6 +17,7 @@ import { BranchSelector } from '../components/branch-chooser'
 import { mockFiles } from '../data/mockSummaryFiiles'
 import { SandboxLayout } from '..'
 import { PlaygroundSandboxLayoutSettings } from '../settings/sandbox-settings'
+import { CloneRepoDialog } from '../components/repo-clone/clone-repo-dialog'
 
 const mockSummaryDetails: { id: string; name: string; count: number; iconName: IconProps['name'] }[] = [
   {
@@ -62,6 +63,7 @@ const mockBranchList = [
 
 function SandboxRepoSummaryPage() {
   const [loadState, setLoadState] = useState('float')
+  const [isCloneDialogOpen, setIsCloneDialogOpen] = useState(false)
 
   return (
     <>
@@ -103,7 +105,10 @@ function SandboxRepoSummaryPage() {
                       Add file&nbsp;&nbsp;
                       <Icon name="chevron-down" size={11} className="chevron-down" />
                     </Button>
-                    <Button variant="default">Clone repository</Button>
+                    {/* <Button variant="default" onClick={() => setIsCloneDialogOpen(true)}>
+                      Clone repository
+                    </Button> */}
+                    <CloneRepoDialog />
                   </ButtonGroup.Root>
                 </ListActions.Right>
               </ListActions.Root>
@@ -166,6 +171,8 @@ function SandboxRepoSummaryPage() {
           </SandboxLayout.Column>
         </SandboxLayout.Columns>
       </SandboxLayout.Main>
+      <CloneRepoDialog open={isCloneDialogOpen} onOpenChange={() => setIsCloneDialogOpen(false)} />
+
       <PlaygroundSandboxLayoutSettings loadState={loadState} setLoadState={setLoadState} />
     </>
   )

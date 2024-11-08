@@ -105,9 +105,6 @@ function SandboxRepoSummaryPage() {
                       Add file&nbsp;&nbsp;
                       <Icon name="chevron-down" size={11} className="chevron-down" />
                     </Button>
-                    {/* <Button variant="default" onClick={() => setIsCloneDialogOpen(true)}>
-                      Clone repository
-                    </Button> */}
                     <CloneRepoDialog />
                   </ButtonGroup.Root>
                 </ListActions.Right>
@@ -171,7 +168,6 @@ function SandboxRepoSummaryPage() {
           </SandboxLayout.Column>
         </SandboxLayout.Columns>
       </SandboxLayout.Main>
-      <CloneRepoDialog open={isCloneDialogOpen} onOpenChange={() => setIsCloneDialogOpen(false)} />
 
       <PlaygroundSandboxLayoutSettings loadState={loadState} setLoadState={setLoadState} />
     </>

@@ -2,15 +2,13 @@ import { CloneRepoForm } from './clone-repo-form'
 import { Tabs, TabsList, TabsTrigger, Popover, PopoverContent, PopoverTrigger, Button, Text } from '@harnessio/canary'
 import React, { useState } from 'react'
 
-export const CloneRepoDialog = ({
-  httpsUrl,
-  sshUrl,
-  handleCreateToken
-}: {
+export interface CloneRepoDialogProps {
   sshUrl: string
   httpsUrl: string
   handleCreateToken: () => void
-}) => {
+}
+
+export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({ httpsUrl, sshUrl, handleCreateToken }) => {
   const [currentTab, setCurrentTab] = useState('https')
 
   return (

@@ -14,15 +14,16 @@ const cloneRepoFormSchema = z.object({
 
 export type CloneRepoFormType = z.infer<typeof cloneRepoFormSchema>
 
-export function CloneRepoForm({
-  httpsUrl,
-  sshUrl,
-  currentTab,
-  handleCreateToken
-}: CloneRepoFormType & { currentTab: string; handleCreateToken: () => void }) {
+export interface CloneRepoFormProps {
+  httpsUrl: string
+  sshUrl: string
+  handleCreateToken: () => void
+  currentTab: string
+}
+
+export const CloneRepoForm: React.FC<CloneRepoFormProps> = ({ httpsUrl, sshUrl, currentTab, handleCreateToken }) => {
   const {
     register,
-
     formState: { errors }
   } = useForm<CloneRepoFormType>({
     resolver: zodResolver(cloneRepoFormSchema),

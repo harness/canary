@@ -3,7 +3,7 @@ import { parse } from 'yaml'
 import { omit } from 'lodash-es'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Spacer, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, useToast } from '@harnessio/canary'
+import { Spacer, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button } from '@harnessio/canary'
 import {
   IInputDefinition,
   RenderForm,
@@ -15,6 +15,7 @@ import {
 import {
   findPipeline,
   getContent,
+  GetContentErrorResponse,
   useCreateExecutionMutation,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
@@ -44,7 +45,6 @@ export default function RunPipelineForm({
   const [loading, setLoading] = useState(true)
   const [pipeline, setPipeline] = useState<Record<string, unknown>>({})
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
-  const { toast } = useToast()
 
   const repoRef = useGetRepoRef()
   const { data: branches, isLoading: listBranchesLoading } = useListBranchesQuery({
@@ -128,7 +128,7 @@ export default function RunPipelineForm({
   }
 
   if (errorMessage) {
-    return <>{errorMessage}</>
+    return <span className="text-red-600">{errorMessage}</span>
   }
 
   if (loading || listBranchesLoading) {

@@ -15,9 +15,9 @@ import {
 import {
   findPipeline,
   getContent,
-  GetContentErrorResponse,
   useCreateExecutionMutation,
-  useListBranchesQuery
+  useListBranchesQuery,
+  UsererrorError
 } from '@harnessio/code-service-client'
 import { PipelineParams } from '../pipeline-edit/context/PipelineStudioDataProvider'
 import { decodeGitContent, normalizeGitRef } from '../../utils/git-utils'
@@ -67,11 +67,10 @@ export default function RunPipelineForm({
             try {
               const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
               setPipeline(pipelineObj)
-            } catch (ex: any) {
-              // TODO: toast
+            } catch (ex: unknown) {
               console.error(ex)
               setLoading(false)
-              setErrorMessage(ex?.message || null)
+              setErrorMessage((ex as UsererrorError)?.message || null)
             }
             setLoading(false)
           })

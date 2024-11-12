@@ -54,36 +54,42 @@ export default function RunPipelineForm({
 
   useEffect(() => {
     findPipeline({ pipeline_identifier: pipelineId ?? pipelineIdFromParams, repo_ref: repoRef })
-      .then(({ body: pipelineData }) => {
-        getContent({
-          path: pipelineData?.config_path ?? '',
-          repo_ref: repoRef,
-          queryParams: {
-            git_ref: normalizeGitRef(branch ?? pipelineData?.default_branch) ?? '',
-            include_commit: true
-          }
-        })
-          .then(({ body: pipelineFileContent }) => {
-            try {
-              const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
-              setPipeline(pipelineObj)
-            } catch (ex: unknown) {
-              console.error(ex)
-              setLoading(false)
-              setErrorMessage((ex as UsererrorError)?.message || null)
+      .then(
+        ({ body: pipelineData }) => {
+          getContent({
+            path: pipelineData?.config_path ?? '',
+            repo_ref: repoRef,
+            queryParams: {
+              git_ref: normalizeGitRef(branch ?? pipelineData?.default_branch) ?? '',
+              include_commit: true
             }
-            setLoading(false)
           })
-          .catch(ex => {
-            console.error(ex)
-            setLoading(false)
-            setErrorMessage(ex.message)
-          })
-      })
-      .catch(ex => {
-        console.error(ex)
+            .then(
+              ({ body: pipelineFileContent }) => {
+                try {
+                  const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
+                  setPipeline(pipelineObj)
+                } catch (ex: unknown) {
+                  console.error(ex)
+                  setErrorMessage((ex as UsererrorError)?.message || null)
+                }
+              },
+              ex => {
+                console.error(ex)
+                setErrorMessage(ex.message)
+              }
+            )
+            .finally(() => {
+              setLoading(false)
+            })
+        },
+        ex => {
+          console.error(ex)
+          setErrorMessage(ex.message)
+        }
+      )
+      .finally(() => {
         setLoading(false)
-        setErrorMessage(ex.message)
       })
   }, [pipelineId, repoRef])
 
@@ -114,15 +120,19 @@ export default function RunPipelineForm({
       queryParams: { branch: branch },
       body: inputsValues
     })
-      .then(response => {
-        requestClose()
-        const executionId = response.body.number
-        navigate(`${toExecutions}/${executionId}`)
-      })
-      .catch(error => {
-        console.error(error)
+      .then(
+        response => {
+          requestClose()
+          const executionId = response.body.number
+          navigate(`${toExecutions}/${executionId}`)
+        },
+        ex => {
+          console.error(ex)
+          setErrorMessage(ex.message)
+        }
+      )
+      .finally(() => {
         setLoading(false)
-        setErrorMessage(error.message)
       })
   }
 

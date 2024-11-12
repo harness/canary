@@ -3,7 +3,7 @@ import { parse } from 'yaml'
 import { omit } from 'lodash-es'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Spacer, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button } from '@harnessio/canary'
+import { Spacer, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button, useToast } from '@harnessio/canary'
 import {
   IInputDefinition,
   RenderForm,
@@ -43,6 +43,8 @@ export default function RunPipelineForm({
 
   const [loading, setLoading] = useState(true)
   const [pipeline, setPipeline] = useState<Record<string, unknown>>({})
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+  const { toast } = useToast()
 
   const repoRef = useGetRepoRef()
   const { data: branches, isLoading: listBranchesLoading } = useListBranchesQuery({
@@ -60,21 +62,29 @@ export default function RunPipelineForm({
             git_ref: normalizeGitRef(branch ?? pipelineData?.default_branch) ?? '',
             include_commit: true
           }
-        }).then(({ body: pipelineFileContent }) => {
-          try {
-            const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
-            setPipeline(pipelineObj)
-          } catch (ex) {
-            // TODO: toast
-            console.error(ex)
-          }
-          setLoading(false)
         })
+          .then(({ body: pipelineFileContent }) => {
+            try {
+              const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
+              setPipeline(pipelineObj)
+            } catch (ex: any) {
+              // TODO: toast
+              console.error(ex)
+              setLoading(false)
+              setErrorMessage(ex?.message || null)
+            }
+            setLoading(false)
+          })
+          .catch(ex => {
+            console.error(ex)
+            setLoading(false)
+            setErrorMessage(ex.message)
+          })
       })
       .catch(ex => {
-        // TODO: toast
-        console.log(ex)
+        console.error(ex)
         setLoading(false)
+        setErrorMessage(ex.message)
       })
   }, [pipelineId, repoRef])
 
@@ -109,12 +119,16 @@ export default function RunPipelineForm({
         requestClose()
         const executionId = response.body.number
         navigate(`${toExecutions}/${executionId}`)
-        // TODO: toast here ?
       })
       .catch(error => {
         console.error(error)
-        // TODO: error toast here ?
+        setLoading(false)
+        setErrorMessage(error.message)
       })
+  }
+
+  if (errorMessage) {
+    return <>{errorMessage}</>
   }
 
   if (loading || listBranchesLoading) {

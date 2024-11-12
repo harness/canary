@@ -11,12 +11,12 @@ import {
 } from '@harnessio/canary'
 
 export interface BranchListProps {
-  name: string
+  name?: string
 }
 
 interface PageProps {
   name: string
-  branchList: BranchListProps[]
+  branchList?: BranchListProps[]
   size?: 'default' | 'sm'
   width?: 'auto' | 'sm' | 'md' | 'lg' | 'full'
   selectBranch: (branch: string) => void
@@ -57,7 +57,7 @@ export const BranchSelector = ({ ...props }: PageProps) => {
         {branchList &&
           branchList.map(branch => {
             return (
-              <DropdownMenuItem key={branch.name} onClick={() => selectBranch(branch.name)}>
+              <DropdownMenuItem key={branch.name} onClick={() => selectBranch(branch.name ?? '')}>
                 {branch.name}
               </DropdownMenuItem>
             )

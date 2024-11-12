@@ -21,9 +21,9 @@ export enum WebhookState {
 }
 
 interface Webhook {
-  id: number
-  enabled: boolean
-  display_name: string
+  id?: number
+  enabled?: boolean
+  display_name?: string
   description?: string
   // timestamp: string
 }
@@ -105,16 +105,16 @@ export const WebhooksList = ({ webhooks, LinkComponent, openDeleteWebhookDialog 
       {webhooks && webhooks.length > 0 && (
         <StackedList.Root>
           {webhooks.map((webhook, webhook_idx) => (
-            <LinkComponent to={`create/${webhook.id.toString()}`}>
+            <LinkComponent to={`create/${(webhook.id ?? '').toString()}`}>
               <StackedList.Item key={webhook.display_name} isLast={webhooks.length - 1 === webhook_idx}>
                 <StackedList.Field
-                  title={<Title title={webhook.display_name} enabled={webhook.enabled} />}
+                  title={<Title title={webhook.display_name ?? ''} enabled={webhook.enabled ?? false} />}
                   description={webhook.description}
                 />
                 <StackedList.Field
                   label
                   secondary
-                  title={<Action id={webhook.id} openDeleteWebhookDialog={openDeleteWebhookDialog} />}
+                  title={<Action id={webhook.id ?? 0} openDeleteWebhookDialog={openDeleteWebhookDialog} />}
                   right
                 />
               </StackedList.Item>

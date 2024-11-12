@@ -2,12 +2,12 @@ import { Badge, Icon, StackedList } from '@harnessio/canary'
 import React from 'react'
 
 export interface Repo {
-  id: string
-  name: string
+  id: number
+  name?: string
   private: boolean
-  forks: number
-  pulls: number
-  timestamp: string
+  forks?: number
+  pulls?: number
+  timestamp?: string
   description?: string
   stars?: number
 }
@@ -49,11 +49,11 @@ export function RepoList({ repos, LinkComponent }: PageProps) {
       {repos && repos.length > 0 && (
         <StackedList.Root>
           {repos.map((repo, repo_idx) => (
-            <LinkComponent to={repo.name}>
+            <LinkComponent to={repo.name ?? '/'}>
               <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
                 <StackedList.Field
                   description={repo.description}
-                  title={<Title title={repo.name} isPrivate={repo.private} />}
+                  title={<Title title={repo.name ?? ''} isPrivate={repo.private} />}
                 />
                 <StackedList.Field
                   title={
@@ -61,7 +61,7 @@ export function RepoList({ repos, LinkComponent }: PageProps) {
                       Updated <em>{repo.timestamp}</em>
                     </>
                   }
-                  description={<Stats stars={repo.stars} forks={repo.forks} pulls={repo.pulls} />}
+                  description={<Stats stars={repo.stars} forks={repo.forks ?? 0} pulls={repo.pulls ?? 0} />}
                   right
                   label
                   secondary

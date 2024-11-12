@@ -66,10 +66,10 @@ export default function RepoPipelinesPage() {
           name: item?.identifier,
           sha: item?.execution?.after,
           description: item?.execution?.message,
-          timestamp: item?.created,
+          timestamp: item?.created?.toString(),
           meter: [
             {
-              id: item?.execution?.number,
+              id: item?.execution?.number?.toString(),
               state: getMeterState(item?.execution?.status)
             }
           ]

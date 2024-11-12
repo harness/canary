@@ -4,7 +4,7 @@ import { usePipelineDataContext } from './PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from './PipelineStudioViewProvider'
 
 export const InteractionContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { setAddStepIntention, editStepIntention } = usePipelineDataContext()
+  const { setAddStepIntention, state } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [selectedNodePath, setSelectedNodePath] = useState<string | undefined>()
@@ -17,8 +17,8 @@ export const InteractionContextProvider: React.FC<{ children: React.ReactNode }>
   }, [])
 
   useEffect(() => {
-    setSelectedNodePath(editStepIntention?.path)
-  }, [editStepIntention])
+    setSelectedNodePath(state.editStepIntention?.path)
+  }, [state.editStepIntention])
 
   return (
     <InteractionContext.Provider value={{ handleAddClick, selectedNodePath, setSelectedNodePath }}>

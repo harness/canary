@@ -10,7 +10,7 @@ export enum MeterState {
 
 interface MeterRootProps {
   data?: {
-    id: string
+    id?: string
     state: MeterState
   }[]
   className?: string

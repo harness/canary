@@ -13,13 +13,13 @@ export enum MeterState {
 interface Pipeline {
   id: string
   status?: ExecutionState
-  name: string
+  name?: string
   sha?: string
   description?: string
   version?: string
   timestamp?: string
   meter?: {
-    id: string
+    id?: string
     state: MeterState
   }[]
 }
@@ -73,7 +73,7 @@ export const PipelineList = ({ pipelines, LinkComponent }: PageProps) => {
             <LinkComponent to={pipeline.id}>
               <StackedList.Item key={pipeline.name} isLast={pipelines.length - 1 === pipeline_idx}>
                 <StackedList.Field
-                  title={<Title status={pipeline.status} title={pipeline.name} />}
+                  title={<Title status={pipeline.status} title={pipeline.name || ''} />}
                   description={
                     <Description
                       sha={pipeline.sha || ''}

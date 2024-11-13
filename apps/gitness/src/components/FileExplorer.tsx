@@ -1,17 +1,7 @@
 import { useEffect } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 import { FileExplorer } from '@harnessio/views'
-<<<<<<< HEAD
 import { OpenapiContentInfo, getContent, OpenapiGetContentOutput } from '@harnessio/code-service-client'
-=======
-import {
-  OpenapiContentInfo,
-  getContent,
-  OpenapiGetContentOutput,
-  OpenapiDirContent
-} from '@harnessio/code-service-client'
-import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
->>>>>>> aaf9949b (debt: type checks)
 import { normalizeGitRef } from '../utils/git-utils'
 import { PathParams } from '../RouteDefinitions'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
@@ -76,7 +66,6 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     }
   }
 
-<<<<<<< HEAD
   const useFolderContents = (folderPath: string) => {
     return useQuery<OpenapiContentInfo[]>(
       ['folderContents', repoRef, selectedBranch, folderPath],
@@ -86,22 +75,6 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
         cacheTime: 900000
       }
     )
-=======
-  const updateFolderTree = (folderPath: string, newContents: OpenapiContentInfo[]) => {
-    const updateTreeRecursive = (entries: OpenapiContentInfo[], path: string): OpenapiContentInfo[] => {
-      return entries.map(entry => {
-        const currentPath = `${entry.path}`
-        if (currentPath === path && entry.type === 'dir') {
-          return { ...entry, entries: newContents }
-        } else if (entry.type === 'dir' && (entry as OpenapiDirContent).entries) {
-          return { ...entry, entries: updateTreeRecursive((entry as OpenapiDirContent).entries ?? [], path) }
-        }
-        return entry
-      })
-    }
-
-    setFolderTree(prevTree => updateTreeRecursive(prevTree, folderPath))
->>>>>>> aaf9949b (debt: type checks)
   }
 
   const renderEntries = (entries: OpenapiContentInfo[], parentPath: string = '') => {
@@ -179,7 +152,15 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     }
 
     return (
-      <FileExplorer.Root onValueChange={handleOpenFoldersChange} value={openFolderPaths}>
+      <FileExplorer.Root
+        onValueChange={value => {
+          if (typeof value === 'string') {
+            handleOpenFoldersChange([value])
+          } else {
+            handleOpenFoldersChange(value)
+          }
+        }}
+        value={openFolderPaths}>
         {contents && renderEntries(contents, folderPath)}
       </FileExplorer.Root>
     )
@@ -239,7 +220,15 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
   })
 
   return (
-    <FileExplorer.Root onValueChange={handleOpenFoldersChange} value={openFolderPaths}>
+    <FileExplorer.Root
+      onValueChange={value => {
+        if (typeof value === 'string') {
+          handleOpenFoldersChange([value])
+        } else {
+          handleOpenFoldersChange(value)
+        }
+      }}
+      value={openFolderPaths}>
       {isRootLoading ? (
         <div>Loading...</div>
       ) : rootError ? (

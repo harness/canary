@@ -13,7 +13,7 @@ export enum MergeStrategy {
 export type Rule = {
   id: string
   checked: boolean
-  submenu: MergeStrategy[]
+  submenu: ('merge' | 'rebase' | 'squash')[]
   selectOptions: string[]
   input: string
 }

@@ -64,6 +64,7 @@ export const CreateNewMemberPage = () => {
 
   const { data: { body: usersData } = {} } = useListPrincipalsQuery({
     // api call shows the array type but if we dont use the string type it will throw error
+    // @ts-expect-error
     queryParams: { page: 1, limit: 20, type: 'user' }
   })
 

@@ -97,16 +97,18 @@ export default function ReposListPage() {
     return (
       <RepoList
         LinkComponent={LinkComponent}
-        repos={repositories?.map((repo: RepoRepositoryOutput) => ({
-          id: repo?.id ? String(repo.id) : '',
-          name: repo?.identifier || '',
-          description: repo?.description,
-          private: !repo.is_public,
-          stars: 0,
-          forks: repo?.num_forks || 0,
-          pulls: repo?.num_pulls || 0,
-          timestamp: repo.updated ? timeAgoFromEpochTime(repo.updated) : ''
-        }))}
+        repos={repositories?.map((repo: RepoRepositoryOutput) => {
+          return {
+            id: repo.id || 0,
+            name: repo.identifier,
+            description: repo.description,
+            private: !repo.is_public,
+            stars: 0,
+            forks: repo.num_forks,
+            pulls: repo.num_pulls,
+            timestamp: (repo.updated && timeAgoFromEpochTime(repo.updated)) || ''
+          }
+        })}
       />
     )
   }

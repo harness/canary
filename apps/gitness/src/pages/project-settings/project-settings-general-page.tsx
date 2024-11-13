@@ -6,8 +6,6 @@ import {
   TypesSpace,
   useUpdateSpaceMutation,
   useDeleteSpaceMutation,
-  UpdateSpaceOkResponse,
-  DeleteSpaceOkResponse,
   UpdateSpaceErrorResponse,
   DeleteSpaceErrorResponse,
   UpdateSpaceRequestBody
@@ -37,7 +35,7 @@ export const ProjectSettingsGeneralPage = () => {
       space_ref: space?.path
     },
     {
-      onSuccess: (data: UpdateSpaceOkResponse) => {
+      onSuccess: ({ body: data }) => {
         if (space) {
           setUpdateError('')
           space.description = data?.description
@@ -81,7 +79,7 @@ export const ProjectSettingsGeneralPage = () => {
       space_ref: space?.path
     },
     {
-      onSuccess: (data: DeleteSpaceOkResponse) => {
+      onSuccess: ({ body: data }) => {
         if (data) {
           setDeleteError(null)
           window.location.href = '/'

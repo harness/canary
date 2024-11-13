@@ -20,6 +20,7 @@ import { GitCommitFormType } from '../types'
 import { FormFieldSet, Layout } from '@harnessio/views'
 import { UsererrorError } from '@harnessio/code-service-client'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
+import { UseFormReturn } from 'react-hook-form'
 
 interface GitCommitFormProps {
   onCancel: () => void
@@ -82,11 +83,13 @@ export function GitCommitForm({
   const form = useZodForm({
     schema: gitCommitSchema,
     defaultValues: {
-      message: '',
       commitToGitRef: CommitToGitRefOption.DIRECTLY,
+      message: '',
+      description: '',
+      newBranchName: '',
       fileName: isNew ? '' : undefined
     }
-  })
+  }) as UseFormReturn<GitCommitFormType>
 
   return (
     <Form className="space-y-6" form={form} onSubmit={onSubmit}>

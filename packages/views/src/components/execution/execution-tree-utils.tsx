@@ -11,9 +11,9 @@ interface Step {
 }
 
 interface Stage {
-  number: number
-  name: string
-  status: ExecutionState
+  number?: number
+  name?: string
+  status?: ExecutionState
   started: number
   stopped: number
   steps?: Step[]
@@ -62,7 +62,7 @@ export const parseStageStepId = (fullStepId: string): { stageId: string; stepId:
 // Recursively convert a step to TreeViewElement format
 const convertStepToTree = ({ stage, step }: { stage: Stage; step: Step }): TreeViewElement => {
   return {
-    id: getStepId(stage.number, step.number),
+    id: getStepId(stage.number ?? 0, step.number),
     isSelectable: true,
     name: step.name,
     status: mapStatus(step.status),
@@ -74,10 +74,10 @@ const convertStepToTree = ({ stage, step }: { stage: Stage; step: Step }): TreeV
 // Convert a stage to TreeViewElement format
 const convertStageToTree = (stage: Stage): TreeViewElement => {
   return {
-    id: getStageId(stage.number),
+    id: getStageId(stage.number ?? 0),
     isSelectable: true,
-    name: stage.name,
-    status: mapStatus(stage.status),
+    name: stage.name ?? '',
+    status: mapStatus(stage.status ?? ExecutionState.ERROR),
     duration: getFormattedDuration(stage.started, stage.stopped),
     children: stage.steps ? stage.steps.map(step => convertStepToTree({ stage, step })) : []
   }

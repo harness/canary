@@ -57,7 +57,7 @@ export const Home: React.FC<HomeProps> = ({
           </Text>
           <Spacer size={2} />
           <Text size={3} weight="normal" align="center" className="text-tertiary-background">
-            Welcome back
+            Welcome back, my dude!
           </Text>
           <Spacer size={6} />
           <Popover open={open} onOpenChange={setOpen}>

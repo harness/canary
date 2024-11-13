@@ -150,31 +150,18 @@ export const RepoSettingsGeneralPageContainer = () => {
   } = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
     {
-      onMutate: async newData => {
-        await queryClient.cancelQueries({ queryKey: ['findRepository', repoRef] })
-
-        const previousRepoData = repoData
-
-        // Optimistically update the description, mapping it to match repoData format
+      onSuccess: newData => {
+        setApiError(null)
         setRepoData(prevState => ({
           ...prevState,
           description: newData.body.description || ''
         }))
-
-        // Return the previous state for rollback if needed
-        return { previousRepoData }
       },
-      onError: (error: UpdateRepositoryErrorResponse, _data, context) => {
-        setRepoData(context.previousRepoData)
-
-        // Invalidate the query to refetch the data from the server
+      onError: (error: UpdateRepositoryErrorResponse) => {
         queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
 
         const message = error.message || 'Error updating repository description'
         setApiError({ type: ErrorTypes.DESCRIPTION_UPDATE, message })
-      },
-      onSuccess: () => {
-        setApiError(null)
       }
     }
   )
@@ -196,6 +183,9 @@ export const RepoSettingsGeneralPageContainer = () => {
         // Return a context object with the previous rules data
         return { previousRulesData }
       },
+      onSuccess: (data: RuleDeleteOkResponse) => {
+        setApiError(null)
+      }
       onError: (error: RuleDeleteErrorResponse, _variables, context) => {
         // Rollback to previous state
         if (context?.previousRulesData) {
@@ -208,9 +198,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         const message = error.message || 'Error deleting rule'
         setApiError({ type: ErrorTypes.DELETE_RULE, message })
       },
-      onSuccess: (_data: RuleDeleteOkResponse) => {
-        setApiError(null)
-      }
+      
     }
   )
 

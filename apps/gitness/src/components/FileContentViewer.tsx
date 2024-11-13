@@ -95,7 +95,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           copyContent={fileContent}
           showEdit
           onDownloadClick={() => downloadFile({ repoRef, resourcePath: fullResourcePath || '', gitRef: gitRef || '' })}
-          // onEditClick={() => navigate(`/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)}
+          onEditClick={() => navigate(`/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)}
+          onCopyClick={noop}
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>

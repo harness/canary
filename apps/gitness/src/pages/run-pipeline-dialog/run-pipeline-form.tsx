@@ -143,7 +143,7 @@ export default function RunPipelineForm({
 
   if (errorMessage) {
     return (
-      <Alert variant="destructive" className="m-5">
+      <Alert variant="destructive" className="my-8">
         <AlertDescription>{errorMessage}</AlertDescription>
       </Alert>
     )

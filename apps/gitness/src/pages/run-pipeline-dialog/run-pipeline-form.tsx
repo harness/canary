@@ -3,7 +3,16 @@ import { parse } from 'yaml'
 import { omit } from 'lodash-es'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 import { useNavigate, useParams } from 'react-router-dom'
-import { Spacer, DialogHeader, DialogTitle, DialogDescription, DialogFooter, Button } from '@harnessio/canary'
+import {
+  Spacer,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+  Button,
+  Alert,
+  AlertDescription
+} from '@harnessio/canary'
 import {
   IInputDefinition,
   RenderForm,
@@ -137,7 +146,11 @@ export default function RunPipelineForm({
   }
 
   if (errorMessage) {
-    return <span className="text-red-600">{errorMessage}</span>
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>{errorMessage}</AlertDescription>
+      </Alert>
+    )
   }
 
   if (loading || listBranchesLoading) {

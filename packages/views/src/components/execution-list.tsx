@@ -8,7 +8,7 @@ export interface Execution {
   status: ExecutionState
   name?: string
   sha?: string
-  description?: string
+  description?: string | React.ReactElement
   version?: string
   timestamp: string
   lastTimestamp: string
@@ -28,7 +28,15 @@ const Title = ({ status, title }: { status: ExecutionState; title: string }) => 
   )
 }
 
-const Description = ({ sha, description, version }: { sha: string; description: string; version: string }) => {
+const Description = ({
+  sha,
+  description,
+  version
+}: {
+  sha: string
+  description: string | React.ReactElement
+  version: string
+}) => {
   return (
     <div className="pl-[24px] inline-flex gap-2 items-center max-w-full overflow-hidden">
       {description && (

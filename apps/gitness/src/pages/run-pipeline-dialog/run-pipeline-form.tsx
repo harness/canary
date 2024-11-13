@@ -79,12 +79,10 @@ export default function RunPipelineForm({
                   const pipelineObj = parse(decodeGitContent(pipelineFileContent?.content?.data))
                   setPipeline(pipelineObj)
                 } catch (ex: unknown) {
-                  console.error(ex)
                   setErrorMessage((ex as UsererrorError)?.message || null)
                 }
               },
               ex => {
-                console.error(ex)
                 setErrorMessage(ex.message)
               }
             )
@@ -93,7 +91,6 @@ export default function RunPipelineForm({
             })
         },
         ex => {
-          console.error(ex)
           setErrorMessage(ex.message)
         }
       )
@@ -136,7 +133,6 @@ export default function RunPipelineForm({
           navigate(`${toExecutions}/${executionId}`)
         },
         ex => {
-          console.error(ex)
           setErrorMessage(ex.message)
         }
       )
@@ -147,7 +143,7 @@ export default function RunPipelineForm({
 
   if (errorMessage) {
     return (
-      <Alert variant="destructive">
+      <Alert variant="destructive" className="m-5">
         <AlertDescription>{errorMessage}</AlertDescription>
       </Alert>
     )

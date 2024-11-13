@@ -36,7 +36,6 @@ interface PipelineStudioDataContextProps {
   setYamlRevision: (yamlRevision: YamlRevision) => void
   setAddStepIntention: (props: { path: string; position: InlineActionArgsType['position'] }) => void
   clearAddStepIntention: () => void
-  // editStepIntention?: EditStepIntentionActionPayload
   setEditStepIntention: (props: { path: string }) => void
   clearEditStepIntention: () => void
   setCurrentStepFormDefinition: (data: TypesPlugin | null) => void
@@ -54,7 +53,6 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
   setYamlRevision: (_yamlRevision: YamlRevision) => undefined,
   setAddStepIntention: (_props: { path: string; position: InlineActionArgsType['position'] } | null) => undefined,
   clearAddStepIntention: () => undefined,
-  // editStepIntention: null,
   setEditStepIntention: (_props: { path: string } | null) => undefined,
   clearEditStepIntention: () => undefined,
   setCurrentStepFormDefinition: (_data: TypesPlugin | null) => undefined,
@@ -155,13 +153,11 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
         setYamlRevision,
         setAddStepIntention,
         clearAddStepIntention,
-        // editStepIntention: state.editStepIntention,
         setEditStepIntention,
         clearEditStepIntention,
         setCurrentStepFormDefinition,
         fetchPipelineFileContent,
         setCurrentBranch,
-        //
         requestYamlModifications
       }}>
       {children}

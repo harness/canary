@@ -171,10 +171,6 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
   return transformed
 }
 
-// submenu = (definition?.pullreq?.merge?.strategies_allowed || []).filter(strategy =>
-//   ['merge', 'rebase', 'squash'].includes(strategy)
-// ) as MergeStrategy[]
-
 export const getTotalRulesApplied = (obj: OpenapiRule) => {
   let totalRules = 0
   const transformRules = transformDataFromApi(obj)['rules']

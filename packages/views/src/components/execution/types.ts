@@ -16,3 +16,15 @@ export enum ExecutionState {
   WAITING_ON_DEPENDENCIES = 'waiting_on_dependencies',
   UNKNOWN = 'unknown'
 }
+
+export type CiStatus =
+  | 'blocked'
+  | 'declined'
+  | 'error'
+  | 'failure'
+  | 'killed'
+  | 'pending'
+  | 'running'
+  | 'skipped'
+  | 'success'
+  | 'waiting_on_dependencies'

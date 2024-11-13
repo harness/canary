@@ -68,7 +68,7 @@ function Root({
 }: {
   children: React.ReactNode
   onValueChange: (value: string | string[]) => void
-  value: string | string[]
+  value: string[]
 }) {
   return (
     <Accordion type="multiple" className="w-full" onValueChange={onValueChange} value={value}>

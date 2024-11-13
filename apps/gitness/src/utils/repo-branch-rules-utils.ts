@@ -158,7 +158,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
           require_resolve_all: rulesMap[BranchRuleId.COMMENTS]?.checked || false
         },
         merge: {
-          strategies_allowed: (rulesMap[BranchRuleId.MERGE]?.submenu as MergeStrategy[]) || [],
+          strategies_allowed: rulesMap[BranchRuleId.MERGE]?.submenu || [],
           delete_branch: rulesMap[BranchRuleId.DELETE_BRANCH]?.checked || false
         },
         status_checks: {
@@ -170,6 +170,10 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
 
   return transformed
 }
+
+// submenu = (definition?.pullreq?.merge?.strategies_allowed || []).filter(strategy =>
+//   ['merge', 'rebase', 'squash'].includes(strategy)
+// ) as MergeStrategy[]
 
 export const getTotalRulesApplied = (obj: OpenapiRule) => {
   let totalRules = 0

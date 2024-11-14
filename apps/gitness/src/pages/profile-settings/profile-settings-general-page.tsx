@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Button, ButtonGroup, Input, Spacer, Text, Icon, Avatar, AvatarImage, AvatarFallback } from '@harnessio/canary'
-import { SandboxLayout, FormFieldSet, SkeletonList, getInitials } from '@harnessio/views'
+import { SandboxLayout, FormFieldSet, SkeletonList, getInitials, ModeToggle } from '@harnessio/views'
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Please provide your name' }),
   username: z.string().min(1, { message: 'Please provide a username' }),
@@ -212,6 +212,11 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   {profileErrors.email.message?.toString()}
                 </FormFieldSet.Message>
               )}
+            </FormFieldSet.ControlGroup>
+
+            <FormFieldSet.ControlGroup>
+              <FormFieldSet.Label>Theme</FormFieldSet.Label>
+              <ModeToggle />
             </FormFieldSet.ControlGroup>
 
             {error && error.type === 'profile' && (

@@ -37,20 +37,21 @@ export function ThemeProvider({
 
     const applyTheme = theme === 'system' ? systemTheme : theme
     root.classList.add(applyTheme)
-  }, [theme, systemTheme])
+  }, [theme, systemTheme])  
+
+  const getMediaQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
 
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    const updateSystemTheme = () => setSystemTheme(mediaQuery.matches ? 'dark' : 'light')
+    const updateSystemTheme = () => setSystemTheme(getMediaQuery().matches ? 'dark' : 'light')
 
     // Update system theme on initial load if theme is 'system'
     if (theme === 'system') {
       updateSystemTheme()
     }
 
-    mediaQuery.addEventListener('change', updateSystemTheme)
+    getMediaQuery().addEventListener('change', updateSystemTheme)
 
-    return () => mediaQuery.removeEventListener('change', updateSystemTheme)
+    return () => getMediaQuery().removeEventListener('change', updateSystemTheme)
   }, [theme])
 
   const setTheme = (newTheme: Theme) => {
@@ -59,7 +60,7 @@ export function ThemeProvider({
 
     // If new theme is 'system', immediately apply the current system theme
     if (newTheme === 'system') {
-      setSystemTheme(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      setSystemTheme(getMediaQuery().matches ? 'dark' : 'light')
     }
   }
 

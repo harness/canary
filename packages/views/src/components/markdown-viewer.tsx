@@ -73,6 +73,7 @@ export function MarkdownViewer({
     },
     [navigate]
   )
+
   return (
     <div
       role="button"
@@ -84,7 +85,7 @@ export function MarkdownViewer({
       ref={ref}>
       <MarkdownPreview
         source={source}
-        className="prose prose-invert !bg-background !max-w-full"
+        className="prose dark:prose-invert !bg-background !max-w-full"        
         // warpperElement={{ 'data-color-mode': darkMode ? 'dark' : 'light' }}
         rehypeRewrite={(node, _index, parent) => {
           if ((node as unknown as HTMLDivElement).tagName === 'a') {

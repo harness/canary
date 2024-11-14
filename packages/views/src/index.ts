@@ -108,6 +108,8 @@ export * from './components/settings-user-management-page'
 export * from './components/settings-create-new-user-form'
 export * from './components/user-management/reset-password-dialog'
 
+export * from './components/mode-toggle'
+
 // HOOKS
 export * from './hooks/useCommonFilter'
 

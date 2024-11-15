@@ -140,7 +140,7 @@
   }
 
   html {
-    @apply antialiased text-base;
+    @apply text-base antialiased;
   }
 
   body {
@@ -151,39 +151,39 @@
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */
-  @apply bg-gradient-radial from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text text-primary/70;
+  @apply bg-gradient-radial text-primary/70 from-[#CA9AF4]/70 to-[#CA9AF4]/0 bg-clip-text;
 }
 
 /* Card utilities */
 .card-auth {
-  @apply border-none w-[362px];
+  @apply w-[362px] border-none;
 }
 
 .card-auth-header {
-  @apply p-0 space-x-0 space-y-0;
+  @apply space-x-0 space-y-0 p-0;
 }
 
 .card-auth-content {
-  @apply py-6 w-full;
+  @apply w-full py-6;
 }
 
 /* Form utilities */
 .text-form-error {
-  @apply font-light text-destructive text-xs mt-2;
+  @apply text-destructive mt-2 text-xs font-light;
 }
 
 .form-input {
-  @apply font-light text-sm w-full mt-1 border-primary/10 bg-primary/5 rounded-[4px];
+  @apply border-primary/10 bg-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-primary/50 !important;
 }
 
 /* Temporary studio controls override */
 .react-flow__panel {
-  @apply m-6 flex gap-[1px] left-auto right-0 !important;
+  @apply left-auto right-0 m-6 flex gap-[1px] !important;
 }
 
 .react-flow__controls-button {
-  @apply invert rounded-md !important;
+  @apply rounded-md invert !important;
 }
 
 .diff-widget-tooltip:hover::before {

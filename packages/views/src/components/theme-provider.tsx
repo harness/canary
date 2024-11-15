@@ -29,9 +29,7 @@ export function ThemeProvider({
   const getMediaQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
 
   const [theme, setThemeState] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme)
-  const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(() =>
-    getMediaQuery().matches ? 'dark' : 'light'
-  )
+  const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(() => (getMediaQuery().matches ? 'dark' : 'light'))
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -39,7 +37,7 @@ export function ThemeProvider({
 
     const applyTheme = theme === 'system' ? systemTheme : theme
     root.classList.add(applyTheme)
-  }, [theme, systemTheme])  
+  }, [theme, systemTheme])
 
   useEffect(() => {
     const updateSystemTheme = () => setSystemTheme(getMediaQuery().matches ? 'dark' : 'light')

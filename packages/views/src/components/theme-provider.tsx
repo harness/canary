@@ -26,9 +26,11 @@ export function ThemeProvider({
   storageKey = 'canary-ui-theme',
   ...props
 }: ThemeProviderProps) {
+  const getMediaQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
+
   const [theme, setThemeState] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme)
   const [systemTheme, setSystemTheme] = useState<'dark' | 'light'>(() =>
-    window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+    getMediaQuery().matches ? 'dark' : 'light'
   )
 
   useEffect(() => {
@@ -38,8 +40,6 @@ export function ThemeProvider({
     const applyTheme = theme === 'system' ? systemTheme : theme
     root.classList.add(applyTheme)
   }, [theme, systemTheme])  
-
-  const getMediaQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
 
   useEffect(() => {
     const updateSystemTheme = () => setSystemTheme(getMediaQuery().matches ? 'dark' : 'light')

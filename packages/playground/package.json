@@ -50,6 +50,7 @@
     "@harnessio/canary": "workspace:*",
     "@harnessio/forms": "workspace:*",
     "@harnessio/unified-pipeline": "workspace:*",
+    "@harnessio/ui": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",
     "@monaco-editor/react": "4.6.0",

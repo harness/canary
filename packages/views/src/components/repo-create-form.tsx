@@ -1,8 +1,6 @@
 import { useEffect } from 'react'
-import { SandboxLayout } from '..'
+import { FormFieldSet, SandboxLayout } from '..'
 import {
-  Alert,
-  AlertDescription,
   Button,
   ButtonGroup,
   Input,
@@ -17,11 +15,11 @@ import {
   Text,
   Textarea
 } from '@harnessio/canary'
-import { useForm, SubmitHandler } from 'react-hook-form'
+import { Alert } from '@harnessio/ui/components'
+import { type SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { FormFieldSet } from '../index'
 import { MessageTheme } from './form-field-set'
 
 // Define the form schema with optional fields for gitignore and license
@@ -44,6 +42,7 @@ interface RepoCreatePageFormProps {
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
 }
+
 const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
   onFormSubmit,
   apiError = null,
@@ -107,7 +106,7 @@ const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
             Create a new repository
           </Text>
           <Spacer size={3} />
-          <Text size={2} as="p" className="text-primary/80 max-w-[100%]">
+          <Text size={2} as="p" className="text-primary/80 max-w-full">
             A repository contains all project files, including the revision history. Already have a project repository
             elsewhere? Import a repository.
           </Text>
@@ -222,9 +221,9 @@ const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
             </FormFieldSet.Root>
 
             {apiError && (
-              <Alert variant="destructive" className="mb-8">
-                <AlertDescription>{apiError?.toString()}</AlertDescription>
-              </Alert>
+              <Alert.Container variant="destructive" className="mb-8">
+                <Alert.Description>{apiError?.toString()}</Alert.Description>
+              </Alert.Container>
             )}
 
             {/* SUBMIT BUTTONS */}

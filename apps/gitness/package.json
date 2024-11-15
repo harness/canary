@@ -21,6 +21,7 @@
     "@harnessio/canary": "workspace:*",
     "@harnessio/code-service-client": "3.2.0",
     "@harnessio/forms": "workspace:*",
+    "@harnessio/ui": "workspace:*",
     "@harnessio/unified-pipeline": "workspace:*",
     "@harnessio/views": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",

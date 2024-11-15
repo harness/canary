@@ -1,3 +1,3 @@
-# Canary
+# Canary UI
 
-Canary is Harness' Unified Components Library built on top of Shadcn/Radix and TailwindCSS.
+Canary UI is Harness' Unified Component Library built on top of Shadcn/Radix and TailwindCSS.

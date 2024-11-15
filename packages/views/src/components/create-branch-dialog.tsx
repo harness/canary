@@ -1,6 +1,4 @@
 import {
-  Alert,
-  AlertTitle,
   Button,
   Dialog,
   DialogContent,
@@ -22,6 +20,7 @@ import {
   Spacer,
   useZodForm
 } from '@harnessio/canary'
+import { Alert } from '@harnessio/ui/components'
 import { z } from 'zod'
 
 export interface Branch {
@@ -120,9 +119,9 @@ export function CreateBranchDialog({
             />
 
             {error ? (
-              <Alert variant="destructive">
-                <AlertTitle>Error: {error}</AlertTitle>
-              </Alert>
+              <Alert.Container variant="destructive">
+                <Alert.Title>Error: {error}</Alert.Title>
+              </Alert.Container>
             ) : null}
 
             <div className="flex justify-end gap-3">

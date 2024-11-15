@@ -3,22 +3,14 @@ import { parse } from 'yaml'
 import { omit } from 'lodash-es'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Button, DialogDescription, DialogFooter, DialogHeader, DialogTitle, Spacer } from '@harnessio/canary'
+import { Alert } from '@harnessio/ui/components'
 import {
-  Spacer,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  Button,
-  Alert,
-  AlertDescription
-} from '@harnessio/canary'
-import {
+  getTransformers,
   IInputDefinition,
+  outputTransformValues,
   RenderForm,
   RootForm,
-  getTransformers,
-  outputTransformValues,
   useZodValidationResolver
 } from '@harnessio/forms'
 import {
@@ -143,9 +135,9 @@ export default function RunPipelineForm({
 
   if (errorMessage) {
     return (
-      <Alert variant="destructive" className="my-8">
-        <AlertDescription>{errorMessage}</AlertDescription>
-      </Alert>
+      <Alert.Container variant="destructive" className="my-8">
+        <Alert.Description>{errorMessage}</Alert.Description>
+      </Alert.Container>
     )
   }
 

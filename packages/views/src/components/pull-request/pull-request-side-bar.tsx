@@ -41,6 +41,7 @@ interface PullRequestSideBarProps {
   handleDelete: (id: number) => void
   addReviewers?: (id?: number) => void
   usersList?: { display_name?: string; id?: number; uid?: string }[]
+  currentUserId?: string
 }
 
 const PullRequestSideBar = (props: PullRequestSideBarProps) => {
@@ -51,7 +52,8 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
     processReviewDecision,
     refetchReviewers,
     handleDelete,
-    addReviewers
+    addReviewers,
+    currentUserId
   } = props
 
   const ReviewerItem = ({
@@ -149,6 +151,7 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
 
   const ReviewersHeader = () => {
     const [isOpen, setIsOpen] = useState(false)
+    console.log('usersList', usersList)
 
     return (
       <div className="flex items-center justify-between">
@@ -167,20 +170,23 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
               <CommandList>
                 <CommandEmpty>No users found.</CommandEmpty>
                 <CommandGroup>
-                  {usersList?.map(({ display_name, id }, idx: number) => (
-                    <CommandItem
-                      key={idx}
-                      value={display_name}
-                      onSelect={() => {
-                        if (display_name) {
-                          addReviewers?.(id)
-                          setIsOpen(false)
-                          refetchReviewers?.()
-                        }
-                      }}>
-                      {display_name}
-                    </CommandItem>
-                  ))}
+                  {usersList?.map(({ display_name, id, uid }, idx: number) => {
+                    if (uid === currentUserId) return null
+                    return (
+                      <CommandItem
+                        key={idx}
+                        value={uid}
+                        onSelect={() => {
+                          if (display_name) {
+                            addReviewers?.(id)
+                            setIsOpen(false)
+                            refetchReviewers?.()
+                          }
+                        }}>
+                        {display_name}
+                      </CommandItem>
+                    )
+                  })}
                 </CommandGroup>
               </CommandList>
             </Command>

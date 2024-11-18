@@ -366,6 +366,7 @@ export default function PullRequestConversationPage() {
               addReviewers={handleAddReviewer}
               usersList={principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid }))}
               // repoMetadata={undefined}
+              currentUserId={currentUserData?.uid}
               pullRequestMetadata={{ source_sha: pullReqMetadata?.source_sha as string }}
               processReviewDecision={processReviewDecision}
               refetchReviewers={refetchReviewers}

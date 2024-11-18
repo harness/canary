@@ -63,7 +63,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   const stateObject = getPrState(is_draft, merged, state)
   return (
     <div className="flex flex-col gap-2 pb-8">
-      <div className="flex items-center pb-1 pt-1">
+      <div className="flex items-center py-1">
         <Text size={5} weight={'medium'} className="text-primary">
           {original}
           &nbsp;&nbsp;
@@ -73,7 +73,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
       <div className="">
         <div className="text-tertiary-background flex space-x-2">
           <div className="flex items-center gap-2.5 text-center align-middle">
-            <Badge disableHover borderRadius="full" theme={stateObject.theme} className={`select-none justify-center`}>
+            <Badge disableHover borderRadius="full" className={`select-none justify-center`}>
               <Layout.Horizontal gap="space-x-1" className="flex items-center align-middle">
                 <Icon name={stateObject.icon as IconType} size={13} />
                 &nbsp;{stateObject.text}

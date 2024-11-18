@@ -1,33 +1,33 @@
 import { useState } from 'react'
 import {
-  Input,
-  Textarea,
-  Text,
+  Badge,
+  Button,
+  Checkbox,
   DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
-  DropdownMenuCheckboxItem,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  Button,
+  DropdownMenuTrigger,
   Icon,
-  Checkbox,
+  Input,
   StackedList,
   Switch,
-  Badge
+  Text,
+  Textarea
 } from '@harnessio/canary'
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
 import {
-  FieldProps,
-  Rule,
-  Dispatch,
-  BypassUsersList,
   BranchRulesActionType,
+  BypassUsersList,
+  Dispatch,
+  FieldProps,
   MergeStrategy,
-  PatternsButtonType
+  PatternsButtonType,
+  Rule
 } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
@@ -116,7 +116,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
               <Button
                 variant="split"
                 type="button"
-                className="min-w-28 pl-0 pr-0"
+                className="min-w-28 px-0"
                 dropdown={
                   <DropdownMenu key="dropdown-menu">
                     <span>
@@ -148,7 +148,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
           <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
         )}
       </div>
-      <Text size={2} as="p" color="tertiaryBackground" className="max-w-[100%]">
+      <Text size={2} as="p" color="tertiaryBackground" className="max-w-full">
         Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
       </Text>
       <div className="flex flex-wrap">
@@ -158,8 +158,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
               variant="outline"
               theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
               key={pattern.pattern}
-              pattern={pattern}
-              className="mx-1 my-1 inline-flex">
+              className="m-1 inline-flex">
               {pattern.pattern}
               <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
                 <Icon name="x-mark" size={12} className="text-current" />
@@ -225,7 +224,7 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
       <DropdownMenu>
         <DropdownMenuTrigger>
           <div className="flex items-center justify-between rounded-md border">
-            <Button variant="ghost w-full">
+            <Button variant="ghost" className="w-full">
               <Text color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>{triggerText}</Text>
             </Button>
             <Icon name="chevron-down" className="mr-2" />
@@ -342,7 +341,7 @@ export const BranchSettingsRuleListField: React.FC<{
               <DropdownMenu>
                 <DropdownMenuTrigger className="w-full">
                   <div className="flex items-center justify-between rounded-md border">
-                    <Button variant="ghost w-full">
+                    <Button variant="ghost" className="w-full">
                       <Text color={rules[index].selectOptions?.length ? 'primary' : 'tertiaryBackground'}>
                         {rules[index].selectOptions?.length
                           ? rules[index].selectOptions.join(', ')

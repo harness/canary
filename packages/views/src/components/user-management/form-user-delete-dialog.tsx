@@ -1,16 +1,16 @@
 import {
-  Spacer,
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Badge,
   Button,
   Icon,
-  Text,
-  Badge
+  Spacer,
+  Text
 } from '@harnessio/canary'
 import { FormDeleterDialogProps } from './interfaces'
 
@@ -30,7 +30,7 @@ export const FormDeleteUserDialog: React.FC<FormDeleterDialogProps> = ({
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you absolutely sure you want to delete
-            <Badge type="admin" className="mx-2" variant="muted" disableHover={true}>
+            <Badge className="mx-2" disableHover={true}>
               <Text>{user?.display_name}</Text>
             </Badge>
             ?

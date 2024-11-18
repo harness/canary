@@ -17,6 +17,7 @@ interface ImageCarouselProps {
   zoomLevel: number
   imgEvent: string[]
 }
+
 // TODO: rewrite this to actually work
 const ImageCarousel = (props: ImageCarouselProps) => {
   const { isOpen, setIsOpen, setZoomLevel, zoomLevel, imgEvent } = props
@@ -51,28 +52,26 @@ const ImageCarousel = (props: ImageCarouselProps) => {
             <div>
               <div className="flex">
                 <Button
-                  variant={'icon'}
-                  icon="zoom-in"
                   data-testid="zoomInButton"
-                  tooltip={'Zoom in'}
                   onClick={() => {
                     if (Number(zoomLevel.toFixed(1)) < 2) {
                       setZoomLevel(zoomLevel + ZOOM_INC_DEC_LEVEL)
                     }
                   }}
-                />
+                  title="Zoom in">
+                  +
+                </Button>
 
                 <Button
-                  variation={'icon'}
-                  icon="zoom-out"
                   data-testid="zoomOutButton"
-                  tooltip={'Zoom out'}
                   onClick={() => {
                     if (Number(zoomLevel.toFixed(1)) > 0.3) {
                       setZoomLevel(zoomLevel - ZOOM_INC_DEC_LEVEL)
                     }
                   }}
-                />
+                  title="Zoom out">
+                  -
+                </Button>
               </div>
             </div>
           </DialogDescription>

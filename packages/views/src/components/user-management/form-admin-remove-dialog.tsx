@@ -1,15 +1,15 @@
 import {
-  Spacer,
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Badge,
   Button,
   Icon,
-  Badge,
+  Spacer,
   Text
 } from '@harnessio/canary'
 import { FormRemoveUserDialogProps } from './interfaces'
@@ -30,7 +30,7 @@ export const FormRemoveAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you sure you want to remove
-            <Badge type="admin" className="mx-2" variant="muted" disableHover={true}>
+            <Badge className="mx-2" disableHover={true}>
               <Text>{user?.display_name}</Text>
             </Badge>
             as an admin?

@@ -23,7 +23,8 @@
     "test": "vitest --run",
     "test:coverage": "vitest --run --coverage",
     "test:watch": "vitest",
-    "test:changed": "vitest --run --changed=origin/main"
+    "test:changed": "vitest --run --changed=origin/main",
+    "typecheck": "tsc"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/style.css",

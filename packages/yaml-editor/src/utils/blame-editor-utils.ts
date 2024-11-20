@@ -31,6 +31,7 @@ export function getMonacoEditorCss({
   css += `
       .monaco-editor-${instanceId} .blame-editor-separator {
         right: 14px;
+        pointer-events: none;
       }
 
       .monaco-editor-${instanceId} {

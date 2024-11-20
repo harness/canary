@@ -41,25 +41,23 @@ export interface BlameEditorProps<_> {
 
 export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
   const { code, language, themeConfig, lineNumbersPosition = 'left', blameData, showSeparators = true } = props
+  const blameDataRef = useRef(blameData)
+  blameDataRef.current = blameData
+
   const instanceId = useRef(createRandomString(5))
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
 
   const [lineNumbersDelta, setLineNumbersDelta] = useState(0)
 
-  const monacoRef = useRef<typeof monaco>()
-
+  const monacoRef = useRef<typeof monaco | null>(null)
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
-  function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
-    editorRef.current = editor
-    monacoRef.current = monaco
+  function setupBlameEditor() {
+    const editor = editorRef.current
+    const monaco = monacoRef.current
 
-    editor.setValue(code)
-    setEditor(editor)
-
-    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
-    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
+    if (!editor || !monaco) return
 
     // separators
     if (showSeparators) {
@@ -71,8 +69,8 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
           domNode: document.createElement('div')
         })
 
-        blameData.forEach((blameItem, index) => {
-          if (index !== blameData.length - 1) {
+        blameDataRef.current.forEach((blameItem, index) => {
+          if (index !== blameDataRef.current.length - 1) {
             const domNode = document.createElement('div')
             domNode.style.borderTop = '1px solid #333333'
             domNode.style.marginTop = '9px'
@@ -89,7 +87,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
     }
 
     const decoratorItems: monaco.editor.IModelDeltaDecoration[] = []
-    blameData.forEach(blameItem => {
+    blameDataRef.current.forEach(blameItem => {
       for (let lineNo = blameItem.fromLineNumber; lineNo <= blameItem.toLineNumber; lineNo++) {
         decoratorItems.push({
           range: new monaco.Range(lineNo, 0, lineNo + 1, 0),
@@ -109,6 +107,19 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
 
     // TODO: on unmount clear decorators, on blameData change recreate
     editor.createDecorationsCollection(decoratorItems)
+  }
+
+  function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
+    editorRef.current = editor
+    monacoRef.current = monaco
+
+    editor.setValue(code)
+    setEditor(editor)
+
+    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
+    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
+
+    setupBlameEditor()
   }
 
   useEffect(() => {
@@ -137,7 +148,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
     [blameData]
   )
 
-  // watch dn set adjustment for lines numbers position
+  // set adjustment for lines numbers position
   useEffect(() => {
     if (lineNumbersPosition === 'center') {
       const scrollableEl = document.getElementsByClassName('lines-content')[0]
@@ -167,14 +178,21 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
     return `
       .monaco-editor-${instanceId.current} .margin {
         left: ${BLAME_MESSAGE_WIDTH - LINE_NUMBERS_HOLDER_WIDTH + lineNumbersDelta}px !important;
+        pointer-events: none;
       }`
   }, [lineNumbersDelta])
+
+  const clipSelection = `
+   .monaco-editor-${instanceId.current} .view-overlays {
+    clip-path: polygon(${BLAME_MESSAGE_WIDTH + 16}px 0, 100% 0%, 100% 100%, ${BLAME_MESSAGE_WIDTH + 16}px 100%);
+    height:100% !important;
+   }`
 
   return (
     <>
       <style
         dangerouslySetInnerHTML={{
-          __html: `${monacoEditorCss} ${monacoEditorCommitInfoCss} ${lineNumbersCss}`
+          __html: `${monacoEditorCss} ${monacoEditorCommitInfoCss} ${lineNumbersCss} ${clipSelection}`
         }}
       />
       <Editor

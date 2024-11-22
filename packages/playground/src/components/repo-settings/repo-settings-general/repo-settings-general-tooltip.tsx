@@ -23,7 +23,7 @@ export const RepoSettingsToolTip = ({
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="xs">
-          <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background cursor-pointer" />
+          <Icon name="vertical-ellipsis" size={14} className="cursor-pointer text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -42,14 +42,14 @@ export const RepoSettingsToolTip = ({
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="text-destructive cursor-pointer"
+            className="cursor-pointer text-destructive"
             onClick={e => {
               e.stopPropagation()
               onDelete(identifier)
             }}
           >
             <DropdownMenuShortcut className="ml-0">
-              <Icon name="trash" className="text-destructive mr-2" />
+              <Icon name="trash" className="mr-2 text-destructive" />
             </DropdownMenuShortcut>
             Delete rule
           </DropdownMenuItem>

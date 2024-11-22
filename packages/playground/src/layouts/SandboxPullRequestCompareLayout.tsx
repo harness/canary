@@ -124,7 +124,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             Choose two branches to see what&apos;s changed or to start a new pull request. If you need to, you can also
             compare across forks or learn more about diff comparisons.
           </Text>
-          <Layout.Horizontal className="text-tertiary-background items-center">
+          <Layout.Horizontal className="items-center text-tertiary-background">
             <Icon name="pull" size={16} className="text-tertiary-background" />
 
             <BranchSelector
@@ -137,7 +137,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 handleBranchSelection() // Call when target branch is selected
               }}
             />
-            <Icon name="arrow-long" size={14} className="text-tertiary-background rotate-180" />
+            <Icon name="arrow-long" size={14} className="rotate-180 text-tertiary-background" />
             <BranchSelector
               prefix="compare"
               size="default"
@@ -185,7 +185,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         <Spacer size={3} />
-        <Layout.Horizontal className="border-border bg-background items-center justify-between rounded-md border-2 p-3">
+        <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
           <div>
             <Layout.Horizontal className="py-2">
               {isBranchSelected ? (

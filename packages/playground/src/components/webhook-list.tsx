@@ -50,7 +50,7 @@ const Title = ({ title, enabled }: { title: string; enabled: boolean }) => {
           </Text>
         </Badge>
       ) : (
-        <Badge variant="outline" size="xs" className="text-tertiary-background rounded-full">
+        <Badge variant="outline" size="xs" className="rounded-full text-tertiary-background">
           <Text size={1} className="text-inherit">
             {WebhookState.DISABLED}
           </Text>
@@ -65,7 +65,7 @@ const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhook
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="xs">
-          <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background cursor-pointer" />
+          <Icon name="vertical-ellipsis" size={14} className="cursor-pointer text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -85,14 +85,14 @@ const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhook
           </Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem
-            className="text-destructive cursor-pointer"
+            className="cursor-pointer text-destructive"
             onClick={e => {
               e.stopPropagation()
               openDeleteWebhookDialog(id)
             }}
           >
             <DropdownMenuShortcut className="ml-0">
-              <Icon name="trash" className="text-destructive mr-2" />
+              <Icon name="trash" className="mr-2 text-destructive" />
             </DropdownMenuShortcut>
             Delete webhook
           </DropdownMenuItem>

@@ -67,7 +67,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="border-border bg-primary-background max-w-[500px]">
+      <DialogContent className="max-w-[500px] border-border bg-primary-background">
         <DialogHeader>
           <DialogTitle>Create Branch</DialogTitle>
         </DialogHeader>

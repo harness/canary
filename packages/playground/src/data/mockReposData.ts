@@ -1,12 +1,13 @@
 export const mockRepos = [
   {
     id: '1',
-    name: 'drone',
+    name: 'cal.com',
     description: 'Continuous Integration platform powered by Docker',
-    private: false,
+    private: true,
     stars: 0,
     forks: 0,
     pulls: 12,
+    createdAt: '2024-11-14T10:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -17,6 +18,7 @@ export const mockRepos = [
     stars: 0,
     forks: 0,
     pulls: 5,
+    createdAt: '2024-11-14T08:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -27,6 +29,7 @@ export const mockRepos = [
     stars: 2,
     forks: 1,
     pulls: 22,
+    createdAt: '2024-11-14T06:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -36,6 +39,7 @@ export const mockRepos = [
     stars: 3,
     forks: 1,
     pulls: 7,
+    createdAt: '2024-11-14T06:20:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -46,6 +50,7 @@ export const mockRepos = [
     stars: 123,
     forks: 16,
     pulls: 56,
+    createdAt: '2024-11-14T04:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -56,6 +61,7 @@ export const mockRepos = [
     stars: 8,
     forks: 0,
     pulls: 1,
+    createdAt: '2024-11-12T06:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -66,6 +72,7 @@ export const mockRepos = [
     stars: 54,
     forks: 1,
     pulls: 1,
+    createdAt: '2024-11-10T06:00:00Z',
     timestamp: '2 hours ago'
   },
   {
@@ -76,6 +83,7 @@ export const mockRepos = [
     stars: 123,
     forks: 16,
     pulls: 56,
+    createdAt: '2024-10-14T06:00:00Z',
     timestamp: '2 hours ago'
   }
 ]

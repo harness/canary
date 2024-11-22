@@ -1,5 +1,5 @@
 import { FormControl, FormField, FormItem, Switch } from '@harnessio/canary'
-import { InputComponent, InputProps, type AnyFormikValue, type UseFormReturn } from '@harnessio/forms'
+import { AnyFormikValue, InputComponent, InputProps, UseFormReturn } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'

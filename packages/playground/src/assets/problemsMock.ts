@@ -1,4 +1,4 @@
-import { Problem } from '../components/pipeline-studio/problems'
+import type { Problem } from '../components/pipeline-studio/problems'
 
 export const problemsMock: Problem[] = [
   {

@@ -1,7 +1,7 @@
 import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
 
 import { timeAgo } from '../../utils/utils'
-import { TokensList } from './types'
+import type { TokensList } from './types'
 
 interface PageProps {
   tokens: TokensList[]

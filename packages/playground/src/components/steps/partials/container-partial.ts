@@ -9,7 +9,7 @@ import {
 } from '@harnessio/forms'
 
 import { InputType } from '../../form-inputs/types'
-import { IInputConfigWithConfig } from '../types'
+import type { IInputConfigWithConfig } from '../types'
 
 export const getContainerPartial = (stepIdentifier: 'run' | 'run-test'): IInputConfigWithConfig => ({
   inputType: InputType.group,

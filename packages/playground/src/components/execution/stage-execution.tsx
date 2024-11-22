@@ -126,9 +126,9 @@ export const StageExecution: React.FC<StageExecutionProps> = ({
       <Layout.Vertical gap="space-y-2" className="grow p-4">
         {stage?.group ? (
           <Layout.Horizontal gap="space-x-1" className="flex items-center">
-            <Text className="text-stage text-sm">{stage.group}</Text>
+            <Text className="text-sm text-stage">{stage.group}</Text>
             <Icon name="x-mark" />
-            <Text className="text-ring text-sm">{stage.name}</Text>
+            <Text className="text-sm text-ring">{stage.name}</Text>
           </Layout.Horizontal>
         ) : (
           <Text>{stage.name}</Text>

@@ -7,9 +7,10 @@ import AddFolder from '../icons/add-folder.svg'
 import AISparks from '../icons/ai-sparks.svg'
 import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
+import ArtifactsGradient from '../icons/artifacts-gradient.svg'
+import Artifacts from '../icons/artifacts-icon.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
 import BookmarkIcon from '../icons/bookmark-icon.svg'
-import Bookmark from '../icons/bookmark.svg'
 import BoxCloning from '../icons/box-cloning.svg'
 import BoxGuide from '../icons/box-guide.svg'
 import BoxLightning from '../icons/box-lightning.svg'
@@ -17,8 +18,8 @@ import BoxPullRequests from '../icons/box-pull-requests.svg'
 import Branch from '../icons/branch.svg'
 import Briefcase from '../icons/briefcase-icon.svg'
 import CancelGrey from '../icons/cancel-grey.svg'
-import Chain from '../icons/chain.svg'
 import Changes from '../icons/changes.svg'
+import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
 import Checkbox from '../icons/checkbox.svg'
 import Checks from '../icons/checks.svg'
@@ -34,23 +35,34 @@ import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
 import Clone from '../icons/clone.svg'
 import Close from '../icons/close.svg'
-import CloudMining from '../icons/cloud-mining.svg'
+import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
+import CloudCosts from '../icons/cloud-costs-icon.svg'
 import Cog6 from '../icons/cog-6.svg'
 import Comments from '../icons/comments.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import DashboardsGradient from '../icons/dashboards-gradient.svg'
+import Dashboards from '../icons/dashboards-icon.svg'
+import DatabaseGradient from '../icons/database-gradient.svg'
+import Database from '../icons/database-icon.svg'
+import DevEnvsGradient from '../icons/dev-envs-gradient.svg'
+import DevEnvs from '../icons/dev-envs-icon.svg'
+import DevInsightsGradient from '../icons/dev-insights-gradient.svg'
+import DevInsights from '../icons/dev-insights-icon.svg'
+import DevPortalGradient from '../icons/dev-portal-gradient.svg'
+import DevPortal from '../icons/dev-portal-icon.svg'
 import Download from '../icons/download.svg'
 import Edit from '../icons/edit.svg'
 import Environment from '../icons/environment-icon.svg'
+import ExecutionGradient from '../icons/execution-gradient.svg'
 import Execution from '../icons/execution-icon.svg'
 import Eye from '../icons/eye-icon.svg'
 import Fail from '../icons/fail.svg'
-import FeaturedFlags from '../icons/featured-flags-icon.svg'
 import FileIcon from '../icons/file-icon.svg'
 import File from '../icons/file.svg'
 import FilterList from '../icons/filter-list.svg'
-import FilterOrganization from '../icons/filter-organization.svg'
-import Flag from '../icons/flag.svg'
+import FlagGradient from '../icons/flag-gradient.svg'
+import Flag from '../icons/flag-icon.svg'
 import FolderIcon from '../icons/folder-icon.svg'
 import Folder from '../icons/folder.svg'
 import GitBranch from '../icons/git-branch.svg'
@@ -63,15 +75,21 @@ import HarnessLogoText from '../icons/harness-logo-text.svg'
 import HarnessPlugin from '../icons/harness-plugin.svg'
 import Harness from '../icons/harness.svg'
 import Hierarchy from '../icons/hierarchy-icon.svg'
+import IncidentsGradient from '../icons/incidents-gradient.svg'
+import Incidents from '../icons/incidents-icon.svg'
 import InfoCircle from '../icons/info-circle.svg'
+import InfrastructureGradient from '../icons/infrastructure-gradient.svg'
+import Infrastructure from '../icons/infrastructure-icon.svg'
 import Key from '../icons/key-icon.svg'
 import Lightning from '../icons/lightning.svg'
+import LogOut from '../icons/log-out-icon.svg'
 import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
+import MenuDots from '../icons/menu-dots-icon.svg'
 import Merged from '../icons/merged.svg'
 import MoreDotsFill from '../icons/more-dots-fill-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
-import MoreFolder from '../icons/more-folder.svg'
+import Navigation from '../icons/navigation-icon.svg'
 import NoDataBranches from '../icons/no-data-branches.svg'
 import NoDataCog from '../icons/no-data-cog.svg'
 import NoDataFolder from '../icons/no-data-folder.svg'
@@ -83,8 +101,10 @@ import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
 import NodeLogo from '../icons/node-logo.svg'
 import Notification from '../icons/notification-icon.svg'
 import OpenPR from '../icons/open-pr.svg'
+import Paint from '../icons/paint-icon.svg'
 import PendingClock from '../icons/pending-clock.svg'
 import Pin from '../icons/pin.svg'
+import PipelinesGradient from '../icons/pipelines-gradient.svg'
 import Pipelines from '../icons/pipelines-icon.svg'
 import Play from '../icons/play-solid.svg'
 import Plug from '../icons/plug.svg'
@@ -98,19 +118,20 @@ import PrReview from '../icons/pr-review.svg'
 import Pull from '../icons/pull-icon.svg'
 import PythonAndNodeLogo from '../icons/python-and-node-logo.svg'
 import PythonLogo from '../icons/python-logo.svg'
+import RepositoriesGradient from '../icons/repositories-gradient.svg'
 import Repositories from '../icons/repositories-icon.svg'
 import Rocket from '../icons/rocket.svg'
 import RunTest from '../icons/run-test.svg'
 import Run from '../icons/run.svg'
 import Running from '../icons/running.svg'
-import SearchContent from '../icons/search-content.svg'
 import Search from '../icons/search-icon.svg'
 import Secrets from '../icons/secrets-icon.svg'
+import SecurityTestsGradient from '../icons/security-tests-gradient.svg'
+import SecurityTests from '../icons/security-tests-icon.svg'
 import Settings1 from '../icons/setting-1.svg'
 import Settings2 from '../icons/setting-2.svg'
 import Shield from '../icons/shield-icon.svg'
 import ShieldLock from '../icons/shield-lock.svg'
-import ShieldTick from '../icons/shield-tick.svg'
 import SidebarIcon from '../icons/sidebar-icon.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
@@ -120,6 +141,8 @@ import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
 import SubMenuEllipse from '../icons/sub-menu-ellipse.svg'
 import Success from '../icons/success.svg'
+import SupplyChainGradient from '../icons/supply-chain-gradient.svg'
+import SupplyChain from '../icons/supply-chain-icon.svg'
 import Tag from '../icons/tag.svg'
 import Tasks from '../icons/tasks.svg'
 import Tick from '../icons/tick.svg'
@@ -151,10 +174,10 @@ const IconNameMap = {
   checkbox: Checkbox,
   harness: Harness,
   pipelines: Pipelines,
-  'featured-flags': FeaturedFlags,
+  'pipelines-gradient': PipelinesGradient,
   ellipsis: Ellipsis,
   repositories: Repositories,
-  'chaos-engineering': ChaosEngineering,
+  'repositories-gradient': RepositoriesGradient,
   environment: Environment,
   secrets: Secrets,
   connectors: Connectors,
@@ -226,15 +249,7 @@ const IconNameMap = {
   unpin: Unpin,
   rocket: Rocket,
   plug: Plug,
-  flag: Flag,
-  'filter-organization': FilterOrganization,
   'shield-lock': ShieldLock,
-  'more-folder': MoreFolder,
-  bookmark: Bookmark,
-  'search-content': SearchContent,
-  chain: Chain,
-  'shield-tick': ShieldTick,
-  'cloud-mining': CloudMining,
   'pr-merged': PRMerged,
   run: Run,
   'run-test': RunTest,
@@ -275,7 +290,38 @@ const IconNameMap = {
   'circle-arrows-updown': CircleArrowsUpDown,
   'chevron-fill-down': ChevronFillDown,
   'more-dots-fill': MoreDotsFill,
-  execution: Execution
+  execution: Execution,
+  'execution-gradient': ExecutionGradient,
+  paint: Paint,
+  navigation: Navigation,
+  logOut: LogOut,
+  'database-gradient': DatabaseGradient,
+  database: Database,
+  'artifacts-gradient': ArtifactsGradient,
+  artifacts: Artifacts,
+  'infrastructure-gradient': InfrastructureGradient,
+  infrastructure: Infrastructure,
+  'flag-gradient': FlagGradient,
+  flag: Flag,
+  'dev-portal-gradient': DevPortalGradient,
+  'dev-portal': DevPortal,
+  'dev-envs-gradient': DevEnvsGradient,
+  'dev-envs': DevEnvs,
+  'dev-insights-gradient': DevInsightsGradient,
+  'dev-insights': DevInsights,
+  'security-tests-gradient': SecurityTestsGradient,
+  'security-tests': SecurityTests,
+  'supply-chain-gradient': SupplyChainGradient,
+  'supply-chain': SupplyChain,
+  'cloud-costs-gradient': CloudCostsGradient,
+  'cloud-costs': CloudCosts,
+  'incidents-gradient': IncidentsGradient,
+  incidents: Incidents,
+  'chaos-engineering-gradient': ChaosEngineeringGradient,
+  'chaos-engineering': ChaosEngineering,
+  'dashboards-gradient': DashboardsGradient,
+  dashboards: Dashboards,
+  'menu-dots': MenuDots
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

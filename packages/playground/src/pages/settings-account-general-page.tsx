@@ -115,7 +115,7 @@ export function SettingsAccountGeneralPage() {
             {/* PERSONAL INFORMATION */}
             <FormFieldSet.Legend>Personal information</FormFieldSet.Legend>
             <FormFieldSet.ControlGroup className="flex w-auto flex-row items-center justify-start gap-x-6">
-              <Avatar size="80" className="bg-primary/[0.02] size-20 rounded-full shadow-md">
+              <Avatar size="80" className="size-20 rounded-full bg-primary/[0.02] shadow-md">
                 <AvatarImage src="/images/anon.jpg" />
                 <AvatarFallback>
                   <Text size={5} weight="medium" color="tertiaryBackground">

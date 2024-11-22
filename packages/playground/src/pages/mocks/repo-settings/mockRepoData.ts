@@ -1,4 +1,4 @@
-import { RepoData } from '../../../index'
+import type { RepoData } from '../../../index'
 
 export const mockRepoData: RepoData = {
   name: 'uuid',

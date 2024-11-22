@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 12"><g fill="currentColor" class="nc-icon-wrapper"><polyline points="1.75 4.25 6 8.5 10.25 4.25" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1"></polyline></g></svg>
+<svg viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_17258_47367)">
+<path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-linecap="round"/>
+</g>
+<defs>
+<clipPath id="clip0_17258_47367">
+<rect width="10" height="10" fill="white"/>
+</clipPath>
+</defs>
+</svg>

@@ -1,4 +1,4 @@
-import { Execution } from '../../../components/execution-list'
+import type { Execution } from '../../../components/execution-list'
 import { ExecutionState } from '../../../components/execution/types'
 
 export const mockExecutions: Execution[] = [

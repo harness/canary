@@ -4,11 +4,11 @@
 
 :root {
   /* PP Figma shades */
-  --black: 240 10% 3%;
-  --grey-6: 240 8% 6%;
+  --black: 240 13% 3%;
+  --grey-6: 240 6% 6%;
   --grey-8: 240 7% 8%;
   --grey-10: 240 6% 10%;
-  --grey-12: 240 6% 12%;
+  --grey-12: 240 5% 11%;
   --grey-15: 240 6% 15%;
   --grey-20: 240 6% 20%;
   --grey-30: 240 6% 30%;
@@ -18,9 +18,15 @@
   --grey-70: 240 6% 70%;
   --grey-80: 240 6% 80%;
   --grey-90: 240 6% 90%;
-  --grey-94: 240 6% 94%;
-  --grey-98: 240 6% 98%;
+  --grey-94: 240 7% 94%;
+  --grey-96: 0 0% 96%;
+  --grey-98: 0 0% 98%;
   --white: 0 0% 100%;
+
+  --red-65: 0 79% 64%;
+  --orange-55: 35 74% 54%;
+  --green-65: 150 75% 65%;
+  --blue-60: 215 100% 60%;
 
   /* PP Figma secondary colors */
   --mint: 175 60% 65%;
@@ -90,6 +96,101 @@
     --diff-add-widget-color--: hsl(0, 0%, 100%);
     --diff-empty-content--: var(--background);
     --diff-hunk-content-color--: hsl(0, 0%, 100%);
+    /* New colors design variables */
+    /* Text */
+    --foreground-01: var(--white);
+    --foreground-02: var(--grey-80);
+    --foreground-03: var(--grey-70);
+    --foreground-04: var(--grey-60);
+    --foreground-05: var(--grey-50);
+    --foreground-06: var(--black);
+    --foreground-07: var(--grey-40);
+    --foreground-08: var(--grey-90);
+    --foreground-09: var(--grey-30);
+    --foreground-danger: var(--red-65);
+    --foreground-alert: var(--orange-55);
+    --foreground-success: var(--green-65);
+    --foreground-accent: var(--blue-60);
+    /* Backgrounds */
+    --background-01: var(--grey-6);
+    --background-02: var(--grey-8);
+    --background-03: var(--grey-10);
+    --background-04: var(--grey-50) / 0.1; /* gray50/10 */
+    --background-05: var(--white);
+    --background-06: var(--grey-80);
+    --background-07: var(--black);
+    --background-08: var(--grey-12);
+    --background-09: var(--grey-15);
+    --background-10: var(--grey-94);
+    --background-11: var(--grey-40);
+    --background-12: var(--grey-20);
+    --background-13: var(--grey-30);
+    --background-danger: var(--red-65) / 0.1; /* red65/10 */
+    --background-success: 154 13% 10% / 0.4;
+    /* Borders */
+    --border-01: var(--grey-15);
+    --border-02: var(--grey-20);
+    --border-03: var(--grey-70);
+    --border-04: var(--grey-12);
+    --border-05: var(--grey-10);
+    --border-06: var(--grey-30);
+    --border-07: var(--grey-90);
+    --border-08: var(--white);
+    --border-09: var(--grey-60);
+    --border-10: var(--grey-6);
+    --border-danger: var(--red-65);
+    --border-success: var(--green-65);
+    /* Icons */
+    --icon-01: var(--grey-60);
+    --icon-02: var(--white);
+    --icon-03: var(--grey-80);
+    --icon-04: var(--grey-50);
+    --icon-05: var(--black);
+    --icon-06: var(--grey-30);
+    --icon-07: var(--grey-40);
+    --icon-08: var(--grey-90);
+    --icon-09: var(--grey-70);
+    --icon-10: var(--grey-6);
+    --icon-danger: var(--red-65);
+    --icon-alert: var(--orange-55);
+    --icon-success: var(--green-65);
+    --icon-accent: var(--blue-60);
+    /* Tags */
+    /* --gray */
+    --tag-foreground-gray-01: hsla(240, 6%, 70%, 1);
+    --tag-border-gray-01: hsla(240, 6%, 70%, 0.12);
+    --tag-background-gray-01: hsla(240, 6%, 70%, 0.1);
+    --tag-background-gray-02: hsla(240, 6%, 70%, 0.15);
+    /* --purple */
+    --tag-foreground-purple-01: hsla(268, 50%, 75%, 1);
+    --tag-border-purple-01: hsla(268, 50%, 75%, 0.12);
+    --tag-background-purple-01: hsla(268, 50%, 75%, 0.1);
+    --tag-background-purple-02: hsla(268, 50%, 75%, 0.15);
+    /* --blue */
+    --tag-foreground-blue-01: hsla(220, 100%, 60%, 1);
+    --tag-border-blue-01: hsla(220, 61%, 65%, 0.12);
+    --tag-background-blue-01: hsla(220, 61%, 65%, 0.1);
+    --tag-background-blue-02: hsla(220, 61%, 65%, 0.15);
+    /* --mint */
+    --tag-foreground-mint-01: hsla(157, 77%, 65%, 1);
+    --tag-border-mint-01: hsla(157, 77%, 65%, 0.12);
+    --tag-background-mint-01: hsla(157, 77%, 65%, 0.1);
+    --tag-background-mint-02: hsla(157, 77%, 65%, 0.15);
+    /* --amber */
+    --tag-foreground-amber-01: hsla(35, 76%, 55%, 1);
+    --tag-border-amber-01: hsla(35, 76%, 55%, 0.12);
+    --tag-background-amber-01: hsla(35, 76%, 55%, 0.1);
+    --tag-background-amber-02: hsla(35, 76%, 55%, 0.15);
+    /* --peach */
+    --tag-foreground-peach-01: hsla(15, 71%, 65%, 1);
+    --tag-border-peach-01: hsla(15, 71%, 65%, 0.12);
+    --tag-background-peach-01: hsla(15, 71%, 65%, 0.1);
+    --tag-background-peach-02: hsla(15, 71%, 65%, 0.15);
+    /* --red */
+    --tag-foreground-red-01: hsla(0, 82%, 65%, 1);
+    --tag-border-red-01: hsla(0, 81%, 60%, 0.12);
+    --tag-background-red-01: hsla(0, 81%, 60%, 0.1);
+    --tag-background-red-02: hsla(0, 81%, 60%, 0.15);
   }
 
   .dark {
@@ -131,12 +232,107 @@
     --ai-button-stop-2: 335 58% 76%;
     --ai-button-stop-3: 246 66% 72%;
     --ai-button-stop-4: 188 97% 89%;
+    /* New colors design variables */
+    /* Text */
+    --foreground-01: var(--white);
+    --foreground-02: var(--grey-80);
+    --foreground-03: var(--grey-70);
+    --foreground-04: var(--grey-60);
+    --foreground-05: var(--grey-50);
+    --foreground-06: var(--black);
+    --foreground-07: var(--grey-40);
+    --foreground-08: var(--grey-90);
+    --foreground-09: var(--grey-30);
+    --foreground-danger: var(--red-65);
+    --foreground-alert: var(--orange-55);
+    --foreground-success: var(--green-65);
+    --foreground-accent: var(--blue-60);
+    /* Backgrounds */
+    --background-01: var(--grey-6);
+    --background-02: var(--grey-8);
+    --background-03: var(--grey-10);
+    --background-04: var(--grey-50) / 0.1; /* gray50/10 */
+    --background-05: var(--white);
+    --background-06: var(--grey-80);
+    --background-07: var(--black);
+    --background-08: var(--grey-12);
+    --background-09: var(--grey-15);
+    --background-10: var(--grey-94);
+    --background-11: var(--grey-40);
+    --background-12: var(--grey-20);
+    --background-13: var(--grey-30);
+    --background-danger: var(--red-65) / 0.1; /* red65/10 */
+    --background-success: 154 13% 10% / 0.4;
+    /* Borders */
+    --border-01: var(--grey-15);
+    --border-02: var(--grey-20);
+    --border-03: var(--grey-70);
+    --border-04: var(--grey-12);
+    --border-05: var(--grey-10);
+    --border-06: var(--grey-30);
+    --border-07: var(--grey-90);
+    --border-08: var(--white);
+    --border-09: var(--grey-60);
+    --border-10: var(--grey-6);
+    --border-danger: var(--red-65);
+    --border-success: var(--green-65);
+    /* Icons */
+    --icon-01: var(--grey-60);
+    --icon-02: var(--white);
+    --icon-03: var(--grey-80);
+    --icon-04: var(--grey-50);
+    --icon-05: var(--black);
+    --icon-06: var(--grey-30);
+    --icon-07: var(--grey-40);
+    --icon-08: var(--grey-90);
+    --icon-09: var(--grey-70);
+    --icon-10: var(--grey-6);
+    --icon-danger: var(--red-65);
+    --icon-alert: var(--orange-55);
+    --icon-success: var(--green-65);
+    --icon-accent: var(--blue-60);
+    /* Tags */
+    /* --gray */
+    --tag-foreground-gray-01: hsla(240, 6%, 70%, 1);
+    --tag-border-gray-01: hsla(240, 6%, 70%, 0.12);
+    --tag-background-gray-01: hsla(240, 6%, 70%, 0.1);
+    --tag-background-gray-02: hsla(240, 6%, 70%, 0.15);
+    /* --purple */
+    --tag-foreground-purple-01: hsla(268, 50%, 75%, 1);
+    --tag-border-purple-01: hsla(268, 50%, 75%, 0.12);
+    --tag-background-purple-01: hsla(268, 50%, 75%, 0.1);
+    --tag-background-purple-02: hsla(268, 50%, 75%, 0.15);
+    /* --blue */
+    --tag-foreground-blue-01: hsla(220, 100%, 60%, 1);
+    --tag-border-blue-01: hsla(220, 61%, 65%, 0.12);
+    --tag-background-blue-01: hsla(220, 61%, 65%, 0.1);
+    --tag-background-blue-02: hsla(220, 61%, 65%, 0.15);
+    /* --mint */
+    --tag-foreground-mint-01: hsla(157, 77%, 65%, 1);
+    --tag-border-mint-01: hsla(157, 77%, 65%, 0.12);
+    --tag-background-mint-01: hsla(157, 77%, 65%, 0.1);
+    --tag-background-mint-02: hsla(157, 77%, 65%, 0.15);
+    /* --amber */
+    --tag-foreground-amber-01: hsla(35, 76%, 55%, 1);
+    --tag-border-amber-01: hsla(35, 76%, 55%, 0.12);
+    --tag-background-amber-01: hsla(35, 76%, 55%, 0.1);
+    --tag-background-amber-02: hsla(35, 76%, 55%, 0.15);
+    /* --peach */
+    --tag-foreground-peach-01: hsla(15, 71%, 65%, 1);
+    --tag-border-peach-01: hsla(15, 71%, 65%, 0.12);
+    --tag-background-peach-01: hsla(15, 71%, 65%, 0.1);
+    --tag-background-peach-02: hsla(15, 71%, 65%, 0.15);
+    /* --red */
+    --tag-foreground-red-01: hsla(0, 82%, 65%, 1);
+    --tag-border-red-01: hsla(0, 81%, 60%, 0.12);
+    --tag-background-red-01: hsla(0, 81%, 60%, 0.1);
+    --tag-background-red-02: hsla(0, 81%, 60%, 0.15);
   }
 }
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-borders-1;
   }
 
   html {
@@ -144,7 +340,7 @@
   }
 
   body {
-    @apply bg-background text-foreground text-sm font-normal;
+    @apply bg-background-1 text-foreground-2 text-sm font-normal -tracking-[0.02em];
   }
 }
 
@@ -158,11 +354,9 @@
 .card-auth {
   @apply w-[362px] border-none;
 }
-
 .card-auth-header {
   @apply space-x-0 space-y-0 p-0;
 }
-
 .card-auth-content {
   @apply w-full py-6;
 }
@@ -171,7 +365,6 @@
 .text-form-error {
   @apply text-destructive mt-2 text-xs font-light;
 }
-
 .form-input {
   @apply border-primary/10 bg-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-primary/50 !important;
@@ -181,7 +374,6 @@
 .react-flow__panel {
   @apply left-auto right-0 m-6 flex gap-[1px] !important;
 }
-
 .react-flow__controls-button {
   @apply rounded-md invert !important;
 }
@@ -197,307 +389,236 @@
 .diff-tailwindcss-wrapper .invisible {
   visibility: hidden;
 }
-
 .diff-tailwindcss-wrapper .group:hover .group-hover\:visible {
   visibility: visible;
 }
-
 .diff-tailwindcss-wrapper .sticky {
   position: sticky;
 }
-
 .diff-tailwindcss-wrapper .left-0 {
   left: 0;
 }
-
 .diff-tailwindcss-wrapper .left-\[100\%\] {
   left: 100%;
 }
-
 .diff-tailwindcss-wrapper .right-\[100\%\] {
   right: 100%;
 }
-
 .diff-tailwindcss-wrapper .top-0 {
   top: 0;
 }
-
 .diff-tailwindcss-wrapper .top-\[1px\] {
   top: 1px;
 }
-
 .diff-tailwindcss-wrapper .top-\[50\%\] {
   top: 50%;
 }
-
 .diff-tailwindcss-wrapper .z-\[1\] {
   z-index: 1;
 }
-
 .diff-tailwindcss-wrapper .ml-\[-1\.5em\] {
   margin-left: -1.5em;
 }
-
 .diff-tailwindcss-wrapper .block {
   display: block;
 }
-
 .diff-tailwindcss-wrapper .inline-block {
   display: inline-block;
 }
-
 .diff-tailwindcss-wrapper .flex {
   display: flex;
 }
-
 .diff-tailwindcss-wrapper .table {
   display: table;
 }
-
 .diff-tailwindcss-wrapper .hidden {
   display: none;
 }
-
 .diff-tailwindcss-wrapper .h-\[50\%\] {
   height: 50%;
 }
-
 .diff-tailwindcss-wrapper .h-full {
   height: 100%;
 }
-
 .diff-tailwindcss-wrapper .min-h-\[28px\] {
   min-height: 28px;
 }
-
 .diff-tailwindcss-wrapper .w-\[1\%\] {
   width: 1%;
 }
-
 .diff-tailwindcss-wrapper .w-\[1\.5em\] {
   width: 1.5em;
 }
-
 .diff-tailwindcss-wrapper .w-\[1\.5px\] {
   width: 1.5px;
 }
-
 .diff-tailwindcss-wrapper .w-\[10px\] {
   width: 10px;
 }
-
 .diff-tailwindcss-wrapper .w-\[1px\] {
   width: 1px;
 }
-
 .diff-tailwindcss-wrapper .w-\[50\%\] {
   width: 50%;
 }
-
 .diff-tailwindcss-wrapper .w-full {
   width: 100%;
 }
-
 .diff-tailwindcss-wrapper .w-max {
+  width: -moz-max-content;
   width: max-content;
 }
-
 .diff-tailwindcss-wrapper .min-w-\[100px\] {
   min-width: 100px;
 }
-
 .diff-tailwindcss-wrapper .min-w-\[40px\] {
   min-width: 40px;
 }
-
 .diff-tailwindcss-wrapper .min-w-full {
   min-width: 100%;
 }
-
 .diff-tailwindcss-wrapper .flex-shrink-0,
 .diff-tailwindcss-wrapper .shrink-0 {
   flex-shrink: 0;
 }
-
 .diff-tailwindcss-wrapper .basis-\[50\%\] {
   flex-basis: 50%;
 }
-
 .diff-tailwindcss-wrapper .table-fixed {
   table-layout: fixed;
 }
-
 .diff-tailwindcss-wrapper .border-collapse {
   border-collapse: collapse;
 }
-
 .diff-tailwindcss-wrapper .origin-center {
   transform-origin: center;
 }
-
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\] {
   --tw-translate-x: -50%;
 }
-
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\],
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
     skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
   --tw-translate-x: 50%;
 }
-
 .diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
   --tw-translate-y: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x))
     skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
-
 .diff-tailwindcss-wrapper .cursor-pointer {
   cursor: pointer;
 }
-
 .diff-tailwindcss-wrapper .select-none {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
-
 .diff-tailwindcss-wrapper .flex-col {
   flex-direction: column;
 }
-
 .diff-tailwindcss-wrapper .items-start {
   align-items: flex-start;
 }
-
 .diff-tailwindcss-wrapper .items-center {
   align-items: center;
 }
-
 .diff-tailwindcss-wrapper .justify-center {
   justify-content: center;
 }
-
 .diff-tailwindcss-wrapper .overflow-x-auto {
   overflow-x: auto;
 }
-
 .diff-tailwindcss-wrapper .overflow-y-hidden {
   overflow-y: hidden;
 }
-
 .diff-tailwindcss-wrapper .whitespace-nowrap {
   white-space: nowrap;
 }
-
 .diff-tailwindcss-wrapper .break-all {
   word-break: break-all;
 }
-
 .diff-tailwindcss-wrapper .bg-\[rgb\(222\2c 222\2c 222\)\] {
   --tw-bg-opacity: 1;
   background-color: rgb(222 222 222 / var(--tw-bg-opacity));
 }
-
 .diff-tailwindcss-wrapper .fill-current {
   fill: currentColor;
 }
-
 .diff-tailwindcss-wrapper .p-0 {
   padding: 0;
 }
-
 .diff-tailwindcss-wrapper .p-\[1px\] {
   padding: 1px;
 }
-
 .diff-tailwindcss-wrapper .px-\[10px\] {
   padding-left: 10px;
   padding-right: 10px;
 }
-
 .diff-tailwindcss-wrapper .py-\[2px\] {
   padding-bottom: 2px;
   padding-top: 2px;
 }
-
 .diff-tailwindcss-wrapper .py-\[6px\] {
   padding-bottom: 6px;
   padding-top: 6px;
 }
-
 .diff-tailwindcss-wrapper .pl-\[1\.5em\] {
   padding-left: 1.5em;
 }
-
 .diff-tailwindcss-wrapper .pl-\[10px\] {
   padding-left: 10px;
 }
-
 .diff-tailwindcss-wrapper .pl-\[2\.0em\] {
   padding-left: 2em;
 }
-
 .diff-tailwindcss-wrapper .pr-\[10px\] {
   padding-right: 10px;
 }
-
 .diff-tailwindcss-wrapper .text-right {
   text-align: right;
 }
-
 .diff-tailwindcss-wrapper .indent-\[0\.2em\] {
   text-indent: 0.2em;
 }
-
 .diff-tailwindcss-wrapper .align-top {
   vertical-align: top;
 }
-
 .diff-tailwindcss-wrapper .align-middle {
   vertical-align: middle;
 }
-
 .diff-tailwindcss-wrapper .text-\[1\.2em\] {
   font-size: 1.2em;
 }
-
 .diff-tailwindcss-wrapper .leading-\[1\.4\] {
   line-height: 1.4;
 }
-
 .diff-tailwindcss-wrapper .leading-\[1\.6\] {
   line-height: 1.6;
 }
-
 .diff-tailwindcss-wrapper .text-red-500 {
   --tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--tw-text-opacity));
 }
-
 .diff-tailwindcss-wrapper .opacity-\[0\.5\] {
   opacity: 0.5;
 }
-
 .diff-tailwindcss-wrapper .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate)
     var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
-
 .diff-tailwindcss-wrapper .transition-transform {
   transition-duration: 0.15s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-
 .diff-tailwindcss-wrapper .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
-
 .diff-tailwindcss-wrapper .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -505,8 +626,17 @@
 .diff-tailwindcss-wrapper .scrollbar-disable::-webkit-scrollbar {
   display: none;
 }
-
 .diff-tailwindcss-wrapper .scrollbar-disable {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.sub-menu-icon-bg {
+  stop {
+    stop-color: hsla(0, 0%, 94%, 1);
+
+    & + stop {
+      stop-color: hsla(0, 0%, 61%, 1);
+    }
+  }
 }

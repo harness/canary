@@ -1,11 +1,12 @@
 import * as React from 'react'
-import { DayPicker } from 'react-day-picker'
+import { DayPicker, type DateRange } from 'react-day-picker'
 
 import { buttonVariants } from '@/components/button'
 import { cn } from '@/lib/utils'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
+export type CalendarDateRange = DateRange
 
 function Calendar({ className, classNames, showOutsideDays = true, ...props }: CalendarProps) {
   return (

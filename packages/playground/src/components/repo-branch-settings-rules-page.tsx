@@ -20,9 +20,9 @@ import {
 import { repoBranchSettingsFormSchema } from './repo-settings/repo-branch-settings-rules/repo-branch-settings-rules-schema'
 import {
   BranchRulesActionType,
-  BypassUsersList,
-  MergeStrategy,
-  RepoBranchSettingsFormFields
+  type BypassUsersList,
+  type MergeStrategy,
+  type RepoBranchSettingsFormFields
 } from './repo-settings/repo-branch-settings-rules/types'
 
 type BranchSettingsErrors = {

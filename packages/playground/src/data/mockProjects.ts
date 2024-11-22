@@ -1,4 +1,4 @@
-import { Project } from '../components/home'
+import type { Project } from '../components/home'
 
 export const mockProjects: Project[] = [
   {

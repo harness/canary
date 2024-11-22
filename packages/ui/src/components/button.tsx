@@ -1,10 +1,9 @@
 import * as React from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
+import { CanaryOutletFactory, CanaryOutletName } from '@utils/CanaryOutletFactory'
+import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { CanaryOutletFactory, CanaryOutletName } from '../utils/CanaryOutletFactory'
-import { cn } from '../utils/cn'
 
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-[4px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
@@ -18,6 +17,7 @@ const buttonVariants = cva(
         tertiary: 'bg-tertiary text-secondary-foreground shadow-sm hover:bg-tertiary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
+        link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
         'gradient-border': 'bg-background-2 text-foreground-1 hover:bg-background-8',
         custom: ''

@@ -8,7 +8,7 @@ const StepsPaletteContent = {
   },
 
   SectionHeader: function SectionHeader({ children }: { children: React.ReactNode }) {
-    return <div className="text-accent-foreground mb-3 flex flex-row justify-between">{children}</div>
+    return <div className="mb-3 flex flex-row justify-between text-accent-foreground">{children}</div>
   },
 
   SectionItem: function SectionHeader({ children }: { children: React.ReactNode }) {

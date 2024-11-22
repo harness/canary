@@ -12,7 +12,7 @@ export const RepoSettingsGeneralDelete: React.FC<{
       <Text size={4} weight="medium">
         Delete Repository
       </Text>
-      <Text size={2} as="p" className="text-primary/80 max-w-full">
+      <Text size={2} as="p" className="max-w-full text-primary/80">
         This will permanently delete this repository, and everything contained in it.{' '}
       </Text>
 

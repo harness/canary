@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useForm, type SubmitHandler } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -44,7 +44,6 @@ interface RepoCreatePageFormProps {
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
 }
-
 const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
   onFormSubmit,
   apiError = null,
@@ -108,7 +107,7 @@ const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
             Create a new repository
           </Text>
           <Spacer size={3} />
-          <Text size={2} as="p" className="text-primary/80 max-w-full">
+          <Text size={2} as="p" className="max-w-full text-primary/80">
             A repository contains all project files, including the revision history. Already have a project repository
             elsewhere? Import a repository.
           </Text>

@@ -1,4 +1,4 @@
-import { EnumPullReqReviewDecision } from '../components/pull-request/interfaces'
+import type { EnumPullReqReviewDecision } from '../components/pull-request/interfaces'
 
 export const mockReviewers = [
   {

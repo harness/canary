@@ -1,40 +1,30 @@
 import { Badge, Icon, StackedList } from '@harnessio/canary'
 
-export interface Repo {
-  id: string
-  name: string
-  private: boolean
-  forks: number
-  pulls: number
-  timestamp: string
-  description?: string
-  stars?: number
-}
+import { Repository } from '../types/repository'
+import { NoData } from './no-data'
 
 export interface PageProps {
-  repos?: Repo[]
+  repos?: Repository[]
   LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+  handleResetFilters?: () => void
+  hasActiveFilters?: boolean
 }
 
-const Stats = ({ stars, forks, pulls }: { stars?: number; forks: number; pulls: number }) => (
+const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
-    <span className="flex items-center gap-1.5">
+    <span className="flex items-center gap-1">
       <Icon width={16} name="star" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{stars || 0}</span>
+      <span className="text-xs font-normal text-primary">{stars || 0}</span>
     </span>
-    <span className="flex items-center gap-1.5">
+    <span className="flex items-center gap-1">
       <Icon size={16} name="pull" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{forks || 0}</span>
-    </span>
-    <span className="flex items-center gap-1.5">
-      <Icon size={16} name="pull" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{pulls || 0}</span>
+      <span className="text-xs font-normal text-primary">{pulls || 0}</span>
     </span>
   </div>
 )
 
 const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => (
-  <div className="inline-flex items-center gap-2">
+  <div className="inline-flex items-center gap-2.5">
     {title}
     <Badge size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
       {isPrivate ? 'Private' : 'Public'}
@@ -42,34 +32,73 @@ const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => (
   </div>
 )
 
-export function RepoList({ repos, LinkComponent }: PageProps) {
+export function RepoList({ repos, LinkComponent, handleResetFilters, hasActiveFilters }: PageProps) {
   return (
     <>
-      {repos && repos.length > 0 && (
-        <StackedList.Root>
-          {repos.map((repo, repo_idx) => (
-            <LinkComponent key={repo.id} to={repo.name}>
-              <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
-                <StackedList.Field
-                  description={repo.description}
-                  title={<Title title={repo.name} isPrivate={repo.private} />}
-                />
-                <StackedList.Field
-                  title={
-                    <>
-                      Updated <em>{repo.timestamp}</em>
-                    </>
+      <StackedList.Root>
+        {repos && repos.length > 0 ? (
+          <>
+            {repos.map((repo, repo_idx) => (
+              <LinkComponent key={repo_idx} to={repo.name}>
+                <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
+                  <StackedList.Field
+                    primary
+                    description={repo.description}
+                    title={<Title title={repo.name} isPrivate={repo.private} />}
+                    className="gap-1.5"
+                  />
+                  <StackedList.Field
+                    title={
+                      <>
+                        Updated <em>{repo.timestamp}</em>
+                      </>
+                    }
+                    description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                    right
+                    label
+                    secondary
+                  />
+                </StackedList.Item>
+              </LinkComponent>
+            ))}
+          </>
+        ) : (
+          <div className="flex min-h-[50vh] items-center justify-center py-20">
+            {hasActiveFilters ? (
+              <NoData
+                iconName="no-search-magnifying-glass"
+                title="No search results"
+                description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+                primaryButton={{
+                  label: 'Clear search',
+                  onClick: () => {
+                    // TODO: add clear search handler
                   }
-                  description={<Stats stars={repo.stars} forks={repo.forks} pulls={repo.pulls} />}
-                  right
-                  label
-                  secondary
-                />
-              </StackedList.Item>
-            </LinkComponent>
-          ))}
-        </StackedList.Root>
-      )}
+                }}
+                secondaryButton={{
+                  label: 'Clear filters',
+                  onClick: handleResetFilters
+                }}
+              />
+            ) : (
+              <NoData
+                iconName="no-data-folder"
+                title="No repositories yet"
+                description={[
+                  'There are no repositories in this project yet.',
+                  'Create new or import an existing repository.'
+                ]}
+                primaryButton={{
+                  label: 'Create repository',
+                  onClick: () => {
+                    /* TODO: add create handler */
+                  }
+                }}
+              />
+            )}
+          </div>
+        )}
+      </StackedList.Root>
     </>
   )
 }

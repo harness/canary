@@ -42,12 +42,12 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
       if (typeof item.value === 'string') {
         return (
           <ul className="flex flex-row border-b align-middle" key={index}>
-            <li className="text-studio-7 w-1/2 py-2.5 pr-2.5" style={{ paddingLeft: `${level + 1}rem` }}>
+            <li className="w-1/2 py-2.5 pr-2.5 text-studio-7" style={{ paddingLeft: `${level + 1}rem` }}>
               <Text size={2} weight="normal">
                 {item.name}
               </Text>
             </li>
-            <li className="text-studio-7 w-1/2 py-2.5 pl-1.5 pr-2.5">
+            <li className="w-1/2 py-2.5 pl-1.5 pr-2.5 text-studio-7">
               <Text size={2} weight="normal">
                 {item.value}
               </Text>

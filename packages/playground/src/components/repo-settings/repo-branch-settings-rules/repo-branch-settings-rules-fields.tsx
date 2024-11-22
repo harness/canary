@@ -24,12 +24,12 @@ import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'
 import {
   BranchRulesActionType,
-  BypassUsersList,
-  Dispatch,
-  FieldProps,
-  MergeStrategy,
   PatternsButtonType,
-  Rule
+  type BypassUsersList,
+  type Dispatch,
+  type FieldProps,
+  type MergeStrategy,
+  type Rule
 } from './types'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (

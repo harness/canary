@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { get } from 'lodash-es'
 
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon } from '@harnessio/canary'
-import { InputComponent, InputProps, RenderInputs, useFormContext, type AnyFormikValue } from '@harnessio/forms'
+import { AnyFormikValue, InputComponent, InputProps, RenderInputs, useFormContext } from '@harnessio/forms'
 
 import { Layout } from '../layout/layout'
 import InputLabel from './common/InputLabel'
@@ -40,7 +40,7 @@ function GroupInputInternal(props: InputProps<AnyFormikValue>): JSX.Element {
     <Accordion
       type="single"
       collapsible
-      className="bg-muted/30 w-full px-3"
+      className="w-full bg-muted/30 px-3"
       // onValueChange={value => setIsOpen(!!value)}
     >
       <AccordionItem value={'group'} className="border-b-0">

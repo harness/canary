@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue
 } from '@harnessio/canary'
-import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { AnyFormikValue, InputComponent, InputProps } from '@harnessio/forms'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'

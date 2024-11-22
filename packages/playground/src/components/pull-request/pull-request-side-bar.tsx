@@ -162,7 +162,7 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
         </Text>
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <Button size="sm" variant="ghost" className="text-tertiary-background px-2 py-1">
+            <Button size="sm" variant="ghost" className="px-2 py-1 text-tertiary-background">
               <Icon name="vertical-ellipsis" size={12} />
             </Button>
           </PopoverTrigger>

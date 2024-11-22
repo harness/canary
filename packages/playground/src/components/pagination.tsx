@@ -93,7 +93,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
 }) => {
   // Render nothing if `totalPages` is absent or <= 1, and both `nextPage` and `previousPage` are absent
   if ((!totalPages || totalPages <= 1) && !nextPage && !previousPage) {
-    return null
+    return <></>
   }
 
   return (
@@ -112,7 +112,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
             </PaginationItem>
 
             {/* Pagination Items */}
-            {totalPages && <PaginationItems totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} />}
+            <PaginationItems totalPages={totalPages} currentPage={currentPage} goToPage={goToPage} />
 
             {/* Next Button */}
             <PaginationItem>

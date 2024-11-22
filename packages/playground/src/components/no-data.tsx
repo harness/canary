@@ -13,6 +13,7 @@ export interface NoDataProps {
     | 'no-data-webhooks'
     | 'no-data-branches'
     | 'no-data-members'
+    | 'no-repository'
   iconSize?: number
   description: string[]
   primaryButton?: {
@@ -41,12 +42,12 @@ export const NoData: React.FC<NoDataProps> = ({
 }) => {
   return (
     <div
-      className={cn('flex h-full w-full flex-col place-content-center place-items-center', {
+      className={cn('flex h-full w-full flex-col place-content-center place-items-center gap-4', {
         'py-20 pb-24': insideTabView
       })}
     >
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
-      <div className="flex flex-col place-content-center place-items-center gap-4">
+      <div className="flex flex-col place-content-center place-items-center gap-2.5">
         <Text size={5} weight="medium">
           {title}
         </Text>
@@ -60,24 +61,22 @@ export const NoData: React.FC<NoDataProps> = ({
           </div>
         )}
         {(primaryButton || secondaryButton) && (
-          <div className="mt-3.5 flex gap-4">
+          <div className="mt-4 flex gap-[1.125rem]">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button size="lg" asChild onClick={primaryButton.onClick}>
+                <Button asChild onClick={primaryButton.onClick}>
                   <NavLink to={primaryButton.to}>{primaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button size="lg" onClick={primaryButton.onClick}>
-                  {primaryButton.label}
-                </Button>
+                <Button onClick={primaryButton.onClick}>{primaryButton.label}</Button>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button variant="outline" size="lg" asChild onClick={secondaryButton.onClick}>
+                <Button variant="outline" asChild onClick={secondaryButton.onClick}>
                   <NavLink to={secondaryButton.to || '/</Button>'}>{secondaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" size="lg" onClick={secondaryButton.onClick}>
+                <Button variant="outline" onClick={secondaryButton.onClick}>
                   {secondaryButton.label}
                 </Button>
               ))}

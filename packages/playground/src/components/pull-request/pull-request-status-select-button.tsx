@@ -3,7 +3,7 @@ import { memo, useEffect, useMemo, useState } from 'react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@harnessio/canary'
 
 import { useEmitCodeCommentStatus } from './hooks/useEmitCodeCommentStatus'
-import { CodeCommentState, CommentItem, TypesPullReq, TypesPullReqActivity } from './interfaces'
+import { CodeCommentState, type CommentItem, type TypesPullReq, type TypesPullReqActivity } from './interfaces'
 
 interface CodeCommentStatusSelectProps {
   comment: { commentItems: CommentItem<TypesPullReqActivity>[] }

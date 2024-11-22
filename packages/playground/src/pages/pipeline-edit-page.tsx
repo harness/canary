@@ -31,7 +31,7 @@ import {
   useZodValidationResolver
 } from '@harnessio/forms'
 import { getNodesFromPipelineYaml, PipelineStudio } from '@harnessio/unified-pipeline'
-import { MonacoGlobals, YamlEditor, type InlineAction } from '@harnessio/yaml-editor'
+import { InlineAction, MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
 
 import { getInlineActions, InlineActionArgsType } from '../assets/inlineActions'
 // import pipelineV0 from '../assets/pipelineV0.yaml'

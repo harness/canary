@@ -1,4 +1,4 @@
-import { EnumCheckPayloadKind, EnumCheckStatus, EnumPrincipalType } from '../components/pull-request/interfaces'
+import type { EnumCheckPayloadKind, EnumCheckStatus, EnumPrincipalType } from '../components/pull-request/interfaces'
 
 export const mockChecksFailedData = [
   {

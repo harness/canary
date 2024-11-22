@@ -4,6 +4,7 @@ export const mockBranchData = [
     name: 'main',
     timestamp: 'last month',
     sha: '1A2Z3F',
+    default: true,
     user: {
       name: 'Tim Henderson',
       avatarUrl: '../../public/images/user-avatar.svg'

@@ -220,7 +220,7 @@ const PullRequestDiffViewer = ({
       {diffFileInstance && !renderCustomContent && (
         <DiffView<string>
           ref={ref}
-          className="bg-tr text-tertiary-background w-full"
+          className="bg-tr w-full text-tertiary-background"
           //   renderWidgetLine={({ onClose }) => {
           //     console.log('render widget')
           //     return <></>
@@ -274,7 +274,7 @@ const PullRequestDiffViewer = ({
               <Card className="rounded-md bg-transparent">
                 <div className="flex flex-col p-4">
                   <div className="flex items-center space-x-2">
-                    <div className='bg-tertiary-background size-6 rounded-full bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                    <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
                     <Text color="primary">adam </Text>
                     <Text size={1} color="tertiaryBackground">
                       4 hours ago
@@ -285,7 +285,7 @@ const PullRequestDiffViewer = ({
                   </Text>
                 </div>
                 <div className="flex items-center gap-3 border-t p-4">
-                  <div className='bg-tertiary-background size-6 rounded-full bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
                   <Input placeholder={'Reply here'} />
                 </div>
               </Card>

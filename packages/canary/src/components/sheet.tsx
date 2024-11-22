@@ -1,9 +1,10 @@
 import * as React from 'react'
 
+import { Button } from '@/components/button'
+import { Icon } from '@/components/icon'
 import { cn } from '@/lib/utils'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
-import { Cross2Icon } from '@radix-ui/react-icons'
-import { cva, type VariantProps } from 'class-variance-authority'
+import { cva, VariantProps } from 'class-variance-authority'
 
 const Sheet = SheetPrimitive.Root
 
@@ -13,19 +14,35 @@ const SheetClose = SheetPrimitive.Close
 
 const SheetPortal = SheetPrimitive.Portal
 
-const SheetOverlay = React.forwardRef<
-  React.ElementRef<typeof SheetPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <SheetPrimitive.Overlay
-    className={cn(
-      'data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50',
-      className
-    )}
-    {...props}
-    ref={ref}
-  />
-))
+interface SheetOverlayProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {
+  modal?: boolean
+  handleClose?: ((event: React.MouseEvent<HTMLDivElement>) => void) | (() => void)
+}
+
+const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Overlay>, SheetOverlayProps>(
+  ({ className, modal, handleClose, ...props }, ref) => {
+    if (modal) {
+      return (
+        <SheetPrimitive.Overlay
+          className={cn(
+            'bg-background-7/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50',
+            className
+          )}
+          {...props}
+          ref={ref}
+        />
+      )
+    }
+
+    return (
+      <div
+        aria-hidden="true"
+        className={cn('bg-background-7/50 fixed left-0 top-0 h-full w-full', className)}
+        onClick={e => handleClose?.(e)}
+      />
+    )
+  }
+)
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName
 
 const sheetVariants = cva(
@@ -36,7 +53,7 @@ const sheetVariants = cva(
         top: 'data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top inset-x-0 top-0 border-b',
         bottom:
           'data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom inset-x-0 bottom-0 border-t',
-        left: 'data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left inset-y-0 left-0 h-full w-3/4 border-r sm:max-w-sm',
+        left: 'inset-y-0 left-0 h-full w-3/4 !animate-none border-r sm:max-w-sm',
         right:
           'data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm'
       }
@@ -51,18 +68,43 @@ interface SheetContentProps
   extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
     VariantProps<typeof sheetVariants> {
   hideCloseButton?: boolean
+  handleClose?: () => void
+  modal?: boolean
+  overlayClassName?: string
 }
 
 const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Content>, SheetContentProps>(
-  ({ side = 'right', hideCloseButton = false, className, children, ...props }, ref) => (
+  (
+    {
+      side = 'right',
+      hideCloseButton = false,
+      modal = true,
+      handleClose,
+      className,
+      children,
+      overlayClassName,
+      ...props
+    },
+    ref
+  ) => (
     <SheetPortal>
-      <SheetOverlay />
+      <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick} />
       <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
         {children}
         {!hideCloseButton && (
-          <SheetPrimitive.Close className="ring-offset-background focus:ring-ring data-[state=open]:bg-secondary absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:pointer-events-none">
-            <Cross2Icon className="size-4" />
-            <span className="sr-only">Close</span>
+          <SheetPrimitive.Close
+            asChild
+            className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+          >
+            <Button
+              className="text-icons-4 hover:text-icons-2"
+              variant="custom"
+              size="icon"
+              onClick={() => handleClose?.()}
+            >
+              <Icon name="close" size={16} />
+              <span className="sr-only">Close</span>
+            </Button>
           </SheetPrimitive.Close>
         )}
       </SheetPrimitive.Content>

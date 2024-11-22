@@ -1,4 +1,4 @@
-import { EnumPrincipalType, EnumPullReqReviewDecision } from '../components/pull-request/interfaces'
+import type { EnumPrincipalType, EnumPullReqReviewDecision } from '../components/pull-request/interfaces'
 
 export const mockCodeOwnerData = {
   evaluation_entries: [

@@ -11,7 +11,14 @@ const tabsListVariants = cva('text-muted-foreground inline-flex items-center', {
       default: 'bg-muted h-9 justify-center rounded-lg p-1',
       underline: 'h-11 justify-center gap-4',
       navigation: 'border-border-background h-[44px] w-full justify-start gap-6 border-b px-8',
-      tabnav: 'h-[36px] w-full justify-start gap-0'
+      // TODO: Refactor - merge tabnav and branch variants
+      // tabnav is used in existing components and has conflicting styles
+      // Future steps:
+      // 1. Analyze all tabnav usage locations
+      // 2. Create a unified variant based on branch
+      // 3. Update existing components
+      tabnav: 'h-[36px] w-full justify-start gap-0',
+      branch: 'border-borders-4 flex w-full border-b px-3'
     }
   },
   defaultVariants: {
@@ -27,11 +34,13 @@ const tabsTriggerVariants = cva(
         default:
           'data-[state=active]:bg-background data-[state=active]:text-foreground rounded-md data-[state=active]:shadow',
         underline:
-          'data-[state=active]:text-primary data-[state=active]:border-primary m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
+          'data-[state=active]:border-primary data-[state=active]:text-primary m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
         navigation:
-          'text-tertiary-background hover:text-primary data-[state=active]:text-primary data-[state=active]:border-tertiary-background m-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal duration-150 ease-in-out',
+          'text-tertiary-background hover:text-primary data-[state=active]:border-tertiary-background data-[state=active]:text-primary m-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal duration-150 ease-in-out',
         tabnav:
-          'bg-background text-tertiary-background hover:text-primary data-[state=active]:text-primary [&svg]:data-[state=active]:text-primary tabnav-inactive data-[state=active]:tabnav-active m-0 h-[36px] items-center gap-2 rounded-t-md px-4 text-sm font-normal duration-150 ease-in-out'
+          'bg-background text-tertiary-background tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary m-0 h-[36px] items-center gap-2 rounded-t-md px-4 text-sm font-normal duration-150 ease-in-out',
+        branch:
+          'text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-4 data-[state=active]:text-foreground-1 -mb-px h-[34px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
       }
     },
     defaultVariants: {
@@ -48,7 +57,8 @@ const tabsContentVariants = cva(
         default: '',
         underline: '',
         navigation: '',
-        tabnav: ''
+        tabnav: '',
+        branch: ''
       }
     },
     defaultVariants: {

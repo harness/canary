@@ -35,7 +35,7 @@ export const UsersList = ({ users }: PageProps) => {
           <TableHead className="text-primary">Name</TableHead>
           <TableHead className="text-primary">Role</TableHead>
           <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-primary text-right">Date added</TableHead>
+          <TableHead className="text-right text-primary">Date added</TableHead>
           <TableHead>
             <></>
           </TableHead>
@@ -61,7 +61,7 @@ export const UsersList = ({ users }: PageProps) => {
                         <Badge
                           variant="outline"
                           size="xs"
-                          className="bg-tertiary-background/10 text-tertiary-background m-auto ml-2 h-5 rounded-full p-2 text-center text-xs font-normal"
+                          className="m-auto ml-2 h-5 rounded-full bg-tertiary-background/10 p-2 text-center text-xs font-normal text-tertiary-background"
                         >
                           {user.role}
                         </Badge>

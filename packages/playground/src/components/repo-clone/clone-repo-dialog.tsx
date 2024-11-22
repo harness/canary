@@ -18,7 +18,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({ httpsUrl, sshU
       <PopoverTrigger asChild>
         <Button variant="default">Clone repository</Button>
       </PopoverTrigger>
-      <PopoverContent className="border-border bg-primary-background min-w-[400px]" side="bottom" align="end">
+      <PopoverContent className="min-w-[400px] border-border bg-primary-background" side="bottom" align="end">
         <Text className="mb-2 text-left text-lg">Git clone URL</Text>
         <Tabs variant="underline" value={currentTab} onValueChange={setCurrentTab} className="mb-2">
           <TabsList>

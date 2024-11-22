@@ -5,11 +5,10 @@ import { Root as SearchBox } from './search-box'
 import { Spacer } from './spacer'
 
 interface ProjectProps {
-  avatarLink: React.ReactNode
-  productLink: React.ReactNode
+  logo: React.ReactNode
 }
 
-function Root({ avatarLink, productLink }: ProjectProps) {
+function Root({ logo }: ProjectProps) {
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
   const openSearchDialog = () => {
@@ -21,13 +20,9 @@ function Root({ avatarLink, productLink }: ProjectProps) {
   }
 
   return (
-    <div className="flex w-full flex-col items-start justify-items-start px-5 pb-5">
-      <div className="flex h-[55px] items-center gap-1.5">
-        {avatarLink}
-        {productLink}
-      </div>
+    <div className="flex w-full flex-col items-start justify-items-start px-5 pb-[1.375rem]">
+      <div className="flex h-[58px] items-center">{logo}</div>
       <SearchBox
-        textSize={1}
         width="full"
         placeholder="Search..."
         hasShortcut
@@ -35,10 +30,9 @@ function Root({ avatarLink, productLink }: ProjectProps) {
         shortcutModifier="cmd"
         onSearch={openSearchDialog}
         showOnFocus
-        className="rounded-sm"
       />
       <Dialog open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <DialogContent className="bg-primary-background border-border h-[600px] max-w-[800px]">
+        <DialogContent className="border-border bg-primary-background h-[600px] max-w-[800px]">
           <DialogHeader>
             <DialogTitle>Search</DialogTitle>
             <DialogDescription>

@@ -2,8 +2,6 @@ import { ACTION_STEP_DESCRIPTION, actionStepFormDefinition } from './action-step
 import { APPROVAL_STEP_DESCRIPTION, approvalStepFormDefinition } from './approval-step'
 import { BACKGROUND_STEP_DESCRIPTION, backgroundStepFormDefinition } from './background-step'
 import { BARRIER_STEP_DESCRIPTION, barrierStepFormDefinition } from './barrier-step'
-import { GROUP_DESCRIPTION, groupFormDefinition } from './group'
-import { PARALLEL_DESCRIPTION, parallelFormDefinition } from './parallel'
 import { QUEUE_STEP_DESCRIPTION, queueStepFormDefinition } from './queue-step'
 import { RUN_STEP_DESCRIPTION, runStepFormDefinition } from './run-step'
 import { RUN_TEST_STEP_DESCRIPTION, runTestStepFormDefinition } from './run-test-step'
@@ -13,17 +11,16 @@ import {
   BACKGROUND_STEP_IDENTIFIER,
   BARRIER_STEP_IDENTIFIER,
   GROUP_IDENTIFIER,
-  HARNESS_STEP_GROUP_IDENTIFIER,
-  HARNESS_STEP_IDENTIFIER,
-  HarnessStep,
-  HarnessStepGroup,
   PARALLEL_IDENTIFIER,
   QUEUE_STEP_IDENTIFIER,
   RUN_STEP_IDENTIFIER,
-  RUN_TEST_STEP_IDENTIFIER
+  RUN_TEST_STEP_IDENTIFIER,
+  type HARNESS_STEP_IDENTIFIER,
+  type HarnessStep,
+  type HarnessStepGroup
 } from './types'
 
-export const harnessSteps: (HarnessStep | HarnessStepGroup)[] = [
+export const harnessSteps: HarnessStep[] = [
   {
     identifier: RUN_STEP_IDENTIFIER,
     description: RUN_STEP_DESCRIPTION,
@@ -58,16 +55,6 @@ export const harnessSteps: (HarnessStep | HarnessStepGroup)[] = [
     identifier: ACTION_STEP_IDENTIFIER,
     description: ACTION_STEP_DESCRIPTION,
     formDefinition: actionStepFormDefinition
-  },
-  {
-    identifier: GROUP_IDENTIFIER,
-    description: GROUP_DESCRIPTION,
-    formDefinition: groupFormDefinition
-  },
-  {
-    identifier: PARALLEL_IDENTIFIER,
-    description: PARALLEL_DESCRIPTION,
-    formDefinition: parallelFormDefinition
   }
 ]
 
@@ -79,13 +66,11 @@ export interface StepQueue {
 export const harnessStepGroups: HarnessStepGroup[] = [
   {
     identifier: GROUP_IDENTIFIER,
-    description: GROUP_DESCRIPTION,
-    formDefinition: groupFormDefinition
+    description: 'Add serial steps group.'
   },
   {
     identifier: PARALLEL_IDENTIFIER,
-    description: PARALLEL_DESCRIPTION,
-    formDefinition: parallelFormDefinition
+    description: 'Add parallel steps group.'
   }
 ]
 
@@ -99,9 +84,7 @@ export function isHarnessGroup(step: { identifier: string }): boolean {
   return harnessStepsIds.some(stepId => stepId in step)
 }
 
-export function getHarnessStepIdentifier(step: {
-  identifier: string
-}): HARNESS_STEP_IDENTIFIER | HARNESS_STEP_GROUP_IDENTIFIER | undefined {
+export function getHarnessStepIdentifier(step: { identifier: string }): HARNESS_STEP_IDENTIFIER | undefined {
   return harnessSteps.find(harnessStep => harnessStep.identifier in step)?.identifier
 }
 

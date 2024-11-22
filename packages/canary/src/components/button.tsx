@@ -12,22 +12,25 @@ const buttonVariants = cva(
       variant: {
         default: 'bg-primary text-primary-foreground hover:bg-primary/90 shadow',
         destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
-        outline: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border shadow-sm',
+        outline: 'border-borders-2 text-foreground-2 hover:border-borders-6 hover:text-foreground-8 border',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
         tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80 shadow-sm',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        ghost: 'text-foreground-8 hover:bg-background-4 hover:text-foreground-1',
         link: 'text-primary underline-offset-4 hover:underline',
+        link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
-        'gradient-border': 'bg-background hover:bg-accent text-primary hover:text-accent-foreground'
+        'gradient-border': 'bg-background-2 text-foreground-1 hover:bg-background-8',
+        custom: ''
       },
       size: {
-        default: 'h-9 px-4 py-2',
-        sm: 'h-8 px-3 py-0 text-sm font-normal',
+        default: 'h-8 px-6 py-2',
+        sm: 'h-7 px-3 py-0 text-sm font-normal',
         xs: 'h-auto px-1.5 py-0.5 text-xs font-normal',
         lg: 'h-10 px-8',
-        icon: 'size-9',
+        icon: 'size-8',
         sm_icon: 'size-7',
-        xs_split: 'h-auto p-0 text-xs font-medium'
+        xs_split: 'h-auto p-0 text-xs font-medium',
+        custom: ''
       },
       borderRadius: {
         default: '',
@@ -35,15 +38,15 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'text-error border-[hsla(var(--error),0.3)] bg-[hsla(var(--error),0.1)]',
-        warning: 'text-warning border-[hsla(var(--warning),0.3)] bg-[hsla(var(--warning),0.1)]',
-        success: 'text-success border-[hsla(var(--success),0.3)] bg-[hsla(var(--success),0.1)]',
-        muted: 'text-tertiary-background border-tertiary-background/20 bg-tertiary-background/10',
-        primary: 'text-primary-foreground border-primary-foreground/20 bg-primary'
+        error: 'border-borders-danger/30 bg-background-danger text-error',
+        warning: 'border-borders-warning/30 bg-background-warning text-warning',
+        success: 'border-borders-success/30 bg-background-success text-success',
+        muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
+        primary: 'border-primary-foreground/20 bg-primary text-primary-foreground'
       },
       padding: {
         default: '',
-        sm: 'px-2.5'
+        sm: 'px-3'
       },
       gradient: {
         default: 'ai-button'

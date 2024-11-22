@@ -10,7 +10,7 @@ import {
 
 import { InputConfigType, InputType } from '../form-inputs/types'
 import { getContainerPartial } from './partials/container-partial'
-import { IInputConfigWithConfig, RUN_TEST_STEP_IDENTIFIER } from './types'
+import { RUN_TEST_STEP_IDENTIFIER, type IInputConfigWithConfig } from './types'
 
 export const RUN_TEST_STEP_DESCRIPTION = 'Run test step description.'
 

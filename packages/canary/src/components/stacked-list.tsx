@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from './icon'
 
 const listItemVariants = cva(
-  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-2 px-4 py-3 align-middle',
+  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b px-4 pb-[0.5625rem] pt-2.5 align-middle',
   {
     variants: {
       disabled: {
@@ -44,6 +44,7 @@ interface ListFieldProps extends Omit<React.ComponentProps<'div'>, 'title'>, Var
   description?: React.ReactNode
   label?: boolean
   secondary?: boolean
+  primary?: boolean
 }
 
 interface ListProps extends React.ComponentProps<'div'> {
@@ -56,6 +57,11 @@ const List: React.FC<ListProps> = ({ className, children, onlyTopRounded, border
     className={cn(
       'w-full',
       'border [&>div:last-child]:border-0',
+      '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-md',
+      {
+        '[&>*:last-child_>.stacked-list-item]:rounded-b-md [&>.stacked-list-item:last-child]:rounded-b-md':
+          !onlyTopRounded
+      },
       onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
       borderBackground ? 'border-border-background' : '',
       className
@@ -83,11 +89,12 @@ const ListItem = ({
   return (
     <Comp
       className={cn(
+        'stacked-list-item',
         listItemVariants({}),
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-primary/[0.01]' : '',
-        disableHover ? '' : 'hover:bg-primary/5 cursor-pointer duration-150 ease-in-out'
+        disableHover ? '' : 'hover:bg-tertiary-muted cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >
@@ -101,12 +108,12 @@ const ListItem = ({
 
 ListItem.displayName = 'StackedListItem'
 
-const ListField = ({ className, title, description, label, secondary, right, ...props }: ListFieldProps) => (
+const ListField = ({ className, title, description, label, primary, secondary, right, ...props }: ListFieldProps) => (
   <div className={cn(listFieldVariants({ right }), className)} {...props}>
     {title && (
       <div
         className={cn(
-          secondary ? 'text-xs' : 'text-sm', // Conditionally apply text-xs if secondary is true
+          primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm', // Conditionally apply text-xs if secondary is true
           'text-primary [&>em]:text-primary font-normal [&>em]:font-medium [&>em]:not-italic',
           label && 'text-tertiary-background',
           className
@@ -118,7 +125,8 @@ const ListField = ({ className, title, description, label, secondary, right, ...
     {description && (
       <div
         className={cn(
-          'text-tertiary-background flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap text-xs',
+          'text-tertiary-background flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap',
+          primary ? 'text-sm' : 'text-xs',
           className
         )}
       >

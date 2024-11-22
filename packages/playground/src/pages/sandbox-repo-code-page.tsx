@@ -90,7 +90,7 @@ function Sidebar() {
         <BranchSelector size="sm" name="main" branchList={mockBranchList} selectBranch={noop} width="full" />
         <ButtonGroup.Root
           spacing="0"
-          className="shadow-border h-full overflow-hidden rounded-md shadow-[inset_0_0_0_1px]"
+          className="h-full overflow-hidden rounded-md shadow-[inset_0_0_0_1px] shadow-border"
         >
           <Button size="sm" variant="ghost" className="w-8 rounded-none p-0">
             <Icon size={15} name="add-folder" className="text-primary/80" />

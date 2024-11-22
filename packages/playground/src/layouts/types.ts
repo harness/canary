@@ -6,6 +6,7 @@ export interface TypesUser {
   created?: number
   display_name?: string
   email?: string
+  role?: string
   uid?: string
   updated?: number
   url?: string

@@ -1,4 +1,4 @@
-import { EnumPrincipalType, EnumPullReqState } from '../components/pull-request/interfaces'
+import type { EnumPrincipalType, EnumPullReqState } from '../components/pull-request/interfaces'
 
 export const mockPullReqMetadata = {
   number: 5,

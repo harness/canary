@@ -1,4 +1,4 @@
-import { Tree, TreeViewElement } from '@harnessio/canary'
+import { Tree, type TreeViewElement } from '@harnessio/canary'
 
 import { renderTree } from './utils'
 

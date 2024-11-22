@@ -3,7 +3,7 @@ import * as React from 'react'
 import { cn } from '@/lib/utils'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const spacerVariants = cva('mt-4 block pb-px', {
+const spacerVariants = cva('mt-4 block', {
   variants: {
     size: {
       1: 'mt-1',

@@ -17,8 +17,8 @@ const RootWrapper = () => {
         currentUser={currentUser}
         pinnedMenu={null}
         recentMenu={undefined}
-        changePinnedMenu={(_data) => {}}
-        changeRecentMenu={(_data) => {}}
+        changePinnedMenu={_data => {}}
+        changeRecentMenu={_data => {}}
       />
     </>
   )

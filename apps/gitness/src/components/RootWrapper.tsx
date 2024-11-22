@@ -13,7 +13,13 @@ const RootWrapper = () => {
 
   return (
     <>
-      <SandboxRoot currentUser={currentUser} />
+      <SandboxRoot
+        currentUser={currentUser}
+        pinnedMenu={null}
+        recentMenu={undefined}
+        changePinnedMenu={(_data) => {}}
+        changeRecentMenu={(_data) => {}}
+      />
     </>
   )
 }

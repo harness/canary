@@ -1,9 +1,9 @@
 import * as React from 'react'
 
 import * as SheetPrimitive from '@radix-ui/react-dialog'
+import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '../utils/cn'
 import { Button } from './button'
 import { Icon } from './icon'
 
@@ -17,7 +17,7 @@ const SheetPortal = SheetPrimitive.Portal
 
 interface SheetOverlayProps extends React.ComponentPropsWithoutRef<typeof SheetPrimitive.Overlay> {
   modal?: boolean
-  handleClose?: () => void
+  handleClose?: ((event: React.MouseEvent<HTMLDivElement>) => void) | (() => void)
 }
 
 const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Overlay>, SheetOverlayProps>(
@@ -39,7 +39,7 @@ const SheetOverlay = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Ove
       <div
         aria-hidden="true"
         className={cn('bg-background-7/50 fixed left-0 top-0 h-full w-full', className)}
-        onClick={handleClose}
+        onClick={e => handleClose?.(e)}
       />
     )
   }
@@ -89,7 +89,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
     ref
   ) => (
     <SheetPortal>
-      <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose} />
+      <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick} />
       <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
         {children}
         {!hideCloseButton && (

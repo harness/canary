@@ -144,11 +144,16 @@ export default {
           6: 'hsl(var(--icon-06))',
           7: 'hsl(var(--icon-07))',
           8: 'hsl(var(--icon-08))',
+          9: 'hsl(var(--icon-09))',
+          10: 'hsl(var(--icon-10))',
           danger: 'hsl(var(--icon-danger))',
           alert: 'hsl(var(--icon-alert))',
           success: 'hsl(var(--icon-success))',
           accent: 'hsl(var(--icon-accent))'
         }
+      },
+      letterSpacing: {
+        tight: '-0.02em'
       },
       boxShadow: {
         1: '0px 8px 16px rgba(0, 0, 0, 0.30)',

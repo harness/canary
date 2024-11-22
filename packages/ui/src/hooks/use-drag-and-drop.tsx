@@ -11,7 +11,7 @@ interface UseDragAndDropProps<T> {
  * Hook for handling drag and drop functionality
  * Provides utilities for managing draggable items in a list
  *
- * @template T - Type of items being dragged (must include a 'type' property)
+ * @template T - Type of items being dragged
  * @param items - Array of draggable items
  * @param onReorder - Callback function to handle reordering of items
  *
@@ -37,7 +37,7 @@ interface UseDragAndDropProps<T> {
  * )
  * ```
  */
-const useDragAndDrop = <T extends { type: string }>({ items, onReorder }: UseDragAndDropProps<T>) => {
+const useDragAndDrop = <T,>({ items, onReorder }: UseDragAndDropProps<T>) => {
   /**
    * Handles the end of a drag operation
    * Calculates new positions and calls onReorder with updated items array

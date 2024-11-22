@@ -512,15 +512,6 @@ importers:
 
   packages/playground:
     dependencies:
-      '@dnd-kit/core':
-        specifier: ^6.1.0
-        version: 6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@dnd-kit/sortable':
-        specifier: ^8.0.0
-        version: 8.0.0(@dnd-kit/core@6.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
-      '@dnd-kit/utilities':
-        specifier: ^3.2.2
-        version: 3.2.2(react@18.3.1)
       '@git-diff-view/react':
         specifier: ^0.0.16
         version: 0.0.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -563,9 +554,6 @@ importers:
       clipboard-copy:
         specifier: ^3.1.0
         version: 3.2.0
-      date-fns:
-        specifier: ^3.6.0
-        version: 3.6.0
       diff2html:
         specifier: 3.4.22
         version: 3.4.22

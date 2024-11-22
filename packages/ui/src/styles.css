@@ -157,40 +157,40 @@
     --icon-accent: var(--blue-60);
     /* Tags */
     /* --gray */
-    --tag-foreground-gray-01: hsla(240, 6%, 70%, 1);
-    --tag-border-gray-01: hsla(240, 6%, 70%, 0.12);
-    --tag-background-gray-01: hsla(240, 6%, 70%, 0.1);
-    --tag-background-gray-02: hsla(240, 6%, 70%, 0.15);
+    --tag-foreground-gray-01: var(--grey-70);
+    --tag-border-gray-01: var(--grey-70) / 0.12; /* grey70/12 */
+    --tag-background-gray-01: var(--grey-70) / 0.1; /* grey70/10 */
+    --tag-background-gray-02: var(--grey-70) / 0.15; /* grey70/15 */
     /* --purple */
-    --tag-foreground-purple-01: hsla(268, 50%, 75%, 1);
-    --tag-border-purple-01: hsla(268, 50%, 75%, 0.12);
-    --tag-background-purple-01: hsla(268, 50%, 75%, 0.1);
-    --tag-background-purple-02: hsla(268, 50%, 75%, 0.15);
+    --tag-foreground-purple-01: var(--purple);
+    --tag-border-purple-01: var(--purple) / 0.12; /* purple/12 */
+    --tag-background-purple-01: var(--purple) / 0.1; /* purple/10 */
+    --tag-background-purple-02: var(--purple) / 0.15; /* purple/15 */
     /* --blue */
-    --tag-foreground-blue-01: hsla(220, 100%, 60%, 1);
-    --tag-border-blue-01: hsla(220, 61%, 65%, 0.12);
-    --tag-background-blue-01: hsla(220, 61%, 65%, 0.1);
-    --tag-background-blue-02: hsla(220, 61%, 65%, 0.15);
+    --tag-foreground-blue-01: var(--blue-60);
+    --tag-border-blue-01: var(--blue-60) / 0.12; /* blue60/12 */
+    --tag-background-blue-01: var(--blue-60) / 0.1; /* blue60/10 */
+    --tag-background-blue-02: var(--blue-60) / 0.15; /* blue60/15 */
     /* --mint */
-    --tag-foreground-mint-01: hsla(157, 77%, 65%, 1);
-    --tag-border-mint-01: hsla(157, 77%, 65%, 0.12);
-    --tag-background-mint-01: hsla(157, 77%, 65%, 0.1);
-    --tag-background-mint-02: hsla(157, 77%, 65%, 0.15);
+    --tag-foreground-mint-01: var(--mint);
+    --tag-border-mint-01: var(--mint) / 0.12; /* mint/12 */
+    --tag-background-mint-01: var(--mint) / 0.1; /* mint/10 */
+    --tag-background-mint-02: var(--mint) / 0.15; /* mint/15 */
     /* --amber */
-    --tag-foreground-amber-01: hsla(35, 76%, 55%, 1);
-    --tag-border-amber-01: hsla(35, 76%, 55%, 0.12);
-    --tag-background-amber-01: hsla(35, 76%, 55%, 0.1);
-    --tag-background-amber-02: hsla(35, 76%, 55%, 0.15);
+    --tag-foreground-amber-01: var(--amber);
+    --tag-border-amber-01: var(--amber) / 0.12; /* amber/12 */
+    --tag-background-amber-01: var(--amber) / 0.1; /* amber/10 */
+    --tag-background-amber-02: var(--amber) / 0.15; /* amber/15 */
     /* --peach */
-    --tag-foreground-peach-01: hsla(15, 71%, 65%, 1);
-    --tag-border-peach-01: hsla(15, 71%, 65%, 0.12);
-    --tag-background-peach-01: hsla(15, 71%, 65%, 0.1);
-    --tag-background-peach-02: hsla(15, 71%, 65%, 0.15);
+    --tag-foreground-peach-01: var(--peach);
+    --tag-border-peach-01: var(--peach) / 0.12; /* peach/12 */
+    --tag-background-peach-01: var(--peach) / 0.1; /* peach/10 */
+    --tag-background-peach-02: var(--peach) / 0.15; /* peach/15 */
     /* --red */
-    --tag-foreground-red-01: hsla(0, 82%, 65%, 1);
-    --tag-border-red-01: hsla(0, 81%, 60%, 0.12);
-    --tag-background-red-01: hsla(0, 81%, 60%, 0.1);
-    --tag-background-red-02: hsla(0, 81%, 60%, 0.15);
+    --tag-foreground-red-01: var(--red);
+    --tag-border-red-01: var(--red) / 0.12; /* red/12 */
+    --tag-background-red-01: var(--red) / 0.1; /* red/10 */
+    --tag-background-red-02: var(--red) / 0.15; /* red/15 */
   }
 
   .dark {
@@ -293,40 +293,40 @@
     --icon-accent: var(--blue-60);
     /* Tags */
     /* --gray */
-    --tag-foreground-gray-01: hsla(240, 6%, 70%, 1);
-    --tag-border-gray-01: hsla(240, 6%, 70%, 0.12);
-    --tag-background-gray-01: hsla(240, 6%, 70%, 0.1);
-    --tag-background-gray-02: hsla(240, 6%, 70%, 0.15);
+    --tag-foreground-gray-01: var(--grey-70);
+    --tag-border-gray-01: var(--grey-70) / 0.12; /* grey70/12 */
+    --tag-background-gray-01: var(--grey-70) / 0.1; /* grey70/10 */
+    --tag-background-gray-02: var(--grey-70) / 0.15; /* grey70/15 */
     /* --purple */
-    --tag-foreground-purple-01: hsla(268, 50%, 75%, 1);
-    --tag-border-purple-01: hsla(268, 50%, 75%, 0.12);
-    --tag-background-purple-01: hsla(268, 50%, 75%, 0.1);
-    --tag-background-purple-02: hsla(268, 50%, 75%, 0.15);
+    --tag-foreground-purple-01: var(--purple);
+    --tag-border-purple-01: var(--purple) / 0.12; /* purple/12 */
+    --tag-background-purple-01: var(--purple) / 0.1; /* purple/10 */
+    --tag-background-purple-02: var(--purple) / 0.15; /* purple/15 */
     /* --blue */
-    --tag-foreground-blue-01: hsla(220, 100%, 60%, 1);
-    --tag-border-blue-01: hsla(220, 61%, 65%, 0.12);
-    --tag-background-blue-01: hsla(220, 61%, 65%, 0.1);
-    --tag-background-blue-02: hsla(220, 61%, 65%, 0.15);
+    --tag-foreground-blue-01: var(--blue-60);
+    --tag-border-blue-01: var(--blue-60) / 0.12; /* blue60/12 */
+    --tag-background-blue-01: var(--blue-60) / 0.1; /* blue60/10 */
+    --tag-background-blue-02: var(--blue-60) / 0.15; /* blue60/15 */
     /* --mint */
-    --tag-foreground-mint-01: hsla(157, 77%, 65%, 1);
-    --tag-border-mint-01: hsla(157, 77%, 65%, 0.12);
-    --tag-background-mint-01: hsla(157, 77%, 65%, 0.1);
-    --tag-background-mint-02: hsla(157, 77%, 65%, 0.15);
+    --tag-foreground-mint-01: var(--mint);
+    --tag-border-mint-01: var(--mint) / 0.12; /* mint/12 */
+    --tag-background-mint-01: var(--mint) / 0.1; /* mint/10 */
+    --tag-background-mint-02: var(--mint) / 0.15; /* mint/15 */
     /* --amber */
-    --tag-foreground-amber-01: hsla(35, 76%, 55%, 1);
-    --tag-border-amber-01: hsla(35, 76%, 55%, 0.12);
-    --tag-background-amber-01: hsla(35, 76%, 55%, 0.1);
-    --tag-background-amber-02: hsla(35, 76%, 55%, 0.15);
+    --tag-foreground-amber-01: var(--amber);
+    --tag-border-amber-01: var(--amber) / 0.12; /* amber/12 */
+    --tag-background-amber-01: var(--amber) / 0.1; /* amber/10 */
+    --tag-background-amber-02: var(--amber) / 0.15; /* amber/15 */
     /* --peach */
-    --tag-foreground-peach-01: hsla(15, 71%, 65%, 1);
-    --tag-border-peach-01: hsla(15, 71%, 65%, 0.12);
-    --tag-background-peach-01: hsla(15, 71%, 65%, 0.1);
-    --tag-background-peach-02: hsla(15, 71%, 65%, 0.15);
+    --tag-foreground-peach-01: var(--peach);
+    --tag-border-peach-01: var(--peach) / 0.12; /* peach/12 */
+    --tag-background-peach-01: var(--peach) / 0.1; /* peach/10 */
+    --tag-background-peach-02: var(--peach) / 0.15; /* peach/15 */
     /* --red */
-    --tag-foreground-red-01: hsla(0, 82%, 65%, 1);
-    --tag-border-red-01: hsla(0, 81%, 60%, 0.12);
-    --tag-background-red-01: hsla(0, 81%, 60%, 0.1);
-    --tag-background-red-02: hsla(0, 81%, 60%, 0.15);
+    --tag-foreground-red-01: var(--red);
+    --tag-border-red-01: var(--red) / 0.12; /* red/12 */
+    --tag-background-red-01: var(--red) / 0.1; /* red/10 */
+    --tag-background-red-02: var(--red) / 0.15; /* red/15 */
   }
 }
 

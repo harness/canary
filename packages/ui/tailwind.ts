@@ -135,6 +135,84 @@ export default {
           danger: 'hsl(var(--border-danger))',
           success: 'hsl(var(--border-success))'
         },
+        tag: {
+          border: {
+            gray: {
+              1: 'hsla(var(--tag-border-gray-01))'
+            },
+            purple: {
+              1: 'hsla(var(--tag-border-purple-01))'
+            },
+            blue: {
+              1: 'hsla(var(--tag-border-blue-01))'
+            },
+            mint: {
+              1: 'hsla(var(--tag-border-mint-01))'
+            },
+            amber: {
+              1: 'hsla(var(--tag-border-amber-01))'
+            },
+            peach: {
+              1: 'hsla(var(--tag-border-peach-01))'
+            },
+            red: {
+              1: 'hsla(var(--tag-border-red-01))'
+            }
+          },
+          foreground: {
+            gray: {
+              1: 'hsl(var(--tag-foreground-gray-01))'
+            },
+            purple: {
+              1: 'hsl(var(--tag-foreground-purple-01))'
+            },
+            blue: {
+              1: 'hsl(var(--tag-foreground-blue-01))'
+            },
+            mint: {
+              1: 'hsl(var(--tag-foreground-mint-01))'
+            },
+            amber: {
+              1: 'hsl(var(--tag-foreground-amber-01))'
+            },
+            peach: {
+              1: 'hsl(var(--tag-foreground-peach-01))'
+            },
+            red: {
+              1: 'hsl(var(--tag-foreground-red-01))'
+            }
+          },
+          background: {
+            gray: {
+              1: 'hsla(var(--tag-background-gray-01))',
+              2: 'hsla(var(--tag-background-gray-02))'
+            },
+            purple: {
+              1: 'hsla(var(--tag-background-purple-01))',
+              2: 'hsla(var(--tag-background-purple-02))'
+            },
+            blue: {
+              1: 'hsla(var(--tag-background-blue-01))',
+              2: 'hsla(var(--tag-background-blue-02))'
+            },
+            mint: {
+              1: 'hsla(var(--tag-background-mint-01))',
+              2: 'hsla(var(--tag-background-mint-02))'
+            },
+            amber: {
+              1: 'hsla(var(--tag-background-amber-01))',
+              2: 'hsla(var(--tag-background-amber-02))'
+            },
+            peach: {
+              1: 'hsla(var(--tag-background-peach-01))',
+              2: 'hsla(var(--tag-background-peach-02))'
+            },
+            red: {
+              1: 'hsla(var(--tag-background-red-01))',
+              2: 'hsla(var(--tag-background-red-02))'
+            }
+          }
+        },
         icons: {
           1: 'hsl(var(--icon-01))',
           2: 'hsl(var(--icon-02))',
@@ -159,9 +237,6 @@ export default {
         1: '0px 8px 16px rgba(0, 0, 0, 0.30)',
         2: '0px 8px 8px rgba(0, 0, 0, 0.60)',
         'pagination-1': '0px 2px 4px rgba(0, 0, 0, 0.50)'
-      },
-      border: {
-        DEFAULT: '1px'
       },
       fontSize: {
         tiny: '0.75rem',

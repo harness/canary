@@ -101,7 +101,7 @@ const FilterTrigger = ({
         <span className="text-foreground-2 hover:text-foreground-1 text-14 flex items-center gap-x-1">
           {displayLabel}
           {!hideCount && activeFilters.length > 0 && (
-            <span className="text-foreground-2 bg-background-2 text-11 border-borders-5 flex h-[18px] min-w-[17px] items-center justify-center rounded border px-1">
+            <span className="text-tag-foreground-blue-1 bg-tag-background-blue-1 text-11 border-tag-border-blue-1 flex h-[18px] min-w-[17px] items-center justify-center rounded border px-1">
               {activeFilters.length}
             </span>
           )}

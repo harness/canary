@@ -27,6 +27,7 @@ import { queryClient } from './framework/queryClient'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayout from './layouts/RepoLayout'
+import { RepoHeader as RepoHeaderV2 } from './pages-v2/repo/repo-header'
 // import ReposListPage from './pages/repo/repo-list'
 import ReposListPage from './pages-v2/repo/repo-list'
 import CreateProject from './pages/create-project'
@@ -81,406 +82,416 @@ export default function App() {
     }
   })
 
-  const router = createBrowserRouter([
-    {
-      path: '/signin',
-      element: <SignIn />
-    },
-    {
-      path: '/signup',
-      element: <SignUp />
-    },
-    {
-      path: '/forgot',
-      element: <ForgotPasswordPage />
-    },
-    {
-      path: '/otp',
-      element: <OTPPage />
-    },
-    {
-      path: '/new-password',
-      element: <NewPasswordPage />
-    },
-    {
-      path: '/v2',
-      element: <RootWrapper />,
-      children: [
-        {
-          path: ':spaceId/repos',
-          element: <ReposListPage />
-        }
-      ]
-    },
-    {
-      path: '/',
-      element: <RootWrapper />,
-      children: [
-        {
-          index: true,
-          element: <LandingPage />
-        },
-        {
-          path: 'spaces/:spaceId/repos/:repoId/pipelines',
-          element: <PipelineLayout />,
-          children: [
-            {
-              path: 'create',
-              element: <PipelineCreate />
-            },
-            {
-              path: ':pipelineId',
-              children: [
-                { index: true, element: <RepoExecutionListPage /> },
-                {
-                  path: 'edit',
-                  element: <PipelineEditPage />
-                },
-                { path: 'executions/:executionId', element: <Execution /> }
-              ]
-            }
-          ]
-        },
-        {
-          path: 'spaces',
-          element: <RepoHeader />,
-          children: [
-            {
-              path: ':spaceId/repos',
-              element: <ReposListPage />
-            },
-            {
-              path: ':spaceId/repos/:repoId',
-              element: <RepoLayout />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="summary" replace />
-                },
-                {
-                  path: 'summary',
-                  element: <RepoSummaryList />
-                },
-                {
-                  path: 'code',
-                  element: (
-                    <ExplorerPathsProvider>
-                      <RepoFiles />
-                    </ExplorerPathsProvider>
-                  ),
-                  children: [
-                    {
-                      index: true,
-                      element: <FileViewer />
-                    },
-                    {
-                      path: 'edit/:gitRef/~/:resourcePath*',
-                      element: <FileEditor />
-                    },
-                    {
-                      path: 'new/:gitRef/~/*',
-                      element: <FileEditor />,
-                      children: [
-                        {
-                          path: ':resourcePath*',
-                          element: <FileViewer />
-                        }
-                      ]
-                    },
-                    {
-                      path: ':gitRef',
-                      element: <FileViewer />,
-                      children: [
-                        {
-                          index: true,
-                          element: <FileViewer />
-                        },
-                        {
-                          path: '~/:resourcePath*',
-                          element: <FileViewer />
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  path: 'pipelines',
-                  children: [
-                    {
-                      index: true,
-                      element: <RepoPipelinesPage />
-                    }
-                  ]
-                },
-                {
-                  path: 'commits',
-                  element: <RepoCommitsPage />
-                },
-                {
-                  path: 'pull-requests',
-                  children: [
-                    { index: true, element: <PullRequestListPage /> },
-                    {
-                      path: 'compare/:diffRefs*?',
-                      element: <CreatePullRequest />
-                    }
-                  ]
-                },
-                {
-                  path: 'pull-requests/:pullRequestId',
-                  element: <PullRequestLayout />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="conversation" replace />
-                    },
-                    {
-                      path: 'conversation',
-                      element: (
-                        <PullRequestDataProvider>
-                          <PullRequestConversationPage />
-                        </PullRequestDataProvider>
-                      )
-                    },
-                    {
-                      path: 'commits',
-                      element: <PullRequestCommitsPage />
-                    },
-                    {
-                      path: 'changes',
-                      element: (
-                        <PullRequestDataProvider>
-                          <PullRequestChangesPage />
-                        </PullRequestDataProvider>
-                      )
-                    },
-                    {
-                      path: 'checks',
-                      element: <>Checks</>
-                    }
-                  ]
-                },
+  const router = createBrowserRouter(
+    [
+      {
+        path: '/signin',
+        element: <SignIn />
+      },
+      {
+        path: '/signup',
+        element: <SignUp />
+      },
+      {
+        path: '/forgot',
+        element: <ForgotPasswordPage />
+      },
+      {
+        path: '/otp',
+        element: <OTPPage />
+      },
+      {
+        path: '/new-password',
+        element: <NewPasswordPage />
+      },
+      {
+        path: '/v2',
+        element: <RootWrapper />,
+        children: [
+          {
+            path: 'spaces',
+            element: <RepoHeaderV2 />,
+            children: [
+              {
+                path: ':spaceId/repos',
+                element: <ReposListPage />
+              }
+            ]
+          }
+        ]
+      },
+      {
+        path: '/',
+        element: <RootWrapper />,
+        children: [
+          {
+            index: true,
+            element: <LandingPage />
+          },
+          {
+            path: 'spaces/:spaceId/repos/:repoId/pipelines',
+            element: <PipelineLayout />,
+            children: [
+              {
+                path: 'create',
+                element: <PipelineCreate />
+              },
+              {
+                path: ':pipelineId',
+                children: [
+                  { index: true, element: <RepoExecutionListPage /> },
+                  {
+                    path: 'edit',
+                    element: <PipelineEditPage />
+                  },
+                  { path: 'executions/:executionId', element: <Execution /> }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'spaces',
+            element: <RepoHeader />,
+            children: [
+              {
+                path: ':spaceId/repos',
+                element: <ReposListPage />
+              },
+              {
+                path: ':spaceId/repos/:repoId',
+                element: <RepoLayout />,
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to="summary" replace />
+                  },
+                  {
+                    path: 'summary',
+                    element: <RepoSummaryList />
+                  },
+                  {
+                    path: 'code',
+                    element: (
+                      <ExplorerPathsProvider>
+                        <RepoFiles />
+                      </ExplorerPathsProvider>
+                    ),
+                    children: [
+                      {
+                        index: true,
+                        element: <FileViewer />
+                      },
+                      {
+                        path: 'edit/:gitRef/~/:resourcePath*',
+                        element: <FileEditor />
+                      },
+                      {
+                        path: 'new/:gitRef/~/*',
+                        element: <FileEditor />,
+                        children: [
+                          {
+                            path: ':resourcePath*',
+                            element: <FileViewer />
+                          }
+                        ]
+                      },
+                      {
+                        path: ':gitRef',
+                        element: <FileViewer />,
+                        children: [
+                          {
+                            index: true,
+                            element: <FileViewer />
+                          },
+                          {
+                            path: '~/:resourcePath*',
+                            element: <FileViewer />
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    path: 'pipelines',
+                    children: [
+                      {
+                        index: true,
+                        element: <RepoPipelinesPage />
+                      }
+                    ]
+                  },
+                  {
+                    path: 'commits',
+                    element: <RepoCommitsPage />
+                  },
+                  {
+                    path: 'pull-requests',
+                    children: [
+                      { index: true, element: <PullRequestListPage /> },
+                      {
+                        path: 'compare/:diffRefs*?',
+                        element: <CreatePullRequest />
+                      }
+                    ]
+                  },
+                  {
+                    path: 'pull-requests/:pullRequestId',
+                    element: <PullRequestLayout />,
+                    children: [
+                      {
+                        index: true,
+                        element: <Navigate to="conversation" replace />
+                      },
+                      {
+                        path: 'conversation',
+                        element: (
+                          <PullRequestDataProvider>
+                            <PullRequestConversationPage />
+                          </PullRequestDataProvider>
+                        )
+                      },
+                      {
+                        path: 'commits',
+                        element: <PullRequestCommitsPage />
+                      },
+                      {
+                        path: 'changes',
+                        element: (
+                          <PullRequestDataProvider>
+                            <PullRequestChangesPage />
+                          </PullRequestDataProvider>
+                        )
+                      },
+                      {
+                        path: 'checks',
+                        element: <>Checks</>
+                      }
+                    ]
+                  },
 
-                {
-                  path: 'webhooks',
-                  element: <RepoWebhooksListPage />
-                },
-                {
-                  path: 'webhooks/create',
-                  element: <CreateWebhookContainer />,
-                  children: [
-                    {
-                      path: ':webhookId',
-                      element: <CreateWebhookContainer />
-                    }
-                  ]
-                },
-                {
-                  path: 'branches',
-                  element: <RepoBranchesListPage />
-                },
-                {
-                  path: 'settings',
-                  element: <RepoSettingsPage />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="general" replace />
-                    },
-                    {
-                      path: 'general',
-                      element: <RepoSettingsGeneralPageContainer />
-                    },
-                    {
-                      path: 'rules',
-                      element: <RepoSettingsGeneralPageContainer />
-                    },
-                    {
-                      path: 'rules/create',
-                      element: <RepoBranchSettingsRulesPageContainer />,
-                      children: [
-                        {
-                          path: ':identifier',
-                          element: <RepoBranchSettingsRulesPageContainer />
-                        }
-                      ]
-                    },
-                    {
-                      path: '*',
-                      element: <RepoSettingsPlaceholderPage />
-                    }
-                  ]
-                }
-              ]
-            },
-            // Pipelines (OUTSIDE REPOS)
-            {
-              path: ':spaceId/pipelines',
-              children: [
-                {
-                  index: true,
-                  element: <ProjectPipelinesPage />
-                },
-                {
-                  path: 'create',
-                  element: <PipelineCreate />
-                },
-                {
-                  path: ':pipelineId',
-                  element: <RepoExecutionListPage />
-                }
-              ]
-            },
-            // Executions (OUTSIDE REPOS)
-            {
-              path: ':spaceId/executions',
-              element: <RepoExecutionListPage />
-            },
-            {
-              path: 'create',
-              element: <CreateProject />
-            },
-            {
-              path: ':spaceId/settings',
-              element: <RootWrapper />,
-              children: [
-                {
-                  element: <SettingsProjectNav />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="general" replace />
-                    },
-                    {
-                      path: 'general',
-                      element: <ProjectSettingsGeneralPage />
-                    },
-                    {
-                      path: 'members',
-                      children: [
-                        { index: true, element: <ProjectSettingsMemebersPage /> },
-                        {
-                          path: 'create',
-                          element: <CreateNewMemberPage />
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              path: ':spaceId/repos/create',
-              element: <CreateRepo />
-            },
-            {
-              path: ':spaceId/repos/import',
-              element: <RepoImportContainer />
-            }
-          ]
-        },
-        {
-          path: 'settings',
-          element: <SandboxSettings />,
-          children: [
-            {
-              element: <SettingsAccountPage />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="general" replace />
-                },
-                {
-                  path: 'general',
-                  element: <SettingsProfileGeneralPage />
-                },
-                {
-                  path: 'keys',
-                  element: <SettingsProfileKeysPage />
-                }
-              ]
-            }
-          ]
-        },
-        {
-          path: 'users',
-          element: <UserManagementPageContainer />
-        },
-        {
-          path: 'users/create',
-          element: <CreateNewUserContainer />
-        }
-      ]
-    },
-    {
-      path: 'logout',
-      element: <Logout />
-    },
-    {
-      path: 'chaos-engineering',
-      element: <EmptyPage pathName="Chaos Engineering" />
-    },
-    {
-      path: 'environments',
-      element: <EmptyPage pathName="Environments" />
-    },
-    {
-      path: 'secrets',
-      element: <EmptyPage pathName="Secrets" />
-    },
-    {
-      path: 'connectors',
-      element: <EmptyPage pathName="Connectors" />
-    },
-    {
-      path: 'continuous-delivery-gitops',
-      element: <EmptyPage pathName="Continuous Delivery Gitops" />
-    },
-    {
-      path: 'continuous-integration',
-      element: <EmptyPage pathName="Continuous Integration" />
-    },
-    {
-      path: 'feature-flags',
-      element: <EmptyPage pathName="Feature Flags" />
-    },
-    {
-      path: 'infrastructure-as-code',
-      element: <EmptyPage pathName="Infrastructure as Code" />
-    },
-    {
-      path: 'service-reliability',
-      element: <EmptyPage pathName="Service Reliability" />
-    },
-    {
-      path: 'internal-developer-portal',
-      element: <EmptyPage pathName="Internal Developer Portal" />
-    },
-    {
-      path: 'infrastructure-as-code',
-      element: <EmptyPage pathName="Infrastructure as Code" />
-    },
-    {
-      path: 'code-repository',
-      element: <EmptyPage pathName="Code Repository" />
-    },
-    {
-      path: 'software-engineering-insights',
-      element: <EmptyPage pathName="Software Engineering Insights" />
-    },
-    {
-      path: 'software-supply-chain-assurance',
-      element: <EmptyPage pathName="Software Supply Chain Assurance" />
-    },
-    {
-      path: 'security-testing-orchestration',
-      element: <EmptyPage pathName="Security Testing Orchestration" />
-    },
-    {
-      path: 'cloud-cost-management',
-      element: <EmptyPage pathName="Cloud Cost Management" />
-    }
-  ])
+                  {
+                    path: 'webhooks',
+                    element: <RepoWebhooksListPage />
+                  },
+                  {
+                    path: 'webhooks/create',
+                    element: <CreateWebhookContainer />,
+                    children: [
+                      {
+                        path: ':webhookId',
+                        element: <CreateWebhookContainer />
+                      }
+                    ]
+                  },
+                  {
+                    path: 'branches',
+                    element: <RepoBranchesListPage />
+                  },
+                  {
+                    path: 'settings',
+                    element: <RepoSettingsPage />,
+                    children: [
+                      {
+                        index: true,
+                        element: <Navigate to="general" replace />
+                      },
+                      {
+                        path: 'general',
+                        element: <RepoSettingsGeneralPageContainer />
+                      },
+                      {
+                        path: 'rules',
+                        element: <RepoSettingsGeneralPageContainer />
+                      },
+                      {
+                        path: 'rules/create',
+                        element: <RepoBranchSettingsRulesPageContainer />,
+                        children: [
+                          {
+                            path: ':identifier',
+                            element: <RepoBranchSettingsRulesPageContainer />
+                          }
+                        ]
+                      },
+                      {
+                        path: '*',
+                        element: <RepoSettingsPlaceholderPage />
+                      }
+                    ]
+                  }
+                ]
+              },
+              // Pipelines (OUTSIDE REPOS)
+              {
+                path: ':spaceId/pipelines',
+                children: [
+                  {
+                    index: true,
+                    element: <ProjectPipelinesPage />
+                  },
+                  {
+                    path: 'create',
+                    element: <PipelineCreate />
+                  },
+                  {
+                    path: ':pipelineId',
+                    element: <RepoExecutionListPage />
+                  }
+                ]
+              },
+              // Executions (OUTSIDE REPOS)
+              {
+                path: ':spaceId/executions',
+                element: <RepoExecutionListPage />
+              },
+              {
+                path: 'create',
+                element: <CreateProject />
+              },
+              {
+                path: ':spaceId/settings',
+                element: <RootWrapper />,
+                children: [
+                  {
+                    element: <SettingsProjectNav />,
+                    children: [
+                      {
+                        index: true,
+                        element: <Navigate to="general" replace />
+                      },
+                      {
+                        path: 'general',
+                        element: <ProjectSettingsGeneralPage />
+                      },
+                      {
+                        path: 'members',
+                        children: [
+                          { index: true, element: <ProjectSettingsMemebersPage /> },
+                          {
+                            path: 'create',
+                            element: <CreateNewMemberPage />
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                path: ':spaceId/repos/create',
+                element: <CreateRepo />
+              },
+              {
+                path: ':spaceId/repos/import',
+                element: <RepoImportContainer />
+              }
+            ]
+          },
+          {
+            path: 'settings',
+            element: <SandboxSettings />,
+            children: [
+              {
+                element: <SettingsAccountPage />,
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to="general" replace />
+                  },
+                  {
+                    path: 'general',
+                    element: <SettingsProfileGeneralPage />
+                  },
+                  {
+                    path: 'keys',
+                    element: <SettingsProfileKeysPage />
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'users',
+            element: <UserManagementPageContainer />
+          },
+          {
+            path: 'users/create',
+            element: <CreateNewUserContainer />
+          }
+        ]
+      },
+      {
+        path: 'logout',
+        element: <Logout />
+      },
+      {
+        path: 'chaos-engineering',
+        element: <EmptyPage pathName="Chaos Engineering" />
+      },
+      {
+        path: 'environments',
+        element: <EmptyPage pathName="Environments" />
+      },
+      {
+        path: 'secrets',
+        element: <EmptyPage pathName="Secrets" />
+      },
+      {
+        path: 'connectors',
+        element: <EmptyPage pathName="Connectors" />
+      },
+      {
+        path: 'continuous-delivery-gitops',
+        element: <EmptyPage pathName="Continuous Delivery Gitops" />
+      },
+      {
+        path: 'continuous-integration',
+        element: <EmptyPage pathName="Continuous Integration" />
+      },
+      {
+        path: 'feature-flags',
+        element: <EmptyPage pathName="Feature Flags" />
+      },
+      {
+        path: 'infrastructure-as-code',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'service-reliability',
+        element: <EmptyPage pathName="Service Reliability" />
+      },
+      {
+        path: 'internal-developer-portal',
+        element: <EmptyPage pathName="Internal Developer Portal" />
+      },
+      {
+        path: 'infrastructure-as-code',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'code-repository',
+        element: <EmptyPage pathName="Code Repository" />
+      },
+      {
+        path: 'software-engineering-insights',
+        element: <EmptyPage pathName="Software Engineering Insights" />
+      },
+      {
+        path: 'software-supply-chain-assurance',
+        element: <EmptyPage pathName="Software Supply Chain Assurance" />
+      },
+      {
+        path: 'security-testing-orchestration',
+        element: <EmptyPage pathName="Security Testing Orchestration" />
+      },
+      {
+        path: 'cloud-cost-management',
+        element: <EmptyPage pathName="Cloud Cost Management" />
+      }
+    ],
+    // With this TEMP change, Breadcrumbs shall only work for V2 routes
+    { basename: '/v2' }
+  )
 
   return (
     <AppProvider>

@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Avatar, AvatarFallback, AvatarImage, Button, ButtonGroup, Icon, Input, Spacer, Text } from '@harnessio/canary'
-import { FormFieldSet, getInitials, ModeToggle, SandboxLayout, SkeletonList } from '@harnessio/views'
+import { FormFieldSet, getInitials, SandboxLayout, SkeletonList } from '@harnessio/views'
 
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Please provide your name' }),
@@ -217,11 +217,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
               )}
             </FormFieldSet.ControlGroup>
 
-            <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label>Theme</FormFieldSet.Label>
-              <ModeToggle />
-            </FormFieldSet.ControlGroup>
-
             {error && error.type === 'profile' && (
               <>
                 <Spacer size={2} />
@@ -238,8 +233,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   <Button
                     size="sm"
                     type="submit"
-                    disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}
-                  >
+                    disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}>
                     {isUpdatingUser ? 'Updating...' : 'Update profile'}
                   </Button>
                 ) : (

@@ -23,10 +23,7 @@ export const useTheme: useThemeType = () => {
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const { theme, setTheme } = useThemeStore(state => ({
-    theme: state.theme,
-    setTheme: state.setTheme
-  }))
+  const { theme, setTheme } = useTheme()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)

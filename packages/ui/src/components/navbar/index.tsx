@@ -24,7 +24,6 @@ interface NavbarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  handleLanguageChange: (lang: string) => void
 }
 
 export const Navbar = ({
@@ -38,8 +37,7 @@ export const Navbar = ({
   handleCustomNav,
   handleLogOut,
   handleChangePinnedMenuItem,
-  handleRemoveRecentMenuItem,
-  handleLanguageChange
+  handleRemoveRecentMenuItem
 }: NavbarProps) => {
   const location = useLocation()
 
@@ -110,12 +108,7 @@ export const Navbar = ({
       </NavbarSkeleton.Content>
 
       <NavbarSkeleton.Footer>
-        <NavbarUser
-          currentUser={currentUser}
-          handleCustomNav={handleCustomNav}
-          handleLogOut={handleLogOut}
-          handleLanguageChange={handleLanguageChange}
-        />
+        <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
       </NavbarSkeleton.Footer>
     </NavbarSkeleton.Root>
   )

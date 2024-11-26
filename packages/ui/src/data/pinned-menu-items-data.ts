@@ -1,7 +1,5 @@
 import { NavbarItemType } from '@components/navbar/types'
 
-// import { t } from 'i18next'
-
 import { i18nextViewsInstance } from '../i18n/i18n'
 
 export const getPinnedMenuItemsData = (): NavbarItemType[] => [

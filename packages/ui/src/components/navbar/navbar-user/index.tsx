@@ -61,10 +61,9 @@ interface NavbarUserProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
-  handleLanguageChange: (lang: string) => void
 }
 
-export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, handleLanguageChange }: NavbarUserProps) => {
+export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut }: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
 
   const menuItems = useMemo(() => {
@@ -77,8 +76,6 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, handleL
             return handleCustomNav()
           case UserMenuKeys.LOG_OUT:
             return handleLogOut()
-          case UserMenuKeys.CHANGE_LANGUAGE:
-            return handleLanguageChange('fr')
           default:
             return
         }

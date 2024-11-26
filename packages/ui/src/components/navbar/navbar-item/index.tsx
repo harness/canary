@@ -45,12 +45,12 @@ export const NavbarItem = ({
     <>
       <DropdownMenuItem onSelect={handlePin}>
         <Text size={2} truncate>
-          {t('navbar.pin')}
+          {t('component:navbar.pin')}
         </Text>
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={handleRemoveRecent}>
         <Text size={2} truncate>
-          {t('navbar.remove')}
+          {t('component:navbar.remove')}
         </Text>
       </DropdownMenuItem>
     </>
@@ -58,12 +58,12 @@ export const NavbarItem = ({
     <>
       <DropdownMenuItem onSelect={handleCustomNav}>
         <Text size={2} truncate>
-          {t('navbar.reorder')}
+          {t('component:navbar.reorder')}
         </Text>
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={handlePin}>
         <Text size={2} truncate>
-          {t('navbar.unpin')}
+          {t('component:navbar.unpin')}
         </Text>
       </DropdownMenuItem>
     </>

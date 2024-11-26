@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build  && pnpm build:css",
+    "build": "vite build  && pnpm build:css && pnpm extract",
     "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "build:watch": "vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src",
@@ -28,7 +28,7 @@
     "test:watch": "vitest",
     "test:changed": "vitest --run --changed=origin/main",
     "typecheck": "tsc",
-    "extract": "i18next 'src/**/*.{js,jsx,ts,tsx}' -o src/components/i18n/locales/en.json"
+    "extract": "i18next --config './i18n.config.ts'"
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",

@@ -5,55 +5,55 @@ import { i18nextViewsInstance } from '../i18n/i18n'
 export const getNavbarMenuData = (): MenuGroupType[] => [
   {
     groupId: 0,
-    title: i18nextViewsInstance.t('navbar.devops'),
+    title: i18nextViewsInstance.t('component:navbar.devops'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 0,
         iconName: 'repositories-gradient',
-        title: i18nextViewsInstance.t('navbar.repositories'),
+        title: i18nextViewsInstance.t('component:navbar.repositories'),
         description: 'Integrated & familiar git experience.',
         to: '/repos'
       },
       {
         id: 1,
         iconName: 'pipelines-gradient',
-        title: i18nextViewsInstance.t('navbar.pipelines'),
+        title: i18nextViewsInstance.t('component:navbar.pipelines'),
         description: 'Up to 4X faster than other solutions.',
         to: '/pipelines'
       },
       {
         id: 2,
         iconName: 'execution-gradient',
-        title: i18nextViewsInstance.t('navbar.executions'),
+        title: i18nextViewsInstance.t('component:navbar.executions'),
         description: 'Optimize feature rollout velocity.',
         to: '/executions'
       },
       {
         id: 3,
         iconName: 'database-gradient',
-        title: i18nextViewsInstance.t('navbar.databases'),
+        title: i18nextViewsInstance.t('component:navbar.databases'),
         description: 'Manage all your infrastructure.',
         to: '/databases'
       },
       {
         id: 4,
         iconName: 'artifacts-gradient',
-        title: i18nextViewsInstance.t('navbar.artifacts'),
+        title: i18nextViewsInstance.t('component:navbar.artifacts'),
         description: 'Validate service resilience.',
         to: '/sandbox/executions/artifacts'
       },
       {
         id: 5,
         iconName: 'infrastructure-gradient',
-        title: i18nextViewsInstance.t('navbar.infrastructure'),
+        title: i18nextViewsInstance.t('component:navbar.infrastructure'),
         description: 'Manage all your infrastructure.',
         to: '/infrastructure'
       },
       {
         id: 6,
         iconName: 'flag-gradient',
-        title: i18nextViewsInstance.t('navbar.feature-flags'),
+        title: i18nextViewsInstance.t('component:navbar.feature-flags'),
         description: 'Optimize feature rollout velocity.',
         to: '/feature-flags'
       }
@@ -67,21 +67,21 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
       {
         id: 7,
         iconName: 'dev-portal-gradient',
-        title: 'Developer Portal',
+        title: i18nextViewsInstance.t('component:navbar.developer-portal'),
         description: 'Built for developers, onboard in minutes.',
         to: '/developer/portal'
       },
       {
         id: 8,
         iconName: 'dev-envs-gradient',
-        title: 'Developer Environments',
+        title: i18nextViewsInstance.t('component:navbar.developer-environments'),
         description: 'Integrated & familiar git experience.',
         to: '/developer/environments'
       },
       {
         id: 9,
         iconName: 'dev-insights-gradient',
-        title: 'Developer Insights',
+        title: i18nextViewsInstance.t('component:navbar.developer-insights'),
         description: 'Actionable insights on SDLC.',
         to: '/developer/insights'
       }
@@ -89,20 +89,20 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
   },
   {
     groupId: 2,
-    title: 'Secops',
+    title: i18nextViewsInstance.t('component:navbar.secops'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 10,
         iconName: 'security-tests-gradient',
-        title: 'Security Tests',
+        title: i18nextViewsInstance.t('component:navbar.security-tests'),
         description: 'Shift left security testing.',
         to: '/sandbox/executions/security-tests'
       },
       {
         id: 11,
         iconName: 'supply-chain-gradient',
-        title: 'Supply Chain',
+        title: i18nextViewsInstance.t('component:navbar.supply-chain'),
         description: 'Artifact integrity and governance.',
         to: '/supply-chain'
       }
@@ -110,13 +110,13 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
   },
   {
     groupId: 3,
-    title: 'Finops',
+    title: i18nextViewsInstance.t('component:navbar.finops'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 12,
         iconName: 'cloud-costs-gradient',
-        title: 'Cloud Costs',
+        title: i18nextViewsInstance.t('component:navbar.cloud-costs'),
         description: 'Intelligent cost management.',
         to: '/cloud-costs'
       }
@@ -124,20 +124,20 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
   },
   {
     groupId: 4,
-    title: 'Reliability',
+    title: i18nextViewsInstance.t('component:navbar.reliability'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 13,
         iconName: 'incidents-gradient',
-        title: 'Incidents',
+        title: i18nextViewsInstance.t('component:navbar.incidents'),
         description: 'Shift left security testing.',
         to: '/incidents'
       },
       {
         id: 14,
         iconName: 'chaos-engineering-gradient',
-        title: 'Chaos Engineering',
+        title: i18nextViewsInstance.t('component:navbar.chaos-engineering'),
         description: 'Validate service resilience.',
         to: '/chaos'
       }
@@ -145,13 +145,13 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
   },
   {
     groupId: 5,
-    title: 'Platform',
+    title: i18nextViewsInstance.t('component:navbar.platform'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 15,
         iconName: 'dashboards-gradient',
-        title: 'Dashboards',
+        title: i18nextViewsInstance.t('component:navbar.dashboards'),
         description: 'Intelligent cost management.',
         to: '/dashboards'
       }
@@ -159,179 +159,179 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
   },
   {
     groupId: 0,
-    title: 'General',
+    title: i18nextViewsInstance.t('component:navbar.general'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
         id: 0,
         iconName: 'settings-2',
-        title: 'Settings',
+        title: i18nextViewsInstance.t('component:navbar.settings'),
         to: '/admin/default-settings'
       },
       {
         id: 1,
         iconName: 'notification',
-        title: 'Notifications',
+        title: i18nextViewsInstance.t('component:navbar.notifications'),
         to: '/admin/notifications'
       }
     ]
   },
   {
     groupId: 1,
-    title: 'Resources',
+    title: i18nextViewsInstance.t('component:navbar.resources'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
         id: 2,
         iconName: 'wrench',
-        title: 'Services',
+        title: i18nextViewsInstance.t('component:navbar.services'),
         to: '/admin/services'
       },
       {
         id: 3,
         iconName: 'environment',
-        title: 'Environments',
+        title: i18nextViewsInstance.t('component:navbar.environments'),
         to: '/admin/environments'
       },
       {
         id: 4,
         iconName: 'connectors',
-        title: 'Connectors',
+        title: i18nextViewsInstance.t('component:navbar.connectors'),
         to: '/admin/connectors'
       },
       {
         id: 5,
         iconName: 'hierarchy',
-        title: 'Delegates',
+        title: i18nextViewsInstance.t('component:navbar.delegates'),
         to: '/admin/delegates'
       },
       {
         id: 6,
         iconName: 'key',
-        title: 'Secrets',
+        title: i18nextViewsInstance.t('component:navbar.secrets'),
         to: '/admin/secrets'
       },
       {
         id: 7,
         iconName: 'file-icon',
-        title: 'File Store',
+        title: i18nextViewsInstance.t('component:navbar.file-store'),
         to: '/admin/filte-store'
       },
       {
         id: 8,
         iconName: 'sidebar-icon',
-        title: 'Templates',
+        title: i18nextViewsInstance.t('component:navbar.templates'),
         to: '/admin/templates'
       },
       {
         id: 9,
         iconName: 'variable',
-        title: 'Variables',
+        title: i18nextViewsInstance.t('component:navbar.variables'),
         to: '/admin/variables'
       },
       {
         id: 10,
         iconName: 'clock-icon',
-        title: 'SLO Downtime',
+        title: i18nextViewsInstance.t('component:navbar.slo-downtime'),
         to: '/admin/slo-downtime'
       },
       {
         id: 11,
         iconName: 'search',
-        title: 'Discovery',
+        title: i18nextViewsInstance.t('component:navbar.discovery'),
         to: '/admin/discovery'
       },
       {
         id: 12,
         iconName: 'eye',
-        title: 'Monitored Services',
+        title: i18nextViewsInstance.t('component:navbar.monitored-services'),
         to: '/admin/monitored-services'
       },
       {
         id: 13,
         iconName: 'stack',
-        title: 'Overrides',
+        title: i18nextViewsInstance.t('component:navbar.overrides'),
         to: '/admin/overrides'
       },
       {
         id: 14,
         iconName: 'bookmark-icon',
-        title: 'Certificates',
+        title: i18nextViewsInstance.t('component:navbar.certificates'),
         to: '/admin/certificates'
       },
       {
         id: 15,
         iconName: 'webhook',
-        title: 'Webhooks',
+        title: i18nextViewsInstance.t('component:navbar.webhooks'),
         to: '/admin/webhooks'
       }
     ]
   },
   {
     groupId: 2,
-    title: 'Access Control',
+    title: i18nextViewsInstance.t('component:navbar.access-control'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
         id: 16,
         iconName: 'user',
-        title: 'Users',
+        title: i18nextViewsInstance.t('component:navbar.users'),
         to: '/admin/users'
       },
       {
         id: 17,
         iconName: 'users',
-        title: 'User Groups',
+        title: i18nextViewsInstance.t('component:navbar.user-groups'),
         to: '/admin/users-group'
       },
       {
         id: 18,
         iconName: 'account-icon',
-        title: 'Service Accounts',
+        title: i18nextViewsInstance.t('component:navbar.service-accounts'),
         to: '/admin/service-accounts'
       },
       {
         id: 19,
         iconName: 'folder-icon',
-        title: 'Resource Groups',
+        title: i18nextViewsInstance.t('component:navbar.resource-groups'),
         to: '/admin/resource-groups'
       },
       {
         id: 20,
         iconName: 'briefcase',
-        title: 'Roles',
+        title: i18nextViewsInstance.t('component:navbar.roles'),
         to: '/admin/roles'
       }
     ]
   },
   {
     groupId: 3,
-    title: 'Security and Governance',
+    title: i18nextViewsInstance.t('component:navbar.security-and-governance'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
         id: 21,
         iconName: 'shield',
-        title: 'Policies',
+        title: i18nextViewsInstance.t('component:navbar.policies'),
         to: '/admin/policies'
       },
       {
         id: 22,
         iconName: 'snow',
-        title: 'Freeze Windows',
+        title: i18nextViewsInstance.t('component:navbar.freeze-windows'),
         to: '/admin/freeze-windows'
       }
     ]
   },
   {
     groupId: 4,
-    title: 'External Tickets',
+    title: i18nextViewsInstance.t('component:navbar.external-tickets'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
         id: 23,
         iconName: 'ticket',
-        title: 'External Tickets',
+        title: i18nextViewsInstance.t('component:navbar.external-tickets'),
         to: '/admin/external-tickets'
       }
     ]

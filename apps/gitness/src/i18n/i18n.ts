@@ -5,13 +5,6 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 import { i18nextViewsInstance } from '@harnessio/ui/internationalization'
 
-// import common from './en/common.json'
-// import common_fr from './common-fr.json'
-
-// const resources = {
-//   en: { common }
-//   // fr: { common: common_fr }∏
-// }
 const languageDetectorOptions = {
   // Order and from where user language should be detected
   order: ['navigator', 'cookie', 'localStorage'],

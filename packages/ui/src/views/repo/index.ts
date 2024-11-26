@@ -7,3 +7,6 @@ export * from '@views/repo/repo-layout'
 
 // repo sidebar
 export * from '@views/repo/repo-sidebar'
+
+// repo summary
+export * from '@views/repo/repo-summary'

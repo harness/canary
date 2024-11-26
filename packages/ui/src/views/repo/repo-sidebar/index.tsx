@@ -1,11 +1,11 @@
-import { BranchListProps, BranchSelector, Button, ButtonGroup, Icon, SearchFiles } from '@/components'
+import { BranchSelector, Button, ButtonGroup, Icon, SearchFiles, type BranchSelectorItem } from '@/components'
 import { SandboxLayout } from '@/views'
 
 interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
   selectedBranch: string
-  branchList: BranchListProps[] | undefined
+  branchList: BranchSelectorItem[] | undefined
   selectBranch: (branch: string) => void
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void

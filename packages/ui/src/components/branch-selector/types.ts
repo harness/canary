@@ -1,0 +1,30 @@
+export enum BranchSelectorTab {
+  BRANCHES = 'branches',
+  TAGS = 'tags'
+}
+
+export interface BranchSelectorItem {
+  name: string
+}
+
+export interface BranchSelectorBranchProps {
+  id: number | string
+  name: string
+  sha: string
+  timestamp: string
+  default?: boolean
+  user: {
+    name: string
+    avatarUrl?: string
+  }
+  checks: {
+    done?: number
+    total?: number
+    status?: number
+  }
+  behindAhead: {
+    behind?: number
+    ahead?: number
+    default?: boolean
+  }
+}

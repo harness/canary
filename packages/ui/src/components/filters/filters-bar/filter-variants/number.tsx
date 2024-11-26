@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import { DropdownMenuItem } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Input } from '@components/input'
 
@@ -47,32 +46,30 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
   }
 
   return (
-    <div className="flex items-center px-2 pb-2.5">
-      <DropdownMenuItem className="relative w-full p-0">
-        <Input
-          className="w-full"
-          type="text"
-          value={value}
-          placeholder="Type a value..."
-          onChange={handleInputChange}
+    <div className="flex items-center px-2 pb-2.5 relative">
+      <Input
+        className="w-full"
+        type="text"
+        value={value}
+        placeholder="Type a value..."
+        onChange={handleInputChange}
+        onClick={e => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
+      />
+
+      {value && (
+        <button
+          className="text-icons-1 hover:text-foreground-1 absolute right-3 transition-colors duration-200"
           onClick={e => {
             e.stopPropagation()
-            e.preventDefault()
+            handleClear()
           }}
-        />
-
-        {value && (
-          <button
-            className="text-icons-1 hover:text-foreground-1 absolute right-3 transition-colors duration-200"
-            onClick={e => {
-              e.stopPropagation()
-              handleClear()
-            }}
-          >
-            <Icon className="rotate-45" name="plus" size={10} />
-          </button>
-        )}
-      </DropdownMenuItem>
+        >
+          <Icon className="rotate-45" name="plus" size={10} />
+        </button>
+      )}
     </div>
   )
 }

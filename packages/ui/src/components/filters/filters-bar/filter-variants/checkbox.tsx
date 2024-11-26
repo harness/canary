@@ -1,7 +1,6 @@
-import { DropdownMenuCheckboxItem, DropdownMenuItem } from '@components/dropdown-menu'
+import { DropdownMenuCheckboxItem } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Input } from '@components/input'
-import { cn } from '@utils/cn'
 
 import { CheckboxFilterOption, FilterValue } from '../../types'
 import { UseFiltersReturn } from '../../use-filters'
@@ -22,14 +21,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
     <>
       {filter.condition !== 'is_empty' && (
         <div className="border-borders-1 border-b px-3 pb-2.5">
-          <div
-            className={cn(
-              'border-border-2 focus-within:border-borders-3 flex min-h-8 justify-between gap-x-1 rounded border px-2.5 py-[3px] outline-none transition-colors duration-200 focus-within:border',
-              {
-                'px-1': !!filter.selectedValues.length
-              }
-            )}
-          >
+          <div className="border-border-2 focus-within:border-borders-3 flex min-h-8 justify-between gap-x-1 rounded border px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border">
             <div className="flex flex-1 flex-wrap items-center gap-1">
               {!!filter.selectedValues.length &&
                 filter.selectedValues.map(value => {
@@ -50,19 +42,17 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
                   )
                 })}
 
-              <DropdownMenuItem className="p-0 focus:bg-transparent" asChild>
-                <Input
-                  className="h-6 flex-1 border-none outline-none hover:border-none focus:border-none focus-visible:ring-0"
-                  type="text"
-                  placeholder={filter.selectedValues.length > 0 ? '' : 'Select one or more options...'}
-                  value={searchQueries.filters[filter.type] || ''}
-                  onChange={e => handleSearchChange?.(filter.type, e.target.value, 'filters')}
-                  onClick={e => {
-                    e.preventDefault()
-                  }}
-                  onKeyDown={e => e.stopPropagation()}
-                />
-              </DropdownMenuItem>
+              <Input
+                className="h-6 flex-1 border-none outline-none hover:border-none focus:border-none focus-visible:ring-0"
+                type="text"
+                placeholder={filter.selectedValues.length > 0 ? '' : 'Select one or more options...'}
+                value={searchQueries.filters[filter.type] || ''}
+                onChange={e => handleSearchChange?.(filter.type, e.target.value, 'filters')}
+                onClick={e => {
+                  e.preventDefault()
+                }}
+                onKeyDown={e => e.stopPropagation()}
+              />
             </div>
             {(!!filter.selectedValues.length || searchQueries.filters[filter.type]) && (
               <button

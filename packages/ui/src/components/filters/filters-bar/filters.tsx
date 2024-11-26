@@ -133,10 +133,10 @@ const Filters = ({
               </DropdownMenuTrigger>
               <DropdownMenuContent align="start">
                 <DropdownMenuItem
-                  className="focus:text-foreground-danger focus:bg-transparent focus:outline-none"
+                  className="data-[highlighted]:text-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:outline-none duration-200 hover:text-foreground-danger text-foreground-4"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
-                  <button className="text-14 text-foreground-4 hover:text-foreground-danger flex items-center gap-x-1.5 transition-colors duration-200">
+                  <button className="text-14 flex items-center gap-x-1.5">
                     <Icon name="trash" size={12} />
                     Delete filter
                   </button>

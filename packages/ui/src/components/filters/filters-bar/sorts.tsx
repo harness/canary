@@ -89,17 +89,15 @@ const SortableItem = ({
           </DropdownMenu>
         </div>
 
-        <DropdownMenuItem className="p-0" asChild>
-          <button
-            className="text-foreground-4 hover:text-foreground-1 p-1 transition-colors duration-200 focus:bg-transparent"
-            onClick={e => {
-              e.preventDefault()
-              onRemoveSort?.(index)
-            }}
-          >
-            <Icon className="rotate-45" name="plus" size={12} />
-          </button>
-        </DropdownMenuItem>
+        <button
+          className="text-foreground-4 hover:text-foreground-1 p-1 transition-colors duration-200 focus:bg-transparent"
+          onClick={e => {
+            e.preventDefault()
+            onRemoveSort?.(index)
+          }}
+        >
+          <Icon className="rotate-45" name="plus" size={12} />
+        </button>
       </div>
     </div>
   )
@@ -250,13 +248,10 @@ const Sorts = ({
           )}
 
           <DropdownMenuItem
-            className="focus:text-foreground-danger p-0 focus:bg-transparent focus:outline-none"
+            className="focus:text-foreground-danger text-foreground-4 p-0 focus:bg-transparent focus:outline-none data-[highlighted]:text-foreground-danger transition-colors duration-200 data-[highlighted]:bg-transparent"
             asChild
           >
-            <button
-              className="text-14 text-foreground-4 hover:text-foreground-danger flex items-center gap-x-1.5 transition-colors duration-200"
-              onClick={handleResetSorts}
-            >
+            <button className="text-14 flex items-center gap-x-1.5" onClick={handleResetSorts}>
               <Icon name="trash" size={12} />
               Delete sort
             </button>

@@ -35,9 +35,9 @@ i18n
     // lng: 'en',
     debug: true,
     react: {
-      bindI18n: 'loaded languageChanged',
-      bindI18nStore: 'added',
-      useSuspense: true
+      bindI18n: 'languageChanged',
+      bindI18nStore: 'added'
+      // useSuspense: true
     },
     // lng: 'fr',
     interpolation: {

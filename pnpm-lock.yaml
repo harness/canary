@@ -813,6 +813,9 @@ importers:
       i18next:
         specifier: ^24.0.2
         version: 24.0.2(typescript@5.6.3)
+      i18next-browser-languagedetector:
+        specifier: ^8.0.0
+        version: 8.0.0
       input-otp:
         specifier: ^1.2.4
         version: 1.2.4(react-dom@18.3.1(react@18.3.1))(react@18.3.1)

@@ -18,7 +18,12 @@ const resources = {
 export const i18nextViewsInstance = createInstance({
   resources,
   fallbackLng: 'en',
-  //   lng: 'fr',
+  react: {
+    bindI18n: 'loaded languageChanged',
+    bindI18nStore: 'added',
+    useSuspense: true
+  },
+  // lng: i18nextViewsInstance.options.lng,
   interpolation: {
     escapeValue: false
   }

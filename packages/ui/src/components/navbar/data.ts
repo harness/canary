@@ -40,5 +40,12 @@ export const userMenuItems: UserMenuItemType[] = [
     title: 'Log out',
     to: null,
     isSeparated: true
+  },
+  {
+    key: UserMenuKeys.CHANGE_LANGUAGE,
+    iconName: 'settings-1',
+    title: 'Language',
+    to: null,
+    isSeparated: false
   }
 ]

@@ -43,6 +43,7 @@ interface SandboxRootProps {
   logout?: () => void
   changePinnedMenu: (items: NavbarItemIdType[]) => void
   changeRecentMenu: (items: NavbarItemIdType[]) => void
+  handleLanguageChange: (lang: string) => void
 }
 
 export const SandboxRoot = ({
@@ -51,7 +52,8 @@ export const SandboxRoot = ({
   recentMenu,
   logout,
   changePinnedMenu,
-  changeRecentMenu
+  changeRecentMenu,
+  handleLanguageChange
 }: SandboxRootProps) => {
   const location = useLocation()
   const [recentMenuItems, setRecentMenuItems] = useState<NavbarItemType[]>([])
@@ -217,6 +219,7 @@ export const SandboxRoot = ({
           pinnedMenuItems={pinnedMenuItems}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+          handleLanguageChange={handleLanguageChange}
         />
       </SandboxLayout.LeftPanel>
       <Outlet />

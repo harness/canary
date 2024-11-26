@@ -27,7 +27,8 @@ export enum UserMenuKeys {
   THEME = 'theme',
   CUSTOM_NAV = 'customNavigation',
   ADMINISTRATION = 'administration',
-  LOG_OUT = 'logOut'
+  LOG_OUT = 'logOut',
+  CHANGE_LANGUAGE = 'changeLanguage'
 }
 
 export interface UserMenuItemType {

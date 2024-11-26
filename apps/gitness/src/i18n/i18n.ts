@@ -14,10 +14,9 @@ import { i18nextViewsInstance } from '@harnessio/ui/internationalization'
 // }
 const languageDetectorOptions = {
   // Order and from where user language should be detected
-  order: ['cookie', 'localStorage', 'navigator'],
+  order: ['navigator', 'cookie', 'localStorage'],
 
   // Keys to search language in
-  lookupQuerystring: 'lng',
   lookupCookie: 'i18next',
   lookupLocalStorage: 'i18nextLng',
 
@@ -32,14 +31,11 @@ i18n
     detection: languageDetectorOptions,
     resources: {},
     fallbackLng: 'en',
-    // lng: 'en',
     debug: true,
     react: {
       bindI18n: 'languageChanged',
       bindI18nStore: 'added'
-      // useSuspense: true
     },
-    // lng: 'fr',
     interpolation: {
       escapeValue: false
     }
@@ -51,10 +47,10 @@ export const handleLanguageChange = (lng: string) => {
   i18nextViewsInstance.i18nextViewsInstance.changeLanguage(lng)
 }
 
-i18n.on('languageChanged', lng => {
-  console.log('languageChanged here', lng)
-  i18nextViewsInstance.i18nextViewsInstance.changeLanguage('en')
-})
+// i18n.on('languageChanged', lng => {
+//   console.log('languageChanged here', lng)
+//   i18nextViewsInstance.i18nextViewsInstance.changeLanguage('en')
+// })
 // i18n.changeLanguage('en')
 
 export default i18n

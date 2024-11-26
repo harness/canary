@@ -1,3 +1,5 @@
+// ToDo: Need to be reviewed by the XD team
+
 import { useMemo } from 'react'
 
 import { ColorSelect } from './color-select'

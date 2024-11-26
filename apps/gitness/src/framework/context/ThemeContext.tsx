@@ -18,8 +18,7 @@ const useThemeStore = create<ThemeState>()(
 )
 
 export const useTheme: () => {theme: FullTheme, setTheme: (theme: FullTheme) => void} = () => {
-  const {theme, setTheme} = useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
-  return {theme, setTheme}
+  return useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -31,12 +30,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [systemMode, setSystemMode] = useState<ModeType>(ModeType.Dark)
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
     
-    const updateSystemTheme = () => {
-      if (theme.startsWith(ModeType.System)) {
-        setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-      }
-    }    
+    const updateSystemTheme = () => {      
+      setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)      
+    }
+    
     mediaQuery.addEventListener('change', updateSystemTheme)
     
     return () => {

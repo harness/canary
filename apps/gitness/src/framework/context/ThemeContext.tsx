@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -17,9 +17,9 @@ const useThemeStore = create<ThemeState>()(
   )
 )
 
-export const useTheme = () => {
-  const { theme, setTheme } = useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
-  return { theme, setTheme }
+export const useTheme: () => {theme: FullTheme, setTheme: (theme: FullTheme) => void} = () => {
+  const {theme, setTheme} = useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
+  return {theme, setTheme}
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
@@ -28,31 +28,34 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme: state.setTheme
   }))
 
+  const [systemMode, setSystemMode] = useState<ModeType>(ModeType.Dark)
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+    
+    const updateSystemTheme = () => {
+      if (theme.startsWith(ModeType.System)) {
+        setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
+      }
+    }    
+    mediaQuery.addEventListener('change', updateSystemTheme)
+    
+    return () => {
+      mediaQuery.removeEventListener('change', updateSystemTheme)
+    }
+  }, [])
+
   useEffect(() => {
     const root = window.document.documentElement
 
-    const getMediaQuery = () => window.matchMedia('(prefers-color-scheme: dark)')
+    // const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const [mode, color, contrast] = theme.split('-') as [ModeType, ColorType, ContrastType]
 
     // Compute the effective theme based on system preference if set to "system"
-    const effectiveMode = mode === ModeType.System ? (getMediaQuery().matches ? ModeType.Dark : ModeType.Light) : mode
-    const effectiveTheme: FullTheme = `${effectiveMode}-${color}-${contrast}`
+    const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
     root.className = '' // Clear existing classes
-    root.classList.add(effectiveTheme) // Apply the computed theme class
-
-    const updateSystemTheme = () => {
-      if (theme.startsWith(ModeType.System)) {
-        setTheme(`${getMediaQuery().matches ? ModeType.Dark : ModeType.Light}-${color}-${contrast}` as FullTheme)
-      }
-    }
-
-    getMediaQuery().addEventListener('change', updateSystemTheme)
-
-    return () => {
-      getMediaQuery().removeEventListener('change', updateSystemTheme)
-    }
-  }, [theme, setTheme])
+    root.classList.add(effectiveTheme) // Apply the computed theme class    
+  }, [theme, setTheme, systemMode])
 
   return <>{children}</>
 }

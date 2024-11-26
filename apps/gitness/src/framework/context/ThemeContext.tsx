@@ -17,7 +17,7 @@ const useThemeStore = create<ThemeState>()(
   )
 )
 
-export const useTheme: () => {theme: FullTheme, setTheme: (theme: FullTheme) => void} = () => {
+export const useTheme: () => { theme: FullTheme; setTheme: (theme: FullTheme) => void } = () => {
   return useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
 }
 
@@ -31,13 +31,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-    
-    const updateSystemTheme = () => {      
-      setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)      
+
+    const updateSystemTheme = () => {
+      setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
     }
-    
+
     mediaQuery.addEventListener('change', updateSystemTheme)
-    
+
     return () => {
       mediaQuery.removeEventListener('change', updateSystemTheme)
     }
@@ -53,7 +53,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
     root.className = '' // Clear existing classes
-    root.classList.add(effectiveTheme) // Apply the computed theme class    
+    root.classList.add(effectiveTheme) // Apply the computed theme class
   }, [theme, setTheme, systemMode])
 
   return <>{children}</>

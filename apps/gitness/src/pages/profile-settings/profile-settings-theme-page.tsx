@@ -8,7 +8,7 @@ const ProfileSettingsThemePage: React.FC = () => {
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
       <SandboxLayout.Content>
         <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
+        <Text size={5} weight="medium">
           Theme Selector
         </Text>
         <Spacer size={6} />

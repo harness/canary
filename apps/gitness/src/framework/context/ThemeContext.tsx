@@ -17,7 +17,8 @@ const useThemeStore = create<ThemeState>()(
   )
 )
 
-export const useTheme: () => { theme: FullTheme; setTheme: (theme: FullTheme) => void } = () => {
+type useThemeType = () => { theme: FullTheme; setTheme: (theme: FullTheme) => void }
+export const useTheme: useThemeType = () => {
   return useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
 }
 

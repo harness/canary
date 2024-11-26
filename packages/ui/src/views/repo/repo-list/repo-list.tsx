@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { Badge, Icon, NoData, StackedList } from '@/components'
 
 import { RepositoryType } from './types'

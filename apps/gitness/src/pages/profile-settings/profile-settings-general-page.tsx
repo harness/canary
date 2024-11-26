@@ -233,7 +233,8 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   <Button
                     size="sm"
                     type="submit"
-                    disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}>
+                    disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}
+                  >
                     {isUpdatingUser ? 'Updating...' : 'Update profile'}
                   </Button>
                 ) : (

@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
-import { ColorType, ContrastType, FullTheme, ModeType, ThemeState } from '@harnessio/ui/components'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+
+import { ColorType, ContrastType, FullTheme, ModeType, ThemeState } from '@harnessio/ui/components'
 
 const useThemeStore = create<ThemeState>()(
   persist(

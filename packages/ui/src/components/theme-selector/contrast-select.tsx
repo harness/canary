@@ -19,7 +19,8 @@ export function ContrastSelect({
         value={contrast}
         onValueChange={(contrast: ContrastType) => {
           setTheme(`${mode}-${color}-${contrast}`)
-        }}>
+        }}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Select a theme contrast" />
         </SelectTrigger>

@@ -29,7 +29,8 @@ export function ColorSelect({
         value={color}
         onValueChange={(color: ColorType) => {
           setTheme(`${mode}-${color}-${contrast}`)
-        }}>
+        }}
+      >
         <SelectTrigger>
           <SelectValue placeholder="Select a color theme" />
         </SelectTrigger>

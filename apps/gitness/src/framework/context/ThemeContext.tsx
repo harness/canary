@@ -27,11 +27,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     setTheme: state.setTheme
   }))
 
-  const [systemMode, setSystemMode] = useState<ModeType>(ModeType.Dark)
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-    setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
-
     const updateSystemTheme = () => {
       setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
     }

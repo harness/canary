@@ -45,7 +45,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
               <Input
                 className="h-6 flex-1 border-none outline-none hover:border-none focus:border-none focus-visible:ring-0"
                 type="text"
-                placeholder={filter.selectedValues.length > 0 ? '' : 'Select one or more options...'}
+                placeholder={filter.selectedValues.length ? '' : 'Select one or more options...'}
                 value={searchQueries.filters[filter.type] || ''}
                 onChange={e => handleSearchChange?.(filter.type, e.target.value, 'filters')}
                 onClick={e => {
@@ -61,6 +61,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
                   onUpdateFilter(filter.type, [])
                   handleSearchChange?.(filter.type, '', 'filters')
                 }}
+                aria-label="Clear filter"
               >
                 <Icon className="rotate-45" name="plus" size={12} />
               </button>

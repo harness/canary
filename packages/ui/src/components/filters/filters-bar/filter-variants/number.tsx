@@ -66,6 +66,7 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
             e.stopPropagation()
             handleClear()
           }}
+          aria-label="Clear filter"
         >
           <Icon className="rotate-45" name="plus" size={10} />
         </button>

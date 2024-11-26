@@ -6,22 +6,22 @@ export default {
   output: './locales/$LOCALE/$NAMESPACE.json',
 
   // Specify default namespace
-  defaultNamespace: 'common',
+  defaultNamespace: 'component',
 
-  // Specify the list of namespaces you want to extract
-  namespaces: ['common', 'component', 'dashboard'],
+  // Specify the list of namespaces
+  namespaces: ['component'],
 
   locales: ['en', 'es', 'fr'],
 
   keySeparator: '.',
 
-  // Namespace separator (if you're using nested keys)
+  // Namespace separator
   namespaceSeparator: ':',
 
-  // If your i18n keys are wrapped in a function like `t('key')`
-  functions: ['t', 'i18nextViewsInstance.t'],
+  // i18n keys are wrapped in a function like `t('key')`
+  functions: ['t', 'i18nextViewsInstance.t']
 
-  // Automatically create empty translations in all locales
-  createOldCatalogs: false,
-  keepRemoved: false
+  // // Automatically create empty translations in all locales
+  // createOldCatalogs: false,
+  // keepRemoved: false
 }

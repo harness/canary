@@ -46,7 +46,7 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
   }
 
   return (
-    <div className="flex items-center px-2 pb-2.5 relative">
+    <div className="relative flex items-center px-2 pb-2.5">
       <Input
         className="w-full"
         type="text"
@@ -61,7 +61,7 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
 
       {value && (
         <button
-          className="text-icons-1 hover:text-foreground-1 absolute right-3 transition-colors duration-200"
+          className="absolute right-3 text-icons-1 transition-colors duration-200 hover:text-foreground-1"
           onClick={e => {
             e.stopPropagation()
             handleClear()

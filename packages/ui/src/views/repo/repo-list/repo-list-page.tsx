@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-
-import { useCommonFilter } from '@hooks/useCommonFilter'
-import { formatDistanceToNow } from 'date-fns'
 
 import {
   Filters,
@@ -13,10 +10,13 @@ import {
   type SortDirection,
   type SortOption,
   type SortValue
-} from '../../components/filters'
-import useFilters from '../../components/filters/use-filters'
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '../../components/index'
-import { SandboxLayout } from '../index'
+} from '@components/filters'
+import useFilters from '@components/filters/use-filters'
+import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
+import { useCommonFilter } from '@hooks/useCommonFilter'
+import { formatDistanceToNow } from 'date-fns'
+
+import { SandboxLayout } from '../../index'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
@@ -103,10 +103,13 @@ const SORT_DIRECTIONS: SortDirection[] = [
   { label: 'Descending', value: 'desc' }
 ]
 
+const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
+
 const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
   // State for storing saved filters and sorts
   // null means no saved state exists
   const { repositories, totalPages, page, setPage } = useRepoStore()
+
   const [savedState, setSavedState] = useState<{
     filters: FilterValue[]
     sorts: SortValue[]
@@ -199,10 +202,6 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
       }
     }
   })
-
-  const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => (
-    <Link to={`/repos/${to}`}>{children}</Link>
-  )
 
   /**
    * Filters repositories based on active filters

@@ -13,9 +13,9 @@ import {
   Icon,
   Text
 } from '@/components'
+import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-import { TypesUser } from '@views/layouts/types'
 
 import { userMenuItems } from '../data'
 import { UserMenuKeys } from '../types'
@@ -39,7 +39,7 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
       )}
     >
       {isButton && (
-        <div className="group-hover:bg-background-4 group-data-[state=open]:bg-background-4 absolute -inset-2 rounded duration-100 ease-in-out" />
+        <div className="absolute -inset-2 rounded duration-100 ease-in-out group-hover:bg-background-4 group-data-[state=open]:bg-background-4" />
       )}
       <div className="col-start-1 row-span-2">
         <Avatar className="overflow-hidden rounded-md" size="8">
@@ -47,9 +47,9 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
           <AvatarFallback>{getInitials(username)}</AvatarFallback>
         </Avatar>
       </div>
-      <p className="text-13 text-foreground-1 col-start-2 row-start-1 font-medium leading-none truncate">{username}</p>
+      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-none text-foreground-1">{username}</p>
       {!!email && (
-        <p className="text-13 text-foreground-4 col-start-2 row-start-2 mt-0.5 font-normal leading-none truncate">
+        <p className="col-start-2 row-start-2 mt-0.5 truncate text-13 font-normal leading-none text-foreground-4">
           {email}
         </p>
       )}
@@ -118,7 +118,7 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut }: Navba
 
       {menuItems && (
         <DropdownMenuContent
-          className="bg-background-1 ml-3 w-[230px]"
+          className="ml-3 w-[230px] bg-background-1"
           align="start"
           sideOffset={-40}
           alignOffset={187}

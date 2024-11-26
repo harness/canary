@@ -4,10 +4,10 @@ import { Outlet, useLocation } from 'react-router-dom'
 import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
 import { navbarMenuData } from '@/data/navbar-menu-data'
 import { pinnedMenuItemsData } from '@/data/pinned-menu-items-data'
+import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
 
 import { SandboxLayout } from '../index'
-import type { TypesUser } from './types'
 
 /**
  * Returns the complete menu model based on an array of IDs,

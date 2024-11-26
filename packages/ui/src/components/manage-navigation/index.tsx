@@ -137,7 +137,7 @@ export const ManageNavigation = ({
             ) : (
               <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
                 <SortableContext items={currentPinnedItems.map((_, index) => getItemId(index))}>
-                  <ul className="-mx-3 mt-3.5 mb-1 flex flex-col gap-y-0.5">
+                  <ul className="-mx-3 mb-1 mt-3.5 flex flex-col gap-y-0.5">
                     {currentPinnedItems.map((item, index) => (
                       <DraggableItem id={getItemId(index)} tag="li" key={item.title}>
                         {({ attributes, listeners }) => (

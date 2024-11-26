@@ -26,8 +26,10 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
-import RepoLayout from './layouts/RepoLayout'
+import RepoLayoutV1 from './layouts/RepoLayout'
+import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import CreateProject from './pages/create-project'
 import { EmptyPage } from './pages/empty-page'
 import { Execution } from './pages/execution/execution-details'
@@ -112,6 +114,21 @@ export default function App() {
           element: <ReposListPage />
         },
         {
+          path: ':spaceId/repos/:repoId',
+          element: <RepoLayout />,
+          children: [
+            {
+              path: 'code',
+              element: (
+                <ExplorerPathsProvider>
+                  <RepoSidebar />
+                </ExplorerPathsProvider>
+              ),
+              children: []
+            }
+          ]
+        },
+        {
           path: 'theme',
           element: <ProfileSettingsThemePage />
         }
@@ -156,7 +173,7 @@ export default function App() {
             },
             {
               path: ':spaceId/repos/:repoId',
-              element: <RepoLayout />,
+              element: <RepoLayoutV1 />,
               children: [
                 {
                   index: true,

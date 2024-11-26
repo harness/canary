@@ -2,7 +2,7 @@ import { useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 
 import { Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
-import { TypesUser } from '@views/layouts/types'
+import { TypesUser } from '@/types'
 
 import { adminMenuItem } from './data'
 import { NavbarItem } from './navbar-item'
@@ -48,13 +48,13 @@ export const Navbar = ({
   if (!showNavbar) return null
 
   return (
-    <NavbarSkeleton.Root className="bg-background fixed inset-y-0 left-0 z-50 overflow-hidden max-md:hidden">
+    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden bg-background max-md:hidden">
       <NavbarSkeleton.Header>
         <NavbarProjectChooser.Root
           logo={
             <Link className="flex items-center gap-1.5" to="/">
               <Icon name="harness" size={18} className="text-foreground-1" />
-              <Icon name="harness-logo-text" width={65} height={15} className="text-foreground-1 mb-0.5" />
+              <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
             </Link>
           }
         />

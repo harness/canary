@@ -123,9 +123,9 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
         />
         <div className="z-10 col-start-1 row-span-full mt-px flex items-center">
           {icon ? (
-            <div className="sub-menu-icon-bg border-borders-1 bg-background-2 relative flex size-8 place-content-center place-items-center rounded border">
+            <div className="sub-menu-icon-bg relative flex size-8 place-content-center place-items-center rounded border border-borders-1 bg-background-2">
               <Icon
-                className="text-foreground-3 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-foreground-3"
                 name="sub-menu-ellipse"
                 size={18}
               />
@@ -147,7 +147,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
             {text}
           </Text>
           {!!description && (
-            <Text className="text-foreground-4 z-10 w-full truncate leading-4 duration-0 ease-in-out" size={1} truncate>
+            <Text className="z-10 w-full truncate leading-4 text-foreground-4 duration-0 ease-in-out" size={1} truncate>
               {description}
             </Text>
           )}
@@ -192,7 +192,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
 
 function Footer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-borders-5 sticky bottom-0 z-20 grid h-[72px] items-center border-t px-4">{children}</div>
+    <div className="sticky bottom-0 z-20 grid h-[72px] items-center border-t border-borders-5 px-4">{children}</div>
   )
 }
 

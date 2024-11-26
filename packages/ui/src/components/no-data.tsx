@@ -1,7 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { cn } from '../utils/cn'
+import { cn } from '@utils/cn'
+
 import { Button } from './button'
 import { Icon, IconProps } from './icon'
 import { Text } from './text'

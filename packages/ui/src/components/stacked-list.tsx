@@ -1,13 +1,13 @@
 import * as React from 'react'
 
 import { Slot, Slottable } from '@radix-ui/react-slot'
+import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { cn } from '../utils/cn'
 import { Icon } from './icon'
 
 const listItemVariants = cva(
-  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b px-4 pb-[0.5625rem] pt-2.5 align-middle',
+  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b px-4 pb-[0.5625rem] pt-[0.6875rem] align-middle',
   {
     variants: {
       disabled: {
@@ -22,7 +22,7 @@ const listItemVariants = cva(
   }
 )
 
-const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-1 text-sm', {
+const listFieldVariants = cva('flex flex-1 flex-col items-stretch justify-center gap-[0.3125rem] text-sm', {
   variants: {
     right: {
       true: 'items-end'
@@ -94,7 +94,7 @@ const ListItem = ({
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-primary/[0.01]' : '',
-        disableHover ? '' : 'hover:bg-tertiary-muted cursor-pointer duration-150 ease-in-out'
+        disableHover ? '' : 'hover:bg-background-2 cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >
@@ -113,9 +113,9 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {title && (
       <div
         className={cn(
-          primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm', // Conditionally apply text-xs if secondary is true
-          'text-primary [&>em]:text-primary font-normal [&>em]:font-medium [&>em]:not-italic',
-          label && 'text-tertiary-background',
+          primary ? 'text-16 leading-snug' : secondary ? 'text-xs' : 'text-sm',
+          'text-foreground-1 [&>em]:text-foreground-1 font-normal [&>em]:font-medium [&>em]:not-italic',
+          !!label && 'text-foreground-4',
           className
         )}
       >
@@ -125,7 +125,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {description && (
       <div
         className={cn(
-          'text-tertiary-background flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap',
+          'text-foreground-4 flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap',
           primary ? 'text-sm' : 'text-xs',
           className
         )}

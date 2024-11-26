@@ -44,7 +44,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const root = window.document.documentElement
 
-    // const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
     const [mode, color, contrast] = theme.split('-') as [ModeType, ColorType, ContrastType]
 
     // Compute the effective theme based on system preference if set to "system"

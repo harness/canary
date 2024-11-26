@@ -14,6 +14,7 @@ import { SandboxLayout } from '../index'
  * Returns the complete menu model based on an array of IDs,
  * using the navbarMenuData variable as a reference.
  * @param data
+ * @param t
  */
 const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
   if (!data.length) return []
@@ -63,7 +64,9 @@ export const SandboxRoot = ({
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = getPinnedMenuItemsData(t)
+  const pinnedMenuItemsData = useMemo(() => {
+    return getPinnedMenuItemsData(t)
+  }, [t])
 
   /**
    * Update pinned manu
@@ -75,14 +78,14 @@ export const SandboxRoot = ({
     }
 
     setPinnedMenuItems(getArrayOfNavItems(pinnedMenu, t))
-  }, [pinnedMenu])
+  }, [pinnedMenu, pinnedMenuItemsData, t])
 
   /**
    * Update recent menu
    */
   useLayoutEffect(() => {
     setRecentMenuItems(getArrayOfNavItems(recentMenu, t))
-  }, [recentMenu])
+  }, [recentMenu, t])
 
   /**
    * Map mock data menu by type to Settings and More
@@ -107,7 +110,7 @@ export const SandboxRoot = ({
         settingsMenu: []
       }
     )
-  }, [])
+  }, [t])
 
   /**
    * Handle logout

@@ -4,10 +4,11 @@ import { createTailwindMerge, getDefaultConfig, mergeConfigs } from 'tailwind-me
 import tailwindConfig from '../../tailwind'
 
 const customTwMerge = createTailwindMerge(getDefaultConfig, config =>
-  mergeConfigs<'font-size'>(config, {
+  mergeConfigs<'font-size' | 'box-shadow'>(config, {
     extend: {
       classGroups: {
-        'font-size': Object.keys(tailwindConfig.theme.extend.fontSize).map(key => `text-${key}`)
+        'font-size': Object.keys(tailwindConfig.theme.extend.fontSize).map(key => `text-${key}`),
+        'box-shadow': Object.keys(tailwindConfig.theme.extend.boxShadow || {}).map(key => `shadow-${key}`)
       }
     }
   })

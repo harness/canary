@@ -50,7 +50,7 @@ export const Navbar = ({
   if (!showNavbar) return null
 
   return (
-    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden bg-background max-md:hidden">
+    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden max-md:hidden">
       <NavbarSkeleton.Header>
         <NavbarProjectChooser.Root
           logo={
@@ -63,7 +63,7 @@ export const Navbar = ({
       </NavbarSkeleton.Header>
 
       <NavbarSkeleton.Content className="overflow-hidden">
-        <ScrollArea className="mb-[1.375rem] flex-1">
+        <ScrollArea className="mb-[1.375rem]">
           <Spacer size={1.5} />
           <NavbarSkeleton.Group>
             {pinnedMenuItems.map((item, idx) => (

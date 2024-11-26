@@ -118,6 +118,8 @@ export default {
           8: 'hsl(var(--background-08))',
           9: 'hsl(var(--background-09))',
           10: 'hsl(var(--background-10))',
+          11: 'hsl(var(--background-11))',
+          12: 'hsl(var(--background-12))',
           danger: 'hsla(var(--background-danger))',
           success: 'hsla(var(--background-success))'
         },
@@ -237,7 +239,8 @@ export default {
       boxShadow: {
         1: '0px 8px 16px rgba(0, 0, 0, 0.30)',
         2: '0px 8px 8px rgba(0, 0, 0, 0.60)',
-        'pagination-1': '0px 2px 4px rgba(0, 0, 0, 0.50)'
+        'pagination-1': '0px 2px 4px rgba(0, 0, 0, 0.50)',
+        'as-border': 'inset 0 0 0 1px'
       },
       borderRadius: {
         10: '0.625rem'

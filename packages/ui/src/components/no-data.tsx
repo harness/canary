@@ -59,7 +59,7 @@ export const NoData: React.FC<NoDataProps> = ({
         {description && (
           <div className="flex flex-col">
             {description.map((line, index) => (
-              <Text key={index} size={2} weight="normal" align="center" className="text-tertiary-background">
+              <Text key={index} size={2} weight="normal" align="center" color="tertiaryBackground">
                 {line}
               </Text>
             ))}
@@ -69,19 +69,19 @@ export const NoData: React.FC<NoDataProps> = ({
           <div className="mt-4 flex gap-[1.125rem]">
             {primaryButton &&
               (primaryButton.to ? (
-                <Button asChild onClick={primaryButton.onClick}>
+                <Button asChild onClick={() => primaryButton?.onClick?.()}>
                   <NavLink to={primaryButton.to}>{primaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button onClick={primaryButton.onClick}>{primaryButton.label}</Button>
+                <Button onClick={() => primaryButton?.onClick?.()}>{primaryButton.label}</Button>
               ))}
             {secondaryButton &&
               (secondaryButton.to ? (
-                <Button variant="outline" asChild onClick={secondaryButton.onClick}>
-                  <NavLink to={secondaryButton.to || '/</Button>'}>{secondaryButton.label}</NavLink>
+                <Button variant="outline" asChild onClick={() => secondaryButton?.onClick?.()}>
+                  <NavLink to={secondaryButton.to}>{secondaryButton.label}</NavLink>
                 </Button>
               ) : (
-                <Button variant="outline" onClick={secondaryButton.onClick}>
+                <Button variant="outline" onClick={() => secondaryButton?.onClick?.()}>
                   {secondaryButton.label}
                 </Button>
               ))}

@@ -31,6 +31,7 @@ import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
@@ -136,7 +137,12 @@ export default function App() {
                   <RepoSidebar />
                 </ExplorerPathsProvider>
               ),
-              children: []
+              children: [
+                {
+                  index: true,
+                  element: <RepoCode />
+                }
+              ]
             },
             {
               index: true,

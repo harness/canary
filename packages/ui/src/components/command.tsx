@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Dialog, DialogContent } from '@/components/dialog'
+import { Dialog, DialogContent, ScrollArea } from '@/components'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
@@ -12,10 +12,7 @@ const Command = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive
     ref={ref}
-    className={cn(
-      'bg-popover text-popover-foreground flex h-full w-full flex-col overflow-hidden rounded-md',
-      className
-    )}
+    className={cn('bg-background-2 text-foreground-8 flex h-full w-full flex-col overflow-hidden rounded', className)}
     {...props}
   />
 ))
@@ -55,13 +52,13 @@ CommandInput.displayName = CommandPrimitive.Input.displayName
 
 const CommandList = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List>
->(({ className, ...props }, ref) => (
-  <CommandPrimitive.List
-    ref={ref}
-    className={cn('max-h-[300px] overflow-y-auto overflow-x-hidden', className)}
-    {...props}
-  />
+  React.ComponentPropsWithoutRef<typeof CommandPrimitive.List> & {
+    heightClassName?: string
+  }
+>(({ className, children, heightClassName, ...props }, ref) => (
+  <CommandPrimitive.List ref={ref} className={cn('flex flex-col', className)} {...props}>
+    <ScrollArea viewportClassName={cn('max-h-[300px]', heightClassName)}>{children}</ScrollArea>
+  </CommandPrimitive.List>
 ))
 
 CommandList.displayName = CommandPrimitive.List.displayName
@@ -69,7 +66,7 @@ CommandList.displayName = CommandPrimitive.List.displayName
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="py-6 text-center text-sm" {...props} />)
+>((props, ref) => <CommandPrimitive.Empty ref={ref} className="px-2 py-4 text-sm text-foreground-5" {...props} />)
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 
@@ -80,7 +77,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
+      'text-foreground-8 [&_[cmdk-group-heading]]:text-foreground-7 overflow-hidden p-1 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium',
       className
     )}
     {...props}
@@ -104,7 +101,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'data-[selected=true]:bg-accent data-[selected=true]:text-accent-foreground relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
+      'data-[selected=true]:bg-background-4 data-[selected=true]:text-foreground-1 relative flex cursor-default select-none items-center rounded px-2 py-1.5 text-sm outline-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50',
       className
     )}
     {...props}

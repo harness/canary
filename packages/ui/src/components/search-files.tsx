@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, useCallback, useMemo, useState } from 'react'
 
 import {
   Command,
@@ -15,21 +15,23 @@ import {
 
 interface SearchFilesProps {
   navigateToFile: (file: string) => void
-  filesList: string[] | undefined
+  filesList?: string[]
 }
 
 export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
 
-  const handleInputChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setQuery(value)
     setIsOpen(value !== '')
   }, [])
 
   const filteredFiles = useMemo(() => {
-    return filesList?.filter(file => file.toLowerCase().includes(query.toLowerCase()))
+    if (!filesList) return [] as string[]
+
+    return filesList.filter(file => file.toLowerCase().includes(query.toLowerCase()))
   }, [query, filesList])
 
   const fileText = useCallback(
@@ -37,9 +39,10 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
       const lowerCaseFile = file.toLowerCase()
       const lowerCaseQuery = query.toLowerCase()
       const matchIndex = lowerCaseFile.indexOf(lowerCaseQuery)
+      const classes = 'w-full text-foreground-8'
 
       if (matchIndex === -1) {
-        return <Text>{file}</Text>
+        return <Text className={classes}>{file}</Text>
       }
 
       const startText = file.slice(0, matchIndex)
@@ -47,7 +50,7 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
       const endText = file.slice(matchIndex + query.length)
 
       return (
-        <Text>
+        <Text className={classes}>
           {startText && <span>{startText}</span>}
           {matchedText && <mark>{matchedText}</mark>}
           {endText && <span>{endText}</span>}
@@ -61,39 +64,36 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverAnchor asChild>
         <div>
-          <SearchBox.Root
-            width="full"
-            placeholder="Search files..."
-            className="searchbox h-9"
-            handleChange={handleInputChange}
-            value={query}
-          />
+          <SearchBox.Root width="full" placeholder="Search files..." handleChange={handleInputChange} value={query} />
         </div>
       </PopoverAnchor>
       <PopoverContent
-        className="max-h-60 w-[600px] overflow-auto p-0"
+        className="w-[300px] p-0"
         align="start"
         onOpenAutoFocus={event => {
           event.preventDefault()
         }}
       >
         <Command>
-          <CommandList>
+          <CommandList heightClassName="max-h-60">
             <CommandEmpty>No file found.</CommandEmpty>
-            <CommandGroup>
-              {filteredFiles?.map((file: string, idx: number) => (
-                <CommandItem
-                  key={idx}
-                  value={file}
-                  onSelect={() => {
-                    navigateToFile(file)
-                    setIsOpen(false)
-                  }}
-                >
-                  {fileText(file)}
-                </CommandItem>
-              ))}
-            </CommandGroup>
+            {filteredFiles && !!filteredFiles.length && (
+              <CommandGroup>
+                {filteredFiles?.map((file: string, idx: number) => (
+                  <CommandItem
+                    key={idx}
+                    className="break-words"
+                    value={file}
+                    onSelect={() => {
+                      navigateToFile(file)
+                      setIsOpen(false)
+                    }}
+                  >
+                    {fileText(file)}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            )}
           </CommandList>
         </Command>
       </PopoverContent>

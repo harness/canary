@@ -1,8 +1,8 @@
-import React from 'react'
+import { ReactNode } from 'react'
 
 import { CheckIcon } from '@radix-ui/react-icons'
+import { cn } from '@utils/cn'
 
-import { cn } from '../utils/cn'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './dropdown-menu'
 import { Icon } from './icon'
 import { Text } from './text'
@@ -19,15 +19,15 @@ interface DropdownProps {
   selectedValue?: string | null
 }
 
-function Root({ children }: { children: React.ReactNode }) {
+function Root({ children }: { children: ReactNode }) {
   return <div className="flex items-center justify-between gap-6">{children}</div>
 }
 
-function Left({ children }: { children: React.ReactNode }) {
+function Left({ children }: { children: ReactNode }) {
   return <div className="flex grow items-center gap-6">{children}</div>
 }
 
-function Right({ children }: { children: React.ReactNode }) {
+function Right({ children }: { children: ReactNode }) {
   return <div className="flex items-center gap-6">{children}</div>
 }
 

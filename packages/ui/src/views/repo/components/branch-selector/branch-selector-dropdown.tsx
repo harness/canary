@@ -134,7 +134,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <Text className="text-foreground-2 leading-tight" size={2}>
+            <Text className="leading-tight text-foreground-2" size={2}>
               Nothing to show
             </Text>
           </div>
@@ -156,7 +156,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="text-foreground-1 min-w-[12px]" />}
+                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
                   <Text
                     className={cn('text-foreground-2', {
                       'text-foreground-1': isSelected
@@ -169,7 +169,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
                 {isDefault && (
                   <Badge
-                    className="text-foreground-3 bg-transparent font-medium"
+                    className="bg-transparent font-medium text-foreground-3"
                     variant="outline"
                     // TODO: Review and update 'muted' theme implementation
                     // Current 'muted' theme styles don't fully match the design requirements
@@ -194,9 +194,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </div>
 
         <DropdownMenuItem className="p-0" asChild>
-          <div className="border-borders-4 mt-1 border-t px-3 py-2">
+          <div className="mt-1 border-t border-borders-4 px-3 py-2">
             <Link to={viewAllUrl}>
-              <Text className="text-ring hover:text-foreground-1 leading-none transition-colors duration-200">
+              <Text className="leading-none text-ring transition-colors duration-200 hover:text-foreground-1">
                 View all {activeTab === BranchSelectorTab.BRANCHES ? 'branches' : 'tags'}
               </Text>
             </Link>

@@ -7,7 +7,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { Icon } from './icon'
 
 const listItemVariants = cva(
-  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b px-4 pb-[0.5625rem] pt-[0.6875rem] align-middle',
+  'flex flex-1 flex-row flex-wrap items-center justify-start gap-1 border-b p-4 align-middle',
   {
     variants: {
       disabled: {
@@ -93,7 +93,7 @@ const ListItem = ({
         listItemVariants({}),
         className,
         isLast ? 'border-none' : 'border-b',
-        isHeader ? 'bg-primary/[0.01]' : '',
+        isHeader ? 'bg-background-2' : '',
         disableHover ? '' : 'hover:bg-background-2 cursor-pointer duration-150 ease-in-out'
       )}
       {...props}

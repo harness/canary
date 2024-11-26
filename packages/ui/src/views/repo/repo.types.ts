@@ -45,3 +45,5 @@ export interface RepoFile {
   sha?: string
   path: string
 }
+
+export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>

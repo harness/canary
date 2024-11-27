@@ -1,18 +1,14 @@
+import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router-dom'
 
 import { SandboxRoot } from '@harnessio/ui/views'
 
 import { useAppContext } from '../framework/context/AppContext'
 
-// import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
-
 const RootWrapper = () => {
-  const {
-    currentUser
-    // spaces
-  } = useAppContext()
-  // const spaceId = useGetSpaceURLParam()
+  const { currentUser } = useAppContext()
   const navigate = useNavigate()
+  const { t } = useTranslation()
   return (
     <>
       <SandboxRoot
@@ -22,6 +18,7 @@ const RootWrapper = () => {
         recentMenu={[]}
         changePinnedMenu={_data => {}}
         changeRecentMenu={_data => {}}
+        t={t}
       />
     </>
   )

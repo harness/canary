@@ -6,6 +6,7 @@ import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
+import { TFunction } from 'i18next'
 
 import { SandboxLayout } from '../index'
 
@@ -14,10 +15,10 @@ import { SandboxLayout } from '../index'
  * using the navbarMenuData variable as a reference.
  * @param data
  */
-const getArrayOfNavItems = (data: NavbarItemIdType[]) => {
+const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
   if (!data.length) return []
 
-  const navbarMenuData = getNavbarMenuData()
+  const navbarMenuData = getNavbarMenuData(t)
 
   return navbarMenuData.reduce<NavbarItemType[]>((acc, { items }) => {
     const currentIndex = items.findIndex(item => data.includes(item.id))
@@ -43,6 +44,7 @@ interface SandboxRootProps {
   logout?: () => void
   changePinnedMenu: (items: NavbarItemIdType[]) => void
   changeRecentMenu: (items: NavbarItemIdType[]) => void
+  t: TFunction
 }
 
 export const SandboxRoot = ({
@@ -51,7 +53,8 @@ export const SandboxRoot = ({
   recentMenu,
   logout,
   changePinnedMenu,
-  changeRecentMenu
+  changeRecentMenu,
+  t
 }: SandboxRootProps) => {
   const location = useLocation()
   const [recentMenuItems, setRecentMenuItems] = useState<NavbarItemType[]>([])
@@ -60,7 +63,7 @@ export const SandboxRoot = ({
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = getPinnedMenuItemsData()
+  const pinnedMenuItemsData = getPinnedMenuItemsData(t)
 
   /**
    * Update pinned manu
@@ -71,21 +74,21 @@ export const SandboxRoot = ({
       return
     }
 
-    setPinnedMenuItems(getArrayOfNavItems(pinnedMenu))
+    setPinnedMenuItems(getArrayOfNavItems(pinnedMenu, t))
   }, [pinnedMenu])
 
   /**
    * Update recent menu
    */
   useLayoutEffect(() => {
-    setRecentMenuItems(getArrayOfNavItems(recentMenu))
+    setRecentMenuItems(getArrayOfNavItems(recentMenu, t))
   }, [recentMenu])
 
   /**
    * Map mock data menu by type to Settings and More
    */
   const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData()
+    const navbarMenuData = getNavbarMenuData(t)
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
@@ -225,7 +228,7 @@ export const SandboxRoot = ({
       <ManageNavigation
         pinnedItems={pinnedMenuItems}
         recentItems={recentMenuItems}
-        navbarMenuData={getNavbarMenuData()}
+        navbarMenuData={getNavbarMenuData(t)}
         showManageNavigation={showCustomNav}
         isSubmitting={false}
         submitted={false}

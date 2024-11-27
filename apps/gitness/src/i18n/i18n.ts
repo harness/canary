@@ -7,14 +7,14 @@ import { resources } from '@harnessio/ui/locales'
 
 const languageDetectorOptions = {
   // Order and from where user language should be detected
-  order: ['localStorage', 'navigator'],
+  order: ['localStorage', 'navigator', 'cookie'],
 
   // Keys to search language in
   lookupCookie: 'i18next',
   lookupLocalStorage: 'i18nextLng',
 
   // Cache user language on
-  caches: ['localStorage']
+  caches: ['localStorage', 'cookie']
 }
 
 i18n
@@ -22,7 +22,7 @@ i18n
   .use(LanguageDetector)
   .init({
     detection: languageDetectorOptions,
-    resources: {},
+    resources,
     fallbackLng: 'en',
     debug: true,
     react: {

@@ -43,7 +43,7 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
         iconName: 'artifacts-gradient',
         title: t('component:navbar.artifacts'),
         description: 'Validate service resilience.',
-        to: '/sandbox/executions/artifacts'
+        to: '/artifacts'
       },
       {
         id: 5,
@@ -99,7 +99,7 @@ export const getNavbarMenuData = (): MenuGroupType[] => [
         iconName: 'security-tests-gradient',
         title: t('component:navbar.security-tests'),
         description: 'Shift left security testing.',
-        to: '/sandbox/executions/security-tests'
+        to: '/security-tests'
       },
       {
         id: 11,

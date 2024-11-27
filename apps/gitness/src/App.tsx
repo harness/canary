@@ -6,6 +6,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { EmptyPage } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
   NewPasswordPage,
@@ -33,7 +34,6 @@ import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import CreateProject from './pages/create-project'
-import { EmptyPage } from './pages/empty-page'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
 import { LandingPage } from './pages/landing-page'
@@ -441,12 +441,12 @@ export default function App() {
       element: <Logout />
     },
     {
-      path: 'chaos-engineering',
+      path: 'chaos',
       element: <EmptyPage pathName="Chaos Engineering" />
     },
     {
-      path: 'environments',
-      element: <EmptyPage pathName="Environments" />
+      path: 'artifacts',
+      element: <EmptyPage pathName="Artifacts" />
     },
     {
       path: 'secrets',
@@ -477,11 +477,19 @@ export default function App() {
       element: <EmptyPage pathName="Service Reliability" />
     },
     {
-      path: 'internal-developer-portal',
+      path: 'developer/portal',
       element: <EmptyPage pathName="Internal Developer Portal" />
     },
     {
-      path: 'infrastructure-as-code',
+      path: 'developer/environments',
+      element: <EmptyPage pathName="Environments" />
+    },
+    {
+      path: 'developer/insights',
+      element: <EmptyPage pathName="Software Engineering Insights" />
+    },
+    {
+      path: 'infrastructure',
       element: <EmptyPage pathName="Infrastructure as Code" />
     },
     {
@@ -489,20 +497,28 @@ export default function App() {
       element: <EmptyPage pathName="Code Repository" />
     },
     {
-      path: 'software-engineering-insights',
-      element: <EmptyPage pathName="Software Engineering Insights" />
-    },
-    {
-      path: 'software-supply-chain-assurance',
+      path: 'supply-chain',
       element: <EmptyPage pathName="Software Supply Chain Assurance" />
     },
     {
-      path: 'security-testing-orchestration',
+      path: 'security-tests',
       element: <EmptyPage pathName="Security Testing Orchestration" />
     },
     {
-      path: 'cloud-cost-management',
+      path: 'cloud-costs',
       element: <EmptyPage pathName="Cloud Cost Management" />
+    },
+    {
+      path: 'databases',
+      element: <EmptyPage pathName="Databases" />
+    },
+    {
+      path: 'incidents',
+      element: <EmptyPage pathName="Incidents" />
+    },
+    {
+      path: 'dashboards',
+      element: <EmptyPage pathName="Dashboards" />
     }
   ])
 

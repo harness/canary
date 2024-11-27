@@ -146,7 +146,7 @@ const getChildNodes = (stage: Record<string, any>): Node[] => {
 
 function getIconAndDisplayName(step: Record<string, any>, stepIndex: number, _?: boolean) {
   return {
-    name: getNameBasedOnStep(step, stepIndex),
+    name: step?.name || getNameBasedOnStep(step, stepIndex),
     icon: (
       <div className="node-icon">
         <Icon name={getIconBasedOnStep(step)} />

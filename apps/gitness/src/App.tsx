@@ -5,6 +5,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { EmptyPage } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
   NewPasswordPage,
@@ -31,7 +32,6 @@ import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import CreateProject from './pages/create-project'
-import { EmptyPage } from './pages/empty-page'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
 import { LandingPage } from './pages/landing-page'

@@ -9,7 +9,7 @@ const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
     variant: {
       default: 'h-9 justify-center rounded-lg bg-muted p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'border-border-background h-[44px] w-full justify-start gap-6 border-b px-8',
+      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-border-background px-8',
       // TODO: Refactor - merge tabnav and branch variants
       // tabnav is used in existing components and has conflicting styles
       // Future steps:
@@ -37,7 +37,7 @@ const tabsTriggerVariants = cva(
         navigation:
           'm-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-tertiary-background duration-150 ease-in-out hover:text-primary data-[state=active]:border-tertiary-background data-[state=active]:text-primary',
         tabnav:
-          'bg-background text-tertiary-background hover:text-primary data-[state=active]:text-primary [&svg]:data-[state=active]:text-primary tabnav-inactive data-[state=active]:tabnav-active m-0 h-[36px] items-center gap-2 rounded-t-md px-4 text-sm font-normal duration-150 ease-in-out',
+          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary',
         branch:
           '-mb-px h-[34px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-4 data-[state=active]:text-foreground-1'
       }

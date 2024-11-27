@@ -20,8 +20,4 @@ export default {
 
   // i18n keys are wrapped in a function like `t('key')`
   functions: ['t', 'i18nextViewsInstance.t']
-
-  // // Automatically create empty translations in all locales
-  // createOldCatalogs: false,
-  // keepRemoved: false
 }

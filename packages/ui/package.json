@@ -9,7 +9,6 @@
     "./components": "./dist/components.js",
     "./views": "./dist/views.js",
     "./hooks": "./dist/hooks.js",
-    "./internationalization": "./dist/internationalization.js",
     "./tailwind.config": "./tailwind.config.js",
     "./styles.css": "./dist/styles.css"
   },

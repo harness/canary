@@ -3,8 +3,6 @@ import { initReactI18next } from 'react-i18next'
 import i18n from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
-// import { i18nextViewsInstance } from '@harnessio/ui/internationalization'
-
 const languageDetectorOptions = {
   // Order and from where user language should be detected
   order: ['localStorage', 'navigator', 'cookie'],

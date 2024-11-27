@@ -4,7 +4,7 @@ import { NavbarItemType } from '@components/navbar/types'
 
 import { i18nextViewsInstance } from '../i18n/i18n'
 
-export const pinnedMenuItemsData: NavbarItemType[] = [
+export const getPinnedMenuItemsData = (): NavbarItemType[] => [
   {
     id: 0,
     iconName: 'repositories-gradient',

@@ -2,7 +2,9 @@ import { MenuGroupType, MenuGroupTypes } from '@components/navbar/types'
 
 import { i18nextViewsInstance } from '../i18n/i18n'
 
-export const navbarMenuData: MenuGroupType[] = [
+// import { t } from 'i18next'
+
+export const getNavbarMenuData = (): MenuGroupType[] => [
   {
     groupId: 0,
     title: i18nextViewsInstance.t('navbar.devops'),

@@ -42,7 +42,7 @@ i18n.on('languageChanged', lng => {
   console.log('languageChanged here', lng)
   i18nextViewsInstance.i18nextViewsInstance.changeLanguage('fr')
 })
-i18n.changeLanguage('fr')
+i18n.changeLanguage('en')
 // i18nextViewsInstance.changeLanguage('fr')
 
 export default i18n

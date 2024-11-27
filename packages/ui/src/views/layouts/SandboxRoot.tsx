@@ -2,8 +2,8 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'reac
 import { Outlet, useLocation } from 'react-router-dom'
 
 import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
-import { navbarMenuData } from '@/data/navbar-menu-data'
-import { pinnedMenuItemsData } from '@/data/pinned-menu-items-data'
+import { getNavbarMenuData } from '@/data/navbar-menu-data'
+import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
 
@@ -16,6 +16,8 @@ import { SandboxLayout } from '../index'
  */
 const getArrayOfNavItems = (data: NavbarItemIdType[]) => {
   if (!data.length) return []
+
+  const navbarMenuData = getNavbarMenuData()
 
   return navbarMenuData.reduce<NavbarItemType[]>((acc, { items }) => {
     const currentIndex = items.findIndex(item => data.includes(item.id))
@@ -58,6 +60,8 @@ export const SandboxRoot = ({
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
+  const pinnedMenuItemsData = getPinnedMenuItemsData()
+
   /**
    * Update pinned manu
    */
@@ -81,6 +85,7 @@ export const SandboxRoot = ({
    * Map mock data menu by type to Settings and More
    */
   const { moreMenu, settingsMenu } = useMemo(() => {
+    const navbarMenuData = getNavbarMenuData()
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
@@ -220,7 +225,7 @@ export const SandboxRoot = ({
       <ManageNavigation
         pinnedItems={pinnedMenuItems}
         recentItems={recentMenuItems}
-        navbarMenuData={navbarMenuData}
+        navbarMenuData={getNavbarMenuData()}
         showManageNavigation={showCustomNav}
         isSubmitting={false}
         submitted={false}

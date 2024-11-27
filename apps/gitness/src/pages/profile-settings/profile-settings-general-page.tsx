@@ -128,7 +128,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
   })
 
   const languageValue = watch('language')
-  console.log('languageValue', languageValue)
 
   useEffect(() => {
     if (userData) {

@@ -9,6 +9,7 @@ import {
 } from '@harnessio/code-service-client'
 
 import { PasswordFields, ProfileFields, SettingsAccountGeneralPage } from './profile-settings-general-page'
+import { LanguagesEnum } from './types'
 
 export const SettingsProfileGeneralPage: React.FC = () => {
   const [apiError, setApiError] = useState<{ type: 'profile' | 'password'; message: string } | null>(null)
@@ -16,7 +17,8 @@ export const SettingsProfileGeneralPage: React.FC = () => {
   const [userData, setUserData] = useState<ProfileFields>({
     name: '',
     username: '',
-    email: ''
+    email: '',
+    language: LanguagesEnum.SYSTEM
   })
 
   const { isLoading: isLoadingUser } = useGetUserQuery(
@@ -26,7 +28,10 @@ export const SettingsProfileGeneralPage: React.FC = () => {
         setUserData({
           name: data.display_name || '',
           username: data.uid || '',
-          email: data.email || ''
+          email: data.email || '',
+          language: localStorage.getItem('i18nextLngSystem')
+            ? ('system' as LanguagesEnum)
+            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
         })
       },
       onError: (error: GetUserErrorResponse) => {
@@ -42,7 +47,10 @@ export const SettingsProfileGeneralPage: React.FC = () => {
         setUserData({
           name: data.display_name || '',
           username: data.uid || '',
-          email: data.email || ''
+          email: data.email || '',
+          language: localStorage.getItem('i18nextLngSystem')
+            ? ('system' as LanguagesEnum)
+            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
         })
       },
       onError: (error: UpdateUserErrorResponse) => {
@@ -59,7 +67,10 @@ export const SettingsProfileGeneralPage: React.FC = () => {
         setUserData({
           name: data.display_name || '',
           username: data.uid || '',
-          email: data.email || ''
+          email: data.email || '',
+          language: localStorage.getItem('i18nextLngSystem')
+            ? ('system' as LanguagesEnum)
+            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
         })
       },
       onError: (error: UpdateUserErrorResponse) => {

@@ -4,13 +4,32 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { Avatar, AvatarFallback, AvatarImage, Button, ButtonGroup, Icon, Input, Spacer, Text } from '@harnessio/canary'
-import { FormFieldSet, getInitials, SandboxLayout, SkeletonList } from '@harnessio/views'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  ButtonGroup,
+  Icon,
+  Input,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Spacer,
+  Text
+} from '@harnessio/canary'
+import { FormFieldSet, getInitials, ModeToggle, SandboxLayout, SkeletonList } from '@harnessio/views'
+
+import { handleLanguageChange } from '../../i18n/i18n'
+import { LanguagesEnum } from './types'
 
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Please provide your name' }),
   username: z.string().min(1, { message: 'Please provide a username' }),
-  email: z.string().email({ message: 'Please provide a valid email address' })
+  email: z.string().email({ message: 'Please provide a valid email address' }),
+  language: z.nativeEnum(LanguagesEnum)
 })
 
 const passwordSchema = z
@@ -60,11 +79,27 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
   const TRUNCATE_INITIALS_LEN = 2
+  const languageOptions = [
+    {
+      label: 'English',
+      value: LanguagesEnum.ENGLISH
+    },
+    {
+      label: 'French',
+      value: LanguagesEnum.FRENCH
+    },
+    {
+      label: 'System',
+      value: LanguagesEnum.SYSTEM
+    }
+  ]
 
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
     reset: resetProfileForm,
+    watch,
+    setValue,
     formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
   } = useForm<ProfileFields>({
     resolver: zodResolver(profileSchema),
@@ -92,12 +127,16 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
     }
   })
 
+  const languageValue = watch('language')
+  console.log('languageValue', languageValue)
+
   useEffect(() => {
     if (userData) {
       resetProfileForm({
         name: userData.name,
         username: userData.username,
-        email: userData.email
+        email: userData.email,
+        language: userData.language
       })
     }
   }, [userData])
@@ -165,17 +204,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   </Text>
                 </AvatarFallback>
               </Avatar>
-              {/* <FormFieldSet.ControlGroup>
-                <FormFieldSet.Label htmlFor="avatar">Profile picture</FormFieldSet.Label>
-                <ButtonGroup.Root spacing="3">
-                  <Button variant="outline" size="sm">
-                    Upload
-                  </Button>
-                  <Button variant="outline" size="sm">
-                    <Icon name="trash" size={14} />
-                  </Button>
-                </ButtonGroup.Root>
-              </FormFieldSet.ControlGroup> */}
             </FormFieldSet.ControlGroup>
 
             {/* NAME */}
@@ -215,6 +243,35 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   {profileErrors.email.message?.toString()}
                 </FormFieldSet.Message>
               )}
+            </FormFieldSet.ControlGroup>
+
+            <FormFieldSet.ControlGroup>
+              <FormFieldSet.Label>Theme</FormFieldSet.Label>
+              <ModeToggle />
+            </FormFieldSet.ControlGroup>
+
+            <FormFieldSet.ControlGroup>
+              <FormFieldSet.Label htmlFor="language">Select Language</FormFieldSet.Label>
+              <Select
+                // defaultValue="system"
+                value={languageValue}
+                {...registerProfile('language')}
+                onValueChange={value => {
+                  setValue('language', value as LanguagesEnum)
+                  handleLanguageChange(value)
+                }}
+              >
+                <SelectTrigger id="language">
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent>
+                  {languageOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </FormFieldSet.ControlGroup>
 
             {error && error.type === 'profile' && (
@@ -260,20 +317,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
               Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase
               letters.
             </FormFieldSet.SubLegend>
-            {/* <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label htmlFor="oldPassword">Old password</FormFieldSet.Label>
-              <Input
-                id="oldPassword"
-                type="password"
-                {...registerPassword('oldPassword')}
-                placeholder="Enter your old password"
-              />
-              {passwordErrors.oldPassword && (
-                <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>
-                  {passwordErrors.oldPassword.message?.toString()}
-                </FormFieldSet.Message>
-              )}
-            </FormFieldSet.ControlGroup> */}
 
             {/* NEW PASSWORD */}
             <FormFieldSet.ControlGroup>

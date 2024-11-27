@@ -7,7 +7,7 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 const languageDetectorOptions = {
   // Order and from where user language should be detected
-  order: ['navigator', 'cookie', 'localStorage'],
+  order: ['localStorage', 'navigator', 'cookie'],
 
   // Keys to search language in
   lookupCookie: 'i18next',
@@ -35,17 +35,17 @@ i18n
   })
 
 export const handleLanguageChange = (lng: string) => {
-  console.log('handleLanguageChange here', lng)
-  i18n.changeLanguage(lng)
-  // i18nextViewsInstance.i18nextViewsInstance.changeLanguage(lng)
+  // set system language
+  if (lng === 'system') {
+    const navigatorLang = navigator.language.split('-')[0]
+    i18n.changeLanguage(navigatorLang)
+    localStorage.setItem('i18nextLngSystem', 'true')
+  } else {
+    // Set specific language
+    i18n.changeLanguage(lng)
+    localStorage.setItem('i18nextLng', lng)
+    localStorage.removeItem('i18nextLngSystem')
+  }
 }
-
-// console.log('i18n', i18n)
-
-// i18n.on('languageChanged', lng => {
-//   console.log('languageChanged here', lng)
-//   i18nextViewsInstance.i18nextViewsInstance.changeLanguage('en')
-// })
-// i18n.changeLanguage('en')
 
 export default i18n

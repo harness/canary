@@ -39,7 +39,7 @@ export const navbarMenuData: MenuGroupType[] = [
         iconName: 'artifacts-gradient',
         title: 'Artifacts',
         description: 'Validate service resilience.',
-        to: '/sandbox/executions/artifacts'
+        to: '/artifacts'
       },
       {
         id: 5,
@@ -95,7 +95,7 @@ export const navbarMenuData: MenuGroupType[] = [
         iconName: 'security-tests-gradient',
         title: 'Security Tests',
         description: 'Shift left security testing.',
-        to: '/sandbox/executions/security-tests'
+        to: '/security-tests'
       },
       {
         id: 11,

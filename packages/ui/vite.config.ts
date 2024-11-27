@@ -17,6 +17,7 @@ export default defineConfig({
         components: resolve(__dirname, 'src/components/index.ts'),
         views: resolve(__dirname, 'src/views/index.ts'),
         hooks: resolve(__dirname, 'src/hooks/index.ts'),
+        internationalization: resolve(__dirname, 'src/i18n/index.ts'),
         index: resolve(__dirname, 'src/index.ts')
       },
       formats: ['es']

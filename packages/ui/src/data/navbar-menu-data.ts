@@ -1,57 +1,59 @@
 import { MenuGroupType, MenuGroupTypes } from '@components/navbar/types'
 
+import { i18nextViewsInstance } from '../i18n/i18n'
+
 export const navbarMenuData: MenuGroupType[] = [
   {
     groupId: 0,
-    title: 'Devops',
+    title: i18nextViewsInstance.t('navbar.devops'),
     type: MenuGroupTypes.GENERAL,
     items: [
       {
         id: 0,
         iconName: 'repositories-gradient',
-        title: 'Repositories',
+        title: i18nextViewsInstance.t('navbar.repositories'),
         description: 'Integrated & familiar git experience.',
         to: '/repos'
       },
       {
         id: 1,
         iconName: 'pipelines-gradient',
-        title: 'Pipelines',
+        title: i18nextViewsInstance.t('navbar.pipelines'),
         description: 'Up to 4X faster than other solutions.',
         to: '/pipelines'
       },
       {
         id: 2,
         iconName: 'execution-gradient',
-        title: 'Executions',
+        title: i18nextViewsInstance.t('navbar.executions'),
         description: 'Optimize feature rollout velocity.',
         to: '/executions'
       },
       {
         id: 3,
         iconName: 'database-gradient',
-        title: 'Databases',
+        title: i18nextViewsInstance.t('navbar.databases'),
         description: 'Manage all your infrastructure.',
         to: '/databases'
       },
       {
         id: 4,
         iconName: 'artifacts-gradient',
-        title: 'Artifacts',
+        title: i18nextViewsInstance.t('navbar.artifacts'),
         description: 'Validate service resilience.',
         to: '/sandbox/executions/artifacts'
       },
       {
         id: 5,
         iconName: 'infrastructure-gradient',
-        title: 'Infrastructure',
+        title: i18nextViewsInstance.t('navbar.infrastructure'),
         description: 'Manage all your infrastructure.',
         to: '/infrastructure'
       },
       {
         id: 6,
         iconName: 'flag-gradient',
-        title: 'Feature Flags',
+        title: i18nextViewsInstance.t('navbar.feature-flags'),
         description: 'Optimize feature rollout velocity.',
         to: '/feature-flags'
       }

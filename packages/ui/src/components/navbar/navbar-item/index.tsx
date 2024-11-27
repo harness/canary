@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
 import {
@@ -29,6 +30,7 @@ export const NavbarItem = ({
   handleRemoveRecentMenuItem,
   handleCustomNav
 }: NavbarItemProps) => {
+  const { t } = useTranslation()
   const iconName = item.iconName.replace('-gradient', '') as IconProps['name']
 
   const handlePin = () => {
@@ -43,12 +45,12 @@ export const NavbarItem = ({
     <>
       <DropdownMenuItem onSelect={handlePin}>
         <Text size={2} truncate>
-          Pin
+          {t('navbar.pin')}
         </Text>
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={handleRemoveRecent}>
         <Text size={2} truncate>
-          Remove
+          {t('navbar.remove')}
         </Text>
       </DropdownMenuItem>
     </>
@@ -56,12 +58,12 @@ export const NavbarItem = ({
     <>
       <DropdownMenuItem onSelect={handleCustomNav}>
         <Text size={2} truncate>
-          Reorder
+          {t('navbar.reorder')}
         </Text>
       </DropdownMenuItem>
       <DropdownMenuItem onSelect={handlePin}>
         <Text size={2} truncate>
-          Unpin
+          {t('navbar.unpin')}
         </Text>
       </DropdownMenuItem>
     </>

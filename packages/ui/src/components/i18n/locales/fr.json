@@ -1,0 +1,15 @@
+{
+  "navbar": {
+    "pin": "Épingler",
+    "remove": "Supprimer",
+    "reorder": "Réorganiser",
+    "unpin": "Détacher",
+    "repositories": "Dépôts",
+    "pipelines": "Pipelines",
+    "executions": "Exécutions",
+    "databases": "Bases de données",
+    "artifacts": "Artifacts",
+    "infrastructure": "Infrastructure",
+    "feature-flags": "Drapeaux de fonctionnalité"
+  }
+}

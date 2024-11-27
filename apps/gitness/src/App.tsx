@@ -1,3 +1,4 @@
+import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -24,6 +25,7 @@ import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
+import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
@@ -506,17 +508,19 @@ export default function App() {
 
   return (
     <AppProvider>
-      <ThemeProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <ExitConfirmProvider>
-              <NuqsAdapter>
-                <RouterProvider router={router} />
-              </NuqsAdapter>
-            </ExitConfirmProvider>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <ExitConfirmProvider>
+                <NuqsAdapter>
+                  <RouterProvider router={router} />
+                </NuqsAdapter>
+              </ExitConfirmProvider>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </I18nextProvider>
     </AppProvider>
   )
 }

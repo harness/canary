@@ -170,7 +170,7 @@ export const CreatePullRequest = () => {
 
           setTimeout(() => {
             navigate(`/spaces/${spaceId}/repos/${repoId}/pull-requests/${data?.number}`)
-          }, 2000)
+          }, 500)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

@@ -35,7 +35,7 @@ i18n
 export const handleLanguageChange = (lng: string) => {
   // set system language
   if (lng === 'system') {
-    const navigatorLang = navigator.language.split('-')[0]
+    const navigatorLang = (navigator.language || 'en').split('-')[0]
     i18n.changeLanguage(navigatorLang)
     localStorage.setItem('i18nextLngSystem', 'true')
     localStorage.setItem('i18nextLng', navigatorLang)

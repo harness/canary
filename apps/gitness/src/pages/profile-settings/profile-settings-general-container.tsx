@@ -13,6 +13,7 @@ import { LanguagesEnum } from './types'
 
 export const SettingsProfileGeneralPage: React.FC = () => {
   const [apiError, setApiError] = useState<{ type: 'profile' | 'password'; message: string } | null>(null)
+  const localLanguage = localStorage.getItem('i18nextLng')
 
   const [userData, setUserData] = useState<ProfileFields>({
     name: '',
@@ -31,7 +32,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
           email: data.email || '',
           language: localStorage.getItem('i18nextLngSystem')
             ? ('system' as LanguagesEnum)
-            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
+            : (localLanguage as LanguagesEnum)
         })
       },
       onError: (error: GetUserErrorResponse) => {
@@ -50,7 +51,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
           email: data.email || '',
           language: localStorage.getItem('i18nextLngSystem')
             ? ('system' as LanguagesEnum)
-            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
+            : (localLanguage as LanguagesEnum)
         })
       },
       onError: (error: UpdateUserErrorResponse) => {
@@ -70,7 +71,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
           email: data.email || '',
           language: localStorage.getItem('i18nextLngSystem')
             ? ('system' as LanguagesEnum)
-            : (localStorage.getItem('i18nextLng') as LanguagesEnum)
+            : (localLanguage as LanguagesEnum)
         })
       },
       onError: (error: UpdateUserErrorResponse) => {

@@ -8,7 +8,7 @@ import {
   useListBranchesQuery,
   useListPathsQuery
 } from '@harnessio/code-service-client'
-import { BranchListProps } from '@harnessio/ui/components'
+import { BranchSelectorItem } from '@harnessio/ui/components'
 import { RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
@@ -46,7 +46,7 @@ export const RepoSidebar = () => {
     }
   })
 
-  const branchList: BranchListProps[] | undefined = branches?.body?.map(item => ({
+  const branchList: BranchSelectorItem[] | undefined = branches?.body?.map(item => ({
     name: item?.name || ''
   }))
 

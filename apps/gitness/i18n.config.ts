@@ -1,15 +1,15 @@
 export default {
   // Directory where the parser will look for files
-  input: ['src/**/*.{js,jsx,ts,tsx}', '../../packages/ui/src/**/*.{js,jsx,ts,tsx}'],
+  input: ['src/**/*.{js,jsx,ts,tsx}'],
 
   // Output directory for extracted translations
-  output: '../../packages/ui/locales/$LOCALE/$NAMESPACE.json',
+  output: './locales/$LOCALE/$NAMESPACE.json',
 
   // Specify default namespace
-  defaultNamespace: 'component',
+  defaultNamespace: 'common',
 
   // Specify the list of namespaces
-  namespaces: ['component'],
+  namespaces: ['common'],
 
   locales: ['en', 'es', 'fr'],
 

@@ -15,6 +15,7 @@
     "preinstall": "npx only-allow pnpm",
     "pre-commit": "lint-staged",
     "test": "vitest",
+    "extract": "i18next --config './i18n.config.ts'",
     "typecheck": "tsc"
   },
   "dependencies": {

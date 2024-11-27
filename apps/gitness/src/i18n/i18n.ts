@@ -5,14 +5,14 @@ import LanguageDetector from 'i18next-browser-languagedetector'
 
 const languageDetectorOptions = {
   // Order and from where user language should be detected
-  order: ['localStorage', 'navigator', 'cookie'],
+  order: ['localStorage', 'navigator'],
 
   // Keys to search language in
   lookupCookie: 'i18next',
   lookupLocalStorage: 'i18nextLng',
 
   // Cache user language on
-  caches: ['cookie', 'localStorage']
+  caches: ['localStorage']
 }
 
 i18n
@@ -22,7 +22,7 @@ i18n
     detection: languageDetectorOptions,
     resources: {},
     fallbackLng: 'en',
-    // debug: true,
+    debug: true,
     react: {
       bindI18n: 'languageChanged',
       bindI18nStore: 'added'
@@ -49,8 +49,7 @@ export const handleLanguageChange = (lng: string) => {
 
 // Detect language change on the navigator
 window.addEventListener('languagechange', () => {
-  const navigatorLang = navigator.language.split('-')[0]
-
+  const navigatorLang = (navigator.language || 'en').split('-')[0]
   i18n.changeLanguage(navigatorLang)
 })
 

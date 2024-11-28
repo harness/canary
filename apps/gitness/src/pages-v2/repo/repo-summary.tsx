@@ -14,8 +14,8 @@ import {
   useListPathsQuery,
   useSummaryQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorListProps, RepoSummaryView } from '@harnessio/ui/views'
-import { FileProps, generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
+import { BranchSelectorListItem, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
+import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
@@ -26,7 +26,7 @@ import { decodeGitContent, getTrimmedSha, normalizeGitRef } from '../../utils/gi
 
 export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
-  const [files, setFiles] = useState<FileProps[]>([])
+  const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
   const { spaceId, repoId, gitRef } = useParams<PathParams>()
@@ -38,19 +38,24 @@ export default function RepoSummaryPage() {
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
 
-  const [selectedBranch, setSelectedBranch] = useState<string>('')
+  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({
+    name: '',
+    sha: ''
+  })
+
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
   const { query } = useCommonFilter()
 
-  const branchList: BranchSelectorListProps[] = useMemo(() => {
-    return (
-      branches?.map(item => ({
-        name: item?.name || '',
-        default: item?.name === repository?.default_branch
-      })) || []
-    )
+  const branchList: BranchSelectorListItem[] = useMemo(() => {
+    if (!branches) return []
+
+    return branches.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: item?.name === repository?.default_branch
+    }))
   }, [branches, repository?.default_branch])
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
@@ -63,7 +68,7 @@ export default function RepoSummaryPage() {
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(selectedBranch) }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(selectedBranch.name) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -73,7 +78,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(selectedBranch) }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(selectedBranch.name) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -133,7 +138,7 @@ export default function RepoSummaryPage() {
     }
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(selectedBranch) },
+      queryParams: { git_ref: normalizeGitRef(selectedBranch.name) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -160,14 +165,22 @@ export default function RepoSummaryPage() {
   }, [repoEntryPathToFileTypeMap, selectedBranch, repoRef, buildFilePath])
 
   useEffect(() => {
-    if (repository) {
-      setSelectedBranch(repository?.default_branch || '')
+    if (!branchList.length) {
+      return
     }
-  }, [repository])
+
+    const defaultBranch = branchList.find(branch => branch.default)
+
+    setSelectedBranch({
+      name: defaultBranch?.name || '',
+      sha: defaultBranch?.sha || '',
+      default: true
+    })
+  }, [branchList])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranch) }
+    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranch.name) }
   })
 
   const filesList = filesData?.body?.files || []

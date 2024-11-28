@@ -6,6 +6,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { Button, Spacer, Text } from '@harnessio/canary'
 import { useDeleteRepoWebhookMutation, useListRepoWebhooksQuery } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   DeleteTokenAlertDialog,
   Filter,
@@ -15,7 +16,6 @@ import {
   SandboxLayout,
   WebhooksList
 } from '@harnessio/views'
-import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'

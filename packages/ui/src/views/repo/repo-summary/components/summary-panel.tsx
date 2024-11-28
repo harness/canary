@@ -11,7 +11,7 @@ import {
   Text
 } from '@/components'
 
-interface DetailsProps {
+interface DetailItem {
   id: string
   iconName: 'tube-sign' | 'open-pr' | 'tag' | 'branch' | IconProps['name']
   name: string
@@ -20,7 +20,7 @@ interface DetailsProps {
 
 interface SummaryPanelProps {
   title: string
-  details: DetailsProps[]
+  details: DetailItem[]
   timestamp?: string
   onAddDescription?: () => void
   description?: string

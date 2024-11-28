@@ -10,6 +10,7 @@ import {
   RepoRepositoryOutput,
   useListReposQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   Filter,
   NoData,
@@ -19,7 +20,6 @@ import {
   SandboxLayout,
   useCommonFilter
 } from '@harnessio/views'
-import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -13,7 +13,7 @@ import {
   Text
 } from '@/components'
 import { cn } from '@utils/cn'
-import { BranchSelectorListProps } from '@views/repo/repo.types'
+import { BranchSelectorListItem } from '@views/repo/repo.types'
 
 enum BranchSelectorTab {
   BRANCHES = 'branches',
@@ -32,25 +32,25 @@ const BRANCH_SELECTOR_LABELS = {
 } as const
 
 export interface BranchSelectorDropdownProps {
-  name: string
-  branchList: BranchSelectorListProps[]
-  tagList: BranchSelectorListProps[]
-  selectBranch: (branch: string) => void
+  selectedBranch: BranchSelectorListItem
+  branchList: BranchSelectorListItem[]
+  tagList: BranchSelectorListItem[]
+  onSelectBranch: (branch: BranchSelectorListItem) => void
   repoId: string
   spaceId: string
 }
 
-const filterItems = (items: BranchSelectorListProps[], query: string) => {
+const filterItems = (items: BranchSelectorListItem[], query: string) => {
   if (!query.trim()) return items
 
   return items.filter(item => item.name.toLowerCase().includes(query.toLowerCase().trim()))
 }
 
-export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
-  name,
+export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
+  selectedBranch,
   branchList,
   tagList = [],
-  selectBranch,
+  onSelectBranch,
   repoId,
   spaceId
 }) => {
@@ -134,7 +134,7 @@ export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <Text className="leading-tight text-foreground-2" size={2}>
+            <Text className="text-foreground-2 leading-tight" size={2}>
               Nothing to show
             </Text>
           </div>
@@ -142,8 +142,8 @@ export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
 
         <div className="max-h-[360px] overflow-y-auto px-1">
           {filteredItems.map(item => {
-            const isSelected = item.name === name
-            const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListProps).default
+            const isSelected = item.name === selectedBranch.name && item.sha === selectedBranch.sha
+            const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
 
             return (
               <DropdownMenuItem
@@ -152,11 +152,11 @@ export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
                   'bg-background-4': isSelected,
                   'pl-7': !isSelected
                 })}
-                onClick={() => selectBranch(item?.name ?? '')}
+                onClick={() => onSelectBranch(item)}
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
+                  {isSelected && <Icon name="tick" size={12} className="text-foreground-1 min-w-[12px]" />}
                   <Text
                     className={cn('text-foreground-2', {
                       'text-foreground-1': isSelected
@@ -169,7 +169,7 @@ export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
 
                 {isDefault && (
                   <Badge
-                    className="bg-transparent font-medium text-foreground-3"
+                    className="text-foreground-3 bg-transparent font-medium"
                     variant="outline"
                     // TODO: Review and update 'muted' theme implementation
                     // Current 'muted' theme styles don't fully match the design requirements
@@ -194,9 +194,9 @@ export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
         </div>
 
         <DropdownMenuItem className="p-0" asChild>
-          <div className="mt-1 border-t border-borders-4 px-3 py-2">
+          <div className="border-borders-4 mt-1 border-t px-3 py-2">
             <Link to={viewAllUrl}>
-              <Text className="leading-none text-ring transition-colors duration-200 hover:text-foreground-1">
+              <Text className="text-ring hover:text-foreground-1 leading-none transition-colors duration-200">
                 View all {activeTab === BranchSelectorTab.BRANCHES ? 'branches' : 'tags'}
               </Text>
             </Link>

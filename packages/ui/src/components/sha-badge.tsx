@@ -1,18 +1,20 @@
+import { ReactNode } from 'react'
+
 import { Text } from '@/components'
 
 interface RootProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 
 interface IconProps {
-  children: React.ReactNode
+  children: ReactNode
   handleClick?: () => void
   className?: string
 }
 
 interface ContentProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 
@@ -42,14 +44,13 @@ function Icon({ ...props }: IconProps) {
   const { children, handleClick } = props
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      onClick={handleClick && handleClick}
+    <button
       className="flex items-center border-l bg-background px-1.5 py-0.5 hover:bg-muted/50"
+      tabIndex={0}
+      onClick={handleClick}
     >
       {children}
-    </div>
+    </button>
   )
 }
 

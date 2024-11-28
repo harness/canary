@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
 import { cn } from '@utils/cn'
 
@@ -9,18 +11,18 @@ interface BranchSelectorProps extends BranchSelectorDropdownProps {
   className?: string
 }
 
-export const BranchSelector: React.FC<BranchSelectorProps> = ({
-  name,
+export const BranchSelector: FC<BranchSelectorProps> = ({
+  selectedBranch,
   branchList,
   tagList,
   size = 'default',
-  selectBranch,
+  onSelectBranch,
   prefix,
   className,
   repoId,
   spaceId
 }) => {
-  const isTag = tagList.some(tag => tag.name === name) ?? false
+  const isTag = tagList.some(tag => tag.name === selectedBranch.name && tag.sha === selectedBranch.sha)
 
   return (
     <DropdownMenu>
@@ -34,10 +36,10 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
           size={size}
         >
           {!prefix && (
-            <Icon className="fill-transparent text-icons-9 flex-shrink-0" name={isTag ? 'tag' : 'branch'} size={12} />
+            <Icon className="text-icons-9 shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={12} />
           )}
-          <Text className="w-full text-foreground-8" truncate align="left">
-            {prefix ? `${prefix}: ${name}` : name}
+          <Text className="text-foreground-8 w-full" truncate align="left">
+            {prefix ? `${prefix}: ${selectedBranch.name}` : selectedBranch.name}
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>
@@ -45,8 +47,8 @@ export const BranchSelector: React.FC<BranchSelectorProps> = ({
       <BranchSelectorDropdown
         branchList={branchList}
         tagList={tagList}
-        name={name}
-        selectBranch={selectBranch}
+        selectedBranch={selectedBranch}
+        onSelectBranch={onSelectBranch}
         repoId={repoId}
         spaceId={spaceId}
       />

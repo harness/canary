@@ -1,9 +1,10 @@
-export interface BranchSelectorListProps {
+export interface BranchSelectorListItem {
   name: string
+  sha: string
   default?: boolean
 }
 
-export interface BranchProps {
+export interface Branch {
   id: number | string
   name: string
   sha: string
@@ -22,4 +23,25 @@ export interface BranchProps {
     ahead?: number
     default?: boolean
   }
+}
+
+export enum SummaryItemType {
+  Folder,
+  File
+}
+
+export interface User {
+  name: string
+  avatarUrl?: string
+}
+
+export interface RepoFile {
+  id: string
+  type: SummaryItemType
+  name: string
+  lastCommitMessage: string
+  timestamp: string
+  user?: User
+  sha?: string
+  path: string
 }

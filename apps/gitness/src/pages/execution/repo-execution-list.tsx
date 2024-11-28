@@ -5,6 +5,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { Button, ListActions, Spacer, Text } from '@harnessio/canary'
 import { TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   ExecutionList,
   ExecutionState,
@@ -13,7 +14,6 @@ import {
   SandboxLayout,
   timeDistance
 } from '@harnessio/views'
-import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'

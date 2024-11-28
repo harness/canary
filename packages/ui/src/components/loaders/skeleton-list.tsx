@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { Skeleton, StackedList } from '@/components'
-import { cn } from '@/utils/cn'
+import { cn } from '@utils/cn'
 
 // Helper function to generate random percentage width within a range
 const getRandomPercentageWidth = (min: number, max: number) => `${Math.floor(Math.random() * (max - min + 1)) + min}%`

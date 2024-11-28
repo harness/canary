@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Icon, ShaBadge, Text } from '@/components'
-import { cn } from '@/utils/cn'
+import { cn } from '@utils/cn'
 import copy from 'clipboard-copy'
 
 //TODO: it need to pass url to copy function in the future, it is used in branch-list & pull-request-commit list

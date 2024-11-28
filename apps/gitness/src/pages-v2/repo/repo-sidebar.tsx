@@ -8,7 +8,7 @@ import {
   useListBranchesQuery,
   useListPathsQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorListProps, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
+import { BranchSelectorListItem, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
@@ -19,7 +19,7 @@ export const RepoSidebar = () => {
   const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
   const subResourcePath = useParams()['*'] || ''
   const fullResourcePath = subResourcePath ? `${resourcePath}/${subResourcePath}` : resourcePath
-  const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')
+  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({ name: gitRef || '', sha: '' })
   const navigate = useNavigate()
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -36,45 +36,59 @@ export const RepoSidebar = () => {
     }
   })
 
+  const branchList: BranchSelectorListItem[] = useMemo(() => {
+    if (!branches?.body) return []
+
+    return branches.body.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: item?.name === repository?.body?.default_branch
+    }))
+  }, [branches, repository?.body?.default_branch])
+
+  useEffect(() => {
+    if (!repository?.body?.default_branch || !branchList.length) {
+      return
+    }
+
+    if (!gitRef) {
+      const defaultBranch = branchList.find(branch => branch.default)
+      if (defaultBranch) {
+        setSelectedBranch(defaultBranch)
+      }
+    } else {
+      const selectedGitRef = branchList.find(branch => branch.name === gitRef)
+      if (selectedGitRef) {
+        setSelectedBranch(selectedGitRef)
+      }
+    }
+  }, [repository?.body?.default_branch, gitRef, branchList])
+
   const { data: _repoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: {
       include_commit: true,
-      git_ref: normalizeGitRef(selectedBranch)
+      git_ref: normalizeGitRef(selectedBranch.name)
     }
   })
-  console.log(branches)
-  const branchList: BranchSelectorListProps[] = useMemo(() => {
-    return (
-      branches?.body?.map(item => ({
-        name: item?.name || '',
-        default: item?.name === repository?.body?.default_branch
-      })) || []
-    )
-  }, [branches, repository?.body?.default_branch])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(selectedBranch) }
+    queryParams: { git_ref: normalizeGitRef(selectedBranch.name) }
   })
 
   const filesList = filesData?.body?.files || []
 
-  useEffect(() => {
-    if (repository?.body?.default_branch && !gitRef) {
-      setSelectedBranch(repository.body.default_branch)
-    } else if (gitRef) {
-      setSelectedBranch(gitRef)
-    }
-  }, [repository?.body?.default_branch, gitRef])
-
   const selectBranch = useCallback(
-    (branch: string) => {
-      setSelectedBranch(branch)
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/${branch}`)
+    (branchName: BranchSelectorListItem) => {
+      const branch = branchList.find(b => b.name === branchName.name)
+      if (branch) {
+        setSelectedBranch(branch)
+        navigate(`/spaces/${spaceId}/repos/${repoId}/code/${branch.name}`)
+      }
     },
-    [navigate, repoId, spaceId]
+    [navigate, repoId, spaceId, branchList]
   )
 
   const navigateToNewFile = useCallback(() => {
@@ -84,26 +98,26 @@ export const RepoSidebar = () => {
         repo_ref: repoRef,
         queryParams: {
           include_commit: true,
-          git_ref: normalizeGitRef(selectedBranch)
+          git_ref: normalizeGitRef(selectedBranch.name)
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch}/~/${fullResourcePath}`)
+          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch}/~/${parentDirPath}`)
+          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${parentDirPath}`)
         }
       })
     } else {
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch}/~/`)
+      navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
     }
-  }, [fullResourcePath, gitRef, navigate, repoId, repoRef, selectedBranch, spaceId])
+  }, [fullResourcePath, gitRef, navigate, repoId, repoRef, selectedBranch.name, spaceId])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${filePath}`)
+      navigate(`/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranch, navigate, repoId, spaceId]
+    [gitRef, selectedBranch.name, navigate, repoId, spaceId]
   )
 
   return (

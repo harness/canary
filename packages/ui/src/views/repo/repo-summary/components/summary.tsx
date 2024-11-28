@@ -19,14 +19,14 @@ import {
 import { CommitCopyActions } from '@/components/commit-copy-actions'
 import { getInitials } from '@/utils/utils'
 
-import { FileProps, SummaryItemType } from '../repo-summary.types'
+import { RepoFile, SummaryItemType } from '../../repo.types'
 
 interface SummaryProps {
-  latestFile: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
-  files?: FileProps[]
+  latestFile: Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
+  files?: RepoFile[]
 }
 
-const TopTitle = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
+const TopTitle = ({ file }: { file: Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
   const { user, lastCommitMessage } = file
 
   return (
@@ -49,7 +49,7 @@ const TopTitle = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage'
   )
 }
 
-const TopDetails = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
+const TopDetails = ({ file }: { file: Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'> }) => {
   const { sha, timestamp } = file
   return (
     <ButtonGroup.Root verticalAlign="center" spacing="2">
@@ -90,7 +90,7 @@ const Summary: React.FC<SummaryProps> = ({ latestFile, files }) => {
             <TableHead className="text-right">Date</TableHead>
           </TableRow>
         </TableHeader>
-        {files && files.length > 0 ? (
+        {files?.length ? (
           <TableBody>
             {files.map(file => (
               <TableRow key={file.id} onClick={() => navigate(file.path)}>

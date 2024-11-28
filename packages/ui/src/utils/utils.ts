@@ -1,3 +1,5 @@
+import { formatDistance, formatDistanceToNow } from 'date-fns'
+
 export const getInitials = (name: string, length?: number) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)
@@ -16,104 +18,72 @@ export const ZOOM_INC_DEC_LEVEL = 0.1
 const LOCALE = Intl.NumberFormat().resolvedOptions?.().locale || 'en-US'
 
 /**
- * Format a timestamp to medium format date (i.e: Jan 1, 2021)
- * @param timestamp Timestamp
- * @param dateStyle Optional DateTimeFormat's `dateStyle` option.
+ * Format a timestamp to a localized date string
+ * @param timestamp - Unix timestamp in milliseconds or ISO date string
+ * @param dateStyle - DateTimeFormat style: 'full' | 'long' | 'medium' | 'short'
+ * @returns Formatted date string or empty string if timestamp is falsy
+ * @example
+ * formatDate(1642774800000) // Returns "Jan 21, 2024"
+ * formatDate("2022-01-21", "full") // Returns "Friday, January 21, 2024"
  */
-export function formatDate(timestamp: number | string, dateStyle = 'medium'): string {
-  return timestamp
-    ? new Intl.DateTimeFormat(LOCALE, {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore: TS built-in type for DateTimeFormat is not correct
-        dateStyle
-      }).format(new Date(timestamp))
-    : ''
-}
+export function formatDate(
+  timestamp: number | string,
+  dateStyle: Intl.DateTimeFormatOptions['dateStyle'] = 'medium'
+): string {
+  if (!timestamp) return ''
 
-// The timeDistance function calculates the time difference between two dates (in milliseconds)
-//  and returns it in a human-readable format. It can return the difference in days, hours, minutes, and seconds, depending on the onlyHighestDenomination flag.
-// ex) const date1 = new Date('2023-10-01T00:00:00').getTime();
-// const date2 = new Date('2023-10-02T01:30:45').getTime();
-// console.log(timeDistance(date1, date2));
-// Output: "1d 1h 30m 45s"
-export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = false) => {
-  let distance = Math.abs(date1 - date2)
-
-  if (!distance) {
-    return '0s'
+  try {
+    return new Intl.DateTimeFormat(LOCALE, { dateStyle }).format(new Date(timestamp))
+  } catch (error) {
+    console.error(`Failed to format date: ${error}`)
+    return ''
   }
-
-  const days = Math.floor(distance / (24 * 3600000))
-  if (onlyHighestDenomination && days) {
-    return days + 'd'
-  }
-  distance -= days * 24 * 3600000
-
-  const hours = Math.floor(distance / 3600000)
-  if (onlyHighestDenomination && hours) {
-    return hours + 'h'
-  }
-  distance -= hours * 3600000
-
-  const minutes = Math.floor(distance / 60000)
-  if (onlyHighestDenomination && minutes) {
-    return minutes + 'm'
-  }
-  distance -= minutes * 60000
-
-  const seconds = Math.floor(distance / 1000)
-  if (onlyHighestDenomination) {
-    return seconds + 's'
-  }
-
-  return `${days ? days + 'd ' : ''}${hours ? hours + 'h ' : ''}${
-    minutes ? minutes + 'm' : hours || days ? '0m' : ''
-  } ${seconds}s`
 }
 
 /**
- * Formats timestamp, such as, "1708113838167" is formatted as "1 hour ago"
- * @param timestamp
- * @returns formatted timestamp
+ * Calculate human-readable time distance between two dates
+ * @param date1 - First date in milliseconds
+ * @param date2 - Second date in milliseconds (defaults to 0)
+ * @param onlyHighestDenomination - If true, returns only the highest unit (e.g., "2 days" instead of "2 days 3 hours")
+ * @returns Formatted distance string
+ */
+export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = false): string => {
+  if (!date1 && !date2) return '0 seconds'
+
+  const fullDistance = formatDistance(date1, date2, {
+    includeSeconds: true,
+    addSuffix: false
+  })
+
+  if (onlyHighestDenomination) {
+    // Take only the first part of the string (e.g., from "2 days 3 hours" we get "2 days")
+    return fullDistance.split(' ').slice(0, 2).join(' ')
+  }
+
+  return fullDistance
+}
+
+/**
+ * Formats timestamp to relative time (e.g., "1 hour ago")
+ * @param timestamp - Unix timestamp in milliseconds
+ * @returns formatted relative time string
+ * @example
+ * timeAgo(1708113838167) // Returns "1 hour ago"
  */
 export const timeAgo = (timestamp?: number | null): string => {
-  // Fallback for null/undefined timestamps
   if (timestamp === null || timestamp === undefined) {
     return 'Unknown time'
   }
-  const date = new Date(timestamp)
-  const now = new Date()
 
-  const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-
-  const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
-
-  if (diffInSeconds < 60) {
-    return rtf.format(-diffInSeconds, 'second')
+  try {
+    return formatDistanceToNow(timestamp, {
+      addSuffix: true, // add "ago" to the end of the string
+      includeSeconds: true
+    })
+  } catch (error) {
+    console.error(`Failed to format time ago: ${error}`)
+    return 'Unknown time'
   }
-
-  const diffInMinutes = Math.floor(diffInSeconds / 60)
-  if (diffInMinutes < 60) {
-    return rtf.format(-diffInMinutes, 'minute')
-  }
-
-  const diffInHours = Math.floor(diffInMinutes / 60)
-  if (diffInHours < 24) {
-    return rtf.format(-diffInHours, 'hour')
-  }
-
-  const diffInDays = Math.floor(diffInHours / 24)
-  if (diffInDays < 30) {
-    return rtf.format(-diffInDays, 'day')
-  }
-
-  const diffInMonths = Math.floor(diffInDays / 30)
-  if (diffInMonths < 12) {
-    return rtf.format(-diffInMonths, 'month')
-  }
-
-  const diffInYears = Math.floor(diffInMonths / 12)
-  return rtf.format(-diffInYears, 'year')
 }
 
 //generate random password

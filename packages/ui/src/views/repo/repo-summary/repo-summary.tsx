@@ -13,26 +13,25 @@ import {
   ListActions,
   NoData,
   SearchFiles,
+  SkeletonList,
   Spacer,
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListProps } from '@views/repo'
+import { BranchSelectorListItem } from '@views/repo'
 import { BranchSelector } from '@views/repo/components'
 
-import { SkeletonList } from '@harnessio/ui/components'
-
 import { SandboxLayout } from '../../index'
+import { RepoFile } from '../repo.types'
 import Summary from './components/summary'
 import SummaryPanel from './components/summary-panel'
-import { FileProps } from './repo-summary.types'
 
 interface RepoSummaryViewProps {
   loading: boolean
-  selectedBranch: string
-  branchList: BranchSelectorListProps[]
-  tagList: BranchSelectorListProps[]
-  selectBranch: (branch: string) => void
+  selectedBranch: BranchSelectorListItem
+  branchList: BranchSelectorListItem[]
+  tagList: BranchSelectorListItem[]
+  selectBranch: (branch: BranchSelectorListItem) => void
   filesList: string[]
   navigateToFile: (path: string) => void
   repository:
@@ -46,7 +45,7 @@ interface RepoSummaryViewProps {
   // TODO: fix this
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   repoEntryPathToFileTypeMap: Map<string, any>
-  files: FileProps[]
+  files: RepoFile[]
   decodedReadmeContent: string
   summaryDetails: {
     default_branch_commit_count?: number
@@ -124,10 +123,10 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup.Root>
                   <BranchSelector
-                    name={selectedBranch}
+                    selectedBranch={selectedBranch}
                     branchList={branchList}
                     tagList={tagList}
-                    selectBranch={selectBranch}
+                    onSelectBranch={selectBranch}
                     repoId={repoId}
                     spaceId={spaceId}
                   />

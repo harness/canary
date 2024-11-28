@@ -13,17 +13,17 @@ import {
   Icon,
   ListActions,
   NoData,
-  RepoSummaryPanel,
   SearchFiles,
   SkeletonList,
   Spacer,
   StackedList,
-  Summary,
   Text,
   type BranchSelectorItem
 } from '@/components'
 
 import { SandboxLayout } from '../../index'
+import { Summary } from './repo-summary'
+import { RepoSummaryPanel } from './repo-summary-panel'
 
 interface RepoSummaryViewProps {
   loading: boolean

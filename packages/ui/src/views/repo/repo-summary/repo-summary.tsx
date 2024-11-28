@@ -16,9 +16,8 @@ import {
   TableRow,
   Text
 } from '@/components'
+import { CommitCopyActions } from '@/components/commit-copy-actions'
 import { getInitials } from '@/utils/utils'
-
-import { CommitCopyActions } from './commit-copy-actions'
 
 export enum SummaryItemType {
   Folder = 0,

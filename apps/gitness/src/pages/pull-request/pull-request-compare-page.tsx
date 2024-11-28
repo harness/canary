@@ -19,7 +19,8 @@ import {
   useListCommitsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { SandboxPullRequestCompare, SkeletonList } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { SandboxPullRequestCompare } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'

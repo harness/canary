@@ -23,6 +23,7 @@ import {
   useListPullReqActivitiesQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   extractInfoFromRuleViolationArr,
   PullRequestCommentBox,
@@ -30,8 +31,7 @@ import {
   PullRequestOverview,
   PullRequestPanel,
   PullRequestSideBar,
-  SandboxLayout,
-  SkeletonList
+  SandboxLayout
 } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'

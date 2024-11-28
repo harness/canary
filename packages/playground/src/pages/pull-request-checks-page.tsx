@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
-import { SkeletonList } from '../components/loaders/skeleton-list'
+import { SkeletonList } from '@harnessio/ui/components'
+
 import { NoData } from '../components/no-data'
 import PullRequestChecks from '../components/pull-request/pull-request-checks'
 import PlaygroundPullRequestChecksSettings from '../settings/pull-request-checks-settings'

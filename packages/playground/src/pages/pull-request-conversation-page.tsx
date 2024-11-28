@@ -3,8 +3,8 @@ import { useMemo, useState } from 'react'
 import { noop } from 'lodash-es'
 
 import { Spacer } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { TypesPullReqActivity } from '../components/pull-request/interfaces'
 import { PullRequestCommentBox } from '../components/pull-request/pull-request-comment-box'

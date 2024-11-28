@@ -11,9 +11,9 @@ import {
   NoData,
   PaginationComponent,
   SandboxLayout,
-  SkeletonList,
   timeDistance
 } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'

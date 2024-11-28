@@ -9,14 +9,14 @@ import {
   useListBranchesQuery,
   useListCommitsQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   BranchSelector,
   Filter,
   NoData,
   PaginationComponent,
   PullRequestCommits,
-  SandboxLayout,
-  SkeletonList
+  SandboxLayout
 } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

@@ -23,7 +23,7 @@ import {
 } from '@harnessio/canary'
 
 import { getInitials } from '../utils/utils'
-import { CommitCopyActions } from './commit-copy-actions'
+import { CommitCopyActions } from '@harnessio/ui/components'
 import { CopyButton } from './copy-button'
 import { DivergenceGauge } from './divergence-gauge'
 

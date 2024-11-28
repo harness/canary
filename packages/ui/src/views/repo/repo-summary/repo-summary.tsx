@@ -13,13 +13,14 @@ import {
   ListActions,
   NoData,
   SearchFiles,
-  SkeletonList,
   Spacer,
   StackedList,
   Text
 } from '@/components'
 import { BranchSelectorListProps } from '@views/repo'
 import { BranchSelector } from '@views/repo/components'
+
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { SandboxLayout } from '../../index'
 import Summary from './components/summary'
@@ -42,7 +43,9 @@ interface RepoSummaryViewProps {
       }
     | undefined
   handleCreateToken: () => void
-  repoEntryPathToFileTypeMap: Map<string, FileProps>
+  // TODO: fix this
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  repoEntryPathToFileTypeMap: Map<string, any>
   files: FileProps[]
   decodedReadmeContent: string
   summaryDetails: {

@@ -2,8 +2,8 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { NoSearchResults } from '../components/no-search-results'
 import { PaginationComponent } from '../components/pagination'

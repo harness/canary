@@ -2,11 +2,11 @@ import { useMemo, useRef, useState } from 'react'
 
 import { Button, Icon, Input, Spacer } from '@harnessio/canary'
 import { useListGlobalTemplatesQuery } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   harnessStepGroups,
   harnessSteps,
   PaginationComponent,
-  SkeletonList,
   StepForm,
   StepsPalette,
   StepsPaletteContent,

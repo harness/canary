@@ -11,8 +11,8 @@ import {
   PaginationComponent,
   PipelineList,
   SandboxLayout,
-  SkeletonList
 } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'

@@ -29,6 +29,7 @@ import {
   useListPathsQuery,
   useSummaryQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   BranchSelector,
   CloneRepoDialog,
@@ -39,7 +40,6 @@ import {
   RepoSummaryPanel,
   SandboxLayout,
   SearchFiles,
-  SkeletonList,
   Summary,
   SummaryItemType,
   useCommonFilter

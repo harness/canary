@@ -17,9 +17,9 @@ import {
   PaginationComponent,
   RepoList,
   SandboxLayout,
-  SkeletonList,
   useCommonFilter
 } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'

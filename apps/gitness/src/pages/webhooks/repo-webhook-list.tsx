@@ -13,9 +13,9 @@ import {
   NoSearchResults,
   PaginationComponent,
   SandboxLayout,
-  SkeletonList,
   WebhooksList
 } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'

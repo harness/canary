@@ -3,10 +3,10 @@ import { useState } from 'react'
 import { noop } from 'lodash-es'
 
 import { Button, ListActions, SearchBox, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { CreateBranchDialog, SandboxLayout } from '..'
 import { BranchesList } from '../components/branches-list'
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { PaginationComponent } from '../components/pagination'
 import { mockBranchData } from '../data/mockBranchData'

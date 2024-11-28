@@ -33,28 +33,27 @@ export const SkeletonList = ({ className }: SkeletonListProps) => {
         className
       )}
     >
-      {listItems && listItems.length > 0 && (
-        <StackedList.Root>
-          {listItems.map((itm, itm_idx) => (
-            <StackedList.Item key={itm_idx} isLast={listItems.length - 1 === itm_idx}>
-              <StackedList.Field
-                // Randomized percentage width for title skeleton
-                title={<Skeleton className="mb-1.5 h-4" style={{ width: getRandomPercentageWidth(20, 60) }} />}
-                // Randomized percentage width for description skeleton
-                description={<Skeleton className="h-4" style={{ width: getRandomPercentageWidth(30, 80) }} />}
-              />
-              <StackedList.Field
-                // Randomized pixel width for secondary title skeleton
-                title={<Skeleton className="mb-1.5 h-4" style={{ width: getRandomPixelWidth(80, 150) }} />}
-                // Randomized pixel width for secondary description skeleton
-                description={<Skeleton className="h-4" style={{ width: getRandomPixelWidth(150, 250) }} />}
-                right
-                secondary
-              />
-            </StackedList.Item>
-          ))}
-        </StackedList.Root>
-      )}
+      <StackedList.Root>
+        {listItems.map(item => (
+          <StackedList.Item key={item} isLast={listItems.length === item}>
+            <StackedList.Field
+              // Randomized percentage width for title skeleton
+              title={<Skeleton className="mb-1.5 h-4" style={{ width: getRandomPercentageWidth(20, 60) }} />}
+              // Randomized percentage width for description skeleton
+              description={<Skeleton className="h-4" style={{ width: getRandomPercentageWidth(30, 80) }} />}
+            />
+            <StackedList.Field
+              // Randomized pixel width for secondary title skeleton
+              title={<Skeleton className="mb-1.5 h-4" style={{ width: getRandomPixelWidth(80, 150) }} />}
+              // Randomized pixel width for secondary description skeleton
+              description={<Skeleton className="h-4" style={{ width: getRandomPixelWidth(150, 250) }} />}
+              right
+              secondary
+            />
+          </StackedList.Item>
+        ))}
+      </StackedList.Root>
+
       <div className="absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent to-background" />
     </div>
   )

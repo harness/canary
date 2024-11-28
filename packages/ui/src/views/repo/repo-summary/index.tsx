@@ -89,7 +89,7 @@ export function RepoSummaryView({
   const renderListContent = () => {
     if (loading) return <SkeletonList />
 
-    if (!loading && repoEntryPathToFileTypeMap.size > 0) {
+    if (repoEntryPathToFileTypeMap.size) {
       return (
         <Summary
           latestFile={{
@@ -136,8 +136,8 @@ export function RepoSummaryView({
                 <ButtonGroup.Root>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="outline">
-                        Add file&nbsp;&nbsp;
+                      <Button className="gap-x-2" variant="outline">
+                        Add file
                         <Icon name="chevron-down" size={11} className="chevron-down" />
                       </Button>
                     </DropdownMenuTrigger>

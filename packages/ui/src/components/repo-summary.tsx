@@ -84,8 +84,7 @@ export const TopDetails = ({ file }: { file: Pick<FileProps, 'user' | 'lastCommi
   )
 }
 
-export const Summary = ({ ...props }: PageProps) => {
-  const { latestFile, files } = props
+export const Summary = ({ latestFile, files }: PageProps) => {
   const navigate = useNavigate()
 
   return (

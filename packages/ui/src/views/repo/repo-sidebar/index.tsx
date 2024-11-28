@@ -5,7 +5,7 @@ interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
   selectedBranch: string
-  branchList: BranchSelectorItem[] | undefined
+  branchList?: BranchSelectorItem[]
   selectBranch: (branch: string) => void
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void

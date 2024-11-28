@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { Dialog, DialogContent, ScrollArea } from '@/components'
+import { Dialog, DialogContent, ScrollArea } from '@components'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
@@ -22,7 +22,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+        <Command className="[&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
         </Command>
       </DialogContent>
@@ -66,7 +66,7 @@ CommandList.displayName = CommandPrimitive.List.displayName
 const CommandEmpty = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Empty>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Empty>
->((props, ref) => <CommandPrimitive.Empty ref={ref} className="px-2 py-4 text-sm text-foreground-5" {...props} />)
+>((props, ref) => <CommandPrimitive.Empty ref={ref} className="text-foreground-5 px-2 py-4 text-sm" {...props} />)
 
 CommandEmpty.displayName = CommandPrimitive.Empty.displayName
 

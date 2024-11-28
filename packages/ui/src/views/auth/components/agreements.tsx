@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { Text } from '@/components'
+import { Text } from '@components'
 
 export function Agreements() {
   return (

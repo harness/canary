@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
 import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
+import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@components'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
 import { useLocationChange } from '@hooks/useLocationChange'
+import { SandboxLayout } from '@views'
 import { TFunction } from 'i18next'
-
-import { SandboxLayout } from '../index'
 
 /**
  * Returns the complete menu model based on an array of IDs,

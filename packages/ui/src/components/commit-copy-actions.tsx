@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Icon, ShaBadge, Text } from '@/components'
+import { Icon, ShaBadge, Text } from '@components'
 import copy from 'clipboard-copy'
 
 export const CommitCopyActions = ({ sha }: { sha: string }) => {

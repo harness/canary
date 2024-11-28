@@ -9,7 +9,7 @@ import {
   Icon,
   IconProps,
   Text
-} from '@/components'
+} from '@components'
 import { TFunction } from 'i18next'
 
 import NavbarSkeleton from '../navbar-skeleton'
@@ -80,7 +80,7 @@ export const NavbarItem = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            className="absolute -right-[0.8125rem] top-0 text-icons-4 opacity-0 hover:text-icons-2 focus:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100"
+            className="text-icons-4 hover:text-icons-2 absolute -right-[0.8125rem] top-0 opacity-0 focus:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100"
             size="sm_icon"
             variant="custom"
           >

@@ -1,4 +1,4 @@
-import { IconProps } from '@/components'
+import { IconProps } from '@components'
 
 export enum MenuGroupTypes {
   GENERAL = 'general',

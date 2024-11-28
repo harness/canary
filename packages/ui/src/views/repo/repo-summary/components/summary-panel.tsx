@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
   Textarea
-} from '@/components'
+} from '@components'
 
 interface DetailItem {
   id: string
@@ -46,7 +46,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
-        <span className="text-18 font-medium truncate">{title}</span>
+        <span className="text-18 truncate font-medium">{title}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="sm_icon" aria-label="More options">
@@ -63,12 +63,12 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
       </div>
       <Spacer size={3} />
       {description?.length && !isEditingDescription && (
-        <span className="line-clamp-3 py-3 border-y border-borders-4 text-foreground-2 text-14">{description}</span>
+        <span className="border-borders-4 text-foreground-2 text-14 line-clamp-3 border-y py-3">{description}</span>
       )}
       {isEditingDescription && (
         <div>
           <Textarea
-            className="h-28 text-primary"
+            className="text-primary h-28"
             value={newDesc}
             defaultValue={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {

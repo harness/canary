@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 
-import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@/components'
+import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@components'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'

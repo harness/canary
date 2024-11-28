@@ -15,9 +15,9 @@ import {
   TableHeader,
   TableRow,
   Text
-} from '@/components'
-import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
+} from '@components'
 import { getInitials } from '@utils/stringUtils'
+import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@views'
 
 interface SummaryProps {
   latestFile: LatestFileTypes

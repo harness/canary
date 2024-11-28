@@ -1,8 +1,8 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
-import { TranslationStore } from '@/views'
+import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@components'
 import { cn } from '@utils/cn'
+import { TranslationStore } from '@views'
 
 import { BranchSelectorDropdown, type BranchSelectorDropdownProps } from './branch-selector-dropdown'
 
@@ -39,9 +39,9 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
           size={size}
         >
           {!prefix && (
-            <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={12} />
+            <Icon className="text-icons-9 shrink-0 fill-transparent" name={isTag ? 'tag' : 'branch'} size={12} />
           )}
-          <Text className="w-full text-foreground-8" truncate align="left">
+          <Text className="text-foreground-8 w-full" truncate align="left">
             {prefix ? `${prefix}: ${selectedBranch.name}` : selectedBranch.name}
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />

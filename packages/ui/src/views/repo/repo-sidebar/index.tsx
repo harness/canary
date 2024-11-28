@@ -1,11 +1,14 @@
-import { BranchSelector, Button, ButtonGroup, Icon, SearchFiles, type BranchSelectorItem } from '@/components'
+import { Button, ButtonGroup, Icon, SearchFiles } from '@/components'
 import { SandboxLayout } from '@/views'
+import { BranchSelectorListProps } from '@views/repo'
+import { BranchSelector } from '@views/repo/components'
 
 interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
   selectedBranch: string
-  branchList?: BranchSelectorItem[]
+  branchList: BranchSelectorListProps[]
+  tagList: BranchSelectorListProps[]
   selectBranch: (branch: string) => void
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
@@ -17,6 +20,7 @@ export const RepoSidebar = ({
   hasSubHeader,
   selectedBranch,
   branchList,
+  tagList,
   selectBranch,
   navigateToNewFile,
   navigateToFile,
@@ -28,7 +32,15 @@ export const RepoSidebar = ({
         <div className="flex flex-col gap-5">
           <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-3">
             {branchList && (
-              <BranchSelector size="sm" name={selectedBranch} branchList={branchList} selectBranch={selectBranch} />
+              <BranchSelector
+                name={selectedBranch}
+                branchList={branchList}
+                tagList={tagList}
+                selectBranch={selectBranch}
+                // TODO: spaceId and repoId transfer is required
+                repoId="repoId"
+                spaceId="spaceId"
+              />
             )}
             <ButtonGroup.Root
               spacing="0"

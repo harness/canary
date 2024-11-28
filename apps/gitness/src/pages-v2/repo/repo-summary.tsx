@@ -14,7 +14,7 @@ import {
   useListPathsQuery,
   useSummaryQuery
 } from '@harnessio/code-service-client'
-import { RepoSummaryView } from '@harnessio/ui/views'
+import { BranchSelectorListProps, RepoSummaryView } from '@harnessio/ui/views'
 import { FileProps, generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -44,13 +44,14 @@ export default function RepoSummaryPage() {
 
   const { query } = useCommonFilter()
 
-  const branchList = useMemo(() => {
+  const branchList: BranchSelectorListProps[] = useMemo(() => {
     return (
       branches?.map(item => ({
-        name: item?.name || ''
+        name: item?.name || '',
+        default: item?.name === repository?.default_branch
       })) || []
     )
-  }, [branches])
+  }, [branches, repository?.default_branch])
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -204,6 +205,7 @@ export default function RepoSummaryPage() {
         loading={loading}
         selectedBranch={selectedBranch}
         branchList={branchList}
+        tagList={[]}
         selectBranch={setSelectedBranch}
         filesList={filesList}
         navigateToFile={navigateToFile}

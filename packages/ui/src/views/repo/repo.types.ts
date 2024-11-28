@@ -1,18 +1,13 @@
-export enum BranchSelectorTab {
-  BRANCHES = 'branches',
-  TAGS = 'tags'
-}
-
-export interface BranchSelectorItem {
+export interface BranchSelectorListProps {
   name: string
+  default?: boolean
 }
 
-export interface BranchSelectorBranchProps {
+export interface BranchProps {
   id: number | string
   name: string
   sha: string
   timestamp: string
-  default?: boolean
   user: {
     name: string
     avatarUrl?: string

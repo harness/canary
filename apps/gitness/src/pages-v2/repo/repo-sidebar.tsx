@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -8,8 +8,7 @@ import {
   useListBranchesQuery,
   useListPathsQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorItem } from '@harnessio/ui/components'
-import { RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
+import { BranchSelectorListProps, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
@@ -45,10 +44,15 @@ export const RepoSidebar = () => {
       git_ref: normalizeGitRef(selectedBranch)
     }
   })
-
-  const branchList: BranchSelectorItem[] | undefined = branches?.body?.map(item => ({
-    name: item?.name || ''
-  }))
+  console.log(branches)
+  const branchList: BranchSelectorListProps[] = useMemo(() => {
+    return (
+      branches?.body?.map(item => ({
+        name: item?.name || '',
+        default: item?.name === repository?.body?.default_branch
+      })) || []
+    )
+  }, [branches, repository?.body?.default_branch])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
@@ -110,6 +114,7 @@ export const RepoSidebar = () => {
         selectedBranch={selectedBranch}
         selectBranch={selectBranch}
         branchList={branchList}
+        tagList={[]}
         navigateToNewFile={navigateToNewFile}
         navigateToFile={navigateToFile}
         filesList={filesList}

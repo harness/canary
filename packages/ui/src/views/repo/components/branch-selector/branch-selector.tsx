@@ -9,17 +9,17 @@ interface BranchSelectorProps extends BranchSelectorDropdownProps {
   className?: string
 }
 
-export const BranchSelector = ({
+export const BranchSelector: React.FC<BranchSelectorProps> = ({
   name,
   branchList,
-  tagList = [],
+  tagList,
   size = 'default',
   selectBranch,
   prefix,
   className,
   repoId,
   spaceId
-}: BranchSelectorProps) => {
+}) => {
   const isTag = tagList.some(tag => tag.name === name) ?? false
 
   return (

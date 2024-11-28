@@ -9,4 +9,7 @@ export * from '@views/repo/repo-layout'
 export * from '@views/repo/repo-sidebar'
 
 // repo summary
-export * from '@views/repo/repo-summary'
+export * from '@views/repo/repo-summary/repo-summary'
+
+// repo types
+export * from '@views/repo/repo.types'

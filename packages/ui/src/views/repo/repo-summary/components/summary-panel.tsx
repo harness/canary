@@ -18,7 +18,7 @@ interface DetailsProps {
   count: number
 }
 
-interface PageProps {
+interface SummaryPanelProps {
   title: string
   details: DetailsProps[]
   timestamp?: string
@@ -26,9 +26,7 @@ interface PageProps {
   description?: string
 }
 
-export const RepoSummaryPanel = ({ ...props }: PageProps) => {
-  const { title, details, timestamp, onAddDescription, description } = props
-
+const SummaryPanel: React.FC<SummaryPanelProps> = ({ title, details, timestamp, onAddDescription, description }) => {
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
@@ -73,3 +71,5 @@ export const RepoSummaryPanel = ({ ...props }: PageProps) => {
     </div>
   )
 }
+
+export default SummaryPanel

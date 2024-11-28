@@ -13,8 +13,12 @@ import {
   Text
 } from '@/components'
 import { cn } from '@utils/cn'
+import { BranchSelectorListProps } from '@views/repo/repo.types'
 
-import { BranchSelectorBranchProps, BranchSelectorItem, BranchSelectorTab } from './types'
+enum BranchSelectorTab {
+  BRANCHES = 'branches',
+  TAGS = 'tags'
+}
 
 const BRANCH_SELECTOR_LABELS = {
   [BranchSelectorTab.BRANCHES]: {
@@ -29,27 +33,27 @@ const BRANCH_SELECTOR_LABELS = {
 
 export interface BranchSelectorDropdownProps {
   name: string
-  branchList: BranchSelectorItem[]
-  tagList: BranchSelectorItem[]
+  branchList: BranchSelectorListProps[]
+  tagList: BranchSelectorListProps[]
   selectBranch: (branch: string) => void
   repoId: string
   spaceId: string
 }
 
-const filterItems = (items: BranchSelectorBranchProps[] | BranchSelectorItem[], query: string) => {
+const filterItems = (items: BranchSelectorListProps[], query: string) => {
   if (!query.trim()) return items
 
   return items.filter(item => item.name.toLowerCase().includes(query.toLowerCase().trim()))
 }
 
-export const BranchSelectorDropdown = ({
+export const BranchSelectorDropdown: React.FC<BranchSelectorDropdownProps> = ({
   name,
   branchList,
   tagList = [],
   selectBranch,
   repoId,
   spaceId
-}: BranchSelectorDropdownProps) => {
+}) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -139,7 +143,7 @@ export const BranchSelectorDropdown = ({
         <div className="max-h-[360px] overflow-y-auto px-1">
           {filteredItems.map(item => {
             const isSelected = item.name === name
-            const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorBranchProps).default
+            const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListProps).default
 
             return (
               <DropdownMenuItem

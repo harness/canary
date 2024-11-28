@@ -14,7 +14,7 @@ const languageDetectorOptions = {
   lookupLocalStorage: 'i18nextLng',
 
   // Cache user language on
-  caches: ['localStorage', 'cookie']
+  caches: ['cookie', 'localStorage']
 }
 
 i18n
@@ -24,7 +24,6 @@ i18n
     detection: languageDetectorOptions,
     resources,
     fallbackLng: 'en',
-    debug: true,
     react: {
       bindI18n: 'languageChanged',
       bindI18nStore: 'added'
@@ -35,8 +34,6 @@ i18n
   })
 
 export const handleLanguageChange = (lng: string) => {
-  console.log('locales', resources)
-
   // set system language
   if (lng === 'system') {
     const navigatorLang = (navigator.language || 'en').split('-')[0]

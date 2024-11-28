@@ -1,10 +1,6 @@
 import { NavbarItemType } from '@components/navbar/types'
 import { TFunction } from 'i18next'
 
-// import { i18nextViewsInstance } from '../i18n/i18n'
-
-// const { t } = i18nextViewsInstance
-
 export const getPinnedMenuItemsData = (t: TFunction): NavbarItemType[] => [
   {
     id: 0,

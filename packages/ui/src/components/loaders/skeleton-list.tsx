@@ -36,6 +36,12 @@ export const SkeletonList = ({ className }: SkeletonListProps) => {
       <StackedList.Root>
         {listItems.map(item => (
           <StackedList.Item key={item} isLast={listItems.length === item}>
+            {/* 
+              TODO: Consider memoizing or hard coding skeleton widths to prevent 
+              random width changes on re-renders. Current implementation regenerates 
+              widths on each render which might cause visual inconsistency.
+              Reference: https://github.com/harness/canary/pull/488#discussion_r1861906392
+            */}
             <StackedList.Field
               // Randomized percentage width for title skeleton
               title={<Skeleton className="mb-1.5 h-4" style={{ width: getRandomPercentageWidth(20, 60) }} />}

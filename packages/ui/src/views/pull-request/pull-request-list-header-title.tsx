@@ -4,20 +4,22 @@ import { Icon } from '../../components/icon'
 import { Text } from '../../components/text'
 
 export const PullRequestListHeaderTitle = ({
-  setHeaderFilter,
+  onCloseClick,
+  onOpenClick,
   headerFilter,
-  closed_prs,
-  open_prs
+  closedPRs,
+  openPRs
 }: {
-  setHeaderFilter: (state: string) => void
+  onOpenClick: () => void
+  onCloseClick: () => void
   headerFilter: string
-  closed_prs?: number
-  open_prs?: number
+  closedPRs?: number
+  openPRs?: number
 }) => {
   return (
     <div className="flex items-center gap-4">
       <button
-        onClick={() => setHeaderFilter('open')}
+        onClick={onOpenClick}
         className={cn('flex items-center gap-2', {
           'text-white': headerFilter === 'open',
           'text-tertiary-background': headerFilter === 'closed'
@@ -33,11 +35,11 @@ export const PullRequestListHeaderTitle = ({
           size={2}
           truncate
         >
-          {open_prs} Open
+          {openPRs} Open
         </Text>
       </button>
       <button
-        onClick={() => setHeaderFilter('closed')}
+        onClick={onCloseClick}
         className={cn('flex items-center gap-2', {
           'text-white': headerFilter === 'closed',
           'text-tertiary-background': headerFilter === 'open'
@@ -52,7 +54,7 @@ export const PullRequestListHeaderTitle = ({
           size={2}
           truncate
         >
-          {closed_prs} Closed
+          {closedPRs} Closed
         </Text>
       </button>
     </div>

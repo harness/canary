@@ -21,7 +21,6 @@ import {
 
 import { FileEditor } from './components/FileEditor'
 import { FileViewer } from './components/FileViewer'
-import RepoWrapper from './components/RepoWrapper'
 import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -136,6 +135,10 @@ export default function App() {
             {
               path: 'pulls',
               element: <SandboxPullRequestListPage />
+            },
+            {
+              path: 'pulls/:pullRequestId',
+              element: <>test</>
             }
           ]
         },

@@ -20,7 +20,7 @@ export default function PullRequestListPage() {
   const { data: { body: pullRequestData, headers } = {} } = useListPullReqQuery(
     {
       queryParams: { page, query },
-      repo_ref: `${repoRef}`
+      repo_ref: repoRef
     },
     { retry: false }
   )
@@ -33,7 +33,8 @@ export default function PullRequestListPage() {
 
   useEffect(() => {
     setQueryPage(page)
-  }, [queryPage, page, setPage, setQueryPage])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, queryPage, setPage])
 
   return <SandboxPullRequestListPage usePullRequestStore={usePullRequestStore} />
 }

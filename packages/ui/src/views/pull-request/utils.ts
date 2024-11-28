@@ -1,4 +1,10 @@
-export const getPrState = (is_draft?: boolean, merged?: number | null, state?: string) => {
+import { IconType } from './types'
+
+export const getPrState = (
+  is_draft?: boolean,
+  merged?: number | null,
+  state?: string
+): { icon: IconType; text: string; theme: string } => {
   if (state === 'open' && is_draft) {
     return { icon: 'pr-draft', text: 'Draft', theme: 'warning' }
   } else if (merged) {

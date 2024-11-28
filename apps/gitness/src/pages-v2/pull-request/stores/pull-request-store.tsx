@@ -8,7 +8,7 @@ import { PageResponseHeader } from '../../../types'
 interface PullRequestType {
   is_draft?: boolean
   merged?: number | null // TODO: Should merged really be all these??
-  name: string | undefined
+  name?: string
   number?: number
   sha?: string
   author?: string
@@ -26,7 +26,7 @@ interface PullRequestType {
 interface PullRequestStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
-  setPullRequests: (data: ListPullReqOkResponse, headers: Headers | undefined) => void
+  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
   page: number
   setPage: (page: number) => void
 }

@@ -168,9 +168,7 @@ export const CreatePullRequest = () => {
         onSuccess: ({ body: data }) => {
           setApiError(null)
 
-          setTimeout(() => {
-            navigate(`/spaces/${spaceId}/repos/${repoId}/pull-requests/${data?.number}`)
-          }, 500)
+          navigate(`/spaces/${spaceId}/repos/${repoId}/pull-requests/${data?.number}`)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

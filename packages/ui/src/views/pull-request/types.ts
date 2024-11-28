@@ -18,7 +18,7 @@ export interface PullRequestType {
 }
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
 
-interface PullRequestStore {
+export interface PullRequestStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
   page: number
@@ -26,13 +26,5 @@ interface PullRequestStore {
 }
 export interface RepoRepositoryOutput {
   num_closed_pulls?: number
-
   num_open_pulls?: number
-}
-
-export interface PullRequestListProps {
-  usePullRequestStore: () => PullRequestStore
-  repoId?: string
-  spaceId?: string
-  repoMetadata?: RepoRepositoryOutput | undefined
 }

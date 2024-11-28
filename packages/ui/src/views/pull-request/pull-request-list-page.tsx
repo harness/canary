@@ -6,7 +6,14 @@ import { noop } from 'lodash-es'
 import { SandboxLayout } from '..'
 import { Button, PaginationComponent, Spacer, Text } from '../../components/index'
 import { PullRequestList } from './pull-request-list'
-import { PullRequestListProps, PullRequestType } from './types'
+import { PullRequestStore, PullRequestType, RepoRepositoryOutput } from './types'
+
+export interface PullRequestListProps {
+  usePullRequestStore: () => PullRequestStore
+  repoId?: string
+  spaceId?: string
+  repoMetadata?: RepoRepositoryOutput
+}
 
 const PullRequestListPage: React.FC<PullRequestListProps> = ({
   usePullRequestStore,
@@ -16,7 +23,7 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
 }) => {
   const { pullRequests, totalPages, page, setPage } = usePullRequestStore()
 
-  const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
+  // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
   const renderListContent = () => {
     if (!pullRequests?.length) {
@@ -54,7 +61,7 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
     return (
       <PullRequestList
         handleResetQuery={noop}
-        LinkComponent={LinkComponent}
+        // LinkComponent={LinkComponent}
         pullRequests={pullRequests?.map((item: PullRequestType) => ({
           author: item?.author,
           name: item?.name,
@@ -71,7 +78,7 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
           source_branch: item?.source_branch,
           state: item?.state,
           labels: item?.labels?.map((label: { text: string; color: string }) => ({
-            text: label?.text ? `${label?.text}` : '',
+            text: label?.text || '',
             color: label?.color
           }))
         }))}

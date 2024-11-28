@@ -16,7 +16,9 @@ export const BranchSelector = ({
   size = 'default',
   selectBranch,
   prefix,
-  className
+  className,
+  repoId,
+  spaceId
 }: BranchSelectorProps) => {
   const isTag = tagList.some(tag => tag.name === name) ?? false
 
@@ -32,7 +34,7 @@ export const BranchSelector = ({
           size={size}
         >
           {!prefix && (
-            <Icon className="min-w-[12px] fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={12} />
+            <Icon className="fill-transparent text-icons-9 flex-shrink-0" name={isTag ? 'tag' : 'branch'} size={12} />
           )}
           <Text className="w-full text-foreground-8" truncate align="left">
             {prefix ? `${prefix}: ${name}` : name}
@@ -40,7 +42,14 @@ export const BranchSelector = ({
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>
       </DropdownMenuTrigger>
-      <BranchSelectorDropdown branchList={branchList} tagList={tagList} name={name} selectBranch={selectBranch} />
+      <BranchSelectorDropdown
+        branchList={branchList}
+        tagList={tagList}
+        name={name}
+        selectBranch={selectBranch}
+        repoId={repoId}
+        spaceId={spaceId}
+      />
     </DropdownMenu>
   )
 }

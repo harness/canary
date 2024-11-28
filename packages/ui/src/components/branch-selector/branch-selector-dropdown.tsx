@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -30,8 +30,10 @@ const BRANCH_SELECTOR_LABELS = {
 export interface BranchSelectorDropdownProps {
   name: string
   branchList: BranchSelectorItem[]
-  tagList?: BranchSelectorItem[]
+  tagList: BranchSelectorItem[]
   selectBranch: (branch: string) => void
+  repoId: string
+  spaceId: string
 }
 
 const filterItems = (items: BranchSelectorBranchProps[] | BranchSelectorItem[], query: string) => {
@@ -40,18 +42,31 @@ const filterItems = (items: BranchSelectorBranchProps[] | BranchSelectorItem[], 
   return items.filter(item => item.name.toLowerCase().includes(query.toLowerCase().trim()))
 }
 
-export const BranchSelectorDropdown = ({ name, branchList, tagList, selectBranch }: BranchSelectorDropdownProps) => {
+export const BranchSelectorDropdown = ({
+  name,
+  branchList,
+  tagList = [],
+  selectBranch,
+  repoId,
+  spaceId
+}: BranchSelectorDropdownProps) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchQuery, setSearchQuery] = useState('')
 
-  const sourceItems = activeTab === BranchSelectorTab.BRANCHES ? branchList : (tagList ?? [])
-  const filteredItems = filterItems(sourceItems, searchQuery)
+  const filteredItems = useMemo(() => {
+    const sourceItems = activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
+
+    return filterItems(sourceItems, searchQuery)
+  }, [activeTab, branchList, tagList, searchQuery])
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
   }
 
-  const viewAllUrl = activeTab === BranchSelectorTab.BRANCHES ? '' : ''
+  const viewAllUrl =
+    activeTab === BranchSelectorTab.BRANCHES
+      ? `/${spaceId}/repos/${repoId}/branches`
+      : `/${spaceId}/repos/${repoId}/tags`
 
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">

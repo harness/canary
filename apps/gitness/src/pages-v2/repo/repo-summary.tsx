@@ -100,10 +100,15 @@ export default function RepoSummaryPage() {
     createToken({ body })
   }
 
-  const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
-    if (repoDetails?.content?.entries?.length === 0) return new Map()
-    const nonEmtpyPathEntries = repoDetails?.content?.entries?.filter(entry => !!entry.path) || []
-    return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
+  const repoEntryPathToFileTypeMap: Map<string, OpenapiGetContentOutput['type']> = useMemo(() => {
+    const entries = repoDetails?.content?.entries
+
+    if (!entries?.length) {
+      return new Map()
+    }
+    const nonEmtpyPathEntries = entries.filter(entry => entry.path)
+
+    return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry.path, entry.type]))
   }, [repoDetails?.content?.entries])
 
   const getSummaryItemType = (type: OpenapiGetContentOutput['type']): SummaryItemType => {
@@ -113,51 +118,51 @@ export default function RepoSummaryPage() {
     return SummaryItemType.File
   }
 
+  const buildFilePath = useCallback(
+    (itemPath: string | undefined) =>
+      `/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${itemPath}`,
+    [spaceId, repoId, gitRef, selectedBranch]
+  )
+
   useEffect(() => {
     setLoading(true)
-    if (repoEntryPathToFileTypeMap.size > 0) {
-      pathDetails({
-        queryParams: { git_ref: normalizeGitRef(selectedBranch) },
-        body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
-        repo_ref: repoRef
-      })
-        .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
-          if (response?.details && response.details.length > 0) {
-            setFiles(
-              response.details.map(
-                (item: GitPathDetails) =>
-                  ({
-                    id: item?.path || '',
-                    type: item?.path
-                      ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
-                      : SummaryItemType.File,
-                    name: item?.path || '',
-                    lastCommitMessage: item?.last_commit?.message || '',
-                    timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
-                    user: { name: item?.last_commit?.author?.identity?.name },
-                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                    path: `/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${item?.path}`
-                  }) as FileProps
-              )
-            )
-          }
-        })
-        .catch()
-        .finally(() => {
-          setLoading(false)
-        })
+
+    if (!repoEntryPathToFileTypeMap.size) {
+      return
     }
-  }, [repoEntryPathToFileTypeMap.size, gitRef, repoRef, selectedBranch])
+
+    pathDetails({
+      queryParams: { git_ref: normalizeGitRef(selectedBranch) },
+      body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
+      repo_ref: repoRef
+    })
+      .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
+        if (response?.details && response.details.length) {
+          setFiles(
+            response.details.map((item: GitPathDetails) => ({
+              id: item?.path || '',
+              type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
+              name: item?.path || '',
+              lastCommitMessage: item?.last_commit?.message || '',
+              timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+              user: { name: item?.last_commit?.author?.identity?.name || '' },
+              sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+              path: buildFilePath(item?.path)
+            }))
+          )
+        }
+      })
+      .catch()
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [repoEntryPathToFileTypeMap, selectedBranch, repoRef, buildFilePath])
 
   useEffect(() => {
     if (repository) {
       setSelectedBranch(repository?.default_branch || '')
     }
   }, [repository])
-
-  const selectBranch = (branch: string) => {
-    setSelectedBranch(branch)
-  }
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
@@ -168,7 +173,7 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${filePath}`)
+      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${filePath}`)
     },
     [gitRef, selectedBranch, navigate, repoId, spaceId]
   )
@@ -199,7 +204,7 @@ export default function RepoSummaryPage() {
         loading={loading}
         selectedBranch={selectedBranch}
         branchList={branchList}
-        selectBranch={selectBranch}
+        selectBranch={setSelectedBranch}
         filesList={filesList}
         navigateToFile={navigateToFile}
         repository={repository}

@@ -128,6 +128,8 @@ export function RepoSummaryView({
                     branchList={branchList}
                     tagList={tagList}
                     selectBranch={selectBranch}
+                    repoId={repoId}
+                    spaceId={spaceId}
                   />
                   <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
                 </ButtonGroup.Root>

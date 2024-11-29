@@ -16,9 +16,9 @@ import {
   TableRow,
   Text
 } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
-import { CommitCopyActions } from './commit-copy-actions'
 
 export enum SummaryItemType {
   Folder = 0,

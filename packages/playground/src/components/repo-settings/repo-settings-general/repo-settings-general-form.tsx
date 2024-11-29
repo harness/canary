@@ -20,9 +20,10 @@ import {
   Text,
   Textarea
 } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { MessageTheme } from '../../../components/form-field-set'
-import { FormFieldSet, SkeletonList } from '../../../index'
+import { FormFieldSet } from '../../../index'
 import { AccessLevel, ErrorTypes, RepoData, RepoUpdateData } from './types'
 
 const formSchema = z.object({

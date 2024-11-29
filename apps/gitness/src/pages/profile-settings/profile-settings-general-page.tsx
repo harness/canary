@@ -20,7 +20,8 @@ import {
   Spacer,
   Text
 } from '@harnessio/canary'
-import { FormFieldSet, getInitials, ModeToggle, SandboxLayout, SkeletonList } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { FormFieldSet, getInitials, ModeToggle, SandboxLayout } from '@harnessio/views'
 
 import { handleLanguageChange } from '../../i18n/i18n'
 import { LanguagesEnum } from './types'

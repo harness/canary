@@ -4,7 +4,8 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { Spacer } from '@harnessio/canary'
 import { TypesCommit, useListPullReqCommitsQuery } from '@harnessio/code-service-client'
-import { NoData, PaginationComponent, PullRequestCommits, SkeletonList } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { NoData, PaginationComponent, PullRequestCommits } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { PathParams } from '../RouteDefinitions'

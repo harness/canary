@@ -5,8 +5,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Checkbox, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
-import { FormFieldSet, SkeletonList } from '../../../index'
+import { FormFieldSet } from '../../../index'
 import { ErrorTypes } from './types'
 
 const formSchema = z.object({

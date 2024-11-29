@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import { noop } from 'lodash-es'
 
 import { ListActions, SearchBox, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { ExecutionList } from '../components/execution-list'
 import { TopBarWidget } from '../components/layout/top-bar-widget'
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { NoSearchResults } from '../components/no-search-results'
 import { PaginationComponent } from '../components/pagination'

@@ -10,7 +10,8 @@ import {
   useFindRepositoryQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { FileProps, NoData, SandboxLayout, SkeletonList, Summary, SummaryItemType } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { FileProps, NoData, SandboxLayout, Summary, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'

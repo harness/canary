@@ -29,6 +29,7 @@ import {
   useListPathsQuery,
   useSummaryQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   BranchSelector,
   CloneRepoDialog,
@@ -39,7 +40,6 @@ import {
   RepoSummaryPanel,
   SandboxLayout,
   SearchFiles,
-  SkeletonList,
   Summary,
   SummaryItemType,
   useCommonFilter
@@ -52,7 +52,7 @@ import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../profile-settings/token-create/token-create-form'
 import { TokenSuccessDialog } from '../profile-settings/token-create/token-success-dialog'
 
-export const RepoSummaryList: React.FC = () => {
+export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<FileProps[]>([])
   const repoRef = useGetRepoRef()

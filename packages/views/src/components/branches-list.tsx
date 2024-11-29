@@ -21,9 +21,9 @@ import {
   TableRow,
   Text
 } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
-import { CommitCopyActions } from './commit-copy-actions'
 import { CopyButton } from './copy-button'
 import { DivergenceGauge } from './divergence-gauge'
 

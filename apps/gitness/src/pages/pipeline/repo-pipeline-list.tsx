@@ -4,15 +4,8 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { Button, Spacer, Text } from '@harnessio/canary'
 import { TypesPipeline, useListPipelinesQuery } from '@harnessio/code-service-client'
-import {
-  Filter,
-  NoData,
-  NoSearchResults,
-  PaginationComponent,
-  PipelineList,
-  SandboxLayout,
-  SkeletonList
-} from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { Filter, NoData, NoSearchResults, PaginationComponent, PipelineList, SandboxLayout } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'

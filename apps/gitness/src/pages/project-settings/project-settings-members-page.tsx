@@ -13,6 +13,7 @@ import {
   useMembershipListQuery,
   useMembershipUpdateMutation
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   Filter,
   FormDeleteMemberDialog,
@@ -22,7 +23,6 @@ import {
   NoSearchResults,
   PaginationComponent,
   SandboxLayout,
-  SkeletonList,
   useCommonFilter
 } from '@harnessio/views'
 

@@ -15,8 +15,7 @@ import {
   RepoSettingsPlaceholderPage,
   SandboxSettings,
   SettingsAccountPage,
-  SettingsProjectNav,
-  ThemeProvider
+  SettingsProjectNav
 } from '@harnessio/views'
 
 import { FileEditor } from './components/FileEditor'
@@ -25,6 +24,7 @@ import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'

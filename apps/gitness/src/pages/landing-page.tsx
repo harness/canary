@@ -21,6 +21,7 @@ export const LandingPage: React.FC = () => {
       })
       .catch(_e => {
         // Ignore/toast error
+        navigate('/signin')
       })
   }, [])
 

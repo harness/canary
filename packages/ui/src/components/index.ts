@@ -29,6 +29,7 @@ export * from './skeleton'
 export * from './loaders/skeleton-list'
 export * from './table'
 export * from './commit-copy-actions'
+export * from './textarea'
 
 export * as ShaBadge from './sha-badge'
 export * as ListActions from './list-actions'

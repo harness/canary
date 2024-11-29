@@ -12,7 +12,8 @@ import {
   useGetContentQuery,
   useListBranchesQuery,
   useListPathsQuery,
-  useSummaryQuery
+  useSummaryQuery,
+  useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
 import { BranchSelectorListItem, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
 import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
@@ -31,7 +32,7 @@ export default function RepoSummaryPage() {
   const navigate = useNavigate()
   const { spaceId, repoId, gitRef } = useParams<PathParams>()
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -42,6 +43,29 @@ export default function RepoSummaryPage() {
     name: '',
     sha: ''
   })
+
+  const { mutate: updateDescription } = useUpdateRepositoryMutation(
+    { repo_ref: repoRef },
+    {
+      onSuccess: () => {
+        refetchRepo()
+      }
+    }
+  )
+  const [isEditingDescription, setIsEditingDescription] = useState<boolean>(false)
+
+  const onChangeDescription = () => {
+    setIsEditingDescription(true)
+  }
+
+  const saveDescription = (description: string) => {
+    updateDescription({
+      body: {
+        description: description
+      }
+    })
+    setIsEditingDescription(false)
+  }
 
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
@@ -232,6 +256,10 @@ export default function RepoSummaryPage() {
         repoId={repoId || ''}
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
+        onChangeDescription={onChangeDescription}
+        isEditingDescription={isEditingDescription}
+        setIsEditingDescription={setIsEditingDescription}
+        saveDescription={saveDescription}
       />
       {createdTokenData && (
         <TokenSuccessDialog

@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
+import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
+import { isEmpty } from 'lodash-es'
 
 import { adminMenuItem } from './data'
 import { NavbarItem } from './navbar-item'
@@ -40,6 +41,7 @@ export const Navbar = ({
   handleRemoveRecentMenuItem
 }: NavbarProps) => {
   const location = useLocation()
+  const navigate = useNavigate()
 
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
@@ -108,7 +110,11 @@ export const Navbar = ({
       </NavbarSkeleton.Content>
 
       <NavbarSkeleton.Footer>
-        <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
+        {!isEmpty(currentUser) ? (
+          <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
+        ) : (
+          <Button onClick={() => navigate('/signin')}>Sign In</Button>
+        )}
       </NavbarSkeleton.Footer>
     </NavbarSkeleton.Root>
   )

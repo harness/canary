@@ -62,6 +62,10 @@ interface RepoSummaryViewProps {
     timestamp: string
     sha: string | null
   }
+  onChangeDescription?: () => void
+  isEditingDescription?: boolean
+  setIsEditingDescription: (value: boolean) => void
+  saveDescription: (description: string) => void
 }
 
 export function RepoSummaryView({
@@ -81,7 +85,11 @@ export function RepoSummaryView({
   spaceId,
   repoId,
   gitRef,
-  latestCommitInfo
+  latestCommitInfo,
+  onChangeDescription,
+  isEditingDescription,
+  setIsEditingDescription,
+  saveDescription
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
 
@@ -213,6 +221,10 @@ export function RepoSummaryView({
                 }
               ]}
               description={repository?.description}
+              onChangeDescription={onChangeDescription}
+              isEditingDescription={isEditingDescription}
+              setIsEditingDescription={setIsEditingDescription}
+              saveDescription={saveDescription}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

@@ -53,7 +53,7 @@ export function RepoList({
                     primary
                     description={repo.description}
                     title={<Title title={repo.name} isPrivate={repo.private} />}
-                    className="gap-1.5"
+                    className="gap-1.5 truncate"
                   />
                   <StackedList.Field
                     title={

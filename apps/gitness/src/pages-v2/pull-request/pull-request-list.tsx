@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListPullReqQuery } from '@harnessio/code-service-client'
-import { PullRequestListPage as SandboxPullRequestListPage } from '@harnessio/ui/views'
+import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'

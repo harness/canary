@@ -76,7 +76,7 @@ export const PullRequestListTitle = ({
           )
         })}
       </div>
-      {comments && <StackedList.Field title={<Comments comments={comments} />} right label secondary />}
+      {!!comments && <StackedList.Field title={<Comments comments={comments} />} right label secondary />}
     </div>
   )
 }

@@ -14,11 +14,11 @@ export interface PullRequestListPageProps {
   hasActiveFilters?: boolean
   query?: string
   handleResetQuery: () => void
-  closed_prs?: number
-  open_prs?: number
+  closedPRs?: number
+  openPRs?: number
 }
 
-export function PullRequestList({ pullRequests, open_prs, closed_prs }: PullRequestListPageProps) {
+export function PullRequestList({ pullRequests, openPRs, closedPRs }: PullRequestListPageProps) {
   const [headerFilter, setHeaderFilter] = useState('open')
   const filteredData = useMemo<PullRequestType[]>(() => {
     if (!pullRequests) return []
@@ -28,63 +28,69 @@ export function PullRequestList({ pullRequests, open_prs, closed_prs }: PullRequ
       if (headerFilter === 'closed') return pr.state !== 'open' || pr.merged !== null
       return true
     })
-  }, [headerFilter])
+  }, [headerFilter, pullRequests])
+
+  const onOpenClick = () => {
+    setHeaderFilter('open')
+  }
+  const onCloseClick = () => {
+    setHeaderFilter('closed')
+  }
+
+  if (!filteredData?.length) return null
 
   return (
-    <>
-      {!!filteredData?.length && (
-        <StackedList.Root>
-          <StackedList.Item isHeader disableHover>
-            <StackedList.Field
-              title={
-                <PullRequestListHeaderTitle
-                  headerFilter={headerFilter}
-                  setHeaderFilter={setHeaderFilter}
-                  open_prs={open_prs}
-                  closed_prs={closed_prs}
-                />
-              }
+    <StackedList.Root>
+      <StackedList.Item isHeader disableHover>
+        <StackedList.Field
+          title={
+            <PullRequestListHeaderTitle
+              headerFilter={headerFilter}
+              onOpenClick={onOpenClick}
+              onCloseClick={onCloseClick}
+              openPRs={openPRs}
+              closedPRs={closedPRs}
             />
+          }
+        />
+      </StackedList.Item>
+      {filteredData.map((pullRequest, pullRequest_idx) => (
+        <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
+          <StackedList.Item isLast={filteredData.length - 1 === pullRequest_idx}>
+            {pullRequest.number && (
+              <>
+                <StackedList.Field
+                  title={
+                    pullRequest.name && (
+                      <PullRequestListTitle
+                        isDraft={pullRequest.is_draft}
+                        state={pullRequest.state}
+                        success={!!pullRequest.merged}
+                        title={pullRequest.name}
+                        labels={pullRequest.labels || []}
+                        comments={pullRequest.comments}
+                        merged={pullRequest.merged}
+                      />
+                    )
+                  }
+                  description={
+                    pullRequest.author && (
+                      <PullRequestListDescription
+                        number={pullRequest.number}
+                        author={pullRequest.author}
+                        reviewRequired={pullRequest.reviewRequired}
+                        tasks={pullRequest.tasks}
+                        sourceBranch={pullRequest.source_branch || ''}
+                        timestamp={pullRequest.timestamp}
+                      />
+                    )
+                  }
+                />
+              </>
+            )}
           </StackedList.Item>
-          {filteredData?.map((pullRequest, pullRequest_idx) => (
-            <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
-              <StackedList.Item isLast={filteredData.length - 1 === pullRequest_idx}>
-                {pullRequest.number && (
-                  <>
-                    <StackedList.Field
-                      title={
-                        pullRequest.name && (
-                          <PullRequestListTitle
-                            isDraft={pullRequest.is_draft}
-                            state={pullRequest.state}
-                            success={!!pullRequest.merged}
-                            title={pullRequest.name}
-                            labels={pullRequest.labels || []}
-                            comments={pullRequest.comments}
-                            merged={pullRequest.merged}
-                          />
-                        )
-                      }
-                      description={
-                        pullRequest.author && (
-                          <PullRequestListDescription
-                            number={pullRequest.number}
-                            author={pullRequest.author}
-                            reviewRequired={pullRequest.reviewRequired}
-                            tasks={pullRequest.tasks}
-                            source_branch={pullRequest.source_branch || ''}
-                            timestamp={pullRequest.timestamp}
-                          />
-                        )
-                      }
-                    />
-                  </>
-                )}
-              </StackedList.Item>
-            </Link>
-          ))}
-        </StackedList.Root>
-      )}
-    </>
+        </Link>
+      ))}
+    </StackedList.Root>
   )
 }

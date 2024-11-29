@@ -6,14 +6,14 @@ export const PullRequestListDescription = ({
   number,
   // tasks,
   author,
-  source_branch,
+  sourceBranch,
   timestamp
 }: {
   number: number
   reviewRequired?: boolean
   tasks?: number
   author: string
-  source_branch: string
+  sourceBranch: string
   timestamp: string
 }) => {
   return (
@@ -37,11 +37,11 @@ export const PullRequestListDescription = ({
           </Text>
         </div>
       )} */}
-      {source_branch && (
+      {sourceBranch && (
         <div className="flex items-center gap-1">
           <Icon size={11} name="signpost" />
           <Text size={1} color="tertiaryBackground">
-            {source_branch}
+            {sourceBranch}
           </Text>
         </div>
       )}

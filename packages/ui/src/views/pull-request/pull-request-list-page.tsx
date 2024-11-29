@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { NoData } from '@components/no-data'
@@ -5,7 +6,7 @@ import { noop } from 'lodash-es'
 
 import { SandboxLayout } from '..'
 import { Button, PaginationComponent, Spacer, Text } from '../../components/index'
-import { PullRequestList } from './pull-request-list'
+import { PullRequestList as PullRequestListContent } from './pull-request-list'
 import { PullRequestStore, PullRequestType, RepoRepositoryOutput } from './types'
 
 export interface PullRequestListProps {
@@ -15,12 +16,7 @@ export interface PullRequestListProps {
   repoMetadata?: RepoRepositoryOutput
 }
 
-const PullRequestListPage: React.FC<PullRequestListProps> = ({
-  usePullRequestStore,
-  spaceId,
-  repoId,
-  repoMetadata
-}) => {
+const PullRequestList: FC<PullRequestListProps> = ({ usePullRequestStore, spaceId, repoId, repoMetadata }) => {
   const { pullRequests, totalPages, page, setPage } = usePullRequestStore()
 
   // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
@@ -59,7 +55,7 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
       )
     }
     return (
-      <PullRequestList
+      <PullRequestListContent
         handleResetQuery={noop}
         // LinkComponent={LinkComponent}
         pullRequests={pullRequests?.map((item: PullRequestType) => ({
@@ -82,8 +78,8 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
             color: label?.color
           }))
         }))}
-        closed_prs={repoMetadata?.num_closed_pulls}
-        open_prs={repoMetadata?.num_open_pulls}
+        closedPRs={repoMetadata?.num_closed_pulls}
+        openPRs={repoMetadata?.num_open_pulls}
       />
     )
   }
@@ -107,13 +103,9 @@ const PullRequestListPage: React.FC<PullRequestListProps> = ({
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        <PaginationComponent
-          totalPages={totalPages}
-          currentPage={page}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-        />
+        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )
 }
-export { PullRequestListPage }
+export { PullRequestList }

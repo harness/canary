@@ -17,10 +17,9 @@ import {
   SelectTrigger,
   SelectValue,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@harnessio/canary'
-import { SkeletonList } from '@harnessio/ui/components'
+import { SkeletonList, Textarea } from '@harnessio/ui/components'
 
 import { MessageTheme } from '../../../components/form-field-set'
 import { FormFieldSet } from '../../../index'

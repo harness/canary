@@ -16,10 +16,10 @@ import {
   RadioGroupItem,
   Spacer,
   Text,
-  Textarea,
   useZodForm
 } from '@harnessio/canary'
 import { UsererrorError } from '@harnessio/code-service-client'
+import { Textarea } from '@harnessio/ui/components'
 import { FormFieldSet, Layout } from '@harnessio/views'
 
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'

@@ -9,6 +9,7 @@ import {
   useFindRepositoryQuery,
   useListPullReqQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   Filter,
   NoData,
@@ -16,7 +17,6 @@ import {
   PaginationComponent,
   PullRequestList,
   SandboxLayout,
-  SkeletonList,
   useCommonFilter
 } from '@harnessio/views'
 

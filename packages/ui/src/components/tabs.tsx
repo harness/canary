@@ -10,7 +10,14 @@ const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
       default: 'h-9 justify-center rounded-lg bg-muted p-1',
       underline: 'h-11 justify-center gap-4',
       navigation: 'h-[44px] w-full justify-start gap-6 border-b border-border-background px-8',
-      tabnav: 'h-[36px] w-full justify-start gap-0'
+      // TODO: Refactor - merge tabnav and branch variants
+      // tabnav is used in existing components and has conflicting styles
+      // Future steps:
+      // 1. Analyze all tabnav usage locations
+      // 2. Create a unified variant based on branch
+      // 3. Update existing components
+      tabnav: 'h-[36px] w-full justify-start gap-0',
+      branch: 'flex w-full border-b border-borders-4 px-3'
     }
   },
   defaultVariants: {
@@ -30,7 +37,9 @@ const tabsTriggerVariants = cva(
         navigation:
           'm-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-tertiary-background duration-150 ease-in-out hover:text-primary data-[state=active]:border-tertiary-background data-[state=active]:text-primary',
         tabnav:
-          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary'
+          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary',
+        branch:
+          '-mb-px h-[34px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-4 data-[state=active]:text-foreground-1'
       }
     },
     defaultVariants: {
@@ -47,7 +56,8 @@ const tabsContentVariants = cva(
         default: '',
         underline: '',
         navigation: '',
-        tabnav: ''
+        tabnav: '',
+        branch: ''
       }
     },
     defaultVariants: {

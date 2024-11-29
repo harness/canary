@@ -5,13 +5,13 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { Button, ListActions, Spacer, Text } from '@harnessio/canary'
 import { TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   ExecutionList,
   ExecutionState,
   NoData,
   PaginationComponent,
   SandboxLayout,
-  SkeletonList,
   timeDistance
 } from '@harnessio/views'
 

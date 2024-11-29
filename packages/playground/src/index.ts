@@ -9,7 +9,6 @@ export * from './components/theme-provider'
 export * from './components/pipeline-list'
 export * from './components/layout/top-bar-widget'
 
-export * from './components/loaders/skeleton-list'
 export * from './components/repo-list'
 export * from './components/repo-clone/clone-repo-dialog'
 
@@ -82,7 +81,6 @@ export * from './components/new-password-page'
 export * from './components/otp-page'
 export * from './utils/utils'
 
-export * as ShaBadge from './components/sha-badge'
 export * as FileViewGauge from './components/file-view-gauge'
 export * as FileExplorer from './components/file-explorer'
 

@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { Icon, ShaBadge, Text } from '@/components'
+import { cn } from '@utils/cn'
 import copy from 'clipboard-copy'
-
-import { cn, Icon, Text } from '@harnessio/canary'
-
-import { ShaBadge } from '..'
 
 //TODO: it need to pass url to copy function in the future, it is used in branch-list & pull-request-commit list
 // not have commit detail page yet

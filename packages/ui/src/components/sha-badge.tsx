@@ -1,18 +1,20 @@
-import { Text } from '@harnessio/canary'
+import { ReactNode } from 'react'
+
+import { Text } from '@/components'
 
 interface RootProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 
 interface IconProps {
-  children: React.ReactNode
+  children: ReactNode
   handleClick?: () => void
   className?: string
 }
 
 interface ContentProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
 }
 
@@ -30,7 +32,7 @@ function Content({ ...props }: ContentProps) {
   const { children } = props
 
   return (
-    <div className="bg-background hover:bg-muted/50 flex items-center px-2 py-0.5">
+    <div className="flex items-center bg-background px-2 py-0.5 hover:bg-muted/50">
       <Text size={1} className="text-tertiary-background">
         {children}
       </Text>
@@ -42,14 +44,13 @@ function Icon({ ...props }: IconProps) {
   const { children, handleClick } = props
 
   return (
-    <div
-      onClick={handleClick && handleClick}
-      role="button"
+    <button
+      className="flex items-center border-l bg-background px-1.5 py-0.5 hover:bg-muted/50"
       tabIndex={0}
-      className="bg-background hover:bg-muted/50 flex items-center border-l px-1.5 py-0.5"
+      onClick={handleClick}
     >
       {children}
-    </div>
+    </button>
   )
 }
 

@@ -11,6 +11,7 @@ import {
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   BranchesList,
   Filter,
@@ -18,7 +19,6 @@ import {
   NoSearchResults,
   PaginationComponent,
   SandboxLayout,
-  SkeletonList,
   useCommonFilter
 } from '@harnessio/views'
 

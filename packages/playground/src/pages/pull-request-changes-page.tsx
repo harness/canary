@@ -14,9 +14,9 @@ import {
   Spacer,
   Text
 } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { FileViewGauge } from '..'
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { PullRequestChanges } from '../components/pull-request/pull-request-changes'
 import { mockDiffData } from '../data/mockDiffData'

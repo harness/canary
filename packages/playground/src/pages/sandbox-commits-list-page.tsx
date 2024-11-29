@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom'
 import { noop } from 'lodash-es'
 
 import { ListActions, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { SandboxLayout } from '..'
 import { BranchSelector } from '../components/branch-chooser'
 import CommitsList from '../components/commits-list'
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { PaginationComponent } from '../components/pagination'
 import { mockRepos } from '../data/mockReposData'

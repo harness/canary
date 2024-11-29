@@ -15,8 +15,7 @@ import {
   RepoSettingsPlaceholderPage,
   SandboxSettings,
   SettingsAccountPage,
-  SettingsProjectNav,
-  ThemeProvider
+  SettingsProjectNav
 } from '@harnessio/views'
 
 import { FileEditor } from './components/FileEditor'
@@ -25,6 +24,7 @@ import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
@@ -35,6 +35,7 @@ import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import WebhookListPage from './pages-v2/webhook/webhook-list'
+import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import CreateProject from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
@@ -65,7 +66,7 @@ import { RepoHeader } from './pages/repo/repo-header'
 import { RepoImportContainer } from './pages/repo/repo-import-container'
 import ReposListPageV1 from './pages/repo/repo-list'
 import { RepoSettingsGeneralPageContainer } from './pages/repo/repo-settings-general-container'
-import { RepoSummaryList } from './pages/repo/repo-summary'
+import RepoSummaryPageV1 from './pages/repo/repo-summary'
 import { SignIn } from './pages/signin'
 import { SignUp } from './pages/signup'
 import { CreateNewUserContainer } from './pages/user-management/create-new-user-container'
@@ -121,6 +122,14 @@ export default function App() {
           path: ':spaceId/repos/:repoId',
           element: <RepoLayout />,
           children: [
+            {
+              index: true,
+              element: <Navigate to="summary" replace />
+            },
+            {
+              path: 'summary',
+              element: <RepoSummaryPage />
+            },
             {
               path: 'code',
               element: (
@@ -201,7 +210,7 @@ export default function App() {
                 },
                 {
                   path: 'summary',
-                  element: <RepoSummaryList />
+                  element: <RepoSummaryPageV1 />
                 },
                 {
                   path: 'code',

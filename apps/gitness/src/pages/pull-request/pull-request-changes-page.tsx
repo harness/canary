@@ -13,7 +13,8 @@ import {
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
-import { PullRequestChanges, SkeletonList } from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { PullRequestChanges } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'

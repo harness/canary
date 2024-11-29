@@ -11,8 +11,8 @@ import {
   PaginationPrevious,
   Spacer
 } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { PullRequestCommits } from '../components/pull-request/pull-request-commits'
 import { mockCommitData } from '../data/mockCommitData'

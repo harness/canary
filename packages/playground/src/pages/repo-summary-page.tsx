@@ -13,9 +13,9 @@ import {
   StackedList,
   Text
 } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 
 import { BranchSelector } from '../components/branch-chooser'
-import { SkeletonList } from '../components/loaders/skeleton-list'
 import { NoData } from '../components/no-data'
 import { NoSearchResults } from '../components/no-search-results'
 import { Summary } from '../components/repo-summary'

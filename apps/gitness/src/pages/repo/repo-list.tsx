@@ -10,6 +10,7 @@ import {
   RepoRepositoryOutput,
   useListReposQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   Filter,
   NoData,
@@ -17,7 +18,6 @@ import {
   PaginationComponent,
   RepoList,
   SandboxLayout,
-  SkeletonList,
   useCommonFilter
 } from '@harnessio/views'
 

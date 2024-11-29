@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 
 import { Avatar, AvatarFallback, NodeGroup, StackedList, Text } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
 
 import { formatDate, getInitials } from '../../utils/utils'
-import { CommitCopyActions } from '../commit-copy-actions'
 import { TypesCommit } from './interfaces'
 
 interface CommitProps {

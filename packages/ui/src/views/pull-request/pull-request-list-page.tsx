@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { NoData } from '@components/no-data'
@@ -15,7 +16,7 @@ export interface PullRequestListProps {
   repoMetadata?: RepoRepositoryOutput
 }
 
-const PullRequestList: React.FC<PullRequestListProps> = ({ usePullRequestStore, spaceId, repoId, repoMetadata }) => {
+const PullRequestList: FC<PullRequestListProps> = ({ usePullRequestStore, spaceId, repoId, repoMetadata }) => {
   const { pullRequests, totalPages, page, setPage } = usePullRequestStore()
 
   // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>

@@ -28,7 +28,7 @@ export function PullRequestList({ pullRequests, openPRs, closedPRs }: PullReques
       if (headerFilter === 'closed') return pr.state !== 'open' || pr.merged !== null
       return true
     })
-  }, [headerFilter])
+  }, [headerFilter, pullRequests])
 
   const onOpenClick = () => {
     setHeaderFilter('open')
@@ -36,7 +36,9 @@ export function PullRequestList({ pullRequests, openPRs, closedPRs }: PullReques
   const onCloseClick = () => {
     setHeaderFilter('closed')
   }
+
   if (!filteredData?.length) return null
+
   return (
     <StackedList.Root>
       <StackedList.Item isHeader disableHover>
@@ -52,7 +54,7 @@ export function PullRequestList({ pullRequests, openPRs, closedPRs }: PullReques
           }
         />
       </StackedList.Item>
-      {filteredData?.map((pullRequest, pullRequest_idx) => (
+      {filteredData.map((pullRequest, pullRequest_idx) => (
         <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
           <StackedList.Item isLast={filteredData.length - 1 === pullRequest_idx}>
             {pullRequest.number && (

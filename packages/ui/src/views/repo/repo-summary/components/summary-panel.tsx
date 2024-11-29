@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import {
   Badge,
@@ -32,7 +32,7 @@ interface SummaryPanelProps {
   saveDescription: (description: string) => void
 }
 
-const SummaryPanel: React.FC<SummaryPanelProps> = ({
+const SummaryPanel: FC<SummaryPanelProps> = ({
   title,
   details,
   timestamp,
@@ -71,7 +71,7 @@ const SummaryPanel: React.FC<SummaryPanelProps> = ({
             defaultValue={description}
             className="text-primary h-28"
             value={newDesc}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setNewDesc(e?.target?.value)
             }}
           />

@@ -3,7 +3,8 @@ import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from
 
 import { z } from 'zod'
 
-import { Input, Text, Textarea } from '@harnessio/canary'
+import { Input, Text } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
 
 import { FormFieldSet } from '../..'
 import { MessageTheme } from '../form-field-set'

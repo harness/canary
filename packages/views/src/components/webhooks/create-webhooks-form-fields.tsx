@@ -1,4 +1,5 @@
-import { Checkbox, Input, RadioGroup, RadioGroupItem, StackedList, Switch, Textarea } from '@harnessio/canary'
+import { Checkbox, Input, RadioGroup, RadioGroupItem, StackedList, Switch } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
 
 import { FormFieldSet, MessageTheme } from '../../index'
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from './types'

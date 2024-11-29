@@ -458,6 +458,10 @@ export default function App() {
           element: <UserManagementPageContainer />
         },
         {
+          path: 'pipelines',
+          element: <UserManagementPageContainer />
+        },
+        {
           path: 'users/create',
           element: <CreateNewUserContainer />
         }

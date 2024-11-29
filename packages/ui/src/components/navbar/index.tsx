@@ -83,20 +83,20 @@ export const Navbar = ({
             </button>
           </NavbarSkeleton.Group>
 
-          {!!recentMenuItems.length && (
-            <NavbarSkeleton.Group title="Recent" topBorder>
-              {recentMenuItems.map(item => (
-                <NavbarItem
-                  key={item.id}
-                  item={item}
-                  isRecent
-                  handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-                  handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-                  handleCustomNav={handleCustomNav}
-                />
-              ))}
-            </NavbarSkeleton.Group>
-          )}
+          {/* {!!recentMenuItems.length && ( */}
+          <NavbarSkeleton.Group title="Recent" topBorder>
+            {recentMenuItems.map(item => (
+              <NavbarItem
+                key={item.id}
+                item={item}
+                isRecent
+                handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+                handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+                handleCustomNav={handleCustomNav}
+              />
+            ))}
+          </NavbarSkeleton.Group>
+          {/* )} */}
 
           <NavbarSkeleton.Group topBorder>
             <button onClick={handleSettingsMenu}>

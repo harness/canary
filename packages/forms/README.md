@@ -30,8 +30,8 @@ export enum InputType {
 
 #### 2. Create inputs
 
-Examples of input can be found in the playground:
-[Text input example](../playground/src/components/form-inputs/TextInput.tsx)
+Examples of input can be found in the `views` package:
+[Text input example](../views/src/components/form-inputs/TextInput.tsx)
 
 #### 3. Register inputs
 
@@ -69,7 +69,7 @@ export const formDefinition: IFormDefinition = {
 };
 ```
 
-NOTE: Input may contains configuration. In this case we have to provide a generic type to `IFormDefinition` in order to get intellisense for form definition inputs.
+NOTE: Input may contain configuration. In this case we have to provide a generic type to `IFormDefinition` in order to get intellisense for form definition inputs.
 
 ```typescript
 // 1. Define input config type
@@ -95,7 +95,7 @@ export const formDefinition: IFormDefinition<InputConfigType> = {
 }
 ```
 
-For more info check [List input example](../playground/src/components/form-inputs/TextInput.tsx)
+For more info check [List input example](../views/src/components/form-inputs/TextInput.tsx)
 
 #### 5. Render form
 
@@ -104,7 +104,7 @@ Use RootForm and RenderForm components.
 ```js
 <RootForm initialValues={{...}} onSubmit={handleOnSubmit}>
   <RenderForm factory={inputComponentFactory} inputs={formDefinition} />
-</RootFormik>
+</RootForm>
 ```
 
 ### Configure Required validation

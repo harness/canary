@@ -1,3 +1,5 @@
+import { TFunction } from 'i18next'
+
 export interface RepositoryType {
   id: number
   name: string
@@ -20,4 +22,5 @@ interface RepoStore {
 
 export interface RepoListProps {
   useRepoStore: () => RepoStore
+  t: TFunction
 }

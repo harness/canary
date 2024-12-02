@@ -109,7 +109,7 @@ const FiltersBar = ({
               customLabel={
                 <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
                   <Icon name="plus" size={10} />
-                  <span>Add filter</span>
+                  <span>{t('component:filter.add-filter', 'Add filter')}</span>
                 </div>
               }
               hideCount
@@ -129,7 +129,7 @@ const FiltersBar = ({
               }}
             >
               <Icon className="rotate-45" name="plus" size={12} />
-              Reset
+              {t('component:filter.reset', 'Reset')}
             </button>
           </div>
 
@@ -138,7 +138,7 @@ const FiltersBar = ({
               className="flex items-center gap-x-1.5 text-14 text-foreground-4 hover:text-foreground-1"
               onClick={handleSaveFilters}
             >
-              Save
+              {t('component:filter.save', 'Save')}
             </button>
           )}
         </div>

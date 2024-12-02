@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
-import { SkeletonList, Spacer, Text } from '@harnessio/ui/components'
+import { Spacer, Text, Skeleton } from '@harnessio/ui/components'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -66,7 +66,7 @@ export default function ReposListPage() {
     shouldRun: isRepoStillImporting
   })
 
-  if (isLoading) return <SkeletonList />
+  if (isLoading) return <Skeleton />
 
   if (isError)
     return (

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
-import { Spacer, Text, Skeleton } from '@harnessio/ui/components'
+import { Skeleton, Spacer, Text } from '@harnessio/ui/components'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'

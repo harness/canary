@@ -53,17 +53,19 @@ export const RepoSidebar = ({
             )}
             <ButtonGroup.Root spacing="0" className="h-full overflow-hidden rounded shadow-as-border shadow-borders-2">
               <Button
+                className="rounded-none border-l border-borders-2 p-0"
                 size="icon"
                 variant="ghost"
-                className="rounded-none border-l border-borders-2 p-0"
+                aria-label="Create new folder"
                 onClick={navigateToNewFolder}
               >
                 <Icon size={16} name="add-folder" className="text-icons-3" />
               </Button>
               <Button
+                className="rounded-none border-l border-borders-2 p-0"
                 size="icon"
                 variant="ghost"
-                className="rounded-none border-l border-borders-2 p-0"
+                aria-label="Create new file"
                 onClick={navigateToNewFile}
               >
                 <Icon size={16} name="add-file" className="text-icons-3" />

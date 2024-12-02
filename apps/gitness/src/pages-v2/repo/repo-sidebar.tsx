@@ -16,8 +16,7 @@ import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef } from '../../utils/git-utils.ts'
 
 /**
- * TODO: This code was migrated from V2.
- * @constructor
+ * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
   const repoRef = useGetRepoRef()
@@ -145,7 +144,7 @@ export const RepoSidebar = () => {
         navigateToFile={navigateToFile}
         filesList={filesList}
       >
-        {repoDetails?.body?.content?.entries?.length && (
+        {!!repoDetails?.body?.content?.entries?.length && (
           <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranch.name} />
         )}
       </RepoSidebarView>

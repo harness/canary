@@ -9,18 +9,20 @@ interface FolderItemProps {
   value?: string
   isActive?: boolean
   content?: ReactNode
-  chevronClass?: string
+  chevronClassName?: string
   link: string
 }
 
-function FolderItem({ children, value, isActive, content, chevronClass, link }: FolderItemProps) {
+function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
   return (
-    <AccordionItem value={value || ''} className="border-none">
+    <AccordionItem value={value} className="border-none">
       <AccordionTrigger
         className="w-full p-0"
         leftChevron
         rotateChevron
-        chevronClass={chevronClass || 'text-icons-7 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'}
+        chevronClassName={
+          chevronClassName || 'text-icons-7 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
+        }
       >
         <div
           className={cn(

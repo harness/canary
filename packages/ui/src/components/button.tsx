@@ -33,7 +33,8 @@ const buttonVariants = cva(
       },
       borderRadius: {
         default: '',
-        full: 'rounded-full'
+        full: 'rounded-full',
+        none: 'rounded-none'
       },
       theme: {
         default: '',

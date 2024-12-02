@@ -63,8 +63,7 @@ export const TopDetails = ({ file }: { file: LatestFileTypes }) => {
   )
 }
 
-export const Summary = ({ ...props }: SummaryProps) => {
-  const { latestFile, files } = props
+export const Summary = ({ latestFile, files }: SummaryProps) => {
   const navigate = useNavigate()
 
   return (

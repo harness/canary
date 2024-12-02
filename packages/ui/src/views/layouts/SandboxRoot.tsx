@@ -13,8 +13,6 @@ import { SandboxLayout } from '../index'
 /**
  * Returns the complete menu model based on an array of IDs,
  * using the navbarMenuData variable as a reference.
- * @param data
- * @param t
  */
 const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
   if (!data.length) return []

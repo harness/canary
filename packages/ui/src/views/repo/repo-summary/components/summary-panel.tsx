@@ -69,7 +69,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         <div>
           <Textarea
             defaultValue={description}
-            className="text-primary h-28"
+            className="h-28 text-primary"
             value={newDesc}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setNewDesc(e?.target?.value)

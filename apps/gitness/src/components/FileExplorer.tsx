@@ -28,11 +28,7 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
 }
 
 /**
- * TODO: This code was migrated from V2.
- *
- * @param selectedBranch
- * @param repoDetails
- * @constructor
+ * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()

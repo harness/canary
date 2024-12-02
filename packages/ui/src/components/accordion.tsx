@@ -24,12 +24,12 @@ const AccordionItem = React.forwardRef<React.ElementRef<typeof AccordionPrimitiv
 )
 AccordionItem.displayName = 'AccordionItem'
 
-const ChevronIcon = ({ chevronClass }: { chevronClass?: string }) => {
+const ChevronIcon = ({ chevronClassName }: { chevronClassName?: string }) => {
   return (
     <Icon
       name="chevron-down"
       size={10}
-      className={cn('chevron-down text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClass)}
+      className={cn('chevron-down text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClassName)}
     />
   )
 }
@@ -38,7 +38,7 @@ type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrim
   hideChevron?: boolean
   leftChevron?: boolean
   rotateChevron?: boolean
-  chevronClass?: string
+  chevronClassName?: string
 }
 
 const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
@@ -48,7 +48,7 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
       hideChevron = false,
       leftChevron = false,
       rotateChevron = 'false',
-      chevronClass = '',
+      chevronClassName = '',
       children,
       ...props
     },
@@ -69,9 +69,9 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
         )}
         {...props}
       >
-        {leftChevron && !hideChevron && <ChevronIcon chevronClass={chevronClass} />}
+        {leftChevron && !hideChevron && <ChevronIcon chevronClassName={chevronClassName} />}
         {children}
-        {!leftChevron && !hideChevron && <ChevronIcon chevronClass={chevronClass} />}
+        {!leftChevron && !hideChevron && <ChevronIcon chevronClassName={chevronClassName} />}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )

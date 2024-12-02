@@ -28,7 +28,7 @@ export const RepoFiles = ({
 
     if (loading) return <SkeletonList />
 
-    if (isShowSummary && !!files.length) return <Summary latestFile={latestFile} files={files} />
+    if (isShowSummary && files.length) return <Summary latestFile={latestFile} files={files} />
 
     return (
       <NoData

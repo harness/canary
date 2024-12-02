@@ -18,8 +18,7 @@ import { getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 
 /**
- * TODO: This code was migrated from V2.
- * @constructor
+ * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
@@ -55,9 +54,11 @@ export const RepoCode = () => {
   }, [repository, gitRef])
 
   const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
-    if (repoDetails?.content?.entries?.length === 0) return new Map()
-    const nonEmtpyPathEntries = repoDetails?.content?.entries?.filter(entry => !!entry.path) || []
-    return new Map(nonEmtpyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
+    if (!repoDetails?.content?.entries?.length) return new Map()
+
+    const nonEmptyPathEntries = repoDetails?.content?.entries?.filter(entry => !!entry.path) || []
+
+    return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
   }, [repoDetails])
 
   const getSummaryItemType = (type: OpenapiGetContentOutput['type']): SummaryItemType => {
@@ -72,8 +73,7 @@ export const RepoCode = () => {
       return ''
     }
     path = path.replace(/\/+$/, '')
-    const segments = path.split('/')
-    return segments[segments.length - 1]
+    return path.split('/').pop()
   }
 
   useEffect(() => {

@@ -82,7 +82,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     const handleFocus = () => {
       onFocus?.()
       if (showOnFocus) {
-        handleSearch?.()
+        handleSearch()
       }
     }
 

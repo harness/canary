@@ -1,2 +1,2 @@
 export * from './branch-selector/branch-selector'
-export * from './summary'
+export * from './summary/summary'

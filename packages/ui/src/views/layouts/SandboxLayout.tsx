@@ -1,14 +1,14 @@
-import { CSSProperties } from 'react'
+import { CSSProperties, ReactNode } from 'react'
 
 import { cn } from '@utils/cn'
 
 interface ColumnsProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
   columnWidths?: string
 }
 
-function Root({ children }: { children: React.ReactNode }) {
+function Root({ children }: { children: ReactNode }) {
   return (
     <main className="h-screen" role="main">
       {children}
@@ -16,7 +16,7 @@ function Root({ children }: { children: React.ReactNode }) {
   )
 }
 
-function LeftPanel({ children, className }: { children: React.ReactNode; className?: string }) {
+function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <nav
       className={cn('border-borders-5 fixed bottom-0 left-0 top-0 z-50 w-[220px] overflow-y-auto border-r', className)}
@@ -33,7 +33,7 @@ function LeftSubPanel({
   hasSubHeader,
   className
 }: {
-  children: React.ReactNode
+  children: ReactNode
   hasHeader?: boolean
   hasSubHeader?: boolean
   className?: string
@@ -55,7 +55,7 @@ function LeftSubPanel({
   )
 }
 
-function Header({ children, className }: { children: React.ReactNode; className?: string }) {
+function Header({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <header className={cn('bg-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
       {children}
@@ -63,7 +63,7 @@ function Header({ children, className }: { children: React.ReactNode; className?
   )
 }
 
-function SubHeader({ children, className }: { children: React.ReactNode; className?: string }) {
+function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <header className={cn('bg-background-1 fixed left-[220px] right-0 top-[58px] z-40 h-[45px]', className)}>
       {children}
@@ -81,7 +81,7 @@ function Main({
   hasLeftSubPanel,
   leftSubPanelWidth = 300
 }: {
-  children: React.ReactNode
+  children: ReactNode
   fullWidth?: boolean
   className?: string
   hasHeader?: boolean
@@ -93,7 +93,7 @@ function Main({
   const paddingTopClass =
     hasHeader && hasSubHeader ? `pt-[calc(55px+45px)]` : hasHeader ? 'pt-[55px]' : hasSubHeader ? 'pt-[45px]' : ''
 
-  const paddingLeftStyle = {
+  const paddingLeftStyle: CSSProperties = {
     paddingLeft:
       hasLeftPanel && hasLeftSubPanel
         ? `calc(220px + ${leftSubPanelWidth}px)`
@@ -101,8 +101,8 @@ function Main({
           ? '220px'
           : hasLeftSubPanel
             ? `${leftSubPanelWidth}px`
-            : undefined
-  } as CSSProperties
+            : ''
+  }
 
   if (fullWidth) {
     return (
@@ -124,7 +124,7 @@ function Main({
 }
 
 interface ContentProps {
-  children: React.ReactNode
+  children: ReactNode
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
   className?: string
 }
@@ -148,7 +148,7 @@ function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: Colum
   )
 }
 
-function Column({ children, className }: { children: React.ReactNode; className?: string }) {
+function Column({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className={cn('', className)} role="gridcell">
       {children}

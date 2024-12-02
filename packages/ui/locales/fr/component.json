@@ -35,6 +35,12 @@
     "title": "Titre"
   },
   "navbar": {
+    "settings": "Paramètres",
+    "account": "Compte",
+    "theme": "Thème",
+    "customNav": "Personnaliser la navigation",
+    "administration": "Administration",
+    "logout": "Se déconnecter",
     "pin": "Épingler",
     "remove": "Supprimer",
     "reorder": "Réorganiser",
@@ -61,7 +67,6 @@
     "platform": "Plateforme",
     "dashboards": "Tableaux de bord",
     "general": "Général",
-    "settings": "Paramètres",
     "notifications": "Notifications",
     "resources": "Ressources",
     "services": "Services",

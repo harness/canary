@@ -35,6 +35,12 @@
     "title": "Title"
   },
   "navbar": {
+    "settings": "",
+    "account": "Account",
+    "theme": "Theme",
+    "customNav": "Customize navigation",
+    "administration": "Administration",
+    "logout": "Log out",
     "pin": "",
     "remove": "",
     "reorder": "",
@@ -61,7 +67,6 @@
     "platform": "",
     "dashboards": "",
     "general": "",
-    "settings": "",
     "notifications": "",
     "resources": "",
     "services": "",

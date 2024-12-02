@@ -1,4 +1,4 @@
-import { TFunction } from 'i18next'
+import i18n, { TFunction } from 'i18next'
 
 export interface RepositoryType {
   id: number
@@ -20,7 +20,13 @@ interface RepoStore {
   setPage: (page: number) => void
 }
 
+export interface TranslationStore {
+  t: TFunction
+  i18n: typeof i18n
+  changeLanguage: (lng: string) => void
+}
+
 export interface RepoListProps {
   useRepoStore: () => RepoStore
-  t: TFunction
+  useTranslationStore: () => TranslationStore
 }

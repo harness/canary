@@ -23,7 +23,7 @@ import {
 import { SkeletonList } from '@harnessio/ui/components'
 import { FormFieldSet, getInitials, ModeToggle, SandboxLayout } from '@harnessio/views'
 
-import { handleLanguageChange } from '../../i18n/i18n'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { LanguagesEnum } from './types'
 
 const profileSchema = z.object({
@@ -94,6 +94,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
       value: LanguagesEnum.SYSTEM
     }
   ]
+  const { changeLanguage: handleLanguageChange } = useTranslationStore()
 
   const {
     register: registerProfile,

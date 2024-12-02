@@ -14,7 +14,8 @@ import { RepoListProps } from './types'
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, t }) => {
+const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, useTranslationStore }) => {
+  const { t } = useTranslationStore()
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)

@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
@@ -10,13 +9,13 @@ import { SandboxRepoListPage } from '@harnessio/ui/views'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-store'
 
 export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
-  const { t } = useTranslation()
 
   /* Query and Pagination */
   const [query] = useDebouncedQueryState('query')
@@ -80,5 +79,5 @@ export default function ReposListPage() {
       </>
     )
 
-  return <SandboxRepoListPage useRepoStore={useRepoStore} t={t} />
+  return <SandboxRepoListPage useRepoStore={useRepoStore} useTranslationStore={useTranslationStore} />
 }

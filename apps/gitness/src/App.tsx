@@ -458,14 +458,6 @@ export default function App() {
           element: <UserManagementPageContainer />
         },
         {
-          path: 'pipelines',
-          element: <UserManagementPageContainer />
-        },
-        {
-          path: 'executions',
-          element: <RepoExecutionListPage />
-        },
-        {
           path: 'users/create',
           element: <CreateNewUserContainer />
         }

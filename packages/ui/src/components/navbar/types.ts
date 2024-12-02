@@ -22,7 +22,7 @@ interface NavbarItemType {
   to: string
 }
 
-enum UserMenuKeys {
+export enum UserMenuKeys {
   ACCOUNT = 'account',
   THEME = 'theme',
   CUSTOM_NAV = 'customNavigation',

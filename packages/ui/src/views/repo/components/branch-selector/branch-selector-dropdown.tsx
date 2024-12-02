@@ -9,8 +9,7 @@ import {
   SearchBox,
   Tabs,
   TabsList,
-  TabsTrigger,
-  Text
+  TabsTrigger
 } from '@/components'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
@@ -75,9 +74,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">
       <div className="px-3 pt-2">
-        <Text className="leading-none" size={2} weight="medium">
-          Switch branches/tags
-        </Text>
+        <span className="leading-none text-14 font-medium">Switch branches/tags</span>
 
         <SearchBox.Root
           className="mt-[18px] w-full"
@@ -134,9 +131,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <Text className="leading-tight text-foreground-2" size={2}>
-              Nothing to show
-            </Text>
+            <span className="leading-tight text-foreground-2 text-14">Nothing to show</span>
           </div>
         )}
 
@@ -157,14 +152,13 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
                   {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
-                  <Text
-                    className={cn('text-foreground-2', {
+                  <span
+                    className={cn('text-foreground-2 truncate', {
                       'text-foreground-1': isSelected
                     })}
-                    truncate
                   >
                     {item.name}
-                  </Text>
+                  </span>
                 </div>
 
                 {isDefault && (
@@ -194,11 +188,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </div>
 
         <DropdownMenuItem className="p-0" asChild>
-          <div className="mt-1 border-t border-borders-4 px-3 py-2">
+          <div className="mt-1 border-t border-borders-1 px-3 py-2">
             <Link to={viewAllUrl}>
-              <Text className="leading-none text-ring transition-colors duration-200 hover:text-foreground-1">
+              <span className="leading-none transition-colors duration-200 hover:text-foreground-1 text-14 font-medium">
                 View all {activeTab === BranchSelectorTab.BRANCHES ? 'branches' : 'tags'}
-              </Text>
+              </span>
             </Link>
           </div>
         </DropdownMenuItem>

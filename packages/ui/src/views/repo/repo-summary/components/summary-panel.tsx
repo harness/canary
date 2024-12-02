@@ -46,31 +46,31 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   return (
     <div className="flex flex-col">
       <div className="flex items-center justify-between">
-        <Text size={4} weight={'medium'} truncate>
-          {title}
-        </Text>
+        <span className="text-18 font-medium truncate">{title}</span>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm_icon">
-              <Icon name="ellipsis" size={12} className="text-primary" />
+            <Button variant="ghost" size="sm_icon" aria-label="More options">
+              <Icon name="more-dots-fill" size={12} className="text-icons-3" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuItem className="flex items-center gap-1.5" onClick={onChangeDescription}>
               <Icon name="plus" size={12} className="text-tertiary-background" />
-              <Text>{description?.length ? 'Edit Description' : 'Add description'}</Text>
+              <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <Spacer size={2} />
-      {description?.length && !isEditingDescription ? <Text className="line-clamp-3">{description}</Text> : <></>}
+      <Spacer size={3} />
+      {description?.length && !isEditingDescription && (
+        <span className="line-clamp-3 py-3 border-y border-borders-4 text-foreground-2 text-14">{description}</span>
+      )}
       {isEditingDescription && (
         <div>
           <Textarea
-            defaultValue={description}
             className="h-28 text-primary"
             value={newDesc}
+            defaultValue={description}
             onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
               setNewDesc(e?.target?.value)
             }}
@@ -95,11 +95,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         </div>
       )}
       <Spacer size={2} />
-      {timestamp && (
-        <Text size={1} color={'tertiaryBackground'}>
-          Created {timestamp}
-        </Text>
-      )}
+      {timestamp && <span className="text-foreground-4 text-13">Created {timestamp}</span>}
       <Spacer size={5} />
       <div className="flex flex-col gap-3">
         {details &&

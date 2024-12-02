@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, ReactNode, useCallback, useMemo, useState } from 'react'
 
 import {
   Command,
@@ -22,7 +22,7 @@ const markedFileClassName = 'w-full text-foreground-8'
  * @param query
  * @param matchIndex
  */
-const getMarkedFileElement = (file: string, query: string, matchIndex: number) => {
+const getMarkedFileElement = (file: string, query: string, matchIndex: number): ReactNode => {
   if (matchIndex === -1) {
     return <Text className={markedFileClassName}>{file}</Text>
   }
@@ -42,7 +42,7 @@ const getMarkedFileElement = (file: string, query: string, matchIndex: number) =
 
 interface FilteredFile {
   file: string
-  element: JSX.Element
+  element: ReactNode
 }
 
 interface SearchFilesProps {

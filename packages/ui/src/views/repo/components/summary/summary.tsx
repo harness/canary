@@ -4,7 +4,6 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  ButtonGroup,
   CommitCopyActions,
   Icon,
   Spacer,
@@ -29,7 +28,7 @@ export const TopTitle = ({ file }: { file: LatestFileTypes }) => {
   const { user, lastCommitMessage } = file
 
   return (
-    <ButtonGroup.Root verticalAlign="center" spacing="2">
+    <div className="flex items-center gap-2">
       <Avatar size="6">
         <AvatarImage src={user?.avatarUrl || ''} />
         <AvatarFallback>
@@ -44,14 +43,14 @@ export const TopTitle = ({ file }: { file: LatestFileTypes }) => {
       <Text size={2} weight="normal" color="primary" className="line-clamp-1">
         {lastCommitMessage}
       </Text>
-    </ButtonGroup.Root>
+    </div>
   )
 }
 
 export const TopDetails = ({ file }: { file: LatestFileTypes }) => {
   const { sha, timestamp } = file
   return (
-    <ButtonGroup.Root verticalAlign="center" spacing="2">
+    <div className="flex items-center gap-2">
       <CommitCopyActions sha={sha || ''} />
       <Text className="text-borders-2" size={2} weight="normal">
         |
@@ -59,7 +58,7 @@ export const TopDetails = ({ file }: { file: LatestFileTypes }) => {
       <Text size={2} weight="normal" color="tertiaryBackground">
         {timestamp}
       </Text>
-    </ButtonGroup.Root>
+    </div>
   )
 }
 
@@ -93,12 +92,7 @@ export const Summary = ({ latestFile, files }: SummaryProps) => {
           {files.map(file => (
             <TableRow key={file.id} onClick={() => navigate(file.path)}>
               <TableCell>
-                <ButtonGroup.Root
-                  direction="horizontal"
-                  verticalAlign="center"
-                  spacing="1.5"
-                  className="cursor-pointer"
-                >
+                <div className="flex cursor-pointer items-center gap-1.5">
                   <Icon
                     className="text-icons-7"
                     name={file.type === SummaryItemType.File ? 'file' : 'folder'}
@@ -107,7 +101,7 @@ export const Summary = ({ latestFile, files }: SummaryProps) => {
                   <Text truncate color="primary">
                     {file.name}
                   </Text>
-                </ButtonGroup.Root>
+                </div>
               </TableCell>
               <TableCell>
                 <Text color="tertiaryBackground" className="line-clamp-1">

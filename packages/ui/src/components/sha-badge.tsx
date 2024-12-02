@@ -21,7 +21,7 @@ interface ContentProps {
 function Root({ ...props }: RootProps) {
   const { children } = props
 
-  return <div className="grid-col-[1fr_auto] grid cursor-pointer grid-flow-col rounded border">{children}</div>
+  return <div className="grid-col-[1fr_auto] grid grid-flow-col rounded border">{children}</div>
 }
 
 function Content({ ...props }: ContentProps) {
@@ -39,13 +39,17 @@ function Content({ ...props }: ContentProps) {
 function Icon({ ...props }: IconProps) {
   const { children, handleClick } = props
 
+  if (!handleClick) {
+    return <div className="flex h-full items-center rounded-r border-l px-1.5 py-0.5">{children}</div>
+  }
+
   return (
     <Button
-      className="flex items-center rounded-r border-l px-1.5 py-0.5 hover:bg-background-3"
+      className="flex h-full items-center rounded-r border-l px-1.5 py-0.5 hover:bg-background-3"
+      tabIndex={0}
+      onClick={() => handleClick()}
       variant="custom"
       borderRadius="none"
-      tabIndex={0}
-      onClick={() => handleClick?.()}
     >
       {children}
     </Button>

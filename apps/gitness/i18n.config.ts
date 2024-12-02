@@ -15,6 +15,8 @@ export default {
 
   keySeparator: '.',
 
+  react: { useSuspense: false },
+
   // Namespace separator
   namespaceSeparator: ':',
 

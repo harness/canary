@@ -1,3 +1,5 @@
+import { TFunction } from 'i18next'
+
 import { Icon } from '../../icon'
 import FilterTrigger from '../filter-trigger'
 import { FilterOption, SortDirection, SortOption } from '../types'
@@ -9,6 +11,7 @@ interface FiltersBarProps {
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
+  t: TFunction
   filterHandlers: Pick<
     UseFiltersReturn,
     | 'activeFilters'
@@ -37,6 +40,7 @@ const FiltersBar = ({
   filterOptions,
   sortOptions,
   sortDirections,
+  t,
   filterHandlers: {
     activeFilters,
     activeSorts,
@@ -115,6 +119,7 @@ const FiltersBar = ({
               searchQueries={searchQueries}
               onSearchChange={handleSearchChange}
               options={filterOptions}
+              t={t}
             />
             <button
               className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"

@@ -2,12 +2,37 @@
   "filter": {
     "defaultLabel": "Filtrer",
     "inputPlaceholder": "Filtrer par...",
-    "buttonLabel": "Réinitialiser les filtres"
+    "buttonLabel": "Réinitialiser les filtres",
+    "is": "est",
+    "isNot": "n'est pas",
+    "isEmpty": "est vide",
+    "isNotEmpty": "n'est pas vide",
+    "isBefore": "est avant",
+    "isAfter": "est après",
+    "isBetween": "est entre",
+    "contains": "contient",
+    "doesNotContain": "ne contient pas",
+    "startsWith": "commence par",
+    "endsWith": "se termine par",
+    "type": "Type",
+    "public": "Public",
+    "private": "Privé",
+    "fork": "Bifurcation",
+    "createdTime": "Date de création",
+    "name": "Nom",
+    "stars": "Étoiles",
+    "ascending": "Croissant",
+    "descending": "Décroissant"
   },
   "sort": {
     "defaultLabel": "Trier",
     "inputPlaceholder": "Trier par...",
-    "buttonLabel": "Réinitialiser le tri"
+    "buttonLabel": "Réinitialiser le tri",
+    "lastUpdated": "Dernière mise à jour",
+    "stars": "Étoiles",
+    "forks": "Bifurcations",
+    "pullRequests": "Demandes de fusion",
+    "title": "Titre"
   },
   "navbar": {
     "pin": "Épingler",
@@ -19,7 +44,7 @@
     "pipelines": "Pipelines",
     "executions": "Exécutions",
     "databases": "Bases de données",
-    "artifacts": "Artifacts",
+    "artifacts": "Artefacts",
     "infrastructure": "Infrastructure",
     "feature-flags": "Indicateurs de fonctionnalités",
     "developer-portal": "Portail développeur",

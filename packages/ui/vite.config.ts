@@ -6,7 +6,15 @@ import dts from 'vite-plugin-dts'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
-const external = ['react', 'react-hook-form', 'react-router-dom', 'react-router', 'react/jsx-runtime']
+const external = [
+  'react',
+  'react-hook-form',
+  'react-router-dom',
+  'react-router',
+  'react/jsx-runtime',
+  'react-i18next',
+  'i18next'
+]
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), dts({ rollupTypes: true }), svgr({ include: '**/*.svg' }), tsConfigPaths()],

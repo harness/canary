@@ -1,11 +1,12 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 
-export const RepoLayout = () => {
+export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) => {
   const location = useLocation()
   const activeTab = location.pathname.split('/').pop() || 'summary'
+  const { t } = useTranslationStore()
 
   return (
     <>
@@ -13,28 +14,28 @@ export const RepoLayout = () => {
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`summary`}>
-              <TabsTrigger value="summary">Summary</TabsTrigger>
+              <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
             </NavLink>
             <NavLink to={`code`}>
-              <TabsTrigger value="code">Files</TabsTrigger>
+              <TabsTrigger value="code">{t('views:repos.files', 'Files')}</TabsTrigger>
             </NavLink>
             <NavLink to={`pipelines`}>
-              <TabsTrigger value="pipelines">Pipelines</TabsTrigger>
+              <TabsTrigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabsTrigger>
             </NavLink>
             <NavLink to={`commits`}>
-              <TabsTrigger value="commits">Commits</TabsTrigger>
+              <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
             </NavLink>
             <NavLink to={`pull-requests`}>
-              <TabsTrigger value="pull-requests">Pull Requests</TabsTrigger>
+              <TabsTrigger value="pull-requests">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
             </NavLink>
             <NavLink to={`webhooks`}>
-              <TabsTrigger value="webhooks">Webhooks</TabsTrigger>
+              <TabsTrigger value="webhooks">{t('views:repos.webhooks', 'Webhooks')}</TabsTrigger>
             </NavLink>
             <NavLink to={`branches`}>
-              <TabsTrigger value="branches">Branches</TabsTrigger>
+              <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>
             </NavLink>
             <NavLink to={`settings`}>
-              <TabsTrigger value="settings">Settings</TabsTrigger>
+              <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>

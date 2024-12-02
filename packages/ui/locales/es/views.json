@@ -1,5 +1,13 @@
 {
   "repos": {
+    "summary": "Summary",
+    "files": "Files",
+    "pipelines": "Pipelines",
+    "commits": "Commits",
+    "pull-requests": "Pull Requests",
+    "webhooks": "Webhooks",
+    "branches": "Branches",
+    "settings": "Settings",
     "repositories": "",
     "search": "",
     "create-repository": ""

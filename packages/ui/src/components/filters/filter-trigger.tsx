@@ -38,19 +38,6 @@ interface FilterTriggerSortProps extends BaseFilterTriggerProps {
 
 type FilterTriggerProps = FilterTriggerFilterProps | FilterTriggerSortProps
 
-// const LABELS = {
-//   filter: {
-//     defaultLabel: 'Filter',
-//     inputPlaceholder: 'Filter by...',
-//     buttonLabel: 'Reset filters'
-//   },
-//   sort: {
-//     defaultLabel: 'Sort',
-//     inputPlaceholder: 'Sort by...',
-//     buttonLabel: 'Reset sort'
-//   }
-// }
-
 const getLabels = (t: TFunction) => ({
   filter: {
     defaultLabel: t('component:filter.defaultLabel', 'Filter'),

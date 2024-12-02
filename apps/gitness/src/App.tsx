@@ -37,6 +37,7 @@ import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
+import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
@@ -68,8 +69,7 @@ import PullRequestConversationPage from './pages/pull-request/pull-request-conve
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
-import RepoCommitsPage from './pages/repo/repo-commits'
-import { CreateRepoV1 } from './pages/repo/repo-create-page'
+import RepoCommitsPageV1 from './pages/repo/repo-commits'
 import { RepoFiles } from './pages/repo/repo-files'
 import { RepoHeader } from './pages/repo/repo-header'
 import { RepoImportContainer } from './pages/repo/repo-import-container'
@@ -158,6 +158,10 @@ export default function App() {
             {
               path: 'summary',
               element: <RepoSummaryPage />
+            },
+            {
+              path: 'commits',
+              element: <RepoCommitsPage />
             },
             {
               path: 'code',
@@ -317,7 +321,7 @@ export default function App() {
                 },
                 {
                   path: 'commits',
-                  element: <RepoCommitsPage />
+                  element: <RepoCommitsPageV1 />
                 },
                 {
                   path: 'pull-requests',

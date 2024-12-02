@@ -19,3 +19,9 @@ export * from '@views/repo/repo.types'
 
 // repo files
 export * from '@views/repo/repo-files'
+
+// repo components
+export * from '@views/repo/components'
+
+// repo commits
+export * from '@views/repo/repo-commits'

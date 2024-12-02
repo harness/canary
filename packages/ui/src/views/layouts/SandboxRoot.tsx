@@ -6,6 +6,7 @@ import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
+import { useLocationChange } from '@hooks/useLocationChange'
 import { TFunction } from 'i18next'
 
 import { SandboxLayout } from '../index'
@@ -15,26 +16,15 @@ import { SandboxLayout } from '../index'
  * using the navbarMenuData variable as a reference.
  */
 const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
-  if (!data.length) return []
-
-  console.log('data fun', data)
+  if (!Array.isArray(data) || !data.length) return []
 
   const navbarMenuData = getNavbarMenuData(t)
 
-  return navbarMenuData.reduce<NavbarItemType[]>((acc, { items }) => {
-    const currentIndex = items.findIndex(item => {
-      console.log('item title', item.title)
-      console.log('item id', item.id)
-      console.log('----------', item.id)
-      return data.includes(item.id)
-    })
-
-    if (currentIndex > -1) {
-      acc.push(items[currentIndex])
-    }
-
-    return acc
+  const routes = navbarMenuData.reduce((acc: NavbarItemType[], item) => {
+    return [...acc, ...item.items]
   }, [])
+
+  return routes.filter(item => data.includes(item.id))
 }
 
 interface SandboxRootProps {
@@ -53,34 +43,6 @@ interface SandboxRootProps {
   t: TFunction
 }
 
-const useLocationHelper = ({
-  t,
-  handleChangeRecentMenu
-}: {
-  t: TFunction
-  handleChangeRecentMenu: (items: NavbarItemType) => void
-}) => {
-  const location = useLocation()
-
-  // generate navbarMenuData with useMemo
-  const navbarMenuData = useMemo(() => getNavbarMenuData(t), [t])
-
-  // generate routes with useMemo
-  const routes = useMemo(() => {
-    return navbarMenuData.reduce((acc: NavbarItemType[], item: MenuGroupType) => {
-      return [...acc, ...item.items]
-    }, [])
-  }, [navbarMenuData])
-
-  useEffect(() => {
-    const currentRoute = routes?.find(route => route.to === location.pathname)
-
-    if (currentRoute) {
-      handleChangeRecentMenu(currentRoute)
-    }
-  }, [location.pathname])
-}
-
 export const SandboxRoot = ({
   currentUser,
   pinnedMenu,
@@ -92,20 +54,24 @@ export const SandboxRoot = ({
 }: SandboxRootProps) => {
   const location = useLocation()
 
-  useLocationHelper({ t, handleChangeRecentMenu })
   const [recentMenuItems, setRecentMenuItems] = useState<NavbarItemType[]>([])
   const [pinnedMenuItems, setPinnedMenuItems] = useState<NavbarItemType[]>([])
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = useMemo(() => {
-    return getPinnedMenuItemsData(t)
-  }, [t])
+  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
 
-  function handleChangeRecentMenu(nextRouteData: NavbarItemType) {
-    changeRecentMenu([nextRouteData.id, ...recentMenu])
-  }
+  const handleChangeRecentMenu = useCallback(
+    (nextRouteData: NavbarItemType) => {
+      if (!pinnedMenu || !pinnedMenu.includes(nextRouteData.id)) {
+        changeRecentMenu([nextRouteData.id, ...(recentMenu ?? [])])
+      }
+    },
+    [changeRecentMenu, pinnedMenu, recentMenu]
+  )
+
+  useLocationChange({ t, onRouteChange: handleChangeRecentMenu })
 
   /**
    * Update pinned manu
@@ -123,10 +89,13 @@ export const SandboxRoot = ({
    * Update recent menu
    */
   useLayoutEffect(() => {
-    console.log('recentMenu in sandbox', recentMenu)
+    const nextRecentItems = getArrayOfNavItems(recentMenu ?? [], t)
+    const filteredRecentItems = nextRecentItems.filter(
+      item => !pinnedMenuItems?.some(pinnedItem => pinnedItem.id === item.id)
+    )
 
-    setRecentMenuItems(getArrayOfNavItems(recentMenu, t))
-  }, [recentMenu, t])
+    setRecentMenuItems(filteredRecentItems)
+  }, [pinnedMenuItems, recentMenu, t])
 
   useEffect(() => {
     console.log('recentMenuItems', recentMenuItems)
@@ -202,9 +171,6 @@ export const SandboxRoot = ({
   const handleSave = (recentItems: NavbarItemType[], currentPinnedItems: NavbarItemType[]) => {
     changeRecentMenu(recentItems.map(item => item.id))
     changePinnedMenu(currentPinnedItems.map(item => item.id))
-    // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-    setRecentMenuItems(recentItems)
-    setPinnedMenuItems(currentPinnedItems)
   }
 
   /**
@@ -220,9 +186,6 @@ export const SandboxRoot = ({
         return acc
       }, [])
       changeRecentMenu(data)
-
-      // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-      setRecentMenuItems(prevState => prevState.filter(prevStateItem => prevStateItem.id !== item.id))
     },
     [recentMenuItems, changeRecentMenu]
   )
@@ -246,9 +209,6 @@ export const SandboxRoot = ({
       }
 
       changePinnedMenu(getPinnedItems(pinnedMenuItems).map(it => it.id))
-
-      // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-      setPinnedMenuItems(prevState => getPinnedItems(prevState))
     },
     [handleRemoveRecentMenuItem, pinnedMenuItems, changePinnedMenu]
   )

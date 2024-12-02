@@ -8,25 +8,25 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     type: MenuGroupTypes.GENERAL,
     items: [
       {
-        id: 0,
+        id: 800,
         iconName: 'repositories-gradient',
         title: t('component:navbar.repositories'),
         description: 'Integrated & familiar git experience.',
         to: '/v1/repos'
       },
       {
-        id: 1,
+        id: 801,
         iconName: 'pipelines-gradient',
         title: t('component:navbar.pipelines'),
         description: 'Up to 4X faster than other solutions.',
         to: '/v1/pipelines'
       },
       {
-        id: 2,
+        id: 802,
         iconName: 'execution-gradient',
         title: t('component:navbar.executions'),
         description: 'Optimize feature rollout velocity.',
-        to: '/executions'
+        to: '/v1/executions'
       },
       {
         id: 3,

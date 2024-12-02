@@ -12,24 +12,26 @@ const RootWrapper = () => {
   const { t } = useTranslation()
 
   // Update type
-  const [recentRoutesIDs, setRecentRoutesIDs] = useState<any[]>([])
+  const [recentRouteIDs, setRecentRouteIDs] = useState<any[]>([])
+  const [pinnedRoutes, setPinnedRoutes] = useState<any[] | null>(null)
 
-  const handleChangeRecentMenu = useCallback(updatedRecentMenuIDs => {
-    setRecentRoutesIDs(_currentRecentIDs => {
-      return [...new Set([...updatedRecentMenuIDs])]
-    })
-  }, [])
-
-  console.log('recentRoutesIDs', recentRoutesIDs)
+  const handleChangeRecentMenu = useCallback(
+    (updatedRecentMenuIDs: Iterable<unknown> | null | undefined) => {
+      setRecentRouteIDs(_currentRecentIDs => {
+        return [...new Set(updatedRecentMenuIDs)]
+      })
+    },
+    [setRecentRouteIDs]
+  )
 
   return (
     <>
       <SandboxRoot
         logout={() => navigate('/logout')}
         currentUser={currentUser}
-        pinnedMenu={null}
-        recentMenu={recentRoutesIDs}
-        changePinnedMenu={_data => {}}
+        pinnedMenu={pinnedRoutes}
+        recentMenu={recentRouteIDs}
+        changePinnedMenu={_data => setPinnedRoutes([...new Set([...(pinnedRoutes ?? []), ..._data])])}
         changeRecentMenu={handleChangeRecentMenu}
         t={t}
       />

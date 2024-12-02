@@ -20,10 +20,17 @@ import { FILE_SEPERATOR, normalizeGitRef } from '../../utils/git-utils.ts'
  */
 export const RepoSidebar = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const fullResourcePath = subResourcePath ? `${resourcePath}/${subResourcePath}` : resourcePath
-  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({ name: gitRef || '', sha: '' })
+  const { spaceId, repoId, gitRef } = useParams<PathParams>()
+  const subCodePath = useParams()['*'] || ''
+
+  // Split the subCodePath into parts to avoid redundant splitting
+  const [rawSubGitRef = '', rawResourcePath = ''] = subCodePath.split('~')
+
+  // Normalize values to remove leading slash if present
+  const subGitRef = rawSubGitRef.endsWith('/') ? rawSubGitRef.slice(0, -1) : rawSubGitRef
+  const fullGitRef = subGitRef ? gitRef + '/' + subGitRef : gitRef
+  const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
+  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({ name: fullGitRef || '', sha: '' })
   const navigate = useNavigate()
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -54,19 +61,18 @@ export const RepoSidebar = () => {
     if (!repository?.body?.default_branch || !branchList.length) {
       return
     }
-
-    if (!gitRef) {
+    if (!fullGitRef) {
       const defaultBranch = branchList.find(branch => branch.default)
       if (defaultBranch) {
         setSelectedBranch(defaultBranch)
       }
     } else {
-      const selectedGitRef = branchList.find(branch => branch.name === gitRef)
+      const selectedGitRef = branchList.find(branch => branch.name === fullGitRef)
       if (selectedGitRef) {
         setSelectedBranch(selectedGitRef)
       }
     }
-  }, [repository?.body?.default_branch, gitRef, branchList])
+  }, [repository?.body?.default_branch, fullGitRef, branchList])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -106,22 +112,22 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${fullResourcePath}`)
+          navigate(`/${spaceId}/repos/${repoId}/code/new/${fullGitRef || selectedBranch.name}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${parentDirPath}`)
+          navigate(`/${spaceId}/repos/${repoId}/code/new/${fullGitRef || selectedBranch.name}/~/${parentDirPath}`)
         }
       })
     } else {
       navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
     }
-  }, [fullResourcePath, gitRef, navigate, repoId, repoRef, selectedBranch.name, spaceId])
+  }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranch.name, spaceId])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
+      navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranch.name, navigate, repoId, spaceId]
+    [fullGitRef, selectedBranch.name, navigate, repoId, spaceId]
   )
 
   // TODO: repoId and spaceId must be defined

@@ -22,10 +22,18 @@ import { splitPathWithParents } from '../../utils/path-utils'
  */
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${gitRef}`
-  const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
+  const { spaceId, repoId, gitRef } = useParams<PathParams>()
+  const subCodePath = useParams()['*'] || ''
+
+  // Split the subCodePath into parts to avoid redundant splitting
+  const [rawSubGitRef = '', rawResourcePath = ''] = subCodePath.split('~')
+
+  // Normalize values to remove slash if present
+  const subGitRef = rawSubGitRef.endsWith('/') ? rawSubGitRef.slice(0, -1) : rawSubGitRef
+  const fullGitRef = subGitRef ? gitRef + '/' + subGitRef : gitRef
+  const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
+
+  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
     {
@@ -36,22 +44,22 @@ export const RepoCode = () => {
   ]
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
-  const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')
+  const [selectedBranch, setSelectedBranch] = useState<string>(fullGitRef || '')
 
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || '') }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   useEffect(() => {
-    if (repository && !gitRef) {
+    if (repository && !fullGitRef) {
       setSelectedBranch(repository?.default_branch || '')
-    } else if (gitRef) {
-      setSelectedBranch(gitRef)
+    } else if (fullGitRef) {
+      setSelectedBranch(fullGitRef)
     }
-  }, [repository, gitRef])
+  }, [repository, fullGitRef])
 
   const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
     if (!repoDetails?.content?.entries?.length) return new Map()
@@ -80,7 +88,7 @@ export const RepoCode = () => {
     setLoading(true)
     if (repoEntryPathToFileTypeMap.size > 0) {
       pathDetails({
-        queryParams: { git_ref: normalizeGitRef(gitRef || '') },
+        queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
         body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
         repo_ref: repoRef
       })
@@ -99,7 +107,7 @@ export const RepoCode = () => {
                     timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
                     user: { name: item?.last_commit?.author?.identity?.name },
                     sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                    path: `/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${item?.path}`
+                    path: `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${item?.path}`
                   }) as RepoFile
               )
             )

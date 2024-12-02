@@ -150,7 +150,7 @@ export default function RepoSummaryPage() {
 
   const buildFilePath = useCallback(
     (itemPath: string | undefined) =>
-      `/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${itemPath}`,
+      `/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch?.name}/~/${itemPath}`,
     [spaceId, repoId, gitRef, selectedBranch]
   )
 
@@ -211,7 +211,7 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch}/~/${filePath}`)
+      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
     },
     [gitRef, selectedBranch, navigate, repoId, spaceId]
   )

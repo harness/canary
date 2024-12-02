@@ -32,9 +32,10 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
  */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const fullResourcePath = subResourcePath ? `${resourcePath}/${subResourcePath}` : resourcePath
+  const { spaceId, repoId } = useParams<PathParams>()
+  const subCodePath = useParams()['*'] || ''
+  const rawResourcePath = subCodePath.split('~')?.[1] ?? ''
+  const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
   const location = useLocation()
   const isFileEditMode = location.pathname.includes('edit')
   const queryClient = useQueryClient()
@@ -87,7 +88,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/spaces/${spaceId}/repos/${repoId}/code/${selectedBranch}/~/${itemPath}`
+      const fullPath = `/${spaceId}/repos/${repoId}/code/${selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
         return (

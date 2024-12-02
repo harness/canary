@@ -24,7 +24,17 @@ const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
     return [...acc, ...item.items]
   }, [])
 
-  return routes.filter(item => data.includes(item.id))
+  const filteredRoutes = []
+
+  // To maintain the same order
+  for (const item of data) {
+    const foundItem = routes.find(route => route.id === item)
+    if (foundItem) {
+      filteredRoutes.push(foundItem)
+    }
+  }
+
+  return filteredRoutes
 }
 
 interface SandboxRootProps {
@@ -65,7 +75,7 @@ export const SandboxRoot = ({
   const handleChangeRecentMenu = useCallback(
     (nextRouteData: NavbarItemType) => {
       if (!pinnedMenu || !pinnedMenu.includes(nextRouteData.id)) {
-        changeRecentMenu([nextRouteData.id, ...(recentMenu ?? [])])
+        changeRecentMenu([...new Set([nextRouteData.id, ...recentMenu])])
       }
     },
     [changeRecentMenu, pinnedMenu, recentMenu]
@@ -185,6 +195,7 @@ export const SandboxRoot = ({
 
         return acc
       }, [])
+
       changeRecentMenu(data)
     },
     [recentMenuItems, changeRecentMenu]

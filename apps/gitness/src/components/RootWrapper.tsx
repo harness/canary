@@ -15,14 +15,13 @@ const RootWrapper = () => {
   const [recentRouteIDs, setRecentRouteIDs] = useState<any[]>([])
   const [pinnedRoutes, setPinnedRoutes] = useState<any[] | null>(null)
 
-  const handleChangeRecentMenu = useCallback(
-    (updatedRecentMenuIDs: Iterable<unknown> | null | undefined) => {
-      setRecentRouteIDs(_currentRecentIDs => {
-        return [...new Set(updatedRecentMenuIDs)]
-      })
-    },
-    [setRecentRouteIDs]
-  )
+  const handleChangeRecentMenu = useCallback((updatedRecentMenuIDs: Iterable<unknown> | null | undefined) => {
+    setRecentRouteIDs([...new Set(updatedRecentMenuIDs)])
+  }, [])
+
+  const handleChangePinnedMenu = useCallback((updatedPinnedMenuIDs: Iterable<unknown> | null | undefined) => {
+    setPinnedRoutes([...new Set(updatedPinnedMenuIDs)])
+  }, [])
 
   return (
     <>
@@ -31,7 +30,7 @@ const RootWrapper = () => {
         currentUser={currentUser}
         pinnedMenu={pinnedRoutes}
         recentMenu={recentRouteIDs}
-        changePinnedMenu={_data => setPinnedRoutes([...new Set([...(pinnedRoutes ?? []), ..._data])])}
+        changePinnedMenu={handleChangePinnedMenu}
         changeRecentMenu={handleChangeRecentMenu}
         t={t}
       />

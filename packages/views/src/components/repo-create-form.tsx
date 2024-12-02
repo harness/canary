@@ -16,10 +16,9 @@ import {
   SelectTrigger,
   SelectValue,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@harnessio/canary'
-import { Alert } from '@harnessio/ui/components'
+import { Alert, Textarea } from '@harnessio/ui/components'
 
 import { FormFieldSet, SandboxLayout } from '..'
 import { MessageTheme } from './form-field-set'

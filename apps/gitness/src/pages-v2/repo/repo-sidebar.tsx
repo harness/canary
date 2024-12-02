@@ -10,10 +10,14 @@ import {
 } from '@harnessio/code-service-client'
 import { BranchSelectorListItem, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
+import Explorer from '../../components/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef } from '../../utils/git-utils.ts'
 
+/**
+ * TODO: This code was migrated from V2 and needs to be refactored.
+ */
 export const RepoSidebar = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
@@ -64,7 +68,7 @@ export const RepoSidebar = () => {
     }
   }, [repository?.body?.default_branch, gitRef, branchList])
 
-  const { data: _repoDetails } = useGetContentQuery({
+  const { data: repoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: {
@@ -85,7 +89,7 @@ export const RepoSidebar = () => {
       const branch = branchList.find(b => b.name === branchName.name)
       if (branch) {
         setSelectedBranch(branch)
-        navigate(`/spaces/${spaceId}/repos/${repoId}/code/${branch.name}`)
+        navigate(`/${spaceId}/repos/${repoId}/code/${branch.name}`)
       }
     },
     [navigate, repoId, spaceId, branchList]
@@ -102,38 +106,48 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${fullResourcePath}`)
+          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${parentDirPath}`)
+          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/${parentDirPath}`)
         }
       })
     } else {
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
+      navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
     }
   }, [fullResourcePath, gitRef, navigate, repoId, repoRef, selectedBranch.name, spaceId])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/spaces/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
+      navigate(`/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
     },
     [gitRef, selectedBranch.name, navigate, repoId, spaceId]
   )
+
+  // TODO: repoId and spaceId must be defined
+  if (!repoId || !spaceId) return <></>
 
   return (
     <>
       <RepoSidebarView
         hasHeader
         hasSubHeader
+        repoId={repoId}
+        spaceId={spaceId}
         selectedBranch={selectedBranch}
         selectBranch={selectBranch}
         branchList={branchList}
         tagList={[]}
+        // TODO: new props navigateToNewFolder
+        navigateToNewFolder={() => {}}
         navigateToNewFile={navigateToNewFile}
         navigateToFile={navigateToFile}
         filesList={filesList}
-        // repoDetails={repoDetails?.body}
-      />
+      >
+        {!!repoDetails?.body?.content?.entries?.length && (
+          <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranch.name} />
+        )}
+      </RepoSidebarView>
       <Outlet />
     </>
   )

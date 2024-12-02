@@ -1,10 +1,10 @@
 import { useEffect } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams } from 'react-router-dom'
 
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { FileExplorer } from '@harnessio/views'
+import { FileExplorer } from '@harnessio/ui/components'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
@@ -27,6 +27,9 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
   })
 }
 
+/**
+ * TODO: This code was migrated from V2 and needs to be refactored.
+ */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, resourcePath } = useParams<PathParams>()
@@ -87,24 +90,14 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       const fullPath = `/spaces/${spaceId}/repos/${repoId}/code/${selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
-        return isFileEditMode && itemPath === fullResourcePath ? (
+        return (
           <FileExplorer.FileItem
             key={itemPath || idx.toString()}
             isActive={itemPath === fullResourcePath}
-            link={fullPath}
+            link={isFileEditMode && itemPath === fullResourcePath ? undefined : fullPath}
           >
             {item.name}
           </FileExplorer.FileItem>
-        ) : (
-          <Link to={fullPath} key={itemPath}>
-            <FileExplorer.FileItem
-              key={itemPath || idx.toString()}
-              isActive={itemPath === fullResourcePath}
-              link={fullPath}
-            >
-              {item.name}
-            </FileExplorer.FileItem>
-          </Link>
         )
       } else {
         return (

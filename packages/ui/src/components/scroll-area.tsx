@@ -6,8 +6,10 @@ import { cn } from '@utils/cn'
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root> & {
+    viewportClassName?: string
+  }
+>(({ className, children, viewportClassName, ...props }, ref) => {
   const [isScrolling, setIsScrolling] = useState(false)
   const timeoutRef = useRef<number | null>(null)
 
@@ -26,8 +28,11 @@ const ScrollArea = React.forwardRef<
   }
 
   return (
-    <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
-      <ScrollAreaPrimitive.Viewport className="size-full rounded-[inherit]" onScroll={handleScroll}>
+    <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden flex-1', className)} {...props}>
+      <ScrollAreaPrimitive.Viewport
+        className={cn('size-full rounded-[inherit] [&>div]:!flex [&>div]:flex-col', viewportClassName)}
+        onScroll={handleScroll}
+      >
         {children}
       </ScrollAreaPrimitive.Viewport>
       <ScrollBar className={isScrolling ? 'opacity-100' : undefined} />

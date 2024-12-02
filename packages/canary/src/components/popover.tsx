@@ -28,4 +28,7 @@ const PopoverContent = React.forwardRef<
 ))
 PopoverContent.displayName = PopoverPrimitive.Content.displayName
 
+/**
+ * @deprecated
+ */
 export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor }

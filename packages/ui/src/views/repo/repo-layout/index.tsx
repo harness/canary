@@ -9,7 +9,7 @@ export const RepoLayout = () => {
 
   return (
     <>
-      <SandboxLayout.SubHeader>
+      <SandboxLayout.SubHeader className="overflow-hidden">
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`summary`}>

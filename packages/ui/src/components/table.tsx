@@ -8,7 +8,7 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom ',
       asStackedList:
-        'rounded-md border [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-primary/[0.02]'
+        'rounded-md border [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-background-2'
     }
   },
   defaultVariants: {
@@ -34,7 +34,9 @@ const Table = React.forwardRef<HTMLTableElement, TableProps>(
 Table.displayName = 'Table'
 
 const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
-  ({ className, ...props }, ref) => <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
+  ({ className, ...props }, ref) => (
+    <thead ref={ref} className={cn('[&_tr]:border-b border-borders-1', className)} {...props} />
+  )
 )
 TableHeader.displayName = 'TableHeader'
 
@@ -56,7 +58,7 @@ const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTML
   ({ className, ...props }, ref) => (
     <tr
       ref={ref}
-      className={cn('hover:bg-muted/50 data-[state=selected]:bg-muted border-b transition-colors', className)}
+      className={cn('hover:bg-background-2 data-[state=selected]:bg-muted border-b transition-colors', className)}
       {...props}
     />
   )
@@ -68,7 +70,7 @@ const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<
     <th
       ref={ref}
       className={cn(
-        'text-muted-foreground h-10 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+        'text-foreground-4 h-11 px-2 text-left align-middle font-medium [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
         className
       )}
       {...props}

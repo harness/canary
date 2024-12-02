@@ -3,7 +3,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { Button, ButtonGroup, Input, Spacer, Text, Textarea } from '@harnessio/canary'
+import { Button, ButtonGroup, Input, Spacer, Text } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
 import { FormFieldSet } from '@harnessio/views'
 
 const formSchema = z.object({

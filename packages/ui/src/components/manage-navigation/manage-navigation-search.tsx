@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 
 import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@/components'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
-import { debounce } from '@utils//debaunce'
 import { cn } from '@utils/cn'
+import { debounce } from 'lodash-es'
 
 const filterItems = (categories: MenuGroupType[], query: string): MenuGroupType[] => {
   if (!query.trim()) return categories
@@ -40,7 +40,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
     [navbarMenuData]
   )
 
-  const handleSearchChange = (event: React.ChangeEvent) => {
+  const handleSearchChange = (event: ChangeEvent) => {
     event.preventDefault()
     const query = (event.target as HTMLInputElement).value
     setSearchQuery(query)

@@ -145,5 +145,12 @@ const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Conte
 )
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
+/**
+ * @deprecated
+ */
 export { Tabs, TabsList, TabsTrigger, TabsContent }
+
+/**
+ * @deprecated
+ */
 export type { TabsListProps, TabsProps }

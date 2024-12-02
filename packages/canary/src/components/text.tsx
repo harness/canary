@@ -131,4 +131,7 @@ const Text = ({
 
 Text.displayName = 'Text'
 
+/**
+ * @deprecated
+ */
 export { Text }

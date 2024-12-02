@@ -2,11 +2,8 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Icon, ShaBadge, Text } from '@/components'
-import { cn } from '@utils/cn'
 import copy from 'clipboard-copy'
 
-//TODO: it need to pass url to copy function in the future, it is used in branch-list & pull-request-commit list
-// not have commit detail page yet
 export const CommitCopyActions = ({ sha }: { sha: string }) => {
   const [copied, setCopied] = useState(false)
 
@@ -19,19 +16,19 @@ export const CommitCopyActions = ({ sha }: { sha: string }) => {
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [copied])
+  }, [copied, sha])
 
   return (
     <ShaBadge.Root>
       <ShaBadge.Content>
         <Link to="#">
-          <Text size={1} className="text-tertiary-background">
+          <Text size={2} className="text-foreground-3">
             {sha.substring(0, 7)}
           </Text>
         </Link>
       </ShaBadge.Content>
       <ShaBadge.Icon handleClick={() => setCopied(true)}>
-        <Icon size={12} name={copied ? 'tick' : 'clone'} className={cn({ 'text-success': copied })} />
+        <Icon size={16} name={copied ? 'tick' : 'clone'} className="text-icons-3" />
       </ShaBadge.Icon>
     </ShaBadge.Root>
   )

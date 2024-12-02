@@ -10,14 +10,14 @@ import {
   useFindRepositoryQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { PathParts, SkeletonList } from '@harnessio/ui/components'
 import { FileProps, NoData, SandboxLayout, Summary, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../RouteDefinitions'
 import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
-import { PathParts, splitPathWithParents } from '../utils/path-utils'
+import { splitPathWithParents } from '../utils/path-utils'
 import FileContentViewer from './FileContentViewer'
 
 export const FileViewer: React.FC = () => {

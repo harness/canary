@@ -16,9 +16,9 @@ import {
   Input,
   StackedList,
   Switch,
-  Text,
-  Textarea
+  Text
 } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
 
 import { FormFieldSet, MessageTheme } from '../../../index'
 import { branchRules } from './repo-branch-settings-rules-data'

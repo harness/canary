@@ -4,12 +4,12 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
+const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
   variants: {
     variant: {
       default: 'h-9 justify-center rounded-lg bg-muted p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-border-background px-8',
+      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-borders-5 px-6',
       // TODO: Refactor - merge tabnav and branch variants
       // tabnav is used in existing components and has conflicting styles
       // Future steps:
@@ -26,18 +26,17 @@ const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
 })
 
 const tabsTriggerVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground-1',
   {
     variants: {
       variant: {
-        default:
-          'rounded-md data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow',
+        default: 'rounded-md data-[state=active]:bg-background data-[state=active]:shadow',
         underline:
-          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary data-[state=active]:text-primary',
+          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
         navigation:
-          'm-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-tertiary-background duration-150 ease-in-out hover:text-primary data-[state=active]:border-tertiary-background data-[state=active]:text-primary',
+          'm-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
         tabnav:
-          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary',
+          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-foreground-1 data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-icons-2',
         branch:
           '-mb-px h-[34px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-4 data-[state=active]:text-foreground-1'
       }
@@ -122,14 +121,24 @@ interface TabsTriggerProps
     VariantProps<typeof tabsTriggerVariants> {}
 
 const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigger>, TabsTriggerProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, children, ...props }, ref) => {
     const context = React.useContext(TabsContext)
     return (
       <TabsPrimitive.Trigger
         ref={ref}
         className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
         {...props}
-      />
+      >
+        {context.variant === 'navigation' && (
+          <span
+            className="absolute -inset-x-[30px] -inset-y-5 hidden group-data-[state=active]:block"
+            style={{
+              background: 'radial-gradient(50% 50% at 50% 50%, rgba(48, 48, 54, 0.3) 0%, rgba(48, 48, 54, 0) 100%)'
+            }}
+          />
+        )}
+        {children}
+      </TabsPrimitive.Trigger>
     )
   }
 )

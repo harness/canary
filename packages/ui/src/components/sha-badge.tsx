@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { Text } from '@/components'
+import { Button, Text } from '@/components'
 
 interface RootProps {
   children: ReactNode
@@ -21,19 +21,15 @@ interface ContentProps {
 function Root({ ...props }: RootProps) {
   const { children } = props
 
-  return (
-    <div className="grid-col-[1fr_auto] grid cursor-pointer grid-flow-col overflow-hidden rounded-md border">
-      {children}
-    </div>
-  )
+  return <div className="grid-col-[1fr_auto] grid grid-flow-col rounded border">{children}</div>
 }
 
 function Content({ ...props }: ContentProps) {
   const { children } = props
 
   return (
-    <div className="flex items-center bg-background px-2 py-0.5 hover:bg-muted/50">
-      <Text size={1} className="text-tertiary-background">
+    <div className="flex items-center rounded-l px-2.5 py-[3px] hover:bg-background-3">
+      <Text size={2} className="text-foreground-3">
         {children}
       </Text>
     </div>
@@ -43,14 +39,20 @@ function Content({ ...props }: ContentProps) {
 function Icon({ ...props }: IconProps) {
   const { children, handleClick } = props
 
+  if (!handleClick) {
+    return <div className="flex h-full items-center rounded-r border-l px-1.5 py-0.5">{children}</div>
+  }
+
   return (
-    <button
-      className="flex items-center border-l bg-background px-1.5 py-0.5 hover:bg-muted/50"
+    <Button
+      className="flex h-full items-center rounded-r border-l px-1.5 py-0.5 hover:bg-background-3"
       tabIndex={0}
-      onClick={handleClick}
+      onClick={() => handleClick()}
+      variant="custom"
+      borderRadius="none"
     >
       {children}
-    </button>
+    </Button>
   )
 }
 

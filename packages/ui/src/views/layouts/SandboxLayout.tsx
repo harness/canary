@@ -1,12 +1,14 @@
+import { CSSProperties, ReactNode } from 'react'
+
 import { cn } from '@utils/cn'
 
 interface ColumnsProps {
-  children: React.ReactNode
+  children: ReactNode
   className?: string
   columnWidths?: string
 }
 
-function Root({ children }: { children: React.ReactNode }) {
+function Root({ children }: { children: ReactNode }) {
   return (
     <main className="h-screen" role="main">
       {children}
@@ -14,13 +16,10 @@ function Root({ children }: { children: React.ReactNode }) {
   )
 }
 
-function LeftPanel({ children, className }: { children: React.ReactNode; className?: string }) {
+function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <nav
-      className={cn(
-        'border-border-background fixed bottom-0 left-0 top-0 z-50 w-[220px] overflow-y-auto border-r',
-        className
-      )}
+      className={cn('border-borders-5 fixed bottom-0 left-0 top-0 z-50 w-[220px] overflow-y-auto border-r', className)}
       aria-label="Left Navigation Panel"
     >
       {children}
@@ -34,7 +33,7 @@ function LeftSubPanel({
   hasSubHeader,
   className
 }: {
-  children: React.ReactNode
+  children: ReactNode
   hasHeader?: boolean
   hasSubHeader?: boolean
   className?: string
@@ -45,7 +44,7 @@ function LeftSubPanel({
   return (
     <section
       className={cn(
-        'border-border-background fixed bottom-0 left-[220px] top-0 z-40 w-[300px] overflow-y-auto border-r',
+        'border-borders-4 fixed bottom-0 left-[220px] top-0 z-40 w-[300px] overflow-y-auto border-r',
         paddingTopClass,
         className
       )}
@@ -56,7 +55,7 @@ function LeftSubPanel({
   )
 }
 
-function Header({ children, className }: { children: React.ReactNode; className?: string }) {
+function Header({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <header className={cn('bg-background fixed left-[220px] right-0 top-0 z-40 h-[55px]', className)} role="banner">
       {children}
@@ -64,9 +63,9 @@ function Header({ children, className }: { children: React.ReactNode; className?
   )
 }
 
-function SubHeader({ children, className }: { children: React.ReactNode; className?: string }) {
+function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <header className={cn('bg-background fixed left-[220px] right-0 top-[55px] z-40 h-[45px]', className)}>
+    <header className={cn('bg-background-1 fixed left-[220px] right-0 top-[58px] z-40 h-[45px]', className)}>
       {children}
     </header>
   )
@@ -79,33 +78,38 @@ function Main({
   hasHeader,
   hasSubHeader,
   hasLeftPanel,
-  hasLeftSubPanel
+  hasLeftSubPanel,
+  leftSubPanelWidth = 300
 }: {
-  children: React.ReactNode
+  children: ReactNode
   fullWidth?: boolean
   className?: string
   hasHeader?: boolean
   hasSubHeader?: boolean
   hasLeftPanel?: boolean
   hasLeftSubPanel?: boolean
+  leftSubPanelWidth?: number
 }) {
   const paddingTopClass =
     hasHeader && hasSubHeader ? `pt-[calc(55px+45px)]` : hasHeader ? 'pt-[55px]' : hasSubHeader ? 'pt-[45px]' : ''
 
-  const paddingLeftClass =
-    hasLeftPanel && hasLeftSubPanel
-      ? 'pl-[calc(220px+300px)]'
-      : hasLeftPanel
-        ? 'pl-[220px]'
-        : hasLeftSubPanel
-          ? 'pl-[300px]'
-          : ''
+  const paddingLeftStyle: CSSProperties = {
+    paddingLeft:
+      hasLeftPanel && hasLeftSubPanel
+        ? `calc(220px + ${leftSubPanelWidth}px)`
+        : hasLeftPanel
+          ? '220px'
+          : hasLeftSubPanel
+            ? `${leftSubPanelWidth}px`
+            : ''
+  }
 
   if (fullWidth) {
     return (
       <section
         aria-label="Main Content"
-        className={cn('h-full', 'bg-background', paddingLeftClass, paddingTopClass, className)}
+        className={cn('h-full', 'bg-background-1', paddingTopClass, className)}
+        style={paddingLeftStyle}
       >
         {children}
       </section>
@@ -113,14 +117,14 @@ function Main({
   }
 
   return (
-    <section aria-label="Main Content" className={cn('h-full', 'bg-background', paddingLeftClass)}>
+    <section className="h-full bg-background-1" aria-label="Main Content" style={paddingLeftStyle}>
       <div className={cn('mx-auto h-full max-w-[1200px]', paddingTopClass, className)}>{children}</div>
     </section>
   )
 }
 
 interface ContentProps {
-  children: React.ReactNode
+  children: ReactNode
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
   className?: string
 }
@@ -128,7 +132,7 @@ interface ContentProps {
 function Content({ children, maxWidth, className }: ContentProps) {
   const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
 
-  return <div className={cn('px-8 py-5 pb-24', widthClass, className)}>{children}</div>
+  return <div className={cn('px-6 py-4 pb-20', widthClass, className)}>{children}</div>
 }
 
 function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: ColumnsProps) {
@@ -144,7 +148,7 @@ function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: Colum
   )
 }
 
-function Column({ children, className }: { children: React.ReactNode; className?: string }) {
+function Column({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className={cn('', className)} role="gridcell">
       {children}

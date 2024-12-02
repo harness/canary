@@ -18,12 +18,9 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem } from '@views/repo'
-import { BranchSelector } from '@views/repo/components'
+import { BranchSelectorListItem, RepoFile, SandboxLayout } from '@/views'
+import { BranchSelector, Summary } from '@/views/repo/components'
 
-import { SandboxLayout } from '../../index'
-import { RepoFile } from '../repo.types'
-import Summary from './components/summary'
 import SummaryPanel from './components/summary-panel'
 
 interface RepoSummaryViewProps {
@@ -62,6 +59,10 @@ interface RepoSummaryViewProps {
     timestamp: string
     sha: string | null
   }
+  onChangeDescription?: () => void
+  isEditingDescription?: boolean
+  setIsEditingDescription: (value: boolean) => void
+  saveDescription: (description: string) => void
 }
 
 export function RepoSummaryView({
@@ -81,7 +82,11 @@ export function RepoSummaryView({
   spaceId,
   repoId,
   gitRef,
-  latestCommitInfo
+  latestCommitInfo,
+  onChangeDescription,
+  isEditingDescription,
+  setIsEditingDescription,
+  saveDescription
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
 
@@ -153,7 +158,7 @@ export function RepoSummaryView({
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
-                  {/*  
+                  {/*
                     TODO: require moving and preparing a component from views
                     <CloneRepoDialog
                       sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
@@ -213,6 +218,10 @@ export function RepoSummaryView({
                 }
               ]}
               description={repository?.description}
+              onChangeDescription={onChangeDescription}
+              isEditingDescription={isEditingDescription}
+              setIsEditingDescription={setIsEditingDescription}
+              saveDescription={saveDescription}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

@@ -176,4 +176,7 @@ function Footer({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root, Header, Content, Group, AccordionGroup, Item, Footer }

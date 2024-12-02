@@ -1,9 +1,8 @@
 import * as React from 'react'
 
 import { Slot } from '@radix-ui/react-slot'
+import { cn } from '@utils/cn'
 import { cva } from 'class-variance-authority'
-
-import { cn } from '../utils/cn'
 
 const textVariants = cva('text-base', {
   variants: {
@@ -46,7 +45,8 @@ const textVariants = cva('text-base', {
       primary: 'text-foreground-1',
       secondary: 'text-foreground-9',
       tertiary: 'text-tertiary',
-      tertiaryBackground: 'text-tertiary-background'
+      tertiaryBackground: 'text-foreground-3',
+      inherit: 'text-inherit'
     },
     wrap: {
       wrap: 'text-wrap',
@@ -99,7 +99,7 @@ interface TextProps extends React.ComponentProps<'span'> {
   /**
    * Sets the color property.
    */
-  color?: 'primary' | 'secondary' | 'tertiary' | 'tertiaryBackground'
+  color?: 'primary' | 'secondary' | 'tertiary' | 'tertiaryBackground' | 'inherit'
 
   /**
    * Controls the wrapping behavior of the text.

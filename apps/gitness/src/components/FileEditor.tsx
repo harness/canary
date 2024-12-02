@@ -16,6 +16,7 @@ import {
   ToggleGroupItem
 } from '@harnessio/canary'
 import { useFindRepositoryQuery, useGetContentQuery } from '@harnessio/code-service-client'
+import { PathParts } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -30,7 +31,7 @@ import {
   normalizeGitRef,
   PLAIN_TEXT
 } from '../utils/git-utils'
-import { PathParts, splitPathWithParents } from '../utils/path-utils'
+import { splitPathWithParents } from '../utils/path-utils'
 import { ExitConfirmDialog } from './ExitConfirmDialog'
 import GitCommitDialog from './GitCommitDialog'
 

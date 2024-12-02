@@ -1,11 +1,15 @@
-import { ForwardedRef, forwardRef, useEffect, type ChangeEventHandler, type InputHTMLAttributes } from 'react'
+import React, {
+  ForwardedRef,
+  forwardRef,
+  useCallback,
+  useEffect,
+  type ChangeEventHandler,
+  type InputHTMLAttributes
+} from 'react'
 
+import { Icon, Input, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
-
-import { Icon } from './icon'
-import { Input } from './input'
-import { Text } from './text'
 
 enum TextSize {
   'text-[12px]' = 0,
@@ -64,11 +68,9 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
   ) => {
     const textSizeClass = TextSize[textSize]
 
-    const handleSearch = () => {
-      if (onSearch) {
-        onSearch()
-      }
-    }
+    const handleSearch = useCallback(() => {
+      onSearch?.()
+    }, [onSearch])
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
@@ -78,9 +80,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     }
 
     const handleFocus = () => {
-      if (onFocus) {
-        onFocus()
-      }
+      onFocus?.()
       if (showOnFocus) {
         handleSearch()
       }

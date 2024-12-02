@@ -35,4 +35,7 @@ const ScrollBar = React.forwardRef<
 ))
 ScrollBar.displayName = ScrollAreaPrimitive.ScrollAreaScrollbar.displayName
 
+/**
+ * @deprecated
+ */
 export { ScrollArea, ScrollBar }

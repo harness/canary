@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { cn } from '@/lib/utils'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
+import { cn } from '@utils/cn'
 
 import { Icon } from './icon'
 
@@ -24,11 +24,21 @@ const AccordionItem = React.forwardRef<React.ElementRef<typeof AccordionPrimitiv
 )
 AccordionItem.displayName = 'AccordionItem'
 
+const ChevronIcon = ({ chevronClassName }: { chevronClassName?: string }) => {
+  return (
+    <Icon
+      name="chevron-down"
+      size={10}
+      className={cn('chevron-down text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClassName)}
+    />
+  )
+}
+
 type AccordionTriggerProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> & {
   hideChevron?: boolean
   leftChevron?: boolean
   rotateChevron?: boolean
-  chevronClass?: string
+  chevronClassName?: string
 }
 
 const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Trigger>, AccordionTriggerProps>(
@@ -38,7 +48,7 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
       hideChevron = false,
       leftChevron = false,
       rotateChevron = 'false',
-      chevronClass = '',
+      chevronClassName = '',
       children,
       ...props
     },
@@ -52,47 +62,44 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
           '[&>svg]:duration-100 [&>svg]:ease-in-out [&>svg]:data-[state=open]:rotate-180',
           {
             'cursor-default': hideChevron,
-            'gap-3': leftChevron,
+            'gap-1.5': leftChevron,
             '[&>svg]:-rotate-90 [&>svg]:data-[state=open]:-rotate-0': rotateChevron
           },
           className
         )}
         {...props}
       >
-        {leftChevron && !hideChevron && (
-          <Icon
-            name="chevron-down"
-            className={cn('chevron-down text-primary h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClass)}
-          />
-        )}
+        {leftChevron && !hideChevron && <ChevronIcon chevronClassName={chevronClassName} />}
         {children}
-        {!leftChevron && !hideChevron && (
-          <Icon
-            name="chevron-down"
-            className={cn('chevron-down text-primary h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClass)}
-          />
-        )}
+        {!leftChevron && !hideChevron && <ChevronIcon chevronClassName={chevronClassName} />}
       </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
   )
 )
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
-    {...props}
-  >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
-  </AccordionPrimitive.Content>
-))
+type AccordionContentProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+
+const AccordionContent = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Content>, AccordionContentProps>(
+  ({ className, children, ...props }, ref) => (
+    <AccordionPrimitive.Content
+      ref={ref}
+      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+      {...props}
+    >
+      <div className={cn('pb-4 pt-0', className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  )
+)
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-/**
- * @deprecated
- */
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export {
+  Accordion,
+  AccordionProps,
+  AccordionItem,
+  AccordionItemProps,
+  AccordionTrigger,
+  AccordionTriggerProps,
+  AccordionContent,
+  AccordionContentProps
+}

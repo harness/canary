@@ -15,7 +15,7 @@ const buttonVariants = cva(
         outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
         tertiary: 'bg-tertiary text-secondary-foreground shadow-sm hover:bg-tertiary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
+        ghost: 'hover:bg-background-12 hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
@@ -33,12 +33,13 @@ const buttonVariants = cva(
       },
       borderRadius: {
         default: '',
-        full: 'rounded-full'
+        full: 'rounded-full',
+        none: 'rounded-none'
       },
       theme: {
         default: '',
         error: 'border-borders-danger/30 bg-background-danger text-error',
-        warning: 'border-borders-warning/30 bg-background-warning text-warning',
+        warning: 'border-borders-danger/30 bg-background-danger text-warning',
         success: 'border-borders-success/30 bg-background-success text-success',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
         primary: 'border-primary-foreground/20 bg-primary text-primary-foreground'

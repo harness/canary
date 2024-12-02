@@ -15,7 +15,7 @@ function Root({ className, children, isSubMenu = false }: NavbarRootProps) {
     <div
       className={cn(
         'border-borders-5 bg-background-7 grid h-screen w-[220px] select-none grid-rows-[auto_1fr_auto] overflow-y-auto border-r',
-        { 'bg-background-7/70 backdrop-blur-[10px]': isSubMenu },
+        { 'bg-background-7/70 backdrop-blur-[20px]': isSubMenu },
         className
       )}
     >

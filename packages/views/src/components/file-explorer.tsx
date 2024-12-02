@@ -80,4 +80,7 @@ function Root({
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root, FileItem, FolderItem }

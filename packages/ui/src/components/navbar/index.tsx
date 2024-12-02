@@ -1,8 +1,9 @@
 import { useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
+import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
+import { isEmpty } from 'lodash-es'
 
 import { adminMenuItem } from './data'
 import { NavbarItem } from './navbar-item'
@@ -40,6 +41,7 @@ export const Navbar = ({
   handleRemoveRecentMenuItem
 }: NavbarProps) => {
   const location = useLocation()
+  const navigate = useNavigate()
 
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
@@ -48,7 +50,7 @@ export const Navbar = ({
   if (!showNavbar) return null
 
   return (
-    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden bg-background max-md:hidden">
+    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden max-md:hidden">
       <NavbarSkeleton.Header>
         <NavbarProjectChooser.Root
           logo={
@@ -61,7 +63,7 @@ export const Navbar = ({
       </NavbarSkeleton.Header>
 
       <NavbarSkeleton.Content className="overflow-hidden">
-        <ScrollArea className="mb-[1.375rem] flex-1">
+        <ScrollArea className="mb-[1.375rem]">
           <Spacer size={1.5} />
           <NavbarSkeleton.Group>
             {pinnedMenuItems.map((item, idx) => (
@@ -108,7 +110,11 @@ export const Navbar = ({
       </NavbarSkeleton.Content>
 
       <NavbarSkeleton.Footer>
-        <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
+        {!isEmpty(currentUser) ? (
+          <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
+        ) : (
+          <Button onClick={() => navigate('/signin')}>Sign In</Button>
+        )}
       </NavbarSkeleton.Footer>
     </NavbarSkeleton.Root>
   )

@@ -60,5 +60,12 @@ function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root, Left, Right, Dropdown }
+
+/**
+ * @deprecated
+ */
 export type { DropdownItemProps, DropdownProps }

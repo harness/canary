@@ -40,7 +40,6 @@ export * from './components/switch'
 export * from './components/table'
 export * from './components/tabs'
 export * from './components/text'
-export * from './components/textarea'
 export * from './components/toast'
 // export * from './components/toaster' Duplicate with sooner! Use sooner's Toaster instead
 export * from './components/toggle-group'

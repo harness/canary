@@ -1,5 +1,6 @@
-import { FormControl, FormField, FormItem, Textarea } from '@harnessio/canary'
+import { FormControl, FormField, FormItem } from '@harnessio/canary'
 import { InputComponent, InputProps, type AnyFormikValue } from '@harnessio/forms'
+import { Textarea } from '@harnessio/ui/components'
 
 import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'

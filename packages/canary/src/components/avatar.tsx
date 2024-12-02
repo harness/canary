@@ -40,4 +40,7 @@ const AvatarFallback = React.forwardRef<
 ))
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName
 
+/**
+ * @deprecated
+ */
 export { Avatar, AvatarImage, AvatarFallback }

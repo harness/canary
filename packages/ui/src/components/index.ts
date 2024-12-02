@@ -43,3 +43,5 @@ export * as NavbarProjectChooser from './navbar-project-chooser'
 export * as StackedList from './stacked-list'
 export * as ButtonGroup from './button-group'
 export * as FileExplorer from './file-explorer'
+
+export type * from './navbar/types'

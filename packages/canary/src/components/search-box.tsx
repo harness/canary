@@ -129,4 +129,7 @@ const Root = ({
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root }

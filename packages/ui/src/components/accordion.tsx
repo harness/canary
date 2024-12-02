@@ -78,18 +78,28 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
 )
 AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName
 
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
-  </AccordionPrimitive.Content>
-))
+type AccordionContentProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
+
+const AccordionContent = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Content>, AccordionContentProps>(
+  ({ className, children, ...props }, ref) => (
+    <AccordionPrimitive.Content
+      ref={ref}
+      className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
+      {...props}
+    >
+      <div className={cn('pb-4 pt-0', className)}>{children}</div>
+    </AccordionPrimitive.Content>
+  )
+)
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }
+export {
+  Accordion,
+  AccordionProps,
+  AccordionItem,
+  AccordionItemProps,
+  AccordionTrigger,
+  AccordionTriggerProps,
+  AccordionContent,
+  AccordionContentProps
+}

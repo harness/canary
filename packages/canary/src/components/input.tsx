@@ -75,5 +75,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ left, right, ...
 })
 Input.displayName = 'Input'
 
+/**
+ * @deprecated
+ */
 export { Input }
+
+/**
+ * @deprecated
+ */
 export type { InputProps }

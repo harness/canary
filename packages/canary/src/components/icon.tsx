@@ -224,4 +224,7 @@ const Icon: React.FC<IconProps> = ({ name, size = 16, height, width, className }
   return <Component width={width || size} height={height || size} className={className} />
 }
 
+/**
+ * @deprecated
+ */
 export { Icon }

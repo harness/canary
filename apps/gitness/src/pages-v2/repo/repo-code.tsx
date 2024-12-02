@@ -56,7 +56,7 @@ export const RepoCode = () => {
   const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
     if (!repoDetails?.content?.entries?.length) return new Map()
 
-    const nonEmptyPathEntries = repoDetails?.content?.entries?.filter(entry => !!entry.path) || []
+    const nonEmptyPathEntries = repoDetails.content.entries.filter(entry => !!entry.path)
 
     return new Map(nonEmptyPathEntries.map((entry: OpenapiContentInfo) => [entry?.path ? entry.path : '', entry.type]))
   }, [repoDetails])

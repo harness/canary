@@ -121,6 +121,9 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 }
 CommandShortcut.displayName = 'CommandShortcut'
 
+/**
+ * @deprecated
+ */
 export {
   Command,
   CommandDialog,

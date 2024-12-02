@@ -79,6 +79,9 @@ const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<'span'
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbElipssis'
 
+/**
+ * @deprecated
+ */
 export {
   Breadcrumb,
   BreadcrumbList,

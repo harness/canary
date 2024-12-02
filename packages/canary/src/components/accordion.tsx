@@ -92,4 +92,7 @@ const AccordionContent = React.forwardRef<
 ))
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
+/**
+ * @deprecated
+ */
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

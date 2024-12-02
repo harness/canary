@@ -105,7 +105,7 @@ const SORT_DIRECTIONS: SortDirection[] = [
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
+const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, t }) => {
   // State for storing saved filters and sorts
   // null means no saved state exists
   const { repositories, totalPages, page, setPage } = useRepoStore()
@@ -458,7 +458,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
         <SandboxLayout.Content>
           <Spacer size={10} />
           <Text size={5} weight={'medium'}>
-            Repositories
+            {t('views:repos.repositories')}
           </Text>
           <Spacer size={6} />
           <ListActions.Root>
@@ -468,12 +468,17 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
                 className="max-w-96"
                 value={value}
                 handleChange={handleInputChange}
-                placeholder="Search"
+                placeholder={t('views:repos.search')}
               />
             </ListActions.Left>
             <ListActions.Right>
-              <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} />
-              <Button variant="default">Create repository</Button>
+              <Filters
+                filterOptions={FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                filterHandlers={filterHandlers}
+                t={t}
+              />
+              <Button variant="default">{t('views:repos.create-repository')}</Button>
             </ListActions.Right>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}

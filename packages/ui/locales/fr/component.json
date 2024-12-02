@@ -1,4 +1,14 @@
 {
+  "filter": {
+    "defaultLabel": "Filtrer",
+    "inputPlaceholder": "Filtrer par...",
+    "buttonLabel": "Réinitialiser les filtres"
+  },
+  "sort": {
+    "defaultLabel": "Trier",
+    "inputPlaceholder": "Trier par...",
+    "buttonLabel": "Réinitialiser le tri"
+  },
   "navbar": {
     "pin": "Épingler",
     "remove": "Supprimer",

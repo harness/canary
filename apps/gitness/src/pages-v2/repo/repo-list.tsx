@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
@@ -15,6 +16,7 @@ import { useRepoStore } from './stores/repo-store'
 export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
+  const { t } = useTranslation()
 
   /* Query and Pagination */
   const [query] = useDebouncedQueryState('query')
@@ -78,5 +80,5 @@ export default function ReposListPage() {
       </>
     )
 
-  return <SandboxRepoListPage useRepoStore={useRepoStore} />
+  return <SandboxRepoListPage useRepoStore={useRepoStore} t={t} />
 }

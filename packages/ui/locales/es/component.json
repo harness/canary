@@ -1,4 +1,14 @@
 {
+  "filter": {
+    "defaultLabel": "Filter",
+    "inputPlaceholder": "Filter by...",
+    "buttonLabel": "Reset filters"
+  },
+  "sort": {
+    "defaultLabel": "Sort",
+    "inputPlaceholder": "Sort by...",
+    "buttonLabel": "Reset sort"
+  },
   "navbar": {
     "pin": "",
     "remove": "",

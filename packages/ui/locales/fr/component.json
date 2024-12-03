@@ -96,5 +96,9 @@
     "policies": "Politiques",
     "freeze-windows": "Fenêtres de gel",
     "external-tickets": "Tickets externes"
+  },
+  "searchFile": {
+    "input": "Rechercher des fichiers...",
+    "noFile": "Aucun fichier trouvé."
   }
 }

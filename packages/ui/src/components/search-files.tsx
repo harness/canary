@@ -12,6 +12,7 @@ import {
   SearchBox,
   Text
 } from '@/components'
+import { TranslationStore } from '@/views'
 import { debounce } from 'lodash-es'
 
 const markedFileClassName = 'w-full text-foreground-8'
@@ -48,12 +49,14 @@ interface FilteredFile {
 interface SearchFilesProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
+  useTranslationStore: () => TranslationStore
 }
 
-export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => {
+export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: SearchFilesProps) => {
   const [isOpen, setIsOpen] = useState(false)
   const [query, setQuery] = useState('')
   const [filteredFiles, setFilteredFiles] = useState<FilteredFile[]>([])
+  const { t } = useTranslationStore()
 
   /**
    * Debounced function for filtering files
@@ -101,7 +104,12 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverAnchor asChild>
         <div>
-          <SearchBox.Root width="full" placeholder="Search files..." handleChange={handleInputChange} value={query} />
+          <SearchBox.Root
+            width="full"
+            placeholder={t('component:searchFile.input', 'Search files...')}
+            handleChange={handleInputChange}
+            value={query}
+          />
         </div>
       </PopoverAnchor>
       <PopoverContent
@@ -113,7 +121,7 @@ export const SearchFiles = ({ navigateToFile, filesList }: SearchFilesProps) => 
       >
         <Command>
           <CommandList heightClassName="max-h-60">
-            <CommandEmpty>No file found.</CommandEmpty>
+            <CommandEmpty>{t('component:searchFile.noFile', 'No file found.')}</CommandEmpty>
             {!!filteredFiles.length && (
               <CommandGroup>
                 {filteredFiles?.map(({ file, element }) => (

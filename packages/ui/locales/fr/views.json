@@ -10,6 +10,9 @@
     "settings": "Paramètres",
     "repositories": "Dépôts",
     "search": "Rechercher",
-    "create-repository": "Créer un dépôt"
+    "create-repository": "Créer un dépôt",
+    "add-file": "Ajouter un fichier",
+    "createNewFile": "+ Créer un nouveau fichier",
+    "readme": "LISEZ-MOI.md"
   }
 }

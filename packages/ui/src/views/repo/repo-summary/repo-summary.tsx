@@ -18,7 +18,7 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem, RepoFile, SandboxLayout } from '@/views'
+import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelector, Summary } from '@/views/repo/components'
 
 import SummaryPanel from './components/summary-panel'
@@ -63,6 +63,7 @@ interface RepoSummaryViewProps {
   isEditingDescription?: boolean
   setIsEditingDescription: (value: boolean) => void
   saveDescription: (description: string) => void
+  useTranslationStore: () => TranslationStore
 }
 
 export function RepoSummaryView({
@@ -86,9 +87,11 @@ export function RepoSummaryView({
   onChangeDescription,
   isEditingDescription,
   setIsEditingDescription,
-  saveDescription
+  saveDescription,
+  useTranslationStore
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
+  const { t } = useTranslationStore()
 
   const renderListContent = () => {
     if (loading) return <SkeletonList />
@@ -135,7 +138,11 @@ export function RepoSummaryView({
                     repoId={repoId}
                     spaceId={spaceId}
                   />
-                  <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
+                  <SearchFiles
+                    navigateToFile={navigateToFile}
+                    filesList={filesList}
+                    useTranslationStore={useTranslationStore}
+                  />
                 </ButtonGroup.Root>
               </ListActions.Left>
               <ListActions.Right>
@@ -143,7 +150,7 @@ export function RepoSummaryView({
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button className="gap-x-2" variant="outline">
-                        Add file
+                        {t('views:repos.add-file', 'Add file')}
                         <Icon name="chevron-down" size={11} className="chevron-down" />
                       </Button>
                     </DropdownMenuTrigger>
@@ -154,7 +161,7 @@ export function RepoSummaryView({
                           navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
                         }}
                       >
-                        + Create New File
+                        {t('views:repos.createNewFile', '+ Create New File')}
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -174,7 +181,9 @@ export function RepoSummaryView({
             <Spacer size={5} />
             <StackedList.Root>
               <StackedList.Item isHeader disableHover>
-                <StackedList.Field title={<Text color="tertiaryBackground">README.md</Text>} />
+                <StackedList.Field
+                  title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
+                />
                 {/* TODO: add component and file editing logic */}
                 <StackedList.Field right />
               </StackedList.Item>

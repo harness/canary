@@ -12,6 +12,7 @@ import { BranchSelectorListItem, RepoSidebar as RepoSidebarView } from '@harness
 
 import Explorer from '../../components/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
+import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef } from '../../utils/git-utils.ts'
 
@@ -144,6 +145,7 @@ export const RepoSidebar = () => {
         selectBranch={selectBranch}
         branchList={branchList}
         tagList={[]}
+        useTranslationStore={useTranslationStore}
         // TODO: new props navigateToNewFolder
         navigateToNewFolder={() => {}}
         navigateToNewFile={navigateToNewFile}

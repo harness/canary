@@ -10,6 +10,9 @@
     "settings": "Settings",
     "repositories": "",
     "search": "",
-    "create-repository": ""
+    "create-repository": "",
+    "add-file": "Add file",
+    "createNewFile": "+ Create New File",
+    "readme": "README.md"
   }
 }

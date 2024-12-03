@@ -21,17 +21,6 @@ enum BranchSelectorTab {
   TAGS = 'tags'
 }
 
-// const BRANCH_SELECTOR_LABELS = {
-//   [BranchSelectorTab.BRANCHES]: {
-//     label: 'Branches',
-//     searchPlaceholder: 'Find a branch'
-//   },
-//   [BranchSelectorTab.TAGS]: {
-//     label: 'Tags',
-//     searchPlaceholder: 'Find a tag'
-//   }
-// } as const
-
 export const getBranchSelectorLabels = (t: TFunction) => ({
   [BranchSelectorTab.BRANCHES]: {
     label: t('views:repos.branches', 'Branches'),

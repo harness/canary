@@ -23,3 +23,5 @@ export interface TypesDiffStats {
   deletions?: number | null
   files_changed?: number | null
 }
+
+export type * from '@components/navbar/types'

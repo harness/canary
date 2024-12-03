@@ -5,16 +5,16 @@ export enum MenuGroupTypes {
   SETTINGS = 'settings'
 }
 
-export interface MenuGroupType {
+interface MenuGroupType {
   groupId: number | string
   title: string
   type: MenuGroupTypes
   items: NavbarItemType[]
 }
 
-export type NavbarItemIdType = number | string
+type NavbarItemIdType = number | string
 
-export interface NavbarItemType {
+interface NavbarItemType {
   id: NavbarItemIdType
   title: string
   iconName: IconProps['name']
@@ -30,10 +30,12 @@ export enum UserMenuKeys {
   LOG_OUT = 'logOut'
 }
 
-export interface UserMenuItemType {
+interface UserMenuItemType {
   key: UserMenuKeys
   iconName: IconProps['name']
   title: string
   to: string | null
   isSeparated: boolean
 }
+
+export type { MenuGroupType, NavbarItemType, UserMenuItemType, NavbarItemIdType }

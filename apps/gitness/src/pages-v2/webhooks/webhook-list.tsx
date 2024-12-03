@@ -3,21 +3,27 @@ import { useEffect } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListRepoWebhooksQuery } from '@harnessio/code-service-client'
-import { SandboxWebhookListPage } from '@harnessio/ui/views'
+import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setWebhooks, page, setPage } = useWebhookStore()
+  const { setWebhooks, page, setPage, setWebhookLoading, setError } = useWebhookStore()
 
   /* Query and Pagination */
   const [query] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { data: { body: webhookData, headers } = {} } = useListRepoWebhooksQuery(
+  const {
+    data: { body: webhookData, headers } = {},
+    isFetching,
+    isError,
+    error
+  } = useListRepoWebhooksQuery(
     {
       queryParams: { page, query },
       repo_ref: repoRef
@@ -54,13 +60,25 @@ export default function WebhookListPage() {
   useEffect(() => {
     if (webhookData) {
       setWebhooks(webhookData, headers)
+      setWebhookLoading(false)
     }
   }, [webhookData, headers, setWebhooks])
+  useEffect(() => {
+    if (isFetching) {
+      setWebhookLoading(isFetching)
+    }
+  }, [isFetching, setWebhookLoading])
+
+  useEffect(() => {
+    if (isError && error !== undefined) {
+      setError(getErrorMessage(error))
+    }
+  }, [isError, setError, error])
 
   useEffect(() => {
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
-  return <SandboxWebhookListPage useWebhookStore={useWebhookStore} />
+  return <RepoWebhookListPage useWebhookStore={useWebhookStore} />
 }

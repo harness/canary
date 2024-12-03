@@ -1,26 +1,19 @@
 import { create } from 'zustand'
 
-import { ListRepoWebhooksOkResponse } from '@harnessio/code-service-client'
-import { WebhookType } from '@harnessio/ui/views'
+import { WebhookStore } from '@harnessio/ui/views'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
 
-interface WebhookStore {
-  webhooks: WebhookType[] | null
-  totalPages: number
-  setWebhooks: (data: ListRepoWebhooksOkResponse, headers: Headers | undefined) => void
-  page: number
-  setPage: (page: number) => void
-}
-
 export const useWebhookStore = create<WebhookStore>(set => ({
   webhooks: null,
   totalPages: 0,
-
+  error: undefined,
+  setError: error => set({ error }),
   page: 1,
   setPage: page => set({ page }),
-
+  webhookLoading: false,
+  setWebhookLoading: (webhookLoading: boolean) => set({ webhookLoading }),
   setWebhooks: (data, headers) => {
     const transformedWebhooks = data.map(webhook => ({
       id: webhook.id || 0,

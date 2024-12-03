@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Filters,
@@ -16,8 +16,9 @@ import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } fro
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
 
-import { BASIC_CONDITIONS, RANGE_CONDITIONS, SandboxLayout, WebhookListProps } from '../../index'
+import { BASIC_CONDITIONS, RANGE_CONDITIONS, SandboxLayout } from '../../index'
 import { RepoWebhookList } from './repo-webhook-list'
+import { WebhookListProps } from './types'
 
 const TEXT_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },
@@ -84,10 +85,11 @@ const SORT_DIRECTIONS: SortDirection[] = [
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore }) => {
+const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore }) => {
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { webhooks, totalPages, page, setPage } = useWebhookStore()
+  const navigate = useNavigate()
+  const { webhooks, totalPages, page, setPage, webhookLoading } = useWebhookStore()
 
   const [savedState, setSavedState] = useState<{
     filters: FilterValue[]
@@ -97,6 +99,9 @@ const SandboxWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore })
   // true when current filters/sorts differ from saved state
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
+  const handleNavigate = () => {
+    navigate('create')
+  }
   /**
    * Load previously saved filters from localStorage when component mounts
    * This restores the last saved filter configuration for this page
@@ -408,7 +413,9 @@ const SandboxWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore })
             </ListActions.Left>
             <ListActions.Right>
               <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} />
-              <Button variant="default">New webhook</Button>
+              <Button variant="default" asChild>
+                <Link to="create">New webhook</Link>
+              </Button>
             </ListActions.Right>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
@@ -420,12 +427,14 @@ const SandboxWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore })
           />
           <Spacer size={5} />
           <RepoWebhookList
+            loading={webhookLoading}
             webhooks={webhooksWithFormattedDates}
             LinkComponent={LinkComponent}
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
             query={query ?? ''}
             handleResetQuery={handleResetQuery}
+            handleNavigate={handleNavigate}
           />
           <Spacer size={8} />
           <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} />
@@ -435,4 +444,4 @@ const SandboxWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore })
   )
 }
 
-export { SandboxWebhookListPage }
+export { RepoWebhookListPage }

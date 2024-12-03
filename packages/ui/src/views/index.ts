@@ -11,4 +11,4 @@ export * from './empty-page'
 export * from './pull-request/pull-request-list-page'
 
 //Webhook
-export * from './webhook'
+export * from './webhooks'

@@ -19,6 +19,7 @@ import { BranchSelectorListItem, RepoFile, RepoSummaryView } from '@harnessio/ui
 import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
@@ -260,6 +261,7 @@ export default function RepoSummaryPage() {
         isEditingDescription={isEditingDescription}
         setIsEditingDescription={setIsEditingDescription}
         saveDescription={saveDescription}
+        useTranslationStore={useTranslationStore}
       />
       {createdTokenData && (
         <TokenSuccessDialog

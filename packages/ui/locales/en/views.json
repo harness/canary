@@ -1,15 +1,28 @@
 {
   "repos": {
+    "branches": "Branches",
+    "findBranch": "Find a branch",
+    "tags": "Tags",
+    "findTag": "Find a tag",
+    "default": "Default",
+    "viewAll": "View all {{type}}",
+    "noFile": "No files available",
+    "name": "Name",
+    "lastCommit": "Last commit message",
+    "date": "Date",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
     "commits": "Commits",
     "pull-requests": "Pull Requests",
     "webhooks": "Webhooks",
-    "branches": "Branches",
     "settings": "Settings",
     "repositories": "Repositories",
     "search": "Search",
-    "create-repository": "Create repository"
+    "create-repository": "Create repository",
+    "add-file": "Add file",
+    "createNewFile": "+ Create New File",
+    "readme": "README.md",
+    "openPullReq": "Open pull requests"
   }
 }

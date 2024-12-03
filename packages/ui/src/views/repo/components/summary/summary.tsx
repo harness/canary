@@ -16,12 +16,13 @@ import {
   TableRow,
   Text
 } from '@/components'
-import { LatestFileTypes, RepoFile, SummaryItemType } from '@/views'
+import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 
 interface SummaryProps {
   latestFile: LatestFileTypes
   files: RepoFile[]
+  useTranslationStore: () => TranslationStore
 }
 
 export const TopTitle = ({ file }: { file: LatestFileTypes }) => {
@@ -62,8 +63,9 @@ export const TopDetails = ({ file }: { file: LatestFileTypes }) => {
   )
 }
 
-export const Summary = ({ latestFile, files }: SummaryProps) => {
+export const Summary = ({ latestFile, files, useTranslationStore }: SummaryProps) => {
   const navigate = useNavigate()
+  const { t } = useTranslationStore()
 
   return (
     <>
@@ -75,7 +77,7 @@ export const Summary = ({ latestFile, files }: SummaryProps) => {
               <StackedList.Field right title={<TopDetails file={latestFile} />} />
             </>
           ) : (
-            <Text>No files available</Text>
+            <Text>{t('views:repos.noFile', 'No files available')}</Text>
           )}
         </StackedList.Item>
       </StackedList.Root>
@@ -83,9 +85,9 @@ export const Summary = ({ latestFile, files }: SummaryProps) => {
       <Table variant="asStackedList">
         <TableHeader>
           <TableRow>
-            <TableHead>Name</TableHead>
-            <TableHead>Last commit message</TableHead>
-            <TableHead className="text-right">Date</TableHead>
+            <TableHead>{t('views:repos.name', 'Name')}</TableHead>
+            <TableHead>{t('views:repos.lastCommit', 'Last commit message')}</TableHead>
+            <TableHead className="text-right">{t('views:repos.date', 'Date')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

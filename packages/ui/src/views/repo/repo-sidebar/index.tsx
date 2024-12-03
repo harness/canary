@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorListItem } from '@views/repo'
 import { BranchSelector } from '@views/repo/components'
 
@@ -19,6 +19,7 @@ interface RepoSidebarProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
+  useTranslationStore: () => TranslationStore
 }
 
 export const RepoSidebar = ({
@@ -34,7 +35,8 @@ export const RepoSidebar = ({
   navigateToNewFolder,
   navigateToFile,
   filesList,
-  children
+  children,
+  useTranslationStore
 }: RepoSidebarProps) => {
   return (
     <SandboxLayout.LeftSubPanel className="w-[248px]" hasHeader={hasHeader} hasSubHeader={hasSubHeader}>
@@ -49,6 +51,7 @@ export const RepoSidebar = ({
                 onSelectBranch={selectBranch}
                 repoId={repoId}
                 spaceId={spaceId}
+                useTranslationStore={useTranslationStore}
               />
             )}
             <ButtonGroup.Root spacing="0" className="h-full overflow-hidden rounded shadow-as-border shadow-borders-2">
@@ -73,7 +76,11 @@ export const RepoSidebar = ({
             </ButtonGroup.Root>
           </div>
           <div className="pr-5">
-            <SearchFiles navigateToFile={navigateToFile} filesList={filesList} />
+            <SearchFiles
+              navigateToFile={navigateToFile}
+              filesList={filesList}
+              useTranslationStore={useTranslationStore}
+            />
           </div>
           <ScrollArea className="pr-5">
             {children}

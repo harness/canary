@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
+import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 
 import { BranchSelectorDropdown, type BranchSelectorDropdownProps } from './branch-selector-dropdown'
@@ -9,6 +10,7 @@ interface BranchSelectorProps extends BranchSelectorDropdownProps {
   size?: 'default' | 'sm'
   prefix?: string
   className?: string
+  useTranslationStore: () => TranslationStore
 }
 
 export const BranchSelector: FC<BranchSelectorProps> = ({
@@ -20,7 +22,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   prefix,
   className,
   repoId,
-  spaceId
+  spaceId,
+  useTranslationStore
 }) => {
   const isTag = tagList.some(tag => tag.name === selectedBranch.name && tag.sha === selectedBranch.sha)
 
@@ -51,6 +54,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         onSelectBranch={onSelectBranch}
         repoId={repoId}
         spaceId={spaceId}
+        useTranslationStore={useTranslationStore}
       />
     </DropdownMenu>
   )

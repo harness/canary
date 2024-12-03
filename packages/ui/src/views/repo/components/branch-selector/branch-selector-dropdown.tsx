@@ -11,24 +11,26 @@ import {
   TabsList,
   TabsTrigger
 } from '@/components'
+import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
+import { TFunction } from 'i18next'
 
 enum BranchSelectorTab {
   BRANCHES = 'branches',
   TAGS = 'tags'
 }
 
-const BRANCH_SELECTOR_LABELS = {
+export const getBranchSelectorLabels = (t: TFunction) => ({
   [BranchSelectorTab.BRANCHES]: {
-    label: 'Branches',
-    searchPlaceholder: 'Find a branch'
+    label: t('views:repos.branches', 'Branches'),
+    searchPlaceholder: t('views:repos.findBranch', 'Find a branch')
   },
   [BranchSelectorTab.TAGS]: {
-    label: 'Tags',
-    searchPlaceholder: 'Find a tag'
+    label: t('views:repos.tags', 'Tags'),
+    searchPlaceholder: t('views:repos.findTag', 'Find a tag')
   }
-} as const
+})
 
 export interface BranchSelectorDropdownProps {
   selectedBranch: BranchSelectorListItem
@@ -37,6 +39,7 @@ export interface BranchSelectorDropdownProps {
   onSelectBranch: (branch: BranchSelectorListItem) => void
   repoId: string
   spaceId: string
+  useTranslationStore: () => TranslationStore
 }
 
 const filterItems = (items: BranchSelectorListItem[], query: string) => {
@@ -51,10 +54,13 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   tagList = [],
   onSelectBranch,
   repoId,
-  spaceId
+  spaceId,
+  useTranslationStore
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchQuery, setSearchQuery] = useState('')
+  const { t } = useTranslationStore()
+  const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 
   const filteredItems = useMemo(() => {
     const sourceItems = activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
@@ -107,7 +113,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               value="branches"
               onClick={e => e.stopPropagation()}
             >
-              Branches
+              {t('views:repos.branches', 'Branches')}
             </TabsTrigger>
           </DropdownMenuItem>
           <DropdownMenuItem
@@ -122,7 +128,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               value="tags"
               onClick={e => e.stopPropagation()}
             >
-              Tags
+              {t('views:repos.tags', 'Tags')}
             </TabsTrigger>
           </DropdownMenuItem>
         </TabsList>
@@ -179,7 +185,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                     borderRadius="full"
                     disableHover
                   >
-                    Default
+                    {t('views:repos.default', 'Default')}
                   </Badge>
                 )}
               </DropdownMenuItem>
@@ -191,7 +197,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           <div className="mt-1 border-t border-borders-1 px-3 py-2">
             <Link to={viewAllUrl}>
               <span className="leading-none transition-colors duration-200 hover:text-foreground-1 text-14 font-medium">
-                View all {activeTab === BranchSelectorTab.BRANCHES ? 'branches' : 'tags'}
+                {t('views:repos.viewAll', 'View all {{type}}', {
+                  type: activeTab === BranchSelectorTab.BRANCHES ? t('views:repos.branches') : t('views:repos.tags')
+                })}
               </span>
             </Link>
           </div>

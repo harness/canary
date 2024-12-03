@@ -106,6 +106,7 @@ export function RepoSummaryView({
             sha: latestCommitInfo?.sha || ''
           }}
           files={files}
+          useTranslationStore={useTranslationStore}
         />
       )
     }
@@ -137,6 +138,7 @@ export function RepoSummaryView({
                     onSelectBranch={selectBranch}
                     repoId={repoId}
                     spaceId={spaceId}
+                    useTranslationStore={useTranslationStore}
                   />
                   <SearchFiles
                     navigateToFile={navigateToFile}
@@ -199,29 +201,29 @@ export function RepoSummaryView({
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-0">
             <SummaryPanel
-              title="Summary"
+              title={t('views:repos.summary', 'Summary')}
               details={[
                 {
                   id: '0',
-                  name: 'Commits',
+                  name: t('views:repos.commits', 'Commits'),
                   count: default_branch_commit_count,
                   iconName: 'tube-sign'
                 },
                 {
                   id: '1',
-                  name: 'Branches',
+                  name: t('views:repos.branches', 'Branches'),
                   count: branch_count,
                   iconName: 'branch'
                 },
                 {
                   id: '2',
-                  name: 'Tags',
+                  name: t('views:repos.tags', 'Tags'),
                   count: tag_count,
                   iconName: 'tag'
                 },
                 {
                   id: '3',
-                  name: 'Open pull requests',
+                  name: t('views:repos.openPullReq', 'Open pull requests'),
                   count: pull_req_summary?.open_count || 0,
                   iconName: 'open-pr'
                 }

@@ -12,6 +12,7 @@ import {
 import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
@@ -143,6 +144,7 @@ export const RepoCode = () => {
       isDir={repoDetails?.type === 'dir'}
       isShowSummary={repoEntryPathToFileTypeMap.size > 0}
       latestFile={latestFiles}
+      useTranslationStore={useTranslationStore}
     >
       <>
         {/*

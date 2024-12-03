@@ -51,6 +51,7 @@ export const RepoSidebar = ({
                 onSelectBranch={selectBranch}
                 repoId={repoId}
                 spaceId={spaceId}
+                useTranslationStore={useTranslationStore}
               />
             )}
             <ButtonGroup.Root spacing="0" className="h-full overflow-hidden rounded shadow-as-border shadow-borders-2">

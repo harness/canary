@@ -1,7 +1,7 @@
-import { ReactNode, useMemo } from 'react'
+import { ReactNode, useMemo, useTransition } from 'react'
 
 import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
-import { LatestFileTypes, RepoFile, SandboxLayout } from '@/views'
+import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { Summary } from '@/views/repo/components'
 
 interface RepoFilesProps {
@@ -12,6 +12,7 @@ interface RepoFilesProps {
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
+  useTranslationStore: () => TranslationStore
 }
 
 export const RepoFiles = ({
@@ -21,14 +22,16 @@ export const RepoFiles = ({
   isDir,
   isShowSummary,
   latestFile,
-  children
+  children,
+  useTranslationStore
 }: RepoFilesProps) => {
   const content = useMemo(() => {
     if (!isDir) return children
 
     if (loading) return <SkeletonList />
 
-    if (isShowSummary && files.length) return <Summary latestFile={latestFile} files={files} />
+    if (isShowSummary && files.length)
+      return <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
 
     return (
       <NoData

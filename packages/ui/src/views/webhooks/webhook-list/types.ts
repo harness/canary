@@ -1,3 +1,5 @@
+import { TranslationStore } from '@views/repo'
+
 export interface WebhookType {
   id: number
   name: string
@@ -61,4 +63,5 @@ export declare type EnumWebhookTrigger =
 
 export interface WebhookListProps {
   useWebhookStore: () => WebhookStore
+  useTranslationStore: () => TranslationStore
 }

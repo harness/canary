@@ -15,11 +15,26 @@ import useFilters from '@components/filters/use-filters'
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
-import { BASIC_CONDITIONS, RANGE_CONDITIONS } from 'dist/views'
 
 import { SandboxLayout } from '../../index'
 import { RepoWebhookList } from './repo-webhook-list'
 import { WebhookListProps } from './types'
+
+const BASIC_CONDITIONS: FilterCondition[] = [
+  { label: 'is', value: 'is' },
+  { label: 'is not', value: 'is_not' },
+  { label: 'is empty', value: 'is_empty' },
+  { label: 'is not empty', value: 'is_not_empty' }
+]
+
+const RANGE_CONDITIONS: FilterCondition[] = [
+  { label: 'is', value: 'is' },
+  { label: 'is before', value: 'is_before' },
+  { label: 'is after', value: 'is_after' },
+  { label: 'is between', value: 'is_between' },
+  { label: 'is empty', value: 'is_empty' },
+  { label: 'is not empty', value: 'is_not_empty' }
+]
 
 const TEXT_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },
@@ -86,7 +101,9 @@ const SORT_DIRECTIONS: SortDirection[] = [
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore }) => {
+const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useTranslationStore }) => {
+  const { t } = useTranslationStore()
+
   // State for storing saved filters and sorts
   // null means no saved state exists
   const navigate = useNavigate()
@@ -413,7 +430,12 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore }) =>
               />
             </ListActions.Left>
             <ListActions.Right>
-              <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} />
+              <Filters
+                t={t}
+                filterOptions={FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                filterHandlers={filterHandlers}
+              />
               <Button variant="default" asChild>
                 <Link to="create">New webhook</Link>
               </Button>
@@ -421,6 +443,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore }) =>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
           <FiltersBar
+            t={t}
             filterOptions={FILTER_OPTIONS}
             sortOptions={SORT_OPTIONS}
             sortDirections={SORT_DIRECTIONS}

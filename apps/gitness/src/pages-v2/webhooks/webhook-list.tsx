@@ -7,6 +7,7 @@ import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
@@ -80,5 +81,5 @@ export default function WebhookListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
-  return <RepoWebhookListPage useWebhookStore={useWebhookStore} />
+  return <RepoWebhookListPage useWebhookStore={useWebhookStore} useTranslationStore={useTranslationStore} />
 }

@@ -1,43 +1,47 @@
+import { TFunction } from 'i18next'
+
 import { NavbarItemType, UserMenuItemType, UserMenuKeys } from './types'
 
-export const adminMenuItem: Pick<NavbarItemType, 'title' | 'iconName'> = {
-  title: 'Settings',
-  iconName: 'settings-1'
+export const getAdminMenuItem = (t: TFunction): Pick<NavbarItemType, 'title' | 'iconName'> => {
+  return {
+    title: t('navbar.settings', 'Settings'),
+    iconName: 'settings-1'
+  }
 }
 
-export const userMenuItems: UserMenuItemType[] = [
+export const getUserMenuItems = (t: TFunction): UserMenuItemType[] => [
   {
     key: UserMenuKeys.ACCOUNT,
     iconName: 'user',
-    title: 'Account',
+    title: t('component:navbar.account', 'Account'),
     to: '/account',
     isSeparated: false
   },
   {
     key: UserMenuKeys.THEME,
     iconName: 'paint',
-    title: 'Theme',
+    title: t('component:navbar.theme', 'Theme'),
     to: '/theme',
     isSeparated: false
   },
   {
     key: UserMenuKeys.CUSTOM_NAV,
     iconName: 'navigation',
-    title: 'Customize navigation',
+    title: t('component:navbar.customNav', 'Customize navigation'),
     to: null,
     isSeparated: false
   },
   {
     key: UserMenuKeys.ADMINISTRATION,
     iconName: 'settings-1',
-    title: 'Administration',
+    title: t('component:navbar.administration', 'Administration'),
     to: '/sandbox/settings/profile/general',
     isSeparated: true
   },
   {
     key: UserMenuKeys.LOG_OUT,
     iconName: 'logOut',
-    title: 'Log out',
+    title: t('component:navbar.logout', 'Log out'),
     to: null,
     isSeparated: true
   }

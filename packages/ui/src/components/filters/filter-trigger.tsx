@@ -1,6 +1,7 @@
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Input } from '@components/input'
+import { TFunction } from 'i18next'
 
 import { FilterOption, SortOption } from './types'
 import { UseFiltersReturn } from './use-filters'
@@ -21,6 +22,7 @@ interface FilterTriggerFilterProps extends BaseFilterTriggerProps {
   onReset?: UseFiltersReturn['handleResetFilters']
   searchQueries: UseFiltersReturn['searchQueries']
   onSearchChange: UseFiltersReturn['handleSearchChange']
+  t: TFunction
 }
 
 interface FilterTriggerSortProps extends BaseFilterTriggerProps {
@@ -31,22 +33,23 @@ interface FilterTriggerSortProps extends BaseFilterTriggerProps {
   onReset: UseFiltersReturn['handleResetSorts']
   searchQueries: UseFiltersReturn['searchQueries']
   onSearchChange: UseFiltersReturn['handleSearchChange']
+  t: TFunction
 }
 
 type FilterTriggerProps = FilterTriggerFilterProps | FilterTriggerSortProps
 
-const LABELS = {
+const getLabels = (t: TFunction) => ({
   filter: {
-    defaultLabel: 'Filter',
-    inputPlaceholder: 'Filter by...',
-    buttonLabel: 'Reset filters'
+    defaultLabel: t('component:filter.defaultLabel', 'Filter'),
+    inputPlaceholder: t('component:filter.inputPlaceholder', 'Filter by...'),
+    buttonLabel: t('component:filter.buttonLabel', 'Reset filters')
   },
   sort: {
-    defaultLabel: 'Sort',
-    inputPlaceholder: 'Sort by...',
-    buttonLabel: 'Reset sort'
+    defaultLabel: t('component:sort.defaultLabel', 'Sort'),
+    inputPlaceholder: t('component:sort.inputPlaceholder', 'Sort by...'),
+    buttonLabel: t('component:sort.buttonLabel', 'Reset sort')
   }
-}
+})
 
 const FilterTrigger = ({
   type,
@@ -58,9 +61,11 @@ const FilterTrigger = ({
   onReset,
   searchQueries,
   onSearchChange,
-  options
+  options,
+  t
 }: FilterTriggerProps) => {
-  const { defaultLabel, inputPlaceholder, buttonLabel } = LABELS[type]
+  const labels = getLabels(t)
+  const { defaultLabel, inputPlaceholder, buttonLabel } = labels[type]
   const displayLabel = customLabel || defaultLabel
 
   const isFilterOption = (option: FilterOption | SortOption): option is FilterOption => {

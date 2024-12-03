@@ -1,3 +1,5 @@
+import { TFunction } from 'i18next'
+
 import { Icon } from '../../icon'
 import FilterTrigger from '../filter-trigger'
 import { FilterOption, SortDirection, SortOption } from '../types'
@@ -9,6 +11,7 @@ interface FiltersBarProps {
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
+  t: TFunction
   filterHandlers: Pick<
     UseFiltersReturn,
     | 'activeFilters'
@@ -37,6 +40,7 @@ const FiltersBar = ({
   filterOptions,
   sortOptions,
   sortDirections,
+  t,
   filterHandlers: {
     activeFilters,
     activeSorts,
@@ -105,7 +109,7 @@ const FiltersBar = ({
               customLabel={
                 <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
                   <Icon name="plus" size={10} />
-                  <span>Add filter</span>
+                  <span>{t('component:filter.add-filter', 'Add filter')}</span>
                 </div>
               }
               hideCount
@@ -115,6 +119,7 @@ const FiltersBar = ({
               searchQueries={searchQueries}
               onSearchChange={handleSearchChange}
               options={filterOptions}
+              t={t}
             />
             <button
               className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
@@ -124,7 +129,7 @@ const FiltersBar = ({
               }}
             >
               <Icon className="rotate-45" name="plus" size={12} />
-              Reset
+              {t('component:filter.reset', 'Reset')}
             </button>
           </div>
 
@@ -133,7 +138,7 @@ const FiltersBar = ({
               className="flex items-center gap-x-1.5 text-14 text-foreground-4 hover:text-foreground-1"
               onClick={handleSaveFilters}
             >
-              Save
+              {t('component:filter.save', 'Save')}
             </button>
           )}
         </div>

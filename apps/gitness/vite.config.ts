@@ -1,10 +1,30 @@
+import { federation } from '@module-federation/vite'
 import react from '@vitejs/plugin-react-swc'
 import { defineConfig } from 'vite'
 import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
-// https://vitejs.dev/config/
+import { dependencies } from './package.json'
+
+// https://vitejs.dev/config/repo-pipeline-list.tsx
 export default defineConfig({
   plugins: [
+    topLevelAwait(),
+    federation({
+      name: 'gitness',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './PipelineList': './src/pages/pipeline/repo-pipeline-list.tsx'
+        // './PipelineList': './src/pages/signin.tsx'
+      },
+      // shared: ['react', 'react-dom']
+      shared: {
+        react: {
+          singleton: true,
+          requiredVersion: dependencies.react
+        }
+      }
+    }),
     react(),
     // @ts-expect-error: @TODO: Fix  this. Should be removed, added to enable typecheck
     monacoEditorPlugin.default({ customWorkers: [{ entry: 'monaco-yaml/yaml.worker', label: 'yaml' }] })

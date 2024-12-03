@@ -1,3 +1,5 @@
+import { TFunction } from 'i18next'
+
 import FilterTrigger from './filter-trigger'
 import { FilterOption, SortOption } from './types'
 import { UseFiltersReturn } from './use-filters'
@@ -18,6 +20,7 @@ interface FiltersProps {
     | 'searchQueries'
     | 'handleSearchChange'
   >
+  t: TFunction
 }
 
 const Filters = ({
@@ -34,7 +37,8 @@ const Filters = ({
     handleSearchChange,
     handleSortChange,
     handleResetSorts
-  }
+  },
+  t
 }: FiltersProps) => {
   return (
     <div className="flex items-center gap-x-5">
@@ -47,6 +51,7 @@ const Filters = ({
           searchQueries={searchQueries}
           onSearchChange={handleSearchChange}
           options={filterOptions}
+          t={t}
         />
       )}
 
@@ -59,6 +64,7 @@ const Filters = ({
           searchQueries={searchQueries}
           onSearchChange={handleSearchChange}
           options={sortOptions}
+          t={t}
         />
       )}
     </div>

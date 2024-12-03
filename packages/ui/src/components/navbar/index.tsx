@@ -3,9 +3,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
+import { TFunction } from 'i18next'
 import { isEmpty } from 'lodash-es'
 
-import { adminMenuItem } from './data'
+import { getAdminMenuItem } from './data'
 import { NavbarItem } from './navbar-item'
 import NavbarSkeleton from './navbar-skeleton'
 import { NavbarUser } from './navbar-user'
@@ -25,6 +26,7 @@ interface NavbarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
+  t: TFunction
 }
 
 export const Navbar = ({
@@ -38,11 +40,12 @@ export const Navbar = ({
   handleCustomNav,
   handleLogOut,
   handleChangePinnedMenuItem,
-  handleRemoveRecentMenuItem
+  handleRemoveRecentMenuItem,
+  t
 }: NavbarProps) => {
   const location = useLocation()
   const navigate = useNavigate()
-
+  const adminMenuItem = getAdminMenuItem(t)
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
   }, [location.pathname])
@@ -111,7 +114,7 @@ export const Navbar = ({
 
       <NavbarSkeleton.Footer>
         {!isEmpty(currentUser) ? (
-          <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} />
+          <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} t={t} />
         ) : (
           <Button onClick={() => navigate('/signin')}>Sign In</Button>
         )}

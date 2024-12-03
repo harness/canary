@@ -221,6 +221,7 @@ export const SandboxRoot = ({
           pinnedMenuItems={pinnedMenuItems}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+          t={t}
         />
       </SandboxLayout.LeftPanel>
       <Outlet />

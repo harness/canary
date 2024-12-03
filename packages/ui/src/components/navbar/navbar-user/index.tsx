@@ -16,8 +16,9 @@ import {
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
+import { TFunction } from 'i18next'
 
-import { userMenuItems } from '../data'
+import { getUserMenuItems } from '../data'
 import { UserMenuKeys } from '../types'
 
 interface UserBlockProps {
@@ -59,10 +60,12 @@ interface NavbarUserProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
+  t: TFunction
 }
 
-export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut }: NavbarUserProps) => {
+export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
+  const userMenuItems = getUserMenuItems(t)
 
   const menuItems = useMemo(() => {
     return userMenuItems.map(({ key, iconName, title, to, isSeparated }) => {

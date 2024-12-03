@@ -1,111 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Filters,
-  FiltersBar,
-  type FilterCondition,
-  type FilterOption,
-  type FilterValue,
-  type SortDirection,
-  type SortOption,
-  type SortValue
-} from '@components/filters'
+import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
 
 import { SandboxLayout } from '../../index'
+import { getFilterOptions, getSortDirections, getSortOptions } from './filter-options'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
-export const BASIC_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is not', value: 'is_not' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-export const RANGE_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is before', value: 'is_before' },
-  { label: 'is after', value: 'is_after' },
-  { label: 'is between', value: 'is_between' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-const TEXT_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is not', value: 'is_not' },
-  { label: 'contains', value: 'contains' },
-  { label: 'does not contain', value: 'does_not_contain' },
-  { label: 'starts with', value: 'starts_with' },
-  { label: 'ends with', value: 'ends_with' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-const NUMBER_CONDITIONS: FilterCondition[] = [
-  { label: '=', value: 'equals' },
-  { label: '≠', value: 'not_equals' },
-  { label: '>', value: 'greater' },
-  { label: '<', value: 'less' },
-  { label: '≥', value: 'greater_equals' },
-  { label: '≤', value: 'less_equals' },
-  { label: 'Is empty', value: 'is_empty' },
-  { label: 'Is not empty', value: 'is_not_empty' }
-]
-
-const FILTER_OPTIONS: FilterOption[] = [
-  {
-    label: 'Type',
-    value: 'type',
-    type: 'checkbox',
-    conditions: BASIC_CONDITIONS,
-    options: [
-      { label: 'Public', value: 'public' },
-      { label: 'Private', value: 'private' },
-      { label: 'Fork', value: 'fork' }
-    ]
-  },
-  {
-    label: 'Created time',
-    value: 'created_time',
-    type: 'calendar',
-    conditions: RANGE_CONDITIONS
-  },
-  {
-    label: 'Name',
-    value: 'name',
-    type: 'text',
-    conditions: TEXT_CONDITIONS
-  },
-  {
-    label: 'Stars',
-    value: 'stars',
-    type: 'number',
-    conditions: NUMBER_CONDITIONS
-  }
-]
-
-const SORT_OPTIONS: SortOption[] = [
-  { label: 'Last updated', value: 'updated' },
-  { label: 'Stars', value: 'stars' },
-  { label: 'Forks', value: 'forks' },
-  { label: 'Pull Requests', value: 'pulls' },
-  { label: 'Title', value: 'title' }
-]
-
-const SORT_DIRECTIONS: SortDirection[] = [
-  { label: 'Ascending', value: 'asc' },
-  { label: 'Descending', value: 'desc' }
-]
-
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
+const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, useTranslationStore }) => {
+  const { t } = useTranslationStore()
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+
   // State for storing saved filters and sorts
   // null means no saved state exists
   const { repositories, totalPages, page, setPage } = useRepoStore()
@@ -458,7 +372,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
         <SandboxLayout.Content>
           <Spacer size={10} />
           <Text size={5} weight={'medium'}>
-            Repositories
+            {t('views:repos.repositories')}
           </Text>
           <Spacer size={6} />
           <ListActions.Root>
@@ -468,12 +382,17 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
                 className="max-w-96"
                 value={value}
                 handleChange={handleInputChange}
-                placeholder="Search"
+                placeholder={t('views:repos.search')}
               />
             </ListActions.Left>
             <ListActions.Right>
-              <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} />
-              <Button variant="default">Create repository</Button>
+              <Filters
+                filterOptions={FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                filterHandlers={filterHandlers}
+                t={t}
+              />
+              <Button variant="default">{t('views:repos.create-repository')}</Button>
             </ListActions.Right>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
@@ -482,6 +401,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore }) => {
             sortOptions={SORT_OPTIONS}
             sortDirections={SORT_DIRECTIONS}
             filterHandlers={filterHandlers}
+            t={t}
           />
           <Spacer size={5} />
           <RepoList

@@ -3,11 +3,13 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
+import { SkeletonList, Spacer, Text } from '@harnessio/ui/components'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-store'
 
@@ -19,7 +21,13 @@ export default function ReposListPage() {
   const [query] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { data: { body: repoData, headers } = {}, refetch } = useListReposQuery(
+  const {
+    data: { body: repoData, headers } = {},
+    refetch,
+    isLoading,
+    isError,
+    error
+  } = useListReposQuery(
     {
       queryParams: { page, query },
       space_ref: `${space}/+`
@@ -59,5 +67,17 @@ export default function ReposListPage() {
     shouldRun: isRepoStillImporting
   })
 
-  return <SandboxRepoListPage useRepoStore={useRepoStore} />
+  if (isLoading) return <SkeletonList />
+
+  if (isError)
+    return (
+      <>
+        <Spacer size={2} />
+        <Text size={1} className="text-destructive">
+          {error?.message || 'Something went wrong'}
+        </Text>
+      </>
+    )
+
+  return <SandboxRepoListPage useRepoStore={useRepoStore} useTranslationStore={useTranslationStore} />
 }

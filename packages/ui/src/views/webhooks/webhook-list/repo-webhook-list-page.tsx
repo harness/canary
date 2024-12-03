@@ -12,7 +12,7 @@ import {
   type SortValue
 } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
+import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@components/index'
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
 
@@ -107,7 +107,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
   // State for storing saved filters and sorts
   // null means no saved state exists
   const navigate = useNavigate()
-  const { webhooks, totalPages, page, setPage, webhookLoading } = useWebhookStore()
+  const { webhooks, totalPages, page, setPage, webhookLoading, error } = useWebhookStore()
 
   const [savedState, setSavedState] = useState<{
     filters: FilterValue[]
@@ -266,13 +266,13 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
 
             // Handle empty conditions
             if (filter.condition === 'is_empty') {
-              return !webhook.createdAt
+              return !webhook.updated
             }
             if (filter.condition === 'is_not_empty') {
-              return !!webhook.createdAt
+              return !!webhook.updated
             }
 
-            const createdDate = new Date(webhook.createdAt)
+            const createdDate = new Date(webhook.updated)
             const selectedDate = new Date(filter.selectedValues[0])
 
             // Reset time parts for date-only comparison
@@ -367,7 +367,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
 
       switch (sort.type) {
         case 'updated':
-          comparison = (new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) * direction
+          comparison = (new Date(b.updated).getTime() - new Date(a.updated).getTime()) * direction
           break
         case 'title':
           comparison = a.name.localeCompare(b.name) * direction
@@ -387,7 +387,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
 
   const webhooksWithFormattedDates = sortedWebhooks.map(webhook => ({
     ...webhook,
-    timestamp: formatDistanceToNow(new Date(webhook.createdAt), {
+    timestamp: formatDistanceToNow(new Date(webhook.updated), {
       addSuffix: true,
       includeSeconds: true
     }).replace('about ', '')
@@ -409,7 +409,26 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
     setValue('')
     handleSearch({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
   }
+  if (webhookLoading)
+    return (
+      <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Content>
+          <SkeletonList />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
 
+  if (error)
+    return (
+      <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Content>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {error || 'Something went wrong'}
+          </Text>
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
   return (
     <>
       <SandboxLayout.Main hasHeader hasLeftPanel>
@@ -451,6 +470,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
           />
           <Spacer size={5} />
           <RepoWebhookList
+            error={error}
             loading={webhookLoading}
             webhooks={webhooksWithFormattedDates}
             LinkComponent={LinkComponent}

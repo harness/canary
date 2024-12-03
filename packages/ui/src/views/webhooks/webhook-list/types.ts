@@ -6,6 +6,7 @@ export interface WebhookType {
   enabled: boolean
   createdAt: string
   description: string
+  updated: number
 }
 
 export interface WebhookStore {

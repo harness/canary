@@ -80,6 +80,5 @@ export default function WebhookListPage() {
     setQueryPage(page)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
-
   return <RepoWebhookListPage useWebhookStore={useWebhookStore} useTranslationStore={useTranslationStore} />
 }

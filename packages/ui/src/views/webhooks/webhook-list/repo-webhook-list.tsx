@@ -1,4 +1,4 @@
-import { Badge, NoData, SkeletonList, StackedList } from '@/components'
+import { Badge, NoData, Spacer, StackedList, Text } from '@/components'
 
 import { WebhookType } from './types'
 
@@ -11,6 +11,7 @@ export interface PageProps {
   handleResetQuery: () => void
   handleNavigate: () => void
   loading: boolean
+  error?: string
 }
 
 const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
@@ -30,12 +31,10 @@ export function RepoWebhookList({
   query,
   handleResetQuery,
   handleNavigate,
-  loading
+  error
 }: PageProps) {
   const renderListContent = () => {
-    if (loading) {
-      return <SkeletonList />
-    } else if (webhooks?.length === 0) {
+    if (webhooks?.length === 0) {
       return (
         <div className="flex min-h-[50vh] items-center justify-center py-20">
           {hasActiveFilters || query ? (
@@ -64,6 +63,15 @@ export function RepoWebhookList({
             />
           )}
         </div>
+      )
+    } else if (error) {
+      return (
+        <>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {error || 'Something went wrong'}
+          </Text>
+        </>
       )
     }
     return (

@@ -20,6 +20,7 @@ export const useWebhookStore = create<WebhookStore>(set => ({
       enabled: !!webhook.enabled,
       name: webhook.display_name || '',
       description: webhook.description || '',
+      updated: webhook.updated || 0,
       createdAt: webhook.updated ? timeAgoFromEpochTime(webhook.updated) : ''
     }))
 

@@ -8,7 +8,7 @@ export * from './repo'
 export * from './empty-page'
 
 //pull-request-list
-export * from './pull-request/pull-request-list-page'
+export * from './pull-request'
 
 //Webhook
 export * from './webhooks'

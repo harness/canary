@@ -36,6 +36,7 @@ import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
+import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProject from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
@@ -157,6 +158,10 @@ export default function App() {
             {
               index: true,
               element: <Navigate to="pulls" replace />
+            },
+            {
+              path: 'webhooks',
+              element: <WebhookListPage />
             },
             {
               path: 'pulls',

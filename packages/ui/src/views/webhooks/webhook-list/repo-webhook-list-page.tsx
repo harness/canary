@@ -1,34 +1,113 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
-import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
+import {
+  Filters,
+  FiltersBar,
+  type FilterCondition,
+  type FilterOption,
+  type FilterValue,
+  type SortDirection,
+  type SortOption,
+  type SortValue
+} from '@components/filters'
 import useFilters from '@components/filters/use-filters'
+import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@components/index'
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
 
 import { SandboxLayout } from '../../index'
-import { getFilterOptions, getSortDirections, getSortOptions } from './filter-options'
-import { RepoList } from './repo-list'
-import { RepoListProps } from './types'
+import { RepoWebhookList } from './repo-webhook-list'
+import { WebhookListProps } from './types'
+
+const BASIC_CONDITIONS: FilterCondition[] = [
+  { label: 'is', value: 'is' },
+  { label: 'is not', value: 'is_not' },
+  { label: 'is empty', value: 'is_empty' },
+  { label: 'is not empty', value: 'is_not_empty' }
+]
+
+const RANGE_CONDITIONS: FilterCondition[] = [
+  { label: 'is', value: 'is' },
+  { label: 'is before', value: 'is_before' },
+  { label: 'is after', value: 'is_after' },
+  { label: 'is between', value: 'is_between' },
+  { label: 'is empty', value: 'is_empty' },
+  { label: 'is not empty', value: 'is_not_empty' }
+]
+
+const TEXT_CONDITIONS: FilterCondition[] = [
+  { label: 'is', value: 'is' },
+  { label: 'is not', value: 'is_not' },
+  { label: 'contains', value: 'contains' },
+  { label: 'does not contain', value: 'does_not_contain' },
+  { label: 'starts with', value: 'starts_with' },
+  { label: 'ends with', value: 'ends_with' },
+  { label: 'is empty', value: 'is_empty' },
+  { label: 'is not empty', value: 'is_not_empty' }
+]
+
+const NUMBER_CONDITIONS: FilterCondition[] = [
+  { label: '=', value: 'equals' },
+  { label: '≠', value: 'not_equals' },
+  { label: '>', value: 'greater' },
+  { label: '<', value: 'less' },
+  { label: '≥', value: 'greater_equals' },
+  { label: '≤', value: 'less_equals' },
+  { label: 'Is empty', value: 'is_empty' },
+  { label: 'Is not empty', value: 'is_not_empty' }
+]
+
+const FILTER_OPTIONS: FilterOption[] = [
+  {
+    label: 'Type',
+    value: 'type',
+    type: 'checkbox',
+    conditions: BASIC_CONDITIONS,
+    options: [
+      { label: 'Enabled', value: 'enabled' },
+      { label: 'Disabled', value: 'disabled' }
+    ]
+  },
+  {
+    label: 'Created time',
+    value: 'created_time',
+    type: 'calendar',
+    conditions: RANGE_CONDITIONS
+  },
+  {
+    label: 'Name',
+    value: 'name',
+    type: 'text',
+    conditions: TEXT_CONDITIONS
+  },
+  {
+    label: 'Stars',
+    value: 'stars',
+    type: 'number',
+    conditions: NUMBER_CONDITIONS
+  }
+]
+
+const SORT_OPTIONS: SortOption[] = [
+  { label: 'Last updated', value: 'updated' },
+  { label: 'Title', value: 'title' }
+]
+
+const SORT_DIRECTIONS: SortDirection[] = [
+  { label: 'Ascending', value: 'asc' },
+  { label: 'Descending', value: 'desc' }
+]
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({
-  useRepoStore,
-  useTranslationStore,
-  isLoading,
-  isError,
-  errorMessage
-}) => {
+const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useTranslationStore }) => {
   const { t } = useTranslationStore()
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
 
   // State for storing saved filters and sorts
   // null means no saved state exists
-  const { repositories, totalPages, page, setPage } = useRepoStore()
+  const navigate = useNavigate()
+  const { webhooks, totalPages, page, setPage, webhookLoading, error } = useWebhookStore()
 
   const [savedState, setSavedState] = useState<{
     filters: FilterValue[]
@@ -38,13 +117,16 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
   // true when current filters/sorts differ from saved state
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
+  const handleNavigate = () => {
+    navigate('create')
+  }
   /**
    * Load previously saved filters from localStorage when component mounts
    * This restores the last saved filter configuration for this page
    */
   useEffect(() => {
     try {
-      const savedFiltersString = localStorage.getItem('sandbox-repo-filters')
+      const savedFiltersString = localStorage.getItem('sandbox-webhook-filters')
       if (savedFiltersString) {
         const savedFilters = JSON.parse(savedFiltersString)
         setSavedState(savedFilters)
@@ -94,7 +176,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
           sorts: filterHandlers.activeSorts
         }
         // Save to localStorage
-        localStorage.setItem('sandbox-repo-filters', JSON.stringify(stateToSave))
+        localStorage.setItem('sandbox-webhook-filters', JSON.stringify(stateToSave))
         // Update saved state
         setSavedState(stateToSave)
         // Hide Save button
@@ -110,7 +192,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
     onClear: () => {
       try {
         // Remove saved filters from localStorage
-        localStorage.removeItem('sandbox-repo-filters')
+        localStorage.removeItem('sandbox-webhook-filters')
         // Reset saved state
         setSavedState(null)
         // Hide Save button
@@ -124,22 +206,22 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
   })
 
   /**
-   * Filters repositories based on active filters
+   * Filters webhooks based on active filters
    *
-   * @param repo - Repository object to filter
-   * @returns boolean - Whether the repository matches all active filters
+   * @param webhook - Webhook object to filter
+   * @returns boolean - Whether the webhooks matches all active filters
    *
    * Filter logic:
-   * - If no active filters, returns all repositories
+   * - If no active filters, returns all webhooks
    * - Applies all active filters (AND condition)
    * - For type filter:
    *   - Handles 'private', 'public', and 'fork' types
    *   - Supports 'is' and 'is not' conditions
    *   - Ignores empty filters or is_empty/is_not_empty conditions
    */
-  const filteredRepos =
-    repositories &&
-    repositories.filter(repo => {
+  const filteredWebhooks =
+    webhooks &&
+    webhooks.filter(webhook => {
       if (filterHandlers.activeFilters.length === 0) return true
 
       return filterHandlers.activeFilters.every(filter => {
@@ -155,20 +237,18 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
               return true
             }
 
-            // Determine repository types
-            const isPrivate = repo.private
-            const isPublic = !repo.private
-            const isFork = repo.forks > 0
+            // Determine webhook types
+            const isEnabled = webhook.enabled
+            const isDisabled = !webhook.enabled
 
-            // Check if repo matches any of the selected type values
+            // Check if webhook matches any of the selected type values
             const matchesType = filter.selectedValues.some(value => {
               switch (value) {
-                case 'private':
-                  return isPrivate
-                case 'public':
-                  return isPublic
-                case 'fork':
-                  return isFork
+                case 'enabled':
+                  return isEnabled
+                case 'disabled':
+                  return isDisabled
+
                 default:
                   return false
               }
@@ -186,13 +266,13 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
 
             // Handle empty conditions
             if (filter.condition === 'is_empty') {
-              return !repo.createdAt
+              return !webhook.updated
             }
             if (filter.condition === 'is_not_empty') {
-              return !!repo.createdAt
+              return !!webhook.updated
             }
 
-            const createdDate = new Date(repo.createdAt)
+            const createdDate = new Date(webhook.updated)
             const selectedDate = new Date(filter.selectedValues[0])
 
             // Reset time parts for date-only comparison
@@ -223,10 +303,10 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
 
           case 'name': {
             if (filter.condition === 'is_empty') {
-              return !repo.name
+              return !webhook.name
             }
             if (filter.condition === 'is_not_empty') {
-              return !!repo.name
+              return !!webhook.name
             }
 
             // Skip if no values selected
@@ -235,7 +315,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
             }
 
             const value = filter.selectedValues[0].toLowerCase()
-            const name = repo.name.toLowerCase()
+            const name = webhook.name.toLowerCase()
 
             switch (filter.condition) {
               case 'is':
@@ -255,39 +335,6 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
             }
           }
 
-          case 'stars': {
-            if (filter.condition === 'is_empty') {
-              return !repo.stars
-            }
-            if (filter.condition === 'is_not_empty') {
-              return !!repo.stars
-            }
-
-            if (filter.selectedValues.length === 0) {
-              return true
-            }
-
-            const filterValue = Number(filter.selectedValues[0])
-            const repoValue = repo.stars || 0
-
-            switch (filter.condition) {
-              case 'equals':
-                return repoValue === filterValue
-              case 'not_equals':
-                return repoValue !== filterValue
-              case 'greater':
-                return repoValue > filterValue
-              case 'less':
-                return repoValue < filterValue
-              case 'greater_equals':
-                return repoValue >= filterValue
-              case 'less_equals':
-                return repoValue <= filterValue
-              default:
-                return true
-            }
-          }
-
           default:
             return true
         }
@@ -295,10 +342,10 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
     })
 
   /**
-   * Sorts filtered repositories based on active sorts
+   * Sorts filtered webhooks based on active sorts
    *
-   * @param a - First repository to compare
-   * @param b - Second repository to compare
+   * @param a - First webhook to compare
+   * @param b - Second webhook to compare
    * @returns number - Comparison result (-1, 0, 1)
    *
    * Sort logic:
@@ -312,7 +359,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
    *   - title: alphabetically by name
    * - Each sort supports ascending/descending direction
    */
-  const sortedRepos = [...(filteredRepos ?? [])].sort((a, b) => {
+  const sortedWebhooks = [...(filteredWebhooks ?? [])].sort((a, b) => {
     // Iterate through sorts in priority order
     for (const sort of filterHandlers.activeSorts) {
       const direction = sort.direction === 'asc' ? 1 : -1
@@ -320,16 +367,7 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
 
       switch (sort.type) {
         case 'updated':
-          comparison = (new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) * direction
-          break
-        case 'stars':
-          comparison = (b.stars - a.stars) * direction
-          break
-        case 'forks':
-          comparison = (b.forks - a.forks) * direction
-          break
-        case 'pulls':
-          comparison = (b.pulls - a.pulls) * direction
+          comparison = (new Date(b.updated).getTime() - new Date(a.updated).getTime()) * direction
           break
         case 'title':
           comparison = a.name.localeCompare(b.name) * direction
@@ -347,9 +385,9 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
     return 0
   })
 
-  const reposWithFormattedDates = sortedRepos.map(repo => ({
-    ...repo,
-    timestamp: formatDistanceToNow(new Date(repo.createdAt), {
+  const webhooksWithFormattedDates = sortedWebhooks.map(webhook => ({
+    ...webhook,
+    timestamp: formatDistanceToNow(new Date(webhook.updated), {
       addSuffix: true,
       includeSeconds: true
     }).replace('about ', '')
@@ -371,26 +409,33 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
     setValue('')
     handleSearch({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
   }
-
-  if (isLoading) return <SkeletonList />
-
-  if (isError)
+  if (webhookLoading)
     return (
-      <>
-        <Spacer size={2} />
-        <Text size={1} className="text-destructive">
-          {errorMessage || 'Something went wrong'}
-        </Text>
-      </>
+      <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Content>
+          <SkeletonList />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
     )
 
+  if (error)
+    return (
+      <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Content>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {error || 'Something went wrong'}
+          </Text>
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
   return (
     <>
       <SandboxLayout.Main hasHeader hasLeftPanel>
         <SandboxLayout.Content>
           <Spacer size={10} />
           <Text size={5} weight={'medium'}>
-            {t('views:repos.repositories')}
+            Webhook
           </Text>
           <Spacer size={6} />
           <ListActions.Root>
@@ -400,35 +445,40 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
                 className="max-w-96"
                 value={value}
                 handleChange={handleInputChange}
-                placeholder={t('views:repos.search')}
+                placeholder="Search"
               />
             </ListActions.Left>
             <ListActions.Right>
               <Filters
+                t={t}
                 filterOptions={FILTER_OPTIONS}
                 sortOptions={SORT_OPTIONS}
                 filterHandlers={filterHandlers}
-                t={t}
               />
-              <Button variant="default">{t('views:repos.create-repository')}</Button>
+              <Button variant="default" asChild>
+                <Link to="create">New webhook</Link>
+              </Button>
             </ListActions.Right>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
           <FiltersBar
+            t={t}
             filterOptions={FILTER_OPTIONS}
             sortOptions={SORT_OPTIONS}
             sortDirections={SORT_DIRECTIONS}
             filterHandlers={filterHandlers}
-            t={t}
           />
           <Spacer size={5} />
-          <RepoList
-            repos={reposWithFormattedDates}
+          <RepoWebhookList
+            error={error}
+            loading={webhookLoading}
+            webhooks={webhooksWithFormattedDates}
             LinkComponent={LinkComponent}
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
             query={query ?? ''}
             handleResetQuery={handleResetQuery}
+            handleNavigate={handleNavigate}
           />
           <Spacer size={8} />
           <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} />
@@ -438,4 +488,4 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
   )
 }
 
-export { SandboxRepoListPage }
+export { RepoWebhookListPage }

@@ -117,7 +117,6 @@ export const RepoSidebar = () => {
     (branchTagName: BranchSelectorListItem) => {
       const branch = branchList.find(branch => branch.name === branchTagName.name)
       const tag = tagsList.find(tag => tag.name === branchTagName.name)
-      debugger
       if (branch) {
         setSelectedBranchTag(branch)
         navigate(`/${spaceId}/repos/${repoId}/code/${branch.name}`)

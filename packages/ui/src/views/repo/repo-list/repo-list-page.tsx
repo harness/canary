@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
+import { SkeletonList } from '@/components'
 import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
@@ -14,7 +15,13 @@ import { RepoListProps } from './types'
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, useTranslationStore }) => {
+const SandboxRepoListPage: React.FC<RepoListProps> = ({
+  useRepoStore,
+  useTranslationStore,
+  isLoading,
+  isError,
+  errorMessage
+}) => {
   const { t } = useTranslationStore()
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
@@ -365,6 +372,18 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({ useRepoStore, useTransla
     setValue('')
     handleSearch({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
   }
+
+  if (isLoading) return <SkeletonList />
+
+  if (isError)
+    return (
+      <>
+        <Spacer size={2} />
+        <Text size={1} className="text-destructive">
+          {errorMessage || 'Something went wrong'}
+        </Text>
+      </>
+    )
 
   return (
     <>

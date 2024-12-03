@@ -41,69 +41,73 @@ export function RepoList({
   query,
   handleResetQuery
 }: PageProps) {
+  const noData = !(repos && repos.length > 0)
+
+  if (noData) {
+    return (
+      <StackedList.Root>
+        <div className="flex min-h-[50vh] items-center justify-center py-20">
+          {hasActiveFilters || query ? (
+            <NoData
+              iconName="no-search-magnifying-glass"
+              title="No search results"
+              description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+              primaryButton={{
+                label: 'Clear search',
+                onClick: handleResetQuery
+              }}
+              secondaryButton={{
+                label: 'Clear filters',
+                onClick: handleResetFilters
+              }}
+            />
+          ) : (
+            <NoData
+              iconName="no-data-folder"
+              title="No repositories yet"
+              description={[
+                'There are no repositories in this project yet.',
+                'Create new or import an existing repository.'
+              ]}
+              primaryButton={{
+                label: 'Create repository',
+                onClick: () => {
+                  /* TODO: add create handler */
+                }
+              }}
+            />
+          )}
+        </div>
+      </StackedList.Root>
+    )
+  }
+
   return (
     <>
       <StackedList.Root>
-        {repos && repos.length > 0 ? (
-          <>
-            {repos.map((repo, repo_idx) => (
-              <LinkComponent key={repo_idx} to={repo.name}>
-                <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
-                  <StackedList.Field
-                    primary
-                    description={repo.description}
-                    title={<Title title={repo.name} isPrivate={repo.private} />}
-                    className="gap-1.5 truncate"
-                  />
-                  <StackedList.Field
-                    title={
-                      <>
-                        Updated <em>{repo.timestamp}</em>
-                      </>
-                    }
-                    description={<Stats stars={repo.stars} pulls={repo.pulls} />}
-                    right
-                    label
-                    secondary
-                  />
-                </StackedList.Item>
-              </LinkComponent>
-            ))}
-          </>
-        ) : (
-          <div className="flex min-h-[50vh] items-center justify-center py-20">
-            {hasActiveFilters || query ? (
-              <NoData
-                iconName="no-search-magnifying-glass"
-                title="No search results"
-                description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-                primaryButton={{
-                  label: 'Clear search',
-                  onClick: handleResetQuery
-                }}
-                secondaryButton={{
-                  label: 'Clear filters',
-                  onClick: handleResetFilters
-                }}
+        {repos.map((repo, repo_idx) => (
+          <LinkComponent key={repo_idx} to={repo.name}>
+            <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
+              <StackedList.Field
+                primary
+                description={repo.description}
+                title={<Title title={repo.name} isPrivate={repo.private} />}
+                className="gap-1.5 truncate"
               />
-            ) : (
-              <NoData
-                iconName="no-data-folder"
-                title="No repositories yet"
-                description={[
-                  'There are no repositories in this project yet.',
-                  'Create new or import an existing repository.'
-                ]}
-                primaryButton={{
-                  label: 'Create repository',
-                  onClick: () => {
-                    /* TODO: add create handler */
-                  }
-                }}
+              <StackedList.Field
+                title={
+                  <>
+                    Updated <em>{repo.timestamp}</em>
+                  </>
+                }
+                description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                right
+                label
+                secondary
               />
-            )}
-          </div>
-        )}
+            </StackedList.Item>
+          </LinkComponent>
+        ))}
       </StackedList.Root>
     </>
   )

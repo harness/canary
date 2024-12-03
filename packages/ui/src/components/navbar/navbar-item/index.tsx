@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next'
 import { NavLink } from 'react-router-dom'
 
 import {
@@ -11,6 +10,7 @@ import {
   IconProps,
   Text
 } from '@/components'
+import { TFunction } from 'i18next'
 
 import NavbarSkeleton from '../navbar-skeleton'
 import { NavbarItemType } from '../types'
@@ -21,6 +21,7 @@ interface NavbarItemProps {
   handleChangePinnedMenuItem: (item: NavbarItemType) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   handleCustomNav: () => void
+  t: TFunction
 }
 
 export const NavbarItem = ({
@@ -28,9 +29,9 @@ export const NavbarItem = ({
   isRecent = false,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
-  handleCustomNav
+  handleCustomNav,
+  t
 }: NavbarItemProps) => {
-  const { t } = useTranslation()
   const iconName = item.iconName.replace('-gradient', '') as IconProps['name']
 
   const handlePin = () => {

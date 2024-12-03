@@ -6,6 +6,7 @@ import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
+import { useLocationChange } from '@hooks/useLocationChange'
 import { TFunction } from 'i18next'
 
 import { SandboxLayout } from '../index'
@@ -15,19 +16,25 @@ import { SandboxLayout } from '../index'
  * using the navbarMenuData variable as a reference.
  */
 const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
-  if (!data.length) return []
+  if (!Array.isArray(data) || !data.length) return []
 
   const navbarMenuData = getNavbarMenuData(t)
 
-  return navbarMenuData.reduce<NavbarItemType[]>((acc, { items }) => {
-    const currentIndex = items.findIndex(item => data.includes(item.id))
-
-    if (currentIndex > -1) {
-      acc.push(items[currentIndex])
-    }
-
-    return acc
+  const routes = navbarMenuData.reduce((acc: NavbarItemType[], item) => {
+    return [...acc, ...item.items]
   }, [])
+
+  const filteredRoutes = []
+
+  // To maintain the same order
+  for (const item of data) {
+    const foundItem = routes.find(route => route.id === item)
+    if (foundItem) {
+      filteredRoutes.push(foundItem)
+    }
+  }
+
+  return filteredRoutes
 }
 
 interface SandboxRootProps {
@@ -56,15 +63,25 @@ export const SandboxRoot = ({
   t
 }: SandboxRootProps) => {
   const location = useLocation()
+
   const [recentMenuItems, setRecentMenuItems] = useState<NavbarItemType[]>([])
   const [pinnedMenuItems, setPinnedMenuItems] = useState<NavbarItemType[]>([])
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = useMemo(() => {
-    return getPinnedMenuItemsData(t)
-  }, [t])
+  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
+
+  const handleChangeRecentMenu = useCallback(
+    (nextRouteData: NavbarItemType) => {
+      if (!pinnedMenu || !pinnedMenu.includes(nextRouteData.id)) {
+        changeRecentMenu([...new Set([nextRouteData.id, ...recentMenu])])
+      }
+    },
+    [changeRecentMenu, pinnedMenu, recentMenu]
+  )
+
+  useLocationChange({ t, onRouteChange: handleChangeRecentMenu })
 
   /**
    * Update pinned manu
@@ -82,8 +99,17 @@ export const SandboxRoot = ({
    * Update recent menu
    */
   useLayoutEffect(() => {
-    setRecentMenuItems(getArrayOfNavItems(recentMenu, t))
-  }, [recentMenu, t])
+    const nextRecentItems = getArrayOfNavItems(recentMenu ?? [], t)
+    const filteredRecentItems = nextRecentItems.filter(
+      item => !pinnedMenuItems?.some(pinnedItem => pinnedItem.id === item.id)
+    )
+
+    setRecentMenuItems(filteredRecentItems)
+  }, [pinnedMenuItems, recentMenu, t])
+
+  useEffect(() => {
+    console.log('recentMenuItems', recentMenuItems)
+  }, [recentMenuItems])
 
   /**
    * Map mock data menu by type to Settings and More
@@ -155,9 +181,6 @@ export const SandboxRoot = ({
   const handleSave = (recentItems: NavbarItemType[], currentPinnedItems: NavbarItemType[]) => {
     changeRecentMenu(recentItems.map(item => item.id))
     changePinnedMenu(currentPinnedItems.map(item => item.id))
-    // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-    setRecentMenuItems(recentItems)
-    setPinnedMenuItems(currentPinnedItems)
   }
 
   /**
@@ -172,10 +195,8 @@ export const SandboxRoot = ({
 
         return acc
       }, [])
-      changeRecentMenu(data)
 
-      // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-      setRecentMenuItems(prevState => prevState.filter(prevStateItem => prevStateItem.id !== item.id))
+      changeRecentMenu(data)
     },
     [recentMenuItems, changeRecentMenu]
   )
@@ -199,9 +220,6 @@ export const SandboxRoot = ({
       }
 
       changePinnedMenu(getPinnedItems(pinnedMenuItems).map(it => it.id))
-
-      // TODO: Remove when `changeRecentMenu` and `changePinnedMenu` are passed to the component
-      setPinnedMenuItems(prevState => getPinnedItems(prevState))
     },
     [handleRemoveRecentMenuItem, pinnedMenuItems, changePinnedMenu]
   )

@@ -127,7 +127,7 @@ export const ManageNavigation = ({
         </AlertDialogHeader>
         <ScrollArea className="-mx-5 -mb-5 mt-1">
           <div className="px-5">
-            <Text className="inline-block leading-none text-foreground-7" size={1}>
+            <Text className="text-foreground-7 inline-block leading-none" size={1}>
               Pinned
             </Text>
             {!currentPinnedItems.length ? (

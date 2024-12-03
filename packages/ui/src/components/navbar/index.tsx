@@ -69,13 +69,14 @@ export const Navbar = ({
         <ScrollArea className="mb-[1.375rem]">
           <Spacer size={1.5} />
           <NavbarSkeleton.Group>
-            {pinnedMenuItems.map((item, idx) => (
+            {pinnedMenuItems.map(item => (
               <NavbarItem
-                key={idx}
+                key={item.id}
                 item={item}
                 handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                 handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                 handleCustomNav={handleCustomNav}
+                t={t}
               />
             ))}
             <button onClick={handleMoreMenu}>
@@ -87,12 +88,13 @@ export const Navbar = ({
             <NavbarSkeleton.Group title="Recent" topBorder>
               {recentMenuItems.map(item => (
                 <NavbarItem
+                  isRecent
                   key={item.id}
                   item={item}
-                  isRecent
                   handleChangePinnedMenuItem={handleChangePinnedMenuItem}
                   handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
                   handleCustomNav={handleCustomNav}
+                  t={t}
                 />
               ))}
             </NavbarSkeleton.Group>

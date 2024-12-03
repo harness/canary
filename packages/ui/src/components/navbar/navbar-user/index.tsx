@@ -107,7 +107,7 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: Na
         isSeparated
       }
     })
-  }, [handleCustomNav, handleLogOut])
+  }, [handleCustomNav, handleLogOut, userMenuItems])
 
   return (
     <DropdownMenu>

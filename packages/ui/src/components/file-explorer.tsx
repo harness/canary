@@ -17,7 +17,13 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
   return (
     <AccordionItem value={value} className="border-none">
       <AccordionTrigger
-        className="w-full p-0"
+        className={cn(
+          `relative w-full p-0 pr-1.5
+          before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
+          {
+            'before:bg-background-4': isActive
+          }
+        )}
         leftChevron
         rotateChevron
         chevronClassName={
@@ -26,21 +32,24 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
       >
         <div
           className={cn(
-            'flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-3',
-            'group-hover:text-foreground-1',
-            'group-data-[state=open]:text-foreground-1',
+            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-3
+            group-hover:text-foreground-1
+            group-data-[state=open]:text-foreground-1`,
             {
-              'text-foreground-1': isActive
+              'text-foreground-1 ': isActive
             }
           )}
         >
           <div className="flex w-full items-center gap-1.5 py-1.5">
             <Icon
-              className="min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2"
+              className={cn(
+                'min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
+                { 'text-icons-2': isActive }
+              )}
               name="folder"
               size={16}
             />
-            <Link to={link}>
+            <Link to={link} className="overflow-hidden">
               <Text className="duration-100 ease-in-out" color="inherit" as="p" size={2} truncate weight="medium">
                 {children}
               </Text>
@@ -48,17 +57,13 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           </div>
         </div>
       </AccordionTrigger>
-      {!!content && (
-        <AccordionContent className="flex w-full items-center gap-2 overflow-hidden pb-0 pl-4">
-          {content}
-        </AccordionContent>
-      )}
+      {!!content && <AccordionContent className="flex w-full items-center gap-2 pb-0 pl-4">{content}</AccordionContent>}
     </AccordionItem>
   )
 }
 
 interface FileItemProps {
-  children: React.ReactNode
+  children: ReactNode
   isActive?: boolean
   link?: string
 }
@@ -67,14 +72,21 @@ function FileItem({ children, isActive, link }: FileItemProps) {
   const comp = (
     <div
       className={cn(
-        'group flex items-center justify-start gap-1.5 overflow-hidden py-1.5 pl-4 text-foreground-3',
-        'hover:text-foreground-1',
+        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-3
+        hover:text-foreground-1
+        before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
         {
-          'text-foreground-1': isActive
+          'text-foreground-1 before:bg-background-4': isActive
         }
       )}
     >
-      <Icon className="min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2" name="file" size={16} />
+      <Icon
+        className={cn('min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2', {
+          'text-icons-2': isActive
+        })}
+        name="file"
+        size={16}
+      />
       <Text className="duration-100 ease-in-out" size={2} color="inherit" weight="medium" truncate>
         {children}
       </Text>
@@ -85,7 +97,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
 }
 
 interface RootProps {
-  children: React.ReactNode
+  children: ReactNode
   onValueChange: (value: string | string[]) => void
   value: string[]
 }

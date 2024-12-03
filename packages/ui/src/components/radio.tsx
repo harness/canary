@@ -33,12 +33,16 @@ const RadioButton = forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        'relative border-primary hover:border-icons-3 text-icons-5 aspect-square h-4 w-4 rounded-full border shadow focus-visible:rounded-full disabled:cursor-not-allowed disabled:border-icons-4 flex items-center justify-center',
+        `flex items-center justify-center relative border-icons-1 text-icons-5 aspect-square h-4 w-4 rounded-full border shadow
+        hover:border-icons-3
+        data-[state=checked]:border-icons-2 
+        focus-visible:rounded-full
+        disabled:cursor-not-allowed disabled:border-icons-4`,
         className
       )}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="size-2 rounded-full bg-primary" />
+      <RadioGroupPrimitive.Indicator className="size-2 rounded-full bg-icons-2" />
     </RadioGroupPrimitive.Item>
   )
 })

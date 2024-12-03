@@ -9,7 +9,6 @@ interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
   navigateToNewFile: () => void
-  navigateToNewFolder: () => void
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
@@ -21,7 +20,6 @@ export const RepoSidebar = ({
   hasHeader,
   hasSubHeader,
   navigateToNewFile,
-  navigateToNewFolder,
   navigateToFile,
   filesList,
   children,
@@ -33,23 +31,14 @@ export const RepoSidebar = ({
   return (
     <SandboxLayout.LeftSubPanel className="w-[248px]" hasHeader={hasHeader} hasSubHeader={hasSubHeader}>
       <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
-        <div className="flex w-full flex-col gap-3 p-5 pb-0 pr-0">
-          <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-3 pr-5">
+        <div className="flex w-full flex-col gap-3 pt-5">
+          <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">
             {branchList && (
               <BranchSelector useRepoBranchesStore={useRepoBranchesStore} useTranslationStore={useTranslationStore} />
             )}
-            <ButtonGroup spacing="0" className="h-full overflow-hidden rounded shadow-as-border shadow-borders-2">
+            <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-2">
               <Button
-                className="rounded-none border-l border-borders-2 p-0"
-                size="icon"
-                variant="ghost"
-                aria-label="Create new folder"
-                onClick={navigateToNewFolder}
-              >
-                <Icon size={16} name="add-folder" className="text-icons-3" />
-              </Button>
-              <Button
-                className="rounded-none border-l border-borders-2 p-0"
+                className="border-borders-2 p-0"
                 size="icon"
                 variant="ghost"
                 aria-label="Create new file"
@@ -59,14 +48,14 @@ export const RepoSidebar = ({
               </Button>
             </ButtonGroup>
           </div>
-          <div className="pr-5">
+          <div className="px-5">
             <SearchFiles
               navigateToFile={navigateToFile}
               filesList={filesList}
               useTranslationStore={useTranslationStore}
             />
           </div>
-          <ScrollArea className="pr-5">
+          <ScrollArea viewportClassName="px-5 pr-3.5">
             {children}
             <Spacer size={10} />
           </ScrollArea>

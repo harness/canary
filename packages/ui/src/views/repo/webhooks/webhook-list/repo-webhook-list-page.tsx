@@ -13,7 +13,7 @@ import {
 } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
 import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@components/index'
-import { useCommonFilter } from '@hooks/useCommonFilter'
+import { useCommonFilter } from '@hooks/use-common-filter'
 import { formatDistanceToNow } from 'date-fns'
 
 import { SandboxLayout } from '../../../index'

@@ -63,7 +63,7 @@ const List: React.FC<ListProps> = ({ className, children, onlyTopRounded, border
           !onlyTopRounded
       },
       onlyTopRounded ? 'rounded-t-md' : 'rounded-md',
-      borderBackground ? 'border-border-background' : '',
+      borderBackground ? 'border-borders-1' : '',
       className
     )}
     {...props}

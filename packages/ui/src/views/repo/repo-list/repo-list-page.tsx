@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
-import { useCommonFilter } from '@hooks/useCommonFilter'
+import { useCommonFilter } from '@hooks/use-common-filter'
 import { formatDistanceToNow } from 'date-fns'
 
 import { SandboxLayout } from '../../index'

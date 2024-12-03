@@ -24,4 +24,17 @@ export interface TypesDiffStats {
   files_changed?: number | null
 }
 
-export type * from '@components/navbar/types'
+export interface ViolationState {
+  violation: boolean
+  bypassable: boolean
+  bypassed: boolean
+}
+
+// TODO: The error type will need to be properly defined once it's clear what format the errors will have and whether they need to be passed into the UI components. It was migrated from @harnessio/code-service-client.
+export interface UsererrorError {
+  message?: string
+  values?: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    [key: string]: any
+  }
+}

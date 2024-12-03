@@ -13,9 +13,9 @@ import {
   Input,
   Text
 } from '@harnessio/canary'
+import { CopyButton } from '@harnessio/ui/components'
 
 import { generateAlphaNumericHash } from '../../utils/utils'
-import { CopyButton } from '../copy-button'
 import { FormResetPasswordsDialogProps } from './interfaces'
 
 export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = ({

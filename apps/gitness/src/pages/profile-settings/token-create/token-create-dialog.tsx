@@ -19,7 +19,7 @@ export const TokenCreateDialog: React.FC<TokenCreateDialogProps> = ({
 }) => {
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-primary-background border-border max-w-[500px]">
+      <DialogContent className="max-w-[500px] border-border bg-primary-background">
         <DialogHeader>
           <DialogTitle className="text-left">Create a token</DialogTitle>
         </DialogHeader>

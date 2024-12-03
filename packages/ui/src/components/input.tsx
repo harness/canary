@@ -1,6 +1,6 @@
 import { forwardRef, Fragment, InputHTMLAttributes, ReactNode } from 'react'
 
-import { Caption, ControlGroup, Label, Message, MessageTheme } from '@/components'
+import { Caption, ControlGroup, Icon, IconProps, Label, Message, MessageTheme } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -47,6 +47,7 @@ interface InputProps extends BaseInputProps {
   optional?: boolean
   className?: string
   wrapperClassName?: string
+  inputIconName?: IconProps['name']
 }
 
 /**
@@ -62,24 +63,46 @@ interface InputProps extends BaseInputProps {
  * />
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, caption, error, id, theme, disabled, optional, className, wrapperClassName, ...props }, ref) => {
-    const InputWrapper = error || caption || label || wrapperClassName ? ControlGroup : Fragment
+  (
+    { label, caption, error, id, theme, disabled, optional, className, wrapperClassName, inputIconName, ...props },
+    ref
+  ) => {
+    const isControlGroup = !!error || !!caption || !!label || !!wrapperClassName
+    const InputWrapper = isControlGroup ? ControlGroup : Fragment
+    const inputWrapperProps = isControlGroup
+      ? {
+          className: wrapperClassName
+        }
+      : {}
+
+    const baseInputComp = (
+      <BaseInput
+        className={cn(className, {
+          'pl-8': inputIconName
+        })}
+        id={id}
+        ref={ref}
+        theme={error ? 'danger' : theme}
+        disabled={disabled}
+        {...props}
+      />
+    )
 
     return (
-      <InputWrapper className={wrapperClassName}>
+      <InputWrapper {...inputWrapperProps}>
         {label && (
           <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}
-        <BaseInput
-          className={className}
-          id={id}
-          ref={ref}
-          theme={error ? 'danger' : theme}
-          disabled={disabled}
-          {...props}
-        />
+        {inputIconName ? (
+          <span className="relative">
+            <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+            {baseInputComp}
+          </span>
+        ) : (
+          baseInputComp
+        )}
         {error && (
           <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
             {error}

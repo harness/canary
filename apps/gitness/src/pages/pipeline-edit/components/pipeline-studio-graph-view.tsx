@@ -30,7 +30,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
   }, [yamlRevision])
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex size-full">
       <InteractionContextProvider>
         <PipelineStudio
           nodes={nodes}

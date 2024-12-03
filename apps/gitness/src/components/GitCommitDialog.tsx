@@ -9,10 +9,10 @@ import {
   useCommitFilesMutation,
   UsererrorError
 } from '@harnessio/code-service-client'
+import { GitCommitFormType } from '@harnessio/ui/components'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
-import { GitCommitFormType } from '../types'
 import { GitCommitAction } from '../utils/git-utils'
 import { CommitToGitRefOption, GitCommitForm } from './GitCommitForm'
 
@@ -35,6 +35,9 @@ interface CommitDialogProps {
   isNew: boolean
 }
 
+/**
+ * @deprecated
+ */
 export default function GitCommitDialog({
   open,
   onClose,
@@ -160,7 +163,7 @@ export default function GitCommitDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="bg-primary-background border-border max-w-[500px]">
+      <DialogContent className="max-w-[500px] border-border bg-primary-background">
         <DialogHeader>
           <DialogTitle>Commit Changes</DialogTitle>
         </DialogHeader>

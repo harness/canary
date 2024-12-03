@@ -23,6 +23,9 @@ interface MarkdownViewerProps {
   //   suggestionCheckSums?: string[]
 }
 
+/**
+ * @deprecated
+ */
 export function MarkdownViewer({
   source,
   maxHeight

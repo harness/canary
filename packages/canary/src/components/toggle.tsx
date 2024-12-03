@@ -36,4 +36,7 @@ const Toggle = React.forwardRef<
 
 Toggle.displayName = TogglePrimitive.Root.displayName
 
+/**
+ * @deprecated
+ */
 export { Toggle, toggleVariants }

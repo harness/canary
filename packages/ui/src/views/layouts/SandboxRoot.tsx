@@ -6,7 +6,7 @@ import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
-import { useLocationChange } from '@hooks/useLocationChange'
+import { useLocationChange } from '@hooks/use-location-change'
 import { TFunction } from 'i18next'
 
 import { SandboxLayout } from '../index'

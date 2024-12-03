@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { noop } from 'lodash-es'
-
 import {
   Button,
   ButtonGroup,
@@ -18,7 +16,8 @@ import {
   ToggleGroupItem
 } from '@harnessio/canary'
 import { OpenapiGetContentOutput, useFindRepositoryQuery } from '@harnessio/code-service-client'
-import { MarkdownViewer, PipelineStudioToolbarActions, TopDetails, TopTitle } from '@harnessio/views'
+import { FileToolbarActions } from '@harnessio/ui/components'
+import { MarkdownViewer, TopDetails, TopTitle } from '@harnessio/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
@@ -94,12 +93,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         <Text size={2} weight="normal" color="tertiaryBackground" className="pr-3">
           {formatBytes(repoContent?.content?.size || 0)}
         </Text>
-        <PipelineStudioToolbarActions
+        <FileToolbarActions
           copyContent={fileContent}
           showEdit
           onDownloadClick={() => downloadFile({ repoRef, resourcePath: fullResourcePath || '', gitRef: gitRef || '' })}
           onEditClick={() => navigate(`/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)}
-          onCopyClick={noop}
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -194,25 +192,25 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             value={view}
             type="single"
             unselectable={'on'}
-            className={'bg-primary-foreground border-primary/10 rounded-lg border p-0.5'}
+            className={'rounded-lg border border-primary/10 bg-primary-foreground p-0.5'}
           >
             {language === 'markdown' && (
               <ToggleGroupItem
                 value={'preview'}
-                className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
+                className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
               >
                 Preview
               </ToggleGroupItem>
             )}
             <ToggleGroupItem
               value={'code'}
-              className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
+              className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
             >
               Code
             </ToggleGroupItem>
             <ToggleGroupItem
               value={'blame'}
-              className="text-tertiary-background data-[state=on]:text-primary h-7 rounded-md border border-transparent text-xs font-medium data-[state=on]:border-white/10"
+              className="h-7 rounded-md border border-transparent text-xs font-medium text-tertiary-background data-[state=on]:border-white/10 data-[state=on]:text-primary"
             >
               Blame
             </ToggleGroupItem>
@@ -221,7 +219,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         </StackedList.Item>
       </StackedList.Root>
       {language === 'markdown' && view === 'preview' ? (
-        <div className="border-border-background border-b border-l border-r px-2 py-2">
+        <div className="border-x border-b border-border-background p-2">
           <MarkdownViewer source={fileContent} />
         </div>
       ) : view === 'code' ? (

@@ -24,14 +24,6 @@ export interface CreateFormType {
   yamlPath: string
 }
 
-export interface GitCommitFormType {
-  message: string
-  description?: string
-  commitToGitRef: string
-  newBranchName?: string
-  fileName?: string
-}
-
 export enum CodeOwnerReqDecision {
   CHANGEREQ = 'changereq',
   APPROVED = 'approved',

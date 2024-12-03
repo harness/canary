@@ -19,11 +19,10 @@ import {
   useZodForm
 } from '@harnessio/canary'
 import { UsererrorError } from '@harnessio/code-service-client'
-import { Textarea } from '@harnessio/ui/components'
+import { GitCommitFormType, Textarea } from '@harnessio/ui/components'
 import { FormFieldSet, Layout } from '@harnessio/views'
 
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
-import { GitCommitFormType } from '../types'
 
 interface GitCommitFormProps {
   onCancel: () => void
@@ -70,6 +69,9 @@ const gitCommitSchema = z
     }
   })
 
+/**
+ * @deprecated
+ */
 export function GitCommitForm({
   onCancel,
   onSubmit,
@@ -163,7 +165,7 @@ export function GitCommitForm({
                   description=""
                 />
                 {violation && form.getValues().commitToGitRef === CommitToGitRefOption.DIRECTLY && (
-                  <Text size={1} className="text-destructive pl-8">
+                  <Text size={1} className="pl-8 text-destructive">
                     {bypassable
                       ? 'Some rules will be bypassed to commit directly'
                       : "Some rules don't allow you to commit directly"}
@@ -176,7 +178,7 @@ export function GitCommitForm({
                   description=""
                 />
                 {violation && form.getValues().commitToGitRef === CommitToGitRefOption.NEW_BRANCH && (
-                  <Text size={1} className="text-destructive pl-8">
+                  <Text size={1} className="pl-8 text-destructive">
                     {bypassable
                       ? 'Some rules will be bypassed to commit by creating branch'
                       : "Some rules don't allow you to create new branch for commit"}
@@ -202,7 +204,7 @@ export function GitCommitForm({
                       className="text-primary"
                       {...field}
                       placeholder="New Branch Name"
-                      left={<Icon name="branch" size={34} className="text-tertiary-background min-w-[12px] px-2" />}
+                      left={<Icon name="branch" size={34} className="min-w-[12px] px-2 text-tertiary-background" />}
                       onChange={value => {
                         field.onChange(value)
 

@@ -44,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({
         )}
         <ButtonGroup.Root
           spacing="0"
-          className="shadow-border h-full overflow-hidden rounded-md shadow-[inset_0_0_0_1px]"
+          className="h-full overflow-hidden rounded-md shadow-[inset_0_0_0_1px] shadow-border"
         >
           <Button size="sm" variant="ghost" className="w-8 rounded-none border-l p-0" onClick={navigateToNewFile}>
             <Icon size={15} name="add-file" className="text-primary/80" />

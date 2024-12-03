@@ -4,9 +4,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Button, Icon, Input, Text } from '@harnessio/canary'
+import { CopyButton } from '@harnessio/ui/components'
 
 import { FormFieldSet } from '../../index'
-import { CopyButton } from '../copy-button'
 
 const cloneRepoFormSchema = z.object({
   httpsUrl: z.string(),

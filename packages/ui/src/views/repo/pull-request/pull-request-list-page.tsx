@@ -13,7 +13,7 @@ import {
   type SortValue
 } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
-import { useCommonFilter } from '@hooks/useCommonFilter'
+import { useCommonFilter } from '@hooks/use-common-filter'
 import { noop } from 'lodash-es'
 
 import { SandboxLayout, TranslationStore } from '../..'

@@ -33,7 +33,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           className={
-            'data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1 flex items-center gap-1.5 overflow-hidden px-3'
+            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
           }
           variant="outline"
           size={buttonSize}

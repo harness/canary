@@ -5,7 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Button, ButtonGroup, Input, Text } from '@harnessio/canary'
-import { CopyButton, FormFieldSet } from '@harnessio/views'
+import { CopyButton } from '@harnessio/ui/components'
+import { FormFieldSet } from '@harnessio/views'
 
 const formSchema = z.object({
   identifier: z.string(),
@@ -67,7 +68,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
               readOnly
               right={<CopyButton name={defaultValues?.token} />}
               autoFocus
-              className="overflow-hidden text-ellipsis whitespace-nowrap"
+              className="truncate"
             />
           </FormFieldSet.ControlGroup>
         </FormFieldSet.Root>

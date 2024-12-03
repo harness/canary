@@ -175,8 +175,6 @@ export const RepoSidebar = () => {
         hasSubHeader
         useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationStore}
-        // TODO: new props navigateToNewFolder
-        navigateToNewFolder={() => {}}
         navigateToNewFile={navigateToNewFile}
         navigateToFile={navigateToFile}
         filesList={filesList}

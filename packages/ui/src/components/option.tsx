@@ -8,7 +8,7 @@ type ControlType = ReactElement<typeof RadioButton> | ReactElement<typeof Checkb
 interface OptionProps {
   control: ControlType
   id: string
-  label?: string
+  label?: string | ReactNode
   description?: string | ReactNode
   className?: string
   ariaSelected?: boolean
@@ -34,7 +34,7 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
     >
       {control}
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="cursor-pointer pl-4 font-medium leading-tight">
+        <Label htmlFor={id} className="cursor-pointer pl-4 leading-tight">
           {label}
         </Label>
         {description && (

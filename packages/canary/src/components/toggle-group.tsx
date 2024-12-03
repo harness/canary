@@ -72,5 +72,12 @@ const ToggleGroupItem = React.forwardRef<React.ElementRef<typeof ToggleGroupPrim
 
 ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
 
+/**
+ * @deprecated
+ */
 export { ToggleGroup, ToggleGroupItem }
+
+/**
+ * @deprecated
+ */
 export type { ToggleGroupProps, ToggleGroupItemProps }

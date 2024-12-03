@@ -114,7 +114,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
 
   return useMemo(
     () => (
-      <div className="flex h-full w-full">
+      <div className="flex size-full">
         <YamlEditor
           onYamlRevisionChange={value => {
             currentYamlRef.current = value?.yaml

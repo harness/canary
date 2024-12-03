@@ -11,8 +11,9 @@ import {
 } from '@harnessio/code-service-client'
 import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
+import FileContentViewer from '../../components-v2/file-content-viewer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import useCodePathDetails, { CodeModes } from '../../hooks/useCodePathDetails'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
@@ -25,8 +26,11 @@ import { splitPathWithParents } from '../../utils/path-utils'
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
-  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
+
+  // TODO: Not sure what codeMode is used for; it needs to be reviewed, and the condition for rendering the FileContentViewer component may need to be adjusted or fixed.
+  const { codeMode: _, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
     {
@@ -134,17 +138,11 @@ export const RepoCode = () => {
       loading={loading}
       files={files}
       isDir={repoDetails?.type === 'dir'}
-      isShowSummary={repoEntryPathToFileTypeMap.size > 0}
+      isShowSummary={!!repoEntryPathToFileTypeMap.size}
       latestFile={latestFiles}
       useTranslationStore={useTranslationStore}
     >
-      <>
-        {/*
-          TODO: Here, the FileContentViewer will need to be passed as a child component,
-          but it hasn’t yet undergone the work of migrating components to the UI directory.
-        */}
-        {codeMode === CodeModes.EDIT ? 'EDIT FILE' : codeMode === CodeModes.VIEW ? 'VIEW FILE' : ''}
-      </>
+      {!!repoDetails?.type && repoDetails.type !== 'dir' && <FileContentViewer repoContent={repoDetails} />}
     </RepoFiles>
   )
 }

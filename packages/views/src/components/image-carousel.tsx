@@ -21,6 +21,9 @@ interface ImageCarouselProps {
 }
 
 // TODO: rewrite this to actually work
+/**
+ * @deprecated
+ */
 const ImageCarousel = (props: ImageCarouselProps) => {
   const { isOpen, setIsOpen, setZoomLevel, zoomLevel, imgEvent } = props
   const [imgTitle] = useState(imgEvent && imgEvent.length > 0 ? imgEvent[0] : '')

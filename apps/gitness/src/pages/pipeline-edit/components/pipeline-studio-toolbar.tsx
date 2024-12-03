@@ -1,8 +1,8 @@
-import copy from 'clipboard-copy'
 import cx from 'clsx'
 import { noop } from 'lodash-es'
 
-import { PipelineStudioToolbarActions, Topbar, VisualYamlToggle } from '@harnessio/views'
+import { FileToolbarActions } from '@harnessio/ui/components'
+import { Topbar, VisualYamlToggle } from '@harnessio/views'
 
 import { VisualYamlValue } from '../../../types/pipeline'
 import { createAndDownloadBlob } from '../../../utils/common-utils'
@@ -27,12 +27,7 @@ export const PipelineStudioToolbar = ({
       {/* <Topbar.Center>AITextEditor placeholder</Topbar.Center> */}
       {view === 'yaml' && (
         <Topbar.Right>
-          <PipelineStudioToolbarActions
-            onCopyClick={() => {
-              copy(yamlRevision.yaml).then(() => {
-                // TODO: toast
-              })
-            }}
+          <FileToolbarActions
             onDownloadClick={() => {
               createAndDownloadBlob(yamlRevision.yaml, `${pipelineData?.identifier}.yaml`)
             }}

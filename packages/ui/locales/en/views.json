@@ -6,7 +6,6 @@
     "viewAll": "View all {{type}}",
     "findBranch": "Find a branch",
     "findTag": "Find a tag",
-    "noFile": "No files available",
     "name": "Name",
     "lastCommit": "Last commit message",
     "date": "Date",
@@ -25,6 +24,7 @@
     "add-file": "Add file",
     "createNewFile": "+ Create New File",
     "readme": "README.md",
-    "openPullReq": "Open pull requests"
+    "openPullReq": "Open pull requests",
+    "noFile": "No files available"
   }
 }

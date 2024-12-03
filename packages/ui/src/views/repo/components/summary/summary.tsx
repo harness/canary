@@ -1,66 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  CommitCopyActions,
-  Icon,
-  Spacer,
-  StackedList,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@/components'
+import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
-import { getInitials } from '@utils/stringUtils'
+import { FileLastChangeBar } from '@views/repo/components'
 
 interface SummaryProps {
   latestFile: LatestFileTypes
   files: RepoFile[]
   useTranslationStore: () => TranslationStore
-}
-
-export const TopTitle = ({ file }: { file: LatestFileTypes }) => {
-  const { user, lastCommitMessage } = file
-
-  return (
-    <div className="flex items-center gap-2">
-      <Avatar size="6">
-        <AvatarImage src={user?.avatarUrl || ''} />
-        <AvatarFallback>
-          <Text size={0} color="tertiaryBackground">
-            {getInitials(user?.name || '')}
-          </Text>
-        </AvatarFallback>
-      </Avatar>
-      <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
-        {user?.name}
-      </Text>
-      <Text size={2} weight="normal" color="primary" className="line-clamp-1">
-        {lastCommitMessage}
-      </Text>
-    </div>
-  )
-}
-
-export const TopDetails = ({ file }: { file: LatestFileTypes }) => {
-  const { sha, timestamp } = file
-  return (
-    <div className="flex items-center gap-2">
-      <CommitCopyActions sha={sha || ''} />
-      <Text className="text-borders-2" size={2} weight="normal">
-        |
-      </Text>
-      <Text size={2} weight="normal" color="tertiaryBackground">
-        {timestamp}
-      </Text>
-    </div>
-  )
 }
 
 export const Summary = ({ latestFile, files, useTranslationStore }: SummaryProps) => {
@@ -69,19 +16,7 @@ export const Summary = ({ latestFile, files, useTranslationStore }: SummaryProps
 
   return (
     <>
-      <StackedList.Root>
-        <StackedList.Item disableHover isHeader className="px-3 py-2">
-          {latestFile ? (
-            <>
-              <StackedList.Field title={<TopTitle file={latestFile} />} />
-              <StackedList.Field right title={<TopDetails file={latestFile} />} />
-            </>
-          ) : (
-            <Text>{t('views:repos.noFile', 'No files available')}</Text>
-          )}
-        </StackedList.Item>
-      </StackedList.Root>
-      <Spacer size={4} />
+      <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
       <Table variant="asStackedList">
         <TableHeader>
           <TableRow>

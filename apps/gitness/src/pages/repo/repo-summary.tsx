@@ -294,7 +294,7 @@ export default function RepoSummaryPage() {
                           title="Edit"
                           size="sm"
                         >
-                          <Icon name="edit-pen" className="text-foreground size-5" />
+                          <Icon name="edit-pen" className="size-5 text-foreground" />
                         </ToggleGroupItem>
                       </ToggleGroup>
                     }

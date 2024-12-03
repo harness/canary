@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -27,19 +28,23 @@ const PathBreadcrumbs = ({ items }: PathBreadcrumbsProps) => {
         {items.map(({ parentPath, path }, idx) => {
           const isLast = length === idx + 1
 
-          return (
-            <BreadcrumbItem key={idx}>
-              {isLast ? (
+          if (isLast) {
+            return (
+              <BreadcrumbItem key={idx}>
                 <BreadcrumbPage>{path}</BreadcrumbPage>
-              ) : (
-                <>
-                  <BreadcrumbLink asChild>
-                    <Link to={parentPath}>{path}</Link>
-                  </BreadcrumbLink>
-                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                </>
-              )}
-            </BreadcrumbItem>
+              </BreadcrumbItem>
+            )
+          }
+
+          return (
+            <Fragment key={idx}>
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to={parentPath}>{path}</Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+            </Fragment>
           )
         })}
       </BreadcrumbList>

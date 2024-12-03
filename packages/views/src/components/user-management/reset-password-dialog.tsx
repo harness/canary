@@ -12,8 +12,7 @@ import {
   Input,
   Text
 } from '@harnessio/canary'
-
-import { CopyButton } from '../copy-button'
+import { CopyButton } from '@harnessio/ui/components'
 
 export const ResetPasswordDialog = ({
   isOpen,

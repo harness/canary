@@ -183,7 +183,7 @@ const ExecutionLogs: React.FC = () => {
                 <Text className="text-base text-white">{execution?.message}</Text>
                 <div className="flex items-center gap-2">
                   {execution?.event === 'manual' ? (
-                    <Badge variant="secondary" className="bg-primary-foreground flex gap-1">
+                    <Badge variant="secondary" className="flex gap-1 bg-primary-foreground">
                       <Layout.Horizontal gap="space-x-1" className="flex items-center">
                         <Icon size={12} name={'tube-sign'} />
                         <Text className="text-git pb-0.5 text-sm">{execution?.source}</Text>
@@ -191,14 +191,14 @@ const ExecutionLogs: React.FC = () => {
                     </Badge>
                   ) : (
                     <>
-                      <Badge variant="secondary" className="bg-primary-foreground flex gap-1">
+                      <Badge variant="secondary" className="flex gap-1 bg-primary-foreground">
                         <Layout.Horizontal gap="space-x-1" className="flex items-center">
                           <Icon size={12} name={'tube-sign'} />
                           <Text className="text-git pb-0.5 text-sm">{execution?.source}</Text>
                         </Layout.Horizontal>
                       </Badge>
                       <span>to</span>
-                      <Badge variant="secondary" className="bg-primary-foreground flex gap-1">
+                      <Badge variant="secondary" className="flex gap-1 bg-primary-foreground">
                         <Layout.Horizontal gap="space-x-1" className="flex items-center">
                           <Icon size={12} name={'git-branch'} />
                           <Text className="text-git pb-0.5 text-sm">{execution?.target}</Text>
@@ -211,7 +211,7 @@ const ExecutionLogs: React.FC = () => {
               <Layout.Horizontal>
                 {execution?.status && (
                   <Layout.Vertical gap="space-y-1">
-                    <Text className="text-muted-foreground text-sm">Status</Text>
+                    <Text className="text-sm text-muted-foreground">Status</Text>
                     <ExecutionStatus.Badge
                       status={execution.status as ExecutionState}
                       minimal
@@ -221,7 +221,7 @@ const ExecutionLogs: React.FC = () => {
                 )}
                 {execution?.created && (
                   <Layout.Vertical gap="space-y-1">
-                    <Text className="text-muted-foreground text-sm">Started</Text>
+                    <Text className="text-sm text-muted-foreground">Started</Text>
                     <span className="text-white">{timeAgoFromEpochTime(execution.created)}</span>
                   </Layout.Vertical>
                 )}

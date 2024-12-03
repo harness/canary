@@ -92,6 +92,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               placeholder="User ID"
               label="User ID"
               size="md"
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
               error={errors.userId?.message?.toString()}
             />

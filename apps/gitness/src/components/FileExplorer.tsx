@@ -235,7 +235,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       ) : rootError ? (
         <div>Error loading root folder</div>
       ) : (
-        rootEntries && renderEntries(rootEntries)
+        rootEntries && renderEntries(rootEntries, '')
       )}
     </FileExplorer.Root>
   )

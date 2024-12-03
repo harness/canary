@@ -2,7 +2,7 @@ import { ReactNode, useMemo } from 'react'
 
 import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
 import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { Summary } from '@/views/repo/components'
+import { FileLastChangeBar, Summary } from '@/views/repo/components'
 
 interface RepoFilesProps {
   pathParts: PathParts[]
@@ -26,7 +26,13 @@ export const RepoFiles = ({
   useTranslationStore
 }: RepoFilesProps) => {
   const content = useMemo(() => {
-    if (!isDir) return children
+    if (!isDir)
+      return (
+        <>
+          <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          {children}
+        </>
+      )
 
     if (loading) return <SkeletonList />
 

@@ -27,7 +27,6 @@ export * from './components/pull-request/pull-request-changes'
 export * from './components/pull-request/interfaces-store'
 
 export * from './components/no-search-results'
-export * from './components/pipeline-studio/pipeline-studio-toolbar-actions'
 export * from './components/pipeline-studio/problems'
 export * from './components/pipeline-studio/visual-yaml-toggle'
 export * from './components/pipeline-studio/step-form/step-form'
@@ -69,7 +68,6 @@ export * from './components/project-settings/form-member-delete-dialog'
 export * from './components/project-settings/form-member-edit-dialog'
 
 export * from './components/filter'
-export * from './components/copy-button'
 export * from './components/profile-settings/delete-alert-dialog'
 export * from './components/alert-delete-dialog'
 

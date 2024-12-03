@@ -16,6 +16,9 @@ const Horizontal: React.FC<LayoutProps> = ({ children, gap = 'space-x-4', classN
   return <div className={cx(`flex ${gap}`, className)}>{children}</div>
 }
 
+/**
+ * @deprecated
+ */
 export const Layout = {
   Vertical,
   Horizontal

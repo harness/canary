@@ -10,8 +10,8 @@ import {
   StackedList,
   Text
 } from '@harnessio/canary'
+import { CopyButton } from '@harnessio/ui/components'
 
-import { CopyButton } from '../copy-button'
 import { useDiffConfig } from './hooks/useDiffConfig'
 import PullRequestDiffViewer from './pull-request-diff-viewer'
 import { parseStartingLineIfOne } from './utils'

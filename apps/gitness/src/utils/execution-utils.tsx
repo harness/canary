@@ -4,7 +4,7 @@ import { ExecutionState } from '@harnessio/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (
-    <div className="bg-tertiary-background/10 flex items-center gap-1 rounded-md px-1.5 font-mono">
+    <div className="flex items-center gap-1 rounded-md bg-tertiary-background/10 px-1.5 font-mono">
       <Icon name="branch" size={11} className="text-tertiary-background" />
       {branch}
     </div>

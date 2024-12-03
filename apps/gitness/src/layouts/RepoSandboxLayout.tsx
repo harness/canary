@@ -11,7 +11,7 @@ const RepoSandboxLayout: React.FC = () => {
   return (
     <>
       <SandboxLayout.SubHeader>
-        <div className="text-muted-foreground border-border-background inline-flex h-[44px] w-full items-center justify-start gap-6 border-b px-8">
+        <div className="inline-flex h-[44px] w-full items-center justify-start gap-6 border-b border-border-background px-8 text-muted-foreground">
           <NavLink to="summary" className={({ isActive }) => getLinkClasses(isActive)}>
             Summary
           </NavLink>

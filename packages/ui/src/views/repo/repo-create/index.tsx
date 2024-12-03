@@ -132,6 +132,7 @@ export function RepoCreatePage({
               placeholder="Enter repository name"
               size="md"
               error={errors.name?.message?.toString()}
+              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
             {/* DESCRIPTION */}

@@ -12,10 +12,11 @@ import {
   useGetContentQuery,
   useListBranchesQuery,
   useListPathsQuery,
+  useListTagsQuery,
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
+import { BranchSelectorListItem, BranchSelectorTab, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
 import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -24,14 +25,15 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
 import { PathParams } from '../../RouteDefinitions'
-import { decodeGitContent, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
+import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 
 export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { spaceId, repoId, gitRef } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
+  const [gitRef, setGitRef] = useState<string>('')
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -40,7 +42,7 @@ export default function RepoSummaryPage() {
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
 
-  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({
+  const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
     name: '',
     sha: ''
   })
@@ -83,6 +85,47 @@ export default function RepoSummaryPage() {
     }))
   }, [branches, repository?.default_branch])
 
+  const { data: tags } = useListTagsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      order: 'asc',
+      limit: 20,
+      page: 1,
+      query: ''
+    }
+  })
+
+  const tagsList: BranchSelectorListItem[] = useMemo(() => {
+    if (!tags?.body) return []
+
+    return tags.body.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: false
+    }))
+  }, [tags])
+
+  const selectBranchorTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          setGitRef(branch.name)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagsList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchTag(tag)
+          setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
+        }
+      }
+    },
+    [navigate, repoId, spaceId, branchList, tagsList]
+  )
+
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query }
@@ -93,7 +136,7 @@ export default function RepoSummaryPage() {
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
-    queryParams: { include_commit: false, git_ref: normalizeGitRef(selectedBranch.name) }
+    queryParams: { include_commit: false, git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
   })
 
   const decodedReadmeContent = useMemo(() => {
@@ -103,7 +146,7 @@ export default function RepoSummaryPage() {
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(selectedBranch.name) }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
   })
 
   const { mutate: createToken } = useCreateTokenMutation(
@@ -150,9 +193,8 @@ export default function RepoSummaryPage() {
   }
 
   const buildFilePath = useCallback(
-    (itemPath: string | undefined) =>
-      `/${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch?.name}/~/${itemPath}`,
-    [spaceId, repoId, gitRef, selectedBranch]
+    (itemPath: string | undefined) => `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${itemPath}`,
+    [spaceId, repoId, gitRef, selectedBranchTag]
   )
 
   useEffect(() => {
@@ -163,7 +205,7 @@ export default function RepoSummaryPage() {
     }
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(selectedBranch.name) },
+      queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -187,7 +229,7 @@ export default function RepoSummaryPage() {
       .finally(() => {
         setLoading(false)
       })
-  }, [repoEntryPathToFileTypeMap, selectedBranch, repoRef, buildFilePath])
+  }, [repoEntryPathToFileTypeMap, selectedBranchTag, repoRef, buildFilePath, gitRef])
 
   useEffect(() => {
     if (!branchList.length) {
@@ -196,7 +238,7 @@ export default function RepoSummaryPage() {
 
     const defaultBranch = branchList.find(branch => branch.default)
 
-    setSelectedBranch({
+    setSelectedBranchTag({
       name: defaultBranch?.name || '',
       sha: defaultBranch?.sha || '',
       default: true
@@ -205,16 +247,16 @@ export default function RepoSummaryPage() {
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranch.name) }
+    queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
   })
 
   const filesList = filesData?.body?.files || []
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranch.name}/~/${filePath}`)
+      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranchTag.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranch, navigate, repoId, spaceId]
+    [gitRef, selectedBranchTag, navigate, repoId, spaceId]
   )
 
   const latestCommitInfo = useMemo(() => {
@@ -241,10 +283,10 @@ export default function RepoSummaryPage() {
     <>
       <RepoSummaryView
         loading={loading}
-        selectedBranch={selectedBranch}
+        selectedBranch={selectedBranchTag}
         branchList={branchList}
-        tagList={[]}
-        selectBranch={setSelectedBranch}
+        tagList={tagsList}
+        selectBranch={selectBranchorTag}
         filesList={filesList}
         navigateToFile={navigateToFile}
         repository={repository}

@@ -9,14 +9,14 @@ import {
   useListPathsQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
+import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
-import { FILE_SEPERATOR, normalizeGitRef } from '../../utils/git-utils.ts'
+import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -45,6 +45,16 @@ export const RepoSidebar = () => {
     }
   })
 
+  const branchList: BranchSelectorListItem[] = useMemo(() => {
+    if (!branches?.body) return []
+
+    return branches.body.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: item?.name === repository?.body?.default_branch
+    }))
+  }, [branches, repository?.body?.default_branch])
+
   const { data: tags } = useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
@@ -56,16 +66,6 @@ export const RepoSidebar = () => {
       query: ''
     }
   })
-
-  const branchList: BranchSelectorListItem[] = useMemo(() => {
-    if (!branches?.body) return []
-
-    return branches.body.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: item?.name === repository?.body?.default_branch
-    }))
-  }, [branches, repository?.body?.default_branch])
 
   const tagsList: BranchSelectorListItem[] = useMemo(() => {
     if (!tags?.body) return []
@@ -114,15 +114,19 @@ export const RepoSidebar = () => {
   const filesList = filesData?.body?.files || []
 
   const selectBranch = useCallback(
-    (branchTagName: BranchSelectorListItem) => {
-      const branch = branchList.find(branch => branch.name === branchTagName.name)
-      const tag = tagsList.find(tag => tag.name === branchTagName.name)
-      if (branch) {
-        setSelectedBranchTag(branch)
-        navigate(`/${spaceId}/repos/${repoId}/code/${branch.name}`)
-      } else if (tag) {
-        setSelectedBranchTag(tag)
-        navigate(`/${spaceId}/repos/${repoId}/code/refs/tags/${tag.name}`)
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          navigate(`/${spaceId}/repos/${repoId}/code/${branch.name}`)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagsList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchTag(tag)
+          navigate(`/${spaceId}/repos/${repoId}/code/${REFS_TAGS_PREFIX + tag.name}`)
+        }
       }
     },
     [navigate, repoId, spaceId, branchList, tagsList]

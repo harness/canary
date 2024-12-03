@@ -16,7 +16,7 @@ import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
 import { TFunction } from 'i18next'
 
-enum BranchSelectorTab {
+export enum BranchSelectorTab {
   BRANCHES = 'branches',
   TAGS = 'tags'
 }
@@ -36,7 +36,7 @@ export interface BranchSelectorDropdownProps {
   selectedBranch: BranchSelectorListItem
   branchList: BranchSelectorListItem[]
   tagList: BranchSelectorListItem[]
-  onSelectBranch: (branch: BranchSelectorListItem) => void
+  onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   repoId: string
   spaceId: string
   useTranslationStore: () => TranslationStore
@@ -153,7 +153,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                   'bg-background-4': isSelected,
                   'pl-7': !isSelected
                 })}
-                onClick={() => onSelectBranch(item)}
+                onClick={() => onSelectBranch(item, activeTab)}
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">

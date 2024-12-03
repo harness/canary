@@ -5,6 +5,8 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorListItem } from '@views/repo'
 import { BranchSelector } from '@views/repo/components'
 
+import { BranchSelectorTab } from '../components/branch-selector/branch-selector-dropdown'
+
 interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
@@ -13,7 +15,7 @@ interface RepoSidebarProps {
   selectedBranch: BranchSelectorListItem
   branchList: BranchSelectorListItem[]
   tagList: BranchSelectorListItem[]
-  selectBranch: (branch: BranchSelectorListItem) => void
+  selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   navigateToNewFile: () => void
   navigateToNewFolder: () => void
   navigateToFile: (file: string) => void

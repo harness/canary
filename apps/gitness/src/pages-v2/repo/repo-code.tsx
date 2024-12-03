@@ -12,28 +12,26 @@ import {
 import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 
+export enum CodeModes {
+  EDIT = 'edit',
+  NEW = 'new',
+  VIEW = 'view'
+}
+
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, gitRef } = useParams<PathParams>()
-  const subCodePath = useParams()['*'] || ''
-
-  // Split the subCodePath into parts to avoid redundant splitting
-  const [rawSubGitRef = '', rawResourcePath = ''] = subCodePath.split('~')
-
-  // Normalize values to remove slash if present
-  const subGitRef = rawSubGitRef.endsWith('/') ? rawSubGitRef.slice(0, -1) : rawSubGitRef
-  const fullGitRef = subGitRef ? gitRef + '/' + subGitRef : gitRef
-  const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
-
+  const { spaceId, repoId } = useParams<PathParams>()
+  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [
@@ -45,7 +43,7 @@ export const RepoCode = () => {
   ]
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
-  const [selectedBranch, setSelectedBranch] = useState<string>(fullGitRef || '')
+  const [selectedBranch, setSelectedBranch] = useState<string>(gitRefName || '')
 
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: fullResourcePath || '',
@@ -151,7 +149,7 @@ export const RepoCode = () => {
           TODO: Here, the FileContentViewer will need to be passed as a child component,
           but it hasn’t yet undergone the work of migrating components to the UI directory.
         */}
-        {'Test'}
+        {codeMode === CodeModes.EDIT ? 'EDIT FILE' : codeMode === CodeModes.VIEW ? 'VIEW FILE' : ''}
       </>
     </RepoFiles>
   )

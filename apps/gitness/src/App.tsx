@@ -177,14 +177,8 @@ export default function App() {
                   element: <RepoCode />
                 },
                 {
-                  path: ':gitRef*',
-                  element: <RepoCode />,
-                  children: [
-                    {
-                      path: '*',
-                      element: <RepoCode />
-                    }
-                  ]
+                  path: '*',
+                  element: <RepoCode />
                 }
               ]
             },

@@ -18,7 +18,6 @@ import {
 } from '@/components'
 import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
-import { use } from 'i18next'
 
 interface SummaryProps {
   latestFile: LatestFileTypes

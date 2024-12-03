@@ -1,4 +1,4 @@
-import { ReactNode, useMemo, useTransition } from 'react'
+import { ReactNode, useMemo } from 'react'
 
 import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
 import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
@@ -43,7 +43,7 @@ export const RepoFiles = ({
         secondaryButton={{ label: 'Import file' }}
       />
     )
-  }, [isDir, children, loading, isShowSummary, latestFile, files])
+  }, [isDir, children, loading, isShowSummary, latestFile, files, useTranslationStore])
 
   return (
     <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>

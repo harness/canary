@@ -1,7 +1,3 @@
-import { Options } from '@dnd-kit/core/dist/hooks/utilities/useAutoScroller'
-
-import { ListBranchesOkResponse } from '@harnessio/code-service-client'
-
 export interface TypesCommit {
   author?: TypesSignature
   committer?: TypesSignature

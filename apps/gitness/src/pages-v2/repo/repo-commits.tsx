@@ -2,21 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { Spacer, Text } from '@harnessio/canary'
-import {
-  TypesCommit,
-  useFindRepositoryQuery,
-  useListBranchesQuery,
-  useListCommitsQuery
-} from '@harnessio/code-service-client'
-import { NoData, PaginationComponent, SkeletonList } from '@harnessio/ui/components'
-import {
-  Filter,
-  PullRequestCommits,
-  RepoCommitsBranchSelector,
-  RepoCommitsView,
-  SandboxLayout
-} from '@harnessio/ui/views'
+import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery } from '@harnessio/code-service-client'
+import { RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PageResponseHeader } from '../../types'
@@ -56,73 +43,21 @@ export default function RepoCommitsPage() {
     setSelectedBranch(branch)
   }
 
-  //   const renderListContent = () => {
-  //     if (isFetchingCommits) return <SkeletonList />
-  //     const commitsList = commitData?.commits
-  //     if (!commitsList?.length) {
-  //       return <NoData iconName="no-data-folder" title="No commits yet" description={['There are no commits yet.']} />
-  //     }
-
-  //     return (
-  //       <PullRequestCommits
-  //         data={commitsList.map((item: TypesCommit) => ({
-  //           sha: item.sha,
-  //           parent_shas: item.parent_shas,
-  //           title: item.title,
-  //           message: item.message,
-  //           author: item.author,
-  //           committer: item.committer
-  //         }))}
-  //       />
-  //     )
-  //   }
-
-  //   return (
-  //     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
-  //       <SandboxLayout.Content>
-  //         <Spacer size={10} />
-  //         <Text size={5} weight={'medium'}>
-  //           Commits
-  //         </Text>
-  //         <Spacer size={6} />
-  //         <div className="flex justify-between gap-5">
-  //           {!isFetchingBranches && branches && (
-  //             <RepoCommitsBranchSelector
-  //               name={selectedBranch}
-  //               branchList={branches.map(item => ({
-  //                 name: item.name || ''
-  //               }))}
-  //               selectBranch={(branch: string) => selectBranch(branch)}
-  //             />
-  //           )}
-
-  //           <Filter showSearch={false} sortOptions={sortOptions} />
-  //         </div>
-  //         <Spacer size={5} />
-  //         {renderListContent()}
-  //         <Spacer size={8} />
-  //         <PaginationComponent
-  //           nextPage={xNextPage}
-  //           previousPage={xPrevPage}
-  //           currentPage={page}
-  //           goToPage={(pageNum: number) => setPage(pageNum)}
-  //         />
-  //       </SandboxLayout.Content>
-  //     </SandboxLayout.Main>
-  //   )
-
   return (
     <RepoCommitsView
-      branches={branches}
+      branches={branches?.map(branch => {
+        return { name: branch.name }
+      })}
       commitsList={commitData?.commits}
       isFetchingBranches={isFetchingBranches}
       isFetchingCommits={isFetchingCommits}
       page={page}
       selectBranch={selectBranch}
       selectedBranch={selectedBranch}
-      setPage={setPage}
+      setPage={(page: number) => setPage(page)}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
+      sortOptions={sortOptions}
     />
   )
 }

@@ -29,4 +29,7 @@ export interface TranslationStore {
 export interface RepoListProps {
   useRepoStore: () => RepoStore
   useTranslationStore: () => TranslationStore
+  isLoading: boolean
+  isError: boolean
+  errorMessage?: string
 }

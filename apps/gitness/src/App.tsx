@@ -142,6 +142,16 @@ export default function App() {
                 {
                   index: true,
                   element: <RepoCode />
+                },
+                {
+                  path: ':gitRef*',
+                  element: <RepoCode />,
+                  children: [
+                    {
+                      path: '*',
+                      element: <RepoCode />
+                    }
+                  ]
                 }
               ]
             },

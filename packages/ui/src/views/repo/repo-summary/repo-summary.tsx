@@ -151,7 +151,7 @@ export function RepoSummaryView({
                       <DropdownMenuItem
                         key={'create-file'}
                         onClick={() => {
-                          navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch}/~/`)
+                          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch.name}/~/`)
                         }}
                       >
                         + Create New File

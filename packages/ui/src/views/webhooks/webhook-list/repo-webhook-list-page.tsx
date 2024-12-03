@@ -15,8 +15,9 @@ import useFilters from '@components/filters/use-filters'
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@components/index'
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
+import { BASIC_CONDITIONS, RANGE_CONDITIONS } from 'dist/views'
 
-import { BASIC_CONDITIONS, RANGE_CONDITIONS, SandboxLayout } from '../../index'
+import { SandboxLayout } from '../../index'
 import { RepoWebhookList } from './repo-webhook-list'
 import { WebhookListProps } from './types'
 

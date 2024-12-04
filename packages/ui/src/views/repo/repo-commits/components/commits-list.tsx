@@ -9,7 +9,7 @@ interface CommitProps {
   data?: TypesCommit[]
 }
 
-export const PullRequestCommits = ({ ...props }: CommitProps) => {
+export const CommitsList = ({ ...props }: CommitProps) => {
   const data = props.data
   const commitsGroupedByDate: Record<string, TypesCommit[]> = useMemo(
     () =>

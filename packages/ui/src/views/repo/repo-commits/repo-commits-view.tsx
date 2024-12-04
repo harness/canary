@@ -6,8 +6,8 @@ import { Text } from '@components/text'
 import { BranchSelectorListItem, SandboxLayout, TranslationStore } from '@views/index'
 
 import { BranchSelector } from '../components/branch-selector/branch-selector'
+import { CommitsList } from './components/commits-list'
 import { Filter } from './components/filter'
-import { PullRequestCommits } from './components/pull-request-commits'
 import { TypesCommit } from './types'
 
 interface RepoCommitsViewProps {
@@ -80,7 +80,7 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         ) : !props.commitsList?.length ? (
           <NoData iconName="no-data-folder" title="No commits yet" description={['There are no commits yet.']} />
         ) : (
-          <PullRequestCommits
+          <CommitsList
             data={props.commitsList.map((item: TypesCommit) => ({
               sha: item.sha,
               parent_shas: item.parent_shas,

@@ -3,11 +3,11 @@ import { PaginationComponent } from '@components/pagination-component'
 import { SkeletonList } from '@components/skeleton-list'
 import { Spacer } from '@components/spacer'
 import { Text } from '@components/text'
-import { SandboxLayout } from '@views/index'
+import { BranchSelectorListItem, SandboxLayout, TranslationStore } from '@views/index'
 
+import { BranchSelector } from '../components/branch-selector/branch-selector'
 import { Filter } from './components/filter'
 import { PullRequestCommits } from './components/pull-request-commits'
-import { RepoCommitsBranchSelector } from './components/repo-commits-branch-selector'
 import { TypesCommit } from './types'
 
 interface RepoCommitsViewProps {
@@ -16,9 +16,10 @@ interface RepoCommitsViewProps {
   isFetchingBranches: boolean
   branches?: {
     name?: string
+    sha?: string
   }[]
-  selectedBranch: string
-  selectBranch: (branch: string) => void
+  selectedBranch: BranchSelectorListItem
+  selectBranch: (branch: BranchSelectorListItem) => void
   xNextPage: number
   xPrevPage: number
   page: number
@@ -30,6 +31,10 @@ interface RepoCommitsViewProps {
   setSort: (sort: string) => void
   query: string | null
   setQuery: (query: string) => void
+  repoId: string
+  tagList: BranchSelectorListItem[]
+  spaceId: string
+  useTranslationStore: () => TranslationStore
 }
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
@@ -45,12 +50,17 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
           {!isFetchingBranches && branches && (
-            <RepoCommitsBranchSelector
-              name={selectedBranch}
+            <BranchSelector
               branchList={branches.map(item => ({
-                name: item.name || ''
+                name: item.name || '',
+                sha: item.sha || ''
               }))}
-              selectBranch={(branch: string) => selectBranch(branch)}
+              selectedBranch={selectedBranch}
+              tagList={props.tagList}
+              onSelectBranch={selectBranch}
+              repoId={props.repoId}
+              spaceId={props.spaceId}
+              useTranslationStore={props.useTranslationStore}
             />
           )}
 

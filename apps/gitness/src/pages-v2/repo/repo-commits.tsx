@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery } from '@harnessio/code-service-client'
-import { RepoCommitsView } from '@harnessio/ui/views'
+import { BranchSelectorListItem, RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 
@@ -13,6 +16,7 @@ const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { nam
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
+  const { spaceId, repoId } = useParams<PathParams>()
 
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const [sort, setSort] = useQueryState('sort')
@@ -24,11 +28,11 @@ export default function RepoCommitsPage() {
     queryParams: { page }
   })
 
-  const [selectedBranch, setSelectedBranch] = useState<string>('')
+  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({ name: '', sha: '' })
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
-    queryParams: { page, git_ref: normalizeGitRef(selectedBranch), include_stats: true }
+    queryParams: { page, git_ref: normalizeGitRef(selectedBranch?.name), include_stats: true }
   })
 
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
@@ -39,18 +43,19 @@ export default function RepoCommitsPage() {
 
   useEffect(() => {
     if (repository) {
-      setSelectedBranch(repository?.default_branch || '')
+      const defaultBranchSha = branches?.find(branch => branch.name === repository?.default_branch)?.sha || ''
+      setSelectedBranch({ name: repository?.default_branch || '', sha: defaultBranchSha })
     }
   }, [repository])
 
-  const selectBranch = (branch: string) => {
+  const selectBranch = (branch: BranchSelectorListItem) => {
     setSelectedBranch(branch)
   }
 
   return (
     <RepoCommitsView
       branches={branches?.map(branch => {
-        return { name: branch.name }
+        return { name: branch.name, sha: branch.sha }
       })}
       commitsList={commitData?.commits}
       isFetchingBranches={isFetchingBranches}
@@ -66,6 +71,10 @@ export default function RepoCommitsPage() {
       setSort={(sort: string) => setSort(sort)}
       query={query}
       setQuery={(query: string) => setQuery(query)}
+      repoId={repoId || ''}
+      spaceId={spaceId || ''}
+      tagList={[]}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

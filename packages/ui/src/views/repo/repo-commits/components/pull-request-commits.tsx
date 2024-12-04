@@ -36,37 +36,43 @@ export const PullRequestCommits = ({ ...props }: CommitProps) => {
           <NodeGroup.Content>
             {commitData && commitData.length > 0 && (
               <StackedList.Root>
-                {commitData.map((commit, repo_idx) => (
-                  <StackedList.Item
-                    className="hover:bg-transparent"
-                    key={commit.title}
-                    isLast={commitData.length - 1 === repo_idx}
-                  >
-                    <StackedList.Field
-                      title={
-                        <div className="flex flex-col">
-                          <div className="max-w-[500px] truncate">{commit.title}</div>
-                          <div className="flex items-center pt-1">
-                            <div className="bg-tertiary-background h-5 w-5 rounded-full bg-cover">
-                              <Avatar className="h-5 w-5 rounded-full p-0">
-                                <AvatarFallback>
-                                  <Text size={1} color="tertiaryBackground">
-                                    {/* TODO: fix fallback string */}
-                                    {getInitials(commit.author?.identity?.name || 'Gitness')}
-                                  </Text>
-                                </AvatarFallback>
-                              </Avatar>
+                {commitData.map((commit, repo_idx) => {
+                  const authorName = commit.author?.identity?.name
+
+                  return (
+                    <StackedList.Item
+                      className="hover:bg-transparent"
+                      key={commit.title}
+                      isLast={commitData.length - 1 === repo_idx}
+                    >
+                      <StackedList.Field
+                        title={
+                          <div className="flex flex-col">
+                            <div className="max-w-[500px] truncate">{commit.title}</div>
+                            <div className="flex items-center pt-1">
+                              {authorName && (
+                                <div className="bg-tertiary-background h-5 w-5 rounded-full bg-cover">
+                                  <Avatar className="h-5 w-5 rounded-full p-0">
+                                    <AvatarFallback>
+                                      <Text size={1} color="tertiaryBackground">
+                                        {/* TODO: fix fallback string */}
+                                        {getInitials(authorName)}
+                                      </Text>
+                                    </AvatarFallback>
+                                  </Avatar>
+                                </div>
+                              )}
+                              <Text className="text-tertiary-background pl-2 text-xs">{`${authorName || ''} commited on ${date}`}</Text>
                             </div>
-                            <Text className="text-tertiary-background pl-2 text-xs">{`${commit.author?.identity?.name} commited on ${date}`}</Text>
                           </div>
-                        </div>
-                      }
-                    />
-                    {commit?.sha && (
-                      <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
-                    )}
-                  </StackedList.Item>
-                ))}
+                        }
+                      />
+                      {commit?.sha && (
+                        <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
+                      )}
+                    </StackedList.Item>
+                  )
+                })}
               </StackedList.Root>
             )}
           </NodeGroup.Content>

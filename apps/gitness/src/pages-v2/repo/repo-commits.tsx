@@ -1,16 +1,17 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, RepoCommitsView } from '@harnessio/ui/views'
+import { RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { useBranchSelectorStore } from './stores/branch-selector-store'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
@@ -24,11 +25,26 @@ export default function RepoCommitsPage() {
     queryParams: { page }
   })
 
-  const [selectedBranch, setSelectedBranch] = useState<BranchSelectorListItem>({ name: '', sha: '' })
+  const { branchList, setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } =
+    useBranchSelectorStore()
+
+  useEffect(() => {
+    branches &&
+      !branchList &&
+      setBranchList(
+        branches.map(item => ({
+          name: item.name || '',
+          sha: item.sha || ''
+        }))
+      )
+
+    repoId && setRepoId(repoId)
+    spaceId && setSpaceId(spaceId)
+  }, [branches, repoId, spaceId, branchList])
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
-    queryParams: { page, git_ref: normalizeGitRef(selectedBranch?.name), include_stats: true }
+    queryParams: { page, git_ref: normalizeGitRef(selectedBranchTag?.name), include_stats: true }
   })
 
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
@@ -40,31 +56,20 @@ export default function RepoCommitsPage() {
   useEffect(() => {
     if (repository) {
       const defaultBranchSha = branches?.find(branch => branch.name === repository?.default_branch)?.sha || ''
-      setSelectedBranch({ name: repository?.default_branch || '', sha: defaultBranchSha })
+      !selectedBranchTag && setSelectedBranchTag({ name: repository?.default_branch || '', sha: defaultBranchSha })
     }
-  }, [repository])
-
-  const selectBranch = (branch: BranchSelectorListItem) => {
-    setSelectedBranch(branch)
-  }
+  }, [repository, selectedBranchTag])
 
   return (
     <RepoCommitsView
-      branches={branches?.map(branch => {
-        return { name: branch.name, sha: branch.sha }
-      })}
       commitsList={commitData?.commits}
       isFetchingBranches={isFetchingBranches}
       isFetchingCommits={isFetchingCommits}
       page={page}
-      selectBranch={selectBranch}
-      selectedBranch={selectedBranch}
       setPage={(page: number) => setPage(page)}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
-      repoId={repoId || ''}
-      spaceId={spaceId || ''}
-      tagList={[]}
+      useBranchSelectorStore={useBranchSelectorStore}
       useTranslationStore={useTranslationStore}
     />
   )

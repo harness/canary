@@ -22,7 +22,9 @@ export interface BranchSelectorDropdownProps {
   selectedBranch: BranchSelectorListItem
   branchList: BranchSelectorListItem[]
   tagList: BranchSelectorListItem[]
-  onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  onSelectBranch?: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
+  setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
   repoId: string
   spaceId: string
   useTranslationStore: () => TranslationStore

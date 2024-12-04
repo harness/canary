@@ -26,6 +26,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   branchList,
   tagList = [],
   onSelectBranch,
+  setSelectedBranchTag,
+  setSelectedBranchType,
   repoId,
   spaceId,
   useTranslationStore
@@ -116,7 +118,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
         <div className="max-h-[360px] overflow-y-auto px-1">
           {filteredItems.map(item => {
-            const isSelected = item.name === selectedBranch.name && item.sha === selectedBranch.sha
+            const isSelected = selectedBranch
+              ? item.name === selectedBranch.name && item.sha === selectedBranch.sha
+              : false
             const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
 
             return (
@@ -126,7 +130,12 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                   'bg-background-4': isSelected,
                   'pl-7': !isSelected
                 })}
-                onClick={() => onSelectBranch(item, activeTab)}
+                onClick={() => {
+                  onSelectBranch && onSelectBranch(item, activeTab)
+
+                  setSelectedBranchTag(item)
+                  setSelectedBranchType(activeTab)
+                }}
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">

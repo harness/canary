@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -17,19 +17,28 @@ import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
+import { useBranchSelectorStore } from './stores/branch-selector-store.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
+  const { selectedBranch, setSelectedBranch, setSpaceId, setRepoId } = useBranchSelectorStore()
+
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
-    name: gitRefName || '',
-    sha: ''
-  })
+  // const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
+  //   name: gitRefName || '',
+  //   sha: ''
+  // })
   const navigate = useNavigate()
+
+  useEffect(() => {
+    !selectedBranch && setSelectedBranch({ name: fullGitRef || '', sha: '' })
+    setSpaceId(spaceId || '')
+    setRepoId(repoId || '')
+  }, [fullGitRef, spaceId, repoId, selectedBranch])
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
 

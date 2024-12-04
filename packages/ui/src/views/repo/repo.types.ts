@@ -1,3 +1,5 @@
+import { BranchSelectorTab } from './components/branch-selector/types'
+
 export interface BranchSelectorListItem {
   name: string
   sha: string
@@ -47,3 +49,26 @@ export interface RepoFile {
 }
 
 export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
+
+export interface IBranchSelectorStore {
+  // selectedBranch?: BranchSelectorListItem
+  // setSelectedBranch: (selectedBranch?: BranchSelectorListItem) => void
+
+  selectedBranchTag: BranchSelectorListItem
+  setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
+
+  selectedBranchType: BranchSelectorTab
+  setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
+
+  branchList: BranchSelectorListItem[]
+  setBranchList: (branchList?: BranchSelectorListItem[]) => void
+
+  tagList: BranchSelectorListItem[]
+  setTagList: (tagList: BranchSelectorListItem[]) => void
+
+  repoId: string
+  setRepoId: (repoId: string) => void
+
+  spaceId: string
+  setSpaceId: (spaceId: string) => void
+}

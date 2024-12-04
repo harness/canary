@@ -30,6 +30,7 @@ import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../p
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
+import { useBranchSelectorStore } from '../repo/stores/branch-selector-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -313,12 +314,23 @@ export const CreatePullRequest = () => {
     [branchList, tagsList]
   )
 
+  const { setTagList, setBranchList, setRepoId, setSpaceId } = useBranchSelectorStore()
+
+  useEffect(() => {
+    setTagList(tagsList)
+    setBranchList(branchList)
+  }, [tagsList, branchList])
+
+  useEffect(() => {
+    setRepoId(repoId || '')
+    setSpaceId(spaceId || '')
+  }, [spaceId, repoId])
+
   const renderContent = () => {
     if (isFetchingBranches) return <SkeletonList />
 
     return (
       <PullRequestCompare
-        tagList={tagsList}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}
@@ -329,17 +341,19 @@ export const CreatePullRequest = () => {
         onFormDraftSubmit={onDraftSubmit}
         mergeability={mergeability}
         selectBranch={selectBranchorTag}
-        repoId={repoId || ''}
-        spaceId={spaceId || ''}
         useTranslationStore={useTranslationStore}
-        branchList={
-          branches
-            ? branches?.map((item: TypesBranchExtended) => ({
-                name: item.name || '',
-                sha: item.sha || ''
-              }))
-            : []
-        }
+        useBranchSelectorStore={useBranchSelectorStore}
+        // tagList={tagsList}
+        // repoId={repoId || ''}
+        // spaceId={spaceId || ''}
+        // branchList={
+        //   branches
+        //     ? branches?.map((item: TypesBranchExtended) => ({
+        //         name: item.name || '',
+        //         sha: item.sha || ''
+        //       }))
+        //     : []
+        // }
         commitData={commitData?.commits?.map((item: TypesCommit) => ({
           sha: item.sha,
           parent_shas: item.parent_shas,

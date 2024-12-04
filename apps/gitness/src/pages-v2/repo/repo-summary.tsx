@@ -26,6 +26,7 @@ import { TokenFormType } from '../../pages/profile-settings/token-create/token-c
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { useBranchSelectorStore } from './stores/branch-selector-store'
 
 export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
@@ -35,6 +36,16 @@ export default function RepoSummaryPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
 
+  const {
+    branchList,
+    setBranchList,
+    setSpaceId,
+    setRepoId,
+    selectedBranchTag,
+    setSelectedBranchTag,
+    selectedBranchType
+  } = useBranchSelectorStore()
+
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
@@ -42,10 +53,15 @@ export default function RepoSummaryPage() {
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
 
-  const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
-    name: '',
-    sha: ''
-  })
+  // const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
+  //   name: '',
+  //   sha: ''
+  // })
+
+  useEffect(() => {
+    setSpaceId(spaceId || '')
+    setRepoId(repoId || '')
+  }, [spaceId, repoId])
 
   const { mutate: updateDescription } = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
@@ -75,14 +91,24 @@ export default function RepoSummaryPage() {
 
   const { query } = useCommonFilter()
 
-  const branchList: BranchSelectorListItem[] = useMemo(() => {
-    if (!branches) return []
+  // const branchList: BranchSelectorListItem[] = useMemo(() => {
+  //   if (!branches) return []
 
-    return branches.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: item?.name === repository?.default_branch
-    }))
+  //   return branches.map(item => ({
+  //     name: item?.name || '',
+  //     sha: item?.sha || '',
+  //     default: item?.name === repository?.default_branch
+  //   }))
+  // }, [branches, repository?.default_branch])
+
+  useEffect(() => {
+    setBranchList(
+      branches?.map(item => ({
+        name: item?.name || '',
+        sha: item?.sha || '',
+        default: item?.name === repository?.default_branch
+      }))
+    )
   }, [branches, repository?.default_branch])
 
   const { data: tags } = useListTagsQuery({
@@ -107,24 +133,40 @@ export default function RepoSummaryPage() {
     }))
   }, [tags])
 
-  const selectBranchorTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          setSelectedBranchTag(branch)
-          setGitRef(branch.name)
-        }
-      } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagsList.find(tag => tag.name === branchTagName.name)
-        if (tag) {
-          setSelectedBranchTag(tag)
-          setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
-        }
+  // const selectBranchorTag = useCallback(
+  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+  //     if (type === BranchSelectorTab.BRANCHES) {
+  //       const branch = branchList.find(branch => branch.name === branchTagName.name)
+  //       if (branch) {
+  //         setSelectedBranchTag(branch)
+  //         setGitRef(branch.name)
+  //       }
+  //     } else if (type === BranchSelectorTab.TAGS) {
+  //       const tag = tagsList.find(tag => tag.name === branchTagName.name)
+  //       if (tag) {
+  //         setSelectedBranchTag(tag)
+  //         setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
+  //       }
+  //     }
+  //   },
+  //   [navigate, repoId, spaceId, branchList, tagsList]
+  // )
+
+  useEffect(() => {
+    if (selectedBranchType === BranchSelectorTab.BRANCHES) {
+      const branch = branchList?.find(branch => branch.name === selectedBranchTag.name)
+      if (branch) {
+        setSelectedBranchTag(branch)
+        setGitRef(branch.name)
       }
-    },
-    [navigate, repoId, spaceId, branchList, tagsList]
-  )
+    } else if (selectedBranchType === BranchSelectorTab.TAGS) {
+      const tag = tagsList?.find(tag => tag.name === selectedBranchTag.name)
+      if (tag) {
+        setSelectedBranchTag(tag)
+        setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
+      }
+    }
+  }, [branchList, tagsList, selectedBranchTag, selectedBranchType])
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -232,7 +274,7 @@ export default function RepoSummaryPage() {
   }, [repoEntryPathToFileTypeMap, selectedBranchTag, repoRef, buildFilePath, gitRef])
 
   useEffect(() => {
-    if (!branchList.length) {
+    if (!branchList?.length) {
       return
     }
 
@@ -285,10 +327,10 @@ export default function RepoSummaryPage() {
     <>
       <RepoSummaryView
         loading={isLoading}
-        selectedBranch={selectedBranchTag}
-        branchList={branchList}
-        tagList={tagsList}
-        selectBranch={selectBranchorTag}
+        // selectedBranch={selectedBranchTag}
+        // branchList={branchList}
+        // tagList={tagsList}
+        // selectBranch={selectBranchorTag}
         filesList={filesList}
         navigateToFile={navigateToFile}
         repository={repository}
@@ -297,14 +339,15 @@ export default function RepoSummaryPage() {
         files={files}
         decodedReadmeContent={decodedReadmeContent}
         summaryDetails={summaryDetails}
-        spaceId={spaceId || ''}
-        repoId={repoId || ''}
+        // spaceId={spaceId || ''}
+        // repoId={repoId || ''}
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
         onChangeDescription={onChangeDescription}
         isEditingDescription={isEditingDescription}
         setIsEditingDescription={setIsEditingDescription}
         saveDescription={saveDescription}
+        useBranchSelectorStore={useBranchSelectorStore}
         useTranslationStore={useTranslationStore}
       />
       {createdTokenData && (

@@ -3,9 +3,7 @@ import { ReactNode } from 'react'
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorListItem } from '@views/repo'
-import { BranchSelector } from '@views/repo/components'
-
-import { BranchSelectorTab } from '../components/branch-selector/branch-selector-dropdown'
+import { BranchSelector, BranchSelectorTab } from '@views/repo/components'
 
 interface RepoSidebarProps {
   hasHeader?: boolean

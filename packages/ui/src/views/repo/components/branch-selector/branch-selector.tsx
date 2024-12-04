@@ -1,17 +1,10 @@
 import { FC } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
-import { TranslationStore } from '@/views'
+import { BranchSelectorProps } from '@/views'
 import { cn } from '@utils/cn'
 
-import { BranchSelectorDropdown, type BranchSelectorDropdownProps } from './branch-selector-dropdown'
-
-interface BranchSelectorProps extends BranchSelectorDropdownProps {
-  size?: 'default' | 'sm'
-  prefix?: string
-  className?: string
-  useTranslationStore: () => TranslationStore
-}
+import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
 export const BranchSelector: FC<BranchSelectorProps> = ({
   selectedBranch,

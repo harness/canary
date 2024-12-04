@@ -19,9 +19,8 @@ import {
   Text
 } from '@/components'
 import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, Summary } from '@/views/repo/components'
+import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 
-import { BranchSelectorTab } from '../components/branch-selector/branch-selector-dropdown'
 import SummaryPanel from './components/summary-panel'
 
 export interface RepoSummaryViewProps {

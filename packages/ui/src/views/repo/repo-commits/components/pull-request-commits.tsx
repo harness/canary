@@ -55,7 +55,6 @@ export const PullRequestCommits = ({ ...props }: CommitProps) => {
                                   <Avatar className="h-5 w-5 rounded-full p-0">
                                     <AvatarFallback>
                                       <Text size={1} color="tertiaryBackground">
-                                        {/* TODO: fix fallback string */}
                                         {getInitials(authorName)}
                                       </Text>
                                     </AvatarFallback>

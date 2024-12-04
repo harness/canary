@@ -1,0 +1,19 @@
+{
+  "repositories": [
+    {
+      "id": 1,
+      "name": "canary",
+      "description": "canary repo",
+      "private": false,
+      "stars": 0,
+      "forks": 0,
+      "pulls": 0,
+      "timestamp": "10 hours ago",
+      "createdAt": 1733226941233,
+      "importing": false
+    }
+  ],
+  "totalPages": 1,
+  "isRepoStillImporting": false,
+  "page": 1
+}

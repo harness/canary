@@ -31,7 +31,8 @@ export default defineConfig({
     },
     rollupOptions: {
       external: external
-    }
+    },
+    sourcemap: true
   },
   test: {
     environment: 'jsdom',

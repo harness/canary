@@ -37,7 +37,7 @@ const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
   return filteredRoutes
 }
 
-interface SandboxRootProps {
+export interface SandboxRootProps {
   currentUser: TypesUser | undefined
   // If the user hasn't interacted with the pinned menu items yet,
   // return null — this will ensure the default pinned items are applied.

@@ -23,7 +23,7 @@ import { BranchSelector, Summary } from '@/views/repo/components'
 
 import SummaryPanel from './components/summary-panel'
 
-interface RepoSummaryViewProps {
+export interface RepoSummaryViewProps {
   loading: boolean
   selectedBranch: BranchSelectorListItem
   branchList: BranchSelectorListItem[]

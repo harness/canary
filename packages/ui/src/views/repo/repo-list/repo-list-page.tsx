@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { ChangeEvent, FC, ReactNode, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
@@ -12,9 +12,9 @@ import { getFilterOptions, getSortDirections, getSortOptions } from './filter-op
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
+const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
 
-const SandboxRepoListPage: React.FC<RepoListProps> = ({
+const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
   useTranslationStore,
   isLoading,
@@ -362,14 +362,14 @@ const SandboxRepoListPage: React.FC<RepoListProps> = ({
     setValue(query || '')
   }, [query])
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e?.target?.value)
     handleSearch(e)
   }
 
   const handleResetQuery = () => {
     setValue('')
-    handleSearch({ target: { value: '' } } as React.ChangeEvent<HTMLInputElement>)
+    handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
   }
 
   if (isLoading) return <SkeletonList />

@@ -31,6 +31,7 @@ interface RepoCommitsViewProps {
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
   const { isFetchingCommits, isFetchingBranches, branches, selectedBranch, selectBranch } = props
+  const { t } = props.useTranslationStore()
 
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
@@ -83,6 +84,7 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
           previousPage={props.xPrevPage}
           currentPage={props.page}
           goToPage={(pageNum: number) => props.setPage(pageNum)}
+          t={t}
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

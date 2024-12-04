@@ -7,7 +7,6 @@ import { BranchSelectorListItem, SandboxLayout, TranslationStore } from '@views/
 
 import { BranchSelector } from '../components/branch-selector/branch-selector'
 import { CommitsList } from './components/commits-list'
-import { Filter } from './components/filter'
 import { TypesCommit } from './types'
 
 interface RepoCommitsViewProps {
@@ -24,13 +23,6 @@ interface RepoCommitsViewProps {
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  sortOptions: {
-    name: string
-  }[]
-  sort: string | null
-  setSort: (sort: string) => void
-  query: string | null
-  setQuery: (query: string) => void
   repoId: string
   tagList: BranchSelectorListItem[]
   spaceId: string
@@ -63,23 +55,16 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
               useTranslationStore={props.useTranslationStore}
             />
           )}
-
-          <Filter
-            showSearch={false}
-            sortOptions={props.sortOptions}
-            sort={props.sort}
-            setSort={props.setSort}
-            query={props.query}
-            setQuery={props.setQuery}
-          />
         </div>
         <Spacer size={5} />
 
-        {isFetchingCommits ? (
-          <SkeletonList />
-        ) : !props.commitsList?.length ? (
+        {isFetchingCommits && <SkeletonList />}
+
+        {!props.commitsList?.length && (
           <NoData iconName="no-data-folder" title="No commits yet" description={['There are no commits yet.']} />
-        ) : (
+        )}
+
+        {!isFetchingCommits && props.commitsList?.length && (
           <CommitsList
             data={props.commitsList.map((item: TypesCommit) => ({
               sha: item.sha,

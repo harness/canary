@@ -20,5 +20,5 @@ export default {
   keepRemoved: true,
 
   // i18n keys are wrapped in a function like `t('key')`
-  functions: ['t', 't\\!']
+  functions: ['t']
 }

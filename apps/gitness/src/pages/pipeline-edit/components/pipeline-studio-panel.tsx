@@ -1,7 +1,8 @@
-import { Badge, Button, Tabs, TabsContent, TabsList, TabsTrigger, Icon } from '@harnessio/canary'
-import { PipelineStudioProblemsPanel } from './pipeline-studio-problems-panel'
+import { Badge, Button, Icon, Tabs, TabsContent, TabsList, TabsTrigger } from '@harnessio/canary'
+
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { usePipelineViewContext } from '../context/PipelineStudioViewProvider'
+import { PipelineStudioProblemsPanel } from './pipeline-studio-problems-panel'
 
 export const PipelineStudioPanel = (): JSX.Element => {
   const {
@@ -30,7 +31,8 @@ export const PipelineStudioPanel = (): JSX.Element => {
             }}
             variant="ghost"
             size="sm"
-            className="mx-2 px-2">
+            className="mx-2 px-2"
+          >
             <Icon name="x-mark" />
           </Button>
         </div>

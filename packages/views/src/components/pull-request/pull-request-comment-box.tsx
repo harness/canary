@@ -1,6 +1,10 @@
 import { useMemo, useState } from 'react'
-import { Avatar, AvatarFallback, Text, Button, Textarea } from '@harnessio/canary'
+
+import { Avatar, AvatarFallback, Button, Text } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
+
 import { getInitials } from '../../utils/utils'
+
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   currentUser?: string

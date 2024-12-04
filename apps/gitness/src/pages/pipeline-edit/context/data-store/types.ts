@@ -1,9 +1,36 @@
 import { editor } from 'monaco-editor'
-import { OpenapiGetContentOutput, TypesPipeline, TypesPlugin } from '@harnessio/code-service-client'
+
+import { OpenapiGetContentOutput, TypesPipeline, TypesTemplate } from '@harnessio/code-service-client'
 import { Problem } from '@harnessio/views'
-import { YamlRevision } from '../PipelineStudioDataProvider'
-import { InlineActionArgsType } from '../../utils/inline-actions'
+
 import { YamlProblemSeverity } from '../../types/types'
+import { InlineActionArgsType } from '../../utils/inline-actions'
+import { YamlRevision } from '../PipelineStudioDataProvider'
+
+export enum StepSource {
+  None = 'None',
+  Harness = 'Harness',
+  Templates = 'Templates'
+}
+
+export type NoneStepType = {
+  stepSource: StepSource.None
+}
+
+export type HarnessStepType = {
+  stepSource: StepSource.Harness
+  data: {
+    identifier: string
+    description?: string
+  }
+}
+
+export type TemplateStepType = {
+  stepSource: StepSource.Templates
+  data: TypesTemplate
+}
+
+export type StepType = HarnessStepType | TemplateStepType
 
 export interface DataReducerState {
   /** is all data loaded - UI ready for use */
@@ -33,7 +60,7 @@ export interface DataReducerState {
   /** Edit step intention */
   editStepIntention: { path: string } | null
   /** Current definition from API (or created in ui for built in steps) */
-  currentStepFormDefinition: TypesPlugin | null
+  formStep: StepType | null
   //
   problems: Problem<editor.IMarker>[]
   problemsCount: Record<YamlProblemSeverity | 'all', number>
@@ -51,7 +78,7 @@ export interface YamlRevisionAction {
   payload: YamlRevision
 }
 
-//  add step intention
+// add step intention
 export type AddStepIntentionActionPayload = {
   path: string
   position: InlineActionArgsType['position']

@@ -1,25 +1,28 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+
 import cx from 'classnames'
-import { Handle, NodeProps, Position, Node } from 'reactflow'
-import { Icon } from '@harnessio/canary'
 import { set } from 'lodash-es'
-import { DefaultNodeProps, GroupOrientation, NodeType, PositionType } from '../../../types'
-import {
-  getChildNodes,
-  isParentOfNode,
-  updateNodePositionType,
-  fetchNodeConnections,
-  getNodeById,
-  isContainerNode,
-  getStageNodeDimensions,
-  getNodeDiagnostics,
-  getNodePositionType
-} from '../../../utils/NodeUtils'
-import { dedupeEdges, createEdgesForChildren, mergeEdges } from '../../../../../components/Canvas/utils/EdgeUtils'
-import Expand from '../../../../../icons/Expand'
+import { Handle, Node, NodeProps, Position } from 'reactflow'
+
+import { Icon } from '@harnessio/canary'
+
+import { createEdgesForChildren, dedupeEdges, mergeEdges } from '../../../../../components/Canvas/utils/EdgeUtils'
 import { performLayout } from '../../../../../components/Canvas/utils/LayoutUtils'
 import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
 import useFlowStore from '../../../../../framework/FlowStore/FlowStore'
+import Expand from '../../../../../icons/Expand'
+import { DefaultNodeProps, GroupOrientation, NodeType, PositionType } from '../../../types'
+import {
+  fetchNodeConnections,
+  getChildNodes,
+  getNodeById,
+  getNodeDiagnostics,
+  getNodePositionType,
+  getStageNodeDimensions,
+  isContainerNode,
+  isParentOfNode,
+  updateNodePositionType
+} from '../../../utils/NodeUtils'
 import { GroupNodeProps } from '../GroupNode/GroupNode'
 
 const StageNode = memo((props: NodeProps<GroupNodeProps>) => <StageNodeInternal {...props} />)
@@ -212,7 +215,8 @@ const StageNodeInternal: React.FC<NodeProps<GroupNodeProps>> = props => {
           'flex flex-col items-center justify-between text-xs font-medium leading-3 box-border text-left p-2.5 rounded-lg bg-studio-6 border border-studio-5 border-dashed',
           { 'justify-center': !isExpanded },
           { 'w-[337px] h-[77px]': showZeroState }
-        )}>
+        )}
+      >
         <div className="box-border flex w-full items-center justify-between">
           <div className="flex items-center">
             <div style={{ display: 'flex', alignItems: 'center' }}>

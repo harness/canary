@@ -1,6 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+
+import { DiffEditor, loader, MonacoDiffEditor, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
-import { useMonaco, loader, DiffEditor, MonacoDiffEditor } from '@monaco-editor/react'
+
 import { useTheme } from '../hooks/useTheme'
 import { ThemeDefinition } from '../types/themes'
 

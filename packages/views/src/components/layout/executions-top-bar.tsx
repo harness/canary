@@ -1,4 +1,4 @@
-import { Topbar, Button, ButtonGroup } from '@harnessio/canary'
+import { Button, ButtonGroup, Topbar } from '@harnessio/canary'
 
 export const ExecutionsTopBar: React.FC = () => {
   return (

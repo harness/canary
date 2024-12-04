@@ -1,17 +1,18 @@
 import {
-  Spacer,
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Badge,
   Button,
   Icon,
-  Badge,
+  Spacer,
   Text
 } from '@harnessio/canary'
+
 import { FormRemoveUserDialogProps } from './interfaces'
 
 //Form Add Admin Dialog
@@ -30,7 +31,7 @@ export const FormAddAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
         <AlertDialogHeader>
           <AlertDialogTitle>
             Are you sure you want to add
-            <Badge type="admin" className="mx-2" variant="muted" disableHover={true}>
+            <Badge className="mx-2" disableHover={true}>
               <Text>{user?.display_name}</Text>
             </Badge>
             as an admin?
@@ -60,7 +61,8 @@ export const FormAddAdminDialog: React.FC<FormRemoveUserDialogProps> = ({
                 updateUserAdmin(user?.uid ?? '', true)
                 onRemove()
               }}
-              disabled={isRemoving || removeSuccess}>
+              disabled={isRemoving || removeSuccess}
+            >
               {isRemoving ? 'Adding admin...' : 'Yes, add admin'}
             </Button>
           )}

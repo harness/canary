@@ -1,6 +1,6 @@
+import { z } from 'zod'
+
 import {
-  Alert,
-  AlertTitle,
   Button,
   Dialog,
   DialogContent,
@@ -22,7 +22,7 @@ import {
   Spacer,
   useZodForm
 } from '@harnessio/canary'
-import { z } from 'zod'
+import { Alert } from '@harnessio/ui/components'
 
 export interface Branch {
   name?: string
@@ -97,7 +97,8 @@ export function CreateBranchDialog({
                   <Select
                     disabled={isLoadingBranches || !branches?.length}
                     onValueChange={field.onChange}
-                    defaultValue={field.value}>
+                    defaultValue={field.value}
+                  >
                     <FormControl className="text-primary">
                       <SelectTrigger>
                         <SelectValue placeholder="Select a branch" />
@@ -120,9 +121,9 @@ export function CreateBranchDialog({
             />
 
             {error ? (
-              <Alert variant="destructive">
-                <AlertTitle>Error: {error}</AlertTitle>
-              </Alert>
+              <Alert.Container variant="destructive">
+                <Alert.Title>Error: {error}</Alert.Title>
+              </Alert.Container>
             ) : null}
 
             <div className="flex justify-end gap-3">

@@ -1,6 +1,6 @@
-import { Button, Spacer, SpotlightsBG, Text } from '@harnessio/canary'
-
 import { Link } from 'react-router-dom'
+
+import { Button, Spacer, SpotlightsBG, Text } from '@harnessio/canary'
 
 export default function Error() {
   return (

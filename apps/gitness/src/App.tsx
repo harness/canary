@@ -1,66 +1,88 @@
+import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom'
-import { NuqsAdapter } from 'nuqs/adapters/react-router'
-import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+
 import { QueryClientProvider } from '@tanstack/react-query'
+import { NuqsAdapter } from 'nuqs/adapters/react-router'
+
+import { TooltipProvider } from '@harnessio/canary'
+import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import {
-  ThemeProvider,
-  SandboxSettings,
-  SettingsAccountPage,
-  SettingsProjectNav,
+  EmptyPage,
+  ForgotPasswordPage as ForgotPasswordPageV2,
+  NewPasswordPage as NewPasswordPageV2,
+  OTPPage as OTPPageV2
+} from '@harnessio/ui/views'
+import {
   ForgotPasswordPage,
   NewPasswordPage,
   OTPPage,
   RepoSettingsPage,
-  RepoSettingsPlaceholderPage
+  RepoSettingsPlaceholderPage,
+  SandboxSettings,
+  SettingsAccountPage,
+  SettingsProjectNav
 } from '@harnessio/views'
+
+import { FileEditor } from './components/FileEditor'
+import { FileViewer } from './components/FileViewer'
 import RootWrapper from './components/RootWrapper'
-import { TooltipProvider } from '@harnessio/canary'
-import { queryClient } from './framework/queryClient'
-import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
-import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
-import { SignIn } from './pages/signin'
-import { SignUp } from './pages/signup'
-import PullRequestListPage from './pages/pull-request/pull-request-list-page'
-import RepoExecutionListPage from './pages/execution/repo-execution-list'
-import PullRequestLayout from './layouts/PullRequestLayout'
-import PullRequestCommitsPage from './pages/pull-request-commits-page'
-import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
-import { LandingPage } from './pages/landing-page'
 import { AppProvider } from './framework/context/AppContext'
-import { RepoSummaryList } from './pages/repo/repo-summary'
+import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { ThemeProvider } from './framework/context/ThemeContext'
+import { queryClient } from './framework/queryClient'
+import i18n from './i18n/i18n'
+import PipelineLayout from './layouts/PipelineStudioLayout'
+import PullRequestLayout from './layouts/PullRequestLayout'
+import RepoLayoutV1 from './layouts/RepoLayout'
+import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import { RepoCode } from './pages-v2/repo/repo-code'
+import RepoCommitsPage from './pages-v2/repo/repo-commits'
+import { CreateRepo } from './pages-v2/repo/repo-create-page'
+import RepoLayout from './pages-v2/repo/repo-layout'
+import ReposListPage from './pages-v2/repo/repo-list'
+import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
+import RepoSummaryPage from './pages-v2/repo/repo-summary'
+import { SignIn as SignInV2 } from './pages-v2/signin'
+import { SignUp as SignUpV2 } from './pages-v2/signup'
+import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProject from './pages/create-project'
-import { CreateRepo } from './pages/repo/repo-create-page'
-import RepoCommitsPage from './pages/repo/repo-commits'
 import { Execution } from './pages/execution/execution-details'
-import RepoWebhooksListPage from './pages/webhooks/repo-webhook-list'
-import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
-import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
-import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
-import { RepoFiles } from './pages/repo/repo-files'
-import { RepoHeader } from './pages/repo/repo-header'
-import ReposListPage from './pages/repo/repo-list'
-import RepoLayout from './layouts/RepoLayout'
+import RepoExecutionListPage from './pages/execution/repo-execution-list'
+import { LandingPage } from './pages/landing-page'
+import { Logout } from './pages/logout'
+import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
+import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
+import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
+import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
 import { SettingsProfileGeneralPage } from './pages/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settings-keys-container'
-import { FileViewer } from './components/FileViewer'
-import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
+import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
-import { FileEditor } from './components/FileEditor'
-import { RepoSettingsGeneralPageContainer } from './pages/repo/repo-settings-general-container'
-import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
-import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
-import { EmptyPage } from './pages/empty-page'
-import { CreateWebhookContainer } from './pages/webhooks/create-webhook-container'
-import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
-import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
-import { Logout } from './pages/logout'
-import { UserManagementPageContainer } from './pages/user-management/user-management-container'
-import PipelineLayout from './layouts/PipelineStudioLayout'
-import { CreateNewUserContainer } from './pages/user-management/create-new-user-container'
 import { CreateNewMemberPage } from './pages/project-settings/project-settings-new-member-page'
-import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
+import PullRequestCommitsPage from './pages/pull-request-commits-page'
+import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
+import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
+import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
+import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
+import PullRequestListPage from './pages/pull-request/pull-request-list-page'
+import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
+import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
+import RepoCommitsPageV1 from './pages/repo/repo-commits'
+import { CreateRepoV1 } from './pages/repo/repo-create-page'
+import { RepoFiles } from './pages/repo/repo-files'
+import { RepoHeader } from './pages/repo/repo-header'
 import { RepoImportContainer } from './pages/repo/repo-import-container'
+import ReposListPageV1 from './pages/repo/repo-list'
+import { RepoSettingsGeneralPageContainer } from './pages/repo/repo-settings-general-container'
+import RepoSummaryPageV1 from './pages/repo/repo-summary'
+import { SignIn } from './pages/signin'
+import { SignUp } from './pages/signup'
+import { CreateNewUserContainer } from './pages/user-management/create-new-user-container'
+import { UserManagementPageContainer } from './pages/user-management/user-management-container'
+import { CreateWebhookContainer } from './pages/webhooks/create-webhook-container'
+import RepoWebhooksListPage from './pages/webhooks/repo-webhook-list'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -79,27 +101,127 @@ export default function App() {
 
   const router = createBrowserRouter([
     {
-      path: '/signin',
+      path: '/v1/signin',
       element: <SignIn />
     },
     {
-      path: '/signup',
+      path: '/v1/signup',
       element: <SignUp />
     },
     {
-      path: '/forgot',
+      path: '/v1/forgot',
       element: <ForgotPasswordPage />
     },
     {
-      path: '/otp',
+      path: '/v1/otp',
       element: <OTPPage />
     },
     {
-      path: '/new-password',
+      path: '/v1/new-password',
       element: <NewPasswordPage />
     },
     {
+      path: '/signin',
+      element: <SignInV2 />
+    },
+    {
+      path: '/signup',
+      element: <SignUpV2 />
+    },
+    {
+      path: '/forgot',
+      element: <ForgotPasswordPageV2 />
+    },
+    {
+      path: '/otp',
+      element: <OTPPageV2 />
+    },
+    {
+      path: '/new-password',
+      element: <NewPasswordPageV2 />
+    },
+    {
       path: '/',
+      element: <RootWrapper />,
+      children: [
+        {
+          path: ':spaceId/repos',
+          element: <ReposListPage />
+        },
+        {
+          path: ':spaceId/repos/:repoId',
+          element: <RepoLayout />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="summary" replace />
+            },
+            {
+              path: 'summary',
+              element: <RepoSummaryPage />
+            },
+            {
+              path: 'commits',
+              element: <RepoCommitsPage />
+            },
+            {
+              path: 'code',
+              element: (
+                <ExplorerPathsProvider>
+                  <RepoSidebar />
+                </ExplorerPathsProvider>
+              ),
+              children: [
+                {
+                  index: true,
+                  element: <RepoCode />
+                },
+                {
+                  path: ':gitRef*',
+                  element: <RepoCode />,
+                  children: [
+                    {
+                      path: '*',
+                      element: <RepoCode />
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              index: true,
+              element: <Navigate to="pulls" replace />
+            },
+            {
+              path: 'webhooks',
+              element: <WebhookListPage />
+            },
+            {
+              path: 'pulls',
+              element: <SandboxPullRequestListPage />
+            },
+            {
+              path: 'pulls/:pullRequestId',
+              element: <>test</>
+            }
+          ]
+        },
+        {
+          path: ':spaceId/repos/create',
+          element: <CreateRepo />
+        },
+        {
+          path: ':spaceId/repos/import',
+          element: <RepoImportContainer />
+        },
+        {
+          path: 'theme',
+          element: <ProfileSettingsThemePage />
+        }
+      ]
+    },
+    {
+      path: '/v1',
       element: <RootWrapper />,
       children: [
         {
@@ -133,11 +255,11 @@ export default function App() {
           children: [
             {
               path: ':spaceId/repos',
-              element: <ReposListPage />
+              element: <ReposListPageV1 />
             },
             {
               path: ':spaceId/repos/:repoId',
-              element: <RepoLayout />,
+              element: <RepoLayoutV1 />,
               children: [
                 {
                   index: true,
@@ -145,7 +267,7 @@ export default function App() {
                 },
                 {
                   path: 'summary',
-                  element: <RepoSummaryList />
+                  element: <RepoSummaryPageV1 />
                 },
                 {
                   path: 'code',
@@ -200,7 +322,7 @@ export default function App() {
                 },
                 {
                   path: 'commits',
-                  element: <RepoCommitsPage />
+                  element: <RepoCommitsPageV1 />
                 },
                 {
                   path: 'pull-requests',
@@ -246,7 +368,6 @@ export default function App() {
                     }
                   ]
                 },
-
                 {
                   path: 'webhooks',
                   element: <RepoWebhooksListPage />
@@ -357,7 +478,7 @@ export default function App() {
             },
             {
               path: ':spaceId/repos/create',
-              element: <CreateRepo />
+              element: <CreateRepoV1 />
             },
             {
               path: ':spaceId/repos/import',
@@ -403,12 +524,12 @@ export default function App() {
       element: <Logout />
     },
     {
-      path: 'chaos-engineering',
+      path: 'chaos',
       element: <EmptyPage pathName="Chaos Engineering" />
     },
     {
-      path: 'environments',
-      element: <EmptyPage pathName="Environments" />
+      path: 'artifacts',
+      element: <EmptyPage pathName="Artifacts" />
     },
     {
       path: 'secrets',
@@ -439,11 +560,19 @@ export default function App() {
       element: <EmptyPage pathName="Service Reliability" />
     },
     {
-      path: 'internal-developer-portal',
+      path: 'developer/portal',
       element: <EmptyPage pathName="Internal Developer Portal" />
     },
     {
-      path: 'infrastructure-as-code',
+      path: 'developer/environments',
+      element: <EmptyPage pathName="Environments" />
+    },
+    {
+      path: 'developer/insights',
+      element: <EmptyPage pathName="Software Engineering Insights" />
+    },
+    {
+      path: 'infrastructure',
       element: <EmptyPage pathName="Infrastructure as Code" />
     },
     {
@@ -451,36 +580,46 @@ export default function App() {
       element: <EmptyPage pathName="Code Repository" />
     },
     {
-      path: 'software-engineering-insights',
-      element: <EmptyPage pathName="Software Engineering Insights" />
-    },
-    {
-      path: 'software-supply-chain-assurance',
+      path: 'supply-chain',
       element: <EmptyPage pathName="Software Supply Chain Assurance" />
     },
     {
-      path: 'security-testing-orchestration',
+      path: 'security-tests',
       element: <EmptyPage pathName="Security Testing Orchestration" />
     },
     {
-      path: 'cloud-cost-management',
+      path: 'cloud-costs',
       element: <EmptyPage pathName="Cloud Cost Management" />
+    },
+    {
+      path: 'databases',
+      element: <EmptyPage pathName="Databases" />
+    },
+    {
+      path: 'incidents',
+      element: <EmptyPage pathName="Incidents" />
+    },
+    {
+      path: 'dashboards',
+      element: <EmptyPage pathName="Dashboards" />
     }
   ])
 
   return (
     <AppProvider>
-      <ThemeProvider defaultTheme="dark">
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <ExitConfirmProvider>
-              <NuqsAdapter>
-                <RouterProvider router={router} />
-              </NuqsAdapter>
-            </ExitConfirmProvider>
-          </TooltipProvider>
-        </QueryClientProvider>
-      </ThemeProvider>
+      <I18nextProvider i18n={i18n}>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <ExitConfirmProvider>
+                <NuqsAdapter>
+                  <RouterProvider router={router} />
+                </NuqsAdapter>
+              </ExitConfirmProvider>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </ThemeProvider>
+      </I18nextProvider>
     </AppProvider>
   )
 }

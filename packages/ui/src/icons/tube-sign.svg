@@ -1,0 +1,31 @@
+<svg
+  viewBox="0 0 12 12"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <g clipPath="url(#clip0)">
+    <ellipse
+      cx="5.99988"
+      cy="5.66602"
+      rx="1.99988"
+      ry="2"
+      stroke="currentColor"
+      strokeLinecap="round"
+    />
+    <path
+      d="M1.00084 5.66602H4.00177"
+      stroke="currentColor"
+      strokeLinecap="round"
+    />
+    <path
+      d="M8 5.66602H11"
+      stroke="currentColor"
+      strokeLinecap="round"
+    />
+  </g>
+  <defs>
+    <clipPath id="clip0">
+      <rect width="100%" height="100%" fill="currentColor" />
+    </clipPath>
+  </defs>
+</svg>

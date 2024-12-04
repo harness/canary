@@ -1,10 +1,11 @@
 import {
-  IFormDefinition,
   arrayToObjectOutputTransformer,
+  IFormDefinition,
   objectToArrayInputTransformer,
   unsetEmptyArrayOutputTransformer,
   unsetEmptyStringOutputTransformer
 } from '@harnessio/forms'
+
 import { InputConfigType, InputType } from '../form-inputs/types'
 import { ACTION_STEP_IDENTIFIER, IInputConfigWithConfig } from './types'
 

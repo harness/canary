@@ -1,9 +1,11 @@
 import { useEffect } from 'react'
-import { Input } from './input'
-import { Icon } from './icon'
-import { Text } from './text'
+
 import { cn } from '@/lib/utils'
 import { noop } from 'lodash-es'
+
+import { Icon } from './icon'
+import { Input } from './input'
+import { Text } from './text'
 
 enum TextSize {
   'text-[12px]' = 0,
@@ -127,4 +129,7 @@ const Root = ({
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root }

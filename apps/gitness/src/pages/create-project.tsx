@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import {
-  useCreateSpaceMutation,
+  CreateSpaceErrorResponse,
   OpenapiCreateSpaceRequest,
-  CreateSpaceErrorResponse
+  useCreateSpaceMutation
 } from '@harnessio/code-service-client'
 import { CreateProjectPage } from '@harnessio/views'
+
 import { useAppContext } from '../framework/context/AppContext'
 
 export default function CreateProject() {

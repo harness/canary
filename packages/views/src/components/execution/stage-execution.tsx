@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react'
+
 import cx from 'classnames'
-import { Button, Text, Icon } from '@harnessio/canary'
-import { StepExecution, StepProps } from './step-execution'
+
+import { Button, Icon, Text } from '@harnessio/canary'
+
 import { Layout } from '../layout/layout'
+import { StepExecution, StepProps } from './step-execution'
 import { LivelogLine } from './types'
 
 export interface StageProps {
@@ -47,7 +50,8 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           'bg-secondary h-4 w-4 rounded-sm p-2',
           { ['cursor-pointer']: !disableUp },
           { ['cursor-not-allowed']: disableUp }
-        )}>
+        )}
+      >
         <div>
           <Icon name="chevron-up" />
         </div>
@@ -62,7 +66,8 @@ const StepNavigation: React.FC<StepNavigationProps> = ({
           'bg-secondary h-4 w-4 rounded-sm p-2',
           { ['cursor-pointer']: !disableDown },
           { ['cursor-not-allowed']: disableDown }
-        )}>
+        )}
+      >
         <div>
           <Icon name="chevron-down" />
         </div>

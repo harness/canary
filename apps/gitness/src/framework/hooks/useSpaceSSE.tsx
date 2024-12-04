@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { isEqual } from 'lodash-es'
+
 import { EventSourcePolyfill } from 'event-source-polyfill'
+import { isEqual } from 'lodash-es'
 
 type UseSpaceSSEProps = {
   space: string

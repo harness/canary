@@ -1,13 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { InlineAction, YamlEditor, MonacoGlobals } from '@harnessio/yaml-editor'
+
 import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
 import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
 import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
+
+import { InlineAction, MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
+
+import { usePipelineDataContext, YamlRevision } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
-import { InlineActionArgsType, getInlineActionConfig } from '../utils/inline-actions'
-import { themes } from '../theme/monaco-theme'
-import { YamlRevision, usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import unifiedSchema from '../schema/unifiedSchema.json'
+import { themes } from '../theme/monaco-theme'
+import { getInlineActionConfig, InlineActionArgsType } from '../utils/inline-actions'
 
 MonacoGlobals.set({
   ILanguageFeaturesService,

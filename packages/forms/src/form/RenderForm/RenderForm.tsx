@@ -1,7 +1,8 @@
 import React from 'react'
-import { RenderInputs } from '../RenderInputs/RenderInputs'
-import type { IFormDefinition } from '../../types/types'
+
 import type { InputFactory } from '../../core/factory/InputFactory'
+import type { IFormDefinition } from '../../types/types'
+import { RenderInputs } from '../RenderInputs/RenderInputs'
 
 export interface RenderFormProps {
   inputs: IFormDefinition

@@ -1,9 +1,9 @@
 import * as React from 'react'
+
+import { Button } from '@/components/button'
+import { cn } from '@/lib/utils'
 import { ArrowLeftIcon, ArrowRightIcon } from '@radix-ui/react-icons'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
-
-import { cn } from '@/lib/utils'
-import { Button } from '@/components/button'
 
 type CarouselApi = UseEmblaCarouselType[1]
 type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
@@ -113,14 +113,16 @@ const Carousel = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivEl
           scrollNext,
           canScrollPrev,
           canScrollNext
-        }}>
+        }}
+      >
         <div
           ref={ref}
           onKeyDownCapture={handleKeyDown}
           className={cn('relative', className)}
           role="region"
           aria-roledescription="carousel"
-          {...props}>
+          {...props}
+        >
           {children}
         </div>
       </CarouselContext.Provider>
@@ -181,7 +183,8 @@ const CarouselPrevious = React.forwardRef<HTMLButtonElement, React.ComponentProp
         )}
         disabled={!canScrollPrev}
         onClick={scrollPrev}
-        {...props}>
+        {...props}
+      >
         <ArrowLeftIcon className="size-4" />
         <span className="sr-only">Previous slide</span>
       </Button>
@@ -208,7 +211,8 @@ const CarouselNext = React.forwardRef<HTMLButtonElement, React.ComponentProps<ty
         )}
         disabled={!canScrollNext}
         onClick={scrollNext}
-        {...props}>
+        {...props}
+      >
         <ArrowRightIcon className="size-4" />
         <span className="sr-only">Next slide</span>
       </Button>

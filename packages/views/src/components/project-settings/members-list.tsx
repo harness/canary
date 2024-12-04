@@ -1,23 +1,25 @@
+import { upperFirst } from 'lodash-es'
+
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
-  Text,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  Select,
-  SelectValue,
-  SelectItem,
-  SelectTrigger,
-  SelectContent
+  Text
 } from '@harnessio/canary'
+
 import { getInitials } from '../../utils/utils'
 import { MembersProps } from './interfaces'
-import { upperFirst } from 'lodash-es'
 import { moreActionsDropdown } from './moreActionsDropdown'
 import { transformValue } from './utils'
 
@@ -69,7 +71,8 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
             <TableCell className="my-6 content-center">
               <Select
                 value={member.role}
-                onValueChange={newRole => onEdit({ ...member, role: transformValue(newRole) })}>
+                onValueChange={newRole => onEdit({ ...member, role: transformValue(newRole) })}
+              >
                 <SelectTrigger className="w-[150px] justify-start space-x-2 border-0" iconClassName="flex-shrink-0">
                   <SelectValue className="flex-1 grow-0 basis-[70%]" placeholder="Select Role">
                     {/* //the data from api call is lowerCase */}

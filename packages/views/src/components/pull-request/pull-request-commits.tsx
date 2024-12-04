@@ -1,8 +1,10 @@
 import { useMemo } from 'react'
-import { TypesCommit } from './interfaces'
+
+import { Avatar, AvatarFallback, NodeGroup, StackedList, Text } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
+
 import { formatDate, getInitials } from '../../utils/utils'
-import { StackedList, Text, NodeGroup, Avatar, AvatarFallback } from '@harnessio/canary'
-import { CommitCopyActions } from '../commit-copy-actions'
+import { TypesCommit } from './interfaces'
 
 interface CommitProps {
   data?: TypesCommit[]
@@ -39,7 +41,8 @@ export const PullRequestCommits = ({ ...props }: CommitProps) => {
                   <StackedList.Item
                     className="hover:bg-transparent"
                     key={commit.title}
-                    isLast={commitData.length - 1 === repo_idx}>
+                    isLast={commitData.length - 1 === repo_idx}
+                  >
                     <StackedList.Field
                       title={
                         <div className="flex flex-col">

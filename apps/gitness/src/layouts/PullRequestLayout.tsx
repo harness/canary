@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Outlet, useParams } from 'react-router-dom'
+
 import { Badge, Icon, Spacer } from '@harnessio/canary'
-import { SandboxLayout, PullRequestHeader } from '@harnessio/views'
 import { TypesPullReq, useGetPullReqQuery } from '@harnessio/code-service-client'
+import { PullRequestHeader, SandboxLayout } from '@harnessio/views'
+
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { PathParams } from '../RouteDefinitions'
 
@@ -76,8 +78,8 @@ const PullRequestLayout: React.FC = () => {
               </NavLink>
             </div>
             <div className="border-border-background h-[36px] border-b" />
-            <div className="border-border-background absolute right-full h-[36px] w-[9999px] border-b" />
-            <div className="border-border-background absolute left-full h-[36px] w-[9999px] border-b" />
+            <div className="border-border-background absolute right-full h-[36px] w-0 border-b" />
+            <div className="border-border-background absolute left-full h-[36px] w-0 border-b" />
           </div>
           <Spacer size={8} />
           <Outlet />

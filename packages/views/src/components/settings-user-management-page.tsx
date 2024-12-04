@@ -1,18 +1,19 @@
 import { useReducer } from 'react'
-import { Spacer, Text, Button } from '@harnessio/canary'
-import { SandboxLayout } from '..'
-import { UsersList } from './user-management/users-list'
 import { useNavigate } from 'react-router-dom'
-import { dialogStateReducer, initialDialogState } from './user-management/user-reducers/dialog-state-reducers'
-import { FormUserEditDialog } from './user-management/form-user-edit-dialog'
-import { FormDeleteUserDialog } from './user-management/form-user-delete-dialog'
-import { FormRemoveAdminDialog } from './user-management/form-admin-remove-dialog'
-import { FormResetPasswordDialog } from './user-management/form-user-reset-password'
-import { FormAddAdminDialog } from './user-management/form-admin-add-dialog'
-import { DialogActionType, DialogType } from './user-management/interfaces'
-import { UsersProps } from './user-management/interfaces'
-import { Filter } from '..'
+
+import { Button, Spacer, Text } from '@harnessio/canary'
+
+import { Filter, SandboxLayout } from '..'
 import { PaginationComponent } from './pagination'
+import { FormAddAdminDialog } from './user-management/form-admin-add-dialog'
+import { FormRemoveAdminDialog } from './user-management/form-admin-remove-dialog'
+import { FormDeleteUserDialog } from './user-management/form-user-delete-dialog'
+import { FormUserEditDialog } from './user-management/form-user-edit-dialog'
+import { FormResetPasswordDialog } from './user-management/form-user-reset-password'
+import { DialogActionType, DialogType, UsersProps } from './user-management/interfaces'
+import { dialogStateReducer, initialDialogState } from './user-management/user-reducers/dialog-state-reducers'
+import { UsersList } from './user-management/users-list'
+
 const sortOptions = [
   { name: 'Date', value: 'created' },
   { name: 'Email', value: 'email' },

@@ -1,20 +1,23 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+
 import { parseAsInteger, useQueryState } from 'nuqs'
+
+import { Button, ListActions, Spacer, Text } from '@harnessio/canary'
 import { TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
-import { ListActions, Spacer, Text, Button } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
   ExecutionList,
-  SkeletonList,
-  timeDistance,
+  ExecutionState,
   NoData,
   PaginationComponent,
   SandboxLayout,
-  ExecutionState
+  timeDistance
 } from '@harnessio/views'
-import { PageResponseHeader } from '../../types'
+
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
+import { PageResponseHeader } from '../../types'
 import { getExecutionStatus, getLabel } from '../../utils/execution-utils'
 import RunPipelineDialog from '../run-pipeline-dialog/run-pipeline-dialog'
 
@@ -63,7 +66,8 @@ export default function RepoExecutionListPage() {
                     variant="default"
                     onClick={() => {
                       setOpenRunPipeline(true)
-                    }}>
+                    }}
+                  >
                     Run
                   </Button>
                   <Button variant="default" asChild>

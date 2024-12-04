@@ -1,8 +1,10 @@
 import { Handle, NodeProps, Position } from 'reactflow'
+
 import { Icon } from '@harnessio/canary'
-import { DefaultNodeProps, ExpandNodeProps } from '../../../types'
-import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
+
 import { getNodeDiagnostics } from '../../../../../components/Canvas/utils/NodeUtils'
+import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
+import { DefaultNodeProps, ExpandNodeProps } from '../../../types'
 
 export interface RootNodeProps extends Omit<DefaultNodeProps, 'targetPostion'>, ExpandNodeProps {}
 

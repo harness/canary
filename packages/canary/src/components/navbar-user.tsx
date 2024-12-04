@@ -1,4 +1,5 @@
 import { getInitials } from '@/utils/StringUtils'
+
 import {
   Avatar,
   AvatarFallback,

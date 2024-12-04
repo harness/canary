@@ -21,7 +21,8 @@ function LeftPanel({ children, className }: { children: React.ReactNode; classNa
         'border-border-background fixed bottom-0 left-0 top-0 z-50 w-[220px] overflow-y-auto border-r',
         className
       )}
-      aria-label="Left Navigation Panel">
+      aria-label="Left Navigation Panel"
+    >
       {children}
     </nav>
   )
@@ -48,7 +49,8 @@ function LeftSubPanel({
         paddingTopClass,
         className
       )}
-      aria-label="Left Sub Navigation Panel">
+      aria-label="Left Sub Navigation Panel"
+    >
       {children}
     </section>
   )
@@ -66,7 +68,8 @@ function SubHeader({ children, className }: { children: React.ReactNode; classNa
   return (
     <header
       className={cn('bg-background fixed left-[220px] right-0 top-[55px] z-40 h-[45px]', className)}
-      role="banner">
+      role="banner"
+    >
       {children}
     </header>
   )
@@ -134,7 +137,8 @@ function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: Colum
       className={cn('grid grid-flow-col', className)}
       style={{ gridTemplateColumns: columnWidths }}
       role="grid"
-      aria-label="Column Layout">
+      aria-label="Column Layout"
+    >
       {children}
     </div>
   )

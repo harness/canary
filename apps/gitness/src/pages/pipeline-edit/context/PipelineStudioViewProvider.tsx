@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+
 import { PipelineStudioView } from '../types/types'
 
 export enum StepDrawer {
@@ -44,7 +45,8 @@ const PipelineStudioViewProvider = ({ children }: React.PropsWithChildren) => {
         setPanelOpen: setPanelVisible,
         stepDrawerOpen,
         setStepDrawerOpen
-      }}>
+      }}
+    >
       {children}
     </PipelineStudioViewContext.Provider>
   )

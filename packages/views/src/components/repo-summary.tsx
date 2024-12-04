@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 import {
   Avatar,
   AvatarFallback,
@@ -14,10 +16,9 @@ import {
   TableRow,
   Text
 } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
-import { useNavigate } from 'react-router-dom'
-import { CommitCopyActions } from './commit-copy-actions'
 
 export enum SummaryItemType {
   Folder = 0,
@@ -119,7 +120,8 @@ export const Summary = ({ ...props }: PageProps) => {
                     direction="horizontal"
                     verticalAlign="center"
                     spacing="1.5"
-                    className="cursor-pointer">
+                    className="cursor-pointer"
+                  >
                     {file.type === SummaryItemType.File ? (
                       <Icon name="file" size={14} className="text-tertiary-background" />
                     ) : (

@@ -1,5 +1,6 @@
-import { ThemeDefinition } from '@harnessio/yaml-editor'
 import { editor } from 'monaco-editor'
+
+import { ThemeDefinition } from '@harnessio/yaml-editor'
 
 const harnessLightTheme = {
   base: 'vs' as editor.BuiltinTheme,

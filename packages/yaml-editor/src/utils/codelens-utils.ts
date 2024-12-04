@@ -1,6 +1,7 @@
 import * as monaco from 'monaco-editor'
-import { PathSelector, SelectorType } from '../types/selectors'
+
 import { InlineAction } from '../types/inline-actions'
+import { PathSelector, SelectorType } from '../types/selectors'
 
 export interface CommandArg<T> extends Pick<InlineAction<T>, 'onClick' | 'data'> {
   range: monaco.IRange

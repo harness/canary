@@ -1,4 +1,4 @@
-import { cn, Text, Label as ShadLabel, RadioGroupItem, Checkbox } from '@harnessio/canary'
+import { Checkbox, cn, RadioGroupItem, Label as ShadLabel, Text } from '@harnessio/canary'
 
 interface CompProps {
   children: React.ReactNode
@@ -66,7 +66,8 @@ function Root({ children, box, shaded, className }: RootProps) {
         'mb-8 flex flex-col gap-2',
         { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-primary/[0.02]': shaded },
         className
-      )}>
+      )}
+    >
       {children}
     </fieldset>
   )

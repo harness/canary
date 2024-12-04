@@ -1,28 +1,37 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Spacer } from '@harnessio/canary'
+import { useParams } from 'react-router-dom'
+
+import { DiffModeEnum } from '@git-diff-view/react'
 import * as Diff2Html from 'diff2html'
+import { useAtom } from 'jotai'
+import { compact, isEqual } from 'lodash-es'
+
+import { Spacer } from '@harnessio/canary'
 import {
   EnumPullReqReviewDecision,
   reviewSubmitPullReq,
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
-import { PullRequestChanges, SkeletonList } from '@harnessio/views'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { compact, isEqual } from 'lodash-es'
-import { useAtom } from 'jotai'
-import { normalizeGitRef } from '../../utils/git-utils'
-import { usePullRequestData } from './context/pull-request-data-provider'
-import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './utils'
-import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState, PullReqReviewDecision } from './types/types'
-import { parseSpecificDiff } from './diff-utils'
+import { SkeletonList } from '@harnessio/ui/components'
+import { PullRequestChanges } from '@harnessio/views'
+
 import { useAppContext } from '../../framework/context/AppContext'
-import { useParams } from 'react-router-dom'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
+import { normalizeGitRef } from '../../utils/git-utils'
+import { parseSpecificDiff } from './diff-utils'
 import { PullRequestChangesFilter } from './pull-request-changes-filter'
+import { usePullRequestDataStore } from './stores/pull-request-store'
+import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState, PullReqReviewDecision } from './types/types'
+import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './utils'
 
 export default function PullRequestChangesPage() {
-  const { pullReqMetadata, refetchPullReq, refetchActivities } = usePullRequestData()
+  const { pullReqMetadata, refetchPullReq, refetchActivities } = usePullRequestDataStore(state => ({
+    pullReqMetadata: state.pullReqMetadata,
+    refetchPullReq: state.refetchPullReq,
+    refetchActivities: state.refetchActivities
+  }))
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
@@ -31,6 +40,7 @@ export default function PullRequestChangesPage() {
     commitRange
     //  setCommitRange  TODO: add commit view filter dropdown to manage different commits
   ] = useState(defaultCommitRange)
+  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
@@ -190,6 +200,7 @@ export default function PullRequestChangesPage() {
             lang: item.filePath.split('.')[1]
           })) || []
         }
+        diffMode={diffMode}
       />
     )
   }
@@ -200,10 +211,12 @@ export default function PullRequestChangesPage() {
         active={''}
         loading={loadingReviewers}
         currentUser={currentUser ?? {}}
-        pullRequestMetadata={pullReqMetadata}
+        pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
         reviewers={reviewers}
         submitReview={submitReview}
         refetchReviewers={refetchReviewers}
+        diffMode={diffMode}
+        setDiffMode={setDiffMode}
       />
       <Spacer aria-setsize={5} />
 

@@ -1,9 +1,11 @@
 import * as React from 'react'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
-import { cn } from '../lib/utils'
-import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { Icon as CanaryIcon } from '../components/icon'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
+
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
+import { ScrollArea } from '@radix-ui/react-scroll-area'
+
+import { Icon as CanaryIcon } from '../components/icon'
+import { cn } from '../lib/utils'
 
 /**
  * @TODO remove this from treeview component
@@ -162,7 +164,8 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           openIcon,
           closeIcon,
           direction
-        }}>
+        }}
+      >
         <div className={cn('size-full', className)}>
           <ScrollArea ref={ref} className="relative h-full px-2" dir={dir as Direction}>
             <AccordionPrimitive.Root
@@ -172,7 +175,8 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
               value={expendedItems}
               className="flex flex-col gap-1"
               onValueChange={value => setExpendedItems(prev => [...(prev ?? []), value[0]])}
-              dir={dir as Direction}>
+              dir={dir as Direction}
+            >
               {children}
             </AccordionPrimitive.Root>
           </ScrollArea>
@@ -225,7 +229,8 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             'cursor-not-allowed opacity-50': !isSelectable
           })}
           disabled={!isSelectable}
-          onClick={() => handleExpand(value)}>
+          onClick={() => handleExpand(value)}
+        >
           <div className="mt-1 pt-1">
             {expendedItems?.includes(value)
               ? (openIcon ?? <CanaryIcon name="chevron-down" className="size-4" height={12} />)
@@ -251,7 +256,8 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             value={expendedItems}
             onValueChange={value => {
               setExpendedItems?.(prev => [...(prev ?? []), value[0]])
-            }}>
+            }}
+          >
             {children}
           </AccordionPrimitive.Root>
         </AccordionPrimitive.Content>
@@ -307,7 +313,8 @@ const File = forwardRef<
           onClick={() => {
             handleSelect?.(value)
             selectItem(value)
-          }}>
+          }}
+        >
           <div className="flex w-full items-baseline justify-between">
             <div className="flex items-baseline">
               <div className="mr-1 flex size-4 self-center">{getStatusIcon(status)}</div>
@@ -373,7 +380,8 @@ const CollapseButton = forwardRef<
         className="absolute bottom-1 right-2 h-8 w-fit p-1"
         onClick={expendedItems && expendedItems.length > 0 ? closeAll : () => expendAllTree(elements)}
         ref={ref}
-        {...props}>
+        {...props}
+      >
         {children}
         <span className="sr-only">Toggle</span>
       </button>

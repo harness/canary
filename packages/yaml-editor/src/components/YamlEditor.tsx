@@ -1,16 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
+
+import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
-import Editor, { Monaco, useMonaco, loader } from '@monaco-editor/react'
-import { PathSelector } from '../types/selectors'
-import { InlineAction } from '../types/inline-actions'
-import { useTheme } from '../hooks/useTheme'
-import { useSchema } from '../hooks/useSchema'
-import { schemaIdToUrl } from '../utils/schema-utils'
-import { useProblems } from '../hooks/useProblems'
-import { useYamlEditorContext } from './YamlProvider'
-import { ThemeDefinition } from '../types/themes'
+
 import { useCodeLenses } from '../hooks/useCodeLens'
 import { useDecoration } from '../hooks/useDecoration'
+import { useProblems } from '../hooks/useProblems'
+import { useSchema } from '../hooks/useSchema'
+import { useTheme } from '../hooks/useTheme'
+import { InlineAction } from '../types/inline-actions'
+import { PathSelector } from '../types/selectors'
+import { ThemeDefinition } from '../types/themes'
+import { schemaIdToUrl } from '../utils/schema-utils'
+import { useYamlEditorContext } from './YamlProvider'
 
 loader.config({ monaco })
 

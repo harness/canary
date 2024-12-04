@@ -1,11 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
-import { countProblems, monacoMarkers2Problems } from '../utils/problems-utils'
-import type { InlineActionArgsType } from '../utils/inline-actions'
-import { TypesPlugin } from '../types/api-types'
+
 import useThunkReducer from '../../../hooks/useThunkReducer'
-import { DataReducer, initialState } from './data-store/reducer'
+import type { InlineActionArgsType } from '../utils/inline-actions'
+import { countProblems, monacoMarkers2Problems } from '../utils/problems-utils'
 import {
   deleteInArrayAction,
   injectInArrayAction,
@@ -15,7 +15,13 @@ import {
   updateInArrayAction,
   updateState
 } from './data-store/actions'
-import { AddStepIntentionActionPayload, DataReducerState, EditStepIntentionActionPayload } from './data-store/types'
+import { DataReducer, initialState } from './data-store/reducer'
+import {
+  AddStepIntentionActionPayload,
+  DataReducerState,
+  EditStepIntentionActionPayload,
+  StepType
+} from './data-store/types'
 
 // TODO: temp interface for params
 export interface PipelineParams extends Record<string, string> {
@@ -23,8 +29,6 @@ export interface PipelineParams extends Record<string, string> {
   repoId: string
   pipelineId: string
 }
-
-export const NEW_PIPELINE_IDENTIFIER = '-1'
 
 export interface YamlRevision {
   yaml: string
@@ -38,7 +42,7 @@ interface PipelineStudioDataContextProps {
   clearAddStepIntention: () => void
   setEditStepIntention: (props: { path: string }) => void
   clearEditStepIntention: () => void
-  setCurrentStepFormDefinition: (data: TypesPlugin | null) => void
+  setFormStep: (data: StepType | null) => void
   fetchPipelineFileContent: (branch: string) => void
   requestYamlModifications: {
     injectInArray: (props: { path: string; position: 'last' | 'after' | 'before' | undefined; item: unknown }) => void
@@ -55,7 +59,7 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
   clearAddStepIntention: () => undefined,
   setEditStepIntention: (_props: { path: string } | null) => undefined,
   clearEditStepIntention: () => undefined,
-  setCurrentStepFormDefinition: (_data: TypesPlugin | null) => undefined,
+  setFormStep: (_data: StepType | null) => undefined,
   fetchPipelineFileContent: (_branch: string) => undefined,
   requestYamlModifications: {
     injectInArray: (_props: {
@@ -112,10 +116,7 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
   )
   const clearEditStepIntention = useCallback(() => dispatch(updateState({ editStepIntention: undefined })), [])
 
-  const setCurrentStepFormDefinition = useCallback(
-    (currentStepFormDefinition: TypesPlugin | null) => dispatch(updateState({ currentStepFormDefinition })),
-    []
-  )
+  const setFormStep = useCallback((formStep: StepType | null) => dispatch(updateState({ formStep })), [])
 
   const injectInArray = useCallback(
     (injectData: { path: string; position: 'after' | 'before' | 'last' | undefined; item: unknown }) => {
@@ -155,11 +156,12 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
         clearAddStepIntention,
         setEditStepIntention,
         clearEditStepIntention,
-        setCurrentStepFormDefinition,
+        setFormStep,
         fetchPipelineFileContent,
         setCurrentBranch,
         requestYamlModifications
-      }}>
+      }}
+    >
       {children}
     </PipelineStudioDataContext.Provider>
   )

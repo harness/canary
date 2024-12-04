@@ -1,5 +1,6 @@
 import { z } from 'zod'
-import { WebhookTriggerEnum, SSLVerificationEnum, TriggerEventsEnum } from './types'
+
+import { SSLVerificationEnum, TriggerEventsEnum, WebhookTriggerEnum } from './types'
 
 export const createWebhookFormSchema = z.object({
   enabled: z.boolean(),

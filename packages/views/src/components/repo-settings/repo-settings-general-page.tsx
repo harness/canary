@@ -1,11 +1,14 @@
 import { useRef } from 'react'
+
 import { FormFieldSet } from '../..'
+import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './repo-settings-general/repo-settings-general-form'
 import { RepoSettingsGeneralRules } from './repo-settings-general/repo-settings-general-rules'
-import { RepoSettingsSecurityForm } from './repo-settings-general/repo-settings-general-security'
-import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
-import { RepoData, RepoUpdateData, ErrorTypes, RuleDataType } from './repo-settings-general/types'
-import { RepoSettingsSecurityFormFields } from './repo-settings-general/repo-settings-general-security'
+import {
+  RepoSettingsSecurityForm,
+  RepoSettingsSecurityFormFields
+} from './repo-settings-general/repo-settings-general-security'
+import { ErrorTypes, RepoData, RepoUpdateData, RuleDataType } from './repo-settings-general/types'
 
 interface ILoadingStates {
   isLoadingRepoData: boolean

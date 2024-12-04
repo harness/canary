@@ -1,44 +1,47 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
+import { useQueryClient } from '@tanstack/react-query'
+
 import {
-  RepoSettingsGeneralPage,
-  RepoUpdateData,
-  SecurityScanning,
-  AccessLevel,
-  ErrorTypes,
-  RepoData,
-  RuleDataType,
-  DeleteTokenAlertDialog,
-  AlertDeleteDialog
-} from '@harnessio/views'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import {
-  useFindRepositoryQuery,
+  DeleteRepositoryErrorResponse,
   // FindRepositoryOkResponse,
   FindRepositoryErrorResponse,
-  useListBranchesQuery,
+  FindSecuritySettingsErrorResponse,
   // ListBranchesOkResponse,
   ListBranchesErrorResponse,
-  useUpdateRepositoryMutation,
-  UpdateRepositoryErrorResponse,
-  useUpdateDefaultBranchMutation,
+  RuleDeleteErrorResponse,
+  RuleListErrorResponse,
   UpdateDefaultBranchErrorResponse,
-  useUpdatePublicAccessMutation,
   UpdatePublicAccessErrorResponse,
-  useFindSecuritySettingsQuery,
-  FindSecuritySettingsErrorResponse,
-  useUpdateSecuritySettingsMutation,
+  UpdateRepositoryErrorResponse,
   UpdateSecuritySettingsErrorResponse,
   useDeleteRepositoryMutation,
-  DeleteRepositoryErrorResponse,
-  useRuleListQuery,
-  RuleListErrorResponse,
+  useFindRepositoryQuery,
+  useFindSecuritySettingsQuery,
+  useListBranchesQuery,
   useRuleDeleteMutation,
-  RuleDeleteErrorResponse
+  useRuleListQuery,
+  useUpdateDefaultBranchMutation,
+  useUpdatePublicAccessMutation,
+  useUpdateRepositoryMutation,
+  useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
-import { useQueryClient } from '@tanstack/react-query'
-import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import {
+  AccessLevel,
+  AlertDeleteDialog,
+  DeleteTokenAlertDialog,
+  ErrorTypes,
+  RepoData,
+  RepoSettingsGeneralPage,
+  RepoUpdateData,
+  RuleDataType,
+  SecurityScanning
+} from '@harnessio/views'
+
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 
 export const RepoSettingsGeneralPageContainer = () => {

@@ -1,4 +1,5 @@
 import { IFormDefinition, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
+
 import { InputConfigType, InputType } from '../form-inputs/types'
 import { BARRIER_STEP_IDENTIFIER, IInputConfigWithConfig } from './types'
 

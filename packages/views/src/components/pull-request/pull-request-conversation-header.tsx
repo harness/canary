@@ -15,12 +15,14 @@
  */
 
 import { useMemo } from 'react'
-import { Badge, Button, Icon, Text } from '@harnessio/canary'
-import { Layout } from '../layout/layout'
-import { getPrState } from './utils'
-import { IconType } from './interfaces'
-import { timeAgo } from '../../utils/utils'
 import { Link } from 'react-router-dom'
+
+import { Badge, Button, Icon, Text } from '@harnessio/canary'
+
+import { timeAgo } from '../../utils/utils'
+import { Layout } from '../layout/layout'
+import { IconType } from './interfaces'
+import { getPrState } from './utils'
 
 interface PullRequestTitleProps {
   data: {
@@ -63,7 +65,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   const stateObject = getPrState(is_draft, merged, state)
   return (
     <div className="flex flex-col gap-2 pb-8">
-      <div className="flex items-center pb-1 pt-1">
+      <div className="flex items-center py-1">
         <Text size={5} weight={'medium'} className="text-primary">
           {original}
           &nbsp;&nbsp;
@@ -73,7 +75,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
       <div className="">
         <div className="text-tertiary-background flex space-x-2">
           <div className="flex items-center gap-2.5 text-center align-middle">
-            <Badge disableHover borderRadius="full" theme={stateObject.theme} className={`select-none justify-center`}>
+            <Badge disableHover borderRadius="full" className={`select-none justify-center`}>
               <Layout.Horizontal gap="space-x-1" className="flex items-center align-middle">
                 <Icon name={stateObject.icon as IconType} size={13} />
                 &nbsp;{stateObject.text}
@@ -83,7 +85,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               <Text
                 size={2}
                 className="text-tertiary-background inline-flex flex-wrap items-center gap-1"
-                weight="normal">
+                weight="normal"
+              >
                 <span className="text-primary">{author?.display_name || author?.email || ''}</span>
                 <span>{merged ? 'merged' : ' wants to merge'}</span>
                 <span className="text-primary">

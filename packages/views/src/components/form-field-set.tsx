@@ -1,4 +1,4 @@
-import { cn, Text, Label as ShadLabel, RadioGroupItem, Checkbox } from '@harnessio/canary'
+import { Checkbox, cn, RadioGroupItem, Label as ShadLabel, Text } from '@harnessio/canary'
 
 interface CompProps {
   children: React.ReactNode
@@ -65,6 +65,7 @@ const themeClassMap: Record<MessageTheme, string> = {
   [MessageTheme.DEFAULT]: 'text-tertiary-background'
 }
 
+/** @deprecated: Use Fieldset from @harnessio/ui/components instead */
 function Root({ children, box, shaded, className }: RootProps) {
   return (
     <fieldset
@@ -74,12 +75,14 @@ function Root({ children, box, shaded, className }: RootProps) {
         className
       )}
       role="group"
-      aria-describedby="fieldset-description">
+      aria-describedby="fieldset-description"
+    >
       {children}
     </fieldset>
   )
 }
 
+/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
 function Legend({ children, className }: CompProps) {
   return (
     <Text size={3} weight={'medium'} className={cn('mb-0', className)} as="p" role="heading">
@@ -88,6 +91,7 @@ function Legend({ children, className }: CompProps) {
   )
 }
 
+/** @deprecated: Use FormLegend from @harnessio/ui/components instead */
 function SubLegend({ children, className }: CompProps) {
   return (
     <Text size={2} weight={'normal'} className={cn('text-primary/70 mb-0', className)} as="p" id="fieldset-description">
@@ -96,6 +100,7 @@ function SubLegend({ children, className }: CompProps) {
   )
 }
 
+/** @deprecated */
 function Item({ children, className }: CompProps) {
   return (
     <div className={cn('item-wrapper', className)} role="presentation">
@@ -104,6 +109,7 @@ function Item({ children, className }: CompProps) {
   )
 }
 
+/** @deprecated: Use Label from @harnessio/ui/components instead */
 function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
     <ShadLabel htmlFor={htmlFor} variant="sm" className={cn('text-primary/80 font-normal', className)}>
@@ -113,17 +119,20 @@ function Label({ htmlFor, required, children, className }: LabelProps) {
   )
 }
 
+/** @deprecated */
 function ControlGroup({ children, type, className }: ControlProps) {
   return (
     <div
       className={cn('flex flex-col gap-2', { 'mt-2': type === 'button' }, className)}
       role="group"
-      aria-label={type === 'button' ? 'Button control group' : 'Input control group'}>
+      aria-label={type === 'button' ? 'Button control group' : 'Input control group'}
+    >
       {children}
     </div>
   )
 }
 
+/** @deprecated: Use Text from @harnessio/ui/components instead */
 function Caption({ children, className }: CompProps) {
   return (
     <Text as="p" size={1} color="tertiaryBackground" role="note" aria-live="polite" className={cn('mt-1', className)}>
@@ -132,6 +141,7 @@ function Caption({ children, className }: CompProps) {
   )
 }
 
+/** @deprecated: Use FormErrorMessage from @harnessio/ui/components instead */
 function Message({ children, theme, className }: MessageProps) {
   const textClass = themeClassMap[theme]
   const role = theme === MessageTheme.ERROR ? 'alert' : 'status'
@@ -146,6 +156,7 @@ function Message({ children, theme, className }: MessageProps) {
   )
 }
 
+/** @deprecated: Use RadioGroupItem from @harnessio/ui/components instead */
 function Option({ control, id, label, description, className }: OptionProps) {
   return (
     // eslint-disable-next-line jsx-a11y/role-has-required-aria-props
@@ -165,6 +176,7 @@ function Option({ control, id, label, description, className }: OptionProps) {
   )
 }
 
+/** @deprecated: Use FormSeparator from @harnessio/ui/components instead */
 function Separator({ dashed, dotted, className }: SeparatorProps) {
   return (
     <div
@@ -175,6 +187,7 @@ function Separator({ dashed, dotted, className }: SeparatorProps) {
   )
 }
 
+/** @deprecated: Use Spacer from @harnessio/ui/components instead */
 function Spacer({ className }: SpacerProps) {
   return <div className={cn('mt-1', className)} role="presentation" aria-hidden="true" />
 }

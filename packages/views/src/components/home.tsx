@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -83,7 +84,8 @@ export const Home: React.FC<HomeProps> = ({
                           if (project.name) {
                             handleSelectProject(project.name)
                           }
-                        }}>
+                        }}
+                      >
                         {project.name}
                       </CommandItem>
                     ))}

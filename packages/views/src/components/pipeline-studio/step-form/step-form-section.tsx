@@ -1,6 +1,6 @@
 const StepFormSection = {
   Root: function Root({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-grow flex-col overflow-scroll">{children}</div>
+    return <div className="flex grow flex-col overflow-scroll">{children}</div>
   },
 
   Header: function Header({ children }: { children: React.ReactNode }) {
@@ -16,7 +16,7 @@ const StepFormSection = {
   },
 
   Form: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="mb-4 px-4">{children}</div>
+    return <div className="mb-4 p-4">{children}</div>
   }
 }
 

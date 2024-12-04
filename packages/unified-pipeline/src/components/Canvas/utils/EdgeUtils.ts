@@ -1,9 +1,10 @@
-import type { Node, Edge } from 'reactflow'
 import { isEmpty } from 'lodash-es'
-import { EdgeType, NodeType } from '../types'
-import { getChildNodes, getLayoutableNodes, partitionNodesByParallelism } from './NodeUtils'
+import type { Edge, Node } from 'reactflow'
+
 import type { PlusEdgeProps } from '../elements/Edges/PlusEdge/PlusEdge'
+import { EdgeType, NodeType } from '../types'
 import { GROUP_NODE_VERTICAL_ALIGNMENT_MARGIN } from './LROrientation/Constants'
+import { getChildNodes, getLayoutableNodes, partitionNodesByParallelism } from './NodeUtils'
 
 /* node to parent edge */
 export const linkChildNodeToParent = ({

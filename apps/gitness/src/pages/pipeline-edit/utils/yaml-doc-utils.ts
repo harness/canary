@@ -1,5 +1,5 @@
 import { forOwn } from 'lodash-es'
-import { Pair, Scalar, YAMLMap, YAMLSeq, Document } from 'yaml'
+import { Document, Pair, Scalar, YAMLMap, YAMLSeq } from 'yaml'
 
 type YamlVariableType = 'object' | 'array' | 'number' | 'string' | 'boolean' | 'undefined' | 'unknown'
 

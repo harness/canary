@@ -1,19 +1,22 @@
 import { useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonGroup,
+  Icon,
   Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Text,
-  Icon
+  Text
 } from '@harnessio/canary'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+
 import { FormFieldSet } from '../../index'
 
 const formSchema = z.object({

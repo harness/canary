@@ -1,4 +1,5 @@
 import { Badge, Icon, IconProps, TabsTrigger, Text } from '@harnessio/canary'
+
 import { Layout } from './layout/layout'
 
 interface TabTriggerItemProps {

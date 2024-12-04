@@ -1,12 +1,15 @@
 import { useEffect } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
-import { FileExplorer } from '@harnessio/views'
-import { OpenapiContentInfo, getContent, OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { normalizeGitRef } from '../utils/git-utils'
-import { PathParams } from '../RouteDefinitions'
+import { useLocation, useParams } from 'react-router-dom'
+
 import { useQuery, useQueryClient } from '@tanstack/react-query'
+
+import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnessio/code-service-client'
+import { FileExplorer } from '@harnessio/ui/components'
+
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { PathParams } from '../RouteDefinitions'
+import { normalizeGitRef } from '../utils/git-utils'
 
 interface ExplorerProps {
   selectedBranch: string
@@ -24,11 +27,15 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
   })
 }
 
+/**
+ * TODO: This code was migrated from V2 and needs to be refactored.
+ */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const fullResourcePath = subResourcePath ? `${resourcePath}/${subResourcePath}` : resourcePath
+  const { spaceId, repoId } = useParams<PathParams>()
+  const subCodePath = useParams()['*'] || ''
+  const rawResourcePath = subCodePath.split('~')?.[1] ?? ''
+  const fullResourcePath = rawResourcePath.startsWith('/') ? rawResourcePath.slice(1) : rawResourcePath
   const location = useLocation()
   const isFileEditMode = location.pathname.includes('edit')
   const queryClient = useQueryClient()
@@ -81,25 +88,17 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/spaces/${spaceId}/repos/${repoId}/code/${selectedBranch}/~/${itemPath}`
+      const fullPath = `/${spaceId}/repos/${repoId}/code/${selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
-        return isFileEditMode && itemPath === fullResourcePath ? (
+        return (
           <FileExplorer.FileItem
             key={itemPath || idx.toString()}
             isActive={itemPath === fullResourcePath}
-            link={fullPath}>
+            link={isFileEditMode && itemPath === fullResourcePath ? undefined : fullPath}
+          >
             {item.name}
           </FileExplorer.FileItem>
-        ) : (
-          <Link to={fullPath} key={itemPath}>
-            <FileExplorer.FileItem
-              key={itemPath || idx.toString()}
-              isActive={itemPath === fullResourcePath}
-              link={fullPath}>
-              {item.name}
-            </FileExplorer.FileItem>
-          </Link>
         )
       } else {
         return (
@@ -116,7 +115,8 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
                 handleOpenFoldersChange={handleOpenFoldersChange}
                 openFolderPaths={openFolderPaths}
               />
-            }>
+            }
+          >
             {item.name}
           </FileExplorer.FolderItem>
         )
@@ -160,7 +160,8 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
             handleOpenFoldersChange(value)
           }
         }}
-        value={openFolderPaths}>
+        value={openFolderPaths}
+      >
         {contents && renderEntries(contents, folderPath)}
       </FileExplorer.Root>
     )
@@ -228,7 +229,8 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
           handleOpenFoldersChange(value)
         }
       }}
-      value={openFolderPaths}>
+      value={openFolderPaths}
+    >
       {isRootLoading ? (
         <div>Loading...</div>
       ) : rootError ? (

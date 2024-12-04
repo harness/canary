@@ -1,9 +1,14 @@
 import { forwardRef } from 'react'
-import { SubmitHandler, FieldErrors, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
+import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
+
 import { z } from 'zod'
-import { Input, Textarea, Text } from '@harnessio/canary'
-import { MessageTheme } from '../form-field-set'
+
+import { Input, Text } from '@harnessio/canary'
+import { Textarea } from '@harnessio/ui/components'
+
 import { FormFieldSet } from '../..'
+import { MessageTheme } from '../form-field-set'
+
 // Define the form schema
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const formSchemaCompare = z.object({

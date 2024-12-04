@@ -1,5 +1,6 @@
-import { TokenSuccessForm } from './token-success-form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@harnessio/canary'
+
+import { TokenSuccessForm } from './token-success-form'
 
 interface TokenCreateDialogProps {
   open: boolean

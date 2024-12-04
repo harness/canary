@@ -1,5 +1,7 @@
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form'
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
+
 import { z } from 'zod'
+
 import { createWebhookFormSchema } from './create-webhooks-form-schema'
 
 export enum WebhookTriggerEnum {

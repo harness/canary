@@ -1,12 +1,13 @@
-import { Node, Edge, Position } from 'reactflow'
 import * as dagre from 'dagre'
-import { getChildNodes, getLayoutableNodes, getNonLayoutableNodes, partitionNodesByParallelism } from './NodeUtils'
+import { Edge, Node, Position } from 'reactflow'
+
 import {
-  NODE_HORIZONTAL_MARGIN,
   INTER_PARENT_NODE_NODE_HORIZONTAL_SEPARATION,
   INTER_PARENT_NODE_NODE_HORIZONTAL_SEPARATION_READ_ONLY,
+  NODE_HORIZONTAL_MARGIN,
   NODE_VERTICAL_MARGIN
 } from './LROrientation/Constants'
+import { getChildNodes, getLayoutableNodes, getNonLayoutableNodes, partitionNodesByParallelism } from './NodeUtils'
 
 // Layout direction (T = top, R = right, B = bottom, L = left, TB = top to bottom)
 export enum Direction {

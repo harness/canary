@@ -1,11 +1,11 @@
-import { Rule, RepoBranchSettingsFormFields, BranchRuleId, PatternsButtonType, MergeStrategy } from '@harnessio/views'
 import {
   EnumRuleState,
+  OpenapiRule,
   OpenapiRuleDefinition,
   RuleAddRequestBody,
-  RuleGetOkResponse,
-  OpenapiRule
+  RuleGetOkResponse
 } from '@harnessio/code-service-client'
+import { BranchRuleId, MergeStrategy, PatternsButtonType, RepoBranchSettingsFormFields, Rule } from '@harnessio/views'
 
 const ruleIds = [
   BranchRuleId.REQUIRE_LATEST_COMMIT,

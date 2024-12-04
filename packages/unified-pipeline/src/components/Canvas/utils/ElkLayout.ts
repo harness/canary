@@ -6,18 +6,19 @@
  */
 
 import ELK, { ElkExtendedEdge, ElkNode, LayoutOptions } from 'elkjs'
-import { Position, type Edge, type Node } from 'reactflow'
 import { get, set } from 'lodash-es'
+import { Position, type Edge, type Node } from 'reactflow'
+
+import { isValidPositiveInteger } from '../../../utils/StringUtils'
+import { dedupeEdges } from './EdgeUtils'
 import {
+  INTER_PARENT_PARENT_HORIZONTAL_SEPARATION,
   NODE_DEFAULT_HEIGHT,
   NODE_DEFAULT_WIDTH,
   PLUS_NODE_ID,
-  ROOT_NODE_ID,
-  INTER_PARENT_PARENT_HORIZONTAL_SEPARATION
+  ROOT_NODE_ID
 } from './LROrientation/Constants'
 import { excludeTerminalNodes, getLayoutableNodes } from './NodeUtils'
-import { dedupeEdges } from './EdgeUtils'
-import { isValidPositiveInteger } from '../../../utils/StringUtils'
 
 enum ElkDirection {
   LEFT = 'LEFT',

@@ -1,4 +1,6 @@
 import { Avatar, AvatarFallback, Button, Icon, Text } from '@harnessio/canary'
+
+import { getInitials } from '../../utils/utils'
 import {
   CommentItem,
   CommentType,
@@ -7,13 +9,12 @@ import {
   TypesPullReq,
   TypesPullReqActivity
 } from './interfaces'
-import PullRequestTimelineItem from './pull-request-timeline-item'
-import { getInitials } from '../../utils/utils'
+import PullRequestSystemLabelItem from './pull-request-system-label-item'
+import PullRequestSystemMergeItem from './pull-request-system-merge'
 import PullRequestSystemReviewerAddItem from './pull-request-system-reviewer-add'
 import PullRequestSystemReviewerDeleteItem from './pull-request-system-reviewer-delete'
-import PullRequestSystemMergeItem from './pull-request-system-merge'
 import PullRequestSystemTitleItem from './pull-request-system-title'
-import PullRequestSystemLabelItem from './pull-request-system-label-item'
+import PullRequestTimelineItem from './pull-request-timeline-item'
 
 interface SystemCommentProps extends TypesPullReq {
   commentItems: CommentItem<TypesPullReqActivity>[]

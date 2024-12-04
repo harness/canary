@@ -1,7 +1,21 @@
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Label, Icon, Text, Spacer } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Icon,
+  Input,
+  Label,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
+
 import { SandboxLayout } from '..'
 
 interface PageProps {
@@ -55,9 +69,7 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError }: PagePro
           <Spacer size={1} />
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Label htmlFor="identifier" variant="sm">
-                Project name
-              </Label>
+              <Label htmlFor="identifier">Project name</Label>
               <Spacer size={1} />
               <Input
                 id="identifier"

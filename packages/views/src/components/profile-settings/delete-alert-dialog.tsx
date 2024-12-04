@@ -6,8 +6,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   Button,
-  Text,
-  Spacer
+  Spacer,
+  Text
 } from '@harnessio/canary'
 
 interface DeleteTokenAlertDialogProps {
@@ -59,7 +59,8 @@ export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
             disabled={isLoading}
             onClick={() => {
               deleteFn(identifier!)
-            }}>
+            }}
+          >
             {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>
         </AlertDialogFooter>

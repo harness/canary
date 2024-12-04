@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useBlocker } from 'react-router-dom'
+
 import { useExitConfirm } from './useExitConfirm'
 
 export interface UseExitPromptProps {

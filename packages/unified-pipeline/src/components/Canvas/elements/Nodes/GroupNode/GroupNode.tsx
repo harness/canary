@@ -1,9 +1,16 @@
 import { useCallback, useEffect, useState } from 'react'
+
 import cx from 'classnames'
-import { Handle, Position, type NodeProps, Node } from 'reactflow'
-import { Icon } from '@harnessio/canary'
 import { set } from 'lodash-es'
+import { Handle, Node, Position, type NodeProps } from 'reactflow'
+
+import { Icon } from '@harnessio/canary'
+
+import { DEFAULT_NODE_LOCATION } from '../../../../../components/Canvas/utils/LROrientation/Constants'
+import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
 import useFlowStore from '../../../../../framework/FlowStore/FlowStore'
+import Expand from '../../../../../icons/Expand'
+import { getIdFromName } from '../../../../../utils/StringUtils'
 import {
   DefaultNodeProps,
   DeleteNodeProps,
@@ -13,22 +20,18 @@ import {
   NodeType,
   PositionType
 } from '../../../types'
-import Expand from '../../../../../icons/Expand'
+import { createEdgesForChildren, dedupeEdges, mergeEdges } from '../../../utils/EdgeUtils'
+import { performLayout } from '../../../utils/LayoutUtils'
 import {
   getChildNodes,
+  getGroupNodeOrientation,
   getNodeById,
+  getNodeDiagnostics,
+  getStageGroupNodeDimensions,
   isContainerNode,
   isParentOfNode,
-  updateNodePositionType,
-  getStageGroupNodeDimensions,
-  getGroupNodeOrientation,
-  getNodeDiagnostics
+  updateNodePositionType
 } from '../../../utils/NodeUtils'
-import { performLayout } from '../../../utils/LayoutUtils'
-import { dedupeEdges, createEdgesForChildren, mergeEdges } from '../../../utils/EdgeUtils'
-import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
-import { DEFAULT_NODE_LOCATION } from '../../../../../components/Canvas/utils/LROrientation/Constants'
-import { getIdFromName } from '../../../../../utils/StringUtils'
 
 export interface GroupNodeProps extends DefaultNodeProps, ExpandNodeProps, DeleteNodeProps, GroupNodesProps {}
 
@@ -215,7 +218,8 @@ export default function GroupNode(props: NodeProps<GroupNodeProps>) {
         className={cx(
           'flex flex-col items-center justify-between text-xs font-medium leading-3 box-border text-left p-2.5 rounded-lg bg-studio-6 border border-studio-5 border-dashed',
           { 'justify-center': !isExpanded }
-        )}>
+        )}
+      >
         <div className="box-border flex w-full items-center justify-between">
           <div className="flex items-center">
             <div style={{ display: 'flex', alignItems: 'center' }}>

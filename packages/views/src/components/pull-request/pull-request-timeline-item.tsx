@@ -1,6 +1,10 @@
-import { memo, useEffect, useState } from 'react'
-import { Button, Card, Input, NodeGroup, Text } from '@harnessio/canary'
+import { memo, useState } from 'react'
+
 import cx from 'classnames'
+
+import { NodeGroup } from '@harnessio/canary'
+import { Button, Card, Input, Text } from '@harnessio/ui/components'
+
 interface TimelineItemProps {
   header: {
     avatar?: React.ReactNode
@@ -68,9 +72,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   // currentUser
 }) => {
   const [comment, setComment] = useState<string>('')
-  useEffect(() => {
-    setComment('')
-  }, [handleSaveComment])
+
   return (
     <NodeGroup.Root>
       <NodeGroup.Icon className={cx({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>
@@ -85,7 +87,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
             {content}
             {/* TODO: will have to eventually implement a commenting and reply system similiar to gitness */}
             {!hideReply && (
-              <div className="flex items-center gap-3 border-t px-4 py-4">
+              <div className="flex items-center gap-3 border-t p-4">
                 {header.length > 0 && header[0].avatar}
                 <Input
                   value={comment}
@@ -99,7 +101,8 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                   onClick={() => {
                     handleSaveComment?.(comment, parentCommentId)
                     setComment('')
-                  }}>
+                  }}
+                >
                   Reply
                 </Button>
               </div>

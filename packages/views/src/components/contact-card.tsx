@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage, Text } from '@harnessio/canary'
-import { Layout } from './layout/layout'
+
 import { getInitials } from '../utils/utils'
+import { Layout } from './layout/layout'
 
 interface ContactCardProps {
   authorEmail: string

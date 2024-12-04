@@ -1,14 +1,14 @@
 import {
-  Text,
-  Icon,
-  Spacer,
   Badge,
   Button,
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  IconProps
+  DropdownMenuTrigger,
+  Icon,
+  IconProps,
+  Spacer,
+  Text
 } from '@harnessio/canary'
 
 interface DetailsProps {
@@ -22,10 +22,12 @@ interface PageProps {
   title: string
   details: DetailsProps[]
   timestamp?: string
+  onAddDescription?: () => void
+  description?: string
 }
 
 export const RepoSummaryPanel = ({ ...props }: PageProps) => {
-  const { title, details, timestamp } = props
+  const { title, details, timestamp, onAddDescription, description } = props
 
   return (
     <div className="flex flex-col">
@@ -40,14 +42,15 @@ export const RepoSummaryPanel = ({ ...props }: PageProps) => {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem className="flex items-center gap-1.5">
+            <DropdownMenuItem className="flex items-center gap-1.5" onClick={onAddDescription}>
               <Icon name="plus" size={12} className="text-tertiary-background" />
               <Text>Add description</Text>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-
+      <Spacer size={2} />
+      {description?.length && <Text>{description}</Text>}
       <Spacer size={2} />
       {timestamp && (
         <Text size={1} color={'tertiaryBackground'}>

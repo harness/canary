@@ -1,5 +1,17 @@
+import { Link } from 'react-router-dom'
+
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
   Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
   Icon,
   Table,
   TableBody,
@@ -7,23 +19,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Text,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  Badge,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger
+  Text
 } from '@harnessio/canary'
+import { CommitCopyActions } from '@harnessio/ui/components'
+
 import { getInitials } from '../utils/utils'
 import { CopyButton } from './copy-button'
 import { DivergenceGauge } from './divergence-gauge'
-import { CommitCopyActions } from './commit-copy-actions'
-import { Link } from 'react-router-dom'
 
 interface BranchProps {
   id: number
@@ -66,7 +68,8 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
           <DropdownMenuGroup>
             <Link
               replace
-              to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${branchInfo.name}`}>
+              to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${branchInfo.name}`}
+            >
               <DropdownMenuItem className="cursor-pointer">
                 <DropdownMenuShortcut className="ml-0">
                   <Icon name="pr-open" className="mr-2" />
@@ -160,7 +163,8 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                       <Badge
                         variant="outline"
                         size="xs"
-                        className="text-tertiary-background m-auto h-5 rounded-full p-2 text-center text-xs font-normal">
+                        className="text-tertiary-background m-auto h-5 rounded-full p-2 text-center text-xs font-normal"
+                      >
                         Default
                       </Badge>
                     ) : (

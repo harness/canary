@@ -1,4 +1,5 @@
 import { BranchRuleId, MergeStrategy } from './types'
+
 export const branchRules = [
   {
     id: BranchRuleId.REQUIRE_LATEST_COMMIT,

@@ -1,22 +1,24 @@
 import { useCallback, useState } from 'react'
+
 import cx from 'classnames'
-import type { NodeProps } from 'reactflow'
-import { Handle, Position, useReactFlow, Node } from 'reactflow'
-import { Skeleton, Text, Icon } from '@harnessio/canary'
+import { Handle, Node, Position, useReactFlow, type NodeProps } from 'reactflow'
+
+import { Icon, Skeleton, Text } from '@harnessio/canary'
+
+// import cardBg from '../../../../../assets/images/card-glow.svg'
+import { DEFAULT_NODE_LOCATION } from '../../../../../components/Canvas/utils/LROrientation/Constants'
+import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
+import { useInteractionContext } from '../../../../../framework/InteractionContext/InteractionContext'
+import { Status } from '../../../../../utils/Constants'
 import {
+  NodeType,
   PositionType,
   type DefaultNodeProps,
   type DeleteNodeProps,
-  type ExpandNodeProps,
-  NodeType
+  type ExpandNodeProps
 } from '../../../types'
-import { fetchNodeConnections, getNodeDiagnostics } from '../../../utils/NodeUtils'
-import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
 import { STEP_NODE_HEIGHT, STEP_NODE_WIDTH } from '../../../utils/LROrientation/Constants'
-import { Status } from '../../../../../utils/Constants'
-// import cardBg from '../../../../../assets/images/card-glow.svg'
-import { DEFAULT_NODE_LOCATION } from '../../../../../components/Canvas/utils/LROrientation/Constants'
-import { useInteractionContext } from '../../../../../framework/InteractionContext/InteractionContext'
+import { fetchNodeConnections, getNodeDiagnostics } from '../../../utils/NodeUtils'
 
 export interface AtomicNodeProps extends DefaultNodeProps, ExpandNodeProps, DeleteNodeProps {
   /**
@@ -83,7 +85,8 @@ export default function AtomicNode({ isConnectable, data, xPos, yPos, zIndex }: 
                 width,
                 height
               }}
-              className="content-layer rounded-md p-2.5">
+              className="content-layer rounded-md p-2.5"
+            >
               <div className="flex flex-col gap-3">
                 <Skeleton className="size-6" />
                 <div className="flex flex-col gap-1">
@@ -100,13 +103,15 @@ export default function AtomicNode({ isConnectable, data, xPos, yPos, zIndex }: 
             'border p-px rounded-md bg-studio-primary border-studio-4/[0.6] shadow-[0px_4px_12px_0px_rgba(0,0,0,0.3)]',
             { 'gradient-border-gray': status === Status.DONE },
             { 'border-studio-node-selected': selectedNodePath === path }
-          )}>
+          )}
+        >
           <div
             style={{
               width,
               minHeight: height
             }}
-            className="content-layer space-y-2.5 rounded-md p-2.5">
+            className="content-layer space-y-2.5 rounded-md p-2.5"
+          >
             {icon}
             <Text className="line-clamp-2 text-[11px] font-normal leading-4 text-white">{name}</Text>
             {enableDiagnostics?.Node && (
@@ -124,7 +129,8 @@ export default function AtomicNode({ isConnectable, data, xPos, yPos, zIndex }: 
             onClick={e => {
               e.stopPropagation()
               handleAddClick(data)
-            }}>
+            }}
+          >
             <Icon
               name="plus"
               className={cx(

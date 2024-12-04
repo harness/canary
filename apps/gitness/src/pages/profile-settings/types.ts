@@ -11,3 +11,9 @@ export enum ApiErrorType {
   TokenDelete = 'tokenDelete',
   KeyDelete = 'keyDelete'
 }
+
+export enum LanguagesEnum {
+  ENGLISH = 'en',
+  FRENCH = 'fr',
+  SYSTEM = 'system'
+}

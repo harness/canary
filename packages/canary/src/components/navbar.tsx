@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './accordion'
 import { Text } from './text'
 
@@ -13,7 +14,8 @@ function Root({ className, children }: NavbarRootProps) {
       className={cn(
         'border-border-background bg-primary-background grid h-screen w-[220px] select-none grid-rows-[auto_1fr_auto] overflow-y-auto border-r',
         className
-      )}>
+      )}
+    >
       {children}
     </div>
   )
@@ -32,7 +34,8 @@ function Group({ children, title, topBorder }: { children: React.ReactNode; titl
     <div
       className={cn('flex w-full flex-col gap-1.5 overflow-x-hidden px-5 pb-3.5', {
         'border-border-background border-t pt-5': topBorder
-      })}>
+      })}
+    >
       {title && (
         <div className="text-primary group mb-2 opacity-40">
           <p className="group-hover:text-primary text-xs font-normal duration-150 ease-in-out">{title}</p>
@@ -56,7 +59,8 @@ function AccordionGroup({
     <div
       className={cn('border-border-background w-full overflow-x-hidden border-t p-5 py-0.5', {
         'border-t-0 pt-0': topBorder
-      })}>
+      })}
+    >
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1" className="border-none">
           <AccordionTrigger className="text-primary group opacity-40">
@@ -87,7 +91,8 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
           'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] items-center gap-3 py-1',
           { 'gap-0': !icon },
           className
-        )}>
+        )}
+      >
         <div
           className={cn(
             'group-hover:bg-primary/5 absolute -left-2 -right-2 z-0 h-full w-auto rounded-md bg-transparent',
@@ -98,7 +103,8 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
           className={cn(
             'text-secondary-muted group-hover:text-primary z-10 col-start-1 row-span-full flex items-center truncate duration-0 ease-in-out',
             { 'text-primary': active }
-          )}>
+          )}
+        >
           {icon ? <div className="bg-tertiary rounded-md">{icon}</div> : <div />}
         </div>
         <div className="col-start-2 flex flex-col items-start">
@@ -111,7 +117,8 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
               {
                 'text-primary': active
               }
-            )}>
+            )}
+          >
             {text}
           </Text>
           <Text
@@ -123,7 +130,8 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
               {
                 'text-primary': active
               }
-            )}>
+            )}
+          >
             {description}
           </Text>
         </div>
@@ -132,13 +140,15 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
 
   return (
     <div
-      className={cn('group flex cursor-pointer select-none items-center gap-2.5 py-1', { 'gap-0': !icon }, className)}>
+      className={cn('group flex cursor-pointer select-none items-center gap-2.5 py-1', { 'gap-0': !icon }, className)}
+    >
       {icon && (
         <div
           className={cn(
             'text-secondary-muted group-hover:text-primary z-10 flex w-3 min-w-3 items-center truncate duration-100 ease-in-out',
             { 'text-primary': active }
-          )}>
+          )}
+        >
           {icon}
         </div>
       )}
@@ -150,7 +160,8 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
           {
             'text-primary': active
           }
-        )}>
+        )}
+      >
         {text}
       </Text>
     </div>
@@ -165,4 +176,7 @@ function Footer({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * @deprecated
+ */
 export { Root, Header, Content, Group, AccordionGroup, Item, Footer }

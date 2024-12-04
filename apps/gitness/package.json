@@ -15,12 +15,14 @@
     "preinstall": "npx only-allow pnpm",
     "pre-commit": "lint-staged",
     "test": "vitest",
+    "extract": "i18next --config './i18n.config.ts'",
     "typecheck": "tsc"
   },
   "dependencies": {
     "@harnessio/canary": "workspace:*",
-    "@harnessio/code-service-client": "3.2.0",
+    "@harnessio/code-service-client": "3.2.1-beta.1",
     "@harnessio/forms": "workspace:*",
+    "@harnessio/ui": "workspace:*",
     "@harnessio/unified-pipeline": "workspace:*",
     "@harnessio/views": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
@@ -30,6 +32,8 @@
     "clsx": "^2.1.1",
     "diff2html": "3.4.22",
     "event-source-polyfill": "^1.0.22",
+    "i18next": "^24.0.2",
+    "i18next-browser-languagedetector": "^8.0.0",
     "jotai": "^2.6.3",
     "lang-map": "^0.4.0",
     "lodash-es": "^4.17.21",
@@ -40,11 +44,13 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
+    "react-i18next": "^15.1.1",
     "yaml": "^2.5.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
+    "@git-diff-view/react": "^0.0.16",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^13.4.0",
     "@types/event-source-polyfill": "^1.0.0",
@@ -57,6 +63,7 @@
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "immer": "^10.1.1",
     "prettier": "^3.0.3",
     "react-router-dom": "^6.26.0",
     "tailwindcss": "^3.4.4",
@@ -64,7 +71,8 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.1",
     "vite-plugin-monaco-editor": "^1.1.0",
-    "vitest": "^2.1.2"
+    "vitest": "^2.1.2",
+    "zustand": "^4.5.4"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

@@ -1,4 +1,5 @@
 import { render } from '@testing-library/react'
+
 import { StringSubstitute, stringSubstitute } from '../StringSubstitute'
 
 describe('StringSubstitute', () => {

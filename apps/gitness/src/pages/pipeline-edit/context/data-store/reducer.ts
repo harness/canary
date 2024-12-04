@@ -20,7 +20,7 @@ export const initialState: DataReducerState = {
   addStepIntention: null,
   editStepIntention: null,
   //
-  currentStepFormDefinition: null,
+  formStep: null,
   //
   problems: [],
   problemsCount: { all: 0, error: 0, info: 0, warning: 0 }

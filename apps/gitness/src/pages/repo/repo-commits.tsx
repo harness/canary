@@ -1,25 +1,27 @@
-import { parseAsInteger, useQueryState } from 'nuqs'
-import { Spacer, Text } from '@harnessio/canary'
-import {
-  BranchSelector,
-  Filter,
-  NoData,
-  PaginationComponent,
-  PullRequestCommits,
-  SkeletonList,
-  SandboxLayout
-} from '@harnessio/views'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useEffect, useState } from 'react'
 
+import { parseAsInteger, useQueryState } from 'nuqs'
+
+import { Spacer, Text } from '@harnessio/canary'
 import {
   TypesCommit,
   useFindRepositoryQuery,
   useListBranchesQuery,
   useListCommitsQuery
 } from '@harnessio/code-service-client'
-import { useEffect, useState } from 'react'
-import { normalizeGitRef } from '../../utils/git-utils'
+import { SkeletonList } from '@harnessio/ui/components'
+import {
+  BranchSelector,
+  Filter,
+  NoData,
+  PaginationComponent,
+  PullRequestCommits,
+  SandboxLayout
+} from '@harnessio/views'
+
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PageResponseHeader } from '../../types'
+import { normalizeGitRef } from '../../utils/git-utils'
 
 const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
 

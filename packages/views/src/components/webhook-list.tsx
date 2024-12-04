@@ -1,19 +1,19 @@
+import { Link } from 'react-router-dom'
+
 import {
   Badge,
+  Button,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuSeparator,
-  Button,
   DropdownMenuShortcut,
+  DropdownMenuTrigger,
   Icon,
   StackedList,
   Text
 } from '@harnessio/canary'
-
-import { Link } from 'react-router-dom'
 
 export enum WebhookState {
   DISABLED = 'Disabled',
@@ -43,7 +43,8 @@ const Title = ({ title, enabled }: { title: string; enabled: boolean }) => {
         <Badge
           variant="outline"
           size="xs"
-          className="rounded-full border-emerald-400/20 bg-emerald-400/10 text-emerald-300">
+          className="rounded-full border-emerald-400/20 bg-emerald-400/10 text-emerald-300"
+        >
           <Text size={0} className="text-inherit">
             {WebhookState.ENABLED}
           </Text>
@@ -74,7 +75,8 @@ const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhook
               className="cursor-pointer"
               onClick={e => {
                 e.stopPropagation()
-              }}>
+              }}
+            >
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="edit-pen" className="mr-2" />
               </DropdownMenuShortcut>
@@ -87,7 +89,8 @@ const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhook
             onClick={e => {
               e.stopPropagation()
               openDeleteWebhookDialog(id)
-            }}>
+            }}
+          >
             <DropdownMenuShortcut className="ml-0">
               <Icon name="trash" className="text-destructive mr-2" />
             </DropdownMenuShortcut>

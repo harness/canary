@@ -1,9 +1,11 @@
 import { useState } from 'react'
-import { Tabs, TabsContent, TabsList, TabsTrigger, Button, Text, ScrollArea, SearchBox, Icon } from '@harnessio/canary'
-import ConsoleLogs from './console-logs'
-import { Layout } from '../layout/layout'
-import { ExecutionStatus } from './execution-status'
+
+import { Button, Icon, ScrollArea, SearchBox, Tabs, TabsContent, TabsList, TabsTrigger, Text } from '@harnessio/canary'
+
 import { getFormattedDuration } from '../../utils/TimeUtils'
+import { Layout } from '../layout/layout'
+import ConsoleLogs from './console-logs'
+import { ExecutionStatus } from './execution-status'
 import { KeyValuePair, KeyValueTable } from './key-value-table'
 import { ExecutionState, LivelogLine } from './types'
 
@@ -56,7 +58,8 @@ const StepExecutionToolbar: React.FC<
           variant="outline"
           size="icon"
           className="rounded-bl-none rounded-tl-none border-l-0"
-          onClick={onDownload}>
+          onClick={onDownload}
+        >
           <Icon name="download" className="h-4 w-4" />
         </Button>
       </div>

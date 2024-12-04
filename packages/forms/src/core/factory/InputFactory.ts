@@ -1,4 +1,5 @@
 import { isEmpty } from 'lodash-es'
+
 import type { InputComponent } from '../components/InputComponent'
 
 export interface IInputFactoryProps {

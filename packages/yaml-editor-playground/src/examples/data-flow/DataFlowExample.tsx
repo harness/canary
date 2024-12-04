@@ -1,4 +1,5 @@
 import React from 'react'
+
 import DataProvider from './DataProvider'
 import { YamlEditorWrapper } from './YamlEditorWrapper'
 

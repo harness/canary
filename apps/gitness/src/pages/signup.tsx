@@ -1,7 +1,8 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { SignUpPage, SignUpDataProps } from '@harnessio/views'
+
 import { useOnRegisterMutation } from '@harnessio/code-service-client'
+import { SignUpDataProps, SignUpPage } from '@harnessio/views'
 
 export const SignUp: React.FC = () => {
   const navigate = useNavigate()

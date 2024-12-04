@@ -1,7 +1,8 @@
 import * as React from 'react'
+
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import type { VariantProps } from 'class-variance-authority'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
+
 import { cn } from '../lib/utils'
 
 const tabsListVariants = cva('text-muted-foreground inline-flex items-center', {
@@ -144,5 +145,12 @@ const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Conte
 )
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
+/**
+ * @deprecated
+ */
 export { Tabs, TabsList, TabsTrigger, TabsContent }
+
+/**
+ * @deprecated
+ */
 export type { TabsListProps, TabsProps }

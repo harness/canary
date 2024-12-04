@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Root as SearchBox } from './search-box'
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './dialog'
+import { Root as SearchBox } from './search-box'
 import { Spacer } from './spacer'
 
 interface ProjectProps {

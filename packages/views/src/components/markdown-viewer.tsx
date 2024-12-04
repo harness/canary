@@ -1,17 +1,19 @@
-import { useNavigate } from 'react-router-dom'
-import rehypeSanitize from 'rehype-sanitize'
 import { useCallback, useMemo, useRef, useState } from 'react'
-import { isEmpty } from 'lodash-es'
+import { useNavigate } from 'react-router-dom'
+
 // import cx from 'classnames'
 // import { getCodeString } from 'rehype-rewrite'
 import MarkdownPreview from '@uiw/react-markdown-preview'
-import rehypeVideo from 'rehype-video'
+import { isEmpty } from 'lodash-es'
 import rehypeExternalLinks from 'rehype-external-links'
-import ImageCarousel from './image-carousel'
+import rehypeSanitize from 'rehype-sanitize'
+import rehypeVideo from 'rehype-video'
+
 // import type { SuggestionBlock } from 'components/SuggestionBlock/SuggestionBlock'
 // import { CodeSuggestionBlock } from './CodeSuggestionBlock'
 // import css from './MarkdownViewer.module.scss'
 import { INITIAL_ZOOM_LEVEL } from '../utils/utils'
+import ImageCarousel from './image-carousel'
 
 interface MarkdownViewerProps {
   source: string
@@ -81,7 +83,8 @@ export function MarkdownViewer({
       // className={cx(css.main, className, { [css.withMaxHeight]: maxHeight && (maxHeight as number) > 0 })}
       onClick={interceptClickEventOnViewerContainer}
       style={{ maxHeight: maxHeight }}
-      ref={ref}>
+      ref={ref}
+    >
       <MarkdownPreview
         source={source}
         className="prose dark:prose-invert !bg-background !max-w-full"

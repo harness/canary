@@ -1,16 +1,18 @@
 import { parseAsInteger, useQueryState } from 'nuqs'
-import { Spacer, Text, Button } from '@harnessio/canary'
+
+import { Button, Spacer, Text } from '@harnessio/canary'
 import {
   FormFieldSet,
-  SandboxLayout,
-  ProfileKeysList,
   KeysList,
+  PaginationComponent,
+  ProfileKeysList,
   ProfileTokensList,
-  TokensList,
-  PaginationComponent
+  SandboxLayout,
+  TokensList
 } from '@harnessio/views'
-import { AlertDeleteParams } from './types'
+
 import { PageResponseHeader } from '../../types'
+import { AlertDeleteParams } from './types'
 
 interface SettingsAccountKeysPageProps {
   publicKeys: KeysList[]

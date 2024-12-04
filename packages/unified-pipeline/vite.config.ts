@@ -1,10 +1,12 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import dts from 'vite-plugin-dts'
 import path, { resolve } from 'path'
-import svgr from 'vite-plugin-svgr'
-import { uniq } from 'lodash-es'
+
 import ViteYaml from '@modyfi/vite-plugin-yaml'
+import react from '@vitejs/plugin-react-swc'
+import { uniq } from 'lodash-es'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
+import svgr from 'vite-plugin-svgr'
+
 const pkg = require('./package.json')
 
 const external = uniq(

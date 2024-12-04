@@ -1,22 +1,33 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { parseAsInteger, useQueryState } from 'nuqs'
-import { SkeletonList, NoData, SandboxLayout, BranchesList, Filter, useCommonFilter } from '@harnessio/views'
+
 import { Button, Spacer, Text } from '@harnessio/canary'
 import {
-  useListBranchesQuery,
+  ListBranchesQueryQueryParams,
   TypesBranchExtended,
   useCalculateCommitDivergenceMutation,
   useFindRepositoryQuery,
-  ListBranchesQueryQueryParams
+  useListBranchesQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
+import {
+  BranchesList,
+  Filter,
+  NoData,
+  NoSearchResults,
+  PaginationComponent,
+  SandboxLayout,
+  useCommonFilter
+} from '@harnessio/views'
+
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { PageResponseHeader, orderSortDate } from '../../types'
-import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
-import { NoSearchResults, PaginationComponent } from '@harnessio/views'
-import { PathParams } from '../../RouteDefinitions'
-import CreateBranchDialog from './repo-branch-create'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { PathParams } from '../../RouteDefinitions'
+import { orderSortDate, PageResponseHeader } from '../../types'
+import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
+import CreateBranchDialog from './repo-branch-create'
 
 const sortOptions = [
   { name: 'Date', value: 'date' },
@@ -139,7 +150,8 @@ export function RepoBranchesListPage() {
             variant="default"
             onClick={() => {
               setCreateBranchDialogOpen(true)
-            }}>
+            }}
+          >
             Create branch
           </Button>
         </div>

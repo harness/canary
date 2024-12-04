@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { useOpLogoutMutation } from '@harnessio/code-service-client'
 
 export const Logout: React.FC = () => {

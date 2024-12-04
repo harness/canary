@@ -1,27 +1,30 @@
 import { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+
 import ReactFlow, {
-  Controls,
-  ReactFlowProvider,
-  Node,
-  Edge,
-  applyNodeChanges,
-  OnNodesChange,
-  NodeMouseHandler,
-  EdgeMouseHandler,
-  OnEdgesChange,
   applyEdgeChanges,
+  applyNodeChanges,
   ControlButton,
+  Controls,
+  Edge,
+  EdgeMouseHandler,
+  Node,
+  NodeMouseHandler,
+  OnEdgesChange,
+  OnNodesChange,
+  ReactFlowProvider,
   useReactFlow
 } from 'reactflow'
+
 import { Icon } from '@harnessio/canary'
-import { defaultEdgeMarkerOptions } from './nodes-edges-defaults'
-import { NodeTypes } from './types'
-import { CanvasEntity, useCanvasStore } from '../../framework/CanvasStore/CanvasStoreContext'
-import useFlowStore from '../../framework/FlowStore/FlowStore'
-import { performElkLayout, elkOptions } from './utils/ElkLayout'
-import { partitionNodesForLayout } from './utils/NodeUtils'
+
 // import useAutoLayout from '../../hooks/useAutoLayout'
 import CircleOverlay, { Position } from '../../components/CircleOverlay/CircleOverlay'
+import { CanvasEntity, useCanvasStore } from '../../framework/CanvasStore/CanvasStoreContext'
+import useFlowStore from '../../framework/FlowStore/FlowStore'
+import { defaultEdgeMarkerOptions } from './nodes-edges-defaults'
+import { NodeTypes } from './types'
+import { elkOptions, performElkLayout } from './utils/ElkLayout'
+import { partitionNodesForLayout } from './utils/NodeUtils'
 
 import 'reactflow/dist/style.css'
 
@@ -154,7 +157,8 @@ const CanvasInternal = (props: CanvasProps) => {
         onConnect={onConnect}
         proOptions={{ hideAttribution: true }}
         /* https://github.com/xyflow/xyflow/discussions/2827 */
-        nodeOrigin={[0.5, 0.5]}>
+        nodeOrigin={[0.5, 0.5]}
+      >
         <Controls position="bottom-right" showFitView={false} showInteractive={false}>
           {process.env.NODE_ENV !== 'production' && (
             <>
@@ -166,7 +170,8 @@ const CanvasInternal = (props: CanvasProps) => {
                       [CanvasEntity.Node]: !diagnostics.Node
                     }
                   })
-                }>
+                }
+              >
                 <Icon name="circle" />
               </ControlButton>
               <ControlButton
@@ -177,7 +182,8 @@ const CanvasInternal = (props: CanvasProps) => {
                       [CanvasEntity.Edge]: !diagnostics.Edge
                     }
                   })
-                }>
+                }
+              >
                 <Icon name="x-mark" />
               </ControlButton>
             </>

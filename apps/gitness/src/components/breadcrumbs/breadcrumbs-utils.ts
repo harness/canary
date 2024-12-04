@@ -117,7 +117,6 @@ export function getBreadcrumbMatchers(pathname: string) {
     },
     pathname
   )
-  console.log(isExecutionRoute)
 
   return {
     isProjectsRoute,

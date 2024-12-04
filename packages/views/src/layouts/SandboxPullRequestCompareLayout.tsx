@@ -1,28 +1,35 @@
 import { useEffect, useRef, useState } from 'react'
-import { BranchSelector, Layout, NoData, PullRequestCommits, SandboxLayout } from '..'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
+import { DiffModeEnum } from '@git-diff-view/react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   Button,
+  Icon,
+  ListActions,
+  Spacer,
   StackedList,
   Tabs,
   TabsContent,
-  TabsList
+  TabsList,
+  Text
 } from '@harnessio/canary'
-import { Icon, Spacer, Text } from '@harnessio/canary'
-import { z } from 'zod'
-import PullRequestCompareForm from '../components/pull-request/pull-request-compare-form'
-import TabTriggerItem from '../components/TabsTriggerItem'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import PullRequestCompareButton from '../components/pull-request/pull-request-compare-button'
-import { TypesCommit } from '../components/pull-request/interfaces'
-import PullRequestDiffViewer from '../components/pull-request/pull-request-diff-viewer'
-import { DiffModeEnum } from '@git-diff-view/react'
-import { parseStartingLineIfOne } from '../components/pull-request/utils'
+
+import { BranchSelector, Layout, NoData, PullRequestCommits, SandboxLayout } from '..'
 import { useDiffConfig } from '../components/pull-request/hooks/useDiffConfig'
+import { TypesCommit } from '../components/pull-request/interfaces'
+import PullRequestCompareButton from '../components/pull-request/pull-request-compare-button'
+import PullRequestCompareForm from '../components/pull-request/pull-request-compare-form'
+import PullRequestDiffViewer from '../components/pull-request/pull-request-diff-viewer'
+import { parseStartingLineIfOne } from '../components/pull-request/utils'
+import TabTriggerItem from '../components/TabsTriggerItem'
 import { TypesDiffStats } from './types'
 
 export const formSchema = z.object({
@@ -31,6 +38,10 @@ export const formSchema = z.object({
 })
 export type CompareFormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
 
+export const DiffModeOptions = [
+  { name: 'Split', value: 'Split' },
+  { name: 'Unified', value: 'Unified' }
+]
 interface SandboxPullRequestCompareProps {
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
@@ -49,6 +60,7 @@ interface SandboxPullRequestCompareProps {
   diffStats: TypesDiffStats
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
+  prBranchCombinationExists: number | null
 }
 
 const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
@@ -67,10 +79,12 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   diffData,
   diffStats,
   setIsBranchSelected,
-  isBranchSelected
+  isBranchSelected,
+  prBranchCombinationExists
 }) => {
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -105,6 +119,10 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   const handleBranchSelection = () => {
     setIsBranchSelected(true) // Update state when a branch is selected
   }
+  const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
+  const handleDiffModeChange = (value: string) => {
+    setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
+  }
 
   return (
     <SandboxLayout.Main fullWidth hasLeftPanel hasHeader>
@@ -119,7 +137,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             Choose two branches to see what&apos;s changed or to start a new pull request. If you need to, you can also
             compare across forks or learn more about diff comparisons.
           </Text>
-          <Layout.Horizontal className="text-tertiary-background items-center">
+          <Layout.Horizontal className="items-center text-tertiary-background">
             <Icon name="pull" size={16} className="text-tertiary-background" />
 
             <BranchSelector
@@ -132,7 +150,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 handleBranchSelection() // Call when target branch is selected
               }}
             />
-            <Icon name="arrow-long" size={14} className="text-tertiary-background rotate-180" />
+            <Icon name="arrow-long" size={14} className="rotate-180 text-tertiary-background" />
             <BranchSelector
               prefix="compare"
               size="default"
@@ -180,28 +198,53 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         <Spacer size={3} />
-        <Layout.Horizontal className="bg-background border-border items-center justify-between rounded-md border-2 px-3 py-3">
-          <div>
-            <Layout.Horizontal className="py-2">
-              {isBranchSelected ? (
-                <>
-                  <Text size={1}>Discuss and review the changes in this comparison with others.</Text>
-                  <Text size={1}>Learn about pull requests.</Text>
-                </>
-              ) : (
-                <Text size={1}>Choose different branches or forks above to discuss and review changes.</Text>
-              )}
+        {!prBranchCombinationExists && (
+          <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
+            <div>
+              <Layout.Horizontal className="py-2">
+                {isBranchSelected ? (
+                  <>
+                    <Text size={1}>Discuss and review the changes in this comparison with others.</Text>
+                    <Text size={1}>Learn about pull requests.</Text>
+                  </>
+                ) : (
+                  <Text size={1}>Choose different branches or forks above to discuss and review changes.</Text>
+                )}
+              </Layout.Horizontal>
+            </div>
+            <PullRequestCompareButton
+              isSubmitted={isSubmitted}
+              isValid={isValid}
+              isLoading={isLoading}
+              formRef={formRef}
+              onFormDraftSubmit={onFormDraftSubmit}
+              onFormSubmit={onFormSubmit}
+            />
+          </Layout.Horizontal>
+        )}
+        {prBranchCombinationExists && (
+          <>
+            {/* <Spacer size={2} /> */}
+            <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
+              <div>
+                <Layout.Horizontal className="py-2">
+                  <>
+                    <Text size={1}>PR for this combination of branches already exists.</Text>
+                  </>
+                </Layout.Horizontal>
+              </div>
+              {/* <ButtonGroup.Root> */}
+              <Button
+                size={'xs'}
+                // className="py-0.5"
+                onClick={() => navigate(`../${prBranchCombinationExists}/conversation`)}
+              >
+                View Pull Request
+              </Button>
+              {/* </ButtonGroup.Root> */}
             </Layout.Horizontal>
-          </div>
-          <PullRequestCompareButton
-            isSubmitted={isSubmitted}
-            isValid={isValid}
-            isLoading={isLoading}
-            formRef={formRef}
-            onFormDraftSubmit={onFormDraftSubmit}
-            onFormSubmit={onFormSubmit}
-          />
-        </Layout.Horizontal>
+          </>
+        )}
         <Spacer size={10} />
         {isBranchSelected ? (
           <Layout.Vertical>
@@ -233,9 +276,23 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 {/* Content for Changes */}
                 <Spacer size={5} />
                 <Text
-                  size={
-                    2
-                  }>{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>
+                  size={2}
+                >{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>
+                <ListActions.Root>
+                  <ListActions.Left>
+                    <Text
+                      size={2}
+                    >{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>
+                  </ListActions.Left>
+                  <ListActions.Right>
+                    <ListActions.Dropdown
+                      selectedValue={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
+                      onChange={handleDiffModeChange}
+                      title={diffMode === DiffModeEnum.Split ? 'Split' : 'Unified'}
+                      items={DiffModeOptions}
+                    />
+                  </ListActions.Right>
+                </ListActions.Root>
                 <Spacer size={3} />
                 {diffData?.map((item, index) => (
                   <>
@@ -244,6 +301,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                       key={`item?.title ? ${item?.title}-${index} : ${index}`}
                       header={item}
                       data={item?.data}
+                      diffMode={diffMode}
                     />
                   </>
                 ))}
@@ -253,7 +311,7 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
           </Layout.Vertical>
         ) : (
           <NoData
-            title={'Compare and review about anything'}
+            title={'Compare and review just about anything'}
             description={['Branches, tags, commit ranges, and time ranges. In the same repository and across forks.']}
           />
         )}
@@ -292,7 +350,8 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
 const PullRequestAccordion: React.FC<{
   header?: HeaderProps
   data?: string
-}> = ({ header }) => {
+  diffMode: DiffModeEnum
+}> = ({ header, diffMode }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
@@ -316,7 +375,7 @@ const PullRequestAccordion: React.FC<{
                     data={header?.data}
                     fontsize={fontsize}
                     highlight={highlight}
-                    mode={DiffModeEnum.Unified}
+                    mode={diffMode}
                     wrap={wrap}
                     addWidget
                     fileName={header?.title ?? ''}

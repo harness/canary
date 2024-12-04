@@ -1,4 +1,5 @@
-import { Text, ButtonGroup, Button, Spacer } from '@harnessio/canary'
+import { Button, ButtonGroup, Spacer, Text } from '@harnessio/canary'
+
 import { ErrorTypes } from './types'
 
 export const RepoSettingsGeneralDelete: React.FC<{

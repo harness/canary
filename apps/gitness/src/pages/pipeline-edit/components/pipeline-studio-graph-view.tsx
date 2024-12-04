@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
+
 import { parse } from 'yaml'
-import { PipelineStudio, getNodesFromPipelineYaml, type Node } from '@harnessio/unified-pipeline'
+
+import { getNodesFromPipelineYaml, PipelineStudio, type Node } from '@harnessio/unified-pipeline'
+
+import { InteractionContextProvider } from '../context/InteractionContextProvider'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
-import { InteractionContextProvider } from '../context/InteractionContextProvider'
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {

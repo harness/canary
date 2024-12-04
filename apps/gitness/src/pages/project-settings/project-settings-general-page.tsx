@@ -1,17 +1,19 @@
 import { useState } from 'react'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useAppContext } from '../../framework/context/AppContext'
-import { NoData } from '@harnessio/views'
-import {
-  TypesSpace,
-  useUpdateSpaceMutation,
-  useDeleteSpaceMutation,
-  UpdateSpaceErrorResponse,
-  DeleteSpaceErrorResponse,
-  UpdateSpaceRequestBody
-} from '@harnessio/code-service-client'
-import { ProjectSettingsPage } from './project-settings-page'
 import { redirect } from 'react-router-dom'
+
+import {
+  DeleteSpaceErrorResponse,
+  TypesSpace,
+  UpdateSpaceErrorResponse,
+  UpdateSpaceRequestBody,
+  useDeleteSpaceMutation,
+  useUpdateSpaceMutation
+} from '@harnessio/code-service-client'
+import { NoData } from '@harnessio/views'
+
+import { useAppContext } from '../../framework/context/AppContext'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { ProjectSettingsPage } from './project-settings-page'
 
 type spaceData = {
   identifier: string

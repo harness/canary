@@ -1,11 +1,11 @@
 import {
-  Text,
+  Button,
   DropdownMenu,
-  DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-  Button,
-  Icon
+  DropdownMenuTrigger,
+  Icon,
+  Text
 } from '@harnessio/canary'
 
 interface DropdownButtonProps {

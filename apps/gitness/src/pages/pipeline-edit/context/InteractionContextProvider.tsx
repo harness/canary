@@ -1,5 +1,7 @@
-import { InteractionContext } from '@harnessio/unified-pipeline'
 import { useCallback, useEffect, useState } from 'react'
+
+import { InteractionContext } from '@harnessio/unified-pipeline'
+
 import { usePipelineDataContext } from './PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from './PipelineStudioViewProvider'
 

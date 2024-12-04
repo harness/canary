@@ -1,4 +1,8 @@
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Badge,
   Icon,
   Table,
   TableBody,
@@ -6,12 +10,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Text,
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  Badge
+  Text
 } from '@harnessio/canary'
+
 import { getInitials } from '../utils/utils'
 
 interface UsersProps {
@@ -60,7 +61,8 @@ export const UsersList = ({ users }: PageProps) => {
                         <Badge
                           variant="outline"
                           size="xs"
-                          className="text-tertiary-background bg-tertiary-background/10 m-auto ml-2 h-5 rounded-full p-2 text-center text-xs font-normal">
+                          className="text-tertiary-background bg-tertiary-background/10 m-auto ml-2 h-5 rounded-full p-2 text-center text-xs font-normal"
+                        >
                           {user.role}
                         </Badge>
                       )}

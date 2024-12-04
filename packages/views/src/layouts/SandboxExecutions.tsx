@@ -1,7 +1,9 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
+
+import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+
 import { SandboxLayout } from '..'
 import { ExecutionsTopBar } from '../components/layout/executions-top-bar'
-import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
 
 const SandboxExecutions: React.FC = () => {
   const location = useLocation()

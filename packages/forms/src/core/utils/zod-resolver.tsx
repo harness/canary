@@ -1,9 +1,10 @@
 import { useCallback } from 'react'
-import { toNestErrors } from '@hookform/resolvers'
 import type { FieldValues, Resolver, ResolverOptions } from 'react-hook-form'
 
+import { toNestErrors } from '@hookform/resolvers'
+
 import type { IFormDefinition } from '../../types/types'
-import { IGetValidationSchemaOptions, getValidationSchema } from '../validation/zod-validation'
+import { getValidationSchema, IGetValidationSchemaOptions } from '../validation/zod-validation'
 import { isZodError, parseErrorSchema } from './zod-resolver-utils'
 
 export function useZodValidationResolver(

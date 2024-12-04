@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react'
+
 import { CodeCommentState } from '../interfaces'
 
 export const PR_COMMENT_STATUS_CHANGED_EVENT = 'PR_COMMENT_STATUS_CHANGED_EVENT'

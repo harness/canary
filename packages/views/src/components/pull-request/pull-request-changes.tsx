@@ -1,21 +1,20 @@
+import { DiffModeEnum } from '@git-diff-view/react'
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
   Badge,
-  Button,
   Checkbox,
-  Icon,
   StackedList,
   Text
 } from '@harnessio/canary'
 
-import PullRequestDiffViewer from './pull-request-diff-viewer'
-import { useDiffConfig } from './hooks/useDiffConfig'
-import { DiffModeEnum } from '@git-diff-view/react'
-import { parseStartingLineIfOne } from './utils'
 import { CopyButton } from '../copy-button'
+import { useDiffConfig } from './hooks/useDiffConfig'
+import PullRequestDiffViewer from './pull-request-diff-viewer'
+import { parseStartingLineIfOne } from './utils'
 
 interface HeaderProps {
   text: string
@@ -28,6 +27,7 @@ interface HeaderProps {
 
 interface DataProps {
   data: HeaderProps[]
+  diffMode: DiffModeEnum
 }
 
 const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ text, numAdditions, numDeletions }) => (
@@ -39,7 +39,8 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
         tabIndex={0}
         onClick={e => {
           e.preventDefault()
-        }}>
+        }}
+      >
         <CopyButton name={text} className="text-tertiary-background" />
       </div>
       {numAdditions != null && numAdditions > 0 && (
@@ -61,9 +62,9 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
           Viewed
         </Text>
       </div>
-      <Button title="coming soon" variant="ghost" size="sm">
+      {/* <Button title="coming soon" variant="ghost" size="sm">
         <Icon name="ellipsis" size={12} className="text-primary-muted/40" />
-      </Button>
+      </Button> */}
     </div>
   </div>
 )
@@ -71,7 +72,8 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
 const PullRequestAccordion: React.FC<{
   header?: HeaderProps
   data?: string
-}> = ({ header }) => {
+  diffMode: DiffModeEnum
+}> = ({ header, diffMode }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
 
   const startingLine =
@@ -104,7 +106,7 @@ const PullRequestAccordion: React.FC<{
                     data={header?.data}
                     fontsize={fontsize}
                     highlight={highlight}
-                    mode={DiffModeEnum.Split}
+                    mode={diffMode}
                     wrap={wrap}
                     addWidget
                     fileName={header?.title ?? ''}
@@ -120,7 +122,7 @@ const PullRequestAccordion: React.FC<{
   )
 }
 
-export function PullRequestChanges({ data }: DataProps) {
+export function PullRequestChanges({ data, diffMode }: DataProps) {
   return (
     <div className="flex flex-col gap-4">
       {data.map((item, index) => (
@@ -128,6 +130,7 @@ export function PullRequestChanges({ data }: DataProps) {
           key={`item?.title ? ${item?.title}-${index} : ${index}`}
           header={item}
           data={item?.data}
+          diffMode={diffMode}
         />
       ))}
     </div>

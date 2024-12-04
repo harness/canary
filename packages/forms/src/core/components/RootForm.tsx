@@ -1,14 +1,13 @@
-import { ReactElement, useEffect, useRef } from 'react'
-import type { Attributes } from 'react'
+import { ReactElement, useEffect, useRef, type Attributes } from 'react'
 import {
-  useForm,
-  FormProvider,
-  Resolver,
-  FieldValues,
-  DefaultValues,
   DeepPartial,
-  UseFormReturn,
-  Path
+  DefaultValues,
+  FieldValues,
+  FormProvider,
+  Path,
+  Resolver,
+  useForm,
+  UseFormReturn
 } from 'react-hook-form'
 
 interface RootFormProps<TFieldValues extends FieldValues = FieldValues, TContext = any> {

@@ -1,4 +1,4 @@
-import { PathSelector, InlineAction, SelectorType } from '@harnessio/yaml-editor'
+import { InlineAction, PathSelector, SelectorType } from '@harnessio/yaml-editor'
 
 export type InlineActionArgsType = {
   entityType: 'stage' | 'step' | 'inputs' | 'input' | 'pipeline'

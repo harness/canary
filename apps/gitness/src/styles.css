@@ -1,5 +1,13 @@
-@import '@harnessio/views/src/styles.css';
-@import '@harnessio/canary/src/styles.css';
+@import '@harnessio/ui/src/styles.css';
+/* @import '@harnessio/views/src/styles.css';
+@import '@harnessio/canary/src/styles.css'; */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 600; /* Supports weights from 300 to 600 */
+  src: url('/fonts/InterVariable.ttf') format('truetype');
+}
 
 mark {
   background: white !important;

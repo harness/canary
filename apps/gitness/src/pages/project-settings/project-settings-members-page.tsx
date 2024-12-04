@@ -1,33 +1,36 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
+
+import { parseAsInteger, useQueryState } from 'nuqs'
 import pluralize from 'pluralize'
-import { Spacer, Text, Button } from '@harnessio/canary'
+
+import { Button, Spacer, Text } from '@harnessio/canary'
 import {
-  SandboxLayout,
-  SkeletonList,
-  NoData,
-  MembersList,
-  FormDeleteMemberDialog,
-  useCommonFilter,
-  PaginationComponent,
-  Filter,
-  MembersProps,
-  NoSearchResults
-} from '@harnessio/views'
-import {
-  useMembershipListQuery,
-  TypesMembershipUser,
   EnumMembershipRole,
   MembershipListQueryQueryParams,
-  useMembershipUpdateMutation,
-  useMembershipDeleteMutation
+  TypesMembershipUser,
+  useMembershipDeleteMutation,
+  useMembershipListQuery,
+  useMembershipUpdateMutation
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
+import {
+  Filter,
+  FormDeleteMemberDialog,
+  MembersList,
+  MembersProps,
+  NoData,
+  NoSearchResults,
+  PaginationComponent,
+  SandboxLayout,
+  useCommonFilter
+} from '@harnessio/views'
+
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { Link } from 'react-router-dom'
-import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
-import { useQueryState, parseAsInteger } from 'nuqs'
-import { PageResponseHeader } from '../../types'
-import { DialogState } from './types'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { PageResponseHeader } from '../../types'
+import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
+import { DialogState } from './types'
 
 const SortOptions = [
   { name: 'Name', value: 'name' },

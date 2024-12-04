@@ -1,5 +1,7 @@
 import { RefObject, useEffect, useState } from 'react'
+
 import * as monaco from 'monaco-editor'
+
 import { ThemeDefinition } from '../types/themes'
 
 export type UseTheme = (arg: {

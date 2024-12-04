@@ -1,7 +1,9 @@
 import * as React from 'react'
-import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { Icon } from './icon'
+
 import { cn } from '@/lib/utils'
+import * as AccordionPrimitive from '@radix-ui/react-accordion'
+
+import { Icon } from './icon'
 
 type AccordionProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
   onValueChange?: (value: string | string[]) => void
@@ -55,7 +57,8 @@ const AccordionTrigger = React.forwardRef<React.ElementRef<typeof AccordionPrimi
           },
           className
         )}
-        {...props}>
+        {...props}
+      >
         {leftChevron && !hideChevron && (
           <Icon
             name="chevron-down"
@@ -82,10 +85,14 @@ const AccordionContent = React.forwardRef<
   <AccordionPrimitive.Content
     ref={ref}
     className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
-    {...props}>
+    {...props}
+  >
     <div className={cn('pb-4 pt-0', className)}>{children}</div>
   </AccordionPrimitive.Content>
 ))
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
+/**
+ * @deprecated
+ */
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent }

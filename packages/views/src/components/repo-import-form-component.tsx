@@ -1,18 +1,21 @@
 import { useEffect } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonGroup,
+  Checkbox,
   Input,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue,
-  Checkbox
+  SelectValue
 } from '@harnessio/canary'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+
 import { FormFieldSet } from '../index'
 
 const importRepoFormSchema = z.object({

@@ -1,10 +1,15 @@
 import { useEffect } from 'react'
-import { Text, Checkbox, Spacer } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { FormFieldSet, SkeletonList } from '../../../index'
+
+import { Checkbox, Spacer, Text } from '@harnessio/canary'
+import { SkeletonList } from '@harnessio/ui/components'
+
+import { FormFieldSet } from '../../../index'
 import { ErrorTypes } from './types'
+
 const formSchema = z.object({
   secretScanning: z.boolean()
 })

@@ -1,5 +1,5 @@
 import { Outlet, useMatch } from 'react-router-dom'
-import { SandboxLayout } from '../index'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,6 +8,8 @@ import {
   BreadcrumbSeparator,
   Text
 } from '@harnessio/canary'
+
+import { SandboxLayout } from '../index'
 
 const SandboxSettings: React.FC = () => {
   const isAccountRoute = useMatch('/sandbox/settings/profile/*')

@@ -1,8 +1,11 @@
-import { RuleDataType, ErrorTypes } from './types'
-import { Button, ListActions, SearchBox, Icon, Text, StackedList, Spacer } from '@harnessio/canary'
-import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
-import { NoData } from '../../no-data'
 import { NavLink } from 'react-router-dom'
+
+import { Button, Icon, ListActions, SearchBox, Spacer, StackedList, Text } from '@harnessio/canary'
+
+import { NoData } from '../../no-data'
+import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
+import { ErrorTypes, RuleDataType } from './types'
+
 const Title = ({ title, iconName }: { title?: string; iconName: 'green-tick' | 'cancel-grey' }) => {
   return (
     <div className="flex items-center gap-2">

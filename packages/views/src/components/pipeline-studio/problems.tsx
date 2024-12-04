@@ -1,4 +1,5 @@
 import { useState } from 'react'
+
 import { Icon } from '@harnessio/canary'
 
 export type ProblemSeverity = 'error' | 'warning' | 'info'
@@ -51,7 +52,8 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className={`width-100 flex flex-1 cursor-pointer items-center gap-2 text-nowrap py-0.5 ${rowClasses}`}>
+        className={`width-100 flex flex-1 cursor-pointer items-center gap-2 text-nowrap py-0.5 ${rowClasses}`}
+      >
         {children}
       </div>
     )
@@ -106,7 +108,8 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
                 setSelectedLine(idx)
               }
               onClick(problem)
-            }}>
+            }}
+          >
             <ProblemsComponent.Icon severity={severity} />
             <ProblemsComponent.Message message={message} />
             <ProblemsComponent.Position position={position} />

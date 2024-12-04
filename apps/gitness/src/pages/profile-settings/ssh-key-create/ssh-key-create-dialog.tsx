@@ -1,5 +1,6 @@
-import { SshKeyCreateForm, SshKeyFormType } from './ssh-key-create-form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@harnessio/canary'
+
+import { SshKeyCreateForm, SshKeyFormType } from './ssh-key-create-form'
 
 interface SshKeyCreateDialogProps {
   open: boolean

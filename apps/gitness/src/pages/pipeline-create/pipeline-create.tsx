@@ -1,6 +1,8 @@
-import { CreatePipelinePage } from '@harnessio/views'
-import CreatePipelineDialog from './PipelineCreateDialog/PipelineCreateDialog'
 import { useState } from 'react'
+
+import { CreatePipelinePage } from '@harnessio/views'
+
+import CreatePipelineDialog from './PipelineCreateDialog/PipelineCreateDialog'
 
 export function PipelineCreate() {
   const [isCreatePipelineDialogOpen, setCreatePipelineDialogOpen] = useState(false)

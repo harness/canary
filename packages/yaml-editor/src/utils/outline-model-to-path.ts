@@ -1,4 +1,5 @@
 import { editor, languages } from 'monaco-editor'
+
 import { OutlineModelValueInternal, RootOutlineModelInternal } from '../types/monaco'
 import { MonacoGlobals } from './monaco-globals'
 

@@ -1,10 +1,12 @@
-import { Handle, NodeProps, Position, useReactFlow } from 'reactflow'
 import { capitalize } from 'lodash-es'
+import { Handle, NodeProps, Position, useReactFlow } from 'reactflow'
+
 import { Icon } from '@harnessio/canary'
+
+import { getNodeDiagnostics } from '../../../../../components/Canvas/utils/NodeUtils'
+import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
 import type { DefaultNodeProps } from '../../../types'
 import { DEFAULT_NODE_LOCATION } from '../../../utils/LROrientation/Constants'
-import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
-import { getNodeDiagnostics } from '../../../../../components/Canvas/utils/NodeUtils'
 
 export interface PlusNodeProps extends DefaultNodeProps {}
 

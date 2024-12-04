@@ -1,4 +1,5 @@
 import { Tree, TreeViewElement } from '@harnessio/canary'
+
 import { renderTree } from './utils'
 
 export interface ExecutionTreeProps {

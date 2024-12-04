@@ -1,4 +1,5 @@
 import { cloneDeep, get, pick, set } from 'lodash-es'
+
 import { IFormDefinition, IInputDefinition } from '../../types/types'
 
 type TransformItem = {

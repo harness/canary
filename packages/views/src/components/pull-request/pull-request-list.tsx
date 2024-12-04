@@ -1,8 +1,11 @@
-import { Badge, cn, Icon, StackedList, Text } from '@harnessio/canary'
 import { useMemo, useState } from 'react'
+
 import cx from 'classnames'
-import { getPrState } from './utils'
+
+import { Badge, cn, Icon, StackedList, Text } from '@harnessio/canary'
+
 import { IconType } from './interfaces'
+import { getPrState } from './utils'
 
 interface PullRequestProps {
   is_draft?: boolean
@@ -50,7 +53,8 @@ const HeaderTitle = ({
         className={cx('flex items-center gap-2', {
           'text-white': headerFilter === 'open',
           'text-tertiary-background': headerFilter === 'closed'
-        })}>
+        })}
+      >
         <Icon size={16} name="pr-open" />
         <Text
           color={headerFilter === 'open' ? 'primary' : headerFilter === 'closed' ? 'tertiaryBackground' : undefined}
@@ -59,7 +63,8 @@ const HeaderTitle = ({
             '!text-tertiary-background': headerFilter === 'closed'
           })}
           size={2}
-          truncate>
+          truncate
+        >
           {open_prs} Open
         </Text>
       </div>
@@ -70,7 +75,8 @@ const HeaderTitle = ({
         className={cx('flex items-center gap-2', {
           'text-white': headerFilter === 'closed',
           'text-tertiary-background': headerFilter === 'open'
-        })}>
+        })}
+      >
         <Icon size={12} name="tick" />
         <Text
           className={cx('flex items-center gap-2', {
@@ -78,7 +84,8 @@ const HeaderTitle = ({
             'text-tertiary-background': headerFilter === 'open'
           })}
           size={2}
-          truncate>
+          truncate
+        >
           {closed_prs} Closed
         </Text>
       </div>
@@ -227,13 +234,15 @@ export function PullRequestList({ pullRequests, LinkComponent, open_prs, closed_
                   open_prs={open_prs}
                   closed_prs={closed_prs}
                 />
-              }></StackedList.Field>
+              }
+            ></StackedList.Field>
           </StackedList.Item>
           {filteredData?.map((pullRequest, pullRequest_idx) => (
             <LinkComponent key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
               <StackedList.Item
                 key={`${pullRequest.name}-${pullRequest_idx}`}
-                isLast={filteredData.length - 1 === pullRequest_idx}>
+                isLast={filteredData.length - 1 === pullRequest_idx}
+              >
                 {pullRequest.number && (
                   <>
                     <StackedList.Field

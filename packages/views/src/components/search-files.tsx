@@ -1,4 +1,5 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
+
 import {
   Command,
   CommandEmpty,
@@ -74,7 +75,8 @@ export const SearchFiles: React.FC<SearchFilesProps> = ({ navigateToFile, filesL
         align="start"
         onOpenAutoFocus={event => {
           event.preventDefault()
-        }}>
+        }}
+      >
         <Command>
           <CommandList>
             <CommandEmpty>No file found.</CommandEmpty>
@@ -86,7 +88,8 @@ export const SearchFiles: React.FC<SearchFilesProps> = ({ navigateToFile, filesL
                   onSelect={() => {
                     navigateToFile(file)
                     setIsOpen(false)
-                  }}>
+                  }}
+                >
                   {fileText(file)}
                 </CommandItem>
               ))}

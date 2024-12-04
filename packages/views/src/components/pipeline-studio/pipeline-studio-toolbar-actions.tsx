@@ -1,4 +1,5 @@
-import { ToggleGroup, ToggleGroupItem, Icon } from '@harnessio/canary'
+import { Icon, ToggleGroup, ToggleGroupItem } from '@harnessio/canary'
+
 import { CopyButton } from '../copy-button'
 
 export interface PipelineStudioToolbarActionsProps {

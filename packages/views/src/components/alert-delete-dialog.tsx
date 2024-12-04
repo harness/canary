@@ -1,10 +1,11 @@
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription
+  AlertDialogTitle
 } from '@harnessio/canary'
+
 import { AlertDeleteDialogForm } from './alert-delete-dialog-form'
 
 interface AlertDeleteDialogProps {

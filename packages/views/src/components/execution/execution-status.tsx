@@ -1,4 +1,5 @@
 import { Icon as CanaryIcon } from '@harnessio/canary'
+
 import { ExecutionState } from './types'
 
 interface ExecutionStatusProps {

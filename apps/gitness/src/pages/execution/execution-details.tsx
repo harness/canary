@@ -1,29 +1,32 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { TypesExecution, TypesStage, useFindExecutionQuery, useViewLogsQuery } from '@harnessio/code-service-client'
+
+import copy from 'clipboard-copy'
+
 import { Badge, Icon, ScrollArea, Separator, Text } from '@harnessio/canary'
+import { TypesExecution, TypesStage, useFindExecutionQuery, useViewLogsQuery } from '@harnessio/code-service-client'
 import {
-  Layout,
-  ExecutionTree,
-  ExecutionStatus,
-  StageExecution,
   ContactCard,
   convertExecutionToTree,
-  StageProps,
+  ExecutionState,
+  ExecutionStatus,
+  ExecutionTree,
   getStepId,
+  Layout,
   parseStageStepId,
   SandboxLayout,
-  ExecutionState
+  StageExecution,
+  StageProps
 } from '@harnessio/views'
-import copy from 'clipboard-copy'
-import { PathParams } from '../../RouteDefinitions'
+
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { SSEEvent } from '../../types'
-import { getDuration, timeAgoFromEpochTime, formatDuration } from '../pipeline-edit/utils/time-utils'
-import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useLogs } from '../../framework/hooks/useLogs'
+import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
+import { PathParams } from '../../RouteDefinitions'
+import { SSEEvent } from '../../types'
 import { createAndDownloadBlob, getLogsText } from '../../utils/common-utils'
+import { formatDuration, getDuration, timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
 import ExecutionDetailsHeaderActions from './execution-details-header-actions'
 
 const ExecutionLogs: React.FC = () => {

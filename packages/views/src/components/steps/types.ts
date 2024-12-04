@@ -1,4 +1,5 @@
 import { IFormDefinition, IInputDefinition } from '@harnessio/forms'
+
 import { InputConfigType } from '../form-inputs/types'
 
 // type for form definition
@@ -29,12 +30,13 @@ export type HARNESS_STEP_GROUP_IDENTIFIER = typeof GROUP_IDENTIFIER | typeof PAR
 export type HARNESS_STEP_AND_STEP_GROUP_IDENTIFIER = HARNESS_STEP_IDENTIFIER | HARNESS_STEP_GROUP_IDENTIFIER
 
 export type HarnessStep = {
-  identifier: HARNESS_STEP_IDENTIFIER
+  identifier: HARNESS_STEP_AND_STEP_GROUP_IDENTIFIER
   description: string
   formDefinition: IFormDefinition<InputConfigType>
 }
 
 export type HarnessStepGroup = {
-  identifier: HARNESS_STEP_GROUP_IDENTIFIER
+  identifier: HARNESS_STEP_AND_STEP_GROUP_IDENTIFIER
   description: string
+  formDefinition: IFormDefinition<InputConfigType>
 }

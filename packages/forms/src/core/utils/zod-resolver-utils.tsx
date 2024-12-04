@@ -1,6 +1,6 @@
+import { appendErrors, type FieldError } from 'react-hook-form'
+
 import * as zod from 'zod'
-import type { FieldError } from 'react-hook-form'
-import { appendErrors } from 'react-hook-form'
 
 export const isZodError = (error: any): error is zod.ZodError => Array.isArray(error?.errors)
 

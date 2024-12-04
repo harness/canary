@@ -1,10 +1,12 @@
 import { memo, useCallback, useEffect, useState } from 'react'
+
 import type { Edge, Node } from 'reactflow'
-import { Canvas } from '../Canvas/Canvas'
+
 import type { Graph } from '../../components/Canvas/types'
-import { getElementsFromGraph } from '../../utils/PipelineYamlUtils'
-import useWindowDimensions from '../../hooks/useWindowDimensions'
 import { getEdgesForAllNodes } from '../../components/Canvas/utils/EdgeUtils'
+import useWindowDimensions from '../../hooks/useWindowDimensions'
+import { getElementsFromGraph } from '../../utils/PipelineYamlUtils'
+import { Canvas } from '../Canvas/Canvas'
 import { getNodeDimensions } from '../Canvas/utils/NodeUtils'
 
 interface PipelineStudioProps {

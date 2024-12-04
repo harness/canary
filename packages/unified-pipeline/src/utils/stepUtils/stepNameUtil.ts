@@ -1,3 +1,5 @@
+import get from 'lodash-es/get'
+
 import {
   getIsActionStep,
   getIsBackgroundStep,
@@ -5,7 +7,6 @@ import {
   getIsRunTestStep,
   getIsTemplateStep
 } from './commonStepUtil'
-import get from 'lodash-es/get'
 
 const getNameOrScriptText = (stepData: string | Record<'script', string>, defaultString: string): string => {
   const isStepHasString = typeof stepData === 'string'

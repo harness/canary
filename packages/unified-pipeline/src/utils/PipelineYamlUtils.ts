@@ -1,14 +1,15 @@
 import { has, isEmpty, isUndefined } from 'lodash-es'
-import { type Node as ReactFlowNode, Position, XYPosition } from 'reactflow'
-import { NodeType, Graph, Node, PositionType } from '../components/Canvas/types'
-import { DEFAULT_NODE_LOCATION, ROOT_NODE_ID, PLUS_NODE_ID } from '../components/Canvas/utils/LROrientation/Constants'
-import type { PlusNodeProps } from '../components/Canvas/elements/Nodes/PlusNode/PlusNode'
-import type { RootNodeProps } from '../components/Canvas/elements/Nodes/RootNode/RootNode'
+import { Position, XYPosition, type Node as ReactFlowNode } from 'reactflow'
+
 import type { AtomicNodeProps } from '../components/Canvas/elements/Nodes/AtomicNode/AtomicNode'
 import type { GroupNodeProps } from '../components/Canvas/elements/Nodes/GroupNode/GroupNode'
-import { getIdFromName } from './StringUtils'
+import type { PlusNodeProps } from '../components/Canvas/elements/Nodes/PlusNode/PlusNode'
+import type { RootNodeProps } from '../components/Canvas/elements/Nodes/RootNode/RootNode'
+import { Graph, Node, NodeType, PositionType } from '../components/Canvas/types'
+import { DEFAULT_NODE_LOCATION, PLUS_NODE_ID, ROOT_NODE_ID } from '../components/Canvas/utils/LROrientation/Constants'
 import { sortNodes } from '../components/Canvas/utils/NodeUtils'
-import { parseV0PipelineYaml, parsePipelineYaml } from './ParserUtils'
+import { parsePipelineYaml, parseV0PipelineYaml } from './ParserUtils'
+import { getIdFromName } from './StringUtils'
 
 const STAGES_PATH = 'stages'
 const PIPELINE_STAGES_PATH = `pipeline.${STAGES_PATH}`

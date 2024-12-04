@@ -1,3 +1,7 @@
+import { DiffModeEnum } from '@git-diff-view/react'
+import { atom } from 'jotai'
+import { z } from 'zod'
+
 import {
   EnumPullReqReviewDecision,
   ReviewerListPullReqOkResponse,
@@ -6,12 +10,15 @@ import {
   TypesPullReqActivity,
   TypesUser
 } from '@harnessio/code-service-client'
-import { atom } from 'jotai'
-import { z } from 'zod'
 
 export enum orderSortDate {
   ASC = 'asc',
   DESC = 'desc'
+}
+
+export enum CodeCommentState {
+  ACTIVE = 'active',
+  RESOLVED = 'resolved'
 }
 
 export enum PRCommentFilterType {
@@ -184,6 +191,8 @@ export interface FilterViewProps {
   submitReview?: (decision: PullReqReviewDecision) => void
   refetchReviewers?: () => void
   loading?: boolean
+  diffMode: DiffModeEnum
+  setDiffMode: (value: DiffModeEnum) => void
 }
 
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'

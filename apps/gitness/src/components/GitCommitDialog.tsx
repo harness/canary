@@ -1,17 +1,20 @@
 import { useEffect, useState } from 'react'
+
 import { useQueryClient } from '@tanstack/react-query'
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Spacer } from '@harnessio/canary'
-import { GitCommitFormType } from '../types'
-import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import {
   OpenapiCommitFilesRequest,
   TypesCommitFilesResponse,
   useCommitFilesMutation,
   UsererrorError
 } from '@harnessio/code-service-client'
-import { CommitToGitRefOption, GitCommitForm } from './GitCommitForm'
-import { GitCommitAction } from '../utils/git-utils'
+
+import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
+import { GitCommitFormType } from '../types'
+import { GitCommitAction } from '../utils/git-utils'
+import { CommitToGitRefOption, GitCommitForm } from './GitCommitForm'
 
 interface CommitDialogProps {
   open: boolean
@@ -68,7 +71,7 @@ export default function GitCommitDialog({
 
   const onSubmit = async (formValues: GitCommitFormType) => {
     const { message, description, commitToGitRef, newBranchName, fileName } = formValues
-    const path = oldResourcePath ?? (isNew ? resourcePath + '/' + fileName : resourcePath)
+    const path = oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
     const data: OpenapiCommitFilesRequest = {
       actions: [
         {
@@ -112,7 +115,7 @@ export default function GitCommitDialog({
   const dryRun = async (commitToGitRef: CommitToGitRefOption, fileName?: string) => {
     resetViolation()
     setDisableCTA(false)
-    const path = oldResourcePath ?? (isNew ? resourcePath + '/' + fileName : resourcePath)
+    const path = oldResourcePath ?? (isNew && resourcePath.length < 1 ? '/' + fileName : resourcePath)
     if (commitToGitRef === CommitToGitRefOption.DIRECTLY) {
       try {
         const data: OpenapiCommitFilesRequest = {
@@ -173,7 +176,7 @@ export default function GitCommitDialog({
             violation={violation}
             bypassable={bypassable}
             defaultBranch={defaultBranch || 'Master'}
-            isNew={isNew}
+            isFileNameRequired={isNew && resourcePath?.length < 1}
           />
         </DialogDescription>
       </DialogContent>

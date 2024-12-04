@@ -1,11 +1,12 @@
-export interface PathParts {
-  path: string
-  parentPath: string
-}
+import { PathParts } from '@harnessio/ui/components'
 
 export function splitPathWithParents(fullResourcePath: string) {
-  const pathParts = fullResourcePath?.split('/')
   const result: PathParts[] = []
+
+  if (!fullResourcePath.length) return result
+
+  const pathParts = fullResourcePath?.split('/')
+
   if (pathParts.length) {
     let parentPath = ''
 

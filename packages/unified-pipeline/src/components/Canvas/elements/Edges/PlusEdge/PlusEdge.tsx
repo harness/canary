@@ -1,9 +1,11 @@
 import cx from 'classnames'
 import { capitalize } from 'lodash-es'
+import { EdgeLabelRenderer, EdgeProps, getBezierPath, Node, SmoothStepEdge, useReactFlow, XYPosition } from 'reactflow'
+
 import { Icon } from '@harnessio/canary'
-import { SmoothStepEdge, EdgeLabelRenderer, EdgeProps, Node, XYPosition, getBezierPath, useReactFlow } from 'reactflow'
-import type { NodeType } from '../../../types'
+
 import { useCanvasStore } from '../../../../../framework/CanvasStore/CanvasStoreContext'
+import type { NodeType } from '../../../types'
 
 export interface PlusEdgeProps {
   sourceNode: Node
@@ -96,7 +98,8 @@ export default function PlusEdge(props: EdgeProps<PlusEdgeProps>) {
                 {
                   'z-[2]': data?.zIndex === 2
                 }
-              )}>
+              )}
+            >
               {enableDiagnostics?.Edge && <span className="text-red text-xs">{edgeId}</span>}
               <Icon name="plus" className="hover:cursor-pointer" />
             </div>

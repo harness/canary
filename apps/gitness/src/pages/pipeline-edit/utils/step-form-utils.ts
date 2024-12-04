@@ -1,6 +1,8 @@
 import { IInputDefinition, unsetEmptyArrayOutputTransformer, unsetEmptyStringOutputTransformer } from '@harnessio/forms'
-import { generateFriendlyName } from './common-utils'
 import { InputType, UIInputWithConfigsForArray } from '@harnessio/views'
+
+import { StepInputDefinitionType } from '../types/api-types'
+import { generateFriendlyName } from './common-utils'
 
 // TODO
 enum ApiInputType {
@@ -43,7 +45,11 @@ function getDefaultOutputTransformer(inputType: string): IInputDefinition<unknow
   }
 }
 
-export function apiInput2IInputDefinition(inputName: string, input: ApiInput, prefix?: string): IInputDefinition {
+export function apiInput2IInputDefinition(
+  inputName: string,
+  input: StepInputDefinitionType,
+  prefix?: string
+): IInputDefinition {
   let arrayInput: UIInputWithConfigsForArray | undefined
   if (input.type === 'array') {
     arrayInput = {

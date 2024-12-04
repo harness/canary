@@ -1,5 +1,6 @@
-import { SandboxLayout } from '@harnessio/views'
 import { NavLink, Outlet } from 'react-router-dom'
+
+import { SandboxLayout } from '@harnessio/views'
 
 const RepoSandboxLayout: React.FC = () => {
   const baseClasses = 'h-full text-center flex items-center'

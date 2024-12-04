@@ -1,0 +1,30 @@
+{
+  "repos": {
+    "branches": "Branches",
+    "findBranch": "Trouver une branche",
+    "tags": "Étiquettes",
+    "findTag": "Trouver une étiquette",
+    "default": "Par défaut",
+    "viewAll": "Voir tout {{type}}",
+    "noFile": "Aucun fichier disponible",
+    "name": "Nom",
+    "lastCommit": "Dernier message de validation",
+    "date": "Date",
+    "summary": "Résumé",
+    "files": "Fichiers",
+    "pipelines": "Pipelines",
+    "commits": "Validations",
+    "pull-requests": "Requêtes de tirage",
+    "webhooks": "Webhooks",
+    "settings": "Paramètres",
+    "repositories": "Dépôts",
+    "search": "Recherche",
+    "create-repository": "Créer un dépôt",
+    "private": "Privé",
+    "public": "Public",
+    "add-file": "Ajouter un fichier",
+    "createNewFile": "+ Créer un nouveau fichier",
+    "readme": "README.md",
+    "openPullReq": "Requêtes de tirage ouvertes"
+  }
+}

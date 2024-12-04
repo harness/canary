@@ -1,21 +1,24 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+
 import { BreadcrumbItem, BreadcrumbLink, ButtonGroup, cn, ListActions, Spacer, Text } from '@harnessio/canary'
-import { SkeletonList, Summary, FileProps, SummaryItemType, NoData, SandboxLayout } from '@harnessio/views'
 import {
-  useGetContentQuery,
-  pathDetails,
   GitPathDetails,
-  OpenapiGetContentOutput,
   OpenapiContentInfo,
-  useFindRepositoryQuery
+  OpenapiGetContentOutput,
+  pathDetails,
+  useFindRepositoryQuery,
+  useGetContentQuery
 } from '@harnessio/code-service-client'
+import { PathParts, SkeletonList } from '@harnessio/ui/components'
+import { FileProps, NoData, SandboxLayout, Summary, SummaryItemType } from '@harnessio/views'
+
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
-import { PathParams } from '../RouteDefinitions'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
+import { PathParams } from '../RouteDefinitions'
+import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
+import { splitPathWithParents } from '../utils/path-utils'
 import FileContentViewer from './FileContentViewer'
-import { PathParts, splitPathWithParents } from '../utils/path-utils'
 
 export const FileViewer: React.FC = () => {
   const repoRef = useGetRepoRef()
@@ -161,7 +164,8 @@ export const FileViewer: React.FC = () => {
                             color="tertiaryBackground"
                             className={cn('hover:text-foreground', {
                               'text-primary': index === pathParts?.length - 1
-                            })}>
+                            })}
+                          >
                             {path.path}
                           </Text>
                         </Link>

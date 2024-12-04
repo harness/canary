@@ -1,15 +1,15 @@
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableHead,
-  TableRow,
-  Text,
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger
+  AccordionTrigger,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Text
 } from '@harnessio/canary'
 
 export type KeyValuePair = {
@@ -63,7 +63,8 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
                 leftChevron
                 style={{
                   paddingLeft: `${level + 1}rem`
-                }}>
+                }}
+              >
                 <Text size={2} weight="normal" className={specTitleStyle}>
                   {item.name}
                 </Text>
@@ -104,7 +105,8 @@ export const KeyValueTable: React.FC<KeyValueTableProps> = ({
                 <AccordionItem value={item.name} className="border-0">
                   <AccordionTrigger
                     className="flex w-full gap-1 py-2.5 pl-4 pr-4 data-[state=closed]:border-b data-[state=open]:border-b-0"
-                    leftChevron>
+                    leftChevron
+                  >
                     <Text size={2} weight="normal" className={specTitleStyle}>
                       {item.name}
                     </Text>

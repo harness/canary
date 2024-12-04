@@ -1,28 +1,31 @@
-import { parseAsInteger, useQueryState } from 'nuqs'
-import { Spacer, Text, Button } from '@harnessio/canary'
 import { Link, useParams } from 'react-router-dom'
-import {
-  SkeletonList,
-  PullRequestList,
-  NoData,
-  useCommonFilter,
-  Filter,
-  NoSearchResults,
-  SandboxLayout
-} from '@harnessio/views'
+
+import { parseAsInteger, useQueryState } from 'nuqs'
+
+import { Button, Spacer, Text } from '@harnessio/canary'
 import {
   ListPullReqQueryQueryParams,
   TypesPullReq,
-  useListPullReqQuery,
-  useFindRepositoryQuery
+  useFindRepositoryQuery,
+  useListPullReqQuery
 } from '@harnessio/code-service-client'
-import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
+import { SkeletonList } from '@harnessio/ui/components'
+import {
+  Filter,
+  NoData,
+  NoSearchResults,
+  PaginationComponent,
+  PullRequestList,
+  SandboxLayout,
+  useCommonFilter
+} from '@harnessio/views'
+
 import { DropdownItemProps } from '../../../../../packages/canary/dist/components/list-actions'
-import { PathParams } from '../../RouteDefinitions'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { PaginationComponent } from '@harnessio/views'
-import { PageResponseHeader } from '../../types'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { PathParams } from '../../RouteDefinitions'
+import { PageResponseHeader } from '../../types'
+import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
 
 const SortOptions = [
   { name: 'Created', value: 'created' },
@@ -49,8 +52,6 @@ export default function PullRequestListPage() {
   })
 
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-
-  console.log(repoMetadata)
 
   const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
 

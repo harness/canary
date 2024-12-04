@@ -1,7 +1,8 @@
-import { createContext, useContext, useState, useEffect, useRef } from 'react'
-import { useGetRepoRef } from '../hooks/useGetRepoPath'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { PathParams } from '../../RouteDefinitions'
+import { useGetRepoRef } from '../hooks/useGetRepoPath'
 
 interface ExplorerPathsContextType {
   openFolderPaths: string[]

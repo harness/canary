@@ -1,4 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
+
+import cx from 'classnames'
+
 import {
   Accordion,
   Button,
@@ -12,24 +15,24 @@ import {
   StackedList,
   Text
 } from '@harnessio/canary'
+
+import { timeAgo } from '../../utils/utils'
+import { Layout } from '../layout/layout'
 import {
+  EnumCheckStatus,
   MergeCheckStatus,
+  PullRequestAction,
+  PullRequestChangesSectionProps,
+  PullRequestFilterOption,
   PullRequestState,
   TypesPullReq,
   TypesPullReqCheck,
-  EnumCheckStatus,
-  PullRequestChangesSectionProps,
-  PullRequestAction,
-  PullRequestFilterOption,
   TypesRuleViolations
 } from './interfaces'
+import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-check-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
-import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
-import cx from 'classnames'
-import { timeAgo } from '../../utils/utils'
-import { Layout } from '../layout/layout'
 import { extractInfoFromRuleViolationArr } from './utils'
 
 interface PullRequestPanelProps extends PullRequestChangesSectionProps {
@@ -54,6 +57,11 @@ interface PullRequestPanelProps extends PullRequestChangesSectionProps {
         }
       }
     | undefined
+  onRestoreBranch: () => void
+  onDeleteBranch: () => void
+  showDeleteBranchButton: boolean
+  showRestoreBranchButton: boolean
+  headerMsg?: string
 }
 
 interface HeaderProps {
@@ -64,6 +72,11 @@ interface HeaderProps {
   isOpen: boolean
   ruleViolation?: boolean
   pullReqMetadata: TypesPullReq | undefined
+  onRestoreBranch: () => void
+  onDeleteBranch: () => void
+  showDeleteBranchButton: boolean
+  showRestoreBranchButton: boolean
+  headerMsg?: string
 }
 
 const HeaderTitle = ({ ...props }: HeaderProps) => {
@@ -72,21 +85,39 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
     const formattedTime = timeAgo(props?.pullReqMetadata?.merged || 0)
 
     return (
-      <div className="inline-flex w-full items-center gap-2">
-        <Text className="items-center gap-2 space-x-2" weight="medium">
-          <Text>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</Text>
-          <Button variant="secondary" size="xs">
-            <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
-            {props?.pullReqMetadata?.source_branch}
-          </Button>
-          <Text>{'into'}</Text>
-          <Button variant="secondary" size="xs">
-            <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
-            {props?.pullReqMetadata?.target_branch}
-          </Button>
-          <Text>{formattedTime}</Text>
-        </Text>
-      </div>
+      <>
+        <div className="inline-flex justify-between w-full items-center gap-2">
+          <Text className="flex items-center gap-2 space-x-2" weight="medium">
+            <Text>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</Text>
+            <Button variant="secondary" size="xs">
+              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+              {props?.pullReqMetadata?.source_branch}
+            </Button>
+            <Text>{'into'}</Text>
+            <Button variant="secondary" size="xs">
+              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+              {props?.pullReqMetadata?.target_branch}
+            </Button>
+            <Text>{formattedTime}</Text>
+          </Text>
+          {props.showRestoreBranchButton ? (
+            <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
+              Restore Branch
+            </Button>
+          ) : props.showDeleteBranchButton ? (
+            <Button variant="secondary" size="sm" onClick={props.onDeleteBranch}>
+              Delete Branch
+            </Button>
+          ) : null}
+        </div>
+        {props.headerMsg && (
+          <div className="flex justify-end w-full">
+            <Text size={1} className="text-destructive">
+              {props.headerMsg}
+            </Text>
+          </div>
+        )}
+      </>
     )
   }
   return (
@@ -138,7 +169,12 @@ const PullRequestPanel = ({
   checkboxBypass,
   setCheckboxBypass,
   spaceId,
-  repoId
+  repoId,
+  onRestoreBranch,
+  onDeleteBranch,
+  showRestoreBranchButton,
+  showDeleteBranchButton,
+  headerMsg
 }: PullRequestPanelProps) => {
   const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
@@ -172,6 +208,11 @@ const PullRequestPanel = ({
               isOpen={isOpen}
               ruleViolation={ruleViolation}
               pullReqMetadata={pullReqMetadata}
+              onRestoreBranch={onRestoreBranch}
+              onDeleteBranch={onDeleteBranch}
+              showRestoreBranchButton={showRestoreBranchButton}
+              showDeleteBranchButton={showDeleteBranchButton}
+              headerMsg={headerMsg}
             />
           }
         />
@@ -230,7 +271,8 @@ const PullRequestPanel = ({
                           </DropdownMenuGroup>
                         </DropdownMenuContent>
                       </DropdownMenu>
-                    }>
+                    }
+                  >
                     Squash and merge
                   </Button>
                 </Layout.Horizontal>

@@ -1,27 +1,28 @@
-import { Edge, Node, isEdge } from 'reactflow'
 import { has, isEmpty } from 'lodash-es'
+import { Edge, isEdge, Node } from 'reactflow'
+
 import {
   DefaultNodeProps,
+  ExpandNodeProps,
+  GroupNodesProps,
+  GroupOrientation,
   NodeType,
   PositionType,
-  ExpandNodeProps,
-  TERMINAL_NODE_TYPES,
-  GroupNodesProps,
-  GroupOrientation
+  TERMINAL_NODE_TYPES
 } from '../types'
 import {
-  STEP_NODE_HEIGHT,
-  STEP_NODE_WIDTH,
-  ROOT_NODE_WIDTH,
-  PLUS_NODE_WIDTH,
-  ROOT_NODE_HEIGHT,
-  PLUS_NODE_HEIGHT,
+  ADJUST_FOR_STEP_GROUPS,
   NODE_DEFAULT_HEIGHT,
   NODE_DEFAULT_WIDTH,
   NODE_HORIZONTAL_MARGIN,
-  NODE_VERTICAL_MARGIN,
   NODE_HORIZONTAL_MARGIN_2,
-  ADJUST_FOR_STEP_GROUPS
+  NODE_VERTICAL_MARGIN,
+  PLUS_NODE_HEIGHT,
+  PLUS_NODE_WIDTH,
+  ROOT_NODE_HEIGHT,
+  ROOT_NODE_WIDTH,
+  STEP_NODE_HEIGHT,
+  STEP_NODE_WIDTH
 } from './LROrientation/Constants'
 
 export const getLayoutableNodes = (nodes: Node[]): Node[] => {

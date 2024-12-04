@@ -1,8 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
-import monacoEditorPlugin from 'vite-plugin-monaco-editor'
-import dts from 'vite-plugin-dts'
 import { resolve } from 'path'
+
+import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from 'vite'
+import dts from 'vite-plugin-dts'
+import monacoEditorPlugin from 'vite-plugin-monaco-editor'
+
 const pkg = require('./package.json')
 
 const external = Object.keys(pkg.devDependencies || [])

@@ -1,13 +1,13 @@
 import {
+  Button,
   DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuShortcut,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  Icon,
-  Button,
-  DropdownMenuGroup
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+  Icon
 } from '@harnessio/canary'
 
 export const RepoSettingsToolTip = ({
@@ -33,7 +33,8 @@ export const RepoSettingsToolTip = ({
             onClick={e => {
               e.stopPropagation()
               onEdit(identifier)
-            }}>
+            }}
+          >
             <DropdownMenuShortcut className="ml-0">
               <Icon name="edit-pen" className="mr-2" />
             </DropdownMenuShortcut>
@@ -45,7 +46,8 @@ export const RepoSettingsToolTip = ({
             onClick={e => {
               e.stopPropagation()
               onDelete(identifier)
-            }}>
+            }}
+          >
             <DropdownMenuShortcut className="ml-0">
               <Icon name="trash" className="text-destructive mr-2" />
             </DropdownMenuShortcut>

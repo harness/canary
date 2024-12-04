@@ -1,7 +1,7 @@
 import * as React from 'react'
-import * as ProgressPrimitive from '@radix-ui/react-progress'
 
 import { cn } from '@/lib/utils'
+import * as ProgressPrimitive from '@radix-ui/react-progress'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const progressVariants = cva('', {
@@ -76,7 +76,8 @@ const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root
     <ProgressPrimitive.Root
       ref={ref}
       className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
-      {...props}>
+      {...props}
+    >
       <ProgressPrimitive.Indicator
         className={cn(
           'h-full w-full flex-1 transition-all',

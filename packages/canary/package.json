@@ -12,7 +12,8 @@
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",
     "prepublishOnly": "pnpm build",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "typecheck": "tsc"
   },
   "module": "./dist/index.js",
   "main": "./dist/index.js",

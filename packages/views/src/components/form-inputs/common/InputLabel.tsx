@@ -1,4 +1,4 @@
-import { Button, Tooltip, TooltipContent, TooltipTrigger, Icon } from '@harnessio/canary'
+import { Icon, Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/canary'
 
 export interface InputLabelProps {
   label?: string
@@ -16,10 +16,8 @@ function InputLabel(props: InputLabelProps): JSX.Element {
       <div className="text-muted-foreground">{labelText}</div>
       {description && (
         <Tooltip>
-          <TooltipTrigger asChild>
-            <Button size="sm" variant="icon" className="ml-2 h-5 cursor-default p-1">
-              <Icon name="info-circle" />
-            </Button>
+          <TooltipTrigger>
+            <Icon name="info-circle" className="text-muted-foreground ml-2 h-5" />
           </TooltipTrigger>
           <TooltipContent>{description}</TooltipContent>
         </Tooltip>

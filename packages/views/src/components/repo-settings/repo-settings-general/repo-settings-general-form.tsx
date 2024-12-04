@@ -1,4 +1,9 @@
 import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonGroup,
@@ -11,17 +16,14 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Text,
-  Textarea,
-  Spacer
+  Spacer,
+  Text
 } from '@harnessio/canary'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
+import { SkeletonList, Textarea } from '@harnessio/ui/components'
 
-import { FormFieldSet, SkeletonList } from '../../../index'
 import { MessageTheme } from '../../../components/form-field-set'
-import { RepoData, AccessLevel, RepoUpdateData, ErrorTypes } from './types'
+import { FormFieldSet } from '../../../index'
+import { AccessLevel, ErrorTypes, RepoData, RepoUpdateData } from './types'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),

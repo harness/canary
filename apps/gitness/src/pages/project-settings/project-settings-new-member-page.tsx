@@ -1,29 +1,32 @@
-import { useState, useEffect } from 'react'
-import { useForm, SubmitHandler, Controller } from 'react-hook-form'
-import { z } from 'zod'
+import { useEffect, useState } from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
   Button,
   ButtonGroup,
   DropdownMenu,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  Spacer,
-  Text,
+  DropdownMenuTrigger,
   Icon,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
-  SelectValue
+  SelectValue,
+  Spacer,
+  Text
 } from '@harnessio/canary'
-import { SandboxLayout, FormFieldSet } from '@harnessio/views'
-import { useNavigate } from 'react-router-dom'
+import { EnumMembershipRole, useListPrincipalsQuery, useMembershipAddMutation } from '@harnessio/code-service-client'
+import { FormFieldSet, SandboxLayout } from '@harnessio/views'
+
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useMembershipAddMutation, EnumMembershipRole, useListPrincipalsQuery } from '@harnessio/code-service-client'
 
 // Define form schema for new member
 const newMemberSchema = z.object({
@@ -144,7 +147,8 @@ export const CreateNewMemberPage = () => {
                           onSelect={() => {
                             field.onChange(user.uid)
                             handleMemberSelect(user.uid ?? '')
-                          }}>
+                          }}
+                        >
                           {user.display_name}
                           {selectedMember === user.uid && <Icon name="tick" size={12} className="ml-2" />}
                         </DropdownMenuItem>

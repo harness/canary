@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+
 import { configureSchema, schemaIdToUrl } from '../utils/schema-utils'
 
 export type UseSchema = (arg: { schemaConfig?: { schema: any; uri: string }; instanceId: string }) => void

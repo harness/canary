@@ -1,4 +1,5 @@
 import langMap from 'lang-map'
+
 export enum GitCommitAction {
   DELETE = 'DELETE',
   CREATE = 'CREATE',

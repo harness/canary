@@ -1,5 +1,12 @@
 import { useMemo } from 'react'
+
+import { DiffModeEnum } from '@git-diff-view/react'
+import { get, orderBy } from 'lodash-es'
+
 import { Avatar, AvatarFallback, Button, Icon, Text } from '@harnessio/canary'
+
+import { getInitials, timeAgo } from '../../utils/utils'
+import { useDiffConfig } from './hooks/useDiffConfig'
 import {
   CommentItem,
   EnumPullReqActivityType,
@@ -12,16 +19,13 @@ import {
   TypesPullReq,
   TypesPullReqActivity
 } from './interfaces'
-import { isCodeComment, isComment, isSystemComment, parseStartingLineIfOne } from './utils'
-import PullRequestTimelineItem from './pull-request-timeline-item'
-import PullRequestSystemComments from './pull-request-system-comments'
-import { get, orderBy } from 'lodash-es'
-import PullRequestDiffViewer from './pull-request-diff-viewer'
-import { useDiffConfig } from './hooks/useDiffConfig'
-import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDescBox from './pull-request-description-box'
-import { getInitials, timeAgo } from '../../utils/utils'
+import PullRequestDiffViewer from './pull-request-diff-viewer'
 import { PullRequestStatusSelect } from './pull-request-status-select-button'
+import PullRequestSystemComments from './pull-request-system-comments'
+import PullRequestTimelineItem from './pull-request-timeline-item'
+import { isCodeComment, isComment, isSystemComment, parseStartingLineIfOne } from './utils'
+
 interface PullRequestOverviewProps {
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }

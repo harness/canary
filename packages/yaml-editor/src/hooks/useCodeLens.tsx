@@ -1,9 +1,11 @@
 import { RefObject, useEffect } from 'react'
+
 import * as monaco from 'monaco-editor'
-import { PathSelector } from '../types/selectors'
+
 import { InlineAction } from '../types/inline-actions'
-import { getOutlineModel, processOutlineModel } from '../utils/outline-model-to-path'
+import { PathSelector } from '../types/selectors'
 import { getCodeLens } from '../utils/codelens-utils'
+import { getOutlineModel, processOutlineModel } from '../utils/outline-model-to-path'
 
 export function useCodeLenses<T>({
   editorRef,

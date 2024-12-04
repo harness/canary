@@ -1,6 +1,8 @@
-import { UseFormRegister, FieldErrors, UseFormWatch, UseFormSetValue } from 'react-hook-form'
-import { repoBranchSettingsFormSchema } from './repo-branch-settings-rules-schema'
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
+
 import { z } from 'zod'
+
+import { repoBranchSettingsFormSchema } from './repo-branch-settings-rules-schema'
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 

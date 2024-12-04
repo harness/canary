@@ -1,8 +1,12 @@
-export interface TypesPlugin {
+export interface StepInputDefinitionType {
+  type: string
   description?: string
-  identifier?: string
-  logo?: string
-  spec?: string
-  type?: string
-  version?: string
+  required: string
+}
+
+export interface StepDefinitionType {
+  template: {
+    inputs: Record<string, StepInputDefinitionType>
+    step: unknown
+  }
 }

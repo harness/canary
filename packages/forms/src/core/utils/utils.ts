@@ -1,4 +1,5 @@
 import { get, set } from 'lodash-es'
+
 import type { AnyFormikValue, IFormDefinition, IInputDefinition } from '../../types/types'
 
 export const getDefaultValuesFromFormDefinition = (inputs: IFormDefinition): AnyFormikValue => {

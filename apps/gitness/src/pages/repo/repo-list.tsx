@@ -1,29 +1,31 @@
 import { useCallback, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+
 import { parseAsInteger, useQueryState } from 'nuqs'
+
 import { Button, Spacer, Text } from '@harnessio/canary'
 import {
-  useListReposQuery,
-  RepoRepositoryOutput,
+  ListReposOkResponse,
   ListReposQueryQueryParams,
-  ListReposOkResponse
+  RepoRepositoryOutput,
+  useListReposQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
 import {
-  SkeletonList,
   Filter,
-  useCommonFilter,
   NoData,
   NoSearchResults,
   PaginationComponent,
-  SandboxLayout
+  RepoList,
+  SandboxLayout,
+  useCommonFilter
 } from '@harnessio/views'
+
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
-import { PageResponseHeader } from '../../types'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
-import { RepoList } from '@harnessio/views'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
-import { SSEEvent } from '../../types'
+import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { PageResponseHeader, SSEEvent } from '../../types'
+import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
 
 const sortOptions = [
   { name: 'Created', value: 'created' },
@@ -33,7 +35,7 @@ const sortOptions = [
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-export default function ReposListPage() {
+export default function ReposListPageV1() {
   const space = useGetSpaceURLParam() ?? ''
   const navigate = useNavigate()
 

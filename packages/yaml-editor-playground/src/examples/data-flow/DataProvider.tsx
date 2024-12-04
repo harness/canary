@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+
 import { stageApproval } from '../../configurations/pipeline/stage-approval'
 
 export interface YamlRevision {

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { getInitials } from '@harnessio/views'
+
 import { useGetBlameQuery } from '@harnessio/code-service-client'
-import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { normalizeGitRef } from '../utils/git-utils'
-import { PathParams } from '../RouteDefinitions'
+import { getInitials } from '@harnessio/views'
 import { BlameEditor, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
+
+import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
+import { PathParams } from '../RouteDefinitions'
+import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {
   selectedBranch: string

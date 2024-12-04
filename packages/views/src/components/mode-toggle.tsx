@@ -1,6 +1,7 @@
 import { Moon, Sun } from 'lucide-react'
 
 import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@harnessio/canary'
+
 import { useTheme } from './theme-provider'
 
 export function ModeToggle() {

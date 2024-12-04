@@ -11,7 +11,8 @@ function Root({ className, children }: NodeGroupRootProps) {
       className={cn(
         'relative grid grid-cols-[26px_1fr] grid-rows-[auto_1fr] items-center gap-x-3 gap-y-2 pb-8',
         className
-      )}>
+      )}
+    >
       {children}
     </div>
   )
@@ -33,7 +34,8 @@ function Icon({
           'border-tertiary-background/30 bg-background text-primary relative z-20 flex h-6 w-6 place-content-center place-items-center rounded-full border p-1',
           { 'bg-transprent border-none': simpleNodeIcon },
           className
-        )}>
+        )}
+      >
         {simpleNodeIcon ? (
           <div className="bg-primary shadow-primary/10 size-[4px] rounded-[1px] shadow-sm" />
         ) : (

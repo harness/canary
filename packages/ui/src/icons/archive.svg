@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <title>archive</title>
+  <g stroke-linejoin="miter" fill="currentColor" stroke-linecap="butt">
+    <polyline points="12.5% 58.33% 37.5% 58.33% 37.5% 70.83% 62.5% 70.83% 62.5% 58.33% 87.5% 58.33%" fill="none" stroke="currentColor" stroke-miterlimit="10" stroke-width="6.25%"></polyline>
+    <rect x="12.5%" y="12.5%" width="75%" height="75%" rx="8.33%" ry="8.33%" fill="none" stroke="currentColor" stroke-linecap="square" stroke-miterlimit="10" stroke-width="6.25%"></rect>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  presets: [require('@harnessio/canary/tailwind.config'), require('@harnessio/unified-pipeline/tailwind.config')],
+  presets: [require('@harnessio/ui/tailwind.config'), require('@harnessio/unified-pipeline/tailwind.config')],
   content: [
     './src/**/*.{ts,tsx}',
     'node_modules/@harnessio/canary/src/**/*.{ts,tsx}',
@@ -25,5 +25,5 @@ module.exports = {
     }
   },
   plugins: [require('@tailwindcss/typography')],
-  safelist: ['prose', 'prose-invert ', 'prose-headings', 'prose-p', 'prose-a', 'prose-img', 'prose-code']
+  safelist: ['prose', 'prose-invert', 'prose-headings', 'prose-p', 'prose-a', 'prose-img', 'prose-code']
 }

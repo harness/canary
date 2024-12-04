@@ -1,10 +1,12 @@
 import { useMemo, useState } from 'react'
+
 import { ThemeDefinition, YamlEditor } from '@harnessio/yaml-editor'
-import { useDataContext } from './DataProvider'
+
+import { getInlineActionExample } from '../../configurations/inline-actions/inline-actions-def'
+import { stageApproval } from '../../configurations/pipeline/stage-approval'
 import unifiedSchema from '../../configurations/schema/unified.json'
 import { harnessDarkTheme, harnessLightTheme } from '../../configurations/theme/theme'
-import { stageApproval } from '../../configurations/pipeline/stage-approval'
-import { getInlineActionExample } from '../../configurations/inline-actions/inline-actions-def'
+import { useDataContext } from './DataProvider'
 
 const themes: ThemeDefinition[] = [
   { themeName: 'dark', themeData: harnessDarkTheme },
@@ -47,13 +49,15 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren> = () => {
         <button
           onClick={() => {
             setYamlRevision({ yaml: stageApproval })
-          }}>
+          }}
+        >
           Update yaml
         </button>
         <button
           onClick={() => {
             setShowYamlEditor(!showYamlEditor)
-          }}>
+          }}
+        >
           Toggle mount
         </button>
       </div>

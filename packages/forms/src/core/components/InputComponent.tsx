@@ -1,5 +1,5 @@
-import type { InputFactory } from '../factory/InputFactory'
 import type { IInputDefinition } from '../../types/types'
+import type { InputFactory } from '../factory/InputFactory'
 
 export interface InputProps<T, K extends { inputConfig?: unknown } = { inputConfig?: unknown }> {
   initialValues?: T

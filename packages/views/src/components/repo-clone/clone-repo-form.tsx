@@ -1,7 +1,10 @@
-import { Button, Input, Text, Icon } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+
+import { Button, Icon, Input, Text } from '@harnessio/canary'
+
 import { FormFieldSet } from '../../index'
 import { CopyButton } from '../copy-button'
 

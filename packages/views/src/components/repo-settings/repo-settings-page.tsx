@@ -1,6 +1,8 @@
-import { SandboxLayout } from '../../index'
-import { Navbar, Spacer } from '@harnessio/canary'
 import { NavLink, Outlet } from 'react-router-dom'
+
+import { Navbar, Spacer } from '@harnessio/canary'
+
+import { SandboxLayout } from '../../index'
 
 export const navItems = [
   {
@@ -55,7 +57,8 @@ function Sidebar() {
             <Navbar.Group
               key={`group-${group.id}`}
               title={group.groupTitle || ''}
-              topBorder={group.groupTitle ? true : false}>
+              topBorder={group.groupTitle ? true : false}
+            >
               {group.items.map(item => (
                 <NavLink key={`group-${group.id}-item-${item.id}`} to={item.to}>
                   {({ isActive }) => <Navbar.Item submenuItem text={item.text} active={isActive} />}

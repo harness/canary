@@ -1,10 +1,12 @@
-import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/views'
-import { EnumPullReqReviewDecisionExtended, PullReqReviewDecision, TypeCheckData } from './types/types'
-import { extractInfoForCodeOwnerContentProps } from '../../types'
-import { get, isEmpty } from 'lodash-es'
 import type * as Diff2Html from 'diff2html'
 import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
+import { get, isEmpty } from 'lodash-es'
+
+import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
+import { ExecutionState } from '@harnessio/views'
+
+import { extractInfoForCodeOwnerContentProps } from '../../types'
+import { EnumPullReqReviewDecisionExtended, PullReqReviewDecision, TypeCheckData } from './types/types'
 
 export const processReviewDecision = (
   review_decision: EnumPullReqReviewDecisionExtended,

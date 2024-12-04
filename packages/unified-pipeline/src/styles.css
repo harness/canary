@@ -18,7 +18,7 @@
 
 @layer components {
   .node-icon {
-    @apply rounded-[4px] bg-teal-300 text-secondary h-8 w-8 grid place-items-center;
+    @apply text-secondary grid h-8 w-8 place-items-center rounded-[4px] bg-teal-300;
   }
 }
 

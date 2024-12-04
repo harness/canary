@@ -1,6 +1,7 @@
 import { AccordionItem, AccordionTrigger, Icon, StackedList, Text } from '@harnessio/canary'
 
 import { LineDescription, LineTitle } from '../pull-request-line-title'
+
 interface PullRequestMergeSectionProps {
   commentsInfo: { header: string; content?: string | undefined; status: string }
   handleAction?: () => void
@@ -30,7 +31,8 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
               handleAction?.()
             }}
             className="pr-2"
-            size={1}>
+            size={1}
+          >
             View
           </Text>
         )}

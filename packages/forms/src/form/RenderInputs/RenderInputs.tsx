@@ -1,6 +1,7 @@
 import React from 'react'
-import type { IInputDefinition } from '../../types/types'
+
 import type { InputFactory } from '../../core/factory/InputFactory'
+import type { IInputDefinition } from '../../types/types'
 import { Row } from '../Row/Row'
 
 export function RenderInputs(props: { items: IInputDefinition[]; factory: InputFactory }): JSX.Element {

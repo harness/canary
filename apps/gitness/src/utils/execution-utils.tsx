@@ -1,6 +1,6 @@
 import { Icon, Meter } from '@harnessio/canary'
-import { ExecutionState } from '@harnessio/views'
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
+import { ExecutionState } from '@harnessio/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (

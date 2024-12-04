@@ -1,11 +1,13 @@
 import { stringify } from 'yaml'
-import { OpenapiGetContentOutput, TypesPipeline, findPipeline, getContent } from '@harnessio/code-service-client'
+
+import { findPipeline, getContent, OpenapiGetContentOutput, TypesPipeline } from '@harnessio/code-service-client'
+
 import { DispatchFunc } from '../../../../hooks/useThunkReducer'
-import { YamlRevision } from '../PipelineStudioDataProvider'
 import { decodeGitContent, normalizeGitRef } from '../../../../utils/git-utils'
 import { starterPipelineV1 } from '../../utils/pipelines'
-import { AddStepIntentionActionPayload, DataActionName, DataActions, DataReducerState } from './types'
 import { deleteItemInArray, injectItemInArray, updateItemInArray } from '../../utils/yaml-utils'
+import { YamlRevision } from '../PipelineStudioDataProvider'
+import { AddStepIntentionActionPayload, DataActionName, DataActions, DataReducerState } from './types'
 
 export const updateState = (payload: Partial<DataReducerState>): DataActions => {
   return { type: DataActionName.UpdateState, payload }

@@ -12,7 +12,7 @@
     "typecheck": "pnpm -r typecheck",
     "publish:all": "pnpm publish -r --access public",
     "preinstall": "npx only-allow pnpm",
-    "pre-commit": "pnpm run -r pre-commit"
+    "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit"
   },
   "engines": {
     "node": ">=18.20.4"
@@ -23,6 +23,7 @@
   },
   "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",
   "devDependencies": {
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.0",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
     "eslint": "^8.57.1",

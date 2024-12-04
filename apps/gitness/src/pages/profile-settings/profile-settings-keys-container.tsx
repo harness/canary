@@ -1,29 +1,31 @@
 import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
+
 import {
-  useListPublicKeyQuery,
-  ListPublicKeyQueryQueryParams,
-  useCreateTokenMutation,
+  CreatePublicKeyErrorResponse,
+  CreatePublicKeyRequestBody,
   CreateTokenErrorResponse,
   CreateTokenRequestBody,
-  useCreatePublicKeyMutation,
-  CreatePublicKeyRequestBody,
-  CreatePublicKeyErrorResponse,
-  ListPublicKeyErrorResponse,
-  useDeletePublicKeyMutation,
-  useDeleteTokenMutation,
   DeleteTokenErrorResponse,
   DeleteTokenOkResponse,
-  useListTokensQuery,
-  ListTokensErrorResponse
+  ListPublicKeyErrorResponse,
+  ListPublicKeyQueryQueryParams,
+  ListTokensErrorResponse,
+  useCreatePublicKeyMutation,
+  useCreateTokenMutation,
+  useDeletePublicKeyMutation,
+  useDeleteTokenMutation,
+  useListPublicKeyQuery,
+  useListTokensQuery
 } from '@harnessio/code-service-client'
-import { TokensList, KeysList, DeleteTokenAlertDialog } from '@harnessio/views'
+import { DeleteTokenAlertDialog, KeysList, TokensList } from '@harnessio/views'
+
 import { SettingsAccountKeysPage } from './profile-settings-keys-page'
+import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenCreateDialog } from './token-create/token-create-dialog'
 import { TokenFormType } from './token-create/token-create-form'
-import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
 import { TokenSuccessDialog } from './token-create/token-success-dialog'
-import { ApiErrorType, AlertDeleteParams } from './types'
+import { AlertDeleteParams, ApiErrorType } from './types'
 
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000

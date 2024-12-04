@@ -1,9 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Label, Icon, Text, Spacer } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
-import { Link } from 'react-router-dom'
+
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Icon,
+  Input,
+  Label,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
+import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
   handleSignIn: (data: DataProps) => void
@@ -51,9 +64,7 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
         <Spacer size={1} />
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <Label htmlFor="email" variant="sm">
-              Email
-            </Label>
+            <Label htmlFor="email">Email</Label>
             <Spacer size={1} />
             <Input id="email" type="email" {...register('email')} placeholder="email@work.com" autoFocus />
             {errors.email && (
@@ -66,9 +77,7 @@ export function SignInPage({ handleSignIn, isLoading }: PageProps) {
             )}
             <Spacer size={4} />
             <div className="flex justify-between">
-              <Label htmlFor="password" variant="sm">
-                Password
-              </Label>
+              <Label htmlFor="password">Password</Label>
             </div>
             <Spacer size={1} />
             <Input

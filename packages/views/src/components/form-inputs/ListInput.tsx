@@ -1,12 +1,19 @@
 import { useCallback } from 'react'
-import { Controller, useFieldArray } from '@harnessio/forms'
+
 import { Button, FormField, FormItem, Icon } from '@harnessio/canary'
-import { InputComponent, InputProps } from '@harnessio/forms'
-import { AnyFormikValue, IInputDefinition } from '@harnessio/forms'
-import { RenderInputs } from '@harnessio/forms'
+import {
+  AnyFormikValue,
+  Controller,
+  IInputDefinition,
+  InputComponent,
+  InputProps,
+  RenderInputs,
+  useFieldArray
+} from '@harnessio/forms'
+
+import { InputError } from './common/InputError'
 import InputLabel from './common/InputLabel'
 import InputWrapper from './common/InputWrapper'
-import { InputError } from './common/InputError'
 import { InputType } from './types'
 
 export type UIInputWithConfigsForList<T = unknown> = Omit<IInputDefinition<T>, 'path'> & {
@@ -92,7 +99,8 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                             onClick={() => {
                               remove(idx)
                             }}
-                            disabled={readonly}>
+                            disabled={readonly}
+                          >
                             <Icon name="trash" />
                           </button>
                         </div>
@@ -100,7 +108,7 @@ function ListInputInternal(props: InputProps<AnyFormikValue, ListInputConfig>): 
                     ))}
                   </div>
                   <Button size="sm" onClick={() => append({})} className="mt-2">
-                    Add <Icon name="plus" />
+                    Add
                   </Button>
                 </div>
               )}

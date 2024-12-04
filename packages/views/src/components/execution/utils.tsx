@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
+
 import { File, Folder, type TreeViewElement } from '@harnessio/canary'
+
 import type { ExecutionTreeProps } from './execution-tree'
 
 interface RenderTreeElementProps {
@@ -24,7 +26,8 @@ const renderTreeFolder = ({ element: folderElement, handleClick }: RenderTreeEle
       element={folderElement.name}
       value={folderElement.id}
       status={folderElement.status}
-      duration={folderElement.duration}>
+      duration={folderElement.duration}
+    >
       {folderElement.children?.map(childElement => (
         <div key={childElement.id}>
           {renderTreeElement({ parentElement: folderElement, element: childElement, handleClick })}
@@ -40,7 +43,8 @@ const renderTreeFile = ({ element: fileElement, handleClick, parentElement }: Re
       value={fileElement.id}
       status={fileElement.status}
       duration={fileElement.duration}
-      handleSelect={(stepId: string) => handleClick({ parentId: parentElement?.id || '', childId: stepId })}>
+      handleSelect={(stepId: string) => handleClick({ parentId: parentElement?.id || '', childId: stepId })}
+    >
       <p>{fileElement.name}</p>
     </File>
   )

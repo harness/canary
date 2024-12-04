@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ZOOM_INC_DEC_LEVEL } from '../utils/utils'
+
 import {
   Button,
   Carousel,
@@ -10,6 +10,8 @@ import {
   DialogTitle
 } from '@harnessio/canary'
 
+import { ZOOM_INC_DEC_LEVEL } from '../utils/utils'
+
 interface ImageCarouselProps {
   isOpen: boolean
   setIsOpen: (value: boolean) => void
@@ -17,6 +19,7 @@ interface ImageCarouselProps {
   zoomLevel: number
   imgEvent: string[]
 }
+
 // TODO: rewrite this to actually work
 const ImageCarousel = (props: ImageCarouselProps) => {
   const { isOpen, setIsOpen, setZoomLevel, zoomLevel, imgEvent } = props
@@ -27,7 +30,8 @@ const ImageCarousel = (props: ImageCarouselProps) => {
       onOpenChange={() => {
         setIsOpen(false)
         setZoomLevel(1)
-      }}>
+      }}
+    >
       <DialogContent className="bg-primary-background border-border h-[600px] max-w-[800px]">
         <DialogHeader>
           <DialogTitle>
@@ -51,28 +55,28 @@ const ImageCarousel = (props: ImageCarouselProps) => {
             <div>
               <div className="flex">
                 <Button
-                  variant={'icon'}
-                  icon="zoom-in"
                   data-testid="zoomInButton"
-                  tooltip={'Zoom in'}
                   onClick={() => {
                     if (Number(zoomLevel.toFixed(1)) < 2) {
                       setZoomLevel(zoomLevel + ZOOM_INC_DEC_LEVEL)
                     }
                   }}
-                />
+                  title="Zoom in"
+                >
+                  +
+                </Button>
 
                 <Button
-                  variation={'icon'}
-                  icon="zoom-out"
                   data-testid="zoomOutButton"
-                  tooltip={'Zoom out'}
                   onClick={() => {
                     if (Number(zoomLevel.toFixed(1)) > 0.3) {
                       setZoomLevel(zoomLevel - ZOOM_INC_DEC_LEVEL)
                     }
                   }}
-                />
+                  title="Zoom out"
+                >
+                  -
+                </Button>
               </div>
             </div>
           </DialogDescription>

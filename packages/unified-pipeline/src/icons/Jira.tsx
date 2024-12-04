@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { SVGProps } from 'react'
+
 const Jira = (props: SVGProps<SVGSVGElement>) => (
   <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <rect y={-0.00012207} width={24} height={24} rx={4} fill="#0C66E4" />
@@ -22,7 +23,8 @@ const Jira = (props: SVGProps<SVGSVGElement>) => (
         y1={7.85462}
         x2={12.7519}
         y2={11.2398}
-        gradientUnits="userSpaceOnUse">
+        gradientUnits="userSpaceOnUse"
+      >
         <stop offset={0.15} stopColor="white" stopOpacity={0.4} />
         <stop offset={0.29} stopColor="white" stopOpacity={0.47} />
         <stop offset={0.56} stopColor="white" stopOpacity={0.66} />
@@ -35,7 +37,8 @@ const Jira = (props: SVGProps<SVGSVGElement>) => (
         y1={11.7207}
         x2={8.63824}
         y2={15.4138}
-        gradientUnits="userSpaceOnUse">
+        gradientUnits="userSpaceOnUse"
+      >
         <stop offset={0.15} stopColor="white" stopOpacity={0.4} />
         <stop offset={0.29} stopColor="white" stopOpacity={0.47} />
         <stop offset={0.56} stopColor="white" stopOpacity={0.66} />

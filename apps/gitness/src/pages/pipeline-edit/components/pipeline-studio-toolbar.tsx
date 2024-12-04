@@ -1,10 +1,12 @@
-import cx from 'clsx'
 import copy from 'clipboard-copy'
-import { PipelineStudioToolbarActions, Topbar, VisualYamlToggle } from '@harnessio/views'
+import cx from 'clsx'
 import { noop } from 'lodash-es'
+
+import { PipelineStudioToolbarActions, Topbar, VisualYamlToggle } from '@harnessio/views'
+
 import { VisualYamlValue } from '../../../types/pipeline'
-import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { createAndDownloadBlob } from '../../../utils/common-utils'
+import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 
 export const PipelineStudioToolbar = ({
   view,

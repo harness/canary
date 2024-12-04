@@ -1,6 +1,8 @@
-import { SignInPage, DataProps } from '@harnessio/views'
-import { getUser, useOnLoginMutation } from '@harnessio/code-service-client'
 import { useNavigate } from 'react-router-dom'
+
+import { getUser, useOnLoginMutation } from '@harnessio/code-service-client'
+import { DataProps, SignInPage } from '@harnessio/views'
+
 import { useAppContext } from '../framework/context/AppContext'
 
 export const SignIn: React.FC = () => {

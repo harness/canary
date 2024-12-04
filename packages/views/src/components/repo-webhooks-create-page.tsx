@@ -1,18 +1,20 @@
 import { useEffect } from 'react'
-import { Button, ButtonGroup, useZodForm, Text, Spacer } from '@harnessio/canary'
 import { SubmitHandler } from 'react-hook-form'
+
+import { Button, ButtonGroup, Spacer, Text, useZodForm } from '@harnessio/canary'
+
+import { FormFieldSet, SandboxLayout } from '../index'
+import { branchEvents, prEvents, tagEvents } from './webhooks/create-webhook-form-data'
 import {
-  WebhookToggleField,
-  WebhookNameField,
   WebhookDescriptionField,
+  WebhookEventSettingsFieldset,
+  WebhookNameField,
   WebhookPayloadUrlField,
   WebhookSecretField,
   WebhookSSLVerificationField,
-  WebhookTriggerField,
-  WebhookEventSettingsFieldset
+  WebhookToggleField,
+  WebhookTriggerField
 } from './webhooks/create-webhooks-form-fields'
-import { branchEvents, tagEvents, prEvents } from './webhooks/create-webhook-form-data'
-import { FormFieldSet, SandboxLayout } from '../index'
 import { createWebhookFormSchema } from './webhooks/create-webhooks-form-schema'
 import { CreateWebhookFormFields, TriggerEventsEnum } from './webhooks/types'
 

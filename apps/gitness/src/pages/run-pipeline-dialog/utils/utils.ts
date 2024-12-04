@@ -1,5 +1,7 @@
-import { IFormDefinition, IInputDefinition } from '@harnessio/forms'
 import { forOwn } from 'lodash-es'
+
+import { IFormDefinition, IInputDefinition } from '@harnessio/forms'
+
 import { Pipeline } from '../../../types/pipeline-schema'
 
 export interface PipelineInput<T = unknown> {

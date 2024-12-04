@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
-import { CodeEditor } from '@harnessio/yaml-editor'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import { noop } from 'lodash-es'
-import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
-import { decodeGitContent, filenameToLanguage, formatBytes, getTrimmedSha, GitCommitAction } from '../utils/git-utils'
+
 import {
   Button,
   ButtonGroup,
@@ -17,15 +17,18 @@ import {
   ToggleGroup,
   ToggleGroupItem
 } from '@harnessio/canary'
-import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
-import { MarkdownViewer, PipelineStudioToolbarActions, TopDetails, TopTitle } from '@harnessio/views'
 import { OpenapiGetContentOutput, useFindRepositoryQuery } from '@harnessio/code-service-client'
-import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useNavigate, useParams } from 'react-router-dom'
-import { PathParams } from '../RouteDefinitions'
+import { MarkdownViewer, PipelineStudioToolbarActions, TopDetails, TopTitle } from '@harnessio/views'
+import { CodeEditor } from '@harnessio/yaml-editor'
+
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
-import GitCommitDialog from './GitCommitDialog'
+import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
+import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
+import { PathParams } from '../RouteDefinitions'
+import { decodeGitContent, filenameToLanguage, formatBytes, getTrimmedSha, GitCommitAction } from '../utils/git-utils'
 import GitBlame from './GitBlame'
+import GitCommitDialog from './GitCommitDialog'
 
 interface FileContentViewerProps {
   repoContent?: OpenapiGetContentOutput
@@ -110,7 +113,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               onSelect={() => {
                 const url = rawURL.replace('//', '/')
                 window.open(url, '_blank')
-              }}>
+              }}
+            >
               <Icon name="arrow-long" size={12} className="text-tertiary-background" />
               <Text>View Raw</Text>
             </DropdownMenuItem>
@@ -118,7 +122,8 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               className="flex items-center gap-1.5"
               onSelect={() => {
                 setIsDeleteFileDialogOpen(true)
-              }}>
+              }}
+            >
               <Icon name="trash" size={12} className="text-primary" />
               <Text>Delete</Text>
             </DropdownMenuItem>
@@ -189,22 +194,26 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             value={view}
             type="single"
             unselectable={'on'}
-            className={'bg-primary-foreground border-primary/10 rounded-lg border p-0.5'}>
+            className={'bg-primary-foreground border-primary/10 rounded-lg border p-0.5'}
+          >
             {language === 'markdown' && (
               <ToggleGroupItem
                 value={'preview'}
-                className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100">
+                className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
+              >
                 Preview
               </ToggleGroupItem>
             )}
             <ToggleGroupItem
               value={'code'}
-              className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100">
+              className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
+            >
               Code
             </ToggleGroupItem>
             <ToggleGroupItem
               value={'blame'}
-              className="text-tertiary-background data-[state=on]:text-primary h-7 rounded-md border border-transparent text-xs font-medium data-[state=on]:border-white/10">
+              className="text-tertiary-background data-[state=on]:text-primary h-7 rounded-md border border-transparent text-xs font-medium data-[state=on]:border-white/10"
+            >
               Blame
             </ToggleGroupItem>
           </ToggleGroup>

@@ -1,5 +1,7 @@
 import { RefObject, useEffect } from 'react'
+
 import * as monaco from 'monaco-editor'
+
 import { useYamlEditorContext } from '../components/YamlProvider'
 
 export type UseProblems = (arg: { monacoRef: RefObject<typeof monaco | undefined> }) => void

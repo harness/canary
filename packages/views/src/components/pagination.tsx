@@ -1,12 +1,13 @@
 import { noop } from 'lodash-es'
+
 import {
   ListPagination,
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationEllipsis,
   PaginationPrevious
 } from '@harnessio/canary'
 
@@ -73,7 +74,8 @@ const PaginationItems: React.FC<PaginationItemsProps> = ({ totalPages, currentPa
         size="sm_icon"
         href="#"
         onClick={() => goToPage(totalPages)}
-        isActive={currentPage === totalPages}>
+        isActive={currentPage === totalPages}
+      >
         {totalPages}
       </PaginationLink>
     </PaginationItem>

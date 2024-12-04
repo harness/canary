@@ -5,6 +5,25 @@ export enum PRCommentFilterType {
   RESOLVED_COMMENTS = 'resolvedComments',
   UNRESOLVED_COMMENTS = 'unresolvedComments'
 }
+
+export interface TypesListCommitResponse {
+  commits?: TypesCommit[] | null
+  rename_details?: TypesRenameDetails[] | null
+  total_commits?: number
+}
+
+export interface TypesPullReqChecks {
+  checks?: TypesPullReqCheck[] | null
+  commit_sha?: string
+}
+
+export interface TypesRenameDetails {
+  commit_sha_after?: string
+  commit_sha_before?: string
+  new_path?: string
+  old_path?: string
+}
+
 export type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed' | 'outdated'
 
 export enum orderSortDate {
@@ -116,10 +135,7 @@ export interface TypesLabelPullReqAssignmentInfo {
   value_count?: number
   value_id?: number | null
 }
-
 export type EnumLabelColor =
-  | 'accent'
-  | 'background'
   | 'blue'
   | 'brown'
   | 'cyan'
@@ -131,8 +147,6 @@ export type EnumLabelColor =
   | 'pink'
   | 'purple'
   | 'red'
-  | 'stroke'
-  | 'text'
   | 'violet'
   | 'yellow'
 
@@ -490,3 +504,16 @@ export interface TypesRuleInfo {
   type?: string
 }
 export type EnumRuleState = 'active' | 'disabled' | 'monitor' | null
+
+export interface ReviewerItemProps {
+  reviewer?: { display_name?: string; id?: number }
+  reviewDecision?: EnumPullReqReviewDecision
+  sha?: string
+  sourceSHA?: string
+  processReviewDecision: (
+    review_decision: EnumPullReqReviewDecision,
+    reviewedSHA?: string,
+    sourceSHA?: string
+  ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
+  handleDelete: (id: number) => void
+}

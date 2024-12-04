@@ -1,10 +1,12 @@
 import { get, has } from 'lodash-es'
+
+import { Icon } from '@harnessio/canary'
+
 import { Node } from '../components/Canvas/types'
 import { StageCategory } from '../components/PipelineConfigPanel/types'
-import { getIdFromName } from './StringUtils'
-import { Icon } from '@harnessio/canary'
 import { getIconBasedOnStep } from './stepUtils/stepIconUtil'
 import { getNameBasedOnStep } from './stepUtils/stepNameUtil'
+import { getIdFromName } from './StringUtils'
 
 const STAGE_LABEL = 'Stage'
 const STAGE_GROUP_LABEL = 'Stage Group'
@@ -144,7 +146,7 @@ const getChildNodes = (stage: Record<string, any>): Node[] => {
 
 function getIconAndDisplayName(step: Record<string, any>, stepIndex: number, _?: boolean) {
   return {
-    name: getNameBasedOnStep(step, stepIndex),
+    name: step?.name || getNameBasedOnStep(step, stepIndex),
     icon: (
       <div className="node-icon">
         <Icon name={getIconBasedOnStep(step)} />

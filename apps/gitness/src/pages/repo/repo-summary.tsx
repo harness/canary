@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import {
   Button,
   ButtonGroup,
@@ -10,45 +12,47 @@ import {
   ListActions,
   Spacer,
   StackedList,
-  Text
+  Text,
+  ToggleGroup,
+  ToggleGroupItem
 } from '@harnessio/canary'
 import {
-  RepoSummaryPanel,
-  BranchSelector,
-  SkeletonList,
-  Summary,
-  FileProps,
-  SummaryItemType,
-  NoData,
-  MarkdownViewer,
-  useCommonFilter,
-  SandboxLayout,
-  CloneRepoDialog,
-  generateAlphaNumericHash,
-  SearchFiles
-} from '@harnessio/views'
-import {
-  useListBranchesQuery,
-  useSummaryQuery,
-  useGetContentQuery,
-  useFindRepositoryQuery,
+  GitPathDetails,
+  OpenapiContentInfo,
+  OpenapiGetContentOutput,
   pathDetails,
   RepoPathsDetailsOutput,
-  GitPathDetails,
-  OpenapiGetContentOutput,
-  OpenapiContentInfo,
   useCreateTokenMutation,
-  useListPathsQuery
+  useFindRepositoryQuery,
+  useGetContentQuery,
+  useListBranchesQuery,
+  useListPathsQuery,
+  useSummaryQuery
 } from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
+import {
+  BranchSelector,
+  CloneRepoDialog,
+  FileProps,
+  generateAlphaNumericHash,
+  MarkdownViewer,
+  NoData,
+  RepoSummaryPanel,
+  SandboxLayout,
+  SearchFiles,
+  Summary,
+  SummaryItemType,
+  useCommonFilter
+} from '@harnessio/views'
+
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { timeAgoFromISOTime } from '../pipeline-edit/utils/time-utils'
-import { useNavigate, useParams } from 'react-router-dom'
-import { PathParams } from '../../RouteDefinitions'
-import { TokenSuccessDialog } from '../profile-settings/token-create/token-success-dialog'
 import { TokenFormType } from '../profile-settings/token-create/token-create-form'
+import { TokenSuccessDialog } from '../profile-settings/token-create/token-success-dialog'
 
-export const RepoSummaryList: React.FC = () => {
+export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<FileProps[]>([])
   const repoRef = useGetRepoRef()
@@ -256,7 +260,8 @@ export const RepoSummaryList: React.FC = () => {
                           key={'create-file'}
                           onClick={() => {
                             navigate(`/spaces/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranch}/~/`)
-                          }}>
+                          }}
+                        >
                           + Create New File
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -275,6 +280,25 @@ export const RepoSummaryList: React.FC = () => {
               <StackedList.Root>
                 <StackedList.Item isHeader disableHover>
                   <StackedList.Field title={<Text color="tertiaryBackground">README.md</Text>} />
+                  <StackedList.Field
+                    right
+                    title={
+                      <ToggleGroup type="single" variant="compact" size="sm">
+                        <ToggleGroupItem
+                          value="edit"
+                          onClick={() =>
+                            navigate(
+                              `/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef || selectedBranch}/~/README.md`
+                            )
+                          }
+                          title="Edit"
+                          size="sm"
+                        >
+                          <Icon name="edit-pen" className="text-foreground size-5" />
+                        </ToggleGroupItem>
+                      </ToggleGroup>
+                    }
+                  />
                 </StackedList.Item>
                 <StackedList.Item disableHover>
                   <MarkdownViewer source={decodedReadmeContent || ''} />
@@ -312,6 +336,7 @@ export const RepoSummaryList: React.FC = () => {
                     iconName: 'open-pr'
                   }
                 ]}
+                description={repository?.description}
               />
             </SandboxLayout.Content>
           </SandboxLayout.Column>

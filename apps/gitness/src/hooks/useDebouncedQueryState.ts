@@ -1,6 +1,7 @@
-import { useQueryState } from 'nuqs'
 import { useCallback, useEffect, useState } from 'react'
+
 import { debounce } from 'lodash-es'
+import { useQueryState } from 'nuqs'
 
 interface UseDebouncedQueryStateProps {
   key: string

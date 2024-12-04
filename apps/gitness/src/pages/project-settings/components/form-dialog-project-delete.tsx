@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
 import {
-  Button,
-  Input,
-  Icon,
   AlertDialog,
-  AlertDialogTrigger,
+  AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  AlertDialogCancel
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  Icon,
+  Input
 } from '@harnessio/canary'
 import { FormFieldSet } from '@harnessio/views'
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
 
 const projectDeleteSchema = z.object({
   verification: z.string().min(1, { message: 'To double confirm, please type "DELETE".' })
@@ -114,7 +116,8 @@ export const FormDialogProjectDelete = ({
                   theme="error"
                   className="self-start"
                   onClick={handleDelete}
-                  disabled={!typeCheck(verificationCheck) || isDeleting}>
+                  disabled={!typeCheck(verificationCheck) || isDeleting}
+                >
                   {isDeleting ? 'Deleting project...' : 'Yes, delete project'}
                 </Button>
               )}

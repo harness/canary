@@ -1,4 +1,5 @@
-import { YAMLSeq, parseDocument } from 'yaml'
+import { parseDocument, YAMLSeq } from 'yaml'
+
 import { updateYamlDocAtPath } from './yaml-doc-utils'
 
 // TODO: split this to addToArray and insertInArray

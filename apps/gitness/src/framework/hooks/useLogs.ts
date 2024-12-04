@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+
 import { LivelogLine } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/views'
 

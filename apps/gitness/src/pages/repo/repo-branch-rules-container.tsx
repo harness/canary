@@ -1,16 +1,17 @@
-import { RepoBranchSettingsRulesPage, RepoBranchSettingsFormFields, BypassUsersList } from '@harnessio/views'
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
-
 import { useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import {
-  useRuleAddMutation,
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
+  useRuleAddMutation,
   useRuleGetQuery,
   useRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { useNavigate, useParams } from 'react-router-dom'
+import { BypassUsersList, RepoBranchSettingsFormFields, RepoBranchSettingsRulesPage } from '@harnessio/views'
+
+import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { transformDataFromApi, transformFormOutput } from '../../utils/repo-branch-rules-utils'
 

@@ -1,4 +1,5 @@
 import { IconProps } from '@harnessio/canary'
+
 import {
   getIsActionStep,
   getIsBackgroundStep,

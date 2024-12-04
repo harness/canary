@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
+
 import { PullRequestRoutePathParams, routes } from '../RouteDefinitions'
 
 export enum PullRequestTab {

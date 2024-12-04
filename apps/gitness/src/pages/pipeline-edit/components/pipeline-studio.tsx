@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useMemo } from 'react'
-import { Container, PipelineStudioFooterBar, getInitials } from '@harnessio/views'
-import { useListBranchesQuery } from '@harnessio/code-service-client'
+
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, Sheet, SheetContent } from '@harnessio/canary'
-import { PipelineStudioPanel } from './pipeline-studio-panel'
-import { PipelineStudioToolbar } from './pipeline-studio-toolbar'
+import { useListBranchesQuery } from '@harnessio/code-service-client'
+import { Container, getInitials, PipelineStudioFooterBar } from '@harnessio/views'
+
+import { useExitPrompt } from '../../../framework/hooks/useExitPrompt'
+import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
+import { getTrimmedSha } from '../../../utils/git-utils'
+import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { PipelineStudioView } from '../types/types'
-import { PipelineStudioStepForm } from './pipeline-studio-step-form'
-import { PipelineStudioGraphView } from './pipeline-studio-graph-view'
-import { PipelineStudioYamlView } from './pipeline-studio-yaml-view'
-import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
-import { PipelineStudioStepPalette } from './pipeline-studio-step-palette'
-import PipelineStudioHeaderActions from './pipeline-studio-header-actions'
 import { timeAgoFromISOTime } from '../utils/time-utils'
-import { getTrimmedSha } from '../../../utils/git-utils'
-import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
-import { useExitPrompt } from '../../../framework/hooks/useExitPrompt'
+import { PipelineStudioGraphView } from './pipeline-studio-graph-view'
+import PipelineStudioHeaderActions from './pipeline-studio-header-actions'
+import { PipelineStudioPanel } from './pipeline-studio-panel'
+import { PipelineStudioStepForm } from './pipeline-studio-step-form'
+import { PipelineStudioStepPalette } from './pipeline-studio-step-palette'
+import { PipelineStudioToolbar } from './pipeline-studio-toolbar'
+import { PipelineStudioYamlView } from './pipeline-studio-yaml-view'
 
 export default function PipelineEdit() {
   const { view, setView, panelOpen, stepDrawerOpen, setStepDrawerOpen, setPanelOpen } = usePipelineViewContext()
@@ -23,7 +25,7 @@ export default function PipelineEdit() {
     state: { problemsCount, pipelineFileContent, fetchingPipelineFileContent, currentBranch, isDirty },
     clearAddStepIntention,
     clearEditStepIntention,
-    setCurrentStepFormDefinition,
+    setFormStep,
     setCurrentBranch
   } = usePipelineDataContext()
 
@@ -74,7 +76,7 @@ export default function PipelineEdit() {
               setStepDrawerOpen(StepDrawer.None)
               clearAddStepIntention()
               clearEditStepIntention()
-              setCurrentStepFormDefinition(null)
+              setFormStep(null)
             }}
           />
         )
@@ -85,7 +87,7 @@ export default function PipelineEdit() {
               setStepDrawerOpen(StepDrawer.None)
               clearAddStepIntention()
               clearEditStepIntention()
-              setCurrentStepFormDefinition(null)
+              setFormStep(null)
             }}
           />
         )
@@ -103,9 +105,10 @@ export default function PipelineEdit() {
             setStepDrawerOpen(StepDrawer.None)
             clearAddStepIntention()
             clearEditStepIntention()
-            setCurrentStepFormDefinition(null)
+            setFormStep(null)
           }
-        }}>
+        }}
+      >
         <SheetContent onOpenAutoFocus={e => e.preventDefault()} hideCloseButton={true} className="p-0 sm:max-w-lg">
           {renderSheetContent()}
         </SheetContent>

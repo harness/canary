@@ -10,7 +10,8 @@
     "pretty": "prettier --check ./src",
     "lint": "eslint ./src",
     "typed-scss": "typed-scss-modules src --watch",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "pre-commit": "lint-staged"
   },
   "private": false,
   "type": "module",
@@ -59,6 +60,7 @@
     "@types/react-dom": "^18.2.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "dts-bundle-generator": "^6.4.0",
+    "lint-staged": "^15.2.9",
     "npm-run-all": "^4.1.5",
     "sass": "^1.32.8",
     "typed-scss-modules": "^7.1.4",
@@ -67,5 +69,11 @@
     "vite-plugin-dts": "^3.9.1",
     "vite-plugin-svgr": "^4.2.0",
     "zustand": "^4.5.4"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint ./src --fix",
+      "prettier ./src --write"
+    ]
   }
 }

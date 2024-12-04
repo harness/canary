@@ -1,8 +1,7 @@
-import { InputType } from './types'
-import { InputComponent } from '@harnessio/forms'
-import type { AnyFormikValue } from '@harnessio/forms'
+import { InputComponent, type AnyFormikValue } from '@harnessio/forms'
 
 import { Separator } from '../..'
+import { InputType } from './types'
 
 export interface SeparatorInputConfig {
   inputType: InputType.separator

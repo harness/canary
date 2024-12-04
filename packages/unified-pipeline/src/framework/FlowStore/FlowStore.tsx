@@ -1,10 +1,12 @@
 // store.ts
-import { Node, Edge } from 'reactflow'
+
 import { set as _set } from 'lodash-es'
+import { Edge, Node } from 'reactflow'
 import { create } from 'zustand'
-import { getNodeById, dedupeNodes } from '../../components/Canvas/utils/NodeUtils'
+
 import { DefaultNodeProps } from '../../components/Canvas/types'
 import { dedupeEdges } from '../../components/Canvas/utils/EdgeUtils'
+import { dedupeNodes, getNodeById } from '../../components/Canvas/utils/NodeUtils'
 
 interface FlowState {
   nodes: Node[]

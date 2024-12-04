@@ -1,4 +1,3 @@
-import { Topbar } from '@harnessio/views'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -7,6 +6,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@harnessio/canary'
+import { Topbar } from '@harnessio/views'
+
 import PipelineStudioHeaderActions from './pipeline-studio-header-actions'
 
 // TODO: this component is not in use

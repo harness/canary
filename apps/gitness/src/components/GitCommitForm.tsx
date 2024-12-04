@@ -1,3 +1,7 @@
+import { UseFormReturn } from 'react-hook-form'
+
+import { z } from 'zod'
+
 import {
   Button,
   Form,
@@ -12,15 +16,14 @@ import {
   RadioGroupItem,
   Spacer,
   Text,
-  Textarea,
   useZodForm
 } from '@harnessio/canary'
-import { z } from 'zod'
-import { GitCommitFormType } from '../types'
-import { FormFieldSet, Layout } from '@harnessio/views'
 import { UsererrorError } from '@harnessio/code-service-client'
+import { Textarea } from '@harnessio/ui/components'
+import { FormFieldSet, Layout } from '@harnessio/views'
+
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
-import { UseFormReturn } from 'react-hook-form'
+import { GitCommitFormType } from '../types'
 
 interface GitCommitFormProps {
   onCancel: () => void
@@ -32,7 +35,7 @@ interface GitCommitFormProps {
   violation: boolean
   bypassable: boolean
   defaultBranch?: string
-  isNew: boolean
+  isFileNameRequired: boolean
 }
 
 export enum CommitToGitRefOption {
@@ -77,7 +80,7 @@ export function GitCommitForm({
   violation,
   bypassable,
   defaultBranch,
-  isNew
+  isFileNameRequired
 }: GitCommitFormProps) {
   const { setAllStates } = useRuleViolationCheck()
   const form = useZodForm({
@@ -87,12 +90,29 @@ export function GitCommitForm({
       message: '',
       description: '',
       newBranchName: '',
-      fileName: isNew ? '' : undefined
+      fileName: isFileNameRequired ? '' : undefined
     }
   }) as UseFormReturn<GitCommitFormType>
 
   return (
     <Form className="space-y-6" form={form} onSubmit={onSubmit}>
+      <div className="grid gap-2">
+        {isFileNameRequired && (
+          <FormField
+            control={form.control}
+            name="fileName"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-primary">File Name</FormLabel>
+                <FormControl>
+                  <Input className="text-primary" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
+      </div>
       <div className="grid gap-2">
         <FormField
           control={form.control}
@@ -122,21 +142,6 @@ export function GitCommitForm({
         )}
       />
 
-      {isNew && (
-        <FormField
-          control={form.control}
-          name="fileName"
-          render={({ field }) => (
-            <FormItem>
-              <FormControl>
-                <Textarea className="text-primary" {...field} placeholder="Name your file" />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-      )}
-
       <FormField
         control={form.control}
         name="commitToGitRef"
@@ -149,7 +154,8 @@ export function GitCommitForm({
                 onValueChange={value => {
                   dryRun(value as CommitToGitRefOption, form.getValues().fileName)
                   field.onChange(value)
-                }}>
+                }}
+              >
                 <FormFieldSet.Option
                   control={<RadioGroupItem value={CommitToGitRefOption.DIRECTLY} id="directly" />}
                   id="directly"

@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
-import { type Node, type Edge, useReactFlow, useNodesInitialized, useStore } from 'reactflow'
-import { performElkLayout } from '../components/Canvas/utils/ElkLayout'
+
+import { useNodesInitialized, useReactFlow, useStore, type Edge, type Node } from 'reactflow'
+
 import { ExpandNodeProps } from '../components/Canvas/types'
+import { performElkLayout } from '../components/Canvas/utils/ElkLayout'
 import { getLayoutableNodes } from '../components/Canvas/utils/NodeUtils'
 
 function useAutoLayout() {

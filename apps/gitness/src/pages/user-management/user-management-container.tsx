@@ -1,14 +1,16 @@
-import { SettingsUserManagementPage, useCommonFilter } from '@harnessio/views'
+import { useQueryClient } from '@tanstack/react-query'
+import { parseAsInteger, useQueryState } from 'nuqs'
+
 import {
+  AdminListUsersQueryQueryParams,
+  useAdminDeleteUserMutation,
   useAdminListUsersQuery,
   useAdminUpdateUserMutation,
-  useAdminDeleteUserMutation,
-  useUpdateUserAdminMutation,
-  AdminListUsersQueryQueryParams
+  useUpdateUserAdminMutation
 } from '@harnessio/code-service-client'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { SettingsUserManagementPage, useCommonFilter } from '@harnessio/views'
+
 import { PageResponseHeader } from '../../types'
-import { useQueryClient } from '@tanstack/react-query'
 
 export const UserManagementPageContainer = () => {
   const { sort } = useCommonFilter<AdminListUsersQueryQueryParams['sort']>()

@@ -1,7 +1,9 @@
+import { isEmpty } from 'lodash-es'
+
 import { AccordionContent, AccordionItem, AccordionTrigger, Icon, StackedList, Text } from '@harnessio/canary'
 
-import { LineTitle, LineDescription } from '../pull-request-line-title'
-import { isEmpty } from 'lodash-es'
+import { LineDescription, LineTitle } from '../pull-request-line-title'
+
 interface PullRequestMergeSectionProps {
   unchecked: boolean
   mergeable: boolean
@@ -61,7 +63,8 @@ const PullRequestMergeSection = ({
                     // }}
                     // className="pl-1 pr-1 text-blue-500 cursor-pointer">
 
-                    className="pl-1 pr-1 text-blue-500">
+                    className="pl-1 pr-1 text-blue-500"
+                  >
                     {/* {getString('commandLine')} */}
                     command line
                   </span>
@@ -87,7 +90,8 @@ const PullRequestMergeSection = ({
               <Text
                 size={1}
                 weight="normal"
-                color={'tertiaryBackground'}>{`Conflicting files (${conflictingFiles?.length || 0})`}</Text>
+                color={'tertiaryBackground'}
+              >{`Conflicting files (${conflictingFiles?.length || 0})`}</Text>
             </StackedList.Item>
             {!isEmpty(conflictingFiles) &&
               conflictingFiles?.map((file, idx) => (

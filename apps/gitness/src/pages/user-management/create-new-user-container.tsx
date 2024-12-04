@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import {
-  SettingsCreateNewUserForm,
-  generateAlphaNumericHash,
-  ResetPasswordDialog,
-  NewUserFields
-} from '@harnessio/views'
+
 import { AdminCreateUserRequestBody, useAdminCreateUserMutation } from '@harnessio/code-service-client'
+import {
+  generateAlphaNumericHash,
+  NewUserFields,
+  ResetPasswordDialog,
+  SettingsCreateNewUserForm
+} from '@harnessio/views'
 
 export const CreateNewUserContainer = () => {
   const [password] = useState<string>(generateAlphaNumericHash(10))

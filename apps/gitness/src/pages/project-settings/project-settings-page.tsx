@@ -1,9 +1,12 @@
-import { useState, useEffect } from 'react'
-import { Button, ButtonGroup, Input, Spacer, Text, Icon } from '@harnessio/canary'
-import { SandboxLayout, FormFieldSet } from '@harnessio/views'
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { z } from 'zod'
+import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+
 import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { Button, ButtonGroup, Icon, Input, Spacer, Text } from '@harnessio/canary'
+import { FormFieldSet, SandboxLayout } from '@harnessio/views'
+
 import { FormDialogProjectDelete } from './components/form-dialog-project-delete'
 
 interface PageProps {
@@ -190,7 +193,8 @@ export const ProjectSettingsPage = ({
                           : isSaveButtonDisabled
                             ? 'cursor-not-allowed opacity-50'
                             : 'cursor-pointer'
-                      }`}>
+                      }`}
+                    >
                       {isUpdating ? 'Saving...' : 'Save changes'}
                     </Button>
                     <Button
@@ -198,7 +202,8 @@ export const ProjectSettingsPage = ({
                       variant="outline"
                       type="button"
                       onClick={handleCancel}
-                      disabled={isCancelDisabled}>
+                      disabled={isCancelDisabled}
+                    >
                       Cancel
                     </Button>
                   </>

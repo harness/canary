@@ -1,9 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle, Button, Input, Label, Icon, Text, Spacer } from '@harnessio/canary'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
-import { Link } from 'react-router-dom'
+
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  Icon,
+  Input,
+  Label,
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
+import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
   isLoading?: boolean
@@ -55,9 +68,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit }: PageProps) {
         <Spacer size={1} />
         <CardContent>
           <form onSubmit={handleSubmit(onFormSubmit)}>
-            <Label htmlFor="password" variant="sm">
-              New password
-            </Label>
+            <Label htmlFor="password">New password</Label>
             <Spacer size={1} />
             <Input id="password" type="password" {...register('password')} placeholder="Password (6+ characters)" />
             {errors.password && (
@@ -69,9 +80,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit }: PageProps) {
               </>
             )}
             <Spacer size={4} />
-            <Label htmlFor="confirmPassword" variant="sm">
-              Confirm Password
-            </Label>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
             <Spacer size={1} />
             <Input
               id="confirmPassword"

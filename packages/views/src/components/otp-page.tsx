@@ -1,21 +1,22 @@
+import { useForm } from 'react-hook-form'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { Button, ButtonGroup } from '@harnessio/canary'
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
-  Button,
   Icon,
-  Text,
-  Spacer,
   InputOTP,
   InputOTPGroup,
   InputOTPSlot,
-  ButtonGroup
-} from '@harnessio/canary'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-import { Floating1ColumnLayout } from '../layouts/Floating1ColumnLayout'
+  Spacer,
+  Text
+} from '@harnessio/ui/components'
+import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
   handleResend?: () => void
@@ -60,10 +61,10 @@ export function OTPPage({ handleResend, isLoading, handleFormSubmit }: PageProps
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputOTP maxLength={4}>
               <InputOTPGroup id="otp" className="mx-auto flex" {...register('otp')}>
-                <InputOTPSlot index={0} size="lg" />
-                <InputOTPSlot index={1} size="lg" />
-                <InputOTPSlot index={2} size="lg" />
-                <InputOTPSlot index={3} size="lg" />
+                <InputOTPSlot index={0} />
+                <InputOTPSlot index={1} />
+                <InputOTPSlot index={2} />
+                <InputOTPSlot index={3} />
               </InputOTPGroup>
             </InputOTP>
             <Spacer size={8} />

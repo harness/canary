@@ -1,21 +1,17 @@
 import { Link } from 'react-router-dom'
+
 import { parseAsInteger, useQueryState } from 'nuqs'
+
 import { Button, Spacer, Text } from '@harnessio/canary'
 import { TypesPipeline, useListSpacePipelinesQuery } from '@harnessio/code-service-client'
-import {
-  PipelineList,
-  SandboxLayout,
-  SkeletonList,
-  Filter,
-  NoData,
-  NoSearchResults,
-  PaginationComponent
-} from '@harnessio/views'
+import { SkeletonList } from '@harnessio/ui/components'
+import { Filter, NoData, NoSearchResults, PaginationComponent, PipelineList, SandboxLayout } from '@harnessio/views'
+
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { PageResponseHeader } from '../../types'
 import { getExecutionStatus } from '../../utils/execution-utils'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { timeAgoFromEpochTime } from '../pipeline-edit/utils/time-utils'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 
 export default function ProjectPipelinesPage() {
   const spaceId = useGetSpaceURLParam()

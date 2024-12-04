@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Slot } from '@radix-ui/react-slot'
 
 import { cn } from '@/lib/utils'
+import { Slot } from '@radix-ui/react-slot'
 import { cva } from 'class-variance-authority'
 
 const headingVariants = cva('text-base', {

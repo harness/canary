@@ -1,5 +1,6 @@
 import Elk, { type ElkNode } from 'elkjs'
-import { type Node, type Edge } from 'reactflow'
+import { type Edge, type Node } from 'reactflow'
+
 import { LayoutAlgorithmOptions, type Direction } from './index'
 
 function getDirection(direction: Direction) {

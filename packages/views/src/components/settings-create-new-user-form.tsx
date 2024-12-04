@@ -1,10 +1,13 @@
-import { useForm, SubmitHandler } from 'react-hook-form'
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Button, ButtonGroup, Input, Spacer, Text, Icon } from '@harnessio/canary'
-import { SandboxLayout, FormFieldSet } from '..'
-import { MessageTheme } from './form-field-set'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
+
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
+
+import { Button, ButtonGroup, Icon, Input, Spacer, Text } from '@harnessio/canary'
+
+import { FormFieldSet, SandboxLayout } from '..'
+import { MessageTheme } from './form-field-set'
 
 const newUserSchema = z.object({
   uid: z.string().min(1, { message: 'Please provide a user ID' }),
@@ -122,7 +125,8 @@ function SettingsCreateNewUserForm({
                     onClick={() => {
                       navigate('../users')
                     }}
-                    disabled={isLoading}>
+                    disabled={isLoading}
+                  >
                     Cancel
                   </Button>
                 </>

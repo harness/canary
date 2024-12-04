@@ -1,20 +1,22 @@
 import { useState } from 'react'
+
 import {
   AlertDialog,
-  AlertDialogTrigger,
   AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
   AlertDialogDescription,
   AlertDialogFooter,
-  Button,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
   Badge,
-  Text,
-  Input
+  Button,
+  Input,
+  Text
 } from '@harnessio/canary'
-import { FormResetPasswordsDialogProps } from './interfaces'
-import { CopyButton } from '../copy-button'
+
 import { generateAlphaNumericHash } from '../../utils/utils'
+import { CopyButton } from '../copy-button'
+import { FormResetPasswordsDialogProps } from './interfaces'
 
 export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = ({
   user,
@@ -38,7 +40,7 @@ export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = 
           ) : (
             <AlertDialogTitle>
               Are you sure you want to reset password for
-              <Badge type="admin" className="mx-2" variant="muted" disableHover={true}>
+              <Badge className="mx-2" disableHover={true}>
                 <Text>{user?.display_name}</Text>
               </Badge>
               ?
@@ -66,12 +68,13 @@ export const FormResetPasswordDialog: React.FC<FormResetPasswordsDialogProps> = 
           {!isConfirm && (
             <Button
               size="default"
-              theme="secondary"
+              variant="secondary"
               className="self-start"
               onClick={() => {
                 handleResetPassword()
                 setIsConfirm(true)
-              }}>
+              }}
+            >
               Confirm
             </Button>
           )}

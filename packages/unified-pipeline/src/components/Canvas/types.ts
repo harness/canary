@@ -4,13 +4,15 @@
  * that can be found in the licenses directory at the root of this repository, also available at
  * https://polyformproject.org/wp-content/uploads/2020/06/PolyForm-Shield-1.0.0.txt.
  */
+
 import type { Position, Node as ReactFlowNode } from 'reactflow'
+
 import type { PipelineEntity } from '../../components/PipelineConfigPanel/types'
 import AtomicNode from './elements/Nodes/AtomicNode/AtomicNode'
-import StageNode from './elements/Nodes/StageNode/StageNode'
 import GroupNode from './elements/Nodes/GroupNode/GroupNode'
-import RootNode from './elements/Nodes/RootNode/RootNode'
 import PlusNode from './elements/Nodes/PlusNode/PlusNode'
+import RootNode from './elements/Nodes/RootNode/RootNode'
+import StageNode from './elements/Nodes/StageNode/StageNode'
 
 export enum EdgeType {
   SMOOTHSTEP = 'smoothstep',

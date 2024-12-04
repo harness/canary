@@ -1,5 +1,6 @@
-import { cn } from '@/lib/utils'
 import { useEffect, useRef } from 'react'
+
+import { cn } from '@/lib/utils'
 
 interface SpotlightsProps {
   children: React.ReactNode

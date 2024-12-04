@@ -30,6 +30,10 @@ export default defineConfig({
     monacoEditorPlugin.default({ customWorkers: [{ entry: 'monaco-yaml/yaml.worker', label: 'yaml' }] })
   ],
   server: {
+    cors: true,
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     host: process.env.UI_HOST || '127.0.0.1',
     port: Number(process.env.UI_DEV_SERVER_PORT) || 5137,
     proxy: {
@@ -41,6 +45,7 @@ export default defineConfig({
     }
   },
   build: {
-    assetsDir: ''
+    assetsDir: '',
+    target: 'esnext'
   }
 })

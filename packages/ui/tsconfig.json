@@ -12,7 +12,9 @@
     "skipLibCheck": true,
     "paths": {
       "@utils/*": ["src/utils/*"],
+      "@components": ["src/components"],
       "@components/*": ["src/components/*"],
+      "@views": ["src/views"],
       "@views/*": ["src/views/*"],
       "@hooks/*": ["src/hooks/*"],
       "@/*": ["src/*"]

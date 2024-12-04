@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Text } from '@components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

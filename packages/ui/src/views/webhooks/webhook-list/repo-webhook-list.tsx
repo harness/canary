@@ -1,4 +1,4 @@
-import { Badge, NoData, Spacer, StackedList, Text } from '@/components'
+import { Badge, NoData, Spacer, StackedList, Text } from '@components'
 
 import { WebhookType } from './types'
 

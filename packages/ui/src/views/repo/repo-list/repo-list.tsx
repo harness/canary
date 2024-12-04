@@ -1,10 +1,12 @@
-import { Badge, Icon, NoData, StackedList } from '@/components'
+import { ComponentType, ReactNode } from 'react'
+
+import { Badge, Icon, NoData, StackedList } from '@components'
 
 import { RepositoryType } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+  LinkComponent: ComponentType<{ to: string; children: ReactNode }>
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
   query?: string

@@ -1,7 +1,7 @@
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
-import { Tabs, TabsList, TabsTrigger } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { Tabs, TabsList, TabsTrigger } from '@components'
+import { SandboxLayout, TranslationStore } from '@views'
 
 export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) => {
   const location = useLocation()

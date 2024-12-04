@@ -17,9 +17,9 @@ import {
   Spacer,
   StackedList,
   Text
-} from '@/components'
-import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, Summary } from '@/views/repo/components'
+} from '@components'
+import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore } from '@views'
+import { BranchSelector, Summary } from '@views/repo/components'
 
 import SummaryPanel from './components/summary-panel'
 

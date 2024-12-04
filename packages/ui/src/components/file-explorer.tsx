@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon, Text } from '@/components'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon, Text } from '@components'
 import { cn } from '@utils/cn'
 
 interface FolderItemProps {
@@ -36,7 +36,7 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
         >
           <div className="flex w-full items-center gap-1.5 py-1.5">
             <Icon
-              className="min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2"
+              className="text-icons-7 group-hover:text-icons-2 group-data-[state=open]:text-icons-2 min-w-4 duration-100 ease-in-out"
               name="folder"
               size={16}
             />
@@ -74,7 +74,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
         }
       )}
     >
-      <Icon className="min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2" name="file" size={16} />
+      <Icon className="text-icons-7 group-hover:text-icons-2 min-w-4 duration-100 ease-in-out" name="file" size={16} />
       <Text className="duration-100 ease-in-out" size={2} color="inherit" weight="medium" truncate>
         {children}
       </Text>

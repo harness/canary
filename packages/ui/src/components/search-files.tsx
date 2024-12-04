@@ -11,8 +11,8 @@ import {
   PopoverContent,
   SearchBox,
   Text
-} from '@/components'
-import { TranslationStore } from '@/views'
+} from '@components'
+import { TranslationStore } from '@views'
 import { debounce } from 'lodash-es'
 
 const markedFileClassName = 'w-full text-foreground-8'

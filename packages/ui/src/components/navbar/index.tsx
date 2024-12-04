@@ -1,8 +1,8 @@
 import { useMemo } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
+import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@components'
 import { TFunction } from 'i18next'
 import { isEmpty } from 'lodash-es'
 
@@ -59,7 +59,7 @@ export const Navbar = ({
           logo={
             <Link className="flex items-center gap-1.5" to="/">
               <Icon name="harness" size={18} className="text-foreground-1" />
-              <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+              <Icon name="harness-logo-text" width={65} height={15} className="text-foreground-1 mb-0.5" />
             </Link>
           }
         />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Skeleton, StackedList } from '@/components'
+import { Skeleton, StackedList } from '@components'
 import { cn } from '@utils/cn'
 
 // Helper function to generate random percentage width within a range
@@ -54,7 +54,7 @@ export const SkeletonList = ({ className }: SkeletonListProps) => {
           </StackedList.Item>
         ))}
       </StackedList.Root>
-      <div className="absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent to-background" />
+      <div className="to-background absolute bottom-0 z-10 size-full bg-gradient-to-b from-transparent" />
     </div>
   )
 }

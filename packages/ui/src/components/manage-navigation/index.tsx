@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -11,8 +12,7 @@ import {
   Icon,
   ScrollArea,
   Text
-} from '@/components'
-import useDragAndDrop from '@/hooks/use-drag-and-drop'
+} from '@components'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'

@@ -1,4 +1,4 @@
-import { Button, Icon, Text } from '@/components'
+import { Button, Icon, Text } from '@components'
 
 export const NavbarAi = () => {
   return (

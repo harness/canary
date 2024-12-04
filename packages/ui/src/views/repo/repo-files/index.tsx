@@ -1,8 +1,8 @@
 import { ReactNode, useMemo } from 'react'
 
-import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
-import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { Summary } from '@/views/repo/components'
+import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@components'
+import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@views'
+import { Summary } from '@views/repo/components'
 
 interface RepoFilesProps {
   pathParts: PathParts[]

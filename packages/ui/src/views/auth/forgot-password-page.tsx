@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Spacer, Text } from '@components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 

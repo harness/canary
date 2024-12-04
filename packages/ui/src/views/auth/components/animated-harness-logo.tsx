@@ -1,4 +1,4 @@
-import { Icon } from '@/components'
+import { Icon } from '@components'
 import { cn } from '@utils/cn'
 
 interface AnimatedHarnessLogoProps {

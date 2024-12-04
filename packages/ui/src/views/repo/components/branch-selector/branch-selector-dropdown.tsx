@@ -1,18 +1,9 @@
 import { FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Badge,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  Icon,
-  SearchBox,
-  Tabs,
-  TabsList,
-  TabsTrigger
-} from '@/components'
-import { TranslationStore } from '@/views'
+import { Badge, DropdownMenuContent, DropdownMenuItem, Icon, SearchBox, Tabs, TabsList, TabsTrigger } from '@components'
 import { cn } from '@utils/cn'
+import { TranslationStore } from '@views'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
 import { TFunction } from 'i18next'
 
@@ -80,7 +71,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">
       <div className="px-3 pt-2">
-        <span className="leading-none text-14 font-medium">Switch branches/tags</span>
+        <span className="text-14 font-medium leading-none">Switch branches/tags</span>
 
         <SearchBox.Root
           className="mt-[18px] w-full"
@@ -137,7 +128,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="leading-tight text-foreground-2 text-14">Nothing to show</span>
+            <span className="text-foreground-2 text-14 leading-tight">Nothing to show</span>
           </div>
         )}
 
@@ -157,7 +148,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 key={item.name}
               >
                 <div className="flex w-full min-w-0 items-center gap-x-2">
-                  {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
+                  {isSelected && <Icon name="tick" size={12} className="text-foreground-1 min-w-[12px]" />}
                   <span
                     className={cn('text-foreground-2 truncate', {
                       'text-foreground-1': isSelected
@@ -169,7 +160,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
                 {isDefault && (
                   <Badge
-                    className="bg-transparent font-medium text-foreground-3"
+                    className="text-foreground-3 bg-transparent font-medium"
                     variant="outline"
                     // TODO: Review and update 'muted' theme implementation
                     // Current 'muted' theme styles don't fully match the design requirements
@@ -194,9 +185,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </div>
 
         <DropdownMenuItem className="p-0" asChild>
-          <div className="mt-1 border-t border-borders-1 px-3 py-2">
+          <div className="border-borders-1 mt-1 border-t px-3 py-2">
             <Link to={viewAllUrl}>
-              <span className="leading-none transition-colors duration-200 hover:text-foreground-1 text-14 font-medium">
+              <span className="hover:text-foreground-1 text-14 font-medium leading-none transition-colors duration-200">
                 {t('views:repos.viewAll', 'View all {{type}}', {
                   type: activeTab === BranchSelectorTab.BRANCHES ? t('views:repos.branches') : t('views:repos.tags')
                 })}

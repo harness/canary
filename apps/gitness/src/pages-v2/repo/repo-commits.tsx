@@ -13,7 +13,11 @@ const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { nam
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
+
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [sort, setSort] = useQueryState('sort')
+  const [query, setQuery] = useQueryState('query')
+
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -58,6 +62,10 @@ export default function RepoCommitsPage() {
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
       sortOptions={sortOptions}
+      sort={sort}
+      setSort={(sort: string) => setSort(sort)}
+      query={query}
+      setQuery={(query: string) => setQuery(query)}
     />
   )
 }

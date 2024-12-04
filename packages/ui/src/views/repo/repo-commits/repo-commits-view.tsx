@@ -26,10 +26,14 @@ interface RepoCommitsViewProps {
   sortOptions: {
     name: string
   }[]
+  sort: string | null
+  setSort: (sort: string) => void
+  query: string | null
+  setQuery: (query: string) => void
 }
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
-  const { isFetchingCommits, isFetchingBranches, branches, selectedBranch, selectBranch, sortOptions } = props
+  const { isFetchingCommits, isFetchingBranches, branches, selectedBranch, selectBranch } = props
 
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
@@ -50,7 +54,14 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
             />
           )}
 
-          <Filter showSearch={false} sortOptions={sortOptions} />
+          <Filter
+            showSearch={false}
+            sortOptions={props.sortOptions}
+            sort={props.sort}
+            setSort={props.setSort}
+            query={props.query}
+            setQuery={props.setQuery}
+          />
         </div>
         <Spacer size={5} />
 

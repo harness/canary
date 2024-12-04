@@ -3,16 +3,17 @@ import { useEffect, useState } from 'react'
 import { ListActions, SearchBox } from '@/components'
 import { isEmpty } from 'lodash-es'
 
-import { useCommonFilter } from '../hooks/useCommonFilter'
-
 interface FilterProps {
   showSort?: boolean
   sortOptions?: ListActions.DropdownItemProps[]
   showSearch?: boolean
+  sort: string | null
+  setSort: (sort: string) => void
+  query: string | null
+  setQuery: (query: string) => void
 }
 
-const Filter = <S,>({ showSort, sortOptions, showSearch = true }: FilterProps) => {
-  const { sort, query, handleSearch, handleDropdownChange } = useCommonFilter<S>()
+const Filter = ({ showSort, sortOptions, showSearch = true, sort, setSort, query, setQuery }: FilterProps) => {
   const [value, setValue] = useState<string>()
 
   useEffect(() => {
@@ -21,7 +22,7 @@ const Filter = <S,>({ showSort, sortOptions, showSearch = true }: FilterProps) =
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e?.target?.value)
-    handleSearch(e)
+    setQuery(e?.target?.value)
   }
 
   return (
@@ -42,7 +43,9 @@ const Filter = <S,>({ showSort, sortOptions, showSearch = true }: FilterProps) =
           {!isEmpty(sortOptions) && (
             <ListActions.Dropdown
               selectedValue={sort as string | null}
-              onChange={handleDropdownChange('sort')}
+              onChange={sort => {
+                setSort(sort)
+              }}
               title="Sort"
               items={sortOptions!}
             />

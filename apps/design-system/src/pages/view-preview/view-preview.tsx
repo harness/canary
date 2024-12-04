@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react'
 
 import '@harnessio/ui/styles.css'
 
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
 import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
@@ -23,15 +23,19 @@ const views: Record<string, ReactNode> = {
   )
 }
 
+const routeEntries = Object.entries(views)
+const routeKeys = Object.keys(views)
+
 const ViewPreview: FC = () => {
   return (
     <div className="dark-std-std">
       <Routes>
-        {Object.entries(views).map(([route, node]) => {
+        {routeEntries.map(([route, node]) => {
           return <Route key={route} path={`${route}/*`} element={node} />
         })}
+        <Route path="/" element={<Navigate to={routeKeys[0]} />} />
       </Routes>
-      <ViewSwitcher routes={Object.keys(views)} />
+      <ViewSwitcher routes={routeKeys} />
     </div>
   )
 }

@@ -432,7 +432,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             useTranslationStore={useTranslationStore}
           />
           <Spacer size={8} />
-          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} />
+          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     </>

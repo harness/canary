@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { cn } from '@utils/cn'
+import { TFunction } from 'i18next'
 
 import { buttonVariants, type ButtonProps } from './button'
 import { Icon } from './icon'
@@ -30,6 +31,7 @@ PaginationItem.displayName = 'PaginationItem'
 type PaginationLinkProps = {
   isActive?: boolean
   disabled?: boolean
+  t?: TFunction
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
@@ -55,7 +57,7 @@ const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkP
 )
 PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationPrevious = ({ t, disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
@@ -68,12 +70,12 @@ const PaginationPrevious = ({ disabled, className, ...props }: React.ComponentPr
     {...props}
   >
     <Icon name="arrow-long" size={12} className="rotate-180" />
-    <span>Previous</span>
+    <span>{t!('component:pagination.previous', 'Previous')}</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = ({ t, disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
@@ -85,7 +87,7 @@ const PaginationNext = ({ disabled, className, ...props }: React.ComponentProps<
     )}
     {...props}
   >
-    <span>Next</span>
+    <span>{t!('component:pagination.next', 'Next')}</span>
     <Icon name="arrow-long" size={12} />
   </PaginationLink>
 )

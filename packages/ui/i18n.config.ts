@@ -17,7 +17,8 @@ export default {
 
   // Namespace separator
   namespaceSeparator: ':',
+  keepRemoved: true,
 
   // i18n keys are wrapped in a function like `t('key')`
-  functions: ['t', 'i18nextViewsInstance.t']
+  functions: ['t', 't\\!']
 }

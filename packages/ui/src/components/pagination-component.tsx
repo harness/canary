@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { TFunction } from 'i18next'
 import { noop } from 'lodash-es'
 
 import { ListPagination } from './index'
@@ -19,6 +20,7 @@ interface PaginationComponentProps {
   totalPages?: number
   nextPage?: number
   previousPage?: number
+  t?: TFunction
 }
 
 interface PaginationItemsProps {
@@ -91,7 +93,8 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
   nextPage,
   previousPage,
   currentPage,
-  goToPage
+  goToPage,
+  t
 }) => {
   // Render nothing if `totalPages` is absent or <= 1, and both `nextPage` and `previousPage` are absent
   if ((!totalPages || totalPages <= 1) && !nextPage && !previousPage) {
@@ -110,6 +113,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
                 href="#"
                 onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
+                t={t}
               />
             </PaginationItem>
 
@@ -123,6 +127,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
                 href="#"
                 onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
+                t={t}
               />
             </PaginationItem>
           </PaginationContent>
@@ -135,6 +140,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
                 href="#"
                 onClick={() => (previousPage ? goToPage(previousPage) : noop)}
                 disabled={!previousPage}
+                t={t}
               />
             </PaginationItem>
             {/* Next Button */}
@@ -144,6 +150,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
                 href="#"
                 onClick={() => (nextPage ? goToPage(nextPage) : noop)}
                 disabled={!nextPage}
+                t={t}
               />
             </PaginationItem>
           </PaginationContent>

@@ -100,5 +100,9 @@
   "searchFile": {
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
+  },
+  "pagination": {
+    "previous": "Précédent",
+    "next": "Suivant"
   }
 }

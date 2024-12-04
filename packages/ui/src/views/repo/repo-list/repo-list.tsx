@@ -1,6 +1,7 @@
 import { Badge, Icon, NoData, StackedList } from '@/components'
+import { TFunction } from 'i18next'
 
-import { RepositoryType } from './types'
+import { RepositoryType, TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
@@ -9,6 +10,7 @@ export interface PageProps {
   hasActiveFilters?: boolean
   query?: string
   handleResetQuery: () => void
+  useTranslationStore: () => TranslationStore
 }
 
 const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
@@ -24,11 +26,11 @@ const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
   </div>
 )
 
-const Title = ({ title, isPrivate }: { title: string; isPrivate: boolean }) => (
+const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
   <div className="inline-flex items-center gap-2.5">
     {title}
     <Badge size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
-      {isPrivate ? 'Private' : 'Public'}
+      {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
     </Badge>
   </div>
 )
@@ -39,9 +41,11 @@ export function RepoList({
   handleResetFilters,
   hasActiveFilters,
   query,
-  handleResetQuery
+  handleResetQuery,
+  useTranslationStore
 }: PageProps) {
   const noData = !(repos && repos.length > 0)
+  const { t } = useTranslationStore()
 
   if (noData) {
     return (
@@ -91,7 +95,7 @@ export function RepoList({
               <StackedList.Field
                 primary
                 description={repo.description}
-                title={<Title title={repo.name} isPrivate={repo.private} />}
+                title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
                 className="gap-1.5 truncate"
               />
               <StackedList.Field

@@ -20,6 +20,8 @@
     "repositories": "Repositories",
     "search": "Search",
     "create-repository": "Create repository",
+    "private": "Private",
+    "public": "Public",
     "add-file": "Add file",
     "createNewFile": "+ Create New File",
     "readme": "README.md",

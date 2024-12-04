@@ -97,6 +97,10 @@
     "freeze-windows": "",
     "external-tickets": ""
   },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
   "searchFile": {
     "input": "Search files...",
     "noFile": "No file found."

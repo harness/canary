@@ -31,11 +31,11 @@ PaginationItem.displayName = 'PaginationItem'
 type PaginationLinkProps = {
   isActive?: boolean
   disabled?: boolean
-  t?: TFunction
+  t: TFunction
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
-const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkProps) => (
+const PaginationLink = ({ className, isActive, size, ...props }: Omit<PaginationLinkProps, 't'>) => (
   // "children" prop will provide the content
   // eslint-disable-next-line jsx-a11y/anchor-has-content
   <a
@@ -57,7 +57,7 @@ const PaginationLink = ({ className, isActive, size, ...props }: PaginationLinkP
 )
 PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ t, disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationPrevious = ({ t, disabled, className, ...props }: PaginationLinkProps) => (
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
@@ -70,12 +70,12 @@ const PaginationPrevious = ({ t, disabled, className, ...props }: React.Componen
     {...props}
   >
     <Icon name="arrow-long" size={12} className="rotate-180" />
-    <span>{t!('component:pagination.previous', 'Previous')}</span>
+    <span>{t('component:pagination.previous', 'Previous')}</span>
   </PaginationLink>
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ t, disabled, className, ...props }: React.ComponentProps<typeof PaginationLink>) => (
+const PaginationNext = ({ t, disabled, className, ...props }: PaginationLinkProps) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
@@ -87,7 +87,7 @@ const PaginationNext = ({ t, disabled, className, ...props }: React.ComponentPro
     )}
     {...props}
   >
-    <span>{t!('component:pagination.next', 'Next')}</span>
+    <span>{t('component:pagination.next', 'Next')}</span>
     <Icon name="arrow-long" size={12} />
   </PaginationLink>
 )

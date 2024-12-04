@@ -20,7 +20,7 @@ interface PaginationComponentProps {
   totalPages?: number
   nextPage?: number
   previousPage?: number
-  t?: TFunction
+  t: TFunction
 }
 
 interface PaginationItemsProps {

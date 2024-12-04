@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { NoData } from '@components/no-data'
 import { noop } from 'lodash-es'
 
-import { SandboxLayout } from '..'
+import { SandboxLayout, TranslationStore } from '..'
 import { Button, PaginationComponent, Spacer, Text } from '../../components/index'
 import { PullRequestList as PullRequestListContent } from './pull-request-list'
 import { PullRequestStore, PullRequestType, RepoRepositoryOutput } from './types'
@@ -14,10 +14,18 @@ export interface PullRequestListProps {
   repoId?: string
   spaceId?: string
   repoMetadata?: RepoRepositoryOutput
+  useTranslationStore: () => TranslationStore
 }
 
-const PullRequestList: FC<PullRequestListProps> = ({ usePullRequestStore, spaceId, repoId, repoMetadata }) => {
+const PullRequestList: FC<PullRequestListProps> = ({
+  usePullRequestStore,
+  spaceId,
+  repoId,
+  repoMetadata,
+  useTranslationStore
+}) => {
   const { pullRequests, totalPages, page, setPage } = usePullRequestStore()
+  const { t } = useTranslationStore()
 
   // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
@@ -103,7 +111,7 @@ const PullRequestList: FC<PullRequestListProps> = ({ usePullRequestStore, spaceI
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} />
+        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

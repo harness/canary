@@ -7,6 +7,7 @@ import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/vie
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { usePullRequestStore } from './stores/pull-request-store'
 
 export default function PullRequestListPage() {
@@ -36,5 +37,7 @@ export default function PullRequestListPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
 
-  return <SandboxPullRequestListPage usePullRequestStore={usePullRequestStore} />
+  return (
+    <SandboxPullRequestListPage usePullRequestStore={usePullRequestStore} useTranslationStore={useTranslationStore} />
+  )
 }

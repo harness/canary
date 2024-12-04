@@ -1,5 +1,3 @@
-import { views } from 'dist'
-
 import component_en from './en/component.json'
 import views_en from './en/views.json'
 import component_es from './es/component.json'

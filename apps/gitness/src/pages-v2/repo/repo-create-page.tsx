@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import {
@@ -8,15 +7,15 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { FormFields, RepoCreatePageForm } from '@harnessio/views'
+import { toast, Toaster } from '@harnessio/ui/components'
+import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
-export const CreateRepoV1 = () => {
+export const CreateRepo = () => {
   const createRepositoryMutation = useCreateRepositoryMutation({})
   const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
-  const [apiError, setApiError] = useState<string | null>(null)
 
   const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
@@ -37,12 +36,14 @@ export const CreateRepoV1 = () => {
       },
       {
         onSuccess: ({ body: data }) => {
-          setApiError(null)
-          navigate(`/spaces/${spaceId}/repos/${data?.identifier}`)
+          navigate(`/${spaceId}/repos/${data?.identifier}`)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
-          setApiError(message)
+          toast({
+            title: message,
+            variant: 'destructive'
+          })
         }
       }
     )
@@ -53,20 +54,20 @@ export const CreateRepoV1 = () => {
   const { data: { body: licenseOptions } = {} } = useListLicensesQuery({})
 
   const onCancel = () => {
-    navigate(`/spaces/${spaceId}/repos`)
+    navigate(`/${spaceId}/repos`)
   }
 
   return (
     <>
-      <RepoCreatePageForm
+      <RepoCreatePageView
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
-        apiError={apiError}
         isLoading={createRepositoryMutation.isLoading}
         isSuccess={createRepositoryMutation.isSuccess}
         gitIgnoreOptions={gitIgnoreOptions}
         licenseOptions={licenseOptions}
       />
+      <Toaster />
     </>
   )
 }

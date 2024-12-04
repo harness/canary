@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
+import { Input } from '@components/form'
 import { Icon } from '@components/icon'
-import { Input } from '@components/input'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -47,7 +47,7 @@ const SortableItem = ({
       <div className="flex items-center justify-between gap-x-2">
         <div className="flex items-center gap-x-2">
           <div
-            className="hover:bg-background-3 cursor-grab rounded p-1 active:cursor-grabbing"
+            className="cursor-grab rounded p-1 hover:bg-background-3 active:cursor-grabbing"
             {...attributes}
             {...listeners}
           >
@@ -55,7 +55,7 @@ const SortableItem = ({
           </div>
 
           <DropdownMenu>
-            <DropdownMenuTrigger className="border-borders-1 text-14 text-foreground-8 flex h-6 items-center gap-x-1.5 rounded border pl-2.5 pr-1.5">
+            <DropdownMenuTrigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-1 pl-2.5 pr-1.5 text-14 text-foreground-8">
               {sortOptions.find(opt => opt.value === sort.type)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenuTrigger>
@@ -72,7 +72,7 @@ const SortableItem = ({
           </DropdownMenu>
 
           <DropdownMenu>
-            <DropdownMenuTrigger className="border-borders-1 text-14 text-foreground-8 flex h-6 items-center gap-x-1.5 rounded border pl-2.5 pr-1.5">
+            <DropdownMenuTrigger className="flex h-6 items-center gap-x-1.5 rounded border border-borders-1 pl-2.5 pr-1.5 text-14 text-foreground-8">
               {sortDirections.find(dir => dir.value === sort.direction)?.label}
               <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
             </DropdownMenuTrigger>
@@ -90,7 +90,7 @@ const SortableItem = ({
         </div>
 
         <button
-          className="text-foreground-4 hover:text-foreground-1 p-1 transition-colors duration-200 focus:bg-transparent"
+          className="p-1 text-foreground-4 transition-colors duration-200 hover:text-foreground-1 focus:bg-transparent"
           onClick={e => {
             e.preventDefault()
             onRemoveSort?.(index)
@@ -152,7 +152,7 @@ const Sorts = ({
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="bg-background-3 hover:bg-background-8 flex h-8 items-center gap-x-3 whitespace-nowrap rounded px-2.5 transition-colors duration-200">
+      <DropdownMenuTrigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 px-2.5 transition-colors duration-200 hover:bg-background-8">
         <div className="flex items-center gap-x-1">
           <Icon
             className={cn('text-icons-1', getSortTriggerLabel(activeSorts, sortOptions).isDescending && 'rotate-180')}
@@ -190,12 +190,12 @@ const Sorts = ({
         <div className="mt-3 flex flex-col gap-y-2.5">
           {sortOptions.some(option => !activeSorts.some(sort => sort.type === option.value)) && (
             <DropdownMenu>
-              <DropdownMenuTrigger className="text-14 text-foreground-4 hover:text-foreground-1 flex w-full items-center gap-x-1.5 transition-colors duration-200">
+              <DropdownMenuTrigger className="flex w-full items-center gap-x-1.5 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
                 <Icon name="plus" size={12} />
                 Add sort
               </DropdownMenuTrigger>
               <DropdownMenuContent className="min-w-[224px] p-0" align="start">
-                <div className="border-borders-4 relative flex items-center justify-between border-b px-3 py-2.5">
+                <div className="relative flex items-center justify-between border-b border-borders-4 px-3 py-2.5">
                   <DropdownMenuItem className="hover:bg-transparent focus:bg-transparent" asChild>
                     <Input
                       type="text"
@@ -210,7 +210,7 @@ const Sorts = ({
                   {searchQueries.menu['sort'] && (
                     <DropdownMenuItem className="absolute right-3 hover:bg-transparent focus:bg-transparent" asChild>
                       <button
-                        className="text-foreground-4 hover:text-foreground-1 flex transition-colors duration-200"
+                        className="flex text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
                         onClick={e => {
                           e.preventDefault()
                           handleSearchChange('sort', '', 'menu')
@@ -239,7 +239,7 @@ const Sorts = ({
 
                   {filteredBySearchSortOptions.length === 0 && (
                     <div className="flex items-center justify-center p-4">
-                      <span className="text-1 text-foreground-2 leading-none">No results</span>
+                      <span className="text-1 leading-none text-foreground-2">No results</span>
                     </div>
                   )}
                 </div>
@@ -248,10 +248,10 @@ const Sorts = ({
           )}
 
           <DropdownMenuItem
-            className="text-foreground-4 focus:text-foreground-danger data-[highlighted]:text-foreground-danger p-0 transition-colors duration-200 focus:bg-transparent focus:outline-none data-[highlighted]:bg-transparent"
+            className="p-0 text-foreground-4 transition-colors duration-200 focus:bg-transparent focus:text-foreground-danger focus:outline-none data-[highlighted]:bg-transparent data-[highlighted]:text-foreground-danger"
             asChild
           >
-            <button className="text-14 flex items-center gap-x-1.5" onClick={handleResetSorts}>
+            <button className="flex items-center gap-x-1.5 text-14" onClick={handleResetSorts}>
               <Icon name="trash" size={12} />
               Delete sort
             </button>

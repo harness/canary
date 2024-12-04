@@ -8,6 +8,9 @@ export * from '@views/repo/repo-layout'
 // repo sidebar
 export * from '@views/repo/repo-sidebar'
 
+// repo create
+export * from '@views/repo/repo-create'
+
 // repo summary
 export * from '@views/repo/repo-summary/repo-summary'
 

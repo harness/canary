@@ -1,4 +1,4 @@
-import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '..'
+import { Label, Select, SelectContent, SelectItem } from '..'
 import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function ContrastSelect({
@@ -16,14 +16,13 @@ export function ContrastSelect({
     <div>
       <Label className="text-xs">Contrast</Label>
       <Select
+        name="contrast"
+        placeholder="Select a theme contrast"
         value={contrast}
         onValueChange={(contrast: ContrastType) => {
           setTheme(`${mode}-${color}-${contrast}`)
         }}
       >
-        <SelectTrigger>
-          <SelectValue placeholder="Select a theme contrast" />
-        </SelectTrigger>
         <SelectContent defaultValue={contrast}>
           <SelectItem value={ContrastType.Standard}>Standard</SelectItem>
           <SelectItem value={ContrastType.Low}>Low</SelectItem>

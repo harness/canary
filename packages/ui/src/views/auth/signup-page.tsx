@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -69,7 +69,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
 
   return (
     <Floating1ColumnLayout
-      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
@@ -91,11 +91,11 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               {...register('userId', { onChange: handleInputChange })}
               placeholder="User ID"
               label="User ID"
-              size={36}
+              size="md"
               autoFocus
               error={
                 errors.userId && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.userId.message?.toString()
                 }
               }
@@ -107,10 +107,10 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               {...register('email', { onChange: handleInputChange })}
               placeholder="Your email"
               label="Email"
-              size={36}
+              size="md"
               error={
                 errors.email && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.email.message?.toString()
                 }
               }
@@ -121,11 +121,11 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               type="password"
               placeholder="Password (6+ characters)"
               label="Password"
-              size={36}
+              size="md"
               {...register('password', { onChange: handleInputChange })}
               error={
                 errors.password && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.password.message?.toString()
                 }
               }
@@ -136,18 +136,18 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               type="password"
               placeholder="Confirm password"
               label="Confirm password"
-              size={36}
+              size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
               error={
                 errors.confirmPassword && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.confirmPassword.message?.toString()
                 }
               }
             />
             {serverError && (
               <>
-                <Text className="text-foreground-danger mt-1 leading-none tracking-tight" size={0}>
+                <Text className="mt-1 leading-none tracking-tight text-foreground-danger" size={0}>
                   {serverError}
                 </Text>
               </>
@@ -168,7 +168,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Already have an account?{' '}
             <Link
-              className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200"
+              className="text-foreground-accent underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
               to="/signin"
             >
               Sign in

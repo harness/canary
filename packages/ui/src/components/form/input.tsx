@@ -1,12 +1,8 @@
-import { forwardRef, InputHTMLAttributes, ReactNode } from 'react'
+import { forwardRef, Fragment, InputHTMLAttributes, ReactNode } from 'react'
 
+import { Caption, ControlGroup, Label, Message, MessageTheme } from '@/components'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
-
-import { ControlGroup } from './control-group'
-import { ErrorMessageTheme, FormErrorMessage } from './form-error-message'
-import { Label } from './label'
-import { Text } from './text'
 
 export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
@@ -20,8 +16,8 @@ const inputVariants = cva('text-foreground-1 bg-transparent px-2.5 py-1 disabled
       extended: 'grow border-none focus-visible:outline-none'
     },
     size: {
-      32: 'h-8',
-      36: 'h-9'
+      sm: 'h-8',
+      md: 'h-9'
     },
     theme: {
       default:
@@ -32,7 +28,7 @@ const inputVariants = cva('text-foreground-1 bg-transparent px-2.5 py-1 disabled
   defaultVariants: {
     variant: 'default',
     theme: 'default',
-    size: 32
+    size: 'sm'
   }
 })
 
@@ -45,7 +41,7 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 BaseInput.displayName = 'BaseInput'
 
 interface InputError {
-  theme: ErrorMessageTheme
+  theme: MessageTheme
   message?: string
 }
 
@@ -54,15 +50,30 @@ interface InputProps extends BaseInputProps {
   caption?: ReactNode
   error?: InputError
   optional?: boolean
+  className?: string
   wrapperClassName?: string
 }
 
+/**
+ * A form input component with support for labels, captions, and error messages.
+ * @example
+ * <Input
+ *   label="Email"
+ *   id="email"
+ *   type="email"
+ *   placeholder="Enter your email"
+ *   caption="We'll never share your email"
+ *   error={{ theme: 'danger', message: 'Invalid email format' }}
+ * />
+ */
 const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, caption, error, id, theme, disabled, optional, className, wrapperClassName, ...props }, ref) => {
+    const InputWrapper = error || caption || label || wrapperClassName ? ControlGroup : Fragment
+
     return (
-      <ControlGroup className={wrapperClassName}>
+      <InputWrapper className={wrapperClassName}>
         {label && (
-          <Label className="mb-2.5" color={disabled ? 'foreground-9' : 'foreground-2'} optional={optional} htmlFor={id}>
+          <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}
@@ -75,16 +86,12 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <FormErrorMessage className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={error.theme}>
+          <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={error.theme}>
             {error.message}
-          </FormErrorMessage>
+          </Message>
         )}
-        {caption && (
-          <Text className="text-foreground-4 mt-1 leading-snug" size={2}>
-            {caption}
-          </Text>
-        )}
-      </ControlGroup>
+        {caption && <Caption>{caption}</Caption>}
+      </InputWrapper>
     )
   }
 )

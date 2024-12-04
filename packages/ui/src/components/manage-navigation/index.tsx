@@ -127,7 +127,7 @@ export const ManageNavigation = ({
         </AlertDialogHeader>
         <ScrollArea className="-mx-5 -mb-5 mt-1">
           <div className="px-5">
-            <Text className="text-foreground-7 inline-block leading-none" size={1}>
+            <Text className="inline-block leading-none text-foreground-7" size={1}>
               Pinned
             </Text>
             {!currentPinnedItems.length ? (
@@ -200,7 +200,7 @@ export const ManageNavigation = ({
           </div>
         </ScrollArea>
         <AlertDialogFooter>
-          <ButtonGroup.Root>
+          <ButtonGroup>
             {!submitted ? (
               <>
                 <Button variant="outline" onClick={handleCancel} disabled={isSubmitting}>
@@ -223,7 +223,7 @@ export const ManageNavigation = ({
                 <Icon name="tick" size={14} />
               </Button>
             )}
-          </ButtonGroup.Root>
+          </ButtonGroup>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

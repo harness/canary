@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { Calendar as UICalendar, type CalendarDateRange } from '@components/calendar'
-import { Input } from '@components/input'
+import { Input } from '@components/form'
 import { cn } from '@utils/cn'
 
 import { FilterValue } from '../../types'

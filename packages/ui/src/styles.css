@@ -1545,3 +1545,38 @@
   outline-offset: 2px;
   border-radius: 2px;
 }
+
+/* Hack for detecting scroll on select */
+@keyframes detect-scroll {
+  from,
+  to {
+    --can-scroll: ;
+  }
+}
+
+[data-radix-select-viewport] {
+  animation: detect-scroll linear;
+  animation-timeline: scroll(self);
+
+  --padding-if-can-scroll: var(--can-scroll) 4px 0 4px 4px;
+  --padding-if-cant-scroll: 4px;
+  padding: var(--padding-if-can-scroll, var(--padding-if-cant-scroll));
+}
+
+/* Select scrollbar */
+
+[data-radix-select-viewport] {
+  scrollbar-width: auto !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar {
+  width: 14px;
+  display: block !important;
+}
+
+[data-radix-select-viewport]::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--background-09));
+  border: 4px solid transparent;
+  border-radius: 7px;
+  background-clip: content-box;
+}

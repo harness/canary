@@ -48,7 +48,7 @@ const InputOTPSlot = forwardRef<HTMLDivElement, InputOTPSlotProps>(({ index, cla
       {char}
       {hasFakeCaret && (
         <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="animate-caret-blink bg-background-5 h-4 w-px duration-1000" />
+          <div className="animate-caret-blink h-4 w-px bg-background-5 duration-1000" />
         </div>
       )}
     </div>

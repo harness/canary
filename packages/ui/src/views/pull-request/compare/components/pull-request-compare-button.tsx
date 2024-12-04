@@ -53,7 +53,7 @@ const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
     <>
       {!isSubmitted ? (
         <>
-          <ButtonGroup.Root>
+          <ButtonGroup>
             <Button
               theme={'primary'}
               variant="split"
@@ -81,7 +81,7 @@ const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
             >
               {!isLoading ? 'Create pull request' : 'Creating pull request...'}
             </Button>
-          </ButtonGroup.Root>
+          </ButtonGroup>
         </>
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">

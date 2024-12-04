@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -76,7 +76,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
 
   return (
     <Floating1ColumnLayout
-      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -96,12 +96,12 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               id="password"
               type="password"
               label="New password"
-              size={36}
+              size="md"
               {...register('password', { onChange: handleInputChange })}
               placeholder="Password (6+ characters)"
               error={
                 errors.password && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.password.message?.toString()
                 }
               }
@@ -111,12 +111,12 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               id="confirmPassword"
               type="password"
               label="Confirm password"
-              size={36}
+              size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
               error={
                 errors.confirmPassword && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.confirmPassword.message?.toString()
                 }
               }

@@ -1,4 +1,4 @@
-import { Label, Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '..'
+import { Label, Select, SelectContent, SelectItem } from '..'
 import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function ModeSelect({
@@ -16,14 +16,13 @@ export function ModeSelect({
     <div>
       <Label className="text-xs">Mode</Label>
       <Select
+        name="mode"
+        placeholder="Select a theme mode"
         value={mode}
         onValueChange={(mode: ModeType) => {
           setTheme(`${mode}-${color}-${contrast}`)
         }}
       >
-        <SelectTrigger>
-          <SelectValue placeholder="Select a theme mode" />
-        </SelectTrigger>
         <SelectContent defaultValue={mode}>
           <SelectItem value={ModeType.Light}>Light</SelectItem>
           <SelectItem value={ModeType.Dark}>Dark</SelectItem>

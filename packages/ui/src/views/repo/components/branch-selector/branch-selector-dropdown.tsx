@@ -80,7 +80,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">
       <div className="px-3 pt-2">
-        <span className="leading-none text-14 font-medium">Switch branches/tags</span>
+        <span className="text-14 font-medium leading-none">Switch branches/tags</span>
 
         <SearchBox.Root
           className="mt-[18px] w-full"
@@ -137,7 +137,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="leading-tight text-foreground-2 text-14">Nothing to show</span>
+            <span className="text-14 leading-tight text-foreground-2">Nothing to show</span>
           </div>
         )}
 
@@ -196,7 +196,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         <DropdownMenuItem className="p-0" asChild>
           <div className="mt-1 border-t border-borders-1 px-3 py-2">
             <Link to={viewAllUrl}>
-              <span className="leading-none transition-colors duration-200 hover:text-foreground-1 text-14 font-medium">
+              <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
                 {t('views:repos.viewAll', 'View all {{type}}', {
                   type: activeTab === BranchSelectorTab.BRANCHES ? t('views:repos.branches') : t('views:repos.tags')
                 })}

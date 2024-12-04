@@ -410,7 +410,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 filterHandlers={filterHandlers}
                 t={t}
               />
-              <Button variant="default">{t('views:repos.create-repository')}</Button>
+              <Button variant="default" asChild>
+                <Link to={`create`}>{t('views:repos.create-repository')}</Link>
+              </Button>
             </ListActions.Right>
           </ListActions.Root>
           {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}

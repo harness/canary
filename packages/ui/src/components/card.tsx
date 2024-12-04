@@ -3,7 +3,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const cardVariants = cva('bg-card text-card-foreground rounded-lg border shadow', {
+const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow', {
   variants: {
     variant: {
       default: '',

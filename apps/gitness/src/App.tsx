@@ -37,6 +37,7 @@ import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
+import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
@@ -68,7 +69,7 @@ import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
 import RepoCommitsPage from './pages/repo/repo-commits'
-import { CreateRepo } from './pages/repo/repo-create-page'
+import { CreateRepoV1 } from './pages/repo/repo-create-page'
 import { RepoFiles } from './pages/repo/repo-files'
 import { RepoHeader } from './pages/repo/repo-header'
 import { RepoImportContainer } from './pages/repo/repo-import-container'
@@ -199,6 +200,14 @@ export default function App() {
               element: <>test</>
             }
           ]
+        },
+        {
+          path: ':spaceId/repos/create',
+          element: <CreateRepo />
+        },
+        {
+          path: ':spaceId/repos/import',
+          element: <RepoImportContainer />
         },
         {
           path: 'theme',
@@ -464,7 +473,7 @@ export default function App() {
             },
             {
               path: ':spaceId/repos/create',
-              element: <CreateRepo />
+              element: <CreateRepoV1 />
             },
             {
               path: ':spaceId/repos/import',

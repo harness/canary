@@ -7,14 +7,14 @@ export function Agreements() {
     <Text className="relative z-10 mt-auto leading-tight" size={0} color="foreground-5" align="center">
       By joining, you agree to{' '}
       <Link
-        className="text-foreground-1 hover:decoration-foreground-1 whitespace-nowrap underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200"
+        className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
         to="/"
       >
         Terms of Service
       </Link>{' '}
       and&nbsp;
       <Link
-        className="text-foreground-1 hover:decoration-foreground-1 whitespace-nowrap underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200"
+        className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
         to="/"
       >
         Privacy Policy

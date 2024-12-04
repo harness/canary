@@ -17,24 +17,24 @@ enum BadgesHoverStates {
 }
 
 const badgeVariants = cva(
-  'focus:ring-ring inline-flex items-center rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2',
+  'inline-flex items-center rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/80 border-transparent shadow',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 border-transparent',
-        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/80 border-transparent shadow',
+        default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
+        secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
         outline: 'text-foreground'
       },
       size: {
         default: 'px-2.5 py-0.5 text-xs font-semibold',
         lg: 'px-3 py-1 text-xs font-normal',
-        sm: 'text-12 h-5 px-1 leading-none',
-        xs: 'text-11 px-1.5 py-0 font-light',
+        sm: 'h-5 px-1 text-12 leading-none',
+        xs: 'px-1.5 py-0 text-11 font-light',
         // TODO: Consider switching size variants to numeric values
         // Numeric size variants (like '18') provide clearer context about actual dimensions
         // compared to abstract sizes (xs, sm, lg).
-        '18': 'text-12 h-[18px] px-2'
+        '18': 'h-[18px] px-2 text-12'
       },
       borderRadius: {
         default: '',

@@ -127,12 +127,13 @@ interface ContentProps {
   children: ReactNode
   maxWidth?: 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl' | '5xl' | '6xl' | '7xl'
   className?: string
+  paddingClassName?: string
 }
 
-function Content({ children, maxWidth, className }: ContentProps) {
+function Content({ children, maxWidth, className, paddingClassName = 'px-8 py-5 pb-24' }: ContentProps) {
   const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
 
-  return <div className={cn('px-6 py-4 pb-20', widthClass, className)}>{children}</div>
+  return <div className={cn(paddingClassName, widthClass, className)}>{children}</div>
 }
 
 function Columns({ children, className, columnWidths = 'repeat(2, 1fr)' }: ColumnsProps) {

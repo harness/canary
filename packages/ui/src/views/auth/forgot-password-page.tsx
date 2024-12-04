@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -69,7 +69,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
 
   return (
     <Floating1ColumnLayout
-      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -90,11 +90,11 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               type="email"
               placeholder="Your email"
               label="Email"
-              size={36}
+              size="md"
               {...register('email', { onChange: handleInputChange })}
               error={
                 errors.email && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.email.message?.toString()
                 }
               }

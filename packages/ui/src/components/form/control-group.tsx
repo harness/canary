@@ -6,6 +6,13 @@ interface ControlGroupProps extends HTMLAttributes<HTMLDivElement> {
   type?: 'button' | 'input'
 }
 
+/**
+ * A container component that groups form control elements together.
+ * @example
+ * <ControlGroup type="button">
+ *   <Button>Button</Button>
+ * </ControlGroup>
+ */
 export function ControlGroup({ children, type, className, ...props }: ControlGroupProps) {
   return (
     <div

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, ErrorMessageTheme, Input, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -72,7 +72,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
 
   return (
     <Floating1ColumnLayout
-      className="bg-background-7 flex-col pt-20 sm:pt-[186px]"
+      className="flex-col bg-background-7 pt-20 sm:pt-[186px]"
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
@@ -93,11 +93,11 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               type="email"
               label="Email"
               placeholder="Your email"
-              size={36}
+              size="md"
               {...register('email', { onChange: handleInputChange })}
               error={
                 errors.email && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.email.message?.toString()
                 }
               }
@@ -110,10 +110,10 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               {...register('password', { onChange: handleInputChange })}
               label="Password"
               placeholder="Password"
-              size={36}
+              size="md"
               error={
                 errors.password && {
-                  theme: ErrorMessageTheme.ERROR,
+                  theme: MessageTheme.ERROR,
                   message: errors.password.message?.toString()
                 }
               }
@@ -134,7 +134,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account?{' '}
             <Link
-              className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200"
+              className="text-foreground-accent underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
               to="/signup"
             >
               Sign up

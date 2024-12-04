@@ -1,15 +1,11 @@
 import { forwardRef } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import { MessageTheme } from '@components/form-field-set'
-import * as FormFieldSet from '@components/form-field-set'
+import { Fieldset, Input, MessageTheme, Textarea } from '@/components'
 import { Text } from '@components/text'
 import { z } from 'zod'
 
-import { Input, Textarea } from '@harnessio/ui/components'
-
 // Define the form schema
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const formSchemaCompare = z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),
   description: z.string().optional()
@@ -35,26 +31,28 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     }
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
-        <FormFieldSet.Root>
-          <FormFieldSet.ControlGroup>
-            <FormFieldSet.Label htmlFor="title" required>
-              Title
-            </FormFieldSet.Label>
-            <Input id="title" {...register('title')} placeholder="Enter pull request title" autoFocus />
-            {errors.title && (
-              <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors.title.message?.toString()}</FormFieldSet.Message>
-            )}
-          </FormFieldSet.ControlGroup>
-          <FormFieldSet.ControlGroup>
-            <FormFieldSet.Label htmlFor="description">Description</FormFieldSet.Label>
-            <Textarea id="description" {...register('description')} placeholder="Add Pull Request description here." />
-            {errors.description && (
-              <FormFieldSet.Message theme={MessageTheme.ERROR}>
-                {errors.description.message?.toString()}
-              </FormFieldSet.Message>
-            )}
-          </FormFieldSet.ControlGroup>
-        </FormFieldSet.Root>
+        <Fieldset>
+          <Input
+            id="title"
+            {...register('title')}
+            placeholder="Enter pull request title"
+            label="Title"
+            error={
+              errors.title && {
+                theme: MessageTheme.ERROR,
+                message: errors.title.message?.toString()
+              }
+            }
+            autoFocus
+          />
+          <Textarea
+            id="description"
+            {...register('description')}
+            placeholder="Add Pull Request description here."
+            label="Description"
+            error={errors.description && { theme: MessageTheme.ERROR, message: errors.description.message?.toString() }}
+          />
+        </Fieldset>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
           <Text size={1} className="text-destructive">

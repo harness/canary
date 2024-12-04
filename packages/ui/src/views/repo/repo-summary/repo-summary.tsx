@@ -130,7 +130,7 @@ export function RepoSummaryView({
           <SandboxLayout.Content>
             <ListActions.Root>
               <ListActions.Left>
-                <ButtonGroup.Root>
+                <ButtonGroup>
                   <BranchSelector
                     selectedBranch={selectedBranch}
                     branchList={branchList}
@@ -145,10 +145,10 @@ export function RepoSummaryView({
                     filesList={filesList}
                     useTranslationStore={useTranslationStore}
                   />
-                </ButtonGroup.Root>
+                </ButtonGroup>
               </ListActions.Left>
               <ListActions.Right>
-                <ButtonGroup.Root>
+                <ButtonGroup>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button className="gap-x-2" variant="outline">
@@ -175,7 +175,7 @@ export function RepoSummaryView({
                       handleCreateToken={handleCreateToken}
                     />
                    */}
-                </ButtonGroup.Root>
+                </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
             <Spacer size={5} />

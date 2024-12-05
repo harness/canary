@@ -48,7 +48,7 @@ export default function RepoSummaryPage() {
     sha: ''
   })
 
-  const [updateError, setUpdateError] = useState<string>("")
+  const [updateError, setUpdateError] = useState<string>('')
 
   const updateDescription = useUpdateRepositoryMutation(
     { repo_ref: repoRef },

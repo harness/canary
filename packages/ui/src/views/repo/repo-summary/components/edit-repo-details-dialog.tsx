@@ -8,9 +8,9 @@ import {
   AlertDialogTitle,
   Button,
   ButtonGroup,
-  Textarea,
+  Icon,
   Text,
-  Icon
+  Textarea
 } from '@/components'
 
 interface EditRepoDetailsDialog {
@@ -23,7 +23,15 @@ interface EditRepoDetailsDialog {
   isSubmitted: boolean
 }
 
-export const EditRepoDetails = ({ showEditRepoDetails, description, onSave, onClose, updateRepoError, isSubmitting, isSubmitted }: EditRepoDetailsDialog) => {
+export const EditRepoDetails = ({
+  showEditRepoDetails,
+  description,
+  onSave,
+  onClose,
+  updateRepoError,
+  isSubmitting,
+  isSubmitted
+}: EditRepoDetailsDialog) => {
   const [newDesc, setNewDesc] = useState<string>(description || '')
   return (
     <AlertDialog open={showEditRepoDetails} onOpenChange={onClose}>
@@ -43,17 +51,13 @@ export const EditRepoDetails = ({ showEditRepoDetails, description, onSave, onCl
           }}
           placeholder="Enter repository description here"
         />
-        {
-          updateRepoError?.length ?
-            <Text
-              className="leading-none tracking-tight text-foreground-danger"
-              align="center"
-              size={1}
-              as="p"
-            >
-              {updateRepoError}
-            </Text> : <></>
-        }
+        {updateRepoError?.length ? (
+          <Text className="leading-none tracking-tight text-foreground-danger" align="center" size={1} as="p">
+            {updateRepoError}
+          </Text>
+        ) : (
+          <></>
+        )}
         <AlertDialogFooter>
           <ButtonGroup>
             {!isSubmitted ? (

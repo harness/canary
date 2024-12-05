@@ -1,11 +1,11 @@
 {
   "repos": {
     "branches": "Branches",
-    "findBranch": "Find a branch",
     "tags": "Tags",
-    "findTag": "Find a tag",
     "default": "Default",
     "viewAll": "View all {{type}}",
+    "findBranch": "Find a branch",
+    "findTag": "Find a tag",
     "noFile": "No files available",
     "name": "Name",
     "lastCommit": "Last commit message",

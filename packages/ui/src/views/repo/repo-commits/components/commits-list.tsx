@@ -51,8 +51,8 @@ export const CommitsList = ({ ...props }: CommitProps) => {
                             <div className="max-w-[500px] truncate">{commit.title}</div>
                             <div className="flex items-center pt-1">
                               {authorName && (
-                                <div className="bg-tertiary-background h-5 w-5 rounded-full bg-cover">
-                                  <Avatar className="h-5 w-5 rounded-full p-0">
+                                <div className="size-5 rounded-full bg-tertiary-background bg-cover">
+                                  <Avatar className="size-5 rounded-full p-0">
                                     <AvatarFallback>
                                       <Text size={1} color="tertiaryBackground">
                                         {getInitials(authorName)}
@@ -61,7 +61,7 @@ export const CommitsList = ({ ...props }: CommitProps) => {
                                   </Avatar>
                                 </div>
                               )}
-                              <Text className="text-tertiary-background pl-2 text-xs">{`${authorName || ''} commited on ${date}`}</Text>
+                              <Text className="pl-2 text-xs text-tertiary-background">{`${authorName || ''} commited on ${date}`}</Text>
                             </div>
                           </div>
                         }

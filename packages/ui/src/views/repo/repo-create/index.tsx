@@ -7,6 +7,7 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormWrapper,
   Input,
   Message,
   MessageTheme,
@@ -121,7 +122,7 @@ export function RepoCreatePage({
           </StyledLink>
         </Text>
         <Spacer size={10} />
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
             <Input
@@ -130,26 +131,19 @@ export function RepoCreatePage({
               {...register('name')}
               placeholder="Enter repository name"
               size="md"
-              error={errors.name && { theme: MessageTheme.ERROR, message: errors.name.message?.toString() }}
+              error={errors.name?.message?.toString()}
               autoFocus
             />
-            <Spacer size={7} />
             {/* DESCRIPTION */}
             <Textarea
               id="description"
               {...register('description')}
               placeholder="Enter a description of this repository..."
               label="Description"
-              error={
-                errors.description && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.description.message?.toString()
-                }
-              }
+              error={errors.description?.message?.toString()}
               optional
             />
           </Fieldset>
-          <Spacer size={7} />
 
           {/* GITIGNORE */}
           <Fieldset>
@@ -160,12 +154,7 @@ export function RepoCreatePage({
                 onValueChange={value => handleSelectChange('gitignore', value)}
                 placeholder="Select"
                 label="Add a .gitignore"
-                error={
-                  errors.gitignore && {
-                    theme: MessageTheme.ERROR,
-                    message: errors.gitignore.message?.toString()
-                  }
-                }
+                error={errors.gitignore?.message?.toString()}
                 caption="Choose which files not to track from a list of templates."
               >
                 <SelectContent>
@@ -180,7 +169,6 @@ export function RepoCreatePage({
                 </SelectContent>
               </Select>
             </ControlGroup>
-            <Spacer size={6} />
 
             {/* LICENSE */}
             <ControlGroup>
@@ -190,12 +178,7 @@ export function RepoCreatePage({
                 onValueChange={value => handleSelectChange('license', value)}
                 placeholder="Select"
                 label="Choose a license"
-                error={
-                  errors.license && {
-                    theme: MessageTheme.ERROR,
-                    message: errors.license.message?.toString()
-                  }
-                }
+                error={errors.license?.message?.toString()}
                 caption="A license tells others what they can and can't do with your code."
               >
                 <SelectContent>
@@ -209,10 +192,9 @@ export function RepoCreatePage({
               </Select>
             </ControlGroup>
           </Fieldset>
-          <Spacer size={11} />
 
           {/* ACCESS */}
-          <Fieldset>
+          <Fieldset className="mt-4">
             <ControlGroup>
               <Text className="leading-none text-foreground-2" size={2}>
                 Who has access
@@ -240,10 +222,9 @@ export function RepoCreatePage({
               )}
             </ControlGroup>
           </Fieldset>
-          <Spacer size={11} />
 
           {/* README */}
-          <Fieldset>
+          <Fieldset className="mt-4">
             <ControlGroup>
               <Text className="leading-none text-foreground-2" size={2}>
                 Initialize this repository with
@@ -269,7 +250,7 @@ export function RepoCreatePage({
           </Fieldset>
 
           {/* SUBMIT BUTTONS */}
-          <Fieldset className="mt-[50px]">
+          <Fieldset className="mt-6">
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}
@@ -282,7 +263,7 @@ export function RepoCreatePage({
               </ButtonGroup>
             </ControlGroup>
           </Fieldset>
-        </form>
+        </FormWrapper>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

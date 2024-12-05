@@ -1,6 +1,5 @@
+import { Icon, Input } from '@/components'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
-import { Input } from '@components/form'
-import { Icon } from '@components/icon'
 import { TFunction } from 'i18next'
 
 import { FilterOption, SortOption } from './types'

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -95,12 +95,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               placeholder="Your email"
               size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={
-                errors.email && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.email.message?.toString()
-                }
-              }
+              error={errors.email?.message?.toString()}
               autoFocus
             />
             <Input
@@ -111,12 +106,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               label="Password"
               placeholder="Password"
               size="md"
-              error={
-                errors.password && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.password.message?.toString()
-                }
-              }
+              error={errors.password?.message?.toString()}
             />
             <Button
               className="mt-10 w-full"

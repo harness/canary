@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -93,12 +93,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               label="User ID"
               size="md"
               autoFocus
-              error={
-                errors.userId && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.userId.message?.toString()
-                }
-              }
+              error={errors.userId?.message?.toString()}
             />
             <Input
               wrapperClassName="mt-7"
@@ -108,12 +103,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               placeholder="Your email"
               label="Email"
               size="md"
-              error={
-                errors.email && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.email.message?.toString()
-                }
-              }
+              error={errors.email?.message?.toString()}
             />
             <Input
               wrapperClassName="mt-7"
@@ -123,12 +113,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               label="Password"
               size="md"
               {...register('password', { onChange: handleInputChange })}
-              error={
-                errors.password && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.password.message?.toString()
-                }
-              }
+              error={errors.password?.message?.toString()}
             />
             <Input
               wrapperClassName="mt-7"
@@ -138,12 +123,7 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               label="Confirm password"
               size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
-              error={
-                errors.confirmPassword && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.confirmPassword.message?.toString()
-                }
-              }
+              error={errors.confirmPassword?.message?.toString()}
             />
             {serverError && (
               <>

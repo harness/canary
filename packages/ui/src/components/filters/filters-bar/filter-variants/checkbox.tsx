@@ -1,6 +1,4 @@
-import { DropdownMenuCheckboxItem } from '@components/dropdown-menu'
-import { Input } from '@components/form'
-import { Icon } from '@components/icon'
+import { DropdownMenuCheckboxItem, Icon, Input } from '@/components'
 
 import { CheckboxFilterOption, FilterValue } from '../../types'
 import { UseFiltersReturn } from '../../use-filters'

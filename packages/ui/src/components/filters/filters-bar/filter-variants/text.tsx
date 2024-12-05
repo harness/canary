@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import { DropdownMenuItem } from '@components/dropdown-menu'
-import { Input } from '@components/form'
-import { Icon } from '@components/icon'
+import { DropdownMenuItem, Icon, Input } from '@/components'
 
 import { FilterValue } from '../../types'
 import { UseFiltersReturn } from '../../use-filters'

@@ -3,15 +3,10 @@ import { forwardRef, ReactNode, TextareaHTMLAttributes } from 'react'
 import { Caption, ControlGroup, Label, Message, MessageTheme } from '@/components'
 import { cn } from '@utils/cn'
 
-interface TextareaError {
-  theme: MessageTheme
-  message?: string
-}
-
 export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string
   caption?: ReactNode
-  error?: TextareaError
+  error?: string
   optional?: boolean
 }
 
@@ -43,8 +38,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
           {...props}
         />
         {error && (
-          <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={error.theme}>
-            {error.message}
+          <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
+            {error}
           </Message>
         )}
         {caption && <Caption>{caption}</Caption>}

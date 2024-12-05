@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -99,12 +99,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               size="md"
               {...register('password', { onChange: handleInputChange })}
               placeholder="Password (6+ characters)"
-              error={
-                errors.password && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.password.message?.toString()
-                }
-              }
+              error={errors.password?.message?.toString()}
             />
             <Input
               wrapperClassName="mt-7"
@@ -114,12 +109,7 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               size="md"
               {...register('confirmPassword', { onChange: handleInputChange })}
               placeholder="Confirm password"
-              error={
-                errors.confirmPassword && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.confirmPassword.message?.toString()
-                }
-              }
+              error={errors.confirmPassword?.message?.toString()}
             />
             <Button
               className="mt-10 w-full"

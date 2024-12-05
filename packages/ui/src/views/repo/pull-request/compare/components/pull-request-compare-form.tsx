@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import { Fieldset, Input, MessageTheme, Spacer, Textarea } from '@/components'
+import { Fieldset, Input, Spacer, Textarea } from '@/components'
 import { Text } from '@components/text'
 import { z } from 'zod'
 
@@ -38,12 +38,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
             {...register('title')}
             placeholder="Enter pull request title"
             label="Title"
-            error={
-              errors.title && {
-                theme: MessageTheme.ERROR,
-                message: errors.title.message?.toString()
-              }
-            }
+            error={errors.title?.message?.toString()}
             autoFocus
           />
           <Spacer size={8} />
@@ -52,7 +47,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
             {...register('description')}
             placeholder="Add Pull Request description here."
             label="Description"
-            error={errors.description && { theme: MessageTheme.ERROR, message: errors.description.message?.toString() }}
+            error={errors.description?.message?.toString()}
           />
         </Fieldset>
 

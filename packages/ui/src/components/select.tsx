@@ -7,14 +7,9 @@ import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectError {
-  theme: MessageTheme
-  message?: string
-}
-
 interface SelectProps extends PropsWithChildren, SelectPrimitive.SelectProps {
   label?: string
-  error?: SelectError
+  error?: string
   caption?: ReactNode
   disabled?: boolean
   placeholder: string
@@ -49,8 +44,8 @@ const Select: FC<SelectProps> = ({
     </SelectTrigger>
     {children}
     {error && (
-      <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={error.theme}>
-        {error.message}
+      <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
+        {error}
       </Message>
     )}
     {caption && <Caption>{caption}</Caption>}

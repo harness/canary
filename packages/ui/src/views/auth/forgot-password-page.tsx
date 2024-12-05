@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, MessageTheme, Spacer, Text } from '@/components'
+import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -92,12 +92,7 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               label="Email"
               size="md"
               {...register('email', { onChange: handleInputChange })}
-              error={
-                errors.email && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.email.message?.toString()
-                }
-              }
+              error={errors.email?.message?.toString()}
               autoFocus
             />
             <Button

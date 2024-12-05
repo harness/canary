@@ -47,7 +47,7 @@ interface LabelProps extends VariantProps<typeof labelVariants>, PropsWithChildr
 const Label = ({ htmlFor, optional, color, variant, children, className }: LabelProps) => {
   return (
     <LabelRoot htmlFor={htmlFor} variant={variant} color={color} className={className}>
-      {children} {optional && <span className="text-foreground-7 align-top">(optional)</span>}
+      {children} {optional && <span className="align-top text-foreground-7">(optional)</span>}
     </LabelRoot>
   )
 }

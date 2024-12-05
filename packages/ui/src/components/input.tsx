@@ -8,11 +8,11 @@ export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {}
 
-const inputVariants = cva('text-foreground-1 bg-transparent px-2.5 py-1 disabled:cursor-not-allowed', {
+const inputVariants = cva('bg-transparent px-2.5 py-1 text-foreground-1 disabled:cursor-not-allowed', {
   variants: {
     variant: {
       default:
-        'placeholder:text-foreground-4 flex w-full rounded border text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:rounded focus-visible:outline-none',
+        'flex w-full rounded border text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
       extended: 'grow border-none focus-visible:outline-none'
     },
     size: {
@@ -40,15 +40,10 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 
 BaseInput.displayName = 'BaseInput'
 
-interface InputError {
-  theme: MessageTheme
-  message?: string
-}
-
 interface InputProps extends BaseInputProps {
   label?: string
   caption?: ReactNode
-  error?: InputError
+  error?: string
   optional?: boolean
   className?: string
   wrapperClassName?: string
@@ -63,7 +58,7 @@ interface InputProps extends BaseInputProps {
  *   type="email"
  *   placeholder="Enter your email"
  *   caption="We'll never share your email"
- *   error={{ theme: 'danger', message: 'Invalid email format' }}
+ *   error='Invalid email format'
  * />
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
@@ -86,8 +81,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {...props}
         />
         {error && (
-          <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={error.theme}>
-            {error.message}
+          <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
+            {error}
           </Message>
         )}
         {caption && <Caption>{caption}</Caption>}

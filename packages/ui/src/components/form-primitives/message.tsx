@@ -3,12 +3,7 @@ import { HTMLAttributes } from 'react'
 import { Text } from '@/components'
 import { cn } from '@utils/cn'
 
-export enum MessageTheme {
-  SUCCESS = 'success',
-  WARNING = 'warning',
-  ERROR = 'error',
-  DEFAULT = 'default'
-}
+import { MessageTheme } from './form-primitives.types'
 
 interface MessageProps extends HTMLAttributes<HTMLDivElement> {
   theme: MessageTheme

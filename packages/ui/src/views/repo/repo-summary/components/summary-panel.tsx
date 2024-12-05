@@ -37,7 +37,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   title,
   details,
   timestamp,
-  description,
+  description = '',
   saveDescription,
   updateRepoError,
   isEditDialogOpen,
@@ -77,7 +77,9 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
         {!!description?.length && (
           <>
             <Spacer size={3} />
-            <span className="border-y border-borders-4 py-3 text-14 text-foreground-2">{description}</span>
+            <span className="border-y border-borders-4 py-1 text-14 text-foreground-2 line-clamp-6">
+              {description}
+            </span>
           </>
         )}
         <Spacer size={5} />

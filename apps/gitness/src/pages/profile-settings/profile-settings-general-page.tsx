@@ -21,7 +21,7 @@ import {
   Text
 } from '@harnessio/canary'
 import { SkeletonList } from '@harnessio/ui/components'
-import { FormFieldSet, getInitials, ModeToggle, SandboxLayout } from '@harnessio/views'
+import { FormFieldSet, getInitials, SandboxLayout } from '@harnessio/views'
 
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { LanguagesEnum } from './types'
@@ -244,11 +244,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                   {profileErrors.email.message?.toString()}
                 </FormFieldSet.Message>
               )}
-            </FormFieldSet.ControlGroup>
-
-            <FormFieldSet.ControlGroup>
-              <FormFieldSet.Label>Theme</FormFieldSet.Label>
-              <ModeToggle />
             </FormFieldSet.ControlGroup>
 
             <FormFieldSet.ControlGroup>

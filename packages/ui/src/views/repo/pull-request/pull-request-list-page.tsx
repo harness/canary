@@ -263,7 +263,6 @@ const PullRequestList: FC<PullRequestListProps> = ({
 
             const createdDate = new Date(pullRequest.updated)
             const selectedDate = new Date(filter.selectedValues[0])
-            // console.log('createdDate', createdDate)
 
             // Reset time parts for date-only comparison
             createdDate.setHours(0, 0, 0, 0)
@@ -395,8 +394,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
       return <SkeletonList />
     }
 
-    if (!pullRequests?.length) {
-      console.log('here now', filterHandlers.activeFilters)
+    if (!sortedPullReqs?.length) {
       if (query || filterHandlers.activeFilters.length > 0) {
         return (
           <NoData

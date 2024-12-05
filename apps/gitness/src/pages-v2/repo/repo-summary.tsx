@@ -102,13 +102,15 @@ export default function RepoSummaryPage() {
   // }, [branches, repository?.default_branch])
 
   useEffect(() => {
-    setBranchList(
-      branches?.map(item => ({
-        name: item?.name || '',
-        sha: item?.sha || '',
-        default: item?.name === repository?.default_branch
-      }))
-    )
+    if (branches) {
+      setBranchList(
+        branches.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: item?.name === repository?.default_branch
+        }))
+      )
+    }
   }, [branches, repository?.default_branch])
 
   const { data: tags } = useListTagsQuery({
@@ -274,10 +276,6 @@ export default function RepoSummaryPage() {
   }, [repoEntryPathToFileTypeMap, selectedBranchTag, repoRef, buildFilePath, gitRef])
 
   useEffect(() => {
-    if (!branchList?.length) {
-      return
-    }
-
     const defaultBranch = branchList.find(branch => branch.default)
 
     setSelectedBranchTag({

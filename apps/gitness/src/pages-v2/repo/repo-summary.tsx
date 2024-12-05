@@ -50,12 +50,14 @@ export default function RepoSummaryPage() {
 
   const [updateError, setUpdateError] = useState<string>('')
 
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false)
+
   const updateDescription = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
     {
       onSuccess: () => {
-        setUpdateError('')
         refetchRepo()
+        setEditDialogOpen(false)
       },
       onError: (error: UpdateRepositoryErrorResponse) => {
         const errormsg = error?.message || 'An unknown error occurred.'
@@ -71,20 +73,10 @@ export default function RepoSummaryPage() {
       }
     })
   }
-  const [submitted, setSubmitted] = useState(false)
 
   useEffect(() => {
-    if (updateDescription.isSuccess) {
-      setSubmitted(true)
-
-      // After 1 second, reset the submitted state and make the button clickable again
-      const timer = setTimeout(() => {
-        setSubmitted(false)
-      }, 1000)
-
-      return () => clearTimeout(timer)
-    }
-  }, [updateDescription.isSuccess])
+    setUpdateError('')
+  }, [isEditDialogOpen])
 
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
@@ -317,8 +309,8 @@ export default function RepoSummaryPage() {
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
         updateRepoError={updateError}
-        isSubmitting={updateDescription.isLoading}
-        isSubmitted={submitted}
+        isEditDialogOpen={isEditDialogOpen}
+        setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
       />
       {createdTokenData && (

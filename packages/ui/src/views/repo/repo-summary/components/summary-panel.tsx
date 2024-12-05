@@ -29,8 +29,8 @@ interface SummaryPanelProps {
   description?: string
   saveDescription: (description: string) => void
   updateRepoError?: string
-  isSubmitting: boolean
-  isSubmitted: boolean
+  isEditDialogOpen: boolean
+  setEditDialogOpen: (value: boolean) => void
 }
 
 const SummaryPanel: FC<SummaryPanelProps> = ({
@@ -40,12 +40,14 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   description,
   saveDescription,
   updateRepoError,
-  isSubmitting,
-  isSubmitted
+  isEditDialogOpen,
+  setEditDialogOpen
 }) => {
-  const [isEditDialogOpen, setEditDialogOpen] = useState(false)
   const onClose = () => {
     setEditDialogOpen(false)
+  }
+  const onSave = (description: string) => {
+    saveDescription(description)
   }
   return (
     <>
@@ -66,16 +68,22 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        {description?.length ? (
+        {timestamp?.length ? (
           <>
-            <Spacer size={3} />
-            <span className="line-clamp-3 border-y border-borders-4 py-3 text-14 text-foreground-2">{description}</span>
+            <Spacer size={2} />
+            <span className="text-13 text-foreground-4">Created {timestamp}</span>
           </>
         ) : (
           <></>
         )}
-        <Spacer size={2} />
-        {timestamp && <span className="text-13 text-foreground-4">Created {timestamp}</span>}
+        {description?.length ? (
+          <>
+            <Spacer size={3} />
+            <span className="border-y border-borders-4 py-3 text-14 text-foreground-2">{description}</span>
+          </>
+        ) : (
+          <></>
+        )}
         <Spacer size={5} />
         <div className="flex flex-col gap-3">
           {details &&
@@ -93,11 +101,9 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
       <EditRepoDetails
         showEditRepoDetails={isEditDialogOpen}
         description={description}
-        onSave={saveDescription}
+        onSave={onSave}
         onClose={onClose}
         updateRepoError={updateRepoError}
-        isSubmitting={isSubmitting}
-        isSubmitted={isSubmitted}
       />
     </>
   )

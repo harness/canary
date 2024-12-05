@@ -20,6 +20,7 @@ import {
 } from '@/components'
 import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { formatDate } from '@utils/utils'
 
 import SummaryPanel from './components/summary-panel'
 
@@ -36,6 +37,7 @@ export interface RepoSummaryViewProps {
         git_ssh_url?: string
         git_url?: string
         description?: string
+        created?: number
       }
     | undefined
   handleCreateToken: () => void
@@ -61,9 +63,9 @@ export interface RepoSummaryViewProps {
   }
   saveDescription: (description: string) => void
   updateRepoError?: string
-  isSubmitting: boolean
-  isSubmitted: boolean
   useTranslationStore: () => TranslationStore
+  isEditDialogOpen: boolean
+  setEditDialogOpen: (value: boolean) => void
 }
 
 export function RepoSummaryView({
@@ -86,8 +88,8 @@ export function RepoSummaryView({
   latestCommitInfo,
   saveDescription,
   updateRepoError,
-  isSubmitting,
-  isSubmitted,
+  isEditDialogOpen,
+  setEditDialogOpen,
   useTranslationStore
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
@@ -228,11 +230,12 @@ export function RepoSummaryView({
                   iconName: 'open-pr'
                 }
               ]}
+              timestamp={formatDate(repository?.created!)}
               description={repository?.description}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}
-              isSubmitting={isSubmitting}
-              isSubmitted={isSubmitted}
+              isEditDialogOpen={isEditDialogOpen}
+              setEditDialogOpen={setEditDialogOpen}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

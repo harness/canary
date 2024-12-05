@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 import { TypesDiffStats } from '@/types'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/accordion'
-import { BranchSelector } from '@components/branch-chooser'
 import {
   Button,
   Icon,
@@ -19,15 +18,16 @@ import {
 } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { zodResolver } from '@hookform/resolvers/zod'
+// import { useDiffConfig } from '@views/pull-request/hooks/useDiffConfig'
+
+import { BranchSelector } from '@views/repo/components/branch-selector/branch-selector'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
-// import { useDiffConfig } from '@views/pull-request/hooks/useDiffConfig'
-import { TypesCommit } from '@views/repo/pull-request/types'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
 import { z } from 'zod'
 
-import { SandboxLayout } from '..'
+import { BranchSelectorListItem, BranchSelectorTab, SandboxLayout, TranslationStore, TypesCommit } from '..'
 // import PullRequestDiffViewer from '../components/pull-request/pull-request-diff-viewer'
 import { Layout } from './layout'
 
@@ -49,28 +49,32 @@ interface SandboxPullRequestCompareProps {
   isLoading: boolean
   isSuccess: boolean
   mergeability?: boolean
-  branchList: { name: string }[]
-  selectTargetBranch: (name: string) => void
-  selectSourceBranch: (name: string) => void
+  branchList: BranchSelectorListItem[]
+  tagList: BranchSelectorListItem[]
+  selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
   commitData?: TypesCommit[]
-  targetBranch: string
-  sourceBranch: string
+  targetBranch: BranchSelectorListItem
+  sourceBranch: BranchSelectorListItem
   diffData: HeaderProps[]
   diffStats: TypesDiffStats
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
   prBranchCombinationExists: number | null
+  useTranslationStore: () => TranslationStore
+  spaceId: string
+  repoId: string
 }
-
-const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
+/**
+ * TODO: This code was migrated from V2 and needs to be refactored.
+ */
+const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   onFormSubmit,
   apiError = null,
   isLoading,
   isSuccess,
   onFormDraftSubmit,
   mergeability = false,
-  selectTargetBranch,
-  selectSourceBranch,
+  selectBranch,
   branchList,
   commitData,
   targetBranch,
@@ -79,7 +83,11 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   diffStats,
   setIsBranchSelected,
   isBranchSelected,
-  prBranchCombinationExists
+  prBranchCombinationExists,
+  tagList,
+  useTranslationStore,
+  spaceId,
+  repoId
 }) => {
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -140,24 +148,32 @@ const SandboxPullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             <Icon name="pull" size={16} className="text-tertiary-background" />
 
             <BranchSelector
+              useTranslationStore={useTranslationStore}
+              spaceId={spaceId}
+              repoId={repoId}
               prefix={'base'}
               size="default"
-              name={targetBranch}
-              branchList={branchList}
-              selectBranch={name => {
-                selectTargetBranch(name)
-                handleBranchSelection() // Call when target branch is selected
+              selectedBranch={targetBranch}
+              tagList={tagList}
+              branchList={branchList.map(item => ({ name: item.name || '', sha: item.sha || '' }))}
+              onSelectBranch={(branchTag, type) => {
+                selectBranch(branchTag, type, false)
+                handleBranchSelection()
               }}
             />
             <Icon name="arrow-long" size={14} className="rotate-180 text-tertiary-background" />
             <BranchSelector
+              useTranslationStore={useTranslationStore}
+              spaceId={spaceId}
+              repoId={repoId}
+              tagList={tagList}
               prefix="compare"
               size="default"
-              name={sourceBranch}
+              selectedBranch={sourceBranch}
               branchList={branchList}
-              selectBranch={name => {
-                selectSourceBranch(name)
-                handleBranchSelection() // Call when source branch is selected
+              onSelectBranch={(branchTag, type) => {
+                selectBranch(branchTag, type, true)
+                handleBranchSelection()
               }}
             />
             {isBranchSelected &&
@@ -399,4 +415,4 @@ const PullRequestAccordion: React.FC<{
   )
 }
 
-export { SandboxPullRequestCompare }
+export { PullRequestCompare }

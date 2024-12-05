@@ -105,7 +105,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
             {/* <Filter sortOptions={SortOptions} /> */}
           </div>
           <Button variant="default" asChild>
-            <Link to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/`}>New pull request</Link>
+            <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
           </Button>
         </div>
         <Spacer size={5} />

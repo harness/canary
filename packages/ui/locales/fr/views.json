@@ -1,11 +1,11 @@
 {
   "repos": {
     "branches": "Branches",
-    "findBranch": "Trouver une branche",
     "tags": "Étiquettes",
-    "findTag": "Trouver une étiquette",
     "default": "Par défaut",
     "viewAll": "Voir tout {{type}}",
+    "findBranch": "Trouver une branche",
+    "findTag": "Trouver une étiquette",
     "noFile": "Aucun fichier disponible",
     "name": "Nom",
     "lastCommit": "Dernier message de validation",

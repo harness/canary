@@ -7,6 +7,7 @@ import {
   Checkbox,
   ControlGroup,
   Fieldset,
+  FormWrapper,
   Input,
   Message,
   MessageTheme,
@@ -113,7 +114,7 @@ export function RepoCreatePage({
           Create a new repository
         </Text>
         <Spacer size={2.5} />
-        <Text className="max-w-[476px] text-foreground-2" size={2} as="p">
+        <Text className="text-foreground-2 max-w-[476px]" size={2} as="p">
           A repository contains all project files, including the revision history. Already have a project repository
           elsewhere?{' '}
           <StyledLink to="../import" relative="path">
@@ -122,166 +123,163 @@ export function RepoCreatePage({
         </Text>
         <Spacer size={10} />
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* NAME */}
-          <Fieldset>
-            <Input
-              id="name"
-              label="Name"
-              {...register('name')}
-              placeholder="Enter repository name"
-              size="md"
-              error={errors.name && { theme: MessageTheme.ERROR, message: errors.name.message?.toString() }}
-              autoFocus
-            />
-            <Spacer size={7} />
-            {/* DESCRIPTION */}
-            <Textarea
-              id="description"
-              {...register('description')}
-              placeholder="Enter a description of this repository..."
-              label="Description"
-              error={
-                errors.description && {
-                  theme: MessageTheme.ERROR,
-                  message: errors.description.message?.toString()
-                }
-              }
-              optional
-            />
-          </Fieldset>
-          <Spacer size={7} />
-
-          {/* GITIGNORE */}
-          <Fieldset>
-            <ControlGroup>
-              <Select
-                name="gitignore"
-                value={gitignoreValue}
-                onValueChange={value => handleSelectChange('gitignore', value)}
-                placeholder="Select"
-                label="Add a .gitignore"
-                error={
-                  errors.gitignore && {
-                    theme: MessageTheme.ERROR,
-                    message: errors.gitignore.message?.toString()
-                  }
-                }
-                caption="Choose which files not to track from a list of templates."
-              >
-                <SelectContent>
-                  {gitIgnoreOptions &&
-                    gitIgnoreOptions?.map(option => {
-                      return (
-                        <SelectItem key={option} value={option}>
-                          {option}
-                        </SelectItem>
-                      )
-                    })}
-                </SelectContent>
-              </Select>
-            </ControlGroup>
-            <Spacer size={6} />
-
-            {/* LICENSE */}
-            <ControlGroup>
-              <Select
-                name="license"
-                value={licenseValue}
-                onValueChange={value => handleSelectChange('license', value)}
-                placeholder="Select"
-                label="Choose a license"
-                error={
-                  errors.license && {
-                    theme: MessageTheme.ERROR,
-                    message: errors.license.message?.toString()
-                  }
-                }
-                caption="A license tells others what they can and can't do with your code."
-              >
-                <SelectContent>
-                  {licenseOptions &&
-                    licenseOptions?.map(option => (
-                      <SelectItem key={option.value} value={option.value ?? ''}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                </SelectContent>
-              </Select>
-            </ControlGroup>
-          </Fieldset>
-          <Spacer size={11} />
-
-          {/* ACCESS */}
-          <Fieldset>
-            <ControlGroup>
-              <Text className="leading-none text-foreground-2" size={2}>
-                Who has access
-              </Text>
-              <RadioGroup className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
-                <Option
-                  control={<RadioButton className="mt-px" value="1" id="access-public" />}
-                  id="access-public"
-                  label="Public"
-                  ariaSelected={accessValue === '1'}
-                  description="Anyone with access to the Gitness environment can clone this repo."
-                />
-                <Option
-                  control={<RadioButton className="mt-px" value="2" id="access-private" />}
-                  id="access-private"
-                  label="Private"
-                  ariaSelected={accessValue === '2'}
-                  description="You choose who can see and commit to this repository."
-                />
-              </RadioGroup>
-              {errors.access && (
-                <Message className="mt-1" theme={MessageTheme.ERROR}>
-                  {errors.access.message?.toString()}
-                </Message>
-              )}
-            </ControlGroup>
-          </Fieldset>
-          <Spacer size={11} />
-
-          {/* README */}
-          <Fieldset>
-            <ControlGroup>
-              <Text className="leading-none text-foreground-2" size={2}>
-                Initialize this repository with
-              </Text>
-              <Option
-                className="mt-6"
-                control={<Checkbox id="readme" checked={readmeValue} onCheckedChange={handleReadmeChange} />}
-                id="readme"
-                label="Add a README file"
-                ariaSelected={accessValue === '1'}
-                description={
-                  <>
-                    This is where you can write a long description for your project.{' '}
-                    <StyledLink className="inline-block" to="/">
-                      Learn more about README
-                    </StyledLink>
-                  </>
-                }
+          <FormWrapper>
+            {/* NAME */}
+            <Fieldset>
+              <Input
+                id="name"
+                label="Name"
+                {...register('name')}
+                placeholder="Enter repository name"
+                size="md"
+                error={errors.name && { theme: MessageTheme.ERROR, message: errors.name.message?.toString() }}
+                autoFocus
               />
+              {/* DESCRIPTION */}
+              <Textarea
+                id="description"
+                {...register('description')}
+                placeholder="Enter a description of this repository..."
+                label="Description"
+                error={
+                  errors.description && {
+                    theme: MessageTheme.ERROR,
+                    message: errors.description.message?.toString()
+                  }
+                }
+                optional
+              />
+            </Fieldset>
 
-              {errors.readme && <Message theme={MessageTheme.ERROR}>{errors.readme.message?.toString()}</Message>}
-            </ControlGroup>
-          </Fieldset>
+            {/* GITIGNORE */}
+            <Fieldset>
+              <ControlGroup>
+                <Select
+                  name="gitignore"
+                  value={gitignoreValue}
+                  onValueChange={value => handleSelectChange('gitignore', value)}
+                  placeholder="Select"
+                  label="Add a .gitignore"
+                  error={
+                    errors.gitignore && {
+                      theme: MessageTheme.ERROR,
+                      message: errors.gitignore.message?.toString()
+                    }
+                  }
+                  caption="Choose which files not to track from a list of templates."
+                >
+                  <SelectContent>
+                    {gitIgnoreOptions &&
+                      gitIgnoreOptions?.map(option => {
+                        return (
+                          <SelectItem key={option} value={option}>
+                            {option}
+                          </SelectItem>
+                        )
+                      })}
+                  </SelectContent>
+                </Select>
+              </ControlGroup>
 
-          {/* SUBMIT BUTTONS */}
-          <Fieldset className="mt-[50px]">
-            <ControlGroup>
-              <ButtonGroup>
-                {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={!isValid || isLoading}>
-                  {!isLoading ? 'Create repository' : 'Creating repository...'}
-                </Button>
-                <Button type="button" variant="outline" onClick={handleCancel}>
-                  Cancel
-                </Button>
-              </ButtonGroup>
-            </ControlGroup>
-          </Fieldset>
+              {/* LICENSE */}
+              <ControlGroup>
+                <Select
+                  name="license"
+                  value={licenseValue}
+                  onValueChange={value => handleSelectChange('license', value)}
+                  placeholder="Select"
+                  label="Choose a license"
+                  error={
+                    errors.license && {
+                      theme: MessageTheme.ERROR,
+                      message: errors.license.message?.toString()
+                    }
+                  }
+                  caption="A license tells others what they can and can't do with your code."
+                >
+                  <SelectContent>
+                    {licenseOptions &&
+                      licenseOptions?.map(option => (
+                        <SelectItem key={option.value} value={option.value ?? ''}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </ControlGroup>
+            </Fieldset>
+
+            {/* ACCESS */}
+            <Fieldset className="mt-4">
+              <ControlGroup>
+                <Text className="text-foreground-2 leading-none" size={2}>
+                  Who has access
+                </Text>
+                <RadioGroup className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
+                  <Option
+                    control={<RadioButton className="mt-px" value="1" id="access-public" />}
+                    id="access-public"
+                    label="Public"
+                    ariaSelected={accessValue === '1'}
+                    description="Anyone with access to the Gitness environment can clone this repo."
+                  />
+                  <Option
+                    control={<RadioButton className="mt-px" value="2" id="access-private" />}
+                    id="access-private"
+                    label="Private"
+                    ariaSelected={accessValue === '2'}
+                    description="You choose who can see and commit to this repository."
+                  />
+                </RadioGroup>
+                {errors.access && (
+                  <Message className="mt-1" theme={MessageTheme.ERROR}>
+                    {errors.access.message?.toString()}
+                  </Message>
+                )}
+              </ControlGroup>
+            </Fieldset>
+
+            {/* README */}
+            <Fieldset className="mt-4">
+              <ControlGroup>
+                <Text className="text-foreground-2 leading-none" size={2}>
+                  Initialize this repository with
+                </Text>
+                <Option
+                  className="mt-6"
+                  control={<Checkbox id="readme" checked={readmeValue} onCheckedChange={handleReadmeChange} />}
+                  id="readme"
+                  label="Add a README file"
+                  ariaSelected={accessValue === '1'}
+                  description={
+                    <>
+                      This is where you can write a long description for your project.{' '}
+                      <StyledLink className="inline-block" to="/">
+                        Learn more about README
+                      </StyledLink>
+                    </>
+                  }
+                />
+
+                {errors.readme && <Message theme={MessageTheme.ERROR}>{errors.readme.message?.toString()}</Message>}
+              </ControlGroup>
+            </Fieldset>
+
+            {/* SUBMIT BUTTONS */}
+            <Fieldset className="mt-6">
+              <ControlGroup>
+                <ButtonGroup>
+                  {/* TODO: Improve loading state to avoid flickering */}
+                  <Button type="submit" disabled={!isValid || isLoading}>
+                    {!isLoading ? 'Create repository' : 'Creating repository...'}
+                  </Button>
+                  <Button type="button" variant="outline" onClick={handleCancel}>
+                    Cancel
+                  </Button>
+                </ButtonGroup>
+              </ControlGroup>
+            </Fieldset>
+          </FormWrapper>
         </form>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

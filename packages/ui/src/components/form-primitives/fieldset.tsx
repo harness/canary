@@ -18,7 +18,7 @@ export function Fieldset({ children, box, shaded, className, ...props }: Fieldse
   return (
     <fieldset
       className={cn(
-        'flex flex-col',
+        'flex flex-col gap-y-7',
         { 'rounded-md border px-5 py-3.5 pb-5': box, 'bg-primary/[0.02]': shaded },
         className
       )}

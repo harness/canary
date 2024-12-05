@@ -23,7 +23,8 @@ import { useBranchSelectorStore } from './stores/branch-selector-store.ts'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
-  const { selectedBranch, setSelectedBranch, setSpaceId, setRepoId } = useBranchSelectorStore()
+  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSelectedBranchType, setSpaceId, setRepoId } =
+    useBranchSelectorStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -35,10 +36,10 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    !selectedBranch && setSelectedBranch({ name: fullGitRef || '', sha: '' })
+    !selectedBranchTag && setSelectedBranchTag({ name: fullGitRef || '', sha: '' })
     setSpaceId(spaceId || '')
     setRepoId(repoId || '')
-  }, [fullGitRef, spaceId, repoId, selectedBranch])
+  }, [fullGitRef, spaceId, repoId, selectedBranchTag])
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -122,24 +123,21 @@ export const RepoSidebar = () => {
 
   const filesList = filesData?.body?.files || []
 
-  const selectBranch = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          setSelectedBranchTag(branch)
-          navigate(`${branch.name}`)
-        }
-      } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagsList.find(tag => tag.name === branchTagName.name)
-        if (tag) {
-          setSelectedBranchTag(tag)
-          navigate(`${REFS_TAGS_PREFIX + tag.name}`)
-        }
+  useEffect(() => {
+    if (selectedBranchType === BranchSelectorTab.BRANCHES) {
+      const branch = branchList?.find(branch => branch.name === selectedBranchTag.name)
+      if (branch) {
+        setSelectedBranchTag(branch)
+        navigate(`${branch.name}`)
       }
-    },
-    [navigate, repoId, branchList, tagsList]
-  )
+    } else if (selectedBranchType === BranchSelectorTab.TAGS) {
+      const tag = tagsList?.find(tag => tag.name === selectedBranchTag.name)
+      if (tag) {
+        setSelectedBranchTag(tag)
+        navigate(`${REFS_TAGS_PREFIX + tag.name}`)
+      }
+    }
+  }, [navigate, branchList, tagsList, selectedBranchTag, selectedBranchType])
 
   const navigateToNewFile = useCallback(() => {
     if (fullResourcePath) {
@@ -178,12 +176,7 @@ export const RepoSidebar = () => {
       <RepoSidebarView
         hasHeader
         hasSubHeader
-        repoId={repoId}
-        spaceId={spaceId}
-        selectedBranch={selectedBranchTag}
-        selectBranch={selectBranch}
-        branchList={branchList}
-        tagList={tagsList}
+        useBranchSelectorStore={useBranchSelectorStore}
         useTranslationStore={useTranslationStore}
         // TODO: new props navigateToNewFolder
         navigateToNewFolder={() => {}}

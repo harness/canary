@@ -50,8 +50,6 @@ export interface RepoSummaryViewProps {
     tag_count?: number
     pull_req_summary?: { open_count: number } | undefined
   }
-  // spaceId: string
-  // repoId: string
   gitRef?: string
   latestCommitInfo?: {
     userName: string
@@ -69,10 +67,6 @@ export interface RepoSummaryViewProps {
 
 export function RepoSummaryView({
   loading,
-  // selectedBranch,
-  // branchList,
-  // tagList,
-  // selectBranch,
   filesList,
   navigateToFile,
   repository,
@@ -81,8 +75,6 @@ export function RepoSummaryView({
   files,
   decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
-  // spaceId,
-  // repoId,
   gitRef,
   latestCommitInfo,
   onChangeDescription,
@@ -120,12 +112,6 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup>
                   <BranchSelector
-                    // selectedBranch={selectedBranch}
-                    // branchList={branchList}
-                    // tagList={tagList}
-                    // onSelectBranch={selectBranch}
-                    // repoId={repoId}
-                    // spaceId={spaceId}
                     useBranchSelectorStore={useBranchSelectorStore}
                     useTranslationStore={useTranslationStore}
                   />

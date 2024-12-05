@@ -91,16 +91,6 @@ export default function RepoSummaryPage() {
 
   const { query } = useCommonFilter()
 
-  // const branchList: BranchSelectorListItem[] = useMemo(() => {
-  //   if (!branches) return []
-
-  //   return branches.map(item => ({
-  //     name: item?.name || '',
-  //     sha: item?.sha || '',
-  //     default: item?.name === repository?.default_branch
-  //   }))
-  // }, [branches, repository?.default_branch])
-
   useEffect(() => {
     if (branches) {
       setBranchList(
@@ -325,10 +315,6 @@ export default function RepoSummaryPage() {
     <>
       <RepoSummaryView
         loading={isLoading}
-        // selectedBranch={selectedBranchTag}
-        // branchList={branchList}
-        // tagList={tagsList}
-        // selectBranch={selectBranchorTag}
         filesList={filesList}
         navigateToFile={navigateToFile}
         repository={repository}
@@ -337,8 +323,6 @@ export default function RepoSummaryPage() {
         files={files}
         decodedReadmeContent={decodedReadmeContent}
         summaryDetails={summaryDetails}
-        // spaceId={spaceId || ''}
-        // repoId={repoId || ''}
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
         onChangeDescription={onChangeDescription}

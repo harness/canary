@@ -407,7 +407,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
             }}
             secondaryButton={{
               label: 'Clear filters',
-              onClick: noop
+              onClick: filterHandlers.handleResetFilters
             }}
           />
         )

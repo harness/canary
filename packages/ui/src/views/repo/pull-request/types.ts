@@ -13,6 +13,7 @@ export interface PullRequestType {
   timestamp: string
   comments?: number
   state?: string
+  updated: number
   labels?: {
     text: string
     color: string

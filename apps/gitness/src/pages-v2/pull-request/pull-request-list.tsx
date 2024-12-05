@@ -21,13 +21,17 @@ export default function PullRequestListPage() {
   const [query] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { data: { body: pullRequestData, headers } = {} } = useListPullReqQuery(
+  const { data: { body: pullRequestData, headers } = {}, isLoading: fetchingPullReqData } = useListPullReqQuery(
     {
       queryParams: { page, query },
       repo_ref: repoRef
     },
     { retry: false }
   )
+  useEffect(() => {
+    console.log('data', pullRequestData)
+  }, [pullRequestData])
+  console.log('data', pullRequestData)
 
   useEffect(() => {
     if (pullRequestData) {
@@ -44,6 +48,7 @@ export default function PullRequestListPage() {
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId}
+      isLoading={fetchingPullReqData}
       usePullRequestStore={usePullRequestStore}
       useTranslationStore={useTranslationStore}
     />

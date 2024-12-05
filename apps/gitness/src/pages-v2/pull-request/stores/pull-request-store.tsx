@@ -18,6 +18,7 @@ interface PullRequestType {
   timestamp: string
   comments?: number
   state?: string
+  updated: number
   labels?: {
     text: string
     color: string
@@ -51,6 +52,7 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
       // labels: item?.labels?.map((key: string, color: string) => ({ text: key, color: color })),
       // TODO: fix 2 hours ago in timestamp
       timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
+      updated: item?.updated ? item?.updated : 0,
       source_branch: item?.source_branch,
       state: item?.state,
       labels: item?.labels?.map(label => ({

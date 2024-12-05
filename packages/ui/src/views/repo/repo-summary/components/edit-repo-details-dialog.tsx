@@ -39,7 +39,7 @@ export const EditRepoDetails = ({
         <AlertDialogHeader>
           <AlertDialogTitle className="mb-4">Repository Description</AlertDialogTitle>
         </AlertDialogHeader>
-        <Text className="inline-block leading-none text-foreground-7" size={1}>
+        <Text className="inline-block leading-none text-foreground-2" size={1}>
           Description
         </Text>
         <Textarea

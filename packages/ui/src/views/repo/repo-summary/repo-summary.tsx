@@ -59,10 +59,10 @@ export interface RepoSummaryViewProps {
     timestamp: string
     sha: string | null
   }
-  onChangeDescription?: () => void
-  isEditingDescription?: boolean
-  setIsEditingDescription: (value: boolean) => void
   saveDescription: (description: string) => void
+  updateRepoError?: string
+  isSubmitting: boolean
+  isSubmitted: boolean
   useTranslationStore: () => TranslationStore
 }
 
@@ -84,10 +84,10 @@ export function RepoSummaryView({
   repoId,
   gitRef,
   latestCommitInfo,
-  onChangeDescription,
-  isEditingDescription,
-  setIsEditingDescription,
   saveDescription,
+  updateRepoError,
+  isSubmitting,
+  isSubmitted,
   useTranslationStore
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
@@ -229,10 +229,10 @@ export function RepoSummaryView({
                 }
               ]}
               description={repository?.description}
-              onChangeDescription={onChangeDescription}
-              isEditingDescription={isEditingDescription}
-              setIsEditingDescription={setIsEditingDescription}
               saveDescription={saveDescription}
+              updateRepoError={updateRepoError}
+              isSubmitting={isSubmitting}
+              isSubmitted={isSubmitted}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

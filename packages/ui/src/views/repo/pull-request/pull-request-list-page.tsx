@@ -200,10 +200,10 @@ const PullRequestList: FC<PullRequestListProps> = ({
    * Filters pull requests based on active filters
    *
    * @param pullrequest - Pullrequest object to filter
-   * @returns boolean - Whether the webhooks matches all active filters
+   * @returns boolean - Whether the pullrequests matches all active filters
    *
    * Filter logic:
-   * - If no active filters, returns all webhooks
+   * - If no active filters, returns all pullrequests
    * - Applies all active filters (AND condition)
    * - For type filter:
    *   - Handles 'private', 'public', and 'fork' types
@@ -232,7 +232,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
             const isOpen = pullRequest.state === 'open'
             const isClosed = pullRequest.state === 'closed'
 
-            // Check if webhook matches any of the selected type values
+            // Check if pullrquest matches any of the selected type values
             const matchesType = filter.selectedValues.some(value => {
               switch (value) {
                 case 'enabled':
@@ -334,10 +334,10 @@ const PullRequestList: FC<PullRequestListProps> = ({
     })
 
   /**
-   * Sorts filtered webhooks based on active sorts
+   * Sorts filtered pullrequest based on active sorts
    *
-   * @param a - First webhook to compare
-   * @param b - Second webhook to compare
+   * @param a - First pullrequest to compare
+   * @param b - Second pullrequest to compare
    * @returns number - Comparison result (-1, 0, 1)
    *
    * Sort logic:

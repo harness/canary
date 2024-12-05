@@ -2,12 +2,11 @@ import { useState } from 'react'
 
 import { DropdownMenuItem, Icon, Input } from '@/components'
 
-import { FilterValue } from '../../types'
-import { UseFiltersReturn } from '../../use-filters'
+import { FilterHandlers, FilterValue } from '../../../types'
 
 interface TextFilterProps {
   filter: FilterValue
-  onUpdateFilter: UseFiltersReturn['handleUpdateFilter']
+  onUpdateFilter: FilterHandlers['handleUpdateFilter']
 }
 
 const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {

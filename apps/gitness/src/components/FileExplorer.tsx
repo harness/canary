@@ -46,7 +46,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     // contents for newly opened folders
     newlyOpenedFolders.forEach(folderPath => {
       queryClient.prefetchQuery(
-        ['folderContents', repoRef, fullGitRef ?? selectedBranch, folderPath],
+        ['folderContents', repoRef, fullGitRef || selectedBranch, folderPath],
         () => fetchFolderContents(folderPath),
         {
           staleTime: 300000,
@@ -63,7 +63,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
       const { body: response } = await getContent({
         path: folderPath,
         repo_ref: repoRef,
-        queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef ?? selectedBranch) }
+        queryParams: { include_commit: false, git_ref: normalizeGitRef(fullGitRef || selectedBranch) }
       })
       return response?.content?.entries || []
     } catch (error) {
@@ -74,7 +74,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
 
   const useFolderContents = (folderPath: string) => {
     return useQuery<OpenapiContentInfo[]>(
-      ['folderContents', repoRef, fullGitRef ?? selectedBranch, folderPath],
+      ['folderContents', repoRef, fullGitRef || selectedBranch, folderPath],
       () => fetchFolderContents(folderPath),
       {
         staleTime: 300000,
@@ -87,7 +87,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef ?? selectedBranch}/~/${itemPath}`
+      const fullPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
         return (
@@ -195,7 +195,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
         // Prefetch contents for folders along the path
         for (const folderPath of folderPaths) {
           queryClient.prefetchQuery(
-            ['folderContents', repoRef, fullGitRef ?? selectedBranch, folderPath],
+            ['folderContents', repoRef, fullGitRef || selectedBranch, folderPath],
             () => fetchFolderContents(folderPath),
             {
               staleTime: 300000,
@@ -213,7 +213,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     data: rootEntries,
     isLoading: isRootLoading,
     error: rootError
-  } = useQuery(['folderContents', repoRef, fullGitRef ?? selectedBranch, ''], () => fetchFolderContents(''), {
+  } = useQuery(['folderContents', repoRef, fullGitRef || selectedBranch, ''], () => fetchFolderContents(''), {
     staleTime: 300000,
     cacheTime: 900000,
     initialData: repoDetails?.content?.entries

@@ -33,7 +33,7 @@ export const RepoCode = () => {
       path: repoId!,
       parentPath: repoPath
     },
-    ...splitPathWithParents(fullResourcePath || '')
+    ...splitPathWithParents(fullResourcePath || '', repoPath)
   ]
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)

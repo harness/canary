@@ -71,7 +71,7 @@ export const FileEditor: React.FC = () => {
   const [parentPath, setParentPath] = useState(
     isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   )
-  const pathParts = useMemo(() => (parentPath?.length ? splitPathWithParents(parentPath) : []), [parentPath])
+  const pathParts = useMemo(() => (parentPath?.length ? splitPathWithParents(parentPath, repoPath) : []), [parentPath])
   const fileResourcePath = useMemo(
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]

@@ -1,6 +1,6 @@
 import { PathParts } from '@harnessio/ui/components'
 
-export function splitPathWithParents(fullResourcePath: string) {
+export function splitPathWithParents(fullResourcePath: string, repoPath: string) {
   const result: PathParts[] = []
 
   if (!fullResourcePath.length) return result
@@ -11,7 +11,7 @@ export function splitPathWithParents(fullResourcePath: string) {
     let parentPath = ''
 
     pathParts.map((path, index) => {
-      parentPath += (index === 0 ? '' : '/') + path
+      parentPath += (index === 0 ? repoPath + '/~/' : '/') + path
 
       result.push({
         path: path,

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { ListPullReqOkResponse } from '@harnessio/code-service-client'
+import { FindRepositoryOkResponse, ListPullReqOkResponse } from '@harnessio/code-service-client'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
@@ -27,15 +27,20 @@ interface PullRequestType {
 interface PullRequestStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
-  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
+  open_pull_reqs: number
+  closed_pull_reqs: number
   page: number
   setPage: (page: number) => void
+  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
+  setOpenClosePullRequests: (data: FindRepositoryOkResponse) => void
 }
 
 export const usePullRequestStore = create<PullRequestStore>(set => ({
   pullRequests: null,
   totalPages: 0,
   page: 1,
+  open_pull_reqs: 0,
+  closed_pull_reqs: 0,
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
@@ -64,6 +69,12 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
     set({
       pullRequests: transformedPullRequests,
       totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+    })
+  },
+  setOpenClosePullRequests: repoMetadata => {
+    set({
+      open_pull_reqs: repoMetadata.num_open_pulls || 0,
+      closed_pull_reqs: repoMetadata.num_closed_pulls || 0
     })
   }
 }))

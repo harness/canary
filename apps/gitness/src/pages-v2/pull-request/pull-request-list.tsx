@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { useListPullReqQuery } from '@harnessio/code-service-client'
+import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -14,7 +14,7 @@ import { usePullRequestStore } from './stores/pull-request-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage } = usePullRequestStore()
+  const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
@@ -28,10 +28,15 @@ export default function PullRequestListPage() {
     },
     { retry: false }
   )
-  useEffect(() => {
-    console.log('data', pullRequestData)
-  }, [pullRequestData])
-  console.log('data', pullRequestData)
+
+  useFindRepositoryQuery(
+    { repo_ref: repoRef },
+    {
+      onSuccess: data => {
+        setOpenClosePullRequests(data.body)
+      }
+    }
+  )
 
   useEffect(() => {
     if (pullRequestData) {

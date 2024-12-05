@@ -18,7 +18,7 @@ import { noop } from 'lodash-es'
 
 import { SandboxLayout, TranslationStore } from '../..'
 import { PullRequestList as PullRequestListContent } from './pull-request-list'
-import { PullRequestStore, RepoRepositoryOutput } from './types'
+import { PullRequestStore } from './types'
 
 const BASIC_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },
@@ -85,7 +85,6 @@ export interface PullRequestListProps {
   usePullRequestStore: () => PullRequestStore
   repoId?: string
   spaceId?: string
-  repoMetadata?: RepoRepositoryOutput
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
 }
@@ -94,11 +93,10 @@ const PullRequestList: FC<PullRequestListProps> = ({
   usePullRequestStore,
   spaceId,
   repoId,
-  repoMetadata,
   useTranslationStore,
   isLoading
 }) => {
-  const { pullRequests, totalPages, page, setPage } = usePullRequestStore()
+  const { pullRequests, totalPages, page, setPage, open_pull_reqs, closed_pull_reqs } = usePullRequestStore()
   const { t } = useTranslationStore()
   const { query, handleSearch } = useCommonFilter()
   const [value, setValue] = useState<string>()
@@ -392,14 +390,14 @@ const PullRequestList: FC<PullRequestListProps> = ({
   }
 
   // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
-  console.log('isLoading', isLoading)
   const renderListContent = () => {
     if (isLoading) {
       return <SkeletonList />
     }
 
     if (!pullRequests?.length) {
-      if (query) {
+      console.log('here now', filterHandlers.activeFilters)
+      if (query || filterHandlers.activeFilters.length > 0) {
         return (
           <NoData
             iconName="no-search-magnifying-glass"
@@ -435,8 +433,8 @@ const PullRequestList: FC<PullRequestListProps> = ({
         handleResetQuery={noop}
         // LinkComponent={LinkComponent}
         pullRequests={sortedPullReqs}
-        closedPRs={repoMetadata?.num_closed_pulls}
-        openPRs={repoMetadata?.num_open_pulls}
+        closedPRs={closed_pull_reqs}
+        openPRs={open_pull_reqs}
       />
     )
   }

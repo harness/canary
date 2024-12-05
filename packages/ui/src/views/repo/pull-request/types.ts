@@ -26,6 +26,8 @@ export interface PullRequestStore {
   totalPages: number
   page: number
   setPage: (page: number) => void
+  open_pull_reqs: number
+  closed_pull_reqs: number
 }
 export interface RepoRepositoryOutput {
   num_closed_pulls?: number

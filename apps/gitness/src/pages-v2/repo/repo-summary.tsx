@@ -57,7 +57,7 @@ export default function RepoSummaryPage() {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
-  const [updateError, setUpdateError] = useState<string>("")
+  const [updateError, setUpdateError] = useState<string>('')
 
   const updateDescription = useUpdateRepositoryMutation(
     { repo_ref: repoRef },

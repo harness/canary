@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 
 import {
   Badge,
@@ -10,9 +10,9 @@ import {
   Icon,
   IconProps,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@/components'
+
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
 interface DetailItem {

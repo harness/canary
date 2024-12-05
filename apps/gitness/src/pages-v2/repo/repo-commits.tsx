@@ -11,7 +11,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { useBranchSelectorStore } from './stores/branch-selector-store'
+import { useBranchSelectorStore } from './stores/repo-branch-selector-store'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()

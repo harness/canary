@@ -35,6 +35,7 @@ import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
+import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
@@ -64,7 +65,7 @@ import { CreateNewMemberPage } from './pages/project-settings/project-settings-n
 import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
 import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
-import { CreatePullRequest } from './pages/pull-request/pull-request-compare-page'
+import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
 import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
@@ -192,7 +193,13 @@ export default function App() {
             },
             {
               path: 'pulls',
-              element: <SandboxPullRequestListPage />
+              children: [
+                { index: true, element: <SandboxPullRequestListPage /> },
+                {
+                  path: 'compare/:diffRefs*?',
+                  element: <CreatePullRequest />
+                }
+              ]
             },
             {
               path: 'pulls/:pullRequestId',
@@ -324,7 +331,7 @@ export default function App() {
                     { index: true, element: <PullRequestListPage /> },
                     {
                       path: 'compare/:diffRefs*?',
-                      element: <CreatePullRequest />
+                      element: <CreatePullRequestV1 />
                     }
                   ]
                 },

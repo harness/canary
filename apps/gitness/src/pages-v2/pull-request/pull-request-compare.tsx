@@ -1,0 +1,382 @@
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
+import * as Diff2Html from 'diff2html'
+import { useAtom } from 'jotai'
+import { compact, isEqual } from 'lodash-es'
+
+import {
+  CreateRepositoryErrorResponse,
+  mergeCheck,
+  OpenapiCreatePullReqRequest,
+  TypesBranchExtended,
+  TypesCommit,
+  useCreatePullReqMutation,
+  useDiffStatsQuery,
+  useFindRepositoryQuery,
+  useGetPullReqByBranchesQuery,
+  useListBranchesQuery,
+  useListCommitsQuery,
+  useListTagsQuery,
+  useRawDiffQuery
+} from '@harnessio/code-service-client'
+import { SkeletonList } from '@harnessio/ui/components'
+import { BranchSelectorListItem, BranchSelectorTab, CompareFormFields, PullRequestCompare } from '@harnessio/ui/views'
+
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
+import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
+import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
+import { PathParams } from '../../RouteDefinitions'
+import { normalizeGitRef } from '../../utils/git-utils'
+
+/**
+ * TODO: This code was migrated from V2 and needs to be refactored.
+ */
+export const CreatePullRequest = () => {
+  const createPullRequestMutation = useCreatePullReqMutation({})
+  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
+  const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
+
+  const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
+
+  const navigate = useNavigate()
+  const [apiError, setApiError] = useState<string | null>(null)
+  const repoRef = useGetRepoRef()
+  const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem>(
+    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: '' }
+  )
+  const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
+    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
+  )
+  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<number | null>(null)
+  const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
+  const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
+  const [
+    commitRange
+    //  setCommitRange  TODO: add commit view filter dropdown to manage different commits
+  ] = useState(defaultCommitRange)
+  const targetRef = useMemo(() => selectedTargetBranch.name, [selectedTargetBranch])
+  const sourceRef = useMemo(() => selectedSourceBranch.name, [selectedSourceBranch])
+  const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
+  const [mergeability, setMergeabilty] = useState<boolean>()
+  const diffApiPath = useMemo(
+    () =>
+      // show range of commits and user selected subrange
+      commitRange.length > 0
+        ? `${commitRange[0]}~1...${commitRange[commitRange.length - 1]}`
+        : // show range of commits and user did not select a subrange
+          `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`,
+    [commitRange, targetRef, sourceRef]
+  )
+  const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
+
+  const [diffs, setDiffs] = useState<DiffFileEntry[]>()
+  const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
+    {
+      repo_ref: repoRef,
+      range: diffApiPath.replace('/diff', ''),
+      queryParams: {},
+      headers: { Accept: 'text/plain' }
+    },
+    {
+      enabled: targetRef !== undefined && sourceRef !== undefined && cachedDiff.path !== path
+    }
+  )
+
+  useEffect(
+    function updateCacheWhenDiffDataArrives() {
+      if (path && rawDiff && typeof rawDiff === 'string') {
+        setCachedDiff({
+          path,
+          raw: rawDiff
+        })
+      }
+    },
+    [rawDiff, path, setCachedDiff]
+  )
+  // Diffs are rendered in blocks that can be destroyed when they go off-screen. Hence their internal
+  // states (such as collapse, view full diff) are reset when they are being re-rendered. To fix this,
+  // we maintained a map from this component and pass to each diff to retain their latest states.
+  // Map entry: <diff.filePath, DiffViewerExchangeState>
+  const memorizedState = useMemo(() => new Map<string, DiffViewerExchangeState>(), [])
+
+  //
+  // Parsing diff and construct data structure to pass into DiffViewer component
+  //
+  useEffect(() => {
+    if (loadingRawDiff || cachedDiff.path !== path || typeof cachedDiff.raw !== 'string') {
+      return
+    }
+    if (cachedDiff.raw) {
+      const _diffs = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
+        .map(diff => {
+          diff.oldName = normalizeGitFilePath(diff.oldName)
+          diff.newName = normalizeGitFilePath(diff.newName)
+
+          const fileId = changedFileId([diff.oldName, diff.newName])
+          const containerId = `container-${fileId}`
+          const contentId = `content-${fileId}`
+
+          const filePath = diff.isDeleted ? diff.oldName : diff.newName
+          const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+          return {
+            ...diff,
+            containerId,
+            contentId,
+            fileId,
+            filePath,
+            fileViews: cachedDiff.fileViews,
+            raw: diffString
+          }
+        })
+        .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
+
+      setDiffs(oldDiffs => {
+        if (isEqual(oldDiffs, _diffs)) return oldDiffs
+
+        // Clear memorizedState when diffs are changed
+        memorizedState.clear()
+        return _diffs
+      })
+    } else {
+      setDiffs([])
+    }
+  }, [
+    // readOnly,
+    path,
+    cachedDiff,
+    loadingRawDiff,
+    memorizedState
+  ])
+  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+
+  useEffect(() => {
+    if (repoMetadata?.default_branch) {
+      setSelectedTargetBranch({ name: diffTargetBranch || repoMetadata.default_branch, sha: '' })
+      setSelectedSourceBranch({ name: diffSourceBranch || repoMetadata.default_branch, sha: '' })
+    }
+  }, [repoMetadata, diffTargetBranch, diffSourceBranch])
+
+  const handleSubmit = (data: CompareFormFields, isDraft: boolean) => {
+    const pullRequestBody: OpenapiCreatePullReqRequest = {
+      description: data.description,
+      is_draft: isDraft,
+      target_branch: selectedTargetBranch.name || repoMetadata?.default_branch,
+      source_branch: selectedSourceBranch.name,
+      title: data.title
+    }
+
+    createPullRequestMutation.mutate(
+      {
+        queryParams: {},
+        body: pullRequestBody,
+        repo_ref: repoRef
+      },
+      {
+        onSuccess: ({ body: data }) => {
+          setApiError(null)
+
+          navigate(`/spaces/${spaceId}/repos/${repoId}/pull-requests/${data?.number}`)
+        },
+        onError: (error: CreateRepositoryErrorResponse) => {
+          const message = error.message || 'An unknown error occurred.'
+          setApiError(message)
+        }
+      }
+    )
+  }
+
+  const onSubmit = (data: CompareFormFields) => {
+    handleSubmit(data, false)
+  }
+
+  const onDraftSubmit = (data: CompareFormFields) => {
+    handleSubmit(data, true)
+  }
+
+  const onCancel = () => {
+    navigate(`/${spaceId}/repos`)
+  }
+  const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
+    repo_ref: repoRef,
+    queryParams: { page: 0, limit: 10 }
+  })
+
+  useEffect(() => {
+    // useMergeCheckMutation
+    setApiError(null)
+    mergeCheck({ queryParams: {}, repo_ref: repoRef, range: diffApiPath })
+      .then(({ body: value }) => {
+        setMergeabilty(value?.mergeable)
+      })
+      .catch(err => {
+        if (err.message !== "head branch doesn't contain any new commits.") {
+          setApiError('Error in merge check')
+        } else {
+          setApiError("head branch doesn't contain any new commits.")
+        }
+        setMergeabilty(false)
+      })
+  }, [repoRef, diffApiPath])
+
+  const { data: { body: diffStats } = {} } = useDiffStatsQuery(
+    { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
+    { enabled: !!repoRef && !!diffApiPath }
+  )
+
+  const { data: { body: pullReqData } = {} } = useGetPullReqByBranchesQuery({
+    repo_ref: repoRef,
+    source_branch: selectedSourceBranch.name || repoMetadata?.default_branch || '',
+    target_branch: selectedTargetBranch.name,
+    queryParams: {
+      include_checks: true,
+      include_rules: true
+    }
+  })
+
+  useEffect(() => {
+    if (pullReqData) {
+      setPrBranchCombinationExists(pullReqData.number || null)
+    } else {
+      setPrBranchCombinationExists(null)
+    }
+  }, [pullReqData])
+
+  const { data: { body: commitData } = {} } = useListCommitsQuery({
+    repo_ref: repoRef,
+
+    queryParams: {
+      page: 0,
+      limit: 10,
+      after: normalizeGitRef(selectedTargetBranch.name),
+      git_ref: normalizeGitRef(selectedSourceBranch.name),
+      include_stats: true
+    }
+  })
+
+  const branchList: BranchSelectorListItem[] = useMemo(() => {
+    if (!branches) return []
+
+    return branches.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: item?.name === repoMetadata?.default_branch
+    }))
+  }, [branches, repoMetadata?.default_branch])
+
+  const { data: tags } = useListTagsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      order: 'asc',
+      limit: 20,
+      page: 1,
+      query: ''
+    }
+  })
+
+  const tagsList: BranchSelectorListItem[] = useMemo(() => {
+    if (!tags?.body) return []
+
+    return tags.body.map(item => ({
+      name: item?.name || '',
+      sha: item?.sha || '',
+      default: false
+    }))
+  }, [tags])
+
+  const selectBranchorTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          if (sourceBranch) {
+            setSelectedSourceBranch(branch)
+          } else {
+            setSelectedTargetBranch(branch)
+          }
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagsList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          if (sourceBranch) {
+            setSelectedSourceBranch(tag)
+          } else {
+            setSelectedTargetBranch(tag)
+          }
+        }
+      }
+    },
+    [branchList, tagsList]
+  )
+
+  const renderContent = () => {
+    if (isFetchingBranches) return <SkeletonList />
+
+    return (
+      <PullRequestCompare
+        tagList={tagsList}
+        isBranchSelected={isBranchSelected}
+        setIsBranchSelected={setIsBranchSelected}
+        onFormSubmit={onSubmit}
+        onFormCancel={onCancel}
+        apiError={apiError}
+        isLoading={createPullRequestMutation.isLoading}
+        isSuccess={createPullRequestMutation.isSuccess}
+        onFormDraftSubmit={onDraftSubmit}
+        mergeability={mergeability}
+        selectBranch={selectBranchorTag}
+        repoId={repoId || ''}
+        spaceId={spaceId || ''}
+        useTranslationStore={useTranslationStore}
+        branchList={
+          branches
+            ? branches?.map((item: TypesBranchExtended) => ({
+                name: item.name || '',
+                sha: item.sha || ''
+              }))
+            : []
+        }
+        commitData={commitData?.commits?.map((item: TypesCommit) => ({
+          sha: item.sha,
+          parent_shas: item.parent_shas,
+          title: item.title,
+          message: item.message,
+          author: item.author,
+          committer: item.committer
+        }))}
+        targetBranch={selectedTargetBranch}
+        sourceBranch={selectedSourceBranch}
+        prBranchCombinationExists={prBranchCombinationExists}
+        diffData={
+          diffs?.map(item => ({
+            text: item.filePath,
+            data: item.raw,
+            title: item.filePath,
+            lang: item.filePath.split('.')?.[1],
+            addedLines: item.addedLines,
+            removedLines: item.deletedLines,
+            isBinary: item.isBinary,
+            deleted: item.isDeleted,
+            unchangedPercentage: item.unchangedPercentage,
+            blocks: item.blocks
+          })) || []
+        }
+        diffStats={
+          diffStats
+            ? {
+                deletions: diffStats.deletions,
+                additions: diffStats.additions,
+                files_changed: diffStats.files_changed,
+                commits: diffStats.commits
+              }
+            : {}
+        }
+      />
+    )
+  }
+  return <>{renderContent()}</>
+}

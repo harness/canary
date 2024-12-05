@@ -2,6 +2,7 @@
 export * as SandboxLayout from './layouts/SandboxLayout'
 export * from './layouts/SandboxRoot'
 export * from './layouts/Floating1ColumnLayout'
+export * from './layouts/PullRequestCompareLayout'
 
 // Repo
 export * from './repo'

@@ -35,13 +35,9 @@ export default function RepoSummaryPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
 
-  const {
-    data: { body: repository } = {},
-    refetch: refetchRepo,
-    isLoading: isLoadingRepository
-  } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: { body: branches } = {}, isLoading: isLoadingBranches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
@@ -89,7 +85,7 @@ export default function RepoSummaryPage() {
     }))
   }, [branches, repository?.default_branch])
 
-  const { data: tags, isLoading: isLoadingTags } = useListTagsQuery({
+  const { data: tags } = useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -130,14 +126,14 @@ export default function RepoSummaryPage() {
     [navigate, repoId, spaceId, branchList, tagsList]
   )
 
-  const { data: { body: repoSummary } = {}, isLoading: isLoadingSummary } = useSummaryQuery({
+  const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query }
   })
 
   const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
 
-  const { data: { body: readmeContent } = {}, isLoading: isLoadingReadme } = useGetContentQuery({
+  const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
     repo_ref: repoRef,
     queryParams: { include_commit: false, git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
@@ -249,7 +245,7 @@ export default function RepoSummaryPage() {
     })
   }, [branchList])
 
-  const { data: filesData, isLoading: isLoadingPaths } = useListPathsQuery({
+  const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
     queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
   })
@@ -283,15 +279,7 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
-  const isLoading =
-    loading ||
-    isLoadingBranches ||
-    isLoadingPaths ||
-    isLoadingReadme ||
-    isLoadingRepoDetails ||
-    isLoadingRepository ||
-    isLoadingSummary ||
-    isLoadingTags
+  const isLoading = loading || isLoadingRepoDetails
 
   return (
     <>

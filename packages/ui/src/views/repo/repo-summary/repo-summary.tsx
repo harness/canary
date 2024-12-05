@@ -93,24 +93,9 @@ export function RepoSummaryView({
   const navigate = useNavigate()
   const { t } = useTranslationStore()
 
-  const renderListContent = () => {
-    if (loading) return <SkeletonList />
+  if (loading) return <SkeletonList />
 
-    if (repoEntryPathToFileTypeMap.size) {
-      return (
-        <Summary
-          latestFile={{
-            user: { name: latestCommitInfo?.userName || '' },
-            lastCommitMessage: latestCommitInfo?.message || '',
-            timestamp: latestCommitInfo?.timestamp || '',
-            sha: latestCommitInfo?.sha || ''
-          }}
-          files={files}
-          useTranslationStore={useTranslationStore}
-        />
-      )
-    }
-
+  if (!repoEntryPathToFileTypeMap.size) {
     return (
       <NoData
         insideTabView
@@ -179,7 +164,16 @@ export function RepoSummaryView({
               </ListActions.Right>
             </ListActions.Root>
             <Spacer size={5} />
-            {renderListContent()}
+            <Summary
+              latestFile={{
+                user: { name: latestCommitInfo?.userName || '' },
+                lastCommitMessage: latestCommitInfo?.message || '',
+                timestamp: latestCommitInfo?.timestamp || '',
+                sha: latestCommitInfo?.sha || ''
+              }}
+              files={files}
+              useTranslationStore={useTranslationStore}
+            />
             <Spacer size={5} />
             <StackedList.Root>
               <StackedList.Item isHeader disableHover>

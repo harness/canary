@@ -102,7 +102,7 @@ export function RepoList({
                 primary
                 description={repo.description}
                 title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-                className="gap-1.5 truncate"
+                className="gap-1.5 line-clamp-1 text-wrap"
               />
               <StackedList.Field
                 title={

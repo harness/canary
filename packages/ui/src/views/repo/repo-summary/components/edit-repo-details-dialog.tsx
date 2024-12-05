@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import {
   AlertDialog,
@@ -8,12 +8,13 @@ import {
   AlertDialogTitle,
   Button,
   ButtonGroup,
+  Icon,
   Textarea
 } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
-  description?: string
+  description: string
   onSave: (desc: string) => void
   onClose: () => void
   updateRepoError?: string
@@ -26,16 +27,30 @@ export const EditRepoDetails = ({
   onClose,
   updateRepoError
 }: EditRepoDetailsDialog) => {
-  const [newDesc, setNewDesc] = useState<string>(description || '')
+  const [newDesc, setNewDesc] = useState<string>(description)
   const handleClose = () => {
     setNewDesc(description || '')
     onClose()
   }
+  useEffect(() => {
+    setNewDesc(description)
+  }, [description])
   return (
     <AlertDialog open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialogContent className="h-80 max-h-[70vh] max-w-[460px]" onOverlayClick={handleClose}>
+      <AlertDialogContent className="h-80 max-h-[70vh] w-[460px] !rounded" onOverlayClick={handleClose}>
         <AlertDialogHeader>
-          <AlertDialogTitle className="mb-4">Repository Description</AlertDialogTitle>
+          <AlertDialogTitle className="mb-4">
+            Repository Description
+            <Button
+              className="absolute right-1 top-1 text-icons-4 hover:text-icons-2"
+              variant="custom"
+              size="icon"
+              onClick={handleClose}
+            >
+              <Icon name="close" size={16} />
+              <span className="sr-only">Close</span>
+            </Button>
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <Textarea
           label="Description"

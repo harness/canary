@@ -68,21 +68,17 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        {timestamp?.length ? (
+        {!!timestamp?.length && (
           <>
             <Spacer size={2} />
             <span className="text-13 text-foreground-4">Created {timestamp}</span>
           </>
-        ) : (
-          <></>
         )}
-        {description?.length ? (
+        {!!description?.length && (
           <>
             <Spacer size={3} />
             <span className="border-y border-borders-4 py-3 text-14 text-foreground-2">{description}</span>
           </>
-        ) : (
-          <></>
         )}
         <Spacer size={5} />
         <div className="flex flex-col gap-3">

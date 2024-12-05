@@ -45,6 +45,7 @@ export * from './option'
 export * from './calendar'
 export * from './progress'
 export * from './copy-button'
+export * from './no-search-results'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

@@ -19,16 +19,6 @@ interface RepoCommitsViewProps {
   setPage: (page: number) => void
   useTranslationStore: () => TranslationStore
   useBranchSelectorStore: () => IBranchSelectorStore
-
-  // branches?: {
-  //   name?: string
-  //   sha?: string
-  // }[]
-  // selectedBranch: BranchSelectorListItem
-  // selectBranch: (branch: BranchSelectorListItem) => void
-  // repoId: string
-  // tagList: BranchSelectorListItem[]
-  // spaceId: string
 }
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
@@ -46,15 +36,6 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         <div className="flex justify-between gap-5">
           {!props.isFetchingBranches && branchList && (
             <BranchSelector
-              // branchList={props.branches.map(item => ({
-              //   name: item.name || '',
-              //   sha: item.sha || ''
-              // }))}
-              // selectedBranch={props.selectedBranch}
-              // onSelectBranch={props.selectBranch}
-              // tagList={props.tagList}
-              // repoId={props.repoId}
-              // spaceId={props.spaceId}
               useBranchSelectorStore={props.useBranchSelectorStore}
               useTranslationStore={props.useTranslationStore}
             />

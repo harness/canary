@@ -25,10 +25,6 @@ import SummaryPanel from './components/summary-panel'
 
 export interface RepoSummaryViewProps {
   loading: boolean
-  // selectedBranch: BranchSelectorListItem
-  // branchList: BranchSelectorListItem[]
-  // tagList: BranchSelectorListItem[]
-  // selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   filesList: string[]
   navigateToFile: (path: string) => void
   repository:

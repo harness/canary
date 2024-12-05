@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
@@ -8,18 +9,17 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
   const activeTab = location.pathname.split('/').pop() || 'summary'
   const { t } = useTranslationStore()
 
-  // TODO: should have a more robust function that will determine tab since there can be nested states
-  const getFinalTab = () => {
+  const getFinalTab = useMemo(() => {
     if (location.pathname.includes('pulls/compare')) {
       return 'pulls'
     }
     return activeTab
-  }
+  }, [location.pathname, activeTab])
 
   return (
     <>
       <SandboxLayout.SubHeader className="overflow-hidden">
-        <Tabs variant="navigation" value={getFinalTab()}>
+        <Tabs variant="navigation" value={getFinalTab}>
           <TabsList>
             <NavLink to={`summary`}>
               <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>

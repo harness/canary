@@ -47,17 +47,6 @@ const TEXT_CONDITIONS: FilterCondition[] = [
   { label: 'is not empty', value: 'is_not_empty' }
 ]
 
-const NUMBER_CONDITIONS: FilterCondition[] = [
-  { label: '=', value: 'equals' },
-  { label: '≠', value: 'not_equals' },
-  { label: '>', value: 'greater' },
-  { label: '<', value: 'less' },
-  { label: '≥', value: 'greater_equals' },
-  { label: '≤', value: 'less_equals' },
-  { label: 'Is empty', value: 'is_empty' },
-  { label: 'Is not empty', value: 'is_not_empty' }
-]
-
 const FILTER_OPTIONS: FilterOption[] = [
   {
     label: 'Type',
@@ -80,12 +69,6 @@ const FILTER_OPTIONS: FilterOption[] = [
     value: 'name',
     type: 'text',
     conditions: TEXT_CONDITIONS
-  },
-  {
-    label: 'Stars',
-    value: 'stars',
-    type: 'number',
-    conditions: NUMBER_CONDITIONS
   }
 ]
 
@@ -353,7 +336,6 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
    * - For equal values, moves to next sort criteria
    * - Supports following sort types:
    *   - updated: by timestamp
-   *   - stars: by number of stars
    *   - forks: by number of forks
    *   - pulls: by number of pull requests
    *   - title: alphabetically by name

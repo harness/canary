@@ -26,7 +26,7 @@ export const FileViewer: React.FC = () => {
   const subResourcePath = useParams()['*'] || ''
   const repoPath = `/spaces/${spaceId}/repos/${repoId}/code/${gitRef}`
   const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
-  const pathParts = splitPathWithParents(fullResourcePath || '')
+  const pathParts = splitPathWithParents(fullResourcePath || '', repoPath)
   const [files, setFiles] = useState<FileProps[]>([])
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState<string>(gitRef || '')

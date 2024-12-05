@@ -119,17 +119,17 @@ export const RepoSidebar = () => {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          navigate(`/${spaceId}/repos/${repoId}/code/${branch.name}`)
+          navigate(`${branch.name}`)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagsList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          navigate(`/${spaceId}/repos/${repoId}/code/${REFS_TAGS_PREFIX + tag.name}`)
+          navigate(`${REFS_TAGS_PREFIX + tag.name}`)
         }
       }
     },
-    [navigate, repoId, spaceId, branchList, tagsList]
+    [navigate, repoId, branchList, tagsList]
   )
 
   const navigateToNewFile = useCallback(() => {
@@ -143,22 +143,22 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`/${spaceId}/repos/${repoId}/code/new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`)
+          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`)
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`/${spaceId}/repos/${repoId}/code/new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`)
+          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`)
         }
       })
     } else {
-      navigate(`/${spaceId}/repos/${repoId}/code/new/${fullGitRef || selectedBranchTag.name}/~/`)
+      navigate(`new/${fullGitRef || selectedBranchTag.name}/~/`)
     }
-  }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name, spaceId])
+  }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
     },
-    [fullGitRef, selectedBranchTag.name, navigate, repoId, spaceId]
+    [fullGitRef, selectedBranchTag.name, navigate, repoId]
   )
 
   // TODO: repoId and spaceId must be defined

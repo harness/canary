@@ -12,18 +12,12 @@ import {
 import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import useCodePathDetails from '../../hooks/useCodePathDetails'
+import useCodePathDetails, { CodeModes } from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
-
-export enum CodeModes {
-  EDIT = 'edit',
-  NEW = 'new',
-  VIEW = 'view'
-}
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -106,7 +100,7 @@ export const RepoCode = () => {
                     timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
                     user: { name: item?.last_commit?.author?.identity?.name },
                     sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                    path: `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${item?.path}`
+                    path: `${fullGitRef || selectedBranch}/~/${item?.path}`
                   }) as RepoFile
               )
             )

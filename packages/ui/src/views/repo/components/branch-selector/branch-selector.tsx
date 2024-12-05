@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, TranslationStore } from '@/views'
-import { cn } from '@utils/cn'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 

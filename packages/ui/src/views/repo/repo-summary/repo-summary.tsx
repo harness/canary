@@ -18,8 +18,8 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem, RepoFile, SandboxLayout, TranslationStore, IBranchSelectorStore } from '@/views'
-import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelector, Summary } from '@/views/repo/components'
 
 import SummaryPanel from './components/summary-panel'
 
@@ -70,10 +70,8 @@ export function RepoSummaryView({
   filesList,
   navigateToFile,
   repository,
-  handleCreateToken,
   repoEntryPathToFileTypeMap,
   files,
-  decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
   gitRef,
   latestCommitInfo,

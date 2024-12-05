@@ -8,12 +8,6 @@ import { BranchSelector, BranchSelectorTab } from '@views/repo/components'
 interface RepoSidebarProps {
   hasHeader?: boolean
   hasSubHeader?: boolean
-  // repoId: string
-  // spaceId: string
-  // selectedBranch: BranchSelectorListItem
-  // branchList: BranchSelectorListItem[]
-  // tagList: BranchSelectorListItem[]
-  // selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   navigateToNewFile: () => void
   navigateToNewFolder: () => void
   navigateToFile: (file: string) => void

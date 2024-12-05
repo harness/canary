@@ -208,7 +208,7 @@ export function RepoSummaryView({
                   iconName: 'open-pr'
                 }
               ]}
-              timestamp={formatDate(repository?.created!)}
+              timestamp={formatDate(repository?.created || '')}
               description={repository?.description}
               saveDescription={saveDescription}
               updateRepoError={updateRepoError}

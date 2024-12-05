@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC } from 'react'
 
 import {
   Badge,
@@ -10,9 +10,10 @@ import {
   Icon,
   IconProps,
   Spacer,
-  Text,
-  Textarea
+  Text
 } from '@/components'
+
+import { EditRepoDetails } from './edit-repo-details-dialog'
 
 interface DetailItem {
   id: string
@@ -26,90 +27,81 @@ interface SummaryPanelProps {
   details: DetailItem[]
   timestamp?: string
   description?: string
-  onChangeDescription?: () => void
-  isEditingDescription?: boolean
-  setIsEditingDescription: (value: boolean) => void
   saveDescription: (description: string) => void
+  updateRepoError?: string
+  isEditDialogOpen: boolean
+  setEditDialogOpen: (value: boolean) => void
 }
 
 const SummaryPanel: FC<SummaryPanelProps> = ({
   title,
   details,
   timestamp,
-  description,
-  onChangeDescription,
-  isEditingDescription,
-  setIsEditingDescription,
-  saveDescription
+  description = '',
+  saveDescription,
+  updateRepoError,
+  isEditDialogOpen,
+  setEditDialogOpen
 }) => {
-  const [newDesc, setNewDesc] = useState(description)
+  const onClose = () => {
+    setEditDialogOpen(false)
+  }
+  const onSave = (description: string) => {
+    saveDescription(description)
+  }
   return (
-    <div className="flex flex-col">
-      <div className="flex items-center justify-between">
-        <span className="truncate text-18 font-medium">{title}</span>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="sm_icon" aria-label="More options">
-              <Icon name="more-dots-fill" size={12} className="text-icons-3" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem className="flex items-center gap-1.5" onClick={onChangeDescription}>
-              <Icon name="plus" size={12} className="text-tertiary-background" />
-              <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-      <Spacer size={3} />
-      {description?.length && !isEditingDescription && (
-        <span className="line-clamp-3 border-y border-borders-4 py-3 text-14 text-foreground-2">{description}</span>
-      )}
-      {isEditingDescription && (
-        <div>
-          <Textarea
-            className="h-28 text-primary"
-            value={newDesc}
-            defaultValue={description}
-            onChange={(e: ChangeEvent<HTMLTextAreaElement>) => {
-              setNewDesc(e?.target?.value)
-            }}
-          />
-          <div className="flex justify-end gap-3 pt-3">
-            <Button
-              type="button"
-              onClick={() => setIsEditingDescription(false)}
-              className="text-primary"
-              variant="outline"
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                saveDescription(newDesc || '')
-              }}
-            >
-              Save
-            </Button>
-          </div>
+    <>
+      <div className="flex flex-col">
+        <div className="flex items-center justify-between">
+          <span className="truncate text-18 font-medium">{title}</span>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="sm_icon" aria-label="More options">
+                <Icon name="more-dots-fill" size={12} className="text-icons-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
+                <Icon name="plus" size={12} className="text-tertiary-background" />
+                <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
-      )}
-      <Spacer size={2} />
-      {timestamp && <span className="text-13 text-foreground-4">Created {timestamp}</span>}
-      <Spacer size={5} />
-      <div className="flex flex-col gap-3">
-        {details &&
-          details.map(item => (
-            <div key={item.id} className="flex items-center gap-1.5">
-              <Icon name={item.iconName} size={14} className="text-tertiary-background" />
-              <Text>{item.name}</Text>
-              <Badge variant="outline" size="sm">
-                {item.count}
-              </Badge>
-            </div>
-          ))}
+        {!!timestamp?.length && (
+          <>
+            <Spacer size={2} />
+            <span className="text-13 text-foreground-4">Created {timestamp}</span>
+          </>
+        )}
+        {!!description?.length && (
+          <>
+            <Spacer size={3} />
+            <span className="border-y border-borders-4 py-1 text-14 text-foreground-2 line-clamp-6">{description}</span>
+          </>
+        )}
+        <Spacer size={5} />
+        <div className="flex flex-col gap-3">
+          {details &&
+            details.map(item => (
+              <div key={item.id} className="flex items-center gap-1.5">
+                <Icon name={item.iconName} size={14} className="text-tertiary-background" />
+                <Text>{item.name}</Text>
+                <Badge variant="outline" size="sm">
+                  {item.count}
+                </Badge>
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
+      <EditRepoDetails
+        showEditRepoDetails={isEditDialogOpen}
+        description={description}
+        onSave={onSave}
+        onClose={onClose}
+        updateRepoError={updateRepoError}
+      />
+    </>
   )
 }
 

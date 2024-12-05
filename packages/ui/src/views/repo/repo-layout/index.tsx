@@ -26,7 +26,7 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
               <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
             </NavLink>
             <NavLink to={`pulls`}>
-              <TabsTrigger value="pull-requests">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
+              <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
             </NavLink>
             <NavLink to={`webhooks`}>
               <TabsTrigger value="webhooks">{t('views:repos.webhooks', 'Webhooks')}</TabsTrigger>

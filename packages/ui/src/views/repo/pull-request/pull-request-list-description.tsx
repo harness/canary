@@ -1,5 +1,5 @@
-import { Icon } from '../../components/icon'
-import { Text } from '../../components/text'
+import { Icon } from '../../../components/icon'
+import { Text } from '../../../components/text'
 
 export const PullRequestListDescription = ({
   reviewRequired,

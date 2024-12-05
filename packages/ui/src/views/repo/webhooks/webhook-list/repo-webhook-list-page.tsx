@@ -16,7 +16,7 @@ import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spac
 import { useCommonFilter } from '@hooks/useCommonFilter'
 import { formatDistanceToNow } from 'date-fns'
 
-import { SandboxLayout } from '../../index'
+import { SandboxLayout } from '../../../index'
 import { RepoWebhookList } from './repo-webhook-list'
 import { WebhookListProps } from './types'
 

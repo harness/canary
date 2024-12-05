@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn'
 
-import { Icon } from '../../components/icon'
-import { Text } from '../../components/text'
+import { Icon } from '../../../components/icon'
+import { Text } from '../../../components/text'
 
 export const PullRequestListHeaderTitle = ({
   onCloseClick,

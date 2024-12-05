@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom'
 import { NoData } from '@components/no-data'
 import { noop } from 'lodash-es'
 
-import { SandboxLayout, TranslationStore } from '..'
-import { Button, PaginationComponent, Spacer, Text } from '../../components/index'
+import { SandboxLayout, TranslationStore } from '../..'
+import { Button, PaginationComponent, Spacer, Text } from '../../../components/index'
 import { PullRequestList as PullRequestListContent } from './pull-request-list'
 import { PullRequestStore, PullRequestType, RepoRepositoryOutput } from './types'
 

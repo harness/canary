@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import * as StackedList from '../../components/stacked-list'
+import * as StackedList from '../../../components/stacked-list'
 import { PullRequestListDescription } from './pull-request-list-description'
 import { PullRequestListHeaderTitle } from './pull-request-list-header-title'
 import { PullRequestListTitle } from './pull-request-list-title'

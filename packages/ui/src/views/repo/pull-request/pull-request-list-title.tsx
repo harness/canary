@@ -1,9 +1,9 @@
 import { cn } from '@utils/cn'
 
-import { Badge } from '../../components/badge'
-import { Icon } from '../../components/icon'
-import * as StackedList from '../../components/stacked-list'
-import { Text } from '../../components/text'
+import { Badge } from '../../../components/badge'
+import { Icon } from '../../../components/icon'
+import * as StackedList from '../../../components/stacked-list'
+import { Text } from '../../../components/text'
 import { getPrState } from './utils'
 
 const colorMapping: { [key: string]: { border: string; text: string; bg: string } } = {

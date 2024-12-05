@@ -1,11 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { container } = require('webpack')
 
-// import packageJson from './package.json' assert { type: 'json' }
-
 const { ModuleFederationPlugin } = container
-
-// const { dependencies } = packageJson
 
 module.exports = {
   mode: 'development',
@@ -20,9 +16,6 @@ module.exports = {
       'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
     }
   },
-  // output: {
-  //   crossOriginLoading: 'anonymous'
-  // },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
@@ -47,7 +40,8 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         // './PipelineList': './src/pages/pipeline/repo-pipeline-list.tsx',
-        './Button': './src/components/exportComponents/Button.tsx'
+        './Button': './src/components/exportComponents/Button.tsx',
+        './MicroFrontendApp': './src/AppMFE.tsx'
       },
       shared: {
         react: {

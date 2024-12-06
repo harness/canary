@@ -359,7 +359,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   }))
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery)
+    setSearchQuery(searchQuery || null)
   }, 300)
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
@@ -430,7 +430,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             query={searchQuery ?? ''}
             handleResetQuery={() => {
               setSearchInput('')
-              setSearchQuery('')
+              setSearchQuery(null)
             }}
             useTranslationStore={useTranslationStore}
             isLoading={isLoading}

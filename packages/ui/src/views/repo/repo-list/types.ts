@@ -33,5 +33,5 @@ export interface RepoListProps {
   isError: boolean
   errorMessage?: string
   searchQuery?: string | null
-  setSearchQuery: (query: string) => void
+  setSearchQuery: (query: string | null) => void
 }

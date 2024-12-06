@@ -40,7 +40,7 @@ export default function RepoCommitsPage() {
 
     repoId && setRepoId(repoId)
     spaceId && setSpaceId(spaceId)
-  }, [branches, repoId, spaceId, branchList])
+  }, [branches, repoId, spaceId])
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
@@ -56,9 +56,9 @@ export default function RepoCommitsPage() {
   useEffect(() => {
     if (repository) {
       const defaultBranchSha = branches?.find(branch => branch.name === repository?.default_branch)?.sha || ''
-      !selectedBranchTag && setSelectedBranchTag({ name: repository?.default_branch || '', sha: defaultBranchSha })
+      setSelectedBranchTag({ name: repository?.default_branch || '', sha: defaultBranchSha })
     }
-  }, [repository, selectedBranchTag])
+  }, [repository])
 
   return (
     <RepoCommitsView

@@ -10,7 +10,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PageResponseHeader } from '../../types'
 import { BreadcrumbDropdown, BreadcrumbDropdownProps } from './breadcrumb-dropdown'
-import { getBreadcrumbMatchers } from './breadcrumbs-utils'
+import { getBreadcrumbMatchers, ROUTE_BASE_PATH } from './breadcrumbs-utils'
 
 const MAX_DROPDOWN_ITEMS = 10
 
@@ -20,6 +20,9 @@ export default function Breadcrumbs() {
   const repoRef = useGetRepoRef()
   const { pipelineId, repoId, executionId: executionIdParam } = useParams()
   const executionId = executionIdParam ? parseInt(executionIdParam) : undefined
+
+  console.log(space)
+  console.log(repoRef)
 
   const { spaces: spacesAll } = useAppContext()
   const spaces = useMemo(() => [...spacesAll].splice(0, 10), [spacesAll])
@@ -66,14 +69,14 @@ export default function Breadcrumbs() {
       const items = spaces.map(spaceItem => ({
         key: spaceItem.path as string,
         label: spaceItem.path as string,
-        path: `/spaces/${spaceItem.path}/repos`,
+        path: ROUTE_BASE_PATH + `/spaces/${spaceItem.path}/repos`,
         value: spaceItem.path as string
       }))
 
       items.push({
         label: 'Create Project',
-        key: '/spaces/create',
-        path: '/spaces/create',
+        key: ROUTE_BASE_PATH + '/spaces/create',
+        path: ROUTE_BASE_PATH + '/spaces/create',
         value: ''
       })
       return { items, selectedValue: space, placeholder: 'Select project' }
@@ -87,15 +90,15 @@ export default function Breadcrumbs() {
       items = repos?.map(repo => ({
         key: repo.identifier as string,
         label: repo.identifier as string,
-        path: `/spaces/${space}/repos/${repo.identifier}`,
+        path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repo.identifier}`,
         value: repo.identifier as string
       }))
 
       if (hasMoreRepos) {
         items?.push({
           label: 'View all',
-          key: `/spaces/${space}/repos`,
-          path: `/spaces/${space}/repos`,
+          key: ROUTE_BASE_PATH + `/spaces/${space}/repos`,
+          path: ROUTE_BASE_PATH + `/spaces/${space}/repos`,
           value: ''
         })
       }
@@ -104,7 +107,7 @@ export default function Breadcrumbs() {
       const selectedItem = {
         key: repoId as string,
         label: repoId as string,
-        path: `/spaces/${space}/repos/${repoId}}}`,
+        path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}}}`,
         value: repoId as string
       }
 
@@ -117,15 +120,15 @@ export default function Breadcrumbs() {
       const items = pipelines.map(pipeline => ({
         key: pipeline.identifier as string,
         label: pipeline.identifier as string,
-        path: `/spaces/${space}/repos/${repoId}/pipelines/${pipeline.identifier}`,
+        path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipeline.identifier}`,
         value: pipeline.identifier as string
       }))
 
       if (hasMorePipelines) {
         items.push({
           label: 'View all',
-          key: `/spaces/${space}/repos/${repoId}/pipelines`,
-          path: `/spaces/${space}/repos/${repoId}/pipelines`,
+          key: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines`,
+          path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines`,
           value: ''
         })
       }
@@ -134,7 +137,7 @@ export default function Breadcrumbs() {
       const selectedItem = {
         key: pipelineId as string,
         label: pipelineId as string,
-        path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}}`,
+        path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}}`,
         value: pipelineId as string
       }
 
@@ -147,15 +150,16 @@ export default function Breadcrumbs() {
       const items = executions.map(execution => ({
         key: `${execution.number}`,
         label: `${execution.number}`,
-        path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${execution.number}`,
+        path:
+          ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${execution.number}`,
         value: execution.number as number
       }))
 
       if (hasMoreExecutions) {
         items.push({
           label: 'View all',
-          key: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
-          path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+          key: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+          path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
           value: -1
         })
       }
@@ -164,7 +168,7 @@ export default function Breadcrumbs() {
       const selectedItem = {
         key: `${executionId}`,
         label: `${executionId}`,
-        path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
+        path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
         value: executionId as number
       }
 
@@ -177,14 +181,14 @@ export default function Breadcrumbs() {
       const items = [
         {
           label: 'Executions',
-          key: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
-          path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+          key: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+          path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
           value: 'executions'
         },
         {
           label: 'Edit',
-          key: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
-          path: `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
+          key: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
+          path: ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
           value: 'edit'
         }
       ]
@@ -211,7 +215,7 @@ export default function Breadcrumbs() {
                 <BreadcrumbSeparator>/</BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to={`/spaces/${space}/repos`}>Repositories</Link>
+                    <Link to={ROUTE_BASE_PATH + `/spaces/${space}/repos`}>Repositories</Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </>
@@ -231,7 +235,9 @@ export default function Breadcrumbs() {
                 <BreadcrumbSeparator>/</BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to={`/spaces/${space}/repos/${repoId}${repoPageMatch.path}`}>{repoPageMatch.label}</Link>
+                    <Link to={ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}${repoPageMatch.path}`}>
+                      {repoPageMatch.label}
+                    </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </>
@@ -251,7 +257,9 @@ export default function Breadcrumbs() {
                 <BreadcrumbSeparator>/</BreadcrumbSeparator>
                 <BreadcrumbItem>
                   <BreadcrumbLink asChild>
-                    <Link to={`/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`}>Executions</Link>
+                    <Link to={ROUTE_BASE_PATH + `/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`}>
+                      Executions
+                    </Link>
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               </>

@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
+import { Card } from '@components/card'
+import { Input } from '@components/input'
+import { Text } from '@components/text'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
-
-import { Card, Input, Text } from '@harnessio/ui/components'
 
 import constants from './constants'
 

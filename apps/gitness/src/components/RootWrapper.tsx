@@ -14,18 +14,16 @@ const RootWrapper = () => {
   const { recent, pinned, setRecent, setPinned, setNavLinks } = useNav()
 
   return (
-    <>
-      <SandboxRoot
-        t={t}
-        currentUser={currentUser}
-        pinnedMenu={pinned}
-        recentMenu={recent}
-        setPinned={setPinned}
-        setRecent={setRecent}
-        setNavLinks={setNavLinks}
-        logout={() => navigate('/logout')}
-      />
-    </>
+    <SandboxRoot
+      t={t}
+      currentUser={currentUser}
+      pinnedMenu={pinned}
+      recentMenu={recent}
+      setPinned={setPinned}
+      setRecent={setRecent}
+      setNavLinks={setNavLinks}
+      logout={() => navigate('/logout')}
+    />
   )
 }
 

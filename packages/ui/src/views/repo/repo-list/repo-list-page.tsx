@@ -369,6 +369,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
 
   const handleResetQuery = () => {
     setValue('')
+
     handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
   }
 
@@ -432,6 +433,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             query={query ?? ''}
             handleResetQuery={handleResetQuery}
             useTranslationStore={useTranslationStore}
+            isLoading={isLoading}
           />
           <Spacer size={8} />
           <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />

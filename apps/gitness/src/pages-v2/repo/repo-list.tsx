@@ -24,6 +24,8 @@ export default function ReposListPage() {
     data: { body: repoData, headers } = {},
     refetch,
     isLoading,
+    isRefetching,
+    isFetching,
     isError,
     error
   } = useListReposQuery(
@@ -70,7 +72,7 @@ export default function ReposListPage() {
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
       useTranslationStore={useTranslationStore}
-      isLoading={isLoading}
+      isLoading={isLoading || isRefetching || isFetching}
       isError={isError}
       errorMessage={error?.message}
     />

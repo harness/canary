@@ -1,4 +1,4 @@
-import { Badge, Icon, NoData, StackedList } from '@/components'
+import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { TFunction } from 'i18next'
 
 import { RepositoryType, TranslationStore } from './types'
@@ -42,7 +42,8 @@ export function RepoList({
   hasActiveFilters,
   query,
   handleResetQuery,
-  useTranslationStore
+  useTranslationStore,
+  isLoading
 }: PageProps) {
   const noData = !(repos && repos.length > 0)
   const { t } = useTranslationStore()
@@ -51,6 +52,7 @@ export function RepoList({
     return (
       <StackedList.Root>
         <div className="flex min-h-[50vh] items-center justify-center py-20">
+          {isLoading && <SkeletonList />}
           {hasActiveFilters || query ? (
             <NoData
               iconName="no-search-magnifying-glass"

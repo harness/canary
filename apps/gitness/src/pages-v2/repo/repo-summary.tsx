@@ -143,7 +143,7 @@ export default function RepoSummaryPage() {
     return decodeGitContent(readmeContent?.content?.data)
   }, [readmeContent])
 
-  const { data: { body: repoDetails } = {} } = useGetContentQuery({
+  const { data: { body: repoDetails } = {}, isLoading: isLoadingRepoDetails } = useGetContentQuery({
     path: '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) }
@@ -279,10 +279,12 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
+  const isLoading = loading || isLoadingRepoDetails
+
   return (
     <>
       <RepoSummaryView
-        loading={loading}
+        loading={isLoading}
         selectedBranch={selectedBranchTag}
         branchList={branchList}
         tagList={tagsList}

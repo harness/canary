@@ -1,10 +1,10 @@
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from 'react'
+import { ChangeEvent, FC, ReactNode, useCallback, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, set } from 'date-fns'
 import { debounce } from 'lodash-es'
 
 import { SandboxLayout } from '../../index'
@@ -27,6 +27,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)
+  const [searchInput, setSearchInput] = useState(searchQuery)
 
   // State for storing saved filters and sorts
   // null means no saved state exists
@@ -361,9 +362,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setSearchQuery(searchQuery)
   }, 300)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }
+  }, [])
 
   if (isError)
     return (
@@ -393,7 +395,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               <SearchBox.Root
                 width="full"
                 className="max-w-96"
-                defaultValue={searchQuery || ''}
+                // defaultValue={searchQuery || ''}
+                value={searchInput || ''}
                 handleChange={handleInputChange}
                 placeholder={t('views:repos.search')}
               />
@@ -425,7 +428,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
             query={searchQuery ?? ''}
-            handleResetQuery={() => setSearchQuery('')}
+            handleResetQuery={() => {
+              setSearchInput('')
+              setSearchQuery('')
+            }}
             useTranslationStore={useTranslationStore}
             isLoading={isLoading}
           />

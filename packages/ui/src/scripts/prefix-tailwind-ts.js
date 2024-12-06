@@ -3,18 +3,18 @@
  * For e.g., "--background" gets updated to "--canary-background"
  */
 
-const fs = require('fs')
+import { readFileSync, writeFileSync } from 'fs'
 
 // Function to add a prefix to CSS variables
 function addPrefixToCssVariables(inputPath, outputPath, prefix = 'canary') {
   // Read the content of the input file
-  const content = fs.readFileSync(inputPath, 'utf8')
+  const content = readFileSync(inputPath, 'utf8')
 
   // Use a regex to find and replace CSS variables with the prefix
   const updatedContent = content.replace(/--([a-zA-Z0-9-]+)/g, `--${prefix}-$1`)
 
   // Write the updated content to the output file
-  fs.writeFileSync(outputPath, updatedContent, 'utf8')
+  writeFileSync(outputPath, updatedContent, 'utf8')
 
   console.log(`Updated file saved to: ${outputPath}`)
 }

@@ -12,7 +12,7 @@ import { TypesCommit } from './types'
 interface RepoCommitsViewProps {
   isFetchingCommits: boolean
   isFetchingBranches: boolean
-  commitsList: TypesCommit[] | null | undefined
+  commitsList?: TypesCommit[] | null
   xNextPage: number
   xPrevPage: number
   page: number

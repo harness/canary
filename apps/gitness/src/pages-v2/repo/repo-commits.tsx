@@ -29,14 +29,14 @@ export default function RepoCommitsPage() {
     useBranchSelectorStore()
 
   useEffect(() => {
-    branches &&
-      !branchList &&
+    if (branches) {
       setBranchList(
         branches.map(item => ({
           name: item.name || '',
           sha: item.sha || ''
         }))
       )
+    }
 
     repoId && setRepoId(repoId)
     spaceId && setSpaceId(spaceId)

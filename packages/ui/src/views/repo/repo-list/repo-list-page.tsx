@@ -425,7 +425,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
             query={searchQuery ?? ''}
-            handleResetQuery={() => {}}
+            handleResetQuery={() => setSearchQuery('')}
             useTranslationStore={useTranslationStore}
             isLoading={isLoading}
           />

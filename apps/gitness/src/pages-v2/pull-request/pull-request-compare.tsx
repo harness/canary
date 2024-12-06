@@ -313,7 +313,7 @@ export const CreatePullRequest = () => {
     [branchList, tagsList]
   )
 
-  const { setTagList, setBranchList, setRepoId, setSpaceId } = useRepoBranchesStore()
+  const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
 
   useEffect(() => {
     setTagList(tagsList)
@@ -321,8 +321,7 @@ export const CreatePullRequest = () => {
   }, [tagsList, branchList])
 
   useEffect(() => {
-    setRepoId(repoId || '')
-    setSpaceId(spaceId || '')
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
   const renderContent = () => {

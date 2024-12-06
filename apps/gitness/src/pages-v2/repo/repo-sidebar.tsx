@@ -23,7 +23,7 @@ import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
-  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceId, setRepoId } = useRepoBranchesStore()
+  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceIdAndRepoId } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -32,9 +32,11 @@ export const RepoSidebar = () => {
 
   useEffect(() => {
     !selectedBranchTag && setSelectedBranchTag({ name: fullGitRef || '', sha: '' })
-    setSpaceId(spaceId || '')
-    setRepoId(repoId || '')
-  }, [fullGitRef, spaceId, repoId, selectedBranchTag])
+  }, [fullGitRef, selectedBranchTag])
+
+  useEffect(() => {
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
+  }, [spaceId, repoId])
 
   const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
 

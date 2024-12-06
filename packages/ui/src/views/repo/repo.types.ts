@@ -63,9 +63,7 @@ export interface IBranchSelectorStore {
   tagList: BranchSelectorListItem[]
   setTagList: (tagList: BranchSelectorListItem[]) => void
 
-  repoId: string
-  setRepoId: (repoId: string) => void
-
   spaceId: string
-  setSpaceId: (spaceId: string) => void
+  repoId: string
+  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => void
 }

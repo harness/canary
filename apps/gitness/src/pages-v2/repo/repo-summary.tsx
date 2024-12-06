@@ -39,8 +39,7 @@ export default function RepoSummaryPage() {
   const {
     branchList,
     setBranchList,
-    setSpaceId,
-    setRepoId,
+    setSpaceIdAndRepoId,
     selectedBranchTag,
     setSelectedBranchTag,
     selectedBranchType
@@ -54,8 +53,7 @@ export default function RepoSummaryPage() {
   })
 
   useEffect(() => {
-    setSpaceId(spaceId || '')
-    setRepoId(repoId || '')
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
   const { mutate: updateDescription } = useUpdateRepositoryMutation(

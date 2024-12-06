@@ -25,7 +25,7 @@ export default function RepoCommitsPage() {
     queryParams: { page }
   })
 
-  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } = useRepoBranchesStore()
+  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setSpaceIdAndRepoId } = useRepoBranchesStore()
 
   useEffect(() => {
     if (branches) {
@@ -36,10 +36,11 @@ export default function RepoCommitsPage() {
         }))
       )
     }
+  }, [branches])
 
-    repoId && setRepoId(repoId)
-    spaceId && setSpaceId(spaceId)
-  }, [branches, repoId, spaceId])
+  useEffect(() => {
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
+  }, [spaceId, repoId])
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,

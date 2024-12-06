@@ -15,9 +15,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   tagList: [{ name: '', sha: '' }],
   setTagList: (tagList: BranchSelectorListItem[]) => set({ tagList }),
 
-  repoId: '',
-  setRepoId: (repoId: string) => set({ repoId }),
-
   spaceId: '',
-  setSpaceId: (spaceId: string) => set({ spaceId })
+  repoId: '',
+  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => set({ spaceId, repoId })
 }))

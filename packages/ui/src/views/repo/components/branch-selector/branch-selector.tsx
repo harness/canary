@@ -47,19 +47,17 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>
       </DropdownMenuTrigger>
-      {branchList && (
-        <BranchSelectorDropdown
-          branchList={branchList}
-          tagList={tagList}
-          onSelectBranch={onSelectBranch}
-          selectedBranch={selectedBranch || selectedBranchTag}
-          setSelectedBranchTag={setSelectedBranchTag}
-          setSelectedBranchType={setSelectedBranchType}
-          repoId={repoId}
-          spaceId={spaceId}
-          useTranslationStore={useTranslationStore}
-        />
-      )}
+      <BranchSelectorDropdown
+        branchList={branchList}
+        tagList={tagList}
+        onSelectBranch={onSelectBranch}
+        selectedBranch={selectedBranch || selectedBranchTag}
+        setSelectedBranchTag={setSelectedBranchTag}
+        setSelectedBranchType={setSelectedBranchType}
+        repoId={repoId}
+        spaceId={spaceId}
+        useTranslationStore={useTranslationStore}
+      />
     </DropdownMenu>
   )
 }

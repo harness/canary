@@ -626,10 +626,6 @@ export default function App() {
       path: 'cloud-costs',
       element: <EmptyPage pathName="Cloud Cost Management" />
     },
-    // {
-    //   path: 'databases',
-    //   element: <h1>DBs</h1>
-    // },
     {
       path: 'incidents',
       element: <EmptyPage pathName="Incidents" />

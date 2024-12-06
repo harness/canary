@@ -42,7 +42,9 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={12} />
           )}
           <Text className="w-full text-foreground-8" truncate align="left">
-            {branchPrefix ? `${branchPrefix}: ${selectedBranchTag.name}` : selectedBranchTag.name}
+            {branchPrefix
+              ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchTag.name}`
+              : selectedBranch?.name || selectedBranchTag.name}
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>

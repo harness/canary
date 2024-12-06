@@ -1,55 +1,31 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
 import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
 import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
-import { MenuGroupType, MenuGroupTypes, NavbarItemIdType, NavbarItemType } from '@components/navbar/types'
+import { MenuGroupType, MenuGroupTypes, NavbarItemType } from '@components/navbar/types'
 import { useLocationChange } from '@hooks/use-location-change'
 import { TFunction } from 'i18next'
 
 import { SandboxLayout } from '../index'
 
-/**
- * Returns the complete menu model based on an array of IDs,
- * using the navbarMenuData variable as a reference.
- */
-const getArrayOfNavItems = (data: NavbarItemIdType[], t: TFunction) => {
-  if (!Array.isArray(data) || !data.length) return []
-
-  const navbarMenuData = getNavbarMenuData(t)
-
-  const routes = navbarMenuData.reduce((acc: NavbarItemType[], item) => {
-    return [...acc, ...item.items]
-  }, [])
-
-  const filteredRoutes = []
-
-  // To maintain the same order
-  for (const item of data) {
-    const foundItem = routes.find(route => route.id === item)
-    if (foundItem) {
-      filteredRoutes.push(foundItem)
-    }
+interface NavLinkStorageInterface {
+  state: {
+    recent: NavbarItemType[]
+    pinned: NavbarItemType[]
   }
-
-  return filteredRoutes
 }
 
 export interface SandboxRootProps {
   currentUser: TypesUser | undefined
-  // If the user hasn't interacted with the pinned menu items yet,
-  // return null — this will ensure the default pinned items are applied.
-  //
-  // However, if the user has manually selected or removed all pinned items
-  // (i.e., taken any action with the pinned menu),
-  // then you should return an array of IDs or an empty array.
-  pinnedMenu: NavbarItemIdType[] | null
-  recentMenu: NavbarItemIdType[]
+  pinnedMenu: NavbarItemType[]
+  recentMenu: NavbarItemType[]
   logout?: () => void
-  changePinnedMenu: (items: NavbarItemIdType[]) => void
-  changeRecentMenu: (items: NavbarItemIdType[]) => void
+  setPinned: (items: NavbarItemType, pin: boolean) => void
+  setRecent: (items: NavbarItemType, remove?: boolean) => void
+  setNavLinks: (links: { pinned?: NavbarItemType[]; recent?: NavbarItemType[] }) => void
   t: TFunction
 }
 
@@ -58,58 +34,42 @@ export const SandboxRoot = ({
   pinnedMenu,
   recentMenu,
   logout,
-  changePinnedMenu,
-  changeRecentMenu,
+  setPinned,
+  setRecent,
+  setNavLinks,
   t
 }: SandboxRootProps) => {
   const location = useLocation()
 
-  const [recentMenuItems, setRecentMenuItems] = useState<NavbarItemType[]>([])
-  const [pinnedMenuItems, setPinnedMenuItems] = useState<NavbarItemType[]>([])
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
   const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
 
-  const handleChangeRecentMenu = useCallback(
-    (nextRouteData: NavbarItemType) => {
-      if (!pinnedMenu || !pinnedMenu.includes(nextRouteData.id)) {
-        changeRecentMenu([...new Set([nextRouteData.id, ...recentMenu])])
-      }
-    },
-    [changeRecentMenu, pinnedMenu, recentMenu]
-  )
-
-  useLocationChange({ t, onRouteChange: handleChangeRecentMenu })
-
-  /**
-   * Update pinned manu
-   */
-  useLayoutEffect(() => {
-    if (!pinnedMenu) {
-      setPinnedMenuItems(pinnedMenuItemsData)
-      return
-    }
-
-    setPinnedMenuItems(getArrayOfNavItems(pinnedMenu, t))
-  }, [pinnedMenu, pinnedMenuItemsData, t])
-
-  /**
-   * Update recent menu
-   */
-  useLayoutEffect(() => {
-    const nextRecentItems = getArrayOfNavItems(recentMenu ?? [], t)
-    const filteredRecentItems = nextRecentItems.filter(
-      item => !pinnedMenuItems?.some(pinnedItem => pinnedItem.id === item.id)
-    )
-
-    setRecentMenuItems(filteredRecentItems)
-  }, [pinnedMenuItems, recentMenu, t])
+  useLocationChange({ t, onRouteChange: setRecent })
 
   useEffect(() => {
-    console.log('recentMenuItems', recentMenuItems)
-  }, [recentMenuItems])
+    const linksFromStorage = localStorage.getItem('nav-items')
+    let parsedLinksFromStorage: NavLinkStorageInterface | undefined
+
+    if (linksFromStorage) {
+      parsedLinksFromStorage = JSON.parse(linksFromStorage)
+    }
+
+    /**
+     * Logic for setting initial pinned links
+     *
+     * setting initial pinned link only if no pinned links are stored in local storage.
+     * Pinned links cannot be empty as we will have some links permanantly.
+     */
+    if (parsedLinksFromStorage && !parsedLinksFromStorage?.state?.pinned?.length) {
+      const pinnedItems = pinnedMenu.filter(
+        item => !pinnedMenuItemsData.some(staticPinned => staticPinned.id === item.id)
+      )
+      setNavLinks({ pinned: [...pinnedMenuItemsData, ...pinnedItems] })
+    }
+  }, [])
 
   /**
    * Map mock data menu by type to Settings and More
@@ -178,9 +138,14 @@ export const SandboxRoot = ({
   /**
    * Handle save recent and pinned items
    */
-  const handleSave = (recentItems: NavbarItemType[], currentPinnedItems: NavbarItemType[]) => {
-    changeRecentMenu(recentItems.map(item => item.id))
-    changePinnedMenu(currentPinnedItems.map(item => item.id))
+  const handleSave = (nextRecentItems: NavbarItemType[], nextPinnedItems: NavbarItemType[]) => {
+    console.log('nextRecentItems', nextRecentItems)
+    console.log('nextPinnedItems', nextPinnedItems)
+
+    setNavLinks({
+      pinned: nextPinnedItems,
+      recent: nextRecentItems
+    })
   }
 
   /**
@@ -188,40 +153,19 @@ export const SandboxRoot = ({
    */
   const handleRemoveRecentMenuItem = useCallback(
     (item: NavbarItemType) => {
-      const data = recentMenuItems.reduce<NavbarItemIdType[]>((acc, recentMenuItem) => {
-        if (recentMenuItem.id !== item.id) {
-          acc.push(recentMenuItem.id)
-        }
-
-        return acc
-      }, [])
-
-      changeRecentMenu(data)
+      setRecent(item, true)
     },
-    [recentMenuItems, changeRecentMenu]
+    [setRecent]
   )
 
   /**
    * Change pinned menu items
    */
   const handleChangePinnedMenuItem = useCallback(
-    (item: NavbarItemType) => {
-      const getPinnedItems = (data: NavbarItemType[]) => {
-        const isPinned = data.some(pinned => pinned.id === item.id)
-
-        if (isPinned) {
-          return data.filter(pinned => pinned.id !== item.id)
-        }
-
-        // If pin item, remove it from recent
-        handleRemoveRecentMenuItem(item)
-
-        return [...data, item]
-      }
-
-      changePinnedMenu(getPinnedItems(pinnedMenuItems).map(it => it.id))
+    (item: NavbarItemType, pin: boolean) => {
+      setPinned(item, pin)
     },
-    [handleRemoveRecentMenuItem, pinnedMenuItems, changePinnedMenu]
+    [setPinned]
   )
 
   return (
@@ -235,8 +179,8 @@ export const SandboxRoot = ({
           currentUser={currentUser}
           handleCustomNav={handleCustomNav}
           handleLogOut={handleLogOut}
-          recentMenuItems={recentMenuItems}
-          pinnedMenuItems={pinnedMenuItems}
+          recentMenuItems={recentMenu}
+          pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
           t={t}
@@ -246,8 +190,8 @@ export const SandboxRoot = ({
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
       <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
       <ManageNavigation
-        pinnedItems={pinnedMenuItems}
-        recentItems={recentMenuItems}
+        pinnedItems={pinnedMenu}
+        recentItems={recentMenu}
         navbarMenuData={getNavbarMenuData(t)}
         showManageNavigation={showCustomNav}
         isSubmitting={false}

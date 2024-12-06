@@ -20,6 +20,7 @@ interface NavbarItemType {
   iconName: IconProps['name']
   description?: string
   to: string
+  permanentlyPinned?: boolean
 }
 
 export enum UserMenuKeys {

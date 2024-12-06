@@ -24,7 +24,7 @@ interface NavbarProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
-  handleChangePinnedMenuItem: (item: NavbarItemType) => void
+  handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   t: TFunction
 }

@@ -66,7 +66,7 @@ interface SandboxPullRequestCompareProps {
   setIsBranchSelected: (val: boolean) => void
   prBranchCombinationExists: number | null
   useTranslationStore: () => TranslationStore
-  useBranchSelectorStore: () => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -88,7 +88,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  useBranchSelectorStore
+  useRepoBranchesStore
 }) => {
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -149,7 +149,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             <Icon name="pull" size={16} className="text-tertiary-background" />
             <BranchSelector
               useTranslationStore={useTranslationStore}
-              useBranchSelectorStore={useBranchSelectorStore}
+              useRepoBranchesStore={useRepoBranchesStore}
               branchPrefix="base"
               selectedBranch={targetBranch}
               onSelectBranch={(branchTag, type) => {
@@ -161,7 +161,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             <Icon name="arrow-long" size={14} className="rotate-180 text-tertiary-background" />
             <BranchSelector
               useTranslationStore={useTranslationStore}
-              useBranchSelectorStore={useBranchSelectorStore}
+              useRepoBranchesStore={useRepoBranchesStore}
               branchPrefix="compare"
               selectedBranch={sourceBranch}
               onSelectBranch={(branchTag, type) => {

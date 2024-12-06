@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
 
-export const useBranchSelectorStore = create<IBranchSelectorStore>(set => ({
+export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   selectedBranchTag: { name: '', sha: '' },
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => set({ selectedBranchTag }),
 

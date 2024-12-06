@@ -13,7 +13,7 @@ interface RepoSidebarProps {
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
-  useBranchSelectorStore: () => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
 }
 
@@ -25,10 +25,10 @@ export const RepoSidebar = ({
   navigateToFile,
   filesList,
   children,
-  useBranchSelectorStore,
+  useRepoBranchesStore,
   useTranslationStore
 }: RepoSidebarProps) => {
-  const { branchList } = useBranchSelectorStore()
+  const { branchList } = useRepoBranchesStore()
 
   return (
     <SandboxLayout.LeftSubPanel className="w-[248px]" hasHeader={hasHeader} hasSubHeader={hasSubHeader}>
@@ -36,10 +36,7 @@ export const RepoSidebar = ({
         <div className="flex w-full flex-col gap-3 p-5 pb-0 pr-0">
           <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-3 pr-5">
             {branchList && (
-              <BranchSelector
-                useBranchSelectorStore={useBranchSelectorStore}
-                useTranslationStore={useTranslationStore}
-              />
+              <BranchSelector useRepoBranchesStore={useRepoBranchesStore} useTranslationStore={useTranslationStore} />
             )}
             <ButtonGroup spacing="0" className="h-full overflow-hidden rounded shadow-as-border shadow-borders-2">
               <Button

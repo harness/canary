@@ -57,7 +57,7 @@ export interface RepoSummaryViewProps {
   isEditingDescription?: boolean
   setIsEditingDescription: (value: boolean) => void
   saveDescription: (description: string) => void
-  useBranchSelectorStore: () => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
 }
 
@@ -76,11 +76,11 @@ export function RepoSummaryView({
   setIsEditingDescription,
   saveDescription,
   useTranslationStore,
-  useBranchSelectorStore
+  useRepoBranchesStore
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
-  const { repoId, spaceId, selectedBranchTag } = useBranchSelectorStore()
+  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
   if (loading) return <SkeletonList />
 
@@ -106,7 +106,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup>
                   <BranchSelector
-                    useBranchSelectorStore={useBranchSelectorStore}
+                    useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
                   />
                   <SearchFiles

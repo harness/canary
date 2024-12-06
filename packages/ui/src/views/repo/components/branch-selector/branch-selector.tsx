@@ -6,7 +6,7 @@ import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, Transl
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
 interface BranchSelectorProps {
-  useBranchSelectorStore: () => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
   buttonSize?: 'default' | 'sm'
@@ -14,7 +14,7 @@ interface BranchSelectorProps {
   onSelectBranch?: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
-  useBranchSelectorStore,
+  useRepoBranchesStore,
   useTranslationStore,
   branchPrefix,
   buttonSize = 'default',
@@ -30,7 +30,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     setSelectedBranchType,
     repoId,
     spaceId
-  } = useBranchSelectorStore()
+  } = useRepoBranchesStore()
 
   const isTag = selectedBranchTag
     ? tagList.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)

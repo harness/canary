@@ -29,7 +29,7 @@ import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../p
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { useBranchSelectorStore } from '../repo/stores/repo-branch-selector-store'
+import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -313,7 +313,7 @@ export const CreatePullRequest = () => {
     [branchList, tagsList]
   )
 
-  const { setTagList, setBranchList, setRepoId, setSpaceId } = useBranchSelectorStore()
+  const { setTagList, setBranchList, setRepoId, setSpaceId } = useRepoBranchesStore()
 
   useEffect(() => {
     setTagList(tagsList)
@@ -341,7 +341,7 @@ export const CreatePullRequest = () => {
         mergeability={mergeability}
         selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
-        useBranchSelectorStore={useBranchSelectorStore}
+        useRepoBranchesStore={useRepoBranchesStore}
         commitData={commitData?.commits?.map((item: TypesCommit) => ({
           sha: item.sha,
           parent_shas: item.parent_shas,

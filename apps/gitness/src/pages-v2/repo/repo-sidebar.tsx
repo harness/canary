@@ -17,14 +17,13 @@ import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
-import { useBranchSelectorStore } from './stores/repo-branch-selector-store.ts'
+import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
-  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceId, setRepoId } =
-    useBranchSelectorStore()
+  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceId, setRepoId } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -172,7 +171,7 @@ export const RepoSidebar = () => {
       <RepoSidebarView
         hasHeader
         hasSubHeader
-        useBranchSelectorStore={useBranchSelectorStore}
+        useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationStore}
         // TODO: new props navigateToNewFolder
         navigateToNewFolder={() => {}}

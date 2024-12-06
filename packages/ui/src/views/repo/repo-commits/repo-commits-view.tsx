@@ -18,12 +18,12 @@ interface RepoCommitsViewProps {
   page: number
   setPage: (page: number) => void
   useTranslationStore: () => TranslationStore
-  useBranchSelectorStore: () => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
 }
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
   const { t } = props.useTranslationStore()
-  const { branchList } = props.useBranchSelectorStore()
+  const { branchList } = props.useRepoBranchesStore()
 
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
@@ -36,7 +36,7 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         <div className="flex justify-between gap-5">
           {!props.isFetchingBranches && branchList && (
             <BranchSelector
-              useBranchSelectorStore={props.useBranchSelectorStore}
+              useRepoBranchesStore={props.useRepoBranchesStore}
               useTranslationStore={props.useTranslationStore}
             />
           )}

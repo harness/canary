@@ -11,7 +11,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { useBranchSelectorStore } from './stores/repo-branch-selector-store'
+import { useRepoBranchesStore } from './stores/repo-branches-store'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
@@ -25,7 +25,7 @@ export default function RepoCommitsPage() {
     queryParams: { page }
   })
 
-  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } = useBranchSelectorStore()
+  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } = useRepoBranchesStore()
 
   useEffect(() => {
     if (branches) {
@@ -65,7 +65,7 @@ export default function RepoCommitsPage() {
       setPage={(page: number) => setPage(page)}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
-      useBranchSelectorStore={useBranchSelectorStore}
+      useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
     />
   )

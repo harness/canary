@@ -26,7 +26,7 @@ import { TokenFormType } from '../../pages/profile-settings/token-create/token-c
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
 import { PathParams } from '../../RouteDefinitions'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
-import { useBranchSelectorStore } from './stores/branch-selector-store'
+import { useBranchSelectorStore } from './stores/repo-branch-selector-store'
 
 export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)

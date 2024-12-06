@@ -17,13 +17,13 @@ import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
-import { useBranchSelectorStore } from './stores/branch-selector-store.ts'
+import { useBranchSelectorStore } from './stores/repo-branch-selector-store.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
-  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSelectedBranchType, setSpaceId, setRepoId } =
+  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceId, setRepoId } =
     useBranchSelectorStore()
 
   const repoRef = useGetRepoRef()

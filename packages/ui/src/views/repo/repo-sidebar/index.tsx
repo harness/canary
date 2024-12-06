@@ -2,8 +2,8 @@ import { ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelectorListItem, IBranchSelectorStore } from '@views/repo'
-import { BranchSelector, BranchSelectorTab } from '@views/repo/components'
+import { IBranchSelectorStore } from '@views/repo'
+import { BranchSelector } from '@views/repo/components'
 
 interface RepoSidebarProps {
   hasHeader?: boolean

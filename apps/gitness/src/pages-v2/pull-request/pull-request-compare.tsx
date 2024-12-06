@@ -9,7 +9,6 @@ import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
-  TypesBranchExtended,
   TypesCommit,
   useCreatePullReqMutation,
   useDiffStatsQuery,
@@ -30,7 +29,7 @@ import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../p
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { useBranchSelectorStore } from '../repo/stores/branch-selector-store'
+import { useBranchSelectorStore } from '../repo/stores/repo-branch-selector-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.

@@ -15,14 +15,16 @@ export interface BreadcrumbDropdownProps {
   selectedValue?: string | number
   selectedItem?: { path: string; label: string; value: string | number; key: string }
   placeholder?: string
+  icon: React.ReactNode
 }
 
 export const BreadcrumbDropdown = (props: BreadcrumbDropdownProps) => {
-  const { items, selectedValue, selectedItem: selectedItemProps, placeholder = 'Select item' } = props
+  const { items, selectedValue, selectedItem: selectedItemProps, placeholder = 'Select item', icon } = props
   const selectedItem = selectedItemProps ?? items.find(item => item.value === selectedValue)
 
   return (
     <BreadcrumbItem>
+      {icon}
       <DropdownMenu>
         <DropdownMenuTrigger className="group flex items-center gap-2 outline-none">
           <BreadcrumbLink asChild className={'flex items-center gap-x-1'}>

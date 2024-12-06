@@ -259,8 +259,18 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
             <Tabs variant="navigation" defaultValue="overview">
               <TabsList className="px-0">
                 <TabTriggerItem value="overview" icon="comments" label="Overview" />
-                <TabTriggerItem value="commits" icon="tube-sign" label="Commits" badgeCount={1} />
-                <TabTriggerItem value="changes" icon="changes" label="Changes" badgeCount={1} />
+                <TabTriggerItem
+                  value="commits"
+                  icon="tube-sign"
+                  label="Commits"
+                  badgeCount={diffStats.commits !== null ? diffStats.commits : undefined}
+                />
+                <TabTriggerItem
+                  value="changes"
+                  icon="changes"
+                  label="Changes"
+                  badgeCount={diffStats.files_changed !== null ? diffStats.files_changed : undefined}
+                />
               </TabsList>
               <TabsContent value="overview">
                 <Spacer size={4} />

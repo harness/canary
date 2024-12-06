@@ -13,6 +13,7 @@ export interface PullRequestType {
   timestamp: string
   comments?: number
   state?: string
+  updated: number
   labels?: {
     text: string
     color: string
@@ -25,6 +26,8 @@ export interface PullRequestStore {
   totalPages: number
   page: number
   setPage: (page: number) => void
+  openPullReqs: number
+  closedPullReqs: number
 }
 export interface RepoRepositoryOutput {
   num_closed_pulls?: number

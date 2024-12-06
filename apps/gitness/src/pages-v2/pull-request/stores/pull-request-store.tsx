@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { ListPullReqOkResponse } from '@harnessio/code-service-client'
+import { FindRepositoryOkResponse, ListPullReqOkResponse } from '@harnessio/code-service-client'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
@@ -18,6 +18,7 @@ interface PullRequestType {
   timestamp: string
   comments?: number
   state?: string
+  updated: number
   labels?: {
     text: string
     color: string
@@ -26,15 +27,20 @@ interface PullRequestType {
 interface PullRequestStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
-  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
+  openPullReqs: number
+  closedPullReqs: number
   page: number
   setPage: (page: number) => void
+  setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
+  setOpenClosePullRequests: (data: FindRepositoryOkResponse) => void
 }
 
 export const usePullRequestStore = create<PullRequestStore>(set => ({
   pullRequests: null,
   totalPages: 0,
   page: 1,
+  openPullReqs: 0,
+  closedPullReqs: 0,
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
@@ -51,6 +57,7 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
       // labels: item?.labels?.map((key: string, color: string) => ({ text: key, color: color })),
       // TODO: fix 2 hours ago in timestamp
       timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
+      updated: item?.updated ? item?.updated : 0,
       source_branch: item?.source_branch,
       state: item?.state,
       labels: item?.labels?.map(label => ({
@@ -62,6 +69,12 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
     set({
       pullRequests: transformedPullRequests,
       totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
+    })
+  },
+  setOpenClosePullRequests: repoMetadata => {
+    set({
+      openPullReqs: repoMetadata.num_open_pulls || 0,
+      closedPullReqs: repoMetadata.num_closed_pulls || 0
     })
   }
 }))

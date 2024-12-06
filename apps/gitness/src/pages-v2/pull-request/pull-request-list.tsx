@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { useListPullReqQuery } from '@harnessio/code-service-client'
+import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -14,19 +14,28 @@ import { usePullRequestStore } from './stores/pull-request-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage } = usePullRequestStore()
+  const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
   const [query] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { data: { body: pullRequestData, headers } = {} } = useListPullReqQuery(
+  const { data: { body: pullRequestData, headers } = {}, isLoading: fetchingPullReqData } = useListPullReqQuery(
     {
       queryParams: { page, query },
       repo_ref: repoRef
     },
     { retry: false }
+  )
+
+  useFindRepositoryQuery(
+    { repo_ref: repoRef },
+    {
+      onSuccess: data => {
+        setOpenClosePullRequests(data.body)
+      }
+    }
   )
 
   useEffect(() => {
@@ -44,6 +53,7 @@ export default function PullRequestListPage() {
     <SandboxPullRequestListPage
       repoId={repoId}
       spaceId={spaceId}
+      isLoading={fetchingPullReqData}
       usePullRequestStore={usePullRequestStore}
       useTranslationStore={useTranslationStore}
     />

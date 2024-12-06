@@ -1,39 +1,19 @@
+import { Icon } from '@/components'
 import { TFunction } from 'i18next'
 
-import { Icon } from '../../icon'
-import FilterTrigger from '../filter-trigger'
-import { FilterOption, SortDirection, SortOption } from '../types'
-import { UseFiltersReturn } from '../use-filters'
-import Filters from './filters'
-import Sorts from './sorts'
+import FilterTrigger from '../triggers/filter-trigger'
+import { FilterHandlers, FilterOption, SortDirection, SortOption, ViewManagement } from '../types'
+import Filters from './actions/filters'
+import Sorts from './actions/sorts'
+import Views from './actions/views'
 
 interface FiltersBarProps {
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
   t: TFunction
-  filterHandlers: Pick<
-    UseFiltersReturn,
-    | 'activeFilters'
-    | 'activeSorts'
-    | 'handleUpdateFilter'
-    | 'handleRemoveFilter'
-    | 'handleFilterChange'
-    | 'handleUpdateCondition'
-    | 'handleUpdateSort'
-    | 'handleRemoveSort'
-    | 'handleSortChange'
-    | 'handleResetSorts'
-    | 'handleReorderSorts'
-    | 'handleResetAll'
-    | 'searchQueries'
-    | 'handleSearchChange'
-    | 'filterToOpen'
-    | 'clearFilterToOpen'
-    | 'handleSaveFilters'
-    | 'handleClearSavedFilters'
-    | 'hasUnsavedChanges'
-  >
+  filterHandlers: FilterHandlers
+  viewManagement: ViewManagement
 }
 
 const FiltersBar = ({
@@ -41,13 +21,16 @@ const FiltersBar = ({
   sortOptions,
   sortDirections,
   t,
-  filterHandlers: {
+  filterHandlers,
+  viewManagement
+}: FiltersBarProps) => {
+  const {
     activeFilters,
     activeSorts,
     handleUpdateFilter,
     handleRemoveFilter,
-    handleUpdateCondition,
     handleFilterChange,
+    handleUpdateCondition,
     handleUpdateSort,
     handleRemoveSort,
     handleSortChange,
@@ -57,13 +40,14 @@ const FiltersBar = ({
     searchQueries,
     handleSearchChange,
     filterToOpen,
-    clearFilterToOpen,
-    handleSaveFilters,
-    handleClearSavedFilters,
-    hasUnsavedChanges
-  }
-}: FiltersBarProps) => {
-  if (activeFilters.length === 0 && activeSorts.length === 0) return null
+    clearFilterToOpen
+  } = filterHandlers
+
+  const hasActiveFilters = !!activeFilters.length || !!activeSorts.length
+
+  const hasViewChanges = viewManagement.hasActiveViewChanges(activeFilters, activeSorts)
+
+  if (!hasActiveFilters) return null
 
   return (
     <div className="flex items-center gap-x-2">
@@ -101,7 +85,7 @@ const FiltersBar = ({
         />
       ))}
 
-      {(!!activeFilters.length || !!activeSorts.length) && (
+      {hasActiveFilters && (
         <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
           <div className="flex items-center gap-x-4">
             <FilterTrigger
@@ -123,24 +107,24 @@ const FiltersBar = ({
             />
             <button
               className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
-              onClick={() => {
-                handleResetAll()
-                handleClearSavedFilters()
-              }}
+              onClick={handleResetAll}
             >
               <Icon className="rotate-45" name="plus" size={12} />
               {t('component:filter.reset', 'Reset')}
             </button>
           </div>
 
-          {hasUnsavedChanges && (
-            <button
-              className="flex items-center gap-x-1.5 text-14 text-foreground-4 hover:text-foreground-1"
-              onClick={handleSaveFilters}
-            >
-              {t('component:filter.save', 'Save')}
-            </button>
-          )}
+          <Views
+            currentView={viewManagement.currentView}
+            savedViews={viewManagement.savedViews}
+            viewManagement={{
+              ...viewManagement,
+              activeFilters,
+              activeSorts,
+              saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
+            }}
+            hasChanges={!!hasViewChanges}
+          />
         </div>
       )}
     </div>

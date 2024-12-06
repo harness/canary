@@ -1,23 +1,28 @@
 import { useEffect, useState } from 'react'
 
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../../dropdown-menu'
-import { Icon } from '../../icon'
-import type { CheckboxFilterOption, FilterAction, FilterOption, FilterSearchQueries, FilterValue } from '../types'
-import { UseFiltersReturn } from '../use-filters'
-import { getFilterDisplayValue, getFilteredOptions } from '../utils'
-import Calendar from './filter-variants/calendar'
-import Checkbox from './filter-variants/checkbox'
-import Number from './filter-variants/number'
-import Text from './filter-variants/text'
+import type {
+  CheckboxFilterOption,
+  FilterAction,
+  FilterHandlers,
+  FilterOption,
+  FilterSearchQueries,
+  FilterValue
+} from '../../types'
+import { getFilterDisplayValue, getFilteredOptions } from '../../utils'
+import Calendar from './variants/calendar'
+import Checkbox from './variants/checkbox'
+import Number from './variants/number'
+import Text from './variants/text'
 
 const renderFilterValues = (
   filter: FilterValue,
   filterOption: FilterOption,
-  onUpdateFilter: UseFiltersReturn['handleUpdateFilter'],
+  onUpdateFilter: FilterHandlers['handleUpdateFilter'],
   searchQueries: FilterSearchQueries,
-  handleSearchChange: UseFiltersReturn['handleSearchChange'],
+  handleSearchChange: FilterHandlers['handleSearchChange'],
   filteredOptions?: CheckboxFilterOption['options']
 ) => {
   if (!onUpdateFilter) return null
@@ -50,10 +55,10 @@ const renderFilterValues = (
 interface FiltersProps {
   filter: FilterValue
   filterOptions: FilterOption[]
-  handleUpdateFilter: UseFiltersReturn['handleUpdateFilter']
-  handleRemoveFilter: UseFiltersReturn['handleRemoveFilter']
-  handleUpdateCondition: UseFiltersReturn['handleUpdateCondition']
-  handleSearchChange: UseFiltersReturn['handleSearchChange']
+  handleUpdateFilter: FilterHandlers['handleUpdateFilter']
+  handleRemoveFilter: FilterHandlers['handleRemoveFilter']
+  handleUpdateCondition: FilterHandlers['handleUpdateCondition']
+  handleSearchChange: FilterHandlers['handleSearchChange']
   searchQueries: FilterSearchQueries
   filterToOpen: FilterAction | null
   onOpen?: () => void

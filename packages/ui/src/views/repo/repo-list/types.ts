@@ -1,17 +1,5 @@
+import { RepositoryType } from '@views/repo/repo.types'
 import i18n, { TFunction } from 'i18next'
-
-export interface RepositoryType {
-  id: number
-  name: string
-  description?: string
-  private: boolean
-  stars: number
-  forks: number
-  pulls: number
-  createdAt: number
-  timestamp: string
-  importing?: boolean
-}
 
 interface RepoStore {
   repositories: RepositoryType[] | null

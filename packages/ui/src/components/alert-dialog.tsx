@@ -100,10 +100,29 @@ AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName
 
 const AlertDialogDescription = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <AlertDialogPrimitive.Description ref={ref} className={cn('text-muted-foreground text-sm', className)} {...props} />
-))
+  React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Description> & {
+    variant?: 'secondary' | 'quaternary'
+    size?: 'sm'
+  }
+>(({ className, variant = 'quaternary', size = 'sm', ...props }, ref) => {
+  const variants = {
+    variant: {
+      secondary: 'text-foreground-2',
+      quaternary: 'text-foreground-4'
+    },
+    size: {
+      sm: 'text-sm'
+    }
+  }
+
+  return (
+    <AlertDialogPrimitive.Description
+      ref={ref}
+      className={cn(className, variants.variant[variant], variants.size[size])}
+      {...props}
+    />
+  )
+})
 AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName
 
 const AlertDialogAction = React.forwardRef<

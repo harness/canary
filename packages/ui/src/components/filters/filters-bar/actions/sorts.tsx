@@ -1,3 +1,5 @@
+// TODO: we should rethink the approach and stop using the @dnd-kit library
+
 import { useEffect, useState } from 'react'
 
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Icon, Input } from '@/components'
@@ -7,16 +9,22 @@ import { CSS } from '@dnd-kit/utilities'
 import useDragAndDrop from '@hooks/use-drag-and-drop'
 import { cn } from '@utils/cn'
 
-import type { FilterAction, FilterSearchQueries, SortDirection, SortOption, SortValue } from '../types'
-import { UseFiltersReturn } from '../use-filters'
-import { getSortTriggerLabel } from '../utils'
+import type {
+  FilterAction,
+  FilterHandlers,
+  FilterSearchQueries,
+  SortDirection,
+  SortOption,
+  SortValue
+} from '../../types'
+import { getSortTriggerLabel } from '../../utils'
 
 interface SortableItemProps {
   id: string
   sort: SortValue
   index: number
-  onUpdateSort: UseFiltersReturn['handleUpdateSort']
-  onRemoveSort: UseFiltersReturn['handleRemoveSort']
+  onUpdateSort: FilterHandlers['handleUpdateSort']
+  onRemoveSort: FilterHandlers['handleRemoveSort']
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
 }
@@ -104,13 +112,13 @@ const SortableItem = ({
 interface SortsProps {
   activeSorts: SortValue[]
   sortOptions: SortOption[]
-  handleUpdateSort: UseFiltersReturn['handleUpdateSort']
-  handleSortChange: UseFiltersReturn['handleSortChange']
-  handleRemoveSort: UseFiltersReturn['handleRemoveSort']
-  handleResetSorts: UseFiltersReturn['handleResetSorts']
-  handleReorderSorts: UseFiltersReturn['handleReorderSorts']
+  handleUpdateSort: FilterHandlers['handleUpdateSort']
+  handleSortChange: FilterHandlers['handleSortChange']
+  handleRemoveSort: FilterHandlers['handleRemoveSort']
+  handleResetSorts: FilterHandlers['handleResetSorts']
+  handleReorderSorts: FilterHandlers['handleReorderSorts']
   searchQueries: FilterSearchQueries
-  handleSearchChange: UseFiltersReturn['handleSearchChange']
+  handleSearchChange: FilterHandlers['handleSearchChange']
   sortDirections: SortDirection[]
   filterToOpen: FilterAction | null
   onOpen?: () => void

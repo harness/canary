@@ -2,8 +2,7 @@ import { Icon, Input } from '@/components'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
 import { TFunction } from 'i18next'
 
-import { FilterOption, SortOption } from './types'
-import { UseFiltersReturn } from './use-filters'
+import { FilterHandlers, FilterOption, SortOption } from '../types'
 
 interface BaseFilterTriggerProps {
   type: 'filter' | 'sort'
@@ -16,22 +15,22 @@ interface BaseFilterTriggerProps {
 interface FilterTriggerFilterProps extends BaseFilterTriggerProps {
   type: 'filter'
   options: FilterOption[]
-  activeFilters: UseFiltersReturn['activeFilters']
-  onChange: UseFiltersReturn['handleFilterChange']
-  onReset?: UseFiltersReturn['handleResetFilters']
-  searchQueries: UseFiltersReturn['searchQueries']
-  onSearchChange: UseFiltersReturn['handleSearchChange']
+  activeFilters: FilterHandlers['activeFilters']
+  onChange: FilterHandlers['handleFilterChange']
+  onReset?: FilterHandlers['handleResetFilters']
+  searchQueries: FilterHandlers['searchQueries']
+  onSearchChange: FilterHandlers['handleSearchChange']
   t: TFunction
 }
 
 interface FilterTriggerSortProps extends BaseFilterTriggerProps {
   type: 'sort'
   options: SortOption[]
-  activeFilters: UseFiltersReturn['activeSorts']
-  onChange: UseFiltersReturn['handleSortChange']
-  onReset: UseFiltersReturn['handleResetSorts']
-  searchQueries: UseFiltersReturn['searchQueries']
-  onSearchChange: UseFiltersReturn['handleSearchChange']
+  activeFilters: FilterHandlers['activeSorts']
+  onChange: FilterHandlers['handleSortChange']
+  onReset: FilterHandlers['handleResetSorts']
+  searchQueries: FilterHandlers['searchQueries']
+  onSearchChange: FilterHandlers['handleSearchChange']
   t: TFunction
 }
 

@@ -146,7 +146,7 @@ export default function App() {
       path: '/',
       element: <RootWrapper />,
       children: [
-        // 🚨 Revert the temporary links before merging 🚨
+        // 🚨 Routes to fix 🚨
         {
           path: 'repos',
           element: (

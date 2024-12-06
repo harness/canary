@@ -10,7 +10,7 @@ export interface NavState {
   setPinned: (route: NavbarItemType, pin: boolean) => void
   setNavLinks: (links: Partial<Pick<NavState, 'pinned' | 'recent'>>) => void
 }
-// Eloborate about this function
+
 const navStateCreator: StateCreator<NavState> = set => ({
   recent: [],
   pinned: [],
@@ -62,7 +62,7 @@ const navStateCreator: StateCreator<NavState> = set => ({
     }),
 
   setNavLinks: ({ pinned, recent }) =>
-    set((state: NavState) => ({
+    set(state => ({
       // Updates the pinned and recent navigation items in the state
       pinned: pinned ?? state.pinned,
       recent: recent ?? state.recent

@@ -43,6 +43,8 @@ export * from './checkbox'
 export * from './radio'
 export * from './option'
 export * from './calendar'
+export * from './progress'
+export * from './copy-button'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

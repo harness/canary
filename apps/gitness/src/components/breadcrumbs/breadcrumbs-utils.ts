@@ -1,7 +1,5 @@
 import { matchPath } from 'react-router-dom'
 
-export const ROUTE_BASE_PATH = '/v1'
-
 const repoRoutePathNameMap = [
   { path: '/summary', label: 'Summary' },
   { path: '/code', label: 'Files' },
@@ -14,18 +12,15 @@ const repoRoutePathNameMap = [
 ]
 
 export function getBreadcrumbMatchers(pathname: string) {
-  console.log(ROUTE_BASE_PATH + '/spaces')
-  console.log(pathname)
-
   const isProjectsRoute = !!matchPath(
     {
-      path: ROUTE_BASE_PATH + '/spaces',
+      path: '',
       end: false
     },
     pathname
   )
 
-  const isExcludedProjectRoute = [ROUTE_BASE_PATH + '/spaces/create'].find(route => {
+  const isExcludedProjectRoute = ['/create'].find(route => {
     return matchPath(
       {
         path: route,
@@ -38,13 +33,13 @@ export function getBreadcrumbMatchers(pathname: string) {
   const isProjectRoute =
     !!matchPath(
       {
-        path: ROUTE_BASE_PATH + '/spaces/:spaceId',
+        path: '/:spaceId',
         end: false
       },
       pathname
     ) && !isExcludedProjectRoute
 
-  const isExcludedRepoRoute = [ROUTE_BASE_PATH + '/spaces/:spaceId/repos/create'].find(route => {
+  const isExcludedRepoRoute = ['/:spaceId/repos/create'].find(route => {
     return matchPath(
       {
         path: route,
@@ -57,7 +52,7 @@ export function getBreadcrumbMatchers(pathname: string) {
   const isRepoRoute =
     !!matchPath(
       {
-        path: ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId',
+        path: '/:spaceId/repos/:repoId',
         end: false
       },
       pathname
@@ -66,7 +61,7 @@ export function getBreadcrumbMatchers(pathname: string) {
   let repoPageMatch = repoRoutePathNameMap.find(repoRoutePathNameItem => {
     return matchPath(
       {
-        path: ROUTE_BASE_PATH + `/spaces/:spaceId/repos/:repoId${repoRoutePathNameItem.path}`,
+        path: `/:spaceId/repos/:repoId${repoRoutePathNameItem.path}`,
         end: false
       },
       pathname
@@ -80,7 +75,7 @@ export function getBreadcrumbMatchers(pathname: string) {
 
   const isRepoPageRoute = !!repoPageMatch
 
-  const isExcludedPipelineRoute = [ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId/pipelines/create'].find(route => {
+  const isExcludedPipelineRoute = ['/:spaceId/repos/:repoId/pipelines/create'].find(route => {
     return matchPath(
       {
         path: route,
@@ -93,7 +88,7 @@ export function getBreadcrumbMatchers(pathname: string) {
   const isPipelineRoute =
     !!matchPath(
       {
-        path: ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId/pipelines/:pipelineId',
+        path: '/:spaceId/repos/:repoId/pipelines/:pipelineId',
         end: false
       },
       pathname
@@ -101,7 +96,7 @@ export function getBreadcrumbMatchers(pathname: string) {
 
   const isPipelineEditRouteExact = !!matchPath(
     {
-      path: ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId/pipelines/:pipelineId/edit',
+      path: '/:spaceId/repos/:repoId/pipelines/:pipelineId/edit',
       end: true
     },
     pathname
@@ -109,7 +104,7 @@ export function getBreadcrumbMatchers(pathname: string) {
   const isPipelineExecutionsRouteExact =
     !!matchPath(
       {
-        path: ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId/pipelines/:pipelineId',
+        path: '/:spaceId/repos/:repoId/pipelines/:pipelineId',
         end: true
       },
       pathname
@@ -117,23 +112,12 @@ export function getBreadcrumbMatchers(pathname: string) {
 
   const isExecutionRoute = !!matchPath(
     {
-      path: ROUTE_BASE_PATH + '/spaces/:spaceId/repos/:repoId/pipelines/:pipelineId/executions/:executionId',
+      path: '/:spaceId/repos/:repoId/pipelines/:pipelineId/executions/:executionId',
       end: false
     },
     pathname
   )
 
-  console.log({
-    isProjectsRoute,
-    isProjectRoute,
-    isRepoRoute,
-    isRepoPageRoute,
-    isPipelineRoute,
-    isPipelineEditRouteExact,
-    isPipelineExecutionsRouteExact,
-    isExecutionRoute,
-    repoPageMatch
-  })
   return {
     isProjectsRoute,
     isProjectRoute,

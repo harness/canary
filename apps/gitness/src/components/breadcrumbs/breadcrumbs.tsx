@@ -9,14 +9,15 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@harnessio/canary'
-import { getInitials, Topbar } from '@harnessio/views'
+  BreadcrumbSeparator,
+  Topbar
+} from '@harnessio/ui/components'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { getInitials } from '../../utils/common-utils'
 import { BreadcrumbDropdown, BreadcrumbDropdownProps } from './breadcrumb-dropdown'
-import { getBreadcrumbMatchers, ROUTE_BASE_PATH } from './breadcrumbs-utils'
+import { getBreadcrumbMatchers } from './breadcrumbs-utils'
 
 export default function Breadcrumbs() {
   const { pathname } = useLocation()
@@ -45,14 +46,14 @@ export default function Breadcrumbs() {
       const items = spaces.map(spaceItem => ({
         key: spaceItem.path as string,
         label: spaceItem.path as string,
-        path: ROUTE_BASE_PATH + `/spaces/${spaceItem.path}/repos`,
+        path: `/${spaceItem.path}/repos`,
         value: spaceItem.path as string
       }))
 
       items.push({
         label: 'Create Project',
-        key: ROUTE_BASE_PATH + '/spaces/create',
-        path: ROUTE_BASE_PATH + '/spaces/create',
+        key: '/create',
+        path: '/create',
         value: ''
       })
 
@@ -61,6 +62,7 @@ export default function Breadcrumbs() {
           <AvatarFallback>{getInitials(space ?? '', 1)}</AvatarFallback>
         </Avatar>
       )
+
       return { items, selectedValue: space, placeholder: 'Select project', icon }
     }
   }, [spaces, space, isProjectRoute])
@@ -81,6 +83,7 @@ export default function Breadcrumbs() {
       </>
     )
   }
+
   return (
     <Topbar.Root>
       <Topbar.Left>
@@ -92,7 +95,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Repositories',
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos`,
+                  path: `/${space}/repos`,
                   isLast: !isRepoRoute
                 })}
               </>
@@ -102,7 +105,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: repoId,
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}`,
+                  path: `/${space}/repos/${repoId}`,
                   isLast: !(isRepoPageRoute && repoPageMatch)
                 })}
               </>
@@ -112,7 +115,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: repoPageMatch.label,
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}${repoPageMatch.path}`,
+                  path: `/${space}/repos/${repoId}${repoPageMatch.path}`,
                   isLast: !isPipelineRoute
                 })}
               </>
@@ -122,7 +125,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: pipelineId,
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
                   isLast: !isExecutionRoute && !isPipelineExecutionsRouteExact && !isPipelineEditRouteExact
                 })}
               </>
@@ -132,7 +135,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Executions',
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -142,7 +145,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Executions',
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -152,7 +155,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Edit',
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
+                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -162,7 +165,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: `${executionId}`,
-                  path: `${ROUTE_BASE_PATH}/spaces/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
+                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
                   isLast: true
                 })}
               </>

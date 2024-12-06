@@ -54,6 +54,7 @@ export * from './layout'
 export * from './carousel'
 export * from './markdown-viewer'
 export * from './image-carousel'
+export * from './topbar'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

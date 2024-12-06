@@ -8,7 +8,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon
-} from '@harnessio/canary'
+} from '@harnessio/ui/components'
 
 export interface BreadcrumbDropdownProps {
   items: { path: string; label: string; value: string | number; key: string }[]

@@ -21,16 +21,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   selectedBranch,
   onSelectBranch
 }) => {
-  const {
-    selectedBranchTag,
-    branchList,
-    tagList,
-    // size = 'default',
-    setSelectedBranchTag,
-    setSelectedBranchType,
-    repoId,
-    spaceId
-  } = useRepoBranchesStore()
+  const { selectedBranchTag, branchList, tagList, setSelectedBranchTag, setSelectedBranchType, repoId, spaceId } =
+    useRepoBranchesStore()
 
   const isTag = selectedBranchTag
     ? tagList.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)

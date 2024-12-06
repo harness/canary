@@ -1,8 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Card } from '@components/card'
-import { Input } from '@components/input'
-import { Text } from '@components/text'
+import { Card, Input, Text } from '@/components/'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
@@ -13,21 +11,21 @@ import constants from './constants'
 const TextArea = ({ onChange }: { onChange: (v: string) => void }) => {
   const [val, setVal] = useState('')
 
-  useEffect(() => {
-    onChange(val)
-  }, [val])
-
   return (
     <textarea
       className="min-h-[80px] w-full border !p-[2px]"
       autoFocus
       value={val}
-      onChange={e => setVal(e.target.value)}
+      onChange={e => {
+        const newValue = e.target.value
+        setVal(newValue)
+        onChange(newValue)
+      }}
     />
   )
 }
 interface PullRequestDiffviewerProps {
-  data: string | undefined
+  data?: string
   fontsize: number
   highlight: boolean
   mode: DiffModeEnum
@@ -175,10 +173,6 @@ const PullRequestDiffViewer = ({
     }
   }, [diffFileInstance, scrollBar, wrap, mode, data])
 
-  const handleClick = () => {
-    console.log('click')
-  }
-
   const setDiffInstanceCb = useCallback(
     debounce((fileName: string, lang: string, diffString: string, content?: string) => {
       if (!diffString) {
@@ -211,11 +205,6 @@ const PullRequestDiffViewer = ({
     }
   }, [])
 
-  useEffect(() => {
-    // const instance = DiffFile.createInstance(data || {}, bundle)
-    // setExpandAll(false)
-    // setDiffFileInstance(instance)
-  }, [handleClick])
   return (
     <>
       {diffFileInstance && !renderCustomContent && (
@@ -298,9 +287,6 @@ const PullRequestDiffViewer = ({
           diffViewMode={mode}
           diffViewWrap={wrap}
           diffViewAddWidget={addWidget}
-          onAddWidgetClick={() => {
-            handleClick()
-          }}
         />
       )}
       {renderCustomContent && (

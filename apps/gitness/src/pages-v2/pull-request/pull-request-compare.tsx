@@ -342,17 +342,6 @@ export const CreatePullRequest = () => {
         selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
         useBranchSelectorStore={useBranchSelectorStore}
-        // tagList={tagsList}
-        // repoId={repoId || ''}
-        // spaceId={spaceId || ''}
-        // branchList={
-        //   branches
-        //     ? branches?.map((item: TypesBranchExtended) => ({
-        //         name: item.name || '',
-        //         sha: item.sha || ''
-        //       }))
-        //     : []
-        // }
         commitData={commitData?.commits?.map((item: TypesCommit) => ({
           sha: item.sha,
           parent_shas: item.parent_shas,

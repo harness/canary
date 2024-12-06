@@ -53,11 +53,6 @@ export default function RepoSummaryPage() {
     queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
   })
 
-  // const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
-  //   name: '',
-  //   sha: ''
-  // })
-
   useEffect(() => {
     setSpaceId(spaceId || '')
     setRepoId(repoId || '')
@@ -124,25 +119,6 @@ export default function RepoSummaryPage() {
       default: false
     }))
   }, [tags])
-
-  // const selectBranchorTag = useCallback(
-  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-  //     if (type === BranchSelectorTab.BRANCHES) {
-  //       const branch = branchList.find(branch => branch.name === branchTagName.name)
-  //       if (branch) {
-  //         setSelectedBranchTag(branch)
-  //         setGitRef(branch.name)
-  //       }
-  //     } else if (type === BranchSelectorTab.TAGS) {
-  //       const tag = tagsList.find(tag => tag.name === branchTagName.name)
-  //       if (tag) {
-  //         setSelectedBranchTag(tag)
-  //         setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
-  //       }
-  //     }
-  //   },
-  //   [navigate, repoId, spaceId, branchList, tagsList]
-  // )
 
   useEffect(() => {
     if (selectedBranchType === BranchSelectorTab.BRANCHES) {

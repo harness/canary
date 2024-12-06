@@ -29,10 +29,6 @@ export const RepoSidebar = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  // const [selectedBranchTag, setSelectedBranchTag] = useState<BranchSelectorListItem>({
-  //   name: gitRefName || '',
-  //   sha: ''
-  // })
   const navigate = useNavigate()
 
   useEffect(() => {

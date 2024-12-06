@@ -18,8 +18,6 @@ import {
 } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-// import { useDiffConfig } from '@views/pull-request/hooks/useDiffConfig'
-
 import { BranchSelector } from '@views/repo/components/branch-selector/branch-selector'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
@@ -38,7 +36,6 @@ import {
   TranslationStore,
   TypesCommit
 } from '..'
-// import PullRequestDiffViewer from '../components/pull-request/pull-request-diff-viewer'
 import { Layout } from './layout'
 
 export const formSchema = z.object({

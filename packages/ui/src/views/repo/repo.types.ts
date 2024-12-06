@@ -51,9 +51,6 @@ export interface RepoFile {
 export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
 
 export interface IBranchSelectorStore {
-  // selectedBranch?: BranchSelectorListItem
-  // setSelectedBranch: (selectedBranch?: BranchSelectorListItem) => void
-
   selectedBranchTag: BranchSelectorListItem
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
 

@@ -25,8 +25,7 @@ export default function RepoCommitsPage() {
     queryParams: { page }
   })
 
-  const { branchList, setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } =
-    useBranchSelectorStore()
+  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setRepoId, setSpaceId } = useBranchSelectorStore()
 
   useEffect(() => {
     if (branches) {
@@ -49,9 +48,6 @@ export default function RepoCommitsPage() {
 
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
-
-  // 🚨 API not supporting sort, so waiting for API changes
-  // const { sort } = useCommonFilter()
 
   useEffect(() => {
     if (repository) {

@@ -6,6 +6,7 @@ import { Filters, FiltersBar, type FilterValue, type SortValue } from '@componen
 import useFilters from '@components/filters/use-filters'
 import { useCommonFilter } from '@hooks/use-common-filter'
 import { formatDistanceToNow } from 'date-fns'
+import { debounce } from 'lodash-es'
 
 import { SandboxLayout } from '../../index'
 import { getFilterOptions, getSortDirections, getSortOptions } from './filter-options'
@@ -19,7 +20,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   useTranslationStore,
   isLoading,
   isError,
-  errorMessage
+  errorMessage,
+  searchQuery,
+  setSearchQuery
 }) => {
   const { t } = useTranslationStore()
   const FILTER_OPTIONS = getFilterOptions(t)
@@ -355,24 +358,29 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     }).replace('about ', '')
   }))
 
-  const { query, handleSearch } = useCommonFilter()
-  const [value, setValue] = useState<string>()
+  // const { query, handleSearch } = useCommonFilter()
+  // const [value, setValue] = useState<string>()
 
-  useEffect(() => {
-    setValue(query || '')
-  }, [query])
+  // useEffect(() => {
+  //   setValue(query || '')
+  // }, [query]){
+
+  const debouncedSetSearchQuery = debounce(searchQuery => {
+    setSearchQuery(searchQuery)
+  }, 300)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e?.target?.value)
-    handleSearch(e)
+    debouncedSetSearchQuery(e.target.value)
+    // handleSearch(e)
   }
 
-  const handleResetQuery = () => {
-    setValue('')
-    handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
-  }
+  // const handleResetQuery = () => {
+  //   setValue('')
+  //   handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
+  // }
 
-  if (isLoading) return <SkeletonList />
+  console.log('isLoading', isLoading, 'isError', isError, 'data', repositories, 'query', searchQuery)
+  // console.log('isError', isError)
 
   if (isError)
     return (
@@ -398,7 +406,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               <SearchBox.Root
                 width="full"
                 className="max-w-96"
-                value={value}
+                // value={searchQuery}
+                defaultValue={searchQuery}
                 handleChange={handleInputChange}
                 placeholder={t('views:repos.search')}
               />
@@ -429,9 +438,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             LinkComponent={LinkComponent}
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
-            query={query ?? ''}
-            handleResetQuery={handleResetQuery}
+            query={searchQuery ?? ''}
+            handleResetQuery={() => {}}
             useTranslationStore={useTranslationStore}
+            isLoading={isLoading}
           />
           <Spacer size={8} />
           <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />

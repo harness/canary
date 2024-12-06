@@ -6,6 +6,7 @@
     "viewAll": "Voir tout {{type}}",
     "findBranch": "Trouver une branche",
     "findTag": "Trouver une étiquette",
+    "noFile": "Aucun fichier disponible",
     "name": "Nom",
     "lastCommit": "Dernier message de validation",
     "date": "Date",
@@ -24,7 +25,6 @@
     "add-file": "Ajouter un fichier",
     "createNewFile": "+ Créer un nouveau fichier",
     "readme": "README.md",
-    "openPullReq": "Requêtes de tirage ouvertes",
-    "noFile": "Aucun fichier disponible"
+    "openPullReq": "Requêtes de tirage ouvertes"
   }
 }

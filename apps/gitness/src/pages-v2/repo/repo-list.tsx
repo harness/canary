@@ -17,13 +17,15 @@ export default function ReposListPage() {
   const { setRepositories, page, setPage } = useRepoStore()
 
   /* Query and Pagination */
-  const [query] = useDebouncedQueryState('query')
+  const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const {
     data: { body: repoData, headers } = {},
     refetch,
     isLoading,
+    isFetching,
+    isRefetching,
     isError,
     error
   } = useListReposQuery(
@@ -31,14 +33,19 @@ export default function ReposListPage() {
       queryParams: { page, query },
       space_ref: `${space}/+`
     },
-    { retry: false }
+    {
+      retry: false,
+      onSuccess: data => {
+        setRepositories(data.body, data.headers)
+      }
+    }
   )
 
-  useEffect(() => {
-    if (repoData) {
-      setRepositories(repoData, headers)
-    }
-  }, [repoData, headers, setRepositories])
+  // useEffect(() => {
+  //   if (repoData) {
+  //     setRepositories(repoData, headers)
+  //   }
+  // }, [repoData, headers, setRepositories])
 
   useEffect(() => {
     setQueryPage(page)
@@ -70,9 +77,11 @@ export default function ReposListPage() {
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
       useTranslationStore={useTranslationStore}
-      isLoading={isLoading}
+      isLoading={isLoading || isFetching || isRefetching}
       isError={isError}
       errorMessage={error?.message}
+      searchQuery={query}
+      setSearchQuery={setQuery}
     />
   )
 }

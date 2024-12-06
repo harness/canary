@@ -20,7 +20,7 @@ export default function ReposListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const {
-    data: { body: repoData } = {},
+    data: { body: repoData, headers } = {},
     refetch,
     isFetching,
     isError,
@@ -31,12 +31,15 @@ export default function ReposListPage() {
       space_ref: `${space}/+`
     },
     {
-      retry: false,
-      onSuccess: data => {
-        setRepositories(data.body, data.headers)
-      }
+      retry: false
     }
   )
+
+  useEffect(() => {
+    if (repoData) {
+      setRepositories(repoData, headers)
+    }
+  }, [repoData, headers, setRepositories])
 
   useEffect(() => {
     setQueryPage(page)

@@ -43,7 +43,6 @@ interface SearchBoxProps {
   value?: InputHTMLAttributes<HTMLInputElement>['value']
   className?: string
   inputClassName?: string
-  // autoFocus?: boolean
 }
 
 const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
@@ -132,7 +131,6 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           onFocus={handleFocus}
           onInput={handleChange}
           value={value}
-          // autoFocus={autoFocus}
         />
       </div>
     )

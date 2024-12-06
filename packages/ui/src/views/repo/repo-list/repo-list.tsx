@@ -11,6 +11,7 @@ export interface PageProps {
   query?: string
   handleResetQuery: () => void
   useTranslationStore: () => TranslationStore
+  isLoading: boolean
 }
 
 const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (

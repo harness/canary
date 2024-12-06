@@ -7,7 +7,6 @@ import { SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-store'
@@ -21,16 +20,14 @@ export default function ReposListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const {
-    data: { body: repoData, headers } = {},
+    data: { body: repoData } = {},
     refetch,
-    isLoading,
     isFetching,
-    isRefetching,
     isError,
     error
   } = useListReposQuery(
     {
-      queryParams: { page, query },
+      queryParams: { page, query: query ?? '' },
       space_ref: `${space}/+`
     },
     {
@@ -40,12 +37,6 @@ export default function ReposListPage() {
       }
     }
   )
-
-  // useEffect(() => {
-  //   if (repoData) {
-  //     setRepositories(repoData, headers)
-  //   }
-  // }, [repoData, headers, setRepositories])
 
   useEffect(() => {
     setQueryPage(page)
@@ -77,7 +68,7 @@ export default function ReposListPage() {
     <SandboxRepoListPage
       useRepoStore={useRepoStore}
       useTranslationStore={useTranslationStore}
-      isLoading={isLoading || isFetching || isRefetching}
+      isLoading={isFetching}
       isError={isError}
       errorMessage={error?.message}
       searchQuery={query}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
@@ -8,7 +8,7 @@ import { ColorType, ContrastType, FullTheme, ModeType, ThemeState } from '@harne
 const useThemeStore = create<ThemeState>()(
   persist(
     set => ({
-      theme: 'system-std-std' as FullTheme, // Default theme
+      theme: 'dark-std-std' as FullTheme, // Default theme
       setTheme: (newTheme: FullTheme) => set({ theme: newTheme })
     }),
     {
@@ -22,7 +22,7 @@ export const useTheme: useThemeType = () => {
   return useThemeStore(state => ({ theme: state.theme, setTheme: state.setTheme }))
 }
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }: { children: ReactNode }) {
   const { theme, setTheme } = useTheme()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')

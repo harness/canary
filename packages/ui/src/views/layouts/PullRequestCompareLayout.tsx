@@ -24,10 +24,19 @@ import { BranchSelector } from '@views/repo/components/branch-selector/branch-se
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
+import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
+import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
 import { z } from 'zod'
 
-import { BranchSelectorListItem, BranchSelectorTab, SandboxLayout, TranslationStore, TypesCommit } from '..'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitsList,
+  SandboxLayout,
+  TranslationStore,
+  TypesCommit
+} from '..'
 // import PullRequestDiffViewer from '../components/pull-request/pull-request-diff-viewer'
 import { Layout } from './layout'
 
@@ -239,7 +248,6 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
         )}
         {prBranchCombinationExists && (
           <>
-            {/* <Spacer size={2} /> */}
             <Layout.Horizontal className="items-center justify-between rounded-md border-2 border-border bg-background p-3">
               <div>
                 <Layout.Horizontal className="py-2">
@@ -285,15 +293,21 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
               </TabsContent>
               <TabsContent className="flex flex-col" value="commits">
                 <Spacer size={10} />
-                {/* TODO: add commits when imported over */}
-                {/* <PullRequestCommits data={commitData} /> */}
+                {/* TODO: add pagination to this */}
+                <CommitsList
+                  data={commitData?.map((item: TypesCommit) => ({
+                    sha: item.sha,
+                    parent_shas: item.parent_shas,
+                    title: item.title,
+                    message: item.message,
+                    author: item.author,
+                    committer: item.committer
+                  }))}
+                />
               </TabsContent>
               <TabsContent value="changes">
                 {/* Content for Changes */}
                 <Spacer size={5} />
-                <Text
-                  size={2}
-                >{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>
                 <ListActions.Root>
                   <ListActions.Left>
                     <Text
@@ -367,11 +381,8 @@ const PullRequestAccordion: React.FC<{
   header?: HeaderProps
   data?: string
   diffMode: DiffModeEnum
-}> = ({
-  header
-  //  diffMode
-}) => {
-  //   const { highlight, wrap, fontsize } = useDiffConfig()
+}> = ({ header, diffMode }) => {
+  const { highlight, wrap, fontsize } = useDiffConfig()
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
   return (
@@ -390,7 +401,7 @@ const PullRequestAccordion: React.FC<{
                       <div className="ml-16 w-full px-2 py-1 font-mono">{startingLine}</div>
                     </div>
                   ) : null}
-                  {/* <PullRequestDiffViewer
+                  <PullRequestDiffViewer
                     data={header?.data}
                     fontsize={fontsize}
                     highlight={highlight}
@@ -404,7 +415,7 @@ const PullRequestAccordion: React.FC<{
                     removedLines={header?.removedLines}
                     deleted={header?.deleted}
                     unchangedPercentage={header?.unchangedPercentage}
-                  /> */}
+                  />
                 </div>
               </div>
             </AccordionContent>

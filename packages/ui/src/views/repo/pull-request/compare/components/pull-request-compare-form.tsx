@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import { Fieldset, Input, Spacer, Textarea } from '@/components'
+import { Fieldset, Input, Textarea } from '@/components'
 import { Text } from '@components/text'
 import { z } from 'zod'
 
@@ -32,7 +32,6 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
-          <Spacer size={4} />
           <Input
             id="title"
             {...register('title')}
@@ -41,7 +40,6 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
             error={errors.title?.message?.toString()}
             autoFocus
           />
-          <Spacer size={8} />
           <Textarea
             id="description"
             {...register('description')}

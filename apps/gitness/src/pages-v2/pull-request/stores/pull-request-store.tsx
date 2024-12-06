@@ -27,8 +27,8 @@ interface PullRequestType {
 interface PullRequestStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
-  open_pull_reqs: number
-  closed_pull_reqs: number
+  openPullreqs: number
+  closedPullReqs: number
   page: number
   setPage: (page: number) => void
   setPullRequests: (data: ListPullReqOkResponse, headers?: Headers) => void
@@ -39,8 +39,8 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
   pullRequests: null,
   totalPages: 0,
   page: 1,
-  open_pull_reqs: 0,
-  closed_pull_reqs: 0,
+  openPullreqs: 0,
+  closedPullReqs: 0,
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
@@ -73,8 +73,8 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
   },
   setOpenClosePullRequests: repoMetadata => {
     set({
-      open_pull_reqs: repoMetadata.num_open_pulls || 0,
-      closed_pull_reqs: repoMetadata.num_closed_pulls || 0
+      openPullreqs: repoMetadata.num_open_pulls || 0,
+      closedPullReqs: repoMetadata.num_closed_pulls || 0
     })
   }
 }))

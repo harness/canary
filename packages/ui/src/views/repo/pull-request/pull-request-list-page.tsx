@@ -96,7 +96,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
   useTranslationStore,
   isLoading
 }) => {
-  const { pullRequests, totalPages, page, setPage, open_pull_reqs, closed_pull_reqs } = usePullRequestStore()
+  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestStore()
   const { t } = useTranslationStore()
   const { query, handleSearch } = useCommonFilter()
   const [value, setValue] = useState<string>()
@@ -431,8 +431,8 @@ const PullRequestList: FC<PullRequestListProps> = ({
         handleResetQuery={noop}
         // LinkComponent={LinkComponent}
         pullRequests={sortedPullReqs}
-        closedPRs={closed_pull_reqs}
-        openPRs={open_pull_reqs}
+        closedPRs={closedPullReqs}
+        openPRs={openPullReqs}
       />
     )
   }

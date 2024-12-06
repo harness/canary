@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, ReactNode, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar, type FilterValue, type SortValue } from '@components/filters'
 import useFilters from '@components/filters/use-filters'
 import { formatDistanceToNow } from 'date-fns'

@@ -385,10 +385,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   if (isError)
     return (
       <>
-        <Spacer size={2} />
-        <Text size={1} className="text-destructive">
-          {errorMessage || 'Something went wrong'}
-        </Text>
+        <SandboxLayout.Main hasHeader hasLeftPanel>
+          <SandboxLayout.Content>
+            <Spacer size={2} />
+            <Text size={1} className="text-destructive">
+              {errorMessage || 'Something went wrong'}
+            </Text>
+          </SandboxLayout.Content>
+        </SandboxLayout.Main>
       </>
     )
 

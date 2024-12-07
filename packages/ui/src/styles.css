@@ -404,13 +404,13 @@
     --canary-foreground-success: var(--canary-green-65);
     --canary-foreground-accent: var(--canary-blue-60);
     /* Backgrounds */
-    --canary-background-01: var(--canary-grey-6);
+    --canary-background-01: var(--canary-white);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
     --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
-    --canary-background-07: var(--canary-black);
+    --canary-background-07: var(--canary-white);
     --canary-background-08: var(--canary-grey-12);
     --canary-background-09: var(--canary-grey-15);
     --canary-background-10: var(--canary-grey-94);

@@ -639,7 +639,7 @@ export default function App() {
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme='dark-std-std'>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <ExitConfirmProvider>

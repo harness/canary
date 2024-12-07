@@ -17,3 +17,6 @@ export * from './repo/pull-request'
 
 //Webhook
 export * from './repo/webhooks'
+
+//landing-page
+export * from './landing-page'

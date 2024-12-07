@@ -8,13 +8,26 @@ import {
   DropdownMenuTrigger,
   Icon,
   Text
-} from '@harnessio/ui/components'
-import { SandboxLayout } from '@harnessio/views'
+} from '@/components'
+import { SandboxLayout } from '@/views'
 
-import { useAppContext } from '../framework/context/AppContext'
+interface TypesSpace {
+  created?: number
+  created_by?: number
+  deleted?: number | null
+  description?: string
+  id?: number
+  identifier?: string
+  parent_id?: number
+  path?: string
+  updated?: number
+}
 
-export const LandingPage = () => {
-  const { spaces } = useAppContext()
+interface LandingPageProps {
+  spaces: TypesSpace[]
+}
+
+export const LandingPageView: React.FC<LandingPageProps> = ({ spaces }) => {
   const navigate = useNavigate()
 
   return (
@@ -40,7 +53,7 @@ export const LandingPage = () => {
                   <Icon name="chevron-down" size={15} className="chevron-down" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="min-w-[180px]">
+              <DropdownMenuContent className="min-w-[185px]">
                 {spaces?.length ? (
                   spaces.map(space => (
                     <DropdownMenuItem key={space.id} onClick={() => navigate(`${space.path}/repos`)}>

@@ -5,7 +5,7 @@ import { useMemo } from 'react'
 import { ColorSelect } from './color-select'
 import { ContrastSelect } from './contrast-select'
 import { ModeSelect } from './mode-select'
-import { FullTheme, IThemeStore } from './types'
+import { IThemeStore } from './types'
 import { getModeColorContrastFromFullTheme } from './utils'
 
 interface ThemeSelectorProps {

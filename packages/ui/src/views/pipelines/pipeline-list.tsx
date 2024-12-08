@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom'
 
-import { Icon, Meter, StackedList, Text } from '@harnessio/canary'
+import { Icon, Meter, StackedList, Text } from '@/components'
 
-import { ExecutionStatus } from './execution/execution-status'
-import { ExecutionState } from './execution/types'
+import { ExecutionStatus } from './execution-status'
+import { ExecutionState } from './types'
 
 export enum MeterState {
   Empty = 0,
@@ -12,7 +12,7 @@ export enum MeterState {
   Success = 3
 }
 
-interface Pipeline {
+export interface IPipeline {
   id: string
   status?: ExecutionState
   name?: string
@@ -27,7 +27,7 @@ interface Pipeline {
 }
 
 interface PageProps {
-  pipelines?: Pipeline[]
+  pipelines?: IPipeline[]
 }
 
 const Title = ({ status, title }: { status?: ExecutionState; title: string }) => {
@@ -43,7 +43,7 @@ const Description = ({ sha, description, version }: { sha: string; description: 
   return (
     <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px]">
       {sha && (
-        <div className="bg-tertiary-background/10 flex items-center gap-1 rounded-md px-1.5">
+        <div className="bg-tertiary-background flex items-center gap-1 rounded-md px-1.5">
           <Icon size={11} name={'tube-sign'} />
           {sha?.slice(0, 7)}
         </div>
@@ -88,7 +88,7 @@ export const PipelineList = ({ pipelines }: PageProps) => {
                   secondary
                   title={
                     pipeline.meter ? (
-                      <Meter.Root data={pipeline.meter} />
+                      <Meter data={pipeline.meter} />
                     ) : pipeline.timestamp ? (
                       `Created ${pipeline.timestamp}`
                     ) : (

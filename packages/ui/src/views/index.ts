@@ -20,3 +20,6 @@ export * from './repo/webhooks'
 
 //landing-page
 export * from './landing-page'
+
+// pipeline list
+export * from './pipelines'

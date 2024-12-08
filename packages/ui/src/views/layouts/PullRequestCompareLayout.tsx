@@ -22,8 +22,10 @@ import { BranchSelector } from '@views/repo/components/branch-selector/branch-se
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
+import { CommitSelector } from '@views/repo/pull-request/components/commit-selector/commit-selector'
 import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
+import { CommitSelectorListItem } from '@views/repo/pull-request/types'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
 import { z } from 'zod'
 
@@ -56,6 +58,8 @@ interface SandboxPullRequestCompareProps {
   isLoading: boolean
   isSuccess: boolean
   mergeability?: boolean
+  onSelectCommit: (commit: CommitSelectorListItem) => void
+
   selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
   commitData?: TypesCommit[]
   targetBranch: BranchSelectorListItem
@@ -67,6 +71,7 @@ interface SandboxPullRequestCompareProps {
   prBranchCombinationExists: number | null
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
+  selectedCommit: CommitSelectorListItem
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -88,7 +93,9 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  useRepoBranchesStore
+  useRepoBranchesStore,
+  onSelectCommit,
+  selectedCommit
 }) => {
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -263,13 +270,13 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                   value="commits"
                   icon="tube-sign"
                   label="Commits"
-                  badgeCount={diffStats.commits !== null ? diffStats.commits : undefined}
+                  badgeCount={diffStats.commits ? diffStats.commits : undefined}
                 />
                 <TabTriggerItem
                   value="changes"
                   icon="changes"
                   label="Changes"
-                  badgeCount={diffStats.files_changed !== null ? diffStats.files_changed : undefined}
+                  badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />
               </TabsList>
               <TabsContent value="overview">
@@ -305,6 +312,20 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 <Spacer size={5} />
                 <ListActions.Root>
                   <ListActions.Left>
+                    <CommitSelector
+                      useTranslationStore={useTranslationStore}
+                      useRepoBranchesStore={useRepoBranchesStore}
+                      selectedCommit={selectedCommit}
+                      onSelectCommit={commit => {
+                        onSelectCommit(commit)
+                      }}
+                      commitList={commitData?.map((item: TypesCommit) => ({
+                        sha: item.sha,
+
+                        title: item.title
+                      }))}
+                      buttonSize="sm"
+                    />
                     <Text
                       size={2}
                     >{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>

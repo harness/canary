@@ -18,7 +18,7 @@ import { NavbarItemType } from '../types'
 interface NavbarItemProps {
   item: NavbarItemType
   isRecent?: boolean
-  handleChangePinnedMenuItem: (item: NavbarItemType) => void
+  handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   handleCustomNav: () => void
   t: TFunction
@@ -35,7 +35,7 @@ export const NavbarItem = ({
   const iconName = item.iconName.replace('-gradient', '') as IconProps['name']
 
   const handlePin = () => {
-    handleChangePinnedMenuItem(item)
+    handleChangePinnedMenuItem(item, isRecent)
   }
 
   const handleRemoveRecent = () => {
@@ -62,11 +62,14 @@ export const NavbarItem = ({
           {t('component:navbar.reorder')}
         </Text>
       </DropdownMenuItem>
-      <DropdownMenuItem onSelect={handlePin}>
-        <Text size={2} truncate>
-          {t('component:navbar.unpin')}
-        </Text>
-      </DropdownMenuItem>
+
+      {!item.permanentlyPinned ? (
+        <DropdownMenuItem onSelect={handlePin}>
+          <Text size={2} truncate>
+            {t('component:navbar.unpin')}
+          </Text>
+        </DropdownMenuItem>
+      ) : null}
     </>
   )
 

@@ -65,7 +65,7 @@ function Header({ children, className }: { children: ReactNode; className?: stri
 
 function SubHeader({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <header className={cn('bg-background-1 fixed left-[220px] right-0 top-[58px] z-40 h-[45px]', className)}>
+    <header className={cn('bg-background-1 fixed left-[220px] right-0 top-[54px] z-40 h-[45px]', className)}>
       {children}
     </header>
   )

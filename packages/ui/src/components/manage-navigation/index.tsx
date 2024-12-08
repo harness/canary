@@ -151,14 +151,16 @@ export const ManageNavigation = ({
                               <Icon className="w-3.5" name="grid-dots" size={14} />
                               <Text className="w-full text-left text-[inherit]">{item.title}</Text>
                             </Button>
-                            <Button
-                              className="absolute right-1 top-0.5 z-20 text-icons-4 hover:text-icons-2"
-                              size="sm_icon"
-                              variant="custom"
-                              onClick={() => removeFromPinnedItems(item)}
-                            >
-                              <Icon className="w-3.5" name="x-mark" size={14} />
-                            </Button>
+                            {!item.permanentlyPinned ? (
+                              <Button
+                                className="text-icons-4 hover:text-icons-2 absolute right-1 top-0.5 z-20"
+                                size="sm_icon"
+                                variant="custom"
+                                onClick={() => removeFromPinnedItems(item)}
+                              >
+                                <Icon className="w-3.5" name="x-mark" size={14} />
+                              </Button>
+                            ) : null}
                           </>
                         )}
                       </DraggableItem>

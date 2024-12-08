@@ -10,7 +10,8 @@ import {
   EmptyPage,
   ForgotPasswordPage as ForgotPasswordPageV2,
   NewPasswordPage as NewPasswordPageV2,
-  OTPPage as OTPPageV2
+  OTPPage as OTPPageV2,
+  SandboxLayout
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -146,6 +147,39 @@ export default function App() {
       path: '/',
       element: <RootWrapper />,
       children: [
+        // 🚨 Routes to fix 🚨
+        {
+          path: 'repos',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>Repo</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'pipelines',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>pipelines</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'executions',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>executions</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'databases',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>databases</h1>
+            </SandboxLayout.Main>
+          )
+        },
         {
           index: true,
           element: <LandingPage />
@@ -598,10 +632,6 @@ export default function App() {
       element: <EmptyPage pathName="Cloud Cost Management" />
     },
     {
-      path: 'databases',
-      element: <EmptyPage pathName="Databases" />
-    },
-    {
       path: 'incidents',
       element: <EmptyPage pathName="Incidents" />
     },
@@ -614,7 +644,7 @@ export default function App() {
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="dark-std-std">
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <ExitConfirmProvider>

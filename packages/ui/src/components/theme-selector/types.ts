@@ -18,7 +18,7 @@ export enum ContrastType {
 
 export type FullTheme = `${ModeType}-${ColorType}-${ContrastType}`
 
-export type ThemeState = {
-  theme: FullTheme
+export interface IThemeStore {
+  theme?: FullTheme
   setTheme: (theme: FullTheme) => void
 }

@@ -157,18 +157,18 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     ]
   },
   {
-    groupId: 0,
+    groupId: 6,
     title: t('component:navbar.general'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
-        id: 0,
+        id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
         to: '/admin/default-settings'
       },
       {
-        id: 1,
+        id: 17,
         iconName: 'notification',
         title: t('component:navbar.notifications'),
         to: '/admin/notifications'
@@ -176,90 +176,90 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     ]
   },
   {
-    groupId: 1,
+    groupId: 7,
     title: t('component:navbar.resources'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
-        id: 2,
+        id: 18,
         iconName: 'wrench',
         title: t('component:navbar.services'),
         to: '/admin/services'
       },
       {
-        id: 3,
+        id: 19,
         iconName: 'environment',
         title: t('component:navbar.environments'),
         to: '/admin/environments'
       },
       {
-        id: 4,
+        id: 20,
         iconName: 'connectors',
         title: t('component:navbar.connectors'),
         to: '/admin/connectors'
       },
       {
-        id: 5,
+        id: 21,
         iconName: 'hierarchy',
         title: t('component:navbar.delegates'),
         to: '/admin/delegates'
       },
       {
-        id: 6,
+        id: 22,
         iconName: 'key',
         title: t('component:navbar.secrets'),
         to: '/admin/secrets'
       },
       {
-        id: 7,
+        id: 23,
         iconName: 'file-icon',
         title: t('component:navbar.file-store'),
         to: '/admin/filte-store'
       },
       {
-        id: 8,
+        id: 24,
         iconName: 'sidebar-icon',
         title: t('component:navbar.templates'),
         to: '/admin/templates'
       },
       {
-        id: 9,
+        id: 25,
         iconName: 'variable',
         title: t('component:navbar.variables'),
         to: '/admin/variables'
       },
       {
-        id: 10,
+        id: 26,
         iconName: 'clock-icon',
         title: t('component:navbar.slo-downtime'),
         to: '/admin/slo-downtime'
       },
       {
-        id: 11,
+        id: 27,
         iconName: 'search',
         title: t('component:navbar.discovery'),
         to: '/admin/discovery'
       },
       {
-        id: 12,
+        id: 28,
         iconName: 'eye',
         title: t('component:navbar.monitored-services'),
         to: '/admin/monitored-services'
       },
       {
-        id: 13,
+        id: 29,
         iconName: 'stack',
         title: t('component:navbar.overrides'),
         to: '/admin/overrides'
       },
       {
-        id: 14,
+        id: 30,
         iconName: 'bookmark-icon',
         title: t('component:navbar.certificates'),
         to: '/admin/certificates'
       },
       {
-        id: 15,
+        id: 31,
         iconName: 'webhook',
         title: t('component:navbar.webhooks'),
         to: '/admin/webhooks'
@@ -267,36 +267,36 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     ]
   },
   {
-    groupId: 2,
+    groupId: 8,
     title: t('component:navbar.access-control'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
-        id: 16,
+        id: 32,
         iconName: 'user',
         title: t('component:navbar.users'),
         to: '/admin/users'
       },
       {
-        id: 17,
+        id: 33,
         iconName: 'users',
         title: t('component:navbar.user-groups'),
         to: '/admin/users-group'
       },
       {
-        id: 18,
+        id: 34,
         iconName: 'account-icon',
         title: t('component:navbar.service-accounts'),
         to: '/admin/service-accounts'
       },
       {
-        id: 19,
+        id: 35,
         iconName: 'folder-icon',
         title: t('component:navbar.resource-groups'),
         to: '/admin/resource-groups'
       },
       {
-        id: 20,
+        id: 36,
         iconName: 'briefcase',
         title: t('component:navbar.roles'),
         to: '/admin/roles'
@@ -304,18 +304,18 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     ]
   },
   {
-    groupId: 3,
+    groupId: 9,
     title: t('component:navbar.security-and-governance'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
-        id: 21,
+        id: 37,
         iconName: 'shield',
         title: t('component:navbar.policies'),
         to: '/admin/policies'
       },
       {
-        id: 22,
+        id: 38,
         iconName: 'snow',
         title: t('component:navbar.freeze-windows'),
         to: '/admin/freeze-windows'
@@ -323,12 +323,12 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
     ]
   },
   {
-    groupId: 4,
+    groupId: 10,
     title: t('component:navbar.external-tickets'),
     type: MenuGroupTypes.SETTINGS,
     items: [
       {
-        id: 23,
+        id: 39,
         iconName: 'ticket',
         title: t('component:navbar.external-tickets'),
         to: '/admin/external-tickets'

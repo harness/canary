@@ -2,6 +2,8 @@ import { NavLink, Outlet } from 'react-router-dom'
 
 import { SandboxLayout } from '@harnessio/views'
 
+import Breadcrumbs from '../components/breadcrumbs/breadcrumbs'
+
 const RepoLayout: React.FC = () => {
   const baseClasses = 'h-full text-center flex items-center'
 
@@ -10,6 +12,7 @@ const RepoLayout: React.FC = () => {
 
   return (
     <>
+      <Breadcrumbs />
       <SandboxLayout.SubHeader>
         <div className="inline-flex h-[44px] w-full items-center justify-start gap-6 border-b border-border-background px-8 text-muted-foreground">
           <NavLink to="summary" className={({ isActive }) => getLinkClasses(isActive)}>

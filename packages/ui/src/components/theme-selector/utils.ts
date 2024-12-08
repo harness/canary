@@ -1,15 +1,19 @@
+import { FullTheme } from 'dist/components'
+
 import { ColorType, ContrastType, ModeType } from './types'
 
-export function getModeColorContrastFromFullTheme(theme: string) {
-  const modeColorContrast = theme.split('-')
+export function getModeColorContrastFromFullTheme(theme?: FullTheme) {
+  if (theme) {
+    const modeColorContrast = theme.split('-')
 
-  if (modeColorContrast.length === 3) {
-    return {
-      mode: modeColorContrast[0] as ModeType,
-      color: modeColorContrast[1] as ColorType,
-      contrast: modeColorContrast[2] as ContrastType
+    if (modeColorContrast.length === 3) {
+      return {
+        mode: modeColorContrast[0] as ModeType,
+        color: modeColorContrast[1] as ColorType,
+        contrast: modeColorContrast[2] as ContrastType
+      }
     }
-  } else {
-    return { mode: ModeType.Dark, color: ColorType.Standard, contrast: ContrastType.Standard }
   }
+
+  return { mode: ModeType.Dark, color: ColorType.Standard, contrast: ContrastType.Standard }
 }

@@ -1,7 +1,7 @@
 import { Spacer, Text, ThemeSelector } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
-import { useTheme } from '../../framework/context/ThemeContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 
 const ProfileSettingsThemePage: React.FC = () => {
   return (
@@ -12,7 +12,7 @@ const ProfileSettingsThemePage: React.FC = () => {
           Theme Selector
         </Text>
         <Spacer size={6} />
-        <ThemeSelector useTheme={useTheme} />
+        <ThemeSelector useThemeStore={useThemeStore} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

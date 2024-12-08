@@ -10,7 +10,8 @@ import {
   EmptyPage,
   ForgotPasswordPage as ForgotPasswordPageV2,
   NewPasswordPage as NewPasswordPageV2,
-  OTPPage as OTPPageV2
+  OTPPage as OTPPageV2,
+  SandboxLayout
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -35,6 +36,7 @@ import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
+import { LandingPage } from './pages-v2/landing-page-container'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
@@ -50,7 +52,7 @@ import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProject from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
-import { LandingPage } from './pages/landing-page'
+import { LandingPage as LandingPageV2 } from './pages/landing-page'
 import { Logout } from './pages/logout'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
@@ -145,6 +147,43 @@ export default function App() {
       path: '/',
       element: <RootWrapper />,
       children: [
+        // 🚨 Routes to fix 🚨
+        {
+          path: 'repos',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>Repo</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'pipelines',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>pipelines</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'executions',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>executions</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          path: 'databases',
+          element: (
+            <SandboxLayout.Main hasLeftPanel hasHeader>
+              <h1>databases</h1>
+            </SandboxLayout.Main>
+          )
+        },
+        {
+          index: true,
+          element: <LandingPage />
+        },
         {
           path: ':spaceId/repos',
           element: <ReposListPage />
@@ -227,7 +266,7 @@ export default function App() {
       children: [
         {
           index: true,
-          element: <LandingPage />
+          element: <LandingPageV2 />
         },
         {
           path: 'spaces/:spaceId/repos/:repoId/pipelines',
@@ -593,10 +632,6 @@ export default function App() {
       element: <EmptyPage pathName="Cloud Cost Management" />
     },
     {
-      path: 'databases',
-      element: <EmptyPage pathName="Databases" />
-    },
-    {
       path: 'incidents',
       element: <EmptyPage pathName="Incidents" />
     },
@@ -609,7 +644,7 @@ export default function App() {
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
-        <ThemeProvider>
+        <ThemeProvider defaultTheme="dark-std-std">
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <ExitConfirmProvider>

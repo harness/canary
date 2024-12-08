@@ -5,19 +5,15 @@ import { useMemo } from 'react'
 import { ColorSelect } from './color-select'
 import { ContrastSelect } from './contrast-select'
 import { ModeSelect } from './mode-select'
-import { FullTheme } from './types'
+import { IThemeStore } from './types'
 import { getModeColorContrastFromFullTheme } from './utils'
 
-function ThemeSelector({
-  useTheme
-}: {
-  useTheme: () => {
-    theme: FullTheme
-    setTheme: (theme: FullTheme) => void
-  }
-}) {
-  // theme will be structured like light-std-std which represents mode-color-contrast
-  const { theme, setTheme } = useTheme()
+interface ThemeSelectorProps {
+  useThemeStore: () => IThemeStore
+}
+function ThemeSelector({ useThemeStore }: ThemeSelectorProps) {
+  // theme will be structured like dark-std-std which represents mode-color-contrast
+  const { theme, setTheme } = useThemeStore()
   const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 
   return (

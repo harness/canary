@@ -2,48 +2,118 @@ import { useEffect, useState } from 'react'
 
 import { parse } from 'yaml'
 
-import { getNodesFromPipelineYaml, PipelineStudio, type Node } from '@harnessio/unified-pipeline'
+import {
+  AnyNodeType,
+  CanvasProvider,
+  ContainerNode,
+  LeafNodeType,
+  NodeContent,
+  PipelineGraph
+} from '@harnessio/pipeline-graph'
 
-import { InteractionContextProvider } from '../context/InteractionContextProvider'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
-import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
+// import { usePipelineViewContext } from '../context/PipelineStudioViewProvider'
+import { yaml2Nodes } from '../utils/yaml-to-pipeline-graph'
+import { CanvasControls } from './graph-implementation/canvas/CanvasControls'
+import { ContentNodeTypes } from './graph-implementation/content-node-types'
+import { EndNode } from './graph-implementation/nodes/end-node'
+import { ParallelGroupNodeContent } from './graph-implementation/nodes/parallel-group-node'
+import { SerialGroupNodeContent } from './graph-implementation/nodes/stage-node'
+import { StartNode } from './graph-implementation/nodes/start-node'
+import { StepNode } from './graph-implementation/nodes/step-node'
+
+import '@harnessio/pipeline-graph/dist/index.css'
+
+const nodes: NodeContent[] = [
+  {
+    type: ContentNodeTypes.start,
+    component: StartNode,
+    containerType: ContainerNode.leaf
+  },
+  {
+    type: ContentNodeTypes.end,
+    containerType: ContainerNode.leaf,
+    component: EndNode
+  },
+  {
+    type: ContentNodeTypes.step,
+    containerType: ContainerNode.leaf,
+    component: StepNode
+  },
+  {
+    type: ContentNodeTypes.parallel,
+    containerType: ContainerNode.parallel,
+    component: ParallelGroupNodeContent
+  },
+  {
+    type: ContentNodeTypes.serial,
+    containerType: ContainerNode.serial,
+    component: SerialGroupNodeContent
+  },
+  {
+    type: ContentNodeTypes.stage,
+    containerType: ContainerNode.serial,
+    component: SerialGroupNodeContent
+  }
+]
+
+const startNode = {
+  type: ContentNodeTypes.start,
+  config: {
+    width: 80,
+    height: 80,
+    hideDeleteButton: true,
+    hideBeforeAdd: true,
+    hideLeftPort: true
+  }
+} satisfies LeafNodeType
+
+const endNode = {
+  type: ContentNodeTypes.end,
+  config: {
+    width: 80,
+    height: 80,
+    hideDeleteButton: true,
+    hideAfterAdd: true,
+    hideRightPort: true
+  }
+} satisfies LeafNodeType
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {
-    state: { yamlRevision },
-    setEditStepIntention
+    state: { yamlRevision }
+    // setEditStepIntention
   } = usePipelineDataContext()
-  const { setStepDrawerOpen } = usePipelineViewContext()
+  // const { setStepDrawerOpen } = usePipelineViewContext()
 
-  const [nodes, setNodes] = useState<Node[]>([])
+  const [data, setData] = useState<AnyNodeType[]>([])
 
   useEffect(() => {
     return () => {
-      setNodes([])
+      setData([])
     }
   }, [])
 
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
-    const nodes: Node[] = getNodesFromPipelineYaml(yamlJson)
-    setNodes(nodes)
+    const newData = yaml2Nodes(yamlJson)
+    newData.unshift(startNode)
+    newData.push(endNode)
+    setData(newData)
   }, [yamlRevision])
 
   return (
-    <div className="flex size-full">
-      <InteractionContextProvider>
-        <PipelineStudio
+    <div className="relative flex size-full">
+      <CanvasProvider>
+        <PipelineGraph
+          data={data}
           nodes={nodes}
-          onAddNode={() => {}}
-          onDeleteNode={() => {}}
-          onSelectNode={node => {
-            if (node.type === 'atomic') {
-              setStepDrawerOpen(StepDrawer.Form)
-              setEditStepIntention({ path: node.data.path })
-            }
-          }}
+          onAdd={() => undefined}
+          onDelete={() => undefined}
+          onSelect={() => undefined}
         />
-      </InteractionContextProvider>
+        <CanvasControls />
+      </CanvasProvider>
     </div>
   )
 }

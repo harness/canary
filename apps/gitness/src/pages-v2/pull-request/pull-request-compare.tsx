@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
+import { t } from 'i18next'
 import { useAtom } from 'jotai'
 import { compact, isEqual } from 'lodash-es'
 
@@ -31,6 +32,10 @@ import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 
+interface CommitSelectorListItem {
+  title: string
+  sha: string
+}
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
@@ -45,10 +50,10 @@ export const CreatePullRequest = () => {
   const [apiError, setApiError] = useState<string | null>(null)
   const repoRef = useGetRepoRef()
   const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem>(
-    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: '' }
+    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: 'fd' }
   )
   const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
-    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
+    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: 'sd' }
   )
   const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<number | null>(null)
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
@@ -288,6 +293,20 @@ export const CreatePullRequest = () => {
       default: false
     }))
   }, [tags])
+  const [selectedCommit, setSelectedCommit] = useState<CommitSelectorListItem>({
+    title: t('views:repos.allCommits'),
+    sha: ''
+  })
+
+  const selectCommit = useCallback(
+    (commitName: CommitSelectorListItem) => {
+      const commit = commitData?.commits?.find(item => item.title === commitName.title)
+      if (commit?.title && commit?.sha) {
+        setSelectedCommit({ title: commit.title, sha: commit.sha || '' })
+      }
+    },
+    [commitData, setSelectedCommit]
+  )
 
   const selectBranchorTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
@@ -311,7 +330,7 @@ export const CreatePullRequest = () => {
         }
       }
     },
-    [branchList, tagsList]
+    [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
   )
 
   const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
@@ -330,6 +349,8 @@ export const CreatePullRequest = () => {
 
     return (
       <PullRequestCompare
+        selectedCommit={selectedCommit}
+        onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}

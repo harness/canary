@@ -1,4 +1,3 @@
-
 import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function getModeColorContrastFromFullTheme(theme?: FullTheme) {

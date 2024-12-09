@@ -27,6 +27,7 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
+  const { selectedBranchTag } = useRepoBranchesStore()
 
   // TODO: Not sure what codeMode is used for; it needs to be reviewed, and the condition for rendering the FileContentViewer component may need to be adjusted or fixed.
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
@@ -131,10 +132,7 @@ export const RepoCode = () => {
     }
   }, [repoDetails?.latest_commit])
 
-  if (!repoId) return <></>
-
-  const { selectedBranchTag } = useRepoBranchesStore()
-
+  
   const pathToNewFile = useMemo(() => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
@@ -147,7 +145,7 @@ export const RepoCode = () => {
       return `new/${fullGitRef || selectedBranchTag.name}/~/`
     }
   }, [repoDetails])
-
+  
   const renderCodeView = () => {
     if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
       return <FileContentViewer repoContent={repoDetails} />
@@ -159,7 +157,9 @@ export const RepoCode = () => {
       return <></>
     }
   }
-
+  
+  if (!repoId) return <></>
+  
   return (
     <RepoFiles
       pathParts={pathParts}

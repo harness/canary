@@ -84,7 +84,7 @@ const endNode = {
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {
-    state: { yamlRevision },
+    state: { yamlRevision, editStepIntention },
     setEditStepIntention,
     setAddStepIntention,
     requestYamlModifications: { deleteInArray }
@@ -101,11 +101,11 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
 
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson)
+    const newData = yaml2Nodes(yamlJson, { selectedPath: editStepIntention?.path })
     newData.unshift(startNode)
     newData.push(endNode)
     setData(newData)
-  }, [yamlRevision])
+  }, [yamlRevision, editStepIntention])
 
   const addStep = useCallback(
     (node: AnyNodeInternal, position: 'after' | 'before') => {

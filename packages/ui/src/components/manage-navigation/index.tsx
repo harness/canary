@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import {
   AlertDialog,
@@ -16,6 +16,7 @@ import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
+import { cn } from '@utils/cn'
 
 import { DraggableItem } from './draggable-item'
 import { ManageNavigationSearch } from './manage-navigation-search'
@@ -115,6 +116,15 @@ export const ManageNavigation = ({
     updatePinnedItems(currentPinnedItems.filter(pinnedItem => pinnedItem.id !== item.id))
   }
 
+  const permanantlyPinnedItems = useMemo(
+    () => currentPinnedItems.filter(item => item.permanentlyPinned),
+    [currentPinnedItems]
+  )
+  const draggablePinnedItems = useMemo(
+    () => currentPinnedItems.filter(item => !item.permanentlyPinned),
+    [currentPinnedItems]
+  )
+
   return (
     <AlertDialog open={showManageNavigation} onOpenChange={handleCancel}>
       <AlertDialogContent className="h-[574px] max-h-[70vh] max-w-[410px]" onOverlayClick={handleCancel}>
@@ -138,31 +148,50 @@ export const ManageNavigation = ({
               <DndContext onDragEnd={handleDragEnd} collisionDetection={closestCenter}>
                 <SortableContext items={currentPinnedItems.map((_, index) => getItemId(index))}>
                   <ul className="-mx-3 mb-1 mt-3.5 flex flex-col gap-y-0.5">
-                    {currentPinnedItems.map((item, index) => (
-                      <DraggableItem id={getItemId(index)} tag="li" key={item.title}>
-                        {({ attributes, listeners }) => (
-                          <>
-                            <Button
-                              className="w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing"
-                              variant="ghost"
-                              {...attributes}
-                              {...listeners}
-                            >
-                              <Icon className="w-3.5" name="grid-dots" size={14} />
-                              <Text className="w-full text-left text-[inherit]">{item.title}</Text>
-                            </Button>
-                            {!item.permanentlyPinned ? (
+                    {permanantlyPinnedItems.map(item => {
+                      return (
+                        <div
+                          key={item.id}
+                          className="flex w-full grow cursor-not-allowed items-center gap-x-2.5 rounded p-1 px-3 opacity-55"
+                        >
+                          <Icon className="w-3.5" name="shield-lock" size={14} />
+                          <Text>{item.title}</Text>
+                        </div>
+                      )
+                    })}
+                    {draggablePinnedItems.map((item, index) => (
+                      <DraggableItem id={getItemId(index + permanantlyPinnedItems.length)} tag="li" key={item.title}>
+                        {({ attributes, listeners }) => {
+                          return (
+                            <>
                               <Button
-                                className="absolute right-1 top-0.5 z-20 text-icons-4 hover:text-icons-2"
-                                size="sm_icon"
-                                variant="custom"
-                                onClick={() => removeFromPinnedItems(item)}
+                                disabled={item.permanentlyPinned}
+                                className={cn(
+                                  'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing',
+                                  {
+                                    'opacity-60': item.permanentlyPinned
+                                  }
+                                )}
+                                variant="ghost"
+                                {...attributes}
+                                {...listeners}
                               >
-                                <Icon className="w-3.5" name="x-mark" size={14} />
+                                <Icon className="w-3.5" name="grid-dots" size={14} />
+                                <Text className="w-full text-left text-[inherit]">{item.title}</Text>
                               </Button>
-                            ) : null}
-                          </>
-                        )}
+                              {!item.permanentlyPinned ? (
+                                <Button
+                                  className="text-icons-4 hover:text-icons-2 absolute right-1 top-0.5 z-20"
+                                  size="sm_icon"
+                                  variant="custom"
+                                  onClick={() => removeFromPinnedItems(item)}
+                                >
+                                  <Icon className="w-3.5" name="x-mark" size={14} />
+                                </Button>
+                              ) : null}
+                            </>
+                          )
+                        }}
                       </DraggableItem>
                     ))}
                   </ul>

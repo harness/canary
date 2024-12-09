@@ -27,9 +27,9 @@ function FolderItem({ children, key, value, isActive, content, chevronClass, lin
           })}
         >
           <div className="flex w-full items-center gap-2 py-1">
-            <Icon name="folder" size={12} className="group-hover:text-primary min-w-[12px] duration-100 ease-in-out" />
+            <Icon name="folder" size={12} className="min-w-[12px] duration-100 ease-in-out group-hover:text-primary" />
             <Link to={link}>
-              <Text as="p" size={2} className="group-hover:text-primary truncate text-inherit duration-100 ease-in-out">
+              <Text as="p" size={2} className="truncate text-inherit duration-100 ease-in-out group-hover:text-primary">
                 {children}
               </Text>
             </Link>
@@ -56,8 +56,8 @@ function FileItem({ children, key, isActive }: ItemProps) {
         }
       )}
     >
-      <Icon name="file" size={12} className="group-hover:text-primary min-w-[12px] duration-100 ease-in-out" />
-      <Text size={2} className="group-hover:text-primary truncate text-inherit duration-100 ease-in-out">
+      <Icon name="file" size={12} className="min-w-[12px] duration-100 ease-in-out group-hover:text-primary" />
+      <Text size={2} className="truncate text-inherit duration-100 ease-in-out group-hover:text-primary">
         {children}
       </Text>
     </div>

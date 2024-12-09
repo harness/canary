@@ -21,7 +21,7 @@ const SandboxSettings: React.FC = () => {
   return (
     <SandboxLayout.Root>
       <SandboxLayout.Header>
-        <div className="border-border-background flex h-full items-center border-b px-8">
+        <div className="flex h-full items-center border-b border-border-background px-8">
           <Breadcrumb>
             <BreadcrumbList>
               <BreadcrumbItem>

@@ -27,16 +27,16 @@ const Description = ({
   return (
     // <div className="pl-[24px]">
     <Text color="tertiaryBackground" as="div" className="flex items-center gap-1 pl-[24px]">
-      {targetPatternsCount} target patterns <span className="text-tertiary text-2xl">|</span> {rulesAppliedCount} rules
-      applied <span className="text-tertiary text-2xl">|</span>
+      {targetPatternsCount} target patterns <span className="text-2xl text-tertiary">|</span> {rulesAppliedCount} rules
+      applied <span className="text-2xl text-tertiary">|</span>
       {bypassAllowed ? (
         <div>
-          <Icon name="tick" className="text-success inline" size={12} />
+          <Icon name="tick" className="inline text-success" size={12} />
           <span> bypass allowed</span>
         </div>
       ) : (
         <div>
-          <Icon name="x-mark" className="text-destructive inline" size={12} />
+          <Icon name="x-mark" className="inline text-destructive" size={12} />
           <span> bypass not allowed</span>
         </div>
       )}

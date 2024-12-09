@@ -88,7 +88,7 @@ function Root({ highlightTop = '', highlightBottom = '', logo, logoSize = 84, ch
 
   return (
     <div
-      className="border-primary/5 group relative h-[220px] w-full cursor-pointer overflow-hidden rounded-lg border duration-150 ease-in-out"
+      className="group relative h-[220px] w-full cursor-pointer overflow-hidden rounded-lg border border-primary/5 duration-150 ease-in-out"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -98,7 +98,7 @@ function Root({ highlightTop = '', highlightBottom = '', logo, logoSize = 84, ch
         height="100%"
         className="absolute inset-0 size-full rounded-lg brightness-110 duration-150 ease-in-out group-hover:brightness-125"
       />
-      <div className="bg-background/40 absolute inset-px rounded-lg" />
+      <div className="absolute inset-px rounded-lg bg-background/40" />
       <div className="absolute inset-0 flex items-center justify-center">
         {logo && <Icon name={logo} size={logoSize} />}
       </div>

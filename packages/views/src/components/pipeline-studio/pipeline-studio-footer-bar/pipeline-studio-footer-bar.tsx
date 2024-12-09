@@ -49,19 +49,19 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
           onClick={() => {
             props.togglePane?.()
           }}
-          className="hover:bg-primary/10 flex h-full cursor-pointer gap-2 rounded-md px-2 py-1.5 duration-150 ease-in-out"
+          className="flex h-full cursor-pointer gap-2 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
         >
           <div className="flex items-center gap-1.5">
             <Icon name="fail" className="text-tertiary-background" />
-            <span className="text-primary text-[12px]">{props.problems.error}</span>
+            <span className="text-[12px] text-primary">{props.problems.error}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Icon name="triangle-warning" className="text-tertiary-background" />
-            <span className="text-primary text-[12px]">{props.problems.warning}</span>
+            <span className="text-[12px] text-primary">{props.problems.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <Icon name="info-circle" className="text-tertiary-background" />
-            <span className="text-primary text-[12px]">{props.problems.info}</span>
+            <span className="text-[12px] text-primary">{props.problems.info}</span>
           </div>
         </div>
         <div className={'flex gap-2'}>
@@ -80,9 +80,9 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
             </Select>
           </div> */}
           <div className={'flex items-baseline'}>
-            <span className="text-tertiary-background text-[12px]">Branch:</span>
+            <span className="text-[12px] text-tertiary-background">Branch:</span>
             <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
-              <SelectTrigger className="text-primary w-fit border-none px-1 text-[12px] focus:ring-[0px]">
+              <SelectTrigger className="w-fit border-none px-1 text-[12px] text-primary focus:ring-0">
                 <SelectValue placeholder={branchesLoading ? 'Loading...' : 'Select branch'} />
               </SelectTrigger>
               <SelectContent>
@@ -99,7 +99,7 @@ const PipelineStudioFooterBar: React.FC<PipelineStudioFooterBarProps> = (props: 
       {committedTimeAgo && authorName && (
         <Popover>
           <PopoverTrigger>
-            <div className="text-tertiary-background flex text-[12px]">
+            <div className="flex text-[12px] text-tertiary-background">
               Last edited
               <span className="text-primary">&nbsp;{committedTimeAgo}&nbsp;</span> by
               <span className="text-primary">&nbsp;{authorName}&nbsp;</span>

@@ -8,11 +8,11 @@ const StepForm = {
   },
 
   Title: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="text-accent-foreground mb-3 text-lg capitalize">{children}</div>
+    return <div className="mb-3 text-lg capitalize text-accent-foreground">{children}</div>
   },
 
   Description: function Title({ children }: { children: React.ReactNode }) {
-    return <div className="text-muted-foreground my-3">{children}</div>
+    return <div className="my-3 text-muted-foreground">{children}</div>
   },
 
   Actions: function Title({ children }: { children: React.ReactNode }) {

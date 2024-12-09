@@ -27,6 +27,7 @@
   --canary-orange-55: 35 74% 54%;
   --canary-green-65: 150 75% 65%;
   --canary-blue-60: 215 100% 60%;
+  --canary-blue-70: 215 100% 70%;
 
   /* PP Figma secondary colors */
   --canary-mint: 175 60% 65%;
@@ -127,6 +128,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -264,6 +266,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -419,6 +422,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -555,6 +559,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -710,6 +715,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -846,6 +852,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -1001,6 +1008,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -1137,6 +1145,7 @@
     --canary-background-13: var(--canary-grey-30);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
+    --canary-background-accent: var(--canary-blue-70);
     /* Borders */
     --canary-border-01: var(--canary-grey-15);
     --canary-border-02: var(--canary-grey-20);
@@ -1547,6 +1556,11 @@
   outline: 2px solid hsl(var(--canary-border-accent));
   outline-offset: 2px;
   border-radius: 2px;
+}
+
+mark {
+  background: hsl(var(--canary-background-accent));
+  color: hsl(var(--canary-foreground-06));
 }
 
 /* Hack for detecting scroll on select */

@@ -42,7 +42,7 @@ const Description = ({ sha, description, version }: { sha: string; description: 
   return (
     <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px]">
       {sha && (
-        <div className="bg-tertiary-background/10 flex items-center gap-1 rounded-md px-1.5">
+        <div className="flex items-center gap-1 rounded-md bg-tertiary-background/10 px-1.5">
           <Icon size={11} name={'tube-sign'} />
           {sha?.slice(0, 7)}
         </div>

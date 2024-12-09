@@ -10,6 +10,7 @@ import ArrowLong from '../icons/arrow-long.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
+import BookmarkAdd from '../icons/bookmark-add.svg'
 import BookmarkIcon from '../icons/bookmark-icon.svg'
 import BoxCloning from '../icons/box-cloning.svg'
 import BoxGuide from '../icons/box-guide.svg'
@@ -152,6 +153,7 @@ import TriangleWarning from '../icons/triangle-warning.svg'
 import TubeSign from '../icons/tube-sign.svg'
 import Unmerged from '../icons/unmerged.svg'
 import Unpin from '../icons/unpin.svg'
+import Upload from '../icons/upload-icon.svg'
 import User from '../icons/user-icon.svg'
 import Users from '../icons/users-icon.svg'
 import Variable from '../icons/variable-icon.svg'
@@ -321,7 +323,9 @@ const IconNameMap = {
   'chaos-engineering': ChaosEngineering,
   'dashboards-gradient': DashboardsGradient,
   dashboards: Dashboards,
-  'menu-dots': MenuDots
+  'menu-dots': MenuDots,
+  'bookmark-add': BookmarkAdd,
+  upload: Upload
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

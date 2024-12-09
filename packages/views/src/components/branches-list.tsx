@@ -63,7 +63,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
             <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="bg-primary-background w-[180px] rounded-[10px] border border-gray-800 py-2 shadow-sm">
+        <DropdownMenuContent className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm">
           <DropdownMenuGroup>
             <Link
               replace
@@ -133,7 +133,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                 {/* user avatar and timestamp */}
                 <TableCell className="content-center">
                   <div className="flex items-center gap-1.5">
-                    <Avatar className="h-5 w-5">
+                    <Avatar className="size-5">
                       {branch.user.avatarUrl && <AvatarImage src={branch.user.avatarUrl} />}
                       <AvatarFallback className="p-1 text-center text-xs">
                         {getInitials(branch.user.name, 2)}
@@ -162,7 +162,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                       <Badge
                         variant="outline"
                         size="xs"
-                        className="text-tertiary-background m-auto h-5 rounded-full p-2 text-center text-xs font-normal"
+                        className="m-auto h-5 rounded-full p-2 text-center text-xs font-normal text-tertiary-background"
                       >
                         Default
                       </Badge>
@@ -176,7 +176,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                   <TableCell className="content-center">
                     <div className="flex items-center justify-center gap-1.5">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
-                      <Text wrap="nowrap" size={1} truncate className="text-tertiary-background font-mono">
+                      <Text wrap="nowrap" size={1} truncate className="font-mono text-tertiary-background">
                         <CommitCopyActions sha={branch.sha} />
                       </Text>
                     </div>

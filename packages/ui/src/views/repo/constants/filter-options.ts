@@ -1,4 +1,10 @@
-import { type FilterCondition, type FilterOption, type SortDirection, type SortOption } from '@components/filters'
+import {
+  type FilterCondition,
+  type FilterOption,
+  type SortDirection,
+  type SortOption,
+  type ViewLayoutOption
+} from '@components/filters'
 import { TFunction } from 'i18next'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
@@ -82,4 +88,9 @@ export const getSortOptions = (t: TFunction): SortOption[] => [
 export const getSortDirections = (t: TFunction): SortDirection[] => [
   { label: t('component:filter.ascending', 'Ascending'), value: 'asc' },
   { label: t('component:filter.descending', 'Descending'), value: 'desc' }
+]
+
+export const getLayoutOptions = (t: TFunction): ViewLayoutOption[] => [
+  { label: t('component:layout.table', 'Table'), value: 'table' },
+  { label: t('component:layout.list', 'List'), value: 'list' }
 ]

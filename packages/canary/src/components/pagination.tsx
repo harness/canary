@@ -64,7 +64,7 @@ const PaginationPrevious = ({ disabled, className, ...props }: React.ComponentPr
     )}
     {...props}
   >
-    <Icon name="arrow-long" size={12} className="text-tertiary-background rotate-180" />
+    <Icon name="arrow-long" size={12} className="rotate-180 text-tertiary-background" />
     <span>Previous</span>
   </PaginationLink>
 )

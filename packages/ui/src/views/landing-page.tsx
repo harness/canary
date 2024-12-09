@@ -34,7 +34,7 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
 
   return (
     <SandboxLayout.Main hasLeftPanel>
-      <div className="flex h-full w-full flex-col place-content-center place-items-center gap-4 justify-center items-center">
+      <div className="flex size-full flex-col place-content-center place-items-center items-center justify-center gap-4">
         <div className="flex flex-col place-content-center place-items-center gap-2.5">
           <Text size={5} weight="medium">
             {t('views:landingPage.selectProject', 'Select a project to get started')}

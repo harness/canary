@@ -29,7 +29,7 @@ type ExecutionDetail = {
 const getStatusIcon = (status: Status): React.ReactElement => {
   switch (status) {
     case Status.IN_PROGRESS:
-      return <CanaryIcon size={16} name="running" className="text-warning animate-spin" />
+      return <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
     case Status.SUCCESS:
       return <CanaryIcon name="success" size={16} />
     case Status.FAILED:
@@ -246,7 +246,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             <span className="text-muted-foreground">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-hidden text-sm">
+        <AccordionPrimitive.Content className="relative h-full overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
           {element && indicator && <TreeIndicator aria-hidden="true" />}
           <AccordionPrimitive.Root
             dir={direction}

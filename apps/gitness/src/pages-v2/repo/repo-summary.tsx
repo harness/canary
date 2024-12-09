@@ -7,6 +7,7 @@ import {
   OpenapiGetContentOutput,
   pathDetails,
   RepoPathsDetailsOutput,
+  UpdateRepositoryErrorResponse,
   useCreateTokenMutation,
   useFindRepositoryQuery,
   useGetContentQuery,
@@ -56,28 +57,35 @@ export default function RepoSummaryPage() {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
-  const { mutate: updateDescription } = useUpdateRepositoryMutation(
+  const [updateError, setUpdateError] = useState<string>('')
+
+  const [isEditDialogOpen, setEditDialogOpen] = useState(false)
+
+  const updateDescription = useUpdateRepositoryMutation(
     { repo_ref: repoRef },
     {
       onSuccess: () => {
         refetchRepo()
+        setEditDialogOpen(false)
+      },
+      onError: (error: UpdateRepositoryErrorResponse) => {
+        const errormsg = error?.message || 'An unknown error occurred.'
+        setUpdateError(errormsg)
       }
     }
   )
-  const [isEditingDescription, setIsEditingDescription] = useState<boolean>(false)
-
-  const onChangeDescription = () => {
-    setIsEditingDescription(true)
-  }
 
   const saveDescription = (description: string) => {
-    updateDescription({
+    updateDescription.mutate({
       body: {
         description: description
       }
     })
-    setIsEditingDescription(false)
   }
+
+  useEffect(() => {
+    setUpdateError('')
+  }, [isEditDialogOpen])
 
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
@@ -299,11 +307,11 @@ export default function RepoSummaryPage() {
         summaryDetails={summaryDetails}
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
-        onChangeDescription={onChangeDescription}
-        isEditingDescription={isEditingDescription}
-        setIsEditingDescription={setIsEditingDescription}
         saveDescription={saveDescription}
         useRepoBranchesStore={useRepoBranchesStore}
+        updateRepoError={updateError}
+        isEditDialogOpen={isEditDialogOpen}
+        setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
       />
       {createdTokenData && (

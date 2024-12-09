@@ -20,7 +20,6 @@ const ScrollArea = React.forwardRef<
       clearTimeout(timeoutRef.current)
     }
 
-    // Устанавливаем новый таймер
     timeoutRef.current = window.setTimeout(() => {
       setIsScrolling(false)
       timeoutRef.current = null

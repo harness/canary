@@ -17,7 +17,7 @@ export const PopoverCommitInfo = {
     commit?: string
   }) {
     return (
-      <div className="flex items-center justify-between p-3 py-3">
+      <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-x-3">
           <Avatar size="8" className="inline-flex">
             <AvatarImage src={avatarUrl} alt="@shadcn" />

@@ -48,7 +48,7 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({ isLast, author,
       contentClassName="pb-0"
       content={
         description && (
-          <div className="flex px-4 py-4">
+          <div className="flex p-4">
             <Text size={2} color="primary">
               {description && <MarkdownViewer source={description} />}
             </Text>

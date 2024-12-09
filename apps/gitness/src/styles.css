@@ -8,7 +8,3 @@
   font-weight: 300 600; /* Supports weights from 300 to 600 */
   src: url('/fonts/InterVariable.ttf') format('truetype');
 }
-
-mark {
-  background: white !important;
-}

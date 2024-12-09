@@ -25,15 +25,15 @@ const buttonVariants = cva(
         custom: ''
       },
       size: {
-        default: 'h-8 px-6 py-2',
-        sm: 'h-7 px-3 py-0 text-sm font-normal',
+        default: 'h-8 px-6',
+        sm: 'h-7 px-3 text-sm font-normal',
         xs: 'h-auto px-1.5 py-0.5 text-xs font-normal',
         md: 'h-9 px-7',
         lg: 'h-10 px-8',
         icon: 'size-8',
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-xs font-medium',
-        lg_split: 'h-10 p-0 text-md font-medium'
+        lg_split: 'text-md h-10 p-0 font-medium'
       },
       borderRadius: {
         default: '',

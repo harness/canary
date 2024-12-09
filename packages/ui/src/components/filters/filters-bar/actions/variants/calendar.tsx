@@ -3,12 +3,11 @@ import { useState } from 'react'
 import { Input, Calendar as UICalendar, type CalendarDateRange } from '@/components'
 import { cn } from '@utils/cn'
 
-import { FilterValue } from '../../types'
-import { UseFiltersReturn } from '../../use-filters'
+import { FilterHandlers, FilterValue } from '../../../types'
 
 interface CalendarProps {
   filter: FilterValue
-  onUpdateFilter: UseFiltersReturn['handleUpdateFilter']
+  onUpdateFilter: FilterHandlers['handleUpdateFilter']
 }
 
 interface DateInputState {

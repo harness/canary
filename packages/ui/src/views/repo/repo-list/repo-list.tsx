@@ -1,7 +1,8 @@
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { TFunction } from 'i18next'
 
-import { RepositoryType, TranslationStore } from './types'
+import { RepositoryType } from '../repo.types'
+import { TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
@@ -102,7 +103,7 @@ export function RepoList({
                 primary
                 description={repo.description}
                 title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-                className="gap-1.5 truncate"
+                className="line-clamp-1 gap-1.5 text-wrap"
               />
               <StackedList.Field
                 title={

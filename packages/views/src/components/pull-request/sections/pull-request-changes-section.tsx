@@ -264,7 +264,7 @@ const PullRequestChangesSection = ({
                   </div>
                 )}
                 <div className="rounded-full border bg-transparent">
-                  <Text className="text-tertiary-background px-2 py-1.5 text-xs">required</Text>
+                  <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
                 </div>
               </div>
             </div>
@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({
                   </div>
                 )}
                 <div className="rounded-full border bg-transparent">
-                  <Text className="text-tertiary-background px-2 py-1.5 text-xs">required</Text>
+                  <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
                 </div>
               </div>
             </div>
@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({
                 </Text>
                 {reqNoChangeReq && (
                   <div className="rounded-full border bg-transparent">
-                    <Text className="text-tertiary-background px-2 py-1.5 text-xs">required</Text>
+                    <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
                   </div>
                 )}
               </div>
@@ -335,7 +335,7 @@ const PullRequestChangesSection = ({
                 )}
                 {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
                   <div className="rounded-full border bg-transparent">
-                    <Text className="text-tertiary-background px-2 py-1.5 text-xs">required</Text>
+                    <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
                   </div>
                 )}
               </div>
@@ -348,7 +348,7 @@ const PullRequestChangesSection = ({
                 <StackedList.Item
                   isHeader
                   disableHover
-                  className="text-tertiary-background cursor-default !bg-transparent px-0"
+                  className="cursor-default !bg-transparent px-0 text-tertiary-background"
                 >
                   <StackedList.Field title={<HeaderItem header="Code" />} />
                   <StackedList.Field title={<HeaderItem header="Owners" />} />

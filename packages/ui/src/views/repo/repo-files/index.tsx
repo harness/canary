@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react'
 
-import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
+import { FileAdditionsTrigger, NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
 import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { FileLastChangeBar, Summary } from '@/views/repo/components'
 
@@ -13,6 +13,10 @@ interface RepoFilesProps {
   latestFile: LatestFileTypes
   children: ReactNode
   useTranslationStore: () => TranslationStore
+  pathNewFile: string
+  pathUploadFiles: string
+  isEditFile: boolean
+  isNewFile: boolean
 }
 
 export const RepoFiles = ({
@@ -23,10 +27,14 @@ export const RepoFiles = ({
   isShowSummary,
   latestFile,
   children,
-  useTranslationStore
+  useTranslationStore,
+  pathNewFile,
+  pathUploadFiles,
+  isEditFile,
+  isNewFile
 }: RepoFilesProps) => {
   const content = useMemo(() => {
-    if (!isDir)
+    if (!isDir && !isEditFile && !isNewFile)
       return (
         <>
           <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
@@ -36,8 +44,12 @@ export const RepoFiles = ({
 
     if (loading) return <SkeletonList />
 
-    if (isShowSummary && files.length)
+    if (isShowSummary && files.length && !isNewFile)
       return <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+
+    if (isNewFile) {
+      return children
+    }
 
     return (
       <NoData
@@ -54,8 +66,15 @@ export const RepoFiles = ({
   return (
     <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
       <SandboxLayout.Content>
-        <div className="mb-4 flex h-8 items-center">
+        <div className="mb-4 flex h-8 items-center justify-between gap-8">
           <PathBreadcrumbs items={pathParts} />
+          {!isEditFile && !isNewFile ? (
+            <FileAdditionsTrigger
+              useTranslationStore={useTranslationStore}
+              pathNewFile={pathNewFile}
+              pathUploadFiles={pathUploadFiles}
+            />
+          ) : null}
         </div>
         {content}
       </SandboxLayout.Content>

@@ -1,11 +1,7 @@
 {
-  "landingPage": {
-    "selectProject": "Sélectionnez un projet pour commencer",
-    "description": "Les projets contiennent vos dépôts et pipelines. Pour commencer à utiliser Gitness, sélectionnez un projet ou créez-en un nouveau.",
-    "projectSelector": "Sélectionner un projet",
-    "noProjects": "Aucun projet disponible"
-  },
   "repos": {
+    "create-new-file-no-plus": "Créer un nouveau fichier",
+    "upload-files": "Télécharger des fichiers",
     "branches": "Branches",
     "tags": "Étiquettes",
     "default": "Par défaut",
@@ -32,5 +28,11 @@
     "createNewFile": "+ Créer un nouveau fichier",
     "readme": "README.md",
     "openPullReq": "Requêtes de tirage ouvertes"
+  },
+  "landingPage": {
+    "selectProject": "Sélectionnez un projet pour commencer",
+    "description": "Les projets contiennent vos dépôts et pipelines. Pour commencer à utiliser Gitness, sélectionnez un projet ou créez-en un nouveau.",
+    "projectSelector": "Sélectionner un projet",
+    "noProjects": "Aucun projet disponible"
   }
 }

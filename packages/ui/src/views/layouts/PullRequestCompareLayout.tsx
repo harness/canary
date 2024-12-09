@@ -23,7 +23,6 @@ import PullRequestCompareButton from '@views/repo/pull-request/compare/component
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
 import { CommitSelectorListItem } from '@views/repo/pull-request/compare/components/types'
-import { CommitSelector } from '@views/repo/pull-request/components/commit-selector/commit-selector'
 import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
@@ -93,9 +92,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  useRepoBranchesStore,
-  onSelectCommit,
-  selectedCommit
+  useRepoBranchesStore
 }) => {
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
@@ -312,20 +309,6 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 <Spacer size={5} />
                 <ListActions.Root>
                   <ListActions.Left>
-                    <CommitSelector
-                      useTranslationStore={useTranslationStore}
-                      useRepoBranchesStore={useRepoBranchesStore}
-                      selectedCommit={selectedCommit}
-                      onSelectCommit={commit => {
-                        onSelectCommit(commit)
-                      }}
-                      commitList={commitData?.map((item: TypesCommit) => ({
-                        sha: item.sha,
-
-                        title: item.title
-                      }))}
-                      buttonSize="sm"
-                    />
                     <Text
                       size={2}
                     >{`Showing ${diffStats.files_changed || 0} changed files with ${diffStats.additions || 0} additions and ${diffStats.deletions || 0} deletions `}</Text>

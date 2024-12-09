@@ -1,7 +1,8 @@
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { TFunction } from 'i18next'
 
-import { RepositoryType, TranslationStore } from './types'
+import { RepositoryType } from '../repo.types'
+import { TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]

@@ -1,11 +1,10 @@
 {
   "filter": {
+    "add-filter": "Add filter",
+    "reset": "Reset",
     "defaultLabel": "Filter",
     "inputPlaceholder": "Filter by...",
     "buttonLabel": "Reset filters",
-    "add-filter": "Add filter",
-    "reset": "Reset",
-    "save": "Save",
     "is": "is",
     "isNot": "is not",
     "isEmpty": "is empty",
@@ -104,5 +103,9 @@
   "searchFile": {
     "input": "Search files...",
     "noFile": "No file found."
+  },
+  "layout": {
+    "table": "Table",
+    "list": "List"
   }
 }

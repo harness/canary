@@ -48,6 +48,19 @@ export interface RepoFile {
   path: string
 }
 
+export interface RepositoryType {
+  id: number
+  name: string
+  description?: string
+  private: boolean
+  stars: number
+  forks: number
+  pulls: number
+  createdAt: number
+  timestamp: string
+  importing?: boolean
+}
+
 export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
 
 export interface IBranchSelectorStore {

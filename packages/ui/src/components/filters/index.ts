@@ -1,8 +1,15 @@
 import Filters from './filters'
 import FiltersBar from './filters-bar/filters-bar'
-import { FilterCondition, FilterOption, FilterValue, SortDirection, SortOption, SortValue } from './types'
-import useFilters from './use-filters'
+import {
+  FilterCondition,
+  FilterOption,
+  FilterValue,
+  SortDirection,
+  SortOption,
+  SortValue,
+  ViewLayoutOption
+} from './types'
 
-export { Filters, FiltersBar, useFilters }
+export { Filters, FiltersBar }
 
-export type { FilterOption, FilterCondition, SortOption, SortDirection, FilterValue, SortValue }
+export type { FilterOption, FilterCondition, SortOption, SortDirection, FilterValue, SortValue, ViewLayoutOption }

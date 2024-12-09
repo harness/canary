@@ -2,12 +2,11 @@ import { useState } from 'react'
 
 import { Icon, Input } from '@/components'
 
-import { FilterValue } from '../../types'
-import { UseFiltersReturn } from '../../use-filters'
+import { FilterHandlers, FilterValue } from '../../../types'
 
 interface NumberFilterProps {
   filter: FilterValue
-  onUpdateFilter: UseFiltersReturn['handleUpdateFilter']
+  onUpdateFilter: FilterHandlers['handleUpdateFilter']
 }
 
 const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {

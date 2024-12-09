@@ -256,10 +256,7 @@ export const FileEditor: React.FC = () => {
         <StackedList.Root onlyTopRounded borderBackground>
           <StackedList.Item disableHover isHeader className="px-3 py-2.5">
             <ToggleGroup
-              onValueChange={(value: ViewTypeValue) => {
-                if (value) {
-                  setView(value)
-                }
+              onValueChange={setView}
               }}
               value={view}
               type="single"

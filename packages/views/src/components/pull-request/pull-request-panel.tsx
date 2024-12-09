@@ -86,16 +86,16 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
 
     return (
       <>
-        <div className="inline-flex justify-between w-full items-center gap-2">
+        <div className="inline-flex w-full items-center justify-between gap-2">
           <Text className="flex items-center gap-2 space-x-2" weight="medium">
             <Text>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</Text>
             <Button variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.source_branch}
             </Button>
             <Text>{'into'}</Text>
             <Button variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.target_branch}
             </Button>
             <Text>{formattedTime}</Text>
@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
           ) : null}
         </div>
         {props.headerMsg && (
-          <div className="flex justify-end w-full">
+          <div className="flex w-full justify-end">
             <Text size={1} className="text-destructive">
               {props.headerMsg}
             </Text>

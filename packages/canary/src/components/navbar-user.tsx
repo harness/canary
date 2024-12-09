@@ -25,15 +25,15 @@ const Root: React.FC<{
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="group relative grid cursor-pointer grid-cols-[auto_1fr] grid-rows-2 items-center justify-start gap-x-3">
-          <div className="group-hover:bg-primary/5 absolute -inset-2 rounded-md duration-100 ease-in-out" />
+          <div className="absolute -inset-2 rounded-md duration-100 ease-in-out group-hover:bg-primary/5" />
           <div className="col-start-1 row-span-2">
             <Avatar className="overflow-hidden rounded-md">
               {url && <AvatarImage src={url} alt="user" />}
               {username && <AvatarFallback>{getInitials(username)}</AvatarFallback>}
             </Avatar>
           </div>
-          <p className="text-primary col-start-2 row-start-1 text-xs font-medium">{username}</p>
-          <p className="text-tertiary-background col-start-2 row-start-2 text-xs font-normal">
+          <p className="col-start-2 row-start-1 text-xs font-medium text-primary">{username}</p>
+          <p className="col-start-2 row-start-2 text-xs font-normal text-tertiary-background">
             {isAdmin ? 'Admin' : 'Account Member'}
           </p>
         </div>

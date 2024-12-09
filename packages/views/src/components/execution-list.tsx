@@ -47,7 +47,7 @@ const Description = ({
         </div>
       )}
       {sha && (
-        <div className="bg-tertiary-background/10 flex items-center gap-1 rounded-md px-1.5 font-mono">
+        <div className="flex items-center gap-1 rounded-md bg-tertiary-background/10 px-1.5 font-mono">
           <Icon size={11} name={'tube-sign'} />
           {sha}
         </div>

@@ -20,11 +20,11 @@ export const moreActionsDropdown = ({ member, onDelete }: moreActionsProps) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" size="xs">
-          <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background cursor-pointer" />
+          <Icon name="vertical-ellipsis" size={14} className="cursor-pointer text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="bg-primary-background w-[180px] rounded-[10px] border border-gray-800 py-2 shadow-sm"
+        className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm"
         onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
       >
         <DropdownMenuGroup>

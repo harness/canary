@@ -22,7 +22,7 @@ function Root({ className, children }: NavbarRootProps) {
 }
 
 function Header({ children }: { children: React.ReactNode }) {
-  return <div className="bg-primary-background sticky top-0 z-20 grid items-center">{children}</div>
+  return <div className="sticky top-0 z-20 grid items-center bg-primary-background">{children}</div>
 }
 
 function Content({ children }: { children: React.ReactNode }) {
@@ -37,8 +37,8 @@ function Group({ children, title, topBorder }: { children: React.ReactNode; titl
       })}
     >
       {title && (
-        <div className="text-primary group mb-2 opacity-40">
-          <p className="group-hover:text-primary text-xs font-normal duration-150 ease-in-out">{title}</p>
+        <div className="group mb-2 text-primary opacity-40">
+          <p className="text-xs font-normal duration-150 ease-in-out group-hover:text-primary">{title}</p>
         </div>
       )}
       {children}
@@ -63,8 +63,8 @@ function AccordionGroup({
     >
       <Accordion type="single" collapsible defaultValue="item-1">
         <AccordionItem value="item-1" className="border-none">
-          <AccordionTrigger className="text-primary group opacity-40">
-            <p className="group-hover:text-primary text-xs font-normal duration-150 ease-in-out">{title}</p>
+          <AccordionTrigger className="group text-primary opacity-40">
+            <p className="text-xs font-normal duration-150 ease-in-out group-hover:text-primary">{title}</p>
           </AccordionTrigger>
           <AccordionContent className="flex flex-col gap-1.5">{children}</AccordionContent>
         </AccordionItem>
@@ -105,7 +105,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
             { 'text-primary': active }
           )}
         >
-          {icon ? <div className="bg-tertiary rounded-md">{icon}</div> : <div />}
+          {icon ? <div className="rounded-md bg-tertiary">{icon}</div> : <div />}
         </div>
         <div className="col-start-2 flex flex-col items-start">
           <Text
@@ -170,7 +170,7 @@ function Item({ icon, text, description, active, submenuItem, className }: ItemP
 
 function Footer({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-primary-background border-border-background sticky bottom-0 z-20 grid h-[76px] items-center border-t px-5">
+    <div className="sticky bottom-0 z-20 grid h-[76px] items-center border-t border-border-background bg-primary-background px-5">
       {children}
     </div>
   )

@@ -98,9 +98,9 @@ const Root = ({
 
   return (
     <div className={cn('relative', width === 'full' ? 'w-full' : 'w-96', className)}>
-      <Icon name="search" size={12} className="text-tertiary-background absolute left-2.5 top-1/2 -translate-y-1/2" />
+      <Icon name="search" size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-tertiary-background" />
       {hasShortcut && (
-        <div className="text-tertiary-background shadow-border absolute right-2.5 top-1/2 flex -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm px-1.5 opacity-80 shadow-[0_0_0_1px] duration-100 ease-in-out hover:opacity-100">
+        <div className="absolute right-2.5 top-1/2 flex -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm px-1.5 text-tertiary-background opacity-80 shadow-[0_0_0_1px] shadow-border duration-100 ease-in-out hover:opacity-100">
           <Icon name="apple-shortcut" size={12} />
           <Text size={0} color="tertiaryBackground">
             {shortcutLetter}

@@ -17,7 +17,7 @@ function InputLabel(props: InputLabelProps): JSX.Element {
       {description && (
         <Tooltip>
           <TooltipTrigger>
-            <Icon name="info-circle" className="text-muted-foreground ml-2 h-5" />
+            <Icon name="info-circle" className="ml-2 h-5 text-muted-foreground" />
           </TooltipTrigger>
           <TooltipContent>{description}</TooltipContent>
         </Tooltip>

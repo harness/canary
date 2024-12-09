@@ -111,9 +111,9 @@ export const RootLayout: React.FC<RootLayoutProps> = ({ currentUser }) => {
 
   return (
     <>
-      <div className="bg-background min-w-screen grid md:grid-cols-[220px_minmax(900px,_1fr)]">
+      <div className="min-w-screen grid bg-background md:grid-cols-[220px_minmax(900px,_1fr)]">
         {showNavbar && (
-          <Navbar.Root className="fixed bottom-0 left-0 top-0 z-50 max-md:hidden">
+          <Navbar.Root className="fixed inset-y-0 left-0 z-50 max-md:hidden">
             <Navbar.Header>
               <NavbarProjectChooser.Root
                 avatarLink={

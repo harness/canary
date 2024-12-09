@@ -6,19 +6,19 @@ import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap rounded-[4px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:cursor-not-allowed disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap rounded-[4px] text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90 shadow',
-        destructive: 'bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-sm',
-        outline: 'border-input bg-background hover:bg-accent hover:text-accent-foreground border shadow-sm',
-        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
-        tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80 shadow-sm',
+        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
+        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
+        tertiary: 'bg-tertiary text-secondary-foreground shadow-sm hover:bg-tertiary/80',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         split: 'flex items-center gap-1.5 border p-0',
-        'gradient-border': 'bg-background hover:bg-accent text-primary hover:text-accent-foreground'
+        'gradient-border': 'bg-background text-primary hover:bg-accent hover:text-accent-foreground'
       },
       size: {
         default: 'h-9 px-4 py-2',
@@ -35,11 +35,11 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'text-error border-[hsla(var(--error),0.3)] bg-[hsla(var(--error),0.1)]',
-        warning: 'text-warning border-[hsla(var(--warning),0.3)] bg-[hsla(var(--warning),0.1)]',
-        success: 'text-success border-[hsla(var(--success),0.3)] bg-[hsla(var(--success),0.1)]',
-        muted: 'text-tertiary-background border-tertiary-background/20 bg-tertiary-background/10',
-        primary: 'text-primary-foreground border-primary-foreground/20 bg-primary'
+        error: 'border-[hsla(var(--error),0.3)] bg-[hsla(var(--error),0.1)] text-error',
+        warning: 'border-[hsla(var(--warning),0.3)] bg-[hsla(var(--warning),0.1)] text-warning',
+        success: 'border-[hsla(var(--success),0.3)] bg-[hsla(var(--success),0.1)] text-success',
+        muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
+        primary: 'border-primary-foreground/20 bg-primary text-primary-foreground'
       },
       padding: {
         default: '',

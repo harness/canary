@@ -13,7 +13,7 @@ const StepPaletteFilters = (): JSX.Element => {
         <Icon name="filter-list" className="mr-2" />
         Filters
       </Button>
-      <Toggle variant={'outline'} className="text-muted-foreground data-[state=on]:text-muted-foreground font-normal">
+      <Toggle variant={'outline'} className="font-normal text-muted-foreground data-[state=on]:text-muted-foreground">
         Recommended <Icon name="x-mark" className="ml-2" />
       </Toggle>
     </StepPaletteFiltersLayout.Root>

@@ -82,23 +82,23 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
                 <SelectContent className="w-[300px]">
                   <SelectItem value="Owner">
                     <Text className="inline-block w-full text-left">Owner</Text>
-                    <Text className="text-muted-foreground mt-1.5 inline-block w-full">
+                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Admin-level access to all resources.
                     </Text>
                   </SelectItem>
                   <SelectItem value="Contributor">
                     <Text className="inline-block w-full text-left">Contributor</Text>
-                    <Text className="text-muted-foreground mt-1.5 inline-block w-full">
+                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Can view, comment, and edit resources.
                     </Text>
                   </SelectItem>
                   <SelectItem value="Reader">
                     <Text className="inline-block w-full text-left">Reader</Text>
-                    <Text className="text-muted-foreground mt-1.5 inline-block w-full">Can view and comment.</Text>
+                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">Can view and comment.</Text>
                   </SelectItem>
                   <SelectItem value="Executor">
                     <Text className="inline-block w-full text-left">Executor</Text>
-                    <Text className="text-muted-foreground mt-1.5 inline-block w-full">
+                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Can view but cannot make changes or leave comments.
                     </Text>
                   </SelectItem>

@@ -64,8 +64,8 @@ function SettingsCreateNewUserForm({
                 <FormFieldSet.Label htmlFor="memberName" required>
                   User ID
                 </FormFieldSet.Label>
-                <Icon name="info-circle" height={15} className="text-tertiary-background ml-3" />
-                <Text size={1} className="text-tertiary-background ml-1">
+                <Icon name="info-circle" height={15} className="ml-3 text-tertiary-background" />
+                <Text size={1} className="ml-1 text-tertiary-background">
                   User ID cannot be changed once created
                 </Text>
               </span>

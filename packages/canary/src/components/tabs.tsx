@@ -5,12 +5,12 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '../lib/utils'
 
-const tabsListVariants = cva('text-muted-foreground inline-flex items-center', {
+const tabsListVariants = cva('inline-flex items-center text-muted-foreground', {
   variants: {
     variant: {
-      default: 'bg-muted h-9 justify-center rounded-lg p-1',
+      default: 'h-9 justify-center rounded-lg bg-muted p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'border-border-background h-[44px] w-full justify-start gap-6 border-b px-8',
+      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-border-background px-8',
       tabnav: 'h-[36px] w-full justify-start gap-0'
     }
   },
@@ -20,18 +20,18 @@ const tabsListVariants = cva('text-muted-foreground inline-flex items-center', {
 })
 
 const tabsTriggerVariants = cva(
-  'ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
         default:
-          'data-[state=active]:bg-background data-[state=active]:text-foreground rounded-md data-[state=active]:shadow',
+          'rounded-md data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow',
         underline:
-          'data-[state=active]:text-primary data-[state=active]:border-primary m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
+          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary data-[state=active]:text-primary',
         navigation:
-          'text-tertiary-background hover:text-primary data-[state=active]:text-primary data-[state=active]:border-tertiary-background m-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal duration-150 ease-in-out',
+          'm-0 h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-tertiary-background duration-150 ease-in-out hover:text-primary data-[state=active]:border-tertiary-background data-[state=active]:text-primary',
         tabnav:
-          'bg-background text-tertiary-background hover:text-primary data-[state=active]:text-primary [&svg]:data-[state=active]:text-primary tabnav-inactive data-[state=active]:tabnav-active m-0 h-[36px] items-center gap-2 rounded-t-md px-4 text-sm font-normal duration-150 ease-in-out'
+          'm-0 h-[36px] items-center gap-2 rounded-t-md bg-background px-4 text-sm font-normal text-tertiary-background duration-150 ease-in-out tabnav-inactive hover:text-primary data-[state=active]:text-primary data-[state=active]:tabnav-active [&svg]:data-[state=active]:text-primary'
       }
     },
     defaultVariants: {
@@ -41,7 +41,7 @@ const tabsTriggerVariants = cva(
 )
 
 const tabsContentVariants = cva(
-  'ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
   {
     variants: {
       variant: {
@@ -72,9 +72,9 @@ const Tabs = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsP
         {variant === 'tabnav' ? (
           <div className="relative grid w-full grid-flow-col grid-cols-[auto_1fr] items-end">
             {children}
-            <div className="border-border-background h-[36px] border-b" />
-            <div className="border-border-background absolute right-full h-[36px] w-[9999px] border-b" />
-            <div className="border-border-background absolute left-full h-[36px] w-[9999px] border-b" />
+            <div className="h-[36px] border-b border-border-background" />
+            <div className="absolute right-full h-[36px] w-[9999px] border-b border-border-background" />
+            <div className="absolute left-full h-[36px] w-[9999px] border-b border-border-background" />
           </div>
         ) : (
           children

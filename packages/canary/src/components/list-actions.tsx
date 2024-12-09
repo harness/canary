@@ -32,8 +32,8 @@ function Right({ children }: { children: React.ReactNode }) {
 function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="text-tertiary-background hover:text-primary flex cursor-pointer items-center gap-1.5 duration-100 ease-in-out">
-        {selectedValue && <span className="bg-primary size-[4px] rounded-full"></span>}
+      <DropdownMenuTrigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-primary">
+        {selectedValue && <span className="size-[4px] rounded-full bg-primary"></span>}
         <Text
           size={2}
           className={cn('text-primary/80', {

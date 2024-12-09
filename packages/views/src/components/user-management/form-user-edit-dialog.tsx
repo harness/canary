@@ -73,9 +73,9 @@ export const FormUserEditDialog: React.FC<FormEditDialogProps> = ({
             {/* User ID */}
             <FormFieldSet.ControlGroup>
               <FormFieldSet.Label className="flex content-center items-center" htmlFor="userID" required>
-                <Text className="text-primary/80 font-normal">User ID</Text>
-                <Icon name="info-circle" height={15} className="text-tertiary-background ml-3" />
-                <Text size={1} className="text-tertiary-background ml-1">
+                <Text className="font-normal text-primary/80">User ID</Text>
+                <Icon name="info-circle" height={15} className="ml-3 text-tertiary-background" />
+                <Text size={1} className="ml-1 text-tertiary-background">
                   User ID cannot be changed once created
                 </Text>
               </FormFieldSet.Label>

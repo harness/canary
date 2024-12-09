@@ -132,7 +132,6 @@ export const RepoCode = () => {
     }
   }, [repoDetails?.latest_commit])
 
-  
   const pathToNewFile = useMemo(() => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
@@ -145,7 +144,7 @@ export const RepoCode = () => {
       return `new/${fullGitRef || selectedBranchTag.name}/~/`
     }
   }, [repoDetails])
-  
+
   const renderCodeView = () => {
     if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
       return <FileContentViewer repoContent={repoDetails} />
@@ -157,9 +156,9 @@ export const RepoCode = () => {
       return <></>
     }
   }
-  
+
   if (!repoId) return <></>
-  
+
   return (
     <RepoFiles
       pathParts={pathParts}

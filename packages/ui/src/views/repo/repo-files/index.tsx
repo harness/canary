@@ -4,8 +4,6 @@ import { FileAdditionsTrigger, NoData, PathBreadcrumbs, PathParts, SkeletonList 
 import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { FileLastChangeBar, Summary } from '@/views/repo/components'
 
-import { BooleanInput } from '../../../../../views/src/components/form-inputs/BooleanInput'
-
 interface RepoFilesProps {
   pathParts: PathParts[]
   loading: boolean

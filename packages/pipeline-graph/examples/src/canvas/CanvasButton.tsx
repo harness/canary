@@ -1,5 +1,3 @@
-import React from 'react'
-
 export function CanvasButton(props: React.PropsWithChildren<{ onClick: () => void }>) {
   const { children, onClick } = props
 

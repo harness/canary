@@ -1,5 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
+import { get } from 'lodash-es'
+
 import { SERIAL_NODE_GAP } from './components/nodes/serial-container'
 import { useCanvasContext } from './context/CanvasProvider'
 import { useGraphContext } from './context/GraphProvider'
@@ -12,9 +14,9 @@ import { addPaths } from './utils/path-utils'
 
 export interface PipelineGraphInternalProps {
   data: AnyNodeType[]
-  onAdd: (path: string, position: 'before' | 'after') => void
-  onDelete: (path: string) => void
-  onSelect: (path: string) => void
+  onAdd: (node: AnyNodeInternal, position: 'before' | 'after') => void
+  onDelete: (node: AnyNodeInternal) => void
+  onSelect: (node: AnyNodeInternal) => void
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
@@ -153,18 +155,21 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
         const path = el.getAttribute('data-path') as string
         const action = el.getAttribute('data-action') as 'add' | 'delete' | 'select'
 
+        const itemPath = path.replace(/^pipeline.children./, '')
+        const node = get(data, itemPath) as AnyNodeInternal
+
         switch (action) {
           case 'add': {
             const position = el.getAttribute('data-position') as 'before' | 'after'
-            onAdd(path, position)
+            onAdd(node, position)
             break
           }
           case 'delete': {
-            onDelete(path)
+            onDelete(node)
             break
           }
           case 'select': {
-            onSelect(path)
+            onSelect(node)
             break
           }
         }

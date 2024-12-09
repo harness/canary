@@ -439,7 +439,7 @@ importers:
         version: 3.7.0(@swc/helpers@0.5.2)(vite@5.3.1(@types/node@20.14.9)(sass@1.77.8)(terser@5.31.3))
       autoprefixer:
         specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.49)
+        version: 10.4.19(postcss@8.4.44)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -570,6 +570,9 @@ importers:
 
   packages/pipeline-graph:
     dependencies:
+      classnames:
+        specifier: ^2.5.1
+        version: 2.5.1
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -16722,14 +16725,14 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  autoprefixer@10.4.19(postcss@8.4.49):
+  autoprefixer@10.4.19(postcss@8.4.44):
     dependencies:
       browserslist: 4.23.1
       caniuse-lite: 1.0.30001638
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.49
+      postcss: 8.4.44
       postcss-value-parser: 4.2.0
 
   autoprefixer@10.4.20(postcss@8.4.49):
@@ -21194,7 +21197,7 @@ snapshots:
       yaml: 2.6.1
     optionalDependencies:
       postcss: 8.4.49
-      ts-node: 10.9.2(@types/node@22.9.1)(typescript@5.6.3)
+      ts-node: 10.9.2(@types/node@20.14.9)(typescript@5.6.3)
 
   postcss-modules-extract-imports@1.1.0:
     dependencies:

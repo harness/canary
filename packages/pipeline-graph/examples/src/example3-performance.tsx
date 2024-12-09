@@ -1,12 +1,14 @@
 import React from 'react'
 
+import { CanvasProvider } from '../../src/context/CanvasProvider'
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
 import { ContainerNode } from '../../src/types/nodes'
+import { CanvasControls } from './canvas/CanvasControls'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
 import { ParallelGroupNodeContent } from './nodes/parallel-group-node'
-import { SerialGroupNodeContent } from './nodes/stage-node'
+import { SerialGroupContentNode } from './nodes/stage-node'
 import { StartNode } from './nodes/start-node'
 import { StepNode } from './nodes/step-node'
 import { getPipeline } from './sample-data/pipeline-data'
@@ -41,32 +43,13 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
+    component: SerialGroupContentNode
   }
 ]
 
-function Example() {
-  const data = getPipeline()
+const data = getPipeline(9, 12, 3, 'success')
 
-  data.unshift({
-    type: ContentNodeTypes.start,
-    config: {
-      width: 80,
-      height: 80,
-      hideDeleteButton: true,
-      hideLeftPort: true
-    }
-  })
-  data.push({
-    type: ContentNodeTypes.end,
-    config: {
-      width: 80,
-      height: 80,
-      hideDeleteButton: true,
-      hideRightPort: true
-    }
-  })
-
+function PerformanceExample() {
   return (
     <div
       style={{
@@ -79,15 +62,18 @@ function Example() {
         border: '1px solid gray'
       }}
     >
-      <PipelineGraph
-        data={data}
-        nodes={nodes}
-        onAdd={() => undefined}
-        onDelete={() => undefined}
-        onSelect={() => undefined}
-      />
+      <CanvasProvider>
+        <PipelineGraph
+          data={data}
+          nodes={nodes}
+          onAdd={() => undefined}
+          onDelete={() => undefined}
+          onSelect={() => undefined}
+        />
+        <CanvasControls />
+      </CanvasProvider>
     </div>
   )
 }
 
-export default Example
+export default PerformanceExample

@@ -26,12 +26,11 @@ export function addPaths(
   return nodesInternal
 }
 
-/** path has to point to array element */
+/** split path of item to 1. path to array and 2. element index */
 export function getPathPeaces(path: string) {
   const peaces = path.split('.')
 
   if (peaces.length === 1) {
-    console.log({ index: parseInt(path) })
     return { index: parseInt(path) }
   }
 

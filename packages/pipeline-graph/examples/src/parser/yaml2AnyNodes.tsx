@@ -1,5 +1,5 @@
 import { AnyNodeType, LeafNodeType, ParallelNodeType, SerialNodeType } from '../../../src/types/nodes'
-import { ParallelGroupNodeDataType } from '../nodes/parallel-group-node'
+import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'
 import { StageNodeContentType } from '../nodes/stage-node'
 import { StepNodeDataType } from '../nodes/step-node'
 import { ContentNodeTypes } from '../types/content-node-types'
@@ -34,14 +34,13 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140, // TMP
+          minWidth: 140,
           hideDeleteButton: false,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>GR</span> // TMP
+          name
         } satisfies StageNodeContentType,
 
         children: processStages(stage[groupKey].stages, path)
@@ -53,15 +52,14 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.parallel,
         config: {
-          minWidth: 140, // TMP
+          minWidth: 140,
           hideDeleteButton: false,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>PL</span> // TMP
-        } satisfies ParallelGroupNodeDataType,
+          name
+        } satisfies ParallelGroupContentNodeDataType,
         children: processStages(stage[groupKey].stages, path)
       } satisfies ParallelNodeType
     }
@@ -73,14 +71,13 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.stage,
         config: {
-          minWidth: 140, // TMP
+          minWidth: 140,
           hideDeleteButton: false,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>ST</span> // TMP
+          name
         } satisfies StageNodeContentType,
         children: processSteps(stage.steps, path)
       } satisfies SerialNodeType
@@ -99,14 +96,13 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140, // TMP
+          minWidth: 140,
           hideDeleteButton: false,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>SGR</span> // TMP
+          name
         } satisfies StageNodeContentType,
 
         children: processSteps(step[groupKey].steps, path)
@@ -124,9 +120,8 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>SPL</span> // TMP
-        } satisfies ParallelGroupNodeDataType,
+          name
+        } satisfies ParallelGroupContentNodeDataType,
         children: processSteps(step[groupKey].steps, path)
       } satisfies ParallelNodeType
     }
@@ -138,12 +133,9 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.step,
         config: {
-          // minWidth: idx === 0 ? 140 : 540, //TMP
-          // maxWidth: idx === 0 ? 140 : 540, //TMP
-          //   width: idx === 0 ? 140 : 540, //TMP
-          //   height: idx === 1 ? undefined : 240, //TMP
-          maxWidth: 140, //TMP
-          hideDeleteButton: false
+          maxWidth: 140,
+          hideDeleteButton: false,
+          selectable: true
         },
         data: {
           yamlPath: path,

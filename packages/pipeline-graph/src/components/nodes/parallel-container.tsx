@@ -33,6 +33,12 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
 
   return (
     <div
+      {...(node.config?.selectable
+        ? {
+            'data-action': 'select',
+            'data-path': node.path
+          }
+        : {})}
       ref={elRef}
       className={'node parallel-node'}
       key={props.node.type + '-' + props.node.path}
@@ -51,18 +57,6 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         flexShrink: 0 // IMPORTANT: do not remove this
       }}
     >
-      {/* TODO: fix (...string })?.state...)! */}
-      <div
-        className={(node.data as { state: string })?.state === 'loading' ? 'border loading' : 'border'}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: -1,
-          border: '1px dashed #454545',
-          borderRadius: '6px',
-          background: 'rgba(152, 150, 172, 0.01)'
-        }}
-      />
       {!node.config?.hideBeforeAdd && isFirst && (
         <AddContainer
           position="before"
@@ -85,23 +79,23 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
       )}
       <Port side="left" id={`left-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
       <Port side="right" id={`right-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+
       <div
         className="parallel-node-header"
         style={{
           position: 'absolute',
           top: '0px',
           left: '0px',
-          zIndex: 1000,
           right: '0px',
           height: '30px',
           padding: '10px',
-          pointerEvents: 'none'
+          zIndex: '100'
         }}
       >
         <CollapseButton
           collapsed={collapsed}
           onToggle={() => {
-            collapse(props.node.path!, !collapsed)
+            collapse(node.path!, !collapsed)
           }}
         />
         {!node.config?.hideDeleteButton && <DeleteButton path={props.node.path} />}

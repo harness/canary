@@ -10,7 +10,7 @@ import { getPathPeaces } from '../../src/utils/path-utils'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
 import { ParallelGroupNodeContent } from './nodes/parallel-group-node'
-import { SerialGroupNodeContent } from './nodes/stage-node'
+import { SerialGroupContentNode } from './nodes/stage-node'
 import { StartNode } from './nodes/start-node'
 import { StepNode, StepNodeDataType } from './nodes/step-node'
 import { yaml2Nodes } from './parser/yaml2AnyNodes'
@@ -20,7 +20,8 @@ import './sample-data/pipeline-data'
 
 import React from 'react'
 
-import CanvasProvider from '../../src/context/CanvasProvider'
+import { CanvasProvider } from '../../src/context/CanvasProvider'
+import { AnyNodeInternal } from '../../src/types/nodes-internal'
 import { CanvasControls } from './canvas/CanvasControls'
 import { getIcon } from './parser/utils'
 import { ContentNodeTypes } from './types/content-node-types'
@@ -54,7 +55,7 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
+    component: SerialGroupContentNode
   }
 ]
 
@@ -86,13 +87,8 @@ const endNode = {
 plData.unshift(startNode)
 plData.push(endNode)
 
-function Example0({ addStepType }: { addStepType: ContentNodeTypes }) {
-  const dataRef = useRef(plData)
-  const [data, setData] = useState<AnyNodeType[]>()
-
-  useEffect(() => {
-    setData(plData)
-  }, [])
+function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
+  const [data, setData] = useState<AnyNodeType[]>(plData)
 
   if (!data) return null
 
@@ -112,16 +108,20 @@ function Example0({ addStepType }: { addStepType: ContentNodeTypes }) {
         <PipelineGraph
           data={data}
           nodes={nodes}
-          onSelect={(path: string) => console.log('select:' + path)}
-          onAdd={(path: string, position: 'before' | 'after' | 'in') => {
+          onSelect={(node: AnyNodeInternal) => {
             const newData = cloneDeep(data)
-
-            const itemPath = path.replace(/^pipeline.children./, '')
+            const itemPath = node.path.replace(/^pipeline.children./, '')
+            const targetNode = get(newData, itemPath) as { data: { selected: boolean } }
+            targetNode.data.selected = !targetNode.data.selected
+            setData(newData)
+          }}
+          onAdd={(node: AnyNodeInternal, position: 'before' | 'after' | 'in') => {
+            const newData = cloneDeep(data)
+            const itemPath = node.path.replace(/^pipeline.children./, '')
 
             if (position === 'in') {
               // add to (empty) array
               const childrenPath = itemPath + '.children'
-
               const arr = get(newData, childrenPath, []) as unknown[]
               arr.push(getNode(addStepType))
               set(newData, childrenPath, arr)
@@ -135,16 +135,11 @@ function Example0({ addStepType }: { addStepType: ContentNodeTypes }) {
 
             setData(newData)
           }}
-          onDelete={(path: string) => {
+          onDelete={(node: AnyNodeInternal) => {
             const newData = cloneDeep(data)
-
-            const { arrayPath, index } = getPathPeaces(path.replace(/^pipeline.children./, ''))
-            // shift collapsed nodes
-
+            const { arrayPath, index } = getPathPeaces(node.path.replace(/^pipeline.children./, ''))
             const arr = arrayPath ? (get(newData, arrayPath) as unknown[]) : newData
-
             arr.splice(index, 1)
-
             setData(newData)
           }}
         />
@@ -154,7 +149,7 @@ function Example0({ addStepType }: { addStepType: ContentNodeTypes }) {
   )
 }
 
-export default Example0
+export default Example1
 
 function getNode(stepType: ContentNodeTypes) {
   switch (stepType) {
@@ -165,9 +160,10 @@ function getNode(stepType: ContentNodeTypes) {
           width: 180
         },
         data: {
-          yamlPath: 'qwe-' + Math.random(),
+          yamlPath: '',
           name: 'step',
-          icon: getIcon(1)
+          icon: getIcon(1),
+          state: 'loading'
         } satisfies StepNodeDataType
       } satisfies LeafNodeType
     case ContentNodeTypes.parallel:
@@ -178,7 +174,7 @@ function getNode(stepType: ContentNodeTypes) {
           minWidth: 180
         },
         data: {
-          yamlPath: 'qwe-' + Math.random(),
+          yamlPath: '',
           name: 'Parallel'
         } satisfies StepNodeDataType
       } satisfies ParallelNodeType
@@ -190,7 +186,7 @@ function getNode(stepType: ContentNodeTypes) {
           minWidth: 180
         },
         data: {
-          yamlPath: 'qwe-' + Math.random(),
+          yamlPath: '',
           name: 'Serial'
         } satisfies StepNodeDataType
       } satisfies SerialNodeType

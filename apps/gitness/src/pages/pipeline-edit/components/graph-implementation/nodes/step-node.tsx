@@ -1,8 +1,9 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/canary'
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 
-export interface StepNodeDataType {
-  yamlPath: string
-  name: string
+import { CommonNodeDataType } from '../types/nodes'
+
+export interface StepNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
   state?: 'success' | 'loading'
 }
@@ -11,26 +12,15 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
   const { node } = props
   const data = node.data as StepNodeDataType
 
-  const style: React.CSSProperties = {
-    height: '100%',
-    width: '100%',
-    boxSizing: 'border-box',
-    border: '1px solid #454545',
-    borderRadius: '6px',
-    wordBreak: 'break-all',
-    fontSize: '11px',
-    fontFamily: 'Verdana',
-    background: 'linear-gradient(-47deg, rgba(152, 150, 172, 0.05) 0%, rgba(177, 177, 177, 0.15) 100%)'
-  }
-
   return (
-    <div style={style} className={data.state === 'loading' ? 'loading' : ''}>
+    <div className="-z-10 box-border size-full rounded-xl border border-borders-6 bg-primary-foreground">
       <div>{data?.icon}</div>
-      <div style={{ margin: '10px' }}>
-        <span>{data?.name ?? 'Step'}</span>
-        <br />
-        <span>{props.node.path}</span>
-      </div>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div className="m-2 line-clamp-2 cursor-default text-primary">{data.name}</div>
+        </TooltipTrigger>
+        <TooltipContent>{data.name}</TooltipContent>
+      </Tooltip>
     </div>
   )
 }

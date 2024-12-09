@@ -1,17 +1,20 @@
 import { Icon } from '@harnessio/canary'
-import { AnyNodeType, LeafNodeType, ParallelNodeType, SerialNodeType } from '@harnessio/pipeline-graph/dist2'
+import { AnyNodeType, LeafNodeType, ParallelNodeType, SerialNodeType } from '@harnessio/pipeline-graph'
 
-import { ContentNodeTypes } from '../components/graph-implementation/content-node-types'
-import { ParallelGroupNodeDataType } from '../components/graph-implementation/nodes/parallel-group-node'
-import { StageNodeContentType } from '../components/graph-implementation/nodes/stage-node'
-import { StepNodeDataType } from '../components/graph-implementation/nodes/step-node'
+import { ContentNodeTypes } from '../content-node-types'
+import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'
+import { StageNodeContentType } from '../nodes/stage-node'
+import { StepNodeDataType } from '../nodes/step-node'
+import { getIconBasedOnStep } from './step-icon-utils'
+import { getNameBasedOnStep } from './step-name-utils'
 
 export const yaml2Nodes = (yamlObject: Record<string, any>): AnyNodeType[] => {
   const nodes: AnyNodeType[] = []
 
   const stages = yamlObject?.pipeline?.stages
+
   if (stages) {
-    const stagesNodes = processStages(stages, '')
+    const stagesNodes = processStages(stages, 'pipeline.stages')
     nodes.push(...stagesNodes)
   }
 
@@ -29,59 +32,59 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
     // parallel stage
     const groupKey = getGroupKey(stage)
     if (groupKey === 'group') {
-      const name = stage.name ?? `Serial group ${idx}`
+      const name = stage.name ?? `Serial ${idx + 1}`
       const path = `${currentPath}.${idx}.${groupKey}.stages`
 
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140, // TMP
-          hideDeleteButton: false,
-          hideCollapseButton: false
+          minWidth: 140,
+          hideDeleteButton: true,
+          hideBeforeAdd: true,
+          hideAfterAdd: true
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>GR</span> // TMP
+          name
         } satisfies StageNodeContentType,
 
         children: processStages(stage[groupKey].stages, path)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
-      const name = stage.name ?? `Parallel group ${idx}`
+      const name = stage.name ?? `Parallel ${idx + 1}`
       const path = `${currentPath}.${idx}.${groupKey}.stages`
 
       return {
         type: ContentNodeTypes.parallel,
         config: {
-          minWidth: 140, // TMP
-          hideDeleteButton: false,
-          hideCollapseButton: false
+          minWidth: 140,
+          hideDeleteButton: true,
+          hideBeforeAdd: true,
+          hideAfterAdd: true
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>PL</span> // TMP
-        } satisfies ParallelGroupNodeDataType,
+          name
+        } satisfies ParallelGroupContentNodeDataType,
         children: processStages(stage[groupKey].stages, path)
       } satisfies ParallelNodeType
     }
     // regular stage
     else {
-      const name = stage.name ?? `Stage ${idx}`
-      const path = `${currentPath}.${idx}`
+      const name = stage.name ?? `Stage ${idx + 1}`
+      const path = `${currentPath}.${idx}.steps`
 
       return {
         type: ContentNodeTypes.stage,
         config: {
-          minWidth: 140, // TMP
-          hideDeleteButton: false,
-          hideCollapseButton: false
+          minWidth: 140,
+          hideDeleteButton: true,
+          hideBeforeAdd: true,
+          hideAfterAdd: true
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>ST</span> // TMP
+          name
         } satisfies StageNodeContentType,
         children: processSteps(stage.steps, path)
       } satisfies SerialNodeType
@@ -94,79 +97,58 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
     // parallel stage
     const groupKey = getGroupKey(step)
     if (groupKey === 'group') {
-      const name = step.name ?? `Step group ${idx}`
+      const name = step.name ?? `Serial steps ${idx + 1}`
       const path = `${currentPath}.${idx}.${groupKey}.steps`
 
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140, // TMP
-          hideDeleteButton: false,
+          minWidth: 140,
+          hideDeleteButton: true,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>SGR</span> // TMP
+          name
         } satisfies StageNodeContentType,
 
         children: processSteps(step[groupKey].steps, path)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
-      const name = step.name ?? `Parallel group ${idx}`
+      const name = step.name ?? `Parallel steps ${idx + 1}`
       const path = `${currentPath}.${idx}.${groupKey}.steps`
 
       return {
         type: ContentNodeTypes.parallel,
         config: {
-          minWidth: 140, // TMP
-          hideDeleteButton: false,
-          hideCollapseButton: false
+          minWidth: 140,
+          hideDeleteButton: true
         },
         data: {
           yamlPath: path,
-          name,
-          icon: <span>SPL</span> // TMP
-        } satisfies ParallelGroupNodeDataType,
+          name
+        } satisfies ParallelGroupContentNodeDataType,
         children: processSteps(step[groupKey].steps, path)
       } satisfies ParallelNodeType
     }
     // regular step
     else {
-      const name = step.name ?? `Step ${idx}`
-
+      const name = getNameBasedOnStep(step, idx + 1)
       const path = `${currentPath}.${idx}`
       return {
         type: ContentNodeTypes.step,
         config: {
-          // minWidth: idx === 0 ? 140 : 540, //TMP
-          // maxWidth: idx === 0 ? 140 : 540, //TMP
-          //   width: idx === 0 ? 140 : 540, //TMP
-          //   height: idx === 1 ? undefined : 240, //TMP
-          maxWidth: 160, //TMP
-          width: 160, //TMP
-          hideDeleteButton: false
+          maxWidth: 140,
+          width: 140,
+          hideDeleteButton: false,
+          selectable: true
         },
         data: {
           yamlPath: path,
           name,
-          icon: getIcon(idx)
+          icon: <Icon className="m-2 size-8" name={getIconBasedOnStep(step)} />
         } satisfies StepNodeDataType
       } satisfies LeafNodeType
     }
   })
-}
-
-export function getIcon(idx: number) {
-  return (
-    <div style={{ margin: '10px' }}>
-      {idx % 2 ? (
-        <Icon name="harness-plugin" className="size-8" />
-      ) : (
-        // <HarnessStep width="30" height="30" style={{ color: '#00ADE4' }} />
-        <Icon name="run" className="size-8" />
-        // <RunStep width="30" height="30" style={{ color: '#CCC' }} />
-      )}
-    </div>
-  )
 }

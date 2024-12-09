@@ -1,20 +1,22 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
+import { cloneDeep, get, last } from 'lodash-es'
 import { parse } from 'yaml'
 
-import CanvasProvider from '../../src/context/CanvasProvider'
+import { CanvasProvider } from '../../src/context/CanvasProvider'
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
-import { ContainerNode } from '../../src/types/nodes'
+import { AnyNodeType, ContainerNode, LeafNodeType } from '../../src/types/nodes'
+import { CanvasControls } from './canvas/CanvasControls'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
 import { ParallelGroupNodeContent } from './nodes/parallel-group-node'
-import { SerialGroupNodeContent } from './nodes/stage-node'
+import { SerialGroupContentNode } from './nodes/stage-node'
 import { StartNode } from './nodes/start-node'
-import { StepNode } from './nodes/step-node'
+import { StepNode, StepNodeDataType } from './nodes/step-node'
+import { getIcon } from './parser/utils'
 import { yaml2Nodes } from './parser/yaml2AnyNodes'
 import { pipeline } from './sample-data/pipeline'
-import { getPipeline } from './sample-data/pipeline-data'
 import { ContentNodeTypes } from './types/content-node-types'
 
 const nodes: NodeContent[] = [
@@ -46,13 +48,62 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
+    component: SerialGroupContentNode
   }
 ]
 
-const data = getPipeline(9, 12, 3, 'success')
+const yamlObject = parse(pipeline)
+const plData = yaml2Nodes(yamlObject)
 
-function Example3() {
+const endNode = {
+  type: ContentNodeTypes.start,
+  config: {
+    width: 80,
+    height: 80
+  }
+}
+
+plData.unshift(endNode)
+
+function AnimationExample() {
+  const dataRef = useRef(plData)
+  const [data, setData] = useState<AnyNodeType[] | null>(null)
+
+  useEffect(() => {
+    const update = () => {
+      const newData = cloneDeep(dataRef.current)
+
+      const node = {
+        type: ContentNodeTypes.step,
+        config: {
+          width: 180
+        },
+        data: {
+          yamlPath: 'qwe-' + Math.random(),
+          name: 'step',
+          icon: getIcon(1),
+          state: 'loading'
+        } satisfies StepNodeDataType
+      } satisfies LeafNodeType
+
+      newData.push(cloneDeep(node))
+      ;(get(newData, '2.children.0.children.1.children.0.children.2.children.2.children') as unknown as any[]).push(
+        cloneDeep(node)
+      )
+
+      dataRef.current = cloneDeep(newData)
+      setData(newData)
+    }
+
+    update()
+
+    setInterval(() => {
+      update()
+    }, 3000)
+  }, [])
+
+  if (!data) return null
+
   return (
     <div
       style={{
@@ -73,9 +124,10 @@ function Example3() {
           onDelete={() => undefined}
           onSelect={() => undefined}
         />
+        <CanvasControls />
       </CanvasProvider>
     </div>
   )
 }
 
-export default Example3
+export default AnimationExample

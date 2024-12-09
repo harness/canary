@@ -1,6 +1,4 @@
-import { CanvasZoom } from '../../../src/context/CanvasProvider'
 import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
-import Logo from '../assets/logo.svg'
 
 export interface FormNodeDataType {
   yamlPath: string
@@ -25,30 +23,11 @@ export function FormNode(props: { node: LeafNodeInternalType<FormNodeDataType> }
     background: 'linear-gradient(-47deg, rgba(152, 150, 172, 0.05) 0%, rgba(177, 177, 177, 0.15) 100%)'
   }
 
-  const scaleStyle = {}
-  // canvasZoom === "small"
-  //   ? {
-  //       background: "#3c3c3f",
-  //       color: "transparent",
-  //     }
-  //   : {
-  //       background: "initial",
-  //       color: "inherit",
-  //     };
   return (
-    <div style={style} className={data.state === 'loading' ? 'loading' : ''}>
-      {/* <div
-        style={{
-          position: "absolute",
-          inset: "0 0 0 0",
-          zIndex: -20,
-          borderRadius: "6px",
-        }}
-        className={data.state === "loading" ? "loading" : ""}
-      ></div> */}
+    <div style={style} className={data?.state === 'loading' ? 'loading' : ''}>
       <div>{data?.icon}</div>
       <div style={{ margin: '10px' }}>
-        <span style={scaleStyle}>{data?.name ?? 'Step'}</span>
+        <span>{data?.name ?? 'Step'}</span>
         <br />
         <input type="checkbox"></input>
         <input style={{ width: '100%' }}></input>

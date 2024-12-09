@@ -28,15 +28,18 @@
 }
 
 /* delete button >>>*/
-.leaf-node-header:hover > .delete-node-button {
+.leaf-node:hover > .delete-node-button,
+.leaf-node:hover > * > .delete-node-button {
   opacity: 1;
   display: flex !important;
 }
-.parallel-node:hover > * > .delete-node-button {
+.parallel-node-header:hover > * > .delete-node-button,
+.parallel-node-header:hover > .delete-node-button {
   opacity: 1;
   display: flex !important;
 }
-.serial-node:hover > * > .delete-node-button {
+.serial-node-header:hover > * > .delete-node-button,
+.serial-node-header:hover > .delete-node-button {
   opacity: 1;
   display: flex !important;
 }

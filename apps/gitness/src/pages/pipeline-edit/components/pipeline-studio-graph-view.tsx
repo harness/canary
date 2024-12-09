@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { parse } from 'yaml'
 
 import {
+  AnyNodeInternal,
   AnyNodeType,
   CanvasProvider,
   ContainerNode,
@@ -12,17 +13,19 @@ import {
 } from '@harnessio/pipeline-graph'
 
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
-// import { usePipelineViewContext } from '../context/PipelineStudioViewProvider'
-import { yaml2Nodes } from '../utils/yaml-to-pipeline-graph'
+import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { CanvasControls } from './graph-implementation/canvas/CanvasControls'
 import { ContentNodeTypes } from './graph-implementation/content-node-types'
 import { EndNode } from './graph-implementation/nodes/end-node'
-import { ParallelGroupNodeContent } from './graph-implementation/nodes/parallel-group-node'
-import { SerialGroupNodeContent } from './graph-implementation/nodes/stage-node'
 import { StartNode } from './graph-implementation/nodes/start-node'
 import { StepNode } from './graph-implementation/nodes/step-node'
+import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
+
+import { ParallelGroupContentNode } from './graph-implementation/nodes/parallel-group-node'
+import { SerialGroupContentNode } from './graph-implementation/nodes/serial-group-node'
+import { CommonNodeDataType } from './graph-implementation/types/nodes'
 
 const nodes: NodeContent[] = [
   {
@@ -43,25 +46,25 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
-    component: ParallelGroupNodeContent
+    component: ParallelGroupContentNode
   },
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
+    component: SerialGroupContentNode
   },
   {
     type: ContentNodeTypes.stage,
     containerType: ContainerNode.serial,
-    component: SerialGroupNodeContent
+    component: SerialGroupContentNode
   }
 ]
 
 const startNode = {
   type: ContentNodeTypes.start,
   config: {
-    width: 80,
-    height: 80,
+    width: 40,
+    height: 40,
     hideDeleteButton: true,
     hideBeforeAdd: true,
     hideLeftPort: true
@@ -71,8 +74,8 @@ const startNode = {
 const endNode = {
   type: ContentNodeTypes.end,
   config: {
-    width: 80,
-    height: 80,
+    width: 40,
+    height: 40,
     hideDeleteButton: true,
     hideAfterAdd: true,
     hideRightPort: true
@@ -81,10 +84,12 @@ const endNode = {
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {
-    state: { yamlRevision }
-    // setEditStepIntention
+    state: { yamlRevision },
+    setEditStepIntention,
+    setAddStepIntention,
+    requestYamlModifications: { deleteInArray }
   } = usePipelineDataContext()
-  // const { setStepDrawerOpen } = usePipelineViewContext()
+  const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [data, setData] = useState<AnyNodeType[]>([])
 
@@ -102,16 +107,39 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
     setData(newData)
   }, [yamlRevision])
 
+  const addStep = useCallback(
+    (node: AnyNodeInternal, position: 'after' | 'before') => {
+      const commonData = node.data as CommonNodeDataType
+
+      setStepDrawerOpen(StepDrawer.Collection)
+      setAddStepIntention({ path: commonData.yamlPath, position })
+    },
+    [setStepDrawerOpen, setAddStepIntention]
+  )
+
+  const deleteStep = useCallback(
+    (node: AnyNodeInternal) => {
+      const commonData = node.data as CommonNodeDataType
+
+      deleteInArray({ path: commonData.yamlPath })
+    },
+    [deleteInArray]
+  )
+
+  const editStep = useCallback(
+    (node: AnyNodeInternal) => {
+      const commonData = node.data as CommonNodeDataType
+
+      setStepDrawerOpen(StepDrawer.Form)
+      setEditStepIntention({ path: commonData.yamlPath })
+    },
+    [setEditStepIntention]
+  )
+
   return (
     <div className="relative flex size-full">
       <CanvasProvider>
-        <PipelineGraph
-          data={data}
-          nodes={nodes}
-          onAdd={() => undefined}
-          onDelete={() => undefined}
-          onSelect={() => undefined}
-        />
+        <PipelineGraph data={data} nodes={nodes} onAdd={addStep} onDelete={deleteStep} onSelect={editStep} />
         <CanvasControls />
       </CanvasProvider>
     </div>

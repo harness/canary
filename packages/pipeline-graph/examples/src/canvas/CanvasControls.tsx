@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { useCanvasContext } from '../../../src/context/CanvasProvider'
 import { CanvasButton } from './CanvasButton'
 

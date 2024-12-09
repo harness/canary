@@ -1,44 +1,31 @@
+import { Tooltip, TooltipContent, TooltipTrigger } from '@harnessio/canary'
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 
-export interface SerialGroupNodeContentType {
-  name?: string
+import { CommonNodeDataType } from '../types/nodes'
+
+export interface SerialGroupContentNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
 }
 
-export function SerialGroupNodeContent(props: {
-  node: SerialNodeInternalType<SerialGroupNodeContentType>
+export function SerialGroupContentNode(props: {
+  node: SerialNodeInternalType<SerialGroupContentNodeDataType>
   children: React.ReactElement
 }) {
   const { node, children } = props
+  const data = node.data as SerialGroupContentNodeDataType
 
   return (
-    <div>
-      <div
-        style={{
-          position: 'absolute',
-          top: '0px',
-          right: '0px',
-          left: '0px',
-          height: '36px',
-          wordBreak: 'break-all',
-          display: 'flex',
-          alignItems: 'center'
-        }}
-      >
-        <span
-          style={{
-            color: 'rgb(153,153,153)',
-            margin: '10px',
-            display: 'inline-block',
-            lineHeight: '12px',
-            fontSize: '12px',
-            paddingLeft: '30px'
-          }}
-        >
-          Serial - {node.path} ({node.children.length})
-        </span>
+    <>
+      <div className="absolute inset-0 -z-10 rounded-xl border border-dashed border-borders-6 bg-primary-foreground/30"></div>
+      <div className="absolute inset-0 flex h-9 items-center">
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <div className="m-3 h-9 cursor-default truncate pl-8 pt-2.5 text-primary-muted">{data.name}</div>
+          </TooltipTrigger>
+          <TooltipContent>{data.name}</TooltipContent>
+        </Tooltip>
       </div>
       {children}
-    </div>
+    </>
   )
 }

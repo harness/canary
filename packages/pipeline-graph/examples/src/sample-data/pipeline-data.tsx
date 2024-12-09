@@ -37,14 +37,12 @@ const getPipelineInternal = ({
   },
   { type: 'approval', config: { width: 100, height: 100 } },
   { type: 'approval', config: { width: 200, height: 200 } },
-
   { type: 'step', config, data: { icon: getIcon(3), state } },
   {
     type: 'serial',
     children: getChildren(serialChildren, state),
     config: { minWidth: 140, minHeight: 0 }
   },
-
   {
     type: 'parallel',
     children: [
@@ -88,7 +86,6 @@ const getPipelineInternal = ({
     ],
     config: { minWidth: 140, minHeight: 0 }
   },
-
   {
     type: 'serial',
     children: [
@@ -133,7 +130,6 @@ const getPipelineInternal = ({
     ],
     config: { minWidth: 140, minHeight: 0 }
   },
-
   {
     type: 'parallel',
     children: [
@@ -146,7 +142,6 @@ const getPipelineInternal = ({
     ],
     config: { minWidth: 140, minHeight: 0 }
   },
-
   { type: 'step', config, data: { icon: getIcon(6) } },
   {
     type: 'end',
@@ -159,27 +154,20 @@ const getPipelineInternal = ({
   }
 ]
 
-export const getPipeline = (repeat = 1, paralle = 5, serial = 3, state: 'loading' | 'success' = 'success') => {
+/** utility for creating pipelines for testing */
+export const getPipeline = (repeat = 1, parallel = 5, serial = 3, state: 'loading' | 'success' = 'success') => {
   let largePipelineInternal: AnyNodeType[] = []
+
   for (let i = 0; i < repeat; i++) {
     largePipelineInternal = [
       ...largePipelineInternal,
       ...getPipelineInternal({
-        parallelChildren: paralle,
+        parallelChildren: parallel,
         serialChildren: serial,
         state
       })
     ]
   }
+
   return largePipelineInternal
 }
-
-// addPathsAndConnectPorts(
-//   largePipelineInternal,
-//   [],
-//   // {},
-//   { left: "start", right: "end" },
-//   null,
-//   false,
-//   "pipeline"
-// );

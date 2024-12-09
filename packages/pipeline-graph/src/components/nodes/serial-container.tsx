@@ -23,7 +23,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const myLevel = level + 1
 
-  const { isCollapsed, collapse, setNodeToRemove, nodeToRemove } = useGraphContext()
+  const { isCollapsed, collapse } = useGraphContext()
 
   const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
 
@@ -31,9 +31,14 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const ADJUSTMENT = findAdjustment(node, parentNode) + SERIAL_GROUP_ADJUSTMENT
 
-  console.log('level:' + level + ', getThreeDepth(node): ' + getThreeDepth(node))
   return (
     <div
+      {...(node.config?.selectable
+        ? {
+            'data-action': 'select',
+            'data-path': node.path
+          }
+        : {})}
       ref={elRef}
       className={'node serial-node'}
       key={node.type + '-' + node.path}
@@ -52,19 +57,6 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         flexShrink: 0
       }}
     >
-      {/* TODO: fix (...string })?.state...)! */}
-      <div
-        className={(node.data as any)?.state === 'loading' ? 'border loading' : 'border'} //TODO: IMPORTANT
-        style={{
-          position: 'absolute',
-          inset: 0,
-          zIndex: -1,
-          border: '1px dashed #454545',
-          borderRadius: '6px',
-          background: 'rgba(152, 150, 172, 0.01)'
-        }}
-      />
-
       {!node.config?.hideBeforeAdd && isFirst && (
         <AddContainer
           position="before"
@@ -96,11 +88,10 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
           position: 'absolute',
           top: '0px',
           left: '0px',
-          zIndex: 100,
           right: '0px',
           height: '30px',
           padding: '10px',
-          pointerEvents: 'none'
+          zIndex: '100'
         }}
       >
         <CollapseButton

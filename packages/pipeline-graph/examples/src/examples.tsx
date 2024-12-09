@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react'
 
 import Example1 from './example1'
-import Example2 from './example2'
-import Example3 from './example3'
-import Example4 from './example4'
-import Example5 from './example5'
+import AnimationExample from './example2-animations'
+import PerformanceExample from './example3-performance'
 import { ContentNodeTypes } from './types/content-node-types'
 
 import './examples.css'
@@ -15,24 +13,16 @@ type ExperimentalType = 'sharpLine' | 'sharpBorder' | 'skeleton'
 
 const examplesArr = [
   {
-    name: 'example1',
+    name: 'Demo',
     component: Example1
   },
   {
-    name: 'example2',
-    component: Example2
+    name: 'Animations',
+    component: AnimationExample
   },
   {
-    name: 'example3',
-    component: Example4
-  },
-  {
-    name: 'example4',
-    component: Example4
-  },
-  {
-    name: 'example5',
-    component: Example5
+    name: 'Performance',
+    component: PerformanceExample
   }
 ]
 
@@ -51,16 +41,12 @@ function App() {
 
   const render = () => {
     switch (example) {
-      case 'example1':
+      case 'Demo':
         return <Example1 addStepType={addStepType} />
-      case 'example2':
-        return <Example2 />
-      case 'example3':
-        return <Example3 />
-      case 'example4':
-        return <Example4 />
-      case 'example5':
-        return <Example5 />
+      case 'Animations':
+        return <AnimationExample />
+      case 'Performance':
+        return <PerformanceExample />
     }
   }
 
@@ -105,22 +91,23 @@ function App() {
                 value={ContentNodeTypes.step}
                 checked={addStepType === stepTypeItem}
               />
-              <label htmlFor="Step">{stepTypeItem}</label>
+              <label htmlFor={stepTypeItem}>{stepTypeItem}</label>
             </div>
           ))}
         </div>
         <div style={{ display: 'flex', columnGap: '5px', height: '20px' }}>
           {experimentalArr.map(experimentalItem => (
-            <label>
+            <div>
               <input
+                id={experimentalItem}
                 checked={experimental[experimentalItem]}
                 type="checkbox"
                 onChange={() => {
                   setExperimental({ ...experimental, [experimentalItem]: !experimental[experimentalItem] })
                 }}
-              ></input>
-              {experimentalItem}
-            </label>
+              />
+              <label htmlFor={experimentalItem}>{experimentalItem}</label>
+            </div>
           ))}
         </div>
       </div>

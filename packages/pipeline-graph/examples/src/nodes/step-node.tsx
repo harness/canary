@@ -1,5 +1,7 @@
 import React from 'react'
 
+import cx from 'classnames'
+
 import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
 
 export interface StepNodeDataType {
@@ -7,6 +9,7 @@ export interface StepNodeDataType {
   name: string
   icon?: React.ReactElement
   state?: 'success' | 'loading'
+  selected?: boolean
 }
 
 export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }) {
@@ -26,33 +29,14 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
   }
 
   const scaleStyle = {}
-  // canvasZoom === "small"
-  //   ? {
-  //       background: "#3c3c3f",
-  //       color: "transparent",
-  //     }
-  //   : {
-  //       background: "initial",
-  //       color: "inherit",
-  //     };
+
   return (
-    <div style={style} className={data.state === 'loading' ? 'loading' : ''}>
-      {/* <div
-        style={{
-          position: "absolute",
-          inset: "0 0 0 0",
-          zIndex: -20,
-          borderRadius: "6px",
-        }}
-        className={data.state === "loading" ? "loading" : ""}
-      ></div> */}
+    <div style={style} className={cx('border', { loading: data.state === 'loading', selected: data.selected })}>
       <div>{data?.icon}</div>
       <div style={{ margin: '10px' }} className={'node-text'}>
-        <span style={scaleStyle}>{data?.name ?? 'Step'}</span>
+        <span>{data?.name ?? 'Step'}</span>
         <br />
-        <span style={scaleStyle} className={'node-text'}>
-          {props.node.path}
-        </span>
+        <span className={'node-text'}>{props.node.path}</span>
       </div>
     </div>
   )

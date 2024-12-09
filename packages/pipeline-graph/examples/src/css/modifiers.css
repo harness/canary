@@ -10,7 +10,7 @@
 }
 
 /* sharp-borders example */
-.sharp-border .parallel-node > .border,
-.sharp-border .serial-node > .border {
+.sharp-border .parallel-node > * > .border,
+.sharp-border .serial-node > * > .border {
   border-width: max(0.8px, calc(1px / var(--scale))) !important;
 }

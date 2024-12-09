@@ -19,17 +19,17 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
   const minW = node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto'
   const minH = node.config?.minHeight ? node.config?.minHeight + 'px' : 'auto'
 
-  function attachRef(ref: HTMLDivElement) {
-    nodeRef.current = ref
-  }
-
   return (
     <div
-      data-action="select"
-      data-path={node.path}
-      ref={attachRef}
+      {...(node.config?.selectable
+        ? {
+            'data-action': 'select',
+            'data-path': node.path
+          }
+        : {})}
+      ref={nodeRef}
       key={props.node.type + '-' + props.node.path}
-      className={'node leaf-node'}
+      className={'node leaf-node'} // TODO: do we need this?
       style={{
         position: 'relative',
         height: h,
@@ -68,10 +68,9 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
           position: 'absolute',
           top: '0px',
           left: '0px',
-          zIndex: 100,
           right: '0px',
           height: '30px',
-          padding: '10px'
+          zIndex: '100'
         }}
       >
         {!node.config?.hideDeleteButton && <DeleteButton path={props.node.path} />}

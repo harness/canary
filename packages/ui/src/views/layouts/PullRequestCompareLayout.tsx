@@ -22,10 +22,10 @@ import { BranchSelector } from '@views/repo/components/branch-selector/branch-se
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
+import { CommitSelectorListItem } from '@views/repo/pull-request/compare/components/types'
 import { CommitSelector } from '@views/repo/pull-request/components/commit-selector/commit-selector'
 import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
-import { CommitSelectorListItem } from '@views/repo/pull-request/types'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
 import { z } from 'zod'
 
@@ -40,11 +40,11 @@ import {
 } from '..'
 import { Layout } from './layout'
 
-export const formSchema = z.object({
+export const pullRequestFormSchema = z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),
   description: z.string().optional()
 })
-export type CompareFormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type CompareFormFields = z.infer<typeof pullRequestFormSchema> // Automatically generate a type from the schema
 
 export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
@@ -107,7 +107,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
 
     formState: { errors, isValid }
   } = useForm<CompareFormFields>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(pullRequestFormSchema),
     mode: 'onChange',
     defaultValues: {
       title: '',

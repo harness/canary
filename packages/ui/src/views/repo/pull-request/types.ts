@@ -1,11 +1,8 @@
 import { z } from 'zod'
 
 import { TranslationStore } from '../repo-list/types'
+import { CommitSelectorListItem } from './compare/components/types'
 
-export interface CommitSelectorListItem {
-  title: string
-  sha: string
-}
 export interface CommitSelectorDropdownProps {
   selectedCommit?: CommitSelectorListItem
   commitList: CommitSelectorListItem[]

@@ -1,3 +1,3 @@
 //pull-request-list
 export * from './pull-request-list-page'
-export { CommitSelectorListItem } from './types'
+export * from './compare/components/types'

@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
 import { IBranchSelectorStore, TranslationStore, TypesCommit } from '@/views'
 
-import { CommitSelectorListItem } from '../../types'
+import { CommitSelectorListItem } from '../../compare/components/types'
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
 
 // import { BranchSelectorDropdown } from './branch-selector-dropdown'

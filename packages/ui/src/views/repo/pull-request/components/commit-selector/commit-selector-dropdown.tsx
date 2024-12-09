@@ -3,7 +3,8 @@ import { FC, useMemo, useState } from 'react'
 import { DropdownMenuContent, DropdownMenuItem, Icon, SearchBox } from '@/components'
 import { cn } from '@utils/cn'
 
-import { CommitSelectorDropdownProps, CommitSelectorListItem } from '../../types'
+import { CommitSelectorListItem } from '../../compare/components/types'
+import { CommitSelectorDropdownProps } from '../../types'
 
 const filterItems = (items: CommitSelectorListItem[], query: string) => {
   if (!query.trim()) return items

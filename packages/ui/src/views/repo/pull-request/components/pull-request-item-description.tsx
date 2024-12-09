@@ -20,12 +20,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   timestamp
 }) => {
   return (
-    <div className="text-14 text-foreground-4 inline-flex max-w-full items-center gap-1.5 pl-[22px] leading-none">
+    <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-foreground-4">
       <p>
         {`#${number}`} opened {timestamp} by {author}
       </p>
 
-      <span className="bg-borders-2 pointer-events-none h-2.5 w-px" aria-hidden />
+      <span className="pointer-events-none h-2.5 w-px bg-borders-2" aria-hidden />
 
       <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
 

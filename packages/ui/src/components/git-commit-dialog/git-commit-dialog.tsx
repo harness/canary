@@ -253,7 +253,7 @@ export const GitCommitDialog = ({
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button type="button" theme="primary" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
                 {isSubmitting ? 'Committing...' : 'Commit changes'}
               </Button>
             </>

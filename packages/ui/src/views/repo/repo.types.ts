@@ -103,3 +103,9 @@ export interface IBranchSelectorStore {
   setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
   setPage: (page: number) => void
 }
+
+export enum CodeModes {
+  EDIT = 'edit',
+  NEW = 'new',
+  VIEW = 'view'
+}

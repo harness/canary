@@ -16,7 +16,7 @@ import {
   ToggleGroupItem
 } from '@harnessio/canary'
 import { useFindRepositoryQuery, useGetContentQuery } from '@harnessio/code-service-client'
-import { PathParts } from '@harnessio/ui/components'
+import { ExitConfirmDialog, PathParts } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
@@ -33,11 +33,13 @@ import {
   PLAIN_TEXT
 } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
-import { ExitConfirmDialog } from './ExitConfirmDialog'
 import GitCommitDialog from './GitCommitDialog'
 
 export type ViewTypeValue = 'contents' | 'changes'
 
+/**
+ * @deprecated
+ */
 export const FileEditor: React.FC = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()

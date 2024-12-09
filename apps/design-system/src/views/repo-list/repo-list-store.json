@@ -3,13 +3,13 @@
     {
       "id": 1,
       "name": "canary",
-      "description": "canary repo",
+      "description": "Monorepo for Harness' next generation Unified UI",
       "private": false,
       "stars": 0,
       "forks": 0,
       "pulls": 0,
-      "timestamp": "10 hours ago",
-      "createdAt": 1733226941233,
+      "timestamp": "Dec 6, 2024",
+      "createdAt": 1733489262454,
       "importing": false
     }
   ],

@@ -1,12 +1,12 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { NavbarItemIdType } from '@harnessio/ui/components'
+import { NavbarItemType } from '@harnessio/ui/components'
 import { RepoLayout, SandboxRoot } from '@harnessio/ui/views'
 
 import { mockT, noop, useTranslationsStore } from '../../utils.ts'
 
-const recentMenu: NavbarItemIdType[] = []
+const recentMenu: NavbarItemType[] = []
 
 const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (
   <Routes>
@@ -15,11 +15,12 @@ const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (
       element={
         <SandboxRoot
           currentUser={undefined}
-          pinnedMenu={null}
+          pinnedMenu={[]}
           recentMenu={recentMenu}
-          changeRecentMenu={noop}
           logout={noop}
-          changePinnedMenu={noop}
+          setPinned={noop}
+          setRecent={noop}
+          setNavLinks={noop}
           t={mockT as any}
         />
       }

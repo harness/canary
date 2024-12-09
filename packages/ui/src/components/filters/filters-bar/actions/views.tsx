@@ -146,7 +146,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
     <>
       {!currentView ? (
         <Button
-          className="flex items-center gap-x-1.5 text-14 text-foreground-4 hover:text-foreground-1 transition-colors duration-200 px-0"
+          className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
           variant="custom"
           onClick={() => setIsNewViewDialogOpen(true)}
         >
@@ -157,7 +157,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
-              className="flex items-center gap-x-1.5 text-14 text-foreground-4 hover:text-foreground-1 transition-colors duration-200 px-0"
+              className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
               variant="custom"
             >
               <Icon name="bookmark-icon" size={12} />
@@ -199,7 +199,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
             <strong className="text-foreground-1">View</strong> dropdown.
           </AlertDialogDescription>
 
-          <div className="pt-3 pb-4">
+          <div className="pb-4 pt-3">
             <Input
               label="Name"
               placeholder="Enter view name"

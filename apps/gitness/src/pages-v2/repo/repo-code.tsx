@@ -13,12 +13,13 @@ import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import useCodePathDetails from '../../hooks/useCodePathDetails'
+import useCodePathDetails, { CodeModes } from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
-import { getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
+import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
+import { useRepoBranchesStore } from './stores/repo-branches-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -28,7 +29,7 @@ export const RepoCode = () => {
   const { spaceId, repoId } = useParams<PathParams>()
 
   // TODO: Not sure what codeMode is used for; it needs to be reviewed, and the condition for rendering the FileContentViewer component may need to be adjusted or fixed.
-  const { codeMode: _, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
+  const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
@@ -132,6 +133,33 @@ export const RepoCode = () => {
 
   if (!repoId) return <></>
 
+  const { selectedBranchTag } = useRepoBranchesStore()
+
+  const pathToNewFile = useMemo(() => {
+    if (fullResourcePath && repoDetails) {
+      if (repoDetails?.type === 'dir') {
+        return `new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+      } else {
+        const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+        return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+      }
+    } else {
+      return `new/${fullGitRef || selectedBranchTag.name}/~/`
+    }
+  }, [repoDetails])
+
+  const renderCodeView = () => {
+    if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
+      return <FileContentViewer repoContent={repoDetails} />
+    } else if (codeMode === CodeModes.EDIT) {
+      // TODO: should render FileEditor
+      return <></>
+    } else if (codeMode === CodeModes.NEW) {
+      // TODO: should render FileEditor with view for new file : empty filename + action to commit on top
+      return <></>
+    }
+  }
+
   return (
     <RepoFiles
       pathParts={pathParts}
@@ -142,11 +170,13 @@ export const RepoCode = () => {
       latestFile={latestFiles}
       useTranslationStore={useTranslationStore}
       // TODO: add correct path to Create new file page
-      pathNewFile="/new-file"
+      pathNewFile={pathToNewFile}
       // TODO: add correct path to Upload files page
       pathUploadFiles="/upload-file"
+      isEditFile={codeMode === CodeModes.EDIT}
+      isNewFile={codeMode === CodeModes.NEW}
     >
-      {!!repoDetails?.type && repoDetails.type !== 'dir' && <FileContentViewer repoContent={repoDetails} />}
+      {renderCodeView()}
     </RepoFiles>
   )
 }

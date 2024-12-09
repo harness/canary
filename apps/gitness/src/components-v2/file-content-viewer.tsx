@@ -9,6 +9,7 @@ import GitCommitDialog from '../components-v2/git-commit-dialog'
 import GitBlame from '../components/GitBlame'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../hooks/useCodePathDetails'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
@@ -31,12 +32,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
+  const { spaceId, repoId } = useParams<PathParams>()
+  const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
-  const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${gitRef}`
+  const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
 
@@ -66,12 +66,12 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     downloadFile({
       repoRef,
       resourcePath: fullResourcePath || '',
-      gitRef: gitRef || ''
+      gitRef: fullGitRef || ''
     })
   }
 
   const handleEditFile = () => {
-    navigate(`/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)
+    navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
   const CodeView = useMemo(
@@ -95,14 +95,14 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         open={isDeleteFileDialogOpen}
         onClose={() => handleToggleDeleteDialog(false)}
         commitAction={GitCommitAction.DELETE}
-        gitRef={gitRef || ''}
+        gitRef={fullGitRef || ''}
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/spaces/${spaceId}/repos/${repoId}/code`)
+            navigate(`/${spaceId}/repos/${repoId}/code`)
           } else {
             navigate(
-              `/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
+              `/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
             )
           }
         }}
@@ -127,7 +127,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         CodeView
       ) : (
         <GitBlame
-          selectedBranch={gitRef || ''}
+          selectedBranch={fullGitRef || ''}
           themeConfig={themeConfig}
           codeContent={fileContent}
           language={language}

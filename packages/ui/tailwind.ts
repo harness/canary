@@ -1,5 +1,6 @@
 import tailwindcssAnimate from 'tailwindcss-animate'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
+import typography from '@tailwindcss/typography'
 
 export default {
   darkMode: ['class'],
@@ -287,6 +288,7 @@ export default {
   },
   plugins: [
     tailwindcssAnimate,
+    typography,
     function ({ addUtilities }: PluginAPI) {
       addUtilities({
         '.tabnav-active': {
@@ -298,5 +300,6 @@ export default {
         }
       })
     }
-  ]
+  ],
+  safelist: ['prose', 'prose-invert', 'prose-headings', 'prose-p', 'prose-a', 'prose-img', 'prose-code']
 } satisfies TailwindConfig

@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
   Icon,
   ListActions,
+  MarkdownViewer,
   NoData,
   SearchFiles,
   SkeletonList,
@@ -70,6 +71,7 @@ export function RepoSummaryView({
   repository,
   repoEntryPathToFileTypeMap,
   files,
+  decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
   gitRef,
   latestCommitInfo,
@@ -170,10 +172,7 @@ export function RepoSummaryView({
                 <StackedList.Field right />
               </StackedList.Item>
               <StackedList.Item disableHover>
-                {/*
-                  TODO: require moving and preparing a component from views
-                  <MarkdownViewer source={decodedReadmeContent || ''} />
-                */}
+                <MarkdownViewer source={decodedReadmeContent || ''} />
               </StackedList.Item>
             </StackedList.Root>
           </SandboxLayout.Content>

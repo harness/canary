@@ -13,6 +13,7 @@
     "lastCommit": "Last commit message",
     "date": "Date",
     "search": "",
+    "allCommits": "All commits",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",

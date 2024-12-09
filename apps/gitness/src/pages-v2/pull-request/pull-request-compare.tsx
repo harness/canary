@@ -21,7 +21,13 @@ import {
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
-import { BranchSelectorListItem, BranchSelectorTab, CompareFormFields, PullRequestCompare } from '@harnessio/ui/views'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitSelectorListItem,
+  CompareFormFields,
+  PullRequestCompare
+} from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -32,10 +38,6 @@ import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 
-interface CommitSelectorListItem {
-  title: string
-  sha: string
-}
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
@@ -50,10 +52,10 @@ export const CreatePullRequest = () => {
   const [apiError, setApiError] = useState<string | null>(null)
   const repoRef = useGetRepoRef()
   const [selectedTargetBranch, setSelectedTargetBranch] = useState<BranchSelectorListItem>(
-    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: 'fd' }
+    diffTargetBranch ? { name: diffTargetBranch, sha: '' } : { name: 'main', sha: '' }
   )
   const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
-    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: 'sd' }
+    diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
   )
   const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<number | null>(null)
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA

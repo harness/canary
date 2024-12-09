@@ -126,23 +126,23 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                     <Text wrap="nowrap" truncate className="text-primary/90">
                       <Button variant="secondary" size="xs">
                         &nbsp;
-                        {branch.name}
+                        {branch?.name}
                       </Button>
                     </Text>
-                    <CopyButton name={branch.name} />
+                    <CopyButton name={branch?.name} />
                   </div>
                 </TableCell>
                 {/* user avatar and timestamp */}
                 <TableCell className="content-center">
                   <div className="flex items-center gap-1.5">
                     <Avatar className="h-5 w-5">
-                      {branch.user.avatarUrl && <AvatarImage src={branch.user.avatarUrl} />}
+                      {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
                       <AvatarFallback className="p-1 text-center text-xs">
-                        {getInitials(branch.user.name, 2)}
+                        {getInitials(branch?.user?.name ?? '', 2)}
                       </AvatarFallback>
                     </Avatar>
                     <Text wrap="nowrap" truncate className="text-primary">
-                      {branch.timestamp}
+                      {branch?.timestamp}
                     </Text>
                   </div>
                 </TableCell>
@@ -160,7 +160,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                 {/* calculated divergence bar & default branch */}
                 <TableCell className="content-center">
                   <div className="flex content-center items-center gap-1.5 align-middle">
-                    {branch.behindAhead.default ? (
+                    {branch?.behindAhead?.default ? (
                       <Badge
                         variant="outline"
                         size="xs"
@@ -169,7 +169,7 @@ export const BranchesList = ({ branches, spaceId, repoId, defaultBranch }: PageP
                         Default
                       </Badge>
                     ) : (
-                      <DivergenceGauge behindAhead={branch.behindAhead} />
+                      <DivergenceGauge behindAhead={branch?.behindAhead || {}} />
                     )}
                   </div>
                 </TableCell>

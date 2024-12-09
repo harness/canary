@@ -5,6 +5,7 @@ import { Button, NoData, NoSearchResults, PaginationComponent, SkeletonList, Spa
 // import { timeAgoFromISOTime } from '@/utils/time-utils'
 import { SandboxLayout } from '@/views'
 
+import { IBranchSelectorStore } from '../repo.types'
 import { BranchesList } from './components/branch-list'
 import { BranchStore } from './types'
 
@@ -19,13 +20,11 @@ interface RepoBranchListViewProps {
   repoId: string
   spaceId: string
   isLoading: boolean
-  useRepoBranchStore: () => BranchStore
+  useRepoBranchesStore: () => IBranchSelectorStore
 }
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
-  repoId,
-  spaceId,
-  useRepoBranchStore,
+  useRepoBranchesStore,
   xNextPage,
   xPrevPage,
   page,
@@ -36,10 +35,10 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   const { t } = useTranslationStore()
 
   const renderListContent = () => {
-    const { branches, defaultBranch, branchDivergence } = useRepoBranchStore()
-    if (isLoading) return <SkeletonList />
+    const { repoId, spaceId, branchList, defaultBranch } = useRepoBranchesStore()
+    if (isLoading && !branchList.length) return <SkeletonList />
 
-    if (!branches?.length) {
+    if (!branchList?.length) {
       if (query) {
         return (
           <NoSearchResults
@@ -69,15 +68,15 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
     }
 
     //get the data arr from behindAhead
-    const behindAhead =
-      branchDivergence?.map(divergence => {
-        return {
-          behind: divergence.behind,
-          ahead: divergence.ahead
-        }
-      }) || []
+    // const behindAhead =
+    //   branchDivergence?.map(divergence => {
+    //     return {
+    //       behind: divergence.behind,
+    //       ahead: divergence.ahead
+    //     }
+    //   }) || []
 
-    return <BranchesList defaultBranch={defaultBranch} repoId={repoId} spaceId={spaceId} branches={branches} />
+    return <BranchesList defaultBranch={defaultBranch} repoId={repoId} spaceId={spaceId} branches={branchList} />
   }
 
   return (

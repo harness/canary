@@ -14,7 +14,6 @@ export function ParallelGroupContentNode(props: {
   const { node, children } = props
   const data = node.data as ParallelGroupContentNodeDataType
 
-  console.log(node)
   return (
     <>
       <div className="absolute inset-0 -z-10 rounded-xl border border-dashed border-borders-6"></div>

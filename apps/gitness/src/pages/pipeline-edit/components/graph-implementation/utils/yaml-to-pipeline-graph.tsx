@@ -135,7 +135,7 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
     else {
       const name = getNameBasedOnStep(step, idx + 1)
       const path = `${currentPath}.${idx}`
-      console.log(path, options?.selectedPath)
+
       return {
         type: ContentNodeTypes.step,
         config: {

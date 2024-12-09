@@ -15,7 +15,6 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
   const { node } = props
   const data = node.data as StepNodeDataType
 
-  console.log(data)
   return (
     <div
       className={cx('-z-10 box-border size-full rounded-xl border bg-primary-foreground', {

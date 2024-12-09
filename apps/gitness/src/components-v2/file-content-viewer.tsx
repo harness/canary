@@ -71,7 +71,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   }
 
   const handleEditFile = () => {
-    navigate(`${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)
+    navigate(`/spaces/${spaceId}/repos/${repoId}/code/edit/${gitRef}/~/${fullResourcePath}`)
   }
 
   const CodeView = useMemo(
@@ -99,10 +99,10 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`${spaceId}/repos/${repoId}/code`)
+            navigate(`/spaces/${spaceId}/repos/${repoId}/code`)
           } else {
             navigate(
-              `${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
+              `/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
             )
           }
         }}

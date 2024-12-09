@@ -114,7 +114,7 @@ function Label({ htmlFor, required, children, className }: LabelProps) {
   return (
     <ShadLabel htmlFor={htmlFor} variant="sm" className={cn('text-primary/80 font-normal', className)}>
       {children}
-      {required && <span className="text-destructive pl-0.5 align-top">*</span>}
+      {required && <span className="pl-0.5 align-top text-destructive">*</span>}
     </ShadLabel>
   )
 }

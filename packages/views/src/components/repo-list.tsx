@@ -21,15 +21,15 @@ const Stats = ({ stars, forks, pulls }: { stars?: number; forks: number; pulls: 
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1.5">
       <Icon width={16} name="star" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{stars || 0}</span>
+      <span className="text-xs font-normal text-primary">{stars || 0}</span>
     </span>
     <span className="flex items-center gap-1.5">
       <Icon size={16} name="pull" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{forks || 0}</span>
+      <span className="text-xs font-normal text-primary">{forks || 0}</span>
     </span>
     <span className="flex items-center gap-1.5">
       <Icon size={16} name="pull" className="text-tertiary-background" />
-      <span className="text-primary text-xs font-normal">{pulls || 0}</span>
+      <span className="text-xs font-normal text-primary">{pulls || 0}</span>
     </span>
   </div>
 )

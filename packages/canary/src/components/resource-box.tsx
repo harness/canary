@@ -2,7 +2,7 @@ import { Icon, type IconProps } from './icon'
 
 function Root({ children }: { children: React.ReactNode }) {
   return (
-    <div className="bg-muted/25 flex h-[233px] flex-col gap-5 rounded-md border px-5 py-3 pb-5 pr-4">{children}</div>
+    <div className="flex h-[233px] flex-col gap-5 rounded-md border bg-muted/25 px-5 py-3 pb-5 pr-4">{children}</div>
   )
 }
 

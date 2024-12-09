@@ -141,6 +141,10 @@ export const RepoCode = () => {
       isShowSummary={!!repoEntryPathToFileTypeMap.size}
       latestFile={latestFiles}
       useTranslationStore={useTranslationStore}
+      // TODO: add correct path to Create new file page
+      pathNewFile="/new-file"
+      // TODO: add correct path to Upload files page
+      pathUploadFiles="/upload-file"
     >
       {!!repoDetails?.type && repoDetails.type !== 'dir' && <FileContentViewer repoContent={repoDetails} />}
     </RepoFiles>

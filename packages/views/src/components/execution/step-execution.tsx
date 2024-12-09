@@ -48,19 +48,14 @@ const StepExecutionToolbar: React.FC<
         value={query}
       />
       <div className="flex">
-        <Button variant="outline" size="icon" className="rounded-br-none rounded-tr-none border-r-0" onClick={onCopy}>
-          <Icon name="clone" className="h-4 w-4" />
+        <Button variant="outline" size="icon" className="rounded-r-none border-r-0" onClick={onCopy}>
+          <Icon name="clone" className="size-4" />
         </Button>
         <Button variant="outline" size="icon" className="rounded-none" onClick={onEdit}>
-          <Icon name="edit-pen" className="h-4 w-4" />
+          <Icon name="edit-pen" className="size-4" />
         </Button>
-        <Button
-          variant="outline"
-          size="icon"
-          className="rounded-bl-none rounded-tl-none border-l-0"
-          onClick={onDownload}
-        >
-          <Icon name="download" className="h-4 w-4" />
+        <Button variant="outline" size="icon" className="rounded-l-none border-l-0" onClick={onDownload}>
+          <Icon name="download" className="size-4" />
         </Button>
       </div>
     </Layout.Horizontal>
@@ -86,7 +81,7 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
           duration={getFormattedDuration(step?.started ?? 0, step?.stopped ?? 0)}
         />
       </Layout.Horizontal>
-      <Tabs defaultValue={StepExecutionTab.LOG} className="mt-2 h-full w-full">
+      <Tabs defaultValue={StepExecutionTab.LOG} className="mt-2 size-full">
         <Layout.Vertical gap="space-y-3">
           <Layout.Horizontal className="flex justify-between">
             <TabsList className="w-fit">

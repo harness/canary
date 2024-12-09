@@ -153,6 +153,7 @@ import TriangleWarning from '../icons/triangle-warning.svg'
 import TubeSign from '../icons/tube-sign.svg'
 import Unmerged from '../icons/unmerged.svg'
 import Unpin from '../icons/unpin.svg'
+import Upload from '../icons/upload-icon.svg'
 import User from '../icons/user-icon.svg'
 import Users from '../icons/users-icon.svg'
 import Variable from '../icons/variable-icon.svg'
@@ -323,7 +324,8 @@ const IconNameMap = {
   'dashboards-gradient': DashboardsGradient,
   dashboards: Dashboards,
   'menu-dots': MenuDots,
-  'bookmark-add': BookmarkAdd
+  'bookmark-add': BookmarkAdd,
+  upload: Upload
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

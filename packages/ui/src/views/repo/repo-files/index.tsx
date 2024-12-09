@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from 'react'
 
-import { NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
+import { FileAdditionsTrigger, NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
 import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
 import { FileLastChangeBar, Summary } from '@/views/repo/components'
 
@@ -13,6 +13,8 @@ interface RepoFilesProps {
   latestFile: LatestFileTypes
   children: ReactNode
   useTranslationStore: () => TranslationStore
+  pathNewFile: string
+  pathUploadFiles: string
 }
 
 export const RepoFiles = ({
@@ -23,7 +25,9 @@ export const RepoFiles = ({
   isShowSummary,
   latestFile,
   children,
-  useTranslationStore
+  useTranslationStore,
+  pathNewFile,
+  pathUploadFiles
 }: RepoFilesProps) => {
   const content = useMemo(() => {
     if (!isDir)
@@ -54,8 +58,13 @@ export const RepoFiles = ({
   return (
     <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
       <SandboxLayout.Content>
-        <div className="mb-4 flex h-8 items-center">
+        <div className="mb-4 flex h-8 items-center justify-between gap-8">
           <PathBreadcrumbs items={pathParts} />
+          <FileAdditionsTrigger
+            useTranslationStore={useTranslationStore}
+            pathNewFile={pathNewFile}
+            pathUploadFiles={pathUploadFiles}
+          />
         </div>
         {content}
       </SandboxLayout.Content>

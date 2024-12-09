@@ -35,7 +35,7 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
   return (
     <Tag
       className={cn(
-        'relative group grid w-full grid-cols-[auto_1fr] grid-rows-2 items-center justify-start gap-x-2.5 text-left',
+        'relative grid w-full grid-cols-[auto_1fr] grid-rows-2 items-center justify-start gap-x-2.5 text-left',
         className
       )}
     >
@@ -119,7 +119,7 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: Na
 
       {menuItems && (
         <DropdownMenuContent
-          className="ml-3 w-[230px] bg-background-1"
+          className="ml-3 w-[230px] !rounded-lg bg-background-1"
           align="start"
           sideOffset={-40}
           alignOffset={187}

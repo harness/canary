@@ -21,7 +21,7 @@ const PullRequestSystemReviewerDeleteItem: React.FC<PullRequestSystemReviewerDel
       header={[
         {
           avatar: (
-            <Avatar className="h-6 w-6 rounded-full p-0">
+            <Avatar className="size-6 rounded-full p-0">
               <AvatarFallback>
                 <Text size={1} color="tertiaryBackground">
                   {/* TODO: fix fallback string */}

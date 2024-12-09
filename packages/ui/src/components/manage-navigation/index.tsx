@@ -153,7 +153,7 @@ export const ManageNavigation = ({
                             </Button>
                             {!item.permanentlyPinned ? (
                               <Button
-                                className="text-icons-4 hover:text-icons-2 absolute right-1 top-0.5 z-20"
+                                className="absolute right-1 top-0.5 z-20 text-icons-4 hover:text-icons-2"
                                 size="sm_icon"
                                 variant="custom"
                                 onClick={() => removeFromPinnedItems(item)}

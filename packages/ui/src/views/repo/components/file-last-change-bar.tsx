@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage, CommitCopyActions, StackedList, Text } from '@/components'
+import { Avatar, AvatarFallback, AvatarImage, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { LatestFileTypes, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 
@@ -19,6 +19,7 @@ const TopTitle = ({ user, lastCommitMessage }: LatestFileTypes) => {
       <Text size={2} weight="normal" color="primary" className="line-clamp-1">
         {lastCommitMessage}
       </Text>
+      <Icon className="shrink-0 text-icons-success" name="tick" size={12} />
     </div>
   )
 }

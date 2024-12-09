@@ -107,7 +107,7 @@ const RepoCreatePageForm: React.FC<RepoCreatePageFormProps> = ({
             Create a new repository
           </Text>
           <Spacer size={3} />
-          <Text size={2} as="p" className="text-primary/80 max-w-full">
+          <Text size={2} as="p" className="max-w-full text-primary/80">
             A repository contains all project files, including the revision history. Already have a project repository
             elsewhere? Import a repository.
           </Text>

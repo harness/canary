@@ -69,11 +69,11 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         <Text size={5} weight={'medium'} className="text-primary">
           {original}
           &nbsp;&nbsp;
-          <span className="text-tertiary-background font-normal">#{number}</span>
+          <span className="font-normal text-tertiary-background">#{number}</span>
         </Text>
       </div>
       <div className="">
-        <div className="text-tertiary-background flex space-x-2">
+        <div className="flex space-x-2 text-tertiary-background">
           <div className="flex items-center gap-2.5 text-center align-middle">
             <Badge disableHover borderRadius="full" className={`select-none justify-center`}>
               <Layout.Horizontal gap="space-x-1" className="flex items-center align-middle">
@@ -84,7 +84,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             <div className="flex gap-2">
               <Text
                 size={2}
-                className="text-tertiary-background inline-flex flex-wrap items-center gap-1"
+                className="inline-flex flex-wrap items-center gap-1 text-tertiary-background"
                 weight="normal"
               >
                 <span className="text-primary">{author?.display_name || author?.email || ''}</span>
@@ -95,14 +95,14 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
                 <span>into</span>
                 <Button variant="secondary" size="xs" asChild>
                   <Link to={`/spaces/${spaceId}/repos/${repoId}/code/${target_branch}`}>
-                    <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+                    <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
                     {target_branch}
                   </Link>
                 </Button>
                 <span>from</span>
                 <Button asChild variant="secondary" size="xs">
                   <Link to={`/spaces/${spaceId}/repos/${repoId}/code/${source_branch}`}>
-                    <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
+                    <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
                     {source_branch}
                   </Link>
                 </Button>

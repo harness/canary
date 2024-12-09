@@ -63,7 +63,7 @@ const PullRequestMergeSection = ({
                     // }}
                     // className="pl-1 pr-1 text-blue-500 cursor-pointer">
 
-                    className="pl-1 pr-1 text-blue-500"
+                    className="px-1 text-blue-500"
                   >
                     {/* {getString('commandLine')} */}
                     command line

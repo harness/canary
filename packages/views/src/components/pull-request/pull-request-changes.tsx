@@ -56,7 +56,7 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
     </div>
     <div className="inline-flex items-center gap-x-6">
       <div title="coming soon" className="flex items-center gap-2">
-        <Checkbox title="coming soon" checked className="h-4 w-4" />
+        <Checkbox title="coming soon" checked className="size-4" />
         {/* This would need to be dynamic text value if/when viewing functionality is hooked up */}
         <Text title="coming soon" size={2} className="text-primary/90">
           Viewed

@@ -21,7 +21,7 @@ const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
       header={[
         {
           avatar: (
-            <Avatar className="h-6 w-6 rounded-full p-0">
+            <Avatar className="size-6 rounded-full p-0">
               <AvatarFallback>
                 <Text size={1} color="tertiaryBackground">
                   {/* TODO: fix fallback string */}
@@ -36,11 +36,11 @@ const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
               {(payload?.payload?.payload as GeneralPayload)?.merge_method === MergeStrategy.REBASE ? (
                 <Text color="tertiaryBackground">
                   rebased changes from branch
-                  <Button className="ml-1 mr-1" variant="secondary" size="xs">
+                  <Button className="mx-1" variant="secondary" size="xs">
                     {pullReqMetadata?.source_branch}
                   </Button>
                   onto
-                  <Button className="ml-1 mr-1" variant="secondary" size="xs">
+                  <Button className="mx-1" variant="secondary" size="xs">
                     {pullReqMetadata?.target_branch}
                   </Button>
                   , now at {(payload?.payload?.payload as GeneralPayload)?.merge_sha as string}
@@ -48,15 +48,15 @@ const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
               ) : (
                 <Text color="tertiaryBackground">
                   merged changes from
-                  <Button className="ml-1 mr-1" variant="secondary" size="xs">
+                  <Button className="mx-1" variant="secondary" size="xs">
                     {pullReqMetadata?.source_branch}
                   </Button>
                   into
-                  <Button className="ml-1 mr-1" variant="secondary" size="xs">
+                  <Button className="mx-1" variant="secondary" size="xs">
                     {pullReqMetadata?.target_branch}
                   </Button>
                   by commit
-                  <Button className="ml-1 mr-1" variant="secondary" size="xs">
+                  <Button className="mx-1" variant="secondary" size="xs">
                     {((payload?.payload?.payload as GeneralPayload)?.merge_sha as string)?.substring(0, 6)}
                   </Button>
                 </Text>

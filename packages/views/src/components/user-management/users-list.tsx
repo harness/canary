@@ -45,7 +45,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="bg-primary-background w-[180px] rounded-[10px] border border-gray-800 py-2 shadow-sm"
+          className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm"
           onCloseAutoFocus={event => event.preventDefault()}
         >
           <DropdownMenuGroup>
@@ -107,7 +107,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
           <TableHead className="text-primary">Name</TableHead>
           <TableHead className="text-primary">Email</TableHead>
           <TableHead className="text-primary">Display Name</TableHead>
-          <TableHead className="text-primary text-right">Date added</TableHead>
+          <TableHead className="text-right text-primary">Date added</TableHead>
           <TableHead>
             <></>
           </TableHead>
@@ -131,7 +131,7 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
                         <Badge
                           variant="outline"
                           size="xs"
-                          className="text-tertiary-background bg-tertiary-background/10 m-auto ml-2 h-5 rounded-full p-2 text-center text-xs font-normal"
+                          className="m-auto ml-2 h-5 rounded-full bg-tertiary-background/10 p-2 text-center text-xs font-normal text-tertiary-background"
                         >
                           Admin
                         </Badge>

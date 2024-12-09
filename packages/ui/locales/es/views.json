@@ -1,11 +1,7 @@
 {
-  "landingPage": {
-    "selectProject": "Select a project to get started",
-    "description": "Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.",
-    "projectSelector": "Select Project",
-    "noProjects": "No projects available"
-  },
   "repos": {
+    "create-new-file-no-plus": "Crear nuevo archivo",
+    "upload-files": "Subir archivos",
     "branches": "Branches",
     "tags": "Tags",
     "default": "Default",
@@ -32,5 +28,11 @@
     "createNewFile": "+ Create New File",
     "readme": "README.md",
     "openPullReq": "Open pull requests"
+  },
+  "landingPage": {
+    "selectProject": "Select a project to get started",
+    "description": "Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.",
+    "projectSelector": "Select Project",
+    "noProjects": "No projects available"
   }
 }

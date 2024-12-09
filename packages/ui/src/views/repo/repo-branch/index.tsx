@@ -1,81 +1,72 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Button, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { Button, NoData, NoSearchResults, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+// import { timeAgoFromISOTime } from '@/utils/time-utils'
 import { SandboxLayout } from '@/views'
 
-// import { SkeletonList } from '@harnessio/ui/components'
-// import {
-//   BranchesList,
-// //   Filter,
-//   NoData,
-//   NoSearchResults,
-//   PaginationComponent,
-//   SandboxLayout,
-//   useCommonFilter
-// } from '@harnessio/'
-
 import { BranchesList } from './components/branch-list'
+import { BranchStore } from './types'
 
 // import CreateBranchDialog from './repo-branch-create'
 
-const sortOptions = [
-  { name: 'Date', value: 'date' },
-  { name: 'Name', value: 'name' }
-]
+// const sortOptions = [
+//   { name: 'Date', value: 'date' },
+//   { name: 'Name', value: 'name' }
+// ]
 
 interface RepoBranchListViewProps {
   repoId: string
   spaceId: string
   isLoading: boolean
-  // branches: any
+  useRepoBranchStore: () => BranchStore
 }
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
   repoId,
   spaceId,
-  repoMetadata,
-  branches,
-  branchDivergence,
+  useRepoBranchStore,
   xNextPage,
   xPrevPage,
   page,
   setPage,
-  useTranslationStore
+  useTranslationStore,
+  query
 }) => {
   const { t } = useTranslationStore()
 
   const renderListContent = () => {
+    const { branches, defaultBranch, branchDivergence } = useRepoBranchStore()
     if (isLoading) return <SkeletonList />
 
-    // if (!branches?.length) {
-    //   if (query) {
-    //     return (
-    //   <NoSearchResults
-    //     iconName="no-search-magnifying-glass"
-    //     title="No search results"
-    //     description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-    //     primaryButton={{ label: 'Clear search', onClick: () => setQuery('') }}
-    //   />
-    // )
-    //   }
-    //   return (
-    // <NoData
-    //   iconName="no-data-branches"
-    //   title="No branches yet"
-    //   description={[
-    //     "Your branches will appear here once they're created.",
-    //     'Start branching to see your work organized.'
-    //   ]}
-    //   primaryButton={{
-    //     label: 'Create branch',
-    //     onClick: () => {
-    //       setCreateBranchDialogOpen(true)
-    //     }
-    //   }}
-    // />
-    //   )
-    // }
+    if (!branches?.length) {
+      if (query) {
+        return (
+          <NoSearchResults
+            iconName="no-search-magnifying-glass"
+            title="No search results"
+            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+            primaryButton={{ label: 'Clear search', onClick: () => {} /*setQuery('')*/ }}
+          />
+        )
+      }
+      return (
+        <NoData
+          iconName="no-data-branches"
+          title="No branches yet"
+          description={[
+            "Your branches will appear here once they're created.",
+            'Start branching to see your work organized.'
+          ]}
+          primaryButton={{
+            label: 'Create branch',
+            onClick: () => {
+              //   setCreateBranchDialogOpen(true)
+            }
+          }}
+        />
+      )
+    }
 
     //get the data arr from behindAhead
     const behindAhead =
@@ -86,31 +77,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
         }
       }) || []
 
-    return (
-      <BranchesList
-        defaultBranch={repoMetadata?.default_branch}
-        repoId={repoId}
-        spaceId={spaceId}
-        branches={branches?.map((branch, index) => {
-          const { ahead: branchAhead, behind: branchBehind } = behindAhead[index] || {}
-          return {
-            id: index,
-            name: branch.name || '',
-            sha: branch.commit?.sha || '',
-            // timestamp: branch.commit?.committer?.when ? timeAgoFromISOTime(branch.commit.committer.when) : '',
-            user: {
-              name: branch.commit?.committer?.identity?.name || '',
-              avatarUrl: ''
-            },
-            behindAhead: {
-              behind: branchBehind || 0,
-              ahead: branchAhead || 0,
-              default: repoMetadata?.default_branch === branch.name
-            }
-          }
-        })}
-      />
-    )
+    return <BranchesList defaultBranch={defaultBranch} repoId={repoId} spaceId={spaceId} branches={branches} />
   }
 
   return (

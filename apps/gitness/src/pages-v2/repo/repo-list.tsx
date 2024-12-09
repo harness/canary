@@ -70,7 +70,7 @@ export default function ReposListPage() {
 
   return (
     <>
-      <div className="fixed top-0 z-50 ml-56 w-full bg-background-1">
+      <div className="fixed top-0 z-30 ml-56 w-full bg-background-1">
         <Breadcrumbs />
       </div>
       <SandboxRepoListPage

@@ -1,6 +1,6 @@
-import { FC, useMemo } from 'react'
+import { FC, useCallback, useMemo } from 'react'
 
-import { RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
+import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
 
 import { useTranslationsStore } from '../../utils.ts'
 import repoSummaryProps from './repo-summary-props.json'
@@ -12,16 +12,32 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
     return new Map(repoSummaryProps.repoEntryPathToFileTypeMap as [string, string][])
   }, [])
 
+  const useRepoBranchesStore = useCallback(
+    (): IBranchSelectorStore => ({
+      ...repoSummaryProps,
+      selectedBranchType: BranchSelectorTab.BRANCHES,
+      setBranchList: noop,
+      setSelectedBranchTag: noop,
+      setSelectedBranchType: noop,
+      setTagList: noop,
+      setSpaceIdAndRepoId: noop
+    }),
+    []
+  )
+
   return (
     <RepoSummaryView
       {...repoSummaryProps}
       repoEntryPathToFileTypeMap={repoEntryPathToFileTypeMap}
       saveDescription={noop}
-      setIsEditingDescription={noop}
       handleCreateToken={noop}
       navigateToFile={noop}
-      selectBranch={noop}
       useTranslationStore={useTranslationsStore}
+      useRepoBranchesStore={useRepoBranchesStore}
+      gitRef={''}
+      updateRepoError={''}
+      isEditDialogOpen={false}
+      setEditDialogOpen={noop}
       {...props}
     />
   )

@@ -56,6 +56,7 @@ export * from './markdown-viewer'
 export * from './image-carousel'
 export * from './topbar'
 export * from './file-additions-trigger'
+export * from './progress'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import { Button, Card, CardContent, CardHeader, CardTitle, Icon, Input, Label, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { use } from 'i18next'
 import { z } from 'zod'
 
 interface PageProps {

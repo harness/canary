@@ -3,7 +3,12 @@ import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery, useListTagsQuery } from '@harnessio/code-service-client'
+import {
+  useFindRepositoryQuery,
+  useListBranchesQuery,
+  useListCommitsQuery,
+  useListTagsQuery
+} from '@harnessio/code-service-client'
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -50,7 +55,6 @@ export default function RepoCommitsPage() {
       )
     }
   }, [branches])
-
 
   useEffect(() => {
     if (tags) {

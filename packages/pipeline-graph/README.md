@@ -4,7 +4,7 @@ A library for generating and interacting with pipeline graphs.
 
 ![pipeline graph](./public/pipeline-graph.png 'Pipeline graph')
 
-## Anatomy of graph
+## Anatomy
 
 - Model
 - Container and Content nodes

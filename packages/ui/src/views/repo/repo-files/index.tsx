@@ -74,9 +74,7 @@ export const RepoFiles = ({
               pathNewFile={pathNewFile}
               pathUploadFiles={pathUploadFiles}
             />
-          ) : (
-            <></>
-          )}
+          ) : null}
         </div>
         {content}
       </SandboxLayout.Content>

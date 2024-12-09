@@ -182,10 +182,11 @@ export const CreatePullRequest = () => {
         repo_ref: repoRef
       },
       {
-        onSuccess: ({ body: data }) => {
+        // TODO: fix this to navigate to the new pull request after transferring a pull request page to ui
+        onSuccess: () => {
           setApiError(null)
 
-          navigate(`/spaces/${spaceId}/repos/${repoId}/pull-requests/${data?.number}`)
+          navigate(`/${spaceId}/repos/${repoId}/pulls`)
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

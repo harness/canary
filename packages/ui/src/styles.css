@@ -32,10 +32,10 @@
   /* PP Figma secondary colors */
   --canary-mint: 175 60% 65%;
   --canary-blue: 216 80% 65%;
-  --canary-orange: 35, 75%, 55%;
-  --canary-purple: 275, 60%, 75%;
-  --canary-green: 150, 75%, 65%;
-  --canary-red: 0, 80%, 65%;
+  --canary-amber: 35 75% 55%;
+  --canary-purple: 275 60% 75%;
+  --canary-green: 150 75% 65%;
+  --canary-red: 0 80% 65%;
 }
 
 @layer themes {
@@ -159,6 +159,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -297,6 +298,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -454,6 +456,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -591,6 +594,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -748,6 +752,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -885,6 +890,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -1042,6 +1048,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
@@ -1179,6 +1186,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);

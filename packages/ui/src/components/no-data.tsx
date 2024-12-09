@@ -1,4 +1,4 @@
-import React from 'react'
+import { Dispatch, FC, SetStateAction } from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
@@ -33,10 +33,10 @@ export interface NoDataProps {
   }
   insideTabView?: boolean
   loadState?: string
-  setLoadState?: React.Dispatch<React.SetStateAction<string>>
+  setLoadState?: Dispatch<SetStateAction<string>>
 }
 
-export const NoData: React.FC<NoDataProps> = ({
+export const NoData: FC<NoDataProps> = ({
   iconName,
   iconSize = 112,
   title,

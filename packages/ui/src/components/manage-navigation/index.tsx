@@ -165,13 +165,7 @@ export const ManageNavigation = ({
                           return (
                             <>
                               <Button
-                                disabled={item.permanentlyPinned}
-                                className={cn(
-                                  'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing',
-                                  {
-                                    'opacity-60': item.permanentlyPinned
-                                  }
-                                )}
+                                className={'w-full grow cursor-grab gap-x-2.5 rounded p-1 px-3 active:cursor-grabbing'}
                                 variant="ghost"
                                 {...attributes}
                                 {...listeners}
@@ -179,16 +173,14 @@ export const ManageNavigation = ({
                                 <Icon className="w-3.5" name="grid-dots" size={14} />
                                 <Text className="w-full text-left text-[inherit]">{item.title}</Text>
                               </Button>
-                              {!item.permanentlyPinned ? (
-                                <Button
-                                  className="text-icons-4 hover:text-icons-2 absolute right-1 top-0.5 z-20"
-                                  size="sm_icon"
-                                  variant="custom"
-                                  onClick={() => removeFromPinnedItems(item)}
-                                >
-                                  <Icon className="w-3.5" name="x-mark" size={14} />
-                                </Button>
-                              ) : null}
+                              <Button
+                                className="text-icons-4 hover:text-icons-2 absolute right-1 top-0.5 z-20"
+                                size="sm_icon"
+                                variant="custom"
+                                onClick={() => removeFromPinnedItems(item)}
+                              >
+                                <Icon className="w-3.5" name="x-mark" size={14} />
+                              </Button>
                             </>
                           )
                         }}

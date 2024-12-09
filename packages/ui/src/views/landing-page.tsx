@@ -10,6 +10,7 @@ import {
   Text
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
+import { ButtonGroup } from 'dist/components'
 
 interface TypesSpace {
   created?: number
@@ -47,7 +48,7 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
               )}
             </Text>
           </div>
-          <div className="mt-4">
+          <ButtonGroup>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="default" size={'lg'}>
@@ -71,7 +72,16 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                navigate('/create')
+              }}
+            >
+              {t('views:landingPage.createProject', 'Create Project')}
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
     </SandboxLayout.Main>

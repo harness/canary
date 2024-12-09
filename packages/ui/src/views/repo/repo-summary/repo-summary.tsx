@@ -18,8 +18,8 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelector, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
 import SummaryPanel from './components/summary-panel'

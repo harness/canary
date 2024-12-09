@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { DraggableAttributes } from '@dnd-kit/core'
 import { SyntheticListenerMap } from '@dnd-kit/core/dist/hooks/utilities'
 import { useSortable } from '@dnd-kit/sortable'

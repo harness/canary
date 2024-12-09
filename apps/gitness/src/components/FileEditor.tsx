@@ -259,17 +259,17 @@ export const FileEditor: React.FC = () => {
               onValueChange={(value: ViewTypeValue) => setView(value)}
               value={view}
               type="single"
-              unselectable='on'
-              className='rounded-lg border border-primary/10 bg-primary-foreground p-0.5'
+              unselectable="on"
+              className="rounded-lg border border-primary/10 bg-primary-foreground p-0.5"
             >
               <ToggleGroupItem
-                value='contents'
+                value="contents"
                 className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
               >
                 Contents
               </ToggleGroupItem>
               <ToggleGroupItem
-                value='changes'
+                value="changes"
                 className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
               >
                 Changes

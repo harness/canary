@@ -16,7 +16,6 @@ import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
 import { SortableContext } from '@dnd-kit/sortable'
-import { cn } from '@utils/cn'
 
 import { DraggableItem } from './draggable-item'
 import { ManageNavigationSearch } from './manage-navigation-search'

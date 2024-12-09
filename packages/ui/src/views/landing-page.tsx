@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Button,
+  ButtonGroup,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -10,7 +11,6 @@ import {
   Text
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
-import { ButtonGroup } from 'dist/components'
 
 interface TypesSpace {
   created?: number

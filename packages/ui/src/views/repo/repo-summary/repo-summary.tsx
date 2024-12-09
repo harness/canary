@@ -56,6 +56,7 @@ export interface RepoSummaryViewProps {
     sha: string | null
   }
   saveDescription: (description: string) => void
+  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   updateRepoError?: string
   useTranslationStore: () => TranslationStore
@@ -74,6 +75,7 @@ export function RepoSummaryView({
   gitRef,
   latestCommitInfo,
   saveDescription,
+  selectBranchOrTag,
   useRepoBranchesStore,
   updateRepoError,
   isEditDialogOpen,
@@ -108,6 +110,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup>
                   <BranchSelector
+                    onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
                   />

@@ -1,10 +1,10 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery } from '@harnessio/code-service-client'
-import { RepoCommitsView } from '@harnessio/ui/views'
+import { useFindRepositoryQuery, useListBranchesQuery, useListCommitsQuery, useListTagsQuery } from '@harnessio/code-service-client'
+import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -24,8 +24,21 @@ export default function RepoCommitsPage() {
     repo_ref: repoRef,
     queryParams: { page }
   })
+  const { data: { body: tags } = {} } = useListTagsQuery({
+    repo_ref: repoRef,
+    queryParams: { page }
+  })
 
-  const { setBranchList, selectedBranchTag, setSelectedBranchTag, setSpaceIdAndRepoId } = useRepoBranchesStore()
+  const {
+    branchList,
+    tagList,
+    setBranchList,
+    setTagList,
+    selectedBranchTag,
+    setSelectedBranchTag,
+    setSelectedBranchType,
+    setSpaceIdAndRepoId
+  } = useRepoBranchesStore()
 
   useEffect(() => {
     if (branches) {
@@ -38,6 +51,19 @@ export default function RepoCommitsPage() {
     }
   }, [branches])
 
+
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
+    }
+  }, [tags])
+
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
@@ -49,6 +75,25 @@ export default function RepoCommitsPage() {
 
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          setSelectedBranchType(type)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchTag(tag)
+          setSelectedBranchType(type)
+        }
+      }
+    },
+    [repoId, spaceId, branchList, tagList]
+  )
 
   useEffect(() => {
     if (repository) {
@@ -66,6 +111,7 @@ export default function RepoCommitsPage() {
       setPage={(page: number) => setPage(page)}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
+      selectBranchOrTag={selectBranchOrTag}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
     />

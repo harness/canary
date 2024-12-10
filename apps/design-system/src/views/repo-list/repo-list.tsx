@@ -20,6 +20,8 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
       useTranslationStore={useTranslationsStore}
       isLoading={false}
       isError={false}
+      searchQuery={''}
+      setSearchQuery={noop}
       {...props}
     />
   )

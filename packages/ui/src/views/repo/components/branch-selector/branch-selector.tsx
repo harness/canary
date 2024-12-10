@@ -11,7 +11,7 @@ interface BranchSelectorProps {
   branchPrefix?: string
   buttonSize?: 'default' | 'sm'
   selectedBranch?: BranchSelectorListItem
-  onSelectBranch?: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
@@ -21,11 +21,10 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   selectedBranch,
   onSelectBranch
 }) => {
-  const { selectedBranchTag, branchList, tagList, setSelectedBranchTag, setSelectedBranchType, repoId, spaceId } =
-    useRepoBranchesStore()
+  const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
 
   const isTag = selectedBranchTag
-    ? tagList.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
+    ? tagList?.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
     : false
 
   return (
@@ -54,8 +53,6 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         tagList={tagList}
         onSelectBranch={onSelectBranch}
         selectedBranch={selectedBranch || selectedBranchTag}
-        setSelectedBranchTag={setSelectedBranchTag}
-        setSelectedBranchType={setSelectedBranchType}
         repoId={repoId}
         spaceId={spaceId}
         useTranslationStore={useTranslationStore}

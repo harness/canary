@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
   Icon,
   ListActions,
+  MarkdownViewer,
   NoData,
   SearchFiles,
   SkeletonList,
@@ -56,6 +57,7 @@ export interface RepoSummaryViewProps {
     sha: string | null
   }
   saveDescription: (description: string) => void
+  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   updateRepoError?: string
   useTranslationStore: () => TranslationStore
@@ -70,10 +72,12 @@ export function RepoSummaryView({
   repository,
   repoEntryPathToFileTypeMap,
   files,
+  decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
   gitRef,
   latestCommitInfo,
   saveDescription,
+  selectBranchOrTag,
   useRepoBranchesStore,
   updateRepoError,
   isEditDialogOpen,
@@ -108,6 +112,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup>
                   <BranchSelector
+                    onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
                   />
@@ -170,10 +175,7 @@ export function RepoSummaryView({
                 <StackedList.Field right />
               </StackedList.Item>
               <StackedList.Item disableHover>
-                {/*
-                  TODO: require moving and preparing a component from views
-                  <MarkdownViewer source={decodedReadmeContent || ''} />
-                */}
+                <MarkdownViewer source={decodedReadmeContent || ''} />
               </StackedList.Item>
             </StackedList.Root>
           </SandboxLayout.Content>

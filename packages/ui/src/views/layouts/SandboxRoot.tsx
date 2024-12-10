@@ -5,7 +5,7 @@ import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/component
 import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
-import { MenuGroupType, MenuGroupTypes, NavbarItemType } from '@components/navbar/types'
+import { MenuGroupType, MenuGroupTypes, NavbarItemType, NavState } from '@components/navbar/types'
 import { useLocationChange } from '@hooks/use-location-change'
 import { TFunction } from 'i18next'
 
@@ -20,26 +20,14 @@ interface NavLinkStorageInterface {
 
 export interface SandboxRootProps {
   currentUser: TypesUser | undefined
-  pinnedMenu: NavbarItemType[]
-  recentMenu: NavbarItemType[]
   logout?: () => void
-  setPinned: (items: NavbarItemType, pin: boolean) => void
-  setRecent: (items: NavbarItemType, remove?: boolean) => void
-  setNavLinks: (links: { pinned?: NavbarItemType[]; recent?: NavbarItemType[] }) => void
+  useNav: () => NavState
   t: TFunction
 }
 
-export const SandboxRoot = ({
-  currentUser,
-  pinnedMenu,
-  recentMenu,
-  logout,
-  setPinned,
-  setRecent,
-  setNavLinks,
-  t
-}: SandboxRootProps) => {
+export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps) => {
   const location = useLocation()
+  const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
@@ -67,7 +55,7 @@ export const SandboxRoot = ({
       const pinnedItems = pinnedMenu.filter(
         item => !pinnedMenuItemsData.some(staticPinned => staticPinned.id === item.id)
       )
-      setNavLinks({ pinned: [...pinnedMenuItemsData, ...pinnedItems] })
+      setNavLinks({ pinnedMenu: [...pinnedMenuItemsData, ...pinnedItems] })
     }
   }, [])
 
@@ -139,12 +127,9 @@ export const SandboxRoot = ({
    * Handle save recent and pinned items
    */
   const handleSave = (nextRecentItems: NavbarItemType[], nextPinnedItems: NavbarItemType[]) => {
-    console.log('nextRecentItems', nextRecentItems)
-    console.log('nextPinnedItems', nextPinnedItems)
-
     setNavLinks({
-      pinned: nextPinnedItems,
-      recent: nextRecentItems
+      pinnedMenu: nextPinnedItems,
+      recentMenu: nextRecentItems
     })
   }
 

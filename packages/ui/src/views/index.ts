@@ -20,3 +20,6 @@ export * from './repo/webhooks'
 
 //landing-page
 export * from './landing-page'
+
+// create-project-page
+export * from './create-project-page'

@@ -29,10 +29,19 @@
     "readme": "README.md",
     "openPullReq": "Requêtes de tirage ouvertes"
   },
+  "createProject": {
+    "newProject": "Créez votre nouveau projet",
+    "description": "Organisez vos dépôts, pipelines et plus encore.",
+    "projectName": "Nom du projet",
+    "projectNamePlaceholder": "Entrez le nom de votre projet",
+    "creating": "Création du projet...",
+    "create": "Créer un projet"
+  },
   "landingPage": {
     "selectProject": "Sélectionnez un projet pour commencer",
     "description": "Les projets contiennent vos dépôts et pipelines. Pour commencer à utiliser Gitness, sélectionnez un projet ou créez-en un nouveau.",
     "projectSelector": "Sélectionner un projet",
-    "noProjects": "Aucun projet disponible"
+    "noProjects": "Aucun projet disponible",
+    "createProject": "Créer un projet"
   }
 }

@@ -36,6 +36,7 @@ import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import PullRequestLayout from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
+import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
@@ -49,7 +50,7 @@ import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-import CreateProject from './pages/create-project'
+import CreateProjectV1 from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
 import RepoExecutionListPage from './pages/execution/repo-execution-list'
 import { LandingPage as LandingPageV2 } from './pages/landing-page'
@@ -148,6 +149,10 @@ export default function App() {
       element: <RootWrapper />,
       children: [
         // 🚨 Routes to fix 🚨
+        {
+          path: 'create',
+          element: <CreateProject />
+        },
         {
           path: 'repos',
           element: (
@@ -485,7 +490,7 @@ export default function App() {
             },
             {
               path: 'create',
-              element: <CreateProject />
+              element: <CreateProjectV1 />
             },
             {
               path: ':spaceId/settings',

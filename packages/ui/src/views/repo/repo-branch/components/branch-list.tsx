@@ -17,7 +17,7 @@ import {
 } from '@/components'
 import { getInitials } from '@utils/stringUtils'
 
-import { BranchListPageProps, BranchProps } from '../types'
+import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
 import { MoreActionsTooltip } from './more-actions-tooltip'
 

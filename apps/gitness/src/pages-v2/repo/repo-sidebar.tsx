@@ -40,8 +40,8 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    !selectedBranchTag && setSelectedBranchTag({ name: gitRefName || '', sha: '' })
-  }, [fullGitRef, selectedBranchTag])
+    setSelectedBranchTag({ name: gitRefName || '', sha: '' })
+  }, [fullGitRef])
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')

@@ -1,6 +1,6 @@
+import typography from '@tailwindcss/typography'
 import tailwindcssAnimate from 'tailwindcss-animate'
 import type { PluginAPI, Config as TailwindConfig } from 'tailwindcss/types/config'
-import typography from '@tailwindcss/typography'
 
 export default {
   darkMode: ['class'],

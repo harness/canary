@@ -6,6 +6,7 @@ import {
   AvatarImage,
   Badge,
   Button,
+  CommitCopyActions,
   CopyButton,
   DropdownMenu,
   DropdownMenuContent,
@@ -23,8 +24,6 @@ import {
   Text
 } from '@/components'
 import { getInitials } from '@utils/stringUtils'
-
-import { CommitCopyActions } from '@harnessio/ui/components'
 
 import { DivergenceGauge } from './divergence-gauge'
 

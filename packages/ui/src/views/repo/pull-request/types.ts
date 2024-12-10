@@ -1,5 +1,17 @@
 import { z } from 'zod'
 
+import { TranslationStore } from '../repo-list/types'
+import { CommitSelectorListItem } from './compare/components/types'
+
+export interface CommitSelectorDropdownProps {
+  selectedCommit?: CommitSelectorListItem
+  commitList: CommitSelectorListItem[]
+  onSelectCommit?: (branchTag: CommitSelectorListItem) => void
+  repoId: string
+  spaceId: string
+  useTranslationStore: () => TranslationStore
+}
+
 export interface PullRequestType {
   is_draft?: boolean
   merged?: number | null // TODO: Should merged really be all these??

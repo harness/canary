@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
+import { t } from 'i18next'
 import { useAtom } from 'jotai'
 import { compact, isEqual } from 'lodash-es'
 
@@ -20,7 +21,13 @@ import {
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
-import { BranchSelectorListItem, BranchSelectorTab, CompareFormFields, PullRequestCompare } from '@harnessio/ui/views'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitSelectorListItem,
+  CompareFormFields,
+  PullRequestCompare
+} from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -288,6 +295,20 @@ export const CreatePullRequest = () => {
       default: false
     }))
   }, [tags])
+  const [selectedCommit, setSelectedCommit] = useState<CommitSelectorListItem>({
+    title: t('views:repos.allCommits'),
+    sha: ''
+  })
+
+  const selectCommit = useCallback(
+    (commitName: CommitSelectorListItem) => {
+      const commit = commitData?.commits?.find(item => item.title === commitName.title)
+      if (commit?.title && commit?.sha) {
+        setSelectedCommit({ title: commit.title, sha: commit.sha || '' })
+      }
+    },
+    [commitData, setSelectedCommit]
+  )
 
   const selectBranchorTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
@@ -311,7 +332,7 @@ export const CreatePullRequest = () => {
         }
       }
     },
-    [branchList, tagsList]
+    [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
   )
 
   const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
@@ -330,6 +351,8 @@ export const CreatePullRequest = () => {
 
     return (
       <PullRequestCompare
+        selectedCommit={selectedCommit}
+        onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}

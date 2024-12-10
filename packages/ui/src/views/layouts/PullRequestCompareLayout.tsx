@@ -23,6 +23,7 @@ import { BranchSelector } from '@views/repo/components/branch-selector/branch-se
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
+import { CommitSelectorListItem } from '@views/repo/pull-request/compare/components/types'
 import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
@@ -39,11 +40,11 @@ import {
 } from '..'
 import { Layout } from './layout'
 
-export const formSchema = z.object({
+export const pullRequestFormSchema = z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),
   description: z.string().optional()
 })
-export type CompareFormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type CompareFormFields = z.infer<typeof pullRequestFormSchema> // Automatically generate a type from the schema
 
 export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
@@ -57,6 +58,8 @@ interface SandboxPullRequestCompareProps {
   isLoading: boolean
   isSuccess: boolean
   mergeability?: boolean
+  onSelectCommit: (commit: CommitSelectorListItem) => void
+
   selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
   commitData?: TypesCommit[]
   targetBranch: BranchSelectorListItem
@@ -68,6 +71,7 @@ interface SandboxPullRequestCompareProps {
   prBranchCombinationExists: number | null
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
+  selectedCommit: CommitSelectorListItem
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -101,7 +105,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
 
     formState: { errors, isValid }
   } = useForm<CompareFormFields>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(pullRequestFormSchema),
     mode: 'onChange',
     defaultValues: {
       title: '',
@@ -264,13 +268,13 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                   value="commits"
                   icon="tube-sign"
                   label="Commits"
-                  badgeCount={diffStats.commits !== null ? diffStats.commits : undefined}
+                  badgeCount={diffStats.commits ? diffStats.commits : undefined}
                 />
                 <TabTriggerItem
                   value="changes"
                   icon="changes"
                   label="Changes"
-                  badgeCount={diffStats.files_changed !== null ? diffStats.files_changed : undefined}
+                  badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />
               </TabsList>
               <TabsContent value="overview">

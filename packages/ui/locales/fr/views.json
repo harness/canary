@@ -13,6 +13,7 @@
     "lastCommit": "Dernier message de validation",
     "date": "Date",
     "search": "Recherche",
+    "allCommits": "Tout s'engage",
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",

@@ -58,6 +58,7 @@ export function RepoList({
     return (
       <StackedList.Root>
         <div className="flex min-h-[50vh] items-center justify-center py-20">
+          {isLoading && <SkeletonList />}
           {hasActiveFilters || query ? (
             <NoData
               iconName="no-search-magnifying-glass"

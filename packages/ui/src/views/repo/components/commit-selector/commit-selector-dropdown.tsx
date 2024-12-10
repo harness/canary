@@ -41,10 +41,10 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   // }
 
   return (
-    <DropdownMenuContent className="w-[298px] p-0" align="start">
+    <DropdownMenuContent className="p-0" align="start">
       <div className="px-3 pt-2">
         <SearchBox.Root
-          className="mt-[18px] w-full"
+          className="w-full"
           placeholder={t('views:repos.search')}
           value={searchQuery}
           handleChange={handleSearchChange}
@@ -53,7 +53,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
       </div>
 
       <div className="mt-1">
-        {commitList.length === 0 && (
+        {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
             <span className="text-14 leading-tight text-foreground-2">Nothing to show</span>
           </div>

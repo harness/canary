@@ -196,6 +196,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
           </ListActions.Left>
           <ListActions.Right>
             <Filters
+              showView={false}
               t={t}
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}

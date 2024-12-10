@@ -4,7 +4,7 @@ import { Badge, Icon } from '@/components'
 import * as StackedList from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 
-import { getPrState } from './utils'
+import { getPrState } from '../utils'
 
 const colorMapping: { [key: string]: { border: string; text: string; bg: string } } = {
   mint: { border: 'border-tag-border-mint-1', text: 'text-tag-foreground-mint-1', bg: 'bg-tag-background-mint-1' },

@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom'
 
 import { StackedList } from '@/components'
 
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '../pull-request.types'
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
 import { PullRequestListHeader } from './pull-request-list-header'
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from './types'
 
 export interface PullRequestListProps {
   pullRequests?: PullRequestType[]

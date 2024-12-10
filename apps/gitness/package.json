@@ -22,6 +22,7 @@
     "start:webpack": "webpack serve --config webpack.config.cjs"
   },
   "dependencies": {
+    "@harness/microfrontends": "^2.96.0",
     "@harnessio/canary": "workspace:*",
     "@harnessio/code-service-client": "3.2.1-beta.1",
     "@harnessio/forms": "workspace:*",

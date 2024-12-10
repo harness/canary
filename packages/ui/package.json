@@ -11,13 +11,12 @@
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
     "./tailwind.config": "./tailwind.config.js",
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/style.css"
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && pnpm build:css && pnpm extract",
+    "build": "vite build && pnpm extract",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "build:watch": "vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
@@ -32,7 +31,10 @@
     "extract": "i18next --config './i18n.config.ts'"
   },
   "types": "./dist/index.d.ts",
-  "style": "./dist/styles.css",
+  "style": "./dist/style.css",
+  "files": [
+    "dist/**.*"
+  ],
   "sideEffects": false,
   "repository": {
     "type": "git",

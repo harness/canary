@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useState } from 'react'
 
 import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
-import { debounce, noop } from 'lodash-es'
+import { debounce } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'

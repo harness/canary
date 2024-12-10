@@ -10,7 +10,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { SSEEvent } from '../../types'
-import { useRepoStore } from './stores/repo-store'
+import { useRepoStore } from './stores/repo-list-store'
 
 export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''

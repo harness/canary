@@ -1,0 +1,60 @@
+@import './css/common.css';
+@import './css/modifiers.css';
+@import './css/animations.css';
+@import './css/selection.css';
+
+/* 
+iframe {
+  display: none;
+} */
+
+/* root container */
+.PipelineGraph-RootContainer {
+  transform-origin: left top;
+  transition: scale 0.2s;
+}
+
+/* nodes container */
+.PipelineGraph-NodesContainer {
+  /* z-index: 20; */
+  position: absolute;
+  width: max-content; /* IMPORTANT: do not delete this */
+}
+
+/* lines container */
+.PipelineGraph-SvgContainer {
+  top: 0px;
+  /* z-index: 30; */
+  position: absolute;
+  pointer-events: none;
+}
+
+/* nodes */
+.delete-node-button {
+  opacity: 0;
+  display: none;
+}
+
+/* delete button >>>*/
+.leaf-node-header:hover > .delete-node-button {
+  opacity: 1;
+  display: flex !important;
+}
+.parallel-node:hover > * > .delete-node-button {
+  opacity: 1;
+  display: flex !important;
+}
+.serial-node:hover > * > .delete-node-button {
+  opacity: 1;
+  display: flex !important;
+}
+
+/* add button */
+.add-node-container .add-node-button {
+  display: none;
+  opacity: 0;
+}
+.add-node-container:hover .add-node-button {
+  display: flex !important;
+  opacity: 1;
+}

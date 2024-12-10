@@ -5,12 +5,12 @@ import { updateYamlDocAtPath } from './yaml-doc-utils'
 // TODO: split this to addToArray and insertInArray
 export function injectItemInArray(
   yaml: string,
-  injectData: { path: string; position: 'after' | 'before' | 'last' | undefined; item: unknown }
+  injectData: { path: string; position: 'after' | 'before' | 'in' | undefined; item: unknown }
 ): string {
   const { path, position, item } = injectData
 
   // if position is "last", path points to an array
-  if (position === 'last') {
+  if (position === 'in') {
     const doc = parseDocument(yaml)
 
     doc.addIn(path.split('.'), item)

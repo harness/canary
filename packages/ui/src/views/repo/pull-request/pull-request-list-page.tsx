@@ -16,8 +16,8 @@ import { debounce, noop } from 'lodash-es'
 import { useFilters, useViewManagement } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
-import { PullRequestList as PullRequestListContent } from './pull-request-list'
-import { PullRequestStore } from './types'
+import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
+import { PullRequestStore } from './pull-request.types'
 
 const BASIC_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },

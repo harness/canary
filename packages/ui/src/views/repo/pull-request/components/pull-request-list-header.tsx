@@ -3,7 +3,7 @@ import { FC } from 'react'
 import { Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from './types'
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES } from '../pull-request.types'
 
 interface PullRequestListHeaderProps {
   onOpenClick: () => void

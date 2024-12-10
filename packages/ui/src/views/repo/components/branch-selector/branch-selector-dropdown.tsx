@@ -26,8 +26,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   branchList,
   tagList = [],
   onSelectBranch,
-  setSelectedBranchTag,
-  setSelectedBranchType,
   repoId,
   spaceId,
   useTranslationStore
@@ -132,9 +130,6 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                 })}
                 onClick={() => {
                   onSelectBranch && onSelectBranch(item, activeTab)
-
-                  setSelectedBranchTag(item)
-                  setSelectedBranchType(activeTab)
                 }}
                 key={item.name}
               >

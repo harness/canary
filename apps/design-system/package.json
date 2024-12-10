@@ -9,7 +9,7 @@
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "pre-commit": "lint-staged",
-    "typecheck": "tsc"
+    "typecheck": "tsc -b"
   },
   "dependencies": {
     "@harnessio/ui": "workspace:*",

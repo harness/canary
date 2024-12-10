@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Card, Input, Text } from '@/components/'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+import { timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
@@ -11,16 +12,16 @@ import constants from './constants'
 const TextArea = ({ onChange }: { onChange: (v: string) => void }) => {
   const [val, setVal] = useState('')
 
+  useEffect(() => {
+    onChange(val)
+  }, [val])
+
   return (
     <textarea
-      className="min-h-[80px] w-full border !p-[2px]"
+      className="min-h-[80px] w-full border !p-[2px] font-sans"
       autoFocus
       value={val}
-      onChange={e => {
-        const newValue = e.target.value
-        setVal(newValue)
-        onChange(newValue)
-      }}
+      onChange={e => setVal(e.target.value)}
     />
   )
 }
@@ -83,10 +84,11 @@ const PullRequestDiffViewer = ({
   )
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
+  const [str, setStr] = useState('')
 
-  const [extend, setExtend] = useState<DiffViewProps<string>['extendData']>({
-    oldFile: { '80': { data: 'hello world!' } },
-    newFile: { '87': { data: 'line have been changed!' } }
+  const [extend, setExtend] = useState<DiffViewProps<{ info: string[]; date: number }[]>['extendData']>({
+    oldFile: {},
+    newFile: {}
   })
 
   const [
@@ -208,18 +210,14 @@ const PullRequestDiffViewer = ({
   return (
     <>
       {diffFileInstance && !renderCustomContent && (
-        <DiffView<string>
+        <DiffView<{ info: string[]; date: number }[]>
           ref={ref}
           className="bg-tr w-full text-tertiary-background"
-          //   renderWidgetLine={({ onClose }) => {
-          //     console.log('render widget')
-          //     return <></>
-          //   }}
           renderWidgetLine={({ onClose, side, lineNumber }) => {
             return (
-              <div className="absolute flex w-full flex-col border px-[4px] py-[8px]">
-                <TextArea onChange={v => (valRef.current = v)} />
-                <div className="m-[5px] mt-[0.8em] text-right">
+              <div className="flex w-full flex-col border px-[4px] py-[8px]">
+                <TextArea onChange={v => setStr(v)} />
+                <div className="m-[5px] mt-[0.8em] text-right font-sans">
                   <div className="inline-flex justify-end gap-x-[12px]">
                     <button
                       className="rounded-[4px] border !px-[12px] py-[6px]"
@@ -228,29 +226,50 @@ const PullRequestDiffViewer = ({
                         valRef.current = ''
                       }}
                     >
-                      cancel
+                      Cancel
                     </button>
                     <button
                       className="rounded-[4px] border !px-[12px] py-[6px]"
                       onClick={() => {
                         onClose()
-                        if (valRef.current) {
+                        if (str) {
                           const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
                           setExtend(prev => {
                             const res = { ...prev }
-                            res[sideKey] = {
-                              ...res[sideKey],
-                              [lineNumber]: { lineNumber, data: valRef.current }
+
+                            // Ensure the sideKey exists
+                            if (!res[sideKey]) {
+                              res[sideKey] = {}
                             }
+
+                            // Check if the lineNumber exists
+                            if (res[sideKey][lineNumber]) {
+                              // If the entry exists, add a new sibling entry
+                              res[sideKey][lineNumber].data.push({
+                                info: [str],
+                                date: Date.now()
+                              })
+                            } else {
+                              // If the entry does not exist, create a new one with an array
+                              res[sideKey][lineNumber] = {
+                                data: [
+                                  {
+                                    info: [str],
+                                    date: Date.now()
+                                  }
+                                ]
+                              }
+                            }
+
                             return res
                           })
-                          setTimeout(() => {
-                            valRef.current = ''
-                          })
+
+                          console.log(sideKey)
+                          // handleAction?.('new', str, sideKey, lineNumber, fileName)
                         }
                       }}
                     >
-                      submit
+                      Comment
                     </button>
                   </div>
                 </div>
@@ -259,28 +278,36 @@ const PullRequestDiffViewer = ({
           }}
           diffFile={diffFileInstance}
           extendData={extend}
-          renderExtendLine={({ data }) => (
-            <div className="bg-background/50 px-6 py-[6px]">
-              <Card className="rounded-md bg-transparent">
-                <div className="flex flex-col p-4">
-                  <div className="flex items-center space-x-2">
-                    <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
-                    <Text color="primary">adam </Text>
-                    <Text size={1} color="tertiaryBackground">
-                      4 hours ago
-                    </Text>
-                  </div>
-                  <Text size={2} color="primary" className="px-8 py-2">
-                    {data}
-                  </Text>
+          renderExtendLine={info => {
+            return (
+              <>
+                <div className="bg-background/50 px-6 py-[6px]">
+                  {info?.data.map((item, index) => {
+                    return (
+                      <Card key={index} className="rounded-md bg-transparent">
+                        <div className="flex flex-col p-4">
+                          <div className="flex items-center space-x-2 font-sans">
+                            <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover font-sans'></div>
+                            <Text color="primary">adam </Text>
+                            <Text size={1} color="tertiaryBackground">
+                              {timeAgo(item?.date)}
+                            </Text>
+                          </div>
+                          <Text size={2} color="primary" className="px-8 py-2 font-sans">
+                            {item.info}
+                          </Text>
+                        </div>
+                        <div className="flex items-center gap-3 border-t p-4 font-sans">
+                          <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                          <Input placeholder={'Reply here'} />
+                        </div>
+                      </Card>
+                    )
+                  })}
                 </div>
-                <div className="flex items-center gap-3 border-t p-4">
-                  <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
-                  <Input placeholder={'Reply here'} />
-                </div>
-              </Card>
-            </div>
-          )}
+              </>
+            )
+          }}
           // data={data}
           diffViewFontSize={fontsize}
           diffViewHighlight={highlight}

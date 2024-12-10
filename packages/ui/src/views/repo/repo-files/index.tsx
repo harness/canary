@@ -47,7 +47,7 @@ export const RepoFiles = ({
     if (isShowSummary && files.length && !isNewFile)
       return <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
 
-    if (isNewFile) {
+    if (isNewFile || isEditFile) {
       return children
     }
 

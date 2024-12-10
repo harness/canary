@@ -28,7 +28,7 @@
     "test:coverage": "vitest --run --coverage",
     "test:watch": "vitest",
     "test:changed": "vitest --run --changed=origin/main",
-    "typecheck": "tsc",
+    "typecheck": "tsc -b",
     "extract": "i18next --config './i18n.config.ts'"
   },
   "types": "./dist/index.d.ts",

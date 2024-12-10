@@ -14,7 +14,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import { orderSortDate, PageResponseHeader } from '../../types'
+import { orderSortDate } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
 // import CreateBranchDialog from './repo-branch-create'
@@ -22,10 +22,18 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 export function RepoBranchesListPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
-  const { setBranchesData, setDefaultBranch, setSpaceIdAndRepoId, setBranchDivergence } = useRepoBranchesStore()
+  const {
+    page,
+    setPage,
+    setBranchList,
+    setDefaultBranch,
+    setSpaceIdAndRepoId,
+    setBranchDivergence,
+    setPaginationFromHeaders
+  } = useRepoBranchesStore()
 
   const [query, _setQuery] = useDebouncedQueryState('query')
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   //   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   //   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -38,8 +46,8 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+  // const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
+  // const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateBranchDivergence } =
     useCalculateCommitDivergenceMutation(
@@ -51,12 +59,20 @@ export function RepoBranchesListPage() {
           if (data.body) {
             setBranchDivergence(data.body)
             if (branches) {
-              setBranchesData(branches, data.body, repoMetadata?.default_branch)
+              setBranchList(branches, data.body, repoMetadata?.default_branch)
             }
           }
         }
       }
     )
+
+  useEffect(() => {
+    setPaginationFromHeaders(headers)
+  }, [headers, setPaginationFromHeaders])
+
+  useEffect(() => {
+    setQueryPage(page)
+  }, [page, setPage, queryPage])
 
   useEffect(() => {
     if (branches?.length !== 0 && branches !== undefined) {
@@ -74,9 +90,9 @@ export function RepoBranchesListPage() {
 
   useEffect(() => {
     if (branches) {
-      setBranchesData(branches, branchDivergence, repoMetadata?.default_branch)
+      setBranchList(branches, branchDivergence, repoMetadata?.default_branch)
     }
-  }, [branches, repoMetadata?.default_branch, setBranchesData])
+  }, [branches, repoMetadata?.default_branch, setBranchList])
 
   useEffect(() => {
     setDefaultBranch(repoMetadata || null)
@@ -86,10 +102,6 @@ export function RepoBranchesListPage() {
     <RepoBranchListView
       isLoading={isLoading}
       useRepoBranchesStore={useRepoBranchesStore}
-      xNextPage={xNextPage}
-      xPrevPage={xPrevPage}
-      page={page}
-      setPage={setPage}
       useTranslationStore={useTranslationStore}
     />
   )

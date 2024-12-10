@@ -1,41 +1,26 @@
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
 import { Button, NoData, NoSearchResults, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
-// import { timeAgoFromISOTime } from '@/utils/time-utils'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 
 import { IBranchSelectorStore } from '../repo.types'
 import { BranchesList } from './components/branch-list'
-import { BranchStore } from './types'
 
 // import CreateBranchDialog from './repo-branch-create'
 
-// const sortOptions = [
-//   { name: 'Date', value: 'date' },
-//   { name: 'Name', value: 'name' }
-// ]
-
 interface RepoBranchListViewProps {
-  repoId: string
-  spaceId: string
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
+  useTranslationStore: () => TranslationStore
+  query: string
 }
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
-  xNextPage,
-  xPrevPage,
-  page,
-  setPage,
   useTranslationStore,
   query
 }) => {
   const { t } = useTranslationStore()
-
+  const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
   const renderListContent = () => {
-    const { repoId, spaceId, branchList, defaultBranch } = useRepoBranchesStore()
     if (isLoading && !branchList.length) return <SkeletonList />
 
     if (!branchList?.length) {
@@ -66,15 +51,6 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
         />
       )
     }
-
-    //get the data arr from behindAhead
-    // const behindAhead =
-    //   branchDivergence?.map(divergence => {
-    //     return {
-    //       behind: divergence.behind,
-    //       ahead: divergence.ahead
-    //     }
-    //   }) || []
 
     return <BranchesList defaultBranch={defaultBranch} repoId={repoId} spaceId={spaceId} branches={branchList} />
   }

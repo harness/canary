@@ -46,9 +46,6 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  // const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
-  // const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
-
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateBranchDivergence } =
     useCalculateCommitDivergenceMutation(
       {

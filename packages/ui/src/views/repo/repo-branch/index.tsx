@@ -1,5 +1,6 @@
 import { Button, NoData, NoSearchResults, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
+import { noop } from 'lodash-es'
 
 import { IBranchSelectorStore } from '../repo.types'
 import { BranchesList } from './components/branch-list'
@@ -46,6 +47,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
             label: 'Create branch',
             onClick: () => {
               //   setCreateBranchDialogOpen(true)
+              noop
             }
           }}
         />
@@ -69,6 +71,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
             variant="default"
             onClick={() => {
               //   setCreateBranchDialogOpen(true)
+              noop
             }}
           >
             Create branch

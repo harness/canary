@@ -126,12 +126,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       ) : view === 'code' ? (
         CodeView
       ) : (
-        <GitBlame
-          selectedBranch={fullGitRef || ''}
-          themeConfig={themeConfig}
-          codeContent={fileContent}
-          language={language}
-        />
+        <GitBlame themeConfig={themeConfig} codeContent={fileContent} language={language} />
       )}
     </>
   )

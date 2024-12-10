@@ -21,6 +21,7 @@ import { SandboxLayout } from '@harnessio/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../hooks/useCodePathDetails'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import {
@@ -39,10 +40,9 @@ export type ViewTypeValue = 'contents' | 'changes'
 
 export const FileEditor: React.FC = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const repoPath = `/spaces/${spaceId}/repos/${repoId}/code/${gitRef}`
-  const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
+  const { spaceId, repoId } = useParams<PathParams>()
+  const { fullGitRef, fullResourcePath } = useCodePathDetails()
+  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
   const [fileName, setFileName] = useState<string>()
   const [language, setLanguage] = useState('')
   const [originalFileContent, setOriginalFileContent] = useState('')
@@ -56,7 +56,7 @@ export const FileEditor: React.FC = () => {
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
-    queryParams: { include_commit: true, git_ref: normalizeGitRef(gitRef || '') }
+    queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
 
   const themeConfig = useMemo(
@@ -141,7 +141,7 @@ export const FileEditor: React.FC = () => {
     }
   }
   const onExitConfirm = () => {
-    const navigateTo = `/spaces/${spaceId}/repos/${repoId}/code/${gitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = `/${spaceId}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }
   const onExitCancel = () => {
@@ -153,7 +153,7 @@ export const FileEditor: React.FC = () => {
         open={isCommitDialogOpen}
         onClose={closeDialog}
         commitAction={commitAction}
-        gitRef={gitRef || ''}
+        gitRef={fullGitRef || ''}
         oldResourcePath={commitAction === GitCommitAction.MOVE ? fullResourcePath : undefined}
         resourcePath={fileResourcePath || ''}
         payload={content}
@@ -161,11 +161,11 @@ export const FileEditor: React.FC = () => {
         onSuccess={(_commitInfo, isNewBranch, newBranchName, fileName) => {
           if (!isNewBranch) {
             navigate(
-              `/spaces/${spaceId}/repos/${repoId}/code/${gitRef}/~/${isNew ? fileResourcePath + fileName : fileResourcePath}`
+              `/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${isNew ? fileResourcePath + fileName : fileResourcePath}`
             )
           } else {
             navigate(
-              `/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
+              `/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
             )
           }
         }}
@@ -173,138 +173,132 @@ export const FileEditor: React.FC = () => {
         isNew={!!isNew}
       />
       <ExitConfirmDialog onCancel={onExitCancel} onConfirm={onExitConfirm} open={isExitConfirmOpen} />
-      <SandboxLayout.Main fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
-        <SandboxLayout.Content>
-          <ListActions.Root>
-            <ListActions.Left>
-              <ButtonGroup.Root spacing="2">
-                <BreadcrumbItem>
-                  <BreadcrumbLink asChild>
-                    <Link to={repoPath}>
-                      <Text size={2} color="tertiaryBackground" className="hover:text-foreground">
-                        {repoId}
-                      </Text>
-                    </Link>
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <Text size={2} color="tertiaryBackground" className="pt-2">
-                  /
-                </Text>
-                {pathParts?.map((path: PathParts, index: number) => {
-                  return (
-                    <>
-                      <BreadcrumbItem>
-                        <BreadcrumbLink asChild>
-                          <Link to={repoPath + '/~/' + path.parentPath}>
-                            <Text
-                              size={2}
-                              color="tertiaryBackground"
-                              className={cn('hover:text-foreground', {
-                                'text-primary': index === pathParts?.length - 1
-                              })}
-                            >
-                              {path.path}
-                            </Text>
-                          </Link>
-                        </BreadcrumbLink>
-                      </BreadcrumbItem>
-                      <Text size={2} color="tertiaryBackground" className="pt-2">
-                        /
-                      </Text>
-                    </>
-                  )
-                })}
-                <BreadcrumbItem>
-                  <Input
-                    id="fileName"
-                    value={fileName}
-                    size={20}
-                    onInput={(event: ChangeEvent<HTMLInputElement>) => {
-                      setFileName(event.currentTarget.value)
-                    }}
-                    ref={_ref => (inputRef.current = _ref)}
-                    onBlur={rebuildPaths}
-                    onFocus={({ target }) => {
-                      const value = (parentPath ? parentPath + FILE_SEPERATOR : '') + fileName
-                      setFileName(value)
-                      setParentPath('')
-                      setTimeout(() => {
-                        target.setSelectionRange(value.length, value.length)
-                        target.scrollLeft = Number.MAX_SAFE_INTEGER
-                      }, 0)
-                    }}
-                    placeholder="Name your file..."
-                  />
-                </BreadcrumbItem>
-              </ButtonGroup.Root>
-            </ListActions.Left>
-            <ListActions.Right>
-              <Button variant="default" size="sm" onClick={() => setIsCommitDialogOpen(true)}>
-                Commit Changes
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  handleCancelFileEdit()
-                }}
-              >
-                Cancel
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-          <Spacer size={5} />
-          <StackedList.Root onlyTopRounded borderBackground>
-            <StackedList.Item disableHover isHeader className="px-3 py-2.5">
-              <ToggleGroup
-                onValueChange={(value: ViewTypeValue) => {
-                  if (value) {
-                    setView(value)
-                  }
-                }}
-                value={view}
-                type="single"
-                unselectable={'on'}
-                className={'rounded-lg border border-primary/10 bg-primary-foreground p-0.5'}
-              >
-                <ToggleGroupItem
-                  value={'contents'}
-                  className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
-                >
-                  Contents
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  value={'changes'}
-                  className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
-                >
-                  Changes
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </StackedList.Item>
-          </StackedList.Root>
-          {view === 'contents' ? (
-            <CodeEditor
-              language={language}
-              codeRevision={{ code: content }}
-              onCodeRevisionChange={value => setContent(value?.code || '')}
-              themeConfig={themeConfig}
-              options={{
-                readOnly: false
+      <SandboxLayout.Content>
+        <ListActions.Root>
+          <ListActions.Left>
+            <ButtonGroup.Root spacing="2">
+              <BreadcrumbItem>
+                <BreadcrumbLink asChild>
+                  <Link to={repoPath}>
+                    <Text size={2} color="tertiaryBackground" className="hover:text-foreground">
+                      {repoId}
+                    </Text>
+                  </Link>
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <Text size={2} color="tertiaryBackground" className="pt-2">
+                /
+              </Text>
+              {pathParts?.map((path: PathParts, index: number) => {
+                return (
+                  <>
+                    <BreadcrumbItem>
+                      <BreadcrumbLink asChild>
+                        <Link to={repoPath + '/~/' + path.parentPath}>
+                          <Text
+                            size={2}
+                            color="tertiaryBackground"
+                            className={cn('hover:text-foreground', {
+                              'text-primary': index === pathParts?.length - 1
+                            })}
+                          >
+                            {path.path}
+                          </Text>
+                        </Link>
+                      </BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <Text size={2} color="tertiaryBackground" className="pt-2">
+                      /
+                    </Text>
+                  </>
+                )
+              })}
+              <BreadcrumbItem>
+                <Input
+                  id="fileName"
+                  value={fileName}
+                  size={20}
+                  onInput={(event: ChangeEvent<HTMLInputElement>) => {
+                    setFileName(event.currentTarget.value)
+                  }}
+                  ref={_ref => (inputRef.current = _ref)}
+                  onBlur={rebuildPaths}
+                  onFocus={({ target }) => {
+                    const value = (parentPath ? parentPath + FILE_SEPERATOR : '') + fileName
+                    setFileName(value)
+                    setParentPath('')
+                    setTimeout(() => {
+                      target.setSelectionRange(value.length, value.length)
+                      target.scrollLeft = Number.MAX_SAFE_INTEGER
+                    }, 0)
+                  }}
+                  placeholder="Name your file..."
+                />
+              </BreadcrumbItem>
+            </ButtonGroup.Root>
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button variant="default" size="sm" onClick={() => setIsCommitDialogOpen(true)}>
+              Commit Changes
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => {
+                handleCancelFileEdit()
               }}
-            />
-          ) : (
-            <CodeDiffEditor
-              language={language}
-              original={originalFileContent}
-              modified={content}
-              themeConfig={themeConfig}
-              options={{
-                readOnly: true
-              }}
-            />
-          )}
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
+            >
+              Cancel
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={5} />
+        <StackedList.Root onlyTopRounded borderBackground>
+          <StackedList.Item disableHover isHeader className="px-3 py-2.5">
+            <ToggleGroup
+              onValueChange={(value: ViewTypeValue) => setView(value)}
+              value={view}
+              type="single"
+              unselectable="on"
+              className="rounded-lg border border-primary/10 bg-primary-foreground p-0.5"
+            >
+              <ToggleGroupItem
+                value="contents"
+                className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
+              >
+                Contents
+              </ToggleGroupItem>
+              <ToggleGroupItem
+                value="changes"
+                className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
+              >
+                Changes
+              </ToggleGroupItem>
+            </ToggleGroup>
+          </StackedList.Item>
+        </StackedList.Root>
+        {view === 'contents' ? (
+          <CodeEditor
+            language={language}
+            codeRevision={{ code: content }}
+            onCodeRevisionChange={value => setContent(value?.code || '')}
+            themeConfig={themeConfig}
+            options={{
+              readOnly: false
+            }}
+          />
+        ) : (
+          <CodeDiffEditor
+            language={language}
+            original={originalFileContent}
+            modified={content}
+            themeConfig={themeConfig}
+            options={{
+              readOnly: true
+            }}
+          />
+        )}
+      </SandboxLayout.Content>
     </>
   )
 }

@@ -12,6 +12,7 @@ import {
 import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
+import { FileEditor } from '../../components/FileEditor'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails, { CodeModes } from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -84,8 +85,8 @@ export const RepoCode = () => {
   }
 
   useEffect(() => {
-    setLoading(true)
     if (repoEntryPathToFileTypeMap.size > 0) {
+      setLoading(true)
       pathDetails({
         queryParams: { git_ref: normalizeGitRef(fullGitRef || '') },
         body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
@@ -148,12 +149,9 @@ export const RepoCode = () => {
   const renderCodeView = () => {
     if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
       return <FileContentViewer repoContent={repoDetails} />
-    } else if (codeMode === CodeModes.EDIT) {
-      // TODO: should render FileEditor
-      return <></>
-    } else if (codeMode === CodeModes.NEW) {
-      // TODO: should render FileEditor with view for new file : empty filename + action to commit on top
-      return <></>
+    } else if (codeMode === CodeModes.EDIT || codeMode === CodeModes.NEW) {
+      // TODO: should render FileEditor from v2
+      return <FileEditor />
     }
   }
 

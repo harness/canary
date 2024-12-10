@@ -11,7 +11,7 @@
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
     "./tailwind.config": "./tailwind.config.js",
-    "./styles.css": "./dist/style.css"
+    "./styles.css": "./dist/styles.css"
   },
   "scripts": {
     "dev": "vite",
@@ -31,7 +31,7 @@
     "extract": "i18next --config './i18n.config.ts'"
   },
   "types": "./dist/index.d.ts",
-  "style": "./dist/style.css",
+  "style": "./dist/styles.css",
   "files": [
     "dist/**.*"
   ],

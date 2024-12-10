@@ -1,4 +1,4 @@
-// import './styles.css'
+import './styles.css'
 
 import * as locales from '../locales'
 import * as components from './components'

@@ -30,7 +30,16 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: external
+      external: external,
+      output: {
+        assetFileNames: chunkInfo => {
+          if (chunkInfo.name === 'style.css') {
+            return 'styles.css'
+          }
+
+          return chunkInfo.name as string
+        }
+      }
     },
     sourcemap: true
   },

@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Button,
+  ButtonGroup,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -47,7 +48,7 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
               )}
             </Text>
           </div>
-          <div className="mt-4">
+          <ButtonGroup>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="default" size={'lg'}>
@@ -71,7 +72,16 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
                 )}
               </DropdownMenuContent>
             </DropdownMenu>
-          </div>
+            <Button
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                navigate('/create')
+              }}
+            >
+              {t('views:landingPage.createProject', 'Create Project')}
+            </Button>
+          </ButtonGroup>
         </div>
       </div>
     </SandboxLayout.Main>

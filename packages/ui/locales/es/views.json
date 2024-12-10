@@ -29,10 +29,19 @@
     "readme": "README.md",
     "openPullReq": "Open pull requests"
   },
+  "createProject": {
+    "newProject": "Create your new project",
+    "description": "Organize your repositories, pipelines and more.",
+    "projectName": "Project name",
+    "projectNamePlaceholder": "Enter your project name",
+    "creating": "Creating project...",
+    "create": "Create project"
+  },
   "landingPage": {
     "selectProject": "Select a project to get started",
     "description": "Projects contain your repositories and pipelines. To start using Gitness, select a project or create a new one.",
     "projectSelector": "Select Project",
-    "noProjects": "No projects available"
+    "noProjects": "No projects available",
+    "createProject": "Create Project"
   }
 }

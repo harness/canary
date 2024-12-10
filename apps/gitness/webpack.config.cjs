@@ -6,7 +6,7 @@ const { ModuleFederationPlugin } = container
 module.exports = {
   mode: 'development',
   devtool: 'cheap-module-source-map',
-  entry: './src/dummy.ts',
+  entry: './src/mfe-entry.ts',
   devServer: {
     port: 5137,
     historyApiFallback: true,

@@ -31,7 +31,7 @@
   },
   "createProject": {
     "newProject": "Create your new project",
-    "description": "Orginaze your projects, pipelines and more.",
+    "description": "Organize your repositories, pipelines and more.",
     "projectName": "Project name",
     "projectNamePlaceholder": "Enter your project name",
     "creating": "Creating project...",

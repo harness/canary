@@ -7,16 +7,16 @@ import { z } from 'zod'
 
 interface PageProps {
   isLoading?: boolean
-  onFormSubmit: (data: InputProps) => void
+  onFormSubmit: (data: CreateProjectFormFields) => void
   apiError?: string | null
   useTranslationStore: () => TranslationStore
 }
-interface InputProps {
-  identifier: string
-  description?: string
-  is_public?: boolean
-  parent_ref?: string
-}
+// interface InputProps {
+//   identifier: string
+//   description?: string
+//   is_public?: boolean
+//   parent_ref?: string
+// }
 
 const createProjectSchema = z.object({
   identifier: z.string().min(4, {
@@ -24,16 +24,18 @@ const createProjectSchema = z.object({
   })
 })
 
+export type CreateProjectFormFields = z.infer<typeof createProjectSchema>
+
 export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTranslationStore }: PageProps) {
   const {
     register,
     handleSubmit,
     formState: { errors }
-  } = useForm<InputProps>({
+  } = useForm<CreateProjectFormFields>({
     resolver: zodResolver(createProjectSchema)
   })
 
-  const onSubmit = (data: InputProps) => {
+  const onSubmit = (data: CreateProjectFormFields) => {
     onFormSubmit(data)
   }
 
@@ -52,7 +54,7 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
               </Text>
               <Spacer size={2} />
               <Text size={2} color="tertiaryBackground">
-                {t('views:createProject.description', 'Orginaze your projects, pipelines and more.')}
+                {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}{' '}
               </Text>
             </CardTitle>
           </CardHeader>

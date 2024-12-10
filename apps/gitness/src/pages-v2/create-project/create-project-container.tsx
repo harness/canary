@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { OpenapiCreateSpaceRequest, useCreateSpaceMutation } from '@harnessio/code-service-client'
-import { CreateProjectPage } from '@harnessio/ui/views'
+import { useCreateSpaceMutation } from '@harnessio/code-service-client'
+import { CreateProjectFormFields, CreateProjectPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -23,14 +23,11 @@ export default function CreateProject() {
     }
   )
 
-  const handleFormSubmit = (formData: OpenapiCreateSpaceRequest) => {
+  const handleFormSubmit = (formData: CreateProjectFormFields) => {
     // Trigger the mutation with form data as the request body
     mutate({
       body: {
-        identifier: formData.identifier || '',
-        description: formData.description || '',
-        is_public: formData.is_public ?? false,
-        parent_ref: formData.parent_ref || ''
+        identifier: formData.identifier
       }
     })
   }

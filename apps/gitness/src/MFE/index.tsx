@@ -9,7 +9,7 @@ export default function ConfigMFE() {
   return (
     <>
       <Link to="test">Test link</Link>
-      <Link to="repo-list">Repo List</Link>
+      <Link to="repos">Repo List</Link>
       <Link to="signin">Sign In</Link>
     </>
   )

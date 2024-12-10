@@ -6,6 +6,7 @@ import { TypesDiffStats } from '@/types'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@components/accordion'
 import {
   Button,
+  CopyButton,
   Icon,
   ListActions,
   NoData,
@@ -360,9 +361,14 @@ const LineTitle: React.FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ tex
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
       <Text weight="medium">{text}</Text>
-      <Button size="sm" variant="ghost">
-        <Icon name="clone" size={14} className="text-tertiary-background" />
-      </Button>
+      <button
+        onClick={e => {
+          e.stopPropagation()
+          e.preventDefault()
+        }}
+      >
+        <CopyButton name={text} />
+      </button>
     </div>
     <div className="inline-flex items-center gap-x-6">
       <div className="flex items-center gap-2">
@@ -402,7 +408,7 @@ const PullRequestAccordion: React.FC<{
                     highlight={highlight}
                     mode={diffMode}
                     wrap={wrap}
-                    addWidget
+                    addWidget={false}
                     fileName={header?.title ?? ''}
                     lang={header?.lang ?? ''}
                     isBinary={header?.isBinary}

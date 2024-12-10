@@ -12,7 +12,7 @@ export const LandingPage = () => {
   const { spaces, setSpaces } = useAppContext()
 
   useEffect(() => {
-    if (spaces.length > 0) {
+    if (spaces.length === 0) {
       membershipSpaces({
         queryParams: { page: 1, limit: 10, sort: 'identifier', order: 'asc' }
       })

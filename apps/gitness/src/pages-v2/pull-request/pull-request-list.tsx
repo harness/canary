@@ -7,7 +7,6 @@ import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-ser
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
@@ -18,12 +17,12 @@ export default function PullRequestListPage() {
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
-  const [query] = useDebouncedQueryState('query')
+  const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { data: { body: pullRequestData, headers } = {}, isLoading: fetchingPullReqData } = useListPullReqQuery(
+  const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
-      queryParams: { page, query },
+      queryParams: { page, query: query ?? '' },
       repo_ref: repoRef
     },
     { retry: false }
@@ -56,6 +55,8 @@ export default function PullRequestListPage() {
       isLoading={fetchingPullReqData}
       usePullRequestStore={usePullRequestStore}
       useTranslationStore={useTranslationStore}
+      searchQuery={query}
+      setSearchQuery={setQuery}
     />
   )
 }

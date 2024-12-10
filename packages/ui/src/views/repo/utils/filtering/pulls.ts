@@ -1,6 +1,6 @@
 import { FilterValue } from '@components/filters/types'
 
-import { PullRequestType } from '../../pull-request/types'
+import { PullRequestType } from '../../pull-request/pull-request.types'
 
 export const filterPullRequests = (
   pullRequests: PullRequestType[] | null,

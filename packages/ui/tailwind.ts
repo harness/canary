@@ -231,7 +231,8 @@ export default {
           danger: 'hsl(var(--canary-icon-danger))',
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
-          accent: 'hsl(var(--canary-icon-accent))'
+          accent: 'hsl(var(--canary-icon-accent))',
+          merged: 'hsl(var(--canary-icon-merged))'
         }
       },
       letterSpacing: {

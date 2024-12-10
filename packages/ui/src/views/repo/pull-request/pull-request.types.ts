@@ -1,5 +1,10 @@
 import { z } from 'zod'
 
+export enum PULL_REQUEST_LIST_HEADER_FILTER_STATES {
+  OPEN = 'open',
+  CLOSED = 'closed'
+}
+
 export interface PullRequestType {
   is_draft?: boolean
   merged?: number | null // TODO: Should merged really be all these??

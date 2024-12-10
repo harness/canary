@@ -74,11 +74,11 @@ const SortableItem = memo<SortableItemProps>(
       <div
         ref={setNodeRef}
         style={{ transform: CSS.Transform.toString(transform), transition }}
-        className="flex items-center gap-x-2 p-2 hover:bg-background-4 rounded"
+        className="flex items-center gap-x-2 rounded p-2 hover:bg-background-4"
       >
-        <div className="cursor-move group" {...attributes} {...listeners}>
+        <div className="group cursor-move" {...attributes} {...listeners}>
           <Icon
-            className="text-icons-4 group-hover:text-icons-2 transition-colors duration-200"
+            className="text-icons-4 transition-colors duration-200 group-hover:text-icons-2"
             name="grid-dots"
             size={14}
           />
@@ -181,7 +181,7 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
           <AlertDialogTitle>Manage saved filters</AlertDialogTitle>
         </AlertDialogHeader>
 
-        <div className="-mx-3.5 space-y-0.5 max-h-[320px] overflow-y-auto">
+        <div className="-mx-3.5 max-h-[320px] space-y-0.5 overflow-y-auto">
           <DndContext onDragEnd={handleDragEnd}>
             <SortableContext
               items={localViews.map((_, index) => getItemId(index))}

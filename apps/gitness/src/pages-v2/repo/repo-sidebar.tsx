@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -23,7 +23,16 @@ import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
-  const { selectedBranchTag, setSelectedBranchTag, selectedBranchType, setSpaceIdAndRepoId } = useRepoBranchesStore()
+  const {
+    branchList,
+    tagList,
+    setBranchList,
+    setTagList,
+    selectedBranchTag,
+    setSelectedBranchTag,
+    setSelectedBranchType,
+    setSpaceIdAndRepoId
+  } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -31,16 +40,39 @@ export const RepoSidebar = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    !selectedBranchTag && setSelectedBranchTag({ name: fullGitRef || '', sha: '' })
-  }, [fullGitRef, selectedBranchTag])
+    setSelectedBranchTag({ name: gitRefName || '', sha: '' })
+  }, [fullGitRef])
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
-  const { data: repository } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
-  const { data: branches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      order: 'asc',
+      limit: 20,
+      page: 1,
+      query: ''
+    }
+  })
+  useEffect(() => {
+    if (branches) {
+      setBranchList(
+        branches.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: item?.name === repository?.default_branch
+        }))
+      )
+    }
+  }, [branches, repository?.default_branch])
+
+  const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -52,40 +84,20 @@ export const RepoSidebar = () => {
     }
   })
 
-  const branchList: BranchSelectorListItem[] = useMemo(() => {
-    if (!branches?.body) return []
-
-    return branches.body.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: item?.name === repository?.body?.default_branch
-    }))
-  }, [branches, repository?.body?.default_branch])
-
-  const { data: tags } = useListTagsQuery({
-    repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: ''
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
     }
-  })
-
-  const tagsList: BranchSelectorListItem[] = useMemo(() => {
-    if (!tags?.body) return []
-
-    return tags.body.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: false
-    }))
   }, [tags])
 
   useEffect(() => {
-    if (!repository?.body?.default_branch || !branchList.length) {
+    if (!repository?.default_branch || !branchList.length) {
       return
     }
     if (!fullGitRef) {
@@ -95,14 +107,14 @@ export const RepoSidebar = () => {
       }
     } else {
       const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
-      const selectedGitRefTag = tagsList.find(tag => tag.name === gitRefName)
+      const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
         setSelectedBranchTag(selectedGitRefBranch)
       } else if (selectedGitRefTag) {
         setSelectedBranchTag(selectedGitRefTag)
       }
     }
-  }, [repository?.body?.default_branch, fullGitRef, branchList, tagsList])
+  }, [repository?.default_branch, fullGitRef, branchList, tagList])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -120,21 +132,26 @@ export const RepoSidebar = () => {
 
   const filesList = filesData?.body?.files || []
 
-  useEffect(() => {
-    if (selectedBranchType === BranchSelectorTab.BRANCHES) {
-      const branch = branchList?.find(branch => branch.name === selectedBranchTag.name)
-      if (branch) {
-        setSelectedBranchTag(branch)
-        navigate(`${branch.name}`)
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          setSelectedBranchType(type)
+          navigate(`${branch.name}`)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchTag(tag)
+          setSelectedBranchType(type)
+          navigate(`${REFS_TAGS_PREFIX + tag.name}`)
+        }
       }
-    } else if (selectedBranchType === BranchSelectorTab.TAGS) {
-      const tag = tagsList?.find(tag => tag.name === selectedBranchTag.name)
-      if (tag) {
-        setSelectedBranchTag(tag)
-        navigate(`${REFS_TAGS_PREFIX + tag.name}`)
-      }
-    }
-  }, [navigate, branchList, tagsList, selectedBranchTag, selectedBranchType])
+    },
+    [navigate, repoId, spaceId, branchList, tagList]
+  )
 
   const navigateToNewFile = useCallback(() => {
     if (fullResourcePath) {
@@ -173,6 +190,7 @@ export const RepoSidebar = () => {
       <RepoSidebarView
         hasHeader
         hasSubHeader
+        selectBranchOrTag={selectBranchOrTag}
         useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationStore}
         navigateToNewFile={navigateToNewFile}

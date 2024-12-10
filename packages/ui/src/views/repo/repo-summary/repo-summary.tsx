@@ -19,8 +19,8 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, Summary } from '@/views/repo/components'
+import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
 import SummaryPanel from './components/summary-panel'
@@ -57,6 +57,7 @@ export interface RepoSummaryViewProps {
     sha: string | null
   }
   saveDescription: (description: string) => void
+  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   updateRepoError?: string
   useTranslationStore: () => TranslationStore
@@ -76,6 +77,7 @@ export function RepoSummaryView({
   gitRef,
   latestCommitInfo,
   saveDescription,
+  selectBranchOrTag,
   useRepoBranchesStore,
   updateRepoError,
   isEditDialogOpen,
@@ -110,6 +112,7 @@ export function RepoSummaryView({
               <ListActions.Left>
                 <ButtonGroup>
                   <BranchSelector
+                    onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
                   />

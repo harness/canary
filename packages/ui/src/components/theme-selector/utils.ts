@@ -1,6 +1,4 @@
-import { FullTheme } from 'dist/components'
-
-import { ColorType, ContrastType, ModeType } from './types'
+import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function getModeColorContrastFromFullTheme(theme?: FullTheme) {
   if (theme) {

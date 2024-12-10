@@ -11,20 +11,7 @@ const RootWrapper = () => {
   const navigate = useNavigate()
   const { t } = useTranslation()
 
-  const { recent, pinned, setRecent, setPinned, setNavLinks } = useNav()
-
-  return (
-    <SandboxRoot
-      t={t}
-      currentUser={currentUser}
-      pinnedMenu={pinned}
-      recentMenu={recent}
-      setPinned={setPinned}
-      setRecent={setRecent}
-      setNavLinks={setNavLinks}
-      logout={() => navigate('/logout')}
-    />
-  )
+  return <SandboxRoot t={t} currentUser={currentUser} useNav={useNav} logout={() => navigate('/logout')} />
 }
 
 export default RootWrapper

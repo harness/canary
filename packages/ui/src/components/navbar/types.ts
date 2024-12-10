@@ -39,4 +39,12 @@ interface UserMenuItemType {
   isSeparated: boolean
 }
 
-export type { MenuGroupType, NavbarItemType, UserMenuItemType, NavbarItemIdType }
+interface NavState {
+  pinnedMenu: NavbarItemType[]
+  recentMenu: NavbarItemType[]
+  setPinned: (items: NavbarItemType, pin: boolean) => void
+  setRecent: (items: NavbarItemType, remove?: boolean) => void
+  setNavLinks: (links: { pinnedMenu?: NavbarItemType[]; recentMenu?: NavbarItemType[] }) => void
+}
+
+export type { MenuGroupType, NavbarItemType, UserMenuItemType, NavbarItemIdType, NavState }

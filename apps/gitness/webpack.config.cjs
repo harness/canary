@@ -39,9 +39,7 @@ module.exports = {
       name: 'gitness',
       filename: 'remoteEntry.js',
       exposes: {
-        // './PipelineList': './src/pages/pipeline/repo-pipeline-list.tsx',
-        './Button': './src/components/exportComponents/Button.tsx',
-        './MicroFrontendApp': './src/AppMFE.tsx'
+        './MicroFrontendApp': './src/App.tsx'
       },
       shared: {
         react: {

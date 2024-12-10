@@ -287,7 +287,7 @@ const PullRequestDiffViewer = ({
                       <Card key={index} className="rounded-md bg-transparent">
                         <div className="flex flex-col p-4">
                           <div className="flex items-center space-x-2 font-sans">
-                            <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover font-sans'></div>
+                            <div className="size-6 rounded-full bg-tertiary-background bg-cover font-sans"></div>
                             <Text color="primary">adam </Text>
                             <Text size={1} color="tertiaryBackground">
                               {timeAgo(item?.date)}
@@ -298,7 +298,7 @@ const PullRequestDiffViewer = ({
                           </Text>
                         </div>
                         <div className="flex items-center gap-3 border-t p-4 font-sans">
-                          <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                          <div className="size-6 rounded-full bg-tertiary-background bg-cover"></div>
                           <Input placeholder={'Reply here'} />
                         </div>
                       </Card>

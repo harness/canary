@@ -5,6 +5,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
+import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -68,14 +69,19 @@ export default function ReposListPage() {
   })
 
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-    />
+    <>
+      <div className="fixed top-0 z-30 ml-56 w-full bg-background-1">
+        <Breadcrumbs />
+      </div>
+      <SandboxRepoListPage
+        useRepoStore={useRepoStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+      />
+    </>
   )
 }

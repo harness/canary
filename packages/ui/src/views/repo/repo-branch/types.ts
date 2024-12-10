@@ -47,9 +47,10 @@ export interface RepoBranchListViewProps {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  query?: string
   isCreateBranchDialogOpen: boolean
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   onSubmit: (formValues: CreateBranchFormFields) => void
   isCreatingBranch: boolean
+  searchQuery: string | null
+  setSearchQuery: (query: string | null) => void
 }

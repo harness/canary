@@ -1,6 +1,8 @@
-import { Button, NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { ChangeEvent, useCallback, useState } from 'react'
+
+import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
-import { noop } from 'lodash-es'
+import { debounce, noop } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
@@ -10,19 +12,31 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
-  query,
   isCreateBranchDialogOpen,
   setCreateBranchDialogOpen,
   onSubmit,
-  isCreatingBranch
+  isCreatingBranch,
+  searchQuery,
+  setSearchQuery
 }) => {
   const { t } = useTranslationStore()
   const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
+  const [searchInput, setSearchInput] = useState(searchQuery)
+
+  const debouncedSetSearchQuery = debounce(searchQuery => {
+    setSearchQuery(searchQuery || null)
+  }, 300)
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+    debouncedSetSearchQuery(e.target.value)
+  }, [])
+
   const renderListContent = () => {
     if (isLoading && !branchList.length) return <SkeletonList />
 
     if (!branchList?.length) {
-      if (query) {
+      if (searchQuery) {
         return (
           <NoData
             iconName="no-search-magnifying-glass"
@@ -33,7 +47,10 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
             ]}
             primaryButton={{
               label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: noop /*setQuery('')*/
+              onClick: () => {
+                setSearchInput('')
+                setSearchQuery(null)
+              }
             }}
           />
         )
@@ -75,17 +92,28 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
           {t('views:repos.branches', 'Branches')}
         </Text>
         <Spacer size={6} />
-        <div className="flex items-center justify-between gap-5">
-          <div className="flex-1">{/* <Filter sortOptions={sortOptions} /> */}</div>
-          <Button
-            variant="default"
-            onClick={() => {
-              setCreateBranchDialogOpen(true)
-            }}
-          >
-            {t('views:repos.createBranch', 'Create branch')}
-          </Button>
-        </div>
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput || ''}
+              handleChange={handleInputChange}
+              placeholder={t('views:repos.search')}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button
+              variant="default"
+              onClick={() => {
+                setCreateBranchDialogOpen(true)
+              }}
+            >
+              {t('views:repos.createBranch', 'Create branch')}
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />

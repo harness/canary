@@ -55,13 +55,13 @@
     "createProject": "Créer un projet"
   },
   "noData": {
-    "noResults": "No search results",
-    "checkSpelling": "Check your spelling and filter options,",
-    "changeSearch": "or search for a different keyword.",
-    "clearSearch": "Clear search",
-    "noBranches": "No branches yet",
-    "createBranchDescription": "Your branches will appear here once they're created.",
-    "startBranchDescription": "Start branching to see your work organized.",
-    "createBranch": "Create branch"
+    "noResults": "Aucun résultat de recherche",
+    "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
+    "changeSearch": "ou recherchez un autre mot-clé.",
+    "clearSearch": "Effacer la recherche",
+    "noBranches": "Pas encore de branches",
+    "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
+    "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
+    "createBranch": "Créer une branche"
   }
 }

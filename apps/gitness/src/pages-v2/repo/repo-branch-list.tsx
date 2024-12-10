@@ -13,7 +13,6 @@ import {
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-// import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'

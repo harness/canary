@@ -39,7 +39,11 @@ export default function RepoSummaryPage() {
 
   const {
     branchList,
+<<<<<<< HEAD
     tagList,
+=======
+    // defaultBranch,
+>>>>>>> 186006d0 (feat: fix minor issues in repo-summary)
     setBranchList,
     setTagList,
     setSpaceIdAndRepoId,

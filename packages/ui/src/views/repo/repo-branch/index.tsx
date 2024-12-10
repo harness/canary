@@ -10,7 +10,7 @@ interface RepoBranchListViewProps {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  query: string
+  query?: string
 }
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,

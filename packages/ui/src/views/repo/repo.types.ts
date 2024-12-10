@@ -66,6 +66,7 @@ export interface BranchData {
   name: string
   sha: string
   timestamp: string
+  default: boolean
   user: {
     name: string
     avatarUrl: string

@@ -69,6 +69,7 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
           name: branch.name || '',
           sha: branch.commit?.sha || '',
           timestamp: branch.commit?.committer?.when ? timeAgoFromISOTime(branch.commit.committer.when) : '',
+          default: branch.is_default || false,
           user: {
             name: branch.commit?.committer?.identity?.name || '',
             avatarUrl: ''

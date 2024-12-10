@@ -57,6 +57,7 @@
     "projectSelector": "Sélectionner un projet",
     "noProjects": "Aucun projet disponible",
     "createProject": "Créer un projet"
+<<<<<<< HEAD
   },
   "forms": {
     "enterBranchName": "Enter branch name",
@@ -74,5 +75,7 @@
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
     "createBranch": "Créer une branche"
+=======
+>>>>>>> d756bef0 (Removed unused files)
   }
 }

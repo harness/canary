@@ -39,7 +39,7 @@ module.exports = {
       name: 'gitness',
       filename: 'remoteEntry.js',
       exposes: {
-        './MicroFrontendApp': './src/App.tsx'
+        './MicroFrontendApp': './src/AppMFE.tsx'
       },
       shared: {
         react: {

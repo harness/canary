@@ -40,6 +40,7 @@ import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
@@ -71,7 +72,7 @@ import PullRequestChangesPage from './pages/pull-request/pull-request-changes-pa
 import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
 import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
-import { RepoBranchesListPage } from './pages/repo/repo-branch-list'
+import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
 import RepoCommitsPageV1 from './pages/repo/repo-commits'
 import { CreateRepoV1 } from './pages/repo/repo-create-page'
@@ -208,6 +209,10 @@ export default function App() {
             {
               path: 'commits',
               element: <RepoCommitsPage />
+            },
+            {
+              path: 'branches',
+              element: <RepoBranchesListPage />
             },
             {
               path: 'code',
@@ -429,7 +434,7 @@ export default function App() {
                 },
                 {
                   path: 'branches',
-                  element: <RepoBranchesListPage />
+                  element: <RepoBranchesListPageV1 />
                 },
                 {
                   path: 'settings',

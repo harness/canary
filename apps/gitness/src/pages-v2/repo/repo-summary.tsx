@@ -39,7 +39,9 @@ export default function RepoSummaryPage() {
 
   const {
     branchList,
+
     tagList,
+
     setBranchList,
     setTagList,
     setSpaceIdAndRepoId,

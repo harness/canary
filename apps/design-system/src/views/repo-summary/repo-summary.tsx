@@ -16,11 +16,15 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
     (): IBranchSelectorStore => ({
       ...repoSummaryProps,
       selectedBranchType: BranchSelectorTab.BRANCHES,
-      setBranchList: noop,
       setSelectedBranchTag: noop,
       setSelectedBranchType: noop,
-      setTagList: noop,
-      setSpaceIdAndRepoId: noop
+      xNextPage: 0,
+      xPrevPage: 0,
+      page: 1,
+      setPage: noop,
+      defaultBranch: '',
+      branchDivergence: [],
+      branchList: []
     }),
     []
   )

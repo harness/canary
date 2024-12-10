@@ -61,7 +61,7 @@ export interface RepositoryType {
   importing?: boolean
 }
 
-interface BranchData {
+export interface BranchData {
   id: number
   name: string
   sha: string
@@ -80,11 +80,11 @@ interface BranchData {
 export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
 
 export type CommitDivergenceType = {
-  ahead: number
-  behind: number
+  ahead?: number
+  behind?: number
 }
 export interface IBranchSelectorStore {
-  // states
+  // state
   selectedBranchTag: BranchSelectorListItem
   selectedBranchType: BranchSelectorTab
   branchList: BranchData[]
@@ -93,15 +93,12 @@ export interface IBranchSelectorStore {
   repoId: string
   defaultBranch: string
   branchDivergence: CommitDivergenceType[]
+  xNextPage: number
+  xPrevPage: number
+  page: number
 
-  //actions
+  // actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
-
   setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
-
-  setBranchList: (branchList?: BranchData[]) => void
-
-  setTagList: (tagList: BranchSelectorListItem[]) => void
-
-  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => void
+  setPage: (page: number) => void
 }

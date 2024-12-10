@@ -1,0 +1,11 @@
+.leaf-node .selected {
+  background-color: #333 !important;
+}
+
+.serial-node .selected {
+  background-color: #333 !important;
+}
+
+.parallel-node .selected {
+  background-color: #333 !important;
+}

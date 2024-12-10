@@ -45,7 +45,7 @@ interface PipelineStudioDataContextProps {
   setFormStep: (data: StepType | null) => void
   fetchPipelineFileContent: (branch: string) => void
   requestYamlModifications: {
-    injectInArray: (props: { path: string; position: 'last' | 'after' | 'before' | undefined; item: unknown }) => void
+    injectInArray: (props: { path: string; position: 'in' | 'after' | 'before' | undefined; item: unknown }) => void
     updateInArray: (props: { path: string; item: unknown }) => void
     deleteInArray: (props: { path: string }) => void
   }
@@ -64,7 +64,7 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
   requestYamlModifications: {
     injectInArray: (_props: {
       path: string
-      position: 'last' | 'after' | 'after' | 'before' | undefined
+      position: 'in' | 'after' | 'after' | 'before' | undefined
       item: unknown
     }) => undefined,
     updateInArray: (_props: { path: string; item: unknown }) => undefined,
@@ -119,7 +119,7 @@ const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
   const setFormStep = useCallback((formStep: StepType | null) => dispatch(updateState({ formStep })), [])
 
   const injectInArray = useCallback(
-    (injectData: { path: string; position: 'after' | 'before' | 'last' | undefined; item: unknown }) => {
+    (injectData: { path: string; position: 'after' | 'before' | 'in' | undefined; item: unknown }) => {
       dispatch(injectInArrayAction({ injectData }))
     },
     []

@@ -27,7 +27,7 @@ export const setYamlRevisionAction = ({
 export const injectInArrayAction = ({
   injectData
 }: {
-  injectData: { path: string; position: 'after' | 'before' | 'last' | undefined; item: unknown }
+  injectData: { path: string; position: 'after' | 'before' | 'in' | undefined; item: unknown }
 }): ((dispatch: DispatchFunc<DataReducerState, DataActions>, getState: () => DataReducerState) => Promise<void>) => {
   return async (dispatch, getState) => {
     const yaml = injectItemInArray(getState().yamlRevision.yaml, injectData)

@@ -3,7 +3,7 @@ import { SelectorType, type InlineAction, type PathSelector } from '@harnessio/y
 export type InlineActionArgsType = {
   entityType: 'stages' | 'stage' | 'step' | 'inputs' | 'input' | 'group'
   action: 'edit' | 'delete' | 'add' | 'manage'
-  position?: 'last' | 'after' | 'before'
+  position?: 'in' | 'after' | 'before'
 }
 
 export const getInlineActionConfig = (
@@ -21,7 +21,7 @@ export const getInlineActionConfig = (
         data: {
           action: 'add',
           entityType: 'step',
-          position: 'last'
+          position: 'in'
         }
       }
     ]

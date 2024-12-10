@@ -34,10 +34,11 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       navigateToFile={noop}
       useTranslationStore={useTranslationsStore}
       useRepoBranchesStore={useRepoBranchesStore}
-      gitRef={''}
-      updateRepoError={''}
+      gitRef=""
+      updateRepoError=""
       isEditDialogOpen={false}
       setEditDialogOpen={noop}
+      selectBranchOrTag={noop}
       {...props}
     />
   )

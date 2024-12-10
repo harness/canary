@@ -16,7 +16,7 @@
     "pre-commit": "lint-staged",
     "test": "vitest",
     "extract": "i18next --config './i18n.config.ts'",
-    "typecheck": "tsc"
+    "typecheck": "tsc -b"
   },
   "dependencies": {
     "@harnessio/canary": "workspace:*",

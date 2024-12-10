@@ -39,11 +39,13 @@ export default function RepoSummaryPage() {
 
   const {
     branchList,
+    tagList,
     setBranchList,
+    setTagList,
     setSpaceIdAndRepoId,
     selectedBranchTag,
     setSelectedBranchTag,
-    selectedBranchType
+    setSelectedBranchType
   } = useRepoBranchesStore()
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -104,7 +106,7 @@ export default function RepoSummaryPage() {
     }
   }, [branches, repository?.default_branch])
 
-  const { data: tags } = useListTagsQuery({
+  const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
     queryParams: {
       include_commit: false,
@@ -116,31 +118,38 @@ export default function RepoSummaryPage() {
     }
   })
 
-  const tagsList: BranchSelectorListItem[] = useMemo(() => {
-    if (!tags?.body) return []
-
-    return tags.body.map(item => ({
-      name: item?.name || '',
-      sha: item?.sha || '',
-      default: false
-    }))
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
+    }
   }, [tags])
 
-  useEffect(() => {
-    if (selectedBranchType === BranchSelectorTab.BRANCHES) {
-      const branch = branchList?.find(branch => branch.name === selectedBranchTag.name)
-      if (branch) {
-        setSelectedBranchTag(branch)
-        setGitRef(branch.name)
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          setSelectedBranchType(type)
+          setGitRef(branch.name)
+        }
+      } else if (type === BranchSelectorTab.TAGS) {
+        const tag = tagList.find(tag => tag.name === branchTagName.name)
+        if (tag) {
+          setSelectedBranchTag(tag)
+          setSelectedBranchType(type)
+          setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
+        }
       }
-    } else if (selectedBranchType === BranchSelectorTab.TAGS) {
-      const tag = tagsList?.find(tag => tag.name === selectedBranchTag.name)
-      if (tag) {
-        setSelectedBranchTag(tag)
-        setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
-      }
-    }
-  }, [branchList, tagsList, selectedBranchTag, selectedBranchType])
+    },
+    [navigate, repoId, spaceId, branchList, tagList]
+  )
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
@@ -308,6 +317,7 @@ export default function RepoSummaryPage() {
         gitRef={gitRef}
         latestCommitInfo={latestCommitInfo}
         saveDescription={saveDescription}
+        selectBranchOrTag={selectBranchOrTag}
         useRepoBranchesStore={useRepoBranchesStore}
         updateRepoError={updateError}
         isEditDialogOpen={isEditDialogOpen}

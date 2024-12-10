@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
 import { getInitials } from '@harnessio/views'
@@ -7,28 +6,25 @@ import { BlameEditor, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import useCodePathDetails from '../hooks/useCodePathDetails'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
-import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface GitBlameProps {
-  selectedBranch: string
   themeConfig: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   codeContent: string
   language: string
 }
 
-export default function GitBlame({ selectedBranch, themeConfig, codeContent, language }: GitBlameProps) {
+export default function GitBlame({ themeConfig, codeContent, language }: GitBlameProps) {
   const repoRef = useGetRepoRef()
-  const { resourcePath } = useParams<PathParams>()
-  const subResourcePath = useParams()['*'] || ''
-  const fullResourcePath = subResourcePath ? resourcePath + '/' + subResourcePath : resourcePath
+  const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const [blameBlocks, setBlameBlocks] = useState<BlameItem[]>([])
 
   const { data: { body: gitBlame } = {}, isFetching } = useGetBlameQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
-    queryParams: { git_ref: normalizeGitRef(selectedBranch) }
+    queryParams: { git_ref: normalizeGitRef(fullGitRef) }
   })
 
   useEffect(() => {

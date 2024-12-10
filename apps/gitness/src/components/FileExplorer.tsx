@@ -171,7 +171,8 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const expandFoldersAlongPath = async () => {
       if (fullResourcePath) {
         const pathSegments = fullResourcePath.split('/')
-        const isFile = pathSegments[pathSegments.length - 1].includes('.')
+        const isFile =
+          pathSegments[pathSegments.length - 1].includes('.') && !pathSegments[pathSegments.length - 1].startsWith('.')
         const folderSegments = isFile ? pathSegments.slice(0, -1) : pathSegments
 
         const folderPaths: string[] = []

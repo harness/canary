@@ -92,7 +92,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
     )
   return (
     <>
-      <SandboxLayout.Main hasHeader hasLeftPanel>
+      <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
         <SandboxLayout.Content>
           <Spacer size={10} />
           <Text size={5} weight={'medium'}>

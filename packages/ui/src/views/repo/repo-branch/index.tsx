@@ -1,18 +1,12 @@
-import { Button, NoData, NoSearchResults, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { Button, NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { SandboxLayout } from '@/views'
 import { noop } from 'lodash-es'
 
-import { IBranchSelectorStore } from '../repo.types'
 import { BranchesList } from './components/branch-list'
+import { RepoBranchListViewProps } from './types'
 
 // import CreateBranchDialog from './repo-branch-create'
 
-interface RepoBranchListViewProps {
-  isLoading: boolean
-  useRepoBranchesStore: () => IBranchSelectorStore
-  useTranslationStore: () => TranslationStore
-  query?: string
-}
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
@@ -27,24 +21,30 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
     if (!branchList?.length) {
       if (query) {
         return (
-          <NoSearchResults
+          <NoData
             iconName="no-search-magnifying-glass"
-            title="No search results"
-            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-            primaryButton={{ label: 'Clear search', onClick: () => {} /*setQuery('')*/ }}
+            title={t('views:noData.noResults', 'No search results')}
+            description={[
+              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+              t('views:noData.changeSearch', 'or search for a different keyword.')
+            ]}
+            primaryButton={{
+              label: t('views:noData.clearSearch', 'Clear search'),
+              onClick: noop /*setQuery('')*/
+            }}
           />
         )
       }
       return (
         <NoData
           iconName="no-data-branches"
-          title="No branches yet"
+          title={t('views:noData.noBranches', 'No branches yet')}
           description={[
-            "Your branches will appear here once they're created.",
-            'Start branching to see your work organized.'
+            t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
+            t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
           ]}
           primaryButton={{
-            label: 'Create branch',
+            label: t('views:noData.createBranch', 'Create branch'),
             onClick: () => {
               //   setCreateBranchDialogOpen(true)
               noop
@@ -54,7 +54,15 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
       )
     }
 
-    return <BranchesList defaultBranch={defaultBranch} repoId={repoId} spaceId={spaceId} branches={branchList} />
+    return (
+      <BranchesList
+        defaultBranch={defaultBranch}
+        repoId={repoId}
+        spaceId={spaceId}
+        branches={branchList}
+        useTranslationStore={useTranslationStore}
+      />
+    )
   }
 
   return (
@@ -62,7 +70,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
       <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
-          Branches
+          {t('views:repos.branches', 'Branches')}
         </Text>
         <Spacer size={6} />
         <div className="flex items-center justify-between gap-5">
@@ -74,7 +82,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
               noop
             }}
           >
-            Create branch
+            {t('views:repos.createBranch', 'Create branch')}
           </Button>
         </div>
         <Spacer size={5} />

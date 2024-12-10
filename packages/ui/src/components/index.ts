@@ -57,7 +57,6 @@ export * from './image-carousel'
 export * from './topbar'
 export * from './file-additions-trigger'
 export * from './progress'
-export * from './no-search-results'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

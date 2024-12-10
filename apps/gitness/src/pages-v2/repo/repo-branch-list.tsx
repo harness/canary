@@ -1,14 +1,16 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
   useCalculateCommitDivergenceMutation,
+  useCreateBranchMutation,
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
-import { RepoBranchListView } from '@harnessio/ui/views'
+import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
@@ -17,11 +19,11 @@ import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
-// import CreateBranchDialog from './repo-branch-create'
-
 export function RepoBranchesListPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
+  const queryClient = useQueryClient()
+
   const {
     page,
     setPage,
@@ -35,8 +37,8 @@ export function RepoBranchesListPage() {
   const [query, _setQuery] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  //   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
-  //   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
+
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({
     repo_ref: repoRef
   })
@@ -62,6 +64,23 @@ export function RepoBranchesListPage() {
         }
       }
     )
+
+  const { mutateAsync: saveBranch, isLoading: isCreatingBranch } = useCreateBranchMutation({})
+
+  const onSubmit = async (formValues: CreateBranchFormFields) => {
+    const { name, target } = formValues
+
+    try {
+      await saveBranch({
+        repo_ref: repoRef,
+        body: { name, target, bypass_rules: false }
+      })
+      queryClient.invalidateQueries({ queryKey: ['listBranches'] })
+      setCreateBranchDialogOpen(false)
+    } catch (e) {
+      console.log(e, 'error')
+    }
+  }
 
   useEffect(() => {
     setPaginationFromHeaders(headers)
@@ -98,8 +117,12 @@ export function RepoBranchesListPage() {
   return (
     <RepoBranchListView
       isLoading={isLoading}
+      isCreatingBranch={isCreatingBranch}
+      onSubmit={onSubmit}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
+      isCreateBranchDialogOpen={isCreateBranchDialogOpen}
+      setCreateBranchDialogOpen={setCreateBranchDialogOpen}
     />
   )
 }

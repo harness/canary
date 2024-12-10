@@ -76,7 +76,7 @@ const PaginationItems: React.FC<PaginationItemsProps> = ({ totalPages, currentPa
     <PaginationItem key={totalPages}>
       <PaginationLink
         size="sm_icon"
-        href="#"
+        // href="#/"
         onClick={() => goToPage(totalPages)}
         isActive={currentPage === totalPages}
       >
@@ -110,7 +110,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
             <PaginationItem>
               <PaginationPrevious
                 size="sm"
-                href="#"
+                // href="#"
                 onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
                 disabled={currentPage === 1}
                 t={t}
@@ -124,7 +124,7 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
             <PaginationItem>
               <PaginationNext
                 size="sm"
-                href="#"
+                // href="#"
                 onClick={() => currentPage < totalPages && goToPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
                 t={t}

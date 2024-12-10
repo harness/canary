@@ -1,6 +1,10 @@
 import { TranslationStore } from '@/views'
+import { z } from 'zod'
 
 import { IBranchSelectorStore } from '../repo.types'
+import { createBranchFormSchema } from './components/create-branch-dialog'
+
+export type CreateBranchFormFields = z.infer<typeof createBranchFormSchema>
 
 export interface BranchProps {
   id: number
@@ -44,4 +48,8 @@ export interface RepoBranchListViewProps {
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   query?: string
+  isCreateBranchDialogOpen: boolean
+  setCreateBranchDialogOpen: (isOpen: boolean) => void
+  onSubmit: (formValues: CreateBranchFormFields) => void
+  isCreatingBranch: boolean
 }

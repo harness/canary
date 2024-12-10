@@ -3,15 +3,18 @@ import { SandboxLayout } from '@/views'
 import { noop } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
+import { CreateBranchDialog } from './components/create-branch-dialog'
 import { RepoBranchListViewProps } from './types'
-
-// import CreateBranchDialog from './repo-branch-create'
 
 export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
-  query
+  query,
+  isCreateBranchDialogOpen,
+  setCreateBranchDialogOpen,
+  onSubmit,
+  isCreatingBranch
 }) => {
   const { t } = useTranslationStore()
   const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
@@ -46,8 +49,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
           primaryButton={{
             label: t('views:noData.createBranch', 'Create branch'),
             onClick: () => {
-              //   setCreateBranchDialogOpen(true)
-              noop
+              setCreateBranchDialogOpen(true)
             }
           }}
         />
@@ -78,8 +80,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
           <Button
             variant="default"
             onClick={() => {
-              //   setCreateBranchDialogOpen(true)
-              noop
+              setCreateBranchDialogOpen(true)
             }}
           >
             {t('views:repos.createBranch', 'Create branch')}
@@ -96,12 +97,16 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
           t={t}
         />
       </SandboxLayout.Content>
-      {/* <CreateBranchDialog
+      <CreateBranchDialog
         open={isCreateBranchDialogOpen}
         onClose={() => {
           setCreateBranchDialogOpen(false)
         }}
-      /> */}
+        onSubmit={onSubmit}
+        branches={branchList}
+        isLoadingBranches={isLoading}
+        isCreatingBranch={isCreatingBranch}
+      />
     </SandboxLayout.Main>
   )
 }

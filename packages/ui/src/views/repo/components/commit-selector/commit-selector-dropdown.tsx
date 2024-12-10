@@ -2,32 +2,43 @@ import { FC, useMemo, useState } from 'react'
 
 import { DropdownMenuContent, DropdownMenuItem, Icon, SearchBox } from '@/components'
 import { cn } from '@utils/cn'
+import { CommitSelectorListItem } from '@views/repo/pull-request'
 
-import { CommitSelectorListItem } from '../../compare/components/types'
-import { CommitSelectorDropdownProps } from '../../types'
+import { CommitSelectorDropdownProps } from '../../pull-request/types'
 
 const filterItems = (items: CommitSelectorListItem[], query: string) => {
   if (!query.trim()) return items
 
   return items.filter(item => item.title.toLowerCase().includes(query.toLowerCase().trim()))
 }
-
 export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   selectedCommit,
   onSelectCommit,
   commitList,
-
+  // setSearchQuery,
+  // searchQuery,
   useTranslationStore
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
+  // const [searchInput, setSearchInput] = useState(searchQuery)
+
   const { t } = useTranslationStore()
 
+  // TODO: Leave until be filtering can be done
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
   }
   const filteredItems = useMemo(() => {
     return filterItems(commitList, searchQuery)
   }, [commitList, searchQuery])
+
+  // const debouncedSetSearchQuery = debounce(searchQuery => {
+  //   setSearchQuery(searchQuery || null)
+  // }, 300)
+  // const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setSearchInput(event.target.value)
+  //   debouncedSetSearchQuery(event.target.value)
+  // }
 
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">

@@ -20,6 +20,7 @@ import {
 import { DiffModeEnum } from '@git-diff-view/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelector } from '@views/repo/components/branch-selector/branch-selector'
+import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
@@ -61,7 +62,6 @@ interface SandboxPullRequestCompareProps {
   onSelectCommit: (commit: CommitSelectorListItem) => void
 
   selectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => void
-  commitData?: TypesCommit[]
   targetBranch: BranchSelectorListItem
   sourceBranch: BranchSelectorListItem
   diffData: HeaderProps[]
@@ -71,7 +71,11 @@ interface SandboxPullRequestCompareProps {
   prBranchCombinationExists: number | null
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
-  selectedCommit: CommitSelectorListItem
+  repoId?: string
+  spaceId?: string
+  useRepoCommitsStore: () => ICommitSelectorStore
+  searchCommitQuery: string | null
+  setSearchCommitQuery: (query: string | null) => void
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -84,7 +88,6 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   onFormDraftSubmit,
   mergeability = false,
   selectBranch,
-  commitData,
   targetBranch,
   sourceBranch,
   diffData,
@@ -93,8 +96,10 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   isBranchSelected,
   prBranchCombinationExists,
   useTranslationStore,
-  useRepoBranchesStore
+  useRepoBranchesStore,
+  useRepoCommitsStore
 }) => {
+  const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()

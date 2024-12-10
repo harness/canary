@@ -1,32 +1,33 @@
 import { FC, useMemo } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
-import { IBranchSelectorStore, TranslationStore, TypesCommit } from '@/views'
+import { TranslationStore } from '@/views'
 
-import { CommitSelectorListItem } from '../../compare/components/types'
+import { CommitSelectorListItem } from '../../pull-request/compare/components/types'
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
-
-// import { BranchSelectorDropdown } from './branch-selector-dropdown'
+import { ICommitSelectorStore } from './types'
 
 interface CommitSelectorProps {
-  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   buttonSize?: 'default' | 'sm'
-  selectedCommit?: CommitSelectorListItem
   onSelectCommit?: (commit: CommitSelectorListItem) => void
-  commitList?: TypesCommit[]
+  repoId?: string
+  spaceId?: string
+  useRepoCommitStore: () => ICommitSelectorStore
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
 }
 export const CommitSelector: FC<CommitSelectorProps> = ({
-  useRepoBranchesStore,
   useTranslationStore,
-
+  useRepoCommitStore,
   buttonSize = 'default',
-  selectedCommit,
   onSelectCommit,
-  commitList
+  repoId,
+  spaceId,
+  searchQuery,
+  setSearchQuery
 }) => {
-  const { repoId, spaceId } = useRepoBranchesStore()
-
+  const { commits: commitList, selectedCommit } = useRepoCommitStore()
   const { t } = useTranslationStore()
 
   const finalList = useMemo(
@@ -71,6 +72,8 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
         repoId={repoId}
         spaceId={spaceId}
         useTranslationStore={useTranslationStore}
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
       />
     </DropdownMenu>
   )

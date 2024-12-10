@@ -7,9 +7,11 @@ export interface CommitSelectorDropdownProps {
   selectedCommit?: CommitSelectorListItem
   commitList: CommitSelectorListItem[]
   onSelectCommit?: (branchTag: CommitSelectorListItem) => void
-  repoId: string
-  spaceId: string
+  repoId?: string
+  spaceId?: string
   useTranslationStore: () => TranslationStore
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
 }
 
 export interface PullRequestType {

@@ -20,9 +20,10 @@ import {
   Text
 } from '@/components'
 import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
+import { RecentPushInfoBar } from './components/recent-push-info-bar'
 import SummaryPanel from './components/summary-panel'
 
 export interface RepoSummaryViewProps {
@@ -35,6 +36,7 @@ export interface RepoSummaryViewProps {
         git_url?: string
         description?: string
         created?: number
+        default_branch?: string
       }
     | undefined
   handleCreateToken: () => void
@@ -63,6 +65,39 @@ export interface RepoSummaryViewProps {
   useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
+}
+
+/**
+ * TODO: This is a temporary implementation.
+ * The actual implementation should:
+ * 1. Use backend-provided timestamps and timezone information
+ * 2. Support i18n for different languages
+ * 3. Handle edge cases:
+ *    - Invalid dates
+ *    - Different timezones
+ * 4. Support more precise time formatting:
+ *    - "just now" for very recent changes
+ *    - "about 1 hour ago"
+ *    - "X minutes ago"
+ *
+ * Note: This function is specifically for RecentPushBar component,
+ * which only shows pushes within last 24 hours (or less, depending on backend configuration)
+ */
+export function timeAgoFromISOTime(isoTime: string): string {
+  const date = new Date(isoTime)
+  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000)
+
+  if (seconds < 60) {
+    return `${seconds} seconds ago`
+  }
+
+  if (seconds < 3600) {
+    const minutes = Math.floor(seconds / 60)
+    return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
+  }
+
+  const hours = Math.floor(seconds / 3600)
+  return `${hours} hour${hours === 1 ? '' : 's'} ago`
 }
 
 export function RepoSummaryView({
@@ -108,6 +143,48 @@ export function RepoSummaryView({
       <SandboxLayout.Columns columnWidths="1fr 255px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-6">
+            {/* 
+              TODO: Implement proper recent push detection logic:
+              1. Backend needs to:
+                - Track and store information about recent pushes
+                - Provide an API endpoint that returns array of recent pushes:
+                  {
+                    recentPushes: Array<{
+                      branchName: string
+                      pushedAt: string // ISO timestamp
+                      userId: string // to show banner only to user who made the push
+                    }>
+                  }
+                - Consider:
+                  * Clearing push data after PR is created
+                  * Clearing push data after 24h
+                  * Limiting number of shown pushes (e.g. max 3 most recent)
+                  * Sorting pushes by timestamp (newest first)
+
+              2. Frontend needs to:
+                - Fetch recent pushes data from the API
+                - Filter pushes to show only where:
+                  * Current user is the one who made the push
+                  * Push was made less than 24h ago
+                  * No PR has been created from this branch yet
+                - Format timestamps using timeAgoFromISOTime
+                - Remove mock data below
+            */}
+            {selectedBranchTag.name !== repository?.default_branch && (
+              <>
+                <RecentPushInfoBar
+                  recentPushes={[
+                    {
+                      branchName: 'new-branch',
+                      timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
+                    }
+                  ]}
+                  spaceId={spaceId}
+                  repoId={repoId}
+                />
+                <Spacer size={6} />
+              </>
+            )}
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup>
@@ -154,6 +231,21 @@ export function RepoSummaryView({
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
+            {selectedBranchTag.name !== repository?.default_branch && (
+              <>
+                <Spacer size={4} />
+                <BranchInfoBar
+                  defaultBranchName={repository?.default_branch}
+                  spaceId={spaceId}
+                  repoId={repoId}
+                  currentBranch={{
+                    ...selectedBranchTag,
+                    // TODO: it is required to transfer the real data that the currently selected branch should contain
+                    behindAhead: { ahead: 10, behind: 20 }
+                  }}
+                />
+              </>
+            )}
             <Spacer size={5} />
             <Summary
               latestFile={{

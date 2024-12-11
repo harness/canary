@@ -17,8 +17,8 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
   return (
     <>
       {filter.condition !== 'is_empty' && (
-        <div className="border-b border-borders-1 px-3 pb-2.5">
-          <div className="border-border-2 flex min-h-8 justify-between gap-x-1 rounded border px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border focus-within:border-borders-3">
+        <div className="border-borders-1 border-b px-3 pb-2.5">
+          <div className="border-borders-2 focus-within:border-borders-3 flex min-h-8 justify-between gap-x-1 rounded border px-1 py-[3px] outline-none transition-colors duration-200 focus-within:border">
             <div className="flex flex-1 flex-wrap items-center gap-1">
               {!!filter.selectedValues.length &&
                 filter.selectedValues.map(value => {

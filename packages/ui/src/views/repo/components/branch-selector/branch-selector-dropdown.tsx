@@ -158,7 +158,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                     // 5. After theme update, remove overriding classes (text-primary-muted, bg-transparent, -tracking, font-medium)
                     //    as they should be part of the theme definition
                     theme="muted"
-                    size="18"
+                    size="xl"
                     borderRadius="full"
                     disableHover
                   >

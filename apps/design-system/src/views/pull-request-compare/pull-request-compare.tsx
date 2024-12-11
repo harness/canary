@@ -40,22 +40,7 @@ const PullRequestCompareWrapper: FC<Partial<SandboxPullRequestCompareProps>> = p
           title: 'bot.txt',
           lang: 'txt',
           addedLines: 1,
-          removedLines: 0,
-          blocks: [
-            {
-              lines: [
-                {
-                  content: '+bot5555',
-                  type: 'insert',
-                  newNumber: 1
-                }
-              ],
-              oldStartLine: 0,
-              oldStartLine2: null,
-              newStartLine: 1,
-              header: '@@ -0,0 +1 @@'
-            }
-          ]
+          removedLines: 0
         } as HeaderProps
       ]}
       diffStats={{

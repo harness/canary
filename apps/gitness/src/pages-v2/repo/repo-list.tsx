@@ -39,6 +39,8 @@ export default function ReposListPage() {
   useEffect(() => {
     if (repoData) {
       setRepositories(repoData, headers)
+    } else {
+      setRepositories([], headers)
     }
   }, [repoData, headers, setRepositories])
 

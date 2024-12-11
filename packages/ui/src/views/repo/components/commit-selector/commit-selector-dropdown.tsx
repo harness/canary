@@ -15,12 +15,9 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   selectedCommit,
   onSelectCommit,
   commitList,
-  // setSearchQuery,
-  // searchQuery,
   useTranslationStore
 }) => {
   const [searchQuery, setSearchQuery] = useState('')
-  // const [searchInput, setSearchInput] = useState(searchQuery)
 
   const { t } = useTranslationStore()
 
@@ -31,14 +28,6 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   const filteredItems = useMemo(() => {
     return filterItems(commitList, searchQuery)
   }, [commitList, searchQuery])
-
-  // const debouncedSetSearchQuery = debounce(searchQuery => {
-  //   setSearchQuery(searchQuery || null)
-  // }, 300)
-  // const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setSearchInput(event.target.value)
-  //   debouncedSetSearchQuery(event.target.value)
-  // }
 
   return (
     <DropdownMenuContent className="p-0" align="start">

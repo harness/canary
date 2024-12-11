@@ -380,14 +380,6 @@ export const CreatePullRequest = () => {
         selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
         useRepoBranchesStore={useRepoBranchesStore}
-        // commitData={commitData?.commits?.map((item: TypesCommit) => ({
-        //   sha: item.sha,
-        //   parent_shas: item.parent_shas,
-        //   title: item.title,
-        //   message: item.message,
-        //   author: item.author,
-        //   committer: item.committer
-        // }))}
         targetBranch={selectedTargetBranch}
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}

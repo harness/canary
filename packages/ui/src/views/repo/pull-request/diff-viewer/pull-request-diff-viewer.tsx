@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Card, Input, Text } from '@/components/'
+import { Avatar, AvatarFallback, Card, Input, Text } from '@/components/'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
-import { timeAgo } from '@utils/utils'
+import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
@@ -41,6 +41,7 @@ interface PullRequestDiffviewerProps {
   deleted?: boolean
   unchangedPercentage?: number
   blocks?: DiffBlock[]
+  currentUser?: string
 }
 
 const PullRequestDiffViewer = ({
@@ -58,7 +59,8 @@ const PullRequestDiffViewer = ({
   unchangedPercentage,
   deleted,
   isBinary,
-  blocks
+  blocks,
+  currentUser
 }: PullRequestDiffviewerProps) => {
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const valRef = useRef('')
@@ -287,7 +289,11 @@ const PullRequestDiffViewer = ({
                       <Card key={index} className="rounded-md bg-transparent">
                         <div className="flex flex-col p-4">
                           <div className="flex items-center space-x-2 font-sans">
-                            <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover font-sans'></div>
+                            <Avatar className="size-5">
+                              <AvatarFallback className="p-1 text-center text-xs">
+                                {getInitials(currentUser ?? '', 2)}
+                              </AvatarFallback>
+                            </Avatar>
                             <Text color="primary">adam </Text>
                             <Text size={1} color="tertiaryBackground">
                               {timeAgo(item?.date)}

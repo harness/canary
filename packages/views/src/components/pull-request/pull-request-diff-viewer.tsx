@@ -274,7 +274,6 @@ const PullRequestDiffViewer = ({
               <Card className="rounded-md bg-transparent">
                 <div className="flex flex-col p-4">
                   <div className="flex items-center space-x-2">
-                    <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
                     <Text color="primary">adam </Text>
                     <Text size={1} color="tertiaryBackground">
                       4 hours ago

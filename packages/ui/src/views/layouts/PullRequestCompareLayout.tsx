@@ -76,6 +76,7 @@ interface SandboxPullRequestCompareProps {
   useRepoCommitsStore: () => ICommitSelectorStore
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
+  currentUser?: string
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -97,7 +98,8 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   prBranchCombinationExists,
   useTranslationStore,
   useRepoBranchesStore,
-  useRepoCommitsStore
+  useRepoCommitsStore,
+  currentUser
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -335,6 +337,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                     <PullRequestAccordion
                       key={`item?.title ? ${item?.title}-${index} : ${index}`}
                       header={item}
+                      currentUser={currentUser}
                       data={item?.data}
                       diffMode={diffMode}
                     />
@@ -391,7 +394,8 @@ const PullRequestAccordion: React.FC<{
   header?: HeaderProps
   data?: string
   diffMode: DiffModeEnum
-}> = ({ header, diffMode }) => {
+  currentUser?: string
+}> = ({ header, diffMode, currentUser }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
@@ -412,6 +416,7 @@ const PullRequestAccordion: React.FC<{
                     </div>
                   ) : null}
                   <PullRequestDiffViewer
+                    currentUser={currentUser}
                     data={header?.data}
                     fontsize={fontsize}
                     highlight={highlight}

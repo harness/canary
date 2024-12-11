@@ -10,6 +10,7 @@ import GitBlame from '../components/GitBlame'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
+import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
@@ -22,13 +23,12 @@ const getDefaultView = (language?: string): ViewTypeValue => {
 
 interface FileContentViewerProps {
   repoContent?: OpenapiGetContentOutput
-  defaultBranch: string
 }
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export default function FileContentViewer({ repoContent, defaultBranch }: FileContentViewerProps) {
+export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
   const { spaceId, repoId } = useParams<PathParams>()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
@@ -41,6 +41,7 @@ export default function FileContentViewer({ repoContent, defaultBranch }: FileCo
   const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
+  const { selectedBranchTag } = useRepoBranchesStore()
 
   /**
    * Toggle delete dialog open state
@@ -100,10 +101,10 @@ export default function FileContentViewer({ repoContent, defaultBranch }: FileCo
           if (!isNewBranch) {
             navigate(`/${spaceId}/repos/${repoId}/code${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
+            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${selectedBranchTag.name}...${newBranchName}`)
           }
         }}
-        currentBranch={fullGitRef || repoMetadata?.default_branch || ''}
+        currentBranch={fullGitRef || selectedBranchTag?.name || ''}
         isNew={false}
       />
       <FileViewerControlBar

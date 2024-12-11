@@ -14,6 +14,7 @@ import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
+import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 
 export interface FileEditorProps {
   repoDetails?: OpenapiGetContentOutput
@@ -37,6 +38,7 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
+  const { selectedBranchTag } = useRepoBranchesStore()
 
   const themeConfig = useMemo(
     () => ({
@@ -157,7 +159,7 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
             navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
           }
         }}
-        defaultBranch={defaultBranch}
+        currentBranch={fullGitRef || selectedBranchTag?.name}
         isNew={!!isNew}
       />
 

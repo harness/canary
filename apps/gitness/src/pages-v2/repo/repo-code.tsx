@@ -149,7 +149,7 @@ export const RepoCode = () => {
    */
   const renderCodeView = useMemo(() => {
     if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
-      return <FileContentViewer repoContent={repoDetails} defaultBranch={repository?.default_branch || ''} />
+      return <FileContentViewer repoContent={repoDetails} />
     }
 
     if (codeMode !== CodeModes.VIEW) {

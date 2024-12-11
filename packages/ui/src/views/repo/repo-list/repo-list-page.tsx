@@ -78,7 +78,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     )
 
   const noData = !(reposWithFormattedDates && reposWithFormattedDates.length > 0)
-  const showFilterBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
+  const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
 
   return (
     <SandboxLayout.Main hasHeader hasLeftPanel>
@@ -91,7 +91,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             {t('views:repos.repositories')}
           </Title>
         */}
-        {showFilterBar ? (
+        {showTopBar ? (
           <>
             <Spacer size={10} />
             <div className="flex items-end">

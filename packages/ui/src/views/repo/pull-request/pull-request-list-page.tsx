@@ -1,7 +1,16 @@
 import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer } from '@/components'
+import {
+  Button,
+  ListActions,
+  NoData,
+  PaginationComponent,
+  SearchBox,
+  SkeletonList,
+  Spacer,
+  StackedList
+} from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import {
   Filters,
@@ -139,6 +148,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     filterHandlers.handleResetFilters()
   }
 
+  const showTopBar =
+    !noData || filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0 || searchQuery?.length
+
   const renderListContent = () => {
     if (isLoading) {
       return <SkeletonList />
@@ -146,29 +158,35 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 
     if (noData) {
       return filterHandlers.activeFilters.length > 0 || searchQuery ? (
-        <NoData
-          iconName="no-search-magnifying-glass"
-          title="No search results"
-          description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-          primaryButton={{
-            label: 'Clear search',
-            onClick: handleResetQuery
-          }}
-          secondaryButton={{
-            label: 'Clear filters',
-            onClick: filterHandlers.handleResetFilters
-          }}
-        />
+        <StackedList.Root>
+          <div className="flex min-h-[50vh] items-center justify-center py-20">
+            <NoData
+              iconName="no-search-magnifying-glass"
+              title="No search results"
+              description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+              primaryButton={{
+                label: 'Clear search',
+                onClick: handleResetQuery
+              }}
+              secondaryButton={{
+                label: 'Clear filters',
+                onClick: filterHandlers.handleResetFilters
+              }}
+            />
+          </div>
+        </StackedList.Root>
       ) : (
-        <NoData
-          iconName="no-data-folder"
-          title="No pull requests yet"
-          description={['There are no pull requests in this project yet.', 'Create a new pull request.']}
-          primaryButton={{
-            label: 'Create pull request',
-            to: `/${spaceId}/repos/${repoId}/pulls/compare/`
-          }}
-        />
+        <div className="flex min-h-[70vh] items-center justify-center py-20">
+          <NoData
+            iconName="no-data-folder"
+            title="No pull requests yet"
+            description={['There are no pull requests in this project yet.', 'Create a new pull request.']}
+            primaryButton={{
+              label: 'Create pull request',
+              to: `/${spaceId}/repos/${repoId}/pulls/compare/`
+            }}
+          />
+        </div>
       )
     }
     return (
@@ -186,44 +204,48 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
       <SandboxLayout.Content>
-        <Spacer size={2} />
-        <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
-        <Spacer size={6} />
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchBox.Root
-              width="full"
-              className="max-w-96"
-              value={searchInput || ''}
-              handleChange={handleInputChange}
-              placeholder={t('views:repos.search')}
-            />
-          </ListActions.Left>
-          <ListActions.Right>
-            <Filters
+        {showTopBar ? (
+          <>
+            <Spacer size={2} />
+            <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
+            <Spacer size={6} />
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={searchInput || ''}
+                  handleChange={handleInputChange}
+                  placeholder={t('views:repos.search')}
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Filters
+                  t={t}
+                  showView={false}
+                  filterOptions={FILTER_OPTIONS}
+                  sortOptions={SORT_OPTIONS}
+                  filterHandlers={filterHandlers}
+                  viewManagement={viewManagement}
+                />
+                <Button variant="default" asChild>
+                  <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
+            {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
+            <FiltersBar
               t={t}
-              showView={false}
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
+              sortDirections={SORT_DIRECTIONS}
               filterHandlers={filterHandlers}
               viewManagement={viewManagement}
             />
-            <Button variant="default" asChild>
-              <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
-            </Button>
-          </ListActions.Right>
-        </ListActions.Root>
-        {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
-        <FiltersBar
-          t={t}
-          filterOptions={FILTER_OPTIONS}
-          sortOptions={SORT_OPTIONS}
-          sortDirections={SORT_DIRECTIONS}
-          filterHandlers={filterHandlers}
-          viewManagement={viewManagement}
-        />
 
-        <Spacer size={5} />
+            <Spacer size={5} />
+          </>
+        ) : null}
         {renderListContent()}
         <Spacer size={6} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />

@@ -1,6 +1,24 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import {
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Icon,
+  Layout,
+  NoData,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SkeletonList,
+  Spacer
+} from '@harnessio/ui/components'
 import { ExecutionState, MeterState, PipelineList, SandboxLayout, type IPipeline } from '@harnessio/ui/views'
 
 function mapExecutionStatusToMeterState(status: string): MeterState {
@@ -31,22 +49,12 @@ function mapExecutionStatusToExecutionState(status: string): ExecutionState {
 
 export default function Account() {
   const [accountId] = useState(localStorage.getItem('accountId'))
-  const [pipelines, setPipelines] = useState([
-    {
-      id: 'pipeline-1',
-      name: 'Pipeline 1',
-      status: ExecutionState.SUCCESS,
-      timestamp: '2021-09-01T12:00:00Z',
-      meter: [{ state: 3 }]
-    },
-    {
-      id: 'pipeline-2',
-      name: 'Pipeline 2',
-      status: ExecutionState.FAILURE,
-      timestamp: '2021-09-01T12:00:00Z',
-      meter: [{ state: 3 }]
-    }
-  ])
+  const orgIdentifier = 'default'
+
+  const [pipelines, setPipelines] = useState([])
+  const [projects, setProjects] = useState([])
+  const [selectedProject, setSelectedProject] = useState('abhinavtest3')
+  const [loading, setLoading] = useState(true)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -54,8 +62,9 @@ export default function Account() {
       navigate('/signin')
     }
 
+    setLoading(true)
     fetch(
-      `/pipeline/api/pipelines/list?routingId=${accountId}&accountIdentifier=${accountId}&projectIdentifier=abhinavtest3&orgIdentifier=default`,
+      `/pipeline/api/pipelines/list?routingId=${accountId}&accountIdentifier=${accountId}&projectIdentifier=${selectedProject}&orgIdentifier=${orgIdentifier}`,
       {
         method: 'POST',
         headers: {
@@ -89,13 +98,75 @@ export default function Account() {
             } satisfies IPipeline
           })
         )
+        setLoading(false)
       })
-  }, [])
+
+    fetch(
+      `/ng/api/aggregate/projects?routingId=${accountId}&accountIdentifier=${accountId}&orgIdentifier=${orgIdentifier}&pageIndex=0&pageSize=20&sortOrders=name,ASC&onlyFavorites=false`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      }
+    )
+      .then(res => res.json())
+      .then(res => {
+        setProjects(res.data.content)
+      })
+  }, [selectedProject])
 
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <PipelineList pipelines={pipelines} />
+        <Layout.Horizontal className="items-center">
+          <Icon name="harness" />
+          <Icon name="harness-logo-text" height={15} width={65} size={65} />
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" className="flex items-center gap-1.5">
+                Account: {accountId} <Icon name="chevron-down" />
+              </Button>
+            </DropdownMenuTrigger>
+          </DropdownMenu>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="secondary" className="flex items-center gap-1.5">
+                Organization: {orgIdentifier} <Icon name="chevron-down" />
+              </Button>
+            </DropdownMenuTrigger>
+          </DropdownMenu>
+          <Select
+            placeholder="Select a Project"
+            value={selectedProject}
+            onValueChange={value => {
+              setSelectedProject(value)
+            }}
+          >
+            <SelectContent>
+              {projects.map(project => {
+                return (
+                  <SelectItem
+                    key={project.projectResponse.project.identifier}
+                    value={project.projectResponse.project.identifier}
+                    // onClick={() => {
+                    // setSelectedProject(project.projectResponse.project.identifier)
+                    // }}
+                  >
+                    {project.projectResponse.project.name}
+                  </SelectItem>
+                )
+              })}
+            </SelectContent>
+          </Select>
+        </Layout.Horizontal>
+        <Spacer size={6} />
+        {loading ? <SkeletonList /> : null}
+        {!loading && pipelines.length == 0 ? (
+          <NoData title="No Pipelines" description={["It seems you don't have any pipelines yet."]} />
+        ) : null}
+        {!loading && pipelines.length > 0 ? <PipelineList pipelines={pipelines} /> : null}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

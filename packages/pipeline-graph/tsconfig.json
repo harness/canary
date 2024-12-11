@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "skipLibCheck": true,
+    "esModuleInterop": false,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    // "emitDeclarationOnly": true,
+    "jsx": "react-jsx",
+    "outDir": "dist2",
+    // "declaration": true,
+    "types": ["node"]
+  },
+  "include": ["./src/**/*"]
+}

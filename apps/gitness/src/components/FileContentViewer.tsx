@@ -165,7 +165,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
             )
           }
         }}
-        defaultBranch={repoMetadata?.default_branch || ''}
+        currentBranch={gitRef || repoMetadata?.default_branch || ''}
         isNew={false}
       />
       <StackedList.Root>

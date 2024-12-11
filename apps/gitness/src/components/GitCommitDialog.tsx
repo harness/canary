@@ -31,7 +31,7 @@ interface CommitDialogProps {
     newBranchName: string,
     fileName?: string
   ) => void
-  defaultBranch: string
+  currentBranch: string
   isNew: boolean
 }
 
@@ -48,7 +48,7 @@ export default function GitCommitDialog({
   payload,
   sha,
   onSuccess,
-  defaultBranch,
+  currentBranch,
   isNew
 }: CommitDialogProps) {
   const repoRef = useGetRepoRef()
@@ -178,7 +178,7 @@ export default function GitCommitDialog({
             dryRun={dryRun}
             violation={violation}
             bypassable={bypassable}
-            defaultBranch={defaultBranch || 'Master'}
+            currentBranch={currentBranch}
             isFileNameRequired={isNew && resourcePath?.length < 1}
           />
         </DialogDescription>

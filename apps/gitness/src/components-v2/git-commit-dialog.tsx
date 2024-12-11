@@ -35,7 +35,7 @@ interface CommitDialogProps {
   resourcePath: string
   payload?: string
   onSuccess: CommitDialogOnSuccess
-  defaultBranch: string
+  currentBranch: string
   isNew: boolean
 }
 
@@ -52,7 +52,7 @@ export default function GitCommitDialog({
   payload,
   sha,
   onSuccess,
-  defaultBranch,
+  currentBranch,
   isNew
 }: CommitDialogProps) {
   const repoRef = useGetRepoRef()
@@ -176,7 +176,7 @@ export default function GitCommitDialog({
       dryRun={dryRun}
       violation={violation}
       bypassable={bypassable}
-      defaultBranch={defaultBranch || 'Master'}
+      currentBranch={currentBranch || 'Master'}
       isFileNameRequired={isNew && resourcePath?.length < 1}
       setAllStates={setAllStates}
       // TODO: Add a loading state for submission

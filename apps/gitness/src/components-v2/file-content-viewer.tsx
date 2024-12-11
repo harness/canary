@@ -103,7 +103,7 @@ export default function FileContentViewer({ repoContent, defaultBranch }: FileCo
             navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
           }
         }}
-        defaultBranch={defaultBranch}
+        currentBranch={fullGitRef || repoMetadata?.default_branch || ''}
         isNew={false}
       />
       <FileViewerControlBar

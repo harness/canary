@@ -59,7 +59,7 @@ export interface GitCommitDialogProps {
   isOpen: boolean
   isFileNameRequired?: boolean
   commitTitlePlaceHolder?: string
-  defaultBranch: string
+  currentBranch: string
   violation: boolean
   bypassable: boolean
   disableCTA: boolean
@@ -79,7 +79,7 @@ export const GitCommitDialog = ({
   onFormSubmit,
   commitTitlePlaceHolder,
   dryRun,
-  defaultBranch,
+  currentBranch,
   violation,
   bypassable,
   setAllStates,
@@ -189,7 +189,7 @@ export const GitCommitDialog = ({
                       "
                     >
                       <Icon className="translate-y-0.5 text-icons-9" name="branch" size={14} />
-                      {defaultBranch}
+                      {currentBranch}
                     </span>
                     branch
                   </span>

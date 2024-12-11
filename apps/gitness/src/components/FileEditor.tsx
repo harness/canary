@@ -169,7 +169,7 @@ export const FileEditor: React.FC = () => {
             )
           }
         }}
-        defaultBranch={repoMetadata?.default_branch || ''}
+        currentBranch={fullGitRef || repoMetadata?.default_branch || ''}
         isNew={!!isNew}
       />
       <ExitConfirmDialog onCancel={onExitCancel} onConfirm={onExitConfirm} open={isExitConfirmOpen} />

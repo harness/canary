@@ -33,7 +33,7 @@ interface GitCommitFormProps {
   dryRun: (commitToGitRef: CommitToGitRefOption, fileName?: string) => void
   violation: boolean
   bypassable: boolean
-  defaultBranch?: string
+  currentBranch?: string
   isFileNameRequired: boolean
 }
 
@@ -81,7 +81,7 @@ export function GitCommitForm({
   dryRun,
   violation,
   bypassable,
-  defaultBranch,
+  currentBranch,
   isFileNameRequired
 }: GitCommitFormProps) {
   const { setAllStates } = useRuleViolationCheck()
@@ -161,7 +161,7 @@ export function GitCommitForm({
                 <FormFieldSet.Option
                   control={<RadioGroupItem value={CommitToGitRefOption.DIRECTLY} id="directly" />}
                   id="directly"
-                  label={`Commit to ${defaultBranch} directly`}
+                  label={`Commit to ${currentBranch} directly`}
                   description=""
                 />
                 {violation && form.getValues().commitToGitRef === CommitToGitRefOption.DIRECTLY && (

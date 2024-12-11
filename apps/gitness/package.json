@@ -4,11 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "run-p watch:css watch",
-    "watch": "vite",
-    "watch:css": "pnpm build:css --watch",
-    "build": "pnpm build:css && vite build",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./public/styles.css",
+    "dev": "vite",
+    "build": "vite build",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "preview": "vite preview",

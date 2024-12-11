@@ -10,11 +10,11 @@ import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
-import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
 
 export interface FileEditorProps {
   repoDetails?: OpenapiGetContentOutput

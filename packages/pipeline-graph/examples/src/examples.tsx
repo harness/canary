@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Example1 from './example1'
 import AnimationExample from './example2-animations'
 import PerformanceExample from './example3-performance'
+import SizeExample from './example4-size'
 import { ContentNodeTypes } from './types/content-node-types'
 
 import './examples.css'
@@ -23,6 +24,10 @@ const examplesArr = [
   {
     name: 'Performance',
     component: PerformanceExample
+  },
+  {
+    name: 'Size',
+    component: SizeExample
   }
 ]
 
@@ -47,6 +52,8 @@ function App() {
         return <AnimationExample />
       case 'Performance':
         return <PerformanceExample />
+      case 'Size':
+        return <SizeExample />
     }
   }
 

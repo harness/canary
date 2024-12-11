@@ -12,6 +12,7 @@ interface GraphContextProps {
   isCollapsed: (path: string) => boolean
   setNodeToRemove: (path: string | null) => void
   nodeToRemove: string | null
+  rerender: () => void
   //
   rerenderConnections: number
   //
@@ -27,7 +28,8 @@ const GraphContext = createContext<GraphContextProps>({
   rerenderConnections: 0,
   setNodeToRemove: (_path: string | null) => undefined,
   nodeToRemove: null,
-  shiftCollapsed: (_path: string, _index: number) => undefined
+  shiftCollapsed: (_path: string, _index: number) => undefined,
+  rerender: () => undefined
 })
 
 const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ nodes: NodeContent[] }>) => {
@@ -79,6 +81,10 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
     [collapsed, setCollapsed, rerenderConnections, setRerenderConnections]
   )
 
+  const rerender = useCallback(() => {
+    setRerenderConnections(prev => prev + 1)
+  }, [setRerenderConnections])
+
   const isCollapsed = useCallback(
     (path: string) => {
       return !!collapsed[path]
@@ -109,7 +115,9 @@ const GraphProvider = ({ nodes: nodesArr, children }: React.PropsWithChildren<{ 
         // force rerender
         rerenderConnections,
         // shift collapsed on node deletion
-        shiftCollapsed
+        shiftCollapsed,
+        // rerender connections
+        rerender
       }}
     >
       {children}

@@ -2,20 +2,16 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
   Icon,
-  Layout,
   NoData,
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
   SkeletonList,
   Spacer
 } from '@harnessio/ui/components'
@@ -120,48 +116,49 @@ export default function Account() {
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Layout.Horizontal className="items-center">
-          <Icon name="harness" />
-          <Icon name="harness-logo-text" height={15} width={65} size={65} />
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" className="flex items-center gap-1.5">
-                Account: {accountId} <Icon name="chevron-down" />
-              </Button>
-            </DropdownMenuTrigger>
-          </DropdownMenu>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="secondary" className="flex items-center gap-1.5">
-                Organization: {orgIdentifier} <Icon name="chevron-down" />
-              </Button>
-            </DropdownMenuTrigger>
-          </DropdownMenu>
-          <Select
-            placeholder="Select a Project"
-            value={selectedProject}
-            onValueChange={value => {
-              setSelectedProject(value)
-            }}
-          >
-            <SelectContent>
-              {projects.map(project => {
-                return (
-                  <SelectItem
-                    key={project.projectResponse.project.identifier}
-                    value={project.projectResponse.project.identifier}
-                    // onClick={() => {
-                    // setSelectedProject(project.projectResponse.project.identifier)
-                    // }}
-                  >
-                    {project.projectResponse.project.name}
-                  </SelectItem>
-                )
-              })}
-            </SelectContent>
-          </Select>
-        </Layout.Horizontal>
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <Icon name="harness" />
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <Icon name="harness-logo-text" height={15} width={65} size={65} />
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <Select
+                placeholder="Select a Project"
+                value={selectedProject}
+                onValueChange={value => {
+                  setSelectedProject(value)
+                }}
+              >
+                <SelectContent>
+                  {projects.map(project => {
+                    return (
+                      <SelectItem
+                        key={project.projectResponse.project.identifier}
+                        value={project.projectResponse.project.identifier}
+                        // onClick={() => {
+                        // setSelectedProject(project.projectResponse.project.identifier)
+                        // }}
+                      >
+                        {project.projectResponse.project.name}
+                      </SelectItem>
+                    )
+                  })}
+                </SelectContent>
+              </Select>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbPage>Pipelines</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+
         <Spacer size={6} />
+
         {loading ? <SkeletonList /> : null}
         {!loading && pipelines.length == 0 ? (
           <NoData title="No Pipelines" description={["It seems you don't have any pipelines yet."]} />

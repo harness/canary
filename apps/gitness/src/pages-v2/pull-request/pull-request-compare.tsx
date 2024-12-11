@@ -364,7 +364,7 @@ export const CreatePullRequest = () => {
 
     return (
       <PullRequestCompare
-        currentUser={currentUser.display_name}
+        currentUser={currentUser?.display_name}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}
         useRepoCommitsStore={useRepoCommitsStore}

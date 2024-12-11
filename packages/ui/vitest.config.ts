@@ -4,12 +4,21 @@ import viteConfig from './vite.config'
 
 export default mergeConfig(viteConfig, {
   test: {
-    include: ['**/*.test.{ts,tsx}'],
+    environment: 'jsdom',
+    setupFiles: ['./config/vitest-setup.ts'],
     globals: true,
     coverage: {
       provider: 'istanbul',
       include: ['src'],
-      exclude: ['src/main.tsx', 'src/App.tsx', 'src/**/*.test.*'],
+      exclude: [
+        'src/index.ts',
+        'src/components/index.ts',
+        'src/views/index.ts',
+        'src/hooks/index.ts',
+        'src/locales/index.ts',
+        'src/**/*.test.*',
+        'src/utils/cn.ts'
+      ],
       extension: ['ts', 'js', 'tsx', 'jsx']
       // thresholds: {
       //   branches: 80,

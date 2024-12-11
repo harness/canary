@@ -15,11 +15,12 @@ const external = [
   'react-i18next',
   'i18next'
 ]
-// https://vitejs.dev/config/
+
 export default defineConfig({
   plugins: [react(), dts({ rollupTypes: true }), svgr({ include: '**/*.svg' }), tsConfigPaths()],
   build: {
     lib: {
+      cssFileName: 'styles',
       entry: {
         components: resolve(__dirname, 'src/components/index.ts'),
         views: resolve(__dirname, 'src/views/index.ts'),
@@ -30,42 +31,8 @@ export default defineConfig({
       formats: ['es']
     },
     rollupOptions: {
-      external: external,
-      output: {
-        assetFileNames: chunkInfo => {
-          if (chunkInfo.name === 'style.css') {
-            return 'styles.css'
-          }
-
-          return chunkInfo.name as string
-        }
-      }
+      external: external
     },
     sourcemap: true
-  },
-  test: {
-    environment: 'jsdom',
-    setupFiles: ['./config/vitest-setup.ts'],
-    globals: true,
-    coverage: {
-      provider: 'istanbul',
-      include: ['src'],
-      exclude: [
-        'src/index.ts',
-        'src/components/index.ts',
-        'src/views/index.ts',
-        'src/hooks/index.ts',
-        'src/locales/index.ts',
-        'src/**/*.test.*',
-        'src/utils/cn.ts'
-      ],
-      extension: ['ts', 'js', 'tsx', 'jsx']
-      // thresholds: {
-      //   branches: 80,
-      //   lines: 80,
-      //   functions: 80,
-      //   statements: 80
-      // }
-    }
   }
 })

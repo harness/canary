@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES2022",
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -17,10 +17,5 @@
     "declaration": true
   },
   "include": ["./src/**/*", "./global.d.ts"],
-  "exclude": ["node_modules"],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "exclude": ["node_modules"]
 }

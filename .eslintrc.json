@@ -12,6 +12,8 @@
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
 
+    "plugin:i18next/recommended",
+
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
 

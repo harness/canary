@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 
-import { Fieldset, FormSeparator } from '@/components'
+import { Fieldset, FormSeparator, FormWrapper } from '@/components'
 
 // import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
@@ -48,18 +48,17 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
   return (
-    <>
-      <Fieldset>
-        <RepoSettingsGeneralForm
-          repoData={repoData}
-          handleRepoUpdate={handleRepoUpdate}
-          apiError={apiError}
-          isLoadingRepoData={loadingStates.isLoadingRepoData}
-          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
-          isRepoUpdateSuccess={isRepoUpdateSuccess}
-        />
-        <FormSeparator />
-        {/* <div ref={rulesRef}>
+    <Fieldset>
+      <RepoSettingsGeneralForm
+        repoData={repoData}
+        handleRepoUpdate={handleRepoUpdate}
+        apiError={apiError}
+        isLoadingRepoData={loadingStates.isLoadingRepoData}
+        isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+        isRepoUpdateSuccess={isRepoUpdateSuccess}
+      />
+      <FormSeparator />
+      {/* <div ref={rulesRef}>
           <RepoSettingsGeneralRules
             rules={rules}
             apiError={apiError}
@@ -78,8 +77,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
         />
         <FormFieldSet.Separator />
         <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} /> */}
-      </Fieldset>
-    </>
+    </Fieldset>
   )
 }
 

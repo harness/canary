@@ -6,9 +6,9 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormWrapper,
   Icon,
   Input,
-  Label,
   Message,
   MessageTheme,
   Option,
@@ -17,8 +17,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
   Spacer,
   Text
 } from '@/components'
@@ -95,7 +93,6 @@ export const RepoSettingsGeneralForm: React.FC<{
   const onSubmit: SubmitHandler<RepoUpdateFormFields> = data => {
     setIsSubmitted(true)
     handleRepoUpdate(data)
-    reset()
   }
   const isDefaultInBranches = repoData.branches.some(branch => branch.name === repoData.defaultBranch)
   const errorTypes = new Set([
@@ -118,78 +115,86 @@ export const RepoSettingsGeneralForm: React.FC<{
       <Text size={4} weight="medium">
         General settings
       </Text>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
         <Fieldset>
           <ControlGroup>
-            <Label htmlFor="name">Name</Label>
-            <Input id="name" {...register('name')} placeholder="Enter repository name" disabled />
-            {errors.name && <Message theme={MessageTheme.ERROR}>{errors.name.message?.toString()}</Message>}
+            <Input
+              id="name"
+              {...register('name')}
+              placeholder="Enter repository name"
+              disabled
+              label="Name"
+              size="md"
+              autoFocus
+              error={errors.name?.message?.toString()}
+            />
           </ControlGroup>
           {/* DESCRIPTION */}
           <ControlGroup>
-            <Label htmlFor="description">Description</Label>
+            {/* <Label htmlFor="description">Description</Label> */}
             <Textarea
               id="description"
               {...register('description')}
               placeholder="Enter a description of this repository..."
+              label="Description"
+              error={errors.description?.message?.toString()}
+              optional
             />
-            {errors.description && (
-              <Message theme={MessageTheme.ERROR}>{errors.description.message?.toString()}</Message>
-            )}
           </ControlGroup>
         </Fieldset>
 
-        {/* <Fieldset className="max-w-[150px]"> */}
-        <ControlGroup>
-          <Label htmlFor="branch" optional>
-            Default Branch
-          </Label>
-          <Select value={branchValue} onValueChange={value => handleSelectChange('branch', value)} placeholder="">
-            {/* <SelectTrigger id="branch">
-                <SelectValue />
-              </SelectTrigger> */}
-            <SelectContent>
-              {!isDefaultInBranches && repoData.defaultBranch && (
-                <SelectItem key={repoData.defaultBranch} value={repoData.defaultBranch}>
-                  {repoData.defaultBranch}
-                </SelectItem>
-              )}
-              {repoData.branches.map(branch => {
-                return (
-                  <SelectItem key={branch.name} value={branch.name || ''}>
-                    {branch.name}
+        <Fieldset className="max-w-[150px]">
+          <ControlGroup>
+            <Select
+              value={branchValue}
+              onValueChange={value => handleSelectChange('branch', value)}
+              placeholder=""
+              label="Default Branch"
+              error={errors.branch?.message?.toString()}
+            >
+              <SelectContent>
+                {!isDefaultInBranches && repoData.defaultBranch && (
+                  <SelectItem key={repoData.defaultBranch} value={repoData.defaultBranch}>
+                    {repoData.defaultBranch}
                   </SelectItem>
-                )
-              })}
-            </SelectContent>
-          </Select>
-          {errors.branch && <Message theme={MessageTheme.ERROR}>{errors.branch.message?.toString()}</Message>}
-        </ControlGroup>
-        {/* </Fieldset> */}
+                )}
+                {repoData.branches.map(branch => {
+                  return (
+                    <SelectItem key={branch.name} value={branch.name || ''}>
+                      {branch.name}
+                    </SelectItem>
+                  )
+                })}
+              </SelectContent>
+            </Select>
+          </ControlGroup>
+        </Fieldset>
 
-        {/* <Fieldset> */}
-        <ControlGroup>
-          <Label htmlFor="access" optional>
-            Visibility
-          </Label>
-          <RadioGroup value={accessValue} onValueChange={handleAccessChange} id="access">
-            <Option
-              control={<RadioButton value="1" id="access-public" />}
-              id="access-public"
-              label="Public"
-              description="Anyone with access to the gitness environment can clone this repo."
-            />
-            <Option
-              control={<RadioButton value="2" id="access-private" />}
-              id="access-private"
-              label="Private"
-              description="You can choose who can see and commit to this repository."
-            />
-          </RadioGroup>
-          {errors.access && <Message theme={MessageTheme.ERROR}>{errors.access.message?.toString()}</Message>}
-        </ControlGroup>
-        {/* </Fieldset> */}
+        <Fieldset>
+          <ControlGroup>
+            <Text className="leading-none text-foreground-2" size={2}>
+              Visibility
+            </Text>
+            <RadioGroup className="mt-4" value={accessValue} onValueChange={handleAccessChange} id="access">
+              <Option
+                control={<RadioButton value="1" id="access-public" />}
+                id="access-public"
+                label="Public"
+                ariaSelected={accessValue === '1'}
+                description="Anyone with access to the gitness environment can clone this repo."
+              />
+              <Option
+                control={<RadioButton value="2" id="access-private" />}
+                id="access-private"
+                label="Private"
+                ariaSelected={accessValue === '2'}
+                description="You can choose who can see and commit to this repository."
+              />
+            </RadioGroup>
+            {errors.access && <Message theme={MessageTheme.ERROR}>{errors.access.message?.toString()}</Message>}
+          </ControlGroup>
+        </Fieldset>
 
         {apiError && errorTypes.has(apiError.type) && (
           <>
@@ -201,25 +206,25 @@ export const RepoSettingsGeneralForm: React.FC<{
         )}
 
         {/* SUBMIT BUTTONS */}
-        {/* <Fieldset className="mb-0"> */}
-        <ControlGroup>
-          <ButtonGroup>
-            {!isSubmitted || !isRepoUpdateSuccess ? (
-              <>
-                <Button type="submit" size="sm" disabled={!isValid || isUpdatingRepoData}>
-                  {!isUpdatingRepoData ? 'Save' : 'Saving...'}
+        <Fieldset>
+          <ControlGroup>
+            <ButtonGroup>
+              {!isSubmitted || !isRepoUpdateSuccess ? (
+                <>
+                  <Button type="submit" size="sm" disabled={!isValid || isUpdatingRepoData}>
+                    {!isUpdatingRepoData ? 'Save' : 'Saving...'}
+                  </Button>
+                </>
+              ) : (
+                <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
+                  Saved&nbsp;&nbsp;
+                  <Icon name="tick" size={14} />
                 </Button>
-              </>
-            ) : (
-              <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                Saved&nbsp;&nbsp;
-                <Icon name="tick" size={14} />
-              </Button>
-            )}
-          </ButtonGroup>
-        </ControlGroup>
-        {/* </Fieldset> */}
-      </form>
+              )}
+            </ButtonGroup>
+          </ControlGroup>
+        </Fieldset>
+      </FormWrapper>
     </>
   )
 }

@@ -45,6 +45,7 @@ export default function RepoSummaryPage() {
     setBranchList,
     setTagList,
     setSpaceIdAndRepoId,
+    setDefaultBranch,
     selectedBranchTag,
     setSelectedBranchTag,
     setSelectedBranchType
@@ -102,9 +103,12 @@ export default function RepoSummaryPage() {
         branches.map(item => ({
           name: item?.name || '',
           sha: item?.sha || '',
-          default: item?.name === repository?.default_branch
+          is_default: item?.name === repository?.default_branch
         }))
       )
+    }
+    if (repository?.default_branch) {
+      setDefaultBranch(repository)
     }
   }, [branches, repository?.default_branch])
 
@@ -260,7 +264,6 @@ export default function RepoSummaryPage() {
 
   useEffect(() => {
     const defaultBranch = branchList.find(branch => branch.default)
-
     setSelectedBranchTag({
       name: defaultBranch?.name || '',
       sha: defaultBranch?.sha || '',

@@ -29,6 +29,7 @@ export const RepoSidebar = () => {
     setBranchList,
     setTagList,
     selectedBranchTag,
+    setDefaultBranch,
     setSelectedBranchTag,
     setSelectedBranchType,
     setSpaceIdAndRepoId
@@ -66,9 +67,12 @@ export const RepoSidebar = () => {
         branches.map(item => ({
           name: item?.name || '',
           sha: item?.sha || '',
-          default: item?.name === repository?.default_branch
+          is_default: item?.name === repository?.default_branch
         }))
       )
+    }
+    if (repository?.default_branch) {
+      setDefaultBranch(repository)
     }
   }, [branches, repository?.default_branch])
 

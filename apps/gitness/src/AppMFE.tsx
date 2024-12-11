@@ -10,7 +10,6 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 
-import Breadcrumbs from './components/breadcrumbs/breadcrumbs'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'

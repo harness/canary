@@ -294,7 +294,6 @@ const PullRequestDiffViewer = ({
                                 {getInitials(currentUser ?? '', 2)}
                               </AvatarFallback>
                             </Avatar>
-                            {/* <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover font-sans'></div> */}
                             <Text color="primary">adam </Text>
                             <Text size={1} color="tertiaryBackground">
                               {timeAgo(item?.date)}

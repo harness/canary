@@ -19,10 +19,12 @@
     "behind": "Behind",
     "ahead": "Ahead",
     "commit": "Commit",
+    "createBranch": "Create branch",
+    "error": "Error:",
+    "cancel": "Cancel",
     "newPullReq": "New pull request",
     "viewRules": "View Rules",
     "renameBranch": "Rename Branch",
-    "createBranch": "Create branch",
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
@@ -53,6 +55,13 @@
     "projectSelector": "Select Project",
     "noProjects": "No projects available",
     "createProject": "Create Project"
+  },
+  "forms": {
+    "enterBranchName": "Enter branch name",
+    "createBranchError": "Branch name is required",
+    "select": "Select",
+    "baseBranch": "Base Branch",
+    "selectBranchError": "Base branch is required"
   },
   "noData": {
     "noResults": "No search results",

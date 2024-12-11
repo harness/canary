@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -21,21 +22,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import { CreateBranchFormFields } from '../types'
-
-export interface Branch {
-  name?: string
-}
-
-export interface CreateBranchDialogProps {
-  open: boolean
-  onClose: () => void
-  onSubmit: (formValues: CreateBranchFormFields) => void
-  isLoadingBranches: boolean
-  branches?: Array<Branch>
-  error?: string
-  isCreatingBranch?: boolean
-}
+import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
 
 export const createBranchFormSchema = z.object({
   name: z.string().min(1, { message: 'Branch name is required' }),
@@ -49,8 +36,11 @@ export function CreateBranchDialog({
   branches,
   isLoadingBranches,
   isCreatingBranch,
-  error
+  error,
+  useTranslationStore,
+  defaultBranch
 }: CreateBranchDialogProps) {
+  const { t } = useTranslationStore()
   const {
     register,
     handleSubmit,
@@ -62,21 +52,34 @@ export function CreateBranchDialog({
     mode: 'onChange',
     defaultValues: {
       name: '',
-      target: ''
+      target: defaultBranch
     }
   })
+
+  const processedBranches = defaultBranch
+    ? branches?.some(branch => branch.name === defaultBranch)
+      ? branches
+      : [{ name: defaultBranch }, ...(branches || [])]
+    : branches
 
   const targetValue = watch('target')
 
   const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
+  console.log('defaultBrabnch', defaultBranch)
+
+  useEffect(() => {
+    if (defaultBranch) {
+      setValue('target', defaultBranch, { shouldValidate: true })
+    }
+  }, [defaultBranch, setValue])
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-[500px] border-border bg-primary-background">
         <DialogHeader>
-          <DialogTitle>Create Branch</DialogTitle>
+          <DialogTitle>{t('views:repos.createBranch', 'Create Branch')}</DialogTitle>
         </DialogHeader>
         <DialogDescription>
           <Spacer size={6} />
@@ -86,9 +89,13 @@ export function CreateBranchDialog({
                 id="name"
                 label="Branch name"
                 {...register('name')}
-                placeholder="Enter branch name"
+                placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
                 size="md"
-                error={errors.name?.message?.toString()}
+                error={
+                  errors.name?.message
+                    ? t('views:forms.createBranchError', errors.name?.message?.toString())
+                    : undefined
+                }
               />
             </Fieldset>
 
@@ -96,15 +103,19 @@ export function CreateBranchDialog({
               <ControlGroup>
                 <Select
                   name="target"
-                  value={targetValue}
+                  value={targetValue || defaultBranch}
                   onValueChange={value => handleSelectChange('target', value)}
-                  placeholder="Select"
-                  label="Base Branch"
-                  error={errors.target?.message?.toString()}
+                  placeholder={t('views:forms.select', 'Select')}
+                  label={t('views:forms.baseBranch', 'Base Branch')}
+                  error={
+                    errors.target?.message
+                      ? t('views:forms.selectBranchError', errors.target?.message?.toString())
+                      : undefined
+                  }
                   disabled={isLoadingBranches || !branches?.length}
                 >
                   <SelectContent>
-                    {branches?.map(
+                    {processedBranches?.map(
                       branch =>
                         branch?.name && (
                           <SelectItem key={branch?.name} value={branch?.name as string}>
@@ -119,14 +130,16 @@ export function CreateBranchDialog({
 
             {error ? (
               <Alert.Container variant="destructive">
-                <Alert.Title>Error: {error}</Alert.Title>
+                <Alert.Title>
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Title>
               </Alert.Container>
             ) : null}
             <ButtonGroup className="flex justify-end">
               <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingBranch}>
-                Cancel
+                {t('views:repos.cancel', 'Cancel')}
               </Button>
-              <Button type="submit">Create Branch</Button>
+              <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>
             </ButtonGroup>
           </FormWrapper>
         </DialogDescription>

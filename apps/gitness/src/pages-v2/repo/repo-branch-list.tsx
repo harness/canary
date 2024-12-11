@@ -64,21 +64,17 @@ export function RepoBranchesListPage() {
       }
     )
 
-  const { mutateAsync: saveBranch, isLoading: isCreatingBranch } = useCreateBranchMutation({})
+  const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
 
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
 
-    try {
-      await saveBranch({
-        repo_ref: repoRef,
-        body: { name, target, bypass_rules: false }
-      })
-      queryClient.invalidateQueries({ queryKey: ['listBranches'] })
-      setCreateBranchDialogOpen(false)
-    } catch (e) {
-      console.log(e, 'error')
-    }
+    await saveBranch({
+      repo_ref: repoRef,
+      body: { name, target, bypass_rules: false }
+    })
+    queryClient.invalidateQueries({ queryKey: ['listBranches'] })
+    setCreateBranchDialogOpen(false)
   }
 
   useEffect(() => {
@@ -124,6 +120,7 @@ export function RepoBranchesListPage() {
       setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       searchQuery={query}
       setSearchQuery={setQuery}
+      createBranchError={createBranchError?.message}
     />
   )
 }

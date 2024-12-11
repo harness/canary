@@ -15,6 +15,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   isCreateBranchDialogOpen,
   setCreateBranchDialogOpen,
   onSubmit,
+  createBranchError,
   isCreatingBranch,
   searchQuery,
   setSearchQuery
@@ -134,6 +135,9 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
         branches={branchList}
         isLoadingBranches={isLoading}
         isCreatingBranch={isCreatingBranch}
+        useTranslationStore={useTranslationStore}
+        error={createBranchError}
+        defaultBranch={defaultBranch}
       />
     </SandboxLayout.Main>
   )

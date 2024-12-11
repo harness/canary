@@ -19,10 +19,12 @@
     "behind": "En retard",
     "ahead": "En avance",
     "commit": "Validation",
+    "createBranch": "Créer une branche",
+    "error": "Error:",
+    "cancel": "Cancel",
     "newPullReq": "Nouvelle requête de tirage",
     "viewRules": "Voir les règles",
     "renameBranch": "Renommer la branche",
-    "createBranch": "Créer une branche",
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",
@@ -53,6 +55,13 @@
     "projectSelector": "Sélectionner un projet",
     "noProjects": "Aucun projet disponible",
     "createProject": "Créer un projet"
+  },
+  "forms": {
+    "enterBranchName": "Enter branch name",
+    "createBranchError": "Le nom de la branche est requis",
+    "select": "Select",
+    "baseBranch": "Base Branch",
+    "selectBranchError": "La branche de base est requise"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",

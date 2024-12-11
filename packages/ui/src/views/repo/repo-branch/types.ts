@@ -51,6 +51,23 @@ export interface RepoBranchListViewProps {
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   onSubmit: (formValues: CreateBranchFormFields) => void
   isCreatingBranch: boolean
+  createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+}
+
+interface Branch {
+  name?: string
+}
+
+export interface CreateBranchDialogProps {
+  open: boolean
+  onClose: () => void
+  onSubmit: (formValues: CreateBranchFormFields) => void
+  isLoadingBranches: boolean
+  branches?: Array<Branch>
+  error?: string
+  isCreatingBranch?: boolean
+  useTranslationStore: () => TranslationStore
+  defaultBranch?: string
 }

@@ -162,9 +162,7 @@ export const FileEditor: React.FC = () => {
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(
-              `/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`
-            )
+            navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
           } else {
             navigate(
               `/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`

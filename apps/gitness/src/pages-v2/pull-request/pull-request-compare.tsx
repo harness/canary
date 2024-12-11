@@ -28,6 +28,7 @@ import {
   PullRequestCompare
 } from '@harnessio/ui/views'
 
+import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
@@ -45,6 +46,7 @@ export const CreatePullRequest = () => {
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
+  const { currentUser } = useAppContext()
 
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
 
@@ -362,6 +364,7 @@ export const CreatePullRequest = () => {
 
     return (
       <PullRequestCompare
+        currentUser={currentUser}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}
         useRepoCommitsStore={useRepoCommitsStore}

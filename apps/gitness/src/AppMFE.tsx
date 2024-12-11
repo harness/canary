@@ -55,11 +55,6 @@ export default function AppMFE({ scope, renderUrl, on401 }: ChildComponentProps)
                   <MFEContext.Provider value={{ scope }}>
                     <BrowserRouter basename={`/ng${renderUrl}`}>
                       <Routes>
-                        <Route path="repos" element={<ReposListPage />} />
-                        <Route path="repos/create" element={<CreateRepo />} />
-                        <Route path="repos/import" element={<RepoImportContainer />} />
-
-                        <Route path="repos/:repoId" element={<RepoSummaryPage />} />
                         <Route path="repos/:repoId/commits" element={<RepoCommitsPage />} />
                         <Route path="repos/:repoId/branches" element={<RepoBranchesListPage />} />
                         <Route path="repos/:repoId/webhooks" element={<WebhookListPage />} />
@@ -80,6 +75,13 @@ export default function AppMFE({ scope, renderUrl, on401 }: ChildComponentProps)
                           <Route index element={<SandboxPullRequestListPage />} />
                           <Route path="compare/:diffRefs*?" element={<CreatePullRequest />} />
                         </Route>
+
+                        <Route path="repos/create" element={<CreateRepo />} />
+                        <Route path="repos/import" element={<RepoImportContainer />} />
+
+                        <Route path="repos/:repoId" element={<RepoSummaryPage />} />
+
+                        <Route path="repos" element={<ReposListPage />} />
                       </Routes>
                     </BrowserRouter>
                   </MFEContext.Provider>

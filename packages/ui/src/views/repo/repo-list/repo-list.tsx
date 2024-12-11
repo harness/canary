@@ -55,41 +55,41 @@ export function RepoList({
   }
 
   if (noData) {
-    return (
+    return hasActiveFilters || query ? (
       <StackedList.Root>
         <div className="flex min-h-[50vh] items-center justify-center py-20">
-          {hasActiveFilters || query ? (
-            <NoData
-              iconName="no-search-magnifying-glass"
-              title="No search results"
-              description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-              primaryButton={{
-                label: 'Clear search',
-                onClick: handleResetQuery
-              }}
-              secondaryButton={{
-                label: 'Clear filters',
-                onClick: handleResetFilters
-              }}
-            />
-          ) : (
-            <NoData
-              iconName="no-data-folder"
-              title="No repositories yet"
-              description={[
-                'There are no repositories in this project yet.',
-                'Create new or import an existing repository.'
-              ]}
-              primaryButton={{
-                label: 'Create repository',
-                onClick: () => {
-                  /* TODO: add create handler */
-                }
-              }}
-            />
-          )}
+          <NoData
+            iconName="no-search-magnifying-glass"
+            title="No search results"
+            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+            primaryButton={{
+              label: 'Clear search',
+              onClick: handleResetQuery
+            }}
+            secondaryButton={{
+              label: 'Clear filters',
+              onClick: handleResetFilters
+            }}
+          />
         </div>
       </StackedList.Root>
+    ) : (
+      <div className="flex min-h-[70vh] items-center justify-center py-20">
+        <NoData
+          iconName="no-data-folder"
+          title="No repositories yet"
+          description={[
+            'There are no repositories in this project yet.',
+            'Create new or import an existing repository.'
+          ]}
+          primaryButton={{
+            label: 'Create repository',
+            onClick: () => {
+              /* TODO: add create handler */
+            }
+          }}
+        />
+      </div>
     )
   }
 

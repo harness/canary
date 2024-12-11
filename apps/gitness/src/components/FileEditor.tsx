@@ -160,10 +160,10 @@ export const FileEditor: React.FC = () => {
         resourcePath={fileResourcePath || ''}
         payload={content}
         sha={repoDetails?.sha}
-        onSuccess={(_commitInfo, isNewBranch, newBranchName, fileName) => {
+        onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
             navigate(
-              `/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${isNew ? fileResourcePath + fileName : fileResourcePath}`
+              `/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`
             )
           } else {
             navigate(

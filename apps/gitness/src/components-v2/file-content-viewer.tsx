@@ -11,8 +11,8 @@ import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
-import { PathParams } from '../RouteDefinitions.ts'
-import { decodeGitContent, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
+import { PathParams } from '../RouteDefinitions'
+import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
 
 const getIsMarkdown = (language?: string) => language === 'markdown'
 
@@ -35,6 +35,7 @@ export default function FileContentViewer({ repoContent, defaultBranch }: FileCo
   const fileContent = decodeGitContent(repoContent?.content?.data)
   const repoRef = useGetRepoRef()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
+  const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
   const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
@@ -97,7 +98,7 @@ export default function FileContentViewer({ repoContent, defaultBranch }: FileCo
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code`)
+            navigate(`/${spaceId}/repos/${repoId}/code${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
             navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
           }

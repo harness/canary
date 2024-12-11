@@ -5,12 +5,15 @@ import { StepNodeDataType } from '../nodes/step-node'
 import { ContentNodeTypes } from '../types/content-node-types'
 import { getIcon } from './utils'
 
-export const yaml2Nodes = (yamlObject: Record<string, any>): AnyNodeType[] => {
+export const yaml2Nodes = (
+  yamlObject: Record<string, any>,
+  options: { maxWidth?: number } = { maxWidth: 140 }
+): AnyNodeType[] => {
   const nodes: AnyNodeType[] = []
 
   const stages = yamlObject?.pipeline?.stages
   if (stages) {
-    const stagesNodes = processStages(stages, '')
+    const stagesNodes = processStages(stages, '', options)
     nodes.push(...stagesNodes)
   }
 
@@ -23,7 +26,7 @@ const getGroupKey = (stage: Record<string, any>): 'group' | 'parallel' | undefin
   return undefined
 }
 
-const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
+const processStages = (stages: any[], currentPath: string, options: { maxWidth?: number }): AnyNodeType[] => {
   return stages.map((stage, idx) => {
     // parallel stage
     const groupKey = getGroupKey(stage)
@@ -43,7 +46,7 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
           name
         } satisfies StageNodeContentType,
 
-        children: processStages(stage[groupKey].stages, path)
+        children: processStages(stage[groupKey].stages, path, options)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
       const name = stage.name ?? `Parallel group ${idx}`
@@ -60,7 +63,7 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
           yamlPath: path,
           name
         } satisfies ParallelGroupContentNodeDataType,
-        children: processStages(stage[groupKey].stages, path)
+        children: processStages(stage[groupKey].stages, path, options)
       } satisfies ParallelNodeType
     }
     // regular stage
@@ -79,13 +82,13 @@ const processStages = (stages: any[], currentPath: string): AnyNodeType[] => {
           yamlPath: path,
           name
         } satisfies StageNodeContentType,
-        children: processSteps(stage.steps, path)
+        children: processSteps(stage.steps, path, options)
       } satisfies SerialNodeType
     }
   })
 }
 
-const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
+const processSteps = (steps: any[], currentPath: string, options: { maxWidth?: number }): AnyNodeType[] => {
   return steps.map((step, idx) => {
     // parallel stage
     const groupKey = getGroupKey(step)
@@ -105,7 +108,7 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
           name
         } satisfies StageNodeContentType,
 
-        children: processSteps(step[groupKey].steps, path)
+        children: processSteps(step[groupKey].steps, path, options)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
       const name = step.name ?? `Parallel group ${idx}`
@@ -122,7 +125,7 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
           yamlPath: path,
           name
         } satisfies ParallelGroupContentNodeDataType,
-        children: processSteps(step[groupKey].steps, path)
+        children: processSteps(step[groupKey].steps, path, options)
       } satisfies ParallelNodeType
     }
     // regular step
@@ -133,7 +136,7 @@ const processSteps = (steps: any[], currentPath: string): AnyNodeType[] => {
       return {
         type: ContentNodeTypes.step,
         config: {
-          maxWidth: 140,
+          ...options,
           hideDeleteButton: false,
           selectable: true
         },

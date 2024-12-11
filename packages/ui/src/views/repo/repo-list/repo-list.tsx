@@ -61,9 +61,12 @@ export function RepoList({
           <NoData
             iconName="no-search-magnifying-glass"
             title="No search results"
-            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+            description={[
+              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+              t('views:noData.changeSearch', 'or search for a different keyword.')
+            ]}
             primaryButton={{
-              label: 'Clear search',
+              label: t('views:noData.clearSearch', 'Clear search'),
               onClick: handleResetQuery
             }}
             secondaryButton={{

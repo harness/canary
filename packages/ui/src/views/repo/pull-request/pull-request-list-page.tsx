@@ -162,14 +162,17 @@ const PullRequestList: FC<PullRequestPageProps> = ({
           <div className="flex min-h-[50vh] items-center justify-center py-20">
             <NoData
               iconName="no-search-magnifying-glass"
-              title="No search results"
-              description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+              title={t('views:noData.noResults', 'No search results')}
+              description={[
+                t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+                t('views:noData.changeSearch', 'or search for a different keyword.')
+              ]}
               primaryButton={{
-                label: 'Clear search',
+                label: t('views:noData.clearSearch', 'Clear search'),
                 onClick: handleResetQuery
               }}
               secondaryButton={{
-                label: 'Clear filters',
+                label: t('views:noData.clearFilters', 'Clear filters'),
                 onClick: filterHandlers.handleResetFilters
               }}
             />
@@ -180,7 +183,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
           <NoData
             iconName="no-data-folder"
             title="No pull requests yet"
-            description={['There are no pull requests in this project yet.', 'Create a new pull request.']}
+            description={[
+              t('views:noData.noPullRequests', 'There are no pull requests in this project yet.'),
+              t('views:noData.createNewPullRequest', 'Create a new pull request.')
+            ]}
             primaryButton={{
               label: 'Create pull request',
               to: `/${spaceId}/repos/${repoId}/pulls/compare/`

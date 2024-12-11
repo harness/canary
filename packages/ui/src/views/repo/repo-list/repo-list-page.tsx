@@ -111,7 +111,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 <SearchBox.Root
                   width="full"
                   className="max-w-96"
-                  // defaultValue={searchQuery || ''}
                   value={searchInput || ''}
                   handleChange={handleInputChange}
                   placeholder={t('views:repos.search')}

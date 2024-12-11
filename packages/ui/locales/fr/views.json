@@ -57,21 +57,24 @@
     "noProjects": "Aucun projet disponible",
     "createProject": "Créer un projet"
   },
+  "noData": {
+    "noResults": "Aucun résultat de recherche",
+    "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
+    "changeSearch": "ou recherchez un autre mot-clé.",
+    "clearSearch": "Effacer la recherche",
+    "clearFilters": "Clear filters",
+    "noPullRequests": "There are no pull requests in this project yet.",
+    "createNewPullRequest": "Create a new pull request.",
+    "noBranches": "Pas encore de branches",
+    "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
+    "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
+    "createBranch": "Créer une branche"
+  },
   "forms": {
     "enterBranchName": "Enter branch name",
     "createBranchError": "Le nom de la branche est requis",
     "select": "Select",
     "baseBranch": "Base Branch",
     "selectBranchError": "La branche de base est requise"
-  },
-  "noData": {
-    "noResults": "Aucun résultat de recherche",
-    "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
-    "changeSearch": "ou recherchez un autre mot-clé.",
-    "clearSearch": "Effacer la recherche",
-    "noBranches": "Pas encore de branches",
-    "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
-    "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
-    "createBranch": "Créer une branche"
   }
 }

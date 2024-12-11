@@ -4,7 +4,7 @@ import { Fieldset, FormSeparator, FormWrapper } from '@/components'
 
 // import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
-// import { RepoSettingsGeneralRules } from './repo-settings-general/repo-settings-general-rules'
+import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 // import {
 //   RepoSettingsSecurityForm,
 //   RepoSettingsSecurityFormFields
@@ -58,17 +58,17 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
         isRepoUpdateSuccess={isRepoUpdateSuccess}
       />
       <FormSeparator />
-      {/* <div ref={rulesRef}>
-          <RepoSettingsGeneralRules
-            rules={rules}
-            apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
-          />
-        </div>
+      <div ref={rulesRef}>
+        <RepoSettingsGeneralRules
+          rules={rules}
+          apiError={apiError}
+          handleRuleClick={handleRuleClick}
+          openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+        />
+      </div>
 
-        <FormFieldSet.Separator />
-        <RepoSettingsSecurityForm
+      <FormSeparator />
+      {/*<RepoSettingsSecurityForm
           securityScanning={securityScanning}
           handleUpdateSecuritySettings={handleUpdateSecuritySettings}
           apiError={apiError}

@@ -8,6 +8,8 @@
     "viewAll": "View all {{type}}",
     "findBranch": "Find a branch",
     "findTag": "Find a tag",
+    "search": "Search",
+    "allCommits": "All commits",
     "noFile": "No files available",
     "name": "Name",
     "lastCommit": "Last commit message",

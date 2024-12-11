@@ -8,6 +8,8 @@
     "viewAll": "Voir tout {{type}}",
     "findBranch": "Trouver une branche",
     "findTag": "Trouver une étiquette",
+    "search": "Recherche",
+    "allCommits": "Tout s'engage",
     "noFile": "Aucun fichier disponible",
     "name": "Nom",
     "lastCommit": "Dernier message de validation",

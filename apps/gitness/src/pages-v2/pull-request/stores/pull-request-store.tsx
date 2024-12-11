@@ -74,7 +74,7 @@ export const usePullRequestStore = create<PullRequestStore>(set => ({
   setOpenClosePullRequests: repoMetadata => {
     set({
       openPullReqs: repoMetadata.num_open_pulls || 0,
-      closedPullReqs: repoMetadata.num_closed_pulls || 0
+      closedPullReqs: (repoMetadata?.num_closed_pulls || 0) + (repoMetadata?.num_merged_pulls || 0)
     })
   }
 }))

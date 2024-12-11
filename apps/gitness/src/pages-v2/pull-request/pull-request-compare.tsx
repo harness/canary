@@ -4,12 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
 import { compact, isEqual } from 'lodash-es'
+import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
   CreateRepositoryErrorResponse,
   mergeCheck,
   OpenapiCreatePullReqRequest,
-  TypesCommit,
   useCreatePullReqMutation,
   useDiffStatsQuery,
   useFindRepositoryQuery,
@@ -20,7 +20,13 @@ import {
   useRawDiffQuery
 } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
-import { BranchSelectorListItem, BranchSelectorTab, CompareFormFields, PullRequestCompare } from '@harnessio/ui/views'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitSelectorListItem,
+  CompareFormFields,
+  PullRequestCompare
+} from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -30,6 +36,7 @@ import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pag
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
+import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -243,12 +250,15 @@ export const CreatePullRequest = () => {
       setPrBranchCombinationExists(null)
     }
   }, [pullReqData])
+  const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
-  const { data: { body: commitData } = {} } = useListCommitsQuery({
+  const { data: { body: commitData, headers } = {} } = useListCommitsQuery({
     repo_ref: repoRef,
 
     queryParams: {
+      // TODO: add query when commit list api has query abilities
+      // query: query??'',
       page: 0,
       limit: 20,
       after: normalizeGitRef(selectedTargetBranch.name),
@@ -256,6 +266,18 @@ export const CreatePullRequest = () => {
       include_stats: true
     }
   })
+  const { setCommits, page, setPage, setSelectedCommit } = useRepoCommitsStore()
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
+  useEffect(() => {
+    if (commitData) {
+      setCommits(commitData, headers)
+    }
+  }, [commitData, headers, setCommits])
+
+  useEffect(() => {
+    setQueryPage(page)
+  }, [queryPage, page, setPage])
 
   const branchList: BranchSelectorListItem[] = useMemo(() => {
     if (!branches) return []
@@ -289,6 +311,16 @@ export const CreatePullRequest = () => {
     }))
   }, [tags])
 
+  const selectCommit = useCallback(
+    (commitName: CommitSelectorListItem) => {
+      const commit = commitData?.commits?.find(item => item.title === commitName.title)
+      if (commit?.title && commit?.sha) {
+        setSelectedCommit({ title: commit.title, sha: commit.sha || '' })
+      }
+    },
+    [commitData, setSelectedCommit]
+  )
+
   const selectBranchorTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab, sourceBranch: boolean) => {
       if (type === BranchSelectorTab.BRANCHES) {
@@ -311,7 +343,7 @@ export const CreatePullRequest = () => {
         }
       }
     },
-    [branchList, tagsList]
+    [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
   )
 
   const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
@@ -330,6 +362,12 @@ export const CreatePullRequest = () => {
 
     return (
       <PullRequestCompare
+        setSearchCommitQuery={setQuery}
+        searchCommitQuery={query}
+        useRepoCommitsStore={useRepoCommitsStore}
+        repoId={repoId}
+        spaceId={spaceId}
+        onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}
         onFormSubmit={onSubmit}
@@ -342,14 +380,6 @@ export const CreatePullRequest = () => {
         selectBranch={selectBranchorTag}
         useTranslationStore={useTranslationStore}
         useRepoBranchesStore={useRepoBranchesStore}
-        commitData={commitData?.commits?.map((item: TypesCommit) => ({
-          sha: item.sha,
-          parent_shas: item.parent_shas,
-          title: item.title,
-          message: item.message,
-          author: item.author,
-          committer: item.committer
-        }))}
         targetBranch={selectedTargetBranch}
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}

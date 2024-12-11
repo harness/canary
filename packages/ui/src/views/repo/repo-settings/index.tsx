@@ -5,10 +5,7 @@ import { Fieldset, FormSeparator, FormWrapper } from '@/components'
 // import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
 import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
-// import {
-//   RepoSettingsSecurityForm,
-//   RepoSettingsSecurityFormFields
-// } from './repo-settings-general/repo-settings-general-security'
+import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
 import { ErrorTypes, RepoData, RepoUpdateData, RuleDataType } from './types'
 
 interface ILoadingStates {
@@ -20,7 +17,7 @@ interface ILoadingStates {
 interface RepoSettingsGeneralPageProps {
   repoData: RepoData
   securityScanning: boolean
-  //   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
+  handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
@@ -34,7 +31,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   repoData,
   handleRepoUpdate,
   securityScanning,
-  //   handleUpdateSecuritySettings,
+  handleUpdateSecuritySettings,
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
@@ -68,15 +65,15 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
       </div>
 
       <FormSeparator />
-      {/*<RepoSettingsSecurityForm
-          securityScanning={securityScanning}
-          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-          apiError={apiError}
-          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
-          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-        />
-        <FormFieldSet.Separator />
-        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} /> */}
+      <RepoSettingsSecurityForm
+        securityScanning={securityScanning}
+        handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+        apiError={apiError}
+        isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+        isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+      />
+      <FormSeparator />
+      {/*<RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} /> */}
     </Fieldset>
   )
 }

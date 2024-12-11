@@ -333,7 +333,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       repoData={repoData}
       handleRepoUpdate={handleRepoUpdate}
       securityScanning={securityScanning}
-      //   handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+      handleUpdateSecuritySettings={handleUpdateSecuritySettings}
       apiError={apiError}
       loadingStates={loadingStates}
       isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}

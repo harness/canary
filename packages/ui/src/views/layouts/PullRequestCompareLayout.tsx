@@ -51,7 +51,7 @@ export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
   { name: 'Unified', value: 'Unified' }
 ]
-interface SandboxPullRequestCompareProps {
+export interface SandboxPullRequestCompareProps {
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
   onFormCancel: () => void
@@ -143,7 +143,6 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
-
   return (
     <SandboxLayout.Main fullWidth hasLeftPanel hasHeader>
       <SandboxLayout.Content maxWidth="3xl">
@@ -357,7 +356,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
     </SandboxLayout.Main>
   )
 }
-interface HeaderProps {
+export interface HeaderProps {
   text: string
   data?: string
   title: string

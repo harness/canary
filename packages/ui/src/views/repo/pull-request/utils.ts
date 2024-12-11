@@ -1,4 +1,4 @@
-import { IconType } from './types'
+import { IconType } from './pull-request.types'
 
 export const getPrState = (
   is_draft?: boolean,

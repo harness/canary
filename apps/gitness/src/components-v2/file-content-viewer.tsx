@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { OpenapiGetContentOutput, useFindRepositoryQuery } from '@harnessio/code-service-client'
+import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
 import { FileViewerControlBar, MarkdownViewer, ViewTypeValue } from '@harnessio/ui/components'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -11,7 +11,7 @@ import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
-import { PathParams } from '../RouteDefinitions'
+import { PathParams } from '../RouteDefinitions.ts'
 import { decodeGitContent, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
 
 const getIsMarkdown = (language?: string) => language === 'markdown'
@@ -22,35 +22,47 @@ const getDefaultView = (language?: string): ViewTypeValue => {
 
 interface FileContentViewerProps {
   repoContent?: OpenapiGetContentOutput
+  defaultBranch: string
 }
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
-export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
+export default function FileContentViewer({ repoContent, defaultBranch }: FileContentViewerProps) {
+  const { spaceId, repoId } = useParams<PathParams>()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
   const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
-  const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
+  const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
 
+  /**
+   * Toggle delete dialog open state
+   * @param value
+   */
+  const handleToggleDeleteDialog = (value: boolean) => {
+    setIsDeleteFileDialogOpen(value)
+  }
+
+  /**
+   * Change view file state
+   * @param value
+   */
   const onChangeView = (value: ViewTypeValue) => {
     setView(value)
   }
 
+  /**
+   * Set default view
+   */
   useEffect(() => {
     setView(getDefaultView(language))
   }, [language])
-
-  const handleToggleDeleteDialog = (value: boolean) => {
-    setIsDeleteFileDialogOpen(value)
-  }
 
   const themeConfig = useMemo(
     () => ({
@@ -60,8 +72,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     []
   )
 
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-
   const handleDownloadFile = () => {
     downloadFile({
       repoRef,
@@ -70,24 +80,12 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     })
   }
 
+  /**
+   * Navigate to Edit file route
+   */
   const handleEditFile = () => {
     navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
   }
-
-  const CodeView = useMemo(
-    () => (
-      <CodeEditor
-        language={language}
-        codeRevision={{ code: fileContent }}
-        onCodeRevisionChange={() => {}}
-        themeConfig={themeConfig}
-        options={{
-          readOnly: true
-        }}
-      />
-    ),
-    [language, fileContent, themeConfig]
-  )
 
   return (
     <>
@@ -101,12 +99,10 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           if (!isNewBranch) {
             navigate(`/${spaceId}/repos/${repoId}/code`)
           } else {
-            navigate(
-              `/${spaceId}/repos/${repoId}/pull-requests/compare/${repoMetadata?.default_branch}...${newBranchName}`
-            )
+            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
           }
         }}
-        defaultBranch={repoMetadata?.default_branch || ''}
+        defaultBranch={defaultBranch}
         isNew={false}
       />
       <FileViewerControlBar
@@ -124,7 +120,15 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       {language === 'markdown' && view === 'preview' ? (
         <MarkdownViewer source={fileContent} withBorderWrapper />
       ) : view === 'code' ? (
-        CodeView
+        <CodeEditor
+          language={language}
+          codeRevision={{ code: fileContent }}
+          onCodeRevisionChange={() => {}}
+          themeConfig={themeConfig}
+          options={{
+            readOnly: true
+          }}
+        />
       ) : (
         <GitBlame themeConfig={themeConfig} codeContent={fileContent} language={language} />
       )}

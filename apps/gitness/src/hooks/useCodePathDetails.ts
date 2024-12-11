@@ -1,12 +1,8 @@
 import { useParams } from 'react-router-dom'
 
-import { REFS_TAGS_PREFIX } from '../utils/git-utils'
+import { CodeModes } from '@harnessio/ui/views'
 
-export enum CodeModes {
-  EDIT = 'edit',
-  NEW = 'new',
-  VIEW = 'view'
-}
+import { REFS_TAGS_PREFIX } from '../utils/git-utils'
 
 const useCodePathDetails = () => {
   const subCodePath = useParams()['*'] || ''

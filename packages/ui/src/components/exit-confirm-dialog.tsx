@@ -1,18 +1,17 @@
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from '@harnessio/canary'
+import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components'
 
-import { ExitConfirmOptions } from '../framework/context/ExitConfirmContext'
+export interface ExitConfirmOptions {
+  title?: string
+  subtitle?: string
+  confirmText?: string
+  cancelText?: string
+  onConfirm: () => void
+  onCancel?: () => void
+}
 
 export type ExitConfirmDialogProps = ExitConfirmOptions & { open: boolean }
 
-export function ExitConfirmDialog({
+export const ExitConfirmDialog = ({
   open,
   onCancel,
   onConfirm,
@@ -20,7 +19,7 @@ export function ExitConfirmDialog({
   subtitle = 'Are you sure you want to leave this page without saving?',
   confirmText = 'Leave',
   cancelText = 'Stay'
-}: ExitConfirmDialogProps) {
+}: ExitConfirmDialogProps) => {
   return (
     <Dialog
       open={open}
@@ -28,16 +27,16 @@ export function ExitConfirmDialog({
         if (!open) onCancel?.()
       }}
     >
-      <DialogContent className="max-w-[500px] border-border bg-primary-background">
+      <DialogContent className="max-w-[500px]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
         <DialogDescription>{subtitle}</DialogDescription>
         <DialogFooter>
-          <Button onClick={onCancel}>{cancelText}</Button>
-          <Button onClick={onConfirm} variant="secondary">
-            {confirmText}
+          <Button variant="outline" onClick={() => onCancel?.()}>
+            {cancelText}
           </Button>
+          <Button onClick={onConfirm}>{confirmText}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

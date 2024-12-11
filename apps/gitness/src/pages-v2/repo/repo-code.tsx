@@ -9,12 +9,12 @@ import {
   useFindRepositoryQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
+import { CodeModes, RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
-import { FileEditor } from '../../components/FileEditor'
+import { FileEditor } from '../../components-v2/file-editor'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import useCodePathDetails, { CodeModes } from '../../hooks/useCodePathDetails'
+import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
@@ -29,8 +29,6 @@ export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { selectedBranchTag } = useRepoBranchesStore()
-
-  // TODO: Not sure what codeMode is used for; it needs to be reviewed, and the condition for rendering the FileContentViewer component may need to be adjusted or fixed.
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
 
@@ -44,7 +42,7 @@ export const RepoCode = () => {
   ]
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
-  const [selectedBranch, setSelectedBranch] = useState<string>(gitRefName || '')
+  const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
 
   const { data: { body: repoDetails } = {} } = useGetContentQuery({
     path: fullResourcePath || '',
@@ -137,43 +135,49 @@ export const RepoCode = () => {
     if (fullResourcePath && repoDetails) {
       if (repoDetails?.type === 'dir') {
         return `new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
-      } else {
-        const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-        return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
       }
-    } else {
-      return `new/${fullGitRef || selectedBranchTag.name}/~/`
-    }
-  }, [repoDetails])
 
-  const renderCodeView = () => {
-    if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
-      return <FileContentViewer repoContent={repoDetails} />
-    } else if (codeMode === CodeModes.EDIT || codeMode === CodeModes.NEW) {
-      // TODO: should render FileEditor from v2
-      return <FileEditor />
+      const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
+      return `new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
     }
-  }
+
+    return `new/${fullGitRef || selectedBranchTag.name}/~/`
+  }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
+
+  /**
+   * Render File content view or Edit file view
+   */
+  const renderCodeView = useMemo(() => {
+    if (codeMode === CodeModes.VIEW && !!repoDetails?.type && repoDetails.type !== 'dir') {
+      return <FileContentViewer repoContent={repoDetails} defaultBranch={repository?.default_branch || ''} />
+    }
+
+    if (codeMode !== CodeModes.VIEW) {
+      return <FileEditor repoDetails={repoDetails} defaultBranch={repository?.default_branch || ''} />
+    }
+
+    return <></>
+  }, [codeMode, repoDetails, repository?.default_branch])
 
   if (!repoId) return <></>
 
   return (
-    <RepoFiles
-      pathParts={pathParts}
-      loading={loading}
-      files={files}
-      isDir={repoDetails?.type === 'dir'}
-      isShowSummary={!!repoEntryPathToFileTypeMap.size}
-      latestFile={latestFiles}
-      useTranslationStore={useTranslationStore}
-      // TODO: add correct path to Create new file page
-      pathNewFile={pathToNewFile}
-      // TODO: add correct path to Upload files page
-      pathUploadFiles="/upload-file"
-      isEditFile={codeMode === CodeModes.EDIT}
-      isNewFile={codeMode === CodeModes.NEW}
-    >
-      {renderCodeView()}
-    </RepoFiles>
+    <>
+      <RepoFiles
+        pathParts={pathParts}
+        loading={loading}
+        files={files}
+        isDir={repoDetails?.type === 'dir'}
+        isShowSummary={!!repoEntryPathToFileTypeMap.size}
+        latestFile={latestFiles}
+        useTranslationStore={useTranslationStore}
+        pathNewFile={pathToNewFile}
+        // TODO: add correct path to Upload files page
+        pathUploadFiles="/upload-file"
+        codeMode={codeMode}
+      >
+        {renderCodeView}
+      </RepoFiles>
+    </>
   )
 }

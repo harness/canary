@@ -1,8 +1,16 @@
 import { ReactNode, useMemo } from 'react'
 
-import { FileAdditionsTrigger, NoData, PathBreadcrumbs, PathParts, SkeletonList } from '@/components'
-import { LatestFileTypes, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { FileLastChangeBar, Summary } from '@/views/repo/components'
+import { NoData, PathParts, SkeletonList } from '@/components'
+import {
+  CodeModes,
+  FileLastChangeBar,
+  LatestFileTypes,
+  PathActionBar,
+  RepoFile,
+  SandboxLayout,
+  Summary,
+  TranslationStore
+} from '@/views'
 
 interface RepoFilesProps {
   pathParts: PathParts[]
@@ -15,8 +23,7 @@ interface RepoFilesProps {
   useTranslationStore: () => TranslationStore
   pathNewFile: string
   pathUploadFiles: string
-  isEditFile: boolean
-  isNewFile: boolean
+  codeMode: CodeModes
 }
 
 export const RepoFiles = ({
@@ -30,11 +37,14 @@ export const RepoFiles = ({
   useTranslationStore,
   pathNewFile,
   pathUploadFiles,
-  isEditFile,
-  isNewFile
+  codeMode
 }: RepoFilesProps) => {
+  const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
+
   const content = useMemo(() => {
-    if (!isDir && !isEditFile && !isNewFile)
+    if (!isView) return children
+
+    if (!isDir)
       return (
         <>
           <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
@@ -44,12 +54,8 @@ export const RepoFiles = ({
 
     if (loading) return <SkeletonList />
 
-    if (isShowSummary && files.length && !isNewFile)
+    if (isShowSummary && files.length)
       return <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
-
-    if (isNewFile || isEditFile) {
-      return children
-    }
 
     return (
       <NoData
@@ -61,21 +67,20 @@ export const RepoFiles = ({
         secondaryButton={{ label: 'Import file' }}
       />
     )
-  }, [isDir, children, loading, isShowSummary, latestFile, files, useTranslationStore])
+  }, [isDir, children, loading, isShowSummary, latestFile, files, useTranslationStore, isView])
 
   return (
     <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
-      <SandboxLayout.Content>
-        <div className="mb-4 flex h-8 items-center justify-between gap-8">
-          <PathBreadcrumbs items={pathParts} />
-          {!isEditFile && !isNewFile ? (
-            <FileAdditionsTrigger
-              useTranslationStore={useTranslationStore}
-              pathNewFile={pathNewFile}
-              pathUploadFiles={pathUploadFiles}
-            />
-          ) : null}
-        </div>
+      <SandboxLayout.Content className="relative z-0">
+        {isView && (
+          <PathActionBar
+            codeMode={codeMode}
+            pathParts={pathParts}
+            useTranslationStore={useTranslationStore}
+            pathNewFile={pathNewFile}
+            pathUploadFiles={pathUploadFiles}
+          />
+        )}
         {content}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

@@ -45,11 +45,11 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
           <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56 max-h-[358px] overflow-y-auto" align="end">
+      <DropdownMenuContent className="max-h-[358px] w-56 overflow-y-auto" align="end">
         {layoutOptions?.length && (
           <>
-            <div className="py-2.5 px-2">
-              <span className="text-13 text-foreground-7 leading-none">Layout</span>
+            <div className="px-2 py-2.5">
+              <span className="text-13 leading-none text-foreground-7">Layout</span>
             </div>
             {layoutOptions.map(option => (
               <DropdownMenuItem key={option.value} onSelect={() => onLayoutChange?.(option.value)} className="gap-x-2">
@@ -65,9 +65,9 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
             {layoutOptions?.length && <DropdownMenuSeparator />}
             <div className="px-2 py-1.5">
               <div className="flex items-center justify-between">
-                <span className="text-13 text-foreground-7 leading-none">Saved views</span>
+                <span className="text-13 leading-none text-foreground-7">Saved views</span>
                 <button
-                  className="text-foreground-accent hover:text-foreground-1 text-13 transition-colors duration-200"
+                  className="text-13 text-foreground-accent transition-colors duration-200 hover:text-foreground-1"
                   onClick={handleManageClick}
                 >
                   Manage

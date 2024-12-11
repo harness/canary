@@ -18,6 +18,13 @@ import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useRuleViolationCheck } from '../framework/hooks/useRuleViolationCheck'
 import { GitCommitAction } from '../utils/git-utils'
 
+export type CommitDialogOnSuccess = (
+  response: TypesCommitFilesResponse,
+  isNewBranch: boolean,
+  newBranchName: string,
+  fileName?: string
+) => void
+
 interface CommitDialogProps {
   open: boolean
   onClose: () => void
@@ -27,12 +34,7 @@ interface CommitDialogProps {
   oldResourcePath?: string
   resourcePath: string
   payload?: string
-  onSuccess: (
-    response: TypesCommitFilesResponse,
-    isNewBranch: boolean,
-    newBranchName: string,
-    fileName?: string
-  ) => void
+  onSuccess: CommitDialogOnSuccess
   defaultBranch: string
   isNew: boolean
 }

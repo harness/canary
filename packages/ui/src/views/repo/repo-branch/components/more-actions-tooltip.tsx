@@ -29,7 +29,7 @@ export const MoreActionsTooltip: React.FC<MoreActionsTooltipProps> = ({
           <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-primary-background w-[180px] rounded-[10px] border border-gray-800 py-2 shadow-sm">
+      <DropdownMenuContent className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm">
         <DropdownMenuGroup>
           <Link
             replace

@@ -15,9 +15,8 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && pnpm build:css && pnpm extract",
+    "build": "vite build && pnpm extract",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
-    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "build:watch": "vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
@@ -33,6 +32,9 @@
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
+  "files": [
+    "dist/**.*"
+  ],
   "sideEffects": false,
   "repository": {
     "type": "git",

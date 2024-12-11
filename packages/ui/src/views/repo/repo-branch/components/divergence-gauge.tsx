@@ -23,7 +23,7 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
         <Text as="p" size={1} truncate color="tertiaryBackground" className="leading-none">
           {behindAhead.behind ?? 0}
         </Text>
-        <div className="border-tertiary-background/30 h-full border-r" />
+        <div className="h-full border-r border-tertiary-background/30" />
         <Text as="p" size={1} truncate color="tertiaryBackground" className="place-self-start leading-none">
           {behindAhead.ahead ?? 0}
         </Text>

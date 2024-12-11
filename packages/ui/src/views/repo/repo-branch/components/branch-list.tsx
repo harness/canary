@@ -71,7 +71,7 @@ export const BranchesList = ({
                 {/* user avatar and timestamp */}
                 <TableCell className="content-center">
                   <div className="flex items-center gap-1.5">
-                    <Avatar className="h-5 w-5">
+                    <Avatar className="size-5">
                       {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
                       <AvatarFallback className="p-1 text-center text-xs">
                         {getInitials(branch?.user?.name ?? '', 2)}
@@ -100,7 +100,7 @@ export const BranchesList = ({
                       <Badge
                         variant="outline"
                         size="xs"
-                        className="text-tertiary-background m-auto h-5 rounded-full p-2 text-center text-xs font-normal"
+                        className="m-auto h-5 rounded-full p-2 text-center text-xs font-normal text-tertiary-background"
                       >
                         {t('views:repos.default', 'Default')}
                       </Badge>
@@ -114,7 +114,7 @@ export const BranchesList = ({
                   <TableCell className="content-center">
                     <div className="flex items-center justify-center gap-1.5">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
-                      <Text wrap="nowrap" size={1} truncate className="text-tertiary-background font-mono">
+                      <Text wrap="nowrap" size={1} truncate className="font-mono text-tertiary-background">
                         <CommitCopyActions sha={branch.sha} />
                       </Text>
                     </div>

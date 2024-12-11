@@ -20,6 +20,9 @@ import { getTrimmedSha, normalizeGitRef } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
 import FileContentViewer from './FileContentViewer'
 
+/**
+ * @deprecated
+ */
 export const FileViewer: React.FC = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, gitRef, resourcePath } = useParams<PathParams>()

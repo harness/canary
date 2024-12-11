@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -7,20 +7,110 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator
+  BreadcrumbSeparator,
+  Icon,
+  Input
 } from '@/components'
+import { debounce } from 'lodash-es'
 
-interface PathParts {
+interface InputPathBreadcrumbItemProps {
+  path: string
+  changeFileName: (value: string) => void
+  gitRefName: string
+  isNew?: boolean
+  handleOnBlur: () => void
+}
+
+const InputPathBreadcrumbItem = ({
+  path,
+  changeFileName,
+  gitRefName,
+  isNew = false,
+  handleOnBlur
+}: InputPathBreadcrumbItemProps) => {
+  const [fileName, setFileName] = useState('')
+
+  const debouncedChangeFileNameRef = useRef(debounce((value: string) => changeFileName(value), 300))
+
+  useEffect(() => {
+    const debouncedChangeFileName = debouncedChangeFileNameRef.current
+
+    return () => {
+      debouncedChangeFileName.cancel()
+    }
+  }, [])
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+    setFileName(value)
+    debouncedChangeFileNameRef.current(value)
+  }
+
+  useEffect(() => {
+    setFileName(path)
+  }, [path])
+
+  return (
+    <div className="flex items-center gap-1.5 text-foreground-4">
+      <Input
+        className="w-[200px]"
+        id="fileName"
+        value={fileName}
+        placeholder="Add a file name"
+        onChange={handleInputChange}
+        onBlur={handleOnBlur}
+        // eslint-disable-next-line jsx-a11y/no-autofocus
+        autoFocus={isNew}
+      />
+      <span>in</span>
+      <span className="flex h-6 items-center gap-1 rounded bg-background-8 px-2.5 text-foreground-8">
+        <Icon className="text-icons-9" name="branch" size={14} />
+        {gitRefName}
+      </span>
+    </div>
+  )
+}
+
+export interface PathParts {
   path: string
   parentPath: string
 }
 
-interface PathBreadcrumbsProps {
+export interface PathBreadcrumbsBaseProps {
   items: PathParts[]
+  isEdit: boolean
+  isNew: boolean
 }
 
-const PathBreadcrumbs = ({ items }: PathBreadcrumbsProps) => {
+export interface PathBreadcrumbsInputProps {
+  changeFileName: (value: string) => void
+  gitRefName: string
+  fileName: string
+  handleOnBlur: () => void
+}
+
+export type PathBreadcrumbsProps = PathBreadcrumbsBaseProps & Partial<PathBreadcrumbsInputProps>
+
+export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcrumbsProps) => {
   const length = items.length
+
+  const renderInput = () => {
+    const { changeFileName, gitRefName, fileName, handleOnBlur } = props
+
+    if (!changeFileName || gitRefName === undefined || fileName === undefined || !handleOnBlur) {
+      throw new Error('Invalid usage of InputComp')
+    }
+
+    return (
+      <InputPathBreadcrumbItem
+        path={fileName}
+        changeFileName={changeFileName}
+        gitRefName={gitRefName}
+        handleOnBlur={handleOnBlur}
+        isNew={isNew}
+      />
+    )
+  }
 
   return (
     <Breadcrumb>
@@ -31,7 +121,7 @@ const PathBreadcrumbs = ({ items }: PathBreadcrumbsProps) => {
           if (isLast) {
             return (
               <BreadcrumbItem key={idx}>
-                <BreadcrumbPage>{path}</BreadcrumbPage>
+                {isEdit ? renderInput() : <BreadcrumbPage>{path}</BreadcrumbPage>}
               </BreadcrumbItem>
             )
           }
@@ -47,9 +137,14 @@ const PathBreadcrumbs = ({ items }: PathBreadcrumbsProps) => {
             </Fragment>
           )
         })}
+
+        {isNew && (
+          <>
+            {!!items.length && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
+            <BreadcrumbItem>{renderInput()}</BreadcrumbItem>
+          </>
+        )}
       </BreadcrumbList>
     </Breadcrumb>
   )
 }
-
-export { PathParts, PathBreadcrumbs }

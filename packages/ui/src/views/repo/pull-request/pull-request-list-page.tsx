@@ -1,7 +1,8 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer } from '@/components'
+import { SandboxLayout, TranslationStore } from '@/views'
 import {
   Filters,
   FiltersBar,
@@ -10,15 +11,13 @@ import {
   type SortDirection,
   type SortOption
 } from '@components/filters'
-import { useCommonFilter } from '@hooks/use-common-filter'
-import { noop } from 'lodash-es'
+import { debounce, noop } from 'lodash-es'
 
-import { SandboxLayout, TranslationStore } from '../..'
 import { useFilters, useViewManagement } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
-import { PullRequestList as PullRequestListContent } from './pull-request-list'
-import { PullRequestStore } from './types'
+import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
+import { PullRequestStore } from './pull-request.types'
 
 const BASIC_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },
@@ -81,25 +80,31 @@ const SORT_DIRECTIONS: SortDirection[] = [
   { label: 'Ascending', value: 'asc' },
   { label: 'Descending', value: 'desc' }
 ]
-export interface PullRequestListProps {
+export interface PullRequestPageProps {
   usePullRequestStore: () => PullRequestStore
   repoId?: string
   spaceId?: string
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
 }
 
-const PullRequestList: FC<PullRequestListProps> = ({
+const PullRequestList: FC<PullRequestPageProps> = ({
   usePullRequestStore,
   spaceId,
   repoId,
   useTranslationStore,
-  isLoading
+  isLoading,
+  searchQuery,
+  setSearchQuery
 }) => {
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestStore()
   const { t } = useTranslationStore()
-  const { query, handleSearch } = useCommonFilter()
-  const [value, setValue] = useState<string>()
+  const [searchInput, setSearchInput] = useState(searchQuery)
+  const debouncedSetSearchQuery = debounce(searchQuery => {
+    setSearchQuery(searchQuery || null)
+  }, 500)
 
   /**
    * Initialize filters hook with handlers for managing filter state
@@ -111,57 +116,57 @@ const PullRequestList: FC<PullRequestListProps> = ({
     setActiveSorts: filterHandlers.setActiveSorts
   })
 
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+    debouncedSetSearchQuery(e.target.value)
+  }, [])
+
+  const handleResetQuery = useCallback(() => {
+    setSearchInput('')
+    setSearchQuery(null)
+  }, [setSearchQuery])
+
   const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
 
-  useEffect(() => {
-    setValue(query || '')
-  }, [query])
+  const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e?.target?.value)
-    handleSearch(e)
+  const handleCloseClick = () => {
+    filterHandlers.setActiveFilters([{ type: 'type', condition: 'is', selectedValues: ['disabled'] }])
   }
 
-  const handleResetQuery = () => {
-    setValue('')
-    handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
+  const handleOpenClick = () => {
+    filterHandlers.handleResetFilters()
   }
 
-  // const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
   const renderListContent = () => {
     if (isLoading) {
       return <SkeletonList />
     }
 
-    if (!sortedPullReqs?.length) {
-      if (query || filterHandlers.activeFilters.length > 0) {
-        return (
-          <NoData
-            iconName="no-search-magnifying-glass"
-            title="No search results"
-            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-            primaryButton={{
-              label: 'Clear search',
-              onClick: handleResetQuery
-            }}
-            secondaryButton={{
-              label: 'Clear filters',
-              onClick: filterHandlers.handleResetFilters
-            }}
-          />
-        )
-      }
-
-      return (
-        // TODO add: no data state
+    if (noData) {
+      return filterHandlers.activeFilters.length > 0 || searchQuery ? (
+        <NoData
+          iconName="no-search-magnifying-glass"
+          title="No search results"
+          description={['Check your spelling and filter options,', 'or search for a different keyword.']}
+          primaryButton={{
+            label: 'Clear search',
+            onClick: handleResetQuery
+          }}
+          secondaryButton={{
+            label: 'Clear filters',
+            onClick: filterHandlers.handleResetFilters
+          }}
+        />
+      ) : (
         <NoData
           iconName="no-data-folder"
           title="No pull requests yet"
           description={['There are no pull requests in this project yet.', 'Create a new pull request.']}
           primaryButton={{
             label: 'Create pull request',
-            onClick: noop
+            to: `/${spaceId}/repos/${repoId}/pulls/compare/`
           }}
         />
       )
@@ -169,35 +174,35 @@ const PullRequestList: FC<PullRequestListProps> = ({
     return (
       <PullRequestListContent
         handleResetQuery={noop}
-        // LinkComponent={LinkComponent}
         pullRequests={sortedPullReqs}
         closedPRs={closedPullReqs}
+        handleOpenClick={handleOpenClick}
         openPRs={openPullReqs}
+        handleCloseClick={handleCloseClick}
       />
     )
   }
+
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
       <SandboxLayout.Content>
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
-          Pull Requests
-        </Text>
+        <Spacer size={2} />
+        <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>
             <SearchBox.Root
               width="full"
               className="max-w-96"
-              value={value}
+              value={searchInput || ''}
               handleChange={handleInputChange}
               placeholder={t('views:repos.search')}
             />
           </ListActions.Left>
           <ListActions.Right>
             <Filters
-              showView={false}
               t={t}
+              showView={false}
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
               filterHandlers={filterHandlers}
@@ -220,7 +225,7 @@ const PullRequestList: FC<PullRequestListProps> = ({
 
         <Spacer size={5} />
         {renderListContent()}
-        <Spacer size={8} />
+        <Spacer size={6} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

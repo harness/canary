@@ -1,15 +1,6 @@
 import { createContext, useCallback, useMemo, useState } from 'react'
 
-import { ExitConfirmDialog } from '../../components/ExitConfirmDialog'
-
-export interface ExitConfirmOptions {
-  title?: string
-  subtitle?: string
-  confirmText?: string
-  cancelText?: string
-  onConfirm: () => void
-  onCancel: () => void
-}
+import { ExitConfirmDialog, ExitConfirmOptions } from '@harnessio/ui/components'
 
 export interface ExitConfirmContextType {
   show: (options: ExitConfirmOptions) => void

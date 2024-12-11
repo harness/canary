@@ -4,7 +4,7 @@ import { DropdownMenuContent, DropdownMenuItem, Icon, SearchBox } from '@/compon
 import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
 
-import { CommitSelectorDropdownProps } from '../../pull-request/types'
+import { CommitSelectorDropdownProps } from '../../pull-request/pull-request.types'
 
 const filterItems = (items: CommitSelectorListItem[], query: string) => {
   if (!query.trim()) return items

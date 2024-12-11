@@ -125,7 +125,7 @@ const ListField = ({ className, title, description, label, primary, secondary, r
     {description && (
       <div
         className={cn(
-          'text-foreground-4 flex gap-2 overflow-hidden text-ellipsis whitespace-nowrap',
+          'text-foreground-4 flex gap-2 text-ellipsis whitespace-nowrap',
           primary ? 'text-sm' : 'text-xs',
           className
         )}

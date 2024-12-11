@@ -24,14 +24,14 @@ const views: Record<string, ReactNode> = {
     </RootViewWrapper>
   ),
   'pull-request-list': (
-    <RootViewWrapper>
+    <RepoViewWrapper>
       <PullRequestListWrapper />
-    </RootViewWrapper>
+    </RepoViewWrapper>
   ),
   'pull-request-compare': (
-    <RootViewWrapper>
+    <RepoViewWrapper>
       <PullRequestCompareWrapper />
-    </RootViewWrapper>
+    </RepoViewWrapper>
   )
 }
 

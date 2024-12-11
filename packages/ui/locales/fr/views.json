@@ -37,10 +37,10 @@
     "create-repository": "Créer un dépôt",
     "private": "Privé",
     "public": "Public",
-    "add-file": "Ajouter un fichier",
-    "createNewFile": "+ Créer un nouveau fichier",
     "readme": "README.md",
-    "openPullReq": "Requêtes de tirage ouvertes"
+    "openPullReq": "Requêtes de tirage ouvertes",
+    "add-file": "Ajouter un fichier",
+    "createNewFile": "+ Créer un nouveau fichier"
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Button,
@@ -125,24 +125,15 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="gap-x-2" variant="outline">
-                        {t('views:repos.add-file', 'Add file')}
-                        <Icon name="chevron-down" size={11} className="chevron-down" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start">
-                      <DropdownMenuItem
-                        key={'create-file'}
-                        onClick={() => {
-                          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`)
-                        }}
-                      >
-                        {t('views:repos.createNewFile', '+ Create New File')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Button variant={'secondary'} asChild>
+                    <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
+                      Add File
+                    </Link>
+                  </Button>
+                  <Button>
+                    <Icon name="clone" />
+                    &nbsp; Clone
+                  </Button>
                   {/*
                     TODO: require moving and preparing a component from views
                     <CloneRepoDialog

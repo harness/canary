@@ -201,7 +201,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
           </ListActions.Left>
           <ListActions.Right>
             <Filters
-              showView={false}
               t={t}
               showView={false}
               filterOptions={FILTER_OPTIONS}

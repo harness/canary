@@ -67,7 +67,6 @@ export function CreateBranchDialog({
   const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
-  console.log('defaultBrabnch', defaultBranch)
 
   useEffect(() => {
     if (defaultBranch) {

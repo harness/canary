@@ -23,7 +23,6 @@
     "src/**/*.test.tsx",
     "src/RouteDe*.{ts,tsx}",
     "src/App.tsx",
-    "src/main.tsx",
-    "src/bootstrap.tsx"
+    "src/main.tsx"
   ]
 }

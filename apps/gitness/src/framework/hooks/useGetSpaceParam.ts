@@ -9,5 +9,6 @@ export function useGetSpaceURLParam(): string | undefined {
   const {
     scope: { accountId, orgIdentifier, projectIdentifier }
   } = useContext(MFEContext)
-  return spaceId || `${accountId}/${orgIdentifier}/${projectIdentifier}`
+
+  return spaceId || [accountId, orgIdentifier, projectIdentifier].filter(Boolean).join('/')
 }

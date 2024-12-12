@@ -22,8 +22,11 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
   const { t } = useTranslationStore()
 
   const activeTab = useMemo(() => {
+    // Prioritize 'pulls' over 'commits' if both are present in the pathname
+    if (location.pathname.includes(RepoTabsKeys.PULLS)) {
+      return RepoTabsKeys.PULLS
+    }
     const tab = repoTabsKeysArr.find(key => location.pathname.includes(key))
-
     return tab ?? RepoTabsKeys.SUMMERY
   }, [location.pathname])
 

@@ -2,6 +2,7 @@
   "repos": {
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
+    "commits": "Validations",
     "branches": "Branches",
     "tags": "Étiquettes",
     "default": "Par défaut",
@@ -29,7 +30,6 @@
     "summary": "Résumé",
     "files": "Fichiers",
     "pipelines": "Pipelines",
-    "commits": "Validations",
     "pull-requests": "Requêtes de tirage",
     "webhooks": "Webhooks",
     "settings": "Paramètres",
@@ -56,6 +56,11 @@
     "projectSelector": "Sélectionner un projet",
     "noProjects": "Aucun projet disponible",
     "createProject": "Créer un projet"
+  },
+  "pullRequests": {
+    "conversation": "Conversation",
+    "changes": "Changements",
+    "commits": "Commet"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",

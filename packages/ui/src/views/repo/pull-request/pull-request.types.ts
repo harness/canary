@@ -40,7 +40,7 @@ export interface PullRequestType {
 }
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
 
-export interface PullRequestStore {
+export interface PullRequestListStore {
   pullRequests: PullRequestType[] | null
   totalPages: number
   page: number
@@ -99,3 +99,82 @@ export interface TypesIdentity {
   email?: string
   name?: string
 }
+
+export interface IPullRequestStore {
+  pullRequest?: TypesPullReq | null
+}
+
+export interface TypesPullReq {
+  author?: TypesPrincipalInfo
+  closed?: number | null
+  created?: number
+  description?: string
+  edited?: number
+  is_draft?: boolean
+  merge_base_sha?: string
+  merge_check_status?: string
+  merge_conflicts?: string[]
+  merge_method?: EnumMergeMethod
+  merge_target_sha?: string | null
+  merged?: number | null
+  merger?: TypesPrincipalInfo
+  number?: number
+  source_branch?: string
+  source_repo_id?: number
+  source_sha?: string
+  state?: EnumPullReqState
+  stats?: TypesPullReqStats
+  target_branch?: string
+  target_repo_id?: number
+  title?: string
+  labels?: TypesLabelPullReqAssignmentInfo[]
+}
+
+export interface TypesPrincipalInfo {
+  created?: number
+  display_name?: string
+  email?: string
+  id?: number
+  type?: EnumPrincipalType
+  uid?: string
+  updated?: number
+}
+
+export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
+
+export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
+
+export type EnumPullReqState = 'closed' | 'merged' | 'open'
+
+export interface TypesPullReqStats {
+  additions?: number | null
+  commits?: number | null
+  conversations?: number
+  deletions?: number | null
+  files_changed?: number | null
+  unresolved_count?: number
+}
+export interface TypesLabelPullReqAssignmentInfo {
+  color?: EnumLabelColor
+  id?: number
+  key?: string
+  scope?: number
+  value?: string | null
+  value_color?: EnumLabelColor
+  value_count?: number
+  value_id?: number | null
+}
+export type EnumLabelColor =
+  | 'blue'
+  | 'brown'
+  | 'cyan'
+  | 'green'
+  | 'indigo'
+  | 'lime'
+  | 'mint'
+  | 'orange'
+  | 'pink'
+  | 'purple'
+  | 'red'
+  | 'violet'
+  | 'yellow'

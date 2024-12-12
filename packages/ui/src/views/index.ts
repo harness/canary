@@ -5,6 +5,9 @@ export * from './layouts/Floating1ColumnLayout'
 export * from './layouts/PullRequestCompareLayout'
 export * from './layouts/PullRequestLayout'
 
+// Project
+export * from './project'
+
 // Repo
 export * from './repo'
 

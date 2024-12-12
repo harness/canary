@@ -38,6 +38,7 @@ import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestL
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
@@ -271,6 +272,21 @@ export default function App() {
                 {
                   path: 'changes',
                   element: <>changes</>
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: ':spaceId/settings',
+          element: <RootWrapper />,
+          children: [
+            {
+              element: <SettingsProjectNav />,
+              children: [
+                {
+                  path: 'members',
+                  children: [{ index: true, element: <ProjectMemberListPage /> }]
                 }
               ]
             }

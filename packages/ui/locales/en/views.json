@@ -2,6 +2,7 @@
   "repos": {
     "create-new-file-no-plus": "Create new file",
     "upload-files": "Upload files",
+    "commits": "Commits",
     "branches": "Branches",
     "tags": "Tags",
     "default": "Default",
@@ -29,7 +30,6 @@
     "summary": "Summary",
     "files": "Files",
     "pipelines": "Pipelines",
-    "commits": "Commits",
     "pull-requests": "Pull Requests",
     "webhooks": "Webhooks",
     "settings": "Settings",
@@ -37,8 +37,8 @@
     "create-repository": "Create repository",
     "private": "Private",
     "public": "Public",
-    "add-file": "Add file",
-    "createNewFile": "+ Create New File",
+    "addFile": "Add file",
+    "clone": "Clone",
     "readme": "README.md",
     "openPullReq": "Open pull requests"
   },
@@ -56,6 +56,13 @@
     "projectSelector": "Select Project",
     "noProjects": "No projects available",
     "createProject": "Create Project"
+  },
+  "pullRequests": {
+    "conversation": "Conversation",
+    "changes": "Changes",
+    "noCommitsYet": "No commits yet",
+    "noCommitDataDescription": "There are no commits yet.",
+    "commits": "Commits"
   },
   "noData": {
     "noResults": "No search results",

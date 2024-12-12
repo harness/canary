@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Button,
@@ -20,9 +20,10 @@ import {
   Text
 } from '@/components'
 import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
-import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
+// import { RecentPushInfoBar } from './components/recent-push-info-bar'
 import SummaryPanel from './components/summary-panel'
 
 export interface RepoSummaryViewProps {
@@ -35,6 +36,7 @@ export interface RepoSummaryViewProps {
         git_url?: string
         description?: string
         created?: number
+        default_branch?: string
       }
     | undefined
   handleCreateToken: () => void
@@ -107,7 +109,51 @@ export function RepoSummaryView({
     <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 255px">
         <SandboxLayout.Column>
-          <SandboxLayout.Content>
+          <SandboxLayout.Content className="pl-6">
+            {/* 
+              TODO: Implement proper recent push detection logic:
+              1. Backend needs to:
+                - Track and store information about recent pushes
+                - Provide an API endpoint that returns array of recent pushes:
+                  {
+                    recentPushes: Array<{
+                      branchName: string
+                      pushedAt: string // ISO timestamp
+                      userId: string // to show banner only to user who made the push
+                    }>
+                  }
+                - Consider:
+                  * Clearing push data after PR is created
+                  * Clearing push data after 24h
+                  * Limiting number of shown pushes (e.g. max 3 most recent)
+                  * Sorting pushes by timestamp (newest first)
+
+              2. Frontend needs to:
+                - Fetch recent pushes data from the API
+                - Filter pushes to show only where:
+                  * Current user is the one who made the push
+                  * Push was made less than 24h ago
+                  * No PR has been created from this branch yet
+                - Format timestamps using timeAgoFromISOTime
+                - Remove mock data below
+         
+                Example:
+                {selectedBranchTag.name !== repository?.default_branch && (
+                  <>
+                    <RecentPushInfoBar
+                      recentPushes={[
+                        {
+                          branchName: 'new-branch',
+                          timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
+                        }
+                      ]}
+                      spaceId={spaceId}
+                      repoId={repoId}
+                    />
+                    <Spacer size={6} />
+                  </>
+                )}
+            */}
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup>
@@ -125,24 +171,15 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button className="gap-x-2" variant="outline">
-                        {t('views:repos.add-file', 'Add file')}
-                        <Icon name="chevron-down" size={11} className="chevron-down" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="start">
-                      <DropdownMenuItem
-                        key={'create-file'}
-                        onClick={() => {
-                          navigate(`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`)
-                        }}
-                      >
-                        {t('views:repos.createNewFile', '+ Create New File')}
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <Button variant="secondary" asChild>
+                    <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
+                      {t('views:repos.addFile', 'Add File')}
+                    </Link>
+                  </Button>
+                  <Button>
+                    <Icon name="clone" />
+                    &nbsp; {t('views:repos.clone', 'Clone')}
+                  </Button>
                   {/*
                     TODO: require moving and preparing a component from views
                     <CloneRepoDialog
@@ -154,6 +191,21 @@ export function RepoSummaryView({
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
+            {selectedBranchTag.name !== repository?.default_branch && (
+              <>
+                <Spacer size={4} />
+                <BranchInfoBar
+                  defaultBranchName={repository?.default_branch}
+                  spaceId={spaceId}
+                  repoId={repoId}
+                  currentBranch={{
+                    ...selectedBranchTag,
+                    // TODO: it is required to transfer the real data that the currently selected branch should contain
+                    behindAhead: { ahead: 10, behind: 20 }
+                  }}
+                />
+              </>
+            )}
             <Spacer size={5} />
             <Summary
               latestFile={{

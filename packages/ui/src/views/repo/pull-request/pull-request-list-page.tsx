@@ -26,7 +26,7 @@ import { useFilters, useViewManagement } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import { PullRequestStore } from './pull-request.types'
+import { PullRequestListStore } from './pull-request.types'
 
 const BASIC_CONDITIONS: FilterCondition[] = [
   { label: 'is', value: 'is' },
@@ -90,7 +90,7 @@ const SORT_DIRECTIONS: SortDirection[] = [
   { label: 'Descending', value: 'desc' }
 ]
 export interface PullRequestPageProps {
-  usePullRequestStore: () => PullRequestStore
+  usePullRequestListStore: () => PullRequestListStore
   repoId?: string
   spaceId?: string
   useTranslationStore: () => TranslationStore
@@ -100,7 +100,7 @@ export interface PullRequestPageProps {
 }
 
 const PullRequestList: FC<PullRequestPageProps> = ({
-  usePullRequestStore,
+  usePullRequestListStore,
   spaceId,
   repoId,
   useTranslationStore,
@@ -108,7 +108,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   searchQuery,
   setSearchQuery
 }) => {
-  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestStore()
+  const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
   const [searchInput, setSearchInput] = useState(searchQuery)
   const debouncedSetSearchQuery = debounce(searchQuery => {

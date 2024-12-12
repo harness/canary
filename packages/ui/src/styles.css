@@ -36,6 +36,7 @@
   --canary-purple: 275 60% 75%;
   --canary-green: 150 75% 65%;
   --canary-red: 0 80% 65%;
+  --canary-orange: 35 74% 54%;
 }
 
 @layer themes {
@@ -707,13 +708,13 @@
     --canary-foreground-success: var(--canary-green-65);
     --canary-foreground-accent: var(--canary-blue-60);
     /* Backgrounds */
-    --canary-background-01: var(--canary-grey-6);
+    --canary-background-01: var(--canary-white);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
     --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
-    --canary-background-07: var(--canary-black);
+    --canary-background-07: var(--canary-white);
     --canary-background-08: var(--canary-grey-12);
     --canary-background-09: var(--canary-grey-15);
     --canary-background-10: var(--canary-grey-94);
@@ -1003,13 +1004,13 @@
     --canary-foreground-success: var(--canary-green-65);
     --canary-foreground-accent: var(--canary-blue-60);
     /* Backgrounds */
-    --canary-background-01: var(--canary-grey-6);
+    --canary-background-01: var(--canary-white);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
     --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
-    --canary-background-07: var(--canary-black);
+    --canary-background-07: var(--canary-white);
     --canary-background-08: var(--canary-grey-12);
     --canary-background-09: var(--canary-grey-15);
     --canary-background-10: var(--canary-grey-94);
@@ -1610,7 +1611,7 @@
 }
 
 mark {
-  background: hsl(var(--canary-background-accent));
+  background: hsl(var(--canary-background-05));
   color: hsl(var(--canary-foreground-06));
 }
 
@@ -1647,4 +1648,8 @@ mark {
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;
+}
+
+.breadcrumbs {
+  @apply bg-background-1 fixed top-0 z-30 ml-56 w-full;
 }

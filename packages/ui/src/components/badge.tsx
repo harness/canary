@@ -17,27 +17,27 @@ enum BadgesHoverStates {
 }
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-md border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       variant: {
         default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
         secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
+        tertiary: 'border-transparent bg-background-8 text-foreground-8',
         destructive: 'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
         outline: 'text-foreground'
       },
       size: {
         default: 'px-2.5 py-0.5 text-xs font-semibold',
+        xl: 'h-[18px] px-2 text-12',
         lg: 'px-3 py-1 text-xs font-normal',
+        md: 'h-6 px-2.5',
         sm: 'h-5 px-1 text-12',
-        xs: 'px-1.5 py-0 text-11 font-light',
-        // TODO: Consider switching size variants to numeric values
-        // Numeric size variants (like '18') provide clearer context about actual dimensions
-        // compared to abstract sizes (xs, sm, lg).
-        '18': 'h-[18px] px-2 text-12'
+        xs: 'px-1.5 py-0 text-11 font-light'
       },
       borderRadius: {
-        default: '',
+        default: 'rounded-md',
+        base: 'rounded',
         full: 'rounded-full'
       },
       hover: {

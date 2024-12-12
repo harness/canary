@@ -17,7 +17,7 @@
     "dev": "vite",
     "build": "vite build && pnpm extract",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
-    "build:watch": "vite build --watch --emptyOutDir=false",
+    "build:watch": "rm -rf dist && vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",

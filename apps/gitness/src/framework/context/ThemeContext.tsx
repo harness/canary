@@ -30,7 +30,7 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
   useEffect(() => {
     const updateSystemTheme = () => {
-      setSystemMode(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
+      setSystemMode(mediaQuery.matches ? ModeType.Light : ModeType.Dark)
     }
 
     mediaQuery.addEventListener('change', updateSystemTheme)
@@ -53,7 +53,10 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
     root.className = '' // Clear existing classes
-    root.classList.add(effectiveTheme) // Apply the computed theme class
+
+    // 🚨 REVERT IT
+    // root.classList.add(effectiveTheme) // Apply the computed theme class
+    root.classList.add('light-std-std') // Apply the computed theme class
   }, [theme, setTheme, systemMode])
 
   return <>{children}</>

@@ -1,5 +1,4 @@
-import { CommitSelectorListItem } from '@views/repo/pull-request'
-import { TypesCommit, TypesListCommitResponse } from '@views/repo/repo-commits'
+import { CommitSelectorListItem, TypesCommit, TypesListCommitResponse } from '@/views'
 
 export interface ICommitSelectorStore {
   commits: TypesCommit[] | null

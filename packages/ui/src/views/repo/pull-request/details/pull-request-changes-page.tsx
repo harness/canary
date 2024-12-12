@@ -5,14 +5,10 @@ import { SkeletonList, Spacer } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { TranslationStore } from '@views/repo/repo-list/types'
 
-import { TypesPullReq } from '../pull-request.types'
+import { PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PullRequestChanges } from './components/changes/pull-request-changes'
 import { PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
-import {
-  PullReqReviewDecision,
-  PullRequestDataState,
-  ReviewerListPullReqOkResponse
-} from './pull-request-details-types'
+import { PullRequestDataState, ReviewerListPullReqOkResponse } from './pull-request-details-types'
 
 interface RepoPullRequestChangesPageProps {
   useTranslationStore: () => TranslationStore

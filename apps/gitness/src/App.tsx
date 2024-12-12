@@ -295,7 +295,7 @@ export default function App() {
           ]
         },
         {
-          path: ':spa`ceId/repos/create',
+          path: ':spaceId/repos/create',
           element: <CreateRepo />
         },
         {

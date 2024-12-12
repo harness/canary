@@ -60,6 +60,8 @@
   "pullRequests": {
     "conversation": "",
     "changes": "",
+    "noCommitsYet": "",
+    "noCommitDataDescription": "",
     "commits": ""
   },
   "noData": {

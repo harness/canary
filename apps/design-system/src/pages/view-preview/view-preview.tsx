@@ -4,6 +4,8 @@ import '@harnessio/ui/styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare.tsx'
+import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list.tsx'
 import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
 import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
 import RepoViewWrapper from './repo-view-wrapper.tsx'
@@ -20,6 +22,16 @@ const views: Record<string, ReactNode> = {
     <RootViewWrapper>
       <RepoListWrapper />
     </RootViewWrapper>
+  ),
+  'pull-request-list': (
+    <RepoViewWrapper>
+      <PullRequestListWrapper />
+    </RepoViewWrapper>
+  ),
+  'pull-request-compare': (
+    <RepoViewWrapper>
+      <PullRequestCompareWrapper />
+    </RepoViewWrapper>
   )
 }
 

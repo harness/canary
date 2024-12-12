@@ -56,7 +56,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         <span className="text-14 font-medium leading-none">Switch branches/tags</span>
 
         <SearchBox.Root
-          className="mt-[18px] w-full"
+          className="mt-2 w-full"
           placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
           value={searchQuery}
           handleChange={handleSearchChange}
@@ -123,7 +123,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
             return (
               <DropdownMenuItem
-                className={cn('hover:bg-background-4 cursor-pointer py-2 leading-none', {
+                className={cn('hover:bg-background-4 cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
                   'bg-background-4': isSelected,
                   'pl-7': !isSelected

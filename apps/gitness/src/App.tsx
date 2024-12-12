@@ -34,11 +34,12 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
-import PullRequestLayout from './layouts/PullRequestLayout'
+import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
+import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
@@ -252,7 +253,25 @@ export default function App() {
             },
             {
               path: 'pulls/:pullRequestId',
-              element: <>test</>
+              element: <PullRequestLayout />,
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="conversation" replace />
+                },
+                {
+                  path: 'conversation',
+                  element: <>conversation</>
+                },
+                {
+                  path: 'commits',
+                  element: <>commits</>
+                },
+                {
+                  path: 'changes',
+                  element: <>changes</>
+                }
+              ]
             }
           ]
         },
@@ -386,7 +405,7 @@ export default function App() {
                 },
                 {
                   path: 'pull-requests/:pullRequestId',
-                  element: <PullRequestLayout />,
+                  element: <PullRequestLayoutV1 />,
                   children: [
                     {
                       index: true,

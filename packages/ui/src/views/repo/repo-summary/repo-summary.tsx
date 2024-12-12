@@ -208,7 +208,6 @@ export function RepoSummaryView({
                   spaceId={spaceId}
                   repoId={repoId}
                   currentBranch={{
-                    ...selectedBranchTag,
                     behindAhead: {
                       ahead: currentBranchDivergence?.ahead || 0,
                       behind: currentBranchDivergence?.behind || 0

@@ -72,7 +72,7 @@ export default function ReposListPage() {
 
   return (
     <>
-      <div className="fixed top-0 breadcrumbs w-full">
+      <div className="breadcrumbs">
         <Breadcrumbs />
       </div>
       <SandboxRepoListPage

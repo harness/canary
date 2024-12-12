@@ -6,7 +6,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 const RepoLayout = () => {
   return (
     <>
-      <div className="fixed top-0 breadcrumbs w-full">
+      <div className="breadcrumbs">
         <Breadcrumbs />
       </div>
       <RepoLayoutView useTranslationStore={useTranslationStore} />

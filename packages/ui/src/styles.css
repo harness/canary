@@ -1651,5 +1651,5 @@ mark {
 }
 
 .breadcrumbs {
-  @apply bg-background-1 z-30 ml-56;
+  @apply bg-background-1 fixed top-0 z-30 ml-56 w-full;
 }

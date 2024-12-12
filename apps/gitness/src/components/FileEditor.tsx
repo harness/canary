@@ -260,17 +260,17 @@ export const FileEditor: React.FC = () => {
               value={view}
               type="single"
               unselectable="on"
-              className="rounded-lg border border-primary/10 bg-primary-foreground p-0.5"
+              className="border-primary/10 bg-primary-foreground rounded-lg border p-0.5"
             >
               <ToggleGroupItem
                 value="contents"
-                className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
+                className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
               >
                 Contents
               </ToggleGroupItem>
               <ToggleGroupItem
                 value="changes"
-                className="h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100 data-[state=on]:border-primary/10"
+                className="data-[state=on]:border-primary/10 h-7 rounded-md border border-transparent text-xs font-medium disabled:opacity-100"
               >
                 Changes
               </ToggleGroupItem>

@@ -44,3 +44,9 @@ export interface RuleDataType {
   identifier?: string
   state?: string
 }
+
+export interface IRepoStore {
+  repoData: RepoData
+  rules: RuleDataType[] | null
+  securityScanning: boolean
+}

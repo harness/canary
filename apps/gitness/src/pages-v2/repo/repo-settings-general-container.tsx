@@ -5,10 +5,8 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import {
   DeleteRepositoryErrorResponse,
-  // FindRepositoryOkResponse,
   FindRepositoryErrorResponse,
   FindSecuritySettingsErrorResponse,
-  // ListBranchesOkResponse,
   ListBranchesErrorResponse,
   RuleDeleteErrorResponse,
   RuleListErrorResponse,
@@ -32,13 +30,9 @@ import {
   AccessLevel,
   BranchSelectorListItem,
   BranchSelectorTab,
-  //   AlertDeleteDialog,
-  //   DeleteTokenAlertDialog,
   ErrorTypes,
-  // RepoData,
   RepoSettingsGeneralPage,
   RepoUpdateData,
-  // RuleDataType,
   SecurityScanning
 } from '@harnessio/ui/views'
 
@@ -47,7 +41,6 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-// import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { useRepoRulesStore } from './stores/repo-rules-store'
 
 export const RepoSettingsGeneralPageContainer = () => {
@@ -56,19 +49,9 @@ export const RepoSettingsGeneralPageContainer = () => {
   const navigate = useNavigate()
   const spaceId = useGetSpaceURLParam()
   const queryClient = useQueryClient()
-  const { setRepoData, setRules, setSecurityScanning, setBranches } = useRepoRulesStore()
+  const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
   const { branchList, setBranchList, setSelectedBranchTag, setSelectedBranchType } = useRepoBranchesStore()
 
-  // const [repoData, setRepoData] = useState<RepoData>({
-  //   name: '',
-  //   description: '',
-  //   defaultBranch: '',
-  //   isPublic: false,
-  //   branches: []
-  // })
-  // const [rules, setRules] = useState<RuleDataType[] | null>(null)
-
-  // const [securityScanning, setSecurityScanning] = useState<boolean>(false)
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
   const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState<boolean>(false)
@@ -86,10 +69,6 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { data: { body: repoData } = {}, isLoading: isLoadingRepoData } = useFindRepositoryQuery(
     { repo_ref: repoRef },
     {
-      // onSuccess: ({ body: data }) => {
-      //   setRepoData(data, [])
-      //   setApiError(null)
-      // },
       onError: (error: FindRepositoryErrorResponse) => {
         const message = error.message || 'Error fetching repo'
         setApiError({ type: ErrorTypes.FETCH_REPO, message })
@@ -107,10 +86,6 @@ export const RepoSettingsGeneralPageContainer = () => {
       }
     },
     {
-      // onSuccess: ({ body: data }) => {
-      //   setRepoData([], data)
-      //   setApiError(null)
-      // },
       onError: (error: ListBranchesErrorResponse) => {
         const message = error.message || 'Error fetching branches'
         setApiError({ type: ErrorTypes.FETCH_BRANCH, message })
@@ -124,19 +99,6 @@ export const RepoSettingsGeneralPageContainer = () => {
       queryParams: {}
     },
     {
-      // onSuccess: ({ body: data }) => {
-      //   const rulesData = data.map(rule => {
-      //     return {
-      //       targetPatternsCount: (rule.pattern?.include?.length ?? 0) + (rule.pattern?.exclude?.length ?? 0),
-      //       rulesAppliedCount: getTotalRulesApplied(rule),
-      //       bypassAllowed: rule.definition?.bypass?.repo_owners === true,
-      //       identifier: rule.identifier,
-      //       state: rule.state ? String(rule.state) : undefined
-      //     }
-      //   })
-      //   setRules(rulesData)
-      //   setApiError(null)
-      // },
       onError: (error: RuleListErrorResponse) => {
         const message = error.message || 'Error fetching rules'
         setApiError({ type: ErrorTypes.FETCH_RULES, message })
@@ -167,8 +129,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { mutate: deleteRule, isLoading: isDeletingRule } = useRuleDeleteMutation(
     { repo_ref: repoRef },
     {
-      onSuccess: (_data, _variables) => {
-        // setRules(rules => (rules ? rules.filter(rule => rule.identifier !== variables.rule_identifier) : null))
+      onSuccess: () => {
         refetchRulesList()
         setIsRulesAlertDeleteDialogOpen(false)
         setApiError(null)
@@ -305,19 +266,21 @@ export const RepoSettingsGeneralPageContainer = () => {
   useEffect(() => {
     if (repoData) {
       setRepoData(repoData)
+      setApiError(null)
     }
   }, [repoData, setRepoData])
 
   useEffect(() => {
     if (branches) {
-      setBranches(branches)
       setBranchList(branches)
+      setApiError(null)
     }
-  }, [branches, setBranches])
+  }, [branches, setBranchList])
 
   useEffect(() => {
     if (rulesData) {
       setRules(rulesData)
+      setApiError(null)
     }
   }, [rulesData, setRules])
 
@@ -348,15 +311,12 @@ export const RepoSettingsGeneralPageContainer = () => {
   return (
     <>
       <RepoSettingsGeneralPage
-        // repoData={repoData}
         handleRepoUpdate={handleRepoUpdate}
         selectBranchOrTag={selectBranchOrTag}
-        // securityScanning={securityScanning}
         handleUpdateSecuritySettings={handleUpdateSecuritySettings}
         apiError={apiError}
         loadingStates={loadingStates}
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
-        // rules={rules}
         useRepoRulesStore={useRepoRulesStore}
         useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationStore}

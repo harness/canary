@@ -18,14 +18,14 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { BranchSelectorListItem } from '@/views'
+import { BranchSelectorListItem, IBranchSelectorStore, TranslationStore } from '@/views'
 import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { SkeletonList, Textarea } from '@harnessio/ui/components'
 
-import { AccessLevel, ErrorTypes, RepoBranch, RepoData, RepoUpdateData } from '../types'
+import { AccessLevel, ErrorTypes, RepoData, RepoUpdateData } from '../types'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -37,18 +37,16 @@ export type RepoUpdateFormFields = z.infer<typeof formSchema>
 
 export const RepoSettingsGeneralForm: React.FC<{
   repoData: RepoData
-  branches: RepoBranch[]
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
   selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
-  useRepoBranchesStore: any
-  useTranslationStore: any
+  useRepoBranchesStore: () => IBranchSelectorStore
+  useTranslationStore: () => TranslationStore
 }> = ({
   repoData,
-  branches,
   handleRepoUpdate,
   apiError,
   isLoadingRepoData,
@@ -86,7 +84,6 @@ export const RepoSettingsGeneralForm: React.FC<{
   }, [repoData, isLoadingRepoData])
 
   const accessValue = watch('access')
-  const branchValue = watch('branch')
 
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
 
@@ -109,7 +106,6 @@ export const RepoSettingsGeneralForm: React.FC<{
     setIsSubmitted(true)
     handleRepoUpdate(data)
   }
-  const isDefaultInBranches = branches.some(branch => branch.name === repoData.defaultBranch)
   const errorTypes = new Set([
     ErrorTypes.FETCH_REPO,
     ErrorTypes.FETCH_BRANCH,

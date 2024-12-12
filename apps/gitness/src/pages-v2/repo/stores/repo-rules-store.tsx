@@ -1,24 +1,21 @@
 import { create } from 'zustand'
 
-import { FindRepositoryOkResponse, ListBranchesOkResponse, RuleListOkResponse } from '@harnessio/code-service-client'
-import { RepoBranch, RepoData, RuleDataType } from '@harnessio/ui/views'
+import { FindRepositoryOkResponse, RuleListOkResponse } from '@harnessio/code-service-client'
+import { RepoData, RuleDataType } from '@harnessio/ui/views'
 
 import { getTotalRulesApplied } from '../../../utils/repo-branch-rules-utils'
 
-interface RepoState {
+interface IRepoStore {
   repoData: RepoData
   rules: RuleDataType[] | null
   securityScanning: boolean
-  branches: RepoBranch[]
 
-  // Actions to update the state
   setRepoData: (data: FindRepositoryOkResponse) => void
-  setBranches: (data: ListBranchesOkResponse) => void
   setRules: (data: RuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
 }
 
-export const useRepoRulesStore = create<RepoState>(set => ({
+export const useRepoRulesStore = create<IRepoStore>(set => ({
   // Initial state
   repoData: {
     name: '',
@@ -51,6 +48,5 @@ export const useRepoRulesStore = create<RepoState>(set => ({
     }))
     set({ rules: rulesData })
   },
-  setBranches: data => set({ branches: data }),
   setSecurityScanning: enabled => set({ securityScanning: enabled })
 }))

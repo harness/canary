@@ -53,7 +53,6 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
     root.className = '' // Clear existing classes
-
     root.classList.add(effectiveTheme) // Apply the computed theme class
   }, [theme, setTheme, systemMode])
 

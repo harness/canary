@@ -1648,3 +1648,7 @@ mark {
   border-radius: 7px;
   background-clip: content-box;
 }
+
+.margin-breadcrumbs {
+  @apply ml-56;
+}

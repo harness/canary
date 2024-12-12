@@ -29,3 +29,7 @@ export * from '@views/repo/repo-commits'
 // repo branches
 export * from '@views/repo/repo-branch'
 export * from '@views/repo/repo-branch/types'
+
+// repo settings
+export * from '@views/repo/repo-settings'
+export * from '@views/repo/repo-settings/types'

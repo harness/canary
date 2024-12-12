@@ -261,12 +261,7 @@ export default function App() {
                 },
                 {
                   path: 'conversation',
-                  element: (
-                    <>conversation</>
-                    // <PullRequestDataProvider>
-                    //   <PullRequestConversationPage />
-                    // </PullRequestDataProvider>
-                  )
+                  element: <>conversation</>
                 },
                 {
                   path: 'commits',

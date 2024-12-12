@@ -207,11 +207,9 @@ export function RepoSummaryView({
                   defaultBranchName={repository?.default_branch}
                   spaceId={spaceId}
                   repoId={repoId}
-                  currentBranch={{
-                    behindAhead: {
-                      ahead: currentBranchDivergence?.ahead || 0,
-                      behind: currentBranchDivergence?.behind || 0
-                    }
+                  currentBranchDivergence={{
+                    ahead: currentBranchDivergence?.ahead || 0,
+                    behind: currentBranchDivergence?.behind || 0
                   }}
                 />
               </>

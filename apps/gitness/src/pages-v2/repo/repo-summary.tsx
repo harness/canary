@@ -89,7 +89,7 @@ export default function RepoSummaryPage() {
   }, [branch_count, tag_count])
 
   useEffect(() => {
-    if(branchDivergence.length) {
+    if (branchDivergence.length) {
       setCurrBranchDivergence(branchDivergence[0])
     }
   }, [branchDivergence])

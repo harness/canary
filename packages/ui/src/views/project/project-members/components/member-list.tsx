@@ -1,6 +1,3 @@
-import { getInitials } from '@utils/stringUtils'
-import { upperFirst } from 'lodash-es'
-
 import {
   Avatar,
   AvatarFallback,
@@ -17,7 +14,9 @@ import {
   TableHeader,
   TableRow,
   Text
-} from '@harnessio/canary'
+} from '@/components'
+import { getInitials } from '@utils/stringUtils'
+import { upperFirst } from 'lodash-es'
 
 import { MembersProps } from '../types'
 import { transformValue } from '../utils'
@@ -70,6 +69,7 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
             {/* ROLE */}
             <TableCell className="my-6 content-center">
               <Select
+                placeholder="Search"
                 value={member.role}
                 onValueChange={newRole => onEdit({ ...member, role: transformValue(newRole) })}
               >

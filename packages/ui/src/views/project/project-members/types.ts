@@ -1,3 +1,7 @@
+import { TranslationStore } from '@views/repo'
+
+import { IMemberListStore } from '../project.types'
+
 export interface MembersProps {
   display_name: string
   role: string
@@ -66,4 +70,10 @@ export interface FormEditDialogProps {
  *
  */
 
-export interface ProjectMemberListViewProps {}
+export interface ProjectMemberListViewProps {
+  isLoading: boolean
+  useMemberListStore: () => IMemberListStore
+  useTranslationStore: () => TranslationStore
+  searchQuery: string | null
+  setSearchQuery: (query: string | null) => void
+}

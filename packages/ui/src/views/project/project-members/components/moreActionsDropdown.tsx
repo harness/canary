@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon
-} from '@harnessio/canary'
+} from '@/components'
 
 import { MembersProps } from '../types'
 

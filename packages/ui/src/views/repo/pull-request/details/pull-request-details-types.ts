@@ -1,6 +1,13 @@
 import { TypesListCommitResponse } from '@views/index'
 
-import { RepoRepositoryOutput, TypesPrincipalInfo, TypesPullReq, TypesPullReqStats } from '../pull-request.types'
+import {
+  EnumPullReqReviewDecision,
+  PullReqReviewDecision,
+  RepoRepositoryOutput,
+  TypesPrincipalInfo,
+  TypesPullReq,
+  TypesPullReqStats
+} from '../pull-request.types'
 
 export interface PullReqCount {
   error: number
@@ -153,14 +160,6 @@ export interface TypesPullReqReviewer {
   sha?: string
   type?: EnumPullReqReviewerType
   updated?: number
-}
-
-export enum PullReqReviewDecision {
-  approved = 'approved',
-  changeReq = 'changereq',
-  pending = 'pending',
-  outdated = 'outdated',
-  approve = 'approve'
 }
 
 export interface TypesCodeCommentFields {
@@ -330,8 +329,6 @@ export interface CommentItem<T = unknown> {
   content: string
   payload?: T // optional payload for callers to handle on callback calls
 }
-
-export declare type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed'
 
 export interface DiffFileEntry extends DiffFile {
   fileId: string

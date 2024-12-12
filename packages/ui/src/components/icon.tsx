@@ -44,6 +44,7 @@ import CloudCosts from '../icons/cloud-costs-icon.svg'
 import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import Comments from '../icons/comments.svg'
+import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
@@ -109,6 +110,7 @@ import Merged from '../icons/merged.svg'
 import Minus from '../icons/minus-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
+import NoDataPR from '../icons/no-data-pr.svg'
 import NodeLogo from '../icons/node-logo.svg'
 import Notification from '../icons/notification-icon.svg'
 import OpenPR from '../icons/open-pr.svg'
@@ -214,6 +216,7 @@ const IconNameMap = {
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-data-members': NoDataMembers,
   'no-data-error': NoDataError,
+  'no-data-pr': NoDataPR,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,
@@ -345,7 +348,8 @@ const IconNameMap = {
   list: List,
   checklist: Checklist,
   italicize: Italicize,
-  'no-data-commits': NoDataCommits
+  'no-data-commits': NoDataCommits,
+  compare: Compare
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

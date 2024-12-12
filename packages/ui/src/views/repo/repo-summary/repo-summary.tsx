@@ -127,12 +127,12 @@ export function RepoSummaryView({
                 <ButtonGroup>
                   <Button variant={'secondary'} asChild>
                     <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
-                      Add File
+                      {t('views:repos.addFile', 'Add File')}
                     </Link>
                   </Button>
                   <Button>
                     <Icon name="clone" />
-                    &nbsp; Clone
+                    &nbsp; {t('views:repos.clone', 'Clone')}
                   </Button>
                   {/*
                     TODO: require moving and preparing a component from views

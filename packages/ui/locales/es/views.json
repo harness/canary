@@ -37,10 +37,10 @@
     "create-repository": "",
     "private": "Private",
     "public": "Public",
+    "addFile": "Add file",
+    "clone": "Clone",
     "readme": "README.md",
-    "openPullReq": "Open pull requests",
-    "add-file": "Add file",
-    "createNewFile": "+ Create New File"
+    "openPullReq": "Open pull requests"
   },
   "createProject": {
     "newProject": "Create your new project",

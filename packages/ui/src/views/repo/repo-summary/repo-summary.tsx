@@ -209,7 +209,6 @@ export function RepoSummaryView({
                   repoId={repoId}
                   currentBranch={{
                     ...selectedBranchTag,
-                    // TODO: it is required to transfer the real data that the currently selected branch should contain
                     behindAhead: {
                       ahead: currentBranchDivergence?.ahead || 0,
                       behind: currentBranchDivergence?.behind || 0

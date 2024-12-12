@@ -18,7 +18,13 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, BranchSelectorTab, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitDivergenceType,
+  RepoFile,
+  RepoSummaryView
+} from '@harnessio/ui/views'
 import { generateAlphaNumericHash, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -38,6 +44,7 @@ export default function RepoSummaryPage() {
   const navigate = useNavigate()
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
+  const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 
   const {
     branchList,
@@ -80,6 +87,12 @@ export default function RepoSummaryPage() {
     setBranchCount(branch_count || 0)
     setTagCount(tag_count || 0)
   }, [branch_count, tag_count])
+
+  useEffect(() => {
+    if(branchDivergence.length) {
+      setCurrBranchDivergence(branchDivergence[0])
+    }
+  }, [branchDivergence])
 
   const [updateError, setUpdateError] = useState<string>('')
 
@@ -349,7 +362,7 @@ export default function RepoSummaryPage() {
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
-        currentBranchDivergence={branchDivergence[0]}
+        currentBranchDivergence={currBranchDivergence}
       />
       {createdTokenData && (
         <TokenSuccessDialog

@@ -42,14 +42,12 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
             rotated="180deg"
             indicatorRounded="right-sm"
             indicatorColor="tertiary-background-20"
-            className="min-w-[5px]"
           />
           <Progress
             variant="divergence"
             value={adjustedAheadPercentage}
             indicatorRounded="right-sm"
             indicatorColor="tertiary-background-40"
-            className="min-w-[5px] "
           />
         </div>
       )}

@@ -24,6 +24,19 @@ export default function RepoCommitsPage() {
 
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
+  const {
+    branchList,
+    tagList,
+    branchCount,
+    tagCount,
+    setBranchList,
+    setTagList,
+    selectedBranchTag,
+    setSelectedBranchTag,
+    setSelectedBranchType,
+    setSpaceIdAndRepoId
+  } = useRepoBranchesStore()
+
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -31,7 +44,7 @@ export default function RepoCommitsPage() {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 1000
+      limit: branchCount || 100
     }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
@@ -40,20 +53,9 @@ export default function RepoCommitsPage() {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 1000
+      limit: tagCount || 100
     }
   })
-
-  const {
-    branchList,
-    tagList,
-    setBranchList,
-    setTagList,
-    selectedBranchTag,
-    setSelectedBranchTag,
-    setSelectedBranchType,
-    setSpaceIdAndRepoId
-  } = useRepoBranchesStore()
 
   useEffect(() => {
     if (branches) {

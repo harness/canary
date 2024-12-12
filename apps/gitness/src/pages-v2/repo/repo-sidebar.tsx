@@ -27,6 +27,8 @@ export const RepoSidebar = () => {
   const {
     branchList,
     tagList,
+    branchCount,
+    tagCount,
     setBranchList,
     setTagList,
     selectedBranchTag,
@@ -57,7 +59,7 @@ export const RepoSidebar = () => {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 1000
+      limit: branchCount || 100
     }
   })
   useEffect(() => {
@@ -81,7 +83,7 @@ export const RepoSidebar = () => {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 100
+      limit: tagCount || 100
     }
   })
 

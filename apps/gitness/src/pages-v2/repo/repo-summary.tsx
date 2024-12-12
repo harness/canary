@@ -8,6 +8,7 @@ import {
   pathDetails,
   RepoPathsDetailsOutput,
   UpdateRepositoryErrorResponse,
+  useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
   useFindRepositoryQuery,
   useGetContentQuery,
@@ -40,11 +41,11 @@ export default function RepoSummaryPage() {
 
   const {
     branchList,
-
     tagList,
-
     setBranchList,
     setTagList,
+    setBranchCount,
+    setTagCount,
     setSpaceIdAndRepoId,
     setDefaultBranch,
     selectedBranchTag,
@@ -54,14 +55,31 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
+  const { data: { body: repoSummary } = {} } = useSummaryQuery({
+    repo_ref: repoRef,
+    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
+  })
+
+  const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
+
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 1000 }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: branch_count }
   })
+
+  const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
+    useCalculateCommitDivergenceMutation({
+      repo_ref: repoRef
+    })
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
+
+  useEffect(() => {
+    setBranchCount(branch_count || 0)
+    setTagCount(tag_count || 0)
+  }, [branch_count, tag_count])
 
   const [updateError, setUpdateError] = useState<string>('')
 
@@ -117,7 +135,7 @@ export default function RepoSummaryPage() {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 100,
+      limit: tag_count,
       page: 1
     }
   })
@@ -155,12 +173,15 @@ export default function RepoSummaryPage() {
     [navigate, repoId, spaceId, branchList, tagList]
   )
 
-  const { data: { body: repoSummary } = {} } = useSummaryQuery({
-    repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
-  })
-
-  const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
+  useEffect(() => {
+    if (selectedBranchTag) {
+      calculateDivergence({
+        body: {
+          requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
+        }
+      })
+    }
+  }, [selectedBranchTag])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
@@ -328,6 +349,7 @@ export default function RepoSummaryPage() {
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
+        currentBranchDivergence={branchDivergence[0]}
       />
       {createdTokenData && (
         <TokenSuccessDialog

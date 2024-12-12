@@ -1464,7 +1464,7 @@
   },
   "isEditingDescription": false,
   "currentBranchDivergence": {
-    "behind" : 10,
+    "behind": 10,
     "ahead": 12
   }
 }

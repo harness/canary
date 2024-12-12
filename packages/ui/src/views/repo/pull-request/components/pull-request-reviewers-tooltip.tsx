@@ -9,7 +9,7 @@ import {
   Icon
 } from '@components/index'
 
-import { ReviewerItemProps } from '../../pull-request-details-types'
+import { ReviewerItemProps } from '../details/pull-request-details-types'
 
 interface TooltipProps {
   reviewer?: ReviewerItemProps['reviewer']

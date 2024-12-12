@@ -1,12 +1,12 @@
 import { TypesUser } from '@/types'
 import { isEmpty } from 'lodash-es'
 
+import { PullReqReviewDecision } from '../pull-request.types'
 import {
   ApprovalItem,
   ApprovalItems,
   CommentItem,
   EnumPullReqReviewDecisionExtended,
-  PullReqReviewDecision,
   ReviewerListPullReqOkResponse,
   TypesPullReqActivity,
   TypesRuleViolations,

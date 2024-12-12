@@ -11,7 +11,7 @@ import {
 } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { TranslationStore } from '@views/index'
-import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
+import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 // import { FileViewGauge } from '@harnessio/views'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'

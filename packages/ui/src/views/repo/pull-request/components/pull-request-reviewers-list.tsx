@@ -1,6 +1,6 @@
 import { Text } from '@components/index'
 
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request-details-types'
+import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'
 
 interface ReviewersListProps {

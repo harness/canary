@@ -21,6 +21,7 @@ export interface NoDataProps {
     | 'no-repository'
     | 'no-data-error'
     | 'no-data-commits'
+    | 'no-data-pr'
   iconSize?: number
   description: string[]
   primaryButton?: {

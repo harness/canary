@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, Input } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Fieldset, Input, Message, MessageTheme } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -55,6 +55,12 @@ export const AlertDeleteDialogForm = ({
           label="To confirm, type “DELETE”"
           error={errors.verification?.message?.toString()}
         />
+
+        {error && (
+          <Message theme={MessageTheme.ERROR} className="mt-2">
+            {error}
+          </Message>
+        )}
 
         <ButtonGroup className="mt-4 justify-end">
           <Button variant="outline" onClick={onClose} disabled={isLoading}>

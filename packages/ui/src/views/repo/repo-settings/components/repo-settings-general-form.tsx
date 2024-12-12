@@ -15,15 +15,15 @@ import {
   Option,
   RadioButton,
   RadioGroup,
+  SkeletonList,
   Spacer,
-  Text
+  Text,
+  Textarea
 } from '@/components'
 import { BranchSelectorListItem, IBranchSelectorStore, TranslationStore } from '@/views'
 import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-
-import { SkeletonList, Textarea } from '@harnessio/ui/components'
 
 import { AccessLevel, ErrorTypes, RepoData, RepoUpdateData } from '../types'
 

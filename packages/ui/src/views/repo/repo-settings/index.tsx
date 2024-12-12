@@ -8,7 +8,7 @@ import { RepoSettingsGeneralDelete } from './components/repo-settings-general-de
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
 import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
-import { ErrorTypes, IRepoStore, RepoUpdateData, RuleDataType } from './types'
+import { ErrorTypes, IRepoStore, RepoUpdateData } from './types'
 
 interface ILoadingStates {
   isLoadingRepoData: boolean

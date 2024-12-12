@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { HeaderProps, PullRequestCompare, SandboxPullRequestCompareProps } from '@harnessio/ui/views'
+import { PullRequestCompare, SandboxPullRequestCompareProps } from '@harnessio/ui/views'
 
 import { noop, useTranslationsStore } from '../../utils.ts'
 import { repoBranchListStore } from './repo-branch-store.ts'
@@ -41,7 +41,7 @@ const PullRequestCompareWrapper: FC<Partial<SandboxPullRequestCompareProps>> = p
           lang: 'txt',
           addedLines: 1,
           removedLines: 0
-        } as HeaderProps
+        }
       ]}
       diffStats={{
         additions: 0,

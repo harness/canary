@@ -2,8 +2,7 @@ import { useMemo } from 'react'
 
 import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList, Text } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
-
-import { TypesCommit } from '../types'
+import { TypesCommit } from '@/views'
 
 interface CommitProps {
   data?: TypesCommit[]

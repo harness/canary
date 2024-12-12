@@ -20,6 +20,7 @@ export interface NoDataProps {
     | 'no-data-members'
     | 'no-repository'
     | 'no-data-error'
+    | 'no-data-pr'
   iconSize?: number
   description: string[]
   primaryButton?: {

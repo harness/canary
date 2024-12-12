@@ -18,7 +18,7 @@ import {
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
 import { BranchSelectorListItem, BranchSelectorTab, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
-import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
+import { generateAlphaNumericHash, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -26,6 +26,7 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
 import { PathParams } from '../../RouteDefinitions'
+import { orderSortDate } from '../../types'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 
@@ -55,7 +56,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 1000 }
   })
 
   useEffect(() => {
@@ -95,8 +96,6 @@ export default function RepoSummaryPage() {
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
-  const { query } = useCommonFilter()
-
   useEffect(() => {
     if (branches) {
       setBranchList(
@@ -117,10 +116,9 @@ export default function RepoSummaryPage() {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: ''
+      order: orderSortDate.DESC,
+      limit: 100,
+      page: 1
     }
   })
 
@@ -159,7 +157,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repoSummary } = {} } = useSummaryQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query }
+    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
   })
 
   const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
@@ -264,11 +262,13 @@ export default function RepoSummaryPage() {
 
   useEffect(() => {
     const defaultBranch = branchList.find(branch => branch.default)
-    setSelectedBranchTag({
-      name: defaultBranch?.name || '',
-      sha: defaultBranch?.sha || '',
-      default: true
-    })
+    if (defaultBranch) {
+      setSelectedBranchTag({
+        name: defaultBranch?.name || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
+    }
   }, [branchList])
 
   const { data: filesData } = useListPathsQuery({

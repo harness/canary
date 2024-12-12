@@ -89,6 +89,23 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
     navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
+  const CodeView = () => {
+    return useMemo(
+      () => (
+        <CodeEditor
+          language={language}
+          codeRevision={{ code: fileContent }}
+          onCodeRevisionChange={() => {}}
+          themeConfig={themeConfig}
+          options={{
+            readOnly: true
+          }}
+        />
+      ),
+      [language, fileContent, themeConfig]
+    )
+  }
+
   return (
     <>
       <GitCommitDialog
@@ -122,15 +139,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       {language === 'markdown' && view === 'preview' ? (
         <MarkdownViewer source={fileContent} withBorderWrapper />
       ) : view === 'code' ? (
-        <CodeEditor
-          language={language}
-          codeRevision={{ code: fileContent }}
-          onCodeRevisionChange={() => {}}
-          themeConfig={themeConfig}
-          options={{
-            readOnly: true
-          }}
-        />
+        <CodeView />
       ) : (
         <GitBlame themeConfig={themeConfig} codeContent={fileContent} language={language} />
       )}

@@ -14,7 +14,7 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@har
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import { PageResponseHeader } from '../../types'
+import { orderSortDate, PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
@@ -27,11 +27,21 @@ export default function RepoCommitsPage() {
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      order: orderSortDate.DESC,
+      limit: 1000
+    }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: {
+      include_commit: false,
+      sort: 'date',
+      order: orderSortDate.DESC,
+      limit: 1000
+    }
   })
 
   const {

@@ -51,7 +51,7 @@ export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
   { name: 'Unified', value: 'Unified' }
 ]
-interface SandboxPullRequestCompareProps {
+export interface SandboxPullRequestCompareProps {
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
   onFormCancel: () => void
@@ -356,7 +356,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
     </SandboxLayout.Main>
   )
 }
-export interface HeaderProps {
+interface HeaderProps {
   text: string
   data?: string
   title: string

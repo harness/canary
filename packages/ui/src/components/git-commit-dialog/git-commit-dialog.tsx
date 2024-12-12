@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -72,7 +72,7 @@ export interface GitCommitDialogProps {
   isSubmitting: boolean
 }
 
-export const GitCommitDialog = ({
+export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   isOpen,
   onClose,
   isFileNameRequired = false,
@@ -85,7 +85,7 @@ export const GitCommitDialog = ({
   setAllStates,
   disableCTA,
   isSubmitting
-}: GitCommitDialogProps) => {
+}) => {
   const {
     register,
     handleSubmit,

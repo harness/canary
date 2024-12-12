@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-import { Button, Icon } from '@/components'
+import { Button, ButtonProps, Icon } from '@/components'
 import copy from 'clipboard-copy'
 
 export interface CopyButtonProps {
   name: string
   className?: string
+  buttonVariant?: ButtonProps['variant']
+  iconSize?: number
 }
 
-export const CopyButton = ({ name, className }: CopyButtonProps) => {
+export const CopyButton: FC<CopyButtonProps> = ({ name, className, buttonVariant = 'custom', iconSize = 16 }) => {
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
@@ -28,8 +30,8 @@ export const CopyButton = ({ name, className }: CopyButtonProps) => {
   const changeIcon = copied ? 'tick' : 'clone'
 
   return (
-    <Button className={className} variant="custom" size="icon" aria-label="Copy" onClick={() => setCopied(true)}>
-      <Icon name={changeIcon} size={16} className={iconCopyStyle} />
+    <Button className={className} variant={buttonVariant} size="icon" aria-label="Copy" onClick={() => setCopied(true)}>
+      <Icon name={changeIcon} size={iconSize} className={iconCopyStyle} />
     </Button>
   )
 }

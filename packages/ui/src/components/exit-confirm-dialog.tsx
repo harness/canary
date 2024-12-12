@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components'
 
 export interface ExitConfirmOptions {
@@ -11,7 +13,7 @@ export interface ExitConfirmOptions {
 
 export type ExitConfirmDialogProps = ExitConfirmOptions & { open: boolean }
 
-export const ExitConfirmDialog = ({
+export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   open,
   onCancel,
   onConfirm,
@@ -19,7 +21,7 @@ export const ExitConfirmDialog = ({
   subtitle = 'Are you sure you want to leave this page without saving?',
   confirmText = 'Leave',
   cancelText = 'Stay'
-}: ExitConfirmDialogProps) => {
+}) => {
   return (
     <Dialog
       open={open}

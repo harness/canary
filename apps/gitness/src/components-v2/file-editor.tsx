@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
@@ -21,10 +21,7 @@ export interface FileEditorProps {
   defaultBranch: string
 }
 
-/**
- * TODO: This code was migrated from V2 and needs to be refactored.
- */
-export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
+export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { spaceId, repoId } = useParams<PathParams>()

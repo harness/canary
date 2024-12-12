@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -25,7 +27,7 @@ export interface FileViewerControlBarProps {
   handleOpenDeleteDialog: () => void
 }
 
-export const FileViewerControlBar = ({
+export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   view,
   onChangeView,
   isMarkdown,
@@ -35,7 +37,7 @@ export const FileViewerControlBar = ({
   handleDownloadFile,
   handleEditFile,
   handleOpenDeleteDialog
-}: FileViewerControlBarProps) => {
+}) => {
   const handleViewRaw = () => {
     window.open(url, '_blank')
   }

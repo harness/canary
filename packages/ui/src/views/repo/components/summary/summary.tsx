@@ -31,7 +31,7 @@ export const Summary = ({ latestFile, files, useTranslationStore }: SummaryProps
               <TableCell>
                 <div className="flex cursor-pointer items-center gap-1.5">
                   <Icon
-                    className="text-icons-7"
+                    className="text-icons-9"
                     name={file.type === SummaryItemType.File ? 'file' : 'folder'}
                     size={16}
                   />

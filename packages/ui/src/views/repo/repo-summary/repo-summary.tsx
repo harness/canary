@@ -23,7 +23,7 @@ import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, 
 import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
-import { RecentPushInfoBar } from './components/recent-push-info-bar'
+// import { RecentPushInfoBar } from './components/recent-push-info-bar'
 import SummaryPanel from './components/summary-panel'
 
 export interface RepoSummaryViewProps {
@@ -65,39 +65,6 @@ export interface RepoSummaryViewProps {
   useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
-}
-
-/**
- * TODO: This is a temporary implementation.
- * The actual implementation should:
- * 1. Use backend-provided timestamps and timezone information
- * 2. Support i18n for different languages
- * 3. Handle edge cases:
- *    - Invalid dates
- *    - Different timezones
- * 4. Support more precise time formatting:
- *    - "just now" for very recent changes
- *    - "about 1 hour ago"
- *    - "X minutes ago"
- *
- * Note: This function is specifically for RecentPushBar component,
- * which only shows pushes within last 24 hours (or less, depending on backend configuration)
- */
-export function timeAgoFromISOTime(isoTime: string): string {
-  const date = new Date(isoTime)
-  const seconds = Math.floor((new Date().getTime() - date.getTime()) / 1000)
-
-  if (seconds < 60) {
-    return `${seconds} seconds ago`
-  }
-
-  if (seconds < 3600) {
-    const minutes = Math.floor(seconds / 60)
-    return `${minutes} minute${minutes === 1 ? '' : 's'} ago`
-  }
-
-  const hours = Math.floor(seconds / 3600)
-  return `${hours} hour${hours === 1 ? '' : 's'} ago`
 }
 
 export function RepoSummaryView({
@@ -169,22 +136,24 @@ export function RepoSummaryView({
                   * No PR has been created from this branch yet
                 - Format timestamps using timeAgoFromISOTime
                 - Remove mock data below
+         
+                Example:
+                {selectedBranchTag.name !== repository?.default_branch && (
+                  <>
+                    <RecentPushInfoBar
+                      recentPushes={[
+                        {
+                          branchName: 'new-branch',
+                          timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
+                        }
+                      ]}
+                      spaceId={spaceId}
+                      repoId={repoId}
+                    />
+                    <Spacer size={6} />
+                  </>
+                )}
             */}
-            {selectedBranchTag.name !== repository?.default_branch && (
-              <>
-                <RecentPushInfoBar
-                  recentPushes={[
-                    {
-                      branchName: 'new-branch',
-                      timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
-                    }
-                  ]}
-                  spaceId={spaceId}
-                  repoId={repoId}
-                />
-                <Spacer size={6} />
-              </>
-            )}
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup>

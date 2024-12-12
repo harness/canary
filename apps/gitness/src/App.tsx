@@ -48,7 +48,6 @@ import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
-// import { RepoSettingsGeneralPageContainer } from './pages/repo/repo-settings-general-container'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -286,13 +285,17 @@ export default function App() {
                 {
                   path: 'general',
                   element: <RepoSettingsGeneralPageContainer />
+                },
+                {
+                  path: 'rules',
+                  element: <RepoSettingsGeneralPageContainer />
                 }
               ]
             }
           ]
         },
         {
-          path: ':spaceId/repos/create',
+          path: ':spa`ceId/repos/create',
           element: <CreateRepo />
         },
         {

@@ -24,7 +24,6 @@ const Description = ({
   bypassAllowed: boolean
 }) => {
   return (
-    // <div className="pl-[24px]">
     <Text color="tertiaryBackground" as="div" className="flex items-center gap-1 pl-[24px]">
       {targetPatternsCount} target patterns <span className="text-2xl text-tertiary">|</span> {rulesAppliedCount} rules
       applied <span className="text-2xl text-tertiary">|</span>
@@ -40,7 +39,6 @@ const Description = ({
         </div>
       )}
     </Text>
-    // </div>
   )
 }
 

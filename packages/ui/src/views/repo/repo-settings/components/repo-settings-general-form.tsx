@@ -143,7 +143,6 @@ export const RepoSettingsGeneralForm: React.FC<{
           </ControlGroup>
           {/* DESCRIPTION */}
           <ControlGroup>
-            {/* <Label htmlFor="description">Description</Label> */}
             <Textarea
               id="description"
               {...register('description')}

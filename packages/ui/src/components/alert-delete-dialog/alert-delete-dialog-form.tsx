@@ -4,8 +4,6 @@ import { Button, ButtonGroup, ControlGroup, Fieldset, Input, Message, MessageThe
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-// import { FormFieldSet } from '../../index'
-
 const alertDeleteSchema = z.object({
   verification: z.string().min(1, { message: 'To confirm, please type "DELETE".' })
 })

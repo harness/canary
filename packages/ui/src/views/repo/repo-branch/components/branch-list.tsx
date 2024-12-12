@@ -34,17 +34,11 @@ export const BranchesList = ({
       <TableHeader>
         <TableRow>
           <TableHead>{t('views:repos.branch', 'Branch')}</TableHead>
-          <TableHead /*className="text-center"*/>{t('views:repos.update', 'Updated')}</TableHead>
+          <TableHead>{t('views:repos.update', 'Updated')}</TableHead>
           {branches[0]?.checks?.done && branches[0]?.checks?.total && branches[0]?.checks?.status && (
             <TableHead>{t('views:repos.checkStatus', 'Check status')}</TableHead>
           )}
           <TableHead>
-            {/* <div className="flex justify-center items-center text-center">
-              <Text className="border-gray-20 w-[50%] px-1.5 text-right">{t('views:repos.behind', 'Behind')}</Text>
-              <div className="h-full inline-block border-r-2 border-tertiary-background/30"></div>
-
-              <Text className="w-[50%] px-1.5 text-left">{t('views:repos.ahead', 'Ahead')}</Text>
-            </div> */}
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-items-end gap-x-2">
               <Text as="p" size={1} truncate color="tertiaryBackground" className="leading-none">
                 {t('views:repos.behind', 'Behind')}
@@ -56,7 +50,7 @@ export const BranchesList = ({
             </div>
           </TableHead>
           {/* since we don't have the data for pull request, we can change data to Commit to match the original gitness */}
-          {branches[0]?.sha && <TableHead /*className="text-center"*/>{t('views:repos.commit', 'Commit')}</TableHead>}
+          {branches[0]?.sha && <TableHead>{t('views:repos.commit', 'Commit')}</TableHead>}
           <TableHead>
             <></>
           </TableHead>
@@ -72,7 +66,6 @@ export const BranchesList = ({
                   <div className="flex items-center gap-1.5">
                     <Text wrap="nowrap" truncate className="text-primary/90">
                       <Button variant="secondary" size="xs">
-                        &nbsp;
                         {branch?.name}
                       </Button>
                     </Text>

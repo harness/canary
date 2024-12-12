@@ -73,49 +73,49 @@ type ProgressProps = React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Roo
     value?: number
   }
 
-// const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-//   ({ className, value, variant, size, rounded, color, indicatorRounded, indicatorColor, rotated, ...props }, ref) => (
-//     <ProgressPrimitive.Root
-//       ref={ref}
-//       className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
-//       {...props}
-//     >
-//       <ProgressPrimitive.Indicator
-//         className={cn(
-//           'h-full w-full flex-1 transition-all',
-//           indicatorVariants({ color, indicatorRounded, indicatorColor })
-//         )}
-//         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
-//       />
-//     </ProgressPrimitive.Root>
-//   )
-// )
-
 const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
-  ({ className, value, variant, size, rounded, color, indicatorRounded, indicatorColor, rotated, ...props }, ref) => {
-    // Calculate the percentage and ensure it's at least 10
-    console.log(value)
-    const adjustedValue = value || 0
-    const percentage = 100 - adjustedValue
-    const adjustedPercentage = percentage < 10 ? 10 : percentage
-
-    return (
-      <ProgressPrimitive.Root
-        ref={ref}
-        className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
-        {...props}
-      >
-        <ProgressPrimitive.Indicator
-          className={cn(
-            'h-full w-full flex-1 transition-all',
-            indicatorVariants({ color, indicatorRounded, indicatorColor })
-          )}
-          style={{ transform: `translateX(-${adjustedPercentage}%)` }}
-        />
-      </ProgressPrimitive.Root>
-    )
-  }
+  ({ className, value, variant, size, rounded, color, indicatorRounded, indicatorColor, rotated, ...props }, ref) => (
+    <ProgressPrimitive.Root
+      ref={ref}
+      className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
+      {...props}
+    >
+      <ProgressPrimitive.Indicator
+        className={cn(
+          'h-full w-full flex-1 transition-all',
+          indicatorVariants({ color, indicatorRounded, indicatorColor })
+        )}
+        style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
+      />
+    </ProgressPrimitive.Root>
+  )
 )
+
+// const Progress = React.forwardRef<React.ElementRef<typeof ProgressPrimitive.Root>, ProgressProps>(
+//   ({ className, value, variant, size, rounded, color, indicatorRounded, indicatorColor, rotated, ...props }, ref) => {
+//     // Calculate the percentage and ensure it's at least 10
+//     console.log(value)
+//     const adjustedValue = value || 0
+//     const percentage = 100 - adjustedValue
+//     const adjustedPercentage = percentage < 10 ? 10 : percentage
+
+//     return (
+//       <ProgressPrimitive.Root
+//         ref={ref}
+//         className={cn(progressVariants({ variant, size, rounded, rotated }), className)}
+//         {...props}
+//       >
+//         <ProgressPrimitive.Indicator
+//           className={cn(
+//             'h-full w-full flex-1 transition-all',
+//             indicatorVariants({ color, indicatorRounded, indicatorColor })
+//           )}
+//           style={{ transform: `translateX(-${adjustedPercentage}%)` }}
+//         />
+//       </ProgressPrimitive.Root>
+//     )
+//   }
+// )
 
 Progress.displayName = ProgressPrimitive.Root.displayName
 

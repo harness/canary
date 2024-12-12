@@ -26,6 +26,7 @@ export interface BranchSelectorDropdownProps {
   repoId: string
   spaceId: string
   useTranslationStore: () => TranslationStore
+  isBranchOnly?: boolean
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {

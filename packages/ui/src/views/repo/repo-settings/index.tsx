@@ -1,6 +1,8 @@
 import { useRef } from 'react'
 
 import { Fieldset, FormSeparator } from '@/components'
+import { BranchSelectorListItem } from '@/views'
+import { BranchSelectorTab } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
@@ -22,11 +24,14 @@ interface RepoSettingsGeneralPageProps {
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
+  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
   // rules: RuleDataType[] | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
   useRepoRulesStore: any
+  useRepoBranchesStore: any
+  useTranslationStore: any
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   // repoData,
@@ -40,7 +45,10 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   handleRuleClick,
   openRulesAlertDeleteDialog,
   openRepoAlertDeleteDialog,
-  useRepoRulesStore
+  useRepoRulesStore,
+  useRepoBranchesStore,
+  useTranslationStore,
+  selectBranchOrTag
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
   if (window.location.pathname.endsWith('/rules')) {
@@ -59,6 +67,9 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
         isLoadingRepoData={loadingStates.isLoadingRepoData}
         isUpdatingRepoData={loadingStates.isUpdatingRepoData}
         isRepoUpdateSuccess={isRepoUpdateSuccess}
+        useRepoBranchesStore={useRepoBranchesStore}
+        useTranslationStore={useTranslationStore}
+        selectBranchOrTag={selectBranchOrTag}
       />
       <FormSeparator />
       <div ref={rulesRef}>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
@@ -30,6 +30,8 @@ import {
 import { AlertDeleteDialog, DeleteAlertDialog } from '@harnessio/ui/components'
 import {
   AccessLevel,
+  BranchSelectorListItem,
+  BranchSelectorTab,
   //   AlertDeleteDialog,
   //   DeleteTokenAlertDialog,
   ErrorTypes,
@@ -43,6 +45,8 @@ import {
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { useRepoBranchesStore } from './stores/repo-branches-store'
 // import { getTotalRulesApplied } from '../../utils/repo-branch-rules-utils'
 import { useRepoRulesStore } from './stores/repo-rules-store'
 
@@ -53,6 +57,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning, setBranches } = useRepoRulesStore()
+  const { branchList, setBranchList, setSelectedBranchTag, setSelectedBranchType } = useRepoBranchesStore()
 
   // const [repoData, setRepoData] = useState<RepoData>({
   //   name: '',
@@ -284,6 +289,19 @@ export const RepoSettingsGeneralPageContainer = () => {
     })
   }
 
+  const selectBranchOrTag = useCallback(
+    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+      if (type === BranchSelectorTab.BRANCHES) {
+        const branch = branchList.find(branch => branch.name === branchTagName.name)
+        if (branch) {
+          setSelectedBranchTag(branch)
+          setSelectedBranchType(type)
+        }
+      }
+    },
+    [spaceId, branchList]
+  )
+
   useEffect(() => {
     if (repoData) {
       setRepoData(repoData)
@@ -293,6 +311,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   useEffect(() => {
     if (branches) {
       setBranches(branches)
+      setBranchList(branches)
     }
   }, [branches, setBranches])
 
@@ -331,6 +350,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       <RepoSettingsGeneralPage
         // repoData={repoData}
         handleRepoUpdate={handleRepoUpdate}
+        selectBranchOrTag={selectBranchOrTag}
         // securityScanning={securityScanning}
         handleUpdateSecuritySettings={handleUpdateSecuritySettings}
         apiError={apiError}
@@ -338,6 +358,8 @@ export const RepoSettingsGeneralPageContainer = () => {
         isRepoUpdateSuccess={updatePublicAccessSuccess || updateDescriptionSuccess || updateBranchSuccess}
         // rules={rules}
         useRepoRulesStore={useRepoRulesStore}
+        useRepoBranchesStore={useRepoBranchesStore}
+        useTranslationStore={useTranslationStore}
         handleRuleClick={handleRuleClick}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}

@@ -28,7 +28,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   onSelectBranch,
   repoId,
   spaceId,
-  useTranslationStore
+  useTranslationStore,
+  isBranchOnly = false
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const [searchQuery, setSearchQuery] = useState('')
@@ -53,7 +54,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">
       <div className="px-3 pt-2">
-        <span className="text-14 font-medium leading-none">Switch branches/tags</span>
+        {isBranchOnly ? (
+          <span className="text-14 font-medium leading-none">Switch branches</span>
+        ) : (
+          <span className="text-14 font-medium leading-none">Switch branches/tags</span>
+        )}
 
         <SearchBox.Root
           className="mt-2 w-full"
@@ -64,48 +69,50 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         />
       </div>
 
-      <Tabs
-        className="mt-2"
-        variant="branch"
-        value={activeTab}
-        onValueChange={value => {
-          setActiveTab(value as BranchSelectorTab)
-          setSearchQuery('')
-        }}
-      >
-        <TabsList>
-          <DropdownMenuItem
-            className="rounded-t-md p-0"
-            onSelect={e => {
-              e.preventDefault()
-              setActiveTab(BranchSelectorTab.BRANCHES)
-            }}
-          >
-            <TabsTrigger
-              className="data-[state=active]:bg-background-2"
-              value="branches"
-              onClick={e => e.stopPropagation()}
+      {!isBranchOnly && (
+        <Tabs
+          className="mt-2"
+          variant="branch"
+          value={activeTab}
+          onValueChange={value => {
+            setActiveTab(value as BranchSelectorTab)
+            setSearchQuery('')
+          }}
+        >
+          <TabsList>
+            <DropdownMenuItem
+              className="rounded-t-md p-0"
+              onSelect={e => {
+                e.preventDefault()
+                setActiveTab(BranchSelectorTab.BRANCHES)
+              }}
             >
-              {t('views:repos.branches', 'Branches')}
-            </TabsTrigger>
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className="rounded-t-md p-0"
-            onSelect={e => {
-              e.preventDefault()
-              setActiveTab(BranchSelectorTab.TAGS)
-            }}
-          >
-            <TabsTrigger
-              className="data-[state=active]:bg-background-2"
-              value="tags"
-              onClick={e => e.stopPropagation()}
+              <TabsTrigger
+                className="data-[state=active]:bg-background-2"
+                value="branches"
+                onClick={e => e.stopPropagation()}
+              >
+                {t('views:repos.branches', 'Branches')}
+              </TabsTrigger>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="rounded-t-md p-0"
+              onSelect={e => {
+                e.preventDefault()
+                setActiveTab(BranchSelectorTab.TAGS)
+              }}
             >
-              {t('views:repos.tags', 'Tags')}
-            </TabsTrigger>
-          </DropdownMenuItem>
-        </TabsList>
-      </Tabs>
+              <TabsTrigger
+                className="data-[state=active]:bg-background-2"
+                value="tags"
+                onClick={e => e.stopPropagation()}
+              >
+                {t('views:repos.tags', 'Tags')}
+              </TabsTrigger>
+            </DropdownMenuItem>
+          </TabsList>
+        </Tabs>
+      )}
 
       <div className="mt-1">
         {filteredItems.length === 0 && (

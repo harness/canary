@@ -9,17 +9,17 @@ import {
   FormWrapper,
   Icon,
   Input,
+  Label,
   Message,
   MessageTheme,
   Option,
   RadioButton,
   RadioGroup,
-  Select,
-  SelectContent,
-  SelectItem,
   Spacer,
   Text
 } from '@/components'
+import { BranchSelectorListItem } from '@/views'
+import { BranchSelector, BranchSelectorTab } from '@/views/repo/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -43,6 +43,9 @@ export const RepoSettingsGeneralForm: React.FC<{
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
+  selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
+  useRepoBranchesStore: any
+  useTranslationStore: any
 }> = ({
   repoData,
   branches,
@@ -50,7 +53,10 @@ export const RepoSettingsGeneralForm: React.FC<{
   apiError,
   isLoadingRepoData,
   isUpdatingRepoData,
-  isRepoUpdateSuccess
+  isRepoUpdateSuccess,
+  selectBranchOrTag,
+  useRepoBranchesStore,
+  useTranslationStore
 }) => {
   const {
     register,
@@ -153,31 +159,18 @@ export const RepoSettingsGeneralForm: React.FC<{
           </ControlGroup>
         </Fieldset>
 
-        <Fieldset className="max-w-[150px]">
-          <ControlGroup>
-            <Select
-              value={branchValue}
-              onValueChange={value => handleSelectChange('branch', value)}
-              placeholder=""
-              label="Default Branch"
-              error={errors.branch?.message?.toString()}
-            >
-              <SelectContent>
-                {!isDefaultInBranches && repoData.defaultBranch && (
-                  <SelectItem key={repoData.defaultBranch} value={repoData.defaultBranch}>
-                    {repoData.defaultBranch}
-                  </SelectItem>
-                )}
-                {branches.map(branch => {
-                  return (
-                    <SelectItem key={branch.name} value={branch.name || ''}>
-                      {branch.name}
-                    </SelectItem>
-                  )
-                })}
-              </SelectContent>
-            </Select>
-          </ControlGroup>
+        {/* BRANCH */}
+        <Fieldset className="w-[298px] gap-y-0">
+          <Label className="mb-2.5">Default Branch</Label>
+          <BranchSelector
+            useTranslationStore={useTranslationStore}
+            useRepoBranchesStore={useRepoBranchesStore}
+            onSelectBranch={value => {
+              handleSelectChange('branch', value.name)
+              selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
+            }}
+            isBranchOnly={true}
+          />
         </Fieldset>
 
         <Fieldset>

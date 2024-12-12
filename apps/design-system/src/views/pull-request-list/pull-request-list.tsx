@@ -17,7 +17,7 @@ const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
   return (
     <PullRequestList
       setSearchQuery={noop}
-      usePullRequestStore={usePullRequestListStore}
+      usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationsStore}
       isLoading={false}
       {...props}

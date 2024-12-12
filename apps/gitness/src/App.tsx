@@ -270,7 +270,7 @@ export default function App() {
                 },
                 {
                   path: 'commits',
-                  element: <PullRequestCommitsPage />
+                  element: <>commits</>
                 },
                 {
                   path: 'changes',

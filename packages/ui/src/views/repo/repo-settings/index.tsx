@@ -1,8 +1,8 @@
 import { useRef } from 'react'
 
-import { Fieldset, FormSeparator, FormWrapper } from '@/components'
+import { Fieldset, FormSeparator } from '@/components'
 
-// import { RepoSettingsGeneralDelete } from './repo-settings-general/repo-settings-general-delete'
+import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
 import { RepoSettingsGeneralForm } from './components/repo-settings-general-form'
 import { RepoSettingsGeneralRules } from './components/repo-settings-general-rules'
 import { RepoSettingsSecurityForm, RepoSettingsSecurityFormFields } from './components/repo-settings-general-security'
@@ -15,39 +15,45 @@ interface ILoadingStates {
   isUpdatingSecuritySettings: boolean
 }
 interface RepoSettingsGeneralPageProps {
-  repoData: RepoData
-  securityScanning: boolean
+  // repoData: RepoData
+  // securityScanning: boolean
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   loadingStates: ILoadingStates
   isRepoUpdateSuccess: boolean
-  rules: RuleDataType[] | null
+  // rules: RuleDataType[] | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
   openRepoAlertDeleteDialog: () => void
+  useRepoRulesStore: any
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
-  repoData,
+  // repoData,
   handleRepoUpdate,
-  securityScanning,
+  // securityScanning,
   handleUpdateSecuritySettings,
   apiError,
   loadingStates,
   isRepoUpdateSuccess,
-  rules,
+  // rules,
   handleRuleClick,
   openRulesAlertDeleteDialog,
-  openRepoAlertDeleteDialog
+  openRepoAlertDeleteDialog,
+  useRepoRulesStore
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
   if (window.location.pathname.endsWith('/rules')) {
     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
+
+  const { repoData, branches, securityScanning, rules } = useRepoRulesStore()
+
   return (
     <Fieldset>
       <RepoSettingsGeneralForm
         repoData={repoData}
+        branches={branches}
         handleRepoUpdate={handleRepoUpdate}
         apiError={apiError}
         isLoadingRepoData={loadingStates.isLoadingRepoData}
@@ -73,7 +79,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
         isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
       />
       <FormSeparator />
-      {/*<RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} /> */}
+      <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
     </Fieldset>
   )
 }

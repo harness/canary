@@ -1,3 +1,5 @@
+import React from 'react'
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -10,7 +12,7 @@ import {
   Text
 } from '@/components'
 
-interface DeleteTokenAlertDialogProps {
+interface DeleteAlertDialogProps {
   open: boolean
   onClose: () => void
   identifier?: string
@@ -19,7 +21,7 @@ interface DeleteTokenAlertDialogProps {
   isLoading?: boolean
   error?: { type: string; message: string } | null
 }
-export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
+export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
   open,
   onClose,
   identifier,

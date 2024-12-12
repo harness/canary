@@ -25,7 +25,7 @@ import { z } from 'zod'
 
 import { SkeletonList, Textarea } from '@harnessio/ui/components'
 
-import { AccessLevel, ErrorTypes, RepoData, RepoUpdateData } from '../types'
+import { AccessLevel, ErrorTypes, RepoBranch, RepoData, RepoUpdateData } from '../types'
 
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -37,12 +37,21 @@ export type RepoUpdateFormFields = z.infer<typeof formSchema>
 
 export const RepoSettingsGeneralForm: React.FC<{
   repoData: RepoData
+  branches: RepoBranch[]
   handleRepoUpdate: (data: RepoUpdateData) => void
   apiError: { type: ErrorTypes; message: string } | null
   isLoadingRepoData: boolean
   isUpdatingRepoData: boolean
   isRepoUpdateSuccess: boolean
-}> = ({ repoData, handleRepoUpdate, apiError, isLoadingRepoData, isUpdatingRepoData, isRepoUpdateSuccess }) => {
+}> = ({
+  repoData,
+  branches,
+  handleRepoUpdate,
+  apiError,
+  isLoadingRepoData,
+  isUpdatingRepoData,
+  isRepoUpdateSuccess
+}) => {
   const {
     register,
     handleSubmit,
@@ -94,7 +103,7 @@ export const RepoSettingsGeneralForm: React.FC<{
     setIsSubmitted(true)
     handleRepoUpdate(data)
   }
-  const isDefaultInBranches = repoData.branches.some(branch => branch.name === repoData.defaultBranch)
+  const isDefaultInBranches = branches.some(branch => branch.name === repoData.defaultBranch)
   const errorTypes = new Set([
     ErrorTypes.FETCH_REPO,
     ErrorTypes.FETCH_BRANCH,
@@ -159,7 +168,7 @@ export const RepoSettingsGeneralForm: React.FC<{
                     {repoData.defaultBranch}
                   </SelectItem>
                 )}
-                {repoData.branches.map(branch => {
+                {branches.map(branch => {
                   return (
                     <SelectItem key={branch.name} value={branch.name || ''}>
                       {branch.name}

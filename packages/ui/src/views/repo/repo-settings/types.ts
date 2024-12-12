@@ -8,7 +8,7 @@ export interface RepoData {
   description: string
   defaultBranch: string
   isPublic: boolean
-  branches: RepoBranch[]
+  // branches: RepoBranch[]
 }
 
 export enum AccessLevel {

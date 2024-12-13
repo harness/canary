@@ -36,13 +36,22 @@ export interface BlameEditorProps<_> {
   code: string
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  theme?: string
   lineNumbersPosition?: 'left' | 'center'
   blameData: BlameItem[]
   showSeparators?: boolean
 }
 
 export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
-  const { code, language, themeConfig, lineNumbersPosition = 'left', blameData, showSeparators = true } = props
+  const {
+    code,
+    language,
+    themeConfig,
+    lineNumbersPosition = 'left',
+    blameData,
+    showSeparators = true,
+    theme: themeFromProps
+  } = props
   const blameDataRef = useRef(blameData)
   blameDataRef.current = blameData
 
@@ -74,7 +83,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
         blameDataRef.current.forEach((blameItem, index) => {
           if (index !== blameDataRef.current.length - 1) {
             const domNode = document.createElement('div')
-            domNode.style.borderTop = '1px solid #333333'
+            domNode.style.borderTop = '1px solid hsl(var(--canary-border-01))'
             domNode.style.marginTop = '9px'
             domNode.className = 'blame-editor-separator'
 
@@ -128,7 +137,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
     editor?.setValue(code)
   }, [code])
 
-  const { theme } = useTheme({ monacoRef, themeConfig, editor })
+  const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
   const monacoEditorCss = useMemo(
     () =>

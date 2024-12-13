@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
+// TODO: remove this maybe , look into our own pluralize function: https://github.com/harness/canary/pull/582
 import pluralize from 'pluralize'
 
 import { TypesPullReq, TypesRepository, useChecksPullReqQuery } from '@harnessio/code-service-client'
@@ -33,8 +34,8 @@ export function usePRChecksDecision({
     queryParams: { debounce: 500 }
   })
   const [count, setCount] = useState(DEFAULT_COUNTS)
-  const [color, setColor] = useState<string>('GREEN_500')
-  const [background, setBackground] = useState<string>('GREEN_50')
+  const [color, setColor] = useState<string>('text-success')
+  const [background, setBackground] = useState<string>('text-success')
   const [message, setMessage] = useState('')
   const [complete, setComplete] = useState(true)
   const [summaryText, setSummaryText] = useState('')
@@ -66,7 +67,7 @@ export function usePRChecksDecision({
           case ExecutionState.PENDING:
           case ExecutionState.SUCCESS:
             _count[check.check.status]++
-            setCount({ ..._count })
+            setCount({ ..._count, [check.check.status]: _count[check.check.status] + 1 })
             break
           default:
             console.error('Unrecognized PR check status', check)
@@ -133,6 +134,9 @@ export function usePRChecksDecision({
     return _status
   }, [data])
 
+  // *******
+  // NOTE: TODO: refactor this to make it more clear and readable
+  // *******
   useEffect(() => {
     let tornDown = false
     const pollingFn = () => {

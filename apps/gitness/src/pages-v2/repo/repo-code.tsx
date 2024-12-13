@@ -41,7 +41,7 @@ export const RepoCode = () => {
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
 
-  const { data: { body: repoDetails } = {} } = useGetContentQuery({
+  const { data: { body: repoDetails } = {}, refetch: refetchRepoContent } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
@@ -140,6 +140,10 @@ export const RepoCode = () => {
 
     return `new/${fullGitRef || selectedBranchTag.name}/~/`
   }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
+
+  useEffect(() => {
+    refetchRepoContent()
+  }, [codeMode])
 
   /**
    * Render File content view or Edit file view

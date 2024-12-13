@@ -7,11 +7,9 @@ interface BranchInfoBarProps {
   defaultBranchName?: string
   spaceId: string
   repoId: string
-  currentBranch: {
-    behindAhead: {
-      ahead: number
-      behind: number
-    }
+  currentBranchDivergence: {
+    ahead: number
+    behind: number
   }
 }
 
@@ -19,11 +17,11 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
   spaceId,
   repoId,
-  currentBranch
+  currentBranchDivergence
 }) => {
-  const { behindAhead } = currentBranch
-  const hasBehind = behindAhead.behind > 0
-  const hasAhead = behindAhead.ahead > 0
+  const { behind, ahead } = currentBranchDivergence
+  const hasBehind = !!behind
+  const hasAhead = !!ahead
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">
@@ -33,14 +31,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           {hasAhead && (
             <>
               <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
-                <span className="text-foreground-accent">{behindAhead.ahead} commits ahead of</span>
+                <span className="text-foreground-accent">{ahead} commits ahead of</span>
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
             <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
-              <span className="text-foreground-accent">{behindAhead.behind} commits behind</span>
+              <span className="text-foreground-accent">{behind} commits behind</span>
             </StyledLink>
           )}
         </span>
@@ -66,9 +64,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-14 leading-snug text-foreground-1">
-                This branch is {behindAhead.ahead} commits ahead of{' '}
-              </span>
+              <span className="text-14 leading-snug text-foreground-1">This branch is {ahead} commits ahead of </span>
               <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
                 <Icon className="text-icons-9" name="branch" size={14} />
                 <span className="text-foreground-8">{defaultBranchName}</span>

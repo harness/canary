@@ -53,11 +53,25 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const [parentPath, setParentPath] = useState(
     isNew ? fullResourcePath : fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   )
-  const pathParts = useMemo(() => (parentPath?.length ? splitPathWithParents(parentPath, repoPath) : []), [parentPath])
   const fileResourcePath = useMemo(
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]
   )
+  const pathToSplit = useMemo(() => {
+    if (isNew) {
+      return parentPath
+    } else if (parentPath?.length && fileName.length) {
+      return [parentPath, fileName].join(FILE_SEPERATOR)
+    }
+    return parentPath?.length ? parentPath : fileName
+  }, [isNew, parentPath, fileName])
+  const pathParts = [
+    {
+      path: repoId!,
+      parentPath: repoPath
+    },
+    ...splitPathWithParents(pathToSplit, repoPath)
+  ]
   const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
   const commitAction = useMemo(
     () => (isNew ? GitCommitAction.CREATE : isUpdate ? GitCommitAction.UPDATE : GitCommitAction.MOVE),
@@ -151,11 +165,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         resourcePath={fileResourcePath || ''}
         payload={contentRevision.code}
         sha={repoDetails?.sha}
-        onSuccess={(_commitInfo, isNewBranch, newBranchName, fileName) => {
+        onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(
-              `/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${isNew ? fileResourcePath + fileName : fileResourcePath}`
-            )
+            navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
           } else {
             navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
           }

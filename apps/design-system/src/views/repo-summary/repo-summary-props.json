@@ -1462,5 +1462,9 @@
     "timestamp": "3 hours ago",
     "sha": "ec92d11"
   },
-  "isEditingDescription": false
+  "isEditingDescription": false,
+  "currentBranchDivergence": {
+    "behind": 10,
+    "ahead": 12
+  }
 }

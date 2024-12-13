@@ -71,10 +71,9 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                 defaultBranchName={defaultBranchName}
                 spaceId={spaceId}
                 repoId={repoId}
-                currentBranch={{
-                  ...selectedBranchTag,
-                  // TODO: it is required to transfer the real data that the currently selected branch should contain
-                  behindAhead: { ahead: 10, behind: 20 }
+                currentBranchDivergence={{
+                  ahead: 10,
+                  behind: 20
                 }}
               />
             </>

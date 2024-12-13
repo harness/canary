@@ -8,6 +8,7 @@ import {
   pathDetails,
   RepoPathsDetailsOutput,
   UpdateRepositoryErrorResponse,
+  useCalculateCommitDivergenceMutation,
   useCreateTokenMutation,
   useFindRepositoryQuery,
   useGetContentQuery,
@@ -17,8 +18,14 @@ import {
   useSummaryQuery,
   useUpdateRepositoryMutation
 } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, BranchSelectorTab, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
-import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
+import {
+  BranchSelectorListItem,
+  BranchSelectorTab,
+  CommitDivergenceType,
+  RepoFile,
+  RepoSummaryView
+} from '@harnessio/ui/views'
+import { generateAlphaNumericHash, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -26,6 +33,7 @@ import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
 import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
 import { PathParams } from '../../RouteDefinitions'
+import { orderSortDate } from '../../types'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 
@@ -36,12 +44,11 @@ export default function RepoSummaryPage() {
   const navigate = useNavigate()
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
+  const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 
   const {
     branchList,
-
     tagList,
-
     setBranchList,
     setTagList,
     setSpaceIdAndRepoId,
@@ -53,14 +60,32 @@ export default function RepoSummaryPage() {
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
+  const { data: { body: repoSummary } = {} } = useSummaryQuery({
+    repo_ref: repoRef,
+    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1 }
+  })
+
+  const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
+
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query: '' }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 50 }
   })
+
+  const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
+    useCalculateCommitDivergenceMutation({
+      repo_ref: repoRef
+    })
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
+
+  useEffect(() => {
+    if (branchDivergence.length) {
+      setCurrBranchDivergence(branchDivergence[0])
+    }
+  }, [branchDivergence])
 
   const [updateError, setUpdateError] = useState<string>('')
 
@@ -95,8 +120,6 @@ export default function RepoSummaryPage() {
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
-  const { query } = useCommonFilter()
-
   useEffect(() => {
     if (branches) {
       setBranchList(
@@ -117,10 +140,9 @@ export default function RepoSummaryPage() {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: ''
+      order: orderSortDate.DESC,
+      limit: 50,
+      page: 1
     }
   })
 
@@ -157,12 +179,15 @@ export default function RepoSummaryPage() {
     [navigate, repoId, spaceId, branchList, tagList]
   )
 
-  const { data: { body: repoSummary } = {} } = useSummaryQuery({
-    repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: 'asc', limit: 20, page: 1, query }
-  })
-
-  const { branch_count, default_branch_commit_count, pull_req_summary, tag_count } = repoSummary || {}
+  useEffect(() => {
+    if (selectedBranchTag) {
+      calculateDivergence({
+        body: {
+          requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
+        }
+      })
+    }
+  }, [selectedBranchTag])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
@@ -264,11 +289,13 @@ export default function RepoSummaryPage() {
 
   useEffect(() => {
     const defaultBranch = branchList.find(branch => branch.default)
-    setSelectedBranchTag({
-      name: defaultBranch?.name || '',
-      sha: defaultBranch?.sha || '',
-      default: true
-    })
+    if (defaultBranch) {
+      setSelectedBranchTag({
+        name: defaultBranch?.name || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
+    }
   }, [branchList])
 
   const { data: filesData } = useListPathsQuery({
@@ -328,6 +355,7 @@ export default function RepoSummaryPage() {
         isEditDialogOpen={isEditDialogOpen}
         setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
+        currentBranchDivergence={currBranchDivergence}
       />
       {createdTokenData && (
         <TokenSuccessDialog

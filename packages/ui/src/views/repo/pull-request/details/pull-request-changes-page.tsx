@@ -61,7 +61,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         }
         useTranslationStore={useTranslationStore}
         diffMode={diffMode}
-        currentUser={currentUser}
+        currentUser={currentUser?.display_name}
       />
     )
   }

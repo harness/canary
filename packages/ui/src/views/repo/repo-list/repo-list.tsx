@@ -6,7 +6,7 @@ import { TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode; disabled?: boolean }>
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
   query?: string
@@ -100,25 +100,27 @@ export function RepoList({
     <>
       <StackedList.Root>
         {repos.map((repo, repo_idx) => (
-          <LinkComponent key={repo_idx} to={repo.name}>
+          <LinkComponent key={repo_idx} to={repo.name} disabled={repo.importing}>
             <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
               <StackedList.Field
                 primary
-                description={repo.description}
+                description={repo.importing ? 'Importing Repository...' : repo.description}
                 title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
                 className="line-clamp-1 gap-1.5 text-wrap"
               />
-              <StackedList.Field
-                title={
-                  <>
-                    Updated <em>{repo.timestamp}</em>
-                  </>
-                }
-                description={<Stats stars={repo.stars} pulls={repo.pulls} />}
-                right
-                label
-                secondary
-              />
+              {!repo.importing ? (
+                <StackedList.Field
+                  title={
+                    <>
+                      Updated <em>{repo.timestamp}</em>
+                    </>
+                  }
+                  description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                  right
+                  label
+                  secondary
+                />
+              ) : null}
             </StackedList.Item>
           </LinkComponent>
         ))}

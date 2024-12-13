@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { Button, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar } from '@components/filters'
+import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'
 
 import { SandboxLayout } from '../../index'
@@ -14,7 +15,16 @@ import { sortRepositories } from '../utils/sorting/repos'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
+const LinkComponent = ({ to, children, disabled }: { to: string; children: ReactNode; disabled?: boolean }) => (
+  <Link
+    to={to}
+    className={cn({
+      'pointer-events-none': disabled
+    })}
+  >
+    {children}
+  </Link>
+)
 
 const DEFAULT_ERROR_MESSAGE = ['An error occurred while loading the data. ', 'Please try again and reload the page.']
 

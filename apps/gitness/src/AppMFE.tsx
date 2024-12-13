@@ -1,5 +1,6 @@
 import './AppMFE.css'
 
+import { useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -14,7 +15,7 @@ import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { MFEContext } from './framework/context/MFEContext'
-import { ThemeProvider } from './framework/context/ThemeContext'
+import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -31,7 +32,7 @@ import { RepoImportContainer } from './pages/repo/repo-import-container'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
-export default function AppMFE({ scope, renderUrl, on401 }: ChildComponentProps) {
+export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: ChildComponentProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) => `/code${BASE_URL_PREFIX}${url}`,
     responseInterceptor: (response: Response) => {
@@ -44,10 +45,22 @@ export default function AppMFE({ scope, renderUrl, on401 }: ChildComponentProps)
     }
   })
 
+  const { theme } = useMFEThemeContext()
+  console.log('MFE Theme', theme)
+
+  const { setTheme } = useThemeStore()
+  useEffect(() => {
+    if (theme === 'Light') {
+      setTheme('light-std-std')
+    } else {
+      setTheme('dark-std-std')
+    }
+  }, [theme])
+
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
-        <ThemeProvider defaultTheme="dark-std-std">
+        <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <ExitConfirmProvider>

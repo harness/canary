@@ -5,6 +5,7 @@ import {
   AccordionTrigger,
   Badge,
   Checkbox,
+  CopyButton,
   StackedList,
   Text
 } from '@components/index'
@@ -14,8 +15,6 @@ import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-req
 // import { FileViewGauge } from '@harnessio/views'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
-
-import { CopyButton } from '@harnessio/ui/components'
 
 interface HeaderProps {
   text: string

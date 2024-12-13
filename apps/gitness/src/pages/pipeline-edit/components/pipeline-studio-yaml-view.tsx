@@ -29,7 +29,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
   } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
   const { theme } = useThemeStore()
-  // TODO: temporary solution fro matching
+  // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)

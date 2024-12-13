@@ -41,7 +41,7 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()
   const { theme } = useThemeStore()
-  // TODO: temporary solution fro matching
+  // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   const themeConfig = useMemo(

@@ -31,6 +31,7 @@ export interface YamlEditorProps<T> {
   schemaConfig?: { schema: any; uri: string }
   inlineActions?: { selectors: PathSelector[]; actions: InlineAction<T>[] }[]
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  theme?: string
   selection?: {
     path: string
     className: string
@@ -39,7 +40,15 @@ export interface YamlEditorProps<T> {
 }
 
 export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
-  const { yamlRevision, schemaConfig, inlineActions, themeConfig, onYamlRevisionChange, selection } = props
+  const {
+    yamlRevision,
+    schemaConfig,
+    inlineActions,
+    themeConfig,
+    onYamlRevisionChange,
+    selection,
+    theme: themeFromProps
+  } = props
   const monaco = useMonaco()
   const [instanceId] = useState('yaml')
   const { editor, setEditor } = useYamlEditorContext()
@@ -82,7 +91,7 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
 
   useCodeLenses({ editorRef, inlineActions })
 
-  const { theme } = useTheme({ monacoRef, themeConfig, editor })
+  const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
   useProblems({ monacoRef })
 
@@ -97,7 +106,6 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
         }}
         language="yaml"
         theme={theme}
-        //value={yamlRevision.yaml}
         options={options}
         path={schemaIdToUrl(instanceId)}
         onMount={handleEditorDidMount}

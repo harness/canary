@@ -33,19 +33,20 @@ export interface DiffEditorProps<_> {
   modified: string
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  theme?: string
   options?: {
     readOnly?: boolean
   }
 }
 
 export function CodeDiffEditor<T>(props: DiffEditorProps<T>): JSX.Element {
-  const { original, modified, language, themeConfig, options } = props
+  const { original, modified, language, themeConfig, options, theme: themeFromProps } = props
   const monaco = useMonaco()
   const [editor, setEditor] = useState<MonacoDiffEditor | undefined>()
 
   const monacoRef = useRef<typeof monaco>()
 
-  const { theme } = useTheme({ monacoRef, themeConfig, editor })
+  const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
   const mergedOptions = useMemo(() => {
     return { ...defaultOptions, ...(options ? options : {}) }

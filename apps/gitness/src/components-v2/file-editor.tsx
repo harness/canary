@@ -7,6 +7,7 @@ import { PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
+import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
@@ -34,18 +35,21 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
   const [originalFileContent, setOriginalFileContent] = useState('')
-  const [content, setContent] = useState(originalFileContent)
+  const [contentRevision, setContentRevision] = useState({ code: originalFileContent })
   const [view, setView] = useState<EditViewTypeValue>('edit')
   const [dirty, setDirty] = useState(false)
   const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()
+  const { theme } = useThemeStore()
+  // TODO: temporary solution fro matching
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   const themeConfig = useMemo(
     () => ({
-      defaultTheme: 'dark',
+      defaultTheme: monacoTheme,
       themes
     }),
-    []
+    [monacoTheme]
   )
 
   const isNew = useMemo(() => repoDetails && repoDetails.type === 'dir', [repoDetails])
@@ -71,11 +75,11 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
   }, [isNew, repoDetails])
 
   useEffect(() => {
-    setDirty(!(!fileName || (isUpdate && content === originalFileContent)))
-  }, [fileName, isUpdate, content, originalFileContent])
+    setDirty(!(!fileName || (isUpdate && contentRevision.code === originalFileContent)))
+  }, [fileName, isUpdate, contentRevision, originalFileContent])
 
   useEffect(() => {
-    setContent(originalFileContent)
+    setContentRevision({ code: originalFileContent })
   }, [originalFileContent])
 
   const toggleOpenCommitDialog = (value: boolean) => {
@@ -101,12 +105,12 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
       }
       if (language !== newLanguage) {
         setLanguage(newLanguage || PLAIN_TEXT)
-        setOriginalFileContent(content)
+        setOriginalFileContent(contentRevision.code)
       }
     }
 
     setParentPath(_parentPath)
-  }, [fileName, parentPath, language, content])
+  }, [fileName, parentPath, language, contentRevision])
 
   /**
    * Navigate to file view route
@@ -148,7 +152,7 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
         gitRef={fullGitRef || ''}
         oldResourcePath={commitAction === GitCommitAction.MOVE ? fullResourcePath : undefined}
         resourcePath={fileResourcePath || ''}
-        payload={content}
+        payload={contentRevision.code}
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName, fileName) => {
           if (!isNewBranch) {
@@ -180,9 +184,10 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
       {view === 'edit' ? (
         <CodeEditor
           language={language}
-          codeRevision={{ code: content }}
-          onCodeRevisionChange={value => setContent(value?.code || '')}
+          codeRevision={contentRevision}
+          onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
           themeConfig={themeConfig}
+          theme={monacoTheme}
           options={{
             readOnly: false
           }}
@@ -191,8 +196,9 @@ export const FileEditor = ({ repoDetails, defaultBranch }: FileEditorProps) => {
         <CodeDiffEditor
           language={language}
           original={originalFileContent}
-          modified={content}
+          modified={contentRevision.code}
           themeConfig={themeConfig}
+          theme={monacoTheme}
           options={{
             readOnly: true
           }}

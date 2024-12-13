@@ -11,56 +11,28 @@ export type UseTheme = (arg: {
     defaultTheme?: string
     themes?: ThemeDefinition[]
   }
+  theme?: string
   editor: any
 }) => { theme: string }
 
 export const useTheme: UseTheme = (props): { theme: string } => {
-  const { themeConfig, editor } = props
-  const { rootElementSelector, defaultTheme } = themeConfig ?? {}
+  const { themeConfig, editor, theme } = props
+  const { defaultTheme } = themeConfig ?? {}
 
-  const [theme, setTheme] = useState(defaultTheme ?? 'vs-dark')
+  const [themeInternal, setThemeInternal] = useState(theme ?? defaultTheme ?? 'vs-dark')
 
   useEffect(() => {
-    themeConfig?.themes?.forEach(theme => {
-      monaco.editor.defineTheme(theme.themeName, theme.themeData)
+    themeConfig?.themes?.forEach(themeItem => {
+      monaco.editor.defineTheme(themeItem.themeName, themeItem.themeData)
     })
   }, [monaco])
 
   useEffect(() => {
-    const monacoEditor = monaco.editor
-
-    if (!monacoEditor) return
-
-    // if there is no selector for observing element, set default theme
-    if (!rootElementSelector) {
-      monacoEditor?.setTheme(theme)
-      return
+    if (monaco.editor && theme) {
+      monaco.editor.setTheme(theme)
+      setThemeInternal(theme)
     }
+  }, [editor, theme])
 
-    const targetNode = document.querySelector(rootElementSelector)
-
-    if (!targetNode) return
-
-    const config = { attributes: true, childList: false, subtree: false }
-
-    const callback = () => {
-      const newTheme = targetNode.classList.contains('dark') ? 'dark' : 'light'
-
-      if (theme !== newTheme) {
-        setTheme(newTheme)
-
-        const monacoEditor = monaco.editor
-        monacoEditor?.setTheme(newTheme)
-      }
-    }
-
-    const observer = new MutationObserver(callback)
-    observer.observe(targetNode, config)
-
-    return () => {
-      observer.disconnect()
-    }
-  }, [editor])
-
-  return { theme }
+  return { theme: themeInternal }
 }

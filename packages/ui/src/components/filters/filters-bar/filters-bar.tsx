@@ -12,10 +12,57 @@ interface FiltersBarProps {
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
   t: TFunction
-  filterHandlers: FilterHandlers
-  viewManagement: ViewManagement
+  filterHandlers: {
+    activeFilters: FilterHandlers['activeFilters']
+    activeSorts: FilterHandlers['activeSorts']
+    handleUpdateFilter: FilterHandlers['handleUpdateFilter']
+    handleRemoveFilter: FilterHandlers['handleRemoveFilter']
+    handleFilterChange: FilterHandlers['handleFilterChange']
+    handleUpdateCondition: FilterHandlers['handleUpdateCondition']
+    handleUpdateSort: FilterHandlers['handleUpdateSort']
+    handleRemoveSort: FilterHandlers['handleRemoveSort']
+    handleSortChange: FilterHandlers['handleSortChange']
+    handleResetSorts: FilterHandlers['handleResetSorts']
+    handleReorderSorts: FilterHandlers['handleReorderSorts']
+    handleResetAll: FilterHandlers['handleResetAll']
+    searchQueries: FilterHandlers['searchQueries']
+    handleSearchChange: FilterHandlers['handleSearchChange']
+    filterToOpen: FilterHandlers['filterToOpen']
+    clearFilterToOpen: FilterHandlers['clearFilterToOpen']
+  }
+  /**
+   * Optional view management configuration.
+   * If provided, enables saving and managing filter views
+   */
+  viewManagement?: {
+    savedViews: ViewManagement['savedViews']
+    currentView: ViewManagement['currentView']
+    hasActiveViewChanges: ViewManagement['hasActiveViewChanges']
+    checkNameExists: ViewManagement['checkNameExists']
+    saveView: ViewManagement['saveView']
+    updateView: ViewManagement['updateView']
+    deleteView: ViewManagement['deleteView']
+    renameView: ViewManagement['renameView']
+  }
 }
 
+/**
+ * FiltersBar component displays active filters and sorts with the ability to manage them.
+ * Shows up only when there are active filters or sorts.
+ *
+ * @example
+ * ```tsx
+ * <FiltersBar
+ *   filterOptions={[{ id: 'status', label: 'Status', options: ['Active', 'Inactive'] }]}
+ *   sortOptions={[{ id: 'name', label: 'Name' }]}
+ *   sortDirections={['asc', 'desc']}
+ *   filterHandlers={filterHandlers}
+ *   t={t}
+ *   // Optional: Enable view management
+ *   viewManagement={viewManagement}
+ * />
+ * ```
+ */
 const FiltersBar = ({
   filterOptions,
   sortOptions,
@@ -45,7 +92,7 @@ const FiltersBar = ({
 
   const hasActiveFilters = !!activeFilters.length || !!activeSorts.length
 
-  const hasViewChanges = viewManagement.hasActiveViewChanges(activeFilters, activeSorts)
+  const hasViewChanges = viewManagement?.hasActiveViewChanges(activeFilters, activeSorts)
 
   if (!hasActiveFilters) return null
 
@@ -114,17 +161,19 @@ const FiltersBar = ({
             </button>
           </div>
 
-          <Views
-            currentView={viewManagement.currentView}
-            savedViews={viewManagement.savedViews}
-            viewManagement={{
-              ...viewManagement,
-              activeFilters,
-              activeSorts,
-              saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
-            }}
-            hasChanges={!!hasViewChanges}
-          />
+          {viewManagement && (
+            <Views
+              currentView={viewManagement.currentView}
+              savedViews={viewManagement.savedViews}
+              viewManagement={{
+                ...viewManagement,
+                activeFilters,
+                activeSorts,
+                saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
+              }}
+              hasChanges={!!hasViewChanges}
+            />
+          )}
         </div>
       )}
     </div>

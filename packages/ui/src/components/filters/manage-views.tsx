@@ -117,7 +117,15 @@ interface ManageViewsProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   views: SavedView[]
-  viewManagement: ViewManagement
+  viewManagement: {
+    setCurrentView: ViewManagement['setCurrentView']
+    updateViewsOrder: ViewManagement['updateViewsOrder']
+    prepareViewsForSave: ViewManagement['prepareViewsForSave']
+    getExistingNames: ViewManagement['getExistingNames']
+    hasViewListChanges: ViewManagement['hasViewListChanges']
+    hasViewErrors: ViewManagement['hasViewErrors']
+    validateViewNameChange: ViewManagement['validateViewNameChange']
+  }
 }
 
 /**

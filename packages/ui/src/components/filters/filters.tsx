@@ -10,21 +10,66 @@ import { FilterHandlers, FilterOption, SortOption, ViewLayoutOption, ViewManagem
 interface FiltersProps {
   showFilter?: boolean
   showSort?: boolean
-  showView?: boolean
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
-  filterHandlers: FilterHandlers
-  viewManagement: ViewManagement
+  filterHandlers: {
+    activeFilters: FilterHandlers['activeFilters']
+    activeSorts: FilterHandlers['activeSorts']
+    handleFilterChange: FilterHandlers['handleFilterChange']
+    handleResetFilters: FilterHandlers['handleResetFilters']
+    searchQueries: FilterHandlers['searchQueries']
+    handleSearchChange: FilterHandlers['handleSearchChange']
+    handleSortChange: FilterHandlers['handleSortChange']
+    handleResetSorts: FilterHandlers['handleResetSorts']
+  }
+  /**
+   * Optional view management configuration.
+   * If provided, enables saving and managing filter views
+   */
+  viewManagement?: {
+    savedViews: ViewManagement['savedViews']
+    currentView: ViewManagement['currentView']
+    hasActiveViewChanges: ViewManagement['hasActiveViewChanges']
+    checkNameExists: ViewManagement['checkNameExists']
+    validateViewName: ViewManagement['validateViewName']
+    hasViewErrors: ViewManagement['hasViewErrors']
+    hasViewListChanges: ViewManagement['hasViewListChanges']
+    applyView: ViewManagement['applyView']
+    setCurrentView: ViewManagement['setCurrentView']
+    updateViewsOrder: ViewManagement['updateViewsOrder']
+    prepareViewsForSave: ViewManagement['prepareViewsForSave']
+    getExistingNames: ViewManagement['getExistingNames']
+    validateViewNameChange: ViewManagement['validateViewNameChange']
+  }
   layoutOptions?: ViewLayoutOption[]
   currentLayout?: string
   onLayoutChange?: (layout: string) => void
   t: TFunction
 }
 
+/**
+ * Filters component for handling filtering, sorting, and view management
+ * @example
+ * ```tsx
+ * <Filters
+ *   filterOptions={[
+ *     { id: 'status', label: 'Status', options: ['Active', 'Inactive'] },
+ *     { id: 'type', label: 'Type', options: ['Public', 'Private'] }
+ *   ]}
+ *   sortOptions={[
+ *     { id: 'name', label: 'Name' },
+ *     { id: 'date', label: 'Date' }
+ *   ]}
+ *   filterHandlers={filterHandlers}
+ *   // Optional: Enable view management
+ *   viewManagement={viewManagement}
+ *   t={t}
+ * />
+ * ```
+ */
 const Filters = ({
   showFilter = true,
   showSort = true,
-  showView = true,
   filterOptions,
   sortOptions,
   filterHandlers: {
@@ -74,7 +119,7 @@ const Filters = ({
           />
         )}
 
-        {showView && (
+        {viewManagement && (!!viewManagement.savedViews.length || !!layoutOptions?.length) && (
           <ViewTrigger
             savedViews={viewManagement.savedViews}
             currentView={viewManagement.currentView}
@@ -87,12 +132,14 @@ const Filters = ({
         )}
       </div>
 
-      <ManageViews
-        open={isManageDialogOpen}
-        onOpenChange={setIsManageDialogOpen}
-        views={viewManagement.savedViews}
-        viewManagement={viewManagement}
-      />
+      {viewManagement && (
+        <ManageViews
+          open={isManageDialogOpen}
+          onOpenChange={setIsManageDialogOpen}
+          views={viewManagement.savedViews}
+          viewManagement={viewManagement}
+        />
+      )}
     </>
   )
 }

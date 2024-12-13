@@ -25,9 +25,14 @@ import { FilterValue, SavedView, SortValue, ViewManagement } from '../../types'
 interface ViewsProps {
   currentView: SavedView | null
   savedViews: SavedView[]
-  viewManagement: ViewManagement & {
+  viewManagement: {
     activeFilters: FilterValue[]
     activeSorts: SortValue[]
+    checkNameExists: ViewManagement['checkNameExists']
+    saveView: ViewManagement['saveView']
+    updateView: ViewManagement['updateView']
+    deleteView: ViewManagement['deleteView']
+    renameView: ViewManagement['renameView']
   }
   hasChanges: boolean
 }

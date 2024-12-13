@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
+import { IThemeStore, ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
 import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
@@ -22,10 +22,11 @@ export interface SandboxRootProps {
   currentUser: TypesUser | undefined
   logout?: () => void
   useNav: () => NavState
+  useThemeStore: () => IThemeStore
   t: TFunction
 }
 
-export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps) => {
+export const SandboxRoot = ({ currentUser, useNav, t, logout, useThemeStore }: SandboxRootProps) => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
 
@@ -168,6 +169,7 @@ export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps
           pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+          useThemeStore={useThemeStore}
           t={t}
         />
       </SandboxLayout.LeftPanel>

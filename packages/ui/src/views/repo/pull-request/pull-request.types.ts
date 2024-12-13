@@ -28,7 +28,8 @@ export interface PullRequestType {
   author?: string
   reviewRequired: boolean
   tasks?: number
-  source_branch?: string
+  sourceBranch?: string
+  targetBranch?: string
   timestamp: string
   comments?: number
   state?: string

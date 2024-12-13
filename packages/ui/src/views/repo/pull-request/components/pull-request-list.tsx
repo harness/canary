@@ -18,6 +18,8 @@ export interface PullRequestListProps {
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void
+  spaceId?: string
+  repoId?: string
 }
 
 export const PullRequestList: FC<PullRequestListProps> = ({
@@ -25,7 +27,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   openPRs,
   closedPRs,
   handleOpenClick,
-  handleCloseClick
+  handleCloseClick,
+  spaceId,
+  repoId
 }) => {
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
@@ -94,8 +98,11 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                         author={pullRequest.author}
                         reviewRequired={pullRequest.reviewRequired}
                         tasks={pullRequest.tasks}
-                        sourceBranch={pullRequest.source_branch || ''}
+                        sourceBranch={pullRequest.sourceBranch || ''}
                         timestamp={pullRequest.timestamp}
+                        targetBranch={pullRequest.targetBranch || ''}
+                        spaceId={spaceId}
+                        repoId={repoId}
                       />
                     )
                   }

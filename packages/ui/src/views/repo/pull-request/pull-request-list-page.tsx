@@ -203,6 +203,8 @@ const PullRequestList: FC<PullRequestPageProps> = ({
         handleOpenClick={handleOpenClick}
         openPRs={openPullReqs}
         handleCloseClick={handleCloseClick}
+        spaceId={spaceId}
+        repoId={repoId}
       />
     )
   }

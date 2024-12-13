@@ -60,7 +60,7 @@ export function RepoList({
         <div className="flex min-h-[50vh] items-center justify-center py-20">
           <NoData
             iconName="no-search-magnifying-glass"
-            title="No search results"
+            title={t('views:noData.noResults', 'No search results')}
             description={[
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
               t('views:noData.changeSearch', 'or search for a different keyword.')
@@ -70,7 +70,7 @@ export function RepoList({
               onClick: handleResetQuery
             }}
             secondaryButton={{
-              label: 'Clear filters',
+              label: t('views:noData.clearFilters', 'Clear filters'),
               onClick: handleResetFilters
             }}
           />
@@ -80,13 +80,13 @@ export function RepoList({
       <div className="flex min-h-[70vh] items-center justify-center py-20">
         <NoData
           iconName="no-data-folder"
-          title="No repositories yet"
+          title={t('views:noData.noRepos', 'No repositories yet')}
           description={[
-            'There are no repositories in this project yet.',
-            'Create new or import an existing repository.'
+            t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
+            t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
           ]}
           primaryButton={{
-            label: 'Create repository',
+            label: t('views:repos.create-repository', 'Create repository'),
             onClick: () => {
               /* TODO: add create handler */
             }
@@ -112,7 +112,7 @@ export function RepoList({
                 <StackedList.Field
                   title={
                     <>
-                      Updated <em>{repo.timestamp}</em>
+                      {t('views:repos.updated')} <em>{repo.timestamp}</em>
                     </>
                   }
                   description={<Stats stars={repo.stars} pulls={repo.pulls} />}

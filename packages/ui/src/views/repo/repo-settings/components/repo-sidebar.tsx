@@ -12,8 +12,6 @@ interface RepoSidebarProps {
 
 export function RepoSidebar({ showMoreMenu, handleMoreMenu, items }: RepoSidebarProps) {
   return (
-    // <NavbarSkeleton.Root className="w-[300px]">
-    // <NavbarSkeleton.Content>
     <div>
       {items.map((group, group_idx) => (
         <NavbarSkeleton.Group
@@ -30,7 +28,6 @@ export function RepoSidebar({ showMoreMenu, handleMoreMenu, items }: RepoSidebar
                   text={item.title || ''}
                   description={item.description || ''}
                   submenuItem
-                  //   icon={<Icon name={item?.iconName || 'search'} size={18} />}
                   active={isActive}
                 />
               )}
@@ -40,8 +37,4 @@ export function RepoSidebar({ showMoreMenu, handleMoreMenu, items }: RepoSidebar
       ))}
     </div>
   )
-  // </NavbarSkeleton.Content>
-  // </NavbarSkeleton.Root>
-
-  //   )
 }

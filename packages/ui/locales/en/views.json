@@ -75,7 +75,9 @@
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
-    "createBranch": "Create branch"
+    "createBranch": "Create branch",
+    "members": "No members yet.",
+    "inviteMembers": "Add your first team members by inviting them to join this project."
   },
   "forms": {
     "enterBranchName": "Enter branch name",
@@ -83,5 +85,9 @@
     "select": "Select",
     "baseBranch": "Base Branch",
     "selectBranchError": "Base branch is required"
+  },
+  "projectSettings": {
+    "members": "Members",
+    "newMember": "New member"
   }
 }

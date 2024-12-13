@@ -1,5 +1,8 @@
-import { NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { ChangeEvent, useCallback, useState } from 'react'
+
+import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
+import { debounce } from 'lodash-es'
 import pluralize from 'pluralize'
 
 import { MembersList } from './components/member-list'
@@ -14,6 +17,16 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
+  const [searchInput, setSearchInput] = useState(searchQuery)
+
+  const debouncedSetSearchQuery = debounce(searchQuery => {
+    setSearchQuery(searchQuery || null)
+  }, 300)
+
+  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInput(e.target.value)
+    debouncedSetSearchQuery(e.target.value)
+  }, [])
 
   const renderListContent = () => {
     if (isLoading) return <SkeletonList />
@@ -22,18 +35,30 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
         return (
           <NoData
             iconName="no-search-magnifying-glass"
-            title="No search results"
-            description={['Check your spelling and filter options,', 'or search for a different keyword.']}
-            primaryButton={{ label: 'Clear search', onClick: () => setSearchQuery('') }}
+            title={t('views:noData.noResults', 'No search results')}
+            description={[
+              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+              t('views:noData.changeSearch', 'or search for a different keyword.')
+            ]}
+            primaryButton={{
+              label: t('views:noData.clearSearch', 'Clear search'),
+              onClick: () => {
+                setSearchInput('')
+                setSearchQuery(null)
+              }
+            }}
           />
         )
       }
       return (
         <NoData
-          iconName="no-data-members"
-          title="No Members yet"
-          description={['Add your first team members by inviting them to join this project.']}
-          primaryButton={{ label: 'Invite new members' }}
+          iconName="no-data-branches"
+          title={t('views:noData.members')}
+          description={[t('views:noData.inviteMembers')]}
+          primaryButton={{
+            label: t('views:projectSettings.newMember'),
+            onClick: () => {}
+          }}
         />
       )
     }
@@ -43,16 +68,29 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
       <SandboxLayout.Content maxWidth="3xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
-          Team
-        </Text>
-        <Text size={5} weight={'medium'} color="tertiaryBackground">
-          {memberList?.length ? `, ${memberList.length} ${pluralize('member', memberList.length)}` : ''}
+          {t('views:projectSettings.members')}
         </Text>
         <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput || ''}
+              handleChange={handleInputChange}
+              placeholder={t('views:repos.search')}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button variant="default" onClick={() => {}}>
+              {t('views:projectSettings.newMember')}
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
         <Spacer size={5} />
         {renderListContent()}
         <Spacer size={8} />

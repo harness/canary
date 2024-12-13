@@ -33,3 +33,4 @@ export * from '@views/repo/repo-branch/types'
 // repo settings
 export * from '@views/repo/repo-settings'
 export * from '@views/repo/repo-settings/types'
+export * from '@views/repo/repo-settings/repo-settings-page'

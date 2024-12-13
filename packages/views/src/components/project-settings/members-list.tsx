@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ */
+
 import { upperFirst } from 'lodash-es'
 
 import {

@@ -30,7 +30,7 @@ export const useMemberListStore = create<IMemberListStore>(set => ({
       memberList: members.map((member: TypesMembershipUser) => ({
         display_name: member.principal?.display_name ?? '',
         role: member.role === 'space_owner' ? 'Owner' : (member.role ?? ''), // Ensure role is always a string
-        email: member.added_by?.email ?? '',
+        email: member.principal?.email ?? '',
         avatarUrl: '',
         timestamp: member.created ? timeAgoFromEpochTime(member.created) : 'No time available',
         uid: member.principal?.uid ?? ''

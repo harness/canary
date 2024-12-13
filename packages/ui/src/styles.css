@@ -82,59 +82,59 @@
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
     /* diff viewer */
-    --diff-grey: hsl(0, 0%, 33%);
-    --diff-add-content--: hsl(156, 28%, 10%);
-    --diff-del-content--: hsl(356, 28%, 11%);
-    --diff-add-lineNumber--: hsl(153, 40%, 14%);
-    --diff-del-lineNumber--: hsl(358, 39%, 17%);
+    --diff-grey: hsl(0 0% 33%);
+    --diff-add-content--: hsl(156 28% 10%);
+    --diff-del-content--: hsl(356 28% 11%);
+    --diff-add-lineNumber--: hsl(153 40% 14%);
+    --diff-del-lineNumber--: hsl(358 39% 17%);
     --diff-plain-content--: var(--canary-background);
     --diff-expand-content--: var(--canary-background);
     --diff-plain-lineNumber--: var(--canary-background);
-    --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
-    --diff-hunk-content--: hsl(218, 26%, 12%);
-    --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
-    --diff-add-content-highlight--: hsl(152, 37%, 24%);
-    --diff-del-content-highlight--: hsl(0, 38%, 26%);
-    --diff-add-widget--: hsl(216, 80%, 65%);
-    --diff-add-widget-color--: hsl(0, 0%, 100%);
+    --diff-plain-lineNumber-color--: hsl(0 0% 100%);
+    --diff-hunk-content--: hsl(218 26% 12%);
+    --diff-hunk-lineNumber--: hsl(218 26% 12%);
+    --diff-add-content-highlight--: hsl(152 37% 24%);
+    --diff-del-content-highlight--: hsl(0 38% 26%);
+    --diff-add-widget--: hsl(216 80% 65%);
+    --diff-add-widget-color--: hsl(0 0% 100%);
     --diff-empty-content--: var(--canary-background);
-    --diff-hunk-content-color--: hsl(0, 0%, 100%);
+    --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
 
-    --canary-harness-nav-panel-bg: 212, 72%, 10%;
-    --canary-harness-grey-0: 0, 0%, 100%;
-    --canary-harness-grey-50: 210, 25%, 98%;
-    --canary-harness-grey-100: 240, 41%, 97%;
-    --canary-harness-grey-150: 240, 39%, 96%;
-    --canary-harness-grey-200: 235, 19%, 87%;
-    --canary-harness-grey-300: 237, 10%, 82%;
-    --canary-harness-grey-350: 238, 12%, 61%;
-    --canary-harness-grey-400: 238, 13%, 59%;
-    --canary-harness-grey-500: 235, 11%, 46%;
-    --canary-harness-grey-600: 234, 11%, 35%;
-    --canary-harness-grey-700: 236, 11%, 25%;
-    --canary-harness-grey-900: 240, 8%, 5%;
-    --canary-harness-primary-300: 194, 100%, 82%;
-    --canary-harness-primary-700: 206, 98%, 42%;
-    --canary-harness-primary-800: 213, 100%, 32%;
-    --canary-harness-primary-900: 213, 82%, 22%;
-    --canary-harness-purple-500: 261, 60%, 56%;
-    --canary-harness-purple-900: 270, 86%, 30%;
-    --canary-harness-green-300: 114, 55%, 75%;
-    --canary-harness-green-600: 122, 44%, 46%;
-    --canary-harness-green-800: 121, 66%, 29%;
-    --canary-harness-red-350: 4, 75%, 69%;
-    --canary-harness-red-600: 4, 77%, 48%;
-    --canary-harness-red-700: 4, 79%, 45%;
-    --canary-harness-yellow-800: 41, 100%, 50%;
-    --canary-harness-yellow-900: 29, 98%, 35%;
-    --canary-harness-orange-300: 25, 100%, 79%;
-    --canary-harness-orange-900: 15, 84%, 42%;
-    --canary-harness-pink-800: 331, 75%, 49%;
-    --canary-ai-yellow: 36, 60%, 85%;
-    --canary-ai-pink: 335, 58%, 66%;
-    --canary-ai-purple: 246, 66%, 62%;
-    --canary-ai-cyan: 187, 97%, 79%;
+    --canary-harness-nav-panel-bg: 212 72% 10%;
+    --canary-harness-grey-0: 0 0% 100%;
+    --canary-harness-grey-50: 210 25% 98%;
+    --canary-harness-grey-100: 240 41% 97%;
+    --canary-harness-grey-150: 240 39% 96%;
+    --canary-harness-grey-200: 235 19% 87%;
+    --canary-harness-grey-300: 237 10% 82%;
+    --canary-harness-grey-350: 238 12% 61%;
+    --canary-harness-grey-400: 238 13% 59%;
+    --canary-harness-grey-500: 235 11% 46%;
+    --canary-harness-grey-600: 234 11% 35%;
+    --canary-harness-grey-700: 236 11% 25%;
+    --canary-harness-grey-900: 240 8% 5%;
+    --canary-harness-primary-300: 194 100% 82%;
+    --canary-harness-primary-700: 206 98% 42%;
+    --canary-harness-primary-800: 213 100% 32%;
+    --canary-harness-primary-900: 213 82% 22%;
+    --canary-harness-purple-500: 261 60% 56%;
+    --canary-harness-purple-900: 270 86% 30%;
+    --canary-harness-green-300: 114 55% 75%;
+    --canary-harness-green-600: 122 44% 46%;
+    --canary-harness-green-800: 121 66% 29%;
+    --canary-harness-red-350: 4 75% 69%;
+    --canary-harness-red-600: 4 77% 48%;
+    --canary-harness-red-700: 4 79% 45%;
+    --canary-harness-yellow-800: 41 100% 50%;
+    --canary-harness-yellow-900: 29 98% 35%;
+    --canary-harness-orange-300: 25 100% 79%;
+    --canary-harness-orange-900: 15 84% 42%;
+    --canary-harness-pink-800: 331 75% 49%;
+    --canary-ai-yellow: 36 60% 85%;
+    --canary-ai-pink: 335 58% 66%;
+    --canary-ai-purple: 246 66% 62%;
+    --canary-ai-cyan: 187 97% 79%;
 
     /* Text */
     --canary-foreground-01: var(--canary-white);
@@ -414,23 +414,23 @@
     --canary-ai-button-stop-2: var(--canary-ai-pink);
     --canary-ai-button-stop-3: var(--canary-ai-purple);
     --canary-ai-button-stop-4: var(--canary-ai-cyan);
-    --diff-grey: hsl(0, 0%, 33%);
-    --diff-add-content--: hsl(156, 28%, 10%);
-    --diff-del-content--: hsl(356, 28%, 11%);
-    --diff-add-lineNumber--: hsl(153, 40%, 14%);
-    --diff-del-lineNumber--: hsl(358, 39%, 17%);
+    --diff-grey: hsl(0 0% 33%);
+    --diff-add-content--: hsl(156 28% 10%);
+    --diff-del-content--: hsl(356 28% 11%);
+    --diff-add-lineNumber--: hsl(153 40% 14%);
+    --diff-del-lineNumber--: hsl(358 39% 17%);
     --diff-plain-content--: var(--canary-background);
     --diff-expand-content--: var(--canary-background);
     --diff-plain-lineNumber--: var(--canary-background);
-    --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
-    --diff-hunk-content--: hsl(218, 26%, 12%);
-    --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
-    --diff-add-content-highlight--: hsl(152, 37%, 24%);
-    --diff-del-content-highlight--: hsl(0, 38%, 26%);
-    --diff-add-widget--: hsl(216, 80%, 65%);
-    --diff-add-widget-color--: hsl(0, 0%, 100%);
+    --diff-plain-lineNumber-color--: hsl(0 0% 100%);
+    --diff-hunk-content--: hsl(218 26% 12%);
+    --diff-hunk-lineNumber--: hsl(218 26% 12%);
+    --diff-add-content-highlight--: hsl(152 37% 24%);
+    --diff-del-content-highlight--: hsl(0 38% 26%);
+    --diff-add-widget--: hsl(216 80% 65%);
+    --diff-add-widget-color--: hsl(0 0% 100%);
     --diff-empty-content--: var(--canary-background);
-    --diff-hunk-content-color--: hsl(0, 0%, 100%);
+    --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
     /* Text */
     --canary-foreground-01: var(--canary-harness-grey-900);
@@ -767,23 +767,23 @@
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
     /* diff viewer */
-    --diff-grey: hsl(0, 0%, 33%);
-    --diff-add-content--: hsl(156, 28%, 10%);
-    --diff-del-content--: hsl(356, 28%, 11%);
-    --diff-add-lineNumber--: hsl(153, 40%, 14%);
-    --diff-del-lineNumber--: hsl(358, 39%, 17%);
+    --diff-grey: hsl(0 0% 33%);
+    --diff-add-content--: hsl(156 28% 10%);
+    --diff-del-content--: hsl(356 28% 11%);
+    --diff-add-lineNumber--: hsl(153 40% 14%);
+    --diff-del-lineNumber--: hsl(358 39% 17%);
     --diff-plain-content--: var(--canary-background);
     --diff-expand-content--: var(--canary-background);
     --diff-plain-lineNumber--: var(--canary-background);
-    --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
-    --diff-hunk-content--: hsl(218, 26%, 12%);
-    --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
-    --diff-add-content-highlight--: hsl(152, 37%, 24%);
-    --diff-del-content-highlight--: hsl(0, 38%, 26%);
-    --diff-add-widget--: hsl(216, 80%, 65%);
-    --diff-add-widget-color--: hsl(0, 0%, 100%);
+    --diff-plain-lineNumber-color--: hsl(0 0% 100%);
+    --diff-hunk-content--: hsl(218 26% 12%);
+    --diff-hunk-lineNumber--: hsl(218 26% 12%);
+    --diff-add-content-highlight--: hsl(152 37% 24%);
+    --diff-del-content-highlight--: hsl(0 38% 26%);
+    --diff-add-widget--: hsl(216 80% 65%);
+    --diff-add-widget-color--: hsl(0 0% 100%);
     --diff-empty-content--: var(--canary-background);
-    --diff-hunk-content-color--: hsl(0, 0%, 100%);
+    --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
     /* Text */
     --canary-foreground-01: var(--canary-orange);
@@ -1063,23 +1063,23 @@
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
     /* diff viewer */
-    --diff-grey: hsl(0, 0%, 33%);
-    --diff-add-content--: hsl(156, 28%, 10%);
-    --diff-del-content--: hsl(356, 28%, 11%);
-    --diff-add-lineNumber--: hsl(153, 40%, 14%);
-    --diff-del-lineNumber--: hsl(358, 39%, 17%);
+    --diff-grey: hsl(0 0% 33%);
+    --diff-add-content--: hsl(156 28% 10%);
+    --diff-del-content--: hsl(356 28% 11%);
+    --diff-add-lineNumber--: hsl(153 40% 14%);
+    --diff-del-lineNumber--: hsl(358 39% 17%);
     --diff-plain-content--: var(--canary-background);
     --diff-expand-content--: var(--canary-background);
     --diff-plain-lineNumber--: var(--canary-background);
-    --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
-    --diff-hunk-content--: hsl(218, 26%, 12%);
-    --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
-    --diff-add-content-highlight--: hsl(152, 37%, 24%);
-    --diff-del-content-highlight--: hsl(0, 38%, 26%);
-    --diff-add-widget--: hsl(216, 80%, 65%);
-    --diff-add-widget-color--: hsl(0, 0%, 100%);
+    --diff-plain-lineNumber-color--: hsl(0 0% 100%);
+    --diff-hunk-content--: hsl(218 26% 12%);
+    --diff-hunk-lineNumber--: hsl(218 26% 12%);
+    --diff-add-content-highlight--: hsl(152 37% 24%);
+    --diff-del-content-highlight--: hsl(0 38% 26%);
+    --diff-add-widget--: hsl(216 80% 65%);
+    --diff-add-widget-color--: hsl(0 0% 100%);
     --diff-empty-content--: var(--canary-background);
-    --diff-hunk-content-color--: hsl(0, 0%, 100%);
+    --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
     /* Text */
     --canary-foreground-01: var(--canary-red);
@@ -1688,10 +1688,10 @@
 
 .sub-menu-icon-bg {
   stop {
-    stop-color: hsla(0, 0%, 94%, 1);
+    stop-color: hsla(0 0% 94% 1);
 
     & + stop {
-      stop-color: hsla(0, 0%, 61%, 1);
+      stop-color: hsla(0 0% 61% 1);
     }
   }
 }

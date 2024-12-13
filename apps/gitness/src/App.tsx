@@ -48,6 +48,7 @@ import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
@@ -82,7 +83,6 @@ import { RepoFiles } from './pages/repo/repo-files'
 import { RepoHeader } from './pages/repo/repo-header'
 import { RepoImportContainer } from './pages/repo/repo-import-container'
 import ReposListPageV1 from './pages/repo/repo-list'
-import { RepoSettingsGeneralPageContainer } from './pages/repo/repo-settings-general-container'
 import RepoSummaryPageV1 from './pages/repo/repo-summary'
 import { SignIn } from './pages/signin'
 import { SignUp } from './pages/signup'
@@ -271,6 +271,24 @@ export default function App() {
                 {
                   path: 'changes',
                   element: <>changes</>
+                }
+              ]
+            },
+            {
+              path: 'settings',
+              element: <RepoSettingsPage />,
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="general" replace />
+                },
+                {
+                  path: 'general',
+                  element: <RepoSettingsGeneralPageContainer />
+                },
+                {
+                  path: 'rules',
+                  element: <RepoSettingsGeneralPageContainer />
                 }
               ]
             }

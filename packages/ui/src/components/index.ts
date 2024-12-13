@@ -58,6 +58,8 @@ export * from './topbar'
 export * from './file-additions-trigger'
 export * from './progress'
 export * from './exit-confirm-dialog'
+export * from './delete-alert-dialog'
+export * from './alert-delete-dialog'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

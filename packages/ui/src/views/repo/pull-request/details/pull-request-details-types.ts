@@ -413,3 +413,15 @@ export interface ApprovalItems {
 }
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
+export interface ReviewerItemProps {
+  reviewer?: { display_name?: string; id?: number }
+  reviewDecision?: EnumPullReqReviewDecision
+  sha?: string
+  sourceSHA?: string
+  processReviewDecision: (
+    review_decision: EnumPullReqReviewDecision,
+    reviewedSHA?: string,
+    sourceSHA?: string
+  ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
+  handleDelete: (id: number) => void
+}

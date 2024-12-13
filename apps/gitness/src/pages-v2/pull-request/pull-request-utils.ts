@@ -2,7 +2,7 @@ import type * as Diff2Html from 'diff2html'
 import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
 import { get, isEmpty } from 'lodash-es'
 
-import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
+import { TypesCodeOwnerEvaluationEntry, TypesRuleViolations, TypesViolation } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/views'
 
 import {
@@ -491,3 +491,19 @@ export function generateAlphaNumericHash(length: number) {
 
 export const getErrorMessage = (error: unknown): string | undefined =>
   error ? (get(error, 'data.error', get(error, 'data.message', get(error, 'message', error))) as string) : undefined
+
+export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViolations[]) => {
+  const tempArray: unknown[] = ruleViolationArr?.flatMap(
+    (item: { violations?: TypesViolation[] | null }) => item?.violations?.map(violation => violation.message) ?? []
+  )
+  const uniqueViolations = new Set(tempArray)
+  const violationArr = [...uniqueViolations].map(violation => ({ violation: violation }))
+
+  const checkIfBypassAllowed = ruleViolationArr.some(ruleViolation => ruleViolation.bypassed === false)
+
+  return {
+    uniqueViolations,
+    checkIfBypassAllowed,
+    violationArr
+  }
+}

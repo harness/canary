@@ -2,14 +2,14 @@ import type * as Diff2Html from 'diff2html'
 import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
 import { get, isEmpty } from 'lodash-es'
 
-import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
+import { EnumPullReqReviewDecision, TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/views'
 
 import { extractInfoForCodeOwnerContentProps } from '../../types'
-import { EnumPullReqReviewDecisionExtended, PullReqReviewDecision, TypeCheckData } from './types/types'
+import { PullReqReviewDecision, TypeCheckData } from './types/types'
 
 export const processReviewDecision = (
-  review_decision: EnumPullReqReviewDecisionExtended,
+  review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
   reviewedSHA?: string,
   sourceSHA?: string
 ) =>

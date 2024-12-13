@@ -21,7 +21,6 @@ import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-// Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
   identifier: z.string(),
   description: z.string(),
@@ -33,7 +32,7 @@ const formSchema = z.object({
   repository: z.string().min(1, { message: 'Please enter a repository' })
 })
 
-export type ImportRepoFormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
+export type ImportRepoFormFields = z.infer<typeof formSchema>
 
 interface RepoImportPageProps {
   onFormSubmit: (data: ImportRepoFormFields) => void
@@ -59,7 +58,6 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
     handleSubmit,
     setValue,
     watch,
-    reset,
     formState: { errors, isValid }
   } = useForm<ImportRepoFormFields>({
     resolver: zodResolver(formSchema),

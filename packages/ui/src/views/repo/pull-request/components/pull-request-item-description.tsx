@@ -57,10 +57,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
               </Text>
             </Link>
           </Button>
-          {/* <div className="flex items-center gap-0.5">
-            <Icon className="text-icons-1" size={12} name="branch" />
-            <p>{targetBranch}</p>
-          </div> */}
+
           <span>&larr;</span>
           <Button variant="secondary" size="xs" asChild>
             <Link to={`/${spaceId}/repos/${repoId}/code/${sourceBranch}`}>
@@ -69,10 +66,6 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
               </Text>
             </Link>
           </Button>
-          {/* <div className="flex items-center gap-0.5">
-            <Icon className="text-icons-1" size={12} name="branch" />
-            <p>{sourceBranch}</p>
-          </div> */}
         </>
       )}
     </div>

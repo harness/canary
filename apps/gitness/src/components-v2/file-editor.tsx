@@ -53,12 +53,20 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     () => [(parentPath || '').trim(), (fileName || '').trim()].filter(p => !!p.trim()).join(FILE_SEPERATOR),
     [parentPath, fileName]
   )
+  const pathToSplit = useMemo(() => {
+    if (isNew) {
+      return parentPath
+    } else if (parentPath?.length && fileName.length) {
+      return [parentPath, fileName].join(FILE_SEPERATOR)
+    }
+    return parentPath?.length ? parentPath : fileName
+  }, [isNew, parentPath, fileName])
   const pathParts = [
     {
       path: repoId!,
       parentPath: repoPath
     },
-    ...splitPathWithParents(isNew ? parentPath : [parentPath, fileName].join(FILE_SEPERATOR), repoPath)
+    ...splitPathWithParents(pathToSplit, repoPath)
   ]
   const isUpdate = useMemo(() => fullResourcePath === fileResourcePath, [fullResourcePath, fileResourcePath])
   const commitAction = useMemo(

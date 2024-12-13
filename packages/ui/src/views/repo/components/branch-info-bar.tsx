@@ -64,9 +64,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-14 leading-snug text-foreground-1">
-                This branch is {ahead} commits ahead of{' '}
-              </span>
+              <span className="text-14 leading-snug text-foreground-1">This branch is {ahead} commits ahead of </span>
               <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
                 <Icon className="text-icons-9" name="branch" size={14} />
                 <span className="text-foreground-8">{defaultBranchName}</span>

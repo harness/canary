@@ -5,10 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import {
   Button,
   ButtonGroup,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Icon,
   ListActions,
   MarkdownViewer,
@@ -224,6 +220,7 @@ export function RepoSummaryView({
               }}
               files={files}
               useTranslationStore={useTranslationStore}
+              hideHeader
             />
             <Spacer size={5} />
             <StackedList.Root>

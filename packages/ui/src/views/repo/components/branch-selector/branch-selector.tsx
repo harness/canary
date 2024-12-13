@@ -12,6 +12,7 @@ interface BranchSelectorProps {
   buttonSize?: 'default' | 'sm'
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  isBranchOnly?: boolean
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
@@ -19,7 +20,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   branchPrefix,
   buttonSize = 'default',
   selectedBranch,
-  onSelectBranch
+  onSelectBranch,
+  isBranchOnly = false
 }) => {
   const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
 
@@ -49,6 +51,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <BranchSelectorDropdown
+        isBranchOnly={isBranchOnly}
         branchList={branchList}
         tagList={tagList}
         onSelectBranch={onSelectBranch}

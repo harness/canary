@@ -7,6 +7,7 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import GitBlame from '../components/GitBlame'
+import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
@@ -42,6 +43,9 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()
+  const { theme } = useThemeStore()
+  // TODO: temporary solution for matching themes
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   /**
    * Toggle delete dialog open state
@@ -68,10 +72,10 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
 
   const themeConfig = useMemo(
     () => ({
-      defaultTheme: 'dark',
+      defaultTheme: monacoTheme,
       themes
     }),
-    []
+    [monacoTheme]
   )
 
   const handleDownloadFile = () => {
@@ -125,7 +129,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         <CodeEditor
           language={language}
           codeRevision={{ code: fileContent }}
-          onCodeRevisionChange={() => {}}
+          onCodeRevisionChange={() => undefined}
           themeConfig={themeConfig}
           options={{
             readOnly: true

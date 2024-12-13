@@ -6,6 +6,7 @@ import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/brows
 
 import { InlineAction, MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
 
+import { useThemeStore } from '../../../framework/context/ThemeContext'
 import { usePipelineDataContext, YamlRevision } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import unifiedSchema from '../schema/unifiedSchema.json'
@@ -27,6 +28,9 @@ const PipelineStudioYamlView = (): JSX.Element => {
     requestYamlModifications: { deleteInArray }
   } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
+  const { theme } = useThemeStore()
+  // TODO: temporary solution for matching themes
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
   const forceRerender = () => {
@@ -51,7 +55,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
   const themeConfig = useMemo(
     () => ({
       //rootElementSelector: '#react-root',
-      defaultTheme: 'dark',
+      defaultTheme: monacoTheme,
       themes
     }),
     []
@@ -122,6 +126,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
           }}
           yamlRevision={newYamlRef.current}
           themeConfig={themeConfig}
+          theme={monacoTheme}
           schemaConfig={schemaConfig}
           inlineActions={inlineActions}
         />

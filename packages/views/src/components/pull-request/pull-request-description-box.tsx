@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, Icon, Text } from '@harnessio/canary'
+import { MarkdownViewer } from '@harnessio/ui/components'
 
 import { getInitials, timeAgo } from '../../utils/utils'
-import { MarkdownViewer } from '../markdown-viewer'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
 interface PullRequestDescBoxProps {

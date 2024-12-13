@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 import {
   GitPathDetails,
@@ -17,7 +16,6 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
-import { PathParams } from '../../RouteDefinitions'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -27,8 +25,7 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
  */
 export const RepoCode = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId } = useParams<PathParams>()
-  const { selectedBranchTag } = useRepoBranchesStore()
+  const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
 
@@ -44,7 +41,7 @@ export const RepoCode = () => {
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
 
-  const { data: { body: repoDetails } = {} } = useGetContentQuery({
+  const { data: { body: repoDetails } = {}, refetch: refetchRepoContent } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
@@ -144,6 +141,10 @@ export const RepoCode = () => {
     return `new/${fullGitRef || selectedBranchTag.name}/~/`
   }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
 
+  useEffect(() => {
+    refetchRepoContent()
+  }, [codeMode])
+
   /**
    * Render File content view or Edit file view
    */
@@ -175,6 +176,8 @@ export const RepoCode = () => {
         // TODO: add correct path to Upload files page
         pathUploadFiles="/upload-file"
         codeMode={codeMode}
+        useRepoBranchesStore={useRepoBranchesStore}
+        defaultBranchName={repository?.default_branch}
       >
         {renderCodeView}
       </RepoFiles>

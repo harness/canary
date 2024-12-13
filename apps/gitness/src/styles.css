@@ -8,3 +8,10 @@
   font-weight: 300 600; /* Supports weights from 300 to 600 */
   src: url('/fonts/InterVariable.ttf') format('truetype');
 }
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: url('/fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}

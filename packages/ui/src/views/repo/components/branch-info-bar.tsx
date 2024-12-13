@@ -7,11 +7,9 @@ interface BranchInfoBarProps {
   defaultBranchName?: string
   spaceId: string
   repoId: string
-  currentBranch: {
-    behindAhead: {
-      ahead: number
-      behind: number
-    }
+  currentBranchDivergence: {
+    ahead: number
+    behind: number
   }
 }
 
@@ -19,28 +17,28 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
   spaceId,
   repoId,
-  currentBranch
+  currentBranchDivergence
 }) => {
-  const { behindAhead } = currentBranch
-  const hasBehind = behindAhead.behind > 0
-  const hasAhead = behindAhead.ahead > 0
+  const { behind, ahead } = currentBranchDivergence
+  const hasBehind = !!behind
+  const hasAhead = !!ahead
 
   return (
-    <div className="bg-background-2 pl-4 pr-1.5 h-11 border border-borders-1 rounded-md flex justify-between items-center">
+    <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">
       <div className="flex items-center gap-x-1.5">
-        <span className="text-foreground-1 text-14 leading-tight">
+        <span className="text-14 leading-tight text-foreground-1">
           This branch is{' '}
           {hasAhead && (
             <>
               <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
-                <span className="text-foreground-accent">{behindAhead.ahead} commits ahead of</span>
+                <span className="text-foreground-accent">{ahead} commits ahead of</span>
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
             <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
-              <span className="text-foreground-accent">{behindAhead.behind} commits behind</span>
+              <span className="text-foreground-accent">{behind} commits behind</span>
             </StyledLink>
           )}
         </span>
@@ -52,34 +50,32 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
-            className="gap-x-2 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1 px-2.5"
+            className="gap-x-2 px-2.5 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1"
             variant="outline"
           >
             <Icon name="merged" size={14} />
             <span>Contribute</span>
-            <Icon className="text-icons-7 chevron-down" name="chevron-down" size={12} />
+            <Icon className="chevron-down text-icons-7" name="chevron-down" size={12} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-60 p-4" align="end">
           <div className="flex gap-x-2">
-            <div className="flex-shrink-0 border border-borders-4 rounded-full flex items-center justify-center h-6 w-6">
+            <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-borders-4">
               <Icon name="merged" size={12} />
             </div>
             <div>
-              <span className="text-foreground-1 text-14 leading-snug">
-                This branch is {behindAhead.ahead} commits ahead of{' '}
-              </span>
+              <span className="text-14 leading-snug text-foreground-1">This branch is {ahead} commits ahead of </span>
               <Badge className="gap-x-1" variant="tertiary" borderRadius="base" size="sm">
                 <Icon className="text-icons-9" name="branch" size={14} />
                 <span className="text-foreground-8">{defaultBranchName}</span>
               </Badge>
               .
-              <p className="mt-2.5 text-foreground-4 text-14 leading-tight">
+              <p className="mt-2.5 text-14 leading-tight text-foreground-4">
                 Open a pull request to contribute your changes upstream.
               </p>
             </div>
           </div>
-          <div className="flex flex-col gap-y-2.5 mt-4">
+          <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
               <Link to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>Compare</Link>
             </Button>

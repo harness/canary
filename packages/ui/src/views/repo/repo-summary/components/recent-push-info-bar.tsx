@@ -16,7 +16,7 @@ interface RecentPushInfoBarProps {
 }
 
 export const RecentPushInfoBar: FC<RecentPushInfoBarProps> = ({ recentPushes, spaceId, repoId }) => (
-  <div className="bg-background-success border border-borders-success rounded-md px-4">
+  <div className="rounded-md border border-borders-success bg-background-success px-4">
     {recentPushes.map(({ branchName, timeAgo }, index) => (
       <div className="flex items-center justify-between py-5 last:border-t last:border-borders-8/10" key={index}>
         <div className="flex items-center gap-x-1.5">

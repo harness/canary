@@ -16,6 +16,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
+import { orderSortDate } from '../../types.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
 import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
 
@@ -55,10 +56,8 @@ export const RepoSidebar = () => {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: ''
+      order: orderSortDate.DESC,
+      limit: 50
     }
   })
   useEffect(() => {
@@ -81,10 +80,8 @@ export const RepoSidebar = () => {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: 'asc',
-      limit: 20,
-      page: 1,
-      query: ''
+      order: orderSortDate.DESC,
+      limit: 50
     }
   })
 

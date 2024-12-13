@@ -19,7 +19,14 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { BranchSelectorListItem, IBranchSelectorStore, RepoFile, SandboxLayout, TranslationStore } from '@/views'
+import {
+  BranchSelectorListItem,
+  CommitDivergenceType,
+  IBranchSelectorStore,
+  RepoFile,
+  SandboxLayout,
+  TranslationStore
+} from '@/views'
 import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
@@ -65,6 +72,7 @@ export interface RepoSummaryViewProps {
   useTranslationStore: () => TranslationStore
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
+  currentBranchDivergence: CommitDivergenceType
 }
 
 export function RepoSummaryView({
@@ -84,7 +92,8 @@ export function RepoSummaryView({
   updateRepoError,
   isEditDialogOpen,
   setEditDialogOpen,
-  useTranslationStore
+  useTranslationStore,
+  currentBranchDivergence
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
@@ -198,10 +207,9 @@ export function RepoSummaryView({
                   defaultBranchName={repository?.default_branch}
                   spaceId={spaceId}
                   repoId={repoId}
-                  currentBranch={{
-                    ...selectedBranchTag,
-                    // TODO: it is required to transfer the real data that the currently selected branch should contain
-                    behindAhead: { ahead: 10, behind: 20 }
+                  currentBranchDivergence={{
+                    ahead: currentBranchDivergence?.ahead || 0,
+                    behind: currentBranchDivergence?.behind || 0
                   }}
                 />
               </>

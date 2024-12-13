@@ -99,7 +99,7 @@ export const BranchesList = ({
                 )}
                 {/* calculated divergence bar & default branch */}
                 <TableCell className="content-center">
-                  <div className="flex justify-center items-center gap-1.5 align-middle">
+                  <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
                       <Badge
                         variant="outline"

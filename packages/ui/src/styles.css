@@ -574,8 +574,8 @@
 
     /* 🚨 Need these colors for other themes */
     /* Selected tab bg element*/
-    --canary-tab-item-gradient-from: var(--canary-harness-grey-400), 0.15;
-    --canary-tab-item-gradient-to: var(--canary-harness-grey-400), 0;
+    --canary-tab-item-gradient-from: var(--canary-harness-grey-400) / 0.15;
+    --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0;
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
     /* Navigation vertical element gradients*/

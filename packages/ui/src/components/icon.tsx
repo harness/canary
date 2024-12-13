@@ -89,6 +89,7 @@ import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
 import MenuDots from '../icons/menu-dots-icon.svg'
 import Merged from '../icons/merged.svg'
+import Minus from '../icons/minus-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
 import NoDataBranches from '../icons/no-data-branches.svg'
@@ -325,7 +326,8 @@ const IconNameMap = {
   dashboards: Dashboards,
   'menu-dots': MenuDots,
   'bookmark-add': BookmarkAdd,
-  upload: Upload
+  upload: Upload,
+  minus: Minus
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

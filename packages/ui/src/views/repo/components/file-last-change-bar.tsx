@@ -1,8 +1,10 @@
+import { FC } from 'react'
+
 import { Avatar, AvatarFallback, AvatarImage, CommitCopyActions, Icon, StackedList, Text } from '@/components'
 import { LatestFileTypes, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 
-const TopTitle = ({ user, lastCommitMessage }: LatestFileTypes) => {
+const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <Avatar size="6">
@@ -24,7 +26,7 @@ const TopTitle = ({ user, lastCommitMessage }: LatestFileTypes) => {
   )
 }
 
-const TopDetails = ({ sha, timestamp }: LatestFileTypes) => {
+const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp }) => {
   return (
     <div className="flex items-center gap-2">
       <CommitCopyActions sha={sha || ''} />
@@ -38,7 +40,7 @@ export interface FileLastChangeBarProps extends LatestFileTypes {
   useTranslationStore: () => TranslationStore
 }
 
-export const FileLastChangeBar = ({ useTranslationStore, ...props }: FileLastChangeBarProps) => {
+export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({ useTranslationStore, ...props }) => {
   const { t } = useTranslationStore()
 
   return (

@@ -16,8 +16,8 @@ import {
   ToggleGroupItem
 } from '@harnessio/canary'
 import { OpenapiGetContentOutput, useFindRepositoryQuery } from '@harnessio/code-service-client'
-import { FileToolbarActions } from '@harnessio/ui/components'
-import { MarkdownViewer, TopDetails, TopTitle } from '@harnessio/views'
+import { FileToolbarActions, MarkdownViewer } from '@harnessio/ui/components'
+import { TopDetails, TopTitle } from '@harnessio/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
@@ -220,7 +220,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       </StackedList.Root>
       {language === 'markdown' && view === 'preview' ? (
         <div className="border-x border-b border-border-background p-2">
-          <MarkdownViewer source={fileContent} />
+          <MarkdownViewer source={fileContent} withBorderWrapper />
         </div>
       ) : view === 'code' ? (
         <CodeView />

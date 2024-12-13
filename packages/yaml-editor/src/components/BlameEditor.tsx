@@ -207,8 +207,8 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
         }}
       />
       <Editor
-        height={'75vh'}
-        className={`monaco-editor-${instanceId.current} border-border-background border-x border-b`}
+        height="75vh"
+        className={`monaco-editor-${instanceId.current} overflow-hidden rounded-b-md border-x border-b`}
         language={language}
         theme={theme}
         options={defaultOptions}

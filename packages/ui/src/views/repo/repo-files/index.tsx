@@ -1,9 +1,11 @@
-import { ReactNode, useMemo } from 'react'
+import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, SkeletonList } from '@/components'
+import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
+  BranchInfoBar,
   CodeModes,
   FileLastChangeBar,
+  IBranchSelectorStore,
   LatestFileTypes,
   PathActionBar,
   RepoFile,
@@ -24,9 +26,11 @@ interface RepoFilesProps {
   pathNewFile: string
   pathUploadFiles: string
   codeMode: CodeModes
+  useRepoBranchesStore: () => IBranchSelectorStore
+  defaultBranchName?: string
 }
 
-export const RepoFiles = ({
+export const RepoFiles: FC<RepoFilesProps> = ({
   pathParts,
   loading,
   files,
@@ -37,8 +41,11 @@ export const RepoFiles = ({
   useTranslationStore,
   pathNewFile,
   pathUploadFiles,
-  codeMode
-}: RepoFilesProps) => {
+  codeMode,
+  useRepoBranchesStore,
+  defaultBranchName
+}) => {
+  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
@@ -55,7 +62,27 @@ export const RepoFiles = ({
     if (loading) return <SkeletonList />
 
     if (isShowSummary && files.length)
-      return <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+      return (
+        <>
+          {selectedBranchTag.name !== defaultBranchName && (
+            <>
+              <Spacer size={4} />
+              <BranchInfoBar
+                defaultBranchName={defaultBranchName}
+                spaceId={spaceId}
+                repoId={repoId}
+                currentBranch={{
+                  ...selectedBranchTag,
+                  // TODO: it is required to transfer the real data that the currently selected branch should contain
+                  behindAhead: { ahead: 10, behind: 20 }
+                }}
+              />
+            </>
+          )}
+          <Spacer size={4} />
+          <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+        </>
+      )
 
     return (
       <NoData
@@ -67,7 +94,20 @@ export const RepoFiles = ({
         secondaryButton={{ label: 'Import file' }}
       />
     )
-  }, [isDir, children, loading, isShowSummary, latestFile, files, useTranslationStore, isView])
+  }, [
+    isView,
+    children,
+    isDir,
+    useTranslationStore,
+    latestFile,
+    loading,
+    isShowSummary,
+    files,
+    selectedBranchTag,
+    defaultBranchName,
+    spaceId,
+    repoId
+  ])
 
   return (
     <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>

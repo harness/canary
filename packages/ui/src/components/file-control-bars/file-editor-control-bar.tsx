@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { EditViewTypeValue, StackedList, ToggleGroup, ToggleGroupItem } from '@/components'
 
 export interface FileEditorControlBarProps {
@@ -5,7 +7,7 @@ export interface FileEditorControlBarProps {
   onChangeView: (value: EditViewTypeValue) => void
 }
 
-export const FileEditorControlBar = ({ view, onChangeView }: FileEditorControlBarProps) => {
+export const FileEditorControlBar: FC<FileEditorControlBarProps> = ({ view, onChangeView }) => {
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">

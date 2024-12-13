@@ -2,7 +2,6 @@ export * from './components/repo-summary-panel'
 export * from './components/branch-chooser'
 export * from './components/search-files'
 export * from './components/repo-summary'
-export * from './components/markdown-viewer'
 
 export * from './components/execution-list'
 export * from './components/pipeline-list'

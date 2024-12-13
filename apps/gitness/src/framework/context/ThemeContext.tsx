@@ -1,22 +1,20 @@
 import { ReactNode, useEffect, useState } from 'react'
 
 import { create } from 'zustand'
-
-// import { persist } from 'zustand/middleware'
+import { persist } from 'zustand/middleware'
 
 import { FullTheme, getModeColorContrastFromFullTheme, IThemeStore, ModeType } from '@harnessio/ui/components'
 
 export const useThemeStore = create<IThemeStore>()(
-  // persist(
-  set => ({
-    theme: undefined,
-    setTheme: (newTheme: FullTheme) => set({ theme: newTheme })
-  })
-  // ,
-  // {
-  //   name: 'canary-ui-theme' // LocalStorage key
-  // }
-  // )
+  persist(
+    set => ({
+      theme: undefined,
+      setTheme: (newTheme: FullTheme) => set({ theme: newTheme })
+    }),
+    {
+      name: 'canary-ui-theme' // LocalStorage key
+    }
+  )
 )
 
 interface ThemeProviderProps {

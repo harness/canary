@@ -59,7 +59,7 @@ function Sidebar() {
   return (
     <SandboxLayout.LeftSubPanel hasHeader hasSubHeader>
       <SandboxLayout.Content className="px-6">
-        <RepoSidebar items={navItems} showMoreMenu={true} handleMoreMenu={() => {}} />
+        <RepoSidebar items={navItems} />
       </SandboxLayout.Content>
     </SandboxLayout.LeftSubPanel>
   )

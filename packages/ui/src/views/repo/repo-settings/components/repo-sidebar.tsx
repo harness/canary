@@ -4,12 +4,10 @@ import NavbarSkeleton from '@/components/navbar/navbar-skeleton'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface RepoSidebarProps {
-  showMoreMenu: boolean
-  handleMoreMenu: () => void
   items: MenuGroupType[]
 }
 
-export function RepoSidebar({ showMoreMenu, handleMoreMenu, items }: RepoSidebarProps) {
+export function RepoSidebar({ items }: RepoSidebarProps) {
   return (
     <div>
       {items.map((group, group_idx) => (

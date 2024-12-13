@@ -23,8 +23,6 @@ export interface IBranchSelectorStore {
   xNextPage: number
   xPrevPage: number
   page: number
-  branchCount: number
-  tagCount: number
 
   //actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
@@ -40,8 +38,6 @@ export interface IBranchSelectorStore {
   setBranchDivergence: (divergence: CalculateCommitDivergenceOkResponse) => void
   setPage: (page: number) => void
   setPaginationFromHeaders: (headers?: Headers) => void
-  setBranchCount: (branchCount: number) => void
-  setTagCount: (tagCount: number) => void
 }
 
 export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
@@ -57,8 +53,6 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
   xNextPage: 0,
   xPrevPage: 0,
   page: 1,
-  branchCount: 0,
-  tagCount: 0,
 
   // Actions
 
@@ -102,7 +96,5 @@ export const useRepoBranchesStore = create<IBranchSelectorStore>(set => ({
     const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
     const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
     set({ xNextPage, xPrevPage })
-  },
-  setBranchCount: (branchCount: number) => set({ branchCount }),
-  setTagCount: (tagCount: number) => set({ tagCount })
+  }
 }))

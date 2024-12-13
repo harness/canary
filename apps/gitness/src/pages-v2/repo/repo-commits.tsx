@@ -14,7 +14,7 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@har
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import { orderSortDate, PageResponseHeader } from '../../types'
+import { PageResponseHeader } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
@@ -27,8 +27,6 @@ export default function RepoCommitsPage() {
   const {
     branchList,
     tagList,
-    branchCount,
-    tagCount,
     setBranchList,
     setTagList,
     selectedBranchTag,
@@ -40,21 +38,11 @@ export default function RepoCommitsPage() {
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: orderSortDate.DESC,
-      limit: branchCount || 100
-    }
+    queryParams: { page }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
-    queryParams: {
-      include_commit: false,
-      sort: 'date',
-      order: orderSortDate.DESC,
-      limit: tagCount || 100
-    }
+    queryParams: { page }
   })
 
   useEffect(() => {

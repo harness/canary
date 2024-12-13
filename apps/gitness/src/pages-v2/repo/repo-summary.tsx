@@ -51,8 +51,6 @@ export default function RepoSummaryPage() {
     tagList,
     setBranchList,
     setTagList,
-    setBranchCount,
-    setTagCount,
     setSpaceIdAndRepoId,
     setDefaultBranch,
     selectedBranchTag,
@@ -71,7 +69,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: branch_count }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 50 }
   })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
@@ -82,11 +80,6 @@ export default function RepoSummaryPage() {
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
-
-  useEffect(() => {
-    setBranchCount(branch_count || 0)
-    setTagCount(tag_count || 0)
-  }, [branch_count, tag_count])
 
   useEffect(() => {
     if (branchDivergence.length) {
@@ -148,7 +141,7 @@ export default function RepoSummaryPage() {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: tag_count,
+      limit: 50,
       page: 1
     }
   })

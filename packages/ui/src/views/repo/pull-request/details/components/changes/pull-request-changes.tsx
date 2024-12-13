@@ -36,6 +36,7 @@ interface DataProps {
   data: HeaderProps[]
   diffMode: DiffModeEnum
   useTranslationStore: () => TranslationStore
+  currentUser?: string
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({ text, numAdditions, numDeletions, useTranslationStore }) => {
@@ -85,7 +86,8 @@ const PullRequestAccordion: React.FC<{
   data?: string
   diffMode: DiffModeEnum
   useTranslationStore: () => TranslationStore
-}> = ({ header, diffMode, useTranslationStore }) => {
+  currentUser?: string
+}> = ({ header, diffMode, useTranslationStore, currentUser }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
 
   const startingLine =
@@ -124,6 +126,7 @@ const PullRequestAccordion: React.FC<{
                     addWidget
                     fileName={header?.title ?? ''}
                     lang={header?.lang ?? ''}
+                    currentUser={currentUser}
                   />
                 </div>
               </div>
@@ -135,7 +138,7 @@ const PullRequestAccordion: React.FC<{
   )
 }
 
-export function PullRequestChanges({ data, diffMode, useTranslationStore }: DataProps) {
+export function PullRequestChanges({ data, diffMode, useTranslationStore, currentUser }: DataProps) {
   return (
     <div className="flex flex-col gap-4">
       {data.map((item, index) => (
@@ -145,6 +148,7 @@ export function PullRequestChanges({ data, diffMode, useTranslationStore }: Data
           data={item?.data}
           diffMode={diffMode}
           useTranslationStore={useTranslationStore}
+          currentUser={currentUser}
         />
       ))}
     </div>

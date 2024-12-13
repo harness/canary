@@ -5,7 +5,7 @@ import pluralize from 'pluralize'
 import { TypesPullReq, TypesRepository, useChecksPullReqQuery } from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/views'
 
-import { determineStatusMessage, generateStatusSummary } from '../utils'
+import { determineStatusMessage, generateStatusSummary } from '../../../pages/pull-request/utils'
 
 interface Check {
   check: {
@@ -49,8 +49,10 @@ export function usePRChecksDecision({
     let _status: ExecutionState | undefined
     const _count = { ...DEFAULT_COUNTS }
     const total = data?.checks?.length
+    // @ts-expect-error remove "@ts-expect-error" once CodeServiceClient Response for useChecksPullReqQuery is fixed
     const { message: summaryMessage } = generateStatusSummary(data?.checks)
     setSummaryText(summaryMessage)
+    // @ts-expect-error remove "@ts-expect-error" once CodeServiceClient Response for useChecksPullReqQuery is fixed
     const checkInfoData = determineStatusMessage(data?.checks)
     if (checkInfoData) {
       setCheckInfo(checkInfoData)

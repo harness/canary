@@ -1,16 +1,15 @@
 export interface MemberData {
-  principal: {
-    display_name: string
-    uid: string
-  }
+  display_name: string
   role: string
-  added_by: { email: string }
-  created: number
+  email: string
+  avatarUrl: string
+  timestamp: string
+  uid: string
 }
 
 export interface IMemberListStore {
   // state
-  memberData: MemberData[]
+  memberList: MemberData[]
   spaceId: string
   totalPages: number
   page: number

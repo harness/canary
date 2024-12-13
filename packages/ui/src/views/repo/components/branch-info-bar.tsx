@@ -20,8 +20,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   currentBranchDivergence
 }) => {
   const { behind, ahead } = currentBranchDivergence
-  const hasBehind = behind && behind > 0
-  const hasAhead = ahead && ahead > 0
+  const hasBehind = !!behind
+  const hasAhead = !!ahead
 
   return (
     <div className="flex h-11 items-center justify-between rounded-md border border-borders-1 bg-background-2 pl-4 pr-1.5">

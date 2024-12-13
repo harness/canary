@@ -1,4 +1,4 @@
-import { ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
@@ -16,7 +16,7 @@ interface RepoSidebarProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const RepoSidebar = ({
+export const RepoSidebar: FC<RepoSidebarProps> = ({
   hasHeader,
   hasSubHeader,
   navigateToNewFile,
@@ -26,7 +26,7 @@ export const RepoSidebar = ({
   selectBranchOrTag,
   useRepoBranchesStore,
   useTranslationStore
-}: RepoSidebarProps) => {
+}) => {
   const { branchList } = useRepoBranchesStore()
 
   return (

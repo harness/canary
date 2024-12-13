@@ -36,7 +36,7 @@ function Root({ logo }: ProjectProps) {
         handleChange={openSearchDialog}
       />
       <Dialog open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <DialogContent className="h-[600px] max-w-[800px] border-border bg-primary-background">
+        <DialogContent className="h-[600px] max-w-[800px] border-border bg-background-1">
           <DialogHeader>
             <DialogTitle>Search</DialogTitle>
             <DialogDescription>

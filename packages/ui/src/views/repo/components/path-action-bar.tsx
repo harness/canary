@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { Button, FileAdditionsTrigger, PathBreadcrumbs, PathParts } from '@/components'
 import { CodeModes, TranslationStore } from '@/views'
 
@@ -15,7 +17,7 @@ export interface PathActionBarProps {
   handleCancelFileEdit?: () => void
 }
 
-export const PathActionBar = ({
+export const PathActionBar: FC<PathActionBarProps> = ({
   codeMode,
   pathParts,
   changeFileName,
@@ -27,7 +29,7 @@ export const PathActionBar = ({
   pathUploadFiles,
   handleOpenCommitDialog,
   handleCancelFileEdit
-}: PathActionBarProps) => {
+}) => {
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs

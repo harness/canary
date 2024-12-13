@@ -27,13 +27,14 @@ export interface CodeEditorProps<_> {
   onCodeRevisionChange: (codeRevision: CodeRevision | undefined, ev: monaco.editor.IModelContentChangedEvent) => void
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
+  theme?: string
   options?: {
     readOnly?: boolean
   }
 }
 
 export function CodeEditor<T>(props: CodeEditorProps<T>): JSX.Element {
-  const { codeRevision, onCodeRevisionChange, language, themeConfig, options } = props
+  const { codeRevision, onCodeRevisionChange, language, themeConfig, options, theme: themeFromProps } = props
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
 
@@ -56,20 +57,25 @@ export function CodeEditor<T>(props: CodeEditorProps<T>): JSX.Element {
       if (!codeRevision.revisionId || codeRevision.revisionId > Number(currentRevisionRef.current?.revisionId)) {
         const model = editorRef.current.getModel()
         if (model) {
-          editorRef.current.pushUndoStop()
-          editorRef.current.executeEdits('edit', [
-            {
-              range: model.getFullModelRange(),
-              text: codeRevision.code
-            }
-          ])
-          editorRef.current.pushUndoStop()
+          // NOTE: if it's a readonly no need to create undo stop points
+          if (options?.readOnly) {
+            editorRef.current?.setValue(codeRevision.code)
+          } else {
+            editorRef.current.pushUndoStop()
+            editorRef.current.executeEdits('edit', [
+              {
+                range: model.getFullModelRange(),
+                text: codeRevision.code
+              }
+            ])
+            editorRef.current.pushUndoStop()
+          }
         }
       }
     }
   }, [codeRevision, editorRef.current])
 
-  const { theme } = useTheme({ monacoRef, themeConfig, editor })
+  const { theme } = useTheme({ monacoRef, themeConfig, editor, theme: themeFromProps })
 
   const mergedOptions = useMemo(() => {
     return { ...defaultOptions, ...(options ? options : {}) }

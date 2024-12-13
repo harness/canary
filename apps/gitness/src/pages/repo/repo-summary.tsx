@@ -29,13 +29,12 @@ import {
   useListPathsQuery,
   useSummaryQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { MarkdownViewer, SkeletonList } from '@harnessio/ui/components'
 import {
   BranchSelector,
   CloneRepoDialog,
   FileProps,
   generateAlphaNumericHash,
-  MarkdownViewer,
   NoData,
   RepoSummaryPanel,
   SandboxLayout,

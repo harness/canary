@@ -442,7 +442,7 @@ importers:
         version: 3.7.2(@swc/helpers@0.5.2)(vite@6.0.3(@types/node@20.14.9)(jiti@1.21.6)(sass@1.77.8)(terser@5.31.3)(yaml@2.5.0))
       autoprefixer:
         specifier: ^10.4.19
-        version: 10.4.19(postcss@8.4.49)
+        version: 10.4.19(postcss@8.4.44)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -747,6 +747,9 @@ importers:
       rehype-external-links:
         specifier: ^3.0.0
         version: 3.0.0
+      rehype-rewrite:
+        specifier: ^4.0.2
+        version: 4.0.2
       rehype-sanitize:
         specifier: ^6.0.0
         version: 6.0.0
@@ -16260,14 +16263,14 @@ snapshots:
 
   asynckit@0.4.0: {}
 
-  autoprefixer@10.4.19(postcss@8.4.49):
+  autoprefixer@10.4.19(postcss@8.4.44):
     dependencies:
       browserslist: 4.23.1
       caniuse-lite: 1.0.30001638
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.1
-      postcss: 8.4.49
+      postcss: 8.4.44
       postcss-value-parser: 4.2.0
 
   autoprefixer@10.4.20(postcss@8.4.49):

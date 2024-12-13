@@ -43,7 +43,7 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
           <TableHead className="text-primary">Email</TableHead>
           <TableHead className="text-primary">Role</TableHead>
           <TableHead>
-            <></>
+            <></> {/* For 3-dot menu */}
           </TableHead>
         </TableRow>
       </TableHeader>

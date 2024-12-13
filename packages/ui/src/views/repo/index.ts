@@ -35,4 +35,4 @@ export * from '@views/repo/repo-settings'
 export * from '@views/repo/repo-settings/types'
 
 // repo import
-export * from '@views/repo/repo-import'
+export * from '@views/repo/repo-import/repo-import'

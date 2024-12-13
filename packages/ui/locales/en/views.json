@@ -62,6 +62,12 @@
     "changes": "Changes",
     "noCommitsYet": "No commits yet",
     "noCommitDataDescription": "There are no commits yet.",
+    "approve": "Approve",
+    "approved": "Approved",
+    "changereq": "Changes Requested",
+    "split": "Split",
+    "unified": "Unified",
+    "viewed": "Viewed",
     "commits": "Commits"
   },
   "noData": {

@@ -3,35 +3,32 @@ import { useParams } from 'react-router-dom'
 
 import { DiffModeEnum } from '@git-diff-view/react'
 import * as Diff2Html from 'diff2html'
-import { useAtom } from 'jotai'
-import { compact, isEqual } from 'lodash-es'
+import { atom, useAtom } from 'jotai'
+import { compact } from 'lodash-es'
 
-import { Spacer } from '@harnessio/canary'
 import {
   EnumPullReqReviewDecision,
   reviewSubmitPullReq,
   useRawDiffQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
-import { PullRequestChanges } from '@harnessio/views'
+import { DiffViewerExchangeState, PullRequestChangesPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
+import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
+import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
-import { parseSpecificDiff } from './diff-utils'
-import { PullRequestChangesFilter } from './pull-request-changes-filter'
-import { usePullRequestDataStore } from './stores/pull-request-store'
-import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState, PullReqReviewDecision } from './types/types'
-import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './utils'
+import { normalizeGitFilePath } from './pull-request-utils'
+import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
-function PullRequestChangesPage() {
-  const { pullReqMetadata, refetchPullReq, refetchActivities } = usePullRequestDataStore(state => ({
-    pullReqMetadata: state.pullReqMetadata,
-    refetchPullReq: state.refetchPullReq,
-    refetchActivities: state.refetchActivities
-  }))
+export const changesInfoAtom = atom<{ path?: string; raw?: string; fileViews?: Map<string, string> }>({})
+
+export default function PullRequestChanges() {
+  const { pullReqMetadata, refetchPullReq, refetchActivities, setDiffs } = usePullRequestProviderStore()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
@@ -43,7 +40,7 @@ function PullRequestChangesPage() {
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const targetRef = useMemo(() => pullReqMetadata?.merge_base_sha, [pullReqMetadata?.merge_base_sha])
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
-  const [diffs, setDiffs] = useState<DiffFileEntry[]>()
+  //   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const {
@@ -166,13 +163,7 @@ function PullRequestChangesPage() {
         })
         .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
 
-      setDiffs(oldDiffs => {
-        if (isEqual(oldDiffs, _diffs)) return oldDiffs
-
-        // Clear memorizedState when diffs are changed
-        memorizedState.clear()
-        return _diffs
-      })
+      setDiffs(_diffs)
     } else {
       setDiffs([])
     }
@@ -184,44 +175,21 @@ function PullRequestChangesPage() {
     memorizedState
   ])
 
-  const renderContent = () => {
-    if (loadingRawDiff) {
-      return <SkeletonList />
-    }
-    return (
-      <PullRequestChanges
-        data={
-          diffs?.map(item => ({
-            text: item.filePath,
-            numAdditions: item.addedLines,
-            numDeletions: item.deletedLines,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')[1]
-          })) || []
-        }
-        diffMode={diffMode}
-      />
-    )
-  }
-
   return (
     <>
-      <PullRequestChangesFilter
-        active={''}
-        loading={loadingReviewers}
-        currentUser={currentUser ?? {}}
-        pullRequestMetadata={pullReqMetadata ? pullReqMetadata : undefined}
-        reviewers={reviewers}
-        submitReview={submitReview}
-        refetchReviewers={refetchReviewers}
-        diffMode={diffMode}
+      <PullRequestChangesPage
+        usePullRequestProviderStore={usePullRequestProviderStore}
+        useTranslationStore={useTranslationStore}
         setDiffMode={setDiffMode}
+        loadingReviewers={loadingReviewers}
+        diffMode={diffMode}
+        reviewers={reviewers}
+        refetchReviewers={refetchReviewers}
+        submitReview={submitReview}
+        currentUser={currentUser}
+        pullReqMetadata={pullReqMetadata}
+        loadingRawDiff={loadingRawDiff}
       />
-      <Spacer aria-setsize={5} />
-
-      {renderContent()}
     </>
   )
 }
-export { PullRequestChangesPage }

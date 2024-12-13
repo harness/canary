@@ -49,9 +49,33 @@ export interface PullRequestListStore {
   closedPullReqs: number
 }
 export interface RepoRepositoryOutput {
+  created?: number
+  created_by?: number
+  default_branch?: string
+  deleted?: number | null
+  description?: string
+  fork_id?: number
+  git_ssh_url?: string
+  git_url?: string
+  id?: number
+  identifier?: string
+  importing?: boolean
+  is_empty?: boolean
+  is_public?: boolean
   num_closed_pulls?: number
+  num_forks?: number
+  num_merged_pulls?: number
   num_open_pulls?: number
+  num_pulls?: number
+  parent_id?: number
+  path?: string
+  size?: number
+  size_updated?: number
+  state?: EnumRepoState
+  updated?: number
 }
+
+export type EnumRepoState = number
 
 export const formSchema = z.object({
   title: z.string().min(1, { message: 'Please provide a pull request title' }),

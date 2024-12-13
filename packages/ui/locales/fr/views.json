@@ -62,7 +62,13 @@
     "changes": "Changements",
     "noCommitsYet": "",
     "noCommitDataDescription": "",
-    "commits": "Commet"
+    "approve": "Approuver",
+    "approved": "Approuvée",
+    "changereq": "Changement Demandé",
+    "split": "Diviser",
+    "unified": "Unifié",
+    "viewed": "Vu",
+    "commits": "Commets"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",

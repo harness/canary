@@ -85,7 +85,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           {details &&
             details.map(item => (
               <div key={item.id} className="flex items-center gap-1.5">
-                <Icon name={item.iconName} size={14} className="text-tertiary-background" />
+                <Icon name={item.iconName} size={14} className="text-tertiary-background fill-none" />
                 <Text>{item.name}</Text>
                 <Badge variant="outline" size="sm">
                   {item.count}

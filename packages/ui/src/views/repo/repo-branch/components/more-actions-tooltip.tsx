@@ -1,4 +1,3 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -29,7 +28,7 @@ export const MoreActionsTooltip: React.FC<MoreActionsTooltipProps> = ({
           <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm">
+      <DropdownMenuContent className="w-[180px] rounded-[10px] border border-borders-1 bg-background-2 py-2 shadow-sm">
         <DropdownMenuGroup>
           <Link
             replace
@@ -37,7 +36,7 @@ export const MoreActionsTooltip: React.FC<MoreActionsTooltipProps> = ({
           >
             <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">
-                <Icon name="pr-open" className="mr-2" />
+                <Icon name="pr-open" className="mr-2 fill-none" />
               </DropdownMenuShortcut>
               {t('views:repos.newPullReq', 'New pull request')}
             </DropdownMenuItem>

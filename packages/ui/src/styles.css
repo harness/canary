@@ -87,9 +87,9 @@
     --diff-del-content--: hsl(356, 28%, 11%);
     --diff-add-lineNumber--: hsl(153, 40%, 14%);
     --diff-del-lineNumber--: hsl(358, 39%, 17%);
-    --diff-plain-content--: var(--background);
-    --diff-expand-content--: var(--background);
-    --diff-plain-lineNumber--: var(--background);
+    --diff-plain-content--: var(--canary-background);
+    --diff-expand-content--: var(--canary-background);
+    --diff-plain-lineNumber--: var(--canary-background);
     --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
     --diff-hunk-content--: hsl(218, 26%, 12%);
     --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
@@ -97,7 +97,7 @@
     --diff-del-content-highlight--: hsl(0, 38%, 26%);
     --diff-add-widget--: hsl(216, 80%, 65%);
     --diff-add-widget-color--: hsl(0, 0%, 100%);
-    --diff-empty-content--: var(--background);
+    --diff-empty-content--: var(--canary-background);
     --diff-hunk-content-color--: hsl(0, 0%, 100%);
     /* New colors design variables */
 
@@ -384,12 +384,12 @@
     --canary-primary: 240 5.9% 10%;
     --canary-primary-background: 240 5.9% 10%;
     --canary-primary-foreground: 0 0% 98%;
-    --canary-primary-muted: var(--grey-70);
+    --canary-primary-muted: var(--canary-grey-70);
     --canary-primary-accent: 216 100% 60%;
     --canary-secondary: 240 4.8% 95.9%;
     --canary-secondary-foreground: 240 5.9% 10%;
     --canary-secondary-background: 0 0% 100%;
-    --canary-secondary-muted: var(--grey-40);
+    --canary-secondary-muted: var(--canary-grey-40);
     --canary-tertiary: 240 4.8% 95.9%;
     --canary-tertiary-foreground: 240 5.9% 10%;
     --canary-tertiary-background: 240 6% 60%;
@@ -405,11 +405,11 @@
     --canary-input-background: 240 5.9% 90%;
     --canary-ring: 240 5.9% 10%;
     --canary-radius: 0.5rem;
-    --canary-success: var(--green);
-    --canary-error: var(--red);
-    --canary-warning: var(--orange);
-    --canary-emphasis: var(--emphasis);
-    --canary-ai: var(--purple);
+    --canary-success: var(--canary-green);
+    --canary-error: var(--canary-red);
+    --canary-warning: var(--canary-orange);
+    --canary-emphasis: var(--canary-emphasis);
+    --canary-ai: var(--canary-purple);
     --canary-ai-button-stop-1: var(--canary-ai-yellow);
     --canary-ai-button-stop-2: var(--canary-ai-pink);
     --canary-ai-button-stop-3: var(--canary-ai-purple);
@@ -419,9 +419,9 @@
     --diff-del-content--: hsl(356, 28%, 11%);
     --diff-add-lineNumber--: hsl(153, 40%, 14%);
     --diff-del-lineNumber--: hsl(358, 39%, 17%);
-    --diff-plain-content--: var(--background);
-    --diff-expand-content--: var(--background);
-    --diff-plain-lineNumber--: var(--background);
+    --diff-plain-content--: var(--canary-background);
+    --diff-expand-content--: var(--canary-background);
+    --diff-plain-lineNumber--: var(--canary-background);
     --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
     --diff-hunk-content--: hsl(218, 26%, 12%);
     --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
@@ -429,7 +429,7 @@
     --diff-del-content-highlight--: hsl(0, 38%, 26%);
     --diff-add-widget--: hsl(216, 80%, 65%);
     --diff-add-widget-color--: hsl(0, 0%, 100%);
-    --diff-empty-content--: var(--background);
+    --diff-empty-content--: var(--canary-background);
     --diff-hunk-content-color--: hsl(0, 0%, 100%);
     /* New colors design variables */
     /* Text */
@@ -772,9 +772,9 @@
     --diff-del-content--: hsl(356, 28%, 11%);
     --diff-add-lineNumber--: hsl(153, 40%, 14%);
     --diff-del-lineNumber--: hsl(358, 39%, 17%);
-    --diff-plain-content--: var(--background);
-    --diff-expand-content--: var(--background);
-    --diff-plain-lineNumber--: var(--background);
+    --diff-plain-content--: var(--canary-background);
+    --diff-expand-content--: var(--canary-background);
+    --diff-plain-lineNumber--: var(--canary-background);
     --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
     --diff-hunk-content--: hsl(218, 26%, 12%);
     --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
@@ -782,7 +782,7 @@
     --diff-del-content-highlight--: hsl(0, 38%, 26%);
     --diff-add-widget--: hsl(216, 80%, 65%);
     --diff-add-widget-color--: hsl(0, 0%, 100%);
-    --diff-empty-content--: var(--background);
+    --diff-empty-content--: var(--canary-background);
     --diff-hunk-content-color--: hsl(0, 0%, 100%);
     /* New colors design variables */
     /* Text */
@@ -1068,9 +1068,9 @@
     --diff-del-content--: hsl(356, 28%, 11%);
     --diff-add-lineNumber--: hsl(153, 40%, 14%);
     --diff-del-lineNumber--: hsl(358, 39%, 17%);
-    --diff-plain-content--: var(--background);
-    --diff-expand-content--: var(--background);
-    --diff-plain-lineNumber--: var(--background);
+    --diff-plain-content--: var(--canary-background);
+    --diff-expand-content--: var(--canary-background);
+    --diff-plain-lineNumber--: var(--canary-background);
     --diff-plain-lineNumber-color--: hsl(0, 0%, 100%);
     --diff-hunk-content--: hsl(218, 26%, 12%);
     --diff-hunk-lineNumber--: hsl(218, 26%, 12%);
@@ -1078,7 +1078,7 @@
     --diff-del-content-highlight--: hsl(0, 38%, 26%);
     --diff-add-widget--: hsl(216, 80%, 65%);
     --diff-add-widget-color--: hsl(0, 0%, 100%);
-    --diff-empty-content--: var(--background);
+    --diff-empty-content--: var(--canary-background);
     --diff-hunk-content-color--: hsl(0, 0%, 100%);
     /* New colors design variables */
     /* Text */
@@ -1414,7 +1414,7 @@
   white-space: nowrap;
   transform: translateY(-50%);
   left: calc(100% + 8px);
-  color: var(--primary);
+  color: var(--canary-primary);
 }
 
 .diff-widget-tooltip::before {
@@ -1736,7 +1736,7 @@ mark {
 }
 
 [data-radix-select-viewport]::-webkit-scrollbar-thumb {
-  background-color: hsl(var(--background-09));
+  background-color: hsl(var(--canary-background-09));
   border: 4px solid transparent;
   border-radius: 7px;
   background-clip: content-box;

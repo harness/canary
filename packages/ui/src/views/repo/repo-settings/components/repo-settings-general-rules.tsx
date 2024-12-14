@@ -25,9 +25,9 @@ const Description = ({
 }) => {
   return (
     <Text color="tertiaryBackground" as="div" className="flex items-center gap-1 pl-[24px]">
-      {targetPatternsCount} target patterns{' '}
+      {targetPatternsCount} target patterns
       <span className="pointer-events-none h-3 w-px bg-borders-2 ml-1 mr-1" aria-hidden />
-      {rulesAppliedCount} rules applied{' '}
+      {rulesAppliedCount} rules applied
       <span className="pointer-events-none h-3 w-px bg-borders-2 ml-1 mr-1" aria-hidden />
       {bypassAllowed ? (
         <div>

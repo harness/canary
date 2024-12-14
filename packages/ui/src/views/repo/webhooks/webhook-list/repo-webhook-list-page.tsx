@@ -92,9 +92,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
     )
   return (
     <>
-      {/* <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel> */}
       <SandboxLayout.Content className="ml-0">
-        {/* <Spacer size={10} /> */}
         <Text size={5} weight={'medium'}>
           Webhooks
         </Text>
@@ -149,7 +147,6 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
         <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>
-      {/* </SandboxLayout.Main> */}
     </>
   )
 }

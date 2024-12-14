@@ -59,7 +59,6 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   return (
     <SandboxLayout.Content className="ml-0" maxWidth="2xl">
       <Fieldset>
-        {/* <div ref={generalRef}> */}
         <RepoSettingsGeneralForm
           repoData={repoData}
           handleRepoUpdate={handleRepoUpdate}
@@ -71,7 +70,6 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           useTranslationStore={useTranslationStore}
           selectBranchOrTag={selectBranchOrTag}
         />
-        {/* </div> */}
         <FormSeparator />
         <div ref={rulesRef}>
           <RepoSettingsGeneralRules

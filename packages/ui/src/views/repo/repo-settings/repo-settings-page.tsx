@@ -13,16 +13,16 @@ export const navItems = [
 
     items: [{ id: 0, title: 'General Settings', to: 'general' }]
   },
-  {
-    groupId: 1,
-    title: 'Access',
-    type: MenuGroupTypes.GENERAL,
+  // {
+  //   groupId: 1,
+  //   title: 'Access',
+  //   type: MenuGroupTypes.GENERAL,
 
-    items: [
-      { id: 0, title: 'Collaborations', to: 'collaborations' },
-      { id: 1, title: 'Moderation options', to: 'moderation' }
-    ]
-  },
+  //   items: [
+  //     { id: 0, title: 'Collaborations', to: 'collaborations' },
+  //     { id: 1, title: 'Moderation options', to: 'moderation' }
+  //   ]
+  // },
   {
     groupId: 2,
     title: 'Code and automation',
@@ -31,9 +31,9 @@ export const navItems = [
     items: [
       // { id: 0, text: 'Branches', to: 'branches' },
       // { id: 1, text: 'Tags', to: 'tags' },
-      { id: 2, title: 'Rules', to: 'rules' },
+      { id: 0, title: 'Rules', to: 'rules' },
       // { id: 3, text: 'Actions', to: 'actions' },
-      { id: 4, title: 'Webhooks', to: 'webhooks' }
+      { id: 1, title: 'Webhooks', to: 'webhooks' }
       // { id: 5, text: 'Environments', to: 'environments' },
       // { id: 6, text: 'Codespaces', to: 'codespaces' },
       // { id: 7, text: 'Pages', to: 'pages' }
@@ -66,11 +66,7 @@ function Sidebar() {
 }
 
 function SettingsContent() {
-  return (
-    // <SandboxLayout.Content className="ml-0">
-    <Outlet />
-    // </SandboxLayout.Content>
-  )
+  return <Outlet />
 }
 
 export function RepoSettingsPage() {

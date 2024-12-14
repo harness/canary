@@ -240,10 +240,6 @@ export default function App() {
               index: true,
               element: <Navigate to="pulls" replace />
             },
-            // {
-            //   path: 'webhooks',
-            //   element: <WebhookListPage />
-            // },
             {
               path: 'pulls',
               children: [

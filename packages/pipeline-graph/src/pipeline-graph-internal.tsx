@@ -17,13 +17,14 @@ export interface PipelineGraphInternalProps {
   onAdd: (node: AnyNodeInternal, position: 'before' | 'after') => void
   onDelete: (node: AnyNodeInternal) => void
   onSelect: (node: AnyNodeInternal) => void
+  onContext?: (node: AnyNodeInternal, e: Event) => void
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { initialized, nodes: nodesBank, rerenderConnections, shiftCollapsed, setInitialized } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
 
-  const { data, onAdd, onDelete, onSelect } = props
+  const { data, onAdd, onDelete, onSelect, onContext } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -158,26 +159,35 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
     }
   }, [dataInternal, rerenderConnections, initialized, graphSizeRef])
 
+  const getContextInfoFromElement = (targetEl: HTMLDivElement) => {
+    // get closest element that have 'data-path' attribute
+    const el = targetEl.hasAttribute('data-path')
+      ? targetEl
+      : (targetEl.closest('*[data-path]') as HTMLDivElement | null)
+
+    if (el) {
+      const path = el.getAttribute('data-path') as string
+      const action = el.getAttribute('data-action') as 'add' | 'delete' | 'select'
+      const position = el.getAttribute('data-position') as 'before' | 'after'
+      return { path, action, position }
+    }
+    return null
+  }
+
   // handle "click" event
   useEffect(() => {
     const handler = (e: Event) => {
       const targetEl = e.target as HTMLDivElement
 
-      // get closest element that have 'data-path' attribute
-      const el = targetEl.hasAttribute('data-path')
-        ? targetEl
-        : (targetEl.closest('*[data-path]') as HTMLDivElement | null)
+      const contextInfo = getContextInfoFromElement(targetEl)
 
-      if (el) {
-        const path = el.getAttribute('data-path') as string
-        const action = el.getAttribute('data-action') as 'add' | 'delete' | 'select'
-
+      if (contextInfo) {
+        const { path, action, position } = contextInfo
         const itemPath = path.replace(/^pipeline.children./, '')
         const node = get(data, itemPath) as AnyNodeInternal
 
         switch (action) {
           case 'add': {
-            const position = el.getAttribute('data-position') as 'before' | 'after'
             onAdd(node, position)
             break
           }
@@ -193,10 +203,28 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       }
     }
 
+    const contextHandler = (e: Event) => {
+      const targetEl = e.target as HTMLDivElement
+
+      const contextInfo = getContextInfoFromElement(targetEl)
+
+      if (contextInfo) {
+        const { path, action, position } = contextInfo
+        const itemPath = path.replace(/^pipeline.children./, '')
+        const node = get(data, itemPath) as AnyNodeInternal
+
+        if (action === 'select') {
+          onContext?.(node, e)
+        }
+      }
+    }
+
     nodesContainerRef.current?.addEventListener('click', handler)
+    nodesContainerRef.current?.addEventListener('contextmenu', contextHandler)
 
     return () => {
       nodesContainerRef.current?.removeEventListener('click', handler)
+      nodesContainerRef.current?.removeEventListener('contextmenu', contextHandler)
     }
   }, [dataInternal, setDataInternal, shiftCollapsed])
 

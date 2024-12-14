@@ -240,10 +240,10 @@ export default function App() {
               index: true,
               element: <Navigate to="pulls" replace />
             },
-            {
-              path: 'webhooks',
-              element: <WebhookListPage />
-            },
+            // {
+            //   path: 'webhooks',
+            //   element: <WebhookListPage />
+            // },
             {
               path: 'pulls',
               children: [
@@ -295,6 +295,11 @@ export default function App() {
                 {
                   path: 'rules',
                   element: <RepoSettingsGeneralPageContainer />
+                },
+
+                {
+                  path: 'webhooks',
+                  element: <WebhookListPage />
                 }
               ]
             }

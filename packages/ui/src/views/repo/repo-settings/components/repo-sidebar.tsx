@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 import NavbarSkeleton from '@/components/navbar/navbar-skeleton'
 import { MenuGroupType } from '@components/navbar/types'
+import { SandboxLayout } from '@views/index'
 
 interface RepoSidebarProps {
   items: MenuGroupType[]

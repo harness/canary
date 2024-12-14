@@ -67,9 +67,9 @@ function Sidebar() {
 
 function SettingsContent() {
   return (
-    <SandboxLayout.Content maxWidth="2xl" className="ml-0">
-      <Outlet />
-    </SandboxLayout.Content>
+    // <SandboxLayout.Content className="ml-0">
+    <Outlet />
+    // </SandboxLayout.Content>
   )
 }
 

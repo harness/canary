@@ -31,7 +31,6 @@
     "files": "Files",
     "pipelines": "Pipelines",
     "pull-requests": "Pull Requests",
-    "webhooks": "Webhooks",
     "settings": "Settings",
     "repositories": "Repositories",
     "create-repository": "Create repository",
@@ -40,7 +39,8 @@
     "addFile": "Add file",
     "clone": "Clone",
     "readme": "README.md",
-    "openPullReq": "Open pull requests"
+    "openPullReq": "Open pull requests",
+    "webhooks": "Webhooks"
   },
   "createProject": {
     "newProject": "Create your new project",

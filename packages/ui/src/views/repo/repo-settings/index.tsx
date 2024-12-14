@@ -45,7 +45,6 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   selectBranchOrTag
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
-  const generalRef = useRef<HTMLDivElement | null>(null)
 
   if (window.location.pathname.endsWith('/rules')) {
     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })

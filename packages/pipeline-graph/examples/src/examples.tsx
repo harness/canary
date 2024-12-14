@@ -10,6 +10,8 @@ import './examples.css'
 
 import React from 'react'
 
+import ContextExample from './example5-context'
+
 type ExperimentalType = 'sharpLine' | 'sharpBorder' | 'skeleton'
 
 const examplesArr = [
@@ -28,6 +30,10 @@ const examplesArr = [
   {
     name: 'Size',
     component: SizeExample
+  },
+  {
+    name: 'Context',
+    component: ContextExample
   }
 ]
 
@@ -54,6 +60,8 @@ function App() {
         return <PerformanceExample />
       case 'Size':
         return <SizeExample />
+      case 'Context':
+        return <ContextExample />
     }
   }
 

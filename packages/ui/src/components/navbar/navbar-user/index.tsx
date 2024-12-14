@@ -23,7 +23,7 @@ import {
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-import { TFunction } from 'i18next'
+import { TranslationStore } from '@views/repo'
 
 interface UserBlockProps {
   username: string
@@ -65,13 +65,20 @@ interface NavbarUserProps {
   handleCustomNav: () => void
   handleLogOut: () => void
   useThemeStore: () => IThemeStore
-  t: TFunction
+  useTranslationStore: () => TranslationStore
 }
 
-export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t, useThemeStore }: NavbarUserProps) => {
+export const NavbarUser = ({
+  currentUser,
+  handleCustomNav,
+  handleLogOut,
+  useThemeStore,
+  useTranslationStore
+}: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
   const { theme, setTheme } = useThemeStore()
-  console.log({ theme })
+  const { t, i18n, changeLanguage } = useTranslationStore()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -120,12 +127,16 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t, useT
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
-              <DropdownMenuItem>
-                <Text>English</Text>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Text>French</Text>
-              </DropdownMenuItem>
+              <DropdownMenuRadioGroup
+                value={i18n.language}
+                onValueChange={value => {
+                  changeLanguage(value)
+                }}
+              >
+                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="fr">French</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>
         </DropdownMenuSub>

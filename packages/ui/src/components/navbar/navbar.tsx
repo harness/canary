@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 import { Button, Icon, IThemeStore, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
-import { TFunction } from 'i18next'
+import { TranslationStore } from '@views/index'
 import { isEmpty } from 'lodash-es'
 
 import { getAdminMenuItem } from './data'
@@ -27,7 +27,7 @@ interface NavbarProps {
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
   useThemeStore: () => IThemeStore
-  t: TFunction
+  useTranslationStore: () => TranslationStore
 }
 
 export const Navbar = ({
@@ -43,10 +43,11 @@ export const Navbar = ({
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
   useThemeStore,
-  t
+  useTranslationStore
 }: NavbarProps) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
@@ -122,7 +123,7 @@ export const Navbar = ({
             currentUser={currentUser}
             handleCustomNav={handleCustomNav}
             handleLogOut={handleLogOut}
-            t={t}
+            useTranslationStore={useTranslationStore}
             useThemeStore={useThemeStore}
           />
         ) : (

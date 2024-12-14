@@ -7,9 +7,8 @@ import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemType, NavState } from '@components/navbar/types'
 import { useLocationChange } from '@hooks/use-location-change'
-import { TFunction } from 'i18next'
 
-import { SandboxLayout } from '../index'
+import { SandboxLayout, TranslationStore } from '../index'
 
 interface NavLinkStorageInterface {
   state: {
@@ -23,13 +22,13 @@ export interface SandboxRootProps {
   logout?: () => void
   useNav: () => NavState
   useThemeStore: () => IThemeStore
-  t: TFunction
+  useTranslationStore: () => TranslationStore
 }
 
-export const SandboxRoot = ({ currentUser, useNav, t, logout, useThemeStore }: SandboxRootProps) => {
+export const SandboxRoot = ({ currentUser, useNav, logout, useThemeStore, useTranslationStore }: SandboxRootProps) => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
-
+  const { t } = useTranslationStore()
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
@@ -170,7 +169,7 @@ export const SandboxRoot = ({ currentUser, useNav, t, logout, useThemeStore }: S
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
           useThemeStore={useThemeStore}
-          t={t}
+          useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>
       <div className="flex flex-col">

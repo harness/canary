@@ -10,7 +10,6 @@ export enum RepoTabsKeys {
   PIPELINES = 'pipelines',
   COMMITS = 'commits',
   PULLS = 'pulls',
-  WEBHOOKS = 'webhooks',
   BRANCHES = 'branches',
   SETTINGS = 'settings'
 }

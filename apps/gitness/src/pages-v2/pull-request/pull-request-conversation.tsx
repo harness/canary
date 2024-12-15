@@ -40,14 +40,13 @@ import {
   extractInfoForCodeOwnerContent,
   findChangeReqDecisions,
   findWaitingDecisions,
-  generateAlphaNumericHash,
-  processReviewDecision
+  generateAlphaNumericHash
 } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { useActivityFilters } from './hooks/useActivityFilters'
 import { useDateFilters } from './hooks/useDataFilters'
-import { extractInfoFromRuleViolationArr } from './pull-request-utils'
+import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 export default function PullRequestConversationPage() {

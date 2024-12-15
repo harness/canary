@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
@@ -7,11 +8,13 @@ import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/vie
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestListStore()
+  const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -47,6 +50,8 @@ export default function PullRequestListPage() {
 
   return (
     <SandboxPullRequestListPage
+      repoId={repoId}
+      spaceId={spaceId}
       isLoading={fetchingPullReqData}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}

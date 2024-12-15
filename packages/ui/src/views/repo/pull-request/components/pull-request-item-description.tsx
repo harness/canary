@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useResolvedPath } from 'react-router-dom'
 
 import { Button, Icon, Text } from '@/components'
 
@@ -11,8 +11,6 @@ interface PullRequestItemDescriptionProps {
   sourceBranch: string
   timestamp: string
   targetBranch: string
-  spaceId?: string
-  repoId?: string
 }
 
 export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = ({
@@ -22,10 +20,12 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
   author,
   sourceBranch,
   targetBranch,
-  timestamp,
-  spaceId,
-  repoId
+  timestamp
 }) => {
+  const resolvedPath = useResolvedPath('')
+  const fullPath = resolvedPath.pathname
+  const relativePath = fullPath.split('/pulls')[0] // Adjust the slice parameters as needed
+
   return (
     <div className="inline-flex max-w-full items-center gap-1.5 pl-[22px] text-14 leading-none text-foreground-4">
       <p>
@@ -50,7 +50,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
       {sourceBranch && (
         <>
           <Button variant="secondary" size="xs" asChild>
-            <Link to={`/${spaceId}/repos/${repoId}/code/${targetBranch}`}>
+            <Link to={`${relativePath}/code/${targetBranch}`}>
               <Icon name="branch" size={11} className="mr-1 text-tertiary-background" />
               <Text size={1} className="p-0.5 hover:underline">
                 {targetBranch}
@@ -60,7 +60,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
 
           <span>&larr;</span>
           <Button variant="secondary" size="xs" asChild>
-            <Link to={`/${spaceId}/repos/${repoId}/code/${sourceBranch}`}>
+            <Link to={`${relativePath}/code/${sourceBranch}`}>
               <Text size={1} className="p-0.5 hover:underline">
                 {sourceBranch}
               </Text>

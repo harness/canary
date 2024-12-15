@@ -67,8 +67,6 @@ export const RepoLayout = ({
           </Tabs>
         </SandboxLayout.SubHeader>
       </div>
-      {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
-      {/* Total height of both the divs should be 100vh */}
       <div className="flex-1">
         <Outlet />
       </div>

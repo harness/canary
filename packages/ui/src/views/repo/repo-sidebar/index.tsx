@@ -26,6 +26,8 @@ export const RepoSidebar = ({
   const { branchList } = useRepoBranchesStore()
 
   return (
+    // 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px)
+    // Total height of both the divs should be 100vh
     <div className="sticky top-20 h-[calc(100vh-100px)]">
       <SandboxLayout.LeftSubPanel className="w-[248px]">
         <SandboxLayout.Content className="flex h-full overflow-hidden p-0">

@@ -1,9 +1,7 @@
 import { useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Button, Text } from '@components/index'
+import { Avatar, AvatarFallback, Button, Text, Textarea } from '@components/index'
 import { getInitials } from '@utils/stringUtils'
-
-import { Textarea } from '@harnessio/ui/components'
 
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void

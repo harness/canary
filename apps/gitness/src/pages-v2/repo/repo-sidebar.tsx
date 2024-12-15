@@ -188,7 +188,7 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <div className="w-full h-full flex justify-center">
+      <div className="grid grid-cols-[auto_1fr]">
         <RepoSidebarView
           selectBranchOrTag={selectBranchOrTag}
           useRepoBranchesStore={useRepoBranchesStore}
@@ -201,7 +201,9 @@ export const RepoSidebar = () => {
             <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
           )}
         </RepoSidebarView>
-        <Outlet />
+        <div className="min-h-[calc(100vh-100px)]">
+          <Outlet />
+        </div>
       </div>
     </>
   )

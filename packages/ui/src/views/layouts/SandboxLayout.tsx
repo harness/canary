@@ -10,7 +10,7 @@ interface ColumnsProps {
 
 function Root({ children }: { children: ReactNode }) {
   return (
-    <main className="w-full h-screen flex items-center justify-center" role="main">
+    <main className="grid min-h-screen grid-cols-[auto_1fr]" role="main">
       {children}
     </main>
   )
@@ -18,19 +18,18 @@ function Root({ children }: { children: ReactNode }) {
 
 function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
-    <nav
-      className={cn('w-56 h-full border-borders-5 overflow-y-auto border-r', className)}
-      aria-label="Left Navigation Panel"
-    >
-      {children}
-    </nav>
+    <div className="sticky top-0 h-screen">
+      <nav className={cn('h-full w-56 border-borders-5 border-r', className)} aria-label="Left Navigation Panel">
+        {children}
+      </nav>
+    </div>
   )
 }
 
 function LeftSubPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <section
-      className={cn('border-borders-4 w-[300px] overflow-y-auto border-r', className)}
+      className={cn('border-borders-4 w-[300px] h-full overflow-y-auto border-r', className)}
       aria-label="Left Sub Navigation Panel"
     >
       {children}

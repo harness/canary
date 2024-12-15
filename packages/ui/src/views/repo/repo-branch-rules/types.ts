@@ -2,7 +2,7 @@ import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'rea
 
 import { z } from 'zod'
 
-import { repoBranchSettingsFormSchema } from './repo-branch-settings-rules-schema'
+import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 

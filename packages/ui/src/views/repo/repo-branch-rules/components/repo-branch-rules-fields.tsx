@@ -20,6 +20,7 @@ import {
   Message,
   MessageTheme,
   Option,
+  ScrollArea,
   StackedList,
   Switch,
   Text
@@ -70,9 +71,6 @@ export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: bool
   disabled
 }) => (
   <ControlGroup>
-    {/* <FormFieldSet.Label htmlFor="identifier" required>
-      Name
-    </FormFieldSet.Label> */}
     <Input
       id="name"
       label="Name"
@@ -82,9 +80,6 @@ export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: bool
       disabled={disabled}
       error={errors?.identifier?.message?.toString()}
     />
-    {/* {errors!.identifier && (
-      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.identifier.message?.toString()}</FormFieldSet.Message>
-    )} */}
   </ControlGroup>
 )
 
@@ -97,9 +92,6 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
       placeholder="Enter a description of this rule..."
       error={errors?.description?.message?.toString()}
     />
-    {/* {errors!.description && (
-      <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.description.message?.toString()}</FormFieldSet.Message>
-    )} */}
   </ControlGroup>
 )
 
@@ -193,7 +185,7 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 // }
 
 export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
-  <ControlGroup className="min-h-8 justify-center">
+  <ControlGroup>
     <Option
       control={
         <Checkbox
@@ -237,33 +229,37 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
 
   return (
     <ControlGroup>
-      <Label htmlFor="bypassValue">Bypass list</Label>
+      <Label className="mb-2.5" htmlFor="bypassValue">
+        Bypass list
+      </Label>
 
       <DropdownMenu>
-        <DropdownMenuTrigger>
-          <div className="flex items-center justify-between rounded-md border">
-            <Button variant="ghost" className="w-full">
-              <Text color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>{triggerText}</Text>
-            </Button>
-            <Icon name="chevron-down" className="mr-2" />
-          </div>
+        <DropdownMenuTrigger className="flex items-center justify-between rounded-md border w-full">
+          <Text className="p-2" color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>
+            {triggerText}
+          </Text>
+          <Icon name="chevron-down" className="mr-2 chevron-down" />
         </DropdownMenuTrigger>
+
         <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
           <DropdownMenuLabel>Users</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          {bypassOptions &&
-            bypassOptions.map(option => {
-              return (
-                <DropdownMenuCheckboxItem
-                  key={option.id}
-                  onCheckedChange={() => handleCheckboxChange(option.id)}
-                  checked={selectedBypassUsers.includes(option.id)}
-                  onSelect={event => event.preventDefault()}
-                >
-                  {option.display_name}
-                </DropdownMenuCheckboxItem>
-              )
-            })}
+          <ScrollArea className="h-[300px]">
+            <DropdownMenuSeparator />
+            {bypassOptions &&
+              bypassOptions.map(option => {
+                return (
+                  <DropdownMenuCheckboxItem
+                    key={option.id}
+                    onCheckedChange={() => handleCheckboxChange(option.id)}
+                    checked={selectedBypassUsers.includes(option.id)}
+                    onSelect={event => event.preventDefault()}
+                    className="overflow-hidden"
+                  >
+                    {option.display_name}
+                  </DropdownMenuCheckboxItem>
+                )
+              })}
+          </ScrollArea>
         </DropdownMenuContent>
       </DropdownMenu>
     </ControlGroup>
@@ -313,7 +309,7 @@ export const BranchSettingsRuleListField: React.FC<{
 
   return (
     <ControlGroup className="max-w-sm">
-      <Label>Rules: select all that apply</Label>
+      <Label className="mb-2.5">Rules: select all that apply</Label>
       {branchRules.map((rule, index) => (
         <div key={rule.id}>
           <Option

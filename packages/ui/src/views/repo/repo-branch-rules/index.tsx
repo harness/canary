@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
@@ -15,7 +15,7 @@ import {
   // BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
-import { repoBranchSettingsFormSchema } from './components/repo-branch-settings-rules-schema'
+import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
 // import { FormFieldSet } from '../index'
 import { branchSettingsReducer } from './reducers/repo-branch-rules-reducer'
 import { BranchRulesActionType, BypassUsersList, MergeStrategy, RepoBranchSettingsFormFields } from './types'

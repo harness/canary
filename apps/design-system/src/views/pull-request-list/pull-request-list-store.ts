@@ -11,7 +11,8 @@ export const pullRequestListStore = {
       is_draft: false,
       timestamp: 'Nov 14, 2024',
       updated: 1731605604491,
-      source_branch: 'changes',
+      sourceBranch: 'changes',
+      targetBranch: 'main',
       state: 'open'
     }
   ],

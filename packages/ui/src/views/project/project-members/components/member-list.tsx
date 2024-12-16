@@ -27,7 +27,7 @@ interface PageProps {
   onEdit: (member: MembersProps) => void
 }
 
-export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
+export const MembersList = ({ members, onDelete }: PageProps) => {
   return (
     <Table variant="asStackedList">
       <TableHeader>

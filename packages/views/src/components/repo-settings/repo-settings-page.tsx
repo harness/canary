@@ -85,7 +85,6 @@ function SettingsContent() {
 export function RepoSettingsPage() {
   return (
     <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel hasLeftSubPanel>
-      {/* <Spacer size={10} /> */}
       <SandboxLayout.Columns columnWidths="auto 1fr">
         <SandboxLayout.Column>
           <Sidebar />

@@ -1,4 +1,6 @@
-import { BranchRulesAction, BranchRulesActionType, MergeStrategy, Rule } from '../types'
+import { MergeStrategy } from '@views/repo/pull-request'
+
+import { BranchRulesAction, BranchRulesActionType, Rule } from '../types'
 
 export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction): Rule[] => {
   switch (action.type) {

@@ -1,4 +1,6 @@
-import { BranchRuleId, MergeStrategy } from '../types'
+import { MergeStrategy } from '@views/repo/pull-request'
+
+import { BranchRuleId } from '../types'
 
 export const branchRules = [
   {
@@ -28,9 +30,9 @@ export const branchRules = [
     description: 'Limit which merge strategies are available to merge a pull request',
     hasSubmenu: true,
     submenuOptions: [
-      { id: MergeStrategy.Merge, label: 'Allow Merge Commit' },
-      { id: MergeStrategy.Squash, label: 'Allow Squash and Merge' },
-      { id: MergeStrategy.Rebase, label: 'Allow Rebase and Merge' }
+      { id: MergeStrategy.MERGE, label: 'Allow Merge Commit' },
+      { id: MergeStrategy.SQUASH, label: 'Allow Squash and Merge' },
+      { id: MergeStrategy.REBASE, label: 'Allow Rebase and Merge' }
     ]
   },
   {

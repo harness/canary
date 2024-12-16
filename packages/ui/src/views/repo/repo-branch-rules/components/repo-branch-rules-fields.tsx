@@ -8,12 +8,12 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
+  // DropdownMenuGroup,
+  // DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  Fieldset,
+  // Fieldset,
   Icon,
   Input,
   Label,
@@ -25,6 +25,7 @@ import {
   Switch,
   Text
 } from '@/components'
+import { MergeStrategy } from '@views/repo/pull-request'
 
 import { Textarea } from '@harnessio/ui/components'
 
@@ -33,7 +34,7 @@ import {
   BypassUsersList,
   Dispatch,
   FieldProps,
-  MergeStrategy,
+  // MergeStrategy,
   PatternsButtonType,
   Rule
 } from '../types'
@@ -96,7 +97,7 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 )
 
 export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
-  const [selectedOption, setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
+  const [selectedOption, _setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
     PatternsButtonType.INCLUDE
   )
 

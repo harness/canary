@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, Spacer, Text } from '@/components'
-import { IRepoStore, SandboxLayout } from '@/views'
+import { IRepoStore, MergeStrategy, SandboxLayout } from '@/views'
 
 import { branchRules } from './components/repo-branch-rules-data'
 import {
@@ -18,7 +18,7 @@ import {
 } from './components/repo-branch-rules-fields'
 // import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
 import { branchSettingsReducer } from './reducers/repo-branch-rules-reducer'
-import { BranchRulesActionType, BypassUsersList, MergeStrategy, RepoBranchSettingsFormFields } from './types'
+import { BranchRulesActionType, BypassUsersList, RepoBranchSettingsFormFields } from './types'
 
 type BranchSettingsErrors = {
   principals: string | null

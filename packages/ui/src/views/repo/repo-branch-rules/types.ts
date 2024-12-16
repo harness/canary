@@ -6,11 +6,11 @@ import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-sch
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 
-export enum MergeStrategy {
-  Merge = 'merge',
-  Rebase = 'rebase',
-  Squash = 'squash'
-}
+// export enum MergeStrategy {
+//   Merge = 'merge',
+//   Rebase = 'rebase',
+//   Squash = 'squash'
+// }
 
 export type Rule = {
   id: string

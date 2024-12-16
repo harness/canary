@@ -95,92 +95,96 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
   </ControlGroup>
 )
 
-// export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
-//   const [selectedOption, setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
-//     PatternsButtonType.INCLUDE
-//   )
+export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+  const [selectedOption, setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
+    PatternsButtonType.INCLUDE
+  )
 
-//   const patterns = watch!('patterns') || []
+  const patterns = watch!('patterns') || []
 
-//   const handleAddPattern = () => {
-//     const pattern = watch!('pattern')
-//     if (pattern && !patterns.some(p => p.pattern === pattern)) {
-//       setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
-//       setValue!('pattern', '')
-//     }
-//   }
+  const handleAddPattern = () => {
+    const pattern = watch!('pattern')
+    if (pattern && !patterns.some(p => p.pattern === pattern)) {
+      setValue!('patterns', [...patterns, { pattern, option: selectedOption }])
+      setValue!('pattern', '')
+    }
+  }
 
-//   const handleRemovePattern = (patternVal: string) => {
-//     const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
-//     setValue!('patterns', updatedPatterns)
-//   }
+  const handleRemovePattern = (patternVal: string) => {
+    const updatedPatterns = patterns.filter(({ pattern }) => pattern !== patternVal)
+    setValue!('patterns', updatedPatterns)
+  }
 
-//   return (
-//     <ControlGroup>
-//       <Label htmlFor="target-patterns">Target Patterns</Label>
-//       <div className="grid grid-cols-5 grid-rows-1">
-//         <div className="col-span-4 mr-2">
-//           <Input
-//             id="pattern"
-//             {...register!('pattern')}
-//             // leftStyle={true}
-//             left={
-//               <Button
-//                 variant="split"
-//                 type="button"
-//                 className="min-w-28 px-0"
-//                 dropdown={
-//                   <DropdownMenu key="dropdown-menu">
-//                     <span>
-//                       <DropdownMenuTrigger insideSplitButton>
-//                         <Icon name="chevron-down" className="chevron-down" />
-//                       </DropdownMenuTrigger>
-//                     </span>
-//                     <DropdownMenuContent align="end" className="mt-1">
-//                       <DropdownMenuGroup>
-//                         <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
-//                           Include
-//                         </DropdownMenuItem>
-//                         <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
-//                           Exclude
-//                         </DropdownMenuItem>
-//                       </DropdownMenuGroup>
-//                     </DropdownMenuContent>
-//                   </DropdownMenu>
-//                 }
-//               >
-//                 {selectedOption}
-//               </Button>
-//             }
-//           />
-//         </div>
-//         <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
-//           Add
-//         </Button>
-//         {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
-//       </div>
-//       <Text size={2} as="p" color="tertiaryBackground" className="max-w-full">
-//         Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
-//       </Text>
-//       <div className="flex flex-wrap">
-//         {patterns &&
-//           patterns.map(pattern => (
-//             <Badge
-//               variant="outline"
-//               theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
-//               key={pattern.pattern}
-//               className="m-1 inline-flex"
-//             >
-//               {pattern.pattern}
-//               <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
-//                 <Icon name="x-mark" size={12} className="text-current" />
-//               </button>
-//             </Badge>
-//           ))}
-//       </div>
-//     </ControlGroup>
-//   )
-// }
+  return (
+    <ControlGroup>
+      <Label htmlFor="target-patterns" className="mb-2.5">
+        Target Patterns
+      </Label>
+      <div className="grid grid-cols-5 grid-rows-1">
+        <div className="col-span-4 mr-2">
+          <Input
+            id="pattern"
+            {...register!('pattern')}
+            // label="Target Patterns"
+            // caption="Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)"
+            // leftStyle={true}
+            // left={
+            //   <Button
+            //     variant="split"
+            //     type="button"
+            //     className="min-w-28 px-0"
+            //     dropdown={
+            //       <DropdownMenu key="dropdown-menu">
+            //         <span>
+            //           <DropdownMenuTrigger insideSplitButton>
+            //             <Icon name="chevron-down" className="chevron-down" />
+            //           </DropdownMenuTrigger>
+            //         </span>
+            //         <DropdownMenuContent align="end" className="mt-1">
+            //           <DropdownMenuGroup>
+            //             <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
+            //               Include
+            //             </DropdownMenuItem>
+            //             <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
+            //               Exclude
+            //             </DropdownMenuItem>
+            //           </DropdownMenuGroup>
+            //         </DropdownMenuContent>
+            //       </DropdownMenu>
+            //     }
+            //   >
+            //     {selectedOption}
+            //   </Button>
+            // }
+          />
+        </div>
+        <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
+          Add
+        </Button>
+        {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
+      </div>
+      <Text size={2} as="p" color="tertiaryBackground" className="max-w-full">
+        Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
+      </Text>
+      <div className="flex flex-wrap">
+        {patterns &&
+          patterns.map(pattern => (
+            <Badge
+              variant="outline"
+              theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
+              key={pattern.pattern}
+              className="m-1 inline-flex"
+            >
+              {pattern.pattern}
+              <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
+                <Icon name="x-mark" size={12} className="text-current" />
+              </button>
+            </Badge>
+          ))}
+      </div>
+    </ControlGroup>
+  )
+}
 
 export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
   <ControlGroup>
@@ -307,11 +311,11 @@ export const BranchSettingsRuleListField: React.FC<{
 
   return (
     <ControlGroup className="max-w-sm">
-      <Label className="mb-2.5">Rules: select all that apply</Label>
+      <Label className="mb-5">Rules: select all that apply</Label>
       {branchRules.map((rule, index) => (
         <div key={rule.id}>
           <Option
-            className="mt-0"
+            className="mb-2.5"
             control={
               <Checkbox
                 id={rule.id}

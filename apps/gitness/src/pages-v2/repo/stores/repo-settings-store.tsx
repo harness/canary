@@ -22,9 +22,9 @@ interface IRepoStore {
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
-  setPresetRuleData: (data: RuleGetOkResponse) => void
-  setPrincipals: (data: ListPrincipalsOkResponse) => void
-  setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse) => void
+  setPresetRuleData: (data: RuleGetOkResponse | null) => void
+  setPrincipals: (data: ListPrincipalsOkResponse | null) => void
+  setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -65,14 +65,26 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
   },
   setSecurityScanning: enabled => set({ securityScanning: enabled }),
   setPresetRuleData: data => {
+    if (!data) {
+      set({ presetRuleData: null })
+      return
+    }
     const transformedData = transformDataFromApi(data)
 
     set({ presetRuleData: transformedData })
   },
   setPrincipals: data => {
+    if (!data) {
+      set({ principals: null })
+      return
+    }
     set({ principals: data as BypassUsersList[] })
   },
   setRecentStatusChecks: data => {
+    if (!data) {
+      set({ recentStatusChecks: null })
+      return
+    }
     set({ recentStatusChecks: data })
   }
 }))

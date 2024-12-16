@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, Spacer, Text } from '@/components'
-import { IRepoStore } from '@/views'
+import { IRepoStore, SandboxLayout } from '@/views'
 
 import { branchRules } from './components/repo-branch-rules-data'
 import {
@@ -13,7 +13,7 @@ import {
   BranchSettingsRuleEditPermissionsField,
   BranchSettingsRuleListField,
   BranchSettingsRuleNameField,
-  // BranchSettingsRuleTargetPatternsField,
+  BranchSettingsRuleTargetPatternsField,
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
 // import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
@@ -104,75 +104,104 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           input: rule.input || ''
         }))
       })
+    } else {
+      reset({
+        identifier: '',
+        description: '',
+        pattern: '',
+        patterns: [],
+        state: true,
+        default: false,
+        repo_owners: false,
+        bypass: [],
+        rules: []
+      })
+      dispatch({
+        type: BranchRulesActionType.SET_INITIAL_RULES,
+        payload: branchRules.map(rule => ({
+          id: rule.id,
+          checked: false,
+          submenu: [],
+          selectOptions: [],
+          input: ''
+        }))
+      })
     }
   }, [presetRuleData])
   return (
     <>
-      <Text size={5} weight="medium" as="div" className="mb-8">
-        Create a rule
-      </Text>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset>
-          <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
-          <BranchSettingsRuleDescriptionField register={register} errors={errors} />
-          {/* <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            errors={errors}
-          /> */}
-          <BranchSettingsRuleDefaultBranchField register={register} errors={errors} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleBypassListField
-            setValue={setValue}
-            watch={watch}
-            bypassOptions={principals as BypassUsersList[]}
-          />
-          <BranchSettingsRuleEditPermissionsField
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            watch={watch}
-          />
-          <BranchSettingsRuleListField rules={rules} dispatch={dispatch} recentStatusChecks={recentStatusChecks} />
+      <SandboxLayout.Content maxWidth="2xl" className="ml-0">
+        <Text size={5} weight="medium" as="div" className="mb-8">
+          Create a rule
+        </Text>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Fieldset>
+            <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
+            <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
+            <BranchSettingsRuleDescriptionField register={register} errors={errors} />
+            <BranchSettingsRuleTargetPatternsField
+              watch={watch}
+              setValue={setValue}
+              register={register}
+              errors={errors}
+            />
+            <BranchSettingsRuleDefaultBranchField
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+            />
+            <BranchSettingsRuleBypassListField
+              setValue={setValue}
+              watch={watch}
+              bypassOptions={principals as BypassUsersList[]}
+            />
+            <BranchSettingsRuleEditPermissionsField
+              register={register}
+              errors={errors}
+              setValue={setValue}
+              watch={watch}
+            />
+            <BranchSettingsRuleListField rules={rules} dispatch={dispatch} recentStatusChecks={recentStatusChecks} />
 
-          {apiErrors &&
-            (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule || apiErrors.updateRule) && (
-              <>
-                <Spacer size={2} />
-                <Text size={1} className="text-destructive">
-                  {apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule}
-                </Text>
-              </>
-            )}
+            {apiErrors &&
+              (apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule || apiErrors.updateRule) && (
+                <>
+                  <Spacer size={2} />
+                  <Text size={1} className="text-destructive">
+                    {apiErrors.principals || apiErrors.statusChecks || apiErrors.addRule}
+                  </Text>
+                </>
+              )}
 
-          <Fieldset className="mt-0">
-            <ControlGroup>
-              <ButtonGroup>
-                {!presetRuleData ? (
-                  <>
-                    <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                      {!isLoading ? 'Create rule' : 'Creating rule...'}
-                    </Button>
-                    <Button type="button" variant="outline" size="sm">
-                      <NavLink to="../general">Cancel</NavLink>
-                    </Button>
-                  </>
-                ) : (
-                  <>
-                    <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                      {!isLoading ? 'Update rule' : 'Updating rule...'}
-                    </Button>
-                    <Button type="button" variant="outline" size="sm">
-                      <NavLink to="../general">Cancel</NavLink>
-                    </Button>
-                  </>
-                )}
-              </ButtonGroup>
-            </ControlGroup>
+            <Fieldset className="mt-0">
+              <ControlGroup>
+                <ButtonGroup>
+                  {!presetRuleData ? (
+                    <>
+                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                        {!isLoading ? 'Create rule' : 'Creating rule...'}
+                      </Button>
+                      <Button type="button" variant="outline" size="sm">
+                        <NavLink to="../general">Cancel</NavLink>
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
+                        {!isLoading ? 'Update rule' : 'Updating rule...'}
+                      </Button>
+                      <Button type="button" variant="outline" size="sm">
+                        <NavLink to="../general">Cancel</NavLink>
+                      </Button>
+                    </>
+                  )}
+                </ButtonGroup>
+              </ControlGroup>
+            </Fieldset>
           </Fieldset>
-        </Fieldset>
-      </form>
+        </form>
+      </SandboxLayout.Content>
     </>
   )
 }

@@ -25,7 +25,15 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
 
-  const { data: { body: rulesData } = {}, isLoading: loadingRule } = useRuleGetQuery(
+  useEffect(() => {
+    if (!identifier) {
+      setPresetRuleData(null)
+      setPrincipals(null)
+      setRecentStatusChecks(null)
+    }
+  }, [identifier, setPresetRuleData, setPrincipals, setRecentStatusChecks])
+
+  const { data: { body: rulesData } = {} } = useRuleGetQuery(
     { repo_ref: repoRef, rule_identifier: identifier ?? '' },
     {
       enabled: !!identifier
@@ -115,7 +123,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
       apiErrors={errors}
-      isLoading={addingRule || updatingRule || loadingRule}
+      isLoading={addingRule || updatingRule}
       useRepoRulesStore={useRepoRulesStore}
     />
   )

@@ -70,7 +70,11 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
       )
     }
     return (
-      <MembersList members={memberList} onEdit={(member: MembersProps) => {}} onDelete={(member: MembersProps) => {}} />
+      <MembersList
+        members={memberList}
+        onEdit={(_member: MembersProps) => {}}
+        onDelete={(_member: MembersProps) => {}}
+      />
     )
   }
 

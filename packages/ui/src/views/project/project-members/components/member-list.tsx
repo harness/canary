@@ -2,17 +2,11 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
   Table,
   TableBody,
   TableCell,
@@ -25,7 +19,6 @@ import { getInitials } from '@utils/stringUtils'
 import { upperFirst } from 'lodash-es'
 
 import { MembersProps } from '../types'
-import { transformValue } from '../utils'
 import { moreActionsDropdown } from './moreActionsDropdown'
 
 interface PageProps {

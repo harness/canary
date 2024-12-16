@@ -89,10 +89,15 @@
     "enterBranchName": "Enter branch name",
     "createBranchError": "Branch name is required",
     "select": "Select",
+    "selectMember": "Select member",
+    "selectRole": "Select role",
     "baseBranch": "Base Branch",
-    "selectBranchError": "Base branch is required"
+    "selectBranchError": "Base branch is required",
+    "selectMemberError": "Member is required",
+    "selectRoleError": "Role is required"
   },
   "projectSettings": {
+    "member": "Member",
     "members": "Members",
     "newMember": "New member",
     "addMember": "Add member to this project"

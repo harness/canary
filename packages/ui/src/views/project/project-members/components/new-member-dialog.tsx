@@ -52,6 +52,10 @@ export function InviteMemberDialog({
     }
   })
 
+  const invitedMember = watch('member')
+
+  const memberRole = watch('role')
+
   const handleSelectChange = (fieldName: keyof InviteMemberFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
@@ -69,7 +73,7 @@ export function InviteMemberDialog({
               <ControlGroup>
                 <Select
                   name="member"
-                  value={''}
+                  value={invitedMember}
                   onValueChange={value => handleSelectChange('member', value)}
                   placeholder={t('views:forms.selectMember')}
                   label={t('views:projectSettings.member')}
@@ -81,7 +85,34 @@ export function InviteMemberDialog({
                   disabled={isLoadingMembers || !members?.length}
                 >
                   <SelectContent>
-                    <SelectItem value="member1">Member 1</SelectItem>
+                    {members
+                      ?.filter(item => item?.display_name)
+                      ?.map(({ display_name, uid }) => (
+                        <SelectItem key={uid} value={uid}>
+                          {display_name}
+                        </SelectItem>
+                      ))}
+                  </SelectContent>
+                </Select>
+              </ControlGroup>
+              <ControlGroup>
+                <Select
+                  name="role"
+                  value={memberRole}
+                  onValueChange={value => handleSelectChange('role', value)}
+                  placeholder={t('views:forms.selectRole')}
+                  label={t('views:projectSettings.role')}
+                  error={
+                    errors.role?.message
+                      ? t('views:forms.selectRoleError', errors.role?.message?.toString())
+                      : undefined
+                  }
+                >
+                  <SelectContent>
+                    <SelectItem value="Contributor">Contributor</SelectItem>
+                    <SelectItem value="Reader">Reader</SelectItem>
+                    <SelectItem value="Executor">Executor</SelectItem>
+                    <SelectItem value="Owner">Owner</SelectItem>
                   </SelectContent>
                 </Select>
               </ControlGroup>

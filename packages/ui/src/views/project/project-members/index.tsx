@@ -116,6 +116,8 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
         }}
         onSubmit={() => {}}
         useTranslationStore={useTranslationStore}
+        members={memberList}
+        isLoadingMembers={isLoading}
       />
     </SandboxLayout.Main>
   )

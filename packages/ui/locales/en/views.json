@@ -99,6 +99,7 @@
   "projectSettings": {
     "member": "Member",
     "members": "Members",
+    "role": "Role",
     "newMember": "New member",
     "addMember": "Add member to this project"
   }

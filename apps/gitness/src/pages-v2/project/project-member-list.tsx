@@ -14,7 +14,7 @@ export function ProjectMemberListPage() {
   const space_ref = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
 
-  const [isInviteMemberDialogOpen, setIsInviteMemberDialogOpen] = useState<boolean>(false)
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
@@ -43,8 +43,8 @@ export function ProjectMemberListPage() {
       isLoading={isLoading}
       useTranslationStore={useTranslationStore}
       useMemberListStore={useMemberListStore}
-      isInviteMemberDialogOpen={isInviteMemberDialogOpen}
-      setIsInviteMemberDialogOpen={setIsInviteMemberDialogOpen}
+      isInviteMemberDialogOpen={isDialogOpen}
+      setIsInviteMemberDialogOpen={setIsDialogOpen}
       searchQuery={query}
       setSearchQuery={setQuery}
     />

@@ -15,22 +15,14 @@ export interface MembersProps {
 
 export type InviteMemberFormFields = z.infer<typeof inviteMemberFormSchema>
 
-interface Member {
-  name?: string
-}
-
 export interface InviteMemberDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (formValues: InviteMemberFormFields) => void
   useTranslationStore: () => TranslationStore
   isLoadingMembers: boolean
-  members: Array<Member>
+  members: Array<MembersProps>
 }
-
-/**
- *
- */
 
 export interface ProjectMemberListViewProps {
   isLoading: boolean

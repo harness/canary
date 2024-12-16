@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
@@ -12,8 +12,9 @@ import { useMemberListStore } from './stores/member-list-store'
 
 export function ProjectMemberListPage() {
   const space_ref = useGetSpaceURLParam()
-
   const { page, setPage, setMemberList } = useMemberListStore()
+
+  const [isInviteMemberDialogOpen, setIsInviteMemberDialogOpen] = useState<boolean>(false)
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
@@ -42,6 +43,8 @@ export function ProjectMemberListPage() {
       isLoading={isLoading}
       useTranslationStore={useTranslationStore}
       useMemberListStore={useMemberListStore}
+      isInviteMemberDialogOpen={isInviteMemberDialogOpen}
+      setIsInviteMemberDialogOpen={setIsInviteMemberDialogOpen}
       searchQuery={query}
       setSearchQuery={setQuery}
     />

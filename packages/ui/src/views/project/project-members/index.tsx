@@ -6,12 +6,15 @@ import { debounce } from 'lodash-es'
 import pluralize from 'pluralize'
 
 import { MembersList } from './components/member-list'
+import { InviteMemberDialog } from './components/new-member-dialog'
 import { MembersProps, ProjectMemberListViewProps } from './types'
 
 export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   isLoading,
   useTranslationStore,
   useMemberListStore,
+  isInviteMemberDialogOpen,
+  setIsInviteMemberDialogOpen,
   searchQuery,
   setSearchQuery
 }) => {
@@ -86,7 +89,12 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" onClick={() => {}}>
+            <Button
+              variant="default"
+              onClick={() => {
+                setIsInviteMemberDialogOpen(true)
+              }}
+            >
               {t('views:projectSettings.newMember')}
             </Button>
           </ListActions.Right>
@@ -101,6 +109,14 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
           t={t}
         />
       </SandboxLayout.Content>
+      <InviteMemberDialog
+        open={isInviteMemberDialogOpen}
+        onClose={() => {
+          setIsInviteMemberDialogOpen(false)
+        }}
+        onSubmit={() => {}}
+        useTranslationStore={useTranslationStore}
+      />
     </SandboxLayout.Main>
   )
 }

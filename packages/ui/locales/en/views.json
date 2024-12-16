@@ -94,6 +94,7 @@
   },
   "projectSettings": {
     "members": "Members",
-    "newMember": "New member"
+    "newMember": "New member",
+    "addMember": "Add member to this project"
   }
 }

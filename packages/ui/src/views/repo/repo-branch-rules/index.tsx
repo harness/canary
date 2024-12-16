@@ -17,7 +17,6 @@ import {
   BranchSettingsRuleToggleField
 } from './components/repo-branch-rules-fields'
 // import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
-// import { FormFieldSet } from '../index'
 import { branchSettingsReducer } from './reducers/repo-branch-rules-reducer'
 import { BranchRulesActionType, BypassUsersList, MergeStrategy, RepoBranchSettingsFormFields } from './types'
 
@@ -31,10 +30,7 @@ type BranchSettingsErrors = {
 interface RepoBranchSettingsRulesPageProps {
   isLoading?: boolean
   handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
-  // principals?: BypassUsersList[]
-  // recentStatusChecks?: string[]
   apiErrors?: BranchSettingsErrors
-  // preSetRuleData?: RepoBranchSettingsFormFields | null
   useRepoRulesStore: () => IRepoStore
 }
 
@@ -42,10 +38,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   isLoading,
   handleRuleUpdate,
   useRepoRulesStore,
-  // principals,
-  // recentStatusChecks,
   apiErrors
-  // preSetRuleData
 }) => {
   const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
   const {

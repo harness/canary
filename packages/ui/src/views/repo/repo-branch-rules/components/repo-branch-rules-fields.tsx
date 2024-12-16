@@ -157,9 +157,7 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 //         <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
 //           Add
 //         </Button>
-//         {errors!.pattern && (
-//           <FormFieldSet.Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</FormFieldSet.Message>
-//         )}
+//         {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
 //       </div>
 //       <Text size={2} as="p" color="tertiaryBackground" className="max-w-full">
 //         Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
@@ -180,7 +178,7 @@ export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ regis
 //             </Badge>
 //           ))}
 //       </div>
-//     </FormFieldSet.ControlGroup>
+//     </ControlGroup>
 //   )
 // }
 

@@ -17,7 +17,6 @@ import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
-  // const [preSetRuleData, setPreSetRuleData] = useState<RepoBranchSettingsFormFields | null>(null)
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
   const repoName = useGetRepoId()
@@ -29,10 +28,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { data: { body: rulesData } = {}, isLoading: loadingRule } = useRuleGetQuery(
     { repo_ref: repoRef, rule_identifier: identifier ?? '' },
     {
-      //   onSuccess: ({ body: data }) => {
-      //     const transformedData = transformDataFromApi(data)
-      //     setPreSetRuleData(transformedData)
-      //   },
       enabled: !!identifier
     }
   )
@@ -70,7 +65,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
-        navigate(`/spaces/${spaceId}/repos/${repoName}/settings/general`)
+        navigate(`/${spaceId}/repos/${repoName}/settings/general`)
       }
     }
   )
@@ -119,12 +114,9 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   return (
     <RepoBranchSettingsRulesPage
       handleRuleUpdate={handleRuleUpdate}
-      // principals={principals as BypassUsersList[]}
-      // recentStatusChecks={recentStatusChecks}
       apiErrors={errors}
       isLoading={addingRule || updatingRule || loadingRule}
       useRepoRulesStore={useRepoRulesStore}
-      // preSetRuleData={preSetRuleData}
     />
   )
 }

@@ -289,7 +289,7 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
 export const BranchSettingsRuleListField: React.FC<{
   rules: Rule[]
   dispatch: Dispatch
-  recentStatusChecks?: string[]
+  recentStatusChecks?: string[] | null
 }> = ({ rules, dispatch, recentStatusChecks }) => {
   const handleCheckboxChange = (ruleId: string, checked: boolean) => {
     dispatch({ type: BranchRulesActionType.TOGGLE_RULE, ruleId, checked })

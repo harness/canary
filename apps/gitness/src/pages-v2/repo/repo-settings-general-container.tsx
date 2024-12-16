@@ -41,7 +41,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-import { useRepoRulesStore } from './stores/repo-rules-store'
+import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()

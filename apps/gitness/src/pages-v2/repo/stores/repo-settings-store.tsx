@@ -1,18 +1,30 @@
 import { create } from 'zustand'
 
-import { FindRepositoryOkResponse, RuleListOkResponse } from '@harnessio/code-service-client'
-import { RepoData, RuleDataType } from '@harnessio/ui/views'
+import {
+  FindRepositoryOkResponse,
+  ListPrincipalsOkResponse,
+  ListStatusCheckRecentOkResponse,
+  RuleGetOkResponse,
+  RuleListOkResponse
+} from '@harnessio/code-service-client'
+import { BypassUsersList, RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
 
-import { getTotalRulesApplied } from '../../../utils/repo-branch-rules-utils'
+import { getTotalRulesApplied, transformDataFromApi } from '../../../utils/repo-branch-rules-utils'
 
 interface IRepoStore {
   repoData: RepoData
   rules: RuleDataType[] | null
   securityScanning: boolean
+  presetRuleData: RepoBranchSettingsFormFields | null
+  principals: BypassUsersList[] | null
+  recentStatusChecks: ListStatusCheckRecentOkResponse | null
 
   setRepoData: (data: FindRepositoryOkResponse) => void
   setRules: (data: RuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
+  setPresetRuleData: (data: RuleGetOkResponse) => void
+  setPrincipals: (data: ListPrincipalsOkResponse) => void
+  setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse) => void
 }
 
 export const useRepoRulesStore = create<IRepoStore>(set => ({
@@ -24,9 +36,12 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     isPublic: false
   },
   branches: [],
+  presetRuleData: null,
 
   rules: null,
   securityScanning: false,
+  principals: null,
+  recentStatusChecks: null,
 
   // Actions
   setRepoData: repoData =>
@@ -48,5 +63,16 @@ export const useRepoRulesStore = create<IRepoStore>(set => ({
     }))
     set({ rules: rulesData })
   },
-  setSecurityScanning: enabled => set({ securityScanning: enabled })
+  setSecurityScanning: enabled => set({ securityScanning: enabled }),
+  setPresetRuleData: data => {
+    const transformedData = transformDataFromApi(data)
+
+    set({ presetRuleData: transformedData })
+  },
+  setPrincipals: data => {
+    set({ principals: data as BypassUsersList[] })
+  },
+  setRecentStatusChecks: data => {
+    set({ recentStatusChecks: data })
+  }
 }))

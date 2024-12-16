@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, Spacer, Text } from '@/components'
+import { IRepoStore } from '@/views'
 
 import { branchRules } from './components/repo-branch-rules-data'
 import {
@@ -30,20 +31,23 @@ type BranchSettingsErrors = {
 interface RepoBranchSettingsRulesPageProps {
   isLoading?: boolean
   handleRuleUpdate: (data: RepoBranchSettingsFormFields) => void
-  principals?: BypassUsersList[]
-  recentStatusChecks?: string[]
+  // principals?: BypassUsersList[]
+  // recentStatusChecks?: string[]
   apiErrors?: BranchSettingsErrors
-  preSetRuleData?: RepoBranchSettingsFormFields | null
+  // preSetRuleData?: RepoBranchSettingsFormFields | null
+  useRepoRulesStore: () => IRepoStore
 }
 
 export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPageProps> = ({
   isLoading,
   handleRuleUpdate,
-  principals,
-  recentStatusChecks,
-  apiErrors,
-  preSetRuleData
+  useRepoRulesStore,
+  // principals,
+  // recentStatusChecks,
+  apiErrors
+  // preSetRuleData
 }) => {
+  const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
   const {
     register,
     handleSubmit,
@@ -84,22 +88,22 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
   }
 
   useEffect(() => {
-    if (preSetRuleData) {
+    if (presetRuleData) {
       reset({
-        identifier: preSetRuleData?.identifier || '',
-        description: preSetRuleData?.description || '',
+        identifier: presetRuleData?.identifier || '',
+        description: presetRuleData?.description || '',
         pattern: '',
-        patterns: preSetRuleData?.patterns || [],
-        state: preSetRuleData?.state && true,
-        default: preSetRuleData?.default || false,
-        repo_owners: preSetRuleData?.repo_owners || false,
-        bypass: preSetRuleData?.bypass || [],
+        patterns: presetRuleData?.patterns || [],
+        state: presetRuleData?.state && true,
+        default: presetRuleData?.default || false,
+        repo_owners: presetRuleData?.repo_owners || false,
+        bypass: presetRuleData?.bypass || [],
         rules: []
       })
 
       dispatch({
         type: BranchRulesActionType.SET_INITIAL_RULES,
-        payload: preSetRuleData?.rules?.map(rule => ({
+        payload: presetRuleData?.rules?.map(rule => ({
           id: rule.id,
           checked: rule.checked || false,
           submenu: (rule.submenu || []) as MergeStrategy[],
@@ -108,7 +112,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
         }))
       })
     }
-  }, [preSetRuleData])
+  }, [presetRuleData])
   return (
     <>
       <Text size={5} weight="medium" as="div" className="mb-8">
@@ -117,7 +121,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
       <form onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
           <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} />
-          <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!preSetRuleData} />
+          <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} />
           <BranchSettingsRuleDescriptionField register={register} errors={errors} />
           {/* <BranchSettingsRuleTargetPatternsField
             watch={watch}
@@ -152,7 +156,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
           <Fieldset className="mt-0">
             <ControlGroup>
               <ButtonGroup>
-                {!preSetRuleData ? (
+                {!presetRuleData ? (
                   <>
                     <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                       {!isLoading ? 'Create rule' : 'Creating rule...'}

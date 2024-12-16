@@ -80,6 +80,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
   useEffect(() => {
     const currentFileName = isNew ? '' : repoDetails?.name || ''
+    console.log(currentFileName)
     setFileName(currentFileName)
     setLanguage(filenameToLanguage(currentFileName) || '')
     setOriginalFileContent(decodeGitContent(repoDetails?.content?.data))
@@ -153,6 +154,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const onChangeView = (value: EditViewTypeValue) => {
     setView(value)
   }
+
+  console.log(contentRevision.code)
 
   return (
     <>

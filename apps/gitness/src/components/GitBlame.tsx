@@ -60,6 +60,8 @@ export default function GitBlame({ themeConfig, codeContent, language }: GitBlam
     }
   }, [gitBlame])
 
+  console.log(blameBlocks)
+
   return !isFetching && blameBlocks.length ? (
     <BlameEditor
       code={codeContent}

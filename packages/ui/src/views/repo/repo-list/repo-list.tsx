@@ -118,11 +118,7 @@ export function RepoList({
               />
               {!repo.importing ? (
                 <StackedList.Field
-                  title={
-                    <>
-                      {t('views:repos.updated')} <em>{repo.timestamp}</em>
-                    </>
-                  }
+                  title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
                   description={<Stats stars={repo.stars} pulls={repo.pulls} />}
                   right
                   label

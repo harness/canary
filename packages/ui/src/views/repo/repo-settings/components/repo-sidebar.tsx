@@ -9,7 +9,7 @@ interface RepoSidebarProps {
 
 export function RepoSidebar({ items }: RepoSidebarProps) {
   return (
-    <div>
+    <>
       {items.map((group, group_idx) => (
         <NavbarSkeleton.Group
           key={group.groupId}
@@ -32,6 +32,6 @@ export function RepoSidebar({ items }: RepoSidebarProps) {
           ))}
         </NavbarSkeleton.Group>
       ))}
-    </div>
+    </>
   )
 }

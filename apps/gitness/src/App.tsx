@@ -39,8 +39,10 @@ import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
+import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
@@ -71,8 +73,8 @@ import { ProjectSettingsGeneralPage } from './pages/project-settings/project-set
 import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
 import { CreateNewMemberPage } from './pages/project-settings/project-settings-new-member-page'
 import PullRequestCommitsPage from './pages/pull-request-commits-page'
-import PullRequestDataProvider from './pages/pull-request/context/pull-request-data-provider'
-import PullRequestChangesPage from './pages/pull-request/pull-request-changes-page'
+import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
+import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
 import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
 import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
@@ -271,7 +273,11 @@ export default function App() {
                 },
                 {
                   path: 'changes',
-                  element: <>changes</>
+                  element: (
+                    <PullRequestDataProvider>
+                      <PullRequestChanges />
+                    </PullRequestDataProvider>
+                  )
                 }
               ]
             },
@@ -449,9 +455,9 @@ export default function App() {
                     {
                       path: 'conversation',
                       element: (
-                        <PullRequestDataProvider>
+                        <PullRequestDataProviderV1>
                           <PullRequestConversationPage />
-                        </PullRequestDataProvider>
+                        </PullRequestDataProviderV1>
                       )
                     },
                     {
@@ -461,9 +467,9 @@ export default function App() {
                     {
                       path: 'changes',
                       element: (
-                        <PullRequestDataProvider>
-                          <PullRequestChangesPage />
-                        </PullRequestDataProvider>
+                        <PullRequestDataProviderV1>
+                          <PullRequestChangesPageV1 />
+                        </PullRequestDataProviderV1>
                       )
                     },
                     {

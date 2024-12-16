@@ -11,24 +11,24 @@ import {
   useListPullReqActivitiesQuery
 } from '@harnessio/code-service-client'
 
-import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
-import useSpaceSSE from '../../../framework/hooks/useSpaceSSE'
-import useGetPullRequestTab, { PullRequestTab } from '../../../hooks/useGetPullRequestTab'
-import { PathParams } from '../../../RouteDefinitions'
-import { SSEEvent } from '../../../types'
-import { normalizeGitRef } from '../../../utils/git-utils'
-import { usePRChecksDecision } from '../hooks/usePRChecksDecision'
-import { usePullRequestDataStore } from '../stores/pull-request-store'
-import { extractSpecificViolations } from '../utils'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
+import useGetPullRequestTab, { PullRequestTab } from '../../hooks/useGetPullRequestTab'
+import { usePRChecksDecision } from '../../pages/pull-request/hooks/usePRChecksDecision'
+import { extractSpecificViolations } from '../../pages/pull-request/utils'
+import { PathParams } from '../../RouteDefinitions'
+import { SSEEvent } from '../../types'
+import { normalizeGitRef } from '../../utils/git-utils'
+import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
-const PullRequestDataProviderV1: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+const PullRequestDataProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
   const space = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const store = usePullRequestDataStore()
+  const store = usePullRequestProviderStore()
   const {
     pullReqMetadata,
     dryMerge,
@@ -245,4 +245,4 @@ const PullRequestDataProviderV1: React.FC<PropsWithChildren<unknown>> = ({ child
   return <>{children}</>
 }
 
-export default PullRequestDataProviderV1
+export default PullRequestDataProvider

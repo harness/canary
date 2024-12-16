@@ -94,8 +94,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                         author={pullRequest.author}
                         reviewRequired={pullRequest.reviewRequired}
                         tasks={pullRequest.tasks}
-                        sourceBranch={pullRequest.source_branch || ''}
+                        sourceBranch={pullRequest.sourceBranch || ''}
                         timestamp={pullRequest.timestamp}
+                        targetBranch={pullRequest.targetBranch || ''}
                       />
                     )
                   }

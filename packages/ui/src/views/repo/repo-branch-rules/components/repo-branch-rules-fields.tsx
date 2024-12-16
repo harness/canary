@@ -23,11 +23,10 @@ import {
   ScrollArea,
   StackedList,
   Switch,
-  Text
+  Text,
+  Textarea
 } from '@/components'
 import { MergeStrategy } from '@views/repo/pull-request'
-
-import { Textarea } from '@harnessio/ui/components'
 
 import {
   BranchRulesActionType,
@@ -199,7 +198,7 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
         />
       }
       id="default-branch"
-      label="Default Branch"
+      label="Apply rule to the default branch"
       className="mt-0"
     />
 

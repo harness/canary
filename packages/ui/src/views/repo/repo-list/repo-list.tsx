@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
@@ -6,7 +9,6 @@ import { TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode; disabled?: boolean }>
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
   query?: string
@@ -39,7 +41,6 @@ const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: 
 
 export function RepoList({
   repos,
-  LinkComponent,
   handleResetFilters,
   hasActiveFilters,
   query,
@@ -91,6 +92,7 @@ export function RepoList({
               /* TODO: add create handler */
             }
           }}
+          secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
         />
       </div>
     )
@@ -100,7 +102,13 @@ export function RepoList({
     <>
       <StackedList.Root>
         {repos.map((repo, repo_idx) => (
-          <LinkComponent key={repo_idx} to={repo.name} disabled={repo.importing}>
+          <Link
+            key={repo_idx}
+            to={repo.name}
+            className={cn({
+              'pointer-events-none': repo.importing
+            })}
+          >
             <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
               <StackedList.Field
                 primary
@@ -122,7 +130,7 @@ export function RepoList({
                 />
               ) : null}
             </StackedList.Item>
-          </LinkComponent>
+          </Link>
         ))}
       </StackedList.Root>
     </>

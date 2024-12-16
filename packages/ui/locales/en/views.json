@@ -35,6 +35,7 @@
     "settings": "Settings",
     "repositories": "Repositories",
     "create-repository": "Create repository",
+    "import-repository": "Import repository",
     "private": "Private",
     "public": "Public",
     "updated": "",

@@ -35,6 +35,7 @@
     "settings": "Paramètres",
     "repositories": "Dépôts",
     "create-repository": "Créer un dépôt",
+    "import-repository": "Importer un dépôt",
     "private": "Privé",
     "public": "Public",
     "updated": "",

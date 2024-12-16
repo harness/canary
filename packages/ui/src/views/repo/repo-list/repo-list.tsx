@@ -88,9 +88,7 @@ export function RepoList({
           ]}
           primaryButton={{
             label: t('views:repos.create-repository', 'Create repository'),
-            onClick: () => {
-              /* TODO: add create handler */
-            }
+            to: 'create'
           }}
           secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
         />
@@ -103,7 +101,7 @@ export function RepoList({
       <StackedList.Root>
         {repos.map((repo, repo_idx) => (
           <Link
-            key={repo_idx}
+            key={repo.name}
             to={repo.name}
             className={cn({
               'pointer-events-none': repo.importing

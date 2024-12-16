@@ -111,7 +111,7 @@ export function RepoSummaryView({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader fullWidth>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 255px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-6">

@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 import { RepositoryType } from '@views/repo/repo.types'
 import i18n, { TFunction } from 'i18next'
 
@@ -22,4 +24,5 @@ export interface RepoListProps {
   errorMessage?: string
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  breadcrumbs: ReactNode
 }

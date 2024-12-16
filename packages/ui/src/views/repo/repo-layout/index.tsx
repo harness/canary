@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { ReactNode, useMemo } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
@@ -16,7 +16,13 @@ export enum RepoTabsKeys {
 
 export const repoTabsKeysArr = Object.values(RepoTabsKeys)
 
-export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) => {
+export const RepoLayout = ({
+  useTranslationStore,
+  breadcrumbs
+}: {
+  useTranslationStore: () => TranslationStore
+  breadcrumbs: ReactNode
+}) => {
   const location = useLocation()
   const { t } = useTranslationStore()
 
@@ -31,34 +37,41 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
 
   return (
     <>
-      <SandboxLayout.SubHeader className="overflow-hidden">
-        <Tabs variant="navigation" value={activeTab}>
-          <TabsList>
-            <NavLink to={RepoTabsKeys.SUMMERY}>
-              <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.CODE}>
-              <TabsTrigger value="code">{t('views:repos.files', 'Files')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.PIPELINES}>
-              <TabsTrigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.COMMITS}>
-              <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.PULLS}>
-              <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.BRANCHES}>
-              <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.SETTINGS}>
-              <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
-            </NavLink>
-          </TabsList>
-        </Tabs>
-      </SandboxLayout.SubHeader>
-      <Outlet />
+      <div className="bg-background-1 w-full">
+        {breadcrumbs}
+        <SandboxLayout.SubHeader className="overflow-hidden h-[45px]">
+          <Tabs variant="navigation" value={activeTab}>
+            <TabsList>
+              <NavLink to={RepoTabsKeys.SUMMERY}>
+                <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.CODE}>
+                <TabsTrigger value="code">{t('views:repos.files', 'Files')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.PIPELINES}>
+                <TabsTrigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.COMMITS}>
+                <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.PULLS}>
+                <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.BRANCHES}>
+                <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>
+              </NavLink>
+              <NavLink to={RepoTabsKeys.SETTINGS}>
+                <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
+              </NavLink>
+            </TabsList>
+          </Tabs>
+        </SandboxLayout.SubHeader>
+      </div>
+      {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
+      {/* Total height of both the divs should be 100vh */}
+      <div className="h-[calc(100vh-100px)] w-full">
+        <Outlet />
+      </div>
     </>
   )
 }

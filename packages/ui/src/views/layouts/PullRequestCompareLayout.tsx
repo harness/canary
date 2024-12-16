@@ -144,7 +144,7 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
   return (
-    <SandboxLayout.Main fullWidth hasLeftPanel hasHeader>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content maxWidth="3xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>

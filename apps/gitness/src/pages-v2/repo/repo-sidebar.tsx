@@ -188,21 +188,21 @@ export const RepoSidebar = () => {
 
   return (
     <>
-      <RepoSidebarView
-        hasHeader
-        hasSubHeader
-        selectBranchOrTag={selectBranchOrTag}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        navigateToNewFile={navigateToNewFile}
-        navigateToFile={navigateToFile}
-        filesList={filesList}
-      >
-        {!!repoDetails?.body?.content?.entries?.length && (
-          <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
-        )}
-      </RepoSidebarView>
-      <Outlet />
+      <div className="w-full h-full flex justify-center">
+        <RepoSidebarView
+          selectBranchOrTag={selectBranchOrTag}
+          useRepoBranchesStore={useRepoBranchesStore}
+          useTranslationStore={useTranslationStore}
+          navigateToNewFile={navigateToNewFile}
+          navigateToFile={navigateToFile}
+          filesList={filesList}
+        >
+          {!!repoDetails?.body?.content?.entries?.length && (
+            <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+          )}
+        </RepoSidebarView>
+        <Outlet />
+      </div>
     </>
   )
 }

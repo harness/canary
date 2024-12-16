@@ -4,14 +4,7 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const RepoLayout = () => {
-  return (
-    <>
-      <div className="breadcrumbs">
-        <Breadcrumbs />
-      </div>
-      <RepoLayoutView useTranslationStore={useTranslationStore} />
-    </>
-  )
+  return <RepoLayoutView breadcrumbs={<Breadcrumbs />} useTranslationStore={useTranslationStore} />
 }
 
 export default RepoLayout

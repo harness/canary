@@ -109,8 +109,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
-      <SandboxLayout.Content className="relative z-0">
+    <SandboxLayout.Main fullWidth>
+      <SandboxLayout.Content>
         {isView && (
           <PathActionBar
             codeMode={codeMode}

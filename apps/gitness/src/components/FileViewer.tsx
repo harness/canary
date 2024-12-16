@@ -139,7 +139,7 @@ export const FileViewer: React.FC = () => {
   }
 
   return (
-    <SandboxLayout.Main fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
         <ListActions.Root>
           <ListActions.Left>

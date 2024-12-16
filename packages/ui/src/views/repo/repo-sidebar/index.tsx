@@ -1,12 +1,10 @@
-import { FC, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 import { Button, ButtonGroup, Icon, ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelector, BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore } from '@views/repo'
 
 interface RepoSidebarProps {
-  hasHeader?: boolean
-  hasSubHeader?: boolean
   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
   filesList?: string[]
@@ -16,9 +14,7 @@ interface RepoSidebarProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const RepoSidebar: FC<RepoSidebarProps> = ({
-  hasHeader,
-  hasSubHeader,
+export const RepoSidebar = ({
   navigateToNewFile,
   navigateToFile,
   filesList,
@@ -26,11 +22,11 @@ export const RepoSidebar: FC<RepoSidebarProps> = ({
   selectBranchOrTag,
   useRepoBranchesStore,
   useTranslationStore
-}) => {
+}: RepoSidebarProps) => {
   const { branchList } = useRepoBranchesStore()
 
   return (
-    <SandboxLayout.LeftSubPanel className="w-[248px]" hasHeader={hasHeader} hasSubHeader={hasSubHeader}>
+    <SandboxLayout.LeftSubPanel className="w-[248px]">
       <SandboxLayout.Content className="flex h-full overflow-hidden p-0">
         <div className="flex w-full flex-col gap-3 pt-5">
           <div className="grid w-full auto-cols-auto grid-flow-col grid-cols-[1fr] items-center gap-2 px-5">

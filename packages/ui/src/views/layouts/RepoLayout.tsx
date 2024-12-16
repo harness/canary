@@ -11,7 +11,7 @@ const RepoLayout: React.FC = () => {
   return (
     <>
       <SandboxLayout.SubHeader>
-        <div className="inline-flex h-[44px] w-full items-center justify-start gap-6 border-b border-border-background px-8 text-muted-foreground">
+        <div className="bg-background-1 h-[45px] inline-flex w-full items-center justify-start gap-6 border-b border-border-background px-8 text-muted-foreground">
           <NavLink to="summary" className={({ isActive }) => getLinkClasses(isActive)}>
             Summary
           </NavLink>
@@ -38,7 +38,9 @@ const RepoLayout: React.FC = () => {
           </NavLink>
         </div>
       </SandboxLayout.SubHeader>
-      <Outlet />
+      <div className="w-full overflow-auto">
+        <Outlet />
+      </div>
     </>
   )
 }

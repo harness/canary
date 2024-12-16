@@ -23,7 +23,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  breadcrumbs
 }) => {
   const { t } = useTranslationStore()
   const navigate = useNavigate()
@@ -67,7 +68,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   if (isError)
     return (
       <>
-        <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Main>
           <SandboxLayout.Content>
             <div className="flex min-h-[70vh] items-center justify-center py-20">
               <NoData
@@ -91,9 +92,12 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
 
   return (
-    <SandboxLayout.Main hasHeader hasLeftPanel>
-      <SandboxLayout.Content>
-        {/* 
+    <div className="w-full h-full">
+      {breadcrumbs}
+      <div className="pt-10 w-full h-[calc(100vh-55px)] overflow-auto">
+        <SandboxLayout.Main>
+          <SandboxLayout.Content>
+            {/* 
           TODO: Replace the Text component with a Title component in the future.
           Consider using a Title component that supports a prefix prop for displaying the selected saved filter name.
           Example:
@@ -101,80 +105,84 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
             {t('views:repos.repositories')}
           </Title>
         */}
-        {showTopBar ? (
-          <>
-            <Spacer size={10} />
-            <div className="flex items-end">
-              <Text className="leading-none" size={5} weight={'medium'}>
-                {t('views:repos.repositories')}
-              </Text>
-              {viewManagement.currentView && (
-                <>
-                  <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
-                  <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
-                </>
-              )}
-            </div>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Filters
+            {showTopBar ? (
+              <>
+                <Spacer size={10} />
+                <div className="flex items-end">
+                  <Text className="leading-none" size={5} weight={'medium'}>
+                    {t('views:repos.repositories')}
+                  </Text>
+                  {viewManagement.currentView && (
+                    <>
+                      <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
+                      <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
+                    </>
+                  )}
+                </div>
+                <Spacer size={6} />
+                <ListActions.Root>
+                  <ListActions.Left>
+                    <SearchBox.Root
+                      width="full"
+                      className="max-w-96"
+                      value={searchInput || ''}
+                      handleChange={handleInputChange}
+                      placeholder={t('views:repos.search')}
+                    />
+                  </ListActions.Left>
+                  <ListActions.Right>
+                    <Filters
+                      filterOptions={FILTER_OPTIONS}
+                      sortOptions={SORT_OPTIONS}
+                      filterHandlers={filterHandlers}
+                      viewManagement={viewManagement}
+                      layoutOptions={LAYOUT_OPTIONS}
+                      currentLayout={currentLayout}
+                      onLayoutChange={setCurrentLayout}
+                      t={t}
+                    />
+                    <ButtonGroup>
+                      <Button variant="default" asChild>
+                        <Link to={`create`}>{t('views:repos.create-repository')}</Link>
+                      </Button>
+                      <Button variant="outline" asChild>
+                        <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
+                      </Button>
+                    </ButtonGroup>
+                  </ListActions.Right>
+                </ListActions.Root>
+                {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && (
+                  <Spacer size={2} />
+                )}
+                <FiltersBar
                   filterOptions={FILTER_OPTIONS}
                   sortOptions={SORT_OPTIONS}
+                  sortDirections={SORT_DIRECTIONS}
                   filterHandlers={filterHandlers}
                   viewManagement={viewManagement}
-                  layoutOptions={LAYOUT_OPTIONS}
-                  currentLayout={currentLayout}
-                  onLayoutChange={setCurrentLayout}
                   t={t}
                 />
-                <ButtonGroup>
-                  <Button variant="default" asChild>
-                    <Link to={`create`}>{t('views:repos.create-repository')}</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
-                  </Button>
-                </ButtonGroup>
-              </ListActions.Right>
-            </ListActions.Root>
-            {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              viewManagement={viewManagement}
-              t={t}
+              </>
+            ) : null}
+            <Spacer size={5} />
+            <RepoList
+              repos={reposWithFormattedDates}
+              handleResetFilters={filterHandlers.handleResetFilters}
+              hasActiveFilters={filterHandlers.activeFilters.length > 0}
+              query={searchQuery ?? ''}
+              handleResetQuery={() => {
+                setSearchInput('')
+                setSearchQuery(null)
+              }}
+              useTranslationStore={useTranslationStore}
+              isLoading={isLoading}
             />
-          </>
-        ) : null}
-        <Spacer size={5} />
-        <RepoList
-          repos={reposWithFormattedDates}
-          handleResetFilters={filterHandlers.handleResetFilters}
-          hasActiveFilters={filterHandlers.activeFilters.length > 0}
-          query={searchQuery ?? ''}
-          handleResetQuery={() => {
-            setSearchInput('')
-            setSearchQuery(null)
-          }}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-        />
-        <Spacer size={8} />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+            <Spacer size={8} />
+            <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+          </SandboxLayout.Content>
+        </SandboxLayout.Main>
+      </div>
+    </div>
   )
 }
 

@@ -49,7 +49,7 @@ export const RepoSidebar: FC<RepoSidebarProps> = ({
                 aria-label="Create new file"
                 onClick={navigateToNewFile}
               >
-                <Icon size={16} name="add-file" className="text-icons-3" />
+                <Icon size={16} name="plus" className="text-icons-3" />
               </Button>
             </ButtonGroup>
           </div>

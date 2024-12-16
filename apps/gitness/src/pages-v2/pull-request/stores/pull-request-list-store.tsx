@@ -14,7 +14,8 @@ interface PullRequestListType {
   author?: string
   reviewRequired: boolean
   tasks?: number
-  source_branch?: string
+  sourceBranch?: string
+  targetBranch?: string
   timestamp: string
   comments?: number
   state?: string
@@ -58,7 +59,8 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       // TODO: fix 2 hours ago in timestamp
       timestamp: item?.created ? timeAgoFromEpochTime(item?.created) : '',
       updated: item?.updated ? item?.updated : 0,
-      source_branch: item?.source_branch,
+      sourceBranch: item?.source_branch,
+      targetBranch: item?.target_branch,
       state: item?.state,
       labels: item?.labels?.map(label => ({
         text: label?.key && label?.value ? `${label?.key}:${label?.value}` : (label.key ?? ''),

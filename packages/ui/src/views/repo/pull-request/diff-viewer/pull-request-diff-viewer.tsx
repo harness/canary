@@ -294,7 +294,7 @@ const PullRequestDiffViewer = ({
                                 {getInitials(currentUser ?? '', 2)}
                               </AvatarFallback>
                             </Avatar>
-                            <Text color="primary">adam </Text>
+                            <Text color="primary">{currentUser ?? ''} </Text>
                             <Text size={1} color="tertiaryBackground">
                               {timeAgo(item?.date)}
                             </Text>

@@ -18,7 +18,7 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name}
       </Text>
-      <Text size={2} weight="normal" color="primary" className="truncate line-clamp-1 text-wrap">
+      <Text size={2} weight="normal" color="primary" className="line-clamp-1 truncate text-wrap">
         {lastCommitMessage}
       </Text>
       <Icon className="shrink-0 text-icons-success" name="tick" size={12} />
@@ -38,13 +38,20 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp }) => {
 
 export interface FileLastChangeBarProps extends LatestFileTypes {
   useTranslationStore: () => TranslationStore
+  onlyTopRounded?: boolean
+  withoutBorder?: boolean
 }
 
-export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({ useTranslationStore, ...props }) => {
+export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
+  useTranslationStore,
+  onlyTopRounded = false,
+  withoutBorder = false,
+  ...props
+}) => {
   const { t } = useTranslationStore()
 
   return (
-    <StackedList.Root className="mb-4">
+    <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
       <StackedList.Item disableHover isHeader className="px-3 py-2">
         {props ? (
           <>

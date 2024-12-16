@@ -46,7 +46,7 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
         </span>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="max-h-[358px] w-56 overflow-y-auto" align="end">
-        {layoutOptions?.length && (
+        {!!layoutOptions?.length && (
           <>
             <div className="px-2 py-2.5">
               <span className="text-13 leading-none text-foreground-7">Layout</span>
@@ -62,7 +62,7 @@ const ViewTrigger: FC<ViewTriggerProps> = ({
 
         {savedViews.length > 0 && (
           <>
-            {layoutOptions?.length && <DropdownMenuSeparator />}
+            {!!layoutOptions?.length && <DropdownMenuSeparator />}
             <div className="px-2 py-1.5">
               <div className="flex items-center justify-between">
                 <span className="text-13 leading-none text-foreground-7">Saved views</span>

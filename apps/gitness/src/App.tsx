@@ -34,6 +34,7 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import PipelineLayout from './layouts/PipelineStudioLayout'
+import ProjectLayout from './layouts/ProjectLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
@@ -303,7 +304,7 @@ export default function App() {
         },
         {
           path: ':spaceId/settings',
-          element: <RootWrapper />,
+          element: <ProjectLayout />,
           children: [
             {
               element: <SettingsProjectNav />,

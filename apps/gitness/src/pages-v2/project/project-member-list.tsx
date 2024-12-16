@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
+  TypesPrincipalInfo,
   useListPrincipalsQuery,
   useMembershipAddMutation,
   useMembershipListQuery
@@ -70,7 +71,12 @@ export function ProjectMemberListPage() {
 
   useEffect(() => {
     if (principalData) {
-      setPrincipalList(principalData)
+      setPrincipalList(
+        principalData.map((member: TypesPrincipalInfo) => ({
+          display_name: member?.display_name ?? '',
+          uid: member?.uid ?? ''
+        }))
+      )
     }
   }, [principalData, setPrincipalList])
 

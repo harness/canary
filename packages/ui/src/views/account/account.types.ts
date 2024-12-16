@@ -4,6 +4,8 @@ export interface PrincipalData {
 }
 
 export interface IPrincipalListStore {
+  // state
   principalList: PrincipalData[]
-  setPrincipals: (principals: PrincipalData[]) => void
+  // actions
+  setPrincipalList: (principals: PrincipalData[]) => void
 }

@@ -59,8 +59,6 @@ const RepoExecutionLayout: React.FC = () => {
           </NavLink>
         </TabsList>
       </Tabs>
-      {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
-      {/* Total height of both the divs should be 100vh */}
       <main className="box-border min-h-[calc(100vh-100px)] overflow-hidden">
         <Outlet />
       </main>

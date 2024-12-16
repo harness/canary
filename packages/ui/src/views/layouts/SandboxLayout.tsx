@@ -73,7 +73,7 @@ interface ContentProps {
 }
 
 function Content({ children, maxWidth, className, paddingClassName = 'px-5 py-5' }: ContentProps) {
-  const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto flex items-center justify-center` : ''
+  const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
 
   return <div className={cn(paddingClassName, widthClass, className)}>{children}</div>
 }

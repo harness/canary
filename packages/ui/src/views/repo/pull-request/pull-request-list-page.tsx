@@ -12,83 +12,16 @@ import {
   StackedList
 } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
-import {
-  Filters,
-  FiltersBar,
-  type FilterCondition,
-  type FilterOption,
-  type SortDirection,
-  type SortOption
-} from '@components/filters'
+import { Filters, FiltersBar } from '@components/filters'
 import { debounce, noop } from 'lodash-es'
 
-import { useFilters, useViewManagement } from '../hooks'
+import { getFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
+import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
 import { PullRequestListStore } from './pull-request.types'
 
-const BASIC_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is not', value: 'is_not' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-const RANGE_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is before', value: 'is_before' },
-  { label: 'is after', value: 'is_after' },
-  { label: 'is between', value: 'is_between' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-const TEXT_CONDITIONS: FilterCondition[] = [
-  { label: 'is', value: 'is' },
-  { label: 'is not', value: 'is_not' },
-  { label: 'contains', value: 'contains' },
-  { label: 'does not contain', value: 'does_not_contain' },
-  { label: 'starts with', value: 'starts_with' },
-  { label: 'ends with', value: 'ends_with' },
-  { label: 'is empty', value: 'is_empty' },
-  { label: 'is not empty', value: 'is_not_empty' }
-]
-
-const FILTER_OPTIONS: FilterOption[] = [
-  {
-    label: 'Type',
-    value: 'type',
-    type: 'checkbox',
-    conditions: BASIC_CONDITIONS,
-    options: [
-      { label: 'open', value: 'enabled' },
-      { label: 'closed', value: 'disabled' }
-    ]
-  },
-  {
-    label: 'Created time',
-    value: 'created_time',
-    type: 'calendar',
-    conditions: RANGE_CONDITIONS
-  },
-  {
-    label: 'Name',
-    value: 'name',
-    type: 'text',
-    conditions: TEXT_CONDITIONS
-  }
-]
-
-const SORT_OPTIONS: SortOption[] = [
-  { label: 'Last updated', value: 'updated' },
-  { label: 'Title', value: 'title' }
-]
-
-const SORT_DIRECTIONS: SortDirection[] = [
-  { label: 'Ascending', value: 'asc' },
-  { label: 'Descending', value: 'desc' }
-]
 export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   repoId?: string
@@ -110,6 +43,11 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 }) => {
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
+
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+
   const [searchInput, setSearchInput] = useState(searchQuery)
   const debouncedSetSearchQuery = debounce(searchQuery => {
     setSearchQuery(searchQuery || null)
@@ -119,11 +57,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
    * Initialize filters hook with handlers for managing filter state
    */
   const filterHandlers = useFilters()
-  const viewManagement = useViewManagement({
-    storageKey: 'pull-req-list-filters',
-    setActiveFilters: filterHandlers.setActiveFilters,
-    setActiveSorts: filterHandlers.setActiveSorts
-  })
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
@@ -227,12 +160,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
               </ListActions.Left>
               <ListActions.Right>
                 <Filters
-                  t={t}
-                  showView={false}
                   filterOptions={FILTER_OPTIONS}
                   sortOptions={SORT_OPTIONS}
                   filterHandlers={filterHandlers}
-                  viewManagement={viewManagement}
+                  t={t}
                 />
                 <Button variant="default" asChild>
                   <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
@@ -241,14 +172,12 @@ const PullRequestList: FC<PullRequestPageProps> = ({
             </ListActions.Root>
             {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
             <FiltersBar
-              t={t}
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
               sortDirections={SORT_DIRECTIONS}
               filterHandlers={filterHandlers}
-              viewManagement={viewManagement}
+              t={t}
             />
-
             <Spacer size={5} />
           </>
         ) : null}

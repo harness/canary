@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar } from '@components/filters'
 import { debounce } from 'lodash-es'
 
@@ -16,6 +16,8 @@ import { RepoListProps } from './types'
 
 const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
 
+const DEFAULT_ERROR_MESSAGE = ['An error occurred while loading the data. ', 'Please try again and reload the page.']
+
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
   useTranslationStore,
@@ -26,6 +28,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   setSearchQuery
 }) => {
   const { t } = useTranslationStore()
+  const navigate = useNavigate()
 
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
@@ -68,10 +71,19 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
       <>
         <SandboxLayout.Main hasHeader hasLeftPanel>
           <SandboxLayout.Content>
-            <Spacer size={2} />
-            <Text size={1} className="text-destructive">
-              {errorMessage || 'Something went wrong'}
-            </Text>
+            <div className="flex min-h-[70vh] items-center justify-center py-20">
+              <NoData
+                iconName="no-data-error"
+                title="Failed to load repositories"
+                description={errorMessage ? [errorMessage] : DEFAULT_ERROR_MESSAGE}
+                primaryButton={{
+                  label: 'Reload',
+                  onClick: () => {
+                    navigate(0) // Reload the page
+                  }
+                }}
+              />
+            </div>
           </SandboxLayout.Content>
         </SandboxLayout.Main>
       </>
@@ -100,7 +112,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               </Text>
               {viewManagement.currentView && (
                 <>
-                  <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
+                  <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
                   <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
                 </>
               )}

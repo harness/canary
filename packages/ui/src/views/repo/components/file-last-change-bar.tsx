@@ -38,13 +38,20 @@ const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp }) => {
 
 export interface FileLastChangeBarProps extends LatestFileTypes {
   useTranslationStore: () => TranslationStore
+  onlyTopRounded?: boolean
+  withoutBorder?: boolean
 }
 
-export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({ useTranslationStore, ...props }) => {
+export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
+  useTranslationStore,
+  onlyTopRounded = false,
+  withoutBorder = false,
+  ...props
+}) => {
   const { t } = useTranslationStore()
 
   return (
-    <StackedList.Root className="mb-4">
+    <StackedList.Root withoutBorder={withoutBorder} onlyTopRounded={onlyTopRounded}>
       <StackedList.Item disableHover isHeader className="px-3 py-2">
         {props ? (
           <>

@@ -12,35 +12,37 @@ interface FiltersProps {
   showSort?: boolean
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
-  filterHandlers: {
-    activeFilters: FilterHandlers['activeFilters']
-    activeSorts: FilterHandlers['activeSorts']
-    handleFilterChange: FilterHandlers['handleFilterChange']
-    handleResetFilters: FilterHandlers['handleResetFilters']
-    searchQueries: FilterHandlers['searchQueries']
-    handleSearchChange: FilterHandlers['handleSearchChange']
-    handleSortChange: FilterHandlers['handleSortChange']
-    handleResetSorts: FilterHandlers['handleResetSorts']
-  }
+  filterHandlers: Pick<
+    FilterHandlers,
+    | 'activeFilters'
+    | 'activeSorts'
+    | 'handleFilterChange'
+    | 'handleResetFilters'
+    | 'searchQueries'
+    | 'handleSearchChange'
+    | 'handleSortChange'
+    | 'handleResetSorts'
+  >
   /**
    * Optional view management configuration.
    * If provided, enables saving and managing filter views
    */
-  viewManagement?: {
-    savedViews: ViewManagement['savedViews']
-    currentView: ViewManagement['currentView']
-    hasActiveViewChanges: ViewManagement['hasActiveViewChanges']
-    checkNameExists: ViewManagement['checkNameExists']
-    validateViewName: ViewManagement['validateViewName']
-    hasViewErrors: ViewManagement['hasViewErrors']
-    hasViewListChanges: ViewManagement['hasViewListChanges']
-    applyView: ViewManagement['applyView']
-    setCurrentView: ViewManagement['setCurrentView']
-    updateViewsOrder: ViewManagement['updateViewsOrder']
-    prepareViewsForSave: ViewManagement['prepareViewsForSave']
-    getExistingNames: ViewManagement['getExistingNames']
-    validateViewNameChange: ViewManagement['validateViewNameChange']
-  }
+  viewManagement?: Pick<
+    ViewManagement,
+    | 'savedViews'
+    | 'currentView'
+    | 'hasActiveViewChanges'
+    | 'checkNameExists'
+    | 'validateViewName'
+    | 'hasViewErrors'
+    | 'hasViewListChanges'
+    | 'applyView'
+    | 'setCurrentView'
+    | 'updateViewsOrder'
+    | 'prepareViewsForSave'
+    | 'getExistingNames'
+    | 'validateViewNameChange'
+  >
   layoutOptions?: ViewLayoutOption[]
   currentLayout?: string
   onLayoutChange?: (layout: string) => void

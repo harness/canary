@@ -12,38 +12,40 @@ interface FiltersBarProps {
   sortOptions: SortOption[]
   sortDirections: SortDirection[]
   t: TFunction
-  filterHandlers: {
-    activeFilters: FilterHandlers['activeFilters']
-    activeSorts: FilterHandlers['activeSorts']
-    handleUpdateFilter: FilterHandlers['handleUpdateFilter']
-    handleRemoveFilter: FilterHandlers['handleRemoveFilter']
-    handleFilterChange: FilterHandlers['handleFilterChange']
-    handleUpdateCondition: FilterHandlers['handleUpdateCondition']
-    handleUpdateSort: FilterHandlers['handleUpdateSort']
-    handleRemoveSort: FilterHandlers['handleRemoveSort']
-    handleSortChange: FilterHandlers['handleSortChange']
-    handleResetSorts: FilterHandlers['handleResetSorts']
-    handleReorderSorts: FilterHandlers['handleReorderSorts']
-    handleResetAll: FilterHandlers['handleResetAll']
-    searchQueries: FilterHandlers['searchQueries']
-    handleSearchChange: FilterHandlers['handleSearchChange']
-    filterToOpen: FilterHandlers['filterToOpen']
-    clearFilterToOpen: FilterHandlers['clearFilterToOpen']
-  }
+  filterHandlers: Pick<
+    FilterHandlers,
+    | 'activeFilters'
+    | 'activeSorts'
+    | 'handleUpdateFilter'
+    | 'handleRemoveFilter'
+    | 'handleFilterChange'
+    | 'handleUpdateCondition'
+    | 'handleUpdateSort'
+    | 'handleRemoveSort'
+    | 'handleSortChange'
+    | 'handleResetSorts'
+    | 'handleReorderSorts'
+    | 'handleResetAll'
+    | 'searchQueries'
+    | 'handleSearchChange'
+    | 'filterToOpen'
+    | 'clearFilterToOpen'
+  >
   /**
    * Optional view management configuration.
    * If provided, enables saving and managing filter views
    */
-  viewManagement?: {
-    savedViews: ViewManagement['savedViews']
-    currentView: ViewManagement['currentView']
-    hasActiveViewChanges: ViewManagement['hasActiveViewChanges']
-    checkNameExists: ViewManagement['checkNameExists']
-    saveView: ViewManagement['saveView']
-    updateView: ViewManagement['updateView']
-    deleteView: ViewManagement['deleteView']
-    renameView: ViewManagement['renameView']
-  }
+  viewManagement?: Pick<
+    ViewManagement,
+    | 'savedViews'
+    | 'currentView'
+    | 'hasActiveViewChanges'
+    | 'checkNameExists'
+    | 'saveView'
+    | 'updateView'
+    | 'deleteView'
+    | 'renameView'
+  >
 }
 
 /**
@@ -91,8 +93,6 @@ const FiltersBar = ({
   } = filterHandlers
 
   const hasActiveFilters = !!activeFilters.length || !!activeSorts.length
-
-  const hasViewChanges = viewManagement?.hasActiveViewChanges(activeFilters, activeSorts)
 
   if (!hasActiveFilters) return null
 
@@ -171,7 +171,7 @@ const FiltersBar = ({
                 activeSorts,
                 saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
               }}
-              hasChanges={!!hasViewChanges}
+              hasChanges={!!viewManagement.hasActiveViewChanges(activeFilters, activeSorts)}
             />
           )}
         </div>

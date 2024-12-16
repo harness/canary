@@ -113,6 +113,11 @@
     "webhooks": "Webhooks",
     "addFile": "Add file",
     "clone": "Clone",
+    "cloneUrl": "Git clone URL",
+    "cloneHttps": "HTTPS",
+    "cloneSsh": "SSH",
+    "cloneCredential": "Generate Clone Credential",
+    "generateCredential": "Please generate a clone credential if its your first time.",
     "readme": "README.md",
     "openPullReq": "Open pull requests"
   },

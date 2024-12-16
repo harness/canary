@@ -1,8 +1,9 @@
+import { IPrincipalListStore, PrincipalData } from '@views/account'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { IMemberListStore } from '../project.types'
-import { inviteMemberFormSchema } from './components/new-member-dialog'
+import { inviteMemberFormSchema } from './components/invite-member-dialog'
 
 export interface MembersProps {
   display_name: string
@@ -15,21 +16,26 @@ export interface MembersProps {
 
 export type InviteMemberFormFields = z.infer<typeof inviteMemberFormSchema>
 
-export interface InviteMemberDialogProps {
-  open: boolean
-  onClose: () => void
-  onSubmit: (formValues: InviteMemberFormFields) => void
-  useTranslationStore: () => TranslationStore
-  isLoadingMembers: boolean
-  members: Array<MembersProps>
-}
-
 export interface ProjectMemberListViewProps {
   isLoading: boolean
+  isInvitingMember: boolean
   useMemberListStore: () => IMemberListStore
+  usePrincipalListStore: () => IPrincipalListStore
   useTranslationStore: () => TranslationStore
   isInviteMemberDialogOpen: boolean
   setIsInviteMemberDialogOpen: (isOpen: boolean) => void
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  inviteMemberError?: string
+  onSubmit: (formValues: InviteMemberFormFields) => void
+}
+
+export interface InviteMemberDialogProps {
+  open: boolean
+  onClose: () => void
+  onSubmit: (formValues: InviteMemberFormFields) => void
+  useTranslationStore: () => TranslationStore
+  isInvitingMember: boolean
+  principals: Array<PrincipalData>
+  error?: string
 }

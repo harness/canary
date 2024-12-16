@@ -33,8 +33,9 @@ export function InviteMemberDialog({
   onClose,
   onSubmit,
   useTranslationStore,
-  isLoadingMembers,
-  members
+  isInvitingMember,
+  principals,
+  error
 }: InviteMemberDialogProps) {
   const { t } = useTranslationStore()
   const {
@@ -72,6 +73,7 @@ export function InviteMemberDialog({
             <Fieldset>
               <ControlGroup>
                 <Select
+                  {...register('member')}
                   name="member"
                   value={invitedMember}
                   onValueChange={value => handleSelectChange('member', value)}
@@ -82,10 +84,10 @@ export function InviteMemberDialog({
                       ? t('views:forms.selectMemberError', errors.member?.message?.toString())
                       : undefined
                   }
-                  disabled={isLoadingMembers || !members?.length}
+                  disabled={!principals?.length}
                 >
                   <SelectContent>
-                    {members
+                    {principals
                       ?.filter(item => item?.display_name)
                       ?.map(({ display_name, uid }) => (
                         <SelectItem key={uid} value={uid}>
@@ -97,6 +99,7 @@ export function InviteMemberDialog({
               </ControlGroup>
               <ControlGroup>
                 <Select
+                  {...register('role')}
                   name="role"
                   value={memberRole}
                   onValueChange={value => handleSelectChange('role', value)}
@@ -109,16 +112,23 @@ export function InviteMemberDialog({
                   }
                 >
                   <SelectContent>
-                    <SelectItem value="Contributor">Contributor</SelectItem>
-                    <SelectItem value="Reader">Reader</SelectItem>
-                    <SelectItem value="Executor">Executor</SelectItem>
-                    <SelectItem value="Owner">Owner</SelectItem>
+                    <SelectItem value="contributor">Contributor</SelectItem>
+                    <SelectItem value="reader">Reader</SelectItem>
+                    <SelectItem value="executor">Executor</SelectItem>
+                    <SelectItem value="space_owner">Owner</SelectItem>
                   </SelectContent>
                 </Select>
               </ControlGroup>
             </Fieldset>
+            {error ? (
+              <Alert.Container variant="destructive">
+                <Alert.Title>
+                  {t('views:repos.error', 'Error:')} {error}
+                </Alert.Title>
+              </Alert.Container>
+            ) : null}
             <ButtonGroup className="flex justify-end">
-              <Button onClick={onClose} className="text-primary" variant="outline" loading={false}>
+              <Button onClick={onClose} className="text-primary" variant="outline" loading={isInvitingMember}>
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
               <Button type="submit">{t('views:projectSettings.addMember')}</Button>

@@ -3,13 +3,15 @@
     "create-new-file-no-plus": "Create new file",
     "upload-files": "Upload files",
     "commits": "Commits",
+    "error": "Error:",
+    "cancel": "Cancel",
+    "search": "Search",
     "branches": "Branches",
     "tags": "Tags",
     "default": "Default",
     "viewAll": "View all {{type}}",
     "findBranch": "Find a branch",
     "findTag": "Find a tag",
-    "search": "Search",
     "allCommits": "All commits",
     "noFile": "No files available",
     "name": "Name",
@@ -22,8 +24,6 @@
     "ahead": "Ahead",
     "commit": "Commit",
     "createBranch": "Create branch",
-    "error": "Error:",
-    "cancel": "Cancel",
     "newPullReq": "New pull request",
     "viewRules": "View Rules",
     "renameBranch": "Rename Branch",
@@ -70,37 +70,37 @@
     "viewed": "Viewed",
     "commits": "Commits"
   },
+  "projectSettings": {
+    "newMember": "New member",
+    "member": "Member",
+    "role": "Role",
+    "addMember": "Add member to this project",
+    "members": "Members"
+  },
+  "forms": {
+    "selectMember": "Select member",
+    "selectMemberError": "Member is required",
+    "selectRole": "Select role",
+    "selectRoleError": "Role is required",
+    "enterBranchName": "Enter branch name",
+    "createBranchError": "Branch name is required",
+    "select": "Select",
+    "baseBranch": "Base Branch",
+    "selectBranchError": "Base branch is required"
+  },
   "noData": {
     "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
+    "members": "No members yet.",
+    "inviteMembers": "Add your first team members by inviting them to join this project.",
     "clearFilters": "Clear filters",
     "noPullRequests": "There are no pull requests in this project yet.",
     "createNewPullRequest": "Create a new pull request.",
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
-    "createBranch": "Create branch",
-    "members": "No members yet.",
-    "inviteMembers": "Add your first team members by inviting them to join this project."
-  },
-  "forms": {
-    "enterBranchName": "Enter branch name",
-    "createBranchError": "Branch name is required",
-    "select": "Select",
-    "selectMember": "Select member",
-    "selectRole": "Select role",
-    "baseBranch": "Base Branch",
-    "selectBranchError": "Base branch is required",
-    "selectMemberError": "Member is required",
-    "selectRoleError": "Role is required"
-  },
-  "projectSettings": {
-    "member": "Member",
-    "members": "Members",
-    "role": "Role",
-    "newMember": "New member",
-    "addMember": "Add member to this project"
+    "createBranch": "Create branch"
   }
 }

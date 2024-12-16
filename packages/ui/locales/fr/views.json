@@ -3,13 +3,15 @@
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
     "commits": "Validations",
+    "error": "Error:",
+    "cancel": "Cancel",
+    "search": "Recherche",
     "branches": "Branches",
     "tags": "Étiquettes",
     "default": "Par défaut",
     "viewAll": "Voir tout {{type}}",
     "findBranch": "Trouver une branche",
     "findTag": "Trouver une étiquette",
-    "search": "Recherche",
     "allCommits": "Tout s'engage",
     "noFile": "Aucun fichier disponible",
     "name": "Nom",
@@ -22,8 +24,6 @@
     "ahead": "En avance",
     "commit": "Validation",
     "createBranch": "Créer une branche",
-    "error": "Error:",
-    "cancel": "Cancel",
     "newPullReq": "Nouvelle requête de tirage",
     "viewRules": "Voir les règles",
     "renameBranch": "Renommer la branche",
@@ -70,11 +70,31 @@
     "viewed": "Vu",
     "commits": "Commets"
   },
+  "projectSettings": {
+    "newMember": "",
+    "member": "",
+    "role": "",
+    "addMember": "",
+    "members": ""
+  },
+  "forms": {
+    "selectMember": "",
+    "selectMemberError": "",
+    "selectRole": "",
+    "selectRoleError": "",
+    "enterBranchName": "Entrez le nom de la branche",
+    "createBranchError": "Le nom de la branche est requis",
+    "select": "Sélectionner",
+    "baseBranch": "Branche de base",
+    "selectBranchError": "La branche de base est requise"
+  },
   "noData": {
     "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",
+    "members": "",
+    "inviteMembers": "",
     "clearFilters": "Effacer les filtres",
     "noPullRequests": "Il n'y a pas encore de demandes de tirage dans ce projet.",
     "createNewPullRequest": "Créez une nouvelle demande de tirage.",
@@ -82,12 +102,5 @@
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
     "createBranch": "Créer une branche"
-  },
-  "forms": {
-    "enterBranchName": "Entrez le nom de la branche",
-    "createBranchError": "Le nom de la branche est requis",
-    "select": "Sélectionner",
-    "baseBranch": "Branche de base",
-    "selectBranchError": "La branche de base est requise"
   }
 }

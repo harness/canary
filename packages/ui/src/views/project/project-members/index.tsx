@@ -3,23 +3,27 @@ import { ChangeEvent, useCallback, useState } from 'react'
 import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 import { debounce } from 'lodash-es'
-import pluralize from 'pluralize'
 
+import { InviteMemberDialog } from './components/invite-member-dialog'
 import { MembersList } from './components/member-list'
-import { InviteMemberDialog } from './components/new-member-dialog'
 import { MembersProps, ProjectMemberListViewProps } from './types'
 
 export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   isLoading,
+  isInvitingMember,
   useTranslationStore,
   useMemberListStore,
+  usePrincipalListStore,
   isInviteMemberDialogOpen,
   setIsInviteMemberDialogOpen,
+  inviteMemberError,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  onSubmit
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
+  const { principalList } = usePrincipalListStore()
   const [searchInput, setSearchInput] = useState(searchQuery)
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
@@ -114,10 +118,11 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
         onClose={() => {
           setIsInviteMemberDialogOpen(false)
         }}
-        onSubmit={() => {}}
+        onSubmit={onSubmit}
         useTranslationStore={useTranslationStore}
-        members={memberList}
-        isLoadingMembers={isLoading}
+        principals={principalList}
+        isInvitingMember={isInvitingMember}
+        error={inviteMemberError}
       />
     </SandboxLayout.Main>
   )

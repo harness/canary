@@ -1787,3 +1787,7 @@ mark {
 .bg-tab-gradient-radial {
   background-image: radial-gradient(var(--canary-tab-item-gradient-stops));
 }
+
+.top-\[100px\] {
+  top: 100px;
+}

@@ -8,15 +8,7 @@ import RootViewWrapper from './root-view-wrapper.tsx'
 
 const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (
   <RootViewWrapper asChild>
-    <Route
-      path="*"
-      element={
-        <RepoLayout
-          breadcrumbs={<>{/* Need to mock breadcrumbs here */}</>}
-          useTranslationStore={useTranslationsStore}
-        />
-      }
-    >
+    <Route path="*" element={<RepoLayout useTranslationStore={useTranslationsStore} />}>
       <Route path="*" element={children} />
     </Route>
   </RootViewWrapper>

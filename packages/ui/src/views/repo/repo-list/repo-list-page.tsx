@@ -23,8 +23,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery,
-  breadcrumbs
+  setSearchQuery
 }) => {
   const { t } = useTranslationStore()
   const navigate = useNavigate()
@@ -92,9 +91,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
 
   return (
+<<<<<<< HEAD
     <>
       {breadcrumbs}
       <SandboxLayout.Main>
+=======
+    <div className="flex-1">
+      <SandboxLayout.Main hasHeader hasLeftPanel>
+>>>>>>> b2ef7479 (Refactored layout architecture code)
         <SandboxLayout.Content>
           {/* 
           TODO: Replace the Text component with a Title component in the future.
@@ -141,13 +145,13 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                     t={t}
                   />
                   <ButtonGroup>
-                    <Button variant="default" asChild>
-                      <Link to={`create`}>{t('views:repos.create-repository')}</Link>
-                    </Button>
-                    <Button variant="outline" asChild>
-                      <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
-                    </Button>
-                  </ButtonGroup>
+                  <Button variant="default" asChild>
+                    <Link to={`create`}>{t('views:repos.create-repository')}</Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
+                  </Button>
+                </ButtonGroup>
                 </ListActions.Right>
               </ListActions.Root>
               {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && (
@@ -166,6 +170,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <Spacer size={5} />
           <RepoList
             repos={reposWithFormattedDates}
+<<<<<<< HEAD
+=======
+            LinkComponent={LinkComponent}
+>>>>>>> b2ef7479 (Refactored layout architecture code)
             handleResetFilters={filterHandlers.handleResetFilters}
             hasActiveFilters={filterHandlers.activeFilters.length > 0}
             query={searchQuery ?? ''}
@@ -180,7 +188,11 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
+<<<<<<< HEAD
     </>
+=======
+    </div>
+>>>>>>> b2ef7479 (Refactored layout architecture code)
   )
 }
 

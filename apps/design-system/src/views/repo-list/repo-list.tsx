@@ -22,7 +22,6 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
       isError={false}
       searchQuery=""
       setSearchQuery={noop}
-      breadcrumbs={<>{/* Need to mock breadcrumbs here */}</>}
       {...props}
     />
   )

@@ -71,15 +71,17 @@ export default function ReposListPage() {
   })
 
   return (
-    <SandboxRepoListPage
-      useRepoStore={useRepoStore}
-      useTranslationStore={useTranslationStore}
-      isLoading={isFetching}
-      isError={isError}
-      errorMessage={error?.message}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      breadcrumbs={<Breadcrumbs />}
-    />
+    <>
+      <Breadcrumbs />
+      <SandboxRepoListPage
+        useRepoStore={useRepoStore}
+        useTranslationStore={useTranslationStore}
+        isLoading={isFetching}
+        isError={isError}
+        errorMessage={error?.message}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+      />
+    </>
   )
 }

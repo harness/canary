@@ -10,7 +10,7 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
-    className={cn('mx-auto flex w-full max-w-full items-center justify-between px-9', className)}
+    className={cn('mx-auto flex w-full max-w-[700px] items-center justify-between', className)}
     {...props}
   />
 )
@@ -28,23 +28,32 @@ const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'
 ))
 PaginationItem.displayName = 'PaginationItem'
 
-type PaginationLinkProps = {
+type PaginationLinkGeneralProps = {
   isActive?: boolean
   disabled?: boolean
   t: TFunction
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
-const PaginationLink = ({ className, isActive, size, ...props }: Omit<PaginationLinkProps, 't'>) => (
-  // "children" prop will provide the content
-  // eslint-disable-next-line jsx-a11y/anchor-has-content
+interface PaginationLinkProps extends Omit<PaginationLinkGeneralProps, 't'> {
+  isFullRounded?: boolean
+}
+
+const PaginationLink = ({
+  className,
+  isActive,
+  size,
+  isFullRounded = true,
+  children,
+  ...props
+}: PaginationLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
     className={cn(
       buttonVariants({
         variant: 'custom',
         size: size ? size : 'sm_icon',
-        borderRadius: 'full'
+        borderRadius: isFullRounded ? 'full' : 'default'
       }),
       'text-12 bg-background-2 text-foreground-1 hover:bg-background-3 w-auto min-w-7 px-1.5 font-normal',
       {
@@ -53,20 +62,24 @@ const PaginationLink = ({ className, isActive, size, ...props }: Omit<Pagination
       className
     )}
     {...props}
-  />
+  >
+    {children}
+  </a>
 )
 PaginationLink.displayName = 'PaginationLink'
 
-const PaginationPrevious = ({ t, disabled, className, ...props }: PaginationLinkProps) => (
+const PaginationPrevious = ({ t, disabled, className, href = '#', ...props }: PaginationLinkGeneralProps) => (
   <PaginationLink
     aria-label="Go to previous page"
     size="default"
+    isFullRounded={false}
     className={cn(
-      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent pl-2.5 text-sm font-normal',
+      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
       'hover:text-foreground-1 hover:bg-transparent',
       { 'text-foreground-7 pointer-events-none cursor-default': disabled },
       className
     )}
+    href={href}
     {...props}
   >
     <Icon name="arrow-long" size={12} className="rotate-180" />
@@ -75,16 +88,18 @@ const PaginationPrevious = ({ t, disabled, className, ...props }: PaginationLink
 )
 PaginationPrevious.displayName = 'PaginationPrevious'
 
-const PaginationNext = ({ t, disabled, className, ...props }: PaginationLinkProps) => (
+const PaginationNext = ({ t, disabled, className, href = '#', ...props }: PaginationLinkGeneralProps) => (
   <PaginationLink
     aria-label="Go to next page"
     size="default"
+    isFullRounded={false}
     className={cn(
-      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent pr-2.5 text-sm font-normal',
+      'text-foreground-2 cursor-pointer gap-1.5 bg-transparent text-sm font-normal',
       'hover:text-foreground-1 hover:bg-transparent',
       { 'text-foreground-7 pointer-events-none cursor-default': disabled },
       className
     )}
+    href={href}
     {...props}
   >
     <span>{t('component:pagination.next', 'Next')}</span>

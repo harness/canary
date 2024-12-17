@@ -117,7 +117,6 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
 
         <Spacer size={5} />
         {renderListContent()}
-        <Spacer size={8} />
         <PaginationComponent
           nextPage={xNextPage}
           previousPage={xPrevPage}

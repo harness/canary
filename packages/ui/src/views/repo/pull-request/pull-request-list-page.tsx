@@ -170,7 +170,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
-            {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
             <FiltersBar
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
@@ -182,7 +181,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
           </>
         ) : null}
         {renderListContent()}
-        <Spacer size={6} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

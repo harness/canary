@@ -88,7 +88,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
     return (
       <NoData
-        insideTabView
+        withBorder
         iconName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
@@ -113,7 +113,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content>
+      <SandboxLayout.Content className="h-full">
         {isView && (
           <PathActionBar
             codeMode={codeMode}

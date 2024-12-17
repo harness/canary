@@ -97,7 +97,7 @@ const FiltersBar = ({
   if (!hasActiveFilters) return null
 
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="mt-2 flex items-center gap-x-2">
       {!!activeSorts.length && (
         <Sorts
           activeSorts={activeSorts}

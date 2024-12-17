@@ -23,7 +23,7 @@ export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
 
   const {
     branchList,
@@ -40,11 +40,11 @@ export default function RepoCommitsPage() {
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page, query: branchTagQuery }
+    queryParams: { query: branchTagQuery }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
-    queryParams: { page, query: branchTagQuery }
+    queryParams: { query: branchTagQuery }
   })
 
   useEffect(() => {
@@ -89,12 +89,14 @@ export default function RepoCommitsPage() {
       if (type === BranchSelectorTab.BRANCHES) {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
+          setPage(1)
           setSelectedBranchTag(branch)
           setSelectedRefType(type)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
+          setPage(1)
           setSelectedBranchTag(tag)
           setSelectedRefType(type)
         }
@@ -115,7 +117,7 @@ export default function RepoCommitsPage() {
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}
       page={page}
-      setPage={(page: number) => setPage(page)}
+      setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
       selectBranchOrTag={selectBranchOrTag}

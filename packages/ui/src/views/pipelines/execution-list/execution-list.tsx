@@ -100,32 +100,30 @@ export const ExecutionList = ({
   }
 
   return (
-    <>
-      <StackedList.Root>
-        {executions.map((execution, idx) => (
-          <LinkComponent key={execution.id} to={execution.id}>
-            <StackedList.Item key={execution.name} isLast={executions.length - 1 === idx}>
-              <StackedList.Field
-                title={<Title status={execution.status} title={execution.name || ''} />}
-                description={
-                  <Description
-                    sha={execution.sha || ''}
-                    description={execution.description || ''}
-                    version={execution.version || ''}
-                  />
-                }
-              />
-              <StackedList.Field
-                title={execution.timestamp}
-                description={execution.lastTimestamp}
-                right
-                label
-                secondary
-              />
-            </StackedList.Item>
-          </LinkComponent>
-        ))}
-      </StackedList.Root>
-    </>
+    <StackedList.Root>
+      {executions.map((execution, idx) => (
+        <LinkComponent key={execution.id} to={execution.id}>
+          <StackedList.Item key={execution.name} isLast={executions.length - 1 === idx}>
+            <StackedList.Field
+              title={<Title status={execution.status} title={execution.name || ''} />}
+              description={
+                <Description
+                  sha={execution.sha || ''}
+                  description={execution.description || ''}
+                  version={execution.version || ''}
+                />
+              }
+            />
+            <StackedList.Field
+              title={execution.timestamp}
+              description={execution.lastTimestamp}
+              right
+              label
+              secondary
+            />
+          </StackedList.Item>
+        </LinkComponent>
+      ))}
+    </StackedList.Root>
   )
 }

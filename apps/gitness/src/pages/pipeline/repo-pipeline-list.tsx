@@ -5,7 +5,15 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import { Button, Spacer, Text } from '@harnessio/canary'
 import { TypesPipeline, useListPipelinesQuery } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
-import { Filter, NoData, NoSearchResults, PaginationComponent, PipelineList, SandboxLayout } from '@harnessio/views'
+import {
+  ExecutionState,
+  Filter,
+  NoData,
+  NoSearchResults,
+  PaginationComponent,
+  PipelineList,
+  SandboxLayout
+} from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
@@ -58,7 +66,8 @@ export default function RepoPipelinesPage() {
       <PipelineList
         pipelines={pipelines?.map((item: TypesPipeline) => ({
           id: item?.identifier || '',
-          status: getExecutionStatus(item?.execution?.status),
+          // TODO: temporary type fix - this component gonna be deleted
+          status: getExecutionStatus(item?.execution?.status) as unknown as ExecutionState,
           name: item?.identifier,
           sha: item?.execution?.after,
           description: item?.execution?.message,

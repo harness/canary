@@ -93,39 +93,37 @@ export const PipelineList = ({
   }
 
   return (
-    <>
-      <StackedList.Root>
-        {pipelines.map((pipeline, idx) => (
-          <LinkComponent key={pipeline.id} to={pipeline.id}>
-            <StackedList.Item key={pipeline.name} isLast={pipelines.length - 1 === idx}>
-              <StackedList.Field
-                title={<Title status={pipeline.status} title={pipeline.name || ''} />}
-                description={
-                  <Description
-                    sha={pipeline.sha || ''}
-                    description={pipeline.description || ''}
-                    version={pipeline.version || ''}
-                  />
-                }
-              />
-              <StackedList.Field
-                title={
-                  pipeline.meter ? (
-                    <Meter data={pipeline.meter} />
-                  ) : pipeline.timestamp ? (
-                    `Created ${timeAgo(parseInt(pipeline.timestamp))}`
-                  ) : (
-                    ''
-                  )
-                }
-                label
-                secondary
-                right
-              />
-            </StackedList.Item>
-          </LinkComponent>
-        ))}
-      </StackedList.Root>
-    </>
+    <StackedList.Root>
+      {pipelines.map((pipeline, idx) => (
+        <LinkComponent key={pipeline.id} to={pipeline.id}>
+          <StackedList.Item key={pipeline.name} isLast={pipelines.length - 1 === idx}>
+            <StackedList.Field
+              title={<Title status={pipeline.status} title={pipeline.name || ''} />}
+              description={
+                <Description
+                  sha={pipeline.sha || ''}
+                  description={pipeline.description || ''}
+                  version={pipeline.version || ''}
+                />
+              }
+            />
+            <StackedList.Field
+              title={
+                pipeline.meter ? (
+                  <Meter data={pipeline.meter} />
+                ) : pipeline.timestamp ? (
+                  `Created ${timeAgo(parseInt(pipeline.timestamp))}`
+                ) : (
+                  ''
+                )
+              }
+              label
+              secondary
+              right
+            />
+          </StackedList.Item>
+        </LinkComponent>
+      ))}
+    </StackedList.Root>
   )
 }

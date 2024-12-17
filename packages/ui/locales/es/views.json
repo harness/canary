@@ -34,8 +34,10 @@
     "settings": "Settings",
     "repositories": "",
     "create-repository": "",
+    "import-repository": "Import repository",
     "private": "Private",
     "public": "Public",
+    "updated": "Updated",
     "addFile": "Add file",
     "clone": "Clone",
     "readme": "README.md",
@@ -81,7 +83,10 @@
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
-    "createBranch": "Create branch"
+    "createBranch": "Create branch",
+    "noRepos": "No repositories yet",
+    "noReposProject": "There are no repositories in this project yet.",
+    "createOrImportRepos": "Create new or import an existing repository."
   },
   "forms": {
     "enterBranchName": "Enter branch name",

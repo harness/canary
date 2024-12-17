@@ -34,8 +34,10 @@
     "settings": "Paramètres",
     "repositories": "Dépôts",
     "create-repository": "Créer un dépôt",
+    "import-repository": "Importer un dépôt",
     "private": "Privé",
     "public": "Public",
+    "updated": "Mis à jour",
     "addFile": "Ajouter un fichier",
     "clone": "Cloner",
     "readme": "README.md",
@@ -81,7 +83,10 @@
     "noBranches": "Pas encore de branches",
     "createBranchDescription": "Vos branches apparaîtront ici une fois créées.",
     "startBranchDescription": "Commencez à créer des branches pour voir votre travail organisé.",
-    "createBranch": "Créer une branche"
+    "createBranch": "Créer une branche",
+    "noRepos": "Pas encore de dépôts",
+    "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
+    "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant."
   },
   "forms": {
     "enterBranchName": "Entrez le nom de la branche",

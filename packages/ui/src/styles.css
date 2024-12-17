@@ -95,6 +95,10 @@
     --canary-ai-button-stop-2: 335 58% 76%;
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
+
+    /* Pure Black */
+    --canary-solid-black: 0 0 0;
+
     /* diff viewer */
     --diff-grey: hsl(0 0% 33%);
     --diff-add-content--: hsl(156 28% 10%);
@@ -247,6 +251,11 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+
+    /* Box shadow colors */
+    --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
   }
 
   .dark {
@@ -386,6 +395,11 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+
+    /* Box shadow colors */
+    --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
+    --canary-box-shadow-2: var(--canary-solid-black) / 0.6;
+    --canary-box-shadow-pagination: var(--canary-solid-black) / 0.5;
   }
 
   .light-std-std {
@@ -600,6 +614,11 @@
     --canary-nav-gradient-item-x-from: var(--canary-harness-grey-0);
     --canary-nav-gradient-item-x-to: var(--canary-harness-grey-0) / 0;
     --canary-tab-gradient-item-x-stops: var(--canary-nav-gradient-item-x-from), var(--canary-nav-gradient-item-x-to);
+
+    /* Box shadow colors */
+    --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
   }
   .dark-std-std {
     --canary-background: var(--canary-grey-6);
@@ -738,6 +757,11 @@
     --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
     --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+
+    /* Box shadow colors */
+    --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
+    --canary-box-shadow-2: var(--canary-solid-black) / 0.6;
+    --canary-box-shadow-pagination: var(--canary-solid-black) / 0.5;
   }
 
   .light-tri-std {

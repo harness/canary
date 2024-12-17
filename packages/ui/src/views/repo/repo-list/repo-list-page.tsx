@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Button, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ButtonGroup, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar } from '@components/filters'
 import { debounce } from 'lodash-es'
 
@@ -13,8 +13,6 @@ import { formatRepositories } from '../utils/formatting/repos'
 import { sortRepositories } from '../utils/sorting/repos'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
-
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
 
 const DEFAULT_ERROR_MESSAGE = ['An error occurred while loading the data. ', 'Please try again and reload the page.']
 
@@ -139,9 +137,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   onLayoutChange={setCurrentLayout}
                   t={t}
                 />
-                <Button variant="default" asChild>
-                  <Link to={`create`}>{t('views:repos.create-repository')}</Link>
-                </Button>
+                <ButtonGroup>
+                  <Button variant="default" asChild>
+                    <Link to={`create`}>{t('views:repos.create-repository')}</Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
+                  </Button>
+                </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
             {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
@@ -158,7 +161,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
         <Spacer size={5} />
         <RepoList
           repos={reposWithFormattedDates}
-          LinkComponent={LinkComponent}
           handleResetFilters={filterHandlers.handleResetFilters}
           hasActiveFilters={filterHandlers.activeFilters.length > 0}
           query={searchQuery ?? ''}

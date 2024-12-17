@@ -49,6 +49,7 @@ import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
+import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
@@ -312,7 +313,7 @@ export default function App() {
         },
         {
           path: ':spaceId/repos/import',
-          element: <RepoImportContainer />
+          element: <ImportRepo />
         },
         {
           path: 'theme',

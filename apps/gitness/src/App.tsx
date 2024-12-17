@@ -39,6 +39,8 @@ import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestL
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+// import { SettingsProfileGeneralPage } from './pages/profile-settings/profile-settings-general-container'
+import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -70,7 +72,6 @@ import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
 import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
 import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
-import { SettingsProfileGeneralPage } from './pages/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
@@ -326,6 +327,29 @@ export default function App() {
         {
           path: ':spaceId/repos/import',
           element: <ImportRepo />
+        },
+        {
+          path: 'settings',
+          element: <SandboxSettings />,
+          children: [
+            {
+              element: <SettingsAccountPage />,
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="general" replace />
+                },
+                {
+                  path: 'general',
+                  element: <SettingsProfileGeneralPage />
+                },
+                {
+                  path: 'keys',
+                  element: <SettingsProfileKeysPage />
+                }
+              ]
+            }
+          ]
         },
         {
           path: 'theme',

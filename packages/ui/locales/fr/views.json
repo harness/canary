@@ -145,10 +145,10 @@
     "commits": "Commets"
   },
   "noData": {
-    "noResults": "Aucun résultat de recherche",
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",
     "changeSearch": "ou recherchez un autre mot-clé.",
     "clearSearch": "Effacer la recherche",
+    "noResults": "Aucun résultat de recherche",
     "clearFilters": "Effacer les filtres",
     "noPullRequests": "Il n'y a pas encore de demandes de tirage dans ce projet.",
     "createNewPullRequest": "Créez une nouvelle demande de tirage.",

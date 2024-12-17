@@ -145,10 +145,10 @@
     "commits": "Commits"
   },
   "noData": {
-    "noResults": "No search results",
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
+    "noResults": "No search results",
     "clearFilters": "Clear filters",
     "noPullRequests": "There are no pull requests in this project yet.",
     "createNewPullRequest": "Create a new pull request.",

@@ -98,7 +98,9 @@ export function ProjectMemberListPage() {
       setPrincipalList(
         principalData.map((member: TypesPrincipalInfo) => ({
           display_name: member?.display_name ?? '',
-          uid: member?.uid ?? ''
+          uid: member?.uid ?? '',
+          email: member?.email ?? '',
+          avatar_url: ''
         }))
       )
     }

@@ -95,6 +95,10 @@
     --canary-ai-button-stop-2: 335 58% 76%;
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
+
+    /* Pure Black */
+    --canary-solid-black: 0 0 0;
+
     /* diff viewer */
     --diff-grey: hsl(0 0% 33%);
     --diff-add-content--: hsl(156 28% 10%);
@@ -393,9 +397,9 @@
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
 
     /* Box shadow colors */
-    --canary-box-shadow-1: 0 0 0 / 0.3;
-    --canary-box-shadow-2: 0 0 0 / 0.6;
-    --canary-box-shadow-pagination: 0 0 0 / 0.5;
+    --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
+    --canary-box-shadow-2: var(--canary-solid-black) / 0.6;
+    --canary-box-shadow-pagination: var(--canary-solid-black) / 0.5;
   }
 
   .light-std-std {
@@ -755,9 +759,9 @@
     --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
 
     /* Box shadow colors */
-    --canary-box-shadow-1: 0 0 0 / 0.3;
-    --canary-box-shadow-2: 0 0 0 / 0.6;
-    --canary-box-shadow-pagination: 0 0 0 / 0.5;
+    --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
+    --canary-box-shadow-2: var(--canary-solid-black) / 0.6;
+    --canary-box-shadow-pagination: var(--canary-solid-black) / 0.5;
   }
 
   .light-tri-std {

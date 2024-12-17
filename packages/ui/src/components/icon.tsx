@@ -94,6 +94,7 @@ import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
 import NoDataBranches from '../icons/no-data-branches.svg'
 import NoDataCog from '../icons/no-data-cog.svg'
+import NoDataError from '../icons/no-data-error.svg'
 import NoDataFolder from '../icons/no-data-folder.svg'
 import NoDataMembers from '../icons/no-data-members.svg'
 import NoDataMerge from '../icons/no-data-merge.svg'
@@ -204,6 +205,7 @@ const IconNameMap = {
   'no-data-branches': NoDataBranches,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-data-members': NoDataMembers,
+  'no-data-error': NoDataError,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,

@@ -18,6 +18,13 @@ export enum PullRequestState {
   CLOSED = 'closed'
 }
 
+export interface PullRequestAction {
+  id: string
+  title: string
+  description?: string
+  action?: () => void
+}
+
 export enum CodeCommentState {
   ACTIVE = 'active',
   RESOLVED = 'resolved'
@@ -413,3 +420,139 @@ export interface ApprovalItems {
 }
 export type ButtonEnum = 'success' | 'muted' | 'default' | 'error' | 'warning' | null | undefined
 export type EnumPullReqReviewDecisionExtended = EnumPullReqReviewDecision | 'outdated'
+export interface ReviewerItemProps {
+  reviewer?: { display_name?: string; id?: number }
+  reviewDecision?: EnumPullReqReviewDecision
+  sha?: string
+  sourceSHA?: string
+  processReviewDecision: (
+    review_decision: EnumPullReqReviewDecision,
+    reviewedSHA?: string,
+    sourceSHA?: string
+  ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
+  handleDelete: (id: number) => void
+}
+
+export interface TypesCodeOwnerEvaluation {
+  evaluation_entries?: TypesCodeOwnerEvaluationEntry[] | null
+  file_sha?: string
+}
+
+export interface TypesOwnerEvaluation {
+  owner?: TypesPrincipalInfo
+  review_decision?: EnumPullReqReviewDecision
+  review_sha?: string
+}
+
+export interface TypesUserGroupOwnerEvaluation {
+  evaluations?: TypesOwnerEvaluation[] | null
+  id?: string
+  name?: string
+}
+export interface TypesCodeOwnerEvaluationEntry {
+  line_number?: number
+  owner_evaluations?: TypesOwnerEvaluation[] | null
+  pattern?: string
+  user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
+}
+
+export interface PullRequestChangesSectionProps {
+  changesInfo: { header: string; content: string; status: string }
+  minApproval?: number
+  codeOwners?: TypesCodeOwnerEvaluation | null
+  minReqLatestApproval?: number
+  approvedEvaluations?: TypesPullReqReviewer[]
+  changeReqEvaluations?: TypesPullReqReviewer[]
+  latestApprovalArr?: TypesPullReqReviewer[]
+  reqNoChangeReq?: boolean
+  changeReqReviewer?: string
+  codeOwnerChangeReqEntries?: (
+    | {
+        owner_evaluations: TypesOwnerEvaluation[]
+        line_number?: number
+        pattern?: string
+        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
+      }
+    | undefined
+  )[]
+  reqCodeOwnerApproval?: boolean
+  reqCodeOwnerLatestApproval?: boolean
+  codeOwnerPendingEntries?: TypesCodeOwnerEvaluationEntry[]
+  codeOwnerApprovalEntries?: (
+    | {
+        owner_evaluations: TypesOwnerEvaluation[]
+        line_number?: number
+        pattern?: string
+        user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
+      }
+    | undefined
+  )[]
+  latestCodeOwnerApprovalArr?: (
+    | {
+        entryEvaluation: TypesOwnerEvaluation[]
+      }
+    | undefined
+  )[]
+}
+
+export const PullRequestFilterOption = {
+  ...PullRequestState,
+  // REJECTED: 'rejected',
+  DRAFT: 'draft',
+  YOURS: 'yours',
+  ALL: 'all'
+}
+
+export enum MergeCheckStatus {
+  MERGEABLE = 'mergeable',
+  UNCHECKED = 'unchecked',
+  CONFLICT = 'conflict'
+}
+
+export interface PayloadAuthor {
+  display_name: string
+}
+
+export interface PayloadCreated {
+  created: number
+}
+
+export interface PayloadCodeComment {
+  path: string
+}
+
+export enum orderSortDate {
+  ASC = 'asc',
+  DESC = 'desc'
+}
+export enum PRCommentFilterType {
+  SHOW_EVERYTHING = 'showEverything',
+  ALL_COMMENTS = 'allComments',
+  MY_COMMENTS = 'myComments',
+  RESOLVED_COMMENTS = 'resolvedComments',
+  UNRESOLVED_COMMENTS = 'unresolvedComments'
+}
+export enum CommentType {
+  COMMENT = 'comment',
+  CODE_COMMENT = 'code-comment',
+  TITLE_CHANGE = 'title-change',
+  REVIEW_SUBMIT = 'review-submit',
+  MERGE = 'merge',
+  REVIEW_DELETE = 'reviewer-delete',
+  BRANCH_UPDATE = 'branch-update',
+  BRANCH_DELETE = 'branch-delete',
+  STATE_CHANGE = 'state-change',
+  REVIEW_ADD = 'reviewer-add',
+  LABEL_MODIFY = 'label-modify'
+}
+
+export enum LabelActivity {
+  ASSIGN = 'assign',
+  UN_ASSIGN = 'unassign',
+  RE_ASSIGN = 'reassign'
+}
+export enum MergeStrategy {
+  MERGE = 'merge',
+  SQUASH = 'squash',
+  REBASE = 'rebase'
+}

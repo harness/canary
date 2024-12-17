@@ -120,10 +120,7 @@ export const RepoSettingsGeneralForm: React.FC<{
 
   return (
     <>
-      <Text size={5} weight={'medium'}>
-        Settings
-      </Text>
-      <Text size={4} weight="medium">
+      <Text size={5} weight="medium" className="mb-2">
         General settings
       </Text>
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>

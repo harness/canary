@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 
-import { Navbar, Spacer } from '@harnessio/canary'
+import { Navbar } from '@harnessio/canary'
 
 import { SandboxLayout } from '../../index'
 
@@ -50,25 +50,27 @@ export const navItems = [
 
 function Sidebar() {
   return (
-    <SandboxLayout.Content>
-      <Navbar.Root className="border-none bg-transparent">
-        <Navbar.Content>
-          {navItems.map(group => (
-            <Navbar.Group
-              key={`group-${group.id}`}
-              title={group.groupTitle || ''}
-              topBorder={group.groupTitle ? true : false}
-            >
-              {group.items.map(item => (
-                <NavLink key={`group-${group.id}-item-${item.id}`} to={item.to}>
-                  {({ isActive }) => <Navbar.Item submenuItem text={item.text} active={isActive} />}
-                </NavLink>
-              ))}
-            </Navbar.Group>
-          ))}
-        </Navbar.Content>
-      </Navbar.Root>
-    </SandboxLayout.Content>
+    <SandboxLayout.LeftSubPanel hasHeader hasSubHeader>
+      <SandboxLayout.Content>
+        <Navbar.Root className="border-none bg-transparent">
+          <Navbar.Content>
+            {navItems.map(group => (
+              <Navbar.Group
+                key={`group-${group.id}`}
+                title={group.groupTitle || ''}
+                topBorder={group.groupTitle ? true : false}
+              >
+                {group.items.map(item => (
+                  <NavLink key={`group-${group.id}-item-${item.id}`} to={item.to}>
+                    {({ isActive }) => <Navbar.Item submenuItem text={item.text} active={isActive} />}
+                  </NavLink>
+                ))}
+              </Navbar.Group>
+            ))}
+          </Navbar.Content>
+        </Navbar.Root>
+      </SandboxLayout.Content>
+    </SandboxLayout.LeftSubPanel>
   )
 }
 
@@ -82,8 +84,7 @@ function SettingsContent() {
 
 export function RepoSettingsPage() {
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
-      <Spacer size={10} />
+    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel hasLeftSubPanel>
       <SandboxLayout.Columns columnWidths="auto 1fr">
         <SandboxLayout.Column>
           <Sidebar />

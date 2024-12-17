@@ -22,7 +22,7 @@ export const RepoSettingsToolTip = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="xs">
+        <Button variant="ghost" size="icon">
           <Icon name="vertical-ellipsis" size={14} className="cursor-pointer text-tertiary-background" />
         </Button>
       </DropdownMenuTrigger>

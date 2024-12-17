@@ -19,6 +19,7 @@ export interface NoDataProps {
     | 'no-data-branches'
     | 'no-data-members'
     | 'no-repository'
+    | 'no-data-error'
   iconSize?: number
   description: string[]
   primaryButton?: {

@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 
 import { isEmpty } from 'lodash-es'
 
-import { Spacer } from '@harnessio/canary'
 import {
   commentCreatePullReq,
   commentStatusPullReq,
@@ -23,35 +22,34 @@ import {
   useListPullReqActivitiesQuery,
   useReviewerListPullReqQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
+import { SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
-  extractInfoFromRuleViolationArr,
   PullRequestCommentBox,
   PullRequestFilters,
   PullRequestOverview,
   PullRequestPanel,
   PullRequestSideBar,
   SandboxLayout
-} from '@harnessio/views'
+} from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { PathParams } from '../../RouteDefinitions'
-import { CodeOwnerReqDecision } from '../../types'
-import { useActivityFilters } from './hooks/useActivityFilters'
-import { useDateFilters } from './hooks/useDataFilters'
-import { usePullRequestDataStore } from './stores/pull-request-store'
 import {
   capitalizeFirstLetter,
   checkIfOutdatedSha,
   extractInfoForCodeOwnerContent,
   findChangeReqDecisions,
   findWaitingDecisions,
-  generateAlphaNumericHash,
-  processReviewDecision
-} from './utils'
+  generateAlphaNumericHash
+} from '../../pages/pull-request/utils'
+import { PathParams } from '../../RouteDefinitions'
+import { CodeOwnerReqDecision } from '../../types'
+import { useActivityFilters } from './hooks/useActivityFilters'
+import { useDateFilters } from './hooks/useDataFilters'
+import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
+import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
-function PullRequestConversationPage() {
+export default function PullRequestConversationPage() {
   const {
     pullReqMetadata,
     refetchPullReq,
@@ -59,7 +57,7 @@ function PullRequestConversationPage() {
     setRuleViolationArr,
     prPanelData,
     pullReqChecksDecision
-  } = usePullRequestDataStore(state => ({
+  } = usePullRequestProviderStore(state => ({
     pullReqMetadata: state.pullReqMetadata,
     refetchPullReq: state.refetchPullReq,
     refetchActivities: state.refetchActivities,
@@ -500,5 +498,3 @@ function PullRequestConversationPage() {
     </>
   )
 }
-
-export { PullRequestConversationPage }

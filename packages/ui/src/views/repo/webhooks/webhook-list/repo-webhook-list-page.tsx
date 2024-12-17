@@ -92,64 +92,61 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
     )
   return (
     <>
-      <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
-        <SandboxLayout.Content>
-          <Spacer size={10} />
-          <Text size={5} weight={'medium'}>
-            Webhook
-          </Text>
-          <Spacer size={6} />
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={value}
-                handleChange={handleInputChange}
-                placeholder="Search"
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <Filters
-                filterOptions={FILTER_OPTIONS}
-                sortOptions={SORT_OPTIONS}
-                filterHandlers={filterHandlers}
-                layoutOptions={LAYOUT_OPTIONS}
-                currentLayout={currentLayout}
-                onLayoutChange={setCurrentLayout}
-                viewManagement={viewManagement}
-                t={t}
-              />
-              <Button variant="default" asChild>
-                <Link to="create">New webhook</Link>
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-          {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
-          <FiltersBar
-            filterOptions={FILTER_OPTIONS}
-            sortOptions={SORT_OPTIONS}
-            sortDirections={SORT_DIRECTIONS}
-            filterHandlers={filterHandlers}
-            viewManagement={viewManagement}
-            t={t}
-          />
-          <Spacer size={5} />
-          <RepoWebhookList
-            error={error}
-            loading={webhookLoading}
-            webhooks={webhooksWithFormattedDates}
-            LinkComponent={LinkComponent}
-            handleResetFilters={filterHandlers.handleResetFilters}
-            hasActiveFilters={filterHandlers.activeFilters.length > 0}
-            query={query ?? ''}
-            handleResetQuery={handleResetQuery}
-            handleNavigate={handleNavigate}
-          />
-          <Spacer size={8} />
-          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
+      <SandboxLayout.Content className="ml-0">
+        <Text size={5} weight={'medium'}>
+          Webhooks
+        </Text>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={value}
+              handleChange={handleInputChange}
+              placeholder="Search"
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Filters
+              filterOptions={FILTER_OPTIONS}
+              sortOptions={SORT_OPTIONS}
+              filterHandlers={filterHandlers}
+              layoutOptions={LAYOUT_OPTIONS}
+              currentLayout={currentLayout}
+              onLayoutChange={setCurrentLayout}
+              viewManagement={viewManagement}
+              t={t}
+            />
+            <Button variant="default" asChild>
+              <Link to="create">New webhook</Link>
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
+        {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
+        <FiltersBar
+          filterOptions={FILTER_OPTIONS}
+          sortOptions={SORT_OPTIONS}
+          sortDirections={SORT_DIRECTIONS}
+          filterHandlers={filterHandlers}
+          viewManagement={viewManagement}
+          t={t}
+        />
+        <Spacer size={5} />
+        <RepoWebhookList
+          error={error}
+          loading={webhookLoading}
+          webhooks={webhooksWithFormattedDates}
+          LinkComponent={LinkComponent}
+          handleResetFilters={filterHandlers.handleResetFilters}
+          hasActiveFilters={filterHandlers.activeFilters.length > 0}
+          query={query ?? ''}
+          handleResetQuery={handleResetQuery}
+          handleNavigate={handleNavigate}
+        />
+        <Spacer size={8} />
+        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+      </SandboxLayout.Content>
     </>
   )
 }

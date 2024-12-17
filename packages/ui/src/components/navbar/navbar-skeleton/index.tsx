@@ -74,15 +74,17 @@ interface GroupProps {
   topBorder?: boolean
   isSubMenu?: boolean
   titleClassName?: string
+  className?: string
 }
 
-function Group({ children, title, topBorder, isSubMenu = false, titleClassName }: GroupProps) {
+function Group({ children, title, topBorder, isSubMenu = false, titleClassName, className }: GroupProps) {
   return (
     <div
       className={cn(
         'flex w-full flex-col px-5',
         { 'border-borders-5 border-t pt-2.5': topBorder },
-        isSubMenu ? 'pb-2.5' : 'gap-1.5 pb-3'
+        isSubMenu ? 'pb-2.5' : 'gap-1.5 pb-3',
+        className
       )}
     >
       {title && (

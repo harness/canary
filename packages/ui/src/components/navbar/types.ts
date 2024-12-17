@@ -17,7 +17,7 @@ type NavbarItemIdType = number | string
 interface NavbarItemType {
   id: NavbarItemIdType
   title: string
-  iconName: IconProps['name']
+  iconName?: IconProps['name']
   description?: string
   to: string
   permanentlyPinned?: boolean

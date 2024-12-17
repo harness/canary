@@ -44,6 +44,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()
   const { theme } = useThemeStore()
+
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 

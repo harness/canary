@@ -55,7 +55,7 @@ export function CodeDiffEditor<T>(props: DiffEditorProps<T>): JSX.Element {
   return (
     <>
       <DiffEditor
-        className="border-border-background border-x border-b"
+        className="overflow-hidden rounded-b-md border-x border-b"
         language={language}
         theme={theme}
         original={original}

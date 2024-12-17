@@ -65,7 +65,7 @@ const PullRequestDiffViewer = ({
 }: PullRequestDiffviewerProps) => {
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const valRef = useRef('')
-  const [_loading, setLoading] = useState(false)
+  const [, setLoading] = useState(false)
   const highlighter = useDiffHighlighter({ setLoading })
   const reactWrapRef = useRef<HTMLDivElement>(null)
   const reactRef = useRef<HTMLDivElement | null>(null)

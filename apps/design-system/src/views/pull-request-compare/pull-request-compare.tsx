@@ -1,12 +1,12 @@
 import { FC, useCallback } from 'react'
 
-import { PullRequestCompare, SandboxPullRequestCompareProps } from '@harnessio/ui/views'
+import { PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
 
 import { noop, useTranslationsStore } from '../../utils.ts'
 import { repoBranchListStore } from './repo-branch-store.ts'
 import { repoCommitStore } from './repo-commit-store.ts'
 
-const PullRequestCompareWrapper: FC<Partial<SandboxPullRequestCompareProps>> = props => {
+const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = props => {
   const useRepoBranchListStore = useCallback(
     () => ({
       ...repoBranchListStore,
@@ -23,7 +23,7 @@ const PullRequestCompareWrapper: FC<Partial<SandboxPullRequestCompareProps>> = p
   )
 
   return (
-    <PullRequestCompare
+    <PullRequestComparePage
       onFormSubmit={noop}
       onFormDraftSubmit={noop}
       onFormCancel={noop}

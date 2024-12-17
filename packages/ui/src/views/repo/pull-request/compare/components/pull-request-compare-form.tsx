@@ -31,20 +31,20 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     }
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
-        <Fieldset>
+        <Fieldset className="gap-y-3">
+          <p className="text-18 font-medium leading-none text-foreground-1">Add a title</p>
           <Input
             id="title"
             {...register('title')}
             placeholder="Enter pull request title"
-            label="Title"
             error={errors.title?.message?.toString()}
             autoFocus
           />
+          <p className="mt-4 text-18 font-medium leading-none text-foreground-1">Add a description</p>
           <Textarea
             id="description"
             {...register('description')}
             placeholder="Add Pull Request description here."
-            label="Description"
             error={errors.description?.message?.toString()}
           />
         </Fieldset>

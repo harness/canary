@@ -40,6 +40,7 @@ import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../icons/cloud-costs-icon.svg'
 import Cog6 from '../icons/cog-6.svg'
 import Comments from '../icons/comments.svg'
+import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
@@ -98,6 +99,7 @@ import NoDataError from '../icons/no-data-error.svg'
 import NoDataFolder from '../icons/no-data-folder.svg'
 import NoDataMembers from '../icons/no-data-members.svg'
 import NoDataMerge from '../icons/no-data-merge.svg'
+import NoDataPR from '../icons/no-data-pr.svg'
 import NoDataWebhooks from '../icons/no-data-webhooks.svg'
 import NoRepository from '../icons/no-repository.svg'
 import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
@@ -206,6 +208,7 @@ const IconNameMap = {
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-data-members': NoDataMembers,
   'no-data-error': NoDataError,
+  'no-data-pr': NoDataPR,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,
@@ -329,6 +332,7 @@ const IconNameMap = {
   'menu-dots': MenuDots,
   'bookmark-add': BookmarkAdd,
   upload: Upload,
+  compare: Compare,
   minus: Minus
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

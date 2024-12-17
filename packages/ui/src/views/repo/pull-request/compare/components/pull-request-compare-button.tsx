@@ -1,4 +1,5 @@
-import { Icon } from '@components/icon'
+import { FC, RefObject, useCallback, useState } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -6,81 +7,106 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@components/index'
-import { Text } from '@components/text'
-import { CompareFormFields } from '@views/layouts/PullRequestCompareLayout'
+  DropdownMenuTrigger,
+  Option,
+  RadioButton,
+  RadioGroup
+} from '@/components'
+import { Icon } from '@components/icon'
+
+import { CompareFormFields } from '../pull-request-compare-page'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean
   isValid: boolean
   isLoading: boolean
-  formRef: React.RefObject<HTMLFormElement>
+  formRef: RefObject<HTMLFormElement>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
 }
 
-const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
+enum PULL_REQUEST_ACTION_TYPE {
+  DRAFT = 'Draft',
+  CREATE = 'Create'
+}
+
+const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
   formRef,
   onFormDraftSubmit,
   onFormSubmit
 }) => {
-  const handleDraftClick = (e: React.MouseEvent) => {
-    e.preventDefault()
+  const [pullRequestActionType, setPullRequestActionType] = useState<PULL_REQUEST_ACTION_TYPE>(
+    PULL_REQUEST_ACTION_TYPE.CREATE
+  )
+
+  const handleButtonClick = useCallback(() => {
     if (formRef.current) {
       const formData = new FormData(formRef.current)
       const data = {
         title: formData.get('title'),
         description: formData.get('description')
       }
-      onFormDraftSubmit(data as CompareFormFields) // Call the draft submit function
-    }
-  }
-  const handleCreateClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (formRef.current) {
-      const formData = new FormData(formRef.current)
-      const data = {
-        title: formData.get('title'),
-        description: formData.get('description')
+
+      if (pullRequestActionType === PULL_REQUEST_ACTION_TYPE.CREATE) {
+        onFormSubmit(data as CompareFormFields) // Call the default submit function
       }
-      onFormSubmit(data as CompareFormFields) // Call the draft submit function
+
+      if (pullRequestActionType === PULL_REQUEST_ACTION_TYPE.DRAFT) {
+        onFormDraftSubmit(data as CompareFormFields) // Call the draft submit function
+      }
     }
+  }, [pullRequestActionType, formRef, onFormSubmit, onFormDraftSubmit])
+
+  const handleChangeActionType = (actionType: PULL_REQUEST_ACTION_TYPE) => () => {
+    setPullRequestActionType(actionType)
   }
+
   return (
     <>
       {!isSubmitted ? (
         <>
-          <ButtonGroup>
-            <Button
-              theme={'primary'}
-              variant="split"
-              size="xs_split"
-              onClick={handleCreateClick}
-              dropdown={
-                <DropdownMenu>
-                  <DropdownMenuTrigger insideSplitButton>
-                    <Icon name="chevron-down" size={11} className="chevron-down" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="mt-1">
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem onClick={handleDraftClick} disabled={isLoading}>
-                        <div className="flex flex-col">
-                          <Text color="primary">Create draft pull request</Text>
-                          <Text color="tertiaryBackground">Does not request code reviews and cannot be merged</Text>
-                        </div>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              }
-              type="button" // Change to button type
-              disabled={isLoading}
-            >
-              {!isLoading ? 'Create pull request' : 'Creating pull request...'}
-            </Button>
+          <ButtonGroup className="bg-background-5 text-foreground-6 flex h-8 min-w-[185px] items-center justify-between rounded font-medium leading-none">
+            <button className="pl-5" onClick={handleButtonClick} type="button" disabled={isLoading}>
+              {pullRequestActionType} pull request
+            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger
+                className="after:bg-borders-7 hover:bg-background-10 relative h-full w-8 rounded border-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px"
+                insideSplitButton
+              >
+                <Icon name="chevron-down" size={11} className="chevron-down" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="max-w-[326px]">
+                <DropdownMenuGroup>
+                  <RadioGroup className="gap-0" value={pullRequestActionType}>
+                    <DropdownMenuItem
+                      onClick={handleChangeActionType(PULL_REQUEST_ACTION_TYPE.CREATE)}
+                      disabled={isLoading}
+                    >
+                      <Option
+                        control={<RadioButton value={PULL_REQUEST_ACTION_TYPE.CREATE} />}
+                        id={PULL_REQUEST_ACTION_TYPE.CREATE}
+                        label="Create pull request"
+                        description="Open pull request that is ready for review."
+                      />
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={handleChangeActionType(PULL_REQUEST_ACTION_TYPE.DRAFT)}
+                      disabled={isLoading}
+                    >
+                      <Option
+                        control={<RadioButton value={PULL_REQUEST_ACTION_TYPE.DRAFT} />}
+                        id={PULL_REQUEST_ACTION_TYPE.DRAFT}
+                        label="Create draft pull request"
+                        description="Does not request code reviews and cannot be merged."
+                      />
+                    </DropdownMenuItem>
+                  </RadioGroup>
+                </DropdownMenuGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </ButtonGroup>
         </>
       ) : (

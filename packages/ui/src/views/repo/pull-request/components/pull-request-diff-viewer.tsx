@@ -7,7 +7,7 @@ import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
-import constants from './constants'
+import constants from '../constants'
 
 const TextArea = ({ onChange }: { onChange: (v: string) => void }) => {
   const [val, setVal] = useState('')

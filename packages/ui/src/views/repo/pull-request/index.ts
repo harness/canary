@@ -1,6 +1,8 @@
 //pull-request-list
 export * from './pull-request-list-page'
-export * from './compare/components/types'
+export * from './pull-request.types'
+//pull-request-compare
+export * from './compare/pull-request-compare-page'
 //pull-request-commits
 export * from './commits/pull-request-commits'
 export * from './commits/pull-request-commits.types'

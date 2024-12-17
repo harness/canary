@@ -1,19 +1,19 @@
-import { NoData } from '@components/no-data'
-import { PaginationComponent } from '@components/pagination-component'
-import { SkeletonList } from '@components/skeleton-list'
-import { Spacer } from '@components/spacer'
-import { Text } from '@components/text'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
   IBranchSelectorStore,
   SandboxLayout,
-  TranslationStore
-} from '@views/index'
+  TranslationStore,
+  TypesCommit
+} from '@/views'
+import { NoData } from '@components/no-data'
+import { PaginationComponent } from '@components/pagination-component'
+import { SkeletonList } from '@components/skeleton-list'
+import { Spacer } from '@components/spacer'
+import { Text } from '@components/text'
 
 import { BranchSelector } from '../components/branch-selector/branch-selector'
-import { CommitsList } from './components/commits-list'
-import { TypesCommit } from './types'
+import { CommitsList } from '../components/commits-list'
 
 interface RepoCommitsViewProps {
   isFetchingCommits: boolean

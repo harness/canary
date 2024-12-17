@@ -25,7 +25,7 @@ import {
   BranchSelectorTab,
   CommitSelectorListItem,
   CompareFormFields,
-  PullRequestCompare
+  PullRequestComparePage
 } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
@@ -364,7 +364,7 @@ export const CreatePullRequest = () => {
     if (isFetchingBranches) return <SkeletonList />
 
     return (
-      <PullRequestCompare
+      <PullRequestComparePage
         currentUser={currentUser?.display_name}
         setSearchCommitQuery={setQuery}
         searchCommitQuery={query}

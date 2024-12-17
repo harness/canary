@@ -37,7 +37,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={<Icon name={item.iconName} size={12} />}
+                            icon={item.iconName && <Icon name={item.iconName} size={12} />}
                             active={isActive}
                           />
                         )}

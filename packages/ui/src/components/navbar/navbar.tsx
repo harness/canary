@@ -104,7 +104,7 @@ export const Navbar = ({
             <button onClick={handleSettingsMenu}>
               <NavbarSkeleton.Item
                 text={adminMenuItem.title}
-                icon={<Icon name={adminMenuItem.iconName} size={12} />}
+                icon={adminMenuItem.iconName && <Icon name={adminMenuItem.iconName} size={12} />}
                 active={showSettingMenu}
               />
             </button>

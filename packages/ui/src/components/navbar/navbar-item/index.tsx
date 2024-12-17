@@ -32,7 +32,7 @@ export const NavbarItem = ({
   handleCustomNav,
   t
 }: NavbarItemProps) => {
-  const iconName = item.iconName.replace('-gradient', '') as IconProps['name']
+  const iconName = item.iconName && (item.iconName.replace('-gradient', '') as IconProps['name'])
 
   const handlePin = () => {
     handleChangePinnedMenuItem(item, isRecent)
@@ -77,7 +77,11 @@ export const NavbarItem = ({
     <div className="group relative">
       <NavLink className="block pr-6" to={item.to || ''}>
         {({ isActive }) => (
-          <NavbarSkeleton.Item text={item.title} icon={<Icon name={iconName} size={12} />} active={isActive} />
+          <NavbarSkeleton.Item
+            text={item.title}
+            icon={iconName && <Icon name={iconName} size={12} />}
+            active={isActive}
+          />
         )}
       </NavLink>
       <DropdownMenu>

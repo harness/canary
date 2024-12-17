@@ -33,7 +33,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
                           text={item.title || ''}
                           description={item.description || ''}
                           submenuItem
-                          icon={<Icon name={item.iconName} size={18} />}
+                          icon={item.iconName && <Icon name={item.iconName} size={18} />}
                           active={isActive}
                         />
                       )}

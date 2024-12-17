@@ -20,7 +20,8 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onSubmit,
-  onEditMember
+  onEditMember,
+  onDeleteMember
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
@@ -65,7 +66,9 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
           description={[t('views:noData.inviteMembers')]}
           primaryButton={{
             label: t('views:projectSettings.newMember'),
-            onClick: () => {}
+            onClick: () => {
+              setIsInviteMemberDialogOpen(true)
+            }
           }}
         />
       )

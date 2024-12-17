@@ -51,7 +51,7 @@ import {
   processReviewDecision
 } from './utils'
 
-export default function PullRequestConversationPage() {
+function PullRequestConversationPage() {
   const {
     pullReqMetadata,
     refetchPullReq,
@@ -500,3 +500,5 @@ export default function PullRequestConversationPage() {
     </>
   )
 }
+
+export { PullRequestConversationPage }

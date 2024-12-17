@@ -31,7 +31,6 @@
     "files": "Fichiers",
     "pipelines": "Pipelines",
     "pull-requests": "Requêtes de tirage",
-    "webhooks": "Webhooks",
     "settings": "Paramètres",
     "repositories": "Dépôts",
     "create-repository": "Créer un dépôt",
@@ -40,7 +39,8 @@
     "addFile": "Ajouter un fichier",
     "clone": "Cloner",
     "readme": "README.md",
-    "openPullReq": "Requêtes de tirage ouvertes"
+    "openPullReq": "Requêtes de tirage ouvertes",
+    "webhooks": "Webhooks"
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

@@ -11,13 +11,13 @@ import {
   ForgotPasswordPage as ForgotPasswordPageV2,
   NewPasswordPage as NewPasswordPageV2,
   OTPPage as OTPPageV2,
+  RepoSettingsPage,
   SandboxLayout
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
   NewPasswordPage,
   OTPPage,
-  RepoSettingsPage,
   RepoSettingsPlaceholderPage,
   SandboxSettings,
   SettingsAccountPage,
@@ -43,6 +43,7 @@ import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
+import PullRequestConversationPage from './pages-v2/pull-request/pull-request-conversation'
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
@@ -77,7 +78,7 @@ import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
 import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
 import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
-import PullRequestConversationPage from './pages/pull-request/pull-request-conversation-page'
+import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
@@ -243,10 +244,6 @@ export default function App() {
               element: <Navigate to="pulls" replace />
             },
             {
-              path: 'webhooks',
-              element: <WebhookListPage />
-            },
-            {
               path: 'pulls',
               children: [
                 { index: true, element: <SandboxPullRequestListPage /> },
@@ -266,7 +263,11 @@ export default function App() {
                 },
                 {
                   path: 'conversation',
-                  element: <>conversation</>
+                  element: (
+                    <PullRequestDataProvider>
+                      <PullRequestConversationPage />
+                    </PullRequestDataProvider>
+                  )
                 },
                 {
                   path: 'commits',
@@ -297,6 +298,11 @@ export default function App() {
                 {
                   path: 'rules',
                   element: <RepoSettingsGeneralPageContainer />
+                },
+
+                {
+                  path: 'webhooks',
+                  element: <WebhookListPage />
                 }
               ]
             }
@@ -457,7 +463,7 @@ export default function App() {
                       path: 'conversation',
                       element: (
                         <PullRequestDataProviderV1>
-                          <PullRequestConversationPage />
+                          <PullRequestConversationPageV1 />
                         </PullRequestDataProviderV1>
                       )
                     },

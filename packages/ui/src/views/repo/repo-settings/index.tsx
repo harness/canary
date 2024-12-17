@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 
 import { Fieldset, FormSeparator } from '@/components'
-import { BranchSelectorListItem, IBranchSelectorStore, TranslationStore } from '@/views'
+import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
 
 import { RepoSettingsGeneralDelete } from './components/repo-settings-general-delete'
@@ -45,46 +45,52 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   selectBranchOrTag
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
+
   if (window.location.pathname.endsWith('/rules')) {
     rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
+  if (window.location.pathname.endsWith('/general')) {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const { repoData, securityScanning, rules } = useRepoRulesStore()
 
   return (
-    <Fieldset>
-      <RepoSettingsGeneralForm
-        repoData={repoData}
-        handleRepoUpdate={handleRepoUpdate}
-        apiError={apiError}
-        isLoadingRepoData={loadingStates.isLoadingRepoData}
-        isUpdatingRepoData={loadingStates.isUpdatingRepoData}
-        isRepoUpdateSuccess={isRepoUpdateSuccess}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        selectBranchOrTag={selectBranchOrTag}
-      />
-      <FormSeparator />
-      <div ref={rulesRef}>
-        <RepoSettingsGeneralRules
-          rules={rules}
+    <SandboxLayout.Content className="ml-0" maxWidth="2xl">
+      <Fieldset>
+        <RepoSettingsGeneralForm
+          repoData={repoData}
+          handleRepoUpdate={handleRepoUpdate}
           apiError={apiError}
-          handleRuleClick={handleRuleClick}
-          openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+          isLoadingRepoData={loadingStates.isLoadingRepoData}
+          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+          isRepoUpdateSuccess={isRepoUpdateSuccess}
+          useRepoBranchesStore={useRepoBranchesStore}
+          useTranslationStore={useTranslationStore}
+          selectBranchOrTag={selectBranchOrTag}
         />
-      </div>
+        <FormSeparator />
+        <div ref={rulesRef}>
+          <RepoSettingsGeneralRules
+            rules={rules}
+            apiError={apiError}
+            handleRuleClick={handleRuleClick}
+            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+          />
+        </div>
 
-      <FormSeparator />
-      <RepoSettingsSecurityForm
-        securityScanning={securityScanning}
-        handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-        apiError={apiError}
-        isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
-        isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-      />
-      <FormSeparator />
-      <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
-    </Fieldset>
+        <FormSeparator />
+        <RepoSettingsSecurityForm
+          securityScanning={securityScanning}
+          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+          apiError={apiError}
+          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+        />
+        <FormSeparator />
+        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
+      </Fieldset>
+    </SandboxLayout.Content>
   )
 }
 

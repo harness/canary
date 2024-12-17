@@ -2,18 +2,19 @@ import type * as Diff2Html from 'diff2html'
 import HoganJsUtils from 'diff2html/lib/hoganjs-utils'
 import { get, isEmpty } from 'lodash-es'
 
-import { TypesCodeOwnerEvaluationEntry } from '@harnessio/code-service-client'
+import {
+  EnumPullReqReviewDecision,
+  TypesCodeOwnerEvaluationEntry,
+  TypesRuleViolations,
+  TypesViolation
+} from '@harnessio/code-service-client'
 import { ExecutionState } from '@harnessio/views'
 
-import {
-  EnumPullReqReviewDecisionExtended,
-  PullReqReviewDecision,
-  TypeCheckData
-} from '../../pages/pull-request/types/types'
+import { PullReqReviewDecision, TypeCheckData } from '../../pages/pull-request/types/types'
 import { extractInfoForCodeOwnerContentProps } from '../../types'
 
 export const processReviewDecision = (
-  review_decision: EnumPullReqReviewDecisionExtended,
+  review_decision: EnumPullReqReviewDecision | PullReqReviewDecision.outdated,
   reviewedSHA?: string,
   sourceSHA?: string
 ) =>
@@ -491,3 +492,19 @@ export function generateAlphaNumericHash(length: number) {
 
 export const getErrorMessage = (error: unknown): string | undefined =>
   error ? (get(error, 'data.error', get(error, 'data.message', get(error, 'message', error))) as string) : undefined
+
+export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViolations[]) => {
+  const tempArray: unknown[] = ruleViolationArr?.flatMap(
+    (item: { violations?: TypesViolation[] | null }) => item?.violations?.map(violation => violation.message) ?? []
+  )
+  const uniqueViolations = new Set(tempArray)
+  const violationArr = [...uniqueViolations].map(violation => ({ violation: violation }))
+
+  const checkIfBypassAllowed = ruleViolationArr.some(ruleViolation => ruleViolation.bypassed === false)
+
+  return {
+    uniqueViolations,
+    checkIfBypassAllowed,
+    violationArr
+  }
+}

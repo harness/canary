@@ -4,9 +4,13 @@ import { isEmpty } from 'lodash-es'
 import {
   ApprovalItem,
   ApprovalItems,
+  CommentItem,
   EnumPullReqReviewDecisionExtended,
   PullReqReviewDecision,
-  ReviewerListPullReqOkResponse
+  ReviewerListPullReqOkResponse,
+  TypesPullReqActivity,
+  TypesRuleViolations,
+  TypesViolation
 } from './pull-request-details-types'
 
 export const processReviewDecision = (
@@ -88,3 +92,38 @@ export const approvalItems = [
     ]
   }
 ]
+
+export const extractInfoFromRuleViolationArr = (ruleViolationArr: TypesRuleViolations[]) => {
+  const tempArray: unknown[] = ruleViolationArr?.flatMap(
+    (item: { violations?: TypesViolation[] | null }) => item?.violations?.map(violation => violation.message) ?? []
+  )
+  const uniqueViolations = new Set(tempArray)
+  const violationArr = [...uniqueViolations].map(violation => ({ violation: violation }))
+
+  const checkIfBypassAllowed = ruleViolationArr.some(ruleViolation => ruleViolation.bypassed === false)
+
+  return {
+    uniqueViolations,
+    checkIfBypassAllowed,
+    violationArr
+  }
+}
+
+export function easyPluralize(count: number, singular: string, plural: string, include?: boolean): string {
+  const word = count === 1 ? singular : plural
+
+  return include ? `${count} ${word}` : word
+}
+// check if activity item is a system comment
+export function isSystemComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
+  return commentItems[0]?.payload?.payload?.kind === 'system'
+}
+
+//  check if comment item is a code comment
+export function isCodeComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
+  return commentItems[0]?.payload?.payload?.type === 'code-comment'
+}
+// check if activity item is a comment
+export function isComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
+  return commentItems[0]?.payload?.payload?.type === 'comment'
+}

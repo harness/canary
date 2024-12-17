@@ -10,7 +10,6 @@ export enum RepoTabsKeys {
   PIPELINES = 'pipelines',
   COMMITS = 'commits',
   PULLS = 'pulls',
-  WEBHOOKS = 'webhooks',
   BRANCHES = 'branches',
   SETTINGS = 'settings'
 }
@@ -49,9 +48,6 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
             </NavLink>
             <NavLink to={RepoTabsKeys.PULLS}>
               <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
-            </NavLink>
-            <NavLink to={RepoTabsKeys.WEBHOOKS}>
-              <TabsTrigger value="webhooks">{t('views:repos.webhooks', 'Webhooks')}</TabsTrigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.BRANCHES}>
               <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>

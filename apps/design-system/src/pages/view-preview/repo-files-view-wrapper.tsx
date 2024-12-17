@@ -60,8 +60,6 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <RepoSidebarView
-        hasHeader
-        hasSubHeader
         selectBranchOrTag={noop}
         useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationsStore}

@@ -12,7 +12,7 @@ import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper.tsx'
 import RepoViewWrapper from './repo-view-wrapper.tsx'
 import RootViewWrapper from './root-view-wrapper.tsx'
-import ViewSwitcher from './view-switcher/view-switcher.tsx'
+import ViewSettings from './view-settings.tsx'
 
 const views: Record<string, ReactNode> = {
   'repo-summary': (
@@ -70,15 +70,15 @@ const routeKeys = Object.keys(views)
 
 const ViewPreview: FC = () => {
   return (
-    <div className="dark-std-std">
+    <>
       <Routes>
         {routeEntries.map(([route, node]) => {
           return <Route key={route} path={`${route}/*`} element={node} />
         })}
         <Route path="/" element={<Navigate to={routeKeys[0]} />} />
       </Routes>
-      <ViewSwitcher routes={routeKeys} />
-    </div>
+      <ViewSettings routes={routeKeys} />
+    </>
   )
 }
 

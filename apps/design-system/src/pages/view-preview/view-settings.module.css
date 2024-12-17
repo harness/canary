@@ -1,0 +1,20 @@
+.viewSettings {
+  position: fixed;
+  bottom: 0.5rem;
+  right: 0.5rem;
+
+  &[data-show='show'] {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid hsl(var(--canary-border-01));
+    border-radius: 0.25rem;
+    padding: 1rem;
+    width: 20rem;
+    background: hsl(var(--canary-background-01));
+  }
+}
+
+.showHideButton {
+  gap: 0.5rem;
+  align-self: flex-end;
+}

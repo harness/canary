@@ -117,8 +117,8 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
 
   return (
     <ControlGroup>
-      <Label htmlFor="target-patterns" className="mb-2.5">
-        Target Patterns
+      <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
+        Target patterns
       </Label>
       <div className="grid grid-cols-5 grid-rows-1">
         <div className="col-span-4 mr-2">
@@ -163,7 +163,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
         </Button>
         {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
       </div>
-      <Text size={2} as="p" color="tertiaryBackground" className="max-w-full">
+      <Text size={2} as="p" color="tertiaryBackground" className="max-w-full mt-2.5">
         Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
       </Text>
       <div className="flex flex-wrap">
@@ -198,7 +198,7 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
         />
       }
       id="default-branch"
-      label="Apply rule to the default branch"
+      label="Apply this rule to the default branch"
       className="mt-0"
     />
 
@@ -315,7 +315,7 @@ export const BranchSettingsRuleListField: React.FC<{
       {branchRules.map((rule, index) => (
         <div key={rule.id}>
           <Option
-            className="mb-2.5"
+            className="mb-5"
             control={
               <Checkbox
                 id={rule.id}

@@ -207,8 +207,7 @@ export function RepoSummaryView({
                 <Spacer size={4} />
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
-                  spaceId={spaceId}
-                  repoId={repoId}
+                  useRepoBranchesStore={useRepoBranchesStore}
                   currentBranchDivergence={{
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0

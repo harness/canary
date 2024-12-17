@@ -72,8 +72,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
               <Spacer size={4} />
               <BranchInfoBar
                 defaultBranchName={defaultBranchName}
-                spaceId={spaceId}
-                repoId={repoId}
+                useRepoBranchesStore={useRepoBranchesStore}
                 currentBranchDivergence={{
                   ahead: currentBranchDivergence.ahead || 0,
                   behind: currentBranchDivergence.behind || 0

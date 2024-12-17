@@ -1,11 +1,12 @@
 import { RepositoryType } from '@views/repo/repo.types'
 import i18n, { TFunction } from 'i18next'
 
-interface RepoStore {
+export interface RepoStore {
   repositories: RepositoryType[] | null
   totalPages: number
   page: number
   setPage: (page: number) => void
+  setRepositories: (data: RepositoryType[], totalPages: number) => void
 }
 
 export interface TranslationStore {

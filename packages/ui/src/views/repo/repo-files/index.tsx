@@ -4,6 +4,7 @@ import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
   BranchInfoBar,
   CodeModes,
+  CommitDivergenceType,
   FileLastChangeBar,
   IBranchSelectorStore,
   LatestFileTypes,
@@ -28,6 +29,7 @@ interface RepoFilesProps {
   codeMode: CodeModes
   useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
+  currentBranchDivergence: CommitDivergenceType
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -43,7 +45,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   pathUploadFiles,
   codeMode,
   useRepoBranchesStore,
-  defaultBranchName
+  defaultBranchName,
+  currentBranchDivergence
 }) => {
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -72,8 +75,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                 spaceId={spaceId}
                 repoId={repoId}
                 currentBranchDivergence={{
-                  ahead: 10,
-                  behind: 20
+                  ahead: currentBranchDivergence.ahead || 0,
+                  behind: currentBranchDivergence.behind || 0
                 }}
               />
             </>

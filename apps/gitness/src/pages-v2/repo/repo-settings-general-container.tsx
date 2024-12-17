@@ -42,6 +42,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()
@@ -50,7 +51,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
-  const { branchList, setBranchList, setSelectedBranchTag, setSelectedBranchType } = useRepoBranchesStore()
+  const { branchList, setBranchList, setSelectedBranchTag, setSelectedRefType } = useRepoBranchesStore()
 
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
@@ -256,7 +257,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       }
     },
@@ -272,7 +273,7 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   useEffect(() => {
     if (branches) {
-      setBranchList(branches)
+      setBranchList(transformBranchList(branches))
       setApiError(null)
     }
   }, [branches, setBranchList])

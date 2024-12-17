@@ -15,8 +15,9 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { normalizeGitRef } from '../../utils/git-utils'
+import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
@@ -27,11 +28,12 @@ export default function RepoCommitsPage() {
   const {
     branchList,
     tagList,
+    selectedRefType,
     setBranchList,
     setTagList,
     selectedBranchTag,
     setSelectedBranchTag,
-    setSelectedBranchType,
+    setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
@@ -47,14 +49,9 @@ export default function RepoCommitsPage() {
 
   useEffect(() => {
     if (branches) {
-      setBranchList(
-        branches.map(item => ({
-          name: item.name || '',
-          sha: item.sha || ''
-        }))
-      )
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
-  }, [branches])
+  }, [branches, repository?.default_branch])
 
   useEffect(() => {
     if (tags) {
@@ -74,9 +71,16 @@ export default function RepoCommitsPage() {
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
-    queryParams: { page, git_ref: normalizeGitRef(selectedBranchTag?.name), include_stats: true }
+    queryParams: {
+      page,
+      git_ref: normalizeGitRef(
+        selectedRefType === BranchSelectorTab.TAGS
+          ? REFS_TAGS_PREFIX + selectedBranchTag?.name
+          : selectedBranchTag?.name
+      ),
+      include_stats: true
+    }
   })
-
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
@@ -86,13 +90,13 @@ export default function RepoCommitsPage() {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       }
     },

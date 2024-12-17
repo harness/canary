@@ -19,6 +19,7 @@ import { PathParams } from '../../RouteDefinitions.ts'
 import { orderSortDate } from '../../types.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
 import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
+import { transformBranchList } from './transform-utils/branch-transform.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -32,7 +33,7 @@ export const RepoSidebar = () => {
     selectedBranchTag,
     setDefaultBranch,
     setSelectedBranchTag,
-    setSelectedBranchType,
+    setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
@@ -40,10 +41,6 @@ export const RepoSidebar = () => {
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    setSelectedBranchTag({ name: gitRefName || '', sha: '' })
-  }, [fullGitRef])
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -56,22 +53,17 @@ export const RepoSidebar = () => {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: orderSortDate.DESC,
+      order: orderSortDate.ASC,
       limit: 50
     }
   })
+
   useEffect(() => {
     if (branches) {
-      setBranchList(
-        branches.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          is_default: item?.name === repository?.default_branch
-        }))
-      )
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
     if (repository?.default_branch) {
-      setDefaultBranch(repository)
+      setDefaultBranch(repository?.default_branch)
     }
   }, [branches, repository?.default_branch])
 
@@ -103,9 +95,11 @@ export const RepoSidebar = () => {
     }
     if (!fullGitRef) {
       const defaultBranch = branchList.find(branch => branch.default)
-      if (defaultBranch) {
-        setSelectedBranchTag(defaultBranch)
-      }
+      setSelectedBranchTag({
+        name: defaultBranch?.name || repository?.default_branch || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
     } else {
       const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
@@ -139,14 +133,14 @@ export const RepoSidebar = () => {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
           navigate(`${branch.name}`)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
           navigate(`${REFS_TAGS_PREFIX + tag.name}`)
         }
       }

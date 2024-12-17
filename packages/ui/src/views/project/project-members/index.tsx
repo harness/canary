@@ -20,8 +20,7 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onSubmit,
-  onEditMember,
-  onDeleteMember
+  onEditMember
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()

@@ -1717,7 +1717,7 @@
 }
 
 mark {
-  background: hsl(var(--canary-background-accent));
+  background: hsl(var(--canary-background-05));
   color: hsl(var(--canary-foreground-06));
 }
 

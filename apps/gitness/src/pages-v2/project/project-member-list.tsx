@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
+  EnumMembershipRole,
   TypesPrincipalInfo,
   useListPrincipalsQuery,
   useMembershipAddMutation,
@@ -42,6 +43,11 @@ export function ProjectMemberListPage() {
     }
   })
 
+  const mapToEnumMembershipRole = (role: string): EnumMembershipRole | undefined =>
+    (['contributor', 'executor', 'reader', 'space_owner'] as const).includes(role as EnumMembershipRole)
+      ? (role as EnumMembershipRole)
+      : undefined
+
   const {
     mutateAsync: inviteMember,
     isLoading: isInvitingMember,
@@ -53,7 +59,7 @@ export function ProjectMemberListPage() {
 
     await inviteMember({
       space_ref: space_ref ?? '',
-      body: { role, user_uid: member }
+      body: { role: mapToEnumMembershipRole(role), user_uid: member }
     })
     queryClient.invalidateQueries({ queryKey: ['membershipList'] })
     setIsDialogOpen(false)

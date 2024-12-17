@@ -29,6 +29,8 @@ interface RepoSettingsGeneralPageProps {
   useRepoRulesStore: () => IRepoStore
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
@@ -42,7 +44,9 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   useRepoRulesStore,
   useRepoBranchesStore,
   useTranslationStore,
-  selectBranchOrTag
+  selectBranchOrTag,
+  searchQuery,
+  setSearchQuery
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
@@ -68,6 +72,8 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           useRepoBranchesStore={useRepoBranchesStore}
           useTranslationStore={useTranslationStore}
           selectBranchOrTag={selectBranchOrTag}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
         <FormSeparator />
         <div ref={rulesRef}>

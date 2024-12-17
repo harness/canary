@@ -48,7 +48,7 @@ export const CreatePullRequest = () => {
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
-
+  const [branchTagQuery, setBranchTagQuery] = useState('')
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
 
   const navigate = useNavigate()
@@ -212,7 +212,7 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10 }
+    queryParams: { page: 0, limit: 10, query: branchTagQuery }
   })
 
   useEffect(() => {
@@ -301,7 +301,7 @@ export const CreatePullRequest = () => {
       order: 'asc',
       limit: 20,
       page: 1,
-      query: ''
+      query: branchTagQuery
     }
   })
 
@@ -412,6 +412,8 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
+        searchQuery={branchTagQuery}
+        setSearchQuery={setBranchTagQuery}
       />
     )
   }

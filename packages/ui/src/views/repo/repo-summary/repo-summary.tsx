@@ -69,6 +69,8 @@ export interface RepoSummaryViewProps {
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
   currentBranchDivergence: CommitDivergenceType
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export function RepoSummaryView({
@@ -89,7 +91,9 @@ export function RepoSummaryView({
   isEditDialogOpen,
   setEditDialogOpen,
   useTranslationStore,
-  currentBranchDivergence
+  currentBranchDivergence,
+  searchQuery,
+  setSearchQuery
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
@@ -166,6 +170,8 @@ export function RepoSummaryView({
                     onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
                   />
                   <SearchFiles
                     navigateToFile={navigateToFile}

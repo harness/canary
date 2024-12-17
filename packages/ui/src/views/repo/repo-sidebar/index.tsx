@@ -12,6 +12,8 @@ interface RepoSidebarProps {
   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export const RepoSidebar = ({
@@ -21,7 +23,9 @@ export const RepoSidebar = ({
   children,
   selectBranchOrTag,
   useRepoBranchesStore,
-  useTranslationStore
+  useTranslationStore,
+  searchQuery,
+  setSearchQuery
 }: RepoSidebarProps) => {
   const { branchList } = useRepoBranchesStore()
 
@@ -38,6 +42,8 @@ export const RepoSidebar = ({
                   onSelectBranch={selectBranchOrTag}
                   useRepoBranchesStore={useRepoBranchesStore}
                   useTranslationStore={useTranslationStore}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
                 />
               )}
               <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-2">

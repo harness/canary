@@ -52,7 +52,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
   const { branchList, setBranchList, setSelectedBranchTag, setSelectedRefType } = useRepoBranchesStore()
-
+  const [branchQuery, setBranchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
   const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState<boolean>(false)
@@ -77,13 +77,14 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { data: { body: branches } = {}, isLoading: isLoadingBranches } = useListBranchesQuery(
+  const { data: { body: branches } = {} } = useListBranchesQuery(
     {
       repo_ref: repoRef,
       queryParams: {
         order: 'asc',
         page: 1,
-        limit: 100
+        limit: 100,
+        query: branchQuery
       }
     },
     {
@@ -268,12 +269,18 @@ export const RepoSettingsGeneralPageContainer = () => {
     if (repoData) {
       setRepoData(repoData)
       setApiError(null)
+      const defaultBranch = branchList.find(branch => branch.default)
+      setSelectedBranchTag({
+        name: defaultBranch?.name || repoData?.default_branch || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
     }
   }, [repoData, setRepoData])
 
   useEffect(() => {
     if (branches) {
-      setBranchList(transformBranchList(branches))
+      setBranchList(transformBranchList(branches, ''))
       setApiError(null)
     }
   }, [branches, setBranchList])
@@ -304,7 +311,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const loadingStates = {
-    isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
+    isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
     isUpdatingSecuritySettings: UpdatingSecuritySettings
@@ -324,6 +331,8 @@ export const RepoSettingsGeneralPageContainer = () => {
         handleRuleClick={handleRuleClick}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+        searchQuery={branchQuery}
+        setSearchQuery={setBranchQuery}
       />
 
       <DeleteAlertDialog

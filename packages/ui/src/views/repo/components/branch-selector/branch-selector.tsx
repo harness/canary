@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useState } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, TranslationStore } from '@/views'
@@ -13,6 +13,8 @@ interface BranchSelectorProps {
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
@@ -21,7 +23,9 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   buttonSize = 'default',
   selectedBranch,
   onSelectBranch,
-  isBranchOnly = false
+  isBranchOnly = false,
+  searchQuery,
+  setSearchQuery
 }) => {
   const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
 
@@ -29,8 +33,10 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     ? tagList?.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
     : false
 
+  const [open, setOpen] = useState(false)
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <Button
           className={
@@ -59,6 +65,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         repoId={repoId}
         spaceId={spaceId}
         useTranslationStore={useTranslationStore}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
     </DropdownMenu>
   )

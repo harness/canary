@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -41,6 +41,7 @@ export const RepoSidebar = () => {
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -54,7 +55,8 @@ export const RepoSidebar = () => {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.ASC,
-      limit: 50
+      limit: 50,
+      query: searchQuery
     }
   })
 
@@ -190,6 +192,8 @@ export const RepoSidebar = () => {
           navigateToNewFile={navigateToNewFile}
           navigateToFile={navigateToFile}
           filesList={filesList}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         >
           {!!repoDetails?.body?.content?.entries?.length && (
             <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />

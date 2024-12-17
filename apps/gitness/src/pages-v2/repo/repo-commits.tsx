@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
@@ -22,7 +22,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
-
+  const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const {
@@ -38,13 +38,13 @@ export default function RepoCommitsPage() {
   } = useRepoBranchesStore()
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: { page, query: branchTagQuery }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: { page, query: branchTagQuery }
   })
 
   useEffect(() => {
@@ -113,7 +113,6 @@ export default function RepoCommitsPage() {
   return (
     <RepoCommitsView
       commitsList={commitData?.commits}
-      isFetchingBranches={isFetchingBranches}
       isFetchingCommits={isFetchingCommits}
       page={page}
       setPage={(page: number) => setPage(page)}
@@ -122,6 +121,8 @@ export default function RepoCommitsPage() {
       selectBranchOrTag={selectBranchOrTag}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
+      searchQuery={branchTagQuery}
+      setSearchQuery={setBranchTagQuery}
     />
   )
 }

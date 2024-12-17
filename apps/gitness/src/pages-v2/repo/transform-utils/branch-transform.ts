@@ -14,7 +14,7 @@ export const transformBranchList = (
       name: branch.name || '',
       sha: branch.commit?.sha || '',
       timestamp: branch.commit?.committer?.when ? timeAgoFromISOTime(branch.commit.committer.when) : '',
-      default: branch.name === defaultBranch || false,
+      default: branch.name === defaultBranch || branch.is_default || false,
       user: {
         name: branch.commit?.committer?.identity?.name || '',
         avatarUrl: ''
@@ -22,7 +22,7 @@ export const transformBranchList = (
       behindAhead: {
         behind: behind || 0,
         ahead: ahead || 0,
-        default: defaultBranch === branch.name
+        default: defaultBranch === branch.name || branch.is_default || false
       }
     }
   })

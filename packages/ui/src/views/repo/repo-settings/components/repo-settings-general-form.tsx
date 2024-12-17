@@ -45,6 +45,8 @@ export const RepoSettingsGeneralForm: React.FC<{
   selectBranchOrTag: (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }> = ({
   repoData,
   handleRepoUpdate,
@@ -54,7 +56,9 @@ export const RepoSettingsGeneralForm: React.FC<{
   isRepoUpdateSuccess,
   selectBranchOrTag,
   useRepoBranchesStore,
-  useTranslationStore
+  useTranslationStore,
+  searchQuery,
+  setSearchQuery
 }) => {
   const {
     register,
@@ -162,6 +166,8 @@ export const RepoSettingsGeneralForm: React.FC<{
               selectBranchOrTag(value, BranchSelectorTab.BRANCHES)
             }}
             isBranchOnly={true}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
         </Fieldset>
 

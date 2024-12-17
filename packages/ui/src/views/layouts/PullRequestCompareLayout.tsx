@@ -77,6 +77,8 @@ export interface SandboxPullRequestCompareProps {
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -99,7 +101,9 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   useTranslationStore,
   useRepoBranchesStore,
   useRepoCommitsStore,
-  currentUser
+  currentUser,
+  searchQuery,
+  setSearchQuery
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -167,6 +171,8 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 selectBranch(branchTag, type, false)
                 handleBranchSelection()
               }}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
 
             <Icon name="arrow-long" size={14} className="rotate-180 text-tertiary-background" />
@@ -179,6 +185,8 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
                 selectBranch(branchTag, type, true)
                 handleBranchSelection()
               }}
+              searchQuery={searchQuery}
+              setSearchQuery={setSearchQuery}
             />
 
             {isBranchSelected &&

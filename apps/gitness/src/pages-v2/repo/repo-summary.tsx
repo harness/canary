@@ -46,6 +46,7 @@ export default function RepoSummaryPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
+  const [branchTagQuery, setBranchTagQuery] = useState('')
 
   const {
     branchList,
@@ -70,7 +71,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.ASC, limit: 50 }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.ASC, limit: 50, query: branchTagQuery }
   })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
@@ -137,7 +138,8 @@ export default function RepoSummaryPage() {
       sort: 'date',
       order: orderSortDate.DESC,
       limit: 50,
-      page: 1
+      page: 1,
+      query: branchTagQuery
     }
   })
 
@@ -243,11 +245,6 @@ export default function RepoSummaryPage() {
     return SummaryItemType.File
   }
 
-  const buildFilePath = useCallback(
-    (itemPath: string | undefined) => `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${itemPath}`,
-    [spaceId, repoId, gitRef, selectedBranchTag]
-  )
-
   useEffect(() => {
     setLoading(true)
 
@@ -271,7 +268,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: buildFilePath(item?.path)
+              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }
@@ -280,7 +277,7 @@ export default function RepoSummaryPage() {
       .finally(() => {
         setLoading(false)
       })
-  }, [repoEntryPathToFileTypeMap, selectedBranchTag?.name, repoRef, buildFilePath, gitRef])
+  }, [repoEntryPathToFileTypeMap, selectedBranchTag?.name, repoRef, gitRef])
 
   useEffect(() => {
     const defaultBranch = branchList.find(branch => branch.default)
@@ -349,6 +346,8 @@ export default function RepoSummaryPage() {
         setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
         currentBranchDivergence={currBranchDivergence}
+        searchQuery={branchTagQuery}
+        setSearchQuery={setBranchTagQuery}
       />
       {createdTokenData && (
         <TokenSuccessDialog

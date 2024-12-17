@@ -38,7 +38,7 @@ export const RepoImportContainer = () => {
   }
   return (
     <>
-      <SandboxLayout.Main hasLeftPanel hasHeader>
+      <SandboxLayout.Main>
         <SandboxLayout.Content maxWidth="2xl">
           <Spacer size={10} />
           <Text size={6} weight={'medium'}>

@@ -163,7 +163,7 @@ export default function App() {
         {
           path: 'repos',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>Repo</h1>
             </SandboxLayout.Main>
           )
@@ -171,7 +171,7 @@ export default function App() {
         {
           path: 'pipelines',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>pipelines</h1>
             </SandboxLayout.Main>
           )
@@ -179,7 +179,7 @@ export default function App() {
         {
           path: 'executions',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>executions</h1>
             </SandboxLayout.Main>
           )
@@ -187,7 +187,7 @@ export default function App() {
         {
           path: 'databases',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>databases</h1>
             </SandboxLayout.Main>
           )

@@ -7,7 +7,7 @@ import PipelineStudioViewProvider from './context/PipelineStudioViewProvider'
 
 const PipelineEditPage = (): JSX.Element => {
   return (
-    <SandboxLayout.Main hasHeader hasLeftPanel fullWidth>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="p-0">
         <YamlEditorContextProvider>
           <PipelineStudioDataProvider>

@@ -72,7 +72,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
   }
   if (webhookLoading)
     return (
-      <SandboxLayout.Main hasHeader hasLeftPanel>
+      <SandboxLayout.Main>
         <SandboxLayout.Content>
           <SkeletonList />
         </SandboxLayout.Content>
@@ -81,7 +81,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
 
   if (error)
     return (
-      <SandboxLayout.Main hasHeader hasLeftPanel>
+      <SandboxLayout.Main>
         <SandboxLayout.Content>
           <Spacer size={2} />
           <Text size={1} className="text-destructive">

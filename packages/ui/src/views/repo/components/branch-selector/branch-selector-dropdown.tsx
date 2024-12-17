@@ -52,7 +52,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         ) : (
           <span className="text-14 font-medium leading-none">Switch branches/tags</span>
         )}
-        <div onKeyDown={e => e.stopPropagation()}>
+        <div role="presentation" onKeyDown={e => e.stopPropagation()}>
           <SearchBox.Root
             className="mt-2 w-full"
             placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}

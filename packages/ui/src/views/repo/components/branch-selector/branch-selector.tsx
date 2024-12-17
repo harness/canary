@@ -13,7 +13,7 @@ interface BranchSelectorProps {
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
-  searchQuery: string
+  searchQuery?: string
   setSearchQuery: (query: string) => void
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
@@ -24,7 +24,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   selectedBranch,
   onSelectBranch,
   isBranchOnly = false,
-  searchQuery,
+  searchQuery = '',
   setSearchQuery
 }) => {
   const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()

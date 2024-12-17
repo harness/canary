@@ -28,6 +28,7 @@ export interface ProjectMemberListViewProps {
   setSearchQuery: (query: string | null) => void
   inviteMemberError?: string
   onSubmit: (formValues: InviteMemberFormFields) => void
+  onEditMember: (updatedMember: MembersProps) => void
 }
 
 export interface InviteMemberDialogProps {

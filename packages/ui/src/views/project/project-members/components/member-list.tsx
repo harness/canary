@@ -27,7 +27,7 @@ interface PageProps {
   onEdit: (member: MembersProps) => void
 }
 
-export const MembersList = ({ members, onDelete }: PageProps) => {
+export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -77,23 +77,39 @@ export const MembersList = ({ members, onDelete }: PageProps) => {
                   <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[300px]">
-                  <DropdownMenuItem className="flex flex-col" key="owner">
+                  <DropdownMenuItem
+                    className="flex flex-col"
+                    key="owner"
+                    onClick={() => onEdit({ ...member, role: 'space_owner' })}
+                  >
                     <Text className="inline-block w-full text-left">Owner</Text>
                     <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Admin-level access to all resources.
                     </Text>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex flex-col" key="contributor">
+                  <DropdownMenuItem
+                    className="flex flex-col"
+                    key="contributor"
+                    onClick={() => onEdit({ ...member, role: 'contributor' })}
+                  >
                     <Text className="inline-block w-full text-left">Contributor</Text>
                     <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Can view, comment, and edit resources.
                     </Text>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex flex-col" key="reader">
+                  <DropdownMenuItem
+                    className="flex flex-col"
+                    key="reader"
+                    onClick={() => onEdit({ ...member, role: 'reader' })}
+                  >
                     <Text className="inline-block w-full text-left">Reader</Text>
                     <Text className="mt-1.5 inline-block w-full text-muted-foreground">Can view and comment.</Text>
                   </DropdownMenuItem>
-                  <DropdownMenuItem className="flex flex-col" key="Executor">
+                  <DropdownMenuItem
+                    className="flex flex-col"
+                    key="executor"
+                    onClick={() => onEdit({ ...member, role: 'executor' })}
+                  >
                     <Text className="inline-block w-full text-left">Executor</Text>
                     <Text className="mt-1.5 inline-block w-full text-muted-foreground">
                       Can view but cannot make changes or leave comments.

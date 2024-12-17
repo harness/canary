@@ -19,7 +19,8 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   inviteMemberError,
   searchQuery,
   setSearchQuery,
-  onSubmit
+  onSubmit,
+  onEditMember
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
@@ -69,13 +70,7 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
         />
       )
     }
-    return (
-      <MembersList
-        members={memberList}
-        onEdit={(_member: MembersProps) => {}}
-        onDelete={(_member: MembersProps) => {}}
-      />
-    )
+    return <MembersList members={memberList} onEdit={onEditMember} onDelete={(_member: MembersProps) => {}} />
   }
 
   return (

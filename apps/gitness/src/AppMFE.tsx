@@ -11,6 +11,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 
+import Breadcrumbs from './components/breadcrumbs/breadcrumbs'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
@@ -65,7 +66,7 @@ export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: 
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NuqsAdapter>
-                  <MFEContext.Provider value={{ scope }}>
+                  <MFEContext.Provider value={{ scope, renderUrl }}>
                     <BrowserRouter basename={`/ng${renderUrl}`}>
                       <Routes>
                         <Route path="repos/:repoId/commits" element={<RepoCommitsPage />} />
@@ -92,7 +93,17 @@ export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: 
                         <Route path="repos/create" element={<CreateRepo />} />
                         <Route path="repos/import" element={<RepoImportContainer />} />
 
-                        <Route path="repos/:repoId" element={<RepoSummaryPage />} />
+                        <Route
+                          path="repos/:repoId"
+                          element={
+                            <>
+                              <div className="fixed top-0 z-40 ml-56 w-full bg-background-1">
+                                <Breadcrumbs />
+                              </div>
+                              <RepoSummaryPage />
+                            </>
+                          }
+                        />
 
                         <Route path="repos" element={<ReposListPage />} />
                       </Routes>

@@ -19,7 +19,10 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   padding: {
     top: 10
   },
-  minimap: { enabled: false }
+  minimap: { enabled: false },
+  fontSize: 14,
+  fontFamily: '"JetBrains Mono", "monospace"',
+  lineHeight: 20
 }
 
 export interface CodeEditorProps<_> {

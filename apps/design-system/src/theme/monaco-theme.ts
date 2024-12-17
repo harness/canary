@@ -5,8 +5,147 @@ import { ThemeDefinition } from '@harnessio/yaml-editor'
 const harnessLightTheme = {
   base: 'vs' as editor.BuiltinTheme,
   inherit: true,
-  rules: [],
-  colors: {}
+  rules: [
+    {
+      background: 'f8f8f8',
+      token: ''
+    },
+    {
+      foreground: '10a567',
+      token: 'comment'
+    },
+    {
+      foreground: '386ac3',
+      token: 'keyword.operator.class'
+    },
+    {
+      foreground: 'e88501',
+      token: 'constant.other'
+    },
+    {
+      foreground: 'e88501',
+      token: 'source.php.embedded.line'
+    },
+    {
+      foreground: 'e06c75',
+      token: 'variable'
+    },
+    {
+      foreground: 'e06c75',
+      token: 'support.other.variable'
+    },
+    {
+      foreground: 'e06c75',
+      token: 'string.other.link'
+    },
+    {
+      foreground: 'e06c75',
+      token: 'string.regexp'
+    },
+    {
+      foreground: '386ac3',
+      token: 'entity.name.tag'
+    },
+    {
+      foreground: '6d8600',
+      token: 'entity.other.attribute-name'
+    },
+    {
+      foreground: '386ac3',
+      token: 'meta.tag'
+    },
+    {
+      foreground: '386ac3',
+      token: 'declaration.tag'
+    },
+    {
+      foreground: 'c82829',
+      token: 'markup.deleted.git_gutter'
+    },
+    {
+      foreground: '6d8600',
+      token: 'constant.numeric'
+    },
+    {
+      foreground: 'e88501',
+      token: 'constant.language'
+    },
+    {
+      foreground: 'e88501',
+      token: 'support.constant'
+    },
+    {
+      foreground: 'e88501',
+      token: 'constant.character'
+    },
+    {
+      foreground: 'e88501',
+      token: 'variable.parameter'
+    },
+    {
+      foreground: 'e88501',
+      token: 'punctuation.section.embedded'
+    },
+    {
+      foreground: '6d8600',
+      token: 'keyword.other.unit'
+    },
+    {
+      foreground: '386ac3',
+      token: 'entity.name.class'
+    },
+    {
+      foreground: '386ac3',
+      token: 'entity.name.type.class'
+    },
+    {
+      foreground: '6d8600',
+      token: 'string'
+    },
+    {
+      foreground: '6d8600',
+      token: 'constant.other.symbol'
+    },
+    {
+      foreground: '6d8600',
+      token: 'markup.heading'
+    },
+    {
+      foreground: '718c00',
+      token: 'markup.inserted.git_gutter'
+    },
+    {
+      foreground: '386ac3',
+      token: 'keyword.operator'
+    },
+    {
+      foreground: '8431c5',
+      token: 'keyword'
+    },
+    {
+      foreground: 'ffffff',
+      background: '4271ae',
+      token: 'meta.diff.header.to-file'
+    },
+    {
+      foreground: 'ffffff',
+      background: '4271ae',
+      token: 'meta.diff.header.from-file'
+    },
+    {
+      foreground: '3e999f',
+      fontStyle: 'italic',
+      token: 'meta.diff.range'
+    }
+  ],
+  colors: {
+    'editor.foreground': '#353535',
+    'editor.background': '#f8f8f8',
+    'editor.selectionBackground': '#abdffa',
+    'editor.lineHighlightBackground': '#f8f8f8',
+    'editorCursor.foreground': '#000000',
+    'editorWhitespace.foreground': '#eaeaea'
+  }
 }
 
 const harnessDarkTheme = {

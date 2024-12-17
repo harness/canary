@@ -55,6 +55,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
       return (
         <>
           <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          <Spacer size={4} />
           {children}
         </>
       )

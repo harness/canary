@@ -58,7 +58,7 @@ const PullRequestCompareWrapper: FC<Partial<SandboxPullRequestCompareProps>> = p
       setSearchCommitQuery={noop}
       useTranslationStore={useTranslationsStore}
       isLoading={false}
-      searchQuery=''
+      searchQuery=""
       setSearchQuery={noop}
       {...props}
     />

@@ -70,7 +70,7 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
         navigateToNewFile={noop}
         navigateToFile={noop}
         filesList={repoFilesStore.filesList}
-        searchQuery=''
+        searchQuery=""
         setSearchQuery={noop}
       >
         <FileExplorer.Root onValueChange={noop} value={[]}>

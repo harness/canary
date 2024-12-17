@@ -47,7 +47,7 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       isEditDialogOpen={false}
       setEditDialogOpen={noop}
       selectBranchOrTag={noop}
-      searchQuery=''
+      searchQuery=""
       setSearchQuery={noop}
       {...props}
     />

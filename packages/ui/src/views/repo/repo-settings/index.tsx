@@ -82,6 +82,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
             apiError={apiError}
             handleRuleClick={handleRuleClick}
             openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
           />
         </div>
 
@@ -92,9 +93,14 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+          useTranslationStore={useTranslationStore}
         />
         <FormSeparator />
-        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
+        <RepoSettingsGeneralDelete
+          apiError={apiError}
+          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+          useTranslationStore={useTranslationStore}
+        />
       </Fieldset>
     </SandboxLayout.Content>
   )

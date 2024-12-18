@@ -60,6 +60,7 @@ export const RepoSettingsGeneralForm: React.FC<{
   searchQuery,
   setSearchQuery
 }) => {
+  const { t } = useTranslationStore()
   const {
     register,
     handleSubmit,
@@ -125,7 +126,7 @@ export const RepoSettingsGeneralForm: React.FC<{
   return (
     <>
       <Text size={5} weight="medium" className="mb-2">
-        General settings
+        {t('views:repos.generalSettings', 'General settings')}
       </Text>
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         {/* NAME */}
@@ -134,9 +135,9 @@ export const RepoSettingsGeneralForm: React.FC<{
             <Input
               id="name"
               {...register('name')}
-              placeholder="Enter repository name"
+              placeholder={t('views:repos.repoNamePlaceholder', 'Enter repository name')}
               disabled
-              label="Name"
+              label={t('views:repos.name', 'Name')}
               size="md"
               autoFocus
               error={errors.name?.message?.toString()}
@@ -147,8 +148,8 @@ export const RepoSettingsGeneralForm: React.FC<{
             <Textarea
               id="description"
               {...register('description')}
-              placeholder="Enter a description of this repository..."
-              label="Description"
+              placeholder={t('views:repos.repoDescriptionPlaceholder', 'Enter a description of this repository...')}
+              label={t('views:repos.description', 'Description')}
               error={errors.description?.message?.toString()}
               optional
             />
@@ -157,7 +158,7 @@ export const RepoSettingsGeneralForm: React.FC<{
 
         {/* BRANCH */}
         <Fieldset className="w-[298px] gap-y-0">
-          <Label className="mb-2.5">Default Branch</Label>
+          <Label className="mb-2.5">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
           <BranchSelector
             useTranslationStore={useTranslationStore}
             useRepoBranchesStore={useRepoBranchesStore}
@@ -174,22 +175,28 @@ export const RepoSettingsGeneralForm: React.FC<{
         <Fieldset>
           <ControlGroup>
             <Text className="leading-none text-foreground-2" size={2}>
-              Visibility
+              {t('views:repos.visibility', 'Visibility')}
             </Text>
             <RadioGroup className="mt-4" value={accessValue} onValueChange={handleAccessChange} id="access">
               <Option
                 control={<RadioButton value="1" id="access-public" />}
                 id="access-public"
-                label="Public"
+                label={t('views:repos.public', 'Public')}
                 ariaSelected={accessValue === '1'}
-                description="Anyone with access to the gitness environment can clone this repo."
+                description={t(
+                  'views:repos.publicDescription',
+                  'Anyone with access to the gitness environment can clone this repo.'
+                )}
               />
               <Option
                 control={<RadioButton value="2" id="access-private" />}
                 id="access-private"
-                label="Private"
+                label={t('views:repos.private', 'Private')}
                 ariaSelected={accessValue === '2'}
-                description="You can choose who can see and commit to this repository."
+                description={t(
+                  'views:repos.privateDescription',
+                  'You can choose who can see and commit to this repository.'
+                )}
               />
             </RadioGroup>
             {errors.access && <Message theme={MessageTheme.ERROR}>{errors.access.message?.toString()}</Message>}
@@ -212,7 +219,7 @@ export const RepoSettingsGeneralForm: React.FC<{
               {!isSubmitted || !isRepoUpdateSuccess ? (
                 <>
                   <Button type="submit" size="sm" disabled={!isValid || isUpdatingRepoData}>
-                    {!isUpdatingRepoData ? 'Save' : 'Saving...'}
+                    {!isUpdatingRepoData ? t('views:repos.save', 'Save') : t('views:repos.saving', 'Saving...')}
                   </Button>
                 </>
               ) : (

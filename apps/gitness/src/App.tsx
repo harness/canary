@@ -33,6 +33,7 @@ import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import { useTranslationStore } from './i18n/stores/i18n-store'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
@@ -285,7 +286,7 @@ export default function App() {
             },
             {
               path: 'settings',
-              element: <RepoSettingsPage />,
+              element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
               children: [
                 {
                   index: true,
@@ -500,7 +501,7 @@ export default function App() {
                 },
                 {
                   path: 'settings',
-                  element: <RepoSettingsPage />,
+                  element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
                   children: [
                     {
                       index: true,

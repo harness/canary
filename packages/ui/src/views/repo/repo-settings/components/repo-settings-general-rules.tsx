@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 
 import { Button, Icon, ListActions, NoData, SearchBox, Spacer, StackedList, Text } from '@/components'
+import { TranslationStore } from '@views/repo/repo-list/types'
+import { TFunction } from 'i18next'
 
 import { ErrorTypes, RuleDataType } from '../types'
 import { RepoSettingsToolTip } from './repo-settings-general-tooltip'
@@ -17,27 +19,29 @@ const Title = ({ title, iconName }: { title?: string; iconName: 'green-tick' | '
 const Description = ({
   targetPatternsCount,
   rulesAppliedCount,
-  bypassAllowed
+  bypassAllowed,
+  t
 }: {
   targetPatternsCount: number
   rulesAppliedCount: number
   bypassAllowed: boolean
+  t: TFunction
 }) => {
   return (
     <Text color="tertiaryBackground" as="div" className="flex items-center gap-1 pl-[24px]">
       {targetPatternsCount} target patterns
       <span className="pointer-events-none mx-1 h-3 w-px bg-borders-2" aria-hidden />
-      {rulesAppliedCount} rules applied
+      {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
       <span className="pointer-events-none mx-1 h-3 w-px bg-borders-2" aria-hidden />
       {bypassAllowed ? (
         <div>
           <Icon name="tick" className="inline text-success" size={12} />
-          <span> bypass allowed</span>
+          <span> {t('views:repos.bypassAllowed', 'bypass allowed')}</span>
         </div>
       ) : (
         <div>
           <Icon name="x-mark" className="inline text-destructive" size={12} />
-          <span> bypass not allowed</span>
+          <span>{t('views:repos.bypassNotAllowed', ' bypass not allowed')}</span>
         </div>
       )}
     </Text>
@@ -48,29 +52,32 @@ export const RepoSettingsGeneralRules = ({
   rules,
   apiError,
   handleRuleClick,
-  openRulesAlertDeleteDialog
+  openRulesAlertDeleteDialog,
+  useTranslationStore
 }: {
   rules: RuleDataType[] | null
   apiError: { type: ErrorTypes; message: string } | null
   handleRuleClick: (identifier: string) => void
   openRulesAlertDeleteDialog: (identifier: string) => void
+  useTranslationStore: () => TranslationStore
 }) => {
+  const { t } = useTranslationStore()
   return (
     <>
       {rules && rules.length > 0 ? (
         <>
           <Text size={4} weight="medium">
-            Rules
+            {t('views:repos.rules', 'Rules')}
           </Text>
           <Spacer size={6} />
 
           <ListActions.Root>
             <ListActions.Left>
-              <SearchBox.Root placeholder="Search" width="full" />
+              <SearchBox.Root placeholder={t('views:repos.search', 'Search')} width="full" />
             </ListActions.Left>
             <ListActions.Right>
               <NavLink to="../rules/create">
-                <Button variant="outline">New branch rule</Button>
+                <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
               </NavLink>
             </ListActions.Right>
           </ListActions.Root>
@@ -89,6 +96,7 @@ export const RepoSettingsGeneralRules = ({
                       targetPatternsCount={rule.targetPatternsCount ?? 0}
                       rulesAppliedCount={rule.rulesAppliedCount ?? 0}
                       bypassAllowed={rule.bypassAllowed ?? false}
+                      t={t}
                     />
                   }
                   className="gap-0"
@@ -121,9 +129,9 @@ export const RepoSettingsGeneralRules = ({
       ) : (
         <NoData
           iconName="no-data-folder"
-          title="No rules yet"
-          description={['There are no rules in this repository yet.']}
-          primaryButton={{ label: 'Create rule', to: '../rules/create' }}
+          title={t('views:repos.noRulesTitle', 'No rules yet')}
+          description={[t('views:repos.noRulesDescription', 'There are no rules in this repository yet.')]}
+          primaryButton={{ label: t('views:repos.createRuleDescription', 'Create rule'), to: '../rules/create' }}
         />
       )}
     </>

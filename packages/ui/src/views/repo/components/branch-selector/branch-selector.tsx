@@ -33,10 +33,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     ? tagList?.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
     : false
 
-  const [open, setOpen] = useState(false)
-
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button
           className={

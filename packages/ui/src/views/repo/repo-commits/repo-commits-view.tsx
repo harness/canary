@@ -42,15 +42,13 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         </Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
-          {branchList && (
-            <BranchSelector
-              onSelectBranch={props.selectBranchOrTag}
-              useRepoBranchesStore={props.useRepoBranchesStore}
-              useTranslationStore={props.useTranslationStore}
-              searchQuery={props.searchQuery}
-              setSearchQuery={props.setSearchQuery}
-            />
-          )}
+          <BranchSelector
+            onSelectBranch={props.selectBranchOrTag}
+            useRepoBranchesStore={props.useRepoBranchesStore}
+            useTranslationStore={props.useTranslationStore}
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+          />
         </div>
         <Spacer size={5} />
 

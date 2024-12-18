@@ -1,4 +1,5 @@
 import { TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
+import { BranchData } from '@harnessio/ui/views'
 
 import { timeAgoFromISOTime } from '../../../pages/pipeline-edit/utils/time-utils'
 
@@ -6,7 +7,7 @@ export const transformBranchList = (
   branches: TypesBranchExtended[],
   defaultBranch?: string,
   divergence?: TypesCommitDivergence[]
-) => {
+): BranchData[] => {
   return branches.map((branch, index) => {
     const { ahead, behind } = divergence?.[index] || {}
     return {

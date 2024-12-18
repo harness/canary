@@ -22,11 +22,9 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
   AlertDeleteParams,
   ApiErrorType,
-  // KeysList,
   SettingsAccountKeysPage,
   SshKeyCreateDialog,
   TokenCreateDialog,
-  // TokenFormType,
   TokensList,
   TokenSuccessDialog
 } from '@harnessio/ui/views'

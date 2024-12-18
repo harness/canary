@@ -33,7 +33,6 @@ const profileSchema = z.object({
 
 const passwordSchema = z
   .object({
-    // oldPassword: z.string().min(6, { message: 'Old password must be at least 6 characters' }),
     newPassword: z
       .string()
       .min(6, { message: 'New password must be at least 6 characters' })
@@ -84,8 +83,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
     reset: resetProfileForm,
-    // watch,
-    // setValue,
+
     formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
   } = useForm<ProfileFields>({
     resolver: zodResolver(profileSchema),
@@ -107,7 +105,6 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
     resolver: zodResolver(passwordSchema),
     mode: 'onChange',
     defaultValues: {
-      // oldPassword: '',
       newPassword: '',
       confirmPassword: ''
     }

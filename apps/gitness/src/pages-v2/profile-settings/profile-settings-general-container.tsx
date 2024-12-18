@@ -15,22 +15,9 @@ export const SettingsProfileGeneralPage: React.FC = () => {
   const { setUserData } = useProfileSettingsStore()
   const [apiError, setApiError] = useState<{ type: 'profile' | 'password'; message: string } | null>(null)
 
-  // const [userData, setUserData] = useState<ProfileFields>({
-  //   name: '',
-  //   username: '',
-  //   email: ''
-  // })
-
   const { data: { body: userData } = {}, isLoading: isLoadingUser } = useGetUserQuery(
     {},
     {
-      // onSuccess: ({ body: data }) => {
-      //   setUserData({
-      //     name: data.display_name || '',
-      //     username: data.uid || '',
-      //     email: data.email || ''
-      //   })
-      // },
       onError: (error: GetUserErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
         setApiError({ type: 'profile', message: message })

@@ -118,12 +118,10 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
       <SandboxLayout.Content maxWidth="2xl" className="ml-0">
         {presetRuleData ? (
           <Text size={5} weight="medium" as="div" className="mb-8">
-            Update rule
+            {t('views:repos.updateRule', 'Update rule')}
           </Text>
         ) : (
-          <Text size={5} weight="medium" as="div" className="mb-8">
-            Create a rule
-          </Text>
+          <Text size={5} weight="medium" as="div" className="mb-8"></Text>
         )}
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -165,6 +163,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
               handleSubmenuChange={handleSubmenuChange}
               handleSelectChangeForRule={handleSelectChangeForRule}
               handleInputChange={handleInputChange}
+              t={t}
             />
 
             {apiErrors &&
@@ -183,19 +182,23 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
                   {!presetRuleData ? (
                     <>
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                        {!isLoading ? 'Create rule' : 'Creating rule...'}
+                        {!isLoading
+                          ? t('views:repos.createRuleButton', 'Create rule')
+                          : t('views:repos.creatingRuleButton', 'Creating rule...')}
                       </Button>
                       <Button type="button" variant="outline" size="sm">
-                        <NavLink to="../general">Cancel</NavLink>
+                        <NavLink to="../general">{t('views:repos.cancel', 'Cancel')}</NavLink>
                       </Button>
                     </>
                   ) : (
                     <>
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                        {!isLoading ? 'Update rule' : 'Updating rule...'}
+                        {!isLoading
+                          ? t('views:repos.updateRule', 'Update rule')
+                          : t('views:repos.updatingRule', 'Updating rule...')}
                       </Button>
                       <Button type="button" variant="outline" size="sm">
-                        <NavLink to="../general">Cancel</NavLink>
+                        <NavLink to="../general">{t('views:repos.cancel', 'Cancel')}</NavLink>
                       </Button>
                     </>
                   )}

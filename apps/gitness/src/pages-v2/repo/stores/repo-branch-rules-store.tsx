@@ -1,8 +1,11 @@
 import { create } from 'zustand'
 
-import { branchRules, BranchRulesAction, IBranchRulesStore, Rule } from '@harnessio/ui/views'
+import { BranchRulesAction, getBranchRules, IBranchRulesStore, Rule } from '@harnessio/ui/views'
 
+import i18n from '../../../i18n/i18n'
 import { branchSettingsReducer } from '../reducers/repo-branch-rules-reducer'
+
+const branchRules = getBranchRules(i18n.t)
 
 const initialState: Rule[] = branchRules.map(rule => ({
   id: rule.id,

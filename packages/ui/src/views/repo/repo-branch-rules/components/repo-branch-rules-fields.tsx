@@ -30,7 +30,7 @@ import { MergeStrategy } from '@views/repo/pull-request'
 import { TFunction } from 'i18next'
 
 import { BypassUsersList, FieldProps, PatternsButtonType, Rule } from '../types'
-import { branchRules } from './repo-branch-rules-data'
+import { getBranchRules } from './repo-branch-rules-data'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue, t }) => (
   <StackedList.Root className="border-none">
@@ -316,14 +316,17 @@ export const BranchSettingsRuleListField: React.FC<{
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
   handleSelectChangeForRule: (ruleId: string, check: string) => void
   handleInputChange: (ruleId: string, value: string) => void
+  t: TFunction
 }> = ({
   rules,
   recentStatusChecks,
   handleCheckboxChange,
   handleSubmenuChange,
   handleSelectChangeForRule,
-  handleInputChange
+  handleInputChange,
+  t
 }) => {
+  const branchRules = getBranchRules(t)
   return (
     <ControlGroup className="max-w-sm">
       <Label className="mb-5">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>

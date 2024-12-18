@@ -9,9 +9,9 @@ import {
   useRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import {
-  branchRules,
   BranchRulesActionType,
   BypassUsersList,
+  getBranchRules,
   MergeStrategy,
   RepoBranchSettingsFormFields,
   RepoBranchSettingsRulesPage
@@ -34,6 +34,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
   const { dispatch } = useBranchRulesStore()
+  const branchRules = getBranchRules(useTranslationStore().t)
 
   useEffect(() => {
     if (!identifier) {

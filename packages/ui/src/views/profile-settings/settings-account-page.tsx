@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -21,7 +21,6 @@ function SettingsAccountPage() {
           </TabsList>
         </Tabs>
       </SandboxLayout.SubHeader>
-      {/* <Outlet /> */}
     </>
   )
 }

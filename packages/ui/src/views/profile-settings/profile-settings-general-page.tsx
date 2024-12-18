@@ -51,7 +51,6 @@ export type ProfileFields = z.infer<typeof profileSchema>
 export type PasswordFields = z.infer<typeof passwordSchema>
 
 interface SettingsAccountGeneralPageProps {
-  userData: ProfileFields
   isLoadingUser: boolean
   isUpdatingUser: boolean
   isUpdatingPassword: boolean
@@ -64,7 +63,6 @@ interface SettingsAccountGeneralPageProps {
 }
 
 const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
-  // userData,
   useProfileSettingsStore,
   isLoadingUser,
   isUpdatingUser,

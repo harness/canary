@@ -1,12 +1,9 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, CopyButton, Fieldset, Input, Text } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FormWrapper } from 'dist/components'
 import { z } from 'zod'
-
-// import { FormFieldSet } from '@harnessio/views'
 
 const formSchema = z.object({
   identifier: z.string(),
@@ -50,6 +47,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
               value={defaultValues?.identifier}
               readOnly
               label="Name"
+              // @todo Add a copy button to copy the identifier value when base component is ready
               // right={<CopyButton name={defaultValues?.identifier} />}
             />
           </ControlGroup>

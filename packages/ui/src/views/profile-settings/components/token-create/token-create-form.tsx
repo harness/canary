@@ -5,6 +5,7 @@ import {
   ButtonGroup,
   ControlGroup,
   Fieldset,
+  FormWrapper,
   Input,
   Select,
   SelectContent,
@@ -13,7 +14,6 @@ import {
   Text
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FormWrapper } from 'dist/components'
 import { z } from 'zod'
 
 import { TokenFormType } from '../../types'

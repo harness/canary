@@ -1,6 +1,5 @@
-import { Button, ControlGroup, Fieldset, FormSeparator, Legend, PaginationComponent, Spacer, Text } from '@/components'
+import { Button, ControlGroup, Fieldset, FormSeparator, FormWrapper, Legend, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
-import { FormWrapper } from 'dist/components'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
@@ -23,6 +22,7 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
   error
   // headers
 }) => {
+  // @todo: Add pagination for tokens and keys lists in following PR
   // const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   // const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
   const { publicKeys, tokens } = useProfileSettingsStore()

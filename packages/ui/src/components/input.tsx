@@ -48,6 +48,9 @@ interface InputProps extends BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputIconName?: IconProps['name']
+  right?: React.ReactNode
+  rightStyle?: boolean
+  rightClassName?: string
 }
 
 /**
@@ -64,7 +67,22 @@ interface InputProps extends BaseInputProps {
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, caption, error, id, theme, disabled, optional, className, wrapperClassName, inputIconName, ...props },
+    {
+      label,
+      caption,
+      error,
+      id,
+      theme,
+      disabled,
+      optional,
+      className,
+      wrapperClassName,
+      inputIconName,
+      right,
+      rightClassName,
+      rightStyle,
+      ...props
+    },
     ref
   ) => {
     const isControlGroup = !!error || !!caption || !!label || !!wrapperClassName
@@ -100,6 +118,19 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
             {baseInputComp}
           </span>
+        ) : right ? (
+          <div className="relative flex h-9 w-full rounded-md border border-input">
+            {baseInputComp}
+            <div
+              className={cn(
+                'flex items-center text-muted-foreground rounded-r-md',
+                rightStyle ? 'bg-muted border-l' : '-ml-3',
+                rightClassName
+              )}
+            >
+              {right}
+            </div>
+          </div>
         ) : (
           baseInputComp
         )}

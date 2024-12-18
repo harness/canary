@@ -21,17 +21,18 @@ import {
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
+  CloneCredentialDialog,
   CommitDivergenceType,
   RepoFile,
   RepoSummaryView
 } from '@harnessio/ui/views'
-import { generateAlphaNumericHash, SummaryItemType } from '@harnessio/views'
+import { SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
-import { TokenSuccessDialog } from '../../pages/profile-settings/token-create/token-success-dialog'
+import { generateAlphaNumericHash } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
@@ -121,6 +122,11 @@ export default function RepoSummaryPage() {
 
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
+
+  const onManageToken = () => {
+    // TODO: update when settings for tokens page is added
+    navigate('/settings')
+  }
 
   useEffect(() => {
     if (branches) {
@@ -350,10 +356,12 @@ export default function RepoSummaryPage() {
         setSearchQuery={setBranchTagQuery}
       />
       {createdTokenData && (
-        <TokenSuccessDialog
+        <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
+          onManageToken={onManageToken}
           tokenData={createdTokenData}
+          useTranslationStore={useTranslationStore}
         />
       )}
     </>

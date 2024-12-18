@@ -29,7 +29,7 @@ const Description = ({
 }) => {
   return (
     <Text color="tertiaryBackground" as="div" className="flex items-center gap-1 pl-[24px]">
-      {targetPatternsCount} target patterns
+      {targetPatternsCount} {t('views:repos.targetPatterns', 'target patterns')}
       <span className="pointer-events-none mx-1 h-3 w-px bg-borders-2" aria-hidden />
       {rulesAppliedCount} {t('views:repos.rulesApplied', 'rules applied')}
       <span className="pointer-events-none mx-1 h-3 w-px bg-borders-2" aria-hidden />

@@ -50,7 +50,7 @@
     "enterRuleName": "Enter rule name",
     "description": "Description",
     "ruleDescriptionPlaceholder": "Enter a description of this rule...",
-    "targetPatterns": "Target patterns",
+    "targetPatterns": "target patterns",
     "add": "Add",
     "createRuleCaption": "Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)",
     "applyRuleDefaultBranch": "Apply this rule to the default branch",

@@ -1,9 +1,10 @@
 import { MeterState } from '@components/meter'
 import { TranslationStore } from '@views/repo'
+import { TLinkComponent } from '@views/types/link-types'
 
 import { PipelineExecutionStatus } from '../common/execution-types'
 
-export interface Pipeline {
+export interface IPipeline {
   id: string
   status?: PipelineExecutionStatus
   name?: string
@@ -17,29 +18,32 @@ export interface Pipeline {
   }[]
 }
 
-export interface PipelineListStore {
-  pipelines: Pipeline[] | null
-  setPipelinesData: (data: Pipeline[] | null, totalPages: number) => void
+export interface IPipelineListStore {
+  pipelines: IPipeline[] | null
+  setPipelinesData: (data: IPipeline[] | null, totalPages: number) => void
   totalPages: number
   page: number
   setPage: (page: number) => void
 }
 
-export interface PipelineListPageProps {
-  usePipelineListStore: () => PipelineListStore
+export interface IPipelineListPageProps {
+  usePipelineListStore: () => IPipelineListStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   isError: boolean
   errorMessage?: string
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
+  handleCreatePipeline: () => void
+  LinkComponent: TLinkComponent
 }
 
-export interface PipelineListProps {
-  pipelines: Pipeline[] | null
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+export interface IPipelineListProps {
+  pipelines: IPipeline[] | null
+  LinkComponent: TLinkComponent
   query?: string
   handleResetQuery: () => void
   useTranslationStore: () => TranslationStore
   isLoading: boolean
+  handleCreatePipeline: () => void
 }

@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 
+import { noop } from 'lodash-es'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListPipelinesOkResponse, useListPipelinesQuery } from '@harnessio/code-service-client'
-import { Pipeline, SandboxPipelineListPage } from '@harnessio/ui/views'
+import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
+import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PageResponseHeader } from '../../types'
@@ -52,7 +54,7 @@ export default function RepoPipelineListPage() {
       <div className="breadcrumbs">
         <Breadcrumbs />
       </div>
-      <SandboxPipelineListPage
+      <PipelineListPage
         usePipelineListStore={usePipelineListStore}
         useTranslationStore={useTranslationStore}
         isLoading={isFetching}
@@ -60,13 +62,15 @@ export default function RepoPipelineListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        handleCreatePipeline={noop}
+        LinkComponent={LinkComponent}
       />
     </>
   )
 }
 
 // NOTE: consider move this function to another file/location
-function apiPipelines2Pipelines(data: ListPipelinesOkResponse): Pipeline[] {
+function apiPipelines2Pipelines(data: ListPipelinesOkResponse): IPipeline[] {
   return data.map(pipelineBody => ({
     id: pipelineBody.identifier ?? '',
     description: pipelineBody?.execution?.message,

@@ -2,14 +2,14 @@ import { timeAgo } from '@utils/utils'
 
 import { Icon, NoData, SkeletonList, StackedList, Text } from '../../../components'
 import { Meter } from '../../../components/meter'
-import { ExecutionStatus } from '../common/execution-status'
 import { PipelineExecutionStatus } from '../common/execution-types'
-import { PipelineListProps } from './types'
+import { ExecutionStatusIcon } from '../components/execution-status-icon'
+import { IPipelineListProps } from './types'
 
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
     <div className="flex items-center gap-2">
-      {status && <ExecutionStatus.Icon status={status} />}
+      {status && <ExecutionStatusIcon status={status} />}
       <Text truncate>{title}</Text>
     </div>
   )
@@ -47,8 +47,9 @@ export const PipelineList = ({
   handleResetQuery,
   isLoading,
   useTranslationStore,
-  query
-}: PipelineListProps) => {
+  query,
+  handleCreatePipeline
+}: IPipelineListProps) => {
   const noData = !pipelines || pipelines.length === 0
 
   const { t } = useTranslationStore()
@@ -83,9 +84,7 @@ export const PipelineList = ({
           description={['There are no pipelines in this project yet.', 'Create new one.']}
           primaryButton={{
             label: 'Create pipeline',
-            onClick: () => {
-              /* TODO: add create handler */
-            }
+            onClick: handleCreatePipeline
           }}
         />
       </div>

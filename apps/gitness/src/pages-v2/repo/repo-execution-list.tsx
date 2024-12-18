@@ -1,14 +1,16 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { noop } from 'lodash-es'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
-import { Execution, PipelineExecutionStatus, SandboxExecutionListPage } from '@harnessio/ui/views'
+import { ExecutionListPage, IExecution, PipelineExecutionStatus } from '@harnessio/ui/views'
 import { timeDistance } from '@harnessio/views'
 
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
+import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -58,7 +60,7 @@ export default function RepoExecutionListPage() {
       <div className="breadcrumbs">
         <Breadcrumbs />
       </div>
-      <SandboxExecutionListPage
+      <ExecutionListPage
         useExecutionListStore={useExecutionListStore}
         useTranslationStore={useTranslationStore}
         isLoading={isFetching}
@@ -66,6 +68,8 @@ export default function RepoExecutionListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        handleExecutePipeline={noop}
+        LinkComponent={LinkComponent}
       />
       {/* TODO */}
       {/* <RunPipelineDialog
@@ -82,14 +86,14 @@ export default function RepoExecutionListPage() {
 }
 
 // NOTE: consider move this function to another file/location
-function apiExecutions2Executions(data: ListExecutionsOkResponse): Execution[] {
+function apiExecutions2Executions(data: ListExecutionsOkResponse): IExecution[] {
   return data.map(executionBody => ({
     id: executionBody?.number ? `executions/${executionBody.number}` : '',
     status: getExecutionStatus(executionBody?.status),
     success: executionBody?.status,
     name: executionBody?.message || executionBody?.title,
     sha: executionBody?.after?.slice(0, 7),
-    description: getDescription(executionBody),
+    description: <Description execution={executionBody} />,
     timestamp: `${timeDistance(executionBody?.finished, Date.now(), true)} ago`,
     lastTimestamp: timeDistance(
       executionBody?.started,
@@ -99,17 +103,19 @@ function apiExecutions2Executions(data: ListExecutionsOkResponse): Execution[] {
   }))
 }
 
-const renderBranch = (branch: string): React.ReactElement => {
+const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement => {
   return (
     <div className="flex items-center gap-1 rounded-md bg-tertiary-background/10 px-1.5 font-mono">
       <Icon name="branch" size={11} className="text-tertiary-background" />
-      {branch}
+      {children}
     </div>
   )
 }
 
-export const getDescription = (execution: TypesExecution): string | React.ReactElement => {
-  const { author_name, event, source, target } = execution
+export const Description = (props: { execution: TypesExecution }): string | React.ReactElement => {
+  const {
+    execution: { author_name, event, source, target }
+  } = props
   if (!author_name || !event) {
     return ''
   }
@@ -120,9 +126,13 @@ export const getDescription = (execution: TypesExecution): string | React.ReactE
       return (
         <div className="flex items-center gap-1">
           <span>{`${author_name} created pull request`}</span>
-          {source && <>from{renderBranch(source)}</>}
+          {source && (
+            <>
+              from<Branch>{source}</Branch>
+            </>
+          )}
           {source && <span>to</span>}
-          {target && renderBranch(target)}
+          {target && <Branch>{target}</Branch>}
         </div>
       )
     default:

@@ -1,3 +1,5 @@
+/** TODO: in view we have only few statuses. Refactor/move to client */
+
 export enum PipelineExecutionStatus {
   PENDING = 'pending',
   RUNNING = 'running',

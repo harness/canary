@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
@@ -6,18 +6,18 @@ import { debounce } from 'lodash-es'
 
 import { SandboxLayout } from '../../index'
 import { ExecutionList } from './execution-list'
-import { ExecutionListPageProps } from './types'
+import { IExecutionListPageProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
-
-const SandboxExecutionListPage: FC<ExecutionListPageProps> = ({
+const ExecutionListPage: FC<IExecutionListPageProps> = ({
   useExecutionListStore,
   useTranslationStore,
   isLoading,
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  handleExecutePipeline,
+  LinkComponent
 }) => {
   const { t } = useTranslationStore()
   const { executions, totalPages, page, setPage } = useExecutionListStore()
@@ -93,6 +93,7 @@ const SandboxExecutionListPage: FC<ExecutionListPageProps> = ({
           }}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
+          handleExecutePipeline={handleExecutePipeline}
         />
         <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
@@ -101,4 +102,4 @@ const SandboxExecutionListPage: FC<ExecutionListPageProps> = ({
   )
 }
 
-export { SandboxExecutionListPage }
+export { ExecutionListPage }

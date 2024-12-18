@@ -1,4 +1,7 @@
-// Layouts
+// types
+export * from './types/link-types'
+
+// layouts
 export * as SandboxLayout from './layouts/SandboxLayout'
 export * from './layouts/SandboxRoot'
 export * from './layouts/Floating1ColumnLayout'

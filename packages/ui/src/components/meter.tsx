@@ -7,7 +7,7 @@ export enum MeterState {
   Success = 3
 }
 
-interface MeterProps {
+interface IMeterProps {
   data?: {
     id?: string
     state: MeterState
@@ -22,15 +22,15 @@ const stateToBgColor: { [key in MeterState]: string } = {
   [MeterState.Success]: 'bg-success'
 }
 
-function Meter({ data = [], className }: MeterProps) {
+function Meter({ data = [], className }: IMeterProps) {
   const emptyBarsCount = 11 - data.length
-  const bars = [...Array(emptyBarsCount).fill({ state: MeterState.Empty }), ...data]
+  const bars: IMeterProps['data'] = [...Array(emptyBarsCount).fill({ state: MeterState.Empty }), ...data]
 
   return (
     <div className={cn('flex h-[19px] items-stretch gap-[4px]', className)}>
-      {bars.map((col, col_idx) => {
+      {bars.map(col => {
         const bgColor = stateToBgColor[col.state as MeterState]
-        return <div key={col_idx} className={cn('flex h-full w-[5px] rounded-[1px]', bgColor)} />
+        return <div key={col.id} className={cn('flex h-full w-[5px] rounded-[1px]', bgColor)} />
       })}
     </div>
   )

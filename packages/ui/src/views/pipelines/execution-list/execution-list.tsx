@@ -1,14 +1,14 @@
 import { JSXElementConstructor, ReactElement } from 'react'
 
 import { Icon, NoData, SkeletonList, StackedList, Text } from '../../../components'
-import { ExecutionStatus } from '../common/execution-status'
 import { PipelineExecutionStatus } from '../common/execution-types'
-import { ExecutionListProps } from './types'
+import { ExecutionStatusIcon } from '../components/execution-status-icon'
+import { IExecutionListProps } from './types'
 
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
     <div className="flex items-center gap-2">
-      {status && <ExecutionStatus.Icon status={status} />}
+      {status && <ExecutionStatusIcon status={status} />}
       <Text truncate>{title}</Text>
     </div>
   )
@@ -54,8 +54,9 @@ export const ExecutionList = ({
   handleResetQuery,
   isLoading,
   useTranslationStore,
-  query
-}: ExecutionListProps) => {
+  query,
+  handleExecutePipeline
+}: IExecutionListProps) => {
   const noData = !executions || executions.length === 0
 
   const { t } = useTranslationStore()
@@ -87,12 +88,10 @@ export const ExecutionList = ({
         <NoData
           iconName="no-data-folder"
           title="No executions yet"
-          description={['There are no execution in this project yet.']}
+          description={['There are no executions in this project yet.']}
           primaryButton={{
             label: 'Execute pipeline',
-            onClick: () => {
-              /* TODO: add create handler */
-            }
+            onClick: handleExecutePipeline
           }}
         />
       </div>

@@ -1,17 +1,15 @@
 import { Icon as CanaryIcon } from '@components/icon'
 
-import { PipelineExecutionStatus } from './execution-types'
+import { PipelineExecutionStatus } from '../common/execution-types'
 
-interface ExecutionStatusProps {
+interface IExecutionStatusBadgeProps {
   status: PipelineExecutionStatus
-}
-
-interface BadgeProps {
-  duration: string /* time formatted as string */
+  /* duration formatted as string */
+  duration: string
   minimal?: boolean
 }
 
-const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
+export const ExecutionStatusBadge: React.FC<IExecutionStatusBadgeProps> = props => {
   const { status, duration, minimal } = props
   switch (status) {
     case PipelineExecutionStatus.WAITING_ON_DEPENDENCIES:
@@ -83,25 +81,3 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
       return <></>
   }
 }
-
-const Icon: React.FC<ExecutionStatusProps> = props => {
-  const { status } = props
-  switch (status) {
-    case PipelineExecutionStatus.WAITING_ON_DEPENDENCIES:
-    case PipelineExecutionStatus.PENDING:
-      return <CanaryIcon size={16} name="pending-clock" />
-    case PipelineExecutionStatus.KILLED:
-    case PipelineExecutionStatus.FAILURE:
-    case PipelineExecutionStatus.ERROR:
-      return <CanaryIcon size={16} name="fail" />
-    case PipelineExecutionStatus.SUCCESS:
-      return <CanaryIcon size={16} name="success" />
-    case PipelineExecutionStatus.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
-    case PipelineExecutionStatus.SKIPPED:
-    default:
-      return <></>
-  }
-}
-
-export const ExecutionStatus = { Badge, Icon }

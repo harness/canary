@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
@@ -6,18 +6,18 @@ import { debounce } from 'lodash-es'
 
 import { SandboxLayout } from '../../index'
 import { PipelineList } from './pipeline-list'
-import { PipelineListPageProps } from './types'
+import { IPipelineListPageProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
-
-const SandboxPipelineListPage: FC<PipelineListPageProps> = ({
+const PipelineListPage: FC<IPipelineListPageProps> = ({
   usePipelineListStore,
   useTranslationStore,
   isLoading,
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  handleCreatePipeline,
+  LinkComponent
 }) => {
   const { t } = useTranslationStore()
   const { pipelines, totalPages, page, setPage } = usePipelineListStore()
@@ -87,6 +87,7 @@ const SandboxPipelineListPage: FC<PipelineListPageProps> = ({
           }}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
+          handleCreatePipeline={handleCreatePipeline}
         />
         <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
@@ -95,4 +96,4 @@ const SandboxPipelineListPage: FC<PipelineListPageProps> = ({
   )
 }
 
-export { SandboxPipelineListPage }
+export { PipelineListPage }

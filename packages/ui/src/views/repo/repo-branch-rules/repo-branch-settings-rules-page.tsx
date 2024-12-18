@@ -121,7 +121,9 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
             {t('views:repos.updateRule', 'Update rule')}
           </Text>
         ) : (
-          <Text size={5} weight="medium" as="div" className="mb-8"></Text>
+          <Text size={5} weight="medium" as="div" className="mb-8">
+            {t('views:repos.CreateRule', 'Create a rule')}
+          </Text>
         )}
 
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,5 +1,6 @@
 import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form'
 
+import { TFunction } from 'i18next'
 import { z } from 'zod'
 
 import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
@@ -36,6 +37,7 @@ export interface FieldProps {
   errors?: FieldErrors<RepoBranchSettingsFormFields>
   watch?: UseFormWatch<RepoBranchSettingsFormFields>
   setValue?: UseFormSetValue<RepoBranchSettingsFormFields>
+  t: TFunction
 }
 
 export interface BypassUsersList {

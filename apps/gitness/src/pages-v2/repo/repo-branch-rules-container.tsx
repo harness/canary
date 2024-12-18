@@ -20,6 +20,7 @@ import {
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
 import { useBranchRulesStore } from './stores/repo-branch-rules-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
@@ -182,6 +183,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       handleSelectChangeForRule={handleSelectChangeForRule}
       handleInputChange={handleInputChange}
       handleInitialRules={handleInitialRules}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

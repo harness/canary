@@ -27,16 +27,20 @@ import {
   Textarea
 } from '@/components'
 import { MergeStrategy } from '@views/repo/pull-request'
+import { TFunction } from 'i18next'
 
 import { BypassUsersList, FieldProps, PatternsButtonType, Rule } from '../types'
 import { branchRules } from './repo-branch-rules-data'
 
-export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
+export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue, t }) => (
   <StackedList.Root className="border-none">
     <StackedList.Item disableHover isHeader>
       <StackedList.Field
-        title="Enable the rule"
-        description="By enabling the toggle, the branch rule will be enforced."
+        title={t('views:repos.enableRule', 'Enable the rule')}
+        description={t(
+          'views:repos.enableRuleDescription',
+          'By enabling the toggle, the branch rule will be enforced.'
+        )}
       />
       <StackedList.Field
         label
@@ -59,14 +63,15 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
 export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: boolean }> = ({
   register,
   errors,
-  disabled
+  disabled,
+  t
 }) => (
   <ControlGroup>
     <Input
       id="name"
-      label="Name"
+      label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
-      placeholder="Enter rule name"
+      placeholder={t('views:repos.enterRuleName', 'Enter rule name')}
       autoFocus
       disabled={disabled}
       error={errors?.identifier?.message?.toString()}
@@ -74,19 +79,25 @@ export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: bool
   </ControlGroup>
 )
 
-export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ register, errors }) => (
+export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Textarea
-      label="Description"
+      label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
-      placeholder="Enter a description of this rule..."
+      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter a description of this rule...')}
       error={errors?.description?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ setValue, watch, register, errors }) => {
+export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({
+  setValue,
+  watch,
+  register,
+  errors,
+  t
+}) => {
   const [selectedOption, _setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
     PatternsButtonType.INCLUDE
   )
@@ -109,7 +120,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   return (
     <ControlGroup>
       <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
-        Target patterns
+        {t('views:repos.targetPatterns', 'Target patterns')}
       </Label>
       <div className="grid grid-cols-5 grid-rows-1">
         <div className="col-span-4 mr-2">
@@ -150,12 +161,15 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
           />
         </div>
         <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
-          Add
+          {t('views:repos.add', 'Add')}
         </Button>
         {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
       </div>
       <Text size={2} as="p" color="tertiaryBackground" className="max-w-full mt-2.5">
-        Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)
+        {t(
+          'views:repos.createRuleCaption',
+          'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
+        )}
       </Text>
       <div className="flex flex-wrap">
         {patterns &&
@@ -177,7 +191,13 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({ se
   )
 }
 
-export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
+export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({
+  register,
+  errors,
+  watch,
+  setValue,
+  t
+}) => (
   <ControlGroup>
     <Option
       control={
@@ -200,7 +220,8 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({ reg
 export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOptions: BypassUsersList[] }> = ({
   watch,
   setValue,
-  bypassOptions
+  bypassOptions,
+  t
 }) => {
   const selectedBypassUsers = watch!('bypass') || []
 
@@ -218,12 +239,12 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
         .map(id => bypassOptions.find(option => option.id === id)?.display_name)
         .filter(Boolean)
         .join(', ')
-    : 'Select Users'
+    : t('views:repos.selectUsers', 'Select Users')
 
   return (
     <ControlGroup>
       <Label className="mb-2.5" htmlFor="bypassValue">
-        Bypass list
+        {t('views:repos.bypassList', 'Bypass list')}
       </Label>
 
       <DropdownMenu>
@@ -235,7 +256,7 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
         </DropdownMenuTrigger>
 
         <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-          <DropdownMenuLabel>Users</DropdownMenuLabel>
+          <DropdownMenuLabel>{t('views:repos.users', 'Users')}</DropdownMenuLabel>
           <ScrollArea className="h-[300px]">
             <DropdownMenuSeparator />
             {bypassOptions &&
@@ -259,7 +280,13 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
   )
 }
 
-export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ register, errors, watch, setValue }) => (
+export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({
+  register,
+  errors,
+  watch,
+  setValue,
+  t
+}) => (
   <ControlGroup className="min-h-8 justify-center">
     <Option
       control={
@@ -271,7 +298,10 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
         />
       }
       id="edit-permissons"
-      label="Allow users with edit permission on the repository to bypass"
+      label={t(
+        'views:repos.editPermissionsCheckboxDescription',
+        'Allow users with edit permission on the repository to bypass'
+      )}
       className="mt-0"
     />
 
@@ -296,7 +326,7 @@ export const BranchSettingsRuleListField: React.FC<{
 }) => {
   return (
     <ControlGroup className="max-w-sm">
-      <Label className="mb-5">Rules: select all that apply</Label>
+      <Label className="mb-5">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
       {branchRules.map((rule, index) => (
         <div key={rule.id}>
           <Option
@@ -350,7 +380,7 @@ export const BranchSettingsRuleListField: React.FC<{
                   </div>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-                  <DropdownMenuLabel>Status Checks</DropdownMenuLabel>
+                  <DropdownMenuLabel>{t('views:repos.statusChecks', 'Status Checks')}</DropdownMenuLabel>
                   <DropdownMenuSeparator />
 
                   {recentStatusChecks?.map(checks => {
@@ -374,7 +404,7 @@ export const BranchSettingsRuleListField: React.FC<{
             <div className="mt-2 pl-8">
               <Input
                 id="name"
-                placeholder="Enter minimum number of reviewers"
+                placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
                 value={rules[index].input || ''}
                 onChange={e => handleInputChange(rule.id, e.target.value)}
               />

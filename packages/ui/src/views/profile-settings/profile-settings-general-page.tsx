@@ -17,6 +17,7 @@ import {
   Legend,
   Message,
   MessageTheme,
+  SkeletonList,
   Spacer,
   Text
 } from '@/components'
@@ -24,8 +25,6 @@ import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
-
-import { SkeletonList } from '@harnessio/ui/components'
 
 const profileSchema = z.object({
   name: z.string().min(1, { message: 'Please provide your name' }),

@@ -9,7 +9,9 @@ import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
+import Attachment from '../icons/attachment.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
+import Bold from '../icons/bold.svg'
 import BookmarkAdd from '../icons/bookmark-add.svg'
 import BookmarkIcon from '../icons/bookmark-icon.svg'
 import BoxCloning from '../icons/box-cloning.svg'
@@ -23,6 +25,7 @@ import Changes from '../icons/changes.svg'
 import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
 import Checkbox from '../icons/checkbox.svg'
+import Checklist from '../icons/checklist.svg'
 import Checks from '../icons/checks.svg'
 import ChevronDown from '../icons/chevron-down.svg'
 import ChevronFillDown from '../icons/chevron-fill-down.svg'
@@ -38,6 +41,7 @@ import Clone from '../icons/clone.svg'
 import Close from '../icons/close.svg'
 import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../icons/cloud-costs-icon.svg'
+import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import Comments from '../icons/comments.svg'
 import Connectors from '../icons/connectors-icon.svg'
@@ -76,14 +80,17 @@ import GridDots from '../icons/grid-dots.svg'
 import HarnessLogoText from '../icons/harness-logo-text.svg'
 import HarnessPlugin from '../icons/harness-plugin.svg'
 import Harness from '../icons/harness.svg'
+import Header from '../icons/header.svg'
 import Hierarchy from '../icons/hierarchy-icon.svg'
 import IncidentsGradient from '../icons/incidents-gradient.svg'
 import Incidents from '../icons/incidents-icon.svg'
 import InfoCircle from '../icons/info-circle.svg'
 import InfrastructureGradient from '../icons/infrastructure-gradient.svg'
 import Infrastructure from '../icons/infrastructure-icon.svg'
+import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
 import Lightning from '../icons/lightning.svg'
+import List from '../icons/list.svg'
 import LogOut from '../icons/log-out-icon.svg'
 import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
@@ -329,7 +336,14 @@ const IconNameMap = {
   'menu-dots': MenuDots,
   'bookmark-add': BookmarkAdd,
   upload: Upload,
-  minus: Minus
+  minus: Minus,
+  header: Header,
+  bold: Bold,
+  attachment: Attachment,
+  code: Code,
+  list: List,
+  checklist: Checklist,
+  italicize: Italicize
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

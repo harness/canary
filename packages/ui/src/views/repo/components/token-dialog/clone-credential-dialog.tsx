@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -43,17 +42,10 @@ export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
   useTranslationStore
 }) => {
   const { t } = useTranslationStore()
-  const { setValue } = useForm<TCloneCredentialsDialog>({
+  useForm<TCloneCredentialsDialog>({
     resolver: zodResolver(formSchema),
     defaultValues: tokenData
   })
-  useEffect(() => {
-    if (tokenData) {
-      setValue('identifier', tokenData.identifier)
-      setValue('lifetime', tokenData.lifetime)
-      setValue('token', tokenData.token)
-    }
-  }, [tokenData, setValue])
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-[576px]">

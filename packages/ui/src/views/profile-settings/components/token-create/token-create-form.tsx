@@ -9,8 +9,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
   Spacer,
   Text
 } from '@/components'

@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { tokenCreateFormSchema } from './components/token-create/token-create-form'
+import { ProfileFields } from './profile-settings-general-page'
 
 export type TokenFormType = z.infer<typeof tokenCreateFormSchema>
 
@@ -36,4 +37,20 @@ export interface TokensList {
   issued_at?: number
   created_by?: number
   uid?: string
+}
+
+export interface IProfileSettingsStore {
+  publicKeys: KeysList[]
+  tokens: TokensList[]
+  createdTokenData: (TokenFormType & { token: string }) | null
+  userData: ProfileFields | null
+
+  setPublicKeys: (data: KeysList[]) => void
+  addPublicKey: (key: KeysList) => void
+  deletePublicKey: (id: string) => void
+  setTokens: (data: TokensList[]) => void
+  deleteToken: (id: string) => void
+  addToken: (data: TokensList) => void
+  setCreatedTokenData: (data: (TokenFormType & { token: string }) | null) => void
+  setUserData: (data: ProfileFields) => void
 }

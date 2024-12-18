@@ -5,28 +5,27 @@ import { FormWrapper } from 'dist/components'
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
 // import { parseAsInteger, useQueryState } from 'nuqs'
-import { AlertDeleteParams, KeysList, TokensList } from './types'
+import { AlertDeleteParams, IProfileSettingsStore } from './types'
 
 interface SettingsAccountKeysPageProps {
-  publicKeys: KeysList[]
-  tokens: TokensList[]
   openTokenDialog: () => void
   openSshKeyDialog: () => void
   openAlertDeleteDialog: (data: AlertDeleteParams) => void
   error: { type: string; message: string } | null
   headers?: Headers
+  useProfileSettingsStore: () => IProfileSettingsStore
 }
 const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
-  publicKeys,
-  tokens,
+  useProfileSettingsStore,
   openTokenDialog,
   openSshKeyDialog,
   openAlertDeleteDialog,
-  error,
-  headers
+  error
+  // headers
 }) => {
   // const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   // const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
+  const { publicKeys, tokens } = useProfileSettingsStore()
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
@@ -79,24 +78,8 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
                   </Button>
                 </span>
               }
-              // description={
-              //   <span className="flex justify-between">
-              //     SSH keys allow you to establish a secure connection to your code repository.
-              //     <Button variant="outline" className="text-primary" type="button" onClick={openSshKeyDialog}>
-              //       Add new SSH key
-              //     </Button>
-              //   </span>
-              // }
               description="SSH keys allow you to establish a secure connection to your code repository."
             />
-            {/* <FormFieldSet.SubLegend>
-              <span className="flex justify-between">
-                SSH keys allow you to establish a secure connection to your code repository.
-                <Button variant="outline" className="text-primary" type="button" onClick={openSshKeyDialog}>
-                  Add new SSH key
-                </Button>
-              </span>
-            </FormFieldSet.SubLegend> */}
 
             <ControlGroup>
               <>

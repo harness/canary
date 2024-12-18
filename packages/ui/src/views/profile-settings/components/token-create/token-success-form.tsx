@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, CopyButton, Fieldset, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FormWrapper } from 'dist/components'
 import { z } from 'zod'
 
 // import { FormFieldSet } from '@harnessio/views'
@@ -16,14 +17,18 @@ const formSchema = z.object({
 export type TokenSuccessFormType = z.infer<typeof formSchema>
 
 interface TokenCreateFormProps {
-  defaultValues: TokenSuccessFormType
+  defaultValues: TokenSuccessFormType | null
   onClose: () => void
 }
 
 export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProps) {
   const { setValue } = useForm<TokenSuccessFormType>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues
+    defaultValues: defaultValues || {
+      identifier: '',
+      lifetime: '',
+      token: ''
+    }
   })
 
   useEffect(() => {
@@ -36,7 +41,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
 
   return (
     <>
-      <form>
+      <FormWrapper>
         {/* NAME */}
         <Fieldset>
           <ControlGroup>
@@ -90,7 +95,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
             </ButtonGroup>
           </ControlGroup>
         </Fieldset>
-      </form>
+      </FormWrapper>
     </>
   )
 }

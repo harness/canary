@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
 import {
@@ -22,29 +22,30 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
   AlertDeleteParams,
   ApiErrorType,
-  KeysList,
+  // KeysList,
   SettingsAccountKeysPage,
   SshKeyCreateDialog,
   TokenCreateDialog,
-  TokenFormType,
+  // TokenFormType,
   TokensList,
   TokenSuccessDialog
 } from '@harnessio/ui/views'
 
-// import { DeleteTokenAlertDialog, KeysList, TokensList } from '@harnessio/views'
-
-// import { SettingsAccountKeysPage } from './profile-settings-keys-page'
-// import { SshKeyCreateDialog } from './ssh-key-create/ssh-key-create-dialog'
-// import { TokenCreateDialog } from './token-create/token-create-dialog'
-// import { TokenFormType } from './token-create/token-create-form'
-// import { TokenSuccessDialog } from './token-create/token-success-dialog'
-// import { AlertDeleteParams, ApiErrorType } from './types'
+import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileKeysPage = () => {
   const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
 
-  const [publicKeys, setPublicKeys] = useState<KeysList[]>([])
-  const [tokens, setTokens] = useState<TokensList[]>([])
+  const {
+    createdTokenData,
+    setCreatedTokenData,
+    setPublicKeys,
+    setTokens,
+    deleteToken,
+    addToken,
+    addPublicKey,
+    deletePublicKey
+  } = useProfileSettingsStore()
   const [openCreateTokenDialog, setCreateTokenDialog] = useState(false)
   const [openSuccessTokenDialog, setSuccessTokenDialog] = useState(false)
   const [saveSshKeyDialog, setSshKeyDialog] = useState(false)
@@ -56,8 +57,6 @@ export const SettingsProfileKeysPage = () => {
     type: ApiErrorType
     message: string
   } | null>(null)
-
-  const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
 
   const closeSuccessTokenDialog = () => setSuccessTokenDialog(false)
 
@@ -85,14 +84,9 @@ export const SettingsProfileKeysPage = () => {
     order: 'asc'
   }
 
-  const { data: { headers } = {} } = useListTokensQuery(
+  const { data: { body: tokenList, headers } = {} } = useListTokensQuery(
     {},
     {
-      onSuccess: ({ body: data }) => {
-        setTokens(data)
-        setApiError(null)
-      },
-
       onError: (error: ListTokensErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
         setApiError({ type: ApiErrorType.TokenFetch, message: message })
@@ -100,13 +94,9 @@ export const SettingsProfileKeysPage = () => {
     }
   )
 
-  useListPublicKeyQuery(
+  const { data: { body: publicKeysList } = {} } = useListPublicKeyQuery(
     { queryParams },
     {
-      onSuccess: ({ body: data }) => {
-        setPublicKeys(data)
-        setApiError(null)
-      },
       onError: (error: ListPublicKeyErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
         setApiError({ type: ApiErrorType.KeyFetch, message: message })
@@ -118,7 +108,7 @@ export const SettingsProfileKeysPage = () => {
     {},
     {
       onSuccess: (_data: DeleteTokenOkResponse, variables) => {
-        setTokens(prevTokens => prevTokens.filter(token => token.identifier !== variables.token_identifier))
+        deleteToken(variables.token_identifier)
         setApiError(null)
         setIsAlertDeleteDialogOpen(false)
       },
@@ -144,7 +134,7 @@ export const SettingsProfileKeysPage = () => {
         closeTokenDialog()
         setCreatedTokenData(tokenData)
         setSuccessTokenDialog(true)
-        setTokens(prevTokens => [...prevTokens, newToken.token as TokensList])
+        addToken(newToken.token as TokensList)
       },
       onError: (error: CreateTokenErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
@@ -158,7 +148,7 @@ export const SettingsProfileKeysPage = () => {
     {
       onSuccess: ({ body: newSshKey }) => {
         closeSshKeyDialog()
-        setPublicKeys(prevKeys => [...prevKeys, newSshKey])
+        addPublicKey(newSshKey)
       },
       onError: (error: CreatePublicKeyErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
@@ -171,7 +161,7 @@ export const SettingsProfileKeysPage = () => {
     { public_key_identifier: '' },
     {
       onSuccess: (_data, variables) => {
-        setPublicKeys(prevKeys => prevKeys.filter(key => key.identifier !== variables.public_key_identifier))
+        deletePublicKey(variables.public_key_identifier!)
         setApiError(null)
         setIsAlertDeleteDialogOpen(false)
       },
@@ -181,6 +171,18 @@ export const SettingsProfileKeysPage = () => {
       }
     }
   )
+
+  useEffect(() => {
+    if (publicKeysList) {
+      setPublicKeys(publicKeysList)
+    }
+  }, [publicKeysList, setPublicKeys])
+
+  useEffect(() => {
+    if (tokenList) {
+      setTokens(tokenList)
+    }
+  }, [tokenList, setTokens])
 
   const handleDeletePublicKey = (publicKeyIdentifier: string) => {
     deletePublicKeyMutation.mutate({ public_key_identifier: publicKeyIdentifier })
@@ -216,8 +218,7 @@ export const SettingsProfileKeysPage = () => {
   return (
     <>
       <SettingsAccountKeysPage
-        publicKeys={publicKeys}
-        tokens={tokens}
+        useProfileSettingsStore={useProfileSettingsStore}
         openTokenDialog={openTokenDialog}
         openSshKeyDialog={openSshKeyDialog}
         openAlertDeleteDialog={openAlertDeleteDialog}
@@ -237,13 +238,11 @@ export const SettingsProfileKeysPage = () => {
         handleCreateSshKey={handleCreateSshKey}
         error={apiError}
       />
-      {createdTokenData && (
-        <TokenSuccessDialog
-          open={openSuccessTokenDialog}
-          onClose={closeSuccessTokenDialog}
-          tokenData={createdTokenData}
-        />
-      )}
+      <TokenSuccessDialog
+        open={openSuccessTokenDialog && !!createdTokenData}
+        onClose={closeSuccessTokenDialog}
+        useProfileSettingsStore={useProfileSettingsStore}
+      />
       <DeleteAlertDialog
         open={isAlertDeleteDialogOpen}
         onClose={closeAlertDeleteDialog}

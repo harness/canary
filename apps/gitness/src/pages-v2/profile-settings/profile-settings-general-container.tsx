@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   GetUserErrorResponse,
@@ -9,25 +9,28 @@ import {
 } from '@harnessio/code-service-client'
 import { PasswordFields, ProfileFields, SettingsAccountGeneralPage } from '@harnessio/ui/views'
 
+import { useProfileSettingsStore } from './stores/profile-settings-store'
+
 export const SettingsProfileGeneralPage: React.FC = () => {
+  const { setUserData } = useProfileSettingsStore()
   const [apiError, setApiError] = useState<{ type: 'profile' | 'password'; message: string } | null>(null)
 
-  const [userData, setUserData] = useState<ProfileFields>({
-    name: '',
-    username: '',
-    email: ''
-  })
+  // const [userData, setUserData] = useState<ProfileFields>({
+  //   name: '',
+  //   username: '',
+  //   email: ''
+  // })
 
-  const { isLoading: isLoadingUser } = useGetUserQuery(
+  const { data: { body: userData } = {}, isLoading: isLoadingUser } = useGetUserQuery(
     {},
     {
-      onSuccess: ({ body: data }) => {
-        setUserData({
-          name: data.display_name || '',
-          username: data.uid || '',
-          email: data.email || ''
-        })
-      },
+      // onSuccess: ({ body: data }) => {
+      //   setUserData({
+      //     name: data.display_name || '',
+      //     username: data.uid || '',
+      //     email: data.email || ''
+      //   })
+      // },
       onError: (error: GetUserErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
         setApiError({ type: 'profile', message: message })
@@ -92,10 +95,20 @@ export const SettingsProfileGeneralPage: React.FC = () => {
     })
   }
 
+  useEffect(() => {
+    if (userData) {
+      setUserData({
+        name: userData.display_name || '',
+        username: userData.uid || '',
+        email: userData.email || ''
+      })
+    }
+  }, [userData, setUserData])
+
   return (
     <>
       <SettingsAccountGeneralPage
-        userData={userData}
+        useProfileSettingsStore={useProfileSettingsStore}
         isLoadingUser={isLoadingUser}
         isUpdatingUser={updateUserMutation.isLoading}
         isUpdatingPassword={updatePasswordMutation.isLoading}

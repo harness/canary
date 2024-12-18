@@ -20,7 +20,7 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout } from '@/views'
+import { IProfileSettingsStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
@@ -60,10 +60,12 @@ interface SettingsAccountGeneralPageProps {
   error: { type: 'profile' | 'password'; message: string } | null
   onUpdateUser: (data: Omit<ProfileFields, 'username'>) => void
   onUpdatePassword: (data: PasswordFields) => void
+  useProfileSettingsStore: () => IProfileSettingsStore
 }
 
 const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
-  userData,
+  // userData,
+  useProfileSettingsStore,
   isLoadingUser,
   isUpdatingUser,
   isUpdatingPassword,
@@ -75,6 +77,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
 }) => {
   // Profile form handling
 
+  const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
   const TRUNCATE_INITIALS_LEN = 2
@@ -125,9 +128,9 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
   useEffect(() => {
     if (profileUpdateSuccess === true) {
       resetProfileForm({
-        name: userData.name,
-        username: userData.username,
-        email: userData.email
+        name: userData?.name,
+        username: userData?.username,
+        email: userData?.email
       })
       setProfileSubmitted(true)
       setTimeout(() => setProfileSubmitted(false), 2000)
@@ -181,7 +184,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                 <AvatarImage src="/images/anon.jpg" />
                 <AvatarFallback>
                   <Text size={5} weight="medium" color="tertiaryBackground">
-                    {getInitials(userData.name, TRUNCATE_INITIALS_LEN)}
+                    {getInitials(userData?.name || '', TRUNCATE_INITIALS_LEN)}
                   </Text>
                 </AvatarFallback>
               </Avatar>

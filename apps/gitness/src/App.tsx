@@ -12,7 +12,8 @@ import {
   NewPasswordPage as NewPasswordPageV2,
   OTPPage as OTPPageV2,
   RepoSettingsPage,
-  SandboxLayout
+  SandboxLayout,
+  SettingsAccountPage
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -20,7 +21,6 @@ import {
   OTPPage,
   RepoSettingsPlaceholderPage,
   SandboxSettings,
-  SettingsAccountPage,
   SettingsProjectNav
 } from '@harnessio/views'
 
@@ -39,8 +39,10 @@ import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestL
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
-// import { SettingsProfileGeneralPage } from './pages/profile-settings/profile-settings-general-container'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
+// import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settings-keys-container'
+import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
+import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -72,7 +74,7 @@ import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
 import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
 import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
-import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settings-keys-container'
+import { SettingsProfileGeneralPage as SettingsProfileGeneralPageV1 } from './pages/profile-settings/profile-settings-general-container'
 import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
 import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
@@ -330,24 +332,19 @@ export default function App() {
         },
         {
           path: 'settings',
-          element: <SandboxSettings />,
+          element: <SettingsLayout />,
           children: [
             {
-              element: <SettingsAccountPage />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="general" replace />
-                },
-                {
-                  path: 'general',
-                  element: <SettingsProfileGeneralPage />
-                },
-                {
-                  path: 'keys',
-                  element: <SettingsProfileKeysPage />
-                }
-              ]
+              index: true,
+              element: <Navigate to="general" replace />
+            },
+            {
+              path: 'general',
+              element: <SettingsProfileGeneralPage />
+            },
+            {
+              path: 'keys',
+              element: <SettingsProfileKeysPage />
             }
           ]
         },
@@ -636,7 +633,7 @@ export default function App() {
                 },
                 {
                   path: 'general',
-                  element: <SettingsProfileGeneralPage />
+                  element: <SettingsProfileGeneralPageV1 />
                 },
                 {
                   path: 'keys',

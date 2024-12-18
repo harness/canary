@@ -93,16 +93,18 @@ export const SettingsProfileGeneralPage: React.FC = () => {
   }
 
   return (
-    <SettingsAccountGeneralPage
-      userData={userData}
-      isLoadingUser={isLoadingUser}
-      isUpdatingUser={updateUserMutation.isLoading}
-      isUpdatingPassword={updatePasswordMutation.isLoading}
-      error={apiError}
-      onUpdateUser={handleUpdateUser}
-      onUpdatePassword={handleUpdatePassword}
-      profileUpdateSuccess={updateUserMutation.isSuccess}
-      passwordUpdateSuccess={updatePasswordMutation.isSuccess}
-    />
+    <>
+      <SettingsAccountGeneralPage
+        userData={userData}
+        isLoadingUser={isLoadingUser}
+        isUpdatingUser={updateUserMutation.isLoading}
+        isUpdatingPassword={updatePasswordMutation.isLoading}
+        error={apiError}
+        onUpdateUser={handleUpdateUser}
+        onUpdatePassword={handleUpdatePassword}
+        profileUpdateSuccess={updateUserMutation.isSuccess}
+        passwordUpdateSuccess={updatePasswordMutation.isSuccess}
+      />
+    </>
   )
 }

@@ -13,7 +13,6 @@ import {
   FormWrapper,
   Icon,
   Input,
-  Label,
   Legend,
   Message,
   MessageTheme,
@@ -157,7 +156,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
 
   if (isLoadingUser) {
     return (
-      <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+      <SandboxLayout.Main>
         <SandboxLayout.Content maxWidth="2xl">
           <SkeletonList />
         </SandboxLayout.Content>
@@ -166,7 +165,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="2xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'} className="flex justify-center">
@@ -249,7 +248,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
           </Fieldset>
         </FormWrapper>
 
-        <Fieldset>
+        <Fieldset className="my-7">
           <FormSeparator />
         </Fieldset>
 

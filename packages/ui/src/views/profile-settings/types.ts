@@ -1,3 +1,9 @@
+import { z } from 'zod'
+
+import { tokenCreateFormSchema } from './components/token-create/token-create-form'
+
+export type TokenFormType = z.infer<typeof tokenCreateFormSchema>
+
 export interface AlertDeleteParams {
   identifier: string
   type: string
@@ -10,4 +16,24 @@ export enum ApiErrorType {
   TokenCreate = 'tokenCreate',
   TokenDelete = 'tokenDelete',
   KeyDelete = 'keyDelete'
+}
+
+export interface KeysList {
+  created?: number
+  verified?: number | null
+  identifier?: string
+  usage?: string
+  fingerprint?: string
+  comment?: string
+  type?: string
+}
+
+export interface TokensList {
+  principal_id?: number
+  type?: string
+  identifier?: string
+  expires_at?: number | null
+  issued_at?: number
+  created_by?: number
+  uid?: string
 }

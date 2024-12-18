@@ -209,7 +209,7 @@ export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({
         />
       }
       id="default-branch"
-      label="Apply this rule to the default branch"
+      label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
       className="mt-0"
     />
 

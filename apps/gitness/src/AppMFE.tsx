@@ -2,7 +2,7 @@ import './AppMFE.css'
 
 import { useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 
 import { ChildComponentProps } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -33,7 +33,51 @@ import { RepoImportContainer } from './pages/repo/repo-import-container'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
-export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: ChildComponentProps) {
+function LocationChangeHandler({
+  renderUrl,
+  locationPathname,
+  onRouteChange
+}: {
+  renderUrl: string
+  locationPathname: string
+  onRouteChange: (updatedLocationPathname: string) => void
+}) {
+  // Handle location change detected from parent route
+  const navigate = useNavigate()
+  useEffect(() => {
+    console.log('locationPathname', locationPathname)
+    if (renderUrl) {
+      const pathToReplace = renderUrl
+      console.log('pathToReplace', pathToReplace)
+
+      const pathToNavigate = locationPathname.replace(pathToReplace, '')
+      console.log('pathToNavigate', pathToNavigate)
+
+      navigate(pathToNavigate)
+    }
+  }, [locationPathname])
+
+  // Notify parent about route change
+  const location = useLocation()
+  useEffect(() => {
+    console.log('location.pathname -> Child', location.pathname)
+    console.log('locationPathname -> Parent', locationPathname)
+    if (location.pathname !== locationPathname) {
+      onRouteChange?.(`${renderUrl}${location.pathname}`)
+    }
+  }, [location])
+
+  return <></>
+}
+
+export default function AppMFE({
+  scope,
+  renderUrl,
+  on401,
+  useMFEThemeContext,
+  locationPathname,
+  onRouteChange
+}: ChildComponentProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) => `/code${BASE_URL_PREFIX}${url}`,
     responseInterceptor: (response: Response) => {
@@ -47,7 +91,6 @@ export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: 
   })
 
   const { theme } = useMFEThemeContext()
-  console.log('MFE Theme', theme)
 
   const { setTheme } = useThemeStore()
   useEffect(() => {
@@ -68,6 +111,11 @@ export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: 
                 <NuqsAdapter>
                   <MFEContext.Provider value={{ scope, renderUrl }}>
                     <BrowserRouter basename={`/ng${renderUrl}`}>
+                      <LocationChangeHandler
+                        renderUrl={renderUrl}
+                        locationPathname={locationPathname}
+                        onRouteChange={onRouteChange}
+                      />
                       <Routes>
                         <Route path="repos/:repoId/commits" element={<RepoCommitsPage />} />
                         <Route path="repos/:repoId/branches" element={<RepoBranchesListPage />} />

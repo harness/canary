@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 import {
   Button,
@@ -24,6 +24,8 @@ import { BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/compone
 import { formatDate } from '@utils/utils'
 
 import SummaryPanel from './components/summary-panel'
+
+const useNavigate = () => ({ navigate: () => void 0 })
 
 export interface RepoSummaryViewProps {
   loading: boolean

@@ -1,8 +1,10 @@
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
 import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
+
+const useNavigate = () => ({ navigate: () => void 0 })
 
 interface SummaryProps {
   latestFile: LatestFileTypes

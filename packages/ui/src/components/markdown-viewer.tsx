@@ -1,5 +1,6 @@
 import { CSSProperties, Fragment, MouseEvent, ReactNode, useCallback, useMemo, useRef, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+
+// import { useNavigate } from 'react-router-dom'
 
 import { ImageCarousel } from '@/components'
 // import type { SuggestionBlock } from 'components/SuggestionBlock/SuggestionBlock'
@@ -40,7 +41,8 @@ export function MarkdownViewer({
   //   suggestionCheckSums
 }: MarkdownViewerProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
+  const navigate = () => {}
   const [zoomLevel, setZoomLevel] = useState(INITIAL_ZOOM_LEVEL)
   const [imgEvent, setImageEvent] = useState<string[]>([])
   const refRootHref = useMemo(() => document.getElementById('repository-ref-root')?.getAttribute('href'), [])

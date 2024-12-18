@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
+
+// import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar } from '@components/filters'
@@ -14,7 +15,8 @@ import { sortRepositories } from '../utils/sorting/repos'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
+// const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
+const Link = ({ ...props }) => <a {...props} />
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -23,7 +25,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  LinkComponent
 }) => {
   const { t } = useTranslationStore()
 

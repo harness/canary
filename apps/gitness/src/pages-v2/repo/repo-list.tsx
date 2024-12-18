@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useContext, useEffect, useMemo } from 'react'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
@@ -6,6 +6,7 @@ import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
+import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -15,11 +16,15 @@ import { useRepoStore } from './stores/repo-list-store'
 export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
+  // const { setRepositories, page, setPage } = { setRepositories: () => {}, page: 1, setPage: () => {} }
+
+  const { Link } = useContext(MFEContext)
 
   /* Query and Pagination */
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-
+  // const [query, setQuery] = useQueryState('query')
+  // const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const query = null
+  const setQuery = () => null
   const {
     data: { body: repoData, headers } = {},
     refetch,
@@ -42,9 +47,9 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
+  // useEffect(() => {
+  //   setQueryPage(page)
+  // }, [queryPage, page, setPage])
 
   const isRepoStillImporting: boolean = useMemo(() => {
     return repoData?.some(repository => repository.importing) ?? false
@@ -73,6 +78,7 @@ export default function ReposListPage() {
       <div className="fixed top-0 z-30 ml-56 w-full bg-background-1">
         <Breadcrumbs />
       </div>
+
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}
@@ -81,6 +87,7 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        LinkComponent={Link}
       />
     </>
   )

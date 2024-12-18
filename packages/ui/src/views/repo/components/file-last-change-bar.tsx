@@ -5,14 +5,14 @@ import { getInitials } from '@utils/stringUtils'
 const TopTitle = ({ user, lastCommitMessage }: LatestFileTypes) => {
   return (
     <div className="flex items-center gap-2">
-      <Avatar size="6">
+      {/* <Avatar size="6">
         <AvatarImage src={user?.avatarUrl || ''} />
         <AvatarFallback>
           <Text size={0} color="tertiaryBackground">
             {getInitials(user?.name || '')}
           </Text>
         </AvatarFallback>
-      </Avatar>
+      </Avatar> */}
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name}
       </Text>

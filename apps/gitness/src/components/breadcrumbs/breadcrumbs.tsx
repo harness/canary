@@ -1,5 +1,6 @@
-import { useMemo } from 'react'
-import { Link, useLocation, useParams } from 'react-router-dom'
+import { useContext, useMemo } from 'react'
+
+// import { Link, useLocation, useParams } from 'react-router-dom'
 
 import {
   Avatar,
@@ -14,12 +15,14 @@ import {
 } from '@harnessio/ui/components'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { getInitials } from '../../utils/common-utils'
 import { BreadcrumbDropdown, BreadcrumbDropdownProps } from './breadcrumb-dropdown'
 import { getBreadcrumbMatchers } from './breadcrumbs-utils'
 
 export default function Breadcrumbs() {
+  const { useLocation, useParams, Link } = useContext(MFEContext)
   const { pathname } = useLocation()
   const space = useGetSpaceURLParam()
   const { pipelineId, repoId, executionId: executionIdParam } = useParams()

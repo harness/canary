@@ -97,7 +97,7 @@ export function RepoList({
     <>
       <StackedList.Root>
         {repos.map((repo, repo_idx) => (
-          <LinkComponent key={repo_idx} to={repo.name}>
+          <LinkComponent key={repo_idx} to={`repos/${repo.name}`}>
             <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
               <StackedList.Field
                 primary

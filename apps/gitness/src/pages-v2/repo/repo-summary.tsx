@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+
+// import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   GitPathDetails,
@@ -20,6 +21,7 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoFile, RepoSummaryView } from '@harnessio/ui/views'
 import { generateAlphaNumericHash, SummaryItemType, useCommonFilter } from '@harnessio/views'
 
+import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -34,16 +36,18 @@ export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
-  const navigate = useNavigate()
+
+  const { useParams } = useContext(MFEContext)
+
+  // const navigate = useNavigate()
+  const navigate = () => null
   const { repoId } = useParams<PathParams>()
   const spaceId = useGetSpaceURLParam() ?? ''
   const [gitRef, setGitRef] = useState<string>('')
 
   const {
     branchList,
-
     tagList,
-
     setBranchList,
     setTagList,
     setSpaceIdAndRepoId,
@@ -96,7 +100,8 @@ export default function RepoSummaryPage() {
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 
-  const { query } = useCommonFilter()
+  // const { query } = useCommonFilter()
+  const query = ''
 
   useEffect(() => {
     if (branches) {
@@ -240,6 +245,7 @@ export default function RepoSummaryPage() {
     })
       .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
         if (response?.details && response.details.length) {
+          console.log('response', response)
           setFiles(
             response.details.map((item: GitPathDetails) => ({
               id: item?.path || '',
@@ -254,7 +260,9 @@ export default function RepoSummaryPage() {
           )
         }
       })
-      .catch()
+      .catch(e => {
+        console.log('error', e)
+      })
       .finally(() => {
         setLoading(false)
       })

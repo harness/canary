@@ -31,7 +31,6 @@ interface RepoCommitsViewProps {
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
   const { t } = props.useTranslationStore()
-  const { branchList } = props.useRepoBranchesStore()
 
   return (
     <SandboxLayout.Main>

@@ -1,11 +1,10 @@
-import React, { useEffect, useReducer } from 'react'
+import React, { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, Spacer, Text } from '@/components'
-import { IRepoStore, MergeStrategy, SandboxLayout } from '@/views'
+import { IRepoStore, SandboxLayout } from '@/views'
 
-import { branchRules } from './components/repo-branch-rules-data'
 import {
   BranchSettingsRuleBypassListField,
   BranchSettingsRuleDefaultBranchField,
@@ -73,7 +72,7 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
     }
   })
 
-  const { rules, dispatch } = useBranchRulesStore()
+  const { rules } = useBranchRulesStore()
 
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     const formData = { ...data, rules }
@@ -154,7 +153,6 @@ export const RepoBranchSettingsRulesPage: React.FC<RepoBranchSettingsRulesPagePr
             />
             <BranchSettingsRuleListField
               rules={rules}
-              dispatch={dispatch}
               recentStatusChecks={recentStatusChecks}
               handleCheckboxChange={handleCheckboxChange}
               handleSubmenuChange={handleSubmenuChange}

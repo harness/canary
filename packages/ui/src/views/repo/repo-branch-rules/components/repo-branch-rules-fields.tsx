@@ -28,16 +28,7 @@ import {
 } from '@/components'
 import { MergeStrategy } from '@views/repo/pull-request'
 
-import {
-  BranchRulesActionType,
-  BypassUsersList,
-  Dispatch,
-  FieldProps,
-  // MergeStrategy,
-  PatternsButtonType,
-  Rule
-} from '../types'
-// import { FormFieldSet, MessageTheme } from '../../../index'
+import { BypassUsersList, FieldProps, PatternsButtonType, Rule } from '../types'
 import { branchRules } from './repo-branch-rules-data'
 
 export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue }) => (
@@ -290,7 +281,6 @@ export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({ r
 
 export const BranchSettingsRuleListField: React.FC<{
   rules: Rule[]
-  dispatch: Dispatch
   recentStatusChecks?: string[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
   handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
@@ -298,7 +288,6 @@ export const BranchSettingsRuleListField: React.FC<{
   handleInputChange: (ruleId: string, value: string) => void
 }> = ({
   rules,
-  dispatch,
   recentStatusChecks,
   handleCheckboxChange,
   handleSubmenuChange,

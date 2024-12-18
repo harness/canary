@@ -37,7 +37,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
     // TODO: improve error handling
     return (
       <>
-        <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Main>
           <SandboxLayout.Content>
             <Spacer size={2} />
             <Text size={1} className="text-destructive">
@@ -49,7 +49,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
     )
 
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <>
           <Spacer size={10} />

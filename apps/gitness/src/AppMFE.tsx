@@ -117,7 +117,15 @@ export default function AppMFE({
                         onRouteChange={onRouteChange}
                       />
                       <Routes>
-                        <Route path="repos/:repoId/commits" element={<RepoCommitsPage />} />
+                        <Route
+                          path="repos/:repoId/commits"
+                          element={
+                            <>
+                              <Breadcrumbs />
+                              <RepoCommitsPage />
+                            </>
+                          }
+                        />
                         <Route path="repos/:repoId/branches" element={<RepoBranchesListPage />} />
                         <Route path="repos/:repoId/webhooks" element={<WebhookListPage />} />
 
@@ -145,9 +153,7 @@ export default function AppMFE({
                           path="repos/:repoId"
                           element={
                             <>
-                              <div className="fixed top-0 z-40 ml-56 w-full bg-background-1">
-                                <Breadcrumbs />
-                              </div>
+                              <Breadcrumbs />
                               <RepoSummaryPage />
                             </>
                           }

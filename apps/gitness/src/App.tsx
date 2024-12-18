@@ -46,6 +46,8 @@ import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-p
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
+// import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
+import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
@@ -80,7 +82,6 @@ import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/p
 import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
-import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
 import RepoCommitsPageV1 from './pages/repo/repo-commits'
 import { CreateRepoV1 } from './pages/repo/repo-create-page'
 import { RepoFiles } from './pages/repo/repo-files'
@@ -302,6 +303,16 @@ export default function App() {
                 {
                   path: 'webhooks',
                   element: <WebhookListPage />
+                },
+                {
+                  path: 'rules/create',
+                  element: <RepoBranchSettingsRulesPageContainer />,
+                  children: [
+                    {
+                      path: ':identifier',
+                      element: <RepoBranchSettingsRulesPageContainer />
+                    }
+                  ]
                 }
               ]
             }

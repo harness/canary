@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useContext, useMemo } from 'react'
 import { Link, useLocation, useParams } from 'react-router-dom'
 
 import {
@@ -14,6 +14,7 @@ import {
 } from '@harnessio/ui/components'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { getInitials } from '../../utils/common-utils'
 import { BreadcrumbDropdown, BreadcrumbDropdownProps } from './breadcrumb-dropdown'
@@ -24,6 +25,9 @@ export default function Breadcrumbs() {
   const space = useGetSpaceURLParam()
   const { pipelineId, repoId, executionId: executionIdParam } = useParams()
   const executionId = executionIdParam ? parseInt(executionIdParam) : undefined
+  const { renderUrl } = useContext(MFEContext)
+
+  const getPath = (path: string) => (renderUrl ? path.replace(`/${space}`, '') : path)
 
   const { spaces: spacesAll } = useAppContext()
 
@@ -95,7 +99,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Repositories',
-                  path: `/${space}/repos`,
+                  path: getPath(`/${space}/repos`),
                   isLast: !isRepoRoute
                 })}
               </>
@@ -105,7 +109,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: repoId,
-                  path: `/${space}/repos/${repoId}`,
+                  path: getPath(`/${space}/repos/${repoId}`),
                   isLast: !(isRepoPageRoute && repoPageMatch)
                 })}
               </>
@@ -115,7 +119,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: repoPageMatch.label,
-                  path: `/${space}/repos/${repoId}${repoPageMatch.path}`,
+                  path: getPath(`/${space}/repos/${repoId}${repoPageMatch.path}`),
                   isLast: !isPipelineRoute
                 })}
               </>
@@ -125,7 +129,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: pipelineId,
-                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: getPath(`/${space}/repos/${repoId}/pipelines/${pipelineId}`),
                   isLast: !isExecutionRoute && !isPipelineExecutionsRouteExact && !isPipelineEditRouteExact
                 })}
               </>
@@ -135,7 +139,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Executions',
-                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: getPath(`/${space}/repos/${repoId}/pipelines/${pipelineId}`),
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -145,7 +149,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Executions',
-                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}`,
+                  path: getPath(`/${space}/repos/${repoId}/pipelines/${pipelineId}`),
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -155,7 +159,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: 'Edit',
-                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`,
+                  path: getPath(`/${space}/repos/${repoId}/pipelines/${pipelineId}/edit`),
                   isLast: !isExecutionRoute
                 })}
               </>
@@ -165,7 +169,7 @@ export default function Breadcrumbs() {
               <>
                 {getBreadcrumbSegment({
                   label: `${executionId}`,
-                  path: `/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
+                  path: getPath(`/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`),
                   isLast: true
                 })}
               </>

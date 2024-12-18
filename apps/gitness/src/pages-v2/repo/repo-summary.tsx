@@ -28,6 +28,7 @@ import {
 import { generateAlphaNumericHash, SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
@@ -42,7 +43,8 @@ export default function RepoSummaryPage() {
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam() ?? ''
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 

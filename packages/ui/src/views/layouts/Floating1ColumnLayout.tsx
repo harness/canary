@@ -101,7 +101,7 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
         />
       </div>
       <span
-        className="pointer-events-none absolute inset-0 bg-[url('/images/signin/noise.png')] bg-[size:100px_100px] bg-repeat opacity-70 mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 bg-[size:100px_100px] bg-repeat opacity-70 mix-blend-overlay"
         aria-hidden
       />
       {children}

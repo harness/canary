@@ -6,8 +6,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
-import { ExecutionListPage, IExecution, PipelineExecutionStatus } from '@harnessio/ui/views'
-import { timeDistance } from '@harnessio/views'
+import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { LinkComponent } from '../../components/LinkComponent'
@@ -94,12 +93,8 @@ function apiExecutions2Executions(data: ListExecutionsOkResponse): IExecution[] 
     name: executionBody?.message || executionBody?.title,
     sha: executionBody?.after?.slice(0, 7),
     description: <Description execution={executionBody} />,
-    timestamp: `${timeDistance(executionBody?.finished, Date.now(), true)} ago`,
-    lastTimestamp: timeDistance(
-      executionBody?.started,
-      executionBody?.status === PipelineExecutionStatus.RUNNING ? Date.now() : executionBody?.finished,
-      true
-    )
+    finished: executionBody?.finished,
+    started: executionBody?.started
   }))
 }
 

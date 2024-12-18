@@ -1,5 +1,3 @@
-import { timeAgo } from '@utils/utils'
-
 import { Icon, NoData, SkeletonList, StackedList, Text } from '../../../components'
 import { Meter } from '../../../components/meter'
 import { PipelineExecutionStatus } from '../common/execution-types'
@@ -9,7 +7,7 @@ import { IPipelineListProps } from './types'
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
     <div className="flex items-center gap-2">
-      {status && <ExecutionStatusIcon status={status} />}
+      <ExecutionStatusIcon status={status} />
       <Text truncate>{title}</Text>
     </div>
   )
@@ -106,20 +104,7 @@ export const PipelineList = ({
                 />
               }
             />
-            <StackedList.Field
-              title={
-                pipeline.meter ? (
-                  <Meter data={pipeline.meter} />
-                ) : pipeline.timestamp ? (
-                  `Created ${timeAgo(parseInt(pipeline.timestamp))}`
-                ) : (
-                  ''
-                )
-              }
-              label
-              secondary
-              right
-            />
+            <StackedList.Field title={<Meter data={pipeline.meter} />} label secondary right />
           </StackedList.Item>
         </LinkComponent>
       ))}

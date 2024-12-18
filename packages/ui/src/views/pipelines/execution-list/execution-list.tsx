@@ -1,5 +1,7 @@
 import { JSXElementConstructor, ReactElement } from 'react'
 
+import { timeAgo, timeDistance } from '@utils/utils'
+
 import { Icon, NoData, SkeletonList, StackedList, Text } from '../../../components'
 import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
@@ -114,8 +116,8 @@ export const ExecutionList = ({
               }
             />
             <StackedList.Field
-              title={execution.timestamp}
-              description={execution.lastTimestamp}
+              title={`${timeDistance(execution.finished, execution.started)}`}
+              description={`${timeAgo(execution.started)}`}
               right
               label
               secondary

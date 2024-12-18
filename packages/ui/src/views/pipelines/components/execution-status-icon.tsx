@@ -3,7 +3,7 @@ import { Icon as CanaryIcon } from '@components/icon'
 import { PipelineExecutionStatus } from '../common/execution-types'
 
 interface IExecutionStatusIconProps {
-  status: PipelineExecutionStatus
+  status?: PipelineExecutionStatus
 }
 
 export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props => {
@@ -22,6 +22,6 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
       return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
     case PipelineExecutionStatus.SKIPPED:
     default:
-      return <></>
+      return <CanaryIcon size={16} name="pending-clock" className="opacity-50" />
   }
 }

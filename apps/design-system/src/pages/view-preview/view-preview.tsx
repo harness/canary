@@ -4,6 +4,8 @@ import '@harnessio/ui/styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
+import ExecutionListWrapper from '../../views/execution-list/execution-list.tsx'
+import PipelineListWrapper from '../../views/pipeline-list/pipeline-list.tsx'
 import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare.tsx'
 import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list.tsx'
 import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
@@ -61,6 +63,16 @@ const views: Record<string, ReactNode> = {
       <RepoFilesViewWrapper>
         <RepoFilesEditView />
       </RepoFilesViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'pipeline-list': (
+    <RepoViewWrapper>
+      <PipelineListWrapper />
+    </RepoViewWrapper>
+  ),
+  'execution-list': (
+    <RepoViewWrapper>
+      <ExecutionListWrapper />
     </RepoViewWrapper>
   )
 }

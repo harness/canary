@@ -11,9 +11,9 @@ export interface IPipeline {
   sha?: string
   description?: string
   version?: string
-  timestamp?: string
-  meter?: {
-    id?: string
+  timestamp?: number
+  meter: {
+    id: string
     state: MeterState
   }[]
 }

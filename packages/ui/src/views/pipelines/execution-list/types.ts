@@ -13,8 +13,8 @@ export interface IExecution {
   version?: string
   sha?: string
   description?: string | ReactElement<any, string | JSXElementConstructor<any>>
-  timestamp?: string
-  lastTimestamp?: string
+  started?: number
+  finished?: number
 }
 
 export interface IExecutionListStore {

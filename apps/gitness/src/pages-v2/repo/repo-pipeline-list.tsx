@@ -74,13 +74,14 @@ function apiPipelines2Pipelines(data: ListPipelinesOkResponse): IPipeline[] {
   return data.map(pipelineBody => ({
     id: pipelineBody.identifier ?? '',
     description: pipelineBody?.execution?.message,
-    meter: pipelineBody.last_executions?.map(exec => ({
-      id: exec.number?.toString(),
-      state: getMeterState(pipelineBody?.execution?.status)
-    })),
+    meter:
+      pipelineBody.last_executions?.map((exec, idx) => ({
+        id: exec.number?.toString() ?? idx.toString(),
+        state: getMeterState(pipelineBody?.execution?.status)
+      })) ?? [],
     name: pipelineBody.identifier,
     sha: pipelineBody?.execution?.after,
-    timestamp: pipelineBody?.created?.toString(),
+    timestamp: pipelineBody?.created,
     status: getExecutionStatus(pipelineBody?.execution?.status)
   }))
 }

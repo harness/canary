@@ -5,3 +5,4 @@ export const mockT = (...args: unknown[]) => {
 }
 
 export const useTranslationsStore = () => ({ t: mockT as any, changeLanguage: noop, i18n: {} as any })
+export const useThemeStore = () => ({ theme: 'dark-std-std' as any, setTheme: noop })

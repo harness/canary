@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import { NavbarItemType, NavState } from '@harnessio/ui/components'
 import { SandboxRoot } from '@harnessio/ui/views'
 
-import { mockT, noop } from '../../utils.ts'
+import { noop, useThemeStore, useTranslationsStore } from '../../utils.ts'
 
 const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([])
@@ -36,7 +36,18 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
 
   return (
     <Routes>
-      <Route path="*" element={<SandboxRoot useNav={useNav} currentUser={undefined} logout={noop} t={mockT as any} />}>
+      <Route
+        path="*"
+        element={
+          <SandboxRoot
+            useNav={useNav}
+            currentUser={undefined}
+            logout={noop}
+            useThemeStore={useThemeStore}
+            useTranslationStore={useTranslationsStore}
+          />
+        }
+      >
         {asChild ? children : <Route path="*" element={children} />}
       </Route>
     </Routes>

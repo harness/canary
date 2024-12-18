@@ -8,12 +8,20 @@ import {
   useRuleGetQuery,
   useRuleUpdateMutation
 } from '@harnessio/code-service-client'
-import { BypassUsersList, RepoBranchSettingsFormFields, RepoBranchSettingsRulesPage } from '@harnessio/ui/views'
+import {
+  branchRules,
+  BranchRulesActionType,
+  BypassUsersList,
+  MergeStrategy,
+  RepoBranchSettingsFormFields,
+  RepoBranchSettingsRulesPage
+} from '@harnessio/ui/views'
 
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { transformFormOutput } from '../../utils/repo-branch-rules-utils'
+import { useBranchRulesStore } from './stores/repo-branch-rules-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
@@ -24,6 +32,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
+  const { dispatch } = useBranchRulesStore()
 
   useEffect(() => {
     if (!identifier) {
@@ -94,6 +103,48 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   }
 
+  const handleCheckboxChange = (ruleId: string, checked: boolean) => {
+    dispatch({ type: BranchRulesActionType.TOGGLE_RULE, ruleId, checked })
+  }
+
+  const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
+    dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
+  }
+
+  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
+    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, checkName })
+  }
+
+  const handleInputChange = (ruleId: string, value: string) => {
+    dispatch({ type: BranchRulesActionType.SET_INPUT_VALUE, ruleId, value })
+  }
+
+  const handleInitialRules = (presetRuleData: RepoBranchSettingsFormFields | null) => {
+    if (!presetRuleData) {
+      dispatch({
+        type: BranchRulesActionType.SET_INITIAL_RULES,
+        payload: branchRules.map(rule => ({
+          id: rule.id,
+          checked: false,
+          submenu: [],
+          selectOptions: [],
+          input: ''
+        }))
+      })
+      return
+    }
+    dispatch({
+      type: BranchRulesActionType.SET_INITIAL_RULES,
+      payload: presetRuleData.rules.map(rule => ({
+        id: rule.id,
+        checked: rule.checked || false,
+        submenu: (rule.submenu || []) as MergeStrategy[],
+        selectOptions: rule.selectOptions || [],
+        input: rule.input || ''
+      }))
+    })
+  }
+
   useEffect(() => {
     if (rulesData) {
       setPresetRuleData(rulesData)
@@ -125,6 +176,12 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       apiErrors={errors}
       isLoading={addingRule || updatingRule}
       useRepoRulesStore={useRepoRulesStore}
+      useBranchRulesStore={useBranchRulesStore}
+      handleCheckboxChange={handleCheckboxChange}
+      handleSubmenuChange={handleSubmenuChange}
+      handleSelectChangeForRule={handleSelectChangeForRule}
+      handleInputChange={handleInputChange}
+      handleInitialRules={handleInitialRules}
     />
   )
 }

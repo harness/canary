@@ -292,23 +292,19 @@ export const BranchSettingsRuleListField: React.FC<{
   rules: Rule[]
   dispatch: Dispatch
   recentStatusChecks?: string[] | null
-}> = ({ rules, dispatch, recentStatusChecks }) => {
-  const handleCheckboxChange = (ruleId: string, checked: boolean) => {
-    dispatch({ type: BranchRulesActionType.TOGGLE_RULE, ruleId, checked })
-  }
-
-  const handleSubmenuChange = (ruleId: string, submenuId: string, checked: boolean) => {
-    dispatch({ type: BranchRulesActionType.TOGGLE_SUBMENU, ruleId, submenuId, checked })
-  }
-
-  const handleSelectChangeForRule = (ruleId: string, checkName: string) => {
-    dispatch({ type: BranchRulesActionType.SET_SELECT_OPTION, ruleId, checkName })
-  }
-
-  const handleInputChange = (ruleId: string, value: string) => {
-    dispatch({ type: BranchRulesActionType.SET_INPUT_VALUE, ruleId, value })
-  }
-
+  handleCheckboxChange: (ruleId: string, checked: boolean) => void
+  handleSubmenuChange: (ruleId: string, subOptionId: string, checked: boolean) => void
+  handleSelectChangeForRule: (ruleId: string, check: string) => void
+  handleInputChange: (ruleId: string, value: string) => void
+}> = ({
+  rules,
+  dispatch,
+  recentStatusChecks,
+  handleCheckboxChange,
+  handleSubmenuChange,
+  handleSelectChangeForRule,
+  handleInputChange
+}) => {
   return (
     <ControlGroup className="max-w-sm">
       <Label className="mb-5">Rules: select all that apply</Label>

@@ -6,12 +6,6 @@ import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-sch
 
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 
-// export enum MergeStrategy {
-//   Merge = 'merge',
-//   Rebase = 'rebase',
-//   Squash = 'squash'
-// }
-
 export type Rule = {
   id: string
   checked: boolean
@@ -70,4 +64,9 @@ export enum BranchRuleId {
 export enum PatternsButtonType {
   INCLUDE = 'Include',
   EXCLUDE = 'Exclude'
+}
+
+export type IBranchRulesStore = {
+  rules: Rule[]
+  dispatch: Dispatch
 }

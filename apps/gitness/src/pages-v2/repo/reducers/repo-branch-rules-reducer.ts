@@ -1,6 +1,4 @@
-import { MergeStrategy } from '@views/repo/pull-request'
-
-import { BranchRulesAction, BranchRulesActionType, Rule } from '../types'
+import { BranchRulesAction, BranchRulesActionType, MergeStrategy, Rule } from '@harnessio/ui/views'
 
 export const branchSettingsReducer = (state: Rule[], action: BranchRulesAction): Rule[] => {
   switch (action.type) {

@@ -57,7 +57,7 @@ export const navItems = [
 
 function Sidebar() {
   return (
-    <SandboxLayout.LeftSubPanel hasHeader hasSubHeader>
+    <SandboxLayout.LeftSubPanel>
       <SandboxLayout.Content className="px-6">
         <RepoSidebar items={navItems} />
       </SandboxLayout.Content>
@@ -71,7 +71,7 @@ function SettingsContent() {
 
 export function RepoSettingsPage() {
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel hasLeftSubPanel>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="auto 1fr">
         <SandboxLayout.Column>
           <Sidebar />

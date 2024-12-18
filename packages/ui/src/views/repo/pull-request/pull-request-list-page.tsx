@@ -141,7 +141,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         {showTopBar ? (
           <>

@@ -9,8 +9,9 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { SSEEvent } from '../../types'
+import { PageResponseHeader, SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
+import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''
@@ -37,10 +38,12 @@ export default function ReposListPage() {
   )
 
   useEffect(() => {
+    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
-      setRepositories(repoData, headers)
+      const transformedRepos = transformRepoList(repoData)
+      setRepositories(transformedRepos, totalPages)
     } else {
-      setRepositories([], headers)
+      setRepositories([], totalPages)
     }
   }, [repoData, headers, setRepositories])
 
@@ -72,9 +75,7 @@ export default function ReposListPage() {
 
   return (
     <>
-      <div className="breadcrumbs">
-        <Breadcrumbs />
-      </div>
+      <Breadcrumbs />
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}

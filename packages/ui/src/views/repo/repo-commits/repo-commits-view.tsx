@@ -17,7 +17,6 @@ import { TypesCommit } from './types'
 
 interface RepoCommitsViewProps {
   isFetchingCommits: boolean
-  isFetchingBranches: boolean
   commitsList?: TypesCommit[] | null
   xNextPage: number
   xPrevPage: number
@@ -26,14 +25,15 @@ interface RepoCommitsViewProps {
   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export const RepoCommitsView = (props: RepoCommitsViewProps) => {
   const { t } = props.useTranslationStore()
-  const { branchList } = props.useRepoBranchesStore()
 
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
@@ -41,13 +41,13 @@ export const RepoCommitsView = (props: RepoCommitsViewProps) => {
         </Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
-          {!props.isFetchingBranches && branchList && (
-            <BranchSelector
-              onSelectBranch={props.selectBranchOrTag}
-              useRepoBranchesStore={props.useRepoBranchesStore}
-              useTranslationStore={props.useTranslationStore}
-            />
-          )}
+          <BranchSelector
+            onSelectBranch={props.selectBranchOrTag}
+            useRepoBranchesStore={props.useRepoBranchesStore}
+            useTranslationStore={props.useTranslationStore}
+            searchQuery={props.searchQuery}
+            setSearchQuery={props.setSearchQuery}
+          />
         </div>
         <Spacer size={5} />
 

@@ -5,7 +5,7 @@ import { Tabs, TabsList, TabsTrigger } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export enum RepoTabsKeys {
-  SUMMERY = 'summary',
+  SUMMARY = 'summary',
   CODE = 'code',
   PIPELINES = 'pipelines',
   COMMITS = 'commits',
@@ -26,15 +26,15 @@ export const RepoLayout = ({ useTranslationStore }: { useTranslationStore: () =>
       return RepoTabsKeys.PULLS
     }
     const tab = repoTabsKeysArr.find(key => location.pathname.includes(key))
-    return tab ?? RepoTabsKeys.SUMMERY
+    return tab ?? RepoTabsKeys.SUMMARY
   }, [location.pathname])
 
   return (
     <>
-      <SandboxLayout.SubHeader className="overflow-hidden">
+      <SandboxLayout.SubHeader className="overflow-hidden h-[45px]">
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
-            <NavLink to={RepoTabsKeys.SUMMERY}>
+            <NavLink to={RepoTabsKeys.SUMMARY}>
               <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
             </NavLink>
             <NavLink to={RepoTabsKeys.CODE}>

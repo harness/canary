@@ -101,7 +101,7 @@ export const CreateNewMemberPage = () => {
   }, [reset])
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="2xl">
         <Spacer size={10} />
         <Text size={5} weight="medium">

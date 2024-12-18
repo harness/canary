@@ -171,7 +171,9 @@ export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps
           t={t}
         />
       </SandboxLayout.LeftPanel>
-      <Outlet />
+      <div className="flex flex-col">
+        <Outlet />
+      </div>
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
       <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
       <ManageNavigation

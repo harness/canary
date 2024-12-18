@@ -42,7 +42,7 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
   const { t } = useTranslationStore()
 
   return (
-    <SandboxLayout.Main hasLeftPanel className="flex items-center justify-center">
+    <SandboxLayout.Main className="flex items-center justify-center">
       <SandboxLayout.Content>
         <Card variant="plain" width="full">
           <CardHeader>

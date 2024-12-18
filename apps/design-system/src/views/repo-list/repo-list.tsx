@@ -9,7 +9,8 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
   const useRepoListStore = useCallback(
     () => ({
       ...repoListStore,
-      setPage: noop
+      setPage: noop,
+      setRepositories: noop
     }),
     []
   )

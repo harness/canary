@@ -5,7 +5,7 @@ import { useThemeStore } from '../../framework/context/ThemeContext'
 
 const ProfileSettingsThemePage: React.FC = () => {
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight="medium">

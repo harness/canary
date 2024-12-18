@@ -5,10 +5,11 @@ import {
   OpenapiContentInfo,
   OpenapiGetContentOutput,
   pathDetails,
+  useCalculateCommitDivergenceMutation,
   useFindRepositoryQuery,
   useGetContentQuery
 } from '@harnessio/code-service-client'
-import { CodeModes, RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
+import { CodeModes, CommitDivergenceType, RepoFile, RepoFiles, SummaryItemType } from '@harnessio/ui/views'
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
@@ -40,6 +41,7 @@ export const RepoCode = () => {
   const [files, setFiles] = useState<RepoFile[]>([])
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
+  const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 
   const { data: { body: repoDetails } = {}, refetch: refetchRepoContent } = useGetContentQuery({
     path: fullResourcePath || '',
@@ -47,6 +49,10 @@ export const RepoCode = () => {
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
+    useCalculateCommitDivergenceMutation({
+      repo_ref: repoRef
+    })
 
   useEffect(() => {
     if (repository && !fullGitRef) {
@@ -55,6 +61,12 @@ export const RepoCode = () => {
       setSelectedBranch(fullGitRef)
     }
   }, [repository, fullGitRef])
+
+  useEffect(() => {
+    if (branchDivergence.length) {
+      setCurrBranchDivergence(branchDivergence[0])
+    }
+  }, [branchDivergence])
 
   const repoEntryPathToFileTypeMap = useMemo((): Map<string, OpenapiGetContentOutput['type']> => {
     if (!repoDetails?.content?.entries?.length) return new Map()
@@ -142,6 +154,16 @@ export const RepoCode = () => {
   }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
 
   useEffect(() => {
+    if (fullGitRef) {
+      calculateDivergence({
+        body: {
+          requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
+        }
+      })
+    }
+  }, [fullGitRef])
+
+  useEffect(() => {
     refetchRepoContent()
   }, [codeMode])
 
@@ -178,6 +200,7 @@ export const RepoCode = () => {
         codeMode={codeMode}
         useRepoBranchesStore={useRepoBranchesStore}
         defaultBranchName={repository?.default_branch}
+        currentBranchDivergence={currBranchDivergence}
       >
         {renderCodeView}
       </RepoFiles>

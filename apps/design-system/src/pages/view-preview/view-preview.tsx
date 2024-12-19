@@ -4,23 +4,27 @@ import '@harnessio/ui/styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import ExecutionListWrapper from '../../views/execution-list/execution-list'
-import PipelineListWrapper from '../../views/pipeline-list/pipeline-list'
-import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare'
-import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list'
-import { RepoCommitsView } from '../../views/repo-commits'
-import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
-import RepoListWrapper from '../../views/repo-list/repo-list'
-import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary'
-import { RepoWebhooksCreate } from '../../views/repo-webhooks-create/repo-webhooks-list.tsx'
-import { RepoWebhooksList } from '../../views/repo-webhooks-list/repo-webhooks-list'
+import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
+import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
+import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
+import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
+import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
+import { RepoCommitsView } from '@subjects/views/repo-commits'
+import { RepoFilesEditView } from '@subjects/views/repo-files/repo-files-edit-view'
+import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-view'
+import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list'
+import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view'
+import RepoListWrapper from '@subjects/views/repo-list/repo-list'
+import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
+import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
+import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
-import { RepoSettingsViewWrapper } from './repo-settings-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
 
-const views: Record<string, ReactNode> = {
+export const viewPreviews: Record<string, ReactNode> = {
   'repo-summary': (
     <RepoViewWrapper>
       <RepoSummaryViewWrapper />
@@ -100,8 +104,8 @@ const views: Record<string, ReactNode> = {
   )
 }
 
-const routeEntries = Object.entries(views)
-const routeKeys = Object.keys(views)
+const routeEntries = Object.entries(viewPreviews)
+const routeKeys = Object.keys(viewPreviews)
 
 const ViewPreview: FC = () => {
   return (

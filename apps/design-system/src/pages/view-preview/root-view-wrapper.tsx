@@ -1,10 +1,10 @@
 import { FC, PropsWithChildren, useCallback, useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
+import { noop, useThemeStore, useTranslationsStore } from '@utils/viewUtils'
+
 import { NavbarItemType, NavState } from '@harnessio/ui/components'
 import { SandboxRoot } from '@harnessio/ui/views'
-
-import { noop, useThemeStore, useTranslationsStore } from '../../utils.ts'
 
 const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([])

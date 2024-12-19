@@ -1,8 +1,8 @@
 import { FC, PropsWithChildren } from 'react'
 
-import { SandboxLayout, SettingsSidebar } from '@harnessio/ui/views'
+import { useTranslationsStore } from '@utils/viewUtils'
 
-import { useTranslationsStore } from '../../utils.ts'
+import { SandboxLayout, SettingsSidebar } from '@harnessio/ui/views'
 
 export const RepoSettingsViewWrapper: FC<PropsWithChildren> = ({ children }) => {
   const { t } = useTranslationsStore()

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import NavbarSkeleton from '@/components/navbar/navbar-skeleton'
+import { NavbarSkeleton } from '@components/navbar-skeleton'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface RepoSidebarProps {

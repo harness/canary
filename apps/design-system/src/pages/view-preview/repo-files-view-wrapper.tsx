@@ -1,10 +1,10 @@
 import { FC, PropsWithChildren, useCallback } from 'react'
 
+import { OpenapiContentInfo, repoFilesStore } from '@subjects/views/repo-files/components/repo-files-store'
+import { noop, useTranslationsStore } from '@utils/viewUtils'
+
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
-
-import { noop, useTranslationsStore } from '../../utils.ts'
-import { OpenapiContentInfo, repoFilesStore } from '../../views/repo-files/components/repo-files-store'
 
 const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] => {
   return entries.sort((a, b) => {

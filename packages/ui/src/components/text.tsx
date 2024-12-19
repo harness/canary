@@ -64,7 +64,7 @@ interface TextProps extends React.ComponentProps<'span'> {
    * Shorthand for changing the default rendered element
    * into a semantically appropriate alternative.
    */
-  as?: 'span' | 'div' | 'label' | 'p'
+  as?: 'span' | 'div' | 'label' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
   /**
    * Change the default rendered element for the one

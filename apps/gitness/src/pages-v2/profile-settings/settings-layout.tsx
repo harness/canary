@@ -7,7 +7,7 @@ import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 export const SettingsLayout = () => {
   return (
     <>
-      <div className="bg-background-1 sticky top-0 z-40">
+      <div className="sticky top-0 z-40 bg-background-1">
         <Breadcrumbs />
         <SettingsAccountPage />
       </div>

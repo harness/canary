@@ -1,8 +1,10 @@
+import { ReactNode } from 'react'
+
 import { cn } from '@utils/cn'
 
 interface NodeGroupRootProps {
   className?: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
 function Root({ className, children }: NodeGroupRootProps) {
@@ -23,7 +25,7 @@ function Icon({
   simpleNodeIcon,
   className
 }: {
-  children?: React.ReactNode
+  children?: ReactNode
   simpleNodeIcon?: boolean
   className?: string
 }) {
@@ -32,21 +34,17 @@ function Icon({
       <div
         className={cn(
           'border-tertiary-background/30 bg-background text-primary relative z-20 flex h-6 w-6 place-content-center place-items-center rounded-full border p-1',
-          { 'bg-transprent border-none': simpleNodeIcon },
+          { 'bg-transparent border-none size-1 p-0 mt-2 shadow-commit-list-bullet': simpleNodeIcon },
           className
         )}
       >
-        {simpleNodeIcon ? (
-          <div className="size-[4px] rounded-[1px] bg-primary shadow-sm shadow-primary/10" />
-        ) : (
-          <>{children}</>
-        )}
+        {simpleNodeIcon ? <div className="size-1 rounded-[1px] bg-icons-8" /> : <>{children}</>}
       </div>
     </div>
   )
 }
 
-function Title({ children, className }: { children: React.ReactNode; className?: string }) {
+function Title({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="col-start-2 row-start-1">
       <div className={cn('inline-flex items-center gap-1.5', className)}>{children}</div>
@@ -54,19 +52,22 @@ function Title({ children, className }: { children: React.ReactNode; className?:
   )
 }
 
-function Content({ children }: { children: React.ReactNode }) {
+function Content({ children }: { children: ReactNode }) {
   return <div className="col-start-2 row-start-2">{children}</div>
 }
 
-function Connector({ first, last }: { first?: boolean; last?: boolean }) {
+function Connector({ first, last, className }: { first?: boolean; last?: boolean; className?: string }) {
   return (
     <div
       className={cn(
-        'absolute bottom-0 left-[12px] top-0 z-10 w-[1px] border-l',
+        'absolute bottom-0 left-[11px] top-0 z-10 w-1',
         { 'top-3': first },
-        { 'bottom-8': last }
+        { 'bottom-8': last },
+        className
       )}
-    />
+    >
+      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-borders-4" />
+    </div>
   )
 }
 

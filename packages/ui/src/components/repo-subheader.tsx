@@ -30,7 +30,7 @@ export const RepoSubheader = ({ useTranslationStore }: { useTranslationStore: ()
   }, [location.pathname])
 
   return (
-    <SandboxLayout.SubHeader className="overflow-hidden h-[45px]">
+    <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
       <Tabs variant="navigation" value={activeTab}>
         <TabsList>
           <NavLink to={RepoTabsKeys.SUMMARY}>

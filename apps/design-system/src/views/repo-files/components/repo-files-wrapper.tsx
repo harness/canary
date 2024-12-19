@@ -2,10 +2,10 @@ import { FC, useCallback, useMemo } from 'react'
 
 import { BranchSelectorTab, CodeModes, IBranchSelectorStore, RepoFiles } from '@harnessio/ui/views'
 
-import { noop, useTranslationsStore } from '../../../utils.ts'
-import { RepoFileContentViewer } from './repo-file-content-viewer.tsx'
-import { RepoFileEdit } from './repo-file-edit.tsx'
-import { repoFilesStore } from './repo-files-store.ts'
+import { noop, useTranslationsStore } from '../../../utils'
+import { RepoFileContentViewer } from './repo-file-content-viewer'
+import { RepoFileEdit } from './repo-file-edit'
+import { repoFilesStore } from './repo-files-store'
 
 interface RepoFilesWrapperProps {
   codeMode: CodeModes

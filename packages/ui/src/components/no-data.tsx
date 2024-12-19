@@ -20,6 +20,7 @@ export interface NoDataProps {
     | 'no-data-members'
     | 'no-repository'
     | 'no-data-error'
+    | 'no-data-commits'
   iconSize?: number
   description: string[]
   primaryButton?: {
@@ -32,9 +33,10 @@ export interface NoDataProps {
     to?: string
     onClick?: () => void
   }
-  insideTabView?: boolean
+  withBorder?: boolean
   loadState?: string
   setLoadState?: Dispatch<SetStateAction<string>>
+  textWrapperClassName?: string
 }
 
 export const NoData: FC<NoDataProps> = ({
@@ -44,16 +46,17 @@ export const NoData: FC<NoDataProps> = ({
   description,
   primaryButton,
   secondaryButton,
-  insideTabView = false
+  withBorder = false,
+  textWrapperClassName
 }) => {
   return (
     <div
       className={cn('flex h-full w-full flex-col place-content-center place-items-center gap-4', {
-        'py-20 pb-24': insideTabView
+        'py-20 pb-24 h-auto min-h-[75vh] border border-borders-4 rounded-md': withBorder
       })}
     >
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
-      <div className="flex flex-col place-content-center place-items-center gap-2.5">
+      <div className={cn('flex flex-col place-content-center place-items-center gap-2.5', textWrapperClassName)}>
         <Text size={5} weight="medium">
           {title}
         </Text>

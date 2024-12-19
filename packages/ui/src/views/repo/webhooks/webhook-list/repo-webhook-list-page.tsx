@@ -123,7 +123,6 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
             </Button>
           </ListActions.Right>
         </ListActions.Root>
-        {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
         <FiltersBar
           filterOptions={FILTER_OPTIONS}
           sortOptions={SORT_OPTIONS}
@@ -144,7 +143,6 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
           handleResetQuery={handleResetQuery}
           handleNavigate={handleNavigate}
         />
-        <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>
     </>

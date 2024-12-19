@@ -9,9 +9,9 @@ import {
 } from '@harnessio/ui/components'
 import { BlameEditor, CodeEditor } from '@harnessio/yaml-editor'
 
-import { themes } from '../../../theme/monaco-theme.ts'
-import { noop } from '../../../utils.ts'
-import { repoFilesStore } from './repo-files-store.ts'
+import { themes } from '../../../theme/monaco-theme'
+import { noop } from '../../../utils'
+import { repoFilesStore } from './repo-files-store'
 
 export const RepoFileContentViewer = ({ isMarkdown = false }: { isMarkdown?: boolean }) => {
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)

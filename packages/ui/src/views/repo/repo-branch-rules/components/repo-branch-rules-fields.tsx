@@ -165,7 +165,7 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({
         </Button>
         {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
       </div>
-      <Text size={2} as="p" color="tertiaryBackground" className="max-w-full mt-2.5">
+      <Text size={2} as="p" color="tertiaryBackground" className="mt-2.5 max-w-full">
         {t(
           'views:repos.createRuleCaption',
           'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
@@ -248,11 +248,11 @@ export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOp
       </Label>
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="flex items-center justify-between rounded-md border w-full">
+        <DropdownMenuTrigger className="flex w-full items-center justify-between rounded-md border">
           <Text className="p-2" color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>
             {triggerText}
           </Text>
-          <Icon name="chevron-down" className="mr-2 chevron-down" />
+          <Icon name="chevron-down" className="chevron-down mr-2" />
         </DropdownMenuTrigger>
 
         <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>

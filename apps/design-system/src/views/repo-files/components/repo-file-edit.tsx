@@ -4,10 +4,10 @@ import { EditViewTypeValue, FileEditorControlBar, GitCommitDialog, GitCommitForm
 import { CodeModes, PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
-import { useExitConfirm } from '../../../hooks/use-exit-confirm.ts'
-import { themes } from '../../../theme/monaco-theme.ts'
-import { noop, useTranslationsStore } from '../../../utils.ts'
-import { repoFilesStore } from './repo-files-store.ts'
+import { useExitConfirm } from '../../../hooks/use-exit-confirm'
+import { themes } from '../../../theme/monaco-theme'
+import { noop, useTranslationsStore } from '../../../utils'
+import { repoFilesStore } from './repo-files-store'
 
 export const RepoFileEdit = () => {
   const [view, setView] = useState<EditViewTypeValue>('edit')

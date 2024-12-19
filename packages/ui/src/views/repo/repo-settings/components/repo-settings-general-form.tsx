@@ -158,7 +158,9 @@ export const RepoSettingsGeneralForm: React.FC<{
 
         {/* BRANCH */}
         <Fieldset className="w-[298px] gap-y-0">
-          <Label className="mb-2.5">{t('views:repos.defaultBranch', 'Default Branch')}</Label>
+          <Label className="mb-2.5" color="secondary">
+            {t('views:repos.defaultBranch', 'Default Branch')}
+          </Label>
           <BranchSelector
             useTranslationStore={useTranslationStore}
             useRepoBranchesStore={useRepoBranchesStore}

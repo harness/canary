@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import { Avatar, AvatarFallback, Button, Icon, Text } from '@components/index'
+import { Avatar, AvatarFallback, Button, Icon, MarkdownViewer, Text } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -173,7 +173,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     : null
                 return (
                   <PullRequestTimelineItem
-                    key={index} // Consider using a unique ID if available
+                    key={payload?.id}
                     header={[
                       {
                         avatar: (
@@ -199,7 +199,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           <Text size={3} color="primary">
                             {(payload?.code_comment as PayloadCodeComment)?.path}
                           </Text>
-                          <div className="flex gap-x-2" key={`${index}-${payload.id}`}>
+                          <div className="flex gap-x-2">
                             {/* TODO: fix states on this on a comment like resolved and active */}
                             <PullRequestStatusSelect
                               refetchActivities={refetchActivities}
@@ -263,12 +263,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 contentClassName="border-transparent"
                                 content={
                                   <div className="flex py-1">
-                                    <Text size={2} color="primary">
-                                      {commentItem.payload?.payload?.text as string}
-                                    </Text>
+                                    <MarkdownViewer source={commentItem.payload?.payload?.text || ''} />
                                   </div>
                                 }
-                                key={`${commentItem.id}-${commentItem.author}-${idx}`}
+                                key={`${commentItem.id}-${commentItem.author}`}
                               />
                             )
                           })}
@@ -285,7 +283,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
               }
               return (
                 <PullRequestTimelineItem
-                  key={index} // Consider using a unique ID if available
+                  key={payload?.id}
                   titleClassName="!flex max-w-full"
                   header={[
                     {
@@ -309,15 +307,17 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         </div>
                       ),
                       selectStatus: (
-                        <PullRequestStatusSelect
-                          refetchActivities={refetchActivities}
-                          commentStatusPullReq={commentStatusPullReq}
-                          comment={{
-                            commentItems: commentItems
-                          }}
-                          pullReqMetadata={pullReqMetadata}
-                          repoId={repoId}
-                        />
+                        <div className="flex gap-x-2">
+                          <PullRequestStatusSelect
+                            refetchActivities={refetchActivities}
+                            commentStatusPullReq={commentStatusPullReq}
+                            comment={{
+                              commentItems: commentItems
+                            }}
+                            pullReqMetadata={pullReqMetadata}
+                            repoId={repoId}
+                          />
+                        </div>
                       )
                     }
                   ]}
@@ -355,12 +355,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             contentClassName="border-transparent pb-0"
                             content={
                               <div className="flex py-1">
-                                <Text size={2} color="primary">
-                                  {commentItem.payload?.payload?.text as string}
-                                </Text>
+                                <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
                               </div>
                             }
-                            key={`${commentItem.id}-${commentItem.author}-${idx}`}
+                            key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                           />
                         )
                       })}

@@ -95,7 +95,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
                 right={<CopyButton name={httpsUrl} />}
               />
               <div className="flex items-center mt-4">
-                <span className="ml-1 text-tertiary-background">
+                <span className="text-foreground-4">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>

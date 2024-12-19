@@ -9,16 +9,22 @@ type Parser<T> = {
 
 interface FilterProps<T = string> {
   filterKey: string
-  children: (props: { onChange: (value: T) => void; value: T }) => React.ReactNode
+  children: (props: {
+    onChange: (value: T) => void
+    value: T
+    removeFilter: (filterKey: string) => void
+  }) => React.ReactNode
   parser?: Parser<T>
+  className?: string
 }
 
 const Filter = <T,>({
   filterKey,
   children,
-  parser = defaultStringParser as Parser<T>
+  parser = defaultStringParser as Parser<T>,
+  className
 }: FilterProps<T>): React.ReactElement | null => {
-  const { updateFilter, getFilterValue } = useFiltersContext()
+  const { updateFilter, getFilterValue, removeFilter } = useFiltersContext()
 
   // Handles when a new value is set
   const handleChange = (value: T) => {
@@ -31,7 +37,11 @@ const Filter = <T,>({
   const parsedValue = parser.parse(rawValue) ?? (rawValue as T)
 
   // Render the children with the injected props
-  return <>{children({ onChange: handleChange, value: parsedValue })}</>
+  return (
+    <div id="filter" className={className}>
+      {children({ onChange: handleChange, value: parsedValue, removeFilter })}
+    </div>
+  )
 }
 
 export default Filter

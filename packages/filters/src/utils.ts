@@ -45,3 +45,19 @@ export const createQueryString = (visibleFilters: string[], updatedFiltersMap: R
 
   return renderQueryString(new URLSearchParams(query ? `?${query}` : '')) // Add ? only if there's a query
 }
+
+export function mergeURLSearchParams(target: URLSearchParams, source: URLSearchParams): URLSearchParams {
+  const mergedParams = new URLSearchParams(target.toString()) // Create a copy of target
+
+  // Iterate through the source URLSearchParams
+  for (const [key, value] of source) {
+    // If the value is falsy except for `false`, skip the merging
+    if (!value && value !== 'false') {
+      mergedParams.delete(key) // Remove the parameter if it's falsy
+    } else {
+      mergedParams.set(key, value) // Otherwise, add or overwrite the param
+    }
+  }
+
+  return mergedParams
+}

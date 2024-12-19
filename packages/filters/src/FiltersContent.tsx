@@ -40,7 +40,7 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
   const orderedFilters = visibleFilters.map(key => filterableChildrenMap[key]?.component).filter(Boolean)
 
   return (
-    <div className={className} style={{ display: 'flex', flexDirection: 'row' }}>
+    <div className={className}>
       {orderedFilters}
       {nonFilterableChildren}
     </div>

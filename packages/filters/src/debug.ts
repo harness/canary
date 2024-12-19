@@ -21,7 +21,7 @@ const isDebugEnabled = () => {
   return debug.includes('enable-debug') // Change this as needed
 }
 
-const enabled = true
+const enabled = isDebugEnabled()
 
 // Utility function to log messages with optional arguments.
 export function debug(message: string, ...args: any[]) {

@@ -80,7 +80,8 @@ export default function RepoExecutionListPage() {
             <ExecutionList
               executions={executions?.map((item: TypesExecution) => ({
                 id: item?.number ? `executions/${item.number}` : '',
-                status: getExecutionStatus(item?.status),
+                // TODO: temporary type fix - this component gonna be deleted
+                status: getExecutionStatus(item?.status) as unknown as ExecutionState,
                 success: item?.status,
                 name: item?.message || item?.title,
                 sha: item?.after?.slice(0, 7),

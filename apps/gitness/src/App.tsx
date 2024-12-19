@@ -56,9 +56,11 @@ import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branc
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
+import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -67,7 +69,7 @@ import { SignUp as SignUpV2 } from './pages-v2/signup'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProjectV1 from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
-import RepoExecutionListPage from './pages/execution/repo-execution-list'
+import RepoExecutionListPageOld from './pages/execution/repo-execution-list'
 import { LandingPage as LandingPageV2 } from './pages/landing-page'
 import { Logout } from './pages/logout'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
@@ -319,6 +321,16 @@ export default function App() {
                   ]
                 }
               ]
+            },
+            {
+              path: 'pipelines',
+              children: [
+                { index: true, element: <RepoPipelineListPage /> },
+                {
+                  path: ':pipelineId',
+                  element: <RepoExecutionListPage />
+                }
+              ]
             }
           ]
         },
@@ -388,7 +400,7 @@ export default function App() {
             {
               path: ':pipelineId',
               children: [
-                { index: true, element: <RepoExecutionListPage /> },
+                { index: true, element: <RepoExecutionListPageOld /> },
                 {
                   path: 'edit',
                   element: <PipelineEditPage />
@@ -583,14 +595,14 @@ export default function App() {
                 },
                 {
                   path: ':pipelineId',
-                  element: <RepoExecutionListPage />
+                  element: <RepoExecutionListPageOld />
                 }
               ]
             },
             // Executions (OUTSIDE REPOS)
             {
               path: ':spaceId/executions',
-              element: <RepoExecutionListPage />
+              element: <RepoExecutionListPageOld />
             },
             {
               path: 'create',

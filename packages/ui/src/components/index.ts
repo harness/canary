@@ -62,6 +62,7 @@ export * from './delete-alert-dialog'
 export * from './alert-delete-dialog'
 export * from './repo-subheader'
 export * from './switch'
+export * from './meter'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

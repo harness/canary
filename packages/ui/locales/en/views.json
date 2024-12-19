@@ -158,7 +158,14 @@
     "createBranch": "Create branch",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
-    "createOrImportRepos": "Create new or import an existing repository."
+    "createOrImportRepos": "Create new or import an existing repository.",
+    "noCommitsHistory": "No commits history",
+    "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "noCommitsYet": "No commits yet",
+    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected."
+  },
+  "commits": {
+    "createNewCommit": "Create new commit"
   },
   "forms": {
     "enterBranchName": "Enter branch name",

@@ -54,6 +54,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
+    filterHandlers.handleResetFilters()
   }
 
   return (
@@ -93,17 +94,32 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
                 withBorder
                 textWrapperClassName="max-w-[350px]"
                 iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
-                title={isDirtyList ? 'No commits history' : 'No commits yet'}
+                title={
+                  isDirtyList
+                    ? t('views:noData.noCommitsHistory', 'No commits history')
+                    : t('views:noData.noCommitsYet', 'No commits yet')
+                }
                 description={[
                   isDirtyList
-                    ? 'There isn’t any commit history to show here for the selected user, time range, or current page.'
-                    : "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                    ? t(
+                        'views:noData.noCommitsHistoryDescription',
+                        "There isn't any commit history to show here for the selected user, time range, or current page."
+                      )
+                    : t(
+                        'views:noData.noCommitsYetDescription',
+                        "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                      )
                 ]}
                 primaryButton={
                   isDirtyList
-                    ? { label: 'Clear filters', onClick: handleResetFiltersAndPages }
+                    ? {
+                        label: t('views:noData.clearFilters', 'Clear filters'),
+                        onClick: handleResetFiltersAndPages
+                      }
                     : // TODO: add onClick for Creating new commit
-                      { label: 'Create new commit' }
+                      {
+                        label: t('views:commits.createNewCommit', 'Create new commit')
+                      }
                 }
               />
             ) : (

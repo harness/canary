@@ -20,7 +20,7 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
           return group
         }, {})
 
-    return Object.entries(commitsGroupedByDate) as [string, TypesCommit[]][]
+    return Object.entries(commitsGroupedByDate)
   }, [data])
 
   const totalNodes = entries.length
@@ -30,7 +30,7 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
       {entries.map(([date, commitData], node_idx) => (
         <NodeGroup.Root
           className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0"
-          key={`${date}-${node_idx}`}
+          key={date}
         >
           <NodeGroup.Icon simpleNodeIcon />
           <NodeGroup.Title>{date && <span className="text-foreground-4">Commits on {date}</span>}</NodeGroup.Title>
@@ -43,7 +43,7 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
                   return (
                     <StackedList.Item
                       className="!cursor-default items-start py-3"
-                      key={`${commit.title}-${repo_idx}`}
+                      key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
                       <StackedList.Field

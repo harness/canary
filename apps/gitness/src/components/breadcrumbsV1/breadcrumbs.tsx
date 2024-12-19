@@ -4,7 +4,7 @@ function Breadcrumbs() {
   const matches = useMatches()
 
   return (
-    <nav className="mb-4">
+    <nav className="mb-4 flex items-start gap-1">
       {/**
        * Fixed/Default links
        */}
@@ -19,8 +19,8 @@ function Breadcrumbs() {
         if (!breadcrumb) return null
 
         return (
-          <span key={match.pathname}>
-            {' / '}
+          <div key={match.pathname} className="flex">
+            <span className="ml-1 mr-1">/</span>
             {isLast ? (
               breadcrumb(match.params)
             ) : (
@@ -28,7 +28,7 @@ function Breadcrumbs() {
                 {breadcrumb(match.params)}
               </Link>
             )}
-          </span>
+          </div>
         )
       })}
     </nav>

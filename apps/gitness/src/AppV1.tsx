@@ -58,23 +58,22 @@ export default function AppV1() {
       children: [
         {
           path: '',
-          element: <ProjectSelector />,
           handle: {
-            breadcrumb: () => 'Select Project'
+            breadcrumb: () => <ProjectSelector />
           }
         },
         {
           path: 'projects/:projectId/repos',
           element: <Outlet />, // Placeholder for nested routes
           handle: {
-            breadcrumb: ({ projectId }: { projectId: string }) => <Text weight={'bold'}>{projectId}</Text>
+            breadcrumb: ({ projectId }: { projectId: string }) => <Text>{projectId}</Text>
           },
           children: [
             {
               path: '',
               element: <RepoListing />,
               handle: {
-                breadcrumb: () => 'Repositories'
+                breadcrumb: () => <Text>Repositories</Text>
               }
             },
             {

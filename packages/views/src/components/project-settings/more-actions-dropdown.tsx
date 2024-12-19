@@ -10,12 +10,12 @@ import {
 
 import { MembersProps } from './interfaces'
 
-interface moreActionsProps {
+interface MoreActionsDropdownProps {
   member: MembersProps
   onDelete: (member: MembersProps) => void
 }
 
-export const moreActionsDropdown = ({ member, onDelete }: moreActionsProps) => {
+export const MoreActionsDropdown = ({ member, onDelete }: MoreActionsDropdownProps) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>

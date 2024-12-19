@@ -24,7 +24,7 @@ import {
 
 import { getInitials } from '../../utils/utils'
 import { MembersProps } from './interfaces'
-import { moreActionsDropdown } from './moreActionsDropdown'
+import { MoreActionsDropdown } from './more-actions-dropdown'
 import { transformValue } from './utils'
 
 interface PageProps {
@@ -110,7 +110,9 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
               </Select>
             </TableCell>
             <TableCell className="my-6 content-center">
-              <div className="flex items-center justify-end gap-1.5">{moreActionsDropdown({ member, onDelete })}</div>
+              <div className="flex items-center justify-end gap-1.5">
+                <MoreActionsDropdown member={member} onDelete={onDelete} />
+              </div>
             </TableCell>
           </TableRow>
         ))}

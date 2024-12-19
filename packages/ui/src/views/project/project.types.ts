@@ -8,12 +8,9 @@ export interface MemberData {
 }
 
 export interface IMemberListStore {
-  // state
   memberList: MemberData[]
   spaceId: string
   totalPages: number
   page: number
-
-  // actions
   setPage: (page: number) => void
 }

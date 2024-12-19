@@ -9,7 +9,7 @@ import React, {
   forwardRef
 } from 'react'
 import { FilterType, FilterStatus } from './types'
-import { createQueryString } from './utils'
+import { createQueryString, mergeURLSearchParams } from './utils'
 import useRouter from './useRouter'
 import { debug, warn } from './debug'
 
@@ -37,8 +37,20 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
 ) {
   const [filtersOrder, setFiltersOrder] = useState<FilterKeys[]>([])
   const [filtersMap, setFiltersMap] = useState<Record<FilterKeys, FilterType>>({} as Record<FilterKeys, FilterType>)
-  const { searchParams, updateURL } = useRouter()
+  const { searchParams, updateURL: routerUpdateURL } = useRouter()
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
+
+  const updateURL = (params: URLSearchParams) => {
+    // merge params into search params and update the URL.
+    const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
+    searchParams.forEach((value, key) => {
+      if (!filters.includes(key as FilterKeys)) {
+        paramsOtherthanFilters.append(key, value)
+      }
+    })
+    const mergedParams = mergeURLSearchParams(paramsOtherthanFilters, params)
+    routerUpdateURL(mergedParams)
+  }
 
   const addFilter = (filterKey: FilterKeys) => {
     debug('Adding filter with key: %s', filterKey)
@@ -51,12 +63,15 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
 
   const removeFilter = (filterKey: FilterKeys) => {
     debug('Removing filter with key: %s', filterKey)
-    setFiltersOrder(prev => prev.filter(key => key !== filterKey))
-    setFiltersMap(prev => {
-      const updatedFiltersMap = { ...prev }
-      delete updatedFiltersMap[filterKey]
-      return updatedFiltersMap
-    })
+    const updatedFiltersMap = { ...filtersMap }
+    delete updatedFiltersMap[filterKey]
+    const updatedFiltersOrder = filtersOrder.filter(key => key !== filterKey)
+    setFiltersMap(updatedFiltersMap)
+    setFiltersOrder(updatedFiltersOrder)
+
+    const query = createQueryString(updatedFiltersOrder, updatedFiltersMap)
+    debug('Updating URL with query: %s', query)
+    updateURL(new URLSearchParams(query))
   }
 
   const updateFilter = (filterKey: FilterKeys, value: any) => {
@@ -178,9 +193,34 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     return Object.keys(filtersMap).map(key => ({ key, value: filtersMap[key as FilterKeys].value }))
   }
 
+  const resetFilters = () => {
+    // add only sticky filters and remove other filters.
+    // remove values also from sticky filters
+    const updatedFiltersMap = { ...filtersMap }
+    Object.keys(updatedFiltersMap).forEach(key => {
+      if (!stickyFilters.includes(key as FilterKeys)) {
+        delete updatedFiltersMap[key as FilterKeys]
+      } else {
+        updatedFiltersMap[key as FilterKeys] = {
+          ...updatedFiltersMap[key as FilterKeys],
+          value: null,
+          query: null,
+          state: FilterStatus.VISIBLE
+        }
+      }
+    })
+
+    setFiltersMap(updatedFiltersMap)
+    setFiltersOrder(stickyFilters)
+    const query = createQueryString(stickyFilters, updatedFiltersMap)
+    debug('Updating URL with query: %s', query)
+    updateURL(new URLSearchParams(query))
+  }
+
   useImperativeHandle(ref, () => ({
     // @ts-ignore
-    getValues
+    getValues,
+    reset: resetFilters
   }))
 
   const availableFilters = filters.filter(filter => !filtersOrder.includes(filter))
@@ -216,4 +256,24 @@ export const useFiltersContext = <FilterKeys extends string>() => {
   return context
 }
 
-export default Filters
+export { Filters }
+
+type FiltersView = 'dropdown' | 'row'
+interface FiltersWrapperProps extends FiltersProps<string> {
+  view?: FiltersView
+}
+
+const FiltersWrapper = forwardRef(function FiltersWrapper(
+  { view = 'row', ...props }: FiltersWrapperProps,
+  ref: React.Ref<{ getValues: () => { key: string; value: any }[] }>
+) {
+  if (view === 'row') {
+    // Forward the ref to Filters when using 'row' view
+    return <Filters {...props} ref={ref} stickyFilters={[...props.filters]} />
+  }
+
+  // Forward the ref to Filters when using other views
+  return <Filters {...props} ref={ref} />
+})
+
+export default FiltersWrapper

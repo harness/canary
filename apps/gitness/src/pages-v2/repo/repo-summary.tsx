@@ -359,7 +359,7 @@ export default function RepoSummaryPage() {
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          onManageToken={onManageToken}
+          toManageToken={'/settings/keys'}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

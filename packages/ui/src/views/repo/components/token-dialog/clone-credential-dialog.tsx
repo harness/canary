@@ -1,4 +1,5 @@
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 
 import {
   Button,
@@ -18,7 +19,7 @@ import { z } from 'zod'
 interface CloneCredentialDialogProps {
   open: boolean
   onClose: () => void
-  onManageToken: () => void
+  toManageToken: string
   useTranslationStore: () => TranslationStore
   tokenData: {
     identifier: string
@@ -37,7 +38,7 @@ export type TCloneCredentialsDialog = z.infer<typeof formSchema>
 export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
-  onManageToken,
+  toManageToken,
   tokenData,
   useTranslationStore
 }) => {
@@ -88,8 +89,8 @@ export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
               <Button variant="outline" onClick={onClose}>
                 Close
               </Button>
-              <Button type="button" onClick={onManageToken}>
-                {t('views:repos.manageAPIToken')}
+              <Button type="button">
+                <Link to={toManageToken}>{t('views:repos.manageAPIToken')}</Link>
               </Button>
             </>
           </ButtonGroup>

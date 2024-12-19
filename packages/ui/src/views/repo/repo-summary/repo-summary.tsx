@@ -99,7 +99,7 @@ export function RepoSummaryView({
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
-  if (loading)
+  if (loading) {
     return (
       <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
@@ -107,6 +107,7 @@ export function RepoSummaryView({
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     )
+  }
 
   if (!repoEntryPathToFileTypeMap.size) {
     return (

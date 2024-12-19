@@ -35,6 +35,7 @@ import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import PipelineLayout from './layouts/PipelineStudioLayout'
+import ProjectLayout from './layouts/ProjectLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
@@ -42,6 +43,7 @@ import { LandingPage } from './pages-v2/landing-page-container'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
+import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -327,6 +329,21 @@ export default function App() {
                 {
                   path: ':pipelineId',
                   element: <RepoExecutionListPage />
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: ':spaceId/settings',
+          element: <ProjectLayout />,
+          children: [
+            {
+              element: <SettingsProjectNav />,
+              children: [
+                {
+                  path: 'members',
+                  children: [{ index: true, element: <ProjectMemberListPage /> }]
                 }
               ]
             }

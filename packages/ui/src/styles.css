@@ -433,7 +433,7 @@
     --canary-input-background: 240 5.9% 90%;
     --canary-ring: 240 5.9% 10%;
     --canary-radius: 0.5rem;
-    --canary-success: var(--canary-green);
+    --canary-success: var(--canary-harness-green-600);
     --canary-error: var(--canary-red);
     --canary-warning: var(--canary-orange);
     --canary-emphasis: var(--canary-emphasis);

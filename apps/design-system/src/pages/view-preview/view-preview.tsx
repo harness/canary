@@ -8,6 +8,7 @@ import ExecutionListWrapper from '../../views/execution-list/execution-list.tsx'
 import PipelineListWrapper from '../../views/pipeline-list/pipeline-list.tsx'
 import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare.tsx'
 import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list.tsx'
+import { RepoCommitsView } from '../../views/repo-commits'
 import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
 import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
 import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
@@ -73,6 +74,11 @@ const views: Record<string, ReactNode> = {
   'execution-list': (
     <RepoViewWrapper>
       <ExecutionListWrapper />
+    </RepoViewWrapper>
+  ),
+  'repo-commits-list': (
+    <RepoViewWrapper>
+      <RepoCommitsView />
     </RepoViewWrapper>
   )
 }

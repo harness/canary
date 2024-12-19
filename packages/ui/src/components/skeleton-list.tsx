@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import { Skeleton, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 
@@ -16,24 +14,8 @@ interface SkeletonListProps {
 }
 
 export const SkeletonList = ({ className }: SkeletonListProps) => {
-  // do a first render with visible=false
-  const [visible, setVisible] = useState(false)
-
-  // immediately re-render with visible=true to trigger the transition delay
-  useEffect(() => {
-    setVisible(true)
-  }, [])
-
   return (
-    <div
-      className={cn(
-        'relative h-full w-full transition-opacity delay-500 duration-500 ease-in-out',
-        {
-          'opacity-0': !visible
-        },
-        className
-      )}
-    >
+    <div className={cn('relative h-full w-full transition-opacity delay-500 duration-500 ease-in-out', className)}>
       <StackedList.Root>
         {listItems.map(itm => (
           <StackedList.Item key={itm} className="py-4" isLast={listItems.length === itm}>

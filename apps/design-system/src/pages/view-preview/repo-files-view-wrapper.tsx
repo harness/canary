@@ -62,7 +62,7 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
   }
 
   return (
-    <>
+    <div className="grid grid-cols-[auto_1fr]">
       <RepoSidebarView
         selectBranchOrTag={noop}
         useRepoBranchesStore={useRepoBranchesStore}
@@ -77,7 +77,9 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
           {renderEntries(repoFilesStore.filesTreeData, '')}
         </FileExplorer.Root>
       </RepoSidebarView>
-      {children}
-    </>
+      {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
+      {/* Total height of both the divs should be 100vh */}
+      <div className="min-h-[calc(100vh-100px)]">{children}</div>
+    </div>
   )
 }

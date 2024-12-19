@@ -99,12 +99,19 @@ export function RepoSummaryView({
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
-  if (loading) return <SkeletonList />
+  if (loading) {
+    return (
+      <SandboxLayout.Main fullWidth>
+        <SandboxLayout.Content>
+          <SkeletonList />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
+  }
 
   if (!repoEntryPathToFileTypeMap.size) {
     return (
       <NoData
-        insideTabView
         iconName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
@@ -119,7 +126,7 @@ export function RepoSummaryView({
       <SandboxLayout.Columns columnWidths="1fr 255px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-6">
-            {/* 
+            {/*
               TODO: Implement proper recent push detection logic:
               1. Backend needs to:
                 - Track and store information about recent pushes
@@ -145,7 +152,7 @@ export function RepoSummaryView({
                   * No PR has been created from this branch yet
                 - Format timestamps using timeAgoFromISOTime
                 - Remove mock data below
-         
+
                 Example:
                 {selectedBranchTag.name !== repository?.default_branch && (
                   <>

@@ -17,14 +17,8 @@ import {
 import { DiffModeEnum } from '@git-diff-view/react'
 import { DiffModeOptions, TranslationStore } from '@views/index'
 
-import { TypesPullReq } from '../../../pull-request.types'
-import {
-  ApprovalItem,
-  ButtonEnum,
-  EnumPullReqReviewDecision,
-  PullReqReviewDecision,
-  ReviewerListPullReqOkResponse
-} from '../../pull-request-details-types'
+import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq } from '../../../pull-request.types'
+import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
 import {
   approvalItems,
   determineOverallDecision,

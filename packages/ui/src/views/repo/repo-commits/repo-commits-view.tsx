@@ -8,13 +8,12 @@ import {
   CommitsList,
   IBranchSelectorStore,
   SandboxLayout,
-  TranslationStore
+  TranslationStore,
+  TypesCommit
 } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
 import { useFilters } from '@views/repo/hooks'
-
-import { TypesCommit } from './types'
 
 export interface RepoCommitsViewProps {
   isFetchingCommits: boolean

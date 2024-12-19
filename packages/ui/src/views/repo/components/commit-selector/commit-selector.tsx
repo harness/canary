@@ -1,9 +1,8 @@
 import { FC, useMemo } from 'react'
 
 import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
-import { TranslationStore } from '@/views'
+import { CommitSelectorListItem, TranslationStore } from '@/views'
 
-import { CommitSelectorListItem } from '../../pull-request/compare/components/types'
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
 import { ICommitSelectorStore } from './types'
 

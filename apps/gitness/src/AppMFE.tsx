@@ -2,7 +2,7 @@ import './AppMFE.css'
 
 import { useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { BrowserRouter, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, Outlet, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
 import { ChildComponentProps } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
@@ -11,7 +11,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 
-import Breadcrumbs from './components/breadcrumbs/breadcrumbs'
+import BreadcrumbsNew from './components/breadcrumbs/breadcrumbs-new'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
@@ -45,9 +45,13 @@ function LocationChangeHandler({
   // Handle location change detected from parent route
   const navigate = useNavigate()
   useEffect(() => {
+    console.log('locationPathname', locationPathname)
+    console.log('renderUrl', renderUrl)
+
     if (renderUrl) {
       const pathToNavigate = locationPathname.replace(renderUrl, '')
-      navigate(pathToNavigate)
+      console.log('pathToNavigate', pathToNavigate)
+      navigate(pathToNavigate, { replace: true })
     }
   }, [locationPathname])
 
@@ -93,6 +97,105 @@ export default function AppMFE({
     }
   }, [theme])
 
+  const router = createBrowserRouter(
+    [
+      {
+        path: '/',
+        element: (
+          <>
+            <LocationChangeHandler
+              renderUrl={renderUrl}
+              onRouteChange={onRouteChange}
+              locationPathname={locationPathname}
+            />
+            <BreadcrumbsNew />
+            <Outlet />
+          </>
+        ),
+        children: [
+          {
+            path: 'repos',
+            handle: { breadcrumb: () => <span>Repositories</span>, noLink: true },
+            children: [
+              {
+                index: true,
+                element: <ReposListPage noBreadcrumbs={true} />
+              },
+              {
+                path: 'create',
+                element: <CreateRepo />,
+                handle: { breadcrumb: () => <span>Create Repository</span> }
+              },
+              {
+                path: 'import',
+                element: <RepoImportContainer />,
+                handle: { breadcrumb: () => <span>Import Repository</span> }
+              },
+              {
+                path: ':repoId',
+                handle: {
+                  breadcrumb: ({ repoId }: { repoId: string }) => `${repoId}`
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <RepoSummaryPage />,
+                    handle: { breadcrumb: () => <span>Summary</span> }
+                  },
+                  {
+                    path: 'commits',
+                    element: <RepoCommitsPage />,
+                    handle: { breadcrumb: () => <span>Commits</span> }
+                  },
+                  {
+                    path: 'code',
+                    handle: { breadcrumb: () => <span>Code</span> },
+                    element: (
+                      <>
+                        <ExplorerPathsProvider>
+                          <RepoSidebar />
+                        </ExplorerPathsProvider>
+                        {/* This outlet should not be needed */}
+                        {/* the outlet inside RepoSidebar should ideally work */}
+                        {/* but somehow it's not working, need to fix */}
+                        {/* One more strange thing, just the Outlet without <RepoSidebar /> doesn't work! */}
+                        <Outlet />
+                      </>
+                    ),
+                    children: [
+                      { index: true, element: <RepoCode /> },
+                      { path: '*', element: <RepoCode /> }
+                    ]
+                  },
+                  {
+                    path: 'branches',
+                    element: <RepoBranchesListPage />,
+                    handle: { breadcrumb: () => <span>Branches</span> }
+                  },
+                  {
+                    path: 'webhooks',
+                    element: <WebhookListPage />,
+                    handle: { breadcrumb: () => <span>Webhooks</span> }
+                  },
+                  {
+                    path: 'pulls',
+                    children: [
+                      { index: true, element: <SandboxPullRequestListPage /> },
+                      { path: 'compare/:diffRefs*?', element: <CreatePullRequest /> }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    {
+      basename: `/ng${renderUrl}`
+    }
+  )
+
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
@@ -102,58 +205,7 @@ export default function AppMFE({
               <ExitConfirmProvider>
                 <NuqsAdapter>
                   <MFEContext.Provider value={{ scope, renderUrl }}>
-                    <BrowserRouter basename={`/ng${renderUrl}`}>
-                      <LocationChangeHandler
-                        renderUrl={renderUrl}
-                        locationPathname={locationPathname}
-                        onRouteChange={onRouteChange}
-                      />
-                      <Routes>
-                        <Route
-                          path="repos/:repoId/commits"
-                          element={
-                            <>
-                              <Breadcrumbs />
-                              <RepoCommitsPage />
-                            </>
-                          }
-                        />
-                        <Route path="repos/:repoId/branches" element={<RepoBranchesListPage />} />
-                        <Route path="repos/:repoId/webhooks" element={<WebhookListPage />} />
-
-                        <Route
-                          path="repos/:repoId/code"
-                          element={
-                            <ExplorerPathsProvider>
-                              <RepoSidebar />
-                            </ExplorerPathsProvider>
-                          }
-                        >
-                          <Route index element={<RepoCode />} />
-                          <Route path="*" element={<RepoCode />} />
-                        </Route>
-
-                        <Route path="repos/:repoId/pulls">
-                          <Route index element={<SandboxPullRequestListPage />} />
-                          <Route path="compare/:diffRefs*?" element={<CreatePullRequest />} />
-                        </Route>
-
-                        <Route path="repos/create" element={<CreateRepo />} />
-                        <Route path="repos/import" element={<RepoImportContainer />} />
-
-                        <Route
-                          path="repos/:repoId"
-                          element={
-                            <>
-                              <Breadcrumbs />
-                              <RepoSummaryPage />
-                            </>
-                          }
-                        />
-
-                        <Route path="repos" element={<ReposListPage />} />
-                      </Routes>
-                    </BrowserRouter>
+                    <RouterProvider router={router} />
                   </MFEContext.Provider>
                 </NuqsAdapter>
               </ExitConfirmProvider>

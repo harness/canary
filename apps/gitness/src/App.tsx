@@ -366,7 +366,7 @@ export default function App() {
           children: [
             {
               index: true,
-              element: <Navigate to="general" />
+              element: <Navigate to="general" replace />
             },
             {
               path: 'general',
@@ -655,7 +655,7 @@ export default function App() {
           element: <SandboxSettings />,
           children: [
             {
-              // element: <SettingsAccountPage />,
+              element: <SettingsLayout />,
               children: [
                 {
                   index: true,

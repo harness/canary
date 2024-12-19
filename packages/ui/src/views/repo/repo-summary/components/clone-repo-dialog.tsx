@@ -99,7 +99,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>
-              <div className="flex items-center mb-2">
+              <div className="flex items-center mt-4">
                 <Button variant="default" type="button" onClick={handleCreateToken} className="px-2 w-full">
                   {t('views:repos.cloneCredential', 'Generate Clone Credential')}
                 </Button>

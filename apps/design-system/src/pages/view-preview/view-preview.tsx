@@ -4,20 +4,24 @@ import '@harnessio/ui/styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import ExecutionListWrapper from '../../views/execution-list/execution-list.tsx'
-import PipelineListWrapper from '../../views/pipeline-list/pipeline-list.tsx'
-import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare.tsx'
-import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list.tsx'
-import { RepoCommitsView } from '../../views/repo-commits'
-import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
-import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
-import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
+import ExecutionListWrapper from '@subjects/views/execution-list/execution-list.tsx'
+import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list.tsx'
+import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare.tsx'
+import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list.tsx'
+import { RepoCommitsView } from '@subjects/views/repo-commits'
+import { RepoFilesEditView } from '@subjects/views/repo-files/repo-files-edit-view.tsx'
+import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-view.tsx'
+import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list.tsx'
+import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view.tsx'
+import RepoListWrapper from '@subjects/views/repo-list/repo-list.tsx'
+import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary.tsx'
+
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper.tsx'
 import RepoViewWrapper from './repo-view-wrapper.tsx'
 import RootViewWrapper from './root-view-wrapper.tsx'
 import ViewSettings from './view-settings.tsx'
 
-const views: Record<string, ReactNode> = {
+export const viewPreviews: Record<string, ReactNode> = {
   'repo-summary': (
     <RepoViewWrapper>
       <RepoSummaryViewWrapper />
@@ -83,8 +87,8 @@ const views: Record<string, ReactNode> = {
   )
 }
 
-const routeEntries = Object.entries(views)
-const routeKeys = Object.keys(views)
+const routeEntries = Object.entries(viewPreviews)
+const routeKeys = Object.keys(viewPreviews)
 
 const ViewPreview: FC = () => {
   return (

@@ -10,9 +10,9 @@ import {
   IconProps,
   Text
 } from '@/components'
+import { NavbarSkeleton } from '@components/navbar-skeleton'
 import { TFunction } from 'i18next'
 
-import NavbarSkeleton from '../navbar-skeleton'
 import { NavbarItemType } from '../types'
 
 interface NavbarItemProps {

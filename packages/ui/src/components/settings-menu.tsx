@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { Icon, ScrollArea, Sheet, SheetContent, SheetTitle, Spacer } from '@/components'
-import NavbarSkeleton from '@/components/navbar/navbar-skeleton'
+import { Icon, NavbarSkeleton, ScrollArea, Sheet, SheetContent, SheetTitle, Spacer } from '@/components'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface SystemAdminMenuProps {

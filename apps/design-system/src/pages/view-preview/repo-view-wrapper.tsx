@@ -1,9 +1,10 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
+import { useTranslationsStore } from '@utils/viewUtils.ts'
+
 import { RepoLayout } from '@harnessio/ui/views'
 
-import { useTranslationsStore } from '../../utils.ts'
 import RootViewWrapper from './root-view-wrapper.tsx'
 
 const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (

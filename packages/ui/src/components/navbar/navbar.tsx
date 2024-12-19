@@ -1,14 +1,13 @@
 import { useMemo } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Button, Icon, IThemeStore, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
+import { Button, Icon, IThemeStore, NavbarProjectChooser, NavbarSkeleton, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
-import { TranslationStore } from '@views/index'
+import { TranslationStore } from '@/views'
 import { isEmpty } from 'lodash-es'
 
 import { getAdminMenuItem } from './data'
 import { NavbarItem } from './navbar-item'
-import NavbarSkeleton from './navbar-skeleton'
 import { NavbarUser } from './navbar-user'
 import { NavbarItemType } from './types'
 
@@ -62,7 +61,7 @@ export const Navbar = ({
           logo={
             <Link className="flex items-center gap-1.5" to="/">
               <Icon name="harness" size={18} className="text-foreground-1" />
-              <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+              <Icon name="harness-logo-text" width={65} height={15} className="text-foreground-1 mb-0.5" />
             </Link>
           }
         />

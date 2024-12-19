@@ -1,0 +1,9 @@
+export const noop = () => void 0
+
+export const mockT = (...args: unknown[]) => {
+  return args[1] || args[0]
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const useTranslationsStore = () => ({ t: mockT as any, changeLanguage: noop, i18n: {} as any })
+export const useThemeStore = () => ({ theme: 'dark-std-std' as any, setTheme: noop })

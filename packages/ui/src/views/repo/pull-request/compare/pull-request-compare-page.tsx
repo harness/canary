@@ -2,7 +2,18 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { Button, Icon, NoData, Spacer, StyledLink, Tabs, TabsContent, TabsList } from '@/components'
+import {
+  Avatar,
+  AvatarFallback,
+  Button,
+  Icon,
+  NoData,
+  Spacer,
+  StyledLink,
+  Tabs,
+  TabsContent,
+  TabsList
+} from '@/components'
 import { TypesDiffStats } from '@/types'
 import {
   BranchSelectorListItem,
@@ -10,17 +21,20 @@ import {
   CommitSelectorListItem,
   CommitsList,
   IBranchSelectorStore,
+  PullRequestSideBar,
   SandboxLayout,
   TranslationStore,
   TypesCommit
 } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { getInitials } from '@utils/stringUtils'
 import { Layout } from '@views/layouts/layout'
 import { BranchSelector } from '@views/repo/components/branch-selector/branch-selector'
 import { ICommitSelectorStore } from '@views/repo/components/commit-selector/types'
 import PullRequestCompareButton from '@views/repo/pull-request/compare/components/pull-request-compare-button'
 import PullRequestCompareForm from '@views/repo/pull-request/compare/components/pull-request-compare-form'
 import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-request-compare-tab-trigger-item'
+import { noop } from 'lodash-es'
 import { z } from 'zod'
 
 import PullRequestCompareDiffList from './components/pull-request-compare-diff-list'
@@ -124,10 +138,13 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     setIsBranchSelected(true) // Update state when a branch is selected
   }
 
+  console.log(currentUser)
   return (
     <SandboxLayout.Main fullWidth hasLeftPanel hasHeader hasSubHeader>
       <SandboxLayout.Content className="px-20">
-        <p className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">Comparing changes</p>
+        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+          Comparing changes
+        </span>
         <Layout.Vertical className="mt-2.5">
           <p className="max-w-xl text-14 leading-snug text-foreground-2">
             Choose two branches to see what&apos;s changed or to start a new pull request. If you need to, you can also{' '}
@@ -259,17 +276,42 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 />
               </TabsList>
               <TabsContent className="pt-7" value="overview">
-                <PullRequestCompareForm
-                  register={register}
-                  ref={formRef} // Pass the ref to the form
-                  apiError={apiError}
-                  isLoading={isLoading}
-                  onFormDraftSubmit={onFormDraftSubmit}
-                  onFormSubmit={onFormSubmit}
-                  isValid={isValid}
-                  errors={errors}
-                  handleSubmit={handleSubmit}
-                />
+                <div className="grid grid-cols-[1fr_288px] gap-x-8">
+                  <div className="flex gap-x-3">
+                    <Avatar className="overflow-hidden rounded-full" size="6">
+                      {/* 
+                        TODO: get avatar url from user 
+                        currentUser?.avatar_url && <AvatarImage src={currentUser?.avatar_url} alt="user" />
+                      */}
+                      {currentUser && <AvatarFallback>{getInitials(currentUser)}</AvatarFallback>}
+                    </Avatar>
+                    <div className="w-full">
+                      <Spacer size={1} />
+                      <PullRequestCompareForm
+                        register={register}
+                        ref={formRef} // Pass the ref to the form
+                        apiError={apiError}
+                        isLoading={isLoading}
+                        onFormDraftSubmit={onFormDraftSubmit}
+                        onFormSubmit={onFormSubmit}
+                        isValid={isValid}
+                        errors={errors}
+                        handleSubmit={handleSubmit}
+                      />
+                    </div>
+                  </div>
+                  {/* TODO: Replace placeholder data with real implementation */}
+                  <PullRequestSideBar
+                    addReviewers={noop}
+                    usersList={[]}
+                    currentUserId={currentUser}
+                    pullRequestMetadata={{ source_sha: '' }}
+                    processReviewDecision={noop}
+                    refetchReviewers={noop}
+                    handleDelete={noop}
+                    reviewers={[]}
+                  />
+                </div>
               </TabsContent>
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}

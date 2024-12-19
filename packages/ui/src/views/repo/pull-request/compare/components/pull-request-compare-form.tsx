@@ -2,7 +2,6 @@ import { forwardRef } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 import { Fieldset, Input, Textarea } from '@/components'
-import { Text } from '@components/text'
 import { z } from 'zod'
 
 // Define the form schema
@@ -32,15 +31,16 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="gap-y-3">
-          <p className="text-18 font-medium leading-none text-foreground-1">Add a title</p>
+          <span className="text-18 font-medium leading-none text-foreground-1">Add a title</span>
           <Input
             id="title"
             {...register('title')}
             placeholder="Enter pull request title"
             error={errors.title?.message?.toString()}
             autoFocus
+            size="md"
           />
-          <p className="mt-4 text-18 font-medium leading-none text-foreground-1">Add a description</p>
+          <span className="mt-4 text-18 font-medium leading-none text-foreground-1">Add a description</span>
           <Textarea
             id="description"
             {...register('description')}
@@ -50,9 +50,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
         </Fieldset>
 
         {apiError && apiError !== "head branch doesn't contain any new commits." && (
-          <Text size={1} className="text-destructive">
-            {apiError?.toString()}
-          </Text>
+          <span className="text-destructive text-12">{apiError?.toString()}</span>
         )}
       </form>
     )

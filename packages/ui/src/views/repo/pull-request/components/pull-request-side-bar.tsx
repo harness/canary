@@ -1,6 +1,6 @@
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request-details-types'
-import { ReviewersHeader } from './pull-request-reviewers-header'
-import { ReviewersList } from './pull-request-reviewers-list'
+import { ReviewersHeader } from '../details/components/conversation/pull-request-reviewers-header'
+import { ReviewersList } from '../details/components/conversation/pull-request-reviewers-list'
+import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../details/pull-request-details-types'
 
 interface PullRequestSideBarProps {
   reviewers?: {

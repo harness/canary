@@ -179,7 +179,7 @@ export const RepoSettingsGeneralForm: React.FC<{
             <Text className="leading-none text-foreground-2" size={2}>
               {t('views:repos.visibility', 'Visibility')}
             </Text>
-            <RadioGroup className="mt-4" value={accessValue} onValueChange={handleAccessChange} id="access">
+            <RadioGroup className="mt-6" value={accessValue} onValueChange={handleAccessChange} id="access">
               <Option
                 control={<RadioButton value="1" id="access-public" />}
                 id="access-public"

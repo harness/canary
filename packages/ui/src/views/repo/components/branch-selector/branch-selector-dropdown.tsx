@@ -15,12 +15,6 @@ import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
 
-const filterItems = (items: BranchSelectorListItem[], query: string) => {
-  if (!query.trim()) return items
-
-  return items.filter(item => item.name.toLowerCase().includes(query.toLowerCase().trim()))
-}
-
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   selectedBranch,
   branchList,
@@ -29,17 +23,16 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   repoId,
   spaceId,
   useTranslationStore,
-  isBranchOnly = false
+  isBranchOnly = false,
+  searchQuery,
+  setSearchQuery
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
-  const [searchQuery, setSearchQuery] = useState('')
   const { t } = useTranslationStore()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 
   const filteredItems = useMemo(() => {
-    const sourceItems = activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
-
-    return filterItems(sourceItems, searchQuery)
+    return activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
   }, [activeTab, branchList, tagList, searchQuery])
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,14 +52,15 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         ) : (
           <span className="text-14 font-medium leading-none">Switch branches/tags</span>
         )}
-
-        <SearchBox.Root
-          className="mt-2 w-full"
-          placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
-          value={searchQuery}
-          handleChange={handleSearchChange}
-          showOnFocus
-        />
+        <div role="presentation" onKeyDown={e => e.stopPropagation()}>
+          <SearchBox.Root
+            className="mt-2 w-full"
+            placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
+            value={searchQuery}
+            handleChange={handleSearchChange}
+            showOnFocus
+          />
+        </div>
       </div>
 
       {!isBranchOnly && (

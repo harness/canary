@@ -67,7 +67,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   if (isError)
     return (
       <>
-        <SandboxLayout.Main hasHeader hasLeftPanel>
+        <SandboxLayout.Main>
           <SandboxLayout.Content>
             <div className="flex min-h-[70vh] items-center justify-center py-20">
               <NoData
@@ -91,9 +91,9 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
 
   return (
-    <SandboxLayout.Main hasHeader hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
-        {/* 
+        {/*
           TODO: Replace the Text component with a Title component in the future.
           Consider using a Title component that supports a prefix prop for displaying the selected saved filter name.
           Example:
@@ -110,7 +110,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               </Text>
               {viewManagement.currentView && (
                 <>
-                  <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
+                  <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
                   <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
                 </>
               )}
@@ -147,7 +147,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
-            {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
             <FiltersBar
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
@@ -171,7 +170,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
         />
-        <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

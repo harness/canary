@@ -94,7 +94,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">

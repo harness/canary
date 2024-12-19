@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation } from 'react-router-dom'
 
-import { ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
+import { IThemeStore, ManageNavigation, MoreSubmenu, Navbar, SettingsMenu } from '@/components'
 import { getNavbarMenuData } from '@/data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '@/data/pinned-menu-items-data'
 import type { TypesUser } from '@/types'
 import { MenuGroupType, MenuGroupTypes, NavbarItemType, NavState } from '@components/navbar/types'
 import { useLocationChange } from '@hooks/use-location-change'
-import { TFunction } from 'i18next'
 
-import { SandboxLayout } from '../index'
+import { SandboxLayout, TranslationStore } from '../index'
 
 interface NavLinkStorageInterface {
   state: {
@@ -22,13 +21,14 @@ export interface SandboxRootProps {
   currentUser: TypesUser | undefined
   logout?: () => void
   useNav: () => NavState
-  t: TFunction
+  useThemeStore: () => IThemeStore
+  useTranslationStore: () => TranslationStore
 }
 
-export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps) => {
+export const SandboxRoot = ({ currentUser, useNav, logout, useThemeStore, useTranslationStore }: SandboxRootProps) => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
-
+  const { t } = useTranslationStore()
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
@@ -168,10 +168,13 @@ export const SandboxRoot = ({ currentUser, useNav, t, logout }: SandboxRootProps
           pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          t={t}
+          useThemeStore={useThemeStore}
+          useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>
-      <Outlet />
+      <div className="flex flex-col">
+        <Outlet />
+      </div>
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
       <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
       <ManageNavigation

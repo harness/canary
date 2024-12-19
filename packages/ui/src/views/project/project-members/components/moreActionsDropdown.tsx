@@ -6,9 +6,9 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon
-} from '@harnessio/canary'
+} from '@/components'
 
-import { MembersProps } from './interfaces'
+import { MembersProps } from '../types'
 
 interface moreActionsProps {
   member: MembersProps

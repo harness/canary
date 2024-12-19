@@ -108,5 +108,13 @@
     "table": "Table",
     "list": "List"
   },
-  "No search results": ""
+  "No search results": "",
+  "projectSettings": {
+    "members": "membres",
+    "newMember": "Nouveau membre"
+  },
+  "noData": {
+    "members": "Aucun membre pour l'instant.",
+    "inviteMembers": "Ajoutez les premiers membres de votre équipe en les invitant à rejoindre ce projet."
+  }
 }

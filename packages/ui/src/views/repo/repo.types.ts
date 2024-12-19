@@ -84,24 +84,29 @@ export type CommitDivergenceType = {
   ahead?: number
   behind?: number
 }
+
 export interface IBranchSelectorStore {
-  // state
+  // states
   selectedBranchTag: BranchSelectorListItem
-  selectedBranchType: BranchSelectorTab
+  selectedRefType: BranchSelectorTab
   branchList: BranchData[]
   tagList: BranchSelectorListItem[]
   spaceId: string
   repoId: string
   defaultBranch: string
-  branchDivergence: CommitDivergenceType[]
   xNextPage: number
   xPrevPage: number
   page: number
 
-  // actions
+  //actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
-  setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
+  setSelectedRefType: (selectedRefType: BranchSelectorTab) => void
+  setTagList: (tagList: BranchSelectorListItem[]) => void
+  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => void
+  setBranchList: (branches: BranchData[]) => void
+  setDefaultBranch: (branch: string) => void
   setPage: (page: number) => void
+  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => void
 }
 
 export enum CodeModes {

@@ -38,3 +38,7 @@ export * from '@views/repo/repo-settings/types'
 export * from '@views/repo/repo-import/repo-import'
 
 export * from '@views/repo/repo-settings/repo-settings-page'
+
+// repo branch rules
+export * from '@views/repo/repo-branch-rules'
+export * from '@views/repo/repo-branch-rules/types'

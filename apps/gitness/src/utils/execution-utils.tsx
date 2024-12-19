@@ -1,6 +1,7 @@
-import { Icon, Meter } from '@harnessio/canary'
+import { Icon } from '@harnessio/canary'
 import { EnumCiStatus, TypesExecution } from '@harnessio/code-service-client'
-import { ExecutionState } from '@harnessio/views'
+import { MeterState } from '@harnessio/ui/components'
+import { PipelineExecutionStatus } from '@harnessio/ui/views'
 
 const renderBranch = (branch: string): React.ReactElement => {
   return (
@@ -33,37 +34,37 @@ export const getLabel = (execution: TypesExecution): string | React.ReactElement
   }
 }
 
-export const getExecutionStatus = (status?: EnumCiStatus): ExecutionState => {
+export const getExecutionStatus = (status?: EnumCiStatus): PipelineExecutionStatus => {
   switch (status) {
     case 'running':
-      return ExecutionState.RUNNING
+      return PipelineExecutionStatus.RUNNING
     case 'success':
-      return ExecutionState.SUCCESS
+      return PipelineExecutionStatus.SUCCESS
     case 'failure':
-      return ExecutionState.FAILURE
+      return PipelineExecutionStatus.FAILURE
     case 'error':
-      return ExecutionState.ERROR
+      return PipelineExecutionStatus.ERROR
     case 'killed':
-      return ExecutionState.KILLED
+      return PipelineExecutionStatus.KILLED
     default:
-      return ExecutionState.UNKNOWN
+      return PipelineExecutionStatus.UNKNOWN
   }
 }
 
-export const getMeterState = (status?: EnumCiStatus): Meter.MeterState => {
+export const getMeterState = (status?: EnumCiStatus): MeterState => {
   switch (status) {
-    case ExecutionState.FAILURE:
-    case ExecutionState.KILLED:
-    case ExecutionState.ERROR:
-      return Meter.MeterState.Error
-    case ExecutionState.SUCCESS:
-      return Meter.MeterState.Success
-    case ExecutionState.SKIPPED:
-    case ExecutionState.BLOCKED:
-      return Meter.MeterState.Warning
-    case ExecutionState.PENDING:
-    case ExecutionState.WAITING_ON_DEPENDENCIES:
+    case PipelineExecutionStatus.FAILURE:
+    case PipelineExecutionStatus.KILLED:
+    case PipelineExecutionStatus.ERROR:
+      return MeterState.Error
+    case PipelineExecutionStatus.SUCCESS:
+      return MeterState.Success
+    case PipelineExecutionStatus.SKIPPED:
+    case PipelineExecutionStatus.BLOCKED:
+      return MeterState.Warning
+    case PipelineExecutionStatus.PENDING:
+    case PipelineExecutionStatus.WAITING_ON_DEPENDENCIES:
     default:
-      return Meter.MeterState.Empty
+      return MeterState.Empty
   }
 }

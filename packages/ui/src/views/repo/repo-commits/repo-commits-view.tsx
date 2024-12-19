@@ -1,23 +1,23 @@
-import { NoData } from '@components/no-data'
-import { PaginationComponent } from '@components/pagination-component'
-import { SkeletonList } from '@components/skeleton-list'
-import { Spacer } from '@components/spacer'
-import { Text } from '@components/text'
+import { FC } from 'react'
+
+import { NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
 import {
+  BranchSelector,
   BranchSelectorListItem,
   BranchSelectorTab,
+  CommitsList,
   IBranchSelectorStore,
   SandboxLayout,
   TranslationStore
-} from '@views/index'
+} from '@/views'
+import { Filters, FiltersBar } from '@components/filters'
+import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
+import { useFilters } from '@views/repo/hooks'
 
-import { BranchSelector } from '../components/branch-selector/branch-selector'
-import { CommitsList } from './components/commits-list'
 import { TypesCommit } from './types'
 
-interface RepoCommitsViewProps {
+export interface RepoCommitsViewProps {
   isFetchingCommits: boolean
-  isFetchingBranches: boolean
   commitsList?: TypesCommit[] | null
   xNextPage: number
   xPrevPage: number
@@ -26,58 +26,117 @@ interface RepoCommitsViewProps {
   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
-export const RepoCommitsView = (props: RepoCommitsViewProps) => {
-  const { t } = props.useTranslationStore()
-  const { branchList } = props.useRepoBranchesStore()
+export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
+  isFetchingCommits,
+  commitsList,
+  xNextPage,
+  xPrevPage,
+  page,
+  setPage,
+  selectBranchOrTag,
+  useTranslationStore,
+  useRepoBranchesStore,
+  searchQuery,
+  setSearchQuery
+}) => {
+  const { t } = useTranslationStore()
+
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+  const filterHandlers = useFilters()
+
+  const isDirtyList = page !== 1
+
+  const handleResetFiltersAndPages = () => {
+    setPage(1)
+    filterHandlers.handleResetFilters()
+  }
 
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
-      <SandboxLayout.Content>
-        <Spacer size={10} />
+    <SandboxLayout.Main>
+      <SandboxLayout.Content className="pt-7">
         <Text size={5} weight={'medium'}>
           Commits
         </Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
-          {!props.isFetchingBranches && branchList && (
-            <BranchSelector
-              onSelectBranch={props.selectBranchOrTag}
-              useRepoBranchesStore={props.useRepoBranchesStore}
-              useTranslationStore={props.useTranslationStore}
-            />
-          )}
-        </div>
-        <Spacer size={5} />
-
-        {props.isFetchingCommits && <SkeletonList />}
-
-        {!props.commitsList?.length && (
-          <NoData iconName="no-data-folder" title="No commits yet" description={['There are no commits yet.']} />
-        )}
-
-        {!props.isFetchingCommits && props.commitsList?.length && (
-          <CommitsList
-            data={props.commitsList.map((item: TypesCommit) => ({
-              sha: item.sha,
-              parent_shas: item.parent_shas,
-              title: item.title,
-              message: item.message,
-              author: item.author,
-              committer: item.committer
-            }))}
+          <BranchSelector
+            onSelectBranch={selectBranchOrTag}
+            useRepoBranchesStore={useRepoBranchesStore}
+            useTranslationStore={useTranslationStore}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
-        )}
+          <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} t={t} />
+        </div>
 
-        <Spacer size={8} />
-        <PaginationComponent
-          nextPage={props.xNextPage}
-          previousPage={props.xPrevPage}
-          currentPage={props.page}
-          goToPage={(pageNum: number) => props.setPage(pageNum)}
+        <FiltersBar
+          filterOptions={FILTER_OPTIONS}
+          sortOptions={SORT_OPTIONS}
+          sortDirections={SORT_DIRECTIONS}
+          filterHandlers={filterHandlers}
           t={t}
         />
+
+        <Spacer size={5} />
+
+        {isFetchingCommits ? (
+          <SkeletonList />
+        ) : (
+          <>
+            {!commitsList?.length ? (
+              <NoData
+                withBorder
+                textWrapperClassName="max-w-[350px]"
+                iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-commits'}
+                title={
+                  isDirtyList
+                    ? t('views:noData.noCommitsHistory', 'No commits history')
+                    : t('views:noData.noCommitsYet', 'No commits yet')
+                }
+                description={[
+                  isDirtyList
+                    ? t(
+                        'views:noData.noCommitsHistoryDescription',
+                        "There isn't any commit history to show here for the selected user, time range, or current page."
+                      )
+                    : t(
+                        'views:noData.noCommitsYetDescription',
+                        "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                      )
+                ]}
+                primaryButton={
+                  isDirtyList
+                    ? {
+                        label: t('views:noData.clearFilters', 'Clear filters'),
+                        onClick: handleResetFiltersAndPages
+                      }
+                    : // TODO: add onClick for Creating new commit
+                      {
+                        label: t('views:commits.createNewCommit', 'Create new commit')
+                      }
+                }
+              />
+            ) : (
+              <>
+                <CommitsList data={commitsList} />
+                <PaginationComponent
+                  className="pl-[26px]"
+                  nextPage={xNextPage}
+                  previousPage={xPrevPage}
+                  currentPage={page}
+                  goToPage={setPage}
+                  t={t}
+                />
+              </>
+            )}
+          </>
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

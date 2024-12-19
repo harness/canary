@@ -1,6 +1,6 @@
-import { memo, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@components/index'
+import { Select, SelectContent, SelectItem } from '@components/index'
 import { useEmitCodeCommentStatus } from '@views/repo/pull-request/hooks/useEmitCodeCommentStatus'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -18,26 +18,23 @@ interface StatusButtonProps {
   onChange: (value: string) => void
 }
 
-const StatusButton: React.FC<StatusButtonProps> = memo(({ codeCommentStatus, onChange }) => (
-  <Select placeholder="Status" onValueChange={onChange}>
-    <SelectTrigger>
-      <SelectValue className="py-2" placeholder={codeCommentStatus} />
-    </SelectTrigger>
+const StatusButton = ({ codeCommentStatus, onChange }: StatusButtonProps) => (
+  <Select placeholder={codeCommentStatus} onValueChange={onChange}>
     <SelectContent>
       <SelectItem value={CodeCommentState.ACTIVE}>Active</SelectItem>
       <SelectItem value={CodeCommentState.RESOLVED}>Resolved</SelectItem>
     </SelectContent>
   </Select>
-))
+)
 StatusButton.displayName = 'StatusButton'
 
-export const PullRequestStatusSelect: React.FC<CodeCommentStatusSelectProps> = ({
+export const PullRequestStatusSelect = ({
   repoId,
   pullReqMetadata,
   comment: { commentItems },
   commentStatusPullReq,
   refetchActivities
-}) => {
+}: CodeCommentStatusSelectProps) => {
   const [parentComment, setParentComment] = useState<CommentItem<TypesPullReqActivity> | undefined>(undefined)
   const [codeCommentStatus, setCodeCommentStatus] = useState<string>('Active')
 

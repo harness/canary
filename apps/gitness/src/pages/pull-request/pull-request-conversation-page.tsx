@@ -473,7 +473,7 @@ function PullRequestConversationPage() {
               currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
             />
             <Spacer size={9} />
-            <PullRequestCommentBox currentUser={currentUserData?.display_name} onSaveComment={handleSaveComment} />
+            <PullRequestCommentBox currentUser={currentUser} onSaveComment={handleSaveComment} />
             <Spacer size={9} />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

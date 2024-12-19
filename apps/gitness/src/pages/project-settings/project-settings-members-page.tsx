@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ */
+
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
@@ -177,7 +181,7 @@ const ProjectSettingsMemebersPage = () => {
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>

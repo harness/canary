@@ -35,7 +35,7 @@ export const getUserMenuItems = (t: TFunction): UserMenuItemType[] => [
     key: UserMenuKeys.ADMINISTRATION,
     iconName: 'settings-1',
     title: t('component:navbar.administration', 'Administration'),
-    to: '/sandbox/settings/profile/general',
+    to: '/settings/general',
     isSeparated: true
   },
   {

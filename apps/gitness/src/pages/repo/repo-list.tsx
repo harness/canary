@@ -151,7 +151,7 @@ export default function ReposListPageV1() {
 
   return (
     <>
-      <SandboxLayout.Main hasHeader hasLeftPanel>
+      <SandboxLayout.Main>
         <SandboxLayout.Content>
           <Spacer size={10} />
           {/**

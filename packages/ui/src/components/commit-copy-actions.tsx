@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 
-import { Icon, ShaBadge, Text } from '@/components'
+import { Icon, ShaBadge } from '@/components'
 import copy from 'clipboard-copy'
 
 export const CommitCopyActions = ({ sha }: { sha: string }) => {
@@ -20,12 +19,8 @@ export const CommitCopyActions = ({ sha }: { sha: string }) => {
 
   return (
     <ShaBadge.Root>
-      <ShaBadge.Content>
-        <Link to="#">
-          <Text size={2} className="font-mono text-foreground-3">
-            {sha.substring(0, 7)}
-          </Text>
-        </Link>
+      <ShaBadge.Content className="hover:bg-transparent">
+        <span className="text-13 text-foreground-3">{sha.substring(0, 7)}</span>
       </ShaBadge.Content>
       <ShaBadge.Icon handleClick={() => setCopied(true)}>
         <Icon size={16} name={copied ? 'tick' : 'clone'} className="text-icons-3" />

@@ -41,7 +41,8 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-import { useRepoRulesStore } from './stores/repo-rules-store'
+import { useRepoRulesStore } from './stores/repo-settings-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()
@@ -50,8 +51,8 @@ export const RepoSettingsGeneralPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
-  const { branchList, setBranchList, setSelectedBranchTag, setSelectedBranchType } = useRepoBranchesStore()
-
+  const { branchList, setBranchList, setSelectedBranchTag, setSelectedRefType } = useRepoBranchesStore()
+  const [branchQuery, setBranchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
   const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
   const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState<boolean>(false)
@@ -76,13 +77,14 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { data: { body: branches } = {}, isLoading: isLoadingBranches } = useListBranchesQuery(
+  const { data: { body: branches } = {} } = useListBranchesQuery(
     {
       repo_ref: repoRef,
       queryParams: {
         order: 'asc',
         page: 1,
-        limit: 100
+        limit: 100,
+        query: branchQuery
       }
     },
     {
@@ -256,7 +258,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       }
     },
@@ -267,12 +269,18 @@ export const RepoSettingsGeneralPageContainer = () => {
     if (repoData) {
       setRepoData(repoData)
       setApiError(null)
+      const defaultBranch = branchList.find(branch => branch.default)
+      setSelectedBranchTag({
+        name: defaultBranch?.name || repoData?.default_branch || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
     }
   }, [repoData, setRepoData])
 
   useEffect(() => {
     if (branches) {
-      setBranchList(branches)
+      setBranchList(transformBranchList(branches, ''))
       setApiError(null)
     }
   }, [branches, setBranchList])
@@ -303,7 +311,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const loadingStates = {
-    isLoadingRepoData: isLoadingBranches || isLoadingRepoData || isLoadingSecuritySettings,
+    isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
     isUpdatingSecuritySettings: UpdatingSecuritySettings
@@ -323,6 +331,8 @@ export const RepoSettingsGeneralPageContainer = () => {
         handleRuleClick={handleRuleClick}
         openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+        searchQuery={branchQuery}
+        setSearchQuery={setBranchQuery}
       />
 
       <DeleteAlertDialog

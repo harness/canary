@@ -69,6 +69,8 @@ export interface RepoSummaryViewProps {
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
   currentBranchDivergence: CommitDivergenceType
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export function RepoSummaryView({
@@ -89,18 +91,27 @@ export function RepoSummaryView({
   isEditDialogOpen,
   setEditDialogOpen,
   useTranslationStore,
-  currentBranchDivergence
+  currentBranchDivergence,
+  searchQuery,
+  setSearchQuery
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
-  if (loading) return <SkeletonList />
+  if (loading) {
+    return (
+      <SandboxLayout.Main fullWidth>
+        <SandboxLayout.Content>
+          <SkeletonList />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
+  }
 
   if (!repoEntryPathToFileTypeMap.size) {
     return (
       <NoData
-        insideTabView
         iconName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
@@ -111,11 +122,11 @@ export function RepoSummaryView({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader fullWidth>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 255px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-6">
-            {/* 
+            {/*
               TODO: Implement proper recent push detection logic:
               1. Backend needs to:
                 - Track and store information about recent pushes
@@ -141,7 +152,7 @@ export function RepoSummaryView({
                   * No PR has been created from this branch yet
                 - Format timestamps using timeAgoFromISOTime
                 - Remove mock data below
-         
+
                 Example:
                 {selectedBranchTag.name !== repository?.default_branch && (
                   <>
@@ -166,6 +177,8 @@ export function RepoSummaryView({
                     onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
                   />
                   <SearchFiles
                     navigateToFile={navigateToFile}
@@ -201,8 +214,7 @@ export function RepoSummaryView({
                 <Spacer size={4} />
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
-                  spaceId={spaceId}
-                  repoId={repoId}
+                  useRepoBranchesStore={useRepoBranchesStore}
                   currentBranchDivergence={{
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0

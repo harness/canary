@@ -1,9 +1,9 @@
 import { useMemo } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
-import { Button, Icon, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
+import { Button, Icon, IThemeStore, NavbarProjectChooser, ScrollArea, Spacer } from '@/components'
 import { TypesUser } from '@/types'
-import { TFunction } from 'i18next'
+import { TranslationStore } from '@views/index'
 import { isEmpty } from 'lodash-es'
 
 import { getAdminMenuItem } from './data'
@@ -26,7 +26,8 @@ interface NavbarProps {
   handleLogOut: () => void
   handleChangePinnedMenuItem: (item: NavbarItemType, pin: boolean) => void
   handleRemoveRecentMenuItem: (item: NavbarItemType) => void
-  t: TFunction
+  useThemeStore: () => IThemeStore
+  useTranslationStore: () => TranslationStore
 }
 
 export const Navbar = ({
@@ -41,10 +42,12 @@ export const Navbar = ({
   handleLogOut,
   handleChangePinnedMenuItem,
   handleRemoveRecentMenuItem,
-  t
+  useThemeStore,
+  useTranslationStore
 }: NavbarProps) => {
   const location = useLocation()
   const navigate = useNavigate()
+  const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
@@ -53,7 +56,7 @@ export const Navbar = ({
   if (!showNavbar) return null
 
   return (
-    <NavbarSkeleton.Root className="fixed inset-y-0 left-0 z-50 overflow-hidden max-md:hidden">
+    <NavbarSkeleton.Root className="inset-y-0 size-full overflow-hidden max-md:hidden">
       <NavbarSkeleton.Header>
         <NavbarProjectChooser.Root
           logo={
@@ -116,7 +119,13 @@ export const Navbar = ({
 
       <NavbarSkeleton.Footer>
         {!isEmpty(currentUser) ? (
-          <NavbarUser currentUser={currentUser} handleCustomNav={handleCustomNav} handleLogOut={handleLogOut} t={t} />
+          <NavbarUser
+            currentUser={currentUser}
+            handleCustomNav={handleCustomNav}
+            handleLogOut={handleLogOut}
+            useTranslationStore={useTranslationStore}
+            useThemeStore={useThemeStore}
+          />
         ) : (
           <Button onClick={() => navigate('/signin')}>Sign In</Button>
         )}

@@ -40,7 +40,7 @@ const PullRequestCommentBox: React.FC<PullRequestCommentBoxProps> = ({ onSaveCom
       <div className="w-full rounded-md border px-2 pb-3">
         <Textarea
           value={comment}
-          className="w-full border-transparent shadow hover:border-transparent focus:outline-none focus-visible:ring-transparent"
+          className="w-full resize-none border-transparent shadow hover:border-transparent focus:outline-none focus-visible:ring-transparent"
           onChange={(e: { target: { value: React.SetStateAction<string> } }) => setComment(e.target.value)}
           placeholder="Add your comment here"
         />

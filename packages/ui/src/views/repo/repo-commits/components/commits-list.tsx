@@ -1,72 +1,65 @@
-import { useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList, Text } from '@/components'
+import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
+import { TypesCommit } from '@/views'
 
-import { TypesCommit } from '../types'
+type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface CommitProps {
   data?: TypesCommit[]
 }
 
-export const CommitsList = ({ ...props }: CommitProps) => {
-  const data = props.data
-  const commitsGroupedByDate: Record<string, TypesCommit[]> = useMemo(
-    () =>
-      data?.reduce(
-        (group, commit) => {
-          const date = formatDate(commit.committer?.when as string)
+export const CommitsList: FC<CommitProps> = ({ data }) => {
+  const entries = useMemo(() => {
+    const commitsGroupedByDate = !data
+      ? {}
+      : data.reduce<CommitsGroupedByDate>((group, commit) => {
+          const date = formatDate(commit.committer?.when ?? '')
           group[date] = (group[date] || []).concat(commit)
           return group
-        },
-        {} as Record<string, TypesCommit[]>
-      ) || {},
-    [data]
-  )
+        }, {})
 
-  const entries = Object.entries(commitsGroupedByDate)
+    return Object.entries(commitsGroupedByDate)
+  }, [data])
+
   const totalNodes = entries.length
 
   return (
-    <>
+    <div>
       {entries.map(([date, commitData], node_idx) => (
-        <NodeGroup.Root key={date}>
+        <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />
-          <NodeGroup.Title>{date && <Text color="tertiaryBackground">Commits on {date}</Text>}</NodeGroup.Title>
+          <NodeGroup.Title>{date && <span className="text-foreground-4">Commits on {date}</span>}</NodeGroup.Title>
           <NodeGroup.Content>
-            {commitData && commitData.length > 0 && (
+            {!!commitData.length && (
               <StackedList.Root>
                 {commitData.map((commit, repo_idx) => {
                   const authorName = commit.author?.identity?.name
 
                   return (
                     <StackedList.Item
-                      className="hover:bg-transparent"
-                      key={commit.title}
+                      className="!cursor-default items-start py-3"
+                      key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
                       <StackedList.Field
                         title={
-                          <div className="flex flex-col">
-                            <div className="max-w-[500px] truncate">{commit.title}</div>
-                            <div className="flex items-center pt-1">
+                          <div className="flex flex-col gap-y-1.5">
+                            <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                            <div className="flex items-center gap-x-1.5">
                               {authorName && (
-                                <div className="size-5 rounded-full bg-tertiary-background bg-cover">
-                                  <Avatar className="size-5 rounded-full p-0">
-                                    <AvatarFallback>
-                                      <Text size={1} color="tertiaryBackground">
-                                        {getInitials(authorName)}
-                                      </Text>
-                                    </AvatarFallback>
-                                  </Avatar>
-                                </div>
+                                <Avatar className="size-[18px]">
+                                  <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
+                                </Avatar>
                               )}
-                              <Text className="pl-2 text-xs text-tertiary-background">{`${authorName || ''} commited on ${date}`}</Text>
+                              <span className="text-foreground-3">{authorName || ''}</span>
+                              <span className="text-foreground-4">committed on {date}</span>
                             </div>
                           </div>
                         }
                       />
-                      {commit?.sha && (
+                      {!!commit?.sha && (
                         <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
                       )}
                     </StackedList.Item>
@@ -75,9 +68,9 @@ export const CommitsList = ({ ...props }: CommitProps) => {
               </StackedList.Root>
             )}
           </NodeGroup.Content>
-          <NodeGroup.Connector first={node_idx === 0} last={node_idx === totalNodes - 1} />
+          <NodeGroup.Connector first={node_idx === 0} last={node_idx === totalNodes - 1} className="!bottom-0 left-0" />
         </NodeGroup.Root>
       ))}
-    </>
+    </div>
   )
 }

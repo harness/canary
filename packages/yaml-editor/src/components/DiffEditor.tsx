@@ -25,7 +25,10 @@ const defaultOptions: monaco.editor.IStandaloneDiffEditorConstructionOptions = {
   overviewRulerBorder: false,
   padding: {
     top: 10
-  }
+  },
+  fontSize: 14,
+  fontFamily: '"JetBrains Mono", "monospace"',
+  lineHeight: 20
 }
 
 export interface DiffEditorProps<_> {

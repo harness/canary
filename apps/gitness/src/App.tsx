@@ -12,7 +12,8 @@ import {
   NewPasswordPage as NewPasswordPageV2,
   OTPPage as OTPPageV2,
   RepoSettingsPage,
-  SandboxLayout
+  SandboxLayout,
+  SettingsAccountPage
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -20,7 +21,6 @@ import {
   OTPPage,
   RepoSettingsPlaceholderPage,
   SandboxSettings,
-  SettingsAccountPage,
   SettingsProjectNav
 } from '@harnessio/views'
 
@@ -33,11 +33,17 @@ import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import { useTranslationStore } from './i18n/stores/i18n-store'
 import PipelineLayout from './layouts/PipelineStudioLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
+import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
+import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
+import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -46,12 +52,15 @@ import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-p
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import SandboxPullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
+import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
+import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -60,15 +69,14 @@ import { SignUp as SignUpV2 } from './pages-v2/signup'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProjectV1 from './pages/create-project'
 import { Execution } from './pages/execution/execution-details'
-import RepoExecutionListPage from './pages/execution/repo-execution-list'
+import RepoExecutionListPageOld from './pages/execution/repo-execution-list'
 import { LandingPage as LandingPageV2 } from './pages/landing-page'
 import { Logout } from './pages/logout'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
 import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
 import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
 import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
-import { SettingsProfileGeneralPage } from './pages/profile-settings/profile-settings-general-container'
-import { SettingsProfileKeysPage } from './pages/profile-settings/profile-settings-keys-container'
+import { SettingsProfileGeneralPage as SettingsProfileGeneralPageV1 } from './pages/profile-settings/profile-settings-general-container'
 import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
 import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
 import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
@@ -80,7 +88,6 @@ import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/p
 import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
 import PullRequestListPage from './pages/pull-request/pull-request-list-page'
 import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
-import { RepoBranchSettingsRulesPageContainer } from './pages/repo/repo-branch-rules-container'
 import RepoCommitsPageV1 from './pages/repo/repo-commits'
 import { CreateRepoV1 } from './pages/repo/repo-create-page'
 import { RepoFiles } from './pages/repo/repo-files'
@@ -163,7 +170,7 @@ export default function App() {
         {
           path: 'repos',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>Repo</h1>
             </SandboxLayout.Main>
           )
@@ -171,7 +178,7 @@ export default function App() {
         {
           path: 'pipelines',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>pipelines</h1>
             </SandboxLayout.Main>
           )
@@ -179,7 +186,7 @@ export default function App() {
         {
           path: 'executions',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>executions</h1>
             </SandboxLayout.Main>
           )
@@ -187,7 +194,7 @@ export default function App() {
         {
           path: 'databases',
           element: (
-            <SandboxLayout.Main hasLeftPanel hasHeader>
+            <SandboxLayout.Main>
               <h1>databases</h1>
             </SandboxLayout.Main>
           )
@@ -284,7 +291,7 @@ export default function App() {
             },
             {
               path: 'settings',
-              element: <RepoSettingsPage />,
+              element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
               children: [
                 {
                   index: true,
@@ -302,8 +309,46 @@ export default function App() {
                 {
                   path: 'webhooks',
                   element: <WebhookListPage />
+                },
+                {
+                  path: 'rules/create',
+                  element: <RepoBranchSettingsRulesPageContainer />,
+                  children: [
+                    {
+                      path: ':identifier',
+                      element: <RepoBranchSettingsRulesPageContainer />
+                    }
+                  ]
                 }
               ]
+            },
+            {
+              path: 'pipelines',
+              children: [
+                { index: true, element: <RepoPipelineListPage /> },
+                {
+                  path: ':pipelineId',
+                  element: <RepoExecutionListPage />
+                }
+              ]
+            }
+          ]
+        },
+        {
+          path: ':spaceId/settings',
+          element: <ProjectSettingsLayout />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="general" replace />
+            },
+            {
+              path: 'general',
+              element: <>General</>
+            },
+            {
+              path: 'members',
+              element: <ProjectMemberListPage />
             }
           ]
         },
@@ -314,6 +359,24 @@ export default function App() {
         {
           path: ':spaceId/repos/import',
           element: <ImportRepo />
+        },
+        {
+          path: 'settings',
+          element: <SettingsLayout />,
+          children: [
+            {
+              index: true,
+              element: <Navigate to="general" replace />
+            },
+            {
+              path: 'general',
+              element: <SettingsProfileGeneralPage />
+            },
+            {
+              path: 'keys',
+              element: <SettingsProfileKeysPage />
+            }
+          ]
         },
         {
           path: 'theme',
@@ -340,7 +403,7 @@ export default function App() {
             {
               path: ':pipelineId',
               children: [
-                { index: true, element: <RepoExecutionListPage /> },
+                { index: true, element: <RepoExecutionListPageOld /> },
                 {
                   path: 'edit',
                   element: <PipelineEditPage />
@@ -489,7 +552,7 @@ export default function App() {
                 },
                 {
                   path: 'settings',
-                  element: <RepoSettingsPage />,
+                  element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
                   children: [
                     {
                       index: true,
@@ -535,14 +598,14 @@ export default function App() {
                 },
                 {
                   path: ':pipelineId',
-                  element: <RepoExecutionListPage />
+                  element: <RepoExecutionListPageOld />
                 }
               ]
             },
             // Executions (OUTSIDE REPOS)
             {
               path: ':spaceId/executions',
-              element: <RepoExecutionListPage />
+              element: <RepoExecutionListPageOld />
             },
             {
               path: 'create',
@@ -600,7 +663,7 @@ export default function App() {
                 },
                 {
                   path: 'general',
-                  element: <SettingsProfileGeneralPage />
+                  element: <SettingsProfileGeneralPageV1 />
                 },
                 {
                   path: 'keys',

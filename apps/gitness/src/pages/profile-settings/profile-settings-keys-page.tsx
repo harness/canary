@@ -35,7 +35,7 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+    <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>

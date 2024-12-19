@@ -1,3 +1,5 @@
+import { BypassUsersList, RepoBranchSettingsFormFields } from '../repo-branch-rules/types'
+
 export interface RepoBranch {
   name?: string
   sha?: string
@@ -48,4 +50,7 @@ export interface IRepoStore {
   repoData: RepoData
   rules: RuleDataType[] | null
   securityScanning: boolean
+  presetRuleData: RepoBranchSettingsFormFields | null
+  principals: BypassUsersList[] | null
+  recentStatusChecks: string[] | null
 }

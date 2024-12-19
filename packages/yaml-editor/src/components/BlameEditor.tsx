@@ -29,7 +29,10 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   renderWhitespace: 'none',
   renderLineHighlight: 'none',
   minimap: { enabled: false },
-  scrollBeyondLastLine: false
+  scrollBeyondLastLine: false,
+  fontSize: 14,
+  fontFamily: '"JetBrains Mono", "monospace"',
+  lineHeight: 20
 }
 
 export interface BlameEditorProps<_> {

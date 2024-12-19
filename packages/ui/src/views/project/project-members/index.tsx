@@ -76,7 +76,7 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Main hasHeader hasSubHeader hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>

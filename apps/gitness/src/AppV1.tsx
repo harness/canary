@@ -8,7 +8,7 @@ import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { Text } from '@harnessio/ui/components'
 
-import Breadcrumbs from './components/breadcrumbsV1/breadcrumbs'
+import BreadcrumbsV1 from './components/breadcrumbsV1/breadcrumbs'
 import ProjectSelector from './components/breadcrumbsV1/project-selector'
 import RepoListing from './components/breadcrumbsV1/repo-listing'
 import RepoSummary from './components/breadcrumbsV1/repo-summary'
@@ -48,7 +48,7 @@ export default function AppV1() {
       path: '/',
       element: (
         <>
-          <Breadcrumbs />
+          <BreadcrumbsV1 />
           <Outlet />
         </>
       ),

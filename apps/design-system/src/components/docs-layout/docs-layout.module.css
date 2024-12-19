@@ -1,0 +1,10 @@
+.layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  left: 0;
+}

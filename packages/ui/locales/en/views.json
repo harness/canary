@@ -195,7 +195,9 @@
     "addTokenDescription": "Personal access tokens allow you to authenticate with the API.",
     "sshKeys": "My SSH keys",
     "addSshKey": "Add new SSH key",
-    "addSshKeyDescription": "SSH keys allow you to establish a secure connection to your code repository."
+    "addSshKeyDescription": "SSH keys allow you to establish a secure connection to your code repository.",
+    "GeneralTab": "General",
+    "KeysTab": "Keys and Tokens"
   },
   "noData": {
     "checkSpelling": "Check your spelling and filter options,",

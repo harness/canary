@@ -196,7 +196,7 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                 id="name"
                 {...registerProfile('name')}
                 placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
-                label="Name"
+                label={t('views:profileSettings.name', 'Name')}
               />
               {profileErrors.name && (
                 <Message theme={MessageTheme.ERROR}>{profileErrors.name.message?.toString()}</Message>

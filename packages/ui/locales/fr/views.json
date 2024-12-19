@@ -195,7 +195,9 @@
     "addTokenDescription": "Les jetons d'accès personnels vous permettent de vous authentifier avec l'API.",
     "sshKeys": "Mes clés SSH",
     "addSshKey": "Ajouter une nouvelle clé SSH",
-    "addSshKeyDescription": "Les clés SSH vous permettent d'établir une connexion sécurisée avec votre dépôt de code."
+    "addSshKeyDescription": "Les clés SSH vous permettent d'établir une connexion sécurisée avec votre dépôt de code.",
+    "GeneralTab": "General",
+    "KeysTab": "Keys and Tokens"
   },
   "noData": {
     "checkSpelling": "Vérifiez votre orthographe et vos options de filtre,",

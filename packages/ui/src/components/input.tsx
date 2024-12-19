@@ -48,9 +48,8 @@ interface InputProps extends BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputIconName?: IconProps['name']
-  right?: React.ReactNode
-  rightStyle?: boolean
-  rightClassName?: string
+  suffix?: React.ReactNode
+  suffixVariant?: 'default' | 'filled'
 }
 
 /**
@@ -78,9 +77,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className,
       wrapperClassName,
       inputIconName,
-      right,
-      rightClassName,
-      rightStyle,
+      suffix,
+      suffixVariant,
       ...props
     },
     ref
@@ -106,6 +104,32 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       />
     )
 
+    const renderInput = () => {
+      if (suffix) {
+        return (
+          <div
+            className={cn(
+              'flex items-center text-muted-foreground',
+              suffixVariant === 'filled' ? 'bg-muted border-l' : '',
+              className
+            )}
+          >
+            {baseInputComp}
+            {suffix}
+          </div>
+        )
+      }
+
+      return inputIconName ? (
+        <span className="relative">
+          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+          {baseInputComp}
+        </span>
+      ) : (
+        baseInputComp
+      )
+    }
+
     return (
       <InputWrapper {...inputWrapperProps}>
         {label && (
@@ -113,27 +137,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </Label>
         )}
-        {inputIconName ? (
-          <span className="relative">
-            <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
-            {baseInputComp}
-          </span>
-        ) : right ? (
-          <div className="relative flex h-9 w-full rounded-md border border-input">
-            {baseInputComp}
-            <div
-              className={cn(
-                'flex items-center text-muted-foreground rounded-r-md',
-                rightStyle ? 'bg-muted border-l' : '-ml-3',
-                rightClassName
-              )}
-            >
-              {right}
-            </div>
-          </div>
-        ) : (
-          baseInputComp
-        )}
+        {renderInput()}
         {error && (
           <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
             {error}

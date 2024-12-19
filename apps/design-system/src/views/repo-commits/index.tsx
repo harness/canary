@@ -2,9 +2,9 @@ import { useCallback, useState } from 'react'
 
 import { BranchSelectorTab, IBranchSelectorStore, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
 
-import { noop, useTranslationsStore } from '../../utils.ts'
-import { repoFilesStore } from '../repo-files/components/repo-files-store.ts'
-import { repoCommitsStore } from './repo-commits-store.ts'
+import { noop, useTranslationsStore } from '../../utils'
+import { repoFilesStore } from '../repo-files/components/repo-files-store'
+import { repoCommitsStore } from './repo-commits-store'
 
 export const RepoCommitsView = () => {
   const [branchTagQuery, setBranchTagQuery] = useState('')

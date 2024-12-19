@@ -64,7 +64,6 @@ export default function AppV1() {
         },
         {
           path: 'projects/:projectId/repos',
-          element: <Outlet />, // Placeholder for nested routes
           handle: {
             breadcrumb: ({ projectId }: { projectId: string }) => <Text>{projectId}</Text>
           },

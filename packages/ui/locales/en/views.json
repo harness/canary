@@ -158,16 +158,13 @@
     "createBranchDescription": "Your branches will appear here once they're created.",
     "startBranchDescription": "Start branching to see your work organized.",
     "createBranch": "Create branch",
+    "noCommitsHistory": "No commits history",
+    "noCommitsYet": "No commits yet",
+    "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
+    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
-    "createOrImportRepos": "Create new or import an existing repository.",
-    "noCommitsHistory": "No commits history",
-    "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
-    "noCommitsYet": "No commits yet",
-    "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected."
-  },
-  "commits": {
-    "createNewCommit": "Create new commit"
+    "createOrImportRepos": "Create new or import an existing repository."
   },
   "projectSettings": {
     "newMember": "New member",
@@ -186,5 +183,8 @@
     "select": "Select",
     "baseBranch": "Base Branch",
     "selectBranchError": "Base branch is required"
+  },
+  "commits": {
+    "createNewCommit": "Create new commit"
   }
 }

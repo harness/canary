@@ -12,7 +12,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 
-export default function ReposListPage() {
+export default function ReposListPage({ noBreadcrumbs = false }: { noBreadcrumbs?: boolean }) {
   const space = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
@@ -72,7 +72,7 @@ export default function ReposListPage() {
 
   return (
     <>
-      <Breadcrumbs />
+      {!noBreadcrumbs && <Breadcrumbs />}
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}

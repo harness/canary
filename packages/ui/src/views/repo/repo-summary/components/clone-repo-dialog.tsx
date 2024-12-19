@@ -91,7 +91,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
                 readOnly
                 value={httpsUrl}
                 variant="extended"
-                className="text-tertiary-background mb-2"
+                className="text-foreground-2"
                 right={<CopyButton name={httpsUrl} />}
               />
               <div className="flex items-center my-2">

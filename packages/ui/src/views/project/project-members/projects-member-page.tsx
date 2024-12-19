@@ -1,12 +1,12 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 
-import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 import { debounce } from 'lodash-es'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
-import { MembersList } from './components/member-list'
-import { MembersProps, ProjectMemberListViewProps } from './types'
+import ProjectMembersList from './components/project-member-list'
+import { ProjectMemberListViewProps } from './types'
 
 export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
   isLoading,
@@ -35,45 +35,6 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
   }, [])
-
-  const renderListContent = () => {
-    if (isLoading) return <SkeletonList />
-    if (!memberList?.length) {
-      if (searchQuery) {
-        return (
-          <NoData
-            iconName="no-search-magnifying-glass"
-            title={t('views:noData.noResults', 'No search results')}
-            description={[
-              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-              t('views:noData.changeSearch', 'or search for a different keyword.')
-            ]}
-            primaryButton={{
-              label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: () => {
-                setSearchInput('')
-                setSearchQuery(null)
-              }
-            }}
-          />
-        )
-      }
-      return (
-        <NoData
-          iconName="no-data-branches"
-          title={t('views:noData.members')}
-          description={[t('views:noData.inviteMembers')]}
-          primaryButton={{
-            label: t('views:projectSettings.newMember'),
-            onClick: () => {
-              setIsInviteMemberDialogOpen(true)
-            }
-          }}
-        />
-      )
-    }
-    return <MembersList members={memberList} onEdit={onEditMember} onDelete={(_member: MembersProps) => {}} />
-  }
 
   return (
     <SandboxLayout.Main>
@@ -105,7 +66,16 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
           </ListActions.Right>
         </ListActions.Root>
         <Spacer size={5} />
-        {renderListContent()}
+        <ProjectMembersList
+          isLoading={isLoading}
+          memberList={memberList}
+          searchQuery={searchQuery}
+          useTranslationStore={useTranslationStore}
+          setSearchInput={setSearchInput}
+          setSearchQuery={setSearchQuery}
+          setIsInviteMemberDialogOpen={setIsInviteMemberDialogOpen}
+          onEditMember={onEditMember}
+        />
         <Spacer size={8} />
         <PaginationComponent
           totalPages={totalPages}

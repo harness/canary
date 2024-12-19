@@ -35,7 +35,6 @@ import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import PipelineLayout from './layouts/PipelineStudioLayout'
-import ProjectLayout from './layouts/ProjectLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
@@ -44,6 +43,7 @@ import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -336,16 +336,19 @@ export default function App() {
         },
         {
           path: ':spaceId/settings',
-          element: <ProjectLayout />,
+          element: <ProjectSettingsLayout />,
           children: [
             {
-              element: <SettingsProjectNav />,
-              children: [
-                {
-                  path: 'members',
-                  children: [{ index: true, element: <ProjectMemberListPage /> }]
-                }
-              ]
+              index: true,
+              element: <Navigate to="general" replace />
+            },
+            {
+              path: 'general',
+              element: <>General</>
+            },
+            {
+              path: 'members',
+              element: <ProjectMemberListPage />
             }
           ]
         },

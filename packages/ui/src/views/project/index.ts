@@ -4,3 +4,5 @@ export * from '@views/project/project-members/types'
 
 // project types
 export * from '@views/project/project.types'
+
+export * from './project-settings-page'

@@ -9,6 +9,7 @@ import {
 } from '@harnessio/code-service-client'
 import { PasswordFields, ProfileFields, SettingsAccountGeneralPage } from '@harnessio/ui/views'
 
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileGeneralPage: React.FC = () => {
@@ -96,6 +97,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
     <>
       <SettingsAccountGeneralPage
         useProfileSettingsStore={useProfileSettingsStore}
+        useTranslationStore={useTranslationStore}
         isLoadingUser={isLoadingUser}
         isUpdatingUser={updateUserMutation.isLoading}
         isUpdatingPassword={updatePasswordMutation.isLoading}

@@ -45,7 +45,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[328px] p-0" align="end">
-        <div className="px-3 pt-2">
+        <div className="px-4 pt-4">
           <span className="text-14 font-medium leading-none">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
         <Tabs

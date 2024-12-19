@@ -18,7 +18,7 @@ interface StatusButtonProps {
   onChange: (value: string) => void
 }
 
-const StatusButton: React.FC<StatusButtonProps> = ({ codeCommentStatus, onChange }) => (
+const StatusButton = ({ codeCommentStatus, onChange }: StatusButtonProps) => (
   <Select placeholder={codeCommentStatus} onValueChange={onChange}>
     <SelectContent>
       <SelectItem value={CodeCommentState.ACTIVE}>Active</SelectItem>
@@ -28,13 +28,13 @@ const StatusButton: React.FC<StatusButtonProps> = ({ codeCommentStatus, onChange
 )
 StatusButton.displayName = 'StatusButton'
 
-export const PullRequestStatusSelect: React.FC<CodeCommentStatusSelectProps> = ({
+export const PullRequestStatusSelect = ({
   repoId,
   pullReqMetadata,
   comment: { commentItems },
   commentStatusPullReq,
   refetchActivities
-}) => {
+}: CodeCommentStatusSelectProps) => {
   const [parentComment, setParentComment] = useState<CommentItem<TypesPullReqActivity> | undefined>(undefined)
   const [codeCommentStatus, setCodeCommentStatus] = useState<string>('Active')
 

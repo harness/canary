@@ -37,7 +37,7 @@ interface PullRequestCommentBoxProps {
 
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
 
-const PullRequestCommentBox: React.FC<PullRequestCommentBoxProps> = ({ onSaveComment, currentUser }) => {
+const PullRequestCommentBox = ({ onSaveComment, currentUser }: PullRequestCommentBoxProps) => {
   const [comment, setComment] = useState('')
 
   const handleSaveComment = () => {

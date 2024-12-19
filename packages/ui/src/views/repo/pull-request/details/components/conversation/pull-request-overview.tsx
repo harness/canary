@@ -173,7 +173,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     : null
                 return (
                   <PullRequestTimelineItem
-                    key={index} // Consider using a unique ID if available
+                    key={payload?.id}
                     header={[
                       {
                         avatar: (
@@ -266,7 +266,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     <MarkdownViewer source={commentItem.payload?.payload?.text || ''} />
                                   </div>
                                 }
-                                key={`${commentItem.id}-${commentItem.author}-${idx}`}
+                                key={`${commentItem.id}-${commentItem.author}`}
                               />
                             )
                           })}
@@ -283,7 +283,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
               }
               return (
                 <PullRequestTimelineItem
-                  key={index} // Consider using a unique ID if available
+                  key={payload?.id}
                   titleClassName="!flex max-w-full"
                   header={[
                     {
@@ -307,7 +307,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         </div>
                       ),
                       selectStatus: (
-                        <div className="flex gap-x-2" key={`${index}-${payload?.id}`}>
+                        <div className="flex gap-x-2">
                           <PullRequestStatusSelect
                             refetchActivities={refetchActivities}
                             commentStatusPullReq={commentStatusPullReq}
@@ -358,7 +358,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
                               </div>
                             }
-                            key={`${commentItem.id}-${commentItem.author}-${idx}`}
+                            key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                           />
                         )
                       })}

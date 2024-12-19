@@ -55,7 +55,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
       return (
         <PullRequestTimelineItem
           hideIconBorder
-          key={payload?.id} // Consider using a unique ID if available
+          key={payload?.id}
           header={[
             {
               avatar: (
@@ -91,7 +91,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
     case CommentType.BRANCH_UPDATE:
       return (
         <PullRequestTimelineItem
-          key={payload?.id} // Consider using a unique ID if available
+          key={payload?.id}
           header={[
             {
               avatar: (
@@ -119,7 +119,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
     case CommentType.BRANCH_DELETE:
       return (
         <PullRequestTimelineItem
-          key={payload?.id} // Consider using a unique ID if available
+          key={payload?.id}
           header={[
             {
               avatar: (
@@ -153,7 +153,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
     case CommentType.STATE_CHANGE:
       return (
         <PullRequestTimelineItem
-          key={payload?.id} // Consider using a unique ID if available
+          key={payload?.id}
           header={[
             {
               avatar: (

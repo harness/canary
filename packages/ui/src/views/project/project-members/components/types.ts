@@ -1,4 +1,4 @@
-import { MembersProps, ProjectMemberListViewProps } from '../../project-members/types' // Adjust the path to where the interface is defined.
+import { MembersProps, ProjectMemberListViewProps } from '../../project-members/types'
 
 export type ProjectMembersListProps = Pick<
   ProjectMemberListViewProps,

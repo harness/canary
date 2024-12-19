@@ -118,6 +118,14 @@ export function getBreadcrumbMatchers(pathname: string) {
     pathname
   )
 
+  const isPorfileSettingsRoute = !!matchPath(
+    {
+      path: '/settings',
+      end: false
+    },
+    pathname
+  )
+
   return {
     isProjectsRoute,
     isProjectRoute,
@@ -127,6 +135,7 @@ export function getBreadcrumbMatchers(pathname: string) {
     isPipelineEditRouteExact,
     isPipelineExecutionsRouteExact,
     isExecutionRoute,
-    repoPageMatch
+    repoPageMatch,
+    isPorfileSettingsRoute
   }
 }

@@ -38,7 +38,8 @@ export default function Breadcrumbs() {
     isPipelineEditRouteExact,
     isPipelineExecutionsRouteExact,
     isExecutionRoute,
-    repoPageMatch
+    repoPageMatch,
+    isPorfileSettingsRoute
   } = getBreadcrumbMatchers(pathname)
 
   const spacesBreadcrumbProps = useMemo((): BreadcrumbDropdownProps | undefined => {
@@ -166,6 +167,16 @@ export default function Breadcrumbs() {
                 {getBreadcrumbSegment({
                   label: `${executionId}`,
                   path: `/${space}/repos/${repoId}/pipelines/${pipelineId}/executions/${executionId}`,
+                  isLast: true
+                })}
+              </>
+            ) : null}
+
+            {isPorfileSettingsRoute ? (
+              <>
+                {getBreadcrumbSegment({
+                  label: 'Settings',
+                  path: `/settings`,
                   isLast: true
                 })}
               </>

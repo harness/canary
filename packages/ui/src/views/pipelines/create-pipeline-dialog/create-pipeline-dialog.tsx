@@ -1,9 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { zodResolver } from '@hookform/resolvers/zod'
-import { z } from 'zod'
-
 import {
   Button,
   ControlGroup,
@@ -17,7 +14,9 @@ import {
   Select,
   SelectContent,
   SelectItem
-} from '@harnessio/ui/components'
+} from '@/components'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { z } from 'zod'
 
 import { CreatePipelineDialogProps, CreatePipelineFormType } from './types'
 

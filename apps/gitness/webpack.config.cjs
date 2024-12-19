@@ -36,7 +36,7 @@ module.exports = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'gitness',
+      name: 'codev2',
       filename: 'remoteEntry.js',
       exposes: {
         './MicroFrontendApp': './src/AppMFE.tsx'

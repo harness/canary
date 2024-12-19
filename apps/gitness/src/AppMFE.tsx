@@ -45,14 +45,8 @@ function LocationChangeHandler({
   // Handle location change detected from parent route
   const navigate = useNavigate()
   useEffect(() => {
-    console.log('locationPathname', locationPathname)
     if (renderUrl) {
-      const pathToReplace = renderUrl
-      console.log('pathToReplace', pathToReplace)
-
-      const pathToNavigate = locationPathname.replace(pathToReplace, '')
-      console.log('pathToNavigate', pathToNavigate)
-
+      const pathToNavigate = locationPathname.replace(renderUrl, '')
       navigate(pathToNavigate)
     }
   }, [locationPathname])
@@ -60,8 +54,6 @@ function LocationChangeHandler({
   // Notify parent about route change
   const location = useLocation()
   useEffect(() => {
-    console.log('location.pathname -> Child', location.pathname)
-    console.log('locationPathname -> Parent', locationPathname)
     if (location.pathname !== locationPathname) {
       onRouteChange?.(`${renderUrl}${location.pathname}`)
     }

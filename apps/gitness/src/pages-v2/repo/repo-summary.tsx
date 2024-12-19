@@ -48,7 +48,7 @@ export default function RepoSummaryPage() {
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-
+  const manageTokensLink = '/settings/keys'
   const {
     branchList,
     tagList,
@@ -122,11 +122,6 @@ export default function RepoSummaryPage() {
 
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
-
-  const onManageToken = () => {
-    // TODO: update when settings for tokens page is added
-    navigate('/settings')
-  }
 
   useEffect(() => {
     if (branches) {
@@ -359,7 +354,7 @@ export default function RepoSummaryPage() {
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          toManageToken={'/settings/keys'}
+          toManageToken={manageTokensLink}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

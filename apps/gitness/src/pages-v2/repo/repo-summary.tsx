@@ -36,6 +36,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
@@ -45,6 +46,7 @@ export default function RepoSummaryPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
+  const [branchTagQuery, setBranchTagQuery] = useState('')
 
   const {
     branchList,
@@ -55,7 +57,7 @@ export default function RepoSummaryPage() {
     setDefaultBranch,
     selectedBranchTag,
     setSelectedBranchTag,
-    setSelectedBranchType
+    setSelectedRefType
   } = useRepoBranchesStore()
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
@@ -69,7 +71,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 50 }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.ASC, limit: 50, query: branchTagQuery }
   })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
@@ -122,16 +124,10 @@ export default function RepoSummaryPage() {
 
   useEffect(() => {
     if (branches) {
-      setBranchList(
-        branches.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          is_default: item?.name === repository?.default_branch
-        }))
-      )
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
     if (repository?.default_branch) {
-      setDefaultBranch(repository)
+      setDefaultBranch(repository?.default_branch)
     }
   }, [branches, repository?.default_branch])
 
@@ -142,7 +138,8 @@ export default function RepoSummaryPage() {
       sort: 'date',
       order: orderSortDate.DESC,
       limit: 50,
-      page: 1
+      page: 1,
+      query: branchTagQuery
     }
   })
 
@@ -164,14 +161,14 @@ export default function RepoSummaryPage() {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
           setGitRef(branch.name)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
           setGitRef(`${REFS_TAGS_PREFIX + tag.name}`)
         }
       }
@@ -180,14 +177,14 @@ export default function RepoSummaryPage() {
   )
 
   useEffect(() => {
-    if (selectedBranchTag) {
+    if (selectedBranchTag?.name) {
       calculateDivergence({
         body: {
           requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
         }
       })
     }
-  }, [selectedBranchTag])
+  }, [selectedBranchTag?.name])
 
   const { data: { body: readmeContent } = {} } = useGetContentQuery({
     path: 'README.md',
@@ -248,11 +245,6 @@ export default function RepoSummaryPage() {
     return SummaryItemType.File
   }
 
-  const buildFilePath = useCallback(
-    (itemPath: string | undefined) => `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${itemPath}`,
-    [spaceId, repoId, gitRef, selectedBranchTag]
-  )
-
   useEffect(() => {
     setLoading(true)
 
@@ -261,7 +253,7 @@ export default function RepoSummaryPage() {
     }
 
     pathDetails({
-      queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag.name) },
+      queryParams: { git_ref: normalizeGitRef(gitRef || selectedBranchTag?.name) },
       body: { paths: Array.from(repoEntryPathToFileTypeMap.keys()) },
       repo_ref: repoRef
     })
@@ -276,7 +268,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: buildFilePath(item?.path)
+              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }
@@ -285,18 +277,16 @@ export default function RepoSummaryPage() {
       .finally(() => {
         setLoading(false)
       })
-  }, [repoEntryPathToFileTypeMap, selectedBranchTag, repoRef, buildFilePath, gitRef])
+  }, [repoEntryPathToFileTypeMap, selectedBranchTag?.name, repoRef, gitRef])
 
   useEffect(() => {
     const defaultBranch = branchList.find(branch => branch.default)
-    if (defaultBranch) {
-      setSelectedBranchTag({
-        name: defaultBranch?.name || '',
-        sha: defaultBranch?.sha || '',
-        default: true
-      })
-    }
-  }, [branchList])
+    setSelectedBranchTag({
+      name: defaultBranch?.name || repository?.default_branch || '',
+      sha: defaultBranch?.sha || '',
+      default: true
+    })
+  }, [branchList, repository?.default_branch])
 
   const { data: filesData } = useListPathsQuery({
     repo_ref: repoRef,
@@ -356,6 +346,8 @@ export default function RepoSummaryPage() {
         setEditDialogOpen={setEditDialogOpen}
         useTranslationStore={useTranslationStore}
         currentBranchDivergence={currBranchDivergence}
+        searchQuery={branchTagQuery}
+        setSearchQuery={setBranchTagQuery}
       />
       {createdTokenData && (
         <TokenSuccessDialog

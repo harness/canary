@@ -240,9 +240,9 @@ export default {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px hsl(var(--canary-harness-grey-400) / 0.10)',
-        2: '0px 8px 8px hsl(var(--canary-harness-grey-400) / 0.10)',
-        'pagination-1': '0px 2px 4px hsl(var(--canary-harness-grey-400) / 0.10)',
+        1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
+        2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
+        'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
         'as-border': 'inset 0 0 0 1px'
       },
       borderRadius: {

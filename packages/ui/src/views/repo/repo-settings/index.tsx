@@ -29,6 +29,8 @@ interface RepoSettingsGeneralPageProps {
   useRepoRulesStore: () => IRepoStore
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
@@ -42,7 +44,9 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   useRepoRulesStore,
   useRepoBranchesStore,
   useTranslationStore,
-  selectBranchOrTag
+  selectBranchOrTag,
+  searchQuery,
+  setSearchQuery
 }) => {
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
@@ -68,6 +72,8 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           useRepoBranchesStore={useRepoBranchesStore}
           useTranslationStore={useTranslationStore}
           selectBranchOrTag={selectBranchOrTag}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
         />
         <FormSeparator />
         <div ref={rulesRef}>
@@ -76,6 +82,7 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
             apiError={apiError}
             handleRuleClick={handleRuleClick}
             openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
           />
         </div>
 
@@ -86,9 +93,14 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
           apiError={apiError}
           isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
           isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+          useTranslationStore={useTranslationStore}
         />
         <FormSeparator />
-        <RepoSettingsGeneralDelete apiError={apiError} openRepoAlertDeleteDialog={openRepoAlertDeleteDialog} />
+        <RepoSettingsGeneralDelete
+          apiError={apiError}
+          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+          useTranslationStore={useTranslationStore}
+        />
       </Fieldset>
     </SandboxLayout.Content>
   )

@@ -4,6 +4,7 @@ import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
   BranchInfoBar,
   CodeModes,
+  CommitDivergenceType,
   FileLastChangeBar,
   IBranchSelectorStore,
   LatestFileTypes,
@@ -28,6 +29,7 @@ interface RepoFilesProps {
   codeMode: CodeModes
   useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
+  currentBranchDivergence: CommitDivergenceType
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -43,7 +45,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   pathUploadFiles,
   codeMode,
   useRepoBranchesStore,
-  defaultBranchName
+  defaultBranchName,
+  currentBranchDivergence
 }) => {
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
@@ -55,6 +58,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
       return (
         <>
           <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          <Spacer size={4} />
           {children}
         </>
       )
@@ -69,11 +73,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
               <Spacer size={4} />
               <BranchInfoBar
                 defaultBranchName={defaultBranchName}
-                spaceId={spaceId}
-                repoId={repoId}
+                useRepoBranchesStore={useRepoBranchesStore}
                 currentBranchDivergence={{
-                  ahead: 10,
-                  behind: 20
+                  ahead: currentBranchDivergence.ahead || 0,
+                  behind: currentBranchDivergence.behind || 0
                 }}
               />
             </>
@@ -109,8 +112,8 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
-      <SandboxLayout.Content className="relative z-0">
+    <SandboxLayout.Main fullWidth>
+      <SandboxLayout.Content>
         {isView && (
           <PathActionBar
             codeMode={codeMode}

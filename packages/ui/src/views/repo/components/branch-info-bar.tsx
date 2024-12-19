@@ -2,11 +2,11 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, Icon, StyledLink } from '@/components'
+import { IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
-  spaceId: string
-  repoId: string
+  useRepoBranchesStore: () => IBranchSelectorStore
   currentBranchDivergence: {
     ahead: number
     behind: number
@@ -15,11 +15,11 @@ interface BranchInfoBarProps {
 
 export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
-  spaceId,
-  repoId,
+  useRepoBranchesStore,
   currentBranchDivergence
 }) => {
   const { behind, ahead } = currentBranchDivergence
+  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const hasBehind = !!behind
   const hasAhead = !!ahead
 
@@ -77,11 +77,15 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           </div>
           <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
-              <Link to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>Compare</Link>
+              <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}>
+                Compare
+              </Link>
             </Button>
 
             <Button className="w-full" asChild>
-              <Link to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>Open pull request</Link>
+              <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}>
+                Open pull request
+              </Link>
             </Button>
           </div>
         </DropdownMenuContent>

@@ -135,7 +135,7 @@ const ExecutionLogs: React.FC = () => {
 
   return (
     <>
-      <SandboxLayout.Main hasHeader fullWidth hasLeftPanel>
+      <SandboxLayout.Main fullWidth>
         <SandboxLayout.Content>
           <ExecutionDetailsHeaderActions
             isExecuting={isPipelineStillExecuting}

@@ -21,16 +21,20 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
   const useRepoBranchesStore = useCallback(
     (): IBranchSelectorStore => ({
       ...repoFilesStore.branchSelectorStore,
-      selectedBranchType: BranchSelectorTab.BRANCHES,
+      selectedRefType: BranchSelectorTab.BRANCHES,
       setSelectedBranchTag: noop,
-      setSelectedBranchType: noop,
+      setSelectedRefType: noop,
       xNextPage: 0,
       xPrevPage: 0,
       page: 1,
       setPage: noop,
       defaultBranch: '',
-      branchDivergence: [],
-      branchList: []
+      branchList: [],
+      setTagList: noop,
+      setSpaceIdAndRepoId: noop,
+      setBranchList: noop,
+      setDefaultBranch: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )
@@ -60,14 +64,14 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <RepoSidebarView
-        hasHeader
-        hasSubHeader
         selectBranchOrTag={noop}
         useRepoBranchesStore={useRepoBranchesStore}
         useTranslationStore={useTranslationsStore}
         navigateToNewFile={noop}
         navigateToFile={noop}
         filesList={repoFilesStore.filesList}
+        searchQuery=""
+        setSearchQuery={noop}
       >
         <FileExplorer.Root onValueChange={noop} value={[]}>
           {renderEntries(repoFilesStore.filesTreeData, '')}

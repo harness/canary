@@ -17,16 +17,20 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
   const useRepoBranchesStore = useCallback(
     (): IBranchSelectorStore => ({
       ...repoFilesStore.branchSelectorStore,
-      selectedBranchType: BranchSelectorTab.BRANCHES,
+      selectedRefType: BranchSelectorTab.BRANCHES,
       setSelectedBranchTag: noop,
-      setSelectedBranchType: noop,
+      setSelectedRefType: noop,
       xNextPage: 0,
       xPrevPage: 0,
       page: 1,
       setPage: noop,
       defaultBranch: '',
-      branchDivergence: [],
-      branchList: []
+      branchList: [],
+      setTagList: noop,
+      setSpaceIdAndRepoId: noop,
+      setBranchList: noop,
+      setDefaultBranch: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )
@@ -60,6 +64,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       codeMode={codeMode}
       useRepoBranchesStore={useRepoBranchesStore}
       defaultBranchName={repoFilesStore.repository.default_branch}
+      currentBranchDivergence={{ behind: 0, ahead: 0 }}
     >
       {renderCodeView}
     </RepoFiles>

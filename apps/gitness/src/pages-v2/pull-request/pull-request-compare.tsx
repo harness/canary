@@ -38,6 +38,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
+import { transformBranchList } from '../repo/transform-utils/branch-transform'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -47,7 +48,7 @@ export const CreatePullRequest = () => {
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
-
+  const [branchTagQuery, setBranchTagQuery] = useState('')
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
 
   const navigate = useNavigate()
@@ -211,7 +212,7 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10 }
+    queryParams: { page: 0, limit: 10, query: branchTagQuery }
   })
 
   useEffect(() => {
@@ -300,7 +301,7 @@ export const CreatePullRequest = () => {
       order: 'asc',
       limit: 20,
       page: 1,
-      query: ''
+      query: branchTagQuery
     }
   })
 
@@ -353,8 +354,8 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     setTagList(tagsList)
-    setBranchList(branchList)
-  }, [tagsList, branchList])
+    setBranchList(transformBranchList(branchList, repoMetadata?.default_branch))
+  }, [tagsList, branchList, repoMetadata?.default_branch])
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -411,6 +412,8 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
+        searchQuery={branchTagQuery}
+        setSearchQuery={setBranchTagQuery}
       />
     )
   }

@@ -146,7 +146,7 @@ export const RepoFiles: React.FC = () => {
 
   return (
     <>
-      <SandboxLayout.LeftSubPanel hasHeader hasSubHeader>
+      <SandboxLayout.LeftSubPanel>
         <SandboxLayout.Content>
           <Sidebar
             selectedBranch={selectedBranch}

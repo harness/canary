@@ -415,6 +415,25 @@ export interface ApprovalItem {
   items?: ApprovalItems[]
 }
 
+export enum CommentAction {
+  NEW = 'new',
+  UPDATE = 'update',
+  REPLY = 'reply',
+  DELETE = 'delete',
+  RESOLVE = 'resolve',
+  REACTIVATE = 'reactivate'
+}
+export enum ToolbarAction {
+  HEADER = 'HEADER',
+  BOLD = 'BOLD',
+  ITALIC = 'ITALIC',
+  UPLOAD = 'UPLOAD',
+  UNORDER_LIST = 'UNORDER_LIST',
+  CHECK_LIST = 'CHECK_LIST',
+  CODE_BLOCK = 'CODE_BLOCK',
+  SUGGESTION = 'SUGGESTION'
+}
+
 export interface ApprovalItems {
   items: ApprovalItem[]
 }

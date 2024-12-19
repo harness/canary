@@ -1,4 +1,7 @@
+import { Link } from 'react-router-dom'
+
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
@@ -6,7 +9,6 @@ import { TranslationStore } from './types'
 
 export interface PageProps {
   repos?: RepositoryType[]
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
   query?: string
@@ -39,7 +41,6 @@ const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: 
 
 export function RepoList({
   repos,
-  LinkComponent,
   handleResetFilters,
   hasActiveFilters,
   query,
@@ -60,7 +61,7 @@ export function RepoList({
         <div className="flex min-h-[50vh] items-center justify-center py-20">
           <NoData
             iconName="no-search-magnifying-glass"
-            title="No search results"
+            title={t('views:noData.noResults', 'No search results')}
             description={[
               t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
               t('views:noData.changeSearch', 'or search for a different keyword.')
@@ -70,7 +71,7 @@ export function RepoList({
               onClick: handleResetQuery
             }}
             secondaryButton={{
-              label: 'Clear filters',
+              label: t('views:noData.clearFilters', 'Clear filters'),
               onClick: handleResetFilters
             }}
           />
@@ -80,17 +81,16 @@ export function RepoList({
       <div className="flex min-h-[70vh] items-center justify-center py-20">
         <NoData
           iconName="no-data-folder"
-          title="No repositories yet"
+          title={t('views:noData.noRepos', 'No repositories yet')}
           description={[
-            'There are no repositories in this project yet.',
-            'Create new or import an existing repository.'
+            t('views:noData.noReposProject', 'There are no repositories in this project yet.'),
+            t('views:noData.createOrImportRepos', 'Create new or import an existing repository.')
           ]}
           primaryButton={{
-            label: 'Create repository',
-            onClick: () => {
-              /* TODO: add create handler */
-            }
+            label: t('views:repos.create-repository', 'Create repository'),
+            to: 'create'
           }}
+          secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
         />
       </div>
     )
@@ -100,27 +100,31 @@ export function RepoList({
     <>
       <StackedList.Root>
         {repos.map((repo, repo_idx) => (
-          <LinkComponent key={repo_idx} to={repo.name}>
+          <Link
+            key={repo.name}
+            to={repo.name}
+            className={cn({
+              'pointer-events-none': repo.importing
+            })}
+          >
             <StackedList.Item key={repo.name} isLast={repos.length - 1 === repo_idx}>
               <StackedList.Field
                 primary
-                description={repo.description}
+                description={repo.importing ? 'Importing Repository...' : repo.description}
                 title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
                 className="line-clamp-1 gap-1.5 text-wrap"
               />
-              <StackedList.Field
-                title={
-                  <>
-                    Updated <em>{repo.timestamp}</em>
-                  </>
-                }
-                description={<Stats stars={repo.stars} pulls={repo.pulls} />}
-                right
-                label
-                secondary
-              />
+              {!repo.importing ? (
+                <StackedList.Field
+                  title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
+                  description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                  right
+                  label
+                  secondary
+                />
+              ) : null}
             </StackedList.Item>
-          </LinkComponent>
+          </Link>
         ))}
       </StackedList.Root>
     </>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
@@ -15,46 +15,43 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
-import { normalizeGitRef } from '../../utils/git-utils'
+import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
-
+  const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const {
     branchList,
     tagList,
+    selectedRefType,
     setBranchList,
     setTagList,
     selectedBranchTag,
     setSelectedBranchTag,
-    setSelectedBranchType,
+    setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: { page, query: branchTagQuery }
   })
   const { data: { body: tags } = {} } = useListTagsQuery({
     repo_ref: repoRef,
-    queryParams: { page }
+    queryParams: { page, query: branchTagQuery }
   })
 
   useEffect(() => {
     if (branches) {
-      setBranchList(
-        branches.map(item => ({
-          name: item.name || '',
-          sha: item.sha || ''
-        }))
-      )
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
-  }, [branches])
+  }, [branches, repository?.default_branch])
 
   useEffect(() => {
     if (tags) {
@@ -74,9 +71,16 @@ export default function RepoCommitsPage() {
 
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
-    queryParams: { page, git_ref: normalizeGitRef(selectedBranchTag?.name), include_stats: true }
+    queryParams: {
+      page,
+      git_ref: normalizeGitRef(
+        selectedRefType === BranchSelectorTab.TAGS
+          ? REFS_TAGS_PREFIX + selectedBranchTag?.name
+          : selectedBranchTag?.name
+      ),
+      include_stats: true
+    }
   })
-
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
@@ -86,13 +90,13 @@ export default function RepoCommitsPage() {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          setSelectedBranchType(type)
+          setSelectedRefType(type)
         }
       }
     },
@@ -109,7 +113,6 @@ export default function RepoCommitsPage() {
   return (
     <RepoCommitsView
       commitsList={commitData?.commits}
-      isFetchingBranches={isFetchingBranches}
       isFetchingCommits={isFetchingCommits}
       page={page}
       setPage={(page: number) => setPage(page)}
@@ -118,6 +121,8 @@ export default function RepoCommitsPage() {
       selectBranchOrTag={selectBranchOrTag}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
+      searchQuery={branchTagQuery}
+      setSearchQuery={setBranchTagQuery}
     />
   )
 }

@@ -13,6 +13,7 @@ import {
   Text
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TranslationStore } from '@views/repo/repo-list/types'
 import { z } from 'zod'
 
 import { ErrorTypes } from '../types'
@@ -29,6 +30,7 @@ interface RepoSettingsSecurityFormProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
+  useTranslationStore: () => TranslationStore
 }
 
 export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> = ({
@@ -36,8 +38,10 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
   handleUpdateSecuritySettings,
   apiError,
   isUpdatingSecuritySettings,
-  isLoadingSecuritySettings
+  isLoadingSecuritySettings,
+  useTranslationStore
 }) => {
+  const { t } = useTranslationStore()
   const {
     handleSubmit,
     setValue,
@@ -70,12 +74,14 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
     isUpdatingSecuritySettings
 
-  const tooltipMessage = isDisabled ? 'Cannot change settings while loading or updating.' : ''
+  const tooltipMessage = isDisabled
+    ? t('views:repos.settingsToolTip', 'Cannot change settings while loading or updating.')
+    : ''
 
   return (
     <>
       <Text size={4} weight="medium">
-        Security
+        {t('views:repos.security', 'Security')}
       </Text>
       <Fieldset className="mb-0">
         <ControlGroup>
@@ -91,8 +97,11 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
               />
             }
             id="secret-scanning"
-            label="Secret scanning"
-            description="Block commits containing secrets like passwords, API keys and tokens."
+            label={t('views:repos.secretScanning', 'Secret scanning')}
+            description={t(
+              'views:repos.secretScanningDescription',
+              'Block commits containing secrets like passwords, API keys and tokens.'
+            )}
           />
           {errors.secretScanning && (
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>

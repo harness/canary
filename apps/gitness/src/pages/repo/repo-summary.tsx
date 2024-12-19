@@ -229,7 +229,7 @@ export default function RepoSummaryPage() {
 
   return (
     <>
-      <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader>
+      <SandboxLayout.Main>
         <SandboxLayout.Columns columnWidths="1fr 220px">
           <SandboxLayout.Column>
             <SandboxLayout.Content>

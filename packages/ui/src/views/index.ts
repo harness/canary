@@ -30,3 +30,6 @@ export * from './landing-page'
 
 // create-project-page
 export * from './create-project-page'
+
+// profile-settings
+export * from './profile-settings'

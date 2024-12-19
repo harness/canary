@@ -15,23 +15,17 @@ import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import { orderSortDate } from '../../types'
+import { orderSortDate, PageResponseHeader } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
+import { transformBranchList } from './transform-utils/branch-transform'
 
 export function RepoBranchesListPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
 
-  const {
-    page,
-    setPage,
-    setBranchList,
-    setDefaultBranch,
-    setSpaceIdAndRepoId,
-    setBranchDivergence,
-    setPaginationFromHeaders
-  } = useRepoBranchesStore()
+  const { page, setPage, setBranchList, setDefaultBranch, setSpaceIdAndRepoId, setPaginationFromHeaders } =
+    useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
@@ -55,9 +49,8 @@ export function RepoBranchesListPage() {
       {
         onSuccess: data => {
           if (data.body) {
-            setBranchDivergence(data.body)
             if (branches) {
-              setBranchList(branches, data.body, repoMetadata?.default_branch)
+              setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
             }
           }
         }
@@ -78,7 +71,10 @@ export function RepoBranchesListPage() {
   }
 
   useEffect(() => {
-    setPaginationFromHeaders(headers)
+    setPaginationFromHeaders(
+      parseInt(headers?.get(PageResponseHeader.xNextPage) || ''),
+      parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+    )
   }, [headers, setPaginationFromHeaders])
 
   useEffect(() => {
@@ -101,12 +97,12 @@ export function RepoBranchesListPage() {
 
   useEffect(() => {
     if (branches) {
-      setBranchList(branches, branchDivergence, repoMetadata?.default_branch)
+      setBranchList(transformBranchList(branches, repoMetadata?.default_branch, branchDivergence))
     }
   }, [branches, repoMetadata?.default_branch, setBranchList])
 
   useEffect(() => {
-    setDefaultBranch(repoMetadata || null)
+    setDefaultBranch(repoMetadata?.default_branch || '')
   }, [repoMetadata, setDefaultBranch])
 
   return (

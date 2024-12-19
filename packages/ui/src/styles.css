@@ -602,8 +602,8 @@
 
     /* 🚨 Need these colors for other themes */
     /* Selected tab bg element*/
-    --canary-tab-item-gradient-from: var(--canary-harness-grey-400) / 0.15;
-    --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0;
+    --canary-tab-item-gradient-from: var(--canary-harness-grey-400) / 15%;
+    --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0%;
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
     /* Navigation vertical element gradients*/
@@ -1785,7 +1785,7 @@ mark {
 }
 
 .bg-tab-gradient-radial {
-  background-image: radial-gradient(var(--canary-tab-item-gradient-stops));
+  background-image: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
 }
 
 .top-\[100px\] {

@@ -48,8 +48,8 @@ interface InputProps extends BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputIconName?: IconProps['name']
-  suffix?: React.ReactNode
-  suffixVariant?: 'default' | 'filled'
+  rightElement?: React.ReactNode
+  rightElementVariant?: 'default' | 'filled'
 }
 
 /**
@@ -77,8 +77,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       className,
       wrapperClassName,
       inputIconName,
-      suffix,
-      suffixVariant,
+      rightElement,
+      rightElementVariant,
       ...props
     },
     ref
@@ -105,17 +105,17 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     )
 
     const renderInput = () => {
-      if (suffix) {
+      if (rightElement) {
         return (
           <div
             className={cn(
-              'flex items-center text-muted-foreground',
-              suffixVariant === 'filled' ? 'bg-muted border-l' : '',
+              'flex items-center text-muted-foreground rounded border',
+              rightElementVariant === 'filled' ? 'bg-muted border-l' : '',
               className
             )}
           >
             {baseInputComp}
-            {suffix}
+            {rightElement}
           </div>
         )
       }

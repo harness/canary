@@ -92,8 +92,8 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
                 value={httpsUrl}
                 variant="extended"
                 className="text-foreground-2"
-                suffixVariant="filled"
-                suffix={<CopyButton name={httpsUrl} />}
+                rightElementVariant="default"
+                rightElement={<CopyButton name={httpsUrl} />}
               />
               <div className="flex items-center mt-4">
                 <span className="text-foreground-4">
@@ -113,8 +113,8 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
               value={sshUrl}
               className="text-tertiary-background"
               variant="extended"
-              suffixVariant="filled"
-              suffix={<CopyButton name={sshUrl} />}
+              rightElementVariant="default"
+              rightElement={<CopyButton name={sshUrl} />}
             />
           )}
         </div>

@@ -62,8 +62,8 @@ export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
             value={tokenData?.identifier}
             readOnly
             variant="extended"
-            suffixVariant="filled"
-            suffix={<CopyButton name={tokenData?.identifier} />}
+            rightElementVariant="default"
+            rightElement={<CopyButton name={tokenData?.identifier} />}
           />
 
           <Input id="lifetime" label={t('views:repos.expiration')} value={tokenData?.lifetime} readOnly />
@@ -75,8 +75,8 @@ export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
             variant="extended"
             value={tokenData?.token}
             readOnly
-            suffixVariant="filled"
-            suffix={<CopyButton name={tokenData?.token} />}
+            rightElementVariant="default"
+            rightElement={<CopyButton name={tokenData?.token} />}
             autoFocus
             className="truncate"
           />

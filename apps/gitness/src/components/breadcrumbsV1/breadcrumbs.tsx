@@ -12,7 +12,7 @@ function Breadcrumbs() {
         Home
       </Link>
       {matches.map((match, index) => {
-        // @ts-expect-error
+        /** @ts-expect-error should be of type "CustomHandle". @TODO fix this properly */
         const { breadcrumb } = match.handle || {}
         const isLast = index === matches.length - 1
 

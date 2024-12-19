@@ -88,7 +88,6 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
-        <Spacer size={10} />
         <Text size={5} weight={'medium'}>
           {t('views:repos.branches', 'Branches')}
         </Text>

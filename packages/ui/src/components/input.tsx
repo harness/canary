@@ -51,6 +51,8 @@ interface InputProps extends BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputIconName?: IconProps['name']
+  rightElement?: React.ReactNode
+  rightElementVariant?: 'default' | 'filled'
 }
 
 /**
@@ -67,7 +69,21 @@ interface InputProps extends BaseInputProps {
  */
 const Input = forwardRef<HTMLInputElement, InputProps>(
   (
-    { label, caption, error, id, theme, disabled, optional, className, wrapperClassName, inputIconName, ...props },
+    {
+      label,
+      caption,
+      error,
+      id,
+      theme,
+      disabled,
+      optional,
+      className,
+      wrapperClassName,
+      inputIconName,
+      rightElement,
+      rightElementVariant,
+      ...props
+    },
     ref
   ) => {
     const isControlGroup = !!error || !!caption || !!label || !!wrapperClassName
@@ -90,6 +106,33 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     )
+
+    const renderInput = () => {
+      if (rightElement) {
+        return (
+          <div
+            className={cn(
+              'flex items-center text-muted-foreground rounded border',
+              rightElementVariant === 'filled' ? 'bg-muted border-l' : '',
+              className
+            )}
+          >
+            {baseInputComp}
+            {rightElement}
+          </div>
+        )
+      }
+
+      return inputIconName ? (
+        <span className="relative">
+          <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
+          {baseInputComp}
+        </span>
+      ) : (
+        baseInputComp
+      )
+    }
+
     // disabled - dark
     return (
       <InputWrapper {...inputWrapperProps}>
@@ -98,14 +141,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             {label}
           </Label>
         )}
-        {inputIconName ? (
-          <span className="relative">
-            <Icon className="absolute left-3 top-1/2 -translate-y-1/2 text-icons-9" name={inputIconName} size={14} />
-            {baseInputComp}
-          </span>
-        ) : (
-          baseInputComp
-        )}
+        {renderInput()}
         {error && (
           <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
             {error}

@@ -5,7 +5,6 @@ import { Link, useNavigate } from 'react-router-dom'
 import {
   Button,
   ButtonGroup,
-  Icon,
   ListActions,
   MarkdownViewer,
   NoData,
@@ -26,6 +25,7 @@ import {
 import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
+import { CloneRepoDialog } from './components/clone-repo-dialog'
 // import { RecentPushInfoBar } from './components/recent-push-info-bar'
 import SummaryPanel from './components/summary-panel'
 
@@ -93,7 +93,8 @@ export function RepoSummaryView({
   useTranslationStore,
   currentBranchDivergence,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  handleCreateToken
 }: RepoSummaryViewProps) {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
@@ -194,18 +195,12 @@ export function RepoSummaryView({
                       {t('views:repos.addFile', 'Add File')}
                     </Link>
                   </Button>
-                  <Button>
-                    <Icon name="clone" />
-                    &nbsp; {t('views:repos.clone', 'Clone')}
-                  </Button>
-                  {/*
-                    TODO: require moving and preparing a component from views
-                    <CloneRepoDialog
-                      sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
-                      httpsUrl={repository?.git_url ?? 'could not fetch url'}
-                      handleCreateToken={handleCreateToken}
-                    />
-                   */}
+                  <CloneRepoDialog
+                    sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+                    httpsUrl={repository?.git_url ?? 'could not fetch url'}
+                    handleCreateToken={handleCreateToken}
+                    useTranslationStore={useTranslationStore}
+                  />
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>

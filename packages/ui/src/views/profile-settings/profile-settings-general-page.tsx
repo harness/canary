@@ -20,7 +20,7 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { IProfileSettingsStore, SandboxLayout } from '@/views'
+import { IProfileSettingsStore, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { z } from 'zod'
@@ -59,6 +59,7 @@ interface SettingsAccountGeneralPageProps {
   onUpdateUser: (data: Omit<ProfileFields, 'username'>) => void
   onUpdatePassword: (data: PasswordFields) => void
   useProfileSettingsStore: () => IProfileSettingsStore
+  useTranslationStore: () => TranslationStore
 }
 
 const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
@@ -70,10 +71,11 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
   passwordUpdateSuccess,
   error,
   onUpdateUser,
-  onUpdatePassword
+  onUpdatePassword,
+  useTranslationStore
 }) => {
   // Profile form handling
-
+  const { t } = useTranslationStore()
   const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
@@ -167,13 +169,16 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
       <SandboxLayout.Content maxWidth="2xl">
         <Spacer size={10} />
         <Text size={5} weight={'medium'} className="flex justify-center">
-          General
+          {t('views:profileSettings.general', 'General')}
         </Text>
         <Spacer size={6} />
         <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
           <Fieldset>
             {/* PERSONAL INFORMATION */}
-            <Legend className="flex justify-center" title="Personal information" />
+            <Legend
+              className="flex justify-center"
+              title={t('views:profileSettings.personalInfo', 'Personal information')}
+            />
             <ControlGroup className="flex w-auto flex-row items-center justify-center gap-x-6">
               <Avatar size="80" className="size-20 rounded-full bg-primary/[0.02] shadow-md">
                 <AvatarImage src="/images/anon.jpg" />
@@ -187,7 +192,12 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
 
             {/* NAME */}
             <ControlGroup>
-              <Input id="name" {...registerProfile('name')} placeholder="Enter your name" label="Name" />
+              <Input
+                id="name"
+                {...registerProfile('name')}
+                placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
+                label={t('views:profileSettings.name', 'Name')}
+              />
               {profileErrors.name && (
                 <Message theme={MessageTheme.ERROR}>{profileErrors.name.message?.toString()}</Message>
               )}
@@ -198,9 +208,9 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
               <Input
                 id="username"
                 {...registerProfile('username')}
-                placeholder="Enter your username"
+                placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
                 disabled
-                label="Username"
+                label={t('views:profileSettings.username', 'Username')}
               />
               {profileErrors.username && (
                 <Message theme={MessageTheme.ERROR}>{profileErrors.username.message?.toString()}</Message>
@@ -209,7 +219,12 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
 
             {/* EMAIL */}
             <ControlGroup>
-              <Input id="email" {...registerProfile('email')} placeholder="name@domain.com" label="Account email" />
+              <Input
+                id="email"
+                {...registerProfile('email')}
+                placeholder="name@domain.com"
+                label={t('views:profileSettings.accountEmail', 'Account email')}
+              />
               {profileErrors.email && (
                 <Message theme={MessageTheme.ERROR}>{profileErrors.email.message?.toString()}</Message>
               )}
@@ -233,11 +248,13 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                     type="submit"
                     disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}
                   >
-                    {isUpdatingUser ? 'Updating...' : 'Update profile'}
+                    {isUpdatingUser
+                      ? t('views:profileSettings.upatingProfileButton', 'Updating...')
+                      : t('views:profileSettings.updateProfileButton', 'Update profile')}
                   </Button>
                 ) : (
                   <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                    Updated&nbsp;&nbsp;
+                    {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
                     <Icon name="tick" size={14} />
                   </Button>
                 )}
@@ -254,9 +271,11 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
         <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
           <Fieldset>
             <Legend
-              title="Password settings"
-              description=" Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase
-              letters."
+              title={t('views:profileSettings.passwordSettingsTitle', 'Password settings')}
+              description={t(
+                'views:profileSettings.passwordSettingsDesc',
+                'Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase letters.'
+              )}
             />
 
             {/* NEW PASSWORD */}
@@ -265,8 +284,8 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                 id="newPassword"
                 type="password"
                 {...registerPassword('newPassword')}
-                placeholder="Enter a new password"
-                label="New password"
+                placeholder={t('views:profileSettings.enterPasswordPlaceholder', 'Enter a new password')}
+                label={t('views:profileSettings.newPassword', 'New password')}
               />
               {passwordErrors.newPassword && (
                 <Message theme={MessageTheme.ERROR}>{passwordErrors.newPassword.message?.toString()}</Message>
@@ -279,8 +298,8 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
                 id="confirmPassword"
                 type="password"
                 {...registerPassword('confirmPassword')}
-                placeholder="Confirm your new password"
-                label="Confirm password"
+                placeholder={t('views:profileSettings.confirmPasswordPlaceholder', 'Confirm your new password')}
+                label={t('views:profileSettings.confirmPassword', 'Confirm password')}
               />
               {passwordErrors.confirmPassword && (
                 <Message theme={MessageTheme.ERROR}>{passwordErrors.confirmPassword.message?.toString()}</Message>
@@ -301,11 +320,13 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
               <ButtonGroup className="flex justify-between">
                 {!passwordSubmitted ? (
                   <Button size="sm" type="submit" disabled={!isPasswordValid || isUpdatingPassword}>
-                    {isUpdatingPassword ? 'Updating...' : 'Update password'}
+                    {isUpdatingPassword
+                      ? t('views:profileSettings.upadtingPasswordButton', 'Updating...')
+                      : t('views:profileSettings.updatePasswordButton', 'Update password')}
                   </Button>
                 ) : (
                   <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                    Updated&nbsp;&nbsp;
+                    {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
                     <Icon name="tick" size={14} />
                   </Button>
                 )}

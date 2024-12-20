@@ -46,7 +46,7 @@ const buttonVariants = cva(
         warning: 'border-borders-danger/30 bg-background-danger text-warning',
         success: 'border-borders-success/30 bg-background-success text-success',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
-        primary: 'border-primary-foreground/20 bg-primary text-primary-foreground'
+        primary: 'border-primary-foreground/20 bg-background-5 text-foreground-6'
       },
       padding: {
         default: '',

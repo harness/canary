@@ -130,7 +130,7 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
         {...props}
       >
         {context.variant === 'navigation' && (
-          <span className="bg-tab-gradient-radial absolute -inset-x-[30px] -inset-y-5 hidden group-data-[state=active]:block" />
+          <span className="bg-tab-gradient-radial absolute -inset-x-[20px] -inset-y-5 hidden group-data-[state=active]:block" />
         )}
         {children}
       </TabsPrimitive.Trigger>

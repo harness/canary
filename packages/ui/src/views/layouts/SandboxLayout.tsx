@@ -19,7 +19,7 @@ function Root({ children }: { children: ReactNode }) {
 function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="sticky top-0 h-screen">
-      <nav className={cn('h-full w-[220px] border-borders-5 border-r', className)} aria-label="Left Navigation Panel">
+      <nav className={cn('h-full w-[220px] border-borders-5', className)} aria-label="Left Navigation Panel">
         {children}
       </nav>
     </div>

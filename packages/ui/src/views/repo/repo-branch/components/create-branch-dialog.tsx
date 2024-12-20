@@ -9,6 +9,7 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   Fieldset,
@@ -16,8 +17,7 @@ import {
   Input,
   Select,
   SelectContent,
-  SelectItem,
-  Spacer
+  SelectItem
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -81,8 +81,7 @@ export function CreateBranchDialog({
           <DialogTitle>{t('views:repos.createBranch', 'Create Branch')}</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          <Spacer size={6} />
-          <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
               <Input
                 id="name"
@@ -134,12 +133,15 @@ export function CreateBranchDialog({
                 </Alert.Title>
               </Alert.Container>
             ) : null}
-            <ButtonGroup className="flex justify-end">
-              <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingBranch}>
-                {t('views:repos.cancel', 'Cancel')}
-              </Button>
-              <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>
-            </ButtonGroup>
+
+            <DialogFooter className="-mx-5 -mb-5 mt-5">
+              <ButtonGroup className="flex justify-end">
+                <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingBranch}>
+                  {t('views:repos.cancel', 'Cancel')}
+                </Button>
+                <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>
+              </ButtonGroup>
+            </DialogFooter>
           </FormWrapper>
         </DialogDescription>
       </DialogContent>

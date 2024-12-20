@@ -1,31 +1,42 @@
-import { useNavigate } from 'react-router-dom'
+import { TypesSpace } from '@harnessio/code-service-client'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  Icon,
+  Text
+} from '@harnessio/ui/components'
 
-const projects = [
-  { id: 'devops', name: 'DevOps' },
-  { id: 'ci', name: 'CI' },
-  { id: 'cd', name: 'CD' }
-]
+interface ProjectSelectorProps {
+  projects: TypesSpace[]
+  onSelectProject: (projectId: string) => void
+  preselectedProject?: string
+}
 
-function ProjectSelector() {
-  const navigate = useNavigate()
-
-  const handleSelectProject = (projectId: string) => {
-    navigate(`/projects/${projectId}/repos`)
-  }
-
+function ProjectSelector({ preselectedProject, onSelectProject, projects }: ProjectSelectorProps): JSX.Element {
   return (
-    <div>
-      <h1>Select</h1>
-      <ul>
-        {projects.map(project => (
-          <li key={project.id}>
-            <button onClick={() => handleSelectProject(project.id)} className="text-blue-500 hover:underline">
-              {project.name}
-            </button>
-          </li>
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center gap-x-1.5">
+        {preselectedProject ?? 'Project'}
+        <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-[300px]">
+        {projects.map(({ identifier }) => (
+          <DropdownMenuItem
+            className="flex flex-col"
+            key={identifier}
+            onClick={() => {
+              if (identifier) {
+                onSelectProject(identifier)
+              }
+            }}
+          >
+            <Text className="inline-block w-full text-left">{identifier}</Text>
+          </DropdownMenuItem>
         ))}
-      </ul>
-    </div>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
 

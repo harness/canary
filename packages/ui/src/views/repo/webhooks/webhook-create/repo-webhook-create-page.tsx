@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Spacer, Text } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, WebhookStore } from '@/views'
 
 import { branchEvents, prEvents, tagEvents } from './components/create-webhook-form-data'
 import {
@@ -22,7 +22,8 @@ interface RepoWebhooksCreatePageProps {
   onFormCancel: () => void
   apiError?: string | null
   isLoading: boolean
-  preSetWebHookData: CreateWebhookFormFields | null
+  // preSetWebHookData: CreateWebhookFormFields | null
+  useWebhookStore: () => WebhookStore
 }
 
 export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
@@ -30,7 +31,8 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   apiError,
   isLoading,
   onFormCancel,
-  preSetWebHookData
+  // preSetWebHookData,
+  useWebhookStore
 }) => {
   const {
     register,
@@ -53,17 +55,21 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
     }
   })
 
+  const { preSetWebhookData } = useWebhookStore()
+
   useEffect(() => {
-    if (preSetWebHookData) {
-      setValue('identifier', preSetWebHookData.identifier)
-      setValue('description', preSetWebHookData.description)
-      setValue('url', preSetWebHookData.url)
-      setValue('enabled', preSetWebHookData.enabled)
-      setValue('insecure', preSetWebHookData.insecure)
-      setValue('trigger', preSetWebHookData.trigger)
-      setValue('triggers', preSetWebHookData.triggers)
+    if (preSetWebhookData) {
+      setValue('identifier', preSetWebhookData.identifier)
+      setValue('description', preSetWebhookData.description)
+      setValue('url', preSetWebhookData.url)
+      setValue('enabled', preSetWebhookData.enabled)
+      setValue('insecure', preSetWebhookData.insecure)
+      setValue('trigger', preSetWebhookData.trigger)
+      setValue('triggers', preSetWebhookData.triggers)
+    } else {
+      reset()
     }
-  }, [preSetWebHookData])
+  }, [preSetWebhookData])
 
   const eventSettingsComponents = [
     { fieldName: 'branchEvents', events: branchEvents },
@@ -118,10 +124,10 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                     <>
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                         {isLoading
-                          ? preSetWebHookData
+                          ? preSetWebhookData
                             ? 'Updating webhook...'
                             : 'Creating webhook...'
-                          : preSetWebHookData
+                          : preSetWebhookData
                             ? 'Update webhook'
                             : 'Create webhook'}
                       </Button>

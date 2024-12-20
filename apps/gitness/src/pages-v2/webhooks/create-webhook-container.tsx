@@ -24,6 +24,12 @@ export const CreateWebhookContainer = () => {
 
   const { setPreSetWebhookData } = useWebhookStore()
 
+  useEffect(() => {
+    if (!webhookId) {
+      setPreSetWebhookData(null)
+    }
+  }, [webhookId])
+
   // const [preSetWebhookData, setPreSetWebhookData] = useState<CreateWebhookFormFields | null>(null)
 
   const {
@@ -125,6 +131,7 @@ export const CreateWebhookContainer = () => {
         onFormCancel={onCancel}
         apiError={apiError}
         isLoading={creatingWebHook || updatingWebHook}
+        useWebhookStore={useWebhookStore}
         // preSetWebHookData={preSetWebhookData}
       />
     </>

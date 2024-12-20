@@ -1,5 +1,4 @@
 import { ChangeEvent, FC, useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { debounce } from 'lodash-es'
@@ -70,8 +69,8 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
               />
             </ListActions.Left>
             <ListActions.Right>
-              <Button variant="default" asChild>
-                <Link to={`create`}>Create pipeline</Link>
+              <Button variant="default" onClick={handleCreatePipeline}>
+                Create pipeline
               </Button>
             </ListActions.Right>
           </ListActions.Root>

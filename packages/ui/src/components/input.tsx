@@ -8,29 +8,32 @@ export interface BaseInputProps
   extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
     VariantProps<typeof inputVariants> {}
 
-const inputVariants = cva('bg-transparent px-2.5 py-1 text-foreground-1 disabled:cursor-not-allowed', {
-  variants: {
-    variant: {
-      default:
-        'flex w-full rounded border text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
-      extended: 'grow border-none focus-visible:outline-none'
+const inputVariants = cva(
+  'bg-transparent px-2.5 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:text-foreground-4',
+  {
+    variants: {
+      variant: {
+        default:
+          'flex w-full rounded border text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
+        extended: 'grow border-none focus-visible:outline-none'
+      },
+      size: {
+        sm: 'h-8',
+        md: 'h-9'
+      },
+      theme: {
+        default:
+          'border-borders-2 focus-visible:border-borders-3 disabled:border-borders-1 disabled:placeholder:text-foreground-9',
+        danger: 'border-borders-danger'
+      }
     },
-    size: {
-      sm: 'h-8',
-      md: 'h-9'
-    },
-    theme: {
-      default:
-        'border-borders-2 focus-visible:border-borders-3 disabled:border-borders-1 disabled:placeholder:text-foreground-9',
-      danger: 'border-borders-danger'
+    defaultVariants: {
+      variant: 'default',
+      theme: 'default',
+      size: 'sm'
     }
-  },
-  defaultVariants: {
-    variant: 'default',
-    theme: 'default',
-    size: 'sm'
   }
-})
+)
 
 const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
   ({ className, type, variant, size, theme, ...props }, ref) => {
@@ -87,11 +90,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {...props}
       />
     )
-
+    // disabled - dark
     return (
       <InputWrapper {...inputWrapperProps}>
         {label && (
-          <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
+          <Label className="mb-2.5" color="secondary" optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}

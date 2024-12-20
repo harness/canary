@@ -1,18 +1,17 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-import { noop } from 'lodash-es'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { ListPipelinesOkResponse, useListPipelinesQuery } from '@harnessio/code-service-client'
-import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
+import { useListPipelinesQuery } from '@harnessio/code-service-client'
+import { PipelineListPage } from '@harnessio/ui/views'
 
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PageResponseHeader } from '../../types'
-import { getExecutionStatus, getMeterState } from '../../utils/execution-utils'
+import CreatePipelineDialog from '../pipeline/create-pipeline-dialog'
 import { usePipelineListStore } from './stores/repo-pipeline-list-store'
+import { apiPipelines2Pipelines } from './transform-utils/pipeline-list-transform'
 
 export default function RepoPipelineListPage() {
   const repoRef = useGetRepoRef()
@@ -21,6 +20,12 @@ export default function RepoPipelineListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const { setPipelinesData, page, setPage } = usePipelineListStore()
+
+  const [isCreatePipelineDialogOpen, setCreatePipelineDialogOpen] = useState(false)
+
+  const closeSearchDialog = () => {
+    setCreatePipelineDialogOpen(false)
+  }
 
   const {
     data: { body: pipelinesBody, headers } = {},
@@ -51,9 +56,6 @@ export default function RepoPipelineListPage() {
 
   return (
     <>
-      <div className="breadcrumbs">
-        <Breadcrumbs />
-      </div>
       <PipelineListPage
         usePipelineListStore={usePipelineListStore}
         useTranslationStore={useTranslationStore}
@@ -62,26 +64,12 @@ export default function RepoPipelineListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
-        handleCreatePipeline={noop}
+        handleCreatePipeline={() => {
+          setCreatePipelineDialogOpen(true)
+        }}
         LinkComponent={LinkComponent}
       />
+      <CreatePipelineDialog open={isCreatePipelineDialogOpen} onClose={closeSearchDialog} />
     </>
   )
-}
-
-// NOTE: consider move this function to another file/location
-function apiPipelines2Pipelines(data: ListPipelinesOkResponse): IPipeline[] {
-  return data.map(pipelineBody => ({
-    id: pipelineBody.identifier ?? '',
-    description: pipelineBody?.execution?.message,
-    meter:
-      pipelineBody.last_executions?.map((exec, idx) => ({
-        id: exec.number?.toString() ?? idx.toString(),
-        state: getMeterState(pipelineBody?.execution?.status)
-      })) ?? [],
-    name: pipelineBody.identifier,
-    sha: pipelineBody?.execution?.after,
-    timestamp: pipelineBody?.created,
-    status: getExecutionStatus(pipelineBody?.execution?.status)
-  }))
 }

@@ -1,4 +1,9 @@
 {
+  "deleteDialog": {
+    "title": "Êtes-vous sûr ?",
+    "description": "Cela supprimera définitivement votre {type} et effacera toutes les données. Cette action est irréversible.",
+    "cancel": "Annuler"
+  },
   "filter": {
     "add-filter": "Ajouter un filtre",
     "reset": "Réinitialiser",
@@ -108,5 +113,13 @@
     "table": "Table",
     "list": "List"
   },
-  "No search results": ""
+  "No search results": "",
+  "projectSettings": {
+    "members": "membres",
+    "newMember": "Nouveau membre"
+  },
+  "noData": {
+    "members": "Aucun membre pour l'instant.",
+    "inviteMembers": "Ajoutez les premiers membres de votre équipe en les invitant à rejoindre ce projet."
+  }
 }

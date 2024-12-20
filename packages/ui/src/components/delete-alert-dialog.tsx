@@ -11,6 +11,7 @@ import {
   Spacer,
   Text
 } from '@/components'
+import { TranslationStore } from '@views/repo'
 
 interface DeleteAlertDialogProps {
   open: boolean
@@ -20,6 +21,7 @@ interface DeleteAlertDialogProps {
   type?: string
   isLoading?: boolean
   error?: { type: string; message: string } | null
+  useTranslationStore: () => TranslationStore
 }
 export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
   open,
@@ -28,15 +30,20 @@ export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
   deleteFn,
   type,
   isLoading,
+  useTranslationStore,
   error
 }) => {
+  const { t } = useTranslationStore()
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialogTitle>
           <AlertDialogDescription>
-            This will permanently delete your {type} and remove all data. This action cannot be undone.
+            {t(
+              'component:deleteDialog.description',
+              'This will permanently delete your {type} and remove all data. This action cannot be undone.'
+            )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <>
@@ -51,7 +58,7 @@ export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
         </>
         <AlertDialogFooter>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
-            Cancel
+            {t('component:deleteDialog.cancel', 'Cancel')}
           </Button>
           <Button
             size="default"

@@ -19,7 +19,7 @@ function Root({ children }: { children: ReactNode }) {
 function LeftPanel({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className="sticky top-0 h-screen">
-      <nav className={cn('h-full w-[220px] border-borders-5 border-r', className)} aria-label="Left Navigation Panel">
+      <nav className={cn('h-full w-[220px] border-borders-5', className)} aria-label="Left Navigation Panel">
         {children}
       </nav>
     </div>
@@ -59,7 +59,7 @@ function Main({ children, fullWidth, className }: { children: ReactNode; fullWid
   }
 
   return (
-    <section className="h-full w-full bg-background-1 overflow-auto" aria-label="Main Content">
+    <section className="size-full overflow-auto bg-background-1" aria-label="Main Content">
       <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>
     </section>
   )
@@ -72,7 +72,7 @@ interface ContentProps {
   paddingClassName?: string
 }
 
-function Content({ children, maxWidth, className, paddingClassName = 'px-5 py-5' }: ContentProps) {
+function Content({ children, maxWidth, className, paddingClassName = 'px-5 pt-5 pb-11' }: ContentProps) {
   const widthClass = maxWidth ? `max-w-${maxWidth} mx-auto` : ''
 
   return <div className={cn(paddingClassName, widthClass, className)}>{children}</div>

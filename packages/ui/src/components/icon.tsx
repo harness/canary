@@ -91,6 +91,16 @@ import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
 import Lightning from '../icons/lightning.svg'
 import List from '../icons/list.svg'
+import NoDataBranches from '../icons/lists-data-icons/no-data-branches.svg'
+import NoDataCog from '../icons/lists-data-icons/no-data-cog.svg'
+import NoDataCommits from '../icons/lists-data-icons/no-data-commits.svg'
+import NoDataError from '../icons/lists-data-icons/no-data-error.svg'
+import NoDataFolder from '../icons/lists-data-icons/no-data-folder.svg'
+import NoDataMembers from '../icons/lists-data-icons/no-data-members.svg'
+import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
+import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
+import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
+import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
 import LogOut from '../icons/log-out-icon.svg'
 import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
@@ -99,15 +109,6 @@ import Merged from '../icons/merged.svg'
 import Minus from '../icons/minus-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
-import NoDataBranches from '../icons/no-data-branches.svg'
-import NoDataCog from '../icons/no-data-cog.svg'
-import NoDataError from '../icons/no-data-error.svg'
-import NoDataFolder from '../icons/no-data-folder.svg'
-import NoDataMembers from '../icons/no-data-members.svg'
-import NoDataMerge from '../icons/no-data-merge.svg'
-import NoDataWebhooks from '../icons/no-data-webhooks.svg'
-import NoRepository from '../icons/no-repository.svg'
-import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
 import NodeLogo from '../icons/node-logo.svg'
 import Notification from '../icons/notification-icon.svg'
 import OpenPR from '../icons/open-pr.svg'
@@ -343,7 +344,8 @@ const IconNameMap = {
   code: Code,
   list: List,
   checklist: Checklist,
-  italicize: Italicize
+  italicize: Italicize,
+  'no-data-commits': NoDataCommits
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

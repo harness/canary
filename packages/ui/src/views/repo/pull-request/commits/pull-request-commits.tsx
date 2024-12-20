@@ -2,7 +2,6 @@ import { FC } from 'react'
 
 import { NoData } from '@components/no-data'
 import { PaginationComponent } from '@components/pagination-component'
-import { Spacer } from '@components/spacer'
 import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@views/index'
 
 import { IPullRequestCommitsStore } from './pull-request-commits.types'
@@ -42,7 +41,6 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         />
       )}
 
-      <Spacer size={8} />
       <PaginationComponent
         nextPage={xNextPage}
         previousPage={xPrevPage}

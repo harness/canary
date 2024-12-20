@@ -10,20 +10,8 @@ import {
   Topbar
 } from '@harnessio/ui/components'
 
-function findLastNoLinkIndex(matches: any): number {
-  for (let i = matches.length - 1; i >= 0; i--) {
-    if (matches[i].handle?.noLink === true) {
-      return i
-    }
-  }
-  return -1
-}
-
 function BreadcrumbsNew() {
   const matches = useMatches()
-  const lastNoLinkIndex = findLastNoLinkIndex(matches)
-  const idealBreadcrumbsLength = matches.filter(match => !!(match.handle as any)?.breadcrumb).length
-  const noLink = lastNoLinkIndex === idealBreadcrumbsLength
 
   return (
     <Topbar.Root>
@@ -44,7 +32,7 @@ function BreadcrumbsNew() {
                     <BreadcrumbSeparator className="mr-1"></BreadcrumbSeparator>
                     <BreadcrumbItem>
                       <BreadcrumbItem>
-                        {isLast || noLink ? (
+                        {isLast ? (
                           <BreadcrumbPage>{breadcrumb(match.params)}</BreadcrumbPage>
                         ) : (
                           <BreadcrumbLink asChild>

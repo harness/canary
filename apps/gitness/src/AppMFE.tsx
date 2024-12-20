@@ -33,37 +33,43 @@ import { RepoImportContainer } from './pages/repo/repo-import-container'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
-function LocationChangeHandler({
+function RootRouteRenderer({
   renderUrl,
-  locationPathname,
-  onRouteChange
+  parentLocationPath,
+  onRouteChange,
+  scope
 }: {
   renderUrl: string
-  locationPathname: string
+  parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
 }) {
   // Handle location change detected from parent route
   const navigate = useNavigate()
   useEffect(() => {
-    console.log('locationPathname', locationPathname)
+    console.log('parentLocationPath', parentLocationPath)
     console.log('renderUrl', renderUrl)
 
     if (renderUrl) {
-      const pathToNavigate = locationPathname.replace(renderUrl, '')
+      const pathToNavigate = parentLocationPath.replace(renderUrl, '')
       console.log('pathToNavigate', pathToNavigate)
       navigate(pathToNavigate, { replace: true })
     }
-  }, [locationPathname])
+  }, [parentLocationPath])
 
   // Notify parent about route change
   const location = useLocation()
   useEffect(() => {
-    if (location.pathname !== locationPathname) {
+    if (location.pathname !== parentLocationPath) {
       onRouteChange?.(`${renderUrl}${location.pathname}`)
     }
   }, [location])
 
-  return <></>
+  return (
+    <>
+      <BreadcrumbsNew selectedProject={scope.projectIdentifier || '...'} />
+      <Outlet />
+    </>
+  )
 }
 
 export default function AppMFE({
@@ -71,7 +77,7 @@ export default function AppMFE({
   renderUrl,
   on401,
   useMFEThemeContext,
-  locationPathname,
+  parentLocationPath,
   onRouteChange
 }: ChildComponentProps) {
   new CodeServiceAPIClient({
@@ -102,15 +108,12 @@ export default function AppMFE({
       {
         path: '/',
         element: (
-          <>
-            <LocationChangeHandler
-              renderUrl={renderUrl}
-              onRouteChange={onRouteChange}
-              locationPathname={locationPathname}
-            />
-            <BreadcrumbsNew selectedProject={scope.projectIdentifier || '...'} />
-            <Outlet />
-          </>
+          <RootRouteRenderer
+            renderUrl={renderUrl}
+            onRouteChange={onRouteChange}
+            parentLocationPath={parentLocationPath}
+            scope={scope}
+          />
         ),
         children: [
           {

@@ -7,6 +7,7 @@ import { DiffBlock } from 'diff2html/lib/types'
 import { debounce } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
+import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 import constants from './constants'
 
 const TextArea = ({ onChange }: { onChange: (v: string) => void }) => {
@@ -64,6 +65,8 @@ const PullRequestDiffViewer = ({
 }: PullRequestDiffviewerProps) => {
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
   const valRef = useRef('')
+  const [, setLoading] = useState(false)
+  const highlighter = useDiffHighlighter({ setLoading })
   const reactWrapRef = useRef<HTMLDivElement>(null)
   const reactRef = useRef<HTMLDivElement | null>(null)
   const highlightRef = useRef(highlight)
@@ -266,7 +269,6 @@ const PullRequestDiffViewer = ({
                             return res
                           })
 
-                          console.log(sideKey)
                           // handleAction?.('new', str, sideKey, lineNumber, fileName)
                         }
                       }}
@@ -318,6 +320,7 @@ const PullRequestDiffViewer = ({
           diffViewFontSize={fontsize}
           diffViewHighlight={highlight}
           diffViewMode={mode}
+          registerHighlighter={highlighter}
           diffViewWrap={wrap}
           diffViewAddWidget={addWidget}
         />

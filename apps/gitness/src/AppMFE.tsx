@@ -108,7 +108,7 @@ export default function AppMFE({
               onRouteChange={onRouteChange}
               locationPathname={locationPathname}
             />
-            <BreadcrumbsNew />
+            <BreadcrumbsNew selectedProject={scope.projectIdentifier || '...'} />
             <Outlet />
           </>
         ),

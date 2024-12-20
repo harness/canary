@@ -48,6 +48,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     register,
     handleSubmit,
     setValue,
+    reset,
     watch,
     clearErrors,
     trigger,
@@ -89,7 +90,13 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={() => {
+        onClose()
+        reset()
+      }}
+    >
       <DialogContent className="max-w-[500px] border-border bg-primary-background">
         <DialogHeader>
           <DialogTitle>Create Pipeline</DialogTitle>
@@ -132,7 +139,15 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               {errorMessage}
             </Message>
             <div className="flex justify-end gap-3">
-              <Button type="button" onClick={onCancel} className="text-primary" variant="outline">
+              <Button
+                type="button"
+                onClick={() => {
+                  onCancel()
+                  reset()
+                }}
+                className="text-primary"
+                variant="outline"
+              >
                 Cancel
               </Button>
               <Button type="submit" disabled={!isValid || isLoadingBranchNames}>

@@ -71,7 +71,13 @@ export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ regis
 
 export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
   <ControlGroup>
-    <Input id="payloadUrl" {...register!('url')} placeholder="https://example.com/harness" label="Payload URL" />
+    <Input
+      id="payloadUrl"
+      {...register!('url')}
+      placeholder="https://example.com/harness"
+      label="Payload URL"
+      error={errors?.url?.message?.toString()}
+    />
   </ControlGroup>
 )
 

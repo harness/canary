@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 const formSchema = z.object({
@@ -16,9 +17,11 @@ export type TokenSuccessFormType = z.infer<typeof formSchema>
 interface TokenCreateFormProps {
   defaultValues: TokenSuccessFormType | null
   onClose: () => void
+  useTranslationStore: () => TranslationStore
 }
 
-export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProps) {
+export function TokenSuccessForm({ defaultValues, onClose, useTranslationStore }: TokenCreateFormProps) {
+  const { t } = useTranslationStore()
   const { setValue } = useForm<TokenSuccessFormType>({
     resolver: zodResolver(formSchema),
     defaultValues: defaultValues || {
@@ -46,7 +49,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
               id="identifier"
               value={defaultValues?.identifier}
               readOnly
-              label="Name"
+              label={t('views:profileSettings.name', 'Name')}
               // @todo Add a copy button to copy the identifier value when base component is ready
               // right={<CopyButton name={defaultValues?.identifier} />}
             />
@@ -55,7 +58,12 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
 
         <Fieldset>
           <ControlGroup>
-            <Input id="lifetime" value={defaultValues?.lifetime} label="Expiration" readOnly />
+            <Input
+              id="lifetime"
+              value={defaultValues?.lifetime}
+              label={t('views:profileSettings.expiration', 'Expiration')}
+              readOnly
+            />
           </ControlGroup>
         </Fieldset>
 
@@ -69,7 +77,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
               // right={<CopyButton name={defaultValues?.token} />}
               autoFocus
               className="truncate"
-              label="Token"
+              label={t('views:profileSettings.token', 'Token')}
             />
           </ControlGroup>
         </Fieldset>
@@ -77,8 +85,10 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
         <Fieldset>
           <ControlGroup>
             <Text>
-              Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t be
-              able to see it again.
+              {t(
+                'views:profileSettings.tokenSuccessDescription',
+                'Your token has been generated. Please make sure to copy and store your token somewhere safe, you won’t beable to see it again.'
+              )}
             </Text>
           </ControlGroup>
         </Fieldset>
@@ -88,7 +98,7 @@ export function TokenSuccessForm({ defaultValues, onClose }: TokenCreateFormProp
           <ControlGroup>
             <ButtonGroup className="justify-end">
               <Button type="button" variant="outline" size="default" onClick={onClose}>
-                Got it
+                {t('views:profileSettings.gotItButton', 'Got it')}
               </Button>
             </ButtonGroup>
           </ControlGroup>

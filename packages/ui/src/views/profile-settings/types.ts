@@ -10,6 +10,11 @@ export interface AlertDeleteParams {
   type: string
 }
 
+export enum ProfileSettingsErrorType {
+  PROFILE = 'profile',
+  PASSWORD = 'password'
+}
+
 export enum ApiErrorType {
   KeyFetch = 'keyFetch',
   TokenFetch = 'tokenFetch',

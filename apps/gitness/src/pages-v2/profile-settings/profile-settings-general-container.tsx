@@ -7,20 +7,26 @@ import {
   useGetUserQuery,
   useUpdateUserMutation
 } from '@harnessio/code-service-client'
-import { PasswordFields, ProfileFields, SettingsAccountGeneralPage } from '@harnessio/ui/views'
+import {
+  PasswordFields,
+  ProfileFields,
+  ProfileSettingsErrorType,
+  SettingsAccountGeneralPage
+} from '@harnessio/ui/views'
 
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileGeneralPage: React.FC = () => {
   const { setUserData } = useProfileSettingsStore()
-  const [apiError, setApiError] = useState<{ type: 'profile' | 'password'; message: string } | null>(null)
+  const [apiError, setApiError] = useState<{ type: ProfileSettingsErrorType; message: string } | null>(null)
 
   const { data: { body: userData } = {}, isLoading: isLoadingUser } = useGetUserQuery(
     {},
     {
       onError: (error: GetUserErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'profile', message: message })
+        setApiError({ type: ProfileSettingsErrorType.PROFILE, message: message })
       }
     }
   )
@@ -36,7 +42,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
       },
       onError: (error: UpdateUserErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'profile', message: message })
+        setApiError({ type: ProfileSettingsErrorType.PROFILE, message: message })
       }
     }
   )
@@ -53,7 +59,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
       },
       onError: (error: UpdateUserErrorResponse) => {
         const message = error.message || 'An unknown error occurred.'
-        setApiError({ type: 'password', message: message })
+        setApiError({ type: ProfileSettingsErrorType.PASSWORD, message: message })
       }
     }
   )
@@ -70,7 +76,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
 
   const handleUpdatePassword = (updatedPasswordData: PasswordFields) => {
     if (updatedPasswordData.newPassword !== updatedPasswordData.confirmPassword) {
-      setApiError({ type: 'password', message: 'Passwords do not match' })
+      setApiError({ type: ProfileSettingsErrorType.PASSWORD, message: 'Passwords do not match' })
       return
     }
 
@@ -96,6 +102,7 @@ export const SettingsProfileGeneralPage: React.FC = () => {
     <>
       <SettingsAccountGeneralPage
         useProfileSettingsStore={useProfileSettingsStore}
+        useTranslationStore={useTranslationStore}
         isLoadingUser={isLoadingUser}
         isUpdatingUser={updateUserMutation.isLoading}
         isUpdatingPassword={updatePasswordMutation.isLoading}

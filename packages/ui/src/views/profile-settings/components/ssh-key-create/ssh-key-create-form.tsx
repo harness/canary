@@ -2,6 +2,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Input, Spacer, Text, Textarea } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 const formSchema = z.object({
@@ -17,9 +18,16 @@ interface SshKeyCreateFormProps {
   onClose: () => void
   handleCreateSshKey: (data: SshKeyFormType) => void
   error: { type: string; message: string } | null
+  useTranslationStore: () => TranslationStore
 }
 
-export function SshKeyCreateForm({ isLoading, handleCreateSshKey, onClose, error }: SshKeyCreateFormProps) {
+export function SshKeyCreateForm({
+  isLoading,
+  handleCreateSshKey,
+  onClose,
+  useTranslationStore,
+  error
+}: SshKeyCreateFormProps) {
   const {
     register,
     handleSubmit,
@@ -33,6 +41,8 @@ export function SshKeyCreateForm({ isLoading, handleCreateSshKey, onClose, error
       content: ''
     }
   })
+
+  const { t } = useTranslationStore()
 
   const content = watch('content')
   const identifier = watch('identifier')
@@ -51,8 +61,8 @@ export function SshKeyCreateForm({ isLoading, handleCreateSshKey, onClose, error
               id="identifier"
               value={identifier}
               {...register('identifier')}
-              placeholder="Enter the name"
-              label="New SSH key"
+              placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter the name')}
+              label={t('views:profileSettings.newSshKey', 'New SSH key')}
               error={errors.identifier?.message?.toString()}
               autoFocus
             />
@@ -65,7 +75,7 @@ export function SshKeyCreateForm({ isLoading, handleCreateSshKey, onClose, error
               id="content"
               value={content}
               {...register('content')}
-              label="Public key"
+              label={t('views:profileSettings.publicKey', 'Public key')}
               error={errors.content?.message?.toString()}
             />
           </ControlGroup>
@@ -86,10 +96,12 @@ export function SshKeyCreateForm({ isLoading, handleCreateSshKey, onClose, error
             <ButtonGroup className="justify-end">
               <>
                 <Button type="button" variant="outline" size="sm" onClick={onClose}>
-                  Cancel
+                  {t('views:profileSettings.cancel', 'Cancel')}
                 </Button>
                 <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                  {!isLoading ? 'Save' : 'Saving...'}
+                  {!isLoading
+                    ? t('views:profileSettings.saveButton', 'Save')
+                    : t('views:profileSettings.savingButton', 'Saving...')}
                 </Button>
               </>
             </ButtonGroup>

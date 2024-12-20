@@ -343,6 +343,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         type="rule"
         identifier={alertDeleteParams}
         isLoading={isDeletingRule}
+        useTranslationStore={useTranslationStore}
       />
       <AlertDeleteDialog
         open={isRepoAlertDeleteDialogOpen}

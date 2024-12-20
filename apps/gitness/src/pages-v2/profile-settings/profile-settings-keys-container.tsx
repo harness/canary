@@ -29,6 +29,7 @@ import {
   TokenSuccessDialog
 } from '@harnessio/ui/views'
 
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileKeysPage = () => {
@@ -222,6 +223,7 @@ export const SettingsProfileKeysPage = () => {
         openAlertDeleteDialog={openAlertDeleteDialog}
         error={apiError}
         headers={headers}
+        useTranslationStore={useTranslationStore}
       />
       <TokenCreateDialog
         open={openCreateTokenDialog}
@@ -229,17 +231,20 @@ export const SettingsProfileKeysPage = () => {
         handleCreateToken={handleCreateToken}
         error={apiError}
         isLoading={createTokenMutation.isLoading}
+        useTranslationStore={useTranslationStore}
       />
       <SshKeyCreateDialog
         open={saveSshKeyDialog}
         onClose={closeSshKeyDialog}
         handleCreateSshKey={handleCreateSshKey}
         error={apiError}
+        useTranslationStore={useTranslationStore}
       />
       <TokenSuccessDialog
         open={openSuccessTokenDialog && !!createdTokenData}
         onClose={closeSuccessTokenDialog}
         useProfileSettingsStore={useProfileSettingsStore}
+        useTranslationStore={useTranslationStore}
       />
       <DeleteAlertDialog
         open={isAlertDeleteDialogOpen}
@@ -247,6 +252,7 @@ export const SettingsProfileKeysPage = () => {
         deleteFn={alertParams?.type === 'key' ? handleDeletePublicKey : handleDeleteToken}
         error={apiError}
         isLoading={alertParams?.type === 'key' ? deletePublicKeyMutation.isLoading : deleteTokenMutation.isLoading}
+        useTranslationStore={useTranslationStore}
         {...alertParams}
       />
     </>

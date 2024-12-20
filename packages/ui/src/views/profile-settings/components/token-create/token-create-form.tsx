@@ -14,6 +14,7 @@ import {
   Text
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
 import { TokenFormType } from '../../types'
@@ -36,9 +37,16 @@ interface TokenCreateFormProps {
   isLoading: boolean
   handleCreateToken: (data: TokenFormType) => void
   onClose: () => void
+  useTranslationStore: () => TranslationStore
 }
 
-export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }: TokenCreateFormProps) {
+export function TokenCreateForm({
+  error,
+  isLoading,
+  handleCreateToken,
+  onClose,
+  useTranslationStore
+}: TokenCreateFormProps) {
   const {
     register,
     handleSubmit,
@@ -53,6 +61,8 @@ export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }
       lifetime: ''
     }
   })
+
+  const { t } = useTranslationStore()
 
   const expirationValue = watch('lifetime')
   const identifier = watch('identifier')
@@ -90,8 +100,8 @@ export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }
               id="identifier"
               value={identifier}
               {...register('identifier')}
-              placeholder="Enter token name"
-              label="Name"
+              placeholder={t('views:profileSettings.enterTokenPlaceholder', 'Enter token name')}
+              label={t('views:profileSettings.name', 'Name')}
               error={errors.identifier?.message?.toString()}
               autoFocus
             />
@@ -103,8 +113,8 @@ export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }
             <Select
               value={expirationValue}
               onValueChange={value => handleSelectChange('lifetime', value)}
-              label="Expiration"
-              placeholder="Select"
+              label={t('views:profileSettings.expiration', 'Expiration')}
+              placeholder={t('views:profileSettings.select', 'Select')}
               error={errors.lifetime?.message?.toString()}
             >
               <SelectContent>
@@ -125,10 +135,13 @@ export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }
           <Fieldset>
             <ControlGroup>
               {watch('lifetime') === 'never' ? (
-                <Text color="tertiaryBackground">Token will never expire</Text>
+                <Text color="tertiaryBackground">
+                  {t('views:profileSettings.tokenExpiryNone', 'Token will never expire')}
+                </Text>
               ) : (
                 <Text color="tertiaryBackground">
-                  Token will expire on {calculateExpirationDate(watch('lifetime'))}
+                  {t('views:profileSettings.tokenExpiryDate', ' Token will expire on')}{' '}
+                  {calculateExpirationDate(watch('lifetime'))}
                 </Text>
               )}
             </ControlGroup>
@@ -152,10 +165,12 @@ export function TokenCreateForm({ error, isLoading, handleCreateToken, onClose }
             <ButtonGroup className="justify-end">
               <>
                 <Button type="button" variant="outline" size="sm" onClick={onClose}>
-                  Cancel
+                  {t('views:profileSettings.cancel', 'Cancel')}
                 </Button>
                 <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                  {!isLoading ? 'Generate Token' : 'Generating Token...'}
+                  {!isLoading
+                    ? t('views:profileSettings.generateTokenButton', 'Generate Token')
+                    : t('views:profileSettings.generatingTokenButton', 'Generating Token...')}
                 </Button>
               </>
             </ButtonGroup>

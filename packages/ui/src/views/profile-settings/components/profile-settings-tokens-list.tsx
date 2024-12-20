@@ -1,22 +1,25 @@
 import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 import { timeAgo } from '@/utils/utils'
+import { TranslationStore } from '@/views'
 
 import { TokensList } from '../types'
 
 interface PageProps {
   tokens: TokensList[]
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
+  useTranslationStore: () => TranslationStore
 }
 
-export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDeleteDialog }) => {
+export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDeleteDialog, useTranslationStore }) => {
+  const { t } = useTranslationStore()
   return (
     <Table variant="asStackedList">
       <TableHeader>
         <TableRow>
-          <TableHead>Token</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Expiration date</TableHead>
-          <TableHead>Created</TableHead>
+          <TableHead>{t('views:profileSettings.tokenTableHeader', 'Token')}</TableHead>
+          <TableHead>{t('views:profileSettings.statusTableHeader', 'Status')}</TableHead>
+          <TableHead>{t('views:profileSettings.expirationDateTableHeader', 'Expiration date')}</TableHead>
+          <TableHead>{t('views:profileSettings.createdTableHeader', 'Created')}</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -30,10 +33,14 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
               <TableCell>
                 <div className="flex items-center gap-2">
                   <Icon name="green-dot" size={8} />
-                  <Text>Active</Text>
+                  <Text>{t('views:profileSettings.active', 'Active')}</Text>
                 </div>
               </TableCell>
-              <TableCell>{token.expires_at ? new Date(token.expires_at).toLocaleString() : 'No Expiration'}</TableCell>
+              <TableCell>
+                {token.expires_at
+                  ? new Date(token.expires_at).toLocaleString()
+                  : t('views:profileSettings.noExpiration', 'No Expiration')}
+              </TableCell>
               <TableCell>{timeAgo(new Date(token.issued_at!).getTime())}</TableCell>
               <TableCell className="content-center">
                 <div
@@ -53,7 +60,10 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
           <TableRow>
             <TableCell colSpan={5}>
               <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
-                There are no personal access tokens associated with this account.
+                {t(
+                  'views:profileSettings.noTokenDescription',
+                  'There are no personal access tokens associated with this account.'
+                )}
               </Text>
             </TableCell>
           </TableRow>

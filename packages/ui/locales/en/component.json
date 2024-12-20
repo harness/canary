@@ -1,4 +1,9 @@
 {
+  "deleteDialog": {
+    "title": "Are you sure?",
+    "description": "This will permanently delete your {type} and remove all data. This action cannot be undone.",
+    "cancel": "Cancel"
+  },
   "filter": {
     "add-filter": "Add filter",
     "reset": "Reset",

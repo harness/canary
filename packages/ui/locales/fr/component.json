@@ -1,4 +1,9 @@
 {
+  "deleteDialog": {
+    "title": "Êtes-vous sûr ?",
+    "description": "Cela supprimera définitivement votre {type} et effacera toutes les données. Cette action est irréversible.",
+    "cancel": "Annuler"
+  },
   "filter": {
     "add-filter": "Ajouter un filtre",
     "reset": "Réinitialiser",

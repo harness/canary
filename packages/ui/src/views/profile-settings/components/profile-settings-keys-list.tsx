@@ -1,21 +1,24 @@
 import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 import { timeAgo } from '@utils/utils'
+import { TranslationStore } from '@views/repo'
 
 import { KeysList } from '../types'
 
 interface PageProps {
   publicKeys: KeysList[]
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
+  useTranslationStore: () => TranslationStore
 }
 
-export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDeleteDialog }) => {
+export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDeleteDialog, useTranslationStore }) => {
+  const { t } = useTranslationStore()
   return (
     <Table variant="asStackedList">
       <TableHeader>
         <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Added</TableHead>
-          <TableHead>Last used date</TableHead>
+          <TableHead>{t('views:profileSettings.name', 'Name')}</TableHead>
+          <TableHead>{t('views:profileSettings.added', 'Added')}</TableHead>
+          <TableHead>{t('views:profileSettings.lastUsedDate', 'Last used date')}</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
@@ -60,7 +63,10 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDele
           <TableRow>
             <TableCell colSpan={4}>
               <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
-                There are no SSH keys associated with this account.
+                {t(
+                  'views:profileSettings.noDataKeysDescription',
+                  'There are no SSH keys associated with this account.'
+                )}
               </Text>
             </TableCell>
           </TableRow>

@@ -110,8 +110,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({ diffS
       <ListActions.Root>
         <ListActions.Left>
           <p className="text-14 leading-tight text-foreground-4">
-            Showing <span className="text-foreground-accent">{diffStats.files_changed || 0} changed files</span> with{' '}
-            {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
+            Showing <span className="text-foreground-accent">{diffStats.files_changed || 0} changed files </span>
+            with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
           </p>
         </ListActions.Left>
         <ListActions.Right>

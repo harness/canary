@@ -162,9 +162,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         </span>
         <Layout.Vertical className="mt-2.5">
           <p className="max-w-xl text-14 leading-snug text-foreground-2">
-            Choose two branches to see what&apos;s changed or to start a new pull request. If you need to, you can also{' '}
-            <StyledLink to="/">compare across forks</StyledLink> or{' '}
-            <StyledLink to="/">learn more about diff comparisons</StyledLink>.
+            Choose two branches to see what&apos;s changed or to start a new pull request. If you need to, you can also
+            <StyledLink to="/"> compare across forks</StyledLink> or
+            <StyledLink to="/"> learn more about diff comparisons</StyledLink>.
           </p>
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />
@@ -202,8 +202,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
                       <p className="text-14 leading-none text-foreground-success">
-                        Able to merge.{' '}
-                        <span className="text-foreground-4">These branches can be automatically merged.</span>
+                        Able to merge.
+                        <span className="text-foreground-4"> These branches can be automatically merged.</span>
                       </p>
                     </>
                   ) : (
@@ -211,7 +211,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-
                           <p className="text-14 leading-none text-foreground-4">
                             Head branch doesn&apos;t contain any new commits.
                           </p>
@@ -220,8 +219,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         <>
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
                           <p className="text-14 leading-none text-foreground-danger">
-                            Can&apos;t be merged.{' '}
-                            <span className="text-foreground-4">You can still create the pull request.</span>
+                            Can&apos;t be merged.
+                            <span className="text-foreground-4"> You can still create the pull request.</span>
                           </p>
                         </>
                       )}
@@ -236,8 +235,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
-                  Discuss and review the changes in this comparison with others.{' '}
-                  <StyledLink to="/">Learn about pull requests.</StyledLink>
+                  Discuss and review the changes in this comparison with others.
+                  <StyledLink to="/"> Learn about pull requests.</StyledLink>
                 </>
               ) : (
                 'Choose different branches or forks above to discuss and review changes.'

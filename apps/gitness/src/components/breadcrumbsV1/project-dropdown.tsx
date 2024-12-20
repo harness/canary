@@ -12,7 +12,7 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { PathParams } from '../../RouteDefinitions'
 
-function ProjectSelector(): JSX.Element {
+function ProjectDropdown(): JSX.Element {
   const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
   const { spaces } = useAppContext()
@@ -41,4 +41,4 @@ function ProjectSelector(): JSX.Element {
   )
 }
 
-export default ProjectSelector
+export { ProjectDropdown }

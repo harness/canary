@@ -1,4 +1,5 @@
 import { TranslationStore } from '@views/repo'
+import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/types'
 
 export interface WebhookType {
   id: number
@@ -12,6 +13,8 @@ export interface WebhookType {
 export interface WebhookStore {
   webhooks: WebhookType[] | null
   // onDelete: (id: number) => void
+  preSetWebhookData: CreateWebhookFormFields | null
+  setPreSetWebhookData: (data: CreateWebhookFormFields | null) => void
   error: string | undefined
   setError: (error?: string) => void
   totalPages: number

@@ -77,7 +77,7 @@ export function RepoWebhookList({
     return (
       <>
         {webhooks?.map((webhook, webhook_idx) => (
-          <LinkComponent key={`${webhook.name}-${webhook_idx}`} to={webhook.name}>
+          <LinkComponent key={`${webhook.name}-${webhook_idx}`} to={`create/${webhook.id}`}>
             <StackedList.Item key={webhook.name} isLast={webhooks.length - 1 === webhook_idx}>
               <StackedList.Field
                 primary

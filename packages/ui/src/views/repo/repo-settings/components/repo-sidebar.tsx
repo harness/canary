@@ -16,7 +16,7 @@ export function RepoSidebar({ items }: RepoSidebarProps) {
           topBorder={group_idx > 0}
           title={group.title}
           isSubMenu
-          className="px-0"
+          className="gap-0.5 px-0"
         >
           {group.items.map(item => (
             <NavLink key={item.id} to={item.to || ''}>

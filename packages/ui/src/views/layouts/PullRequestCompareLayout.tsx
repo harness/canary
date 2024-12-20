@@ -150,7 +150,6 @@ const PullRequestCompare: React.FC<SandboxPullRequestCompareProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content maxWidth="3xl">
-        <Spacer size={10} />
         <Text size={5} weight={'medium'}>
           Comparing changes
         </Text>

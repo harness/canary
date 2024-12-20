@@ -10,7 +10,7 @@ export const useCreatePipelineStore = create<ICreatePipelineStore>(set => ({
     set(payload)
   },
   error: undefined,
-  setError: (error: { message: string }) => {
+  setError: (error?: { message: string }) => {
     set({ error })
   }
 }))

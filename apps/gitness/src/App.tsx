@@ -54,6 +54,7 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
+import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
@@ -327,6 +328,10 @@ export default function App() {
               element: <SettingsProfileKeysPage />
             }
           ]
+        },
+        {
+          path: 'admin/default-settings',
+          element: <UserManagementPageContainer />
         },
         {
           path: 'theme',

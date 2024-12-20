@@ -38,3 +38,6 @@ export * from './profile-settings'
 
 // pipelines
 export * from './pipelines'
+
+// user-management
+export * from './user-management'

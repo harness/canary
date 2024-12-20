@@ -1,4 +1,5 @@
-import { TypesSpace } from '@harnessio/code-service-client'
+import { useNavigate, useParams } from 'react-router-dom'
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,27 +9,27 @@ import {
   Text
 } from '@harnessio/ui/components'
 
-interface ProjectSelectorProps {
-  projects: TypesSpace[]
-  onSelectProject: (projectId: string) => void
-  preselectedProject?: string
-}
+import { useAppContext } from '../../framework/context/AppContext'
+import { PathParams } from '../../RouteDefinitions'
 
-function ProjectSelector({ preselectedProject, onSelectProject, projects }: ProjectSelectorProps): JSX.Element {
+function ProjectSelector(): JSX.Element {
+  const { spaceId } = useParams<PathParams>()
+  const navigate = useNavigate()
+  const { spaces } = useAppContext()
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-x-1.5">
-        {preselectedProject ?? 'Project'}
+        {spaceId ?? 'Select project'}
         <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[300px]">
-        {projects.map(({ identifier }) => (
+        {spaces.map(({ identifier }) => (
           <DropdownMenuItem
             className="flex flex-col"
             key={identifier}
             onClick={() => {
               if (identifier) {
-                onSelectProject(identifier)
+                navigate(`/${identifier}/repos`)
               }
             }}
           >

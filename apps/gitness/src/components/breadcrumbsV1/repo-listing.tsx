@@ -1,21 +1,23 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { PathParams } from '../../RouteDefinitions'
+
 const repos = [
   { id: 'uuid', name: 'UUID' },
   { id: 'k8s', name: 'Kubernetes' }
 ]
 
 function RepoListing() {
-  const { projectId } = useParams<{ projectId: string }>()
+  const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
 
   const handleSelectRepo = (repoId: string) => {
-    navigate(`/projects/${projectId}/repos/${repoId}`)
+    navigate(`/${spaceId}/repos/${repoId}`)
   }
 
   return (
     <div>
-      <h1>Repositories in Project {projectId}</h1>
+      <h1>Repositories in Project {spaceId}</h1>
       <ul>
         {repos.map(repo => (
           <li key={repo.id}>

@@ -1,5 +1,5 @@
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, Outlet, RouteObject, RouterProvider } from 'react-router-dom'
+import { createBrowserRouter, Navigate, Outlet, RouteObject, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
@@ -10,13 +10,15 @@ import { Text } from '@harnessio/ui/components'
 
 import BreadcrumbsV1 from './components/breadcrumbsV1/breadcrumbs'
 import ProjectSelector from './components/breadcrumbsV1/project-selector'
-import RepoListing from './components/breadcrumbsV1/repo-listing'
-import RepoSummary from './components/breadcrumbsV1/repo-summary'
+// import RepoListing from './components/breadcrumbsV1/repo-listing'
+// import RepoSummary from './components/breadcrumbsV1/repo-summary'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import ReposListPage from './pages-v2/repo/repo-list'
+import RepoSummaryPage from './pages-v2/repo/repo-summary'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -50,37 +52,35 @@ export default function AppV1() {
         <>
           <BreadcrumbsV1 />
           <Outlet />
+          {/* <RootWrapper /> */}
         </>
       ),
       handle: {
-        breadcrumb: () => 'Landing Page'
+        breadcrumb: () => <ProjectSelector />
       },
       children: [
         {
-          path: '',
+          path: ':spaceId/repos',
           handle: {
-            breadcrumb: () => <ProjectSelector />
-          }
-        },
-        {
-          path: 'projects/:projectId/repos',
-          handle: {
-            breadcrumb: ({ projectId }: { projectId: string }) => <Text>{projectId}</Text>
+            breadcrumb: () => <Text>Repositories</Text>
           },
           children: [
-            {
-              path: '',
-              element: <RepoListing />,
-              handle: {
-                breadcrumb: () => <Text>Repositories</Text>
-              }
-            },
+            { index: true, element: <ReposListPage /> },
             {
               path: ':repoId',
-              element: <RepoSummary />,
-              handle: {
-                breadcrumb: ({ repoId }: { projectId: string; repoId: string }) => `${repoId}`
-              }
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to="summary" replace />
+                },
+                {
+                  path: 'summary',
+                  element: <RepoSummaryPage />,
+                  handle: {
+                    breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+                  }
+                }
+              ]
             }
           ]
         }

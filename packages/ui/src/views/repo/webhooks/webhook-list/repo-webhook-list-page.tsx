@@ -21,7 +21,11 @@ import { WebhookListProps } from './types'
 
 const LinkComponent = ({ to, children }: { to: string; children: React.ReactNode }) => <Link to={to}>{children}</Link>
 
-const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useTranslationStore }) => {
+const RepoWebhookListPage: React.FC<WebhookListProps> = ({
+  useWebhookStore,
+  useTranslationStore,
+  openDeleteWebhookDialog
+}) => {
   const { t } = useTranslationStore()
 
   const FILTER_OPTIONS = getFilterOptions(t)
@@ -142,6 +146,7 @@ const RepoWebhookListPage: React.FC<WebhookListProps> = ({ useWebhookStore, useT
           query={query ?? ''}
           handleResetQuery={handleResetQuery}
           handleNavigate={handleNavigate}
+          openDeleteWebhookDialog={openDeleteWebhookDialog}
         />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>

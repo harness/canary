@@ -68,4 +68,5 @@ export declare type EnumWebhookTrigger =
 export interface WebhookListProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
+  openDeleteWebhookDialog: (id: number) => void
 }

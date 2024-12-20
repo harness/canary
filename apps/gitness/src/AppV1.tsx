@@ -18,6 +18,10 @@ import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { SettingsLayout } from './pages-v2/project/settings-layout'
+import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
+import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -85,8 +89,49 @@ export default function AppV1() {
                   handle: {
                     breadcrumb: () => <Text>Summary</Text>
                   }
+                },
+                {
+                  path: 'commits',
+                  element: <RepoCommitsPage />,
+                  handle: {
+                    breadcrumb: () => <Text>Commits</Text>
+                  }
+                },
+                {
+                  path: 'branches',
+                  element: <RepoBranchesListPage />,
+                  handle: {
+                    breadcrumb: () => <Text>Branches</Text>
+                  }
                 }
               ]
+            }
+          ]
+        },
+        {
+          path: ':spaceId/settings',
+          element: <SettingsLayout />,
+          handle: {
+            breadcrumb: () => <Text>Settings</Text>
+          },
+          children: [
+            {
+              index: true,
+              element: <Navigate to="general" replace />
+            },
+            {
+              path: 'general',
+              element: <>General</>,
+              handle: {
+                breadcrumb: () => <Text>General</Text>
+              }
+            },
+            {
+              path: 'members',
+              element: <ProjectMemberListPage />,
+              handle: {
+                breadcrumb: () => <Text>Members</Text>
+              }
             }
           ]
         }

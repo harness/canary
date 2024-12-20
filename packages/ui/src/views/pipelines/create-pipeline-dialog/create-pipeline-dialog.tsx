@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -11,6 +11,8 @@ import {
   DialogTitle,
   FormWrapper,
   Input,
+  Message,
+  MessageTheme,
   Select,
   SelectContent,
   SelectItem
@@ -27,16 +29,20 @@ const createPipelineSchema = z.object({
 })
 
 export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
-  const {
-    onCancel,
-    onSubmit,
-    isLoadingBranchNames,
-    branchNames,
-    isLoadingDefaultBranch,
-    defaultBranch,
-    isOpen,
-    onClose
-  } = props
+  const { onCancel, onSubmit, isOpen, onClose, useCreatePipelineStore } = props
+
+  const { isLoadingBranchNames, branchNames, defaultBranch, error } = useCreatePipelineStore()
+
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(error?.message)
+
+  // NOTE: update local state when error is changed
+  useEffect(() => {
+    setErrorMessage(error?.message)
+  }, [error])
+
+  const resetError = () => {
+    setErrorMessage(undefined)
+  }
 
   const {
     register,
@@ -59,7 +65,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   const branch = watch('branch')
 
   useEffect(() => {
-    setValue('branch', defaultBranch)
+    setValue('branch', defaultBranch ?? '')
   }, [defaultBranch, setValue])
 
   useEffect(() => {
@@ -70,9 +76,13 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         // NOTE: validate YAML path field
         trigger('yamlPath')
       }
+
+      if (error) {
+        resetError()
+      }
     })
     return () => subscription.unsubscribe()
-  }, [watch, setValue, clearErrors])
+  }, [watch, setValue, clearErrors, error, resetError])
 
   const handleSelectChange = (fieldName: keyof CreatePipelineFormType, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -102,7 +112,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
             />
             <ControlGroup>
               <Select
-                disabled={isLoadingBranchNames || isLoadingDefaultBranch}
+                disabled={isLoadingBranchNames}
                 name="branch"
                 value={branch}
                 onValueChange={value => handleSelectChange('branch', value)}
@@ -118,11 +128,14 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </SelectContent>
               </Select>
             </ControlGroup>
+            <Message className="mt-1" theme={MessageTheme.ERROR}>
+              {errorMessage}
+            </Message>
             <div className="flex justify-end gap-3">
               <Button type="button" onClick={onCancel} className="text-primary" variant="outline">
                 Cancel
               </Button>
-              <Button type="submit" disabled={!isValid || isLoadingBranchNames || isLoadingDefaultBranch}>
+              <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
                 Create Pipeline
               </Button>
             </div>

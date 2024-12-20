@@ -2,7 +2,8 @@ import { Avatar, AvatarFallback, Icon, Text } from '@components/index'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { PullReqReviewDecision, ReviewerItemProps } from '../../pull-request-details-types'
+import { ReviewerItemProps } from '../details/pull-request-details-types'
+import { PullReqReviewDecision } from '../pull-request.types'
 import { PullRequestReviewersTooltip } from './pull-request-reviewers-tooltip'
 
 const ReviewerItem = ({

@@ -115,7 +115,7 @@ export default function AppMFE({
         children: [
           {
             path: 'repos',
-            handle: { breadcrumb: () => <span>Repositories</span>, noLink: true },
+            handle: { breadcrumb: () => <span>Repositories</span> },
             children: [
               {
                 index: true,

@@ -10,6 +10,7 @@ import { Text } from '@harnessio/ui/components'
 
 import BreadcrumbsV1 from './components/breadcrumbsV1/breadcrumbs'
 import ProjectSelector from './components/breadcrumbsV1/project-selector'
+// import RootWrapper from './components/RootWrapper'
 // import RepoListing from './components/breadcrumbsV1/repo-listing'
 // import RepoSummary from './components/breadcrumbsV1/repo-summary'
 import { AppProvider } from './framework/context/AppContext'

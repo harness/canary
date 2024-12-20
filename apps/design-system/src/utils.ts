@@ -1,7 +1,15 @@
 export const noop = () => void 0
 
-export const mockT = (...args: unknown[]) => {
-  return args[1] || args[0]
+export const mockT = (key: string, options?: { [key: string]: any }) => {
+  if (typeof options === 'string') {
+    return options
+  }
+
+  if (typeof options === 'object' && options?.defaultValue) {
+    return options.defaultValue.replace(/{{\s*(\w+)\s*}}/g, (_: string, variable: string) => options[variable] || '')
+  }
+
+  return key
 }
 
 export const useTranslationsStore = () => ({ t: mockT as any, changeLanguage: noop, i18n: {} as any })

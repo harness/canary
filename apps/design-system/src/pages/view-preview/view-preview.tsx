@@ -12,7 +12,9 @@ import { RepoCommitsView } from '../../views/repo-commits'
 import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
 import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
 import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
+import { RepoWebhooksList } from '../../views/repo-webhooks-list'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper.tsx'
+import { RepoSettingsViewWrapper } from './repo-settings-view-wrapper.tsx'
 import RepoViewWrapper from './repo-view-wrapper.tsx'
 import RootViewWrapper from './root-view-wrapper.tsx'
 import ViewSettings from './view-settings.tsx'
@@ -79,6 +81,13 @@ const views: Record<string, ReactNode> = {
   'repo-commits-list': (
     <RepoViewWrapper>
       <RepoCommitsView />
+    </RepoViewWrapper>
+  ),
+  'webhooks-list': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoWebhooksList />
+      </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   )
 }

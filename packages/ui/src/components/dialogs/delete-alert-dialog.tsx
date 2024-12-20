@@ -1,4 +1,4 @@
-import React from 'react'
+import { FC } from 'react'
 
 import {
   AlertDialog,
@@ -23,27 +23,33 @@ interface DeleteAlertDialogProps {
   error?: { type: string; message: string } | null
   useTranslationStore: () => TranslationStore
 }
-export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
+export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   open,
   onClose,
   identifier,
   deleteFn,
   type,
-  isLoading,
+  isLoading = false,
   useTranslationStore,
   error
 }) => {
   const { t } = useTranslationStore()
+
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t(
-              'component:deleteDialog.description',
-              'This will permanently delete your {type} and remove all data. This action cannot be undone.'
-            )}
+            {type
+              ? t('component:deleteDialog.descriptionWithType', {
+                  defaultValue: `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
+                  type: type
+                })
+              : t(
+                  'component:deleteDialog.description',
+                  `This will permanently remove all data. This action cannot be undone.`
+                )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <>
@@ -61,9 +67,6 @@ export const DeleteAlertDialog: React.FC<DeleteAlertDialogProps> = ({
             {t('component:deleteDialog.cancel', 'Cancel')}
           </Button>
           <Button
-            size="default"
-            theme="error"
-            className="self-start"
             variant="destructive"
             disabled={isLoading}
             onClick={() => {

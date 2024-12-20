@@ -56,7 +56,7 @@ export const getNavItems = (t: TFunction) => [
   // }
 ]
 
-function Sidebar({ t }: { t: TFunction }) {
+export function SettingsSidebar({ t }: { t: TFunction }) {
   return (
     <SandboxLayout.LeftSubPanel>
       <SandboxLayout.Content className="px-6">
@@ -76,7 +76,7 @@ export function RepoSettingsPage({ useTranslationStore }: { useTranslationStore:
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="auto 1fr">
         <SandboxLayout.Column>
-          <Sidebar t={t} />
+          <SettingsSidebar t={t} />
         </SandboxLayout.Column>
         <SandboxLayout.Column>
           <SettingsContent />

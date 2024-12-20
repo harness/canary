@@ -105,7 +105,8 @@ export default {
           danger: 'hsl(var(--canary-foreground-danger))',
           alert: 'hsl(var(--canary-foreground-alert))',
           success: 'hsl(var(--canary-foreground-success))',
-          accent: 'hsl(var(--canary-foreground-accent))'
+          accent: 'hsl(var(--canary-foreground-accent))',
+          'button-danger': 'hsl(var(--canary-button-foreground-danger))'
         },
         background: {
           // TODO: remove DEFAULT, cause use old color var
@@ -123,7 +124,9 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           danger: 'hsla(var(--canary-background-danger))',
-          success: 'hsla(var(--canary-background-success))'
+          success: 'hsla(var(--canary-background-success))',
+          'button-danger-1': 'hsla(var(--canary-background-button-danger-1))',
+          'button-danger-3': 'hsla(var(--canary-background-button-danger-3))'
         },
         borders: {
           1: 'hsl(var(--canary-border-01))',

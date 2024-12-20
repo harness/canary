@@ -1,8 +1,10 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Spacer, Text } from '@/components'
+import { Button, ButtonGroup, Fieldset, FormWrapper, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from './components/create-webhook-form-data'
 import {
@@ -27,7 +29,7 @@ interface RepoWebhooksCreatePageProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
+export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
   onFormSubmit,
   apiError,
   isLoading,
@@ -43,6 +45,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
     reset,
     formState: { errors, isValid }
   } = useForm<CreateWebhookFormFields>({
+    resolver: zodResolver(createWebhookFormSchema),
     mode: 'onChange',
     defaultValues: {
       enabled: true,
@@ -71,6 +74,8 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
     } else {
       reset()
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [preSetWebhookData])
 
   const eventSettingsComponents = [
@@ -82,24 +87,35 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
 
   const onSubmit: SubmitHandler<CreateWebhookFormFields> = data => {
     onFormSubmit(data)
-    reset()
   }
 
   return (
     <>
       <SandboxLayout.Main>
-        <SandboxLayout.Content maxWidth="2xl" className="ml-0">
-          <Text size={5} weight="medium" as="div" className="mb-8">
+        <SandboxLayout.Content className="mx-auto max-w-[610px] pt-7">
+          <Text size={5} weight="medium" as="div" className="mb-10">
             {t('views:repos.createWebhookTitle', 'Create a webhook')}
           </Text>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
               <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookNameField register={register} errors={errors} disabled={false} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookDescriptionField register={register} errors={errors} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookPayloadUrlField register={register} errors={errors} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookSecretField register={register} errors={errors} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookSSLVerificationField setValue={setValue} watch={watch} t={t} />
+            </Fieldset>
+            <Fieldset>
               <WebhookTriggerField setValue={setValue} watch={watch} t={t} />
               {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
                 <div className="flex justify-between">
@@ -115,37 +131,30 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                   ))}
                 </div>
               )}
-
-              {apiError && (
-                <>
-                  <Spacer size={2} />
-                  <Text size={1} className="text-destructive">
-                    {apiError?.toString()}
-                  </Text>
-                </>
-              )}
-
-              <Fieldset className="mt-0">
-                <ControlGroup>
-                  <ButtonGroup>
-                    <>
-                      <Button type="submit" size="sm" disabled={!isValid || isLoading}>
-                        {isLoading
-                          ? preSetWebhookData
-                            ? t('views:repos.updatingWebhook', 'Updating webhook...')
-                            : t('views:repos.creatingWebhook', 'Creating webhook...')
-                          : preSetWebhookData
-                            ? t('views:repos.updateWebhook', 'Update webhook')
-                            : t('views:repos.createWebhook', 'Create webhook')}
-                      </Button>
-                      <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
-                        {t('views:repos.cancel', 'Cancel')}
-                      </Button>
-                    </>
-                  </ButtonGroup>
-                </ControlGroup>
-              </Fieldset>
             </Fieldset>
+
+            <Fieldset className="mt-7">
+              <ButtonGroup>
+                <Button type="submit" disabled={!isValid || isLoading}>
+                  {isLoading
+                    ? preSetWebhookData
+                      ? t('views:repos.updatingWebhook', 'Updating webhook...')
+                      : t('views:repos.creatingWebhook', 'Creating webhook...')
+                    : preSetWebhookData
+                      ? t('views:repos.updateWebhook', 'Update webhook')
+                      : t('views:repos.createWebhook', 'Create webhook')}
+                </Button>
+                <Button type="button" variant="outline" onClick={onFormCancel}>
+                  {t('views:repos.cancel', 'Cancel')}
+                </Button>
+              </ButtonGroup>
+            </Fieldset>
+
+            {apiError && (
+              <Text size={1} className="text-destructive">
+                {apiError?.toString()}
+              </Text>
+            )}
           </FormWrapper>
         </SandboxLayout.Content>
       </SandboxLayout.Main>

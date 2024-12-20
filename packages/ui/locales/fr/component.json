@@ -1,7 +1,8 @@
 {
   "deleteDialog": {
     "title": "Êtes-vous sûr ?",
-    "description": "Cela supprimera définitivement votre {type} et effacera toutes les données. Cette action est irréversible.",
+    "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
+    "description": "This will permanently remove all data. This action cannot be undone.",
     "cancel": "Annuler"
   },
   "filter": {

@@ -1,9 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
-import { useDeleteRepoWebhookMutation, useListRepoWebhooksQuery } from '@harnessio/code-service-client'
+import {
+  DeleteRepoWebhookErrorResponse,
+  useDeleteRepoWebhookMutation,
+  useListRepoWebhooksQuery
+} from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
 
@@ -16,24 +20,22 @@ import { useWebhookStore } from './stores/webhook-store'
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setWebhooks, page, setPage, setWebhookLoading, setError } = useWebhookStore()
-  const queryClient = useQueryClient()
-
   const [query] = useDebouncedQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [deleteWebhookId, setDeleteWebhookId] = useState<string | null>(null)
+  const queryClient = useQueryClient()
 
-  const [isDeleteWebhookDialogOpen, setIsDeleteWebhookDialogOpen] = useState(false)
-  const closeDeleteWebhookDialog = () => setIsDeleteWebhookDialogOpen(false)
-  const openDeleteWebhookDialog = (id: number) => {
-    setIsDeleteWebhookDialogOpen(true)
-    setDeleteWebhookId(id.toString())
-  }
+  const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
+  const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
 
+  /**
+   * Fetching webhooks
+   */
   const {
     data: { body: webhookData, headers } = {},
     isFetching,
     isError,
-    error
+    error,
+    refetch
   } = useListRepoWebhooksQuery(
     {
       queryParams: { page, query },
@@ -42,20 +44,43 @@ export default function WebhookListPage() {
     { retry: false }
   )
 
-  const { mutate: deleteWebhook } = useDeleteRepoWebhookMutation(
-    { repo_ref: repoRef, webhook_identifier: 0 },
+  /**
+   * Deleting webhook
+   */
+  const { mutate: deleteWebhook, isLoading: deleteIsLoading } = useDeleteRepoWebhookMutation(
+    {
+      repo_ref: repoRef,
+      webhook_identifier: 0
+    },
     {
       onSuccess: () => {
+        setApiError(null)
         queryClient.invalidateQueries({ queryKey: ['listRepoWebhooks', repoRef] })
         closeDeleteWebhookDialog()
+        refetch()
+      },
+      onError: (error: DeleteRepoWebhookErrorResponse) => {
+        const message = error.message || 'Error deleting webhook'
+        setApiError({ type: '', message })
       }
     }
   )
 
-  const handleDeleteWebhook = (id: string) => {
-    const webhook_identifier = parseInt(id)
+  /**
+   * Set id of webhook to delete it
+   */
+  const openDeleteWebhookDialog = useCallback((id: number) => {
+    setDeleteWebhookId(id)
+  }, [])
 
-    deleteWebhook({ repo_ref: repoRef, webhook_identifier: webhook_identifier })
+  const closeDeleteWebhookDialog = () => {
+    setDeleteWebhookId(null)
+  }
+
+  const handleDeleteWebhook = () => {
+    if (deleteWebhookId === null) return
+
+    deleteWebhook({ repo_ref: repoRef, webhook_identifier: deleteWebhookId })
   }
 
   useEffect(() => {
@@ -63,7 +88,10 @@ export default function WebhookListPage() {
       setWebhooks(webhookData, headers)
       setWebhookLoading(false)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webhookData, headers, setWebhooks])
+
   useEffect(() => {
     if (isFetching) {
       setWebhookLoading(isFetching)
@@ -78,23 +106,26 @@ export default function WebhookListPage() {
 
   useEffect(() => {
     setQueryPage(page)
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, queryPage, setPage])
+
   return (
-    <>
+    <div>
       <RepoWebhookListPage
         useWebhookStore={useWebhookStore}
         useTranslationStore={useTranslationStore}
         openDeleteWebhookDialog={openDeleteWebhookDialog}
       />
       <DeleteAlertDialog
-        type="webhook"
-        open={isDeleteWebhookDialogOpen}
+        open={deleteWebhookId !== null}
         onClose={closeDeleteWebhookDialog}
         deleteFn={handleDeleteWebhook}
-        identifier={deleteWebhookId!}
+        type="webhook"
+        isLoading={deleteIsLoading}
+        error={apiError}
         useTranslationStore={useTranslationStore}
       />
-    </>
+    </div>
   )
 }

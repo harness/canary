@@ -29,7 +29,7 @@ export const CreateWebhookContainer = () => {
     if (!webhookId) {
       setPreSetWebhookData(null)
     }
-  }, [webhookId])
+  }, [setPreSetWebhookData, webhookId])
 
   const {
     mutate: createWebHook,
@@ -122,6 +122,9 @@ export const CreateWebhookContainer = () => {
   }
 
   const apiError = createWebHookError?.message || updateWebhookError?.message || null
+
+  // TODO: Here, we need to display the view of the 404 page
+  if (!!webhookId && !webhookData) return <span className="text-destructive">404</span>
 
   return (
     <>

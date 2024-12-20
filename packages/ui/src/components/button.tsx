@@ -12,7 +12,7 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-background-5 text-foreground-6 hover:bg-background-10 disabled:bg-background-6 disabled:text-foreground-9',
-        destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
+        destructive: 'bg-background-button-danger-1 text-foreground-button-danger hover:bg-background-button-danger-3',
         outline:
           'border border-borders-2 bg-transparent text-foreground-2 hover:border-borders-6 hover:text-foreground-8',
         secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
@@ -34,7 +34,7 @@ const buttonVariants = cva(
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-xs font-medium',
         md_split: 'h-8 text-14 font-medium',
-        lg_split: 'text-md h-10 p-0 font-medium'
+        lg_split: 'h-10 p-0 font-medium'
       },
       borderRadius: {
         default: '',

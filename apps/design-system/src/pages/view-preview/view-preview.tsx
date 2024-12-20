@@ -4,18 +4,21 @@ import '@harnessio/ui/styles.css'
 
 import { Navigate, Route, Routes } from 'react-router-dom'
 
-import ExecutionListWrapper from '../../views/execution-list/execution-list.tsx'
-import PipelineListWrapper from '../../views/pipeline-list/pipeline-list.tsx'
-import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare.tsx'
-import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list.tsx'
+import ExecutionListWrapper from '../../views/execution-list/execution-list'
+import PipelineListWrapper from '../../views/pipeline-list/pipeline-list'
+import PullRequestCompareWrapper from '../../views/pull-request-compare/pull-request-compare'
+import PullRequestListWrapper from '../../views/pull-request-list/pull-request-list'
 import { RepoCommitsView } from '../../views/repo-commits'
 import { RepoFilesEditView, RepoFilesJsonView, RepoFilesList, RepoFilesMarkdownView } from '../../views/repo-files'
-import RepoListWrapper from '../../views/repo-list/repo-list.tsx'
-import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary.tsx'
-import { RepoFilesViewWrapper } from './repo-files-view-wrapper.tsx'
-import RepoViewWrapper from './repo-view-wrapper.tsx'
-import RootViewWrapper from './root-view-wrapper.tsx'
-import ViewSettings from './view-settings.tsx'
+import RepoListWrapper from '../../views/repo-list/repo-list'
+import RepoSummaryViewWrapper from '../../views/repo-summary/repo-summary'
+import { RepoWebhooksCreate } from '../../views/repo-webhooks-create/repo-webhooks-list.tsx'
+import { RepoWebhooksList } from '../../views/repo-webhooks-list/repo-webhooks-list'
+import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
+import { RepoSettingsViewWrapper } from './repo-settings-view-wrapper'
+import RepoViewWrapper from './repo-view-wrapper'
+import RootViewWrapper from './root-view-wrapper'
+import ViewSettings from './view-settings'
 
 const views: Record<string, ReactNode> = {
   'repo-summary': (
@@ -79,6 +82,20 @@ const views: Record<string, ReactNode> = {
   'repo-commits-list': (
     <RepoViewWrapper>
       <RepoCommitsView />
+    </RepoViewWrapper>
+  ),
+  'webhooks-list': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoWebhooksList />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'webhooks-create': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoWebhooksCreate />
+      </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   )
 }

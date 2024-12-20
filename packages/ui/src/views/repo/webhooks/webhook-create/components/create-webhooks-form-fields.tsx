@@ -1,7 +1,8 @@
+import { FC } from 'react'
+
 import {
   Checkbox,
   ControlGroup,
-  Fieldset,
   Input,
   Label,
   Option,
@@ -11,35 +12,31 @@ import {
   Switch,
   Textarea
 } from '@/components'
+import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
-import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '../types'
-
-export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root className="bg-tertiary/2 border-none" borderBackground>
-    <StackedList.Item disableHover isHeader>
+export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
+  <StackedList.Root borderBackground withoutBorder>
+    <StackedList.Item
+      className="!rounded px-5 py-3.5"
+      disableHover
+      isHeader
+      actions={
+        <Switch
+          {...register!('enabled')}
+          checked={watch!('enabled')}
+          onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
+        />
+      }
+    >
       <StackedList.Field
         title={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
         description={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
-      />
-      <StackedList.Field
-        label
-        secondary
-        title={
-          <div className="flex cursor-pointer items-center justify-end gap-1.5">
-            <Switch
-              {...register!('enabled')}
-              checked={watch!('enabled')}
-              onCheckedChange={() => setValue!('enabled', !watch!('enabled'))}
-            />
-          </div>
-        }
-        right
       />
     </StackedList.Item>
   </StackedList.Root>
 )
 
-export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: boolean }> = ({
+export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }> = ({
   register,
   errors,
   disabled,
@@ -50,15 +47,17 @@ export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: bool
       id="name"
       {...register!('identifier')}
       placeholder="Name your webhook"
+      // eslint-disable-next-line jsx-a11y/no-autofocus
       autoFocus
       disabled={disabled}
       label={t('views:repos.name', 'Name')}
       error={errors?.identifier?.message?.toString()}
+      size="md"
     />
   </ControlGroup>
 )
 
-export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Textarea
       id="description"
@@ -70,7 +69,7 @@ export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ regis
   </ControlGroup>
 )
 
-export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookPayloadUrlField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
       id="payloadUrl"
@@ -78,11 +77,12 @@ export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ regist
       placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
       label={t('views:repos.urlLabel', 'Payload URL')}
       error={errors?.url?.message?.toString()}
+      size="md"
     />
   </ControlGroup>
 )
 
-export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
+export const WebhookSecretField: FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
       id="secret"
@@ -90,41 +90,40 @@ export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, 
       type="password"
       label={t('views:repos.secret', 'Secret')}
       error={errors?.secret?.message?.toString()}
+      size="md"
     />
   </ControlGroup>
 )
 
-export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
+export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
   const sslVerificationValue = watch!('insecure')
   const handleAccessChange = (value: string) => {
     setValue!('insecure', value)
   }
 
   return (
-    <Fieldset className="mb-0">
-      <ControlGroup>
-        <Label htmlFor="insecure" className="mb-5">
-          {t('views:repos.sslVerification', 'SSL Verification')}
-        </Label>
-        <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
-          <Option
-            control={<RadioGroupItem value="1" id="enable-ssl" />}
-            id="enable-ssl"
-            label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')}
-          />
-          <Option
-            control={<RadioGroupItem value="2" id="disable-ssl" />}
-            id="disable-ssl"
-            label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
-            description={t('views:repos.disableSslDescription', 'Not recommended for production use')}
-          />
-        </RadioGroup>
-      </ControlGroup>
-    </Fieldset>
+    <ControlGroup className="mt-4">
+      <Label htmlFor="insecure" className="mb-6">
+        {t('views:repos.sslVerification', 'SSL Verification')}
+      </Label>
+      <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
+        <Option
+          control={<RadioGroupItem value="1" id="enable-ssl" />}
+          id="enable-ssl"
+          label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')}
+        />
+        <Option
+          control={<RadioGroupItem value="2" id="disable-ssl" />}
+          id="disable-ssl"
+          label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
+          description={t('views:repos.disableSslDescription', 'Not recommended for production use')}
+        />
+      </RadioGroup>
+    </ControlGroup>
   )
 }
 
-export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
+export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
     setValue!('trigger', value)
@@ -134,29 +133,27 @@ export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, se
   }
 
   return (
-    <Fieldset className="mb-0">
-      <ControlGroup>
-        <Label htmlFor="trigger" className="mb-5">
-          {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
-        </Label>
-        <RadioGroup value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">
-          <Option
-            control={<RadioGroupItem value="1" id="all-events" />}
-            id="all-events"
-            label={t('views:repos.evenTriggerAllLabel', 'Send me everything')}
-          />
-          <Option
-            control={<RadioGroupItem value="2" id="select-events" />}
-            id="select-events"
-            label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
-          />
-        </RadioGroup>
-      </ControlGroup>
-    </Fieldset>
+    <ControlGroup className="mt-4">
+      <Label htmlFor="trigger" className="mb-6">
+        {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
+      </Label>
+      <RadioGroup value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">
+        <Option
+          control={<RadioGroupItem value="1" id="all-events" />}
+          id="all-events"
+          label={t('views:repos.evenTriggerAllLabel', 'Send me everything')}
+        />
+        <Option
+          control={<RadioGroupItem value="2" id="select-events" />}
+          id="select-events"
+          label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
+        />
+      </RadioGroup>
+    </ControlGroup>
   )
 }
 
-export const WebhookEventSettingsFieldset: React.FC<WebhookFormFieldProps & { eventList: WebhookEvent[] }> = ({
+export const WebhookEventSettingsFieldset: FC<WebhookFormFieldProps & { eventList: WebhookEvent[] }> = ({
   watch,
   setValue,
   eventList

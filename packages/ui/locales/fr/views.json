@@ -195,7 +195,10 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
-    "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant."
+    "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
+    "noWebhooks": "No webhooks yet",
+    "noResultsDescription": "There are no search results to show here for the selected filters, search query, or current page.",
+    "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project."
   },
   "profileSettings": {
     "name": "Nom",
@@ -286,6 +289,9 @@
     "prBranchUpdated": "Branche de la requête de tirage mise à jour",
     "prClosed": "Requête de tirage fermée",
     "prCommentCreated": "Commentaire de la requête de tirage créé",
-    "prMerged": "Requête de tirage fusionnée"
+    "prMerged": "Requête de tirage fusionnée",
+    "edit": "Edit webhook",
+    "delete": "Delete webhook",
+    "create": "Create webhook"
   }
 }

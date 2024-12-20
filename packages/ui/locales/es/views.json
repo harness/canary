@@ -195,7 +195,10 @@
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
-    "createOrImportRepos": "Create new or import an existing repository."
+    "createOrImportRepos": "Create new or import an existing repository.",
+    "noWebhooks": "No webhooks yet",
+    "noResultsDescription": "There are no search results to show here for the selected filters, search query, or current page.",
+    "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project."
   },
   "profileSettings": {
     "name": "Name",
@@ -286,7 +289,10 @@
     "prBranchUpdated": "PR branch updated",
     "prClosed": "PR closed",
     "prCommentCreated": "PR comment created",
-    "prMerged": "PR merged"
+    "prMerged": "PR merged",
+    "edit": "Edit webhook",
+    "delete": "Delete webhook",
+    "create": "Create webhook"
   },
   "profileSettingsTableHeader": {
     "token": "Token",

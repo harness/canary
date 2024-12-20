@@ -92,9 +92,9 @@ export const useFilters = (): FilterHandlers => {
     setActiveFilters(prevFilters => prevFilters.filter(filter => filter.type !== type))
   }
 
-  const handleResetFilters = () => {
+  const handleResetFilters = useCallback(() => {
     setActiveFilters([])
-  }
+  }, [])
 
   // SORTS
   /**

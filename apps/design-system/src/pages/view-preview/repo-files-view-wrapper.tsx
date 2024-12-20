@@ -4,7 +4,7 @@ import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import { noop, useTranslationsStore } from '../../utils.ts'
-import { OpenapiContentInfo, repoFilesStore } from '../../views/repo-files/components/repo-files-store.ts'
+import { OpenapiContentInfo, repoFilesStore } from '../../views/repo-files/components/repo-files-store'
 
 const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] => {
   return entries.sort((a, b) => {

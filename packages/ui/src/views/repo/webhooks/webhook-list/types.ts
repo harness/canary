@@ -65,7 +65,7 @@ export declare type EnumWebhookTrigger =
   | 'tag_deleted'
   | 'tag_updated'
 
-export interface WebhookListProps {
+export interface RepoWebhookListPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
   openDeleteWebhookDialog: (id: number) => void

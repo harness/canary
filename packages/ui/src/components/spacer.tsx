@@ -12,6 +12,7 @@ const spacerVariants = cva('mt-4 block', {
       2.5: 'mt-2.5',
       3: 'mt-3',
       4: 'mt-4',
+      4.5: 'mt-[18px]',
       5: 'mt-5',
       6: 'mt-6',
       7: 'mt-7',

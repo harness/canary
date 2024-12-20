@@ -19,6 +19,10 @@ interface DeleteTokenAlertDialogProps {
   isLoading?: boolean
   error?: { type: string; message: string } | null
 }
+
+/**
+ * @deprecated
+ */
 export const DeleteTokenAlertDialog: React.FC<DeleteTokenAlertDialogProps> = ({
   open,
   onClose,

@@ -49,7 +49,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   const SORT_DIRECTIONS = getSortDirections(t)
   const filterHandlers = useFilters()
 
-  const isDirtyList = page !== 1
+  const isDirtyList = page !== 1 || !!filterHandlers.activeFilters.length
 
   const handleResetFiltersAndPages = () => {
     setPage(1)

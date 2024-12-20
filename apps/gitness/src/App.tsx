@@ -65,6 +65,8 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
+// import { UserManagementPageContainer } from './pages/user-management/user-management-container'
+import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProjectV1 from './pages/create-project'
@@ -98,7 +100,6 @@ import RepoSummaryPageV1 from './pages/repo/repo-summary'
 import { SignIn } from './pages/signin'
 import { SignUp } from './pages/signup'
 import { CreateNewUserContainer } from './pages/user-management/create-new-user-container'
-import { UserManagementPageContainer } from './pages/user-management/user-management-container'
 import RepoWebhooksListPage from './pages/webhooks/repo-webhook-list'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
@@ -386,6 +387,10 @@ export default function App() {
               element: <SettingsProfileKeysPage />
             }
           ]
+        },
+        {
+          path: 'admin/default-settings',
+          element: <UserManagementPageContainer />
         },
         {
           path: 'theme',

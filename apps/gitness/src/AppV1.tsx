@@ -18,6 +18,7 @@ import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 
@@ -69,6 +70,10 @@ export default function AppV1() {
             { index: true, element: <ReposListPage /> },
             {
               path: ':repoId',
+              element: <RepoLayout />,
+              handle: {
+                breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+              },
               children: [
                 {
                   index: true,
@@ -78,7 +83,7 @@ export default function AppV1() {
                   path: 'summary',
                   element: <RepoSummaryPage />,
                   handle: {
-                    breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+                    breadcrumb: () => <Text>Summary</Text>
                   }
                 }
               ]

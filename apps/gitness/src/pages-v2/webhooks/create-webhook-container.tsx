@@ -30,8 +30,6 @@ export const CreateWebhookContainer = () => {
     }
   }, [webhookId])
 
-  // const [preSetWebhookData, setPreSetWebhookData] = useState<CreateWebhookFormFields | null>(null)
-
   const {
     mutate: createWebHook,
     isLoading: creatingWebHook,
@@ -132,7 +130,6 @@ export const CreateWebhookContainer = () => {
         apiError={apiError}
         isLoading={creatingWebHook || updatingWebHook}
         useWebhookStore={useWebhookStore}
-        // preSetWebHookData={preSetWebhookData}
       />
     </>
   )

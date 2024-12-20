@@ -13,7 +13,6 @@ import {
   OTPPage as OTPPageV2,
   RepoSettingsPage,
   SandboxLayout
-  // SettingsAccountPage
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -66,7 +65,6 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
-// import { CreateWebhookContainer } from './pages/webhooks/create-webhook-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import CreateProjectV1 from './pages/create-project'

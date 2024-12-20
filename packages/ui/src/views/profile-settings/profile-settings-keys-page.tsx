@@ -1,5 +1,5 @@
 import { Button, ControlGroup, Fieldset, FormSeparator, FormWrapper, Legend, Spacer, Text } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
@@ -13,12 +13,14 @@ interface SettingsAccountKeysPageProps {
   error: { type: string; message: string } | null
   headers?: Headers
   useProfileSettingsStore: () => IProfileSettingsStore
+  useTranslationStore: () => TranslationStore
 }
 const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
   useProfileSettingsStore,
   openTokenDialog,
   openSshKeyDialog,
   openAlertDeleteDialog,
+  useTranslationStore,
   error
   // headers
 }) => {
@@ -26,12 +28,13 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
   // const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   // const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
   const { publicKeys, tokens } = useProfileSettingsStore()
+  const { t } = useTranslationStore()
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content>
         <Spacer size={10} />
         <Text size={5} weight={'medium'}>
-          Keys and Tokens
+          {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
         </Text>
         <Spacer size={6} />
         <FormWrapper>
@@ -40,18 +43,25 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
             <Legend
               title={
                 <span className="flex justify-between">
-                  Personal access token
+                  {t('views:profileSettings.personalAccessToken', 'Personal access token')}
                   <Button type="button" variant="outline" className="text-primary" onClick={openTokenDialog}>
-                    Add new token
+                    {t('views:profileSettings.addToken', 'Add new token')}
                   </Button>
                 </span>
               }
-              description="Personal access tokens allow you to authenticate with the API."
+              description={t(
+                'views:profileSettings.addTokenDescription',
+                'Personal access tokens allow you to authenticate with the API.'
+              )}
             />
             <ControlGroup>
               <>
                 {(!error || error.type !== 'tokenFetch') && (
-                  <ProfileTokensList tokens={tokens} openAlertDeleteDialog={openAlertDeleteDialog} />
+                  <ProfileTokensList
+                    tokens={tokens}
+                    openAlertDeleteDialog={openAlertDeleteDialog}
+                    useTranslationStore={useTranslationStore}
+                  />
                 )}
                 {error && error.type === 'tokenFetch' && (
                   <>
@@ -72,20 +82,27 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
             <Legend
               title={
                 <span className="flex justify-between">
-                  My SSH keys
+                  {t('views:profileSettings.sshKeys', 'My SSH keys')}
                   <Button variant="outline" className="text-primary" type="button" onClick={openSshKeyDialog}>
-                    Add new SSH key
+                    {t('views:profileSettings.addSshKey', 'Add new SSH key')}
                   </Button>
                 </span>
               }
-              description="SSH keys allow you to establish a secure connection to your code repository."
+              description={t(
+                'views:profileSettings.addSshKeyDescription',
+                'SSH keys allow you to establish a secure connection to your code repository.'
+              )}
             />
 
             <ControlGroup>
               <>
                 {(!error || error.type !== 'keyFetch') && (
                   <>
-                    <ProfileKeysList publicKeys={publicKeys} openAlertDeleteDialog={openAlertDeleteDialog} />
+                    <ProfileKeysList
+                      publicKeys={publicKeys}
+                      openAlertDeleteDialog={openAlertDeleteDialog}
+                      useTranslationStore={useTranslationStore}
+                    />
                     {/* <PaginationComponent
                       totalPages={totalPages}
                       currentPage={page}

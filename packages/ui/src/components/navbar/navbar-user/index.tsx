@@ -1,4 +1,3 @@
-import { Fragment, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -8,18 +7,23 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
+  FullTheme,
   Icon,
+  IThemeStore,
   Text
 } from '@/components'
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-import { TFunction } from 'i18next'
-
-import { getUserMenuItems } from '../data'
-import { UserMenuKeys } from '../types'
+import { TranslationStore } from '@views/repo'
 
 interface UserBlockProps {
   username: string
@@ -60,54 +64,20 @@ interface NavbarUserProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
-  t: TFunction
+  useThemeStore: () => IThemeStore
+  useTranslationStore: () => TranslationStore
 }
 
-export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: NavbarUserProps) => {
+export const NavbarUser = ({
+  currentUser,
+  handleCustomNav,
+  handleLogOut,
+  useThemeStore,
+  useTranslationStore
+}: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
-  const userMenuItems = getUserMenuItems(t)
-
-  const menuItems = useMemo(() => {
-    return userMenuItems.map(({ key, iconName, title, to, isSeparated }) => {
-      const className = 'relative grid grid-cols-[auto_1fr] items-center gap-2.5'
-
-      const handleClick = () => {
-        switch (key) {
-          case UserMenuKeys.CUSTOM_NAV:
-            return handleCustomNav()
-          case UserMenuKeys.LOG_OUT:
-            return handleLogOut()
-          default:
-            return
-        }
-      }
-
-      const elementChild = (
-        <>
-          <Icon className={cn('text-icons-4 ml-[3px] transition-colors')} size={12} name={iconName} />
-          <Text size={2} truncate>
-            {title}
-          </Text>
-        </>
-      )
-
-      const element = to ? (
-        <Link className={className} to={to}>
-          {elementChild}
-        </Link>
-      ) : (
-        <button className={cn(className, 'w-full text-left')} onClick={handleClick}>
-          {elementChild}
-        </button>
-      )
-
-      return {
-        key,
-        element,
-        isSeparated
-      }
-    })
-  }, [handleCustomNav, handleLogOut, userMenuItems])
+  const { theme, setTheme } = useThemeStore()
+  const { t, i18n, changeLanguage } = useTranslationStore()
 
   return (
     <DropdownMenu>
@@ -116,28 +86,77 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: Na
           <UserBlock username={username} email={currentUser?.email} url={currentUser?.url} isButton />
         </div>
       </DropdownMenuTrigger>
-
-      {menuItems && (
-        <DropdownMenuContent
-          className="ml-3 w-[230px] !rounded-lg bg-background-1"
-          align="start"
-          sideOffset={-40}
-          alignOffset={187}
-        >
-          <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
-          <DropdownMenuSeparator />
-          {menuItems.map(itm => {
-            return (
-              <Fragment key={itm.key}>
-                {!!itm?.isSeparated && <DropdownMenuSeparator />}
-                <DropdownMenuItem className="[&_svg]:data-[highlighted]:text-icons-2" asChild>
-                  {itm.element}
-                </DropdownMenuItem>
-              </Fragment>
-            )
-          })}
-        </DropdownMenuContent>
-      )}
+      <DropdownMenuContent
+        className="ml-3 w-[230px] !rounded-lg bg-background-1"
+        align="start"
+        sideOffset={-40}
+        alignOffset={187}
+      >
+        <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/account">
+            <Icon size={12} name="user" className="mr-2" />
+            <Text>{t('component:navbar.account', 'Account')}</Text>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Icon size={12} name="paint" className="mr-2" />
+            <Text>{t('component:navbar.theme', 'Theme')}</Text>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup
+                value={theme}
+                onValueChange={value => {
+                  setTheme(value as FullTheme)
+                }}
+              >
+                <DropdownMenuRadioItem value="light-std-std">Light</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="dark-std-std">Dark</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system-std-std">System</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger>
+            <Icon size={12} name="environment" className="mr-2" />
+            <Text>Language</Text>
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup
+                value={i18n.language}
+                onValueChange={value => {
+                  changeLanguage(value)
+                }}
+              >
+                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="fr">French</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
+        <DropdownMenuItem onClick={handleCustomNav}>
+          <Icon size={12} name="navigation" className="mr-2" />
+          <Text>{t('component:navbar.customNav', 'Customize navigation')}</Text>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem asChild>
+          <Link to="/account">
+            <Icon size={12} name="settings-1" className="mr-2" />
+            <Text>{t('component:navbar.administration', 'Administration')}</Text>
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={handleLogOut}>
+          <Icon size={12} name="logOut" className="mr-2" />
+          <Text>{t('component:navbar.logout', 'Log out')}</Text>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
     </DropdownMenu>
   )
 }

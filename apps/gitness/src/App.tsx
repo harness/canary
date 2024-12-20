@@ -12,8 +12,8 @@ import {
   NewPasswordPage as NewPasswordPageV2,
   OTPPage as OTPPageV2,
   RepoSettingsPage,
-  SandboxLayout,
-  SettingsAccountPage
+  SandboxLayout
+  // SettingsAccountPage
 } from '@harnessio/ui/views'
 import {
   ForgotPasswordPage,
@@ -655,7 +655,7 @@ export default function App() {
           element: <SandboxSettings />,
           children: [
             {
-              element: <SettingsAccountPage />,
+              element: <SettingsLayout />,
               children: [
                 {
                   index: true,

@@ -8,7 +8,6 @@ import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from
 import { Icon } from '@harnessio/ui/components'
 import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -56,9 +55,6 @@ export default function RepoExecutionListPage() {
 
   return (
     <>
-      <div className="breadcrumbs">
-        <Breadcrumbs />
-      </div>
       <ExecutionListPage
         useExecutionListStore={useExecutionListStore}
         useTranslationStore={useTranslationStore}

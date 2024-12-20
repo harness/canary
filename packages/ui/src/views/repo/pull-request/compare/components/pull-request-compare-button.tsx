@@ -61,7 +61,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             <Button
               theme="primary"
               variant="split"
-              size="xs_split"
+              size="md_split"
               onClick={handleCreateClick}
               dropdown={
                 <DropdownMenu>

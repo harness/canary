@@ -10,7 +10,7 @@ import {
   Topbar
 } from '@harnessio/ui/components'
 
-function BreadcrumbsNew() {
+function BreadcrumbsNew({ selectedProject }: { selectedProject: string }) {
   const matches = useMatches()
 
   return (
@@ -19,7 +19,8 @@ function BreadcrumbsNew() {
         <Breadcrumb className="select-none">
           <BreadcrumbList>
             <nav className="flex items-start gap-1">
-              <span className="ml-1">Selected Project</span>
+              <span className="ml-1">{selectedProject}</span>
+
               {matches.map((match, index) => {
                 /** @ts-expect-error should be of type "CustomHandle". @TODO fix this properly */
                 const { breadcrumb } = match.handle || {}

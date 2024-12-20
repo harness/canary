@@ -1,9 +1,4 @@
-import {
-  ListBranchesOkResponse,
-  RepoRepositoryOutput,
-  TypesBranchExtended,
-  TypesCommitDivergence
-} from '@harnessio/code-service-client'
+import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
 import { BranchData } from '@harnessio/ui/views'
 
 import { timeAgoFromISOTime } from '../../../pages/pipeline-edit/utils/time-utils'
@@ -38,6 +33,6 @@ export function apiBranches2BranchNames(apiBranches?: ListBranchesOkResponse) {
   return apiBranches?.map(apiBranch => apiBranch.name ?? '')
 }
 
-export function apiRepository2DefaultBranchName(apiRepo?: RepoRepositoryOutput, defaultBranch = 'main') {
-  return apiRepo?.default_branch ?? defaultBranch
+export function apiBranches2DefaultBranchName(apiBranches?: ListBranchesOkResponse, defaultBranch = 'main') {
+  return apiBranches?.find(apiBranch => apiBranch.is_default)?.name ?? defaultBranch
 }

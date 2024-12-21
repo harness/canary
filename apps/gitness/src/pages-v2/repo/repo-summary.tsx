@@ -40,7 +40,7 @@ import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } fr
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
-export default function RepoSummaryPage() {
+export default function RepoSummaryPage({ isMFE = false }: { isMFE?: boolean }) {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
@@ -271,7 +271,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
+              path: `${!isMFE ? `/${spaceId}` : ''}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }
@@ -300,9 +300,9 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${spaceId}/repos/${repoId}/code/${gitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${!isMFE ? `${spaceId}/repos/${repoId}/` : ''}code/${gitRef || selectedBranchTag.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranchTag, navigate, repoId, spaceId]
+    [gitRef, selectedBranchTag, navigate, repoId, spaceId, isMFE]
   )
 
   const latestCommitInfo = useMemo(() => {

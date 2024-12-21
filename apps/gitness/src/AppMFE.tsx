@@ -142,7 +142,7 @@ export default function AppMFE({
                 children: [
                   {
                     index: true,
-                    element: <RepoSummaryPage />,
+                    element: <RepoSummaryPage isMFE={true} />,
                     handle: { breadcrumb: () => <span>Summary</span> }
                   },
                   {

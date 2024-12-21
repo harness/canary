@@ -138,7 +138,11 @@
     "evenTriggerLabel": "Quels événements souhaitez-vous utiliser pour déclencher ce webhook ?",
     "evenTriggerAllLabel": "Envoyez-moi tout",
     "eventTriggerIndividualLabel": "Permettez-moi de sélectionner des événements individuels",
-    "createWebhookTitle": "Créer un webhook"
+    "createWebhookTitle": "Créer un webhook",
+    "updatingWebhook": "Updating webhook...",
+    "creatingWebhook": "Creating webhook...",
+    "updateWebhook": "Update webhook",
+    "createWebhook": "Create webhook"
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

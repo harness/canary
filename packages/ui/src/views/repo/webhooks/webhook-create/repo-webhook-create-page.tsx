@@ -132,14 +132,14 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                         {isLoading
                           ? preSetWebhookData
-                            ? 'Updating webhook...'
-                            : 'Creating webhook...'
+                            ? t('views:repos.updatingWebhook', 'Updating webhook...')
+                            : t('views:repos.creatingWebhook', 'Creating webhook...')
                           : preSetWebhookData
-                            ? 'Update webhook'
-                            : 'Create webhook'}
+                            ? t('views:repos.updateWebhook', 'Update webhook')
+                            : t('views:repos.createWebhook', 'Create webhook')}
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
-                        Cancel
+                        {t('views:repos.cancel', 'Cancel')}
                       </Button>
                     </>
                   </ButtonGroup>

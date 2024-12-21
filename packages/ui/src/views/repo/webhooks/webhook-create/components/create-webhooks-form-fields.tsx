@@ -14,12 +14,12 @@ import {
 
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '../types'
 
-export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue }) => (
+export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
   <StackedList.Root className="bg-tertiary/2 border-none" borderBackground>
     <StackedList.Item disableHover isHeader>
       <StackedList.Field
-        title="Enable the webhook"
-        description="We will deliver event details when this hook is triggered"
+        title={t('views:repos.enableWebhookToggle', 'Enable the webhook')}
+        description={t('views:repos.toggleDescription', 'We will deliver event details when this hook is triggered')}
       />
       <StackedList.Field
         label
@@ -42,7 +42,8 @@ export const WebhookToggleField: React.FC<WebhookFormFieldProps> = ({ register, 
 export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: boolean }> = ({
   register,
   errors,
-  disabled
+  disabled,
+  t
 }) => (
   <ControlGroup>
     <Input
@@ -51,49 +52,49 @@ export const WebhookNameField: React.FC<WebhookFormFieldProps & { disabled: bool
       placeholder="Name your webhook"
       autoFocus
       disabled={disabled}
-      label="Name"
+      label={t('views:repos.name', 'Name')}
       error={errors?.identifier?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
+export const WebhookDescriptionField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Textarea
       id="description"
       {...register!('description')}
-      placeholder="Enter a description of this rule..."
-      label="Description"
+      placeholder={t('views:repos.desciptionPlaceholder', 'Enter a description of this rule...')}
+      label={t('views:repos.desciption', 'Description')}
       error={errors?.description?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
+export const WebhookPayloadUrlField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
       id="payloadUrl"
       {...register!('url')}
-      placeholder="https://example.com/harness"
-      label="Payload URL"
+      placeholder={t('views:repos.urlPlaceholder', 'https://example.com/harness')}
+      label={t('views:repos.urlLabel', 'Payload URL')}
       error={errors?.url?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, errors }) => (
+export const WebhookSecretField: React.FC<WebhookFormFieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Input
       id="secret"
       {...register!('secret')}
       type="password"
-      label="Secret"
+      label={t('views:repos.secret', 'Secret')}
       error={errors?.secret?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
+export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
   const sslVerificationValue = watch!('insecure')
   const handleAccessChange = (value: string) => {
     setValue!('insecure', value)
@@ -103,19 +104,19 @@ export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ w
     <Fieldset className="mb-0">
       <ControlGroup>
         <Label htmlFor="insecure" className="mb-5">
-          SSL Verification
+          {t('views:repos.sslVerification', 'SSL Verification')}
         </Label>
         <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
           <Option
             control={<RadioGroupItem value="1" id="enable-ssl" />}
             id="enable-ssl"
-            label="Enable SSL Verification"
+            label={t('views:repos.sslVerificationLabel', 'Enable SSL Verification')}
           />
           <Option
             control={<RadioGroupItem value="2" id="disable-ssl" />}
             id="disable-ssl"
-            label="Disable SSL verification"
-            description="Not recommended for production use"
+            label={t('views:repos.disableSslLabel', 'Disable SSL verification')}
+            description={t('views:repos.disableSslDescription', 'Not recommended for production use')}
           />
         </RadioGroup>
       </ControlGroup>
@@ -123,7 +124,7 @@ export const WebhookSSLVerificationField: React.FC<WebhookFormFieldProps> = ({ w
   )
 }
 
-export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, setValue }) => {
+export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, setValue, t }) => {
   const sslVerificationValue = watch!('trigger')
   const handleTriggerChange = (value: string) => {
     setValue!('trigger', value)
@@ -136,14 +137,18 @@ export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, se
     <Fieldset className="mb-0">
       <ControlGroup>
         <Label htmlFor="trigger" className="mb-5">
-          Which events would you like to use to trigger this webhook?
+          {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
         </Label>
         <RadioGroup value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">
-          <Option control={<RadioGroupItem value="1" id="all-events" />} id="all-events" label="Send me everything" />
+          <Option
+            control={<RadioGroupItem value="1" id="all-events" />}
+            id="all-events"
+            label={t('views:repos.evenTriggerAllLabel', 'Send me everything')}
+          />
           <Option
             control={<RadioGroupItem value="2" id="select-events" />}
             id="select-events"
-            label="Let me select individual events"
+            label={t('views:repos.eventTriggerIndividualLabel', 'Let me select individual events')}
           />
         </RadioGroup>
       </ControlGroup>

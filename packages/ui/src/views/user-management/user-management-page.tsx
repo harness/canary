@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 
@@ -10,7 +8,6 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   useAdminListUsersStore,
   useTranslationStore
 }) => {
-  const navigate = useNavigate()
   const { users: userData, totalPages, page: currentPage, setPage } = useAdminListUsersStore()
   const { t } = useTranslationStore()
 

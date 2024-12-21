@@ -159,8 +159,7 @@ export const WebhookTriggerField: React.FC<WebhookFormFieldProps> = ({ watch, se
 export const WebhookEventSettingsFieldset: React.FC<WebhookFormFieldProps & { eventList: WebhookEvent[] }> = ({
   watch,
   setValue,
-  eventList,
-  t
+  eventList
 }) => {
   const currentArray = (watch!('triggers') || []) as WebhookTriggerEnum[]
 

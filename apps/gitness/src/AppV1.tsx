@@ -48,6 +48,7 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
+import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import { Logout } from './pages/logout'
 import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
@@ -260,17 +261,15 @@ export default function AppV1() {
                       element: <RepoSettingsGeneralPageContainer />,
                       handle: {
                         breadcrumb: () => <Text>Rules</Text>
-                      },
+                      }
+                    },
+                    {
+                      path: 'rules/create',
+                      element: <RepoBranchSettingsRulesPageContainer />,
                       children: [
                         {
-                          path: 'create',
-                          element: <RepoBranchSettingsRulesPageContainer />,
-                          children: [
-                            {
-                              path: ':identifier',
-                              element: <RepoBranchSettingsRulesPageContainer />
-                            }
-                          ]
+                          path: ':identifier',
+                          element: <RepoBranchSettingsRulesPageContainer />
                         }
                       ]
                     },
@@ -280,6 +279,16 @@ export default function AppV1() {
                       handle: {
                         breadcrumb: () => <Text>Webhooks</Text>
                       }
+                    },
+                    {
+                      path: 'webhooks/create',
+                      element: <CreateWebhookContainer />,
+                      children: [
+                        {
+                          path: ':webhookId',
+                          element: <CreateWebhookContainer />
+                        }
+                      ]
                     }
                   ]
                 }

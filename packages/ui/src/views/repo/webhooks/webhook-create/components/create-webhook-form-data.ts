@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next'
 
-import { WebhookEvent, WebhookTriggerEnum } from '../types'
+import { WebhookTriggerEnum } from '../types'
 
 export const getBranchEvents = (t: TFunction) => [
   { id: WebhookTriggerEnum.BRANCH_CREATED, event: t('views:webhookData.branchCreated', 'Branch created') },

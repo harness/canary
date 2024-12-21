@@ -273,7 +273,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
+              path: `${!isMFE ? `/${spaceId}` : ''}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }
@@ -304,7 +304,7 @@ export default function RepoSummaryPage() {
     (filePath: string) => {
       navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchTag.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranchTag, navigate, repoId, spaceId]
+    [gitRef, selectedBranchTag, navigate, repoId, spaceId, isMFE]
   )
 
   const latestCommitInfo = useMemo(() => {

@@ -1,4 +1,21 @@
-import { Badge, NoData, Spacer, StackedList, Text } from '@/components'
+import { Link } from 'react-router-dom'
+
+import {
+  Badge,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuTrigger,
+  Icon,
+  NoData,
+  Spacer,
+  StackedList,
+  Text
+} from '@/components'
 
 import { WebhookType } from './types'
 
@@ -12,6 +29,7 @@ export interface PageProps {
   handleNavigate: () => void
   loading: boolean
   error?: string
+  openDeleteWebhookDialog: (id: number) => void
 }
 
 const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
@@ -23,6 +41,47 @@ const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
   </div>
 )
 
+const Action = ({ id, openDeleteWebhookDialog }: { id: number; openDeleteWebhookDialog: (id: number) => void }) => {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="xs">
+          <Icon name="vertical-ellipsis" size={14} className="cursor-pointer text-tertiary-background" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent>
+        <DropdownMenuGroup>
+          <Link to={`create/${id}`}>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={e => {
+                e.stopPropagation()
+              }}
+            >
+              <DropdownMenuShortcut className="ml-0">
+                <Icon name="edit-pen" className="mr-2" />
+              </DropdownMenuShortcut>
+              Edit webhook
+            </DropdownMenuItem>
+          </Link>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            className="cursor-pointer text-destructive"
+            onClick={e => {
+              e.stopPropagation()
+              openDeleteWebhookDialog(id)
+            }}
+          >
+            <DropdownMenuShortcut className="ml-0">
+              <Icon name="trash" className="mr-2 text-destructive" />
+            </DropdownMenuShortcut>
+            Delete webhook
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 export function RepoWebhookList({
   webhooks,
   LinkComponent,
@@ -31,6 +90,7 @@ export function RepoWebhookList({
   query,
   handleResetQuery,
   handleNavigate,
+  openDeleteWebhookDialog,
   error
 }: PageProps) {
   const renderListContent = () => {
@@ -77,7 +137,7 @@ export function RepoWebhookList({
     return (
       <>
         {webhooks?.map((webhook, webhook_idx) => (
-          <LinkComponent key={`${webhook.name}-${webhook_idx}`} to={webhook.name}>
+          <LinkComponent key={`${webhook.name}-${webhook_idx}`} to={`create/${webhook.id}`}>
             <StackedList.Item key={webhook.name} isLast={webhooks.length - 1 === webhook_idx}>
               <StackedList.Field
                 primary
@@ -86,14 +146,10 @@ export function RepoWebhookList({
                 className="gap-1.5"
               />
               <StackedList.Field
-                title={
-                  <>
-                    Updated <em>{webhook.createdAt}</em>
-                  </>
-                }
-                right
                 label
                 secondary
+                title={<Action id={webhook.id ?? 0} openDeleteWebhookDialog={openDeleteWebhookDialog} />}
+                right
               />
             </StackedList.Item>
           </LinkComponent>

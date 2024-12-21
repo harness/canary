@@ -20,17 +20,12 @@ import {
   TableRow,
   Text
 } from '@/components'
-import { getInitials, timeAgo } from '@/utils/utils'
+import { getInitials } from '@/utils/utils'
 
 import { UsersProps } from '../types'
 
 interface PageProps {
   users: UsersProps[]
-  // onDelete: (user: UsersProps) => void
-  // onEdit: (user: UsersProps) => void
-  // onRemoveAdmin: (user: UsersProps) => void
-  // onResetPassword: (user: UsersProps) => void
-  // onSetAdmin: (user: UsersProps) => void
 }
 
 // fix the edit form dialog and mock data and coressponding props
@@ -48,46 +43,26 @@ export const UsersList = ({ users }: PageProps) => {
           onCloseAutoFocus={event => event.preventDefault()}
         >
           <DropdownMenuGroup>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              // onSelect={() => {
-              //   return user.admin ? onRemoveAdmin(user) : onSetAdmin(user)
-              // }}
-            >
+            <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="trash" className="mr-2" />
               </DropdownMenuShortcut>
               {user.admin ? 'Remove Admin' : 'Set as Admin'}
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              // onSelect={() => {
-              //   onResetPassword(user)
-              // }}
-            >
+            <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="cog-6" className="mr-2" />
               </DropdownMenuShortcut>
               Reset Password
             </DropdownMenuItem>
-            <DropdownMenuItem
-              className="cursor-pointer"
-              // onSelect={() => {
-              //   onEdit(user)
-              // }}
-            >
+            <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="edit-pen" className="mr-2" />
               </DropdownMenuShortcut>
               Edit User
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400"
-              // onSelect={() => {
-              //   onDelete(user)
-              // }}
-            >
+            <DropdownMenuItem className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400">
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="trash" className="mr-2 text-red-400" />
               </DropdownMenuShortcut>
@@ -103,9 +78,9 @@ export const UsersList = ({ users }: PageProps) => {
     <Table variant="asStackedList">
       <TableHeader>
         <TableRow>
-          <TableHead className="text-primary">User</TableHead>
-          <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-primary">Role Binding</TableHead>
+          <TableHead>User</TableHead>
+          <TableHead>Email</TableHead>
+          <TableHead>Role Binding</TableHead>
           {/* <TableHead className="text-right text-primary">Date added</TableHead> */}
           <TableHead>
             <></>
@@ -118,8 +93,8 @@ export const UsersList = ({ users }: PageProps) => {
             return (
               <TableRow key={user.uid}>
                 {/* NAME */}
-                <TableCell>
-                  <div className="flex items-center gap-4">
+                <TableCell className="my-6 content-center">
+                  <div className="flex items-center gap-2">
                     <Avatar className="size-6 rounded-full p-0">
                       {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
                       <AvatarFallback>{getInitials(user.uid!, 2)}</AvatarFallback>
@@ -147,31 +122,11 @@ export const UsersList = ({ users }: PageProps) => {
                   </div>
                 </TableCell>
 
-                {/* displayName */}
-                {/* <TableCell className="my-6 content-center">
-                  <div className="flex gap-1.5">
-                    <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                      {user.display_name}
-                    </Text>
-                  </div>
-                </TableCell> */}
                 {/* @TODO: add roll binding data when available */}
-                <TableCell></TableCell>
-
-                {/* TimeStamp */}
-                {/* <TableCell className="my-6 content-center">
-                  <div className="flex items-center justify-end gap-1.5">
-                    <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                      {timeAgo(user.created)}
-                    </Text>
-                  </div>
-                </TableCell> */}
+                <TableCell className="my-6 content-center"></TableCell>
 
                 <TableCell className="my-6 content-center">
-                  <div className="flex items-center justify-end gap-1.5">
-                    {/* <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" /> */}
-                    {moreActionsTooltip({ user })}
-                  </div>
+                  <div className="flex items-center justify-end">{moreActionsTooltip({ user })}</div>
                 </TableCell>
               </TableRow>
             )

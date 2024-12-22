@@ -29,12 +29,12 @@ const Filter = <T,>({
   // Handles when a new value is set
   const handleChange = (value: T) => {
     const serializedValue = parser.serialize(value)
-    updateFilter(filterKey, serializedValue)
+    updateFilter(filterKey, serializedValue, value)
   }
 
   // Retrieves the raw and parsed filter value
   const rawValue = getFilterValue(filterKey)
-  const parsedValue = parser.parse(rawValue) ?? (rawValue as T)
+  const parsedValue = rawValue as T
 
   // Render the children with the injected props
   return (

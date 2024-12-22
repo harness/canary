@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactNode, useEffect, useRef } from 'react'
+import React, { ReactElement, ReactNode, useRef } from 'react'
 import { useFiltersContext } from './Filters'
 import { FilterStatus, FilterTypeWithComponent } from './types'
 
@@ -21,8 +21,10 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
           filterKey: child.props.filterKey,
           value: null,
           query: null,
-          state: FilterStatus.HIDDEN,
-          component: child as ReactElement
+          state: child.props.isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN,
+          component: child as ReactElement,
+          isSticky: child.props.isSticky,
+          parser: child.props.parser
         }
       } else {
         acc.nonFilterableChildren.push(child) // Collect components without filterKey

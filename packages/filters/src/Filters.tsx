@@ -19,20 +19,18 @@ interface FiltersContextType<FilterKeys extends string> {
   removeFilter: (filterKey: FilterKeys) => void
   addFilter: (filterKey: FilterKeys) => void
   getFilterValue: (filterKey: FilterKeys) => any
-  updateFilter: (filterKey: FilterKeys, value: any) => void
+  updateFilter: (filterKey: FilterKeys, parsedValue: any, value: any) => void
   addInitialFilters: (filtersMap: Record<FilterKeys, FilterType>) => void
 }
 
 const FiltersContext = createContext<FiltersContextType<any> | null>(null)
 
-interface FiltersProps<FilterKeys extends string> {
-  filters: FilterKeys[]
-  stickyFilters?: FilterKeys[]
+interface FiltersProps {
   children: ReactNode
 }
 
 const Filters = forwardRef(function Filters<FilterKeys extends string>(
-  { filters, stickyFilters = [], children }: FiltersProps<FilterKeys>,
+  { children }: FiltersProps,
   ref: React.Ref<{ getValues: () => { key: FilterKeys; value: any }[] }>
 ) {
   const [filtersOrder, setFiltersOrder] = useState<FilterKeys[]>([])
@@ -44,7 +42,7 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     // merge params into search params and update the URL.
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
     searchParams.forEach((value, key) => {
-      if (!filters.includes(key as FilterKeys)) {
+      if (!filtersMap[key as FilterKeys]) {
         paramsOtherthanFilters.append(key, value)
       }
     })
@@ -74,9 +72,9 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     updateURL(new URLSearchParams(query))
   }
 
-  const updateFilter = (filterKey: FilterKeys, value: any) => {
+  const updateFilter = (filterKey: FilterKeys, parsedValue: any, value: any) => {
     debug('Updating filter: %s with value: %O', filterKey, value)
-    const updatedFiltersMap = { ...filtersMap, [filterKey]: getUpdatedFilter(filterKey, value) }
+    const updatedFiltersMap = { ...filtersMap, [filterKey]: getUpdatedFilter(filterKey, parsedValue, value) }
     setFiltersMap(updatedFiltersMap)
 
     // when updating URL, include params other than filters params.
@@ -95,23 +93,15 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     // updating filters map state from search params
     searchParams?.forEach((value, key) => {
       if (filtersMap[key as FilterKeys]) {
+        const parser = filtersMap[key as FilterKeys].parser
+        const parsedValue = parser ? parser.parse(value) : value
+
         filtersMap[key as FilterKeys] = {
           ...filtersMap[key as FilterKeys],
-          value,
+          value: parsedValue,
           query: value,
           state: FilterStatus.FILTER_APPLIED
         }
-      }
-    })
-
-    // add sticky filters
-    stickyFilters.forEach(filter => {
-      if (!filtersMap[filter]) {
-        filtersMap[filter] = createNewFilter(filter)
-      }
-
-      if (filtersMap[filter].state === FilterStatus.HIDDEN) {
-        filtersMap[filter].state = FilterStatus.VISIBLE
       }
     })
 
@@ -140,10 +130,12 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
 
     searchParams.forEach((value, key) => {
       if (filtersMap[key as FilterKeys]) {
+        const parser = filtersMap[key as FilterKeys].parser
+        const parsedValue = parser ? parser.parse(value) : value
         // @ts-ignore
         searchParamsFiltersMap[key] = {
           ...filtersMap[key as FilterKeys],
-          value,
+          value: parsedValue,
           query: value,
           state: FilterStatus.FILTER_APPLIED
         }
@@ -163,34 +155,31 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
   }, [searchParams])
 
   const createNewFilter = (filterKey: FilterKeys): FilterType => ({
+    ...filtersMap[filterKey],
     filterKey,
     value: null,
     query: null,
     state: FilterStatus.VISIBLE
   })
 
-  const getUpdatedFilter = (filterKey: FilterKeys, value: any): FilterType => {
-    const parsedValue = value
+  const getUpdatedFilter = (filterKey: FilterKeys, parsedValue: any, value: any): FilterType => {
     const isValueNullable = parsedValue === '' || parsedValue === undefined || parsedValue === null
     return {
+      ...filtersMap[filterKey],
       filterKey,
-      value: parsedValue,
+      value: value,
       query: isValueNullable ? null : parsedValue,
       state: isValueNullable ? FilterStatus.VISIBLE : FilterStatus.FILTER_APPLIED
     }
   }
 
   const getValues = () => {
-    if (Object.keys(filtersMap).length === 0) {
-      if (initialFiltersRef.current) {
-        return Object.keys(initialFiltersRef.current).map(key => ({
-          key,
-          value: initialFiltersRef.current?.[key as FilterKeys].value
-        }))
-      }
-    }
+    const filters = Object.keys(filtersMap).length === 0 ? initialFiltersRef.current : filtersMap
 
-    return Object.keys(filtersMap).map(key => ({ key, value: filtersMap[key as FilterKeys].value }))
+    return Object.keys(filters || {}).map(key => {
+      const filter = filters?.[key as FilterKeys]
+      return { key, value: filter?.value }
+    })
   }
 
   const resetFilters = () => {
@@ -198,20 +187,23 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     // remove values also from sticky filters
     const updatedFiltersMap = { ...filtersMap }
     Object.keys(updatedFiltersMap).forEach(key => {
-      if (!stickyFilters.includes(key as FilterKeys)) {
-        delete updatedFiltersMap[key as FilterKeys]
-      } else {
+      if (updatedFiltersMap[key as FilterKeys].isSticky) {
         updatedFiltersMap[key as FilterKeys] = {
           ...updatedFiltersMap[key as FilterKeys],
           value: null,
           query: null,
           state: FilterStatus.VISIBLE
         }
+      } else {
+        delete updatedFiltersMap[key as FilterKeys]
       }
     })
 
     setFiltersMap(updatedFiltersMap)
-    setFiltersOrder(stickyFilters)
+    const stickyFilters = Object.keys(updatedFiltersMap).filter(
+      filter => updatedFiltersMap[filter as FilterKeys].isSticky
+    )
+    setFiltersOrder(stickyFilters as FilterKeys[])
     const query = createQueryString(stickyFilters, updatedFiltersMap)
     debug('Updating URL with query: %s', query)
     updateURL(new URLSearchParams(query))
@@ -223,7 +215,9 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     reset: resetFilters
   }))
 
-  const availableFilters = filters.filter(filter => !filtersOrder.includes(filter))
+  const availableFilters = Object.keys(filtersMap).filter(
+    filter => filtersMap[filter as FilterKeys].state === FilterStatus.HIDDEN
+  )
 
   const getFilterValue = (filterKey: FilterKeys) => {
     return filtersMap[filterKey]?.value || null
@@ -259,7 +253,7 @@ export const useFiltersContext = <FilterKeys extends string>() => {
 export { Filters }
 
 type FiltersView = 'dropdown' | 'row'
-interface FiltersWrapperProps extends FiltersProps<string> {
+interface FiltersWrapperProps extends FiltersProps {
   view?: FiltersView
 }
 
@@ -269,7 +263,7 @@ const FiltersWrapper = forwardRef(function FiltersWrapper(
 ) {
   if (view === 'row') {
     // Forward the ref to Filters when using 'row' view
-    return <Filters {...props} ref={ref} stickyFilters={[...props.filters]} />
+    return <Filters {...props} ref={ref} />
   }
 
   // Forward the ref to Filters when using other views

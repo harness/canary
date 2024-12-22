@@ -3,6 +3,8 @@ export interface FilterType<T = any> {
   value: T
   query: string | null
   state: FilterStatus
+  isSticky?: boolean
+  parser?: Parser<T>
 }
 
 export interface FilterTypeWithComponent<T = any> extends FilterType<T> {

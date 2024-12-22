@@ -1,9 +1,10 @@
 import { useMemo } from 'react'
 
-import { Avatar, AvatarFallback, Button, Icon, MarkdownViewer, Text } from '@components/index'
+import { Avatar, AvatarFallback, Button, Icon, Layout, MarkdownViewer, Text } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
+import { TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/diff-viewer/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
@@ -21,7 +22,7 @@ import {
   PRCommentFilterType,
   TypesPullReqActivity
 } from '../../pull-request-details-types'
-import { isCodeComment, isComment, isSystemComment } from '../../pull-request-utils'
+import { isCodeComment, isComment, isSystemComment, removeLastPlus } from '../../pull-request-utils'
 import PullRequestDescBox from './pull-request-description-box'
 import { PullRequestStatusSelect } from './pull-request-status-select-button'
 import PullRequestSystemComments from './pull-request-system-comments'
@@ -32,6 +33,8 @@ interface PullRequestOverviewProps {
   currentUser?: { display_name?: string; uid?: string }
   handleSaveComment: (comment: string, parentId?: number) => void
   refetchActivities: () => void
+  useTranslationStore: () => TranslationStore
+
   // data: CommentItem<TypesPullReqActivity>[][]
   pullReqMetadata: TypesPullReq | undefined
   activityFilter: { label: string; value: string }
@@ -61,8 +64,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   commentStatusPullReq,
   repoId,
   refetchActivities,
-  currentUser
+  currentUser,
+  useTranslationStore
 }) => {
+  const { t } = useTranslationStore()
+
   const {
     // mode,
     // setMode,
@@ -165,7 +171,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                 `${get(payload, 'payload.title', '')} ttttt`,
                 ...get(payload, 'payload.lines', [])
               ].join('\n')
-
               if (payload?.type === ('code-comment' as EnumPullReqActivityType)) {
                 const startingLine =
                   parseStartingLineIfOne(codeDiffSnapshot ?? '') !== null
@@ -199,7 +204,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           <Text size={3} color="primary">
                             {(payload?.code_comment as PayloadCodeComment)?.path}
                           </Text>
-                          <div className="flex gap-x-2">
+                          <div className="flex items-center gap-x-2">
                             {/* TODO: fix states on this on a comment like resolved and active */}
                             <PullRequestStatusSelect
                               refetchActivities={refetchActivities}
@@ -221,7 +226,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         ) : null}
 
                         <PullRequestDiffViewer
-                          data={codeDiffSnapshot}
+                          data={removeLastPlus(codeDiffSnapshot)}
                           fileName={payload?.code_comment?.path ?? ''}
                           lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
                           fontsize={fontsize}
@@ -255,16 +260,33 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     name: ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
                                       ?.display_name,
                                     // TODO: fix comment to tell between comment or code comment?
-                                    description:
-                                      commentItem.created && `${timeAgo((commentItem as PayloadCreated)?.created)}`
+                                    description: (
+                                      <Layout.Horizontal>
+                                        <span className="text-foreground-3">
+                                          {timeAgo((commentItem as PayloadCreated)?.created)}
+                                        </span>
+                                        {commentItem?.deleted ? (
+                                          <>
+                                            <span className="text-foreground-3">&nbsp;|&nbsp;</span>
+                                            <span className="text-foreground-3">
+                                              {t('views:pullRequests.deleted')}{' '}
+                                            </span>
+                                          </>
+                                        ) : null}
+                                      </Layout.Horizontal>
+                                    )
                                   }
                                 ]}
                                 hideReply
                                 contentClassName="border-transparent"
                                 content={
-                                  <div className="flex py-1">
-                                    <MarkdownViewer source={commentItem.payload?.payload?.text || ''} />
-                                  </div>
+                                  commentItem?.deleted ? (
+                                    <div className="rounded-md border bg-primary-background p-1">
+                                      {t('views:pullRequests.deletedComment')}
+                                    </div>
+                                  ) : (
+                                    <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
+                                  )
                                 }
                                 key={`${commentItem.id}-${commentItem.author}`}
                               />
@@ -307,7 +329,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         </div>
                       ),
                       selectStatus: (
-                        <div className="flex gap-x-2">
+                        <div className="flex items-center gap-x-2">
                           <PullRequestStatusSelect
                             refetchActivities={refetchActivities}
                             commentStatusPullReq={commentStatusPullReq}
@@ -317,6 +339,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             pullReqMetadata={pullReqMetadata}
                             repoId={repoId}
                           />
+                          <Button name="vertical-ellipsis" size="sm" variant="ghost" className="rotate-90">
+                            <Icon name="vertical-ellipsis" size={12} />
+                          </Button>
                         </div>
                       )
                     }
@@ -347,15 +372,32 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 name: ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
                                   ?.display_name,
                                 // TODO: fix comment to tell between comment or code comment?
-                                description:
-                                  commentItem?.created && `${timeAgo((commentItem as PayloadCreated)?.created)}`
+                                description: (
+                                  <Layout.Horizontal>
+                                    <span className="text-foreground-3">
+                                      {timeAgo((commentItem as PayloadCreated)?.created)}
+                                    </span>
+                                    {commentItem?.deleted ? (
+                                      <>
+                                        <span className="text-foreground-3">&nbsp;|&nbsp;</span>
+                                        <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                      </>
+                                    ) : null}
+                                  </Layout.Horizontal>
+                                )
                               }
                             ]}
                             hideReply
                             contentClassName="border-transparent pb-0"
                             content={
                               <div className="flex py-1">
-                                <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
+                                {commentItem?.deleted ? (
+                                  <div className="rounded-md border bg-primary-background p-1">
+                                    {t('views:pullRequests.deletedComment')}
+                                  </div>
+                                ) : (
+                                  <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
+                                )}
                               </div>
                             }
                             key={`${commentItem.id}-${commentItem.author}-pr-comment`}

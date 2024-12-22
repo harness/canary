@@ -151,6 +151,8 @@
     "split": "Split",
     "unified": "Unified",
     "viewed": "Viewed",
+    "deleted": "Deleted",
+    "deletedComment": "This comment was deleted.",
     "commits": "Commits"
   },
   "noData": {

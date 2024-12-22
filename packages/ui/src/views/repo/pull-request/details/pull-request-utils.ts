@@ -127,3 +127,17 @@ export function isCodeComment(commentItems: CommentItem<TypesPullReqActivity>[])
 export function isComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
   return commentItems[0]?.payload?.payload?.type === 'comment'
 }
+
+export function removeLastPlus(str: string) {
+  if (typeof str !== 'string' || str.length === 0) {
+    return str
+  }
+
+  // Check if the last character is a plus
+  if (str.charAt(str.length - 1) === '+') {
+    // Remove the last character
+    return str.slice(0, -1)
+  }
+
+  return str
+}

@@ -151,6 +151,8 @@
     "split": "Diviser",
     "unified": "Unifié",
     "viewed": "Vu",
+    "deleted": "Supprimé",
+    "deletedComment": "Ce commentaire a été supprimé.",
     "commits": "Commets"
   },
   "noData": {

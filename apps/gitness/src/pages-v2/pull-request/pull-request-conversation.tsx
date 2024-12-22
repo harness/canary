@@ -34,6 +34,7 @@ import {
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
   capitalizeFirstLetter,
   checkIfOutdatedSha,
@@ -438,6 +439,7 @@ export default function PullRequestConversationPage() {
             <Spacer size={6} />
 
             <PullRequestOverview
+              useTranslationStore={useTranslationStore}
               repoId={repoRef}
               refetchActivities={refetchActivities}
               commentStatusPullReq={commentStatusPullReq}

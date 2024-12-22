@@ -30,10 +30,7 @@ export const MoreActionsTooltip: React.FC<MoreActionsTooltipProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[180px] rounded-[10px] border border-borders-1 bg-background-2 py-2 shadow-sm">
         <DropdownMenuGroup>
-          <Link
-            replace
-            to={`/spaces/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${branchInfo.name}`}
-          >
+          <Link replace to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${branchInfo.name}`}>
             <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">
                 <Icon name="pr-open" className="mr-2 fill-none" />

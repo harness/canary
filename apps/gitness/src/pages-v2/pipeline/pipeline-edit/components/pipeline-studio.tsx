@@ -2,11 +2,11 @@ import { useCallback, useEffect, useMemo } from 'react'
 
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup, Sheet, SheetContent } from '@harnessio/canary'
 import { useListBranchesQuery } from '@harnessio/code-service-client'
-import { Container, getInitials, PipelineStudioFooterBar } from '@harnessio/views'
+import { getInitials, PipelineStudioFooterBar } from '@harnessio/views'
 
-import { useExitPrompt } from '../../../framework/hooks/useExitPrompt'
-import { useGetRepoRef } from '../../../framework/hooks/useGetRepoPath'
-import { getTrimmedSha } from '../../../utils/git-utils'
+import { useExitPrompt } from '../../../../framework/hooks/useExitPrompt'
+import { useGetRepoRef } from '../../../../framework/hooks/useGetRepoPath'
+import { getTrimmedSha } from '../../../../utils/git-utils'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { PipelineStudioView } from '../types/types'
@@ -118,30 +118,28 @@ export default function PipelineEdit() {
   )
 
   return (
-    <Container.Root wFull={true} hFull={true} className="h-[calc(100vh-54px)]">
-      <Container.Main>
-        <div>
-          <PipelineStudioHeaderActions />
-          <PipelineStudioToolbar view={view} setView={view => setView(view as PipelineStudioView)} />
-        </div>
-        {drawer}
-        {main}
-        <PipelineStudioFooterBar
-          lastCommitInfo={{
-            authorName: latestCommitAuthor?.identity?.name ?? '',
-            committedTimeAgo: latestCommitAuthor?.when ? timeAgoFromISOTime(latestCommitAuthor.when) : '',
-            authorInitials: getInitials(latestCommitAuthor?.identity?.name ?? ''),
-            commitMessage: pipelineFileContent?.latest_commit?.message,
-            commitSha: getTrimmedSha(pipelineFileContent?.latest_commit?.sha ?? '')
-          }}
-          currentBranch={currentBranch}
-          branches={branchesNames}
-          branchesLoading={listBranchesLoading || fetchingPipelineFileContent}
-          onBranchChange={branch => confirmExit().then(confirmed => confirmed && setCurrentBranch(branch))}
-          problems={problemsCount}
-          togglePane={() => setPanelOpen(!panelOpen)}
-        />
-      </Container.Main>
-    </Container.Root>
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 54px)' }}>
+      <div>
+        <PipelineStudioHeaderActions />
+        <PipelineStudioToolbar view={view} setView={view => setView(view as PipelineStudioView)} />
+      </div>
+      {drawer}
+      {main}
+      <PipelineStudioFooterBar
+        lastCommitInfo={{
+          authorName: latestCommitAuthor?.identity?.name ?? '',
+          committedTimeAgo: latestCommitAuthor?.when ? timeAgoFromISOTime(latestCommitAuthor.when) : '',
+          authorInitials: getInitials(latestCommitAuthor?.identity?.name ?? ''),
+          commitMessage: pipelineFileContent?.latest_commit?.message,
+          commitSha: getTrimmedSha(pipelineFileContent?.latest_commit?.sha ?? '')
+        }}
+        currentBranch={currentBranch}
+        branches={branchesNames}
+        branchesLoading={listBranchesLoading || fetchingPipelineFileContent}
+        onBranchChange={branch => confirmExit().then(confirmed => confirmed && setCurrentBranch(branch))}
+        problems={problemsCount}
+        togglePane={() => setPanelOpen(!panelOpen)}
+      />
+    </div>
   )
 }

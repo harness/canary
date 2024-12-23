@@ -1,4 +1,4 @@
-import { SandboxLayout } from '@harnessio/views'
+import { SandboxLayout } from '@harnessio/ui/views'
 import { YamlEditorContextProvider } from '@harnessio/yaml-editor'
 
 import PipelineStudio from './components/pipeline-studio'

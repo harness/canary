@@ -1,6 +1,6 @@
-import React, { ReactElement, ReactNode, useRef } from 'react'
+import React, { ReactNode, useRef } from 'react'
 import { useFiltersContext } from './Filters'
-import { FilterStatus, FilterTypeWithComponent } from './types'
+import { FilterStatus, InitializeFiltersConfigType } from './types'
 
 interface FiltersContentProps {
   children: ReactNode
@@ -11,42 +11,35 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
   const { visibleFilters, addInitialFilters } = useFiltersContext()
   const initializedFiltersRef = useRef(false)
 
-  const { filterableChildrenMap, nonFilterableChildren } = React.Children.toArray(children).reduce<{
-    filterableChildrenMap: Record<string, FilterTypeWithComponent>
-    nonFilterableChildren: ReactNode[]
+  const { components, filtersConfig } = React.Children.toArray(children).reduce<{
+    components: ReactNode[]
+    filtersConfig: Record<string, InitializeFiltersConfigType>
   }>(
     (acc, child) => {
       if (React.isValidElement(child) && child.props.filterKey !== null && typeof child.props.filterKey === 'string') {
-        acc.filterableChildrenMap[child.props.filterKey] = {
-          filterKey: child.props.filterKey,
-          value: null,
-          query: null,
-          state: child.props.isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN,
-          component: child as ReactElement,
-          isSticky: child.props.isSticky,
-          parser: child.props.parser
+        if (visibleFilters.includes(child.props.filterKey)) {
+          acc.components.push(child)
+        }
+
+        acc.filtersConfig[child.props.filterKey] = {
+          parser: child.props.parser,
+          isSticky: child.props.sticky,
+          state: FilterStatus.HIDDEN
         }
       } else {
-        acc.nonFilterableChildren.push(child) // Collect components without filterKey
+        acc.components.push(child)
       }
       return acc
     },
-    { filterableChildrenMap: {}, nonFilterableChildren: [] }
+    { components: [], filtersConfig: {} }
   )
 
   if (initializedFiltersRef.current === false) {
-    addInitialFilters(filterableChildrenMap)
+    addInitialFilters(filtersConfig)
     initializedFiltersRef.current = true
   }
 
-  const orderedFilters = visibleFilters.map(key => filterableChildrenMap[key]?.component).filter(Boolean)
-
-  return (
-    <div className={className}>
-      {orderedFilters}
-      {nonFilterableChildren}
-    </div>
-  )
+  return <div className={className}>{components}</div>
 }
 
 export default FiltersContent

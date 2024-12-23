@@ -15,6 +15,7 @@ interface FilterProps<T = string> {
     removeFilter: (filterKey: string) => void
   }) => React.ReactNode
   parser?: Parser<T>
+  sticky?: boolean
   className?: string
 }
 

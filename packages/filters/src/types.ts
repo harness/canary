@@ -1,12 +1,15 @@
 export interface FilterType<T = any> {
-  filterKey: string
   value: T
   query: string | null
   state: FilterStatus
-  isSticky?: boolean
-  parser?: Parser<T>
 }
 
+export interface FilterConfig<T = any> {
+  parser?: Parser<T>
+  isSticky?: boolean
+}
+
+export type InitializeFiltersConfigType = { state: FilterStatus } & FilterConfig
 export interface FilterTypeWithComponent<T = any> extends FilterType<T> {
   component: React.ReactElement
 }

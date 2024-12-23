@@ -2,8 +2,8 @@ import { stringify } from 'yaml'
 
 import { findPipeline, getContent, OpenapiGetContentOutput, TypesPipeline } from '@harnessio/code-service-client'
 
-import { DispatchFunc } from '../../../../hooks/useThunkReducer'
-import { decodeGitContent, normalizeGitRef } from '../../../../utils/git-utils'
+import { DispatchFunc } from '../../../../../hooks/useThunkReducer'
+import { decodeGitContent, normalizeGitRef } from '../../../../../utils/git-utils'
 import { starterPipelineV1 } from '../../utils/pipelines'
 import { deleteItemInArray, injectItemInArray, updateItemInArray } from '../../utils/yaml-utils'
 import { YamlRevision } from '../PipelineStudioDataProvider'

@@ -6,7 +6,7 @@ import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/brows
 
 import { InlineAction, MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
 
-import { useThemeStore } from '../../../framework/context/ThemeContext'
+import { useThemeStore } from '../../../../framework/context/ThemeContext'
 import { usePipelineDataContext, YamlRevision } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import unifiedSchema from '../schema/unifiedSchema.json'

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import { useYamlEditorContext } from '@harnessio/yaml-editor'
 
-import useThunkReducer from '../../../hooks/useThunkReducer'
+import useThunkReducer from '../../../../hooks/useThunkReducer'
 import type { InlineActionArgsType } from '../utils/inline-actions'
 import { countProblems, monacoMarkers2Problems } from '../utils/problems-utils'
 import {

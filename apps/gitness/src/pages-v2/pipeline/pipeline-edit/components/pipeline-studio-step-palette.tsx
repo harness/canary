@@ -13,7 +13,7 @@ import {
   StepsPaletteItem
 } from '@harnessio/views'
 
-import { PageResponseHeader } from '../../../types'
+import { PageResponseHeader } from '../../../../types'
 import { StepSource } from '../context/data-store/types'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'

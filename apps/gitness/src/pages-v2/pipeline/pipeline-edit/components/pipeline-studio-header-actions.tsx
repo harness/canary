@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { Button, DropdownMenuItem, SplitButton } from '@harnessio/canary'
 import { OpenapiCommitFilesRequest, useCommitFilesMutation } from '@harnessio/code-service-client'
 
-import RunPipelineDialog from '../../run-pipeline-dialog/run-pipeline-dialog'
+import RunPipelineDialog from '../../../../pages/run-pipeline-dialog/run-pipeline-dialog'
 import { PipelineParams, usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 
 const PipelineStudioHeaderActions = (): JSX.Element => {

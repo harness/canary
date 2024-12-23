@@ -4,8 +4,8 @@ import { noop } from 'lodash-es'
 import { FileToolbarActions } from '@harnessio/ui/components'
 import { Topbar, VisualYamlToggle } from '@harnessio/views'
 
-import { VisualYamlValue } from '../../../types/pipeline'
-import { createAndDownloadBlob } from '../../../utils/common-utils'
+import { VisualYamlValue } from '../../../../types/pipeline'
+import { createAndDownloadBlob } from '../../../../utils/common-utils'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 
 export const PipelineStudioToolbar = ({

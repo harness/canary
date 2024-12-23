@@ -23,9 +23,11 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
+import PipelineLayout from './layouts/PipelineStudioLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
+import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -147,6 +149,26 @@ export default function App() {
         {
           path: ':spaceId/repos',
           element: <ReposListPage />
+        },
+        {
+          path: ':spaceId/repos/:repoId/pipelines/:pipelineId',
+          element: <PipelineLayout />,
+          children: [
+            {
+              index: true,
+              element: <RepoExecutionListPage />
+              // children: [
+              //   {
+              //     path: 'edit',
+              //     element: <PipelineEditPage />
+              //   }
+              // ]
+            },
+            {
+              path: 'edit',
+              element: <PipelineEditPage />
+            }
+          ]
         },
         {
           path: ':spaceId/repos/:repoId',
@@ -275,13 +297,7 @@ export default function App() {
             },
             {
               path: 'pipelines',
-              children: [
-                { index: true, element: <RepoPipelineListPage /> },
-                {
-                  path: ':pipelineId',
-                  element: <RepoExecutionListPage />
-                }
-              ]
+              children: [{ index: true, element: <RepoPipelineListPage /> }]
             }
           ]
         },

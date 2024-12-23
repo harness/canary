@@ -34,14 +34,21 @@ export function encodeQueryValue(input: string) {
     .replace(/[\x00-\x1F]/g, char => encodeURIComponent(char))
 }
 
-export const createQueryString = (visibleFilters: string[], updatedFiltersMap: Record<string, FilterType>) => {
+export const createQueryString = <T extends Record<string, unknown>>(
+  visibleFilters: (keyof T)[],
+  updatedFiltersMap: Record<keyof T, FilterType>
+) => {
   const query = visibleFilters.reduce((acc, key) => {
     if (updatedFiltersMap[key]?.state === FilterStatus.FILTER_APPLIED) {
       // Add & if there's already an existing query
-      return acc ? `${acc}&${key}=${updatedFiltersMap[key].query}` : `${key}=${updatedFiltersMap[key].query}`
+      const stringKey = key as string
+      return acc
+        ? // @ts-ignore
+          `${acc}&${stringKey}=${updatedFiltersMap[stringKey].query}`
+        : `${stringKey}=${updatedFiltersMap[stringKey].query}`
     }
     return acc
-  }, '')
+  }, '') as string
 
   return renderQueryString(new URLSearchParams(query ? `?${query}` : '')) // Add ? only if there's a query
 }

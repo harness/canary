@@ -1,6 +1,6 @@
 export interface FilterType<T = any> {
-  value: T
-  query: string | null
+  value?: T
+  query?: string
   state: FilterStatus
 }
 
@@ -25,4 +25,9 @@ export enum FilterStatus {
   VISIBLE = 'VISIBLE',
   FILTER_APPLIED = 'FILTER_APPLIED',
   HIDDEN = 'HIDDEN'
+}
+
+export interface FilterRefType<T> {
+  getValues: () => T
+  reset: () => void
 }

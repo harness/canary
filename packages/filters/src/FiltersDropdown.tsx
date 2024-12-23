@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react'
 import { useFiltersContext } from './Filters'
 
-interface FiltersDropdownProps {
-  children: (addFilter: (filterKey: string) => void, availableFilters: string[]) => ReactNode
+export interface FiltersDropdownProps<T> {
+  children: (addFilter: (filterKey: keyof T) => void, availableFilters: (keyof T)[]) => ReactNode
 }
 
-const FiltersDropdown: React.FC<FiltersDropdownProps> = ({ children }) => {
+const FiltersDropdown = <T,>({ children }: FiltersDropdownProps<T>) => {
   const { addFilter, availableFilters } = useFiltersContext()
 
   return <div id="filters-dropdown">{children(addFilter, availableFilters)}</div>

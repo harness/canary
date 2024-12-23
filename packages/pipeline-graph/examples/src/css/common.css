@@ -1,0 +1,10 @@
+html,
+body {
+  background: #121214;
+  color: white;
+  font-size: 13px;
+  cursor: default;
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Verdana';
+}

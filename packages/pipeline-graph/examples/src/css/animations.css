@@ -1,0 +1,26 @@
+/* sample animation example */
+.loading {
+  --border-angle: 0turn;
+  --main-bg: conic-gradient(from var(--border-angle), #202020, #1d1d1d 5%, #1d1d1d 60%, #202020 95%);
+  --gradient-border: conic-gradient(from var(--border-angle), transparent 25%, #acc3f5, #444957 99%, transparent);
+
+  border: solid 1px transparent !important;
+  background:
+    var(--main-bg) padding-box,
+    var(--gradient-border) border-box,
+    var(--main-bg) border-box !important;
+  background-position: center center;
+  animation: bg-spin 3s linear infinite;
+}
+
+@keyframes bg-spin {
+  to {
+    --border-angle: 1turn;
+  }
+}
+
+@property --border-angle {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0turn;
+}

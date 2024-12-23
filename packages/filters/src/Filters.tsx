@@ -8,10 +8,13 @@ import React, {
   useState,
   forwardRef
 } from 'react'
-import { FilterType, FilterStatus, FilterConfig, InitializeFiltersConfigType } from './types'
+import { FilterType, FilterStatus, FilterConfig, InitializeFiltersConfigType, FilterRefType } from './types'
 import { createQueryString, mergeURLSearchParams } from './utils'
 import useRouter from './useRouter'
 import { debug, warn } from './debug'
+import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
+import Filter, { FilterProps } from './Filter'
+import FiltersContent, { FiltersContentProps } from './FiltersContent'
 
 interface FiltersContextType<FilterKeys extends string> {
   visibleFilters: FilterKeys[]
@@ -30,10 +33,11 @@ interface FiltersProps {
   allFiltersSticky?: boolean
 }
 
-const Filters = forwardRef(function Filters<FilterKeys extends string>(
+const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   { children, allFiltersSticky }: FiltersProps,
-  ref: React.Ref<{ getValues: () => { key: FilterKeys; value: any }[] }>
+  ref: React.Ref<FilterRefType<T>>
 ) {
+  type FilterKeys = keyof T
   const [filtersOrder, setFiltersOrder] = useState<FilterKeys[]>([])
   const [filtersMap, setFiltersMap] = useState<Record<FilterKeys, FilterType>>({} as Record<FilterKeys, FilterType>)
   const [filtersConfig, setFiltersConfig] = useState<Record<FilterKeys, FilterConfig>>(
@@ -96,8 +100,8 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     for (const key in initialFiltersConfig) {
       const isSticky = allFiltersSticky ? true : initialFiltersConfig[key].isSticky
       map[key] = {
-        value: null,
-        query: null,
+        value: undefined,
+        query: undefined,
         state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
       }
 
@@ -176,8 +180,8 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
   }, [searchParams])
 
   const createNewFilter = (): FilterType => ({
-    value: null,
-    query: null,
+    value: undefined,
+    query: undefined,
     state: FilterStatus.VISIBLE
   })
 
@@ -185,7 +189,7 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
     const isValueNullable = parsedValue === '' || parsedValue === undefined || parsedValue === null
     return {
       value: value,
-      query: isValueNullable ? null : parsedValue,
+      query: isValueNullable ? undefined : parsedValue,
       state: isValueNullable ? FilterStatus.VISIBLE : FilterStatus.FILTER_APPLIED
     }
   }
@@ -207,8 +211,8 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       if (isSticky) {
         updatedFiltersMap[key as FilterKeys] = {
-          value: null,
-          query: null,
+          value: undefined,
+          query: undefined,
           state: FilterStatus.VISIBLE
         }
       } else {
@@ -235,7 +239,7 @@ const Filters = forwardRef(function Filters<FilterKeys extends string>(
   )
 
   const getFilterValue = (filterKey: FilterKeys) => {
-    return filtersMap[filterKey]?.value || null
+    return filtersMap[filterKey]?.value
   }
 
   return (
@@ -274,15 +278,43 @@ interface FiltersWrapperProps extends FiltersProps {
 
 const FiltersWrapper = forwardRef(function FiltersWrapper(
   { view = 'row', ...props }: FiltersWrapperProps,
-  ref: React.Ref<{ getValues: () => { key: string; value: any }[] }>
+  ref: React.Ref<FilterRefType<any>>
 ) {
   if (view === 'row') {
-    // Forward the ref to Filters when using 'row' view
     return <Filters {...props} ref={ref} allFiltersSticky />
   }
 
-  // Forward the ref to Filters when using other views
   return <Filters {...props} ref={ref} />
 })
 
 export default FiltersWrapper
+
+export const createFilters = <T extends unknown>() => {
+  // @ts-ignore
+  const Filters = forwardRef<HTMLDivElement, FiltersWrapperProps>((props, ref: FilterRefType<T>) => {
+    return <FiltersWrapper ref={ref} {...props} />
+  })
+
+  const FiltersWithStatics = Filters as typeof Filters & {
+    Dropdown: <U>(props: FiltersDropdownProps<U>) => JSX.Element
+    Content: (props: FiltersContentProps) => JSX.Element
+    Component: <K extends keyof T>(props: FilterProps<T, K>) => JSX.Element
+  }
+
+  FiltersWithStatics.Dropdown = <U,>(props: FiltersDropdownProps<U>) => {
+    return <FiltersDropdown {...props} />
+  }
+
+  FiltersWithStatics.Content = (props: FiltersContentProps) => {
+    return <FiltersContent {...props} />
+  }
+
+  FiltersWithStatics.Component = <K extends keyof T>(props: FilterProps<T, K>) => {
+    useEffect(() => {
+      console.log('component rendered')
+    }, [])
+    return <Filter {...props} />
+  }
+
+  return FiltersWithStatics
+}

@@ -2,7 +2,7 @@ import React, { ReactNode, useRef } from 'react'
 import { useFiltersContext } from './Filters'
 import { FilterStatus, InitializeFiltersConfigType } from './types'
 
-interface FiltersContentProps {
+export interface FiltersContentProps {
   children: ReactNode
   className?: string
 }

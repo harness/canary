@@ -1,13 +1,14 @@
-import { useMemo } from 'react'
+import { useCallback, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { useCreatePipelineMutation, useFindRepositoryQuery, useListBranchesQuery } from '@harnessio/code-service-client'
+import { useCreatePipelineMutation, useListBranchesQuery } from '@harnessio/code-service-client'
 import { CreatePipelineDialog as CreatePipelineDialogView, CreatePipelineFormType } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
-import { apiBranches2BranchNames, apiRepository2DefaultBranchName } from '../repo/transform-utils/branch-transform'
+import { apiBranches2BranchNames, apiBranches2DefaultBranchName } from '../repo/transform-utils/branch-transform'
+import { useCreatePipelineStore } from './stores/create-pipeline-dialog.store'
 
 interface CreatePipelineDialogProps {
   open: boolean
@@ -20,16 +21,22 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
 
-  const { data: { body: branches } = {}, isLoading: isLoadingBranchNames } = useListBranchesQuery({
-    repo_ref: repoRef,
-    queryParams: {}
-  })
-  const branchNames = useMemo(() => apiBranches2BranchNames(branches), [branches])
+  const { setBranchesState, setError } = useCreatePipelineStore()
 
-  const { data: { body: repositoryData } = {}, isLoading: isLoadingDefaultBranch } = useFindRepositoryQuery({
-    repo_ref: repoRef
-  })
-  const defaultBranch = useMemo(() => apiRepository2DefaultBranchName(repositoryData), [repositoryData])
+  const { data: { body: branches } = {}, isLoading: isLoadingBranchNames } = useListBranchesQuery(
+    {
+      repo_ref: repoRef,
+      queryParams: {}
+    },
+    { enabled: open }
+  )
+
+  useEffect(() => {
+    const branchNames = apiBranches2BranchNames(branches)
+    const defaultBranch = apiBranches2DefaultBranchName(branches)
+
+    setBranchesState({ isLoadingBranchNames, branchNames, defaultBranch })
+  }, [branches, isLoadingBranchNames])
 
   const { mutateAsync: savePipeline } = useCreatePipelineMutation({})
 
@@ -43,22 +50,25 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
       })
 
       navigate(`/spaces/${spaceId}/repos/${repoId}/pipelines/${name}/edit`)
-    } catch (e) {
-      //TODO: Handle error by showing toast
-      console.log(e, 'error')
+    } catch (e: any) {
+      if ('message' in e) {
+        setError({ message: e.message })
+      }
     }
   }
+
+  const onCloseInternal = useCallback(() => {
+    setError(undefined)
+    onClose()
+  }, [setError, onClose])
 
   return (
     <CreatePipelineDialogView
       isOpen={open}
-      onClose={onClose}
+      onClose={onCloseInternal}
       onSubmit={onSubmit}
-      onCancel={onClose}
-      isLoadingBranchNames={isLoadingBranchNames}
-      branchNames={branchNames}
-      defaultBranch={defaultBranch}
-      isLoadingDefaultBranch={isLoadingDefaultBranch}
+      onCancel={onCloseInternal}
+      useCreatePipelineStore={useCreatePipelineStore}
     />
   )
 }

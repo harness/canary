@@ -16,17 +16,17 @@ import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
 import Filter, { FilterProps } from './Filter'
 import FiltersContent, { FiltersContentProps } from './FiltersContent'
 
-interface FiltersContextType<FilterKeys extends string> {
-  visibleFilters: FilterKeys[]
-  availableFilters: FilterKeys[]
-  removeFilter: (filterKey: FilterKeys) => void
-  addFilter: (filterKey: FilterKeys) => void
-  getFilterValue: (filterKey: FilterKeys) => any
-  updateFilter: (filterKey: FilterKeys, parsedValue: any, value: any) => void
-  addInitialFilters: (filtersConfig: Record<FilterKeys, InitializeFiltersConfigType>) => void
+interface FiltersContextType<T extends Record<string, unknown>> {
+  visibleFilters: (keyof T)[]
+  availableFilters: (keyof T)[]
+  removeFilter: (filterKey: keyof T) => void
+  addFilter: (filterKey: keyof T) => void
+  getFilterValue: (filterKey: keyof T) => any
+  updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
+  addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType>) => void
 }
 
-const FiltersContext = createContext<FiltersContextType<any> | null>(null)
+const FiltersContext = createContext<FiltersContextType<Record<string, unknown>> | null>(null)
 
 interface FiltersProps {
   children: ReactNode
@@ -114,7 +114,6 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     // initialize filters
     // add sticky filters
     // update filters from search params;
-
     // updating filters map state from search params
     searchParams?.forEach((value, key) => {
       if (map[key as FilterKeys]) {
@@ -244,23 +243,25 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
   return (
     <FiltersContext.Provider
-      value={{
-        visibleFilters: filtersOrder,
-        availableFilters,
-        removeFilter,
-        getFilterValue,
-        addFilter,
-        updateFilter,
-        addInitialFilters: initializeFilters
-      }}
+      value={
+        {
+          visibleFilters: filtersOrder as string[],
+          availableFilters,
+          removeFilter,
+          getFilterValue,
+          addFilter,
+          updateFilter,
+          addInitialFilters: initializeFilters
+        } as any
+      }
     >
       <div id="filters">{children}</div>
     </FiltersContext.Provider>
   )
 })
 
-export const useFiltersContext = <FilterKeys extends string>() => {
-  const context = useContext(FiltersContext as React.Context<FiltersContextType<FilterKeys> | null>)
+export const useFiltersContext = <T extends Record<string, unknown>>() => {
+  const context = useContext(FiltersContext as React.Context<FiltersContextType<T> | null>)
   if (!context) {
     warn('FiltersContext is missing. Ensure this is used within a FiltersProvider.') // Warn if context is missing
     throw new Error('FiltersDropdown, FiltersRow, and Filter must be used within a FiltersAdapter.')
@@ -292,16 +293,17 @@ export default FiltersWrapper
 export const createFilters = <T extends unknown>() => {
   // @ts-ignore
   const Filters = forwardRef<HTMLDivElement, FiltersWrapperProps>((props, ref: FilterRefType<T>) => {
-    return <FiltersWrapper ref={ref} {...props} />
+    return <FiltersWrapper ref={ref as any} {...props} />
   })
 
   const FiltersWithStatics = Filters as typeof Filters & {
-    Dropdown: <U>(props: FiltersDropdownProps<U>) => JSX.Element
+    Dropdown: <K extends keyof T>(props: FiltersDropdownProps<T, K>) => JSX.Element
     Content: (props: FiltersContentProps) => JSX.Element
     Component: <K extends keyof T>(props: FilterProps<T, K>) => JSX.Element
   }
 
-  FiltersWithStatics.Dropdown = <U,>(props: FiltersDropdownProps<U>) => {
+  FiltersWithStatics.Dropdown = <K extends keyof T>(props: FiltersDropdownProps<T, K>) => {
+    // @ts-ignore
     return <FiltersDropdown {...props} />
   }
 
@@ -310,9 +312,6 @@ export const createFilters = <T extends unknown>() => {
   }
 
   FiltersWithStatics.Component = <K extends keyof T>(props: FilterProps<T, K>) => {
-    useEffect(() => {
-      console.log('component rendered')
-    }, [])
     return <Filter {...props} />
   }
 

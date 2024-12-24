@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useFiltersContext } from './Filters'
 import { defaultStringParser } from './parsers'
 
@@ -25,11 +25,7 @@ const Filter = <T, K extends keyof T>({
   parser = defaultStringParser as Parser<T[K]>,
   className
 }: FilterProps<T, K>): React.ReactElement | null => {
-  const { updateFilter, getFilterValue, removeFilter } = useFiltersContext()
-
-  useEffect(() => {
-    console.log('did mount in filter.tsx')
-  }, [])
+  const { updateFilter, getFilterValue, removeFilter } = useFiltersContext<any>()
 
   // Handles when a new value is set
   const handleChange = (value: T[K]) => {

@@ -6,12 +6,13 @@ import dts from 'vite-plugin-dts'
 
 const pkg = require('./package.json')
 
-const external = Object.keys(pkg.devDependencies || []).concat(Object.keys(pkg.peerDependencies || []))
+const external = Object.keys(pkg.devDependencies || [])
+  .concat(Object.keys(pkg.peerDependencies || []))
+  .concat(['react/jsx-runtime'])
 
 export default defineConfig({
   define: { 'process.env.NODE_ENV': '"production"' },
   plugins: [
-    react(),
     dts({
       outDir: 'dist',
       tsconfigPath: './tsconfig.json',

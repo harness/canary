@@ -4,7 +4,7 @@ import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
 
 export interface StartNodeDataType {}
 
-export function StartNode(props: { node: LeafNodeInternalType<StartNodeDataType> }) {
+export function StartNode(_props: { node: LeafNodeInternalType<StartNodeDataType> }) {
   const style: React.CSSProperties = {
     boxSizing: 'border-box',
     height: '100%',

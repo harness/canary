@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
 
 export interface FormNodeDataType {
@@ -9,7 +11,7 @@ export interface FormNodeDataType {
 
 export function FormNode(props: { node: LeafNodeInternalType<FormNodeDataType> }) {
   const { node } = props
-  const data = node.data as FormNodeDataType
+  const { data } = node
 
   const style: React.CSSProperties = {
     height: '100%',
@@ -24,10 +26,10 @@ export function FormNode(props: { node: LeafNodeInternalType<FormNodeDataType> }
   }
 
   return (
-    <div style={style} className={data?.state === 'loading' ? 'loading' : ''}>
-      <div>{data?.icon}</div>
+    <div style={style} className={data.state === 'loading' ? 'loading' : ''}>
+      <div>{data.icon}</div>
       <div style={{ margin: '10px' }}>
-        <span>{data?.name ?? 'Step'}</span>
+        <span>{data.name ?? 'Step'}</span>
         <br />
         <input type="checkbox"></input>
         <input style={{ width: '100%' }}></input>

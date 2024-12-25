@@ -12,10 +12,11 @@ interface GraphContextProps {
   isCollapsed: (path: string) => boolean
   setNodeToRemove: (path: string | null) => void
   nodeToRemove: string | null
+  // rerender connections
   rerender: () => void
-  //
+  // rerenderConnections increments when in the rerender()
   rerenderConnections: number
-  //
+  // shift collapsed on node deletion
   shiftCollapsed: (path: string, index: number) => void
 }
 

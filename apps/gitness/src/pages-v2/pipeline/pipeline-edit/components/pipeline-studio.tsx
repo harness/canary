@@ -109,7 +109,11 @@ export default function PipelineEdit() {
           }
         }}
       >
-        <SheetContent onOpenAutoFocus={e => e.preventDefault()} hideCloseButton={true} className="p-0 sm:max-w-lg">
+        <SheetContent
+          onOpenAutoFocus={e => e.preventDefault()}
+          hideCloseButton={true}
+          className="max-w-lg p-0 sm:max-w-lg"
+        >
           {renderSheetContent()}
         </SheetContent>
       </Sheet>

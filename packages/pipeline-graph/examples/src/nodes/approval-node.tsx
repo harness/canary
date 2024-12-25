@@ -1,11 +1,13 @@
+import React from 'react'
+
 import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
 
 export interface ApprovalNodeDataType {}
 
-export function ApprovalNode(props: { node: LeafNodeInternalType<ApprovalNodeDataType> }) {
+export function ApprovalNode(_props: { node: LeafNodeInternalType<ApprovalNodeDataType> }) {
   const style: React.CSSProperties = {
     transformOrigin: 'center center',
-    zIndex: '-10',
+    // zIndex: '-10',
     position: 'absolute',
     transform: 'rotate(45deg)',
     boxSizing: 'border-box',

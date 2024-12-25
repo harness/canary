@@ -6,7 +6,7 @@ import { calculateTransform, MousePoint } from './canvas-utils'
 import './canvas.css'
 
 export function Canvas({ children }: React.PropsWithChildren) {
-  const { setCanvasTransform, canvasTransformRef } = useCanvasContext()
+  const { setCanvasTransform, canvasTransformRef, config } = useCanvasContext()
 
   const mainRef = useRef<HTMLDivElement | null>(null)
 
@@ -20,7 +20,27 @@ export function Canvas({ children }: React.PropsWithChildren) {
 
         event.preventDefault()
 
+        if (!event.ctrlKey) {
+          const newTransform = calculateTransform({
+            scaleDiff: 1,
+            originX: event.deltaX,
+            originY: event.deltaY,
+            panX: -event.deltaX,
+            panY: -event.deltaY,
+            currentScale: canvasTransformRef.current.scale,
+            currentTranslateX: canvasTransformRef.current.translateX,
+            currentTranslateY: canvasTransformRef.current.translateY
+          })
+
+          setCanvasTransform(newTransform)
+
+          canvasTransformRef.current = newTransform
+
+          return
+        }
+
         const currentRect = targetEl.getBoundingClientRect()
+
         let { deltaY } = event
         const { ctrlKey, deltaMode } = event
 
@@ -41,8 +61,9 @@ export function Canvas({ children }: React.PropsWithChildren) {
           currentTranslateY: canvasTransformRef.current.translateY
         })
 
-        setCanvasTransform(newTransform)
+        if (newTransform.scale < config.minScale) return
 
+        setCanvasTransform(newTransform)
         canvasTransformRef.current = newTransform
       }
 
@@ -94,9 +115,7 @@ export function Canvas({ children }: React.PropsWithChildren) {
         })
 
         setCanvasTransform(newTransform)
-
         canvasTransformRef.current = newTransform
-
         latestPointRef.current = event
       }
 
@@ -117,16 +136,7 @@ export function Canvas({ children }: React.PropsWithChildren) {
   }, [mainRef])
 
   return (
-    <div
-      style={{
-        display: 'block',
-        overflow: 'hidden',
-        touchAction: 'none',
-        height: '100%'
-      }}
-      ref={mainRef}
-      className="PipelineGraph-Canvas"
-    >
+    <div ref={mainRef} className="PipelineGraph-Canvas">
       {children}
     </div>
   )

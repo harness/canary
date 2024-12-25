@@ -1,30 +1,24 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { get } from 'lodash-es'
-
 import { SERIAL_NODE_GAP } from './components/nodes/serial-container'
 import { useCanvasContext } from './context/canvas-provider'
 import { useGraphContext } from './context/graph-provider'
 import { renderNode } from './render/render-node'
 import { clear, getPortsConnectionPath } from './render/render-svg-lines'
-import { AnyNodeType } from './types/nodes'
+import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { connectPorts } from './utils/connects-utils'
 import { addPaths } from './utils/path-utils'
 
 export interface PipelineGraphInternalProps {
-  data: AnyNodeType[]
-  onAdd: (node: AnyNodeInternal, position: 'before' | 'after') => void
-  onDelete: (node: AnyNodeInternal) => void
-  onSelect: (node: AnyNodeInternal) => void
-  onContext?: (node: AnyNodeInternal, e: Event) => void
+  data: AnyContainerNodeType[]
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
-  const { initialized, nodes: nodesBank, rerenderConnections, shiftCollapsed, setInitialized } = useGraphContext()
+  const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
 
-  const { data, onAdd, onDelete, onSelect, onContext } = props
+  const { data } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -80,21 +74,13 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       // reset transform
       rootContainerEl.style.transform = ''
 
+      // get nodes container size (to apply size to child containers)
       const { width: graphWidth, height: graphHeight } = nodesContainerEl.getBoundingClientRect()
 
       if (graphHeight > 0) {
         setInitialized()
 
-        console.log(nodesContainerEl.getBoundingClientRect().toJSON())
-        // console.log()
-
-        // console.log(nodesContainerEl.innerHTML)
-        // const graphWidth = parseInt(graphWidthPx)
-        // const graphHeight = parseInt(graphHeightPx)
         if (!initialized) {
-          console.log('initialized 0')
-          // get nodes container size and apply it to child containers
-
           setRootWH({ w: graphWidth, h: graphHeight })
 
           svgEl.setAttribute('width', graphWidth.toString())
@@ -112,22 +98,13 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           const parentEl = rootContainerEl.parentElement
           const { height: parentHeight } = parentEl?.getBoundingClientRect() ?? new DOMRect()
 
-          console.log(graphHeight + 'px')
-          console.log(graphHeight)
-
-          console.log(parentHeight)
-
           setCanvasTransform({
             scale: 1,
             translateX: canvasConfig.paddingForFit,
             translateY: parentHeight / 2 - graphHeight / 2
           })
         } else {
-          console.log('initialized 1')
-
           if (graphSizeRef.current) {
-            console.log('initialized 2')
-
             const { width: graphWidthPx, height: graphHeightPx } = getComputedStyle(nodesContainerRef.current)
 
             svgEl.setAttribute('width', graphWidthPx)
@@ -139,10 +116,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             const graphWidth = parseInt(graphWidthPx)
             const graphHeight = parseInt(graphHeightPx)
 
-            // kep "start node" in place - e.g when delete/add nodes
+            // kep "start node" in place (horizontally) - e.g when delete/add nodes
             if (graphHeight !== graphSizeRef.current.h) {
-              console.log('initialized 3')
-
               const diffH = (graphSizeRef.current.h - graphHeight) / 2
 
               setCanvasTransform({
@@ -159,77 +134,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
     }
   }, [dataInternal, rerenderConnections, initialized, graphSizeRef])
 
-  const getContextInfoFromElement = (targetEl: HTMLDivElement) => {
-    // get closest element that have 'data-path' attribute
-    const el = targetEl.hasAttribute('data-path')
-      ? targetEl
-      : (targetEl.closest('*[data-path]') as HTMLDivElement | null)
-
-    if (el) {
-      const path = el.getAttribute('data-path') as string
-      const action = el.getAttribute('data-action') as 'add' | 'delete' | 'select'
-      const position = el.getAttribute('data-position') as 'before' | 'after'
-      return { path, action, position }
-    }
-    return null
-  }
-
-  // handle "click" event
   useEffect(() => {
-    const handler = (e: Event) => {
-      const targetEl = e.target as HTMLDivElement
-
-      const contextInfo = getContextInfoFromElement(targetEl)
-
-      if (contextInfo) {
-        const { path, action, position } = contextInfo
-        const itemPath = path.replace(/^pipeline.children./, '')
-        const node = get(data, itemPath) as AnyNodeInternal
-
-        switch (action) {
-          case 'add': {
-            onAdd(node, position)
-            break
-          }
-          case 'delete': {
-            onDelete(node)
-            break
-          }
-          case 'select': {
-            onSelect(node)
-            break
-          }
-        }
-      }
-    }
-
-    const contextHandler = (e: Event) => {
-      const targetEl = e.target as HTMLDivElement
-
-      const contextInfo = getContextInfoFromElement(targetEl)
-
-      if (contextInfo) {
-        const { path, action, position } = contextInfo
-        const itemPath = path.replace(/^pipeline.children./, '')
-        const node = get(data, itemPath) as AnyNodeInternal
-
-        if (action === 'select') {
-          onContext?.(node, e)
-        }
-      }
-    }
-
-    nodesContainerRef.current?.addEventListener('click', handler)
-    nodesContainerRef.current?.addEventListener('contextmenu', contextHandler)
-
-    return () => {
-      nodesContainerRef.current?.removeEventListener('click', handler)
-      nodesContainerRef.current?.removeEventListener('contextmenu', contextHandler)
-    }
-  }, [dataInternal, setDataInternal, shiftCollapsed])
-
-  useEffect(() => {
-    // setMainRef(rootContainerRef)
     if (rootContainerRef.current) setTargetEl(rootContainerRef.current)
   }, [rootContainerRef])
 
@@ -240,7 +145,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
         position: 'relative',
         height: rootWH.h ? rootWH.h + 'px' : '1x', // IMPORTANT: do not remove this
         width: rootWH.w ? rootWH.w + 'px' : 'auto', // IMPORTANT: do not remove this
-        transformOrigin: '0 0',
+        transformOrigin: 'top left',
         willChange: 'transform'
       }}
       ref={rootContainerRef}

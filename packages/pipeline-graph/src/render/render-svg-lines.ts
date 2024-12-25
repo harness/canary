@@ -136,5 +136,6 @@ function getPath(
       (endX + correction)
   }
 
-  return `<path d="${path}"  id="${id}"  fill="none" stroke="#5D5B65" />`
+  // TODO: line style (color)
+  return `<path d="${path}" id="${id}" fill="none" stroke="#5D5B65" />`
 }

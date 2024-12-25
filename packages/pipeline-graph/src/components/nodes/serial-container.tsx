@@ -5,21 +5,18 @@ import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { AnyNodeInternal, SerialNodeInternalType } from '../../types/nodes-internal'
-import { findAdjustment, getThreeDepth } from '../../utils/layout-utils'
-import AddButton from '../components-tmp/add'
-import CollapseButton from '../components-tmp/collapse'
-import DeleteButton from '../components-tmp/delete'
-import AddContainer from './add-container'
+import { findAdjustment } from '../../utils/layout-utils'
+import CollapseButton from '../components/collapse'
 import Port from './port'
 
-export const SERIAL_GROUP_ADJUSTMENT = 20
-export const PADDING_TOP = 40
+export const SERIAL_GROUP_ADJUSTMENT = 10
+export const PADDING_TOP = 30
 export const PADDING_BOTTOM = 20
 export const SERIAL_PADDING = 26
 export const SERIAL_NODE_GAP = 36
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
-  const { node, level, parentNodeType, isFirst, isLast, parentNode } = props
+  const { node, level, parentNode } = props
 
   const myLevel = level + 1
 
@@ -27,25 +24,15 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
 
   const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
 
-  const elRef = useRef<HTMLDivElement | null>(null)
-
   const ADJUSTMENT = findAdjustment(node, parentNode) + SERIAL_GROUP_ADJUSTMENT
 
   return (
     <div
-      {...(node.config?.selectable
-        ? {
-            'data-action': 'select',
-            'data-path': node.path
-          }
-        : {})}
-      ref={elRef}
       className={'node serial-node'}
       key={node.type + '-' + node.path}
       style={{
         minWidth: node.config?.minWidth ? node.config?.minWidth + 'px' : 'auto',
         minHeight: node.config?.minHeight ? node.config?.minHeight + 'px' : 'auto',
-        transition: 'width 0.46s, height 0.46s, opacity 0.46s',
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
@@ -57,28 +44,6 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         flexShrink: 0
       }}
     >
-      {!node.config?.hideBeforeAdd && isFirst && (
-        <AddContainer
-          position="before"
-          orientation={parentNodeType === 'parallel' ? 'vertical' : 'horizontal'}
-          path={props.node.path}
-          isFirst={isFirst}
-          isLast={isLast}
-          adjustment={parentNodeType === 'serial' && !collapsed ? ADJUSTMENT : 0}
-        />
-      )}
-
-      {!node.config?.hideAfterAdd && (
-        <AddContainer
-          position="after"
-          orientation={parentNodeType === 'parallel' ? 'vertical' : 'horizontal'}
-          path={props.node.path}
-          isFirst={isFirst}
-          isLast={isLast}
-          adjustment={parentNodeType === 'serial' && !collapsed ? ADJUSTMENT : 0}
-        />
-      )}
-
       <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
       <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
 
@@ -89,7 +54,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
           top: '0px',
           left: '0px',
           right: '0px',
-          height: '30px',
+          height: '0px',
           padding: '10px',
           zIndex: '100'
         }}
@@ -100,34 +65,31 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
             collapse(node.path!, !collapsed)
           }}
         />
-        {!node.config?.hideDeleteButton && <DeleteButton path={props.node.path} />}
       </div>
 
-      {node.children.length === 0 && <AddButton path={node.path} position="in" />}
-
-      <RenderNodeContent node={node}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            columnGap: SERIAL_NODE_GAP + 'px'
-          }}
-        >
-          {!collapsed
-            ? node.children.map((item: AnyNodeInternal, index: number) =>
-                renderNode({
-                  node: item,
-                  parentNode: node,
-                  level: myLevel,
-                  parentNodeType: 'serial',
-                  relativeIndex: index,
-                  isFirst: index === 0,
-                  isLast: index === node.children.length - 1
-                })
-              )
-            : null}
-        </div>
+      <RenderNodeContent node={node} collapsed={collapsed}>
+        {!collapsed && node.children.length > 0 ? (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              columnGap: SERIAL_NODE_GAP + 'px'
+            }}
+          >
+            {node.children.map((item: AnyNodeInternal, index: number) =>
+              renderNode({
+                node: item,
+                parentNode: node,
+                level: myLevel,
+                parentNodeType: 'serial',
+                relativeIndex: index,
+                isFirst: index === 0,
+                isLast: index === node.children.length - 1
+              })
+            )}
+          </div>
+        ) : undefined}
       </RenderNodeContent>
     </div>
   )

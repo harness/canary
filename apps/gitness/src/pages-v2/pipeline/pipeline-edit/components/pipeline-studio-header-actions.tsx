@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { Button, DropdownMenuItem, SplitButton } from '@harnessio/canary'
+import { Button } from '@harnessio/canary'
 import { OpenapiCommitFilesRequest, useCommitFilesMutation } from '@harnessio/code-service-client'
 
 import RunPipelineDialog from '../../../../pages/run-pipeline-dialog/run-pipeline-dialog'
@@ -69,27 +69,20 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
         Run
       </Button>
     ) : (
-      <SplitButton
-        disabled={disabled}
-        size="sm"
-        onClick={() => handleSave(true)}
-        dropdown={<>&gt;</>}
-        menu={
-          <>
-            <DropdownMenuItem onClick={() => handleSave(false)} disabled={disabled}>
-              Save
-            </DropdownMenuItem>
-          </>
-        }
-      >
-        Save and Run
-      </SplitButton>
+      <>
+        <Button size="sm" onClick={() => handleSave(false)} disabled={disabled}>
+          Save
+        </Button>
+        <Button size="sm" onClick={() => handleSave(true)} disabled={disabled}>
+          Save and Run
+        </Button>
+      </>
     )
   }
 
   return (
     <>
-      <div className="absolute right-0 top-0 z-50 w-fit">
+      <div className="absolute right-0 top-0 z-50 flex h-[55px] w-fit items-center">
         <div className="flex h-14 items-center gap-x-3 px-4">
           {/* <Button variant="ghost" size="sm" disabled={!isInitialized || fetchingPipelineFileContent}>
             Settings

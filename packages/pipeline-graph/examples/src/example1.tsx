@@ -5,7 +5,13 @@ import { parse } from 'yaml'
 
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
-import { AnyNodeType, ContainerNode, LeafNodeType, ParallelNodeType, SerialNodeType } from '../../src/types/nodes'
+import {
+  AnyContainerNodeType,
+  ContainerNode,
+  LeafContainerNodeType,
+  ParallelContainerNodeType,
+  SerialContainerNodeType
+} from '../../src/types/nodes'
 import { getPathPeaces } from '../../src/utils/path-utils'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
@@ -38,8 +44,8 @@ const nodes: NodeContent[] = [
     component: EndNode
   },
   {
-    type: ContentNodeTypes.step,
     containerType: ContainerNode.leaf,
+    type: ContentNodeTypes.step,
     component: StepNode
   },
   {
@@ -51,12 +57,12 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: ParallelGroupNodeContent
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const yamlObject = parse(pipeline)
@@ -70,8 +76,9 @@ const startNode = {
     hideDeleteButton: true,
     hideBeforeAdd: true,
     hideLeftPort: true
-  }
-} satisfies LeafNodeType
+  },
+  data: {}
+} satisfies LeafContainerNodeType
 
 const endNode = {
   type: ContentNodeTypes.end,
@@ -81,14 +88,15 @@ const endNode = {
     hideDeleteButton: true,
     hideAfterAdd: true,
     hideRightPort: true
-  }
-} satisfies LeafNodeType
+  },
+  data: {}
+} satisfies LeafContainerNodeType
 
 plData.unshift(startNode)
 plData.push(endNode)
 
 function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
-  const [data, setData] = useState<AnyNodeType[]>(plData)
+  const [data] = useState<AnyContainerNodeType[]>(plData)
 
   if (!data) return null
 
@@ -108,40 +116,40 @@ function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
         <PipelineGraph
           data={data}
           nodes={nodes}
-          onSelect={(node: AnyNodeInternal) => {
-            const newData = cloneDeep(data)
-            const itemPath = node.path.replace(/^pipeline.children./, '')
-            const targetNode = get(newData, itemPath) as { data: { selected: boolean } }
-            targetNode.data.selected = !targetNode.data.selected
-            setData(newData)
-          }}
-          onAdd={(node: AnyNodeInternal, position: 'before' | 'after' | 'in') => {
-            const newData = cloneDeep(data)
-            const itemPath = node.path.replace(/^pipeline.children./, '')
+          // onSelect={(node: AnyNodeInternal) => {
+          //   const newData = cloneDeep(data)
+          //   const itemPath = node.path.replace(/^pipeline.children./, '')
+          //   const targetNode = get(newData, itemPath) as { data: { selected: boolean } }
+          //   targetNode.data.selected = !targetNode.data.selected
+          //   setData(newData)
+          // }}
+          // onAdd={(node: AnyNodeInternal, position: 'before' | 'after' | 'in') => {
+          //   const newData = cloneDeep(data)
+          //   const itemPath = node.path.replace(/^pipeline.children./, '')
 
-            if (position === 'in') {
-              // add to (empty) array
-              const childrenPath = itemPath + '.children'
-              const arr = get(newData, childrenPath, []) as unknown[]
-              arr.push(getNode(addStepType))
-              set(newData, childrenPath, arr)
-            } else {
-              // add before or after
-              const { arrayPath, index } = getPathPeaces(itemPath)
-              const arr = arrayPath ? (get(newData, arrayPath) as unknown[]) : newData
+          //   if (position === 'in') {
+          //     // add to (empty) array
+          //     const childrenPath = itemPath + '.children'
+          //     const arr = get(newData, childrenPath, []) as unknown[]
+          //     arr.push(getNode(addStepType))
+          //     set(newData, childrenPath, arr)
+          //   } else {
+          //     // add before or after
+          //     const { arrayPath, index } = getPathPeaces(itemPath)
+          //     const arr = arrayPath ? (get(newData, arrayPath) as unknown[]) : newData
 
-              arr.splice(position === 'before' ? index : index + 1, 0, getNode(addStepType))
-            }
+          //     arr.splice(position === 'before' ? index : index + 1, 0, getNode(addStepType))
+          //   }
 
-            setData(newData)
-          }}
-          onDelete={(node: AnyNodeInternal) => {
-            const newData = cloneDeep(data)
-            const { arrayPath, index } = getPathPeaces(node.path.replace(/^pipeline.children./, ''))
-            const arr = arrayPath ? (get(newData, arrayPath) as unknown[]) : newData
-            arr.splice(index, 1)
-            setData(newData)
-          }}
+          //   setData(newData)
+          // }}
+          // onDelete={(node: AnyNodeInternal) => {
+          //   const newData = cloneDeep(data)
+          //   const { arrayPath, index } = getPathPeaces(node.path.replace(/^pipeline.children./, ''))
+          //   const arr = arrayPath ? (get(newData, arrayPath) as unknown[]) : newData
+          //   arr.splice(index, 1)
+          //   setData(newData)
+          // }}
         />
         <CanvasControls />
       </CanvasProvider>
@@ -165,7 +173,7 @@ function getNode(stepType: ContentNodeTypes) {
           icon: getIcon(1),
           state: 'loading'
         } satisfies StepNodeDataType
-      } satisfies LeafNodeType
+      } satisfies LeafContainerNodeType
     case ContentNodeTypes.parallel:
       return {
         type: ContentNodeTypes.parallel,
@@ -177,7 +185,7 @@ function getNode(stepType: ContentNodeTypes) {
           yamlPath: '',
           name: 'Parallel'
         } satisfies StepNodeDataType
-      } satisfies ParallelNodeType
+      } satisfies ParallelContainerNodeType
     case ContentNodeTypes.serial:
       return {
         type: ContentNodeTypes.serial,
@@ -189,6 +197,6 @@ function getNode(stepType: ContentNodeTypes) {
           yamlPath: '',
           name: 'Serial'
         } satisfies StepNodeDataType
-      } satisfies SerialNodeType
+      } satisfies SerialContainerNodeType
   }
 }

@@ -13,13 +13,13 @@ A library for generating and interacting with pipeline graphs.
 
 ### Model
 
-Type **AnyNodeType** us a union of **LeafNodeType** | **ParallelNodeType** | **SerialNodeType** and represent one node.
-**LeafNodeType** node does not have children while other have.
+Type **AnyContainerNodeType** us a union of **LeafContainerNodeType** | **ParallelContainerNodeType** | **SerialContainerNodeType** and represent one node.
+**LeafContainerNodeType** node does not have children while other have.
 
 Example of the model
 
 ```ts
-const model: AnyNodeType[] = [
+const model: AnyContainerNodeType[] = [
   {
     type: 'stage',
     children: [{ type: 'step' }, { type: 'step' }]

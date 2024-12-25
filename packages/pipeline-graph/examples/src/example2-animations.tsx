@@ -6,7 +6,7 @@ import { parse } from 'yaml'
 import { CanvasProvider } from '../../src/context/canvas-provider'
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
-import { AnyNodeType, ContainerNode, LeafNodeType } from '../../src/types/nodes'
+import { AnyContainerNodeType, ContainerNode, LeafContainerNodeType } from '../../src/types/nodes'
 import { CanvasControls } from './canvas/CanvasControls'
 import { ApprovalNode } from './nodes/approval-node'
 import { EndNode } from './nodes/end-node'
@@ -44,12 +44,12 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: ParallelGroupNodeContent
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const yamlObject = parse(pipeline)
@@ -60,14 +60,15 @@ const endNode = {
   config: {
     width: 80,
     height: 80
-  }
+  },
+  data: {}
 }
 
 plData.unshift(endNode)
 
 function AnimationExample() {
   const dataRef = useRef(plData)
-  const [data, setData] = useState<AnyNodeType[] | null>(null)
+  const [data, setData] = useState<AnyContainerNodeType[] | null>(null)
 
   useEffect(() => {
     const update = () => {
@@ -84,7 +85,7 @@ function AnimationExample() {
           icon: getIcon(1),
           state: 'loading'
         } satisfies StepNodeDataType
-      } satisfies LeafNodeType
+      } satisfies LeafContainerNodeType
 
       newData.push(cloneDeep(node))
       ;(get(newData, '2.children.0.children.1.children.0.children.2.children.2.children') as unknown as any[]).push(
@@ -117,13 +118,7 @@ function AnimationExample() {
       }}
     >
       <CanvasProvider>
-        <PipelineGraph
-          data={data}
-          nodes={nodes}
-          onAdd={() => undefined}
-          onDelete={() => undefined}
-          onSelect={() => undefined}
-        />
+        <PipelineGraph data={data} nodes={nodes} />
         <CanvasControls />
       </CanvasProvider>
     </div>

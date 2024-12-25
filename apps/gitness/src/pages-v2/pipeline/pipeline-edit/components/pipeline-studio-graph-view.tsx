@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react'
 import { parse } from 'yaml'
 
 import {
-  AnyNodeType,
+  AnyContainerNodeType,
   CanvasProvider,
   ContainerNode,
-  LeafNodeType,
   NodeContent,
   PipelineGraph
 } from '@harnessio/pipeline-graph'
@@ -41,22 +40,22 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.step,
     containerType: ContainerNode.leaf,
     component: StepNode
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: ParallelGroupContentNode
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.stage,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const startNode = {
@@ -67,8 +66,9 @@ const startNode = {
     hideDeleteButton: true,
     hideBeforeAdd: true,
     hideLeftPort: true
-  }
-} satisfies LeafNodeType
+  },
+  data: {}
+} satisfies AnyContainerNodeType
 
 const endNode = {
   type: ContentNodeTypes.end,
@@ -78,15 +78,16 @@ const endNode = {
     hideDeleteButton: true,
     hideAfterAdd: true,
     hideRightPort: true
-  }
-} satisfies LeafNodeType
+  },
+  data: {}
+} satisfies AnyContainerNodeType
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {
     state: { yamlRevision, editStepIntention }
   } = usePipelineDataContext()
 
-  const [data, setData] = useState<AnyNodeType[]>([])
+  const [data, setData] = useState<AnyContainerNodeType[]>([])
 
   useEffect(() => {
     return () => {

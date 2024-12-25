@@ -1,7 +1,7 @@
 import { ContainerNode } from './nodes'
 import { LeafNodeInternalType, ParallelNodeInternalType, SerialNodeInternalType } from './nodes-internal'
 
-export interface LeafNodeContent<T = {}> {
+export interface LeafNodeContent<T = any> {
   containerType: ContainerNode.leaf
   type: string
   component: (props: {
@@ -11,7 +11,7 @@ export interface LeafNodeContent<T = {}> {
   }) => JSX.Element
 }
 
-export interface SerialNodeContent<T = {}> {
+export interface SerialNodeContent<T = any> {
   containerType: ContainerNode.serial
   type: string
   component: (props: {
@@ -21,7 +21,7 @@ export interface SerialNodeContent<T = {}> {
   }) => JSX.Element
 }
 
-export interface ParallelNodeContent<T = {}> {
+export interface ParallelNodeContent<T = any> {
   containerType: ContainerNode.parallel
   type: string
   component: (props: {

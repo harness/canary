@@ -27,17 +27,17 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: ParallelGroupNodeContent
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.stage,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const yamlObject = parse(pipeline)
@@ -60,19 +60,19 @@ function ContextExample() {
         <PipelineGraph
           data={plData}
           nodes={nodes}
-          onSelect={() => {}}
-          onAdd={() => {}}
-          onDelete={() => {}}
-          onContext={(node, e) => {
-            e.preventDefault()
-            console.log(node, e)
-            const el = document.getElementsByClassName('context-menu')[0] as HTMLDivElement
-            el.style.display = 'block'
-            el.style.position = 'absolute'
-            el.style.zIndex = '1000'
-            el.style.top = (e as MouseEvent).pageY - 40 + 'px'
-            el.style.left = (e as MouseEvent).pageX - 40 + 'px'
-          }}
+          // onSelect={() => {}}
+          // onAdd={() => {}}
+          // onDelete={() => {}}
+          // onContext={(node, e) => {
+          //   e.preventDefault()
+          //   console.log(node, e)
+          //   const el = document.getElementsByClassName('context-menu')[0] as HTMLDivElement
+          //   el.style.display = 'block'
+          //   el.style.position = 'absolute'
+          //   el.style.zIndex = '1000'
+          //   el.style.top = (e as MouseEvent).pageY - 40 + 'px'
+          //   el.style.left = (e as MouseEvent).pageX - 40 + 'px'
+          // }}
         />
         <CanvasControls />
       </CanvasProvider>

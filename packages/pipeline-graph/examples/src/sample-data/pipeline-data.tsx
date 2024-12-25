@@ -1,9 +1,9 @@
-import { AnyNodeType } from '../../../src/types/nodes'
+import { AnyContainerNodeType } from '../../../src/types/nodes'
 import { getIcon } from '../parser/utils'
 
 const config = { width: 140 }
 
-const getChildren = (count: number, state = 'success'): AnyNodeType[] =>
+const getChildren = (count: number, state = 'success'): AnyContainerNodeType[] =>
   Array(count)
     .fill(1)
     .map((_, idx) => ({
@@ -20,7 +20,7 @@ const getPipelineInternal = ({
   parallelChildren: number
   serialChildren: number
   state: 'loading' | 'success'
-}): AnyNodeType[] => [
+}): AnyContainerNodeType[] => [
   {
     type: 'start',
     config: {
@@ -28,20 +28,22 @@ const getPipelineInternal = ({
       height: 60,
       hideLeftPort: true,
       hideDeleteButton: true
-    }
+    },
+    data: {}
   },
   {
     type: 'step',
     config: { width: 250, height: 250 },
     data: { name: 'VERY LARGE STEP NODE', icon: getIcon(1) }
   },
-  { type: 'approval', config: { width: 100, height: 100 } },
-  { type: 'approval', config: { width: 200, height: 200 } },
+  { type: 'approval', config: { width: 100, height: 100 }, data: {} },
+  { type: 'approval', config: { width: 200, height: 200 }, data: {} },
   { type: 'step', config, data: { icon: getIcon(3), state } },
   {
     type: 'serial',
     children: getChildren(serialChildren, state),
-    config: { minWidth: 140, minHeight: 0 }
+    config: { minWidth: 140, minHeight: 0 },
+    data: {}
   },
   {
     type: 'parallel',
@@ -49,15 +51,18 @@ const getPipelineInternal = ({
       {
         type: 'serial',
         children: getChildren(serialChildren),
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       },
       {
         type: 'serial',
         children: getChildren(serialChildren),
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       }
     ],
-    config: { minWidth: 140, minHeight: 0 }
+    config: { minWidth: 140, minHeight: 0 },
+    data: {}
   },
   {
     type: 'serial',
@@ -65,7 +70,8 @@ const getPipelineInternal = ({
       {
         type: 'parallel',
         children: getChildren(parallelChildren),
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       },
       {
         type: 'parallel',
@@ -73,7 +79,8 @@ const getPipelineInternal = ({
           {
             type: 'parallel',
             children: getChildren(parallelChildren, state),
-            config: { minWidth: 140, minHeight: 0 }
+            config: { minWidth: 140, minHeight: 0 },
+            data: {}
           },
           {
             type: 'step',
@@ -81,10 +88,12 @@ const getPipelineInternal = ({
             data: { icon: getIcon(4) }
           }
         ],
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       }
     ],
-    config: { minWidth: 140, minHeight: 0 }
+    config: { minWidth: 140, minHeight: 0 },
+    data: {}
   },
   {
     type: 'serial',
@@ -95,15 +104,18 @@ const getPipelineInternal = ({
           {
             type: 'parallel',
             children: getChildren(parallelChildren),
-            config: { minWidth: 140, minHeight: 0 }
+            config: { minWidth: 140, minHeight: 0 },
+            data: {}
           },
           {
             type: 'parallel',
             children: getChildren(parallelChildren),
-            config: { minWidth: 140, minHeight: 0 }
+            config: { minWidth: 140, minHeight: 0 },
+            data: {}
           }
         ],
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       },
       {
         type: 'parallel',
@@ -114,21 +126,26 @@ const getPipelineInternal = ({
               {
                 type: 'parallel',
                 children: getChildren(parallelChildren),
-                config: { minWidth: 140, minHeight: 0 }
+                config: { minWidth: 140, minHeight: 0 },
+                data: {}
               },
               {
                 type: 'parallel',
                 children: getChildren(parallelChildren),
-                config: { minWidth: 140, minHeight: 0 }
+                config: { minWidth: 140, minHeight: 0 },
+                data: {}
               }
             ],
-            config: { minWidth: 140, minHeight: 0 }
+            config: { minWidth: 140, minHeight: 0 },
+            data: {}
           }
         ],
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       }
     ],
-    config: { minWidth: 140, minHeight: 0 }
+    config: { minWidth: 140, minHeight: 0 },
+    data: {}
   },
   {
     type: 'parallel',
@@ -137,10 +154,12 @@ const getPipelineInternal = ({
       {
         type: 'parallel',
         children: getChildren(parallelChildren),
-        config: { minWidth: 140, minHeight: 0 }
+        config: { minWidth: 140, minHeight: 0 },
+        data: {}
       }
     ],
-    config: { minWidth: 140, minHeight: 0 }
+    config: { minWidth: 140, minHeight: 0 },
+    data: {}
   },
   { type: 'step', config, data: { icon: getIcon(6) } },
   {
@@ -150,13 +169,14 @@ const getPipelineInternal = ({
       height: 160,
       hideRightPort: true,
       hideDeleteButton: true
-    }
+    },
+    data: {}
   }
 ]
 
 /** utility for creating pipelines for testing */
 export const getPipeline = (repeat = 1, parallel = 5, serial = 3, state: 'loading' | 'success' = 'success') => {
-  let largePipelineInternal: AnyNodeType[] = []
+  let largePipelineInternal: AnyContainerNodeType[] = []
 
   for (let i = 0; i < repeat; i++) {
     largePipelineInternal = [

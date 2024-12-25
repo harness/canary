@@ -27,17 +27,17 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: SimpleParallelGroupNodeContent
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SimpleSerialGroupContentNode
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.stage,
     containerType: ContainerNode.serial,
     component: SimpleSerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const yamlObject = parse(pipeline)
@@ -57,7 +57,7 @@ function Example4() {
       }}
     >
       <CanvasProvider>
-        <PipelineGraph data={plData} nodes={nodes} onSelect={() => {}} onAdd={() => {}} onDelete={() => {}} />
+        <PipelineGraph data={plData} nodes={nodes} />
         <CanvasControls />
       </CanvasProvider>
     </div>

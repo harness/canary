@@ -14,7 +14,7 @@ export interface StepNodeDataType extends CommonNodeDataType {
 
 export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }) {
   const { node } = props
-  const data = node.data as StepNodeDataType
+  const data = node.data
 
   const { showContextMenu } = useNodeContext()
 
@@ -41,7 +41,7 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
         <Icon name="ellipsis" size={15} />
       </Button>
 
-      <div>{data?.icon}</div>
+      <div>{data.icon}</div>
       <Text title={data.name} className="m-2 line-clamp-2 cursor-default text-primary">
         {data.name}
       </Text>

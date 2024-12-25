@@ -39,12 +39,12 @@ const nodes: NodeContent[] = [
     type: ContentNodeTypes.parallel,
     containerType: ContainerNode.parallel,
     component: ParallelGroupNodeContent
-  },
+  } as NodeContent,
   {
     type: ContentNodeTypes.serial,
     containerType: ContainerNode.serial,
     component: SerialGroupContentNode
-  }
+  } as NodeContent
 ]
 
 const data = getPipeline(9, 12, 3, 'success')
@@ -63,13 +63,7 @@ function PerformanceExample() {
       }}
     >
       <CanvasProvider>
-        <PipelineGraph
-          data={data}
-          nodes={nodes}
-          onAdd={() => undefined}
-          onDelete={() => undefined}
-          onSelect={() => undefined}
-        />
+        <PipelineGraph data={data} nodes={nodes} />
         <CanvasControls />
       </CanvasProvider>
     </div>

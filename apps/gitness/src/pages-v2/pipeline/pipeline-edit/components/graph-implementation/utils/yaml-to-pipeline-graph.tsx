@@ -1,5 +1,10 @@
 import { Icon } from '@harnessio/canary'
-import { AnyNodeType, LeafNodeType, ParallelNodeType, SerialNodeType } from '@harnessio/pipeline-graph'
+import {
+  AnyContainerNodeType,
+  LeafContainerNodeType,
+  ParallelContainerNodeType,
+  SerialContainerNodeType
+} from '@harnessio/pipeline-graph'
 
 import { ContentNodeTypes } from '../content-node-types'
 import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'
@@ -9,8 +14,11 @@ import { YamlEntityType } from '../types/nodes'
 import { getIconBasedOnStep } from './step-icon-utils'
 import { getNameBasedOnStep } from './step-name-utils'
 
-export const yaml2Nodes = (yamlObject: Record<string, any>, options: { selectedPath?: string } = {}): AnyNodeType[] => {
-  const nodes: AnyNodeType[] = []
+export const yaml2Nodes = (
+  yamlObject: Record<string, any>,
+  options: { selectedPath?: string } = {}
+): AnyContainerNodeType[] => {
+  const nodes: AnyContainerNodeType[] = []
 
   const stages = yamlObject?.pipeline?.stages
 
@@ -28,7 +36,11 @@ const getGroupKey = (stage: Record<string, any>): 'group' | 'parallel' | undefin
   return undefined
 }
 
-const processStages = (stages: any[], currentPath: string, options: { selectedPath?: string }): AnyNodeType[] => {
+const processStages = (
+  stages: any[],
+  currentPath: string,
+  options: { selectedPath?: string }
+): AnyContainerNodeType[] => {
   return stages.map((stage, idx) => {
     // parallel stage
     const groupKey = getGroupKey(stage)
@@ -52,7 +64,7 @@ const processStages = (stages: any[], currentPath: string, options: { selectedPa
           name
         } satisfies StageNodeContentType,
         children: processStages(stage[groupKey].stages, childrenPath, options)
-      } satisfies SerialNodeType
+      } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
       const name = stage.name ?? `Parallel ${idx + 1}`
       const path = `${currentPath}.${idx}`
@@ -73,7 +85,7 @@ const processStages = (stages: any[], currentPath: string, options: { selectedPa
           name
         } satisfies ParallelGroupContentNodeDataType,
         children: processStages(stage[groupKey].stages, childrenPath, options)
-      } satisfies ParallelNodeType
+      } satisfies ParallelContainerNodeType
     }
     // regular stage
     else {
@@ -96,12 +108,16 @@ const processStages = (stages: any[], currentPath: string, options: { selectedPa
           name
         } satisfies StageNodeContentType,
         children: processSteps(stage.steps, childrenPath, options)
-      } satisfies SerialNodeType
+      } satisfies SerialContainerNodeType
     }
   })
 }
 
-const processSteps = (steps: any[], currentPath: string, options: { selectedPath?: string }): AnyNodeType[] => {
+const processSteps = (
+  steps: any[],
+  currentPath: string,
+  options: { selectedPath?: string }
+): AnyContainerNodeType[] => {
   return steps.map((step, idx) => {
     // parallel stage
     const groupKey = getGroupKey(step)
@@ -125,7 +141,7 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
         } satisfies StageNodeContentType,
 
         children: processSteps(step[groupKey].steps, childrenPath, options)
-      } satisfies SerialNodeType
+      } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
       const name = step.name ?? `Parallel steps ${idx + 1}`
       const path = `${currentPath}.${idx}`
@@ -144,7 +160,7 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
           name
         } satisfies ParallelGroupContentNodeDataType,
         children: processSteps(step[groupKey].steps, childrenPath, options)
-      } satisfies ParallelNodeType
+      } satisfies ParallelContainerNodeType
     }
     // regular step
     else {
@@ -166,7 +182,7 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
           icon: <Icon className="m-2 size-8" name={getIconBasedOnStep(step)} />,
           selected: path === options?.selectedPath
         } satisfies StepNodeDataType
-      } satisfies LeafNodeType
+      } satisfies LeafContainerNodeType
     }
   })
 }

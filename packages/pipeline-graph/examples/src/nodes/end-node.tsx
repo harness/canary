@@ -1,8 +1,10 @@
+import React from 'react'
+
 import { LeafNodeInternalType } from '../../../src/types/nodes-internal'
 
 export interface EndNodeDataType {}
 
-export function EndNode(props: { node: LeafNodeInternalType<EndNodeDataType> }) {
+export function EndNode(_props: { node: LeafNodeInternalType<EndNodeDataType> }) {
   const style: React.CSSProperties = {
     boxSizing: 'border-box',
     height: '100%',

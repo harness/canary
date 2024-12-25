@@ -1,36 +1,25 @@
-import {
-  ParallelNodeType,
-  SerialNodeType,
-  LeafNodeType,
-  ContainerNode,
-} from "./nodes";
+import { ContainerNode, LeafContainerNodeType, ParallelContainerNodeType, SerialContainerNodeType } from './nodes'
 
 interface NodeInternal {
-  path: string;
-  // uid: string;
+  path: string
 }
 
-export interface LeafNodeInternalType<T = {}>
-  extends LeafNodeType,
+export interface LeafNodeInternalType<T = unknown> extends LeafContainerNodeType<T>, NodeInternal {
+  containerType: ContainerNode.leaf
+}
+
+export interface ParallelNodeInternalType<T = unknown>
+  extends Omit<ParallelContainerNodeType<T>, 'children'>,
     NodeInternal {
-  containerType: ContainerNode.leaf;
+  containerType: ContainerNode.parallel
+  children: AnyNodeInternal[]
 }
 
-export interface ParallelNodeInternalType<T = {}>
-  extends Omit<ParallelNodeType, "children">,
+export interface SerialNodeInternalType<T = unknown>
+  extends Omit<SerialContainerNodeType<T>, 'children'>,
     NodeInternal {
-  containerType: ContainerNode.parallel;
-  children: AnyNodeInternal[];
+  containerType: ContainerNode.serial
+  children: AnyNodeInternal[]
 }
 
-export interface SerialNodeInternalType<T = {}>
-  extends Omit<SerialNodeType, "children">,
-    NodeInternal {
-  containerType: ContainerNode.serial;
-  children: AnyNodeInternal[];
-}
-
-export type AnyNodeInternal =
-  | LeafNodeInternalType
-  | ParallelNodeInternalType
-  | SerialNodeInternalType;
+export type AnyNodeInternal = LeafNodeInternalType | ParallelNodeInternalType | SerialNodeInternalType

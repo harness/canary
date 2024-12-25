@@ -14,7 +14,7 @@ export interface StepNodeDataType {
 
 export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }) {
   const { node } = props
-  const data = node.data as StepNodeDataType
+  const { data } = node
 
   const style: React.CSSProperties = {
     height: '100%',
@@ -28,7 +28,7 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
     background: 'linear-gradient(-47deg, rgba(152, 150, 172, 0.05) 0%, rgba(177, 177, 177, 0.15) 100%)'
   }
 
-  const name = data?.name ?? 'Step'
+  const name = data.name ?? 'Step'
 
   return (
     <div

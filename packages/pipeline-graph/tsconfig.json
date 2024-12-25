@@ -11,10 +11,8 @@
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    // "emitDeclarationOnly": true,
     "jsx": "react-jsx",
     "outDir": "dist2",
-    // "declaration": true,
     "types": ["node"]
   },
   "include": ["./src/**/*"]

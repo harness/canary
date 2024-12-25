@@ -17,14 +17,14 @@ export function SerialGroupNodeContent(props: {
   children: React.ReactElement
 }) {
   const { node, children } = props
-  const data = node.data as SerialGroupContentNodeDataType
+  const { data } = node
 
   const name = `Serial - ${node.path} (${node.children.length})`
 
   return (
     <div title={name}>
       <div
-        className={cx('border', { loading: data?.state === 'loading', selected: data?.selected })}
+        className={cx('border', { loading: data.state === 'loading', selected: data.selected })}
         style={{
           position: 'absolute',
           inset: 0,

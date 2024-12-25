@@ -5,6 +5,7 @@ import { ContentNodeTypes } from '../content-node-types'
 import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'
 import { StageNodeContentType } from '../nodes/stage-node'
 import { StepNodeDataType } from '../nodes/step-node'
+import { YamlEntityType } from '../types/nodes'
 import { getIconBasedOnStep } from './step-icon-utils'
 import { getNameBasedOnStep } from './step-name-utils'
 
@@ -33,59 +34,68 @@ const processStages = (stages: any[], currentPath: string, options: { selectedPa
     const groupKey = getGroupKey(stage)
     if (groupKey === 'group') {
       const name = stage.name ?? `Serial ${idx + 1}`
-      const path = `${currentPath}.${idx}.${groupKey}.stages`
+      const path = `${currentPath}.${idx}`
+      const childrenPath = `${path}.${groupKey}.stages`
 
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140,
+          minWidth: 192,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
         },
         data: {
           yamlPath: path,
+          yamlChildrenPath: childrenPath,
+          yamlEntityType: YamlEntityType.SerialGroup,
           name
         } satisfies StageNodeContentType,
-        children: processStages(stage[groupKey].stages, path, options)
+        children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
       const name = stage.name ?? `Parallel ${idx + 1}`
-      const path = `${currentPath}.${idx}.${groupKey}.stages`
+      const path = `${currentPath}.${idx}`
+      const childrenPath = `${path}.${groupKey}.stages`
 
       return {
         type: ContentNodeTypes.parallel,
         config: {
-          minWidth: 140,
+          minWidth: 192,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
         },
         data: {
           yamlPath: path,
+          yamlChildrenPath: childrenPath,
+          yamlEntityType: YamlEntityType.ParallelGroup,
           name
         } satisfies ParallelGroupContentNodeDataType,
-        children: processStages(stage[groupKey].stages, path, options)
+        children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies ParallelNodeType
     }
     // regular stage
     else {
       const name = stage.name ?? `Stage ${idx + 1}`
-      const path = `${currentPath}.${idx}.steps`
+      const path = `${currentPath}.${idx}`
+      const childrenPath = `${path}.steps`
 
       return {
         type: ContentNodeTypes.stage,
         config: {
-          minWidth: 140,
+          minWidth: 192,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
         },
         data: {
           yamlPath: path,
+          yamlChildrenPath: childrenPath,
+          yamlEntityType: YamlEntityType.Stage,
           name
         } satisfies StageNodeContentType,
-        children: processSteps(stage.steps, path, options)
+        children: processSteps(stage.steps, childrenPath, options)
       } satisfies SerialNodeType
     }
   })
@@ -97,37 +107,43 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
     const groupKey = getGroupKey(step)
     if (groupKey === 'group') {
       const name = step.name ?? `Serial steps ${idx + 1}`
-      const path = `${currentPath}.${idx}.${groupKey}.steps`
+      const path = `${currentPath}.${idx}`
+      const childrenPath = `${path}.${groupKey}.steps`
 
       return {
         type: ContentNodeTypes.serial,
         config: {
-          minWidth: 140,
+          minWidth: 192,
           hideDeleteButton: true,
           hideCollapseButton: false
         },
         data: {
           yamlPath: path,
+          yamlChildrenPath: childrenPath,
+          yamlEntityType: YamlEntityType.StepSerialGroup,
           name
         } satisfies StageNodeContentType,
 
-        children: processSteps(step[groupKey].steps, path, options)
+        children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies SerialNodeType
     } else if (groupKey === 'parallel') {
       const name = step.name ?? `Parallel steps ${idx + 1}`
-      const path = `${currentPath}.${idx}.${groupKey}.steps`
+      const path = `${currentPath}.${idx}`
+      const childrenPath = `${path}.${groupKey}.steps`
 
       return {
         type: ContentNodeTypes.parallel,
         config: {
-          minWidth: 140,
+          minWidth: 192,
           hideDeleteButton: true
         },
         data: {
           yamlPath: path,
+          yamlChildrenPath: childrenPath,
+          yamlEntityType: YamlEntityType.StepParallelGroup,
           name
         } satisfies ParallelGroupContentNodeDataType,
-        children: processSteps(step[groupKey].steps, path, options)
+        children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies ParallelNodeType
     }
     // regular step
@@ -145,6 +161,7 @@ const processSteps = (steps: any[], currentPath: string, options: { selectedPath
         },
         data: {
           yamlPath: path,
+          yamlEntityType: YamlEntityType.Step,
           name,
           icon: <Icon className="m-2 size-8" name={getIconBasedOnStep(step)} />,
           selected: path === options?.selectedPath

@@ -1,6 +1,7 @@
 export default function Port(props: { side: 'left' | 'right'; id?: string; adjustment?: number }) {
   const { adjustment = 0 } = props
 
+  // TODO: port style
   return (
     <div
       id={props.id}

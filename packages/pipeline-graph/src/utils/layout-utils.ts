@@ -37,5 +37,5 @@ export function hasNodeGroup(node: SerialNodeInternalType | ParallelNodeInternal
 }
 
 export function hasNodeGroupAndDontHaveLeaf(node: SerialNodeInternalType | ParallelNodeInternalType): boolean {
-  return node.children.some(item => 'children' in item) //&&
+  return node.children.some(item => 'children' in item)
 }

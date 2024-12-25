@@ -1,10 +1,10 @@
 import { NodeContent } from '../types/node-content'
-import { AnyNodeType } from '../types/nodes'
+import { AnyContainerNodeType } from '../types/nodes'
 import { AnyNodeInternal } from '../types/nodes-internal'
 
-/** addPaths mutates nodes */
+/** addPaths function mutates 'nodes' */
 export function addPaths(
-  nodes: AnyNodeType[],
+  nodes: AnyContainerNodeType[],
   nodesBank: Record<string, NodeContent>,
   parentPath: string,
   addUid: boolean

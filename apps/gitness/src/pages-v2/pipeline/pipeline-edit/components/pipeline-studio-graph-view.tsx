@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { parse } from 'yaml'
 
 import {
-  AnyNodeInternal,
   AnyNodeType,
   CanvasProvider,
   ContainerNode,
@@ -13,7 +12,6 @@ import {
 } from '@harnessio/pipeline-graph'
 
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
-import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
 import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
 import { ContentNodeTypes } from './graph-implementation/content-node-types'
 import { EndNode } from './graph-implementation/nodes/end-node'
@@ -23,9 +21,10 @@ import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
+import { NodeContextProvider } from '../context/NodeContextMenuProvider'
+import { CommonNodeContextMenu } from './graph-implementation/nodes/common/CommonContextMenu'
 import { ParallelGroupContentNode } from './graph-implementation/nodes/parallel-group-node'
 import { SerialGroupContentNode } from './graph-implementation/nodes/serial-group-node'
-import { CommonNodeDataType } from './graph-implementation/types/nodes'
 
 const nodes: NodeContent[] = [
   {
@@ -84,12 +83,8 @@ const endNode = {
 
 export const PipelineStudioGraphView = (): React.ReactElement => {
   const {
-    state: { yamlRevision, editStepIntention },
-    setEditStepIntention,
-    setAddStepIntention,
-    requestYamlModifications: { deleteInArray }
+    state: { yamlRevision, editStepIntention }
   } = usePipelineDataContext()
-  const { setStepDrawerOpen } = usePipelineViewContext()
 
   const [data, setData] = useState<AnyNodeType[]>([])
 
@@ -107,41 +102,16 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
     setData(newData)
   }, [yamlRevision, editStepIntention])
 
-  const addStep = useCallback(
-    (node: AnyNodeInternal, position: 'after' | 'before') => {
-      const commonData = node.data as CommonNodeDataType
-
-      setStepDrawerOpen(StepDrawer.Collection)
-      setAddStepIntention({ path: commonData.yamlPath, position })
-    },
-    [setStepDrawerOpen, setAddStepIntention]
-  )
-
-  const deleteStep = useCallback(
-    (node: AnyNodeInternal) => {
-      const commonData = node.data as CommonNodeDataType
-
-      deleteInArray({ path: commonData.yamlPath })
-    },
-    [deleteInArray]
-  )
-
-  const editStep = useCallback(
-    (node: AnyNodeInternal) => {
-      const commonData = node.data as CommonNodeDataType
-
-      setStepDrawerOpen(StepDrawer.Form)
-      setEditStepIntention({ path: commonData.yamlPath })
-    },
-    [setEditStepIntention]
-  )
-
   return (
-    <div className="relative flex size-full">
-      <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} onAdd={addStep} onDelete={deleteStep} onSelect={editStep} />
-        <CanvasControls />
-      </CanvasProvider>
+    // TODO: fix style.width
+    <div className="relative flex size-full" style={{ width: 'calc(100vw - 220px)' }}>
+      <NodeContextProvider>
+        <CanvasProvider>
+          <PipelineGraph data={data} nodes={nodes} />
+          <CanvasControls />
+          <CommonNodeContextMenu />
+        </CanvasProvider>
+      </NodeContextProvider>
     </div>
   )
 }

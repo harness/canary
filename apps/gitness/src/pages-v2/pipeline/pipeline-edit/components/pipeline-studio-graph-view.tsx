@@ -21,11 +21,18 @@ import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 import '@harnessio/pipeline-graph/dist/index.css'
 
 import { NodeContextProvider } from '../context/NodeContextMenuProvider'
+import { AddNode, AddNodeDataType } from './graph-implementation/nodes/add-node'
 import { CommonNodeContextMenu } from './graph-implementation/nodes/common/CommonContextMenu'
 import { ParallelGroupContentNode } from './graph-implementation/nodes/parallel-group-node'
 import { SerialGroupContentNode } from './graph-implementation/nodes/serial-group-node'
+import { YamlEntityType } from './graph-implementation/types/nodes'
 
 const nodes: NodeContent[] = [
+  {
+    type: ContentNodeTypes.add,
+    component: AddNode,
+    containerType: ContainerNode.leaf
+  },
   {
     type: ContentNodeTypes.start,
     component: StartNode,
@@ -98,6 +105,19 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
     const newData = yaml2Nodes(yamlJson, { selectedPath: editStepIntention?.path })
+
+    if (newData.length === 0) {
+      newData.push({
+        type: ContentNodeTypes.add,
+        data: {
+          yamlChildrenPath: 'pipeline.stages',
+          name: '',
+          yamlEntityType: YamlEntityType.SerialGroup,
+          yamlPath: ''
+        } satisfies AddNodeDataType
+      })
+    }
+
     newData.unshift(startNode)
     newData.push(endNode)
     setData(newData)

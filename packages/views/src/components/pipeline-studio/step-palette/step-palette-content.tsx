@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 
 const StepsPaletteContent = {
   Root: function Content({ children }: { children: React.ReactNode }) {
-    return <div className="flex flex-col overflow-scroll">{children}</div>
+    return <div className="flex flex-col overflow-auto px-4">{children}</div>
   },
 
   Section: forwardRef<HTMLDivElement, { children: React.ReactNode }>(function Section({ children }, ref) {

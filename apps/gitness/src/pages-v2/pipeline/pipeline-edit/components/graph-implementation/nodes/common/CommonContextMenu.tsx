@@ -19,7 +19,8 @@ export const CommonNodeContextMenu = () => {
     addStage,
     editStep,
     addSerialGroup,
-    addParallelGroup
+    addParallelGroup,
+    revealInYaml
   } = useNodeContext()
 
   const showAddStepBeforeAfter =
@@ -52,6 +53,8 @@ export const CommonNodeContextMenu = () => {
     (contextMenuData?.nodeData.yamlEntityType === YamlEntityType.ParallelGroup ||
       contextMenuData?.nodeData.yamlEntityType === YamlEntityType.SerialGroup) &&
     contextMenuData.isIn
+
+  const showRevealInYaml = contextMenuData?.nodeData.yamlEntityType === YamlEntityType.Step
 
   const getMenu = () => {
     const menu: React.ReactNode[][] = []
@@ -209,6 +212,22 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add parallel group</Text>
+        </DropdownMenuItem>
+      ])
+    }
+
+    if (showRevealInYaml) {
+      menu.push([
+        <DropdownMenuItem
+          key="edit"
+          disabled={!enableEdit}
+          className="flex items-center gap-1.5"
+          onSelect={() => {
+            contextMenuData && revealInYaml(contextMenuData.nodeData.yamlPath)
+          }}
+        >
+          <Icon name="circle" size={12} className="text-tertiary-background" />
+          <Text>Reveal in Yaml</Text>
         </DropdownMenuItem>
       ])
     }

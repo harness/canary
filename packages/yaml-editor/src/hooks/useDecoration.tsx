@@ -61,7 +61,8 @@ export const useDecoration: UseDecoration = ({ editorRef, selection }) => {
 
     const decorations = editorRef?.current?.createDecorationsCollection([
       {
-        range,
+        // TODO: check why startColumn is set to "end of row"
+        range: { ...range, startColumn: 1 },
         options: {
           isWholeLine: false,
           className: selection?.className

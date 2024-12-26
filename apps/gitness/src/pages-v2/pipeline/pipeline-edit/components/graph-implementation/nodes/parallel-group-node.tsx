@@ -40,7 +40,9 @@ export function ParallelGroupContentNode(props: {
         className="absolute right-2 top-2 z-10"
         variant="ghost"
         size="sm_icon"
+        onMouseDown={e => e.stopPropagation()}
         onClick={e => {
+          e.stopPropagation()
           showContextMenu(data, e.currentTarget)
         }}
       >
@@ -52,6 +54,7 @@ export function ParallelGroupContentNode(props: {
           className="self-center rounded-full p-3"
           variant="outline"
           size="lg"
+          onMouseDown={e => e.stopPropagation()}
           onClick={e => {
             handleAddIn(data, e.currentTarget)
           }}

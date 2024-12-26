@@ -20,7 +20,7 @@ export const yaml2Nodes = (
 ): AnyContainerNodeType[] => {
   const nodes: AnyContainerNodeType[] = []
 
-  const stages = yamlObject?.pipeline?.stages
+  const stages = yamlObject?.pipeline?.stages ?? []
 
   if (stages) {
     const stagesNodes = processStages(stages, 'pipeline.stages', options)

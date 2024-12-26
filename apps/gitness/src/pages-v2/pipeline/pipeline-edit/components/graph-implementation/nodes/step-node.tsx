@@ -1,4 +1,4 @@
-import cx from 'clsx'
+import { useMemo } from 'react'
 
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 import { Button, Icon, Text } from '@harnessio/ui/components'
@@ -16,17 +16,16 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
   const { node } = props
   const data = node.data
 
-  const { showContextMenu } = useNodeContext()
+  const { showContextMenu, selectionPath } = useNodeContext()
+
+  const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
   return (
     <div
-      className={cx('box-border size-full rounded-xl border bg-primary-foreground p-2', {
-        // 'border-borders-3': data.selected,
-        // 'border-borders-6': !data.selected
-      })}
+      className={'box-border size-full rounded-xl border bg-primary-foreground p-2'}
       // TODO
       style={{
-        border: '1px solid #454545',
+        border: selected ? '1px solid #999999' : '1px solid #454545',
         background: 'linear-gradient(-47deg, rgba(152, 150, 172, 0.05) 0%, rgba(177, 177, 177, 0.15) 100%)'
       }}
     >
@@ -34,7 +33,9 @@ export function StepNode(props: { node: LeafNodeInternalType<StepNodeDataType> }
         className="absolute right-2 top-2"
         variant="ghost"
         size="sm_icon"
+        onMouseDown={e => e.stopPropagation()}
         onClick={e => {
+          e.stopPropagation()
           showContextMenu(data, e.currentTarget)
         }}
       >

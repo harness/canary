@@ -22,7 +22,7 @@ import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
-import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
+import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import {
   decodeGitContent,

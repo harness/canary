@@ -76,7 +76,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
                   <Link to={`create`}>Run</Link>
                 </Button>
                 <Button variant="default" asChild>
-                  <Link to={`create`}>Edit</Link>
+                  <Link to={`edit`}>Edit</Link>
                 </Button>
               </div>
             </ListActions.Right>

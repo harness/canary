@@ -33,11 +33,12 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import PipelineLayout from './layouts/PipelineStudioLayout'
 import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
 import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
+import PipelineLayout from './pages-v2/pipeline/pipeline-layout'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
@@ -73,7 +74,6 @@ import RepoExecutionListPageOld from './pages/execution/repo-execution-list'
 import { LandingPage as LandingPageV2 } from './pages/landing-page'
 import { Logout } from './pages/logout'
 import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
-import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
 import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
 import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
 import { SettingsProfileGeneralPage as SettingsProfileGeneralPageV1 } from './pages/profile-settings/profile-settings-general-container'
@@ -207,6 +207,26 @@ export default function App() {
           element: <ReposListPage />
         },
         {
+          path: ':spaceId/repos/:repoId/pipelines/:pipelineId',
+          element: <PipelineLayout />,
+          children: [
+            {
+              index: true,
+              element: <RepoExecutionListPage />
+              // children: [
+              //   {
+              //     path: 'edit',
+              //     element: <PipelineEditPage />
+              //   }
+              // ]
+            },
+            {
+              path: 'edit',
+              element: <PipelineEditPage />
+            }
+          ]
+        },
+        {
           path: ':spaceId/repos/:repoId',
           element: <RepoLayout />,
           children: [
@@ -333,13 +353,7 @@ export default function App() {
             },
             {
               path: 'pipelines',
-              children: [
-                { index: true, element: <RepoPipelineListPage /> },
-                {
-                  path: ':pipelineId',
-                  element: <RepoExecutionListPage />
-                }
-              ]
+              children: [{ index: true, element: <RepoPipelineListPage /> }]
             }
           ]
         },

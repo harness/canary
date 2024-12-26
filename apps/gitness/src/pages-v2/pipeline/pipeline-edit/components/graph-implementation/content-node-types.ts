@@ -1,4 +1,5 @@
 export enum ContentNodeTypes {
+  add = 'add',
   start = 'start',
   end = 'end',
   step = 'step',

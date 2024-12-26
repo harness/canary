@@ -40,7 +40,9 @@ export function SerialGroupContentNode(props: {
         className="absolute right-2 top-2 z-10"
         variant="ghost"
         size="sm_icon"
+        onMouseDown={e => e.stopPropagation()}
         onClick={e => {
+          e.stopPropagation()
           showContextMenu(data, e.currentTarget)
         }}
       >
@@ -53,6 +55,7 @@ export function SerialGroupContentNode(props: {
           style={{ alignSelf: 'center' }}
           variant="outline"
           size="lg"
+          onMouseDown={e => e.stopPropagation()}
           onClick={e => {
             handleAddIn(data, e.currentTarget)
           }}

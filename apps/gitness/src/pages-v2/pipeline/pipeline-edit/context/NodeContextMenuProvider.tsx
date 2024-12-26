@@ -1,6 +1,7 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useMemo, useState } from 'react'
 
 import { CommonNodeDataType, YamlEntityType } from '../components/graph-implementation/types/nodes'
+import { PipelineStudioView } from '../types/types'
 import { usePipelineDataContext } from './PipelineStudioDataProvider'
 import { StepDrawer, usePipelineViewContext } from './PipelineStudioViewProvider'
 
@@ -15,6 +16,8 @@ export interface NodeContextProps {
   showContextMenu: (nodeData: CommonNodeDataType, initiator: HTMLElement, isIn?: boolean) => void
   hideContextMenu: () => void
   contextMenuData: ContextMenuData | null
+  // selected entity path
+  selectionPath?: string
   // step manipulation
   addStep: (nodeData: CommonNodeDataType, position: 'after' | 'before') => void
   editStep: (nodeData: CommonNodeDataType) => void
@@ -23,15 +26,18 @@ export interface NodeContextProps {
   addStage: (nodeData: CommonNodeDataType, position: 'after' | 'before' | 'in') => void
   addSerialGroup: (nodeData: CommonNodeDataType, position: 'after' | 'before' | 'in') => void
   addParallelGroup: (nodeData: CommonNodeDataType, position: 'after' | 'before' | 'in') => void
-
   // handle add in empty group/parallel
   handleAddIn: (nodeData: CommonNodeDataType, initiator: HTMLElement) => void
+  // reveal in yaml
+  revealInYaml: (path: string | undefined) => void
 }
 
 export const NodeContext = createContext<NodeContextProps>({
   showContextMenu: (_nodeData: CommonNodeDataType, _initiator: HTMLElement, _isIn?: boolean) => undefined,
   hideContextMenu: () => undefined,
   contextMenuData: null,
+  //
+  selectionPath: undefined,
   //
   addStep: (_yamlPath: CommonNodeDataType, _position: 'after' | 'before') => undefined,
   editStep: (_yamlPath: CommonNodeDataType) => undefined,
@@ -41,7 +47,9 @@ export const NodeContext = createContext<NodeContextProps>({
   addSerialGroup: (_nodeData: CommonNodeDataType, _position: 'after' | 'before' | 'in') => undefined,
   addParallelGroup: (_nodeData: CommonNodeDataType, _position: 'after' | 'before' | 'in') => undefined,
   //
-  handleAddIn: (_nodeData: CommonNodeDataType, _initiator: HTMLElement) => undefined
+  handleAddIn: (_nodeData: CommonNodeDataType, _initiator: HTMLElement) => undefined,
+  //
+  revealInYaml: (_path: string | undefined) => undefined
 })
 
 export function useNodeContext(): NodeContextProps {
@@ -49,8 +57,13 @@ export function useNodeContext(): NodeContextProps {
 }
 
 export const NodeContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const { setAddStepIntention, setEditStepIntention, requestYamlModifications } = usePipelineDataContext()
-  const { setStepDrawerOpen } = usePipelineViewContext()
+  const {
+    setAddStepIntention,
+    setEditStepIntention,
+    requestYamlModifications,
+    state: { editStepIntention }
+  } = usePipelineDataContext()
+  const { setStepDrawerOpen, setHighlightInYamlPath, setView } = usePipelineViewContext()
 
   const [contextMenuData, setContextMenuData] = useState<ContextMenuData | null>(null)
 
@@ -136,6 +149,15 @@ export const NodeContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
     }
   }
 
+  const revealInYaml = (path: string | undefined) => {
+    setView(PipelineStudioView.Yaml)
+    setHighlightInYamlPath(path)
+  }
+
+  const selectionPath = useMemo(() => {
+    return editStepIntention?.path
+  }, [editStepIntention])
+
   return (
     <NodeContext.Provider
       value={{
@@ -149,7 +171,11 @@ export const NodeContextProvider: React.FC<{ children: React.ReactNode }> = ({ c
         addSerialGroup,
         addParallelGroup,
         //
-        handleAddIn
+        handleAddIn,
+        //
+        revealInYaml,
+        //
+        selectionPath
       }}
     >
       {children}

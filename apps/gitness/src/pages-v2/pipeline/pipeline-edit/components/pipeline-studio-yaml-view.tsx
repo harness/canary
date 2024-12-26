@@ -27,7 +27,7 @@ const PipelineStudioYamlView = (): JSX.Element => {
     setEditStepIntention,
     requestYamlModifications: { deleteInArray }
   } = usePipelineDataContext()
-  const { setStepDrawerOpen } = usePipelineViewContext()
+  const { setStepDrawerOpen, highlightInYamlPath } = usePipelineViewContext()
   const { theme } = useThemeStore()
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -116,8 +116,12 @@ const PipelineStudioYamlView = (): JSX.Element => {
     }
   }, [yamlRevision])
 
-  return useMemo(
-    () => (
+  return useMemo(() => {
+    const selection = highlightInYamlPath
+      ? { path: highlightInYamlPath, className: 'bg-background-4', revealInCenter: true }
+      : undefined
+
+    return (
       <div className="flex size-full">
         <YamlEditor
           onYamlRevisionChange={value => {
@@ -129,11 +133,11 @@ const PipelineStudioYamlView = (): JSX.Element => {
           theme={monacoTheme}
           schemaConfig={schemaConfig}
           inlineActions={inlineActions}
+          selection={selection}
         />
       </div>
-    ),
-    [reRenderYamlEditor, themeConfig, schemaConfig, inlineActions]
-  )
+    )
+  }, [reRenderYamlEditor, themeConfig, schemaConfig, inlineActions, highlightInYamlPath])
 }
 
 export { PipelineStudioYamlView }

@@ -13,7 +13,20 @@ export function injectItemInArray(
   if (position === 'in') {
     const doc = parseDocument(yaml)
 
-    doc.addIn(path.split('.'), item)
+    const pathArr = path.split('.')
+    // NOTE: exception for minimal pipeline: "pipeline: {}"
+    if (path === 'pipeline' || path === 'pipeline.stages') {
+      const pl = doc.getIn(['pipeline']) as { flow: boolean }
+      pl.flow = false
+    }
+
+    if (!doc.hasIn(pathArr)) {
+      // NOTE: if array does not exist, add array with item
+      doc.addIn(pathArr, [item])
+    } else {
+      doc.addIn(pathArr, item)
+    }
+
     const arr = doc.getIn(path.split('.')) as { flow: boolean } //as Collection
     arr.flow = false
 
@@ -21,13 +34,13 @@ export function injectItemInArray(
   }
   // if position is "after" or "before", path points to an array element
   else if (position === 'after' || position === 'before') {
-    const pathParts = path.split('.')
-    const index = parseInt(pathParts.pop() ?? '0')
+    const pathArr = path.split('.')
+    const index = parseInt(pathArr.pop() ?? '0')
 
     const doc = parseDocument(yaml)
 
     const yamlItem = doc.createNode(item)
-    const collection = doc.getIn(pathParts) as YAMLSeq
+    const collection = doc.getIn(pathArr) as YAMLSeq
     collection.items.splice(position == 'before' ? index : index + 1, 0, yamlItem)
 
     return doc.toString()

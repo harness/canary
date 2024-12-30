@@ -5,7 +5,8 @@
 @font-face {
   font-family: 'Inter';
   font-style: normal;
-  font-weight: 300 600; /* Supports weights from 300 to 600 */
+  font-weight: 300 600;
+  /* Supports weights from 300 to 600 */
   src: url('./fonts/InterVariable.ttf') format('truetype');
 }
 
@@ -43,6 +44,8 @@
   --canary-blue-60: 215 100% 60%;
   --canary-blue-70: 215 100% 70%;
 
+
+
   /* PP Figma secondary colors */
   --canary-mint: 175 60% 65%;
   --canary-blue: 216 80% 65%;
@@ -54,6 +57,7 @@
 }
 
 @layer themes {
+
   /* TODO: replace hsl with variables for theming */
   :root {
     --canary-background: 0 0% 100%;
@@ -119,6 +123,46 @@
     --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
 
+    /* Figma gray contrast colors */
+    --canary-gray-contrast-4: hsl(240 6% 7%);
+    --canary-gray-contrast-6: hsl(240 6% 8%);
+    --canary-gray-contrast-8: hsl(240 6% 10%);
+    --canary-gray-contrast-10: hsl(240 6% 14%);
+    --canary-gray-contrast-12: hsl(240 6% 16%);
+    --canary-gray-contrast-15: hsl(240 6% 19%);
+    --canary-gray-contrast-20: hsl(240 6% 22%);
+    --canary-gray-contrast-30: hsl(240 6% 25%);
+    --canary-gray-contrast-40: hsl(247 6% 33%);
+    --canary-gray-contrast-50: hsl(247 6% 45%);
+    --canary-gray-contrast-60: hsl(247 6% 56%);
+    --canary-gray-contrast-70: hsl(249 6% 68%);
+    --canary-gray-contrast-80: hsl(255 6% 78%);
+    --canary-gray-contrast-90: hsl(276 6% 86%);
+    --canary-gray-contrast-94: hsl(270 6% 93%);
+    --canary-gray-contrast-96: hsl(300 6% 95%);
+    --canary-gray-contrast-98: hsl(300 6% 99%);
+    --canary-gray-contrast-alpha-20-0: hsl(240 5% 22% / 0);
+    --canary-gray-contrast-alpha-20-40: hsl(240 5% 22% / 0.4);
+    --canary-gray-contrast-alpha-80-0: hsl(255 5% 71% / 0);
+    --canary-gray-contrast-alpha-80-25: hsl(255 5% 71% / 0.25);
+
+    /* Figma radix colors */
+    --canary-radix-dark-blue: hsl(193 98% 74%);
+    --canary-radix-dark-green: hsl(163 75% 48%);
+    --canary-radix-dark-orange: hsl(46 100% 54%);
+    --canary-radix-dark-peach: hsl(12 100% 75%);
+    --canary-radix-dark-purple: hsl(272 100% 81%);
+    --canary-radix-dark-red: hsl(2 100% 79%);
+    --canary-radix-dark-red-darker: hsl(360 79% 65%);
+    --canary-radix-light-blue: hsl(196 100% 31%);
+    --canary-radix-light-green: hsl(164 61% 32%);
+    --canary-radix-light-orange: hsl(35 100% 34%);
+    --canary-radix-light-peach: hsl(23 100% 40%);
+    --canary-radix-light-purple: hsl(272 45% 49%);
+    --canary-radix-light-red: hsl(358 65% 49%);
+    --canary-radix-light-red-darker: hsl(358 75% 59%);
+
+    /*
     --canary-harness-nav-panel-bg: 212 72% 10%;
     --canary-harness-grey-0: 0 0% 100%;
     --canary-harness-grey-50: 210 25% 98%;
@@ -149,10 +193,12 @@
     --canary-harness-orange-300: 25 100% 79%;
     --canary-harness-orange-900: 15 84% 42%;
     --canary-harness-pink-800: 331 75% 49%;
+    */
     --canary-ai-yellow: 36 60% 85%;
     --canary-ai-pink: 335 58% 66%;
     --canary-ai-purple: 246 66% 62%;
     --canary-ai-cyan: 187 97% 79%;
+
 
     /* Text */
     --canary-foreground-01: var(--canary-white);
@@ -172,7 +218,8 @@
     --canary-background-01: var(--canary-grey-6);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-black);
@@ -182,7 +229,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -218,39 +266,60 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
 
     /* Box shadow colors */
     --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
@@ -316,7 +385,8 @@
     --canary-background-01: var(--canary-grey-6);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-black);
@@ -326,7 +396,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -362,39 +433,60 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
 
     /* Box shadow colors */
     --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
@@ -412,12 +504,12 @@
     --canary-primary: 240 5.9% 10%;
     --canary-primary-background: 240 5.9% 10%;
     --canary-primary-foreground: 0 0% 98%;
-    --canary-primary-muted: var(--canary-grey-70);
+    --canary-primary-muted: var(--canary-gray-contrast-70);
     --canary-primary-accent: 216 100% 60%;
     --canary-secondary: 240 4.8% 95.9%;
     --canary-secondary-foreground: 240 5.9% 10%;
     --canary-secondary-background: 0 0% 100%;
-    --canary-secondary-muted: var(--canary-grey-40);
+    --canary-secondary-muted: var(--canary-gray-contrast-40);
     --canary-tertiary: 240 4.8% 95.9%;
     --canary-tertiary-foreground: 240 5.9% 10%;
     --canary-tertiary-background: 240 6% 60%;
@@ -433,11 +525,11 @@
     --canary-input-background: 240 5.9% 90%;
     --canary-ring: 240 5.9% 10%;
     --canary-radius: 0.5rem;
-    --canary-success: var(--canary-green);
-    --canary-error: var(--canary-red);
-    --canary-warning: var(--canary-orange);
-    --canary-emphasis: var(--canary-emphasis);
-    --canary-ai: var(--canary-purple);
+    --canary-success: var(--canary-radix-light-green);
+    --canary-error: var(--canary-radix-light-red);
+    --canary-warning: var(--canary-radix-light-orange);
+    --canary-emphasis: var(--canary-radix-light-purple);
+    --canary-ai: var(--canary-radix-light-purple);
     --canary-ai-button-stop-1: var(--canary-ai-yellow);
     --canary-ai-button-stop-2: var(--canary-ai-pink);
     --canary-ai-button-stop-3: var(--canary-ai-purple);
@@ -461,165 +553,151 @@
     --diff-hunk-content-color--: hsl(0 0% 100%);
     /* New colors design variables */
     /* Text */
-    --canary-foreground-01: var(--canary-harness-grey-900);
-    --canary-foreground-02: var(--canary-harness-grey-700);
-    --canary-foreground-03: var(--canary-harness-grey-600);
-    --canary-foreground-04: var(--canary-harness-grey-500);
-    --canary-foreground-05: var(--canary-harness-grey-400);
-    --canary-foreground-06: var(--canary-harness-grey-0);
-    --canary-foreground-07: var(--canary-harness-grey-500);
-    --canary-foreground-08: var(--canary-harness-grey-900);
-    --canary-foreground-09: var(--canary-harness-grey-350);
-    --canary-foreground-10: var(--canary-harness-grey-200);
-    --canary-foreground-danger: var(--canary-harness-red-600);
-    --canary-foreground-alert: var(--canary-harness-yellow-900);
-    --canary-foreground-success: var(--canary-harness-green-800);
-    --canary-foreground-accent: var(--canary-harness-primary-700);
+    --canary-foreground-01: var(--canary-gray-contrast-6);
+    --canary-foreground-02: var(--canary-gray-contrast-15);
+    --canary-foreground-03: var(--canary-gray-contrast-30);
+    --canary-foreground-04: var(--canary-gray-contrast-40);
+    --canary-foreground-05: var(--canary-gray-contrast-50);
+    --canary-foreground-06: var(--canary-gray-contrast-98);
+    --canary-foreground-07: var(--canary-gray-contrast-40);
+    --canary-foreground-08: var(--canary-gray-contrast-6);
+    --canary-foreground-09: var(--canary-gray-contrast-60);
+    --canary-foreground-10: var(--canary-gray-contrast-80);
+    --canary-foreground-danger: var(--canary-radix-light-red);
+    --canary-foreground-alert: var(--canary-radix-light-orange);
+    --canary-foreground-success: var(--canary-radix-light-green);
+    --canary-foreground-accent: var(--canary-radix-light-blue);
     /* Backgrounds */
-    --canary-background-01: var(--canary-harness-grey-50);
-    --canary-background-02: var(--canary-harness-grey-100);
-    --canary-background-03: var(--canary-harness-grey-150);
-    --canary-background-04: var(--canary-harness-grey-400) / 0.15;
-    --canary-background-05: var(--canary-harness-primary-700);
-    --canary-background-06: var(--canary-harness-primary-300) / 0.2;
-    --canary-background-07: var(--canary-harness-grey-100);
-    --canary-background-08: var(--canary-harness-grey-200);
-    --canary-background-09: var(--canary-harness-grey-200);
-    --canary-background-10: var(--canary-harness-primary-800);
-    --canary-background-11: var(--canary-harness-grey-200);
-    --canary-background-12: var(--canary-harness-grey-300);
-    --canary-background-13: var(--canary-harness-grey-400);
-    --canary-background-14: var(--canary-harness-grey-0);
+    --canary-background-01: var(--canary-gray-contrast-94);
+    --canary-background-02: var(--canary-gray-contrast-96);
+    --canary-background-03: var(--canary-gray-contrast-90);
+    --canary-background-04: var(--canary-gray-contrast-alpha-80-25);
+    --canary-background-05: var(--canary-radix-light-blue);
+    --canary-background-06: var(--canary-radix-light-blue) / 0.2;
+    --canary-background-07: var(--canary-gray-contrast-96);
+    --canary-background-08: var(--canary-gray-contrast-90);
+    --canary-background-09: var(--canary-gray-contrast-90);
+    --canary-background-10: var(--canary-radix-light-blue);
+    --canary-background-11: var(--canary-gray-contrast-90);
+    --canary-background-12: var(--canary-gray-contrast-80);
+    --canary-background-13: var(--canary-gray-contrast-50);
+    --canary-background-14: var(--canary-gray-contrast-98);
+    --canary-background-background-surface: var(--canary-gray-contrast-96);
+    --canary-background-popover: var(--canary-gray-contrast-98);
+    --canary-background-highlight: var(--canary-gray-contrast-90);
     /* Exist in Figma, but not in code. I added it just in case */
-    --canary-background-accent: var(--canary-harness-primary-700);
+    --canary-background-accent: var(--canary-radix-light-blue);
     /* Exist in Figma, but not in code. I added it just in case */
-    --canary-background-danger: var(--canary-harness-red-350) / 0.1;
+    --canary-background-danger: var(--canary-radix-light-red-darker) / 0.04;
     /* I can’t find the usage of this token in Figma*/
-    --canary-background-success: var(--canary-harness-green-300) / 0.1;
-    --canary-toast-background-danger: var(--canary-harness-red-350);
+    --canary-background-success: var(--canary-radix-light-green) / 0.04;
+    --canary-toast-background-danger: var(--canary-radix-light-red-darker);
     /* Exist in Figma, but not in code. I added it just in case */
     /* Borders */
-    --canary-border-01: var(--canary-harness-grey-300);
-    --canary-border-02: var(--canary-harness-grey-200);
-    --canary-border-03: var(--canary-harness-grey-400);
+    --canary-border-01: var(--canary-gray-contrast-90);
+    --canary-border-02: var(--canary-gray-contrast-80);
+    --canary-border-03: var(--canary-gray-contrast-70);
     /* I can’t find the usage of this token in Figma*/
-    --canary-border-04: var(--canary-harness-grey-200);
-    --canary-border-05: var(--canary-harness-grey-200);
-    --canary-border-06: var(--canary-harness-grey-350);
+    --canary-border-04: var(--canary-gray-contrast-90);
+    --canary-border-05: var(--canary-gray-contrast-90);
+    --canary-border-06: var(--canary-gray-contrast-70);
     /* Note: In Figma, this token is used for the ‘/’ symbol in breadcrumbs, while designers have used the foreground-09 token for the same element on some pages. */
-    --canary-border-07: var(--canary-harness-grey-900);
+    --canary-border-07: var(--canary-gray-contrast-98);
     /* In Figma this token used as a blinking cursor, which means it could be ignored, and instead you can use foreground-01 token. */
-    --canary-border-08: var(--canary-harness-grey-200);
-    --canary-border-09: var(--canary-harness-grey-500);
+    --canary-border-08: var(--canary-gray-contrast-90);
+    --canary-border-09: var(--canary-gray-contrast-60);
     /* I can’t find the usage of this token in Figma*/
-    --canary-border-10: var(--canary-harness-grey-200);
-    --canary-border-danger: var(--canary-harness-red-600);
-    --canary-border-success: var(--canary-harness-green-600);
-    --canary-border-accent: var(--canary-harness-primary-700);
+    --canary-border-10: var(--canary-gray-contrast-90);
+    --canary-border-danger: var(--canary-radix-light-red);
+    --canary-border-success: var(--canary-radix-light-green);
+    --canary-border-accent: var(--canary-radix-light-blue);
     /* Icons */
-    --canary-icon-01: var(--canary-harness-grey-500);
-    --canary-icon-02: var(--canary-harness-grey-900);
-    --canary-icon-03: var(--canary-harness-grey-700);
-    --canary-icon-04: var(--canary-harness-grey-500);
-    --canary-icon-05: var(--canary-harness-grey-0);
-    --canary-icon-06: var(--canary-harness-grey-400);
-    --canary-icon-07: var(--canary-harness-grey-400);
-    --canary-icon-08: var(--canary-harness-grey-900);
-    --canary-icon-09: var(--canary-harness-grey-500);
-    --canary-icon-10: var(--canary-harness-grey-0);
-    --canary-icon-danger: var(--canary-harness-red-600);
-    --canary-icon-alert: var(--canary-harness-yellow-900);
-    --canary-icon-success: var(--canary-harness-green-800);
-    --canary-icon-accent: var(--canary-harness-primary-700);
-    --canary-icon-merged: var(--canary-harness-purple-800);
+    --canary-icon-01: var(--canary-gray-contrast-40);
+    --canary-icon-02: var(--canary-gray-contrast-6);
+    --canary-icon-03: var(--canary-gray-contrast-15);
+    --canary-icon-04: var(--canary-gray-contrast-40);
+    --canary-icon-05: var(--canary-gray-contrast-98);
+    --canary-icon-06: var(--canary-gray-contrast-50);
+    --canary-icon-07: var(--canary-gray-contrast-50);
+    --canary-icon-08: var(--canary-gray-contrast-6);
+    --canary-icon-09: var(--canary-gray-contrast-40);
+    --canary-icon-10: var(--canary-gray-contrast-98);
+    --canary-icon-danger: var(--canary-radix-light-red);
+    --canary-icon-alert: var(--canary-radix-light-orange);
+    --canary-icon-success: var(--canary-radix-light-green);
+    --canary-icon-accent: var(--canary-radix-light-blue);
+    --canary-icon-merged: var(--canary-radix-light-purple);
     /* Tags */
     /* --gray */
-    --canary-tag-foreground-gray-01: var(--canary-harness-grey-600);
-    --canary-tag-border-gray-01: var(--canary-harness-grey-400) / 0.2;
-    --canary-tag-background-gray-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-tag-background-gray-02: var(--canary-harness-grey-400) / 0.2;
+    --canary-tag-foreground-gray-01: var(--canary-gray-contrast-40);
+    --canary-tag-border-gray-01: var(--canary-gray-contrast-40) / 0.3;
+    --canary-tag-background-gray-01: var(--canary-gray-contrast-40) / 0.03;
+    --canary-tag-background-gray-02: var(--canary-gray-contrast-40) / 0.08;
     /* --purple */
-    --canary-tag-foreground-purple-01: var(--canary-harness-purple-900);
-    --canary-tag-border-purple-01: var(--canary-harness-purple-500) / 0.15;
-    --canary-tag-background-purple-01: var(--canary-harness-purple-500) / 0.1;
-    --canary-tag-background-purple-02: var(--canary-harness-purple-500) / 0.15;
+    --canary-tag-foreground-purple-01: var(--canary-radix-light-purple);
+    --canary-tag-border-purple-01: var(--canary-radix-light-purple) / 0.3;
+    --canary-tag-background-purple-01: var(--canary-radix-light-purple) / 0.03;
+    --canary-tag-background-purple-02: var(--canary-radix-light-purple) / 0.08;
     /* --blue */
-    --canary-tag-foreground-blue-01: var(--canary-harness-primary-700);
-    --canary-tag-border-blue-01: var(--canary-harness-primary-700) / 0.15;
-    --canary-tag-background-blue-01: var(--canary-harness-primary-300) / 0.15;
-    --canary-tag-background-blue-02: var(--canary-harness-primary-300) / 0.2;
+    --canary-tag-foreground-blue-01: var(--canary-radix-light-blue);
+    --canary-tag-border-blue-01: var(--canary-radix-light-blue) / 0.3;
+    --canary-tag-background-blue-01: var(--canary-radix-light-blue) / 0.03;
+    --canary-tag-background-blue-02: var(--canary-radix-light-blue) / 0.08;
     /* --mint */
-    --canary-tag-foreground-mint-01: var(--canary-harness-green-800);
-    --canary-tag-border-mint-01: var(--canary-harness-green-800) / 0.15;
-    --canary-tag-background-mint-01: var(--canary-harness-green-300) / 0.1;
-    --canary-tag-background-mint-02: var(--canary-harness-green-300) / 0.25;
+    --canary-tag-foreground-mint-01: var(--canary-radix-light-green);
+    --canary-tag-border-mint-01: var(--canary-radix-light-green) / 0.3;
+    --canary-tag-background-mint-01: var(--canary-radix-light-green) / 0.03;
+    --canary-tag-background-mint-02: var(--canary-radix-light-green) / 0.08;
     /* --amber */
-    --canary-tag-foreground-amber-01: var(--canary-harness-yellow-900);
-    --canary-tag-border-amber-01: var(--canary-harness-yellow-800) / 0.2;
-    --canary-tag-background-amber-01: var(--canary-harness-yellow-800) / 0.1;
-    --canary-tag-background-amber-02: var(--canary-harness-yellow-800) / 0.2;
+    --canary-tag-foreground-amber-01: var(--canary-radix-light-orange);
+    --canary-tag-border-amber-01: var(--canary-radix-light-orange) / 0.3;
+    --canary-tag-background-amber-01: var(--canary-radix-light-orange) / 0.03;
+    --canary-tag-background-amber-02: var(--canary-radix-light-orange) / 0.08;
     /* --peach */
-    --canary-tag-foreground-peach-01: var(--canary-harness-orange-900);
-    --canary-tag-border-peach-01: var(--canary-harness-orange-300) / 0.3;
-    --canary-tag-background-peach-01: var(--canary-harness-orange-300) / 0.2;
-    --canary-tag-background-peach-02: var(--canary-harness-orange-300) / 0.3;
+    --canary-tag-foreground-peach-01: var(--canary-radix-light-peach);
+    --canary-tag-border-peach-01: var(--canary-radix-light-peach) / 0.3;
+    --canary-tag-background-peach-01: var(--canary-radix-light-peach) / 0.03;
+    --canary-tag-background-peach-02: var(--canary-radix-light-peach) / 0.08;
     /* --red */
-    --canary-tag-foreground-red-01: var(--canary-harness-red-700);
-    --canary-tag-border-red-01: var(--canary-harness-red-350) / 0.2;
-    --canary-tag-background-red-01: var(--canary-harness-red-350) / 0.1;
-    --canary-tag-background-red-02: var(--canary-harness-red-350) / 0.2;
-    /* Code Backgrounds; this token group exist in Figma, just added it here as well */
-    --canary-code-foreground-01: var(--canary-harness-pink-800);
-    --canary-code-foreground-02: var(--canary-harness-primary-700);
-    --canary-code-foreground-03: var(--canary-harness-green-800);
-    --canary-code-foreground-04: var(--canary-harness-purple-800);
-    --canary-code-foreground-05: var(--canary-harness-orange-900);
-    --canary-code-foreground-06: var(--canary-harness-grey-500);
-    --canary-code-foreground-07: var(--canary-harness-grey-400);
-    --canary-code-foreground-08: var(--canary-harness-grey-400);
-    --canary-code-foreground-09: var(--canary-harness-grey-500);
-    --canary-code-background-01: var(--canary-harness-grey-400) / 0.1;
-    --canary-code-background-02: var(--canary-harness-green-300) / 0.25;
-    --canary-code-background-03: var(--canary-harness-300) / 0.45;
-    --canary-code-background-04: var(--canary-harness-350) / 0.2;
-    --canary-code-background-05: var(--canary-harness-350) / 0.25;
-    --canary-code-background-06: var(--canary-harness-yellow-800) / 0.1;
-    --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
-    --canary-code-background-08: var(--canary-harness-primary-300) / 0.2;
+    --canary-tag-foreground-red-01: var(--canary-radix-light-red);
+    --canary-tag-border-red-01: var(--canary-radix-light-red) / 0.3;
+    --canary-tag-background-red-01: var(--canary-radix-light-red) / 0.03;
+    --canary-tag-background-red-02: var(--canary-radix-light-red) / 0.08;
     /* Button; this token group exist in Figma, just added it here as well */
-    --canary-button-foreground-danger-01: var(--canary-harness-red-700);
-    --canary-button-background-danger-01: var(--canary-harness-red-350) / 0.1;
-    --canary-button-background-danger-02: var(--canary-harness-red-350) / 0.2;
-    --canary-button-background-danger-03: var(--canary-harness-red-350) / 0.2;
-    --canary-button-border-danger-01: var(--canary-harness-red-350) / 0.2;
-    --canary-button-foreground-success-01: var(--canary-harness-green-800);
-    --canary-button-background-success-01: var(--canary-harness-green-300) / 0.1;
-    --canary-button-background-success-02: var(--canary-harness-green-300) / 0.25;
-    --canary-button-border-success-01: var(--canary-harness-green-800) / 0.15;
-    --canary-button-foreground-disabled-01: var(--canary-harness-grey-350);
-    --canary-button-background-disabled-01: var(--canary-harness-grey-400) / 0.15;
-    --canary-button-border-disabled-01: var(--canary-harness-grey-400) / 0.2;
+    --canary-button-foreground-danger-01: var(--canary-radix-light-red);
+    --canary-button-background-danger-01: var(--canary-radix-light-red) / 0.06;
+    --canary-button-background-danger-02: var(--canary-radix-light-red) / 0.08;
+    --canary-button-background-danger-03: var(--canary-radix-light-red) / 0.2;
+    --canary-button-border-danger-01: var(--canary-radix-light-red) / 0.15;
+    --canary-button-foreground-success-01: var(--canary-radix-light-green);
+    --canary-button-background-success-01: var(--canary-radix-light-green) / 0.06;
+    --canary-button-background-success-02: var(--canary-radix-light-green) / 0.1;
+    --canary-button-border-success-01: var(--canary-radix-light-green) / 0.15;
+    --canary-button-foreground-disabled-01: var(--canary-gray-contrast-40);
+    --canary-button-background-disabled-01: var(--canary-gray-contrast-40) / 0.06;
+    --canary-button-border-disabled-01: var(--canary-gray-contrast-40) / 0.15;
 
     /* 🚨 Need these colors for other themes */
     /* Selected tab bg element*/
-    --canary-tab-item-gradient-from: var(--canary-harness-grey-400) / 0.15;
-    --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0;
+    --canary-tab-item-gradient-from: var(--canary-gray-contrast-alpha-80-25);
+    --canary-tab-item-gradient-to: var(--canary-gray-contrast-alpha-80-0);
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
     /* Navigation vertical element gradients*/
-    --canary-nav-gradient-item-y-from: var(--canary-harness-grey-200);
-    --canary-nav-gradient-item-y-to: var(--canary-harness-grey-200) / 0;
+    --canary-nav-gradient-item-y-from: var(--canary-gray-contrast-alpha-80-25);
+    --canary-nav-gradient-item-y-to: var(--canary-gray-contrast-alpha-80-0);
     --canary-tab-gradient-item-y-stops: var(--canary-nav-gradient-item-y-from), var(--canary-nav-gradient-item-y-to);
     /* Navigation horizontal element gradients*/
-    --canary-nav-gradient-item-x-from: var(--canary-harness-grey-0);
-    --canary-nav-gradient-item-x-to: var(--canary-harness-grey-0) / 0;
+    --canary-nav-gradient-item-x-from: var(--canary-gray-contrast-alpha-80-25);
+    --canary-nav-gradient-item-x-to: var(--canary-gray-contrast-alpha-80-0);
     --canary-tab-gradient-item-x-stops: var(--canary-nav-gradient-item-x-from), var(--canary-nav-gradient-item-x-to);
 
     /* Box shadow colors */
-    --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
-    --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
-    --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-1: var(--canary-gray-contrast-50) / 0.12;
+    --canary-box-shadow-2: var(--canary-gray-contrast-50) / 0.12;
+    --canary-box-shadow-pagination: var(--canary-gray-contrast-50) / 0.12;
   }
+
   .dark-std-std {
     --canary-background: var(--canary-grey-6);
     --canary-foreground: var(--canary-grey-94);
@@ -678,7 +756,8 @@
     --canary-background-01: var(--canary-grey-6);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-black);
@@ -688,7 +767,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -724,39 +804,60 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
 
     /* Box shadow colors */
     --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
@@ -841,7 +942,8 @@
     --canary-background-01: var(--canary-white);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-white);
@@ -851,7 +953,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -887,40 +990,62 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
   }
+
   .dark-tri-std {
     --canary-background: var(--canary-grey-6);
     --canary-foreground: var(--canary-grey-94);
@@ -931,12 +1056,12 @@
     --canary-primary: var(--canary-white);
     --canary-primary-background: var(--canary-black);
     --canary-primary-foreground: var(--canary-grey-10);
-    --canary-primary-muted: var(--canary-grey-70);
+    --canary-primary-muted: var(--canary-gray-contrast-40);
     --canary-primary-accent: 216 100% 60%;
     --canary-secondary: var(--canary-grey-15);
     --canary-secondary-foreground: var(--canary-white);
     --canary-secondary-background: var(--canary-grey-6);
-    --canary-secondary-muted: var(--canary-grey-40);
+    --canary-secondary-muted: var(--canary-gray-contrast-30);
     --canary-tertiary: var(--canary-grey-12);
     --canary-tertiary-foreground: var(--canary-white);
     --canary-tertiary-background: var(--canary-grey-60);
@@ -951,35 +1076,37 @@
     --canary-input: var(--canary-grey-15);
     --canary-input-background: var(--canary-grey-10);
     --canary-ring: var(--canary-grey-80);
-    --canary-success: var(--canary-green);
-    --canary-error: var(--canary-red);
-    --canary-warning: var(--canary-orange);
-    --canary-emphasis: var(--canary-purple);
-    --canary-ai: var(--canary-purple);
+    --canary-success: var(--canary-radix-dark-green);
+    --canary-error: var(--canary-radix-dark-red);
+    --canary-warning: var(--canary-radix-dark-orange);
+    --canary-emphasis: var(--canary-radix-dark-purple);
+    --canary-ai: var(--canary-radix-dark-purple);
     --canary-ai-button-stop-1: 36 60% 95%;
     --canary-ai-button-stop-2: 335 58% 76%;
     --canary-ai-button-stop-3: 246 66% 72%;
     --canary-ai-button-stop-4: 188 97% 89%;
     /* New colors design variables */
     /* Text */
-    --canary-foreground-01: var(--canary-orange);
-    --canary-foreground-02: var(--canary-grey-80);
-    --canary-foreground-03: var(--canary-grey-70);
-    --canary-foreground-04: var(--canary-grey-60);
-    --canary-foreground-05: var(--canary-grey-50);
-    --canary-foreground-06: var(--canary-black);
-    --canary-foreground-07: var(--canary-grey-40);
-    --canary-foreground-08: var(--canary-grey-90);
-    --canary-foreground-09: var(--canary-grey-30);
-    --canary-foreground-danger: var(--canary-red-65);
-    --canary-foreground-alert: var(--canary-orange-55);
-    --canary-foreground-success: var(--canary-green-65);
-    --canary-foreground-accent: var(--canary-blue-60);
+    --canary-foreground-01: var(--canary-white);
+    --canary-foreground-02: var(--canary-gray-contrast-90);
+    --canary-foreground-03: var(--canary-gray-contrast-70);
+    --canary-foreground-04: var(--canary-gray-contrast-80);
+    --canary-foreground-05: var(--canary-gray-contrast-60);
+    --canary-foreground-06: var(--canary-gray-contrast-6);
+    --canary-foreground-07: var(--canary-gray-contrast-60);
+    --canary-foreground-08: var(--canary-gray-contrast-90);
+    --canary-foreground-09: var(--canary-gray-contrast-30);
+    --canary-foreground-10: var(--canary-gray-contrast-15);
+    --canary-foreground-danger: var(--canary-radix-dark-red);
+    --canary-foreground-alert: var(--canary-radix-dark-orange);
+    --canary-foreground-success: var(--canary-radix-dark-green);
+    --canary-foreground-accent: var(--canary-radix-dark-blue);
     /* Backgrounds */
     --canary-background-01: var(--canary-grey-6);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-black);
@@ -989,7 +1116,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -1025,39 +1153,60 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
   }
 
   .light-pnd-std {
@@ -1137,7 +1286,8 @@
     --canary-background-01: var(--canary-white);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-white);
@@ -1147,7 +1297,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -1183,40 +1334,62 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
   }
+
   .dark-pnd-std {
     --canary-background: var(--canary-grey-6);
     --canary-foreground: var(--canary-grey-94);
@@ -1275,7 +1448,8 @@
     --canary-background-01: var(--canary-grey-6);
     --canary-background-02: var(--canary-grey-8);
     --canary-background-03: var(--canary-grey-10);
-    --canary-background-04: var(--canary-grey-50) / 0.1; /* gray50/10 */
+    --canary-background-04: var(--canary-grey-50) / 0.1;
+    /* gray50/10 */
     --canary-background-05: var(--canary-white);
     --canary-background-06: var(--canary-grey-80);
     --canary-background-07: var(--canary-black);
@@ -1285,7 +1459,8 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
-    --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-background-danger: var(--canary-red-65) / 0.1;
+    /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);
     /* Borders */
@@ -1321,39 +1496,60 @@
     /* Tags */
     /* --canary-gray */
     --canary-tag-foreground-gray-01: var(--canary-grey-70);
-    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12; /* grey70/12 */
-    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1; /* grey70/10 */
-    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15; /* grey70/15 */
+    --canary-tag-border-gray-01: var(--canary-grey-70) / 0.12;
+    /* grey70/12 */
+    --canary-tag-background-gray-01: var(--canary-grey-70) / 0.1;
+    /* grey70/10 */
+    --canary-tag-background-gray-02: var(--canary-grey-70) / 0.15;
+    /* grey70/15 */
     /* --canary-purple */
     --canary-tag-foreground-purple-01: var(--canary-purple);
-    --canary-tag-border-purple-01: var(--canary-purple) / 0.12; /* purple/12 */
-    --canary-tag-background-purple-01: var(--canary-purple) / 0.1; /* purple/10 */
-    --canary-tag-background-purple-02: var(--canary-purple) / 0.15; /* purple/15 */
+    --canary-tag-border-purple-01: var(--canary-purple) / 0.12;
+    /* purple/12 */
+    --canary-tag-background-purple-01: var(--canary-purple) / 0.1;
+    /* purple/10 */
+    --canary-tag-background-purple-02: var(--canary-purple) / 0.15;
+    /* purple/15 */
     /* --canary-blue */
     --canary-tag-foreground-blue-01: var(--canary-blue-60);
-    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12; /* blue60/12 */
-    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1; /* blue60/10 */
-    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15; /* blue60/15 */
+    --canary-tag-border-blue-01: var(--canary-blue-60) / 0.12;
+    /* blue60/12 */
+    --canary-tag-background-blue-01: var(--canary-blue-60) / 0.1;
+    /* blue60/10 */
+    --canary-tag-background-blue-02: var(--canary-blue-60) / 0.15;
+    /* blue60/15 */
     /* --canary-mint */
     --canary-tag-foreground-mint-01: var(--canary-mint);
-    --canary-tag-border-mint-01: var(--canary-mint) / 0.12; /* mint/12 */
-    --canary-tag-background-mint-01: var(--canary-mint) / 0.1; /* mint/10 */
-    --canary-tag-background-mint-02: var(--canary-mint) / 0.15; /* mint/15 */
+    --canary-tag-border-mint-01: var(--canary-mint) / 0.12;
+    /* mint/12 */
+    --canary-tag-background-mint-01: var(--canary-mint) / 0.1;
+    /* mint/10 */
+    --canary-tag-background-mint-02: var(--canary-mint) / 0.15;
+    /* mint/15 */
     /* --canary-amber */
     --canary-tag-foreground-amber-01: var(--canary-amber);
-    --canary-tag-border-amber-01: var(--canary-amber) / 0.12; /* amber/12 */
-    --canary-tag-background-amber-01: var(--canary-amber) / 0.1; /* amber/10 */
-    --canary-tag-background-amber-02: var(--canary-amber) / 0.15; /* amber/15 */
+    --canary-tag-border-amber-01: var(--canary-amber) / 0.12;
+    /* amber/12 */
+    --canary-tag-background-amber-01: var(--canary-amber) / 0.1;
+    /* amber/10 */
+    --canary-tag-background-amber-02: var(--canary-amber) / 0.15;
+    /* amber/15 */
     /* --canary-peach */
     --canary-tag-foreground-peach-01: var(--canary-peach);
-    --canary-tag-border-peach-01: var(--canary-peach) / 0.12; /* peach/12 */
-    --canary-tag-background-peach-01: var(--canary-peach) / 0.1; /* peach/10 */
-    --canary-tag-background-peach-02: var(--canary-peach) / 0.15; /* peach/15 */
+    --canary-tag-border-peach-01: var(--canary-peach) / 0.12;
+    /* peach/12 */
+    --canary-tag-background-peach-01: var(--canary-peach) / 0.1;
+    /* peach/10 */
+    --canary-tag-background-peach-02: var(--canary-peach) / 0.15;
+    /* peach/15 */
     /* --canary-red */
     --canary-tag-foreground-red-01: var(--canary-red);
-    --canary-tag-border-red-01: var(--canary-red) / 0.12; /* red/12 */
-    --canary-tag-background-red-01: var(--canary-red) / 0.1; /* red/10 */
-    --canary-tag-background-red-02: var(--canary-red) / 0.15; /* red/15 */
+    --canary-tag-border-red-01: var(--canary-red) / 0.12;
+    /* red/12 */
+    --canary-tag-background-red-01: var(--canary-red) / 0.1;
+    /* red/10 */
+    --canary-tag-background-red-02: var(--canary-red) / 0.15;
+    /* red/15 */
   }
 }
 
@@ -1372,6 +1568,7 @@
 }
 
 @layer utilities {
+
   /*
     Handy CSS class to prevent Input background color becomes yellow in Chrome on autofill.
     Works as well with inputs with transparent background.
@@ -1405,9 +1602,11 @@
 .card-auth {
   @apply w-[362px] border-none;
 }
+
 .card-auth-header {
   @apply space-x-0 space-y-0 p-0;
 }
+
 .card-auth-content {
   @apply w-full py-6;
 }
@@ -1416,6 +1615,7 @@
 .text-form-error {
   @apply text-destructive mt-2 text-xs font-light;
 }
+
 .form-input {
   @apply border-primary/10 bg-primary/5 mt-1 w-full rounded-[4px] text-sm font-light;
   @apply placeholder:text-primary/50 !important;
@@ -1425,6 +1625,7 @@
 .react-flow__panel {
   @apply left-auto right-0 m-6 flex gap-[1px] !important;
 }
+
 .react-flow__controls-button {
   @apply rounded-md invert !important;
 }
@@ -1479,239 +1680,305 @@
 .diff-tailwindcss-wrapper .invisible {
   visibility: hidden;
 }
+
 .diff-tailwindcss-wrapper .group:hover .group-hover\:visible {
   visibility: visible;
 }
+
 .diff-tailwindcss-wrapper .sticky {
   position: sticky;
 }
+
 .diff-tailwindcss-wrapper .left-0 {
   left: 0;
 }
+
 .diff-tailwindcss-wrapper .left-\[100\%\] {
   left: 100%;
 }
+
 .diff-tailwindcss-wrapper .right-\[100\%\] {
   right: 100%;
 }
+
 .diff-tailwindcss-wrapper .top-0 {
   top: 0;
 }
+
 .diff-tailwindcss-wrapper .top-\[1px\] {
   top: 1px;
 }
+
 .diff-tailwindcss-wrapper .top-\[50\%\] {
   top: 50%;
 }
+
 .diff-tailwindcss-wrapper .z-\[1\] {
   z-index: 1;
 }
+
 .diff-tailwindcss-wrapper .ml-\[-1\.5em\] {
   margin-left: -1.5em;
 }
+
 .diff-tailwindcss-wrapper .block {
   display: block;
 }
+
 .diff-tailwindcss-wrapper .inline-block {
   display: inline-block;
 }
+
 .diff-tailwindcss-wrapper .flex {
   display: flex;
 }
+
 .diff-tailwindcss-wrapper .table {
   display: table;
 }
+
 .diff-tailwindcss-wrapper .hidden {
   display: none;
 }
+
 .diff-tailwindcss-wrapper .h-\[50\%\] {
   height: 50%;
 }
+
 .diff-tailwindcss-wrapper .h-full {
   height: 100%;
 }
+
 .diff-tailwindcss-wrapper .min-h-\[28px\] {
   min-height: 28px;
 }
+
 .diff-tailwindcss-wrapper .w-\[1\%\] {
   width: 1%;
 }
+
 .diff-tailwindcss-wrapper .w-\[1\.5em\] {
   width: 1.5em;
 }
+
 .diff-tailwindcss-wrapper .w-\[1\.5px\] {
   width: 1.5px;
 }
+
 .diff-tailwindcss-wrapper .w-\[10px\] {
   width: 10px;
 }
+
 .diff-tailwindcss-wrapper .w-\[1px\] {
   width: 1px;
 }
+
 .diff-tailwindcss-wrapper .w-\[50\%\] {
   width: 50%;
 }
+
 .diff-tailwindcss-wrapper .w-full {
   width: 100%;
 }
+
 .diff-tailwindcss-wrapper .w-max {
   width: -moz-max-content;
   width: max-content;
 }
+
 .diff-tailwindcss-wrapper .min-w-\[100px\] {
   min-width: 100px;
 }
+
 .diff-tailwindcss-wrapper .min-w-\[40px\] {
   min-width: 40px;
 }
+
 .diff-tailwindcss-wrapper .min-w-full {
   min-width: 100%;
 }
+
 .diff-tailwindcss-wrapper .flex-shrink-0,
 .diff-tailwindcss-wrapper .shrink-0 {
   flex-shrink: 0;
 }
+
 .diff-tailwindcss-wrapper .basis-\[50\%\] {
   flex-basis: 50%;
 }
+
 .diff-tailwindcss-wrapper .table-fixed {
   table-layout: fixed;
 }
+
 .diff-tailwindcss-wrapper .border-collapse {
   border-collapse: collapse;
 }
+
 .diff-tailwindcss-wrapper .origin-center {
   transform-origin: center;
 }
+
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\] {
   --canary-tw-translate-x: -50%;
 }
+
 .diff-tailwindcss-wrapper .translate-x-\[-50\%\],
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
-  transform: translate(var(--canary-tw-translate-x), var(--canary-tw-translate-y)) rotate(var(--canary-tw-rotate))
-    skewX(var(--canary-tw-skew-x)) skewY(var(--canary-tw-skew-y)) scaleX(var(--canary-tw-scale-x))
-    scaleY(var(--canary-tw-scale-y));
+  transform: translate(var(--canary-tw-translate-x), var(--canary-tw-translate-y)) rotate(var(--canary-tw-rotate)) skewX(var(--canary-tw-skew-x)) skewY(var(--canary-tw-skew-y)) scaleX(var(--canary-tw-scale-x)) scaleY(var(--canary-tw-scale-y));
 }
+
 .diff-tailwindcss-wrapper .translate-x-\[50\%\] {
   --canary-tw-translate-x: 50%;
 }
+
 .diff-tailwindcss-wrapper .translate-y-\[-50\%\] {
   --canary-tw-translate-y: -50%;
-  transform: translate(var(--canary-tw-translate-x), var(--canary-tw-translate-y)) rotate(var(--canary-tw-rotate))
-    skewX(var(--canary-tw-skew-x)) skewY(var(--canary-tw-skew-y)) scaleX(var(--canary-tw-scale-x))
-    scaleY(var(--canary-tw-scale-y));
+  transform: translate(var(--canary-tw-translate-x), var(--canary-tw-translate-y)) rotate(var(--canary-tw-rotate)) skewX(var(--canary-tw-skew-x)) skewY(var(--canary-tw-skew-y)) scaleX(var(--canary-tw-scale-x)) scaleY(var(--canary-tw-scale-y));
 }
+
 .diff-tailwindcss-wrapper .cursor-pointer {
   cursor: pointer;
 }
+
 .diff-tailwindcss-wrapper .select-none {
   -webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
 }
+
 .diff-tailwindcss-wrapper .flex-col {
   flex-direction: column;
 }
+
 .diff-tailwindcss-wrapper .items-start {
   align-items: flex-start;
 }
+
 .diff-tailwindcss-wrapper .items-center {
   align-items: center;
 }
+
 .diff-tailwindcss-wrapper .justify-center {
   justify-content: center;
 }
+
 .diff-tailwindcss-wrapper .overflow-x-auto {
   overflow-x: auto;
 }
+
 .diff-tailwindcss-wrapper .overflow-y-hidden {
   overflow-y: hidden;
 }
+
 .diff-tailwindcss-wrapper .whitespace-nowrap {
   white-space: nowrap;
 }
+
 .diff-tailwindcss-wrapper .break-all {
   word-break: break-all;
 }
+
 .diff-tailwindcss-wrapper .bg-\[rgb\(222\2c 222\2c 222\)\] {
   --canary-tw-bg-opacity: 1;
   background-color: rgb(222 222 222 / var(--canary-tw-bg-opacity));
 }
+
 .diff-tailwindcss-wrapper .fill-current {
   fill: currentColor;
 }
+
 .diff-tailwindcss-wrapper .p-0 {
   padding: 0;
 }
+
 .diff-tailwindcss-wrapper .p-\[1px\] {
   padding: 1px;
 }
+
 .diff-tailwindcss-wrapper .px-\[10px\] {
   padding-left: 10px;
   padding-right: 10px;
 }
+
 .diff-tailwindcss-wrapper .py-\[2px\] {
   padding-bottom: 2px;
   padding-top: 2px;
 }
+
 .diff-tailwindcss-wrapper .py-\[6px\] {
   padding-bottom: 6px;
   padding-top: 6px;
 }
+
 .diff-tailwindcss-wrapper .pl-\[1\.5em\] {
   padding-left: 1.5em;
 }
+
 .diff-tailwindcss-wrapper .pl-\[10px\] {
   padding-left: 10px;
 }
+
 .diff-tailwindcss-wrapper .pl-\[2\.0em\] {
   padding-left: 2em;
 }
+
 .diff-tailwindcss-wrapper .pr-\[10px\] {
   padding-right: 10px;
 }
+
 .diff-tailwindcss-wrapper .text-right {
   text-align: right;
 }
+
 .diff-tailwindcss-wrapper .indent-\[0\.2em\] {
   text-indent: 0.2em;
 }
+
 .diff-tailwindcss-wrapper .align-top {
   vertical-align: top;
 }
+
 .diff-tailwindcss-wrapper .align-middle {
   vertical-align: middle;
 }
+
 .diff-tailwindcss-wrapper .text-\[1\.2em\] {
   font-size: 1.2em;
 }
+
 .diff-tailwindcss-wrapper .leading-\[1\.4\] {
   line-height: 1.4;
 }
+
 .diff-tailwindcss-wrapper .leading-\[1\.6\] {
   line-height: 1.6;
 }
+
 .diff-tailwindcss-wrapper .text-red-500 {
   --canary-tw-text-opacity: 1;
   color: rgb(239 68 68 / var(--canary-tw-text-opacity));
 }
+
 .diff-tailwindcss-wrapper .opacity-\[0\.5\] {
   opacity: 0.5;
 }
+
 .diff-tailwindcss-wrapper .filter {
-  filter: var(--canary-tw-blur) var(--canary-tw-brightness) var(--canary-tw-contrast) var(--canary-tw-grayscale)
-    var(--canary-tw-hue-rotate) var(--canary-tw-invert) var(--canary-tw-saturate) var(--canary-tw-sepia)
-    var(--canary-tw-drop-shadow);
+  filter: var(--canary-tw-blur) var(--canary-tw-brightness) var(--canary-tw-contrast) var(--canary-tw-grayscale) var(--canary-tw-hue-rotate) var(--canary-tw-invert) var(--canary-tw-saturate) var(--canary-tw-sepia) var(--canary-tw-drop-shadow);
 }
+
 .diff-tailwindcss-wrapper .transition-transform {
   transition-duration: 0.15s;
   transition-property: transform;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .diff-tailwindcss-wrapper .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
 .diff-tailwindcss-wrapper .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
@@ -1719,6 +1986,7 @@
 .diff-tailwindcss-wrapper .scrollbar-disable::-webkit-scrollbar {
   display: none;
 }
+
 .diff-tailwindcss-wrapper .scrollbar-disable {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -1728,7 +1996,7 @@
   stop {
     stop-color: hsla(0 0% 94% 1);
 
-    & + stop {
+    &+stop {
       stop-color: hsla(0 0% 61% 1);
     }
   }
@@ -1747,6 +2015,7 @@ mark {
 
 /* Hack for detecting scroll on select */
 @keyframes detect-scroll {
+
   from,
   to {
     --can-scroll: ;

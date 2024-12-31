@@ -37,7 +37,7 @@ const ReviewersHeader = ({ usersList, addReviewers, currentUserId }: ReviewersHe
         </PopoverTrigger>
         <PopoverContent className="w-[300px] p-0" align="start">
           <Command>
-            <CommandInput placeholder="Search users..." className="h-9" />
+            <CommandInput className="focus-visible:ring-1" placeholder="Search users..." />
             <CommandList>
               <CommandEmpty>No users found.</CommandEmpty>
               <CommandGroup>

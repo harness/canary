@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 
 import {
   Avatar,
@@ -15,6 +15,7 @@ import {
   TabsTrigger,
   Text
 } from '@components/index'
+import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
 import { ToolbarAction } from '../../pull-request-details-types'
@@ -27,19 +28,30 @@ interface ToolbarItem {
 }
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
+  comment: string
+  setComment: (comment: string) => void
   currentUser?: string
   onBoldClick?: () => void
   onItalicClick?: () => void
   onLinkClick?: () => void
   onCodeClick?: () => void
   onCommentSubmit?: () => void
+  inReplyMode?: boolean
+  isEditMode?: boolean
+  onCancelClick?: () => void
 }
 
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
 
-const PullRequestCommentBox = ({ onSaveComment, currentUser }: PullRequestCommentBoxProps) => {
-  const [comment, setComment] = useState('')
-
+const PullRequestCommentBox = ({
+  onSaveComment,
+  currentUser,
+  inReplyMode = false,
+  onCancelClick,
+  comment,
+  setComment,
+  isEditMode
+}: PullRequestCommentBoxProps) => {
   const handleSaveComment = () => {
     if (comment.trim()) {
       onSaveComment(comment)
@@ -74,8 +86,13 @@ const PullRequestCommentBox = ({ onSaveComment, currentUser }: PullRequestCommen
   }, [])
   return (
     <div className="flex items-start space-x-4">
-      {avatar}
-      <div className="min-w-0 flex-1 rounded-md border px-3 pb-3 pt-2">
+      {!inReplyMode && avatar}
+      <div
+        className={cn('min-w-0 flex-1  px-3 pb-3 pt-2', {
+          'border rounded-md': !inReplyMode || isEditMode,
+          'border-t ': inReplyMode
+        })}
+      >
         <Tabs variant="navigation" defaultValue="write">
           <TabsList className="px-0">
             <TabsTrigger value={'write'}>
@@ -89,6 +106,7 @@ const PullRequestCommentBox = ({ onSaveComment, currentUser }: PullRequestCommen
           <TabsContent value="write">
             <Spacer size={2} />
             <textarea
+              autoFocus={inReplyMode}
               className="focus!:outline-none w-full resize-none bg-transparent p-2 focus-visible:outline-1  focus-visible:outline-white"
               placeholder="Add your comment here"
               value={comment}
@@ -112,10 +130,31 @@ const PullRequestCommentBox = ({ onSaveComment, currentUser }: PullRequestCommen
               )
             })}
           </Layout.Horizontal>
-          <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
-            Comment
-          </Button>
+          {!inReplyMode && (
+            <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
+              Comment
+            </Button>
+          )}
         </div>
+        {inReplyMode && (
+          <Layout.Horizontal className="pl-2 pt-2">
+            {isEditMode ? (
+              <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
+                Save
+              </Button>
+            ) : (
+              <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
+                Reply
+              </Button>
+            )}
+            {/* <Button variant={'outline'} onClick={handleSaveComment}>
+              Reply & Resolve
+            </Button> */}
+            <Button variant={'outline'} onClick={onCancelClick}>
+              Cancel
+            </Button>
+          </Layout.Horizontal>
+        )}
       </div>
     </div>
   )

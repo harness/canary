@@ -49,7 +49,7 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
       )}
     >
       {isButton && (
-        <div className="absolute -inset-2 rounded duration-100 ease-in-out group-hover:bg-background-4 group-data-[state=open]:bg-background-4" />
+        <div className="group-hover:bg-background-4 group-data-[state=open]:bg-background-4 absolute -inset-2 rounded duration-100 ease-in-out" />
       )}
       <div className="col-start-1 row-span-2">
         <Avatar className="overflow-hidden rounded-md" size="8">
@@ -57,9 +57,9 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
           <AvatarFallback>{getInitials(username)}</AvatarFallback>
         </Avatar>
       </div>
-      <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-foreground-1">{username}</p>
+      <p className="text-13 text-foreground-1 col-start-2 row-start-1 truncate font-medium leading-tight">{username}</p>
       {!!email && (
-        <p className="col-start-2 row-start-2 truncate text-13 font-normal leading-tight text-foreground-4">{email}</p>
+        <p className="text-13 text-foreground-4 col-start-2 row-start-2 truncate font-normal leading-tight">{email}</p>
       )}
     </Tag>
   )
@@ -93,7 +93,7 @@ export const NavbarUser = ({
         </div>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="ml-3 w-[230px] !rounded-lg bg-background-1"
+        className="bg-background-1 ml-3 w-[230px] !rounded-lg"
         align="start"
         sideOffset={-40}
         alignOffset={187}

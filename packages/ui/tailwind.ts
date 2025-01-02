@@ -126,7 +126,9 @@ export default {
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))',
           'button-danger-1': 'hsla(var(--canary-background-button-danger-1))',
-          'button-danger-3': 'hsla(var(--canary-background-button-danger-3))'
+          'button-danger-3': 'hsla(var(--canary-background-button-danger-3))',
+          surface: 'hsl(var(--canary-background-surface))',
+          highlight: 'hsl(var(--canary-background-highlight))'
         },
         borders: {
           1: 'hsl(var(--canary-border-01))',

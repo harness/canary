@@ -14,7 +14,6 @@ import {
   RepoSettingsPage,
   SandboxLayout
 } from '@harnessio/ui/views'
-import { ForgotPasswordPage, NewPasswordPage, OTPPage } from '@harnessio/views'
 
 import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
@@ -26,6 +25,7 @@ import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+import { Logout } from './pages-v2/logout'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -56,13 +56,11 @@ import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-import { Logout } from './pages/logout'
+
 // import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
 // import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
 // import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
 // import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
-import { SignIn } from './pages/signin'
-import { SignUp } from './pages/signup'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -80,26 +78,6 @@ export default function App() {
   })
 
   const router = createBrowserRouter([
-    {
-      path: '/v1/signin',
-      element: <SignIn />
-    },
-    {
-      path: '/v1/signup',
-      element: <SignUp />
-    },
-    {
-      path: '/v1/forgot',
-      element: <ForgotPasswordPage />
-    },
-    {
-      path: '/v1/otp',
-      element: <OTPPage />
-    },
-    {
-      path: '/v1/new-password',
-      element: <NewPasswordPage />
-    },
     {
       path: '/signin',
       element: <SignInV2 />

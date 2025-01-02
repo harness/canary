@@ -1,4 +1,5 @@
-import { Icon } from '@components/icon'
+import { FC, RefObject } from 'react'
+
 import {
   Button,
   ButtonGroup,
@@ -6,21 +7,23 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@components/index'
-import { Text } from '@components/text'
-import { CompareFormFields } from '@views/layouts/PullRequestCompareLayout'
+  DropdownMenuTrigger,
+  Icon,
+  Text
+} from '@/components'
+
+import { CompareFormFields } from '../pull-request-compare-page'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean
   isValid: boolean
   isLoading: boolean
-  formRef: React.RefObject<HTMLFormElement>
+  formRef: RefObject<HTMLFormElement>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
 }
 
-const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
+const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
   formRef,
@@ -49,6 +52,7 @@ const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
       onFormSubmit(data as CompareFormFields) // Call the draft submit function
     }
   }
+
   return (
     <>
       {!isSubmitted ? (
@@ -57,7 +61,7 @@ const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
             <Button
               theme="primary"
               variant="split"
-              size="xs_split"
+              size="md_split"
               onClick={handleCreateClick}
               dropdown={
                 <DropdownMenu>

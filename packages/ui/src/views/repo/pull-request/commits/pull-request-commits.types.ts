@@ -1,4 +1,4 @@
-import { TypesCommit } from '@views/repo/repo-commits'
+import { TypesCommit } from '@/views'
 
 export interface IPullRequestCommitsStore {
   // state

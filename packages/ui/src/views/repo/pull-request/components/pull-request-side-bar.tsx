@@ -1,4 +1,4 @@
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request-details-types'
+import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../pull-request.types'
 import { ReviewersHeader } from './pull-request-reviewers-header'
 import { ReviewersList } from './pull-request-reviewers-list'
 

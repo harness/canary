@@ -1,12 +1,12 @@
 import { TypesUser } from '@/types'
 import { isEmpty } from 'lodash-es'
 
+import { PullReqReviewDecision } from '../pull-request.types'
 import {
   ApprovalItem,
   ApprovalItems,
   CommentItem,
   EnumPullReqReviewDecisionExtended,
-  PullReqReviewDecision,
   ReviewerListPullReqOkResponse,
   TypesPullReqActivity,
   TypesRuleViolations,
@@ -126,4 +126,18 @@ export function isCodeComment(commentItems: CommentItem<TypesPullReqActivity>[])
 // check if activity item is a comment
 export function isComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
   return commentItems[0]?.payload?.payload?.type === 'comment'
+}
+
+export function removeLastPlus(str: string) {
+  if (typeof str !== 'string' || str.length === 0) {
+    return str
+  }
+
+  // Check if the last character is a plus
+  if (str.charAt(str.length - 1) === '+') {
+    // Remove the last character
+    return str.slice(0, -1)
+  }
+
+  return str
 }

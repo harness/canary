@@ -82,7 +82,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                         success={!!pullRequest.merged}
                         title={pullRequest.name}
                         labels={pullRequest.labels || []}
-                        comments={5}
+                        comments={pullRequest?.comments}
                         merged={pullRequest.merged}
                       />
                     )

@@ -61,8 +61,6 @@ import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request
 import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
 import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
 import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
-import PullRequestListPage from './pages/pull-request/pull-request-list-page'
-import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
 import RepoCommitsPageV1 from './pages/repo/repo-commits'
 import { CreateRepoV1 } from './pages/repo/repo-create-page'
 import { RepoFiles } from './pages/repo/repo-files'

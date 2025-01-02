@@ -14,14 +14,7 @@ import {
   RepoSettingsPage,
   SandboxLayout
 } from '@harnessio/ui/views'
-import {
-  ForgotPasswordPage,
-  NewPasswordPage,
-  OTPPage,
-  RepoSettingsPlaceholderPage,
-  SandboxSettings,
-  SettingsProjectNav
-} from '@harnessio/views'
+import { ForgotPasswordPage, NewPasswordPage, OTPPage } from '@harnessio/views'
 
 import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
@@ -64,9 +57,6 @@ import { SignUp as SignUpV2 } from './pages-v2/signup'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 import { Logout } from './pages/logout'
-import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
-import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
-import { CreateNewMemberPage } from './pages/project-settings/project-settings-new-member-page'
 import PullRequestCommitsPage from './pages/pull-request-commits-page'
 import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
 import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'

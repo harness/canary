@@ -119,7 +119,7 @@ export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: Na
 
       {menuItems && (
         <DropdownMenuContent
-          className="ml-3 w-[230px] !rounded-lg bg-background-1"
+          className="ml-3 w-[230px] !rounded-lg bg-popover"
           align="start"
           sideOffset={-40}
           alignOffset={187}

@@ -23,8 +23,6 @@ import {
   SettingsProjectNav
 } from '@harnessio/views'
 
-import { FileEditor } from './components/FileEditor'
-import { FileViewer } from './components/FileViewer'
 import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -33,9 +31,6 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import PipelineLayout from './layouts/PipelineStudioLayout'
-import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
-import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'

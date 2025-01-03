@@ -24,15 +24,15 @@ import {
   CloneCredentialDialog,
   CommitDivergenceType,
   RepoFile,
-  RepoSummaryView
+  RepoSummaryView,
+  TokenFormType
 } from '@harnessio/ui/views'
 import { SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
-import { TokenFormType } from '../../pages/profile-settings/token-create/token-create-form'
-import { generateAlphaNumericHash } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'

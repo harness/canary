@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Badge, Button, Icon, Layout, Text } from '@components/index'
+import { Badge, Icon } from '@components/index'
 import { timeAgo } from '@utils/utils'
 
 import { IconType } from '../pull-request.types'
@@ -48,58 +48,42 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
   const stateObject = getPrState(is_draft, merged, state)
   return (
-    <div className="flex flex-col gap-2 pb-8">
-      <div className="flex items-center py-1">
-        <Text size={5} weight={'medium'} className="text-primary">
+    <div className="flex flex-col gap-y-4">
+      <div className="flex items-center">
+        <h1 className="text-foreground-1 font-medium text-24 flex gap-x-2.5">
           {original}
-          &nbsp;&nbsp;
-          <span className="font-normal text-tertiary-background">#{number}</span>
-        </Text>
+          <span className="font-normal text-foreground-4">#{number}</span>
+        </h1>
       </div>
-      <div className="">
-        <div className="flex space-x-2 text-tertiary-background">
-          <div className="flex items-center gap-2.5 text-center align-middle">
-            <Badge
-              disableHover
-              borderRadius="full"
-              className={`select-none justify-center`}
-              theme={stateObject.theme as ThemeType}
-            >
-              <Layout.Horizontal gap="space-x-1" className="flex items-center align-middle">
-                <Icon name={stateObject.icon as IconType} size={13} />
-                &nbsp;{stateObject.text}
-              </Layout.Horizontal>
-            </Badge>
-            <div className="flex gap-2">
-              <Text
-                size={2}
-                className="inline-flex flex-wrap items-center gap-1 text-tertiary-background"
-                weight="normal"
-              >
-                <span className="text-primary">{author?.display_name || author?.email || ''}</span>
-                <span>{merged ? 'merged' : ' wants to merge'}</span>
-                <span className="text-primary">
-                  {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
-                </span>
-                <span>into</span>
-                <Button variant="secondary" size="xs" asChild>
-                  <Link to={`/${spaceId}/repos/${repoId}/code/${target_branch}`}>
-                    <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
-                    {target_branch}
-                  </Link>
-                </Button>
-                <span>from</span>
-                <Button asChild variant="secondary" size="xs">
-                  <Link to={`/${spaceId}/repos/${repoId}/code/${source_branch}`}>
-                    <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
-                    {source_branch}
-                  </Link>
-                </Button>
-                <span>&nbsp;|&nbsp;</span>
-                <span className="time">{formattedTime}</span>
-              </Text>
-            </div>
-          </div>
+
+      <div className="flex items-center gap-x-3">
+        <Badge className="gap-x-1 font-normal" disableHover borderRadius="full" theme={stateObject.theme as ThemeType}>
+          <Icon name={stateObject.icon as IconType} size={13} />
+          {stateObject.text}
+        </Badge>
+
+        <div className="inline-flex flex-wrap items-center gap-1 text-foreground-4">
+          <span className="text-foreground-1">{author?.display_name || author?.email || ''}</span>
+          <span>{merged ? 'merged' : ' wants to merge'}</span>
+          <span className="text-foreground-1">
+            {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
+          </span>
+          <span>into</span>
+          <Badge variant="tertiary" size="md" borderRadius="base">
+            <Link className="flex items-center gap-x-1" to={`/${spaceId}/repos/${repoId}/code/${target_branch}`}>
+              <Icon name="branch" size={12} className="text-icons-9" />
+              {target_branch}
+            </Link>
+          </Badge>
+          <span>from</span>
+          <Badge variant="tertiary" size="md" borderRadius="base">
+            <Link className="flex items-center gap-x-1" to={`/${spaceId}/repos/${repoId}/code/${source_branch}`}>
+              <Icon name="branch" size={12} className="text-icons-9" />
+              {source_branch}
+            </Link>
+          </Badge>
+          <span className="w-px h-4 mx-1.5 bg-borders-2" />
+          <span className="text-foreground-4">{formattedTime}</span>
         </div>
       </div>
     </div>

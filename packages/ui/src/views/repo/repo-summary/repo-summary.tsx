@@ -177,7 +177,7 @@ export function RepoSummaryView({
               <ListActions.Right>
                 <ButtonGroup>
                   <Button variant="secondary" asChild>
-                    <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
+                    <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
                       {t('views:repos.addFile', 'Add File')}
                     </Link>
                   </Button>

@@ -5,6 +5,8 @@ import { persist } from 'zustand/middleware'
 
 import { FullTheme, getModeColorContrastFromFullTheme, IThemeStore, ModeType } from '@harnessio/ui/components'
 
+import { useIsMFE } from '../hooks/useIsMFE'
+
 export const useThemeStore = create<IThemeStore>()(
   persist(
     set => ({
@@ -23,6 +25,7 @@ interface ThemeProviderProps {
 }
 export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
   const { theme, setTheme } = useThemeStore()
+  const isMFE = useIsMFE()
 
   const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
   const [systemMode, setSystemMode] = useState<ModeType>(mediaQuery.matches ? ModeType.Dark : ModeType.Light)
@@ -51,7 +54,12 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     const effectiveTheme: FullTheme = `${mode === ModeType.System ? systemMode : mode}-${color}-${contrast}`
 
     root.className = '' // Clear existing classes
-    root.classList.add(effectiveTheme) // Apply the computed theme class
+
+    if (!isMFE) {
+      root.classList.add(effectiveTheme) // Apply the computed theme class
+    } else {
+      root.classList.add(mode)
+    }
   }, [theme, setTheme, systemMode])
 
   return <>{children}</>

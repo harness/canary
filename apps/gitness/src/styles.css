@@ -3,3 +3,11 @@
 @import '@harnessio/canary/src/styles.css'; */
 
 @import 'highlight.js/styles/atom-one-dark.css';
+
+:root {
+  --breadcrumbs-height: 55px;
+}
+
+.top-breadcrumbs {
+  top: var(--breadcrumbs-height);
+}

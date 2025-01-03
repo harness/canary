@@ -175,8 +175,10 @@ const AppShell = () => {
           useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>
-      <div className="flex flex-col sticky top-0">
-        <BreadcrumbsV1 />
+      <div className="flex flex-col">
+        <div className="sticky top-0 z-40 bg-background-1">
+          <BreadcrumbsV1 />
+        </div>
         <Outlet />
       </div>
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />

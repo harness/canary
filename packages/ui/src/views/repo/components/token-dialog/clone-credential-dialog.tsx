@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
@@ -35,7 +36,7 @@ const formSchema = z.object({
 
 export type TCloneCredentialsDialog = z.infer<typeof formSchema>
 
-export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
+export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
   toManageToken,
@@ -49,36 +50,43 @@ export const CloneCredentialDialog: React.FC<CloneCredentialDialogProps> = ({
   })
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[576px]">
+      <DialogContent className="max-w-xl">
         <DialogHeader>
           <DialogTitle>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</DialogTitle>
         </DialogHeader>
-        <form className="flex flex-col gap-y-7 pb-4">
+        <form className="flex flex-col gap-y-7">
           {/* NAME */}
 
           <Input
+            className="py-px"
             id="identifier"
             label={t('views:repos.name')}
             value={tokenData?.identifier}
             readOnly
             variant="extended"
             rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.identifier} />}
+            rightElement={<CopyButton name={tokenData?.identifier} onClick={e => e.preventDefault()} />}
           />
 
-          <Input id="lifetime" label={t('views:repos.expiration')} value={tokenData?.lifetime} readOnly />
+          <Input
+            className="py-px"
+            id="lifetime"
+            label={t('views:repos.expiration')}
+            value={tokenData?.lifetime}
+            readOnly
+          />
 
           {/* Expiration Info */}
           <Input
+            className="py-px truncate"
             id="token"
             label={t('views:repos.token')}
             variant="extended"
             value={tokenData?.token}
             readOnly
             rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.token} />}
+            rightElement={<CopyButton name={tokenData?.token} onClick={e => e.preventDefault()} />}
             autoFocus
-            className="truncate"
           />
 
           <span>{t('views:repos.cloneCredGenerated')}</span>

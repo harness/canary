@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 import {
   Button,
@@ -27,7 +27,7 @@ export enum CloneRepoTabs {
   SSH = 'ssh'
 }
 
-export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
+export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   httpsUrl,
   sshUrl,
   handleCreateToken,
@@ -39,22 +39,22 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button>
-          <Icon name="clone" />
-          &nbsp; {t('views:repos.clone', 'Clone')}
+        <Button className="gap-x-2 items-center pl-5 pr-2.5">
+          {t('views:repos.cloneRepo', 'Clone repository')}
+          <Icon name="chevron-down" size={12} className="text-icons-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[328px] p-0" align="end">
-        <div className="px-4 pt-4">
-          <span className="text-14 font-medium leading-none">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+      <DropdownMenuContent className="w-[328px] p-0 shadow-2" align="end">
+        <div className="px-4 pt-4 leading-none">
+          <span className="text-14 font-medium inline-block">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
         <Tabs
-          className="mt-2"
+          className="mt-4"
           variant="branch"
           value={currentTab}
           onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
         >
-          <TabsList>
+          <TabsList className="px-4">
             <DropdownMenuItem
               className="rounded-t-md p-0"
               onSelect={e => {
@@ -62,7 +62,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
                 setCurrentTab(CloneRepoTabs.HTTPS)
               }}
             >
-              <TabsTrigger className="data-[state=active]:bg-background-2" value={CloneRepoTabs.HTTPS}>
+              <TabsTrigger className="data-[state=active]:bg-background-2 px-4" value={CloneRepoTabs.HTTPS}>
                 {t('views:repos.cloneHttps', 'HTTPS')}
               </TabsTrigger>
             </DropdownMenuItem>
@@ -74,7 +74,7 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
               }}
             >
               <TabsTrigger
-                className="data-[state=active]:bg-background-2"
+                className="data-[state=active]:bg-background-2 px-4"
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
               >
@@ -83,20 +83,25 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
             </DropdownMenuItem>
           </TabsList>
         </Tabs>
-        <div className="px-5 py-4">
+        <div className="p-4">
+          <div className="flex items-center mb-2.5">
+            <span className="text-foreground-2 leading-none inline-block">
+              {t('views:repos.gitCloneUrl', 'Git clone URL')}
+            </span>
+          </div>
           {currentTab === 'https' ? (
             <>
               <Input
+                className="text-foreground-1 py-px"
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
                 variant="extended"
-                className="text-foreground-2"
                 rightElementVariant="default"
                 rightElement={<CopyButton name={httpsUrl} />}
               />
               <div className="flex items-center mt-4">
-                <span className="text-foreground-4">
+                <span className="text-foreground-4 leading-snug">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>
@@ -108,10 +113,10 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({
             </>
           ) : (
             <Input
+              className="text-foreground-1 py-px"
               id="sshUrl"
               readOnly
               value={sshUrl}
-              className="text-tertiary-background"
               variant="extended"
               rightElementVariant="default"
               rightElement={<CopyButton name={sshUrl} />}

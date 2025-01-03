@@ -1,12 +1,13 @@
-import { Navigate, Outlet, RouteObject } from 'react-router-dom'
+import { Navigate, RouteObject } from 'react-router-dom'
 
 import { BreadcrumbSeparator } from '@harnessio/canary'
 import { Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage } from '@harnessio/ui/views'
 import { SandboxLayout } from '@harnessio/views'
 
-import BreadcrumbsV1 from './components/breadcrumbsV1/breadcrumbs'
-import { ProjectDropdown } from './components/breadcrumbsV1/project-dropdown'
+import AppShell from './components-v2/app-shell'
+import BreadcrumbsV1 from './components-v2/breadcrumbs/breadcrumbs'
+import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import { PullRequestLayout } from './layouts/PullRequestLayout'
@@ -58,9 +59,8 @@ export const routes: CustomRouteObject[] = [
     path: '/',
     element: (
       <>
-        <BreadcrumbsV1 />
-        <Outlet />
-        {/* <RootWrapper /> */}
+        {/* <BreadcrumbsV1 /> */}
+        <AppShell />
       </>
     ),
     handle: {

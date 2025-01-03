@@ -23,14 +23,7 @@ const LineTitle: FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ text }) =
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
       <p className="font-medium">{text}</p>
-      <button
-        onClick={e => {
-          e.stopPropagation()
-          e.preventDefault()
-        }}
-      >
-        <CopyButton name={text} />
-      </button>
+      <CopyButton name={text} />
     </div>
     <div className="inline-flex items-center gap-x-6">
       <div className="flex items-center gap-2">
@@ -69,7 +62,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
               <div className="flex w-full border-t">
                 <div className="w-full bg-transparent">
                   {startingLine ? (
-                    <div className="bg-[--diff-hunk-lineNumber--]">
+                    <div className="bg-tag-background-code-8">
                       <div className="ml-16 w-full px-2 py-1 font-mono">{startingLine}</div>
                     </div>
                   ) : null}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -29,8 +29,10 @@ import {
 } from '@harnessio/ui/views'
 import { SummaryItemType } from '@harnessio/views'
 
+import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
@@ -40,7 +42,7 @@ import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } fr
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
-export default function RepoSummaryPage({ isMFE = false }: { isMFE?: boolean }) {
+export default function RepoSummaryPage() {
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
@@ -49,8 +51,13 @@ export default function RepoSummaryPage({ isMFE = false }: { isMFE?: boolean }) 
   const spaceId = useGetSpaceURLParam() ?? ''
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
+<<<<<<< HEAD
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const manageTokensLink = '/settings/keys'
+=======
+  const isMFE = useIsMFE()
+
+>>>>>>> dfc9e08f (MFE changes)
   const {
     branchList,
     tagList,

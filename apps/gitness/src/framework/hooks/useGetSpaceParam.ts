@@ -1,14 +1,13 @@
-import { useContext } from 'react'
 import { useParams } from 'react-router-dom'
 
 import type { PathParams } from '../../RouteDefinitions'
-import { MFEContext } from '../context/MFEContext'
+import { useMFEContext } from './useMFEContext'
 
 export function useGetSpaceURLParam(): string | undefined {
   const { spaceId } = useParams<PathParams>()
   const {
     scope: { accountId, orgIdentifier, projectIdentifier }
-  } = useContext(MFEContext)
+  } = useMFEContext()
 
   return spaceId || [accountId, orgIdentifier, projectIdentifier].filter(Boolean).join('/')
 }

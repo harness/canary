@@ -41,8 +41,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   const viewAllUrl =
     activeTab === BranchSelectorTab.BRANCHES
-      ? `/${spaceId}/repos/${repoId}/branches`
-      : `/${spaceId}/repos/${repoId}/tags`
+      ? `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/branches`
+      : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
 
   return (
     <DropdownMenuContent className="w-[298px] p-0" align="start">

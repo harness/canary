@@ -122,7 +122,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
             ]}
             primaryButton={{
               label: 'Create pull request',
-              to: `/${spaceId}/repos/${repoId}/pulls/compare/`
+              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
             }}
           />
         </div>
@@ -166,7 +166,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                   t={t}
                 />
                 <Button variant="default" asChild>
-                  <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
+                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
                 </Button>
               </ListActions.Right>
             </ListActions.Root>

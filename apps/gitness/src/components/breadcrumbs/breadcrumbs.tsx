@@ -16,6 +16,7 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { MFEContext } from '../../framework/context/MFEContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { getInitials } from '../../utils/common-utils'
 import { BreadcrumbDropdown, BreadcrumbDropdownProps } from './breadcrumb-dropdown'
 import { getBreadcrumbMatchers } from './breadcrumbs-utils'
@@ -34,6 +35,8 @@ export default function Breadcrumbs() {
   // TODO: hasMoreSpaces
   const spaces = useMemo(() => [...spacesAll].splice(0, 10), [spacesAll])
 
+  const isMFE = useIsMFE()
+
   const {
     isProjectRoute,
     isRepoRoute,
@@ -43,7 +46,7 @@ export default function Breadcrumbs() {
     isPipelineExecutionsRouteExact,
     isExecutionRoute,
     repoPageMatch
-  } = getBreadcrumbMatchers(pathname)
+  } = getBreadcrumbMatchers(pathname, isMFE)
 
   const spacesBreadcrumbProps = useMemo((): BreadcrumbDropdownProps | undefined => {
     if (isProjectRoute && spaces) {

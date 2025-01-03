@@ -122,7 +122,7 @@ export function RepoList({
                   label
                   secondary
                 />
-              ) : null}
+              ) : null}-
             </StackedList.Item>
           </Link>
         ))}

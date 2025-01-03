@@ -36,24 +36,27 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="gap-y-3">
-          <span className="text-18 font-medium leading-none text-foreground-1">
-            {t('views:pullRequests.compareChangesFormTitle')}
+          <span className="text-18 text-foreground-1 font-medium leading-none">
+            {t('views:pullRequests.compareChangesFormTitle', 'Add a title')}
           </span>
           <Input
             id="title"
             {...register('title')}
-            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder')}
+            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
             error={errors.title?.message?.toString()}
             autoFocus
             size="md"
           />
-          <span className="mt-4 text-18 font-medium leading-none text-foreground-1">
-            {t('views:pullRequests.compareChangesFormDescription')}
+          <span className="text-18 text-foreground-1 mt-4 font-medium leading-none">
+            {t('views:pullRequests.compareChangesFormDescription', 'Add a description')}
           </span>
           <Textarea
             id="description"
             {...register('description')}
-            placeholder={t('views:pullRequests.compareChangesFormDescriptionPlaceholder')}
+            placeholder={t(
+              'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+              'Add Pull Request description here.'
+            )}
             error={errors.description?.message?.toString()}
           />
         </Fieldset>

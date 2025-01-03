@@ -71,7 +71,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   return (
     <>
       {!isSubmitted ? (
-        <div className="flex rounded bg-background-5">
+        <div className="bg-background-5 flex rounded">
           <Button
             className="rounded-r-none pr-2.5"
             theme="primary"
@@ -79,10 +79,13 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             type="button"
             disabled={isLoading}
           >
-            {t(`views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`)}
+            {t(
+              `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
+              `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`
+            )}
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger className="relative flex size-8 items-center justify-center rounded-r after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px after:bg-borders-7 hover:bg-background-10">
+            <DropdownMenuTrigger className="after:bg-borders-7 hover:bg-background-10 relative flex size-8 items-center justify-center rounded-r after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px">
               <Icon name="chevron-down" size={12} className="text-icons-10" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="mt-1 max-w-80">
@@ -92,18 +95,24 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
                     <Option
                       control={<RadioButton className="mt-px" value={PR_TYPE.CREATE} id={PR_TYPE.CREATE} />}
                       id={PR_TYPE.CREATE}
-                      label={t(`views:pullRequests.compareChangesCreateTitle`)}
+                      label={t(`views:pullRequests.compareChangesCreateTitle`, 'Create pull request')}
                       ariaSelected={prType === PR_TYPE.CREATE}
-                      description={t(`views:pullRequests.compareChangesCreateDescription`)}
+                      description={t(
+                        `views:pullRequests.compareChangesCreateDescription`,
+                        'Open pull request that is ready for review.'
+                      )}
                     />
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={handlePrTypeChange(PR_TYPE.DRAFT)} disabled={isLoading}>
                     <Option
                       control={<RadioButton className="mt-px" value={PR_TYPE.DRAFT} id={PR_TYPE.DRAFT} />}
                       id={PR_TYPE.DRAFT}
-                      label={t(`views:pullRequests.compareChangesDraftTitle`)}
+                      label={t(`views:pullRequests.compareChangesDraftTitle`, 'Create draft pull request')}
                       ariaSelected={prType === PR_TYPE.DRAFT}
-                      description={t(`views:pullRequests.compareChangesDraftDescription`)}
+                      description={t(
+                        `views:pullRequests.compareChangesDraftDescription`,
+                        'Does not request code reviews and cannot be merged.'
+                      )}
                     />
                   </DropdownMenuItem>
                 </DropdownMenuGroup>

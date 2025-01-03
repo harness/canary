@@ -189,7 +189,7 @@
     "compareChangesDraftDescription": "Does not request code reviews and cannot be merged.",
     "compareChangesCreatedButton": "Pull request created",
     "compareChangesTabOverview": "Overview",
-    "compareChangesTabCommit": "Commits",
+    "compareChangesTabCommits": "Commits",
     "compareChangesTabChanges": "Changes",
     "compareChangesFormTitle": "Add a title",
     "compareChangesFormTitlePlaceholder": "Enter pull request title",

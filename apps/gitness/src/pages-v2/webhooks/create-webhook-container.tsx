@@ -15,6 +15,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useWebhookStore } from './stores/webhook-store'
 
 export const CreateWebhookContainer = () => {
@@ -130,6 +131,7 @@ export const CreateWebhookContainer = () => {
         apiError={apiError}
         isLoading={creatingWebHook || updatingWebHook}
         useWebhookStore={useWebhookStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

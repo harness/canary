@@ -123,7 +123,26 @@
     "generateCredential": "Please generate a clone credential if its your first time.",
     "addFile": "Add file",
     "readme": "README.md",
-    "openPullReq": "Open pull requests"
+    "openPullReq": "Open pull requests",
+    "enableWebhookToggle": "Enable the webhook",
+    "toggleDescription": "We will deliver event details when this hook is triggered",
+    "desciptionPlaceholder": "Enter a description of this rule...",
+    "desciption": "Description",
+    "urlPlaceholder": "https://example.com/harness",
+    "urlLabel": "Payload URL",
+    "secret": "Secret",
+    "sslVerification": "SSL Verification",
+    "sslVerificationLabel": "Enable SSL Verification",
+    "disableSslLabel": "Disable SSL verification",
+    "disableSslDescription": "Not recommended for production use",
+    "evenTriggerLabel": "Which events would you like to use to trigger this webhook?",
+    "evenTriggerAllLabel": "Send me everything",
+    "eventTriggerIndividualLabel": "Let me select individual events",
+    "createWebhookTitle": "Create a webhook",
+    "updatingWebhook": "Updating webhook...",
+    "creatingWebhook": "Creating webhook...",
+    "updateWebhook": "Update webhook",
+    "createWebhook": "Create webhook"
   },
   "createProject": {
     "newProject": "Create your new project",
@@ -253,6 +272,21 @@
   },
   "commits": {
     "createNewCommit": "Create new commit"
+  },
+  "webhookData": {
+    "branchCreated": "Branch created",
+    "branchUpdated": "Branch updated",
+    "branchDeleted": "Branch deleted",
+    "tagCreated": "Tag created",
+    "tagUpdated": "Tag updated",
+    "tagDeleted": "Tag deleted",
+    "prCreated": "PR created",
+    "prUpdated": "PR updated",
+    "prReopened": "PR reopened",
+    "prBranchUpdated": "PR branch updated",
+    "prClosed": "PR closed",
+    "prCommentCreated": "PR comment created",
+    "prMerged": "PR merged"
   },
   "profileSettingsTableHeader": {
     "token": "Token",

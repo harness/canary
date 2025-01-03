@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Spacer, Text } from '@/components'
-import { SandboxLayout, WebhookStore } from '@/views'
+import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 
-import { branchEvents, prEvents, tagEvents } from './components/create-webhook-form-data'
+import { getBranchEvents, getPrEvents, getTagEvents } from './components/create-webhook-form-data'
 import {
   WebhookDescriptionField,
   WebhookEventSettingsFieldset,
@@ -24,6 +24,7 @@ interface RepoWebhooksCreatePageProps {
   isLoading: boolean
   // preSetWebHookData: CreateWebhookFormFields | null
   useWebhookStore: () => WebhookStore
+  useTranslationStore: () => TranslationStore
 }
 
 export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
@@ -31,7 +32,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   apiError,
   isLoading,
   onFormCancel,
-  // preSetWebHookData,
+  useTranslationStore,
   useWebhookStore
 }) => {
   const {
@@ -54,6 +55,7 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
       triggers: []
     }
   })
+  const { t } = useTranslationStore()
 
   const { preSetWebhookData } = useWebhookStore()
 
@@ -72,9 +74,9 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
   }, [preSetWebhookData])
 
   const eventSettingsComponents = [
-    { fieldName: 'branchEvents', events: branchEvents },
-    { fieldName: 'tagEvents', events: tagEvents },
-    { fieldName: 'prEvents', events: prEvents }
+    { fieldName: 'branchEvents', events: getBranchEvents(t) },
+    { fieldName: 'tagEvents', events: getTagEvents(t) },
+    { fieldName: 'prEvents', events: getPrEvents(t) }
   ]
   const triggerValue = watch('trigger')
 
@@ -88,22 +90,27 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
       <SandboxLayout.Main>
         <SandboxLayout.Content maxWidth="2xl" className="ml-0">
           <Text size={5} weight="medium" as="div" className="mb-8">
-            Create a webhook
+            {t('views:repos.createWebhookTitle', 'Create a webhook')}
           </Text>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
-              <WebhookToggleField register={register} setValue={setValue} watch={watch} />
-              <WebhookNameField register={register} errors={errors} disabled={false} />
-              <WebhookDescriptionField register={register} errors={errors} />
-              <WebhookPayloadUrlField register={register} errors={errors} />
-              <WebhookSecretField register={register} errors={errors} />
-              <WebhookSSLVerificationField setValue={setValue} watch={watch} />
-              <WebhookTriggerField setValue={setValue} watch={watch} />
+              <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
+              <WebhookNameField register={register} errors={errors} disabled={false} t={t} />
+              <WebhookDescriptionField register={register} errors={errors} t={t} />
+              <WebhookPayloadUrlField register={register} errors={errors} t={t} />
+              <WebhookSecretField register={register} errors={errors} t={t} />
+              <WebhookSSLVerificationField setValue={setValue} watch={watch} t={t} />
+              <WebhookTriggerField setValue={setValue} watch={watch} t={t} />
               {triggerValue === TriggerEventsEnum.SELECTED_EVENTS && (
                 <div className="flex justify-between">
                   {eventSettingsComponents.map(component => (
                     <div key={component.fieldName} className="flex flex-col">
-                      <WebhookEventSettingsFieldset setValue={setValue} watch={watch} eventList={component.events} />
+                      <WebhookEventSettingsFieldset
+                        setValue={setValue}
+                        watch={watch}
+                        eventList={component.events}
+                        t={t}
+                      />
                     </div>
                   ))}
                 </div>
@@ -125,14 +132,14 @@ export const RepoWebhooksCreatePage: React.FC<RepoWebhooksCreatePageProps> = ({
                       <Button type="submit" size="sm" disabled={!isValid || isLoading}>
                         {isLoading
                           ? preSetWebhookData
-                            ? 'Updating webhook...'
-                            : 'Creating webhook...'
+                            ? t('views:repos.updatingWebhook', 'Updating webhook...')
+                            : t('views:repos.creatingWebhook', 'Creating webhook...')
                           : preSetWebhookData
-                            ? 'Update webhook'
-                            : 'Create webhook'}
+                            ? t('views:repos.updateWebhook', 'Update webhook')
+                            : t('views:repos.createWebhook', 'Create webhook')}
                       </Button>
                       <Button type="button" variant="outline" size="sm" onClick={onFormCancel}>
-                        Cancel
+                        {t('views:repos.cancel', 'Cancel')}
                       </Button>
                     </>
                   </ButtonGroup>

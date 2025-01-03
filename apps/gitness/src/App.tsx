@@ -14,17 +14,7 @@ import {
   RepoSettingsPage,
   SandboxLayout
 } from '@harnessio/ui/views'
-import {
-  ForgotPasswordPage,
-  NewPasswordPage,
-  OTPPage,
-  RepoSettingsPlaceholderPage,
-  SandboxSettings,
-  SettingsProjectNav
-} from '@harnessio/views'
 
-import { FileEditor } from './components/FileEditor'
-import { FileViewer } from './components/FileViewer'
 import RootWrapper from './components/RootWrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -33,13 +23,12 @@ import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { useTranslationStore } from './i18n/stores/i18n-store'
-import PipelineLayout from './layouts/PipelineStudioLayout'
-import { PullRequestLayout as PullRequestLayoutV1 } from './layouts/PullRequestLayout'
-import RepoLayoutV1 from './layouts/RepoLayout'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
+import { Logout } from './pages-v2/logout'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
+import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
@@ -65,41 +54,14 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn as SignInV2 } from './pages-v2/signin'
 import { SignUp as SignUpV2 } from './pages-v2/signup'
+import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-import CreateProjectV1 from './pages/create-project'
-import { Execution } from './pages/execution/execution-details'
-import RepoExecutionListPageOld from './pages/execution/repo-execution-list'
-import { LandingPage as LandingPageV2 } from './pages/landing-page'
-import { Logout } from './pages/logout'
-import { PipelineCreate } from './pages/pipeline-create/pipeline-create'
-import PipelineEditPage from './pages/pipeline-edit/pipeline-edit'
-import ProjectPipelinesPage from './pages/pipeline/project-pipeline-list'
-import RepoPipelinesPage from './pages/pipeline/repo-pipeline-list'
-import { SettingsProfileGeneralPage as SettingsProfileGeneralPageV1 } from './pages/profile-settings/profile-settings-general-container'
-import { ProfileSettingsThemePage } from './pages/profile-settings/profile-settings-theme-page'
-import { ProjectSettingsGeneralPage } from './pages/project-settings/project-settings-general-page'
-import { ProjectSettingsMemebersPage } from './pages/project-settings/project-settings-members-page'
-import { CreateNewMemberPage } from './pages/project-settings/project-settings-new-member-page'
-import PullRequestCommitsPage from './pages/pull-request-commits-page'
-import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
-import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
-import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
-import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
-import PullRequestListPage from './pages/pull-request/pull-request-list-page'
-import { RepoBranchesListPage as RepoBranchesListPageV1 } from './pages/repo/repo-branch-list'
-import RepoCommitsPageV1 from './pages/repo/repo-commits'
-import { CreateRepoV1 } from './pages/repo/repo-create-page'
-import { RepoFiles } from './pages/repo/repo-files'
-import { RepoHeader } from './pages/repo/repo-header'
-import { RepoImportContainer } from './pages/repo/repo-import-container'
-import ReposListPageV1 from './pages/repo/repo-list'
-import RepoSummaryPageV1 from './pages/repo/repo-summary'
-import { SignIn } from './pages/signin'
-import { SignUp } from './pages/signup'
-import { CreateNewUserContainer } from './pages/user-management/create-new-user-container'
-import { UserManagementPageContainer } from './pages/user-management/user-management-container'
-import RepoWebhooksListPage from './pages/webhooks/repo-webhook-list'
+
+// import PullRequestDataProviderV1 from './pages/pull-request/context/pull-request-data-provider'
+// import { PullRequestChangesPage as PullRequestChangesPageV1 } from './pages/pull-request/pull-request-changes-page'
+// import { CreatePullRequest as CreatePullRequestV1 } from './pages/pull-request/pull-request-compare-page'
+// import { PullRequestConversationPage as PullRequestConversationPageV1 } from './pages/pull-request/pull-request-conversation-page'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -117,26 +79,6 @@ export default function App() {
   })
 
   const router = createBrowserRouter([
-    {
-      path: '/v1/signin',
-      element: <SignIn />
-    },
-    {
-      path: '/v1/signup',
-      element: <SignUp />
-    },
-    {
-      path: '/v1/forgot',
-      element: <ForgotPasswordPage />
-    },
-    {
-      path: '/v1/otp',
-      element: <OTPPage />
-    },
-    {
-      path: '/v1/new-password',
-      element: <NewPasswordPage />
-    },
     {
       path: '/signin',
       element: <SignInV2 />
@@ -388,307 +330,12 @@ export default function App() {
           ]
         },
         {
-          path: 'theme',
-          element: <ProfileSettingsThemePage />
-        }
-      ]
-    },
-    {
-      path: '/v1',
-      element: <RootWrapper />,
-      children: [
-        {
-          index: true,
-          element: <LandingPageV2 />
-        },
-        {
-          path: 'spaces/:spaceId/repos/:repoId/pipelines',
-          element: <PipelineLayout />,
-          children: [
-            {
-              path: 'create',
-              element: <PipelineCreate />
-            },
-            {
-              path: ':pipelineId',
-              children: [
-                { index: true, element: <RepoExecutionListPageOld /> },
-                {
-                  path: 'edit',
-                  element: <PipelineEditPage />
-                },
-                { path: 'executions/:executionId', element: <Execution /> }
-              ]
-            }
-          ]
-        },
-        {
-          path: 'spaces',
-          element: <RepoHeader />,
-          children: [
-            {
-              path: ':spaceId/repos',
-              element: <ReposListPageV1 />
-            },
-            {
-              path: ':spaceId/repos/:repoId',
-              element: <RepoLayoutV1 />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="summary" replace />
-                },
-                {
-                  path: 'summary',
-                  element: <RepoSummaryPageV1 />
-                },
-                {
-                  path: 'code',
-                  element: (
-                    <ExplorerPathsProvider>
-                      <RepoFiles />
-                    </ExplorerPathsProvider>
-                  ),
-                  children: [
-                    {
-                      index: true,
-                      element: <FileViewer />
-                    },
-                    {
-                      path: 'edit/:gitRef/~/:resourcePath*',
-                      element: <FileEditor />
-                    },
-                    {
-                      path: 'new/:gitRef/~/*',
-                      element: <FileEditor />,
-                      children: [
-                        {
-                          path: ':resourcePath*',
-                          element: <FileViewer />
-                        }
-                      ]
-                    },
-                    {
-                      path: ':gitRef',
-                      element: <FileViewer />,
-                      children: [
-                        {
-                          index: true,
-                          element: <FileViewer />
-                        },
-                        {
-                          path: '~/:resourcePath*',
-                          element: <FileViewer />
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  path: 'pipelines',
-                  children: [
-                    {
-                      index: true,
-                      element: <RepoPipelinesPage />
-                    }
-                  ]
-                },
-                {
-                  path: 'commits',
-                  element: <RepoCommitsPageV1 />
-                },
-                {
-                  path: 'pull-requests',
-                  children: [
-                    { index: true, element: <PullRequestListPage /> },
-                    {
-                      path: 'compare/:diffRefs*?',
-                      element: <CreatePullRequestV1 />
-                    }
-                  ]
-                },
-                {
-                  path: 'pull-requests/:pullRequestId',
-                  element: <PullRequestLayoutV1 />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="conversation" replace />
-                    },
-                    {
-                      path: 'conversation',
-                      element: (
-                        <PullRequestDataProviderV1>
-                          <PullRequestConversationPageV1 />
-                        </PullRequestDataProviderV1>
-                      )
-                    },
-                    {
-                      path: 'commits',
-                      element: <PullRequestCommitsPage />
-                    },
-                    {
-                      path: 'changes',
-                      element: (
-                        <PullRequestDataProviderV1>
-                          <PullRequestChangesPageV1 />
-                        </PullRequestDataProviderV1>
-                      )
-                    },
-                    {
-                      path: 'checks',
-                      element: <>Checks</>
-                    }
-                  ]
-                },
-                {
-                  path: 'webhooks',
-                  element: <RepoWebhooksListPage />
-                },
-                {
-                  path: 'webhooks/create',
-                  element: <CreateWebhookContainer />,
-                  children: [
-                    {
-                      path: ':webhookId',
-                      element: <CreateWebhookContainer />
-                    }
-                  ]
-                },
-                {
-                  path: 'branches',
-                  element: <RepoBranchesListPageV1 />
-                },
-                {
-                  path: 'settings',
-                  element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="general" replace />
-                    },
-                    {
-                      path: 'general',
-                      element: <RepoSettingsGeneralPageContainer />
-                    },
-                    {
-                      path: 'rules',
-                      element: <RepoSettingsGeneralPageContainer />
-                    },
-                    {
-                      path: 'rules/create',
-                      element: <RepoBranchSettingsRulesPageContainer />,
-                      children: [
-                        {
-                          path: ':identifier',
-                          element: <RepoBranchSettingsRulesPageContainer />
-                        }
-                      ]
-                    },
-                    {
-                      path: '*',
-                      element: <RepoSettingsPlaceholderPage />
-                    }
-                  ]
-                }
-              ]
-            },
-            // Pipelines (OUTSIDE REPOS)
-            {
-              path: ':spaceId/pipelines',
-              children: [
-                {
-                  index: true,
-                  element: <ProjectPipelinesPage />
-                },
-                {
-                  path: 'create',
-                  element: <PipelineCreate />
-                },
-                {
-                  path: ':pipelineId',
-                  element: <RepoExecutionListPageOld />
-                }
-              ]
-            },
-            // Executions (OUTSIDE REPOS)
-            {
-              path: ':spaceId/executions',
-              element: <RepoExecutionListPageOld />
-            },
-            {
-              path: 'create',
-              element: <CreateProjectV1 />
-            },
-            {
-              path: ':spaceId/settings',
-              element: <RootWrapper />,
-              children: [
-                {
-                  element: <SettingsProjectNav />,
-                  children: [
-                    {
-                      index: true,
-                      element: <Navigate to="general" replace />
-                    },
-                    {
-                      path: 'general',
-                      element: <ProjectSettingsGeneralPage />
-                    },
-                    {
-                      path: 'members',
-                      children: [
-                        { index: true, element: <ProjectSettingsMemebersPage /> },
-                        {
-                          path: 'create',
-                          element: <CreateNewMemberPage />
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              path: ':spaceId/repos/create',
-              element: <CreateRepoV1 />
-            },
-            {
-              path: ':spaceId/repos/import',
-              element: <RepoImportContainer />
-            }
-          ]
-        },
-        {
-          path: 'settings',
-          element: <SandboxSettings />,
-          children: [
-            {
-              element: <SettingsLayout />,
-              children: [
-                {
-                  index: true,
-                  element: <Navigate to="general" replace />
-                },
-                {
-                  path: 'general',
-                  element: <SettingsProfileGeneralPageV1 />
-                },
-                {
-                  path: 'keys',
-                  element: <SettingsProfileKeysPage />
-                }
-              ]
-            }
-          ]
-        },
-        {
-          path: 'users',
+          path: 'admin/default-settings',
           element: <UserManagementPageContainer />
         },
         {
-          path: 'users/create',
-          element: <CreateNewUserContainer />
+          path: 'theme',
+          element: <ProfileSettingsThemePage />
         }
       ]
     },

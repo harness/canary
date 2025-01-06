@@ -169,7 +169,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
           if (!isNewBranch) {
             navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
+            navigate(`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}

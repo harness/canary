@@ -44,6 +44,7 @@ interface PullRequestOverviewProps {
   commentStatusPullReq: any
   repoId: string
   diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
+  onCopyClick: (commentId?: number) => void
 }
 export const activityToCommentItem = (activity: TypesPullReqActivity): CommentItem<TypesPullReqActivity> => ({
   id: activity.id || 0,
@@ -67,7 +68,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   currentUser,
   handleDeleteComment,
   handleUpdateComment,
-  useTranslationStore
+  useTranslationStore,
+  onCopyClick
 }) => {
   const { t } = useTranslationStore()
 
@@ -206,6 +208,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       hideReplyBox={hideReplyBoxes[payload?.id]}
                       setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                       key={payload?.id}
+                      currentUser={currentUser?.display_name}
+                      replyBoxClassName="p-4"
                       header={[
                         {
                           avatar: (
@@ -258,6 +262,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             mode={DiffModeEnum.Unified}
                             wrap={wrap}
                             addWidget={false}
+                            useTranslationStore={useTranslationStore}
                           />
                           <div className="px-4 py-2">
                             {commentItems?.map((commentItem, idx) => {
@@ -286,6 +291,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       </Avatar>
                                     }
                                     isComment
+                                    onCopyClick={onCopyClick}
+                                    commentId={commentItem.id}
                                     isLast={commentItems.length - 1 === idx}
                                     header={[
                                       {
@@ -316,6 +323,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
                                     }
                                     contentClassName="border-transparent"
+                                    replyBoxClassName="p-4"
                                     content={
                                       commentItem?.deleted ? (
                                         <div className="rounded-md border bg-primary-background p-1">
@@ -404,6 +412,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         // )
                       }
                     ]}
+                    currentUser={currentUser?.display_name}
+                    replyBoxClassName="p-4"
                     content={
                       <div className="px-4 pt-4">
                         {commentItems?.map((commentItem, idx) => {
@@ -416,6 +426,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                                 parentCommentId={payload?.id}
                                 titleClassName="!flex max-w-full"
+                                currentUser={currentUser?.display_name}
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
                                     {/* <AvatarImage src={AvatarUrl} /> */}
@@ -455,6 +466,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                   }
                                 ]}
                                 isComment
+                                onCopyClick={onCopyClick}
+                                commentId={commentItem.id}
                                 hideReply
                                 isDeleted={!!commentItem?.deleted}
                                 handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
@@ -462,6 +475,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                   toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
                                 }
                                 contentClassName="border-transparent pb-0"
+                                replyBoxClassName="p-4"
                                 content={
                                   commentItem?.deleted ? (
                                     <div className="rounded-md border bg-primary-background p-1">

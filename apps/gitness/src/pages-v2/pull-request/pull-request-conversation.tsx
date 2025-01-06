@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
 
 import {
@@ -143,8 +144,18 @@ export default function PullRequestConversationPage() {
       branch_name: pullReqMetadata?.source_branch || '',
       queryParams: { bypass_rules: true, dry_run_rules: false }
     })
-      .then(() => {
+      .then(res => {
         refetchBranch()
+        if (res?.body?.rule_violations) {
+          const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+          if (checkIfBypassAllowed) {
+            setShowDeleteBranchButton(true)
+          } else {
+            setShowDeleteBranchButton(false)
+            setShowRestoreBranchButton(true)
+          }
+        }
+        setShowRestoreBranchButton(true)
         setErrorMsg('')
       })
       .catch(err => {
@@ -153,49 +164,38 @@ export default function PullRequestConversationPage() {
   }
 
   useEffect(() => {
-    if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
-      refetchBranch()
-      if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
-        // dry run delete branch
-        deleteBranch({}).then(res => {
-          if (res?.body?.rule_violations) {
-            const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
-            if (checkIfBypassAllowed) {
-              setShowDeleteBranchButton(true)
-            } else {
-              setShowDeleteBranchButton(false)
-            }
-          } else {
-            setShowDeleteBranchButton(true)
-          }
-        })
-      }
+    if (sourceBranch && (pullReqMetadata?.merged || pullReqMetadata?.closed)) {
+      setShowDeleteBranchButton(true)
     }
   }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
   useEffect(() => {
     if (branchError) {
-      setShowDeleteBranchButton(false)
-      createBranch({
-        repo_ref: repoRef,
-        body: {
-          name: pullReqMetadata?.source_branch || '',
-          target: pullReqMetadata?.source_sha,
-          bypass_rules: true,
-          dry_run_rules: true
-        }
-      }).then(res => {
-        if (res?.body?.rule_violations) {
-          const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
-          if (checkIfBypassAllowed) {
-            setShowRestoreBranchButton(true)
-          } else {
-            setShowRestoreBranchButton(false)
+      if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
+        setShowRestoreBranchButton(true)
+      } else {
+        setShowDeleteBranchButton(false)
+        createBranch({
+          repo_ref: repoRef,
+          body: {
+            name: pullReqMetadata?.source_branch || '',
+            target: pullReqMetadata?.source_sha,
+            bypass_rules: true,
+            dry_run_rules: true
           }
-        } else {
-          setShowRestoreBranchButton(true)
-        }
-      })
+        }).then(res => {
+          if (res?.body?.rule_violations) {
+            const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+            if (checkIfBypassAllowed) {
+              setShowRestoreBranchButton(true)
+            } else {
+              setShowRestoreBranchButton(false)
+            }
+          } else {
+            setShowRestoreBranchButton(true)
+          }
+        })
+      }
     }
   }, [branchError])
 
@@ -303,6 +303,15 @@ export default function PullRequestConversationPage() {
         setActivities(prevData => prevData?.filter(item => item.id !== newComment.id))
         console.error('Failed to save comment:', error)
       })
+  }
+
+  const onCopyClick = (commentId?: number) => {
+    if (commentId) {
+      const url = new URL(window.location.href)
+      url.pathname = url.pathname.replace('/conversation', '/changes')
+      url.searchParams.set('commentId', commentId.toString())
+      copy(url.toString())
+    }
   }
 
   const changesInfo = extractInfoForCodeOwnerContent({
@@ -494,6 +503,7 @@ export default function PullRequestConversationPage() {
             dateOrderSort={dateOrderSort}
             handleSaveComment={handleSaveComment}
             currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
+            onCopyClick={onCopyClick}
           />
           <Spacer size={9} />
           <PullRequestCommentBox

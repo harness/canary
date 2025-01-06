@@ -179,3 +179,15 @@ export type EnumLabelColor =
   | 'red'
   | 'violet'
   | 'yellow'
+
+export interface CreateCommentPullReqRequest {
+  line_end?: number
+  line_end_new?: boolean
+  line_start?: number
+  line_start_new?: boolean
+  parent_id?: number
+  path?: string
+  source_commit_sha?: string
+  target_commit_sha?: string
+  text?: string
+}

@@ -1,31 +1,28 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Card, Input, Text } from '@/components/'
+import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { getInitials, timeAgo } from '@utils/utils'
+import {
+  CommentItem,
+  CreateCommentPullReqRequest,
+  PullRequestCommentBox,
+  TranslationStore,
+  TypesPullReqActivity
+} from '@views/index'
 import { DiffBlock } from 'diff2html/lib/types'
-import { debounce } from 'lodash-es'
+import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 import constants from '../constants'
+import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 
-const TextArea = ({ onChange }: { onChange: (v: string) => void }) => {
-  const [val, setVal] = useState('')
-
-  useEffect(() => {
-    onChange(val)
-  }, [val])
-
-  return (
-    <textarea
-      className="min-h-[80px] w-full border !p-[2px] font-sans"
-      autoFocus
-      value={val}
-      onChange={e => setVal(e.target.value)}
-    />
-  )
+interface Thread {
+  parent: CommentItem<TypesPullReqActivity>
+  replies: CommentItem<TypesPullReqActivity>[]
 }
+
 interface PullRequestDiffviewerProps {
   data?: string
   fontsize: number
@@ -43,6 +40,13 @@ interface PullRequestDiffviewerProps {
   unchangedPercentage?: number
   blocks?: DiffBlock[]
   currentUser?: string
+  comments?: CommentItem<TypesPullReqActivity>[][]
+  handleSaveComment?: (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => void
+  deleteComment?: (id: number) => void
+  updateComment?: (id: number, comment: string) => void
+  useTranslationStore: () => TranslationStore
+  commentId?: string
+  onCopyClick?: (commentId?: number) => void
 }
 
 const PullRequestDiffViewer = ({
@@ -61,10 +65,17 @@ const PullRequestDiffViewer = ({
   deleted,
   isBinary,
   blocks,
-  currentUser
+  currentUser,
+  comments,
+  handleSaveComment,
+  deleteComment,
+  updateComment,
+  useTranslationStore,
+  commentId,
+  onCopyClick
 }: PullRequestDiffviewerProps) => {
+  const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
-  const valRef = useRef('')
   const [, setLoading] = useState(false)
   const highlighter = useDiffHighlighter({ setLoading })
   const reactWrapRef = useRef<HTMLDivElement>(null)
@@ -89,12 +100,6 @@ const PullRequestDiffViewer = ({
   )
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
-  const [str, setStr] = useState('')
-
-  const [extend, setExtend] = useState<DiffViewProps<{ info: string[]; date: number }[]>['extendData']>({
-    oldFile: {},
-    newFile: {}
-  })
 
   const [
     scrollBar
@@ -105,17 +110,69 @@ const PullRequestDiffViewer = ({
     //  setExpandAll
   ] = useState(false)
 
+  const [extend, setExtend] = useState<{
+    oldFile: Record<number, { data: Thread[] }>
+    newFile: Record<number, { data: Thread[] }>
+  }>({ oldFile: {}, newFile: {} })
+
   useEffect(() => {
-    if (expandAll) {
-      if (ref?.current) {
-        ref?.current?.getDiffFileInstance?.().onAllExpand(mode & DiffModeEnum.Split ? 'split' : 'unified')
-      }
-    } else {
-      if (ref?.current) {
-        ref?.current?.getDiffFileInstance?.().onAllCollapse(mode & DiffModeEnum.Split ? 'split' : 'unified')
-      }
+    if (expandAll && diffFileInstance) {
+      diffFileInstance.onAllExpand(mode & DiffModeEnum.Split ? 'split' : 'unified')
+    } else if (diffFileInstance) {
+      diffFileInstance.onAllCollapse(mode & DiffModeEnum.Split ? 'split' : 'unified')
     }
-  }, [expandAll])
+  }, [expandAll, diffFileInstance, mode])
+
+  // Build extendData from comments as threads
+  useEffect(() => {
+    if (!comments) return
+    const newExtend = { oldFile: {}, newFile: {} } as {
+      oldFile: Record<number, { data: Thread[] }>
+      newFile: Record<number, { data: Thread[] }>
+    }
+
+    comments.forEach(threadArr => {
+      if (threadArr.length === 0) return
+      const parentComment = threadArr[0]
+      const codeComment = parentComment.payload?.payload?.code_comment
+      if (!codeComment) return
+      const rightSide = get(parentComment.payload?.payload?.payload, 'line_start_new', false)
+      const side: 'oldFile' | 'newFile' = rightSide ? 'newFile' : 'oldFile'
+      const lineNumber = rightSide ? codeComment.line_new : codeComment.line_old
+      if (lineNumber == null) return
+
+      const parent = {
+        author: parentComment.author,
+        created: parentComment.created,
+        content: parentComment.content,
+        id: parentComment.id,
+        edited: parentComment.edited,
+        updated: parentComment.updated,
+        deleted: parentComment.deleted,
+        outdated: parentComment.outdated,
+        payload: parentComment.payload
+      }
+
+      const replies = threadArr.slice(1).map(reply => ({
+        author: reply.author,
+        created: reply.created,
+        content: reply.content,
+        id: reply.id,
+        payload: reply.payload,
+        edited: reply.edited,
+        updated: reply.updated,
+        deleted: reply.deleted,
+        outdated: reply.outdated
+      }))
+
+      if (!newExtend[side][lineNumber]) {
+        newExtend[side][lineNumber] = { data: [] }
+      }
+      newExtend[side][lineNumber].data.push({ parent, replies })
+    })
+
+    setExtend(newExtend)
+  }, [comments])
 
   useEffect(() => {
     if (diffFileInstance && scrollBar && !wrap) {
@@ -210,113 +267,286 @@ const PullRequestDiffViewer = ({
     if (data) {
       setDiffInstanceCb(fileName, lang, data, fullContent)
     }
-  }, [])
+  }, [data, fileName, lang, fullContent, setDiffInstanceCb])
+
+  const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
+  const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
+  const [hideReplyBoxes, setHideReplyBoxes] = useState<{ [key: string]: boolean }>({})
+
+  const toggleEditMode = (id: string, initialText: string) => {
+    setEditModes(prev => ({ ...prev, [id]: !prev[id] }))
+    if (!editModes[id]) {
+      setEditComments(prev => ({ ...prev, [id]: initialText }))
+    }
+  }
+
+  const toggleReplyBox = (state: boolean, id?: number) => {
+    if (id === undefined) {
+      console.error('toggleEditMode called with undefined id')
+      return
+    }
+    setHideReplyBoxes(prev => ({ ...prev, [id]: state }))
+  }
+
+  const [newComments, setNewComments] = useState<Record<string, string>>({})
+
+  function getNewCommentKey(side: SplitSide, lineNumber: number) {
+    return `${side}:${lineNumber}`
+  }
+  function getNewCommentValue(side: SplitSide, lineNumber: number) {
+    return newComments[getNewCommentKey(side, lineNumber)] ?? ''
+  }
+  function setNewCommentValue(side: SplitSide, lineNumber: number, text: string) {
+    setNewComments(prev => ({ ...prev, [getNewCommentKey(side, lineNumber)]: text }))
+  }
+
+  const renderWidgetLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderWidgetLine']>>(
+    ({ onClose, side, lineNumber }) => {
+      const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
+      const commentText = getNewCommentValue(side, lineNumber)
+
+      return (
+        <div className="flex w-full flex-col border px-[4px] py-[8px]">
+          <PullRequestCommentBox
+            isEditMode
+            inReplyMode
+            onSaveComment={() => {
+              onClose()
+              if (commentText.trim() && handleSaveComment) {
+                handleSaveComment(commentText.trim(), undefined, {
+                  line_end: lineNumber,
+                  line_end_new: sideKey === 'newFile',
+                  line_start: lineNumber,
+                  line_start_new: sideKey === 'newFile',
+                  path: fileName
+                })
+              }
+              setNewCommentValue(side, lineNumber, '')
+            }}
+            currentUser={currentUser}
+            onCancelClick={() => {
+              onClose()
+              setNewCommentValue(side, lineNumber, '')
+            }}
+            comment={commentText}
+            setComment={value => setNewCommentValue(side, lineNumber, value)}
+          />
+        </div>
+      )
+    },
+    [handleSaveComment, fileName, newComments, currentUser]
+  )
+
+  const renderExtendLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderExtendLine']>>(
+    ({ data: threads }) => {
+      if (!threads) return <></>
+
+      return (
+        <div className="border bg-background rounded w-">
+          {threads.map(thread => {
+            const parent = thread.parent
+            const componentId = `activity-code-${parent?.id}`
+            const parentIdAttr = `comment-${parent?.id}`
+            const replies = thread.replies
+            const parentInitials = getInitials(parent.author ?? '', 2)
+            return (
+              <PullRequestTimelineItem
+                key={parent.id}
+                id={parentIdAttr}
+                parentCommentId={parent.id}
+                handleSaveComment={handleSaveComment}
+                isLast={true}
+                contentClassName="px-4 py-2 w-[calc(100%-38px)]"
+                header={[]}
+                currentUser={currentUser}
+                isComment
+                replyBoxClassName="py-4"
+                hideReplyBox={hideReplyBoxes[parent?.id]}
+                setHideReplyBox={state => toggleReplyBox(state, parent?.id)}
+                content={
+                  <div className="flex-col">
+                    <PullRequestTimelineItem
+                      icon={
+                        <Avatar className="size-6 rounded-full p-0">
+                          <AvatarFallback>
+                            <Text size={1} color="tertiaryBackground">
+                              {parentInitials}
+                            </Text>
+                          </AvatarFallback>
+                        </Avatar>
+                      }
+                      titleClassName="!flex max-w-full"
+                      parentCommentId={parent.id}
+                      handleSaveComment={handleSaveComment}
+                      isLast={replies.length === 0}
+                      hideReply
+                      isComment
+                      replyBoxClassName=""
+                      handleDeleteComment={() => deleteComment?.(parent?.id)}
+                      onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
+                      contentClassName="border-transparent"
+                      onCopyClick={onCopyClick}
+                      commentId={parent.id}
+                      header={[
+                        {
+                          name: parent.author,
+                          description: (
+                            <Layout.Horizontal>
+                              <span className="text-foreground-3">{timeAgo(parent?.created as number)}</span>
+                              {parent?.deleted ? (
+                                <>
+                                  <span className="text-foreground-3">&nbsp;|&nbsp;</span>
+                                  <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                </>
+                              ) : null}
+                            </Layout.Horizontal>
+                          )
+                        }
+                      ]}
+                      content={
+                        parent?.deleted ? (
+                          <div className="rounded-md border bg-primary-background p-1">
+                            {t('views:pullRequests.deletedComment')}
+                          </div>
+                        ) : editModes[componentId] ? (
+                          <PullRequestCommentBox
+                            inReplyMode
+                            isEditMode
+                            onSaveComment={() => {
+                              if (parent?.id) {
+                                updateComment?.(parent?.id, editComments[componentId])
+                                toggleEditMode(componentId, '')
+                              }
+                            }}
+                            currentUser={currentUser}
+                            onCancelClick={() => {
+                              toggleEditMode(componentId, '')
+                            }}
+                            comment={editComments[componentId]}
+                            setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                          />
+                        ) : (
+                          <MarkdownViewer source={parent?.payload?.payload?.text || parent.content} />
+                        )
+                      }
+                    />
+                    {replies?.length > 0
+                      ? replies.map((reply, idx) => {
+                          const replyInitials = getInitials(reply.author ?? '', 2)
+                          const isLastComment = idx === replies.length - 1
+                          const replyComponentId = `activity-code-${reply?.id}`
+                          const replyIdAttr = `comment-${reply?.id}`
+
+                          return (
+                            <PullRequestTimelineItem
+                              key={reply.id}
+                              id={replyIdAttr}
+                              parentCommentId={parent?.id}
+                              icon={
+                                <Avatar className="size-6 rounded-full p-0">
+                                  <AvatarFallback>
+                                    <Text size={1} color="tertiaryBackground">
+                                      {replyInitials}
+                                    </Text>
+                                  </AvatarFallback>
+                                </Avatar>
+                              }
+                              isLast={isLastComment}
+                              handleSaveComment={handleSaveComment}
+                              hideReply
+                              isComment
+                              onCopyClick={onCopyClick}
+                              commentId={reply.id}
+                              isDeleted={!!reply?.deleted}
+                              handleDeleteComment={() => deleteComment?.(reply?.id)}
+                              onEditClick={() => toggleEditMode(replyComponentId, reply?.payload?.payload?.text || '')}
+                              contentClassName="border-transparent"
+                              titleClassName="!flex max-w-full"
+                              header={[
+                                {
+                                  name: reply.author,
+                                  description: (
+                                    <Layout.Horizontal>
+                                      <span className="text-foreground-3">{timeAgo(reply?.created as number)}</span>
+                                      {reply?.deleted ? (
+                                        <>
+                                          <span className="text-foreground-3">&nbsp;|&nbsp;</span>
+                                          <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                        </>
+                                      ) : null}
+                                    </Layout.Horizontal>
+                                  )
+                                }
+                              ]}
+                              content={
+                                reply?.deleted ? (
+                                  <div className="rounded-md border bg-primary-background p-1">
+                                    {t('views:pullRequests.deletedComment')}
+                                  </div>
+                                ) : editModes[replyComponentId] ? (
+                                  <PullRequestCommentBox
+                                    inReplyMode
+                                    isEditMode
+                                    onSaveComment={() => {
+                                      if (reply?.id) {
+                                        updateComment?.(reply?.id, editComments[replyComponentId])
+                                        toggleEditMode(replyComponentId, '')
+                                      }
+                                    }}
+                                    currentUser={currentUser}
+                                    onCancelClick={() => {
+                                      toggleEditMode(replyComponentId, '')
+                                    }}
+                                    comment={editComments[replyComponentId]}
+                                    setComment={text =>
+                                      setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
+                                    }
+                                  />
+                                ) : (
+                                  <MarkdownViewer source={reply?.payload?.payload?.text || reply.content} />
+                                )
+                              }
+                            />
+                          )
+                        })
+                      : null}
+                  </div>
+                }
+              />
+            )
+          })}
+        </div>
+      )
+    },
+    [currentUser, handleSaveComment, updateComment, deleteComment, fileName, hideReplyBoxes, editModes, editComments, t]
+  )
+
+  // Scroll to commentId whenever extendData or commentId changes
+  useEffect(() => {
+    if (!commentId) return
+    // Slight timeout so the UI has time to expand/hydrate
+    const timeoutId = setTimeout(() => {
+      const elem = document.getElementById(`comment-${commentId}`)
+      if (!elem) return
+      console.log('element mil gya timeout')
+      elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }, 500)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [commentId, extend])
 
   return (
     <>
       {diffFileInstance && !renderCustomContent && (
-        <DiffView<{ info: string[]; date: number }[]>
+        <DiffView<Thread[]>
           ref={ref}
           className="bg-tr w-full text-tertiary-background"
-          renderWidgetLine={({ onClose, side, lineNumber }) => {
-            return (
-              <div className="flex w-full flex-col border px-[4px] py-[8px]">
-                <TextArea onChange={v => setStr(v)} />
-                <div className="m-[5px] mt-[0.8em] text-right font-sans">
-                  <div className="inline-flex justify-end gap-x-[12px]">
-                    <button
-                      className="rounded-[4px] border !px-[12px] py-[6px]"
-                      onClick={() => {
-                        onClose()
-                        valRef.current = ''
-                      }}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      className="rounded-[4px] border !px-[12px] py-[6px]"
-                      onClick={() => {
-                        onClose()
-                        if (str) {
-                          const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
-                          setExtend(prev => {
-                            const res = { ...prev }
-
-                            // Ensure the sideKey exists
-                            if (!res[sideKey]) {
-                              res[sideKey] = {}
-                            }
-
-                            // Check if the lineNumber exists
-                            if (res[sideKey][lineNumber]) {
-                              // If the entry exists, add a new sibling entry
-                              res[sideKey][lineNumber].data.push({
-                                info: [str],
-                                date: Date.now()
-                              })
-                            } else {
-                              // If the entry does not exist, create a new one with an array
-                              res[sideKey][lineNumber] = {
-                                data: [
-                                  {
-                                    info: [str],
-                                    date: Date.now()
-                                  }
-                                ]
-                              }
-                            }
-
-                            return res
-                          })
-
-                          // handleAction?.('new', str, sideKey, lineNumber, fileName)
-                        }
-                      }}
-                    >
-                      Comment
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )
-          }}
+          renderWidgetLine={renderWidgetLine}
+          renderExtendLine={renderExtendLine}
           diffFile={diffFileInstance}
           extendData={extend}
-          renderExtendLine={info => {
-            return (
-              <>
-                <div className="bg-background/50 px-6 py-[6px]">
-                  {info?.data.map((item, index) => {
-                    return (
-                      <Card key={index} className="rounded-md bg-transparent">
-                        <div className="flex flex-col p-4">
-                          <div className="flex items-center space-x-2 font-sans">
-                            <Avatar className="size-5">
-                              <AvatarFallback className="p-1 text-center text-xs">
-                                {getInitials(currentUser ?? '', 2)}
-                              </AvatarFallback>
-                            </Avatar>
-                            <Text color="primary">{currentUser ?? ''} </Text>
-                            <Text size={1} color="tertiaryBackground">
-                              {timeAgo(item?.date)}
-                            </Text>
-                          </div>
-                          <Text size={2} color="primary" className="px-8 py-2 font-sans">
-                            {item.info}
-                          </Text>
-                        </div>
-                        <div className="flex items-center gap-3 border-t p-4 font-sans">
-                          <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
-                          <Input placeholder={'Reply here'} />
-                        </div>
-                      </Card>
-                    )
-                  })}
-                </div>
-              </>
-            )
-          }}
-          // data={data}
           diffViewFontSize={fontsize}
           diffViewHighlight={highlight}
           diffViewMode={mode}

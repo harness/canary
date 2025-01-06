@@ -4,8 +4,6 @@ import {
   Avatar,
   AvatarFallback,
   Button,
-  Icon,
-  IconProps,
   Layout,
   MarkdownViewer,
   Spacer,
@@ -18,14 +16,15 @@ import {
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { ToolbarAction } from '../../pull-request-details-types'
+// TODO: add back when functionality is added
+// import { ToolbarAction } from '../../pull-request-details-types'
+// interface ToolbarItem {
+//   icon: IconProps['name']
+//   action: ToolbarAction
+//   title?: string
+//   size?: number
+// }
 
-interface ToolbarItem {
-  icon: IconProps['name']
-  action: ToolbarAction
-  title?: string
-  size?: number
-}
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   comment: string
@@ -70,20 +69,21 @@ const PullRequestCommentBox = ({
       </Avatar>
     )
   }, [currentUser])
-  const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = []
-    return [
-      ...initial,
+  // TODO: add back when functionality is added
+  // const toolbar: ToolbarItem[] = useMemo(() => {
+  //   const initial: ToolbarItem[] = []
+  //   return [
+  //     ...initial,
 
-      { icon: 'header', action: ToolbarAction.HEADER },
-      { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italicize', action: ToolbarAction.ITALIC },
-      { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-      { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
-      { icon: 'code', action: ToolbarAction.CODE_BLOCK }
-    ]
-  }, [])
+  //     { icon: 'header', action: ToolbarAction.HEADER },
+  //     { icon: 'bold', action: ToolbarAction.BOLD },
+  //     { icon: 'italicize', action: ToolbarAction.ITALIC },
+  //     { icon: 'attachment', action: ToolbarAction.UPLOAD },
+  //     { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+  //     { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+  //     { icon: 'code', action: ToolbarAction.CODE_BLOCK }
+  //   ]
+  // }, [])
   return (
     <div className="flex items-start space-x-4">
       {!inReplyMode && avatar}
@@ -121,6 +121,7 @@ const PullRequestCommentBox = ({
           </TabsContent>
         </Tabs>
         <div className="mt-2 flex items-center justify-between space-x-2">
+          {/* TODO : add back when functionality is implemented
           <Layout.Horizontal>
             {toolbar.map((item, index) => {
               return (
@@ -129,7 +130,7 @@ const PullRequestCommentBox = ({
                 </Button>
               )
             })}
-          </Layout.Horizontal>
+          </Layout.Horizontal> */}
           {!inReplyMode && (
             <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
               Comment

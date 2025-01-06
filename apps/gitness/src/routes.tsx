@@ -1,6 +1,5 @@
 import { Navigate, Params, RouteObject } from 'react-router-dom'
 
-import { BreadcrumbSeparator } from '@harnessio/canary'
 import { Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
@@ -11,6 +10,7 @@ import { useTranslationStore } from './i18n/stores/i18n-store'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
+import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -194,16 +194,25 @@ export const routes: CustomRouteObject[] = [
                   { index: true, element: <RepoPipelineListPage /> },
                   {
                     path: ':pipelineId',
-                    element: <RepoExecutionListPage />,
                     handle: {
-                      breadcrumb: ({ pipelineId }: { pipelineId: string }) => (
-                        <div className="flex items-center gap-1">
-                          <Text>{pipelineId}</Text>
-                          <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                          <Text>Executions</Text>
-                        </div>
-                      )
-                    }
+                      breadcrumb: ({ pipelineId }: { pipelineId: string }) => <Text>{pipelineId}</Text>
+                    },
+                    children: [
+                      {
+                        index: true,
+                        element: <RepoExecutionListPage />,
+                        handle: {
+                          breadcrumb: () => <Text>Executions</Text>
+                        }
+                      },
+                      {
+                        path: 'edit',
+                        element: <PipelineEditPage />,
+                        handle: {
+                          breadcrumb: () => <Text>Edit</Text>
+                        }
+                      }
+                    ]
                   }
                 ]
               },

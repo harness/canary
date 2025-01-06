@@ -5,7 +5,6 @@ import { Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
 import AppShell from './components-v2/app-shell'
-import BreadcrumbsV1 from './components-v2/breadcrumbs/breadcrumbs'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { useTranslationStore } from './i18n/stores/i18n-store'

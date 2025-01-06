@@ -11,6 +11,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { BreadcrumbSeparator } from '@harnessio/ui/components'
 import { RepoSettingsPage } from '@harnessio/ui/views'
 
 import { AppProvider } from './framework/context/AppContext'
@@ -31,8 +32,10 @@ import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
+import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
+import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
@@ -156,6 +159,28 @@ export default function AppMFE({
                     path: 'summary',
                     element: <RepoSummaryPage />,
                     handle: { breadcrumb: () => <span>Summary</span> }
+                  },
+                  {
+                    path: 'pipelines',
+                    handle: {
+                      breadcrumb: () => <span>Pipelines</span>
+                    },
+                    children: [
+                      { index: true, element: <RepoPipelineListPage /> },
+                      {
+                        path: ':pipelineId',
+                        element: <RepoExecutionListPage />,
+                        handle: {
+                          breadcrumb: ({ pipelineId }: { pipelineId: string }) => (
+                            <div className="flex items-center gap-1">
+                              <span>{pipelineId}</span>
+                              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                              <span>Executions</span>
+                            </div>
+                          )
+                        }
+                      }
+                    ]
                   },
                   {
                     path: 'commits',

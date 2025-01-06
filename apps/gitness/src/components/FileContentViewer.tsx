@@ -22,7 +22,7 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
+import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { timeAgoFromISOTime } from '../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, filenameToLanguage, formatBytes, getTrimmedSha, GitCommitAction } from '../utils/git-utils'

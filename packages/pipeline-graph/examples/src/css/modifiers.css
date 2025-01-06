@@ -1,0 +1,16 @@
+/* skeleton example */
+.skeleton .PipelineGraph-LeafContainerNode .node-text {
+  color: transparent;
+  background: #373737;
+}
+
+/* sharp-lines example */
+.sharp-line svg g {
+  stroke-width: max(0.8px, calc(1px / var(--scale)));
+}
+
+/* sharp-borders example */
+.sharp-border .parallel-node > * > .border,
+.sharp-border .serial-node > * > .border {
+  border-width: max(0.8px, calc(1px / var(--scale))) !important;
+}

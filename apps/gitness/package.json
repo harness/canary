@@ -23,7 +23,7 @@
     "@harnessio/code-service-client": "3.2.1-beta.1",
     "@harnessio/forms": "workspace:*",
     "@harnessio/ui": "workspace:*",
-    "@harnessio/unified-pipeline": "workspace:*",
+    "@harnessio/pipeline-graph": "workspace:*",
     "@harnessio/views": "workspace:*",
     "@harnessio/yaml-editor": "workspace:*",
     "@hookform/resolvers": "^3.6.0",

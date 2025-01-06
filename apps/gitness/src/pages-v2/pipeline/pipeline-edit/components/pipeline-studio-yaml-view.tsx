@@ -1,0 +1,143 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+
+import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
+import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
+import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
+
+import { InlineAction, MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
+
+import { useThemeStore } from '../../../../framework/context/ThemeContext'
+import { usePipelineDataContext, YamlRevision } from '../context/PipelineStudioDataProvider'
+import { StepDrawer, usePipelineViewContext } from '../context/PipelineStudioViewProvider'
+import unifiedSchema from '../schema/unifiedSchema.json'
+import { themes } from '../theme/monaco-theme'
+import { getInlineActionConfig, InlineActionArgsType } from '../utils/inline-actions'
+
+MonacoGlobals.set({
+  ILanguageFeaturesService,
+  OutlineModel,
+  StandaloneServices
+})
+
+const PipelineStudioYamlView = (): JSX.Element => {
+  const {
+    state: { yamlRevision },
+    setYamlRevision,
+    setAddStepIntention,
+    setEditStepIntention,
+    requestYamlModifications: { deleteInArray }
+  } = usePipelineDataContext()
+  const { setStepDrawerOpen, highlightInYamlPath } = usePipelineViewContext()
+  const { theme } = useThemeStore()
+  // TODO: temporary solution for matching themes
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+
+  const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
+  const forceRerender = () => {
+    setRerenderYamlEditor(reRenderYamlEditor + 1)
+  }
+
+  // stores current yaml we have in monaco
+  const currentYamlRef = useRef<string | undefined>('')
+
+  // hold yaml from context, this will be used for feeding YamlEditor as we use reRenderYamlEditor for rerendering YamlEditor
+  const newYamlRef = useRef<YamlRevision>(yamlRevision)
+  newYamlRef.current = yamlRevision
+
+  const schemaConfig = useMemo(
+    () => ({
+      schema: unifiedSchema,
+      uri: 'https://raw.githubusercontent.com/bradrydzewski/spec/master/dist/schema.json'
+    }),
+    []
+  )
+
+  const themeConfig = useMemo(
+    () => ({
+      //rootElementSelector: '#react-root',
+      defaultTheme: monacoTheme,
+      themes
+    }),
+    []
+  )
+
+  const addStep = useCallback(
+    (path: string, position: InlineActionArgsType['position']) => {
+      setStepDrawerOpen(StepDrawer.Collection)
+      setAddStepIntention({ path, position })
+    },
+    [setStepDrawerOpen, setAddStepIntention]
+  )
+
+  const deleteStep = useCallback(
+    (path: string) => {
+      deleteInArray({ path })
+    },
+    [deleteInArray]
+  )
+
+  const editStep = useCallback(
+    (path: string) => {
+      setStepDrawerOpen(StepDrawer.Form)
+      setEditStepIntention({ path })
+    },
+    [setEditStepIntention]
+  )
+
+  const inlineActionCallback: InlineAction<InlineActionArgsType>['onClick'] = useCallback(
+    props => {
+      const { data, path } = props
+      // TODO: move this to utils, refactor
+      switch (data.entityType) {
+        case 'step':
+          switch (data.action) {
+            case 'add':
+              addStep(path, data.position)
+              break
+            case 'edit':
+              editStep(path)
+              break
+            case 'delete':
+              deleteStep(path)
+              break
+          }
+          break
+        default:
+          break
+      }
+    },
+    [addStep, deleteStep, editStep]
+  )
+  const inlineActions = useMemo(() => getInlineActionConfig(inlineActionCallback), [inlineActionCallback])
+
+  useEffect(() => {
+    if (yamlRevision.yaml !== currentYamlRef.current) {
+      forceRerender()
+    }
+  }, [yamlRevision])
+
+  return useMemo(() => {
+    const selection = highlightInYamlPath
+      ? { path: highlightInYamlPath, className: 'bg-background-4', revealInCenter: true }
+      : undefined
+
+    return (
+      <div className="flex size-full">
+        <YamlEditor
+          onYamlRevisionChange={value => {
+            currentYamlRef.current = value?.yaml
+            setYamlRevision(value ?? { yaml: '', revisionId: 0 })
+          }}
+          yamlRevision={newYamlRef.current}
+          themeConfig={themeConfig}
+          theme={monacoTheme}
+          schemaConfig={schemaConfig}
+          inlineActions={inlineActions}
+          selection={selection}
+        />
+      </div>
+    )
+  }, [reRenderYamlEditor, themeConfig, schemaConfig, inlineActions, highlightInYamlPath])
+}
+
+export { PipelineStudioYamlView }

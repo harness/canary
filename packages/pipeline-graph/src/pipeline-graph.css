@@ -1,0 +1,18 @@
+.PipelineGraph-RootContainer {
+  transform-origin: left top;
+}
+
+.PipelineGraph-NodesContainer {
+  position: absolute;
+  width: max-content; /* IMPORTANT: do not delete this */
+}
+
+.PipelineGraph-SvgContainer {
+  top: 0px;
+  position: absolute;
+  pointer-events: none;
+}
+
+.PipelineGraph-Canvas {
+  width: 100%;
+}

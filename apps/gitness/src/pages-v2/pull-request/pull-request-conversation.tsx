@@ -487,7 +487,7 @@ export default function PullRequestConversationPage() {
             repoId={repoRef}
             refetchActivities={refetchActivities}
             commentStatusPullReq={commentStatusPullReq}
-            data={activities?.map((item: TypesPullReqActivity) => {
+            data={activityData?.map((item: TypesPullReqActivity) => {
               return {
                 author: item?.author,
                 created: item?.created,

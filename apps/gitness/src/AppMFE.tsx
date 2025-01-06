@@ -33,6 +33,7 @@ import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
+import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
@@ -40,7 +41,6 @@ import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-import { RepoImportContainer } from './pages/repo/repo-import-container'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -140,7 +140,7 @@ export default function AppMFE({
               },
               {
                 path: 'import',
-                element: <RepoImportContainer />,
+                element: <ImportRepo />,
                 handle: { breadcrumb: () => <span>Import Repository</span> }
               },
               {

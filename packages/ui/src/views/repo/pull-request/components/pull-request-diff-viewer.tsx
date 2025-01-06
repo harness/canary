@@ -3,7 +3,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { getInitials, timeAgo } from '@utils/utils'
-import { CommentItem, CreateCommentPullReqRequest, PullRequestCommentBox, TranslationStore, TypesPullReqActivity } from '@views/index'
+import {
+  CommentItem,
+  CreateCommentPullReqRequest,
+  PullRequestCommentBox,
+  TranslationStore,
+  TypesPullReqActivity
+} from '@views/index'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'

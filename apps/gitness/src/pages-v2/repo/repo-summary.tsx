@@ -87,7 +87,7 @@ export default function RepoSummaryPage() {
     })
 
   useEffect(() => {
-    setSpaceIdAndRepoId(spaceId || '', repoId || '')
+    setSpaceIdAndRepoId(isMFE ? '' : spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
   useEffect(() => {

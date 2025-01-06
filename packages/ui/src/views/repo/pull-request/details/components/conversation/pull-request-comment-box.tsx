@@ -17,14 +17,15 @@ import {
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { ToolbarAction } from '../../pull-request-details-types'
+// TODO: add back when functionality is added
+// import { ToolbarAction } from '../../pull-request-details-types'
+// interface ToolbarItem {
+//   icon: IconProps['name']
+//   action: ToolbarAction
+//   title?: string
+//   size?: number
+// }
 
-interface ToolbarItem {
-  icon: IconProps['name']
-  action: ToolbarAction
-  title?: string
-  size?: number
-}
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   comment: string

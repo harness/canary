@@ -75,7 +75,6 @@ export default function ReposListPage() {
 
   return (
     <>
-      {/* <Breadcrumbs /> */}
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}

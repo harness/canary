@@ -40,6 +40,7 @@ import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
+import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
@@ -56,12 +57,7 @@ type CustomRouteObject = RouteObject & {
 export const routes: CustomRouteObject[] = [
   {
     path: '/',
-    element: (
-      <>
-        {/* <BreadcrumbsV1 /> */}
-        <AppShell />
-      </>
-    ),
+    element: <AppShell />,
     handle: {
       breadcrumb: () => <ProjectDropdown />
     },
@@ -349,12 +345,7 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'settings',
-    element: (
-      <>
-        <BreadcrumbsV1 />
-        <ProfileSettingsLayout />
-      </>
-    ),
+    element: <ProfileSettingsLayout />,
     handle: {
       breadcrumb: () => <Text>Settings</Text>
     },
@@ -378,6 +369,10 @@ export const routes: CustomRouteObject[] = [
         }
       }
     ]
+  },
+  {
+    path: 'admin/default-settings',
+    element: <UserManagementPageContainer />
   },
   {
     path: 'theme',

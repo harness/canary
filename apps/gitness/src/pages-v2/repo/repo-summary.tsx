@@ -51,13 +51,10 @@ export default function RepoSummaryPage() {
   const spaceId = useGetSpaceURLParam() ?? ''
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
-<<<<<<< HEAD
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const manageTokensLink = '/settings/keys'
-=======
   const isMFE = useIsMFE()
 
->>>>>>> dfc9e08f (MFE changes)
   const {
     branchList,
     tagList,

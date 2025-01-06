@@ -4,7 +4,6 @@ import {
   Avatar,
   AvatarFallback,
   Button,
-  IconProps,
   Layout,
   MarkdownViewer,
   Spacer,

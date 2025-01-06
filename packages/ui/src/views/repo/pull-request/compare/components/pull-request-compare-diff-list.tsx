@@ -12,7 +12,7 @@ import {
   StackedList
 } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { DiffModeOptions, TypesDiffStats } from '@views/index'
+import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@views/index'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
 import { useDiffConfig } from '../../hooks/useDiffConfig'
@@ -45,9 +45,15 @@ interface PullRequestAccordionProps {
   data?: string
   diffMode: DiffModeEnum
   currentUser?: string
+  useTranslationStore: () => TranslationStore
 }
 
-const PullRequestAccordion: FC<PullRequestAccordionProps> = ({ header, diffMode, currentUser }) => {
+const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
+  header,
+  diffMode,
+  currentUser,
+  useTranslationStore
+}) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
@@ -82,6 +88,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({ header, diffMode,
                     removedLines={header?.removedLines}
                     deleted={header?.deleted}
                     unchangedPercentage={header?.unchangedPercentage}
+                    useTranslationStore={useTranslationStore}
                   />
                 </div>
               </div>
@@ -97,9 +104,15 @@ interface PullRequestCompareDiffListProps {
   diffStats: TypesDiffStats
   diffData: HeaderProps[]
   currentUser?: string
+  useTranslationStore: () => TranslationStore
 }
 
-const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({ diffStats, diffData, currentUser }) => {
+const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
+  diffStats,
+  diffData,
+  currentUser,
+  useTranslationStore
+}) => {
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -133,6 +146,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({ diffS
             currentUser={currentUser}
             data={item?.data}
             diffMode={diffMode}
+            useTranslationStore={useTranslationStore}
           />
         </>
       ))}

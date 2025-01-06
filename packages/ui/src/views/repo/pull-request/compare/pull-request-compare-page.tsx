@@ -336,7 +336,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               </TabsContent>
               <TabsContent className="pt-7" value="changes">
                 {/* Content for Changes */}
-                <PullRequestCompareDiffList diffData={diffData} currentUser={currentUser} diffStats={diffStats} />
+                <PullRequestCompareDiffList
+                  diffData={diffData}
+                  currentUser={currentUser}
+                  diffStats={diffStats}
+                  useTranslationStore={useTranslationStore}
+                />
               </TabsContent>
             </Tabs>
           </Layout.Vertical>

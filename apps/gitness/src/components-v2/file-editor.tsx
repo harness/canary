@@ -10,6 +10,8 @@ import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
+import { useIsMFE } from '../framework/hooks/useIsMFE'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
@@ -27,7 +29,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { repoId } = useParams<PathParams>()
+  const spaceId = useGetSpaceURLParam() ?? ''
+  const isMFE = useIsMFE()
   const { show } = useExitConfirm()
   const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
 
@@ -129,7 +133,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * Navigate to file view route
    */
   const onExitConfirm = useCallback(() => {
-    const navigateTo = `/${spaceId}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = `${isMFE ? '' : `/${spaceId}`}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId])
 

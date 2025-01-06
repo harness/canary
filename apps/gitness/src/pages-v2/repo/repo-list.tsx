@@ -5,7 +5,6 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
-// import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'

@@ -111,7 +111,7 @@ export default function WebhookListPage() {
   }, [page, queryPage, setPage])
 
   return (
-    <div>
+    <>
       <RepoWebhookListPage
         useWebhookStore={useWebhookStore}
         useTranslationStore={useTranslationStore}
@@ -126,6 +126,6 @@ export default function WebhookListPage() {
         error={apiError}
         useTranslationStore={useTranslationStore}
       />
-    </div>
+    </>
   )
 }

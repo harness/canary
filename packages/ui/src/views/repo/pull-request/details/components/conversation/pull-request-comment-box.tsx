@@ -4,7 +4,6 @@ import {
   Avatar,
   AvatarFallback,
   Button,
-  Icon,
   IconProps,
   Layout,
   MarkdownViewer,
@@ -70,20 +69,21 @@ const PullRequestCommentBox = ({
       </Avatar>
     )
   }, [currentUser])
-  const toolbar: ToolbarItem[] = useMemo(() => {
-    const initial: ToolbarItem[] = []
-    return [
-      ...initial,
+  // TODO: add back when functionality is added
+  // const toolbar: ToolbarItem[] = useMemo(() => {
+  //   const initial: ToolbarItem[] = []
+  //   return [
+  //     ...initial,
 
-      { icon: 'header', action: ToolbarAction.HEADER },
-      { icon: 'bold', action: ToolbarAction.BOLD },
-      { icon: 'italicize', action: ToolbarAction.ITALIC },
-      { icon: 'attachment', action: ToolbarAction.UPLOAD },
-      { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-      { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
-      { icon: 'code', action: ToolbarAction.CODE_BLOCK }
-    ]
-  }, [])
+  //     { icon: 'header', action: ToolbarAction.HEADER },
+  //     { icon: 'bold', action: ToolbarAction.BOLD },
+  //     { icon: 'italicize', action: ToolbarAction.ITALIC },
+  //     { icon: 'attachment', action: ToolbarAction.UPLOAD },
+  //     { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+  //     { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+  //     { icon: 'code', action: ToolbarAction.CODE_BLOCK }
+  //   ]
+  // }, [])
   return (
     <div className="flex items-start space-x-4">
       {!inReplyMode && avatar}

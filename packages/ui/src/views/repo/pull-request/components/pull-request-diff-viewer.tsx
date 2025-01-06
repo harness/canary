@@ -137,8 +137,8 @@ const PullRequestDiffViewer = ({
       const codeComment = parentComment.payload?.payload?.code_comment
       if (!codeComment) return
       const rightSide = get(parentComment.payload?.payload?.payload, 'line_start_new', false)
-      let side: 'oldFile' | 'newFile' = rightSide ? 'newFile' : 'oldFile'
-      let lineNumber = rightSide ? codeComment.line_new : codeComment.line_old
+      const side: 'oldFile' | 'newFile' = rightSide ? 'newFile' : 'oldFile'
+      const lineNumber = rightSide ? codeComment.line_new : codeComment.line_old
       if (lineNumber == null) return
 
       const parent = {

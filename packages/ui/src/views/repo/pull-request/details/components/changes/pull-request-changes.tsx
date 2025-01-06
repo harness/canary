@@ -139,7 +139,7 @@ const PullRequestAccordion: React.FC<{
   diffMode: DiffModeEnum
   useTranslationStore: () => TranslationStore
   currentUser?: string
-  comments: TypesPullReqActivity[]
+  comments: CommentItem<TypesPullReqActivity>[][]
   handleSaveComment: (comment: string, parentId?: number) => void
   deleteComment: (id: number) => void
   updateComment: (id: number, comment: string) => void

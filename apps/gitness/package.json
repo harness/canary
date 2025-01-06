@@ -17,7 +17,6 @@
     "test:changed": "vitest --run --changed=origin/main",
     "extract": "i18next --config './i18n.config.ts'",
     "typecheck": "tsc -b",
-    "serve": "vite preview --port 5137",
     "build:webpack": "webpack --config webpack.config.cjs",
     "start:webpack": "webpack serve --config webpack.config.cjs"
   },
@@ -62,7 +61,6 @@
     "@babel/preset-typescript": "^7.24.7",
     "@eslint/js": "^9.9.0",
     "@git-diff-view/react": "^0.0.16",
-    "@module-federation/vite": "^1.1.8",
     "@swc/core": "^1.9.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^13.4.0",
@@ -93,12 +91,10 @@
     "typescript-eslint": "^8.0.1",
     "vite": "^6.0.3",
     "vite-plugin-monaco-editor": "^1.1.0",
-    "vite-plugin-top-level-await": "^1.4.4",
     "vitest": "^2.1.2",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.0.4",
-    "zustand": "^4.5.4"
+    "webpack-dev-server": "^5.0.4"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

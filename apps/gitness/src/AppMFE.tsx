@@ -131,7 +131,7 @@ export default function AppMFE({
             children: [
               {
                 index: true,
-                element: <ReposListPage noBreadcrumbs={true} />
+                element: <ReposListPage showBreadcrumbs={false} />
               },
               {
                 path: 'create',

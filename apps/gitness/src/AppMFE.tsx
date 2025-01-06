@@ -21,6 +21,7 @@ import { MFEContext } from './framework/context/MFEContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import { useTranslationStore } from './i18n/stores/i18n-store'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
 import { CreatePullRequest } from './pages-v2/pull-request/pull-request-compare'
@@ -255,7 +256,7 @@ export default function AppMFE({
                   },
                   {
                     path: 'settings',
-                    element: <RepoSettingsPage />,
+                    element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
                     children: [
                       {
                         index: true,

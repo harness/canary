@@ -62,9 +62,9 @@ BreadcrumbPage.displayName = 'BreadcrumbPage'
 type BreadcrumbSeparatorProps = ComponentProps<'li'>
 
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
-  <li role="presentation" aria-hidden="true" className={cn('[&>svg]:size-3.5', className)} {...props}>
+  <span role="presentation" aria-hidden="true" className={cn('[&>svg]:size-3.5', className)} {...props}>
     {children ?? <ChevronRightIcon />}
-  </li>
+  </span>
 )
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'
 

@@ -9,6 +9,8 @@ import {
   Topbar
 } from '@harnessio/ui/components'
 
+import { CustomHandle } from '../../routes'
+
 function Breadcrumbs() {
   const matches = useMatches()
 
@@ -18,8 +20,7 @@ function Breadcrumbs() {
         <Breadcrumb className="select-none">
           <BreadcrumbList>
             {matches.map((match, index) => {
-              /** @ts-expect-error should be of type "CustomHandle". @TODO fix this properly */
-              const { breadcrumb } = match.handle || {}
+              const { breadcrumb } = (match.handle || {}) as CustomHandle
               const isFirst = index === 0
               const isLast = index === matches.length - 1
 

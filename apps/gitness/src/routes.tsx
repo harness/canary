@@ -1,9 +1,8 @@
-import { Navigate, RouteObject } from 'react-router-dom'
+import { Navigate, Params, RouteObject } from 'react-router-dom'
 
 import { BreadcrumbSeparator } from '@harnessio/canary'
 import { Text } from '@harnessio/ui/components'
-import { EmptyPage, RepoSettingsPage } from '@harnessio/ui/views'
-import { SandboxLayout } from '@harnessio/views'
+import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
 import AppShell from './components-v2/app-shell'
 import BreadcrumbsV1 from './components-v2/breadcrumbs/breadcrumbs'
@@ -45,8 +44,8 @@ import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-conta
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
 // Define a custom handle with the breadcrumb property
-interface CustomHandle {
-  breadcrumb?: (params: Record<string, string>) => string
+export interface CustomHandle {
+  breadcrumb?: (params: Params<string>) => string
 }
 
 // Create a new type by intersecting RouteObject with the custom handle

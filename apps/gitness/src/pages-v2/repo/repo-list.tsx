@@ -12,7 +12,7 @@ import { PageResponseHeader, SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
-export default function ReposListPage({ noBreadcrumbs = false }: { noBreadcrumbs?: boolean }) {
+export default function ReposListPage() {
   const space = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 

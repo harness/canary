@@ -141,3 +141,30 @@ export function removeLastPlus(str: string) {
 
   return str
 }
+
+export enum FileViewedState {
+  NOT_VIEWED,
+  VIEWED,
+  CHANGED
+}
+
+export function getFileViewedState(
+  filePath?: string,
+  fileSha?: string | undefined,
+  views?: Map<string, string> | undefined
+): FileViewedState {
+  if (!filePath || !views || !views.has(filePath)) {
+    return FileViewedState.NOT_VIEWED
+  }
+
+  const viewedSHA = views.get(filePath)
+
+  // this case is only expected in case of pure rename - but we'll also use it as fallback.
+  if (fileSha === undefined || fileSha === '') {
+    return viewedSHA === FILE_VIEWED_OBSOLETE_SHA ? FileViewedState.CHANGED : FileViewedState.VIEWED
+  }
+
+  return viewedSHA === fileSha ? FileViewedState.VIEWED : FileViewedState.CHANGED
+}
+
+export const FILE_VIEWED_OBSOLETE_SHA = 'ffffffffffffffffffffffffffffffffffffffff'

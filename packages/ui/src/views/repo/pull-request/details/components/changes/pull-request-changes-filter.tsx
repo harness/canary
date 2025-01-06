@@ -3,6 +3,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { TypesUser } from '@/types'
 import {
   Button,
+  Checkbox,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -13,9 +14,9 @@ import {
   RadioGroup,
   Text
 } from '@components/index'
-// import { FileViewGauge } from '@harnessio/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { DiffModeOptions, TranslationStore } from '@views/index'
+import { cn } from '@utils/cn'
+import { DiffModeOptions, TranslationStore, TypesCommit } from '@views/index'
 
 import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq } from '../../../pull-request.types'
 import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
@@ -26,6 +27,12 @@ import {
   getApprovalStateTheme,
   processReviewDecision
 } from '../../pull-request-utils'
+import * as FileViewGauge from './file-viewed-gauge'
+
+export interface CommitFilterItemProps {
+  name: string
+  value: string
+}
 
 export interface FilterViewProps {
   active?: string
@@ -38,9 +45,14 @@ export interface FilterViewProps {
   diffMode: DiffModeEnum
   setDiffMode: (value: DiffModeEnum) => void
   useTranslationStore: () => TranslationStore
+  pullReqCommits?: TypesCommit[]
+  defaultCommitFilter: CommitFilterItemProps
+  selectedCommits: CommitFilterItemProps[]
+  setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
+  viewedFiles: number
+  totalFiles: number
 }
 
-// TODO: workon on filter and files viewed
 export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
   currentUser,
   pullRequestMetadata,
@@ -49,13 +61,16 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
   refetchReviewers,
   diffMode,
   setDiffMode,
-  useTranslationStore
+  useTranslationStore,
+  pullReqCommits,
+  defaultCommitFilter,
+  selectedCommits,
+  setSelectedCommits,
+  viewedFiles,
+  totalFiles
 }) => {
   const { t } = useTranslationStore()
-  // const filterOptions = [{ name: 'Filter option 1' }, { name: 'Filter option 2' }, { name: 'Filter option 3' }]
-  // const sortOptions = [{ name: 'Sort option 1' }, { name: 'Sort option 2' }, { name: 'Sort option 3' }]
-  // const viewOptions = [{ name: 'View option 1' }, { name: 'View option 2' }]
-
+  const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
   const shouldHideReviewButton = useMemo(
     () => pullRequestMetadata?.state === 'merged' || pullRequestMetadata?.state === 'closed',
     [pullRequestMetadata?.state]
@@ -70,6 +85,21 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
       !!currentUser?.uid && !!pullRequestMetadata?.author?.uid && currentUser?.uid === pullRequestMetadata?.author?.uid,
     [currentUser, pullRequestMetadata]
   )
+
+  // Populate commit options when `pullReqCommits` is available
+  useEffect(() => {
+    if (pullReqCommits?.length) {
+      const commitsList = [defaultCommitFilter]
+      pullReqCommits.forEach(commitInfo => {
+        commitsList.push({
+          name: commitInfo.message || '',
+          value: commitInfo.sha || ''
+        })
+      })
+      setCommitFilterOptions(commitsList)
+    }
+  }, [pullReqCommits])
+
   useEffect(() => {
     if (refetchReviewers) {
       refetchReviewers()
@@ -106,6 +136,55 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
     }
   }
 
+  /** Click handler to manage multi-selection with Shift + Click */
+  const handleCommitCheck = (
+    event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>,
+    item: CommitFilterItemProps
+  ): void => {
+    // If user clicked on 'All Commits', reset selection to just the default commit filter
+    if (item.value === defaultCommitFilter.value) {
+      setSelectedCommits([defaultCommitFilter])
+      return
+    }
+
+    // Otherwise, remove 'ALL' from the selection
+    setSelectedCommits((prev: CommitFilterItemProps[]) =>
+      prev.filter((sel: CommitFilterItemProps) => sel.value !== defaultCommitFilter.value)
+    )
+
+    // If SHIFT is pressed, toggle the clicked commit
+    if (event.shiftKey) {
+      setSelectedCommits((prev: CommitFilterItemProps[]) => {
+        const isInSelection = prev.some((sel: CommitFilterItemProps) => sel.value === item.value)
+        if (isInSelection) {
+          return prev.filter((sel: CommitFilterItemProps) => sel.value !== item.value)
+        } else {
+          return [...prev, item]
+        }
+      })
+    } else {
+      setSelectedCommits([item])
+    }
+  }
+
+  function renderCommitDropdownItems(items: CommitFilterItemProps[]): JSX.Element[] {
+    return items.map((item, idx) => {
+      const isSelected = selectedCommits.some(sel => sel.value === item.value)
+      return (
+        <DropdownMenuItem
+          key={idx}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => handleCommitCheck(e, item)}
+          className="cursor-pointer flex items-center"
+        >
+          <Checkbox checked={isSelected} />
+          <Text size={1} className="text-primary pl-3">
+            {item.name}
+          </Text>
+        </DropdownMenuItem>
+      )
+    })
+  }
+
   function renderDropdownMenuItems(items: ApprovalItem[]): JSX.Element[] {
     return items.map(itm => (
       <DropdownMenuItem
@@ -116,7 +195,6 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
         }}
       >
         <RadioGroup className="flex items-start gap-2">
-          {/* <RadioGroupItem value="false" className="mt-1 size-3 text-tertiary-background" /> */}
           <div className="flex flex-col">
             <Text truncate size={1} color="primary">
               {itm.title}
@@ -127,6 +205,7 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
     ))
   }
 
+  const commitDropdownItems = renderCommitDropdownItems(commitFilterOptions)
   const itemsToRender = getApprovalItems(approveState, approvalItems)
   const dropdownMenuItems = renderDropdownMenuItems(itemsToRender)
   const handleDiffModeChange = (value: string) => {
@@ -135,9 +214,23 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
   return (
     <ListActions.Root>
       <ListActions.Left>
-        {/* <ListActions.Dropdown title="All commits" items={filterOptions} />
-        <ListActions.Dropdown title="File filter" items={sortOptions} />
-        <ListActions.Dropdown title="View" items={viewOptions} /> */}
+        <DropdownMenu>
+          <DropdownMenuTrigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-primary">
+            <span className="size-[4px] rounded-full bg-primary"></span>
+            <Text
+              size={2}
+              className={cn('text-primary/80', {
+                ['font-bold']: selectedCommits?.length
+              })}
+            >
+              {selectedCommits[0].value === 'ALL' ? defaultCommitFilter.name : `${selectedCommits?.length} Commits`}
+            </Text>
+            <Icon name="chevron-down" size={12} className="chevron-down" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuGroup>{commitDropdownItems}</DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
         <ListActions.Dropdown
           selectedValue={
             diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')
@@ -146,17 +239,19 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
           title={diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
           items={DiffModeOptions}
         />
-        <Text
-          size={2}
-        >{`Showing ${pullRequestMetadata?.stats?.files_changed || 0} changed files with ${pullRequestMetadata?.stats?.additions || 0} additions and ${pullRequestMetadata?.stats?.deletions || 0} deletions `}</Text>
+        <Text size={2}>
+          {`Showing ${pullRequestMetadata?.stats?.files_changed || 0} changed files with ${
+            pullRequestMetadata?.stats?.additions || 0
+          } additions and ${pullRequestMetadata?.stats?.deletions || 0} deletions `}
+        </Text>
       </ListActions.Left>
       <ListActions.Right>
-        {/* <FileViewGauge.Root>
+        <FileViewGauge.Root>
           <FileViewGauge.Content>
-            {filesViewed.viewed}/{filesViewed.total} file{filesViewed.total === 1 ? '' : 's'} viewed
+            {viewedFiles}/{totalFiles} file{totalFiles === 1 ? '' : 's'} viewed
           </FileViewGauge.Content>
-          <FileViewGauge.Bar total={filesViewed.total} filled={filesViewed.viewed} />
-        </FileViewGauge.Root> */}
+          <FileViewGauge.Bar total={totalFiles} filled={viewedFiles} />
+        </FileViewGauge.Root>
         {!shouldHideReviewButton && currentUser && (
           <Button
             hidden={loading}

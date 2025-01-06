@@ -1,6 +1,8 @@
 import { memo, useState } from 'react'
 
 import {
+  Avatar,
+  AvatarFallback,
   Button,
   Card,
   DropdownMenu,
@@ -16,6 +18,7 @@ import {
   Text
 } from '@components/index'
 import { cn } from '@utils/cn'
+import { getInitials } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 
@@ -27,22 +30,26 @@ interface TimelineItemProps {
     selectStatus?: React.ReactNode
   }[]
   parentCommentId?: number
+  commentId?: number
   currentUser?: string
   content?: React.ReactNode
-  icon: React.ReactNode
+  icon?: React.ReactNode
   isLast: boolean
   isComment?: boolean
   hideIconBorder?: boolean
   hideReply?: boolean
   contentClassName?: string
+  replyBoxClassName?: string
   titleClassName?: string
   handleSaveComment?: (comment: string, parentId?: number) => void
   onEditClick?: () => void
+  onCopyClick?: (commentId?: number) => void
   isEditMode?: boolean
   handleDeleteComment?: () => void
   isDeleted?: boolean
   hideReplyBox?: boolean
   setHideReplyBox?: (state: boolean) => void
+  id?: string
 }
 
 interface ItemHeaderProps {
@@ -55,6 +62,8 @@ interface ItemHeaderProps {
   setComment?: React.Dispatch<React.SetStateAction<string>>
   selectStatus?: React.ReactNode
   onEditClick?: () => void
+  onCopyClick?: (commentId?: number) => void
+  commentId?: number
   handleDeleteComment?: () => void
   isDeleted?: boolean
 }
@@ -65,6 +74,8 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
   ({
     handleReplyBox,
     onEditClick,
+    onCopyClick,
+    commentId,
     avatar,
     name,
     description,
@@ -98,7 +109,7 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
                   <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
                   {'Quote reply'}
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer" onClick={() => onCopyClick?.(commentId)}>
                   <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
                   {'Copy Link'}
                 </DropdownMenuItem>
@@ -158,16 +169,21 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   hideIconBorder,
   hideReply = false,
   contentClassName,
+  replyBoxClassName,
   handleSaveComment,
+  commentId,
   parentCommentId,
   titleClassName,
   isComment,
   onEditClick,
+  onCopyClick,
   isEditMode,
   handleDeleteComment,
   isDeleted = false,
   hideReplyBox,
-  setHideReplyBox
+  setHideReplyBox,
+  currentUser,
+  id
 }) => {
   const [comment, setComment] = useState<string>('')
   const onQuote = (content: string) => {
@@ -185,91 +201,103 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
     onQuote('t')
   }
   return (
-    <NodeGroup.Root>
-      <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>
-      <NodeGroup.Title className={titleClassName}>
-        {/* Ensure that header has at least one item */}
-        {header.length > 0 && (
-          <ItemHeader
-            handleReplyBox={handleReplyBox}
-            isDeleted={isDeleted}
-            setComment={setComment}
-            onEditClick={onEditClick}
-            comment={comment}
-            isComment={isComment}
-            handleDeleteComment={handleDeleteComment}
-            {...header[0]}
-          />
-        )}
-      </NodeGroup.Title>
-      {content && (
-        <NodeGroup.Content>
-          <Card className={cn('rounded-md bg-transparent', contentClassName)}>
-            {isEditMode ? (
-              <PullRequestCommentBox
-                isEditMode
-                inReplyMode
-                onSaveComment={() => {
-                  handleSaveComment?.(comment, parentCommentId)
-                  setComment('')
-                }}
-                currentUser={header[0].name}
-                onCancelClick={() => {
-                  setComment('')
-                }}
-                comment={comment}
-                setComment={setComment}
-              />
-            ) : (
-              content
-            )}
-            {!hideReply && (
-              <>
-                {hideReplyBox ? (
-                  <PullRequestCommentBox
-                    inReplyMode
-                    onSaveComment={() => {
-                      handleSaveComment?.(comment, parentCommentId)
-                      setHideReplyBox?.(false)
-                    }}
-                    currentUser={header[0].name}
-                    onCancelClick={() => {
-                      setHideReplyBox?.(false)
-                    }}
-                    comment={comment}
-                    setComment={setComment}
-                  />
-                ) : (
-                  <div className="flex items-center gap-3 border-t p-4">
-                    {header.length > 0 && header[0].avatar}
-                    <Input
-                      value={comment}
-                      placeholder={'Reply here'}
-                      onClick={() => {
-                        setHideReplyBox?.(true)
-                      }}
-                      onChange={e => {
-                        setComment(e.target.value)
-                      }}
-                    />
-                    <Button
-                      disabled={!comment.trim()}
-                      onClick={() => {
+    <div id={id}>
+      <NodeGroup.Root>
+        {icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
+        <NodeGroup.Title className={titleClassName}>
+          {/* Ensure that header has at least one item */}
+          {header.length > 0 && (
+            <ItemHeader
+              handleReplyBox={handleReplyBox}
+              isDeleted={isDeleted}
+              setComment={setComment}
+              onEditClick={onEditClick}
+              onCopyClick={onCopyClick}
+              comment={comment}
+              isComment={isComment}
+              handleDeleteComment={handleDeleteComment}
+              commentId={commentId}
+              {...header[0]}
+            />
+          )}
+        </NodeGroup.Title>
+        {content && (
+          <NodeGroup.Content>
+            <Card className={cn('rounded-md bg-transparent', contentClassName)}>
+              {isEditMode ? (
+                <PullRequestCommentBox
+                  isEditMode
+                  inReplyMode
+                  onSaveComment={() => {
+                    handleSaveComment?.(comment, parentCommentId)
+                    setComment('')
+                  }}
+                  currentUser={currentUser}
+                  onCancelClick={() => {
+                    setComment('')
+                  }}
+                  comment={comment}
+                  setComment={setComment}
+                />
+              ) : (
+                content
+              )}
+              {!hideReply && (
+                <>
+                  {hideReplyBox ? (
+                    <PullRequestCommentBox
+                      inReplyMode
+                      onSaveComment={() => {
                         handleSaveComment?.(comment, parentCommentId)
-                        setComment('')
+                        setHideReplyBox?.(false)
                       }}
-                    >
-                      Reply
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-          </Card>
-        </NodeGroup.Content>
-      )}
-      {!isLast && <NodeGroup.Connector />}
-    </NodeGroup.Root>
+                      currentUser={currentUser}
+                      onCancelClick={() => {
+                        setHideReplyBox?.(false)
+                      }}
+                      comment={comment}
+                      setComment={setComment}
+                    />
+                  ) : (
+                    <div className={cn('flex items-center gap-3 border-t', replyBoxClassName)}>
+                      {currentUser ? (
+                        <Avatar className="size-6 rounded-full p-0">
+                          <AvatarFallback>
+                            <Text size={1} color="tertiaryBackground">
+                              {getInitials(currentUser ?? '', 2)}
+                            </Text>
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : null}
+                      <Input
+                        value={comment}
+                        placeholder={'Reply here'}
+                        onClick={() => {
+                          setHideReplyBox?.(true)
+                        }}
+                        onChange={e => {
+                          setComment(e.target.value)
+                        }}
+                      />
+                      <Button
+                        disabled={!comment.trim()}
+                        onClick={() => {
+                          handleSaveComment?.(comment, parentCommentId)
+                          setComment('')
+                        }}
+                      >
+                        Reply
+                      </Button>
+                    </div>
+                  )}
+                </>
+              )}
+            </Card>
+          </NodeGroup.Content>
+        )}
+        {!isLast && <NodeGroup.Connector />}
+      </NodeGroup.Root>
+    </div>
   )
 }
 

@@ -121,6 +121,7 @@ const PullRequestCommentBox = ({
           </TabsContent>
         </Tabs>
         <div className="mt-2 flex items-center justify-between space-x-2">
+          {/* TODO : add back when functionality is implemented
           <Layout.Horizontal>
             {toolbar.map((item, index) => {
               return (
@@ -129,7 +130,7 @@ const PullRequestCommentBox = ({
                 </Button>
               )
             })}
-          </Layout.Horizontal>
+          </Layout.Horizontal> */}
           {!inReplyMode && (
             <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
               Comment

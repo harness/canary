@@ -295,23 +295,23 @@ export default function AppMFE({
     <ReactShadowRoot>
       <style>{`${styles}`}</style>
 
-      <AppProvider>
-        <I18nextProvider i18n={i18n}>
-          <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-            <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <ExitConfirmProvider>
-                  <NuqsAdapter>
-                    <MFEContext.Provider value={{ scope, renderUrl }}>
+      <MFEContext.Provider value={{ scope, renderUrl }}>
+        <AppProvider>
+          <I18nextProvider i18n={i18n}>
+            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+              <QueryClientProvider client={queryClient}>
+                <TooltipProvider>
+                  <ExitConfirmProvider>
+                    <NuqsAdapter>
                       <RouterProvider router={router} />
-                    </MFEContext.Provider>
-                  </NuqsAdapter>
-                </ExitConfirmProvider>
-              </TooltipProvider>
-            </QueryClientProvider>
-          </ThemeProvider>
-        </I18nextProvider>
-      </AppProvider>
+                    </NuqsAdapter>
+                  </ExitConfirmProvider>
+                </TooltipProvider>
+              </QueryClientProvider>
+            </ThemeProvider>
+          </I18nextProvider>
+        </AppProvider>
+      </MFEContext.Provider>
     </ReactShadowRoot>
   )
 }

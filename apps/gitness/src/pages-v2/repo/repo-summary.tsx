@@ -29,6 +29,7 @@ import {
 } from '@harnessio/ui/views'
 import { SummaryItemType } from '@harnessio/views'
 
+import { useRoutes } from '../../framework/context/RoutingContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
@@ -40,6 +41,7 @@ import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoSummaryPage() {
+  const routes = useRoutes()
   const [loading, setLoading] = useState(false)
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
@@ -60,6 +62,8 @@ export default function RepoSummaryPage() {
     setSelectedBranchTag,
     setSelectedRefType
   } = useRepoBranchesStore()
+
+  console.log(routes.toRepoSummary({ spaceId, repoId }))
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 

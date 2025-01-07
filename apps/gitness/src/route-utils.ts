@@ -1,5 +1,6 @@
 import { Params } from 'react-router-dom'
 
+import { RouteConstants, RouteFunctionMap } from './framework/context/RoutingContext'
 import { CustomRouteObject } from './routes'
 
 interface RouteEntry {
@@ -7,26 +8,16 @@ interface RouteEntry {
   path: string // e.g., ":spaceId/repos/create"
 }
 
-// Enum defining the route constants
-export enum RouteConstants {
-  toRepoSummary = 'toRepoSummary',
-  toRepoCommits = 'toRepoCommits'
-  // Add other routes here
-}
-
-// Type for a mapping of enum keys to functions that generate paths
-type RouteNameToPathMap = Record<keyof typeof RouteConstants, (params: Params<string>) => string>
-
 /**
  * Generates a map from route names to functions that replace route params.
  */
-export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): RouteNameToPathMap => {
-  return routeEntries.reduce<RouteNameToPathMap>((map, { name, path }) => {
+export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): RouteFunctionMap => {
+  return routeEntries.reduce<RouteFunctionMap>((map, { name, path }) => {
     map[name] = (params: Params<string>) => {
       return path.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params[key] || `:${key}`)
     }
     return map
-  }, {} as RouteNameToPathMap)
+  }, {} as RouteFunctionMap)
 }
 
 /**
@@ -80,7 +71,7 @@ export const getRouteMapping = ({
   routes: CustomRouteObject[]
   parentPath?: string
   parentName?: string
-}): RouteNameToPathMap => {
+}): RouteFunctionMap => {
   const routeEntries = generateRouteEntries({ routes, parentPath, parentName })
   return generateRouteNameToPathFunctions(routeEntries)
 }

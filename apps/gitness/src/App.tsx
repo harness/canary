@@ -9,6 +9,7 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { RoutingProvider } from './framework/context/RoutingContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
@@ -33,10 +34,6 @@ export default function AppV1() {
   // Router Configuration
   const router = createBrowserRouter(routes)
 
-  getRouteMapping({ routes })
-
-  // console.log(routeMapping.toRepoSummary({ spaceId: 'test', repoId: 'uuid' }))
-
   return (
     <AppProvider>
       <I18nextProvider i18n={i18n}>
@@ -45,7 +42,9 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NuqsAdapter>
-                  <RouterProvider router={router} />
+                  <RoutingProvider value={getRouteMapping({ routes })}>
+                    <RouterProvider router={router} />
+                  </RoutingProvider>
                 </NuqsAdapter>
               </ExitConfirmProvider>
             </TooltipProvider>

@@ -63,6 +63,7 @@ export const routes: CustomRouteObject[] = [
         index: true,
         element: <LandingPage />
       },
+
       {
         path: ':spaceId',
         handle: {
@@ -327,6 +328,33 @@ export const routes: CustomRouteObject[] = [
         path: 'admin/default-settings',
         element: <UserManagementPageContainer />,
         handle: { breadcrumb: () => <Text>Users</Text> }
+      },
+      {
+        path: 'settings',
+        element: <ProfileSettingsLayout />,
+        handle: {
+          breadcrumb: () => <Text>Settings</Text>
+        },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="general" replace />
+          },
+          {
+            path: 'general',
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <Text>General</Text>
+            }
+          },
+          {
+            path: 'keys',
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <Text>Keys</Text>
+            }
+          }
+        ]
       }
     ]
   },
@@ -378,33 +406,33 @@ export const routes: CustomRouteObject[] = [
     path: 'signup',
     element: <SignUp />
   },
-  {
-    path: 'settings',
-    element: <ProfileSettingsLayout />,
-    handle: {
-      breadcrumb: () => <Text>Settings</Text>
-    },
-    children: [
-      {
-        index: true,
-        element: <Navigate to="general" replace />
-      },
-      {
-        path: 'general',
-        element: <SettingsProfileGeneralPage />,
-        handle: {
-          breadcrumb: () => <Text>General</Text>
-        }
-      },
-      {
-        path: 'keys',
-        element: <SettingsProfileKeysPage />,
-        handle: {
-          breadcrumb: () => <Text>Keys</Text>
-        }
-      }
-    ]
-  },
+  // {
+  //   path: 'settings',
+  //   element: <ProfileSettingsLayout />,
+  //   handle: {
+  //     breadcrumb: () => <Text>Settings</Text>
+  //   },
+  //   children: [
+  //     {
+  //       index: true,
+  //       element: <Navigate to="general" replace />
+  //     },
+  //     {
+  //       path: 'general',
+  //       element: <SettingsProfileGeneralPage />,
+  //       handle: {
+  //         breadcrumb: () => <Text>General</Text>
+  //       }
+  //     },
+  //     {
+  //       path: 'keys',
+  //       element: <SettingsProfileKeysPage />,
+  //       handle: {
+  //         breadcrumb: () => <Text>Keys</Text>
+  //       }
+  //     }
+  //   ]
+  // },
 
   {
     path: 'theme',

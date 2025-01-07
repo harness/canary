@@ -76,12 +76,13 @@ function RootRouteRenderer({
     }
   }, [location])
 
-  return (
-    <>
-      {/* <BreadcrumbsNew selectedProject={scope.projectIdentifier || '...'} /> */}
-      <Outlet />
-    </>
-  )
+  return <Outlet />
+}
+
+interface AppMFEProps extends ChildComponentProps {
+  useMFEThemeContext: () => { theme: string }
+  parentLocationPath: string
+  onRouteChange: (updatedLocationPathname: string) => void
 }
 
 export default function AppMFE({
@@ -91,7 +92,7 @@ export default function AppMFE({
   useMFEThemeContext,
   parentLocationPath,
   onRouteChange
-}: ChildComponentProps) {
+}: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) => `/code${BASE_URL_PREFIX}${url}`,
     responseInterceptor: (response: Response) => {
@@ -133,7 +134,7 @@ export default function AppMFE({
             children: [
               {
                 index: true,
-                element: <ReposListPage showBreadcrumbs={false} />
+                element: <ReposListPage />
               },
               {
                 path: 'create',

@@ -2,19 +2,16 @@ import { Params } from 'react-router-dom'
 
 import '../context/RoutingContext'
 
-import { CustomRouteObject, RouteConstants, RouteFunctionMap } from './types'
-
-interface RouteEntry {
-  name: keyof typeof RouteConstants // Enum keys
-  path: string // e.g., ":spaceId/repos/create"
-}
+import { CustomRouteObject, RouteConstants, RouteEntry, RouteFunctionMap } from './types'
 
 /**
- * Generates a map from route names to functions that replace route params.
+ * @param routeEntries - An array of route entries, each containing a `name` and a `path` where the path may contain route parameters.
+ * @returns A map where the key is a route name and the value is a function that takes parameters and returns the path with those parameters replaced.
  */
 export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): RouteFunctionMap => {
   return routeEntries.reduce<RouteFunctionMap>((map, { name, path }) => {
     map[name] = (params: Params<string>) => {
+      /* Replace each parameter in the path with the corresponding value from params */
       return path.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params[key] || `:${key}`)
     }
     return map

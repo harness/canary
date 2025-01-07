@@ -6,6 +6,11 @@ export enum RouteConstants {
   toRepoCommits = 'toRepoCommits'
 }
 
+export interface RouteEntry {
+  name: keyof typeof RouteConstants // Enum keys
+  path: string // e.g., ":spaceId/repos/create"
+}
+
 // Type for a mapping of enum keys to functions that generate paths
 export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params: Params<string>) => string>
 

@@ -123,9 +123,6 @@ importers:
 
   apps/gitness:
     dependencies:
-      '@harness/microfrontends':
-        specifier: ^2.96.0
-        version: 2.99.0
       '@harnessio/canary':
         specifier: workspace:*
         version: link:../../packages/canary
@@ -2821,9 +2818,6 @@ packages:
   '@gulpjs/to-absolute-glob@4.0.0':
     resolution: {integrity: sha512-kjotm7XJrJ6v+7knhPaRgaT6q8F8K2jiafwYdNHLzmV0uGLuZY43FK6smNSHUPrhq5kX2slCUy+RGG/xGqmIKA==}
     engines: {node: '>=10.13.0'}
-
-  '@harness/microfrontends@2.99.0':
-    resolution: {integrity: sha512-0PZmnLlv9qsZP1eJjPWS5//acsSndFKz4D89fX/UdqWHwwsue4n1/2zEvv4T8h8w/9ceSF1sRsxrjrg9wyZhbA==, tarball: https://npm.pkg.github.com/download/@harness/microfrontends/2.99.0/61e434b55dee161d2d82c06ff928fa3030d14eb6}
 
   '@harnessio/code-service-client@3.2.1-beta.1':
     resolution: {integrity: sha512-jYKxUAZqUO8UQdqmJ9yGoct2Jc8pA7JNk3tkMt3t4idMZWQhGooTCbj7tgz9+VSbH84yeY0SCtPYnv/ADHBnaQ==}
@@ -12360,8 +12354,6 @@ snapshots:
   '@gulpjs/to-absolute-glob@4.0.0':
     dependencies:
       is-negated-glob: 1.0.0
-
-  '@harness/microfrontends@2.99.0': {}
 
   '@harnessio/code-service-client@3.2.1-beta.1': {}
 

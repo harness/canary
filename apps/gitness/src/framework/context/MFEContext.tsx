@@ -1,8 +1,15 @@
 import { createContext } from 'react'
 
-import { Scope } from '@harness/microfrontends'
+interface Scope {
+  accountId?: string
+  orgIdentifier?: string
+  projectIdentifier?: string
+}
 
 interface IMFEContext {
+  /**
+   * Scope will be later referred from "Scope" from @harness/microfrontends
+   *  */
   scope: Scope
   renderUrl: string
 }

@@ -10,7 +10,9 @@ import {
   Topbar
 } from '@harnessio/ui/components'
 
-function BreadcrumbsNew({ selectedProject }: { selectedProject: string }) {
+import { CustomHandle } from '../../routes'
+
+function BreadcrumbsMFE({ selectedProject }: { selectedProject: string }) {
   const matches = useMatches()
 
   return (
@@ -22,8 +24,7 @@ function BreadcrumbsNew({ selectedProject }: { selectedProject: string }) {
               <span className="ml-1">{selectedProject}</span>
 
               {matches.map((match, index) => {
-                /** @ts-expect-error should be of type "CustomHandle". @TODO fix this properly */
-                const { breadcrumb } = match.handle || {}
+                const { breadcrumb } = (match.handle || {}) as CustomHandle
                 const isLast = index === matches.length - 1
 
                 if (!breadcrumb) return null
@@ -53,4 +54,4 @@ function BreadcrumbsNew({ selectedProject }: { selectedProject: string }) {
   )
 }
 
-export default BreadcrumbsNew
+export default BreadcrumbsMFE

@@ -174,10 +174,10 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
         <DropdownMenuItem
           key={idx}
           onClick={(e: React.MouseEvent<HTMLDivElement>) => handleCommitCheck(e, item)}
-          className="cursor-pointer flex items-center"
+          className="flex cursor-pointer items-center"
         >
           <Checkbox checked={isSelected} />
-          <Text size={1} className="text-primary pl-3">
+          <Text size={1} className="pl-3 text-primary">
             {item.name}
           </Text>
         </DropdownMenuItem>

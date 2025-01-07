@@ -94,7 +94,9 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
       <SandboxLayout.Main>
         <SandboxLayout.Content className="mx-auto max-w-[610px] pt-7">
           <Text size={5} weight="medium" as="div" className="mb-10">
-            {t('views:repos.createWebhookTitle', 'Create a webhook')}
+            {preSetWebhookData
+              ? t('views:repos.editWebhookTitle', 'Webhook details')
+              : t('views:repos.createWebhookTitle', 'Create a webhook')}
           </Text>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>

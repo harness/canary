@@ -342,7 +342,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border bg-background rounded w-">
+        <div className="w- rounded border bg-background">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`

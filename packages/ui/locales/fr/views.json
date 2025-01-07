@@ -139,6 +139,7 @@
     "evenTriggerAllLabel": "Envoyez-moi tout",
     "eventTriggerIndividualLabel": "Permettez-moi de sélectionner des événements individuels",
     "createWebhookTitle": "Créer un webhook",
+    "editWebhookTitle": "Webhook details",
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",

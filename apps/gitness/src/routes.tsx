@@ -253,18 +253,27 @@ export const routes: CustomRouteObject[] = [
                   },
                   {
                     path: 'webhooks',
-                    element: <WebhookListPage />,
                     handle: {
                       breadcrumb: () => <Text>Webhooks</Text>
-                    }
-                  },
-                  {
-                    path: 'webhooks/create',
-                    element: <CreateWebhookContainer />,
+                    },
                     children: [
                       {
+                        index: true,
+                        element: <WebhookListPage />
+                      },
+                      {
+                        path: 'create',
+                        element: <CreateWebhookContainer />,
+                        handle: {
+                          breadcrumb: () => <Text>Create a webhook</Text>
+                        }
+                      },
+                      {
                         path: ':webhookId',
-                        element: <CreateWebhookContainer />
+                        element: <CreateWebhookContainer />,
+                        handle: {
+                          breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                        }
                       }
                     ]
                   }

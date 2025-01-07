@@ -5,7 +5,6 @@ import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, Outlet, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 import ReactShadowRoot from 'react-shadow-root'
 
-import { ChildComponentProps } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
@@ -79,7 +78,17 @@ function RootRouteRenderer({
   return <Outlet />
 }
 
-interface AppMFEProps extends ChildComponentProps {
+interface AppMFEProps {
+  /**
+   * These types will be later referred from "ChildComponentProps" from @harness/microfrontends
+   *  */
+  scope: {
+    accountId?: string
+    orgIdentifier?: string
+    projectIdentifier?: string
+  }
+  renderUrl: string
+  on401?: () => void
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void

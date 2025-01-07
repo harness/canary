@@ -9,6 +9,7 @@ import { ChildComponentProps } from '@harness/microfrontends'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
+import styles from '!!raw-loader!@harnessio/ui/styles.css'
 import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { BreadcrumbSeparator } from '@harnessio/ui/components'
@@ -272,7 +273,6 @@ export default function AppMFE({
                         path: 'rules',
                         element: <RepoSettingsGeneralPageContainer />
                       },
-
                       {
                         path: 'webhooks',
                         element: <WebhookListPage />
@@ -293,7 +293,7 @@ export default function AppMFE({
 
   return (
     <ReactShadowRoot>
-      <link href="http://localhost:5137/styles.css" rel="stylesheet" />
+      <style>{`${styles}`}</style>
 
       <AppProvider>
         <I18nextProvider i18n={i18n}>

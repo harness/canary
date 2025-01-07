@@ -18,7 +18,7 @@ export default function ProjectPipelineListPage() {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
     queryParams: { page, query: query ?? '' },
-    space_ref
+    space_ref: space_ref || ''
   })
 
   useEffect(() => {

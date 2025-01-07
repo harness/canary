@@ -1,7 +1,8 @@
 import { Params } from 'react-router-dom'
 
-import { RouteConstants, RouteFunctionMap } from './framework/context/RoutingContext'
-import { CustomRouteObject } from './routes'
+import '../context/RoutingContext'
+
+import { CustomRouteObject, RouteConstants, RouteFunctionMap } from './types'
 
 interface RouteEntry {
   name: keyof typeof RouteConstants // Enum keys

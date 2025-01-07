@@ -13,7 +13,6 @@ import { RoutingProvider } from './framework/context/RoutingContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
-import { getRouteMapping } from './route-utils'
 import { routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
@@ -42,7 +41,7 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NuqsAdapter>
-                  <RoutingProvider value={getRouteMapping({ routes })}>
+                  <RoutingProvider>
                     <RouterProvider router={router} />
                   </RoutingProvider>
                 </NuqsAdapter>

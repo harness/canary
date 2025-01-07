@@ -1,4 +1,4 @@
-import { Navigate, Params, RouteObject } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 
 import { Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
@@ -6,6 +6,7 @@ import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 import AppShell from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { CustomRouteObject } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
@@ -42,17 +43,6 @@ import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-
-// Define a custom handle with the breadcrumb property
-export interface CustomHandle {
-  breadcrumb?: (params: Params<string>) => string
-  routeName?: string
-}
-
-// Create a new type by intersecting RouteObject with the custom handle
-export type CustomRouteObject = RouteObject & {
-  handle?: CustomHandle
-}
 
 export const routes: CustomRouteObject[] = [
   {

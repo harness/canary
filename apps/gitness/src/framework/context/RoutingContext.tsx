@@ -1,20 +1,14 @@
-import React, { createContext, ReactNode, useContext } from 'react'
-import { Params } from 'react-router-dom'
+import React, { createContext, useContext } from 'react'
 
-// Enum defining the route constants
-export enum RouteConstants {
-  toRepoSummary = 'toRepoSummary',
-  toRepoCommits = 'toRepoCommits'
-}
-
-// Type for a mapping of enum keys to functions that generate paths
-export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params: Params<string>) => string>
+import { routes } from '../../routes'
+import { RouteFunctionMap } from '../routing/types'
+import { getRouteMapping } from '../routing/utils'
 
 const RouteMappingContext = createContext<RouteFunctionMap | undefined>(undefined)
 
-export const RoutingProvider: React.FC<{ value: RouteFunctionMap; children: ReactNode }> = ({ value, children }) => (
-  <RouteMappingContext.Provider value={value}>{children}</RouteMappingContext.Provider>
-)
+export const RoutingProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  return <RouteMappingContext.Provider value={getRouteMapping({ routes })}>{children}</RouteMappingContext.Provider>
+}
 
 export const useRoutes = (): RouteFunctionMap => {
   const context = useContext(RouteMappingContext)

@@ -11,6 +11,7 @@ import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
 import { Logout } from './pages-v2/logout'
 import PipelineEditPage from './pages-v2/pipeline/pipeline-edit/pipeline-edit'
+import ProjectPipelineListPage from './pages-v2/pipeline/project-pipeline-list-page'
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
@@ -309,6 +310,13 @@ export const routes: CustomRouteObject[] = [
             }
           }
         ]
+      },
+      {
+        path: ':spaceId/pipelines',
+        element: <ProjectPipelineListPage />,
+        handle: {
+          breadcrumb: () => <Text>Pipelines</Text>
+        }
       }
     ]
   },

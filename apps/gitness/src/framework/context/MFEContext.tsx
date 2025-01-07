@@ -8,5 +8,5 @@ interface IMFEContext {
 }
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
-  renderUrl: '',
+  renderUrl: ''
 })

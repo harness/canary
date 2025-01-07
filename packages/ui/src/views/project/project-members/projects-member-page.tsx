@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -8,7 +8,7 @@ import { InviteMemberDialog } from './components/invite-member-dialog'
 import ProjectMembersList from './components/project-member-list'
 import { ProjectMemberListViewProps } from './types'
 
-export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
+export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   isLoading,
   isInvitingMember,
   useTranslationStore,
@@ -31,10 +31,10 @@ export const ProjectMemberListView: React.FC<ProjectMemberListViewProps> = ({
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }, [])
+  }
 
   return (
     <SandboxLayout.Main>

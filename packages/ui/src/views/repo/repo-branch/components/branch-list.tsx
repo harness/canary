@@ -7,6 +7,7 @@ import {
   CommitCopyActions,
   CopyButton,
   Icon,
+  MoreActionsTooltip,
   Table,
   TableBody,
   TableCell,
@@ -19,7 +20,6 @@ import { getInitials } from '@utils/stringUtils'
 
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
-import { MoreActionsTooltip } from './more-actions-tooltip'
 
 export const BranchesList = ({
   branches,
@@ -124,16 +124,25 @@ export const BranchesList = ({
                     </div>
                   </TableCell>
                 )}
-                <TableCell className="content-center">
-                  <div className="flex justify-end">
-                    <MoreActionsTooltip
-                      branchInfo={branch}
-                      spaceId={spaceId}
-                      repoId={repoId}
-                      defaultBranch={defaultBranch}
-                      useTranslationStore={useTranslationStore}
-                    />
-                  </div>
+                <TableCell className="text-right">
+                  <MoreActionsTooltip
+                    actions={[
+                      {
+                        title: t('views:repos.newPullReq', 'New pull request'),
+                        to: `/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
+                      },
+                      {
+                        title: t('views:repos.viewRules', 'View Rules'),
+                        to: `/${spaceId}/repos/${repoId}/settings/rules`
+                      },
+                      {
+                        isDanger: true,
+                        title: t('views:repos.renameBranch', 'Rename Branch'),
+                        // TODO: add remove fnc
+                        onClick: () => {}
+                      }
+                    ]}
+                  />
                 </TableCell>
               </TableRow>
             )

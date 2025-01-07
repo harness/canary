@@ -3,8 +3,6 @@ import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'rea
 import { TFunction } from 'i18next'
 import { z } from 'zod'
 
-import { repoBranchSettingsFormSchema } from './components/repo-branch-rules-schema'
-
 export type RepoBranchSettingsFormFields = z.infer<typeof repoBranchSettingsFormSchema>
 
 export type Rule = {
@@ -48,6 +46,8 @@ export interface BypassUsersList {
   type: 'user' | 'service' | 'serviceaccount'
   created: number
   updated: number
+  // TODO: need to add avatar
+  url?: string
 }
 
 export enum BranchRuleId {
@@ -72,3 +72,35 @@ export type IBranchRulesStore = {
   rules: Rule[]
   dispatch: Dispatch
 }
+
+// Constants
+
+export const repoBranchSettingsFormSchema = z.object({
+  identifier: z.string().min(1, 'Name is required'),
+  description: z.string().min(1, 'Description is required'),
+  pattern: z.string(),
+  patterns: z.array(
+    z.object({
+      pattern: z.string(),
+      option: z.enum([PatternsButtonType.INCLUDE, PatternsButtonType.EXCLUDE])
+    })
+  ),
+  state: z.boolean(),
+  bypass: z.array(
+    z.object({
+      id: z.number(),
+      display_name: z.string()
+    })
+  ),
+  default: z.boolean().optional(),
+  repo_owners: z.boolean().optional(),
+  rules: z.array(
+    z.object({
+      id: z.string(),
+      checked: z.boolean(),
+      submenu: z.array(z.enum(['merge', 'rebase', 'squash'])),
+      selectOptions: z.array(z.string()),
+      input: z.string()
+    })
+  )
+})

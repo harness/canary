@@ -282,8 +282,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                           <Text size={1} color="tertiaryBackground">
                                             {/* TODO: fix fallback string */}
                                             {getInitials(
-                                              ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
-                                                ?.display_name || ''
+                                              (
+                                                (commentItem as unknown as TypesPullReqActivity)?.payload
+                                                  ?.author as PayloadAuthor
+                                              )?.display_name || ''
                                             )}
                                           </Text>
                                         </AvatarFallback>
@@ -295,13 +297,15 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     isLast={commentItems.length - 1 === idx}
                                     header={[
                                       {
-                                        name: ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
-                                          ?.display_name,
+                                        name: (
+                                          (commentItem as unknown as TypesPullReqActivity)?.payload
+                                            ?.author as PayloadAuthor
+                                        )?.display_name,
                                         // TODO: fix comment to tell between comment or code comment?
                                         description: (
                                           <Layout.Horizontal>
                                             <span className="text-foreground-3">
-                                              {timeAgo((commentItem as PayloadCreated)?.created)}
+                                              {timeAgo((commentItem as unknown as PayloadCreated)?.created)}
                                             </span>
                                             {commentItem?.deleted ? (
                                               <>
@@ -434,8 +438,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       <Text size={1} color="tertiaryBackground">
                                         {/* TODO: fix fallback string */}
                                         {getInitials(
-                                          ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
-                                            .display_name || ''
+                                          (
+                                            (commentItem as unknown as TypesPullReqActivity)?.payload
+                                              ?.author as PayloadAuthor
+                                          ).display_name || ''
                                         )}
                                       </Text>
                                     </AvatarFallback>
@@ -444,13 +450,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 isLast={commentItems.length - 1 === idx}
                                 header={[
                                   {
-                                    name: ((commentItem as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
-                                      ?.display_name,
+                                    name: (
+                                      (commentItem as unknown as TypesPullReqActivity)?.payload?.author as PayloadAuthor
+                                    )?.display_name,
                                     // TODO: fix comment to tell between comment or code comment?
                                     description: (
                                       <Layout.Horizontal>
                                         <span className="text-foreground-3">
-                                          {timeAgo((commentItem as PayloadCreated)?.created)}
+                                          {timeAgo((commentItem as unknown as PayloadCreated)?.created)}
                                         </span>
                                         {commentItem?.deleted ? (
                                           <>

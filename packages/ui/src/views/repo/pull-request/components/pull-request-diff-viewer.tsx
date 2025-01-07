@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@components/index'
-import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
-import { getInitials, timeAgo } from '@utils/utils'
+import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@/components'
 import {
   CommentItem,
   CreateCommentPullReqRequest,
   PullRequestCommentBox,
   TranslationStore,
   TypesPullReqActivity
-} from '@views/index'
+} from '@/views'
+import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'

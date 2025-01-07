@@ -10,7 +10,7 @@ import {
   TabsList,
   TabsTrigger,
   Textarea
-} from '@components/index'
+} from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
@@ -99,7 +99,7 @@ const PullRequestCommentBox = ({
             <div className="relative">
               <Textarea
                 className="min-h-24 p-3 pb-10"
-                autoFocus={inReplyMode}
+                autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
                 onChange={e => setComment(e.target.value)}

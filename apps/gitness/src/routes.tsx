@@ -416,19 +416,26 @@ export const routes: CustomRouteObject[] = [
                       },
                       {
                         path: 'rules',
-                        element: <RepoSettingsGeneralPageContainer />,
                         handle: {
                           breadcrumb: () => <Text>Rules</Text>
-                        }
-                      },
-                      {
-                        path: 'rules/create',
-                        element: <RepoBranchSettingsRulesPageContainer />,
+                        },
                         children: [
+                          {
+                            index: true,
+                            element: <RepoSettingsGeneralPageContainer />
+                          },
+                          {
+                            path: 'create',
+                            element: <RepoBranchSettingsRulesPageContainer />,
+                            handle: {
+                              breadcrumb: () => <Text>Create a rule</Text>
+                            }
+                          },
                           {
                             path: ':identifier',
                             element: <RepoBranchSettingsRulesPageContainer />,
                             handle: {
+                              breadcrumb: ({ identifier }: { identifier: string }) => <Text>{identifier}</Text>,
                               routeName: RouteConstants.toRepoBranchRule
                             }
                           }

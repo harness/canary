@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -8,7 +8,7 @@ import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
 import { RepoBranchListViewProps } from './types'
 
-export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
+export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
@@ -28,10 +28,10 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }, [])
+  }
 
   const renderListContent = () => {
     if (isLoading && !branchList.length) return <SkeletonList />

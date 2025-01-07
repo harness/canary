@@ -50,8 +50,7 @@ const InputPathBreadcrumbItem = ({
         placeholder="Add a file name"
         onChange={handleInputChange}
         onBlur={handleOnBlur}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus={isNew}
+        autoFocus={!!isNew}
       />
       <span>in</span>
       <span className="flex h-6 items-center gap-1 rounded bg-background-8 px-2.5 text-foreground-8">

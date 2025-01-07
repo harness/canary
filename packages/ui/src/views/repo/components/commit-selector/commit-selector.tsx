@@ -46,7 +46,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
       return selectedCommit.title || ''
     }
     return t('views:repos.allCommits', 'All commits')
-  }, [selectedCommit, t, onSelectCommit])
+  }, [selectedCommit, t])
 
   return (
     <DropdownMenu>

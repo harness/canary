@@ -89,46 +89,45 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
           Webhooks
         </Text>
         <Spacer size={6} />
-        {!!webhooksWithFormattedDates.length ||
-          (!webhooksWithFormattedDates.length && isDirtyList && (
-            <>
-              <ListActions.Root>
-                <ListActions.Left>
-                  <SearchBox.Root
-                    width="full"
-                    className="max-w-96"
-                    value={value}
-                    handleChange={handleInputChange}
-                    placeholder="Search"
-                  />
-                </ListActions.Left>
-                <ListActions.Right>
-                  <Filters
-                    filterOptions={FILTER_OPTIONS}
-                    sortOptions={SORT_OPTIONS}
-                    filterHandlers={filterHandlers}
-                    layoutOptions={LAYOUT_OPTIONS}
-                    currentLayout={currentLayout}
-                    onLayoutChange={setCurrentLayout}
-                    viewManagement={viewManagement}
-                    t={t}
-                  />
-                  <Button asChild>
-                    <Link to="create">New webhook</Link>
-                  </Button>
-                </ListActions.Right>
-              </ListActions.Root>
-              <FiltersBar
-                filterOptions={FILTER_OPTIONS}
-                sortOptions={SORT_OPTIONS}
-                sortDirections={SORT_DIRECTIONS}
-                filterHandlers={filterHandlers}
-                viewManagement={viewManagement}
-                t={t}
-              />
-              <Spacer size={4.5} />
-            </>
-          ))}
+        {(!!webhooksWithFormattedDates.length || (!webhooksWithFormattedDates.length && isDirtyList)) && (
+          <>
+            <ListActions.Root>
+              <ListActions.Left>
+                <SearchBox.Root
+                  width="full"
+                  className="max-w-96"
+                  value={value}
+                  handleChange={handleInputChange}
+                  placeholder="Search"
+                />
+              </ListActions.Left>
+              <ListActions.Right>
+                <Filters
+                  filterOptions={FILTER_OPTIONS}
+                  sortOptions={SORT_OPTIONS}
+                  filterHandlers={filterHandlers}
+                  layoutOptions={LAYOUT_OPTIONS}
+                  currentLayout={currentLayout}
+                  onLayoutChange={setCurrentLayout}
+                  viewManagement={viewManagement}
+                  t={t}
+                />
+                <Button asChild>
+                  <Link to="create">New webhook</Link>
+                </Button>
+              </ListActions.Right>
+            </ListActions.Root>
+            <FiltersBar
+              filterOptions={FILTER_OPTIONS}
+              sortOptions={SORT_OPTIONS}
+              sortDirections={SORT_DIRECTIONS}
+              filterHandlers={filterHandlers}
+              viewManagement={viewManagement}
+              t={t}
+            />
+            <Spacer size={4.5} />
+          </>
+        )}
 
         {webhookLoading ? (
           <SkeletonList />

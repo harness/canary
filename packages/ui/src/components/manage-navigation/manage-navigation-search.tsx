@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
 
 import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@/components'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
@@ -31,20 +31,21 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const popoverRef = useRef<HTMLDivElement | null>(null)
+  const debouncedSearch = useRef(debounce((value: string) => setFilteredItems(filterItems(navbarMenuData, value)), 300))
 
-  const debouncedSearch = useCallback(
-    debounce((query: string) => {
-      const filtered = filterItems(navbarMenuData, query)
-      setFilteredItems(filtered)
-    }, 300),
-    [navbarMenuData]
-  )
+  useEffect(() => {
+    const debouncedChangeSearch = debouncedSearch.current
+
+    return () => {
+      debouncedChangeSearch.cancel()
+    }
+  }, [])
 
   const handleSearchChange = (event: ChangeEvent) => {
     event.preventDefault()
     const query = (event.target as HTMLInputElement).value
     setSearchQuery(query)
-    debouncedSearch(query)
+    debouncedSearch.current(query)
   }
 
   const handleItemClick = (item: NavbarItemType) => {

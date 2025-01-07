@@ -1,5 +1,5 @@
 import { RepositoryType } from '@views/repo/repo.types'
-import i18n, { TFunction } from 'i18next'
+import { i18n, TFunction } from 'i18next'
 
 export interface RepoStore {
   repositories: RepositoryType[] | null
@@ -11,7 +11,7 @@ export interface RepoStore {
 
 export interface TranslationStore {
   t: TFunction
-  i18n: typeof i18n
+  i18n: i18n
   changeLanguage: (lng: string) => void
 }
 

@@ -1,11 +1,9 @@
-import { JSXElementConstructor, ReactElement } from 'react'
-
+import { Icon, NoData, SkeletonList, StackedList, Text } from '@/components'
+import { PipelineExecutionStatus } from '@/views'
 import { timeAgo, timeDistance } from '@utils/utils'
 
-import { Icon, NoData, SkeletonList, StackedList, Text } from '../../../components'
-import { PipelineExecutionStatus } from '../common/execution-types'
 import { ExecutionStatusIcon } from '../components/execution-status-icon'
-import { IExecutionListProps } from './types'
+import { IExecutionListProps, IExecutionType } from './types'
 
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
@@ -16,15 +14,7 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   )
 }
 
-const Description = ({
-  sha,
-  description,
-  version
-}: {
-  sha: string
-  description: string | ReactElement<any, string | JSXElementConstructor<any>>
-  version: string
-}) => {
+const Description = ({ sha, description, version }: { sha: string; description: IExecutionType; version: string }) => {
   return (
     <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px]">
       {description && (

@@ -8,11 +8,12 @@ import {
   useDeleteSpaceMutation,
   useUpdateSpaceMutation
 } from '@harnessio/code-service-client'
-import { AlertDeleteDialog } from '@harnessio/ui/components'
+import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ProjectSettingsGeneralPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { useSpaceStore } from './stores/spaces-store'
 
 export const ProjectGeneralSettingsPageContainer = () => {
@@ -22,7 +23,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
   const space = spaces.find((space: TypesSpace) => space?.identifier === spaceId)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [updateError, setUpdateError] = useState<string | null>(null)
-  const [deleteError, setDeleteError] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState<{ type: string; message: string } | null>(null)
 
   useEffect(() => {
     setSpace(space || null)
@@ -70,7 +71,10 @@ export const ProjectGeneralSettingsPageContainer = () => {
       },
       onError: (error: DeleteSpaceErrorResponse) => {
         const deleteErrorMsg = error?.message || 'An unknown error occurred.'
-        setDeleteError(deleteErrorMsg)
+        setDeleteError({
+          type: '',
+          message: deleteErrorMsg
+        })
       }
     }
   )
@@ -97,14 +101,16 @@ export const ProjectGeneralSettingsPageContainer = () => {
         updateError={updateError}
         setOpenDeleteDialog={() => setOpenDeleteDialog(true)}
       />
-      <AlertDeleteDialog
+      <DeleteAlertDialog
         open={openDeleteDialog}
-        onOpenChange={() => setOpenDeleteDialog(false)}
-        handleDeleteRepository={handleDeleteProject}
+        onClose={() => setOpenDeleteDialog(false)}
+        deleteFn={handleDeleteProject}
         type="Project"
         error={deleteError}
         identifier=""
-        isDeletingRepo={deleteSpaceMutation.isLoading}
+        isLoading={deleteSpaceMutation.isLoading}
+        withForm
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

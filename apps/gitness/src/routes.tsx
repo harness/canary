@@ -46,10 +46,11 @@ import WebhookListPage from './pages-v2/webhooks/webhook-list'
 // Define a custom handle with the breadcrumb property
 export interface CustomHandle {
   breadcrumb?: (params: Params<string>) => string
+  routeName?: string
 }
 
 // Create a new type by intersecting RouteObject with the custom handle
-type CustomRouteObject = RouteObject & {
+export type CustomRouteObject = RouteObject & {
   handle?: CustomHandle
 }
 
@@ -95,21 +96,24 @@ export const routes: CustomRouteObject[] = [
                 path: 'summary',
                 element: <RepoSummaryPage />,
                 handle: {
-                  breadcrumb: () => <Text>Summary</Text>
+                  breadcrumb: () => <Text>Summary</Text>,
+                  routeName: 'toRepoSummary'
                 }
               },
               {
                 path: 'commits',
                 element: <RepoCommitsPage />,
                 handle: {
-                  breadcrumb: () => <Text>Commits</Text>
+                  breadcrumb: () => <Text>Commits</Text>,
+                  routeName: 'toRepoCommits'
                 }
               },
               {
                 path: 'branches',
                 element: <RepoBranchesListPage />,
                 handle: {
-                  breadcrumb: () => <Text>Branches</Text>
+                  breadcrumb: () => <Text>Branches</Text>,
+                  routeName: 'toRepoBranches'
                 }
               },
               {
@@ -120,7 +124,8 @@ export const routes: CustomRouteObject[] = [
                   </ExplorerPathsProvider>
                 ),
                 handle: {
-                  breadcrumb: () => <Text>Files</Text>
+                  breadcrumb: () => <Text>Files</Text>,
+                  routeName: 'toRepoFiles'
                 },
                 children: [
                   {

@@ -12,6 +12,7 @@ import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
+import { getRouteMapping } from './route-utils'
 import { routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
@@ -31,6 +32,10 @@ export default function AppV1() {
 
   // Router Configuration
   const router = createBrowserRouter(routes)
+
+  getRouteMapping({ routes })
+
+  // console.log(routeMapping.toRepoSummary({ spaceId: 'test', repoId: 'uuid' }))
 
   return (
     <AppProvider>

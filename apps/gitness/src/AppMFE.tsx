@@ -94,6 +94,10 @@ interface AppMFEProps {
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
+function decode<T = unknown>(arg: string): T {
+  return JSON.parse(decodeURIComponent(atob(arg)))
+}
+
 export default function AppMFE({
   scope,
   renderUrl,
@@ -104,6 +108,12 @@ export default function AppMFE({
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) => `/code${BASE_URL_PREFIX}${url}`,
+    requestInterceptor: (request: Request) => {
+      const token = decode(localStorage.getItem('token') || '')
+      const newRequest = request.clone()
+      newRequest.headers.set('Authorization', `Bearer ${token}`)
+      return newRequest
+    },
     responseInterceptor: (response: Response) => {
       switch (response.status) {
         case 401:

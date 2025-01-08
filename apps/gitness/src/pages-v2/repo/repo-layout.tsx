@@ -13,7 +13,7 @@ const RepoLayout = () => {
 
   return (
     <>
-      <div className="top-breadcrumbs bg-background-1 sticky z-40">
+      <div className="top-0 bg-background-1 sticky z-40">
         {!isMFE ? null : <BreadcrumbsMFE selectedProject={scope.projectIdentifier || '...'} />}
         <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
       </div>

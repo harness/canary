@@ -57,12 +57,8 @@ function RootRouteRenderer({
   // Handle location change detected from parent route
   const navigate = useNavigate()
   useEffect(() => {
-    console.log('parentLocationPath', parentLocationPath)
-    console.log('renderUrl', renderUrl)
-
     if (renderUrl) {
       const pathToNavigate = parentLocationPath.replace(renderUrl, '')
-      console.log('pathToNavigate', pathToNavigate)
       navigate(pathToNavigate, { replace: true })
     }
   }, [parentLocationPath])

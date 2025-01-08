@@ -21,8 +21,8 @@ export const CopyButton: FC<CopyButtonProps> = ({
   const [copied, setCopied] = useState(false)
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-    onClick?.(e)
     setCopied(true)
+    onClick?.(e)
   }
 
   useEffect(() => {

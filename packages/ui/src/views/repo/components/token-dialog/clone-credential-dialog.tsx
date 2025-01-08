@@ -54,7 +54,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
         <DialogHeader>
           <DialogTitle>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</DialogTitle>
         </DialogHeader>
-        <form className="flex flex-col gap-y-7">
+        <div className="flex flex-col gap-y-7">
           {/* NAME */}
 
           <Input
@@ -65,7 +65,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
             readOnly
             variant="extended"
             rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.identifier} onClick={e => e.preventDefault()} />}
+            rightElement={<CopyButton name={tokenData?.identifier} />}
           />
 
           <Input
@@ -78,19 +78,19 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
 
           {/* Expiration Info */}
           <Input
-            className="py-px truncate"
+            className="truncate py-px"
             id="token"
             label={t('views:repos.token')}
             variant="extended"
             value={tokenData?.token}
             readOnly
             rightElementVariant="default"
-            rightElement={<CopyButton name={tokenData?.token} onClick={e => e.preventDefault()} />}
+            rightElement={<CopyButton name={tokenData?.token} />}
             autoFocus
           />
 
           <span>{t('views:repos.cloneCredGenerated')}</span>
-        </form>
+        </div>
         <DialogFooter>
           <ButtonGroup>
             <>

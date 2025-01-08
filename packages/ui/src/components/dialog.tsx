@@ -3,6 +3,7 @@ import * as React from 'react'
 import { Button, Icon } from '@/components'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
+import { getGitnessShadowRoot } from '@utils/utils'
 
 const Dialog = DialogPrimitive.Root
 
@@ -46,7 +47,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
     })
 
     return (
-      <DialogPortal>
+      <DialogPortal container={getGitnessShadowRoot()}>
         <DialogOverlay onClick={onOverlayClick} />
         <DialogPrimitive.Content
           ref={ref}

@@ -98,13 +98,13 @@ export default function PullRequestConversationPage() {
     repo_ref: repoRef,
     pullreq_number: prId
   })
-  const { data: { body: activityData } = {}, isLoading: isActivitiesLoading } = useListPullReqActivitiesQuery({
+  const { data: { body: activityData } = {} } = useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
   })
 
-  // const [changesLoading, setChangesLoading] = useState(true)
+  const [changesLoading, setChangesLoading] = useState(true)
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
@@ -203,7 +203,7 @@ export default function PullRequestConversationPage() {
     }
   }, [branchError])
 
-  // const [activities, setActivities] = useState(activityData)
+  const [activities, setActivities] = useState(activityData)
   const approvedEvaluations = reviewers?.filter(evaluation => evaluation.review_decision === 'approved')
   const latestApprovalArr = approvedEvaluations?.filter(
     approved => !checkIfOutdatedSha(approved.sha, pullReqMetadata?.source_sha as string)
@@ -240,9 +240,9 @@ export default function PullRequestConversationPage() {
   }, [pullReqMetadata, pullReqMetadata?.title, pullReqMetadata?.state, pullReqMetadata?.source_sha, refetchCodeOwners])
 
   // If you need to update activities when activityData changes, use useEffect
-  // useEffect(() => {
-  //   setActivities(activityData)
-  // }, [activityData])
+  useEffect(() => {
+    setActivities(activityData)
+  }, [activityData])
   const currentUser = useMemo(() => currentUserData?.display_name, [currentUserData?.display_name])
 
   let count = generateAlphaNumericHash(5)
@@ -304,7 +304,7 @@ export default function PullRequestConversationPage() {
       })
       .catch(error => {
         // Handle error (e.g., remove the temporary comment or show an error message)
-        // setActivities(prevData => prevData?.filter(item => item.id !== newComment.id))
+        setActivities(prevData => prevData?.filter(item => item.id !== newComment.id))
         console.error('Failed to save comment:', error)
       })
   }
@@ -333,20 +333,18 @@ export default function PullRequestConversationPage() {
     changeReqReviewer,
     changeReqEvaluations
   })
-
-  // useEffect(() => {
-  //   if (
-  //     !prPanelData?.PRStateLoading &&
-  //     changesInfo?.title !== '' &&
-  //     changesInfo?.statusMessage !== '' &&
-  //     changesInfo?.statusIcon !== ''
-  //   ) {
-  //     setChangesLoading(false)
-  //   } else if (pullReqMetadata?.merged) {
-  //     setChangesLoading(false)
-  //   }
-  // }, [changesInfo, prPanelData, pullReqMetadata?.merged])
-
+  useEffect(() => {
+    if (
+      !prPanelData?.PRStateLoading &&
+      changesInfo?.title !== '' &&
+      changesInfo?.statusMessage !== '' &&
+      changesInfo?.statusIcon !== ''
+    ) {
+      setChangesLoading(false)
+    } else if (pullReqMetadata?.merged) {
+      setChangesLoading(false)
+    }
+  }, [changesInfo, prPanelData, pullReqMetadata?.merged])
   const handleAddReviewer = (id?: number) => {
     reviewerAddPullReq({ repo_ref: repoRef, pullreq_number: prId, body: { reviewer_id: id } })
       .then(() => {
@@ -408,12 +406,7 @@ export default function PullRequestConversationPage() {
       }
     }
   ]
-
-  // if (prPanelData?.PRStateLoading || changesLoading) {
-  //   return <SkeletonList />
-  // }
-
-  if (isActivitiesLoading) {
+  if (prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
   }
 
@@ -489,7 +482,7 @@ export default function PullRequestConversationPage() {
             repoId={repoRef}
             refetchActivities={refetchActivities}
             commentStatusPullReq={commentStatusPullReq}
-            data={activityData?.map((item: TypesPullReqActivity) => {
+            data={activities?.map((item: TypesPullReqActivity) => {
               return {
                 author: item?.author,
                 created: item?.created,

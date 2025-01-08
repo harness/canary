@@ -10,6 +10,8 @@ import {
   FormWrapper,
   Icon,
   Input,
+  Message,
+  MessageTheme,
   Spacer,
   Text
 } from '@/components'
@@ -35,33 +37,25 @@ interface InputProps {
   description: string
 }
 
-// Define form schema for Project Settings
 const projectSettingsSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a project name' }),
   description: z.string().min(1, { message: 'Please provide an description' })
 })
 
-// Define TypeScript type
 type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
 
 export const ProjectSettingsGeneralPage = ({
   spaceData,
   onFormSubmit,
-  handleDeleteProject,
-  isDeleting,
   isUpdating,
-  isDeleteSuccess,
   isUpateSuccess,
   updateError,
-  deleteError,
   setOpenDeleteDialog
 }: ProjectSettingsGeneralPageProps) => {
   // Project Settings form handling
   const {
     register,
     handleSubmit,
-    // TODO: will use this to reset the form after api call has projectName
-    // reset: resetProjectSettingsForm,
     reset,
     resetField,
     setValue,
@@ -76,10 +70,6 @@ export const ProjectSettingsGeneralPage = ({
   })
 
   const [submitted, setSubmitted] = useState(false)
-  const [prodescription, setProDescription] = useState(spaceData?.description)
-  const [isCancelDisabled, setIsCancelDisabled] = useState(true)
-
-  const isSaveButtonDisabled = submitted || !isValid || !isDirty || isUpdating
 
   // Form submit handler
   const onSubmit: SubmitHandler<ProjectSettingsGeneralFields> = formData => {
@@ -89,7 +79,6 @@ export const ProjectSettingsGeneralPage = ({
   useEffect(() => {
     if (isUpateSuccess) {
       setSubmitted(true)
-      setIsCancelDisabled(true)
 
       const timer = setTimeout(() => {
         setSubmitted(false)
@@ -97,7 +86,7 @@ export const ProjectSettingsGeneralPage = ({
 
       reset({
         identifier: spaceData.identifier,
-        description: prodescription
+        description: spaceData.description
       })
 
       return () => clearTimeout(timer)
@@ -106,26 +95,14 @@ export const ProjectSettingsGeneralPage = ({
 
   useEffect(() => {
     setValue('description', spaceData?.description ?? '')
-    setProDescription(spaceData?.description ?? '')
-    setIsCancelDisabled(true)
   }, [spaceData?.description, setValue])
 
   useEffect(() => {
     setValue('identifier', spaceData?.identifier ?? '')
   }, [spaceData?.identifier, setValue])
 
-  const handleDescriptionInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDescription = e.target.value
-    setProDescription(newDescription)
-    setValue('description', newDescription, { shouldValidate: true, shouldDirty: true })
-    setSubmitted(false)
-    setIsCancelDisabled(false)
-  }
-
   const handleCancel = () => {
     resetField('description', { defaultValue: spaceData.description })
-    setProDescription(spaceData?.description ?? '')
-    setIsCancelDisabled(true)
   }
 
   return (
@@ -148,29 +125,21 @@ export const ProjectSettingsGeneralPage = ({
                 label="Project Name"
                 error={errors.identifier?.message?.toString()}
                 disabled
-                //TODO: onChange={handleProjectNameInputChange}
-                //wait for the api call to update the project name
               />
             </ControlGroup>
 
             {/* IDENTIFIER/DESCRIPTION */}
             <ControlGroup>
               <Input
-                // value={prodescription}
                 id="description"
                 {...register('description')}
                 placeholder="Enter unique description"
                 label="Description"
-                onChange={handleDescriptionInputChange}
+                onChange={e => setValue('description', e.target.value)}
                 error={errors.description?.message?.toString()}
               />
 
-              {/* {updateError && (
-                <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>{updateError}</FormFieldSet.Message>
-              )}
-              {deleteError && (
-                <FormFieldSet.Message theme={FormFieldSet.MessageTheme.ERROR}>{deleteError}</FormFieldSet.Message>
-              )} */}
+              {updateError && <Message theme={MessageTheme.ERROR}>{updateError}</Message>}
             </ControlGroup>
 
             {/*BUTTON CONTROL: SAVE & CANCEL*/}
@@ -178,27 +147,10 @@ export const ProjectSettingsGeneralPage = ({
               <ButtonGroup>
                 {!submitted ? (
                   <>
-                    <Button
-                      size="sm"
-                      type="submit"
-                      disabled={isSaveButtonDisabled}
-                      className={`${
-                        isUpdating
-                          ? 'cursor-wait'
-                          : isSaveButtonDisabled
-                            ? 'cursor-not-allowed opacity-50'
-                            : 'cursor-pointer'
-                      }`}
-                    >
+                    <Button size="sm" type="submit">
                       {isUpdating ? 'Saving...' : 'Save changes'}
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      type="button"
-                      onClick={handleCancel}
-                      disabled={isCancelDisabled}
-                    >
+                    <Button size="sm" variant="outline" type="button" onClick={handleCancel}>
                       Cancel
                     </Button>
                   </>
@@ -217,13 +169,6 @@ export const ProjectSettingsGeneralPage = ({
           </Fieldset>
         </FormWrapper>
 
-        {/* DELETE PROJECT */}
-        {/* <FormDialogProjectDelete
-          handleDeleteProject={handleDeleteProject}
-          isDeleteSuccess={isDeleteSuccess}
-          isDeleting={isDeleting}
-          deleteError={deleteError}
-        /> */}
         <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>
           Delete project
         </Button>

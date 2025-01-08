@@ -40,7 +40,6 @@ const AppShell = () => {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
-  console.log('space_ref in app-shell', space_ref)
 
   const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
 

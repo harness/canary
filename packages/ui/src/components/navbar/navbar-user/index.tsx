@@ -95,7 +95,7 @@ export const NavbarUser = ({
         <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/settings">
+          <Link to="/profile-settings">
             <Icon size={12} name="user" className="mr-2" />
             <Text>{t('component:navbar.profile', 'Profile')}</Text>
           </Link>

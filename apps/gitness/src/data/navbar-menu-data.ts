@@ -166,7 +166,7 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
         id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
-        to: '/admin/default-settings'
+        to: '/settings/members'
       },
       {
         id: 17,

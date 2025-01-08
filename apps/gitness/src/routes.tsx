@@ -17,6 +17,7 @@ import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-set
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
+import { ProjectMemberListWithSpaceRef } from './pages-v2/project/project-member-list-space-ref'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
 import { PullRequestCommitPage } from './pages-v2/pull-request/pull-request-commits'
@@ -330,7 +331,7 @@ export const routes: CustomRouteObject[] = [
         handle: { breadcrumb: () => <Text>Users</Text> }
       },
       {
-        path: 'settings',
+        path: 'profile-settings',
         element: <ProfileSettingsLayout />,
         handle: {
           breadcrumb: () => <Text>Settings</Text>

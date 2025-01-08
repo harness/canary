@@ -1,6 +1,6 @@
 import { Params } from 'react-router-dom'
 
-import '../context/RoutingContext'
+import '../context/NavigationContext'
 
 import { CustomRouteObject, RouteConstants, RouteEntry, RouteFunctionMap } from './types'
 

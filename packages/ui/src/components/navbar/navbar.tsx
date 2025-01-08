@@ -114,6 +114,13 @@ export const Navbar = ({
         </ScrollArea>
 
         {/*<NavbarAi />*/}
+        {currentUser?.admin && (
+          <NavbarSkeleton.Group>
+            <Link to="/admin/default-settings">
+              <NavbarSkeleton.Item text="User Management" icon={<Icon name="account" size={12} />} />
+            </Link>
+          </NavbarSkeleton.Group>
+        )}
       </NavbarSkeleton.Content>
 
       <NavbarSkeleton.Footer>

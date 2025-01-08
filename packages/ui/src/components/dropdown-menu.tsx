@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
 import { ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
+import { getGitnessShadowRoot } from '@utils/utils'
 
 import { Icon } from './icon'
 
@@ -77,7 +78,7 @@ const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
 >(({ className, sideOffset = 4, ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
+  <DropdownMenuPrimitive.Portal container={getGitnessShadowRoot()}>
     <DropdownMenuPrimitive.Content
       ref={ref}
       sideOffset={sideOffset}

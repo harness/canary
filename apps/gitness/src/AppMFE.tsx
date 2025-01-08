@@ -308,26 +308,28 @@ export default function AppMFE({
   )
 
   return (
-    <ReactShadowRoot>
-      <style>{`${styles}`}</style>
+    <div id="gitness-shadow-root">
+      <ReactShadowRoot>
+        <style>{`${styles}`}</style>
 
-      <MFEContext.Provider value={{ scope, renderUrl }}>
-        <AppProvider>
-          <I18nextProvider i18n={i18n}>
-            <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-              <QueryClientProvider client={queryClient}>
-                <TooltipProvider>
-                  <ExitConfirmProvider>
-                    <NuqsAdapter>
-                      <RouterProvider router={router} />
-                    </NuqsAdapter>
-                  </ExitConfirmProvider>
-                </TooltipProvider>
-              </QueryClientProvider>
-            </ThemeProvider>
-          </I18nextProvider>
-        </AppProvider>
-      </MFEContext.Provider>
-    </ReactShadowRoot>
+        <MFEContext.Provider value={{ scope, renderUrl }}>
+          <AppProvider>
+            <I18nextProvider i18n={i18n}>
+              <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                <QueryClientProvider client={queryClient}>
+                  <TooltipProvider>
+                    <ExitConfirmProvider>
+                      <NuqsAdapter>
+                        <RouterProvider router={router} />
+                      </NuqsAdapter>
+                    </ExitConfirmProvider>
+                  </TooltipProvider>
+                </QueryClientProvider>
+              </ThemeProvider>
+            </I18nextProvider>
+          </AppProvider>
+        </MFEContext.Provider>
+      </ReactShadowRoot>
+    </div>
   )
 }

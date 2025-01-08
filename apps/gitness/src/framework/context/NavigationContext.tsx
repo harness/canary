@@ -1,12 +1,16 @@
 import React, { createContext, useContext } from 'react'
 
-import { routes } from '../../routes'
-import { RouteFunctionMap } from '../routing/types'
+import { CustomRouteObject, RouteFunctionMap } from '../routing/types'
 import { getRouteMapping } from '../routing/utils'
 
 const RouteMappingContext = createContext<RouteFunctionMap | undefined>(undefined)
 
-export const NavigationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+interface NavigationProviderProps {
+  routes: CustomRouteObject[]
+  children: React.ReactNode
+}
+
+export const NavigationProvider: React.FC<NavigationProviderProps> = ({ routes, children }) => {
   return <RouteMappingContext.Provider value={getRouteMapping({ routes })}>{children}</RouteMappingContext.Provider>
 }
 

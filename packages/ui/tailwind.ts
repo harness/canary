@@ -188,6 +188,16 @@ export default {
             },
             red: {
               1: 'hsl(var(--canary-tag-foreground-red-01))'
+            },
+            code: {
+              1: 'hsl(var(--canary-code-foreground-01))',
+              2: 'hsl(var(--canary-code-foreground-02))',
+              3: 'hsl(var(--canary-code-foreground-03))',
+              4: 'hsl(var(--canary-code-foreground-04))',
+              5: 'hsl(var(--canary-code-foreground-05))',
+              6: 'hsl(var(--canary-code-foreground-06))',
+              7: 'hsl(var(--canary-code-foreground-07))',
+              8: 'hsl(var(--canary-code-foreground-08))'
             }
           },
           background: {
@@ -218,6 +228,16 @@ export default {
             red: {
               1: 'hsla(var(--canary-tag-background-red-01))',
               2: 'hsla(var(--canary-tag-background-red-02))'
+            },
+            code: {
+              1: 'hsla(var(--canary-code-background-01))',
+              2: 'hsla(var(--canary-code-background-02))',
+              3: 'hsla(var(--canary-code-background-03))',
+              4: 'hsla(var(--canary-code-background-04))',
+              5: 'hsla(var(--canary-code-background-05))',
+              6: 'hsla(var(--canary-code-background-06))',
+              7: 'hsla(var(--canary-code-background-07))',
+              8: 'hsla(var(--canary-code-background-08))'
             }
           }
         },
@@ -247,7 +267,8 @@ export default {
         2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
         'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
         'as-border': 'inset 0 0 0 1px',
-        'commit-list-bullet': '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
+        'commit-list-bullet':
+          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
       },
       borderRadius: {
         10: '0.625rem'

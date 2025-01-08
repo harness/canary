@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Button,
   ButtonGroup,
+  FileAdditionsTrigger,
+  Icon,
   ListActions,
   MarkdownViewer,
   NoData,
@@ -96,7 +98,6 @@ export function RepoSummaryView({
   setSearchQuery,
   handleCreateToken
 }: RepoSummaryViewProps) {
-  const navigate = useNavigate()
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
@@ -190,11 +191,12 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup>
-                  <Button variant="outline" asChild>
-                    <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
-                      {t('views:repos.addFile', 'Add File')}
-                    </Link>
-                  </Button>
+                  <FileAdditionsTrigger
+                    useTranslationStore={useTranslationStore}
+                    pathNewFile={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                    // TODO: set the actual file upload path
+                    pathUploadFiles={`/${spaceId}/repos/${repoId}/code/upload/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                  />
                   <CloneRepoDialog
                     sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}
@@ -231,12 +233,28 @@ export function RepoSummaryView({
             />
             <Spacer size={5} />
             <StackedList.Root>
-              <StackedList.Item isHeader disableHover>
+              <StackedList.Item className="py-2" isHeader disableHover>
                 <StackedList.Field
                   title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
                 />
-                {/* TODO: add component and file editing logic */}
-                <StackedList.Field right />
+                <StackedList.Field
+                  right
+                  title={
+                    <Button
+                      className="flex border border-borders-1 hover:bg-background-3"
+                      variant="ghost"
+                      size="icon"
+                      asChild
+                    >
+                      <Link
+                        to={`/${spaceId}/repos/${repoId}/code/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}
+                      >
+                        <Icon name="edit-pen" size={16} className="text-icons-3" />
+                        <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
+                      </Link>
+                    </Button>
+                  }
+                />
               </StackedList.Item>
               <StackedList.Item disableHover>
                 <MarkdownViewer source={decodedReadmeContent || ''} />

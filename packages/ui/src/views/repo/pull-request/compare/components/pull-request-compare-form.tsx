@@ -2,6 +2,7 @@ import { forwardRef } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 import { Fieldset, Input, Textarea } from '@/components'
+import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
 // Define the form schema
@@ -21,30 +22,41 @@ interface PullRequestFormProps {
   errors: FieldErrors<FormFields>
   handleSubmit: UseFormHandleSubmit<FormFields>
   register: UseFormRegister<FormFields>
+  useTranslationStore: () => TranslationStore
 }
 
 const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>(
-  ({ apiError, register, handleSubmit, errors, onFormSubmit }, ref) => {
+  ({ apiError, register, handleSubmit, errors, onFormSubmit, useTranslationStore }, ref) => {
+    const { t } = useTranslationStore()
+
     const onSubmit: SubmitHandler<FormFields> = data => {
       onFormSubmit(data)
     }
+
     return (
       <form ref={ref} onSubmit={handleSubmit(onSubmit)}>
         <Fieldset className="gap-y-3">
-          <span className="text-18 font-medium leading-none text-foreground-1">Add a title</span>
+          <span className="text-18 text-foreground-1 font-medium leading-none">
+            {t('views:pullRequests.compareChangesFormTitle', 'Add a title')}
+          </span>
           <Input
             id="title"
             {...register('title')}
-            placeholder="Enter pull request title"
+            placeholder={t('views:pullRequests.compareChangesFormTitlePlaceholder', 'Enter pull request title')}
             error={errors.title?.message?.toString()}
             autoFocus
             size="md"
           />
-          <span className="mt-4 text-18 font-medium leading-none text-foreground-1">Add a description</span>
+          <span className="text-18 text-foreground-1 mt-4 font-medium leading-none">
+            {t('views:pullRequests.compareChangesFormDescription', 'Add a description')}
+          </span>
           <Textarea
             id="description"
             {...register('description')}
-            placeholder="Add Pull Request description here."
+            placeholder={t(
+              'views:pullRequests.compareChangesFormDescriptionPlaceholder',
+              'Add Pull Request description here.'
+            )}
             error={errors.description?.message?.toString()}
           />
         </Fieldset>

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { Button, ButtonProps, Icon } from '@/components'
 import copy from 'clipboard-copy'
@@ -8,10 +8,22 @@ export interface CopyButtonProps {
   className?: string
   buttonVariant?: ButtonProps['variant']
   iconSize?: number
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const CopyButton: FC<CopyButtonProps> = ({ name, className, buttonVariant = 'custom', iconSize = 16 }) => {
+export const CopyButton: FC<CopyButtonProps> = ({
+  name,
+  className,
+  buttonVariant = 'custom',
+  iconSize = 16,
+  onClick
+}) => {
   const [copied, setCopied] = useState(false)
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    setCopied(true)
+    onClick?.(e)
+  }
 
   useEffect(() => {
     let timeoutId: number
@@ -29,8 +41,8 @@ export const CopyButton: FC<CopyButtonProps> = ({ name, className, buttonVariant
   const changeIcon = copied ? 'tick' : 'clone'
 
   return (
-    <Button className={className} variant={buttonVariant} size="icon" aria-label="Copy" onClick={() => setCopied(true)}>
-      <Icon name={changeIcon} size={iconSize} className="text-icons-3" />
+    <Button className={className} variant={buttonVariant} size="icon" aria-label="Copy" onClick={handleClick}>
+      <Icon className="text-icons-3" name={changeIcon} size={iconSize} />
     </Button>
   )
 }

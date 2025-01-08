@@ -58,223 +58,228 @@ export const routes: CustomRouteObject[] = [
   {
     path: '/',
     element: <AppShell />,
-    handle: {
-      breadcrumb: () => <ProjectDropdown />
-    },
     children: [
       {
         index: true,
         element: <LandingPage />
       },
       {
-        path: ':spaceId/repos',
+        path: ':spaceId',
         handle: {
-          breadcrumb: () => <Text>Repositories</Text>
+          breadcrumb: () => <ProjectDropdown />
         },
         children: [
-          { index: true, element: <ReposListPage /> },
           {
-            path: 'create',
-            element: <CreateRepo />
-          },
-          {
-            path: 'import',
-            element: <ImportRepo />
-          },
-          {
-            path: ':repoId',
-            element: <RepoLayout />,
+            path: 'repos',
             handle: {
-              breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+              breadcrumb: () => <Text>Repositories</Text>
             },
             children: [
+              { index: true, element: <ReposListPage /> },
               {
-                index: true,
-                element: <Navigate to="summary" replace />
+                path: 'create',
+                element: <CreateRepo />
               },
               {
-                path: 'summary',
-                element: <RepoSummaryPage />,
-                handle: {
-                  breadcrumb: () => <Text>Summary</Text>
-                }
+                path: 'import',
+                element: <ImportRepo />
               },
               {
-                path: 'commits',
-                element: <RepoCommitsPage />,
+                path: ':repoId',
+                element: <RepoLayout />,
                 handle: {
-                  breadcrumb: () => <Text>Commits</Text>
-                }
-              },
-              {
-                path: 'branches',
-                element: <RepoBranchesListPage />,
-                handle: {
-                  breadcrumb: () => <Text>Branches</Text>
-                }
-              },
-              {
-                path: 'code',
-                element: (
-                  <ExplorerPathsProvider>
-                    <RepoSidebar />
-                  </ExplorerPathsProvider>
-                ),
-                handle: {
-                  breadcrumb: () => <Text>Files</Text>
+                  breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
                 },
                 children: [
                   {
                     index: true,
-                    element: <RepoCode />
+                    element: <Navigate to="summary" replace />
                   },
                   {
-                    path: '*',
-                    element: <RepoCode />
-                  }
-                ]
-              },
-              {
-                path: 'pulls',
-                handle: {
-                  breadcrumb: () => <Text>Pull Requests</Text>
-                },
-                children: [
-                  { index: true, element: <PullRequestListPage /> },
-                  {
-                    path: 'compare/:diffRefs*?',
-                    element: <CreatePullRequest />
-                  },
-                  {
-                    path: ':pullRequestId',
-                    element: <PullRequestLayout />,
+                    path: 'summary',
+                    element: <RepoSummaryPage />,
                     handle: {
-                      breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>
-                    },
-                    children: [
-                      {
-                        index: true,
-                        element: <Navigate to="conversation" replace />
-                      },
-                      {
-                        path: 'conversation',
-                        element: (
-                          <PullRequestDataProvider>
-                            <PullRequestConversationPage />
-                          </PullRequestDataProvider>
-                        )
-                      },
-                      {
-                        path: 'commits',
-                        element: <PullRequestCommitPage />,
-                        handle: {
-                          breadcrumb: () => <Text>Commits</Text>
-                        }
-                      },
-                      {
-                        path: 'changes',
-                        element: (
-                          <PullRequestDataProvider>
-                            <PullRequestChanges />
-                          </PullRequestDataProvider>
-                        ),
-                        handle: {
-                          breadcrumb: () => <Text>Changes</Text>
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                path: 'pipelines',
-                handle: {
-                  breadcrumb: () => <Text>Pipelines</Text>
-                },
-                children: [
-                  { index: true, element: <RepoPipelineListPage /> },
-                  {
-                    path: ':pipelineId',
-                    handle: {
-                      breadcrumb: ({ pipelineId }: { pipelineId: string }) => <Text>{pipelineId}</Text>
-                    },
-                    children: [
-                      {
-                        index: true,
-                        element: <RepoExecutionListPage />,
-                        handle: {
-                          breadcrumb: () => <Text>Executions</Text>
-                        }
-                      },
-                      {
-                        path: 'edit',
-                        element: <PipelineEditPage />,
-                        handle: {
-                          breadcrumb: () => <Text>Edit</Text>
-                        }
-                      }
-                    ]
-                  }
-                ]
-              },
-              {
-                path: 'settings',
-                element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
-                handle: {
-                  breadcrumb: () => <Text>Settings</Text>
-                },
-                children: [
-                  {
-                    index: true,
-                    element: <Navigate to="general" replace />
-                  },
-                  {
-                    path: 'general',
-                    element: <RepoSettingsGeneralPageContainer />,
-                    handle: {
-                      breadcrumb: () => <Text>General</Text>
+                      breadcrumb: () => <Text>Summary</Text>
                     }
                   },
                   {
-                    path: 'rules',
-                    element: <RepoSettingsGeneralPageContainer />,
+                    path: 'commits',
+                    element: <RepoCommitsPage />,
                     handle: {
-                      breadcrumb: () => <Text>Rules</Text>
+                      breadcrumb: () => <Text>Commits</Text>
                     }
                   },
                   {
-                    path: 'rules/create',
-                    element: <RepoBranchSettingsRulesPageContainer />,
-                    children: [
-                      {
-                        path: ':identifier',
-                        element: <RepoBranchSettingsRulesPageContainer />
-                      }
-                    ]
+                    path: 'branches',
+                    element: <RepoBranchesListPage />,
+                    handle: {
+                      breadcrumb: () => <Text>Branches</Text>
+                    }
                   },
                   {
-                    path: 'webhooks',
+                    path: 'code',
+                    element: (
+                      <ExplorerPathsProvider>
+                        <RepoSidebar />
+                      </ExplorerPathsProvider>
+                    ),
                     handle: {
-                      breadcrumb: () => <Text>Webhooks</Text>
+                      breadcrumb: () => <Text>Files</Text>
                     },
                     children: [
                       {
                         index: true,
-                        element: <WebhookListPage />
+                        element: <RepoCode />
                       },
                       {
-                        path: 'create',
-                        element: <CreateWebhookContainer />,
+                        path: '*',
+                        element: <RepoCode />
+                      }
+                    ]
+                  },
+                  {
+                    path: 'pulls',
+                    handle: {
+                      breadcrumb: () => <Text>Pull Requests</Text>
+                    },
+                    children: [
+                      { index: true, element: <PullRequestListPage /> },
+                      {
+                        path: 'compare/:diffRefs*?',
+                        element: <CreatePullRequest />
+                      },
+                      {
+                        path: ':pullRequestId',
+                        element: <PullRequestLayout />,
                         handle: {
-                          breadcrumb: () => <Text>Create a webhook</Text>
+                          breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>
+                        },
+                        children: [
+                          {
+                            index: true,
+                            element: <Navigate to="conversation" replace />
+                          },
+                          {
+                            path: 'conversation',
+                            element: (
+                              <PullRequestDataProvider>
+                                <PullRequestConversationPage />
+                              </PullRequestDataProvider>
+                            )
+                          },
+                          {
+                            path: 'commits',
+                            element: <PullRequestCommitPage />,
+                            handle: {
+                              breadcrumb: () => <Text>Commits</Text>
+                            }
+                          },
+                          {
+                            path: 'changes',
+                            element: (
+                              <PullRequestDataProvider>
+                                <PullRequestChanges />
+                              </PullRequestDataProvider>
+                            ),
+                            handle: {
+                              breadcrumb: () => <Text>Changes</Text>
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    path: 'pipelines',
+                    handle: {
+                      breadcrumb: () => <Text>Pipelines</Text>
+                    },
+                    children: [
+                      { index: true, element: <RepoPipelineListPage /> },
+                      {
+                        path: ':pipelineId',
+                        handle: {
+                          breadcrumb: ({ pipelineId }: { pipelineId: string }) => <Text>{pipelineId}</Text>
+                        },
+                        children: [
+                          {
+                            index: true,
+                            element: <RepoExecutionListPage />,
+                            handle: {
+                              breadcrumb: () => <Text>Executions</Text>
+                            }
+                          },
+                          {
+                            path: 'edit',
+                            element: <PipelineEditPage />,
+                            handle: {
+                              breadcrumb: () => <Text>Edit</Text>
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    path: 'settings',
+                    element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
+                    handle: {
+                      breadcrumb: () => <Text>Settings</Text>
+                    },
+                    children: [
+                      {
+                        index: true,
+                        element: <Navigate to="general" replace />
+                      },
+                      {
+                        path: 'general',
+                        element: <RepoSettingsGeneralPageContainer />,
+                        handle: {
+                          breadcrumb: () => <Text>General</Text>
                         }
                       },
                       {
-                        path: ':webhookId',
-                        element: <CreateWebhookContainer />,
+                        path: 'rules',
+                        element: <RepoSettingsGeneralPageContainer />,
                         handle: {
-                          breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                          breadcrumb: () => <Text>Rules</Text>
                         }
+                      },
+                      {
+                        path: 'rules/create',
+                        element: <RepoBranchSettingsRulesPageContainer />,
+                        children: [
+                          {
+                            path: ':identifier',
+                            element: <RepoBranchSettingsRulesPageContainer />
+                          }
+                        ]
+                      },
+                      {
+                        path: 'webhooks',
+                        handle: {
+                          breadcrumb: () => <Text>Webhooks</Text>
+                        },
+                        children: [
+                          {
+                            index: true,
+                            element: <WebhookListPage />
+                          },
+                          {
+                            path: 'create',
+                            element: <CreateWebhookContainer />,
+                            handle: {
+                              breadcrumb: () => <Text>Create a webhook</Text>
+                            }
+                          },
+                          {
+                            path: ':webhookId',
+                            element: <CreateWebhookContainer />,
+                            handle: {
+                              breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                            }
+                          }
+                        ]
                       }
                     ]
                   }
@@ -317,6 +322,11 @@ export const routes: CustomRouteObject[] = [
         handle: {
           breadcrumb: () => <Text>Pipelines</Text>
         }
+      },
+      {
+        path: 'admin/default-settings',
+        element: <UserManagementPageContainer />,
+        handle: { breadcrumb: () => <Text>Users</Text> }
       }
     ]
   },
@@ -395,10 +405,7 @@ export const routes: CustomRouteObject[] = [
       }
     ]
   },
-  {
-    path: 'admin/default-settings',
-    element: <UserManagementPageContainer />
-  },
+
   {
     path: 'theme',
     element: <ProfileSettingsThemePage />

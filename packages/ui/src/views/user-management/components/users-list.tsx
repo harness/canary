@@ -79,9 +79,8 @@ export const UsersList = ({ users }: PageProps) => {
       <TableHeader>
         <TableRow>
           <TableHead>User</TableHead>
+          <TableHead>Display Name</TableHead>
           <TableHead>Email</TableHead>
-          <TableHead>Role Binding</TableHead>
-          {/* <TableHead className="text-right text-primary">Date added</TableHead> */}
           <TableHead>
             <></>
           </TableHead>
@@ -100,7 +99,7 @@ export const UsersList = ({ users }: PageProps) => {
                       <AvatarFallback>{getInitials(user.uid!, 2)}</AvatarFallback>
                     </Avatar>
                     <Text size={2} weight="medium" wrap="nowrap" truncate className="text-primary">
-                      {user.display_name}
+                      {user.uid}
                       {user.admin && (
                         <Badge
                           variant="outline"
@@ -113,6 +112,14 @@ export const UsersList = ({ users }: PageProps) => {
                     </Text>
                   </div>
                 </TableCell>
+
+                {/* DISPLAY NAME */}
+                <TableCell className="my-6 content-center">
+                  <Text size={2} weight="medium" wrap="nowrap" truncate className="text-primary">
+                    {user.display_name}
+                  </Text>
+                </TableCell>
+
                 {/* EMAIL */}
                 <TableCell className="my-6 content-center">
                   <div className="flex gap-1.5">
@@ -123,7 +130,6 @@ export const UsersList = ({ users }: PageProps) => {
                 </TableCell>
 
                 {/* @TODO: add roll binding data when available */}
-                <TableCell className="my-6 content-center"></TableCell>
 
                 <TableCell className="my-6 content-center">
                   <div className="flex items-center justify-end">{moreActionsTooltip({ user })}</div>

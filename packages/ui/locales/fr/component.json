@@ -47,7 +47,6 @@
     "profile": "Profile",
     "theme": "Thème",
     "customNav": "Personnaliser la navigation",
-    "administration": "Administration",
     "logout": "Se déconnecter",
     "pin": "Épingler",
     "remove": "Supprimer",
@@ -101,6 +100,7 @@
     "policies": "Politiques",
     "freeze-windows": "Fenêtres de gel",
     "external-tickets": "Tickets externes",
+    "administration": "Administration",
     "account": "Compte"
   },
   "pagination": {

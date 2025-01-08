@@ -1,6 +1,6 @@
 import { Navigate, Params, RouteObject } from 'react-router-dom'
 
-import { Text } from '@harnessio/ui/components'
+import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
 import AppShell from './components-v2/app-shell'
@@ -63,7 +63,6 @@ export const routes: CustomRouteObject[] = [
         index: true,
         element: <LandingPage />
       },
-
       {
         path: ':spaceId',
         handle: {
@@ -287,36 +286,37 @@ export const routes: CustomRouteObject[] = [
                 ]
               }
             ]
+          },
+          {
+            path: 'settings',
+            element: <ProjectSettingsLayout />,
+            handle: {
+              breadcrumb: () => <Text>Settings</Text>
+            },
+            children: [
+              {
+                index: true,
+                element: <Navigate to="general" replace />
+              },
+              {
+                path: 'general',
+                element: <>General</>,
+                handle: {
+                  breadcrumb: () => <Text>General</Text>
+                }
+              },
+              {
+                path: 'members',
+                element: <ProjectMemberListPage />,
+                handle: {
+                  breadcrumb: () => <Text>Members</Text>
+                }
+              }
+            ]
           }
         ]
       },
-      {
-        path: ':spaceId/settings',
-        element: <ProjectSettingsLayout />,
-        handle: {
-          breadcrumb: () => <Text>Settings</Text>
-        },
-        children: [
-          {
-            index: true,
-            element: <Navigate to="general" replace />
-          },
-          {
-            path: 'general',
-            element: <>General</>,
-            handle: {
-              breadcrumb: () => <Text>General</Text>
-            }
-          },
-          {
-            path: 'members',
-            element: <ProjectMemberListPage />,
-            handle: {
-              breadcrumb: () => <Text>Members</Text>
-            }
-          }
-        ]
-      },
+
       {
         path: ':spaceId/pipelines',
         element: <ProjectPipelineListPage />,
@@ -327,13 +327,27 @@ export const routes: CustomRouteObject[] = [
       {
         path: 'admin/default-settings',
         element: <UserManagementPageContainer />,
-        handle: { breadcrumb: () => <Text>Users</Text> }
+        handle: {
+          breadcrumb: () => (
+            <>
+              <Text>Account</Text>
+              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <Text>Users</Text>
+            </>
+          )
+        }
       },
       {
         path: 'profile-settings',
         element: <ProfileSettingsLayout />,
         handle: {
-          breadcrumb: () => <Text>Settings</Text>
+          breadcrumb: () => (
+            <>
+              <Text>User</Text>
+              <BreadcrumbSeparator className="mx-2.5">/</BreadcrumbSeparator>
+              <Text>Settings</Text>
+            </>
+          )
         },
         children: [
           {

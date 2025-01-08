@@ -124,8 +124,6 @@
     "readme": "README.md",
     "editReadme": "Edit README.md",
     "openPullReq": "Open pull requests",
-    "clone": "Clone",
-    "addFile": "Add file",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
     "desciptionPlaceholder": "Enter a description of this rule...",
@@ -145,7 +143,9 @@
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
-    "createWebhook": "Create webhook"
+    "createWebhook": "Create webhook",
+    "clone": "Clone",
+    "addFile": "Add file"
   },
   "createProject": {
     "newProject": "Create your new project",

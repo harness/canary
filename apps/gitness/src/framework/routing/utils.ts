@@ -34,12 +34,12 @@ const generateRouteEntries = ({
 
   routes.forEach(route => {
     const fullPath = `${parentPath}/${route.path || ''}`.replace(/\/\/+/g, '/')
-    const routeNameBase = route.path?.replace(/[:/]/g, '_') || 'index'
-    const routeName = parentName ? `${parentName}_${routeNameBase}` : routeNameBase
-
-    if (route.handle?.routeName && RouteConstants[route.handle.routeName as keyof typeof RouteConstants]) {
+    const routeNamePrefix = route.path?.replace(/[:/]/g, '_') || 'index'
+    const routeName = parentName ? `${parentName}_${routeNamePrefix}` : routeNamePrefix
+    const routeNameKey = route.handle?.routeName as keyof typeof RouteConstants
+    if (routeNameKey) {
       entries.push({
-        name: route.handle.routeName as keyof typeof RouteConstants,
+        name: routeNameKey,
         path: fullPath.replace(/^\//, '')
       })
     }

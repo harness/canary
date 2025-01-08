@@ -18,6 +18,7 @@ import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
+import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import BreadcrumbsV1 from './breadcrumbs/breadcrumbs'
 
@@ -29,11 +30,13 @@ interface NavLinkStorageInterface {
 }
 
 const AppShell = () => {
-  const { currentUser } = useAppContext()
+  const { currentUser, spaces } = useAppContext()
   const navigate = useNavigate()
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
+  const space_ref = useGetSpaceURLParam()
+
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
@@ -68,7 +71,7 @@ const AppShell = () => {
    * Map mock data menu by type to Settings and More
    */
   const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData(t)
+    const navbarMenuData = getNavbarMenuData(t, space_ref ?? (spaces.length > 0 ? spaces[0].path : ''))
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
@@ -87,7 +90,7 @@ const AppShell = () => {
         settingsMenu: []
       }
     )
-  }, [t])
+  }, [t, space_ref])
 
   /**
    * Handle logout

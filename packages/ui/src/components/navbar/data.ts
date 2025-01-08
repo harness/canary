@@ -13,8 +13,8 @@ export const getUserMenuItems = (t: TFunction): UserMenuItemType[] => [
   {
     key: UserMenuKeys.ACCOUNT,
     iconName: 'user',
-    title: t('component:navbar.account', 'Account'),
-    to: '/account',
+    title: t('component:navbar.profile', 'Profile'),
+    to: '/profile',
     isSeparated: false
   },
   {
@@ -31,13 +31,7 @@ export const getUserMenuItems = (t: TFunction): UserMenuItemType[] => [
     to: null,
     isSeparated: false
   },
-  {
-    key: UserMenuKeys.ADMINISTRATION,
-    iconName: 'settings-1',
-    title: t('component:navbar.administration', 'Administration'),
-    to: '/settings/general',
-    isSeparated: true
-  },
+
   {
     key: UserMenuKeys.LOG_OUT,
     iconName: 'logOut',

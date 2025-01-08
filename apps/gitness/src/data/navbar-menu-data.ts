@@ -2,7 +2,7 @@ import { TFunction } from 'i18next'
 
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
-export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
+export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupType[] => [
   {
     groupId: 0,
     title: t('component:navbar.devops'),
@@ -166,7 +166,7 @@ export const getNavbarMenuData = (t: TFunction): MenuGroupType[] => [
         id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
-        to: '/admin/default-settings'
+        to: space_ref ? `${space_ref}/settings/members` : '/'
       },
       {
         id: 17,

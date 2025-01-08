@@ -95,9 +95,9 @@ export const NavbarUser = ({
         <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          <Link to="/account">
+          <Link to="/profile-settings">
             <Icon size={12} name="user" className="mr-2" />
-            <Text>{t('component:navbar.account', 'Account')}</Text>
+            <Text>{t('component:navbar.profile', 'Profile')}</Text>
           </Link>
         </DropdownMenuItem>
         <DropdownMenuSub>
@@ -144,13 +144,7 @@ export const NavbarUser = ({
           <Icon size={12} name="navigation" className="mr-2" />
           <Text>{t('component:navbar.customNav', 'Customize navigation')}</Text>
         </DropdownMenuItem>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link to="/account">
-            <Icon size={12} name="settings-1" className="mr-2" />
-            <Text>{t('component:navbar.administration', 'Administration')}</Text>
-          </Link>
-        </DropdownMenuItem>
+
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogOut}>
           <Icon size={12} name="logOut" className="mr-2" />

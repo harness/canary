@@ -44,10 +44,9 @@
   },
   "navbar": {
     "settings": "",
-    "account": "Account",
+    "profile": "Profile",
     "theme": "Theme",
     "customNav": "Customize navigation",
-    "administration": "Administration",
     "logout": "Log out",
     "pin": "",
     "remove": "",
@@ -100,7 +99,9 @@
     "security-and-governance": "",
     "policies": "",
     "freeze-windows": "",
-    "external-tickets": ""
+    "external-tickets": "",
+    "administration": "Administration",
+    "account": "Account"
   },
   "pagination": {
     "previous": "Previous",

@@ -124,8 +124,6 @@
     "readme": "README.md",
     "editReadme": "Edit README.md",
     "openPullReq": "Requêtes de tirage ouvertes",
-    "clone": "Cloner",
-    "addFile": "Ajouter un fichier",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
     "desciptionPlaceholder": "Entrez une description de cette règle...",
@@ -145,7 +143,9 @@
     "updatingWebhook": "Updating webhook...",
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
-    "createWebhook": "Create webhook"
+    "createWebhook": "Create webhook",
+    "clone": "Cloner",
+    "addFile": "Ajouter un fichier"
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

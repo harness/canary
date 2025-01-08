@@ -21,7 +21,7 @@ function Breadcrumbs() {
           <BreadcrumbList>
             {matches.map((match, index) => {
               const { breadcrumb } = (match.handle || {}) as CustomHandle
-              const isFirst = index === 0
+              const isFirst = index === 1
               const isLast = index === matches.length - 1
 
               if (!breadcrumb) return null

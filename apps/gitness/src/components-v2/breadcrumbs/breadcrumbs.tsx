@@ -9,7 +9,7 @@ import {
   Topbar
 } from '@harnessio/ui/components'
 
-import { CustomHandle } from '../../routes'
+import { CustomHandle } from '../../framework/routing/types'
 
 function Breadcrumbs() {
   const matches = useMatches()

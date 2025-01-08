@@ -6,7 +6,7 @@ import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 import AppShell from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
-import { CustomRouteObject } from './framework/routing/types'
+import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import CreateProject from './pages-v2/create-project/create-project-container'
 import { LandingPage } from './pages-v2/landing-page-container'
@@ -87,7 +87,7 @@ export const routes: CustomRouteObject[] = [
                 element: <RepoSummaryPage />,
                 handle: {
                   breadcrumb: () => <Text>Summary</Text>,
-                  routeName: 'toRepoSummary'
+                  routeName: RouteConstants.toRepoSummary
                 }
               },
               {
@@ -95,7 +95,7 @@ export const routes: CustomRouteObject[] = [
                 element: <RepoCommitsPage />,
                 handle: {
                   breadcrumb: () => <Text>Commits</Text>,
-                  routeName: 'toRepoCommits'
+                  routeName: RouteConstants.toRepoCommits
                 }
               },
               {
@@ -103,7 +103,7 @@ export const routes: CustomRouteObject[] = [
                 element: <RepoBranchesListPage />,
                 handle: {
                   breadcrumb: () => <Text>Branches</Text>,
-                  routeName: 'toRepoBranches'
+                  routeName: RouteConstants.toRepoBranches
                 }
               },
               {
@@ -115,7 +115,7 @@ export const routes: CustomRouteObject[] = [
                 ),
                 handle: {
                   breadcrumb: () => <Text>Files</Text>,
-                  routeName: 'toRepoFiles'
+                  routeName: RouteConstants.toRepoFiles
                 },
                 children: [
                   {

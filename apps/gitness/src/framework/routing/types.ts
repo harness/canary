@@ -3,7 +3,9 @@ import { Params, RouteObject } from 'react-router-dom'
 // Enum defining the route constants
 export enum RouteConstants {
   toRepoSummary = 'toRepoSummary',
-  toRepoCommits = 'toRepoCommits'
+  toRepoCommits = 'toRepoCommits',
+  toRepoBranches = 'toRepoBranches',
+  toRepoFiles = 'toRepoFiles'
 }
 
 export interface RouteEntry {

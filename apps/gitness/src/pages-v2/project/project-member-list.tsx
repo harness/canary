@@ -19,11 +19,7 @@ import { orderSortDate } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
-// interface ProjectMemberListPageProps {
-//   space_ref?: string
-// }
-
-export const ProjectMemberListPage /*: React.FC<ProjectMemberListPageProps>*/ = () /*({ space_ref })*/ => {
+export const ProjectMemberListPage = () => {
   const space_ref = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()

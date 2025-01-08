@@ -15,21 +15,17 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { SandboxLayout } from '@/views'
+import { ISPaceStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface ProjectSettingsGeneralPageProps {
-  spaceData: InputProps
+  // spaceData: InputProps
   onFormSubmit: (formData: InputProps) => void
-  onHandleDescription: (newDescription: string) => void
-  handleDeleteProject: () => void
-  isDeleteSuccess: boolean
-  isDeleting: boolean
   isUpdating: boolean
   isUpateSuccess: boolean
   updateError: string | null
-  deleteError: string | null
+  useSpaceStore: () => ISPaceStore
   setOpenDeleteDialog: () => void
 }
 interface InputProps {
@@ -39,13 +35,13 @@ interface InputProps {
 
 const projectSettingsSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a project name' }),
-  description: z.string().min(1, { message: 'Please provide an description' })
+  description: z.string()
 })
 
 type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
 
 export const ProjectSettingsGeneralPage = ({
-  spaceData,
+  useSpaceStore,
   onFormSubmit,
   isUpdating,
   isUpateSuccess,
@@ -53,13 +49,14 @@ export const ProjectSettingsGeneralPage = ({
   setOpenDeleteDialog
 }: ProjectSettingsGeneralPageProps) => {
   // Project Settings form handling
+  const { space: spaceData } = useSpaceStore()
   const {
     register,
     handleSubmit,
     reset,
     resetField,
     setValue,
-    formState: { errors, isValid, isDirty }
+    formState: { errors }
   } = useForm<ProjectSettingsGeneralFields>({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onChange',
@@ -85,8 +82,8 @@ export const ProjectSettingsGeneralPage = ({
       }, 1000)
 
       reset({
-        identifier: spaceData.identifier,
-        description: spaceData.description
+        identifier: spaceData?.identifier,
+        description: spaceData?.description
       })
 
       return () => clearTimeout(timer)
@@ -102,7 +99,7 @@ export const ProjectSettingsGeneralPage = ({
   }, [spaceData?.identifier, setValue])
 
   const handleCancel = () => {
-    resetField('description', { defaultValue: spaceData.description })
+    resetField('description', { defaultValue: spaceData?.description })
   }
 
   return (

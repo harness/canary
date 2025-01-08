@@ -406,33 +406,6 @@ export const routes: CustomRouteObject[] = [
     path: 'signup',
     element: <SignUp />
   },
-  // {
-  //   path: 'settings',
-  //   element: <ProfileSettingsLayout />,
-  //   handle: {
-  //     breadcrumb: () => <Text>Settings</Text>
-  //   },
-  //   children: [
-  //     {
-  //       index: true,
-  //       element: <Navigate to="general" replace />
-  //     },
-  //     {
-  //       path: 'general',
-  //       element: <SettingsProfileGeneralPage />,
-  //       handle: {
-  //         breadcrumb: () => <Text>General</Text>
-  //       }
-  //     },
-  //     {
-  //       path: 'keys',
-  //       element: <SettingsProfileKeysPage />,
-  //       handle: {
-  //         breadcrumb: () => <Text>Keys</Text>
-  //       }
-  //     }
-  //   ]
-  // },
 
   {
     path: 'theme',

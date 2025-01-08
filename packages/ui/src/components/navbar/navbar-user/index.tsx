@@ -144,13 +144,7 @@ export const NavbarUser = ({
           <Icon size={12} name="navigation" className="mr-2" />
           <Text>{t('component:navbar.customNav', 'Customize navigation')}</Text>
         </DropdownMenuItem>
-        {/* <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
-          <Link to="/account">
-            <Icon size={12} name="settings-1" className="mr-2" />
-            <Text>{t('component:navbar.administration', 'Administration')}</Text>
-          </Link>
-        </DropdownMenuItem> */}
+
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={handleLogOut}>
           <Icon size={12} name="logOut" className="mr-2" />

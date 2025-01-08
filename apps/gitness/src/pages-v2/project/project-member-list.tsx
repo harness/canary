@@ -13,18 +13,18 @@ import {
 } from '@harnessio/code-service-client'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
-// import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { orderSortDate } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
-interface ProjectMemberListPageProps {
-  space_ref?: string
-}
+// interface ProjectMemberListPageProps {
+//   space_ref?: string
+// }
 
-export const ProjectMemberListPage: React.FC<ProjectMemberListPageProps> = ({ space_ref }) => {
-  // const space_ref = useGetSpaceURLParam()
+export const ProjectMemberListPage /*: React.FC<ProjectMemberListPageProps>*/ = () /*({ space_ref })*/ => {
+  const space_ref = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()

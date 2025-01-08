@@ -9,9 +9,10 @@ type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface CommitProps {
   data?: TypesCommit[]
+  commitsPath?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data }) => {
+export const CommitsList: FC<CommitProps> = ({ data, commitsPath }) => {
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -39,33 +40,40 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
                   const authorName = commit.author?.identity?.name
 
                   return (
-                    <Link to={`${commit?.sha?.substring(0, 7)}`} key={commit?.sha}>
-                      <StackedList.Item
-                        className="items-start py-3"
-                        key={commit?.sha || repo_idx}
-                        isLast={commitData.length - 1 === repo_idx}
-                      >
-                        <StackedList.Field
-                          title={
-                            <div className="flex flex-col gap-y-1.5">
-                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
-                              <div className="flex items-center gap-x-1.5">
-                                {authorName && (
-                                  <Avatar className="size-[18px]">
-                                    <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
-                                  </Avatar>
-                                )}
-                                <span className="text-foreground-3">{authorName || ''}</span>
-                                <span className="text-foreground-4">committed on {date}</span>
-                              </div>
+                    <StackedList.Item
+                      className="!cursor-default items-start py-3"
+                      key={commit?.sha || repo_idx}
+                      isLast={commitData.length - 1 === repo_idx}
+                    >
+                      <StackedList.Field
+                        title={
+                          <div className="flex flex-col gap-y-1.5">
+                            {commitsPath ? (
+                              <Link
+                                className="text-16 truncate font-medium leading-snug"
+                                to={`${commitsPath}/${commit?.sha}`}
+                              >
+                                {commit.title}
+                              </Link>
+                            ) : (
+                              <span className="text-16 truncate font-medium leading-snug">{commit.title}</span>
+                            )}
+                            <div className="flex items-center gap-x-1.5">
+                              {authorName && (
+                                <Avatar className="size-[18px]">
+                                  <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
+                                </Avatar>
+                              )}
+                              <span className="text-foreground-3">{authorName || ''}</span>
+                              <span className="text-foreground-4">committed on {date}</span>
                             </div>
-                          }
-                        />
-                        {!!commit?.sha && (
-                          <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
-                        )}
-                      </StackedList.Item>
-                    </Link>
+                          </div>
+                        }
+                      />
+                      {!!commit?.sha && (
+                        <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
+                      )}
+                    </StackedList.Item>
                   )
                 })}
               </StackedList.Root>

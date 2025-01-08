@@ -25,6 +25,7 @@ export * from '@views/repo/components'
 
 // repo commits
 export * from '@views/repo/repo-commits'
+export * from '@views/repo/repo-commit-details'
 
 // repo branches
 export * from '@views/repo/repo-branch'

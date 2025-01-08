@@ -34,6 +34,7 @@ import RepoCommitDiffsPage from './pages-v2/repo-commit-details/commit-diffs-con
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
+import RepoCommitDetailsPage from './pages-v2/repo/repo-commit-details'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'

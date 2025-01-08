@@ -19,7 +19,7 @@ import { orderSortDate } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
-export const ProjectMemberListPage = () => {
+export function ProjectMemberListPage() {
   const space_ref = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()

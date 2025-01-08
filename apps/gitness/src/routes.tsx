@@ -313,17 +313,17 @@ export const routes: CustomRouteObject[] = [
                 }
               }
             ]
+          },
+          {
+            path: 'pipelines',
+            element: <ProjectPipelineListPage />,
+            handle: {
+              breadcrumb: () => <Text>Pipelines</Text>
+            }
           }
         ]
       },
 
-      {
-        path: ':spaceId/pipelines',
-        element: <ProjectPipelineListPage />,
-        handle: {
-          breadcrumb: () => <Text>Pipelines</Text>
-        }
-      },
       {
         path: 'admin/default-settings',
         element: <UserManagementPageContainer />,

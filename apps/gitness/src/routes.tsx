@@ -254,7 +254,10 @@ export const routes: CustomRouteObject[] = [
                         children: [
                           {
                             path: ':identifier',
-                            element: <RepoBranchSettingsRulesPageContainer />
+                            element: <RepoBranchSettingsRulesPageContainer />,
+                            handle: {
+                              routeName: RouteConstants.toRepoBranchRule
+                            }
                           }
                         ]
                       },

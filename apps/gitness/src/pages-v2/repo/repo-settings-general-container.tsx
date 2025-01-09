@@ -303,9 +303,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    const url = `/${spaceId}/repos/${repoName}/settings/rules/create/${identifier}`
-
-    navigate(url)
+    navigate(`/${routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier })}`)
   }
 
   const handleDeleteRule = (ruleIdentifier: string) => {

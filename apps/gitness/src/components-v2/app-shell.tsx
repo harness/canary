@@ -97,7 +97,7 @@ const AppShell = () => {
   /**
    * Handle logout
    */
-  const handleLogOut = () => navigate(routes.toLogout({}))
+  const handleLogOut = () => navigate(routes.toLogout())
 
   /**
    * Toggle show more menu

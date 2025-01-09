@@ -10,9 +10,11 @@ import {
 } from '@harnessio/ui/components'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { PathParams } from '../../RouteDefinitions'
 
 function ProjectDropdown(): JSX.Element {
+  const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
   const { spaces } = useAppContext()
@@ -29,7 +31,7 @@ function ProjectDropdown(): JSX.Element {
             key={identifier}
             onClick={() => {
               if (identifier) {
-                navigate(`/${identifier}/repos`)
+                navigate(routes.toRepositories({ spaceId: identifier }))
               }
             }}
           >

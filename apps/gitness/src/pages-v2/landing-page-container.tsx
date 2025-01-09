@@ -24,7 +24,7 @@ export const LandingPage = () => {
         })
         .catch(_e => {
           // Ignore/toast error
-          navigate(routes.toSignIn({}))
+          navigate(routes.toSignIn())
         })
     }
   }, [])

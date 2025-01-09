@@ -19,7 +19,7 @@ const RootWrapper = () => {
       useNav={useNav}
       useThemeStore={useThemeStore}
       useTranslationStore={useTranslationStore}
-      logout={() => navigate(routes.toLogout({}))}
+      logout={() => navigate(routes.toLogout())}
     />
   )
 }

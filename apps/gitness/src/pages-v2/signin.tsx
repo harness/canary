@@ -26,7 +26,7 @@ export const SignIn: FC = () => {
           .catch(_e => {
             // Ignore/toast error
           })
-        navigate(routes.toHome({})) // Redirect to Home page
+        navigate(routes.toHome()) // Redirect to Home page
       }
     }
   )

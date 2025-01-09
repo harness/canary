@@ -64,7 +64,8 @@ export const routes: CustomRouteObject[] = [
           {
             path: 'repos',
             handle: {
-              breadcrumb: () => <Text>Repositories</Text>
+              breadcrumb: () => <Text>Repositories</Text>,
+              routeName: RouteConstants.toRepositories
             },
             children: [
               { index: true, element: <ReposListPage /> },

@@ -10,9 +10,9 @@ import { CustomRouteObject, RouteConstants, RouteEntry, RouteFunctionMap } from 
  */
 export const generateRouteNameToPathFunctions = (routeEntries: RouteEntry[]): RouteFunctionMap => {
   return routeEntries.reduce<RouteFunctionMap>((map, { name, path }) => {
-    map[name] = (params: Params<string>) => {
+    map[name] = (params?: Params<string>) => {
       /* Replace each parameter in the path with the corresponding value from params */
-      return path.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params[key] || `:${key}`)
+      return path.replace(/:([a-zA-Z0-9_]+)/g, (_, key) => params?.[key] || `:${key}`)
     }
     return map
   }, {} as RouteFunctionMap)

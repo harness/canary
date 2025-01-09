@@ -5,6 +5,7 @@ export enum RouteConstants {
   toHome = 'toHome',
   toLogout = 'toLogout',
   toSignIn = 'toSignIn',
+  toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',
@@ -17,7 +18,7 @@ export interface RouteEntry {
 }
 
 // Type for a mapping of enum keys to functions that generate paths
-export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params: Params<string>) => string>
+export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params?: Params<string>) => string>
 
 // Define a custom handle with the breadcrumb property
 export interface CustomHandle {

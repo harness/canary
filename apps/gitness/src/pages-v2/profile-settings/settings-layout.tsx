@@ -10,7 +10,7 @@ export const SettingsLayout = () => {
 
   return (
     <>
-      <div className="top-breadcrumbs sticky z-40 bg-background-1">
+      <div className="top-[55px] sticky z-40 bg-background-1">
         <ProfileSettingsTabNav activeTab={activeTab} useTranslationStore={useTranslationStore} />
       </div>
       <Outlet />

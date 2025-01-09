@@ -98,7 +98,3 @@ export function generateAlphaNumericHash(length: number) {
 
   return result
 }
-
-export function getGitnessShadowRoot() {
-  return document.getElementById('gitness-shadow-root')?.shadowRoot as Element | null | undefined
-}

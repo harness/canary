@@ -11,7 +11,9 @@
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
     "./tailwind.config": "./tailwind.config.js",
-    "./styles.css": "./dist/styles.css"
+    "./styles.css": "./dist/styles.css",
+    "./shared-style-variables.css": "./src/shared-style-variables.css",
+    "./context": "./dist/context.js"
   },
   "scripts": {
     "dev": "vite",

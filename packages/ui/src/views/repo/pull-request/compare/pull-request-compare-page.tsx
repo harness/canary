@@ -159,11 +159,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="text-24 text-foreground-1 mt-7 font-medium leading-snug tracking-tight">
+        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="text-14 text-foreground-2 max-w-xl leading-snug">
+          <p className="max-w-xl text-14 leading-snug text-foreground-2">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request. If you need to, you can also'
@@ -190,7 +190,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               setSearchQuery={setSearchQuery}
             />
 
-            <Icon name="arrow-long" size={12} className="text-icons-1 rotate-180" />
+            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
             <BranchSelector
               useTranslationStore={useTranslationStore}
               useRepoBranchesStore={useRepoBranchesStore}
@@ -210,7 +210,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-14 text-foreground-success leading-none">
+                      <p className="text-14 leading-none text-foreground-success">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-foreground-4">
                           {t(
@@ -225,7 +225,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-14 text-foreground-4 leading-none">
+                          <p className="text-14 leading-none text-foreground-4">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
@@ -235,7 +235,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       ) : (
                         <>
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-14 text-foreground-danger leading-none">
+                          <p className="text-14 leading-none text-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-foreground-4">
                               {t(
@@ -253,7 +253,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="border-borders-1 bg-background-2 mt-4 items-center justify-between rounded-md border p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
@@ -284,7 +284,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
-          <Layout.Horizontal className="border-borders-1 bg-background-2 mt-4 items-center justify-between rounded-md border p-4">
+          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
             <div className="flex items-center gap-x-1.5">
               <Icon name="compare" size={14} className="text-icons-success" />
               <div className="flex gap-x-1.5">

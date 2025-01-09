@@ -71,7 +71,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   return (
     <>
       {!isSubmitted ? (
-        <div className="bg-background-5 flex rounded">
+        <div className="flex rounded bg-background-5">
           <Button
             className="rounded-r-none pr-2.5"
             theme="primary"
@@ -85,7 +85,7 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
             )}
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger className="after:bg-borders-7 hover:bg-background-10 relative flex size-8 items-center justify-center rounded-r after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px">
+            <DropdownMenuTrigger className="relative flex size-8 items-center justify-center rounded-r after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px after:bg-borders-7 hover:bg-background-10">
               <Icon name="chevron-down" size={12} className="text-icons-10" />
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="mt-1 max-w-80">

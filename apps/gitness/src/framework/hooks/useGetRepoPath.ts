@@ -4,7 +4,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { useGetSpaceURLParam } from './useGetSpaceParam'
 
 export function useGetRepoRef(): string {
-  const space = useGetSpaceURLParam()
+  const spaceURL = useGetSpaceURLParam()
   const { repoId } = useParams<PathParams>()
-  return space && repoId ? `${space}/${repoId}/+` : ''
+  return spaceURL && repoId ? `${spaceURL}/${repoId}/+` : ''
 }

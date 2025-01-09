@@ -12,13 +12,13 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { usePipelineListStore } from './stores/project-pipeline-list-store'
 
 export default function ProjectPipelineListPage() {
-  const space_ref = useGetSpaceURLParam()
+  const spaceURL = useGetSpaceURLParam()
   const { setPipelinesData, page, setPage } = usePipelineListStore()
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
     queryParams: { page, query: query ?? '' },
-    space_ref: space_ref || ''
+    space_ref: spaceURL || ''
   })
 
   useEffect(() => {

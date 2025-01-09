@@ -93,7 +93,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
         useSpaceStore={useSpaceStore}
         onFormSubmit={handleFormSubmit}
         isUpdating={updateDescription.isLoading}
-        isUpateSuccess={updateDescription.isSuccess}
+        isUpdateSuccess={updateDescription.isSuccess}
         updateError={updateError}
         setOpenDeleteDialog={() => setOpenDeleteDialog(true)}
       />

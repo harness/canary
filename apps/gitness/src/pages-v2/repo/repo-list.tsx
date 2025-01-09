@@ -13,7 +13,7 @@ import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
-  const space = useGetSpaceURLParam() ?? ''
+  const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
   /* Query and Pagination */
@@ -29,7 +29,7 @@ export default function ReposListPage() {
   } = useListReposQuery(
     {
       queryParams: { page, query: query ?? '' },
-      space_ref: `${space}/+`
+      space_ref: `${spaceURL}/+`
     },
     {
       retry: false
@@ -66,7 +66,7 @@ export default function ReposListPage() {
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
   useSpaceSSE({
-    space,
+    space: spaceURL,
     events,
     onEvent,
     shouldRun: isRepoStillImporting

@@ -21,7 +21,7 @@ import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
 import { routes } from './routes'
 
-const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
+// const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
 export interface MFERouteRendererProps {
   projectIdentifier: string | undefined
@@ -82,7 +82,7 @@ export default function AppMFE({
   onRouteChange
 }: AppMFEProps) {
   new CodeServiceAPIClient({
-    urlInterceptor: (url: string) => `/code${BASE_URL_PREFIX}${url}`,
+    urlInterceptor: (url: string) => `${window.apiUrl || ''}/code/api/v1${url}`,
     requestInterceptor: (request: Request) => {
       const token = decode(localStorage.getItem('token') || '')
       const newRequest = request.clone()

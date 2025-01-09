@@ -36,19 +36,6 @@ function Breadcrumbs() {
                     </Breadcrumb.Item>
                   </div>
                 )
-
-                // return (
-                //   <BreadcrumbItem key={index}>
-                //     {!isFirst ? <BreadcrumbSeparator className="mr-1">/</BreadcrumbSeparator> : null}
-                //     {isLast ? (
-                //       <BreadcrumbPage>{breadcrumb(match.params)}</BreadcrumbPage>
-                //     ) : (
-                //       <BreadcrumbLink asChild>
-                //         <Link to={match.pathname}>{breadcrumb(match.params)}</Link>
-                //       </BreadcrumbLink>
-                //     )}
-                //   </BreadcrumbItem>
-                // )
               })}
             </nav>
           </Breadcrumb.List>

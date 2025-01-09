@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
 
 import { useDiffStatsQuery, useGetCommitDiffQuery, useGetCommitQuery } from '@harnessio/code-service-client'
-import { DiffFile, RepoCommitDetailsView } from '@harnessio/ui/views'
+import { DiffFileEntry, RepoCommitDetailsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -16,6 +16,7 @@ import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-r
 export default function RepoCommitDetailsPage() {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
+  const [diffs, setDiffs] = useState<DiffFileEntry[]>([])
 
   const { data: { body: commitData } = {} } = useGetCommitQuery({
     repo_ref: repoRef,
@@ -78,7 +79,7 @@ export default function RepoCommitDetailsPage() {
         ...commitData,
         // TODO: get this data from backend if possible
         isVerified: true,
-        diffs: currentCommitDiffData?.body as unknown as DiffFile[],
+        diffs: diffs,
         diffStats: diffStats
       }}
       useTranslationStore={useTranslationStore}

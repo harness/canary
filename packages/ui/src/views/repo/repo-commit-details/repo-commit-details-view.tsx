@@ -1,17 +1,18 @@
 import { FC } from 'react'
 
 import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon } from '@/components'
-import { DiffFile, SandboxLayout, TranslationStore, TypesCommit, TypesDiffStats } from '@/views'
+import { DiffFileEntry, SandboxLayout, TranslationStore, TypesCommit, TypesDiffStats } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
-import PullRequestCompareDiffList from '../pull-request/compare/components/pull-request-compare-diff-list'
 import { HeaderProps } from '../pull-request/compare/pull-request-compare.types'
+// import { PullRequestChanges } from '../pull-request/details/components/changes/pull-request-changes'
+import { CommitChanges } from './components/commit-changes'
 
 interface CommitDetails extends TypesCommit {
   isVerified?: boolean
-  diffs: DiffFile[]
-  diffStats: TypesDiffStats
+  diffs: DiffFileEntry[]
+  diffStats?: TypesDiffStats
 }
 
 export interface RepoCommitDetailsViewProps {
@@ -22,7 +23,7 @@ export interface RepoCommitDetailsViewProps {
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, useTranslationStore }) => {
   const { t } = useTranslationStore()
 
-  console.log(commit)
+  console.log(commit.diffStats)
 
   return (
     <SandboxLayout.Main fullWidth>
@@ -66,6 +67,38 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, 
             <CommitCopyActions sha={commit?.sha || ''} />
           </div>
         </div>
+        <p className="text-14 leading-tight text-foreground-4 py-2">
+          Showing <span className="text-foreground-accent">{commit?.diffStats?.files_changed || 0} changed files </span>
+          with {commit?.diffStats?.additions || 0} additions and {commit?.diffStats?.deletions || 0} deletions
+        </p>
+        <CommitChanges
+          data={
+            commit.diffs?.map(item => ({
+              text: item.filePath,
+              numAdditions: item.addedLines,
+              numDeletions: item.deletedLines,
+              data: item.raw,
+              title: item.filePath,
+              lang: item.filePath.split('.')[1],
+              fileViews: item.fileViews,
+              checksumAfter: item.checksumAfter,
+              filePath: item.filePath
+            })) || []
+          }
+          useTranslationStore={useTranslationStore}
+          diffMode={2}
+          //   currentUser={currentUser?.display_name}
+          //   comments={[]}
+          //   handleSaveComment={() => {}}
+          //   deleteComment={() => {}}
+          //   updateComment={() => {}}
+          //   defaultCommitFilter={{ name: '', value: '' }}
+          //   selectedCommits={[]}
+          //   markViewed={() => {}}
+          //   unmarkViewed={() => {}}
+          //   commentId={commentId}
+          //   onCopyClick={onCopyClick}
+        />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

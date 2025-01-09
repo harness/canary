@@ -53,10 +53,6 @@ module.exports = {
           eager: true
         }
       }
-    }),
-    new HtmlWebpackPlugin({
-      template: './index.html',
-      crossorigin: 'anonymous'
     })
   ]
 }

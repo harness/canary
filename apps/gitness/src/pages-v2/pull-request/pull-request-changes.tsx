@@ -138,6 +138,8 @@ export default function PullRequestChanges() {
       enabled: targetRef !== undefined && sourceRef !== undefined && cachedDiff.path !== path
     }
   )
+  // console.log('diffApiPath is', diffApiPath)
+  // console.log('raw diff is', rawDiff)
 
   const { data: { body: fileViewsData } = {}, refetch: refetchFileViews } = useFileViewListPullReqQuery({
     repo_ref: repoRef,

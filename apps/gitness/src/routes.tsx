@@ -143,7 +143,10 @@ export const routes: CustomRouteObject[] = [
                       { index: true, element: <PullRequestListPage /> },
                       {
                         path: 'compare/:diffRefs*?',
-                        element: <CreatePullRequest />
+                        element: <CreatePullRequest />,
+                        handle: {
+                          routeName: RouteConstants.toPullRequestCompare
+                        }
                       },
                       {
                         path: ':pullRequestId',
@@ -210,7 +213,8 @@ export const routes: CustomRouteObject[] = [
                             path: 'edit',
                             element: <PipelineEditPage />,
                             handle: {
-                              breadcrumb: () => <Text>Edit</Text>
+                              breadcrumb: () => <Text>Edit</Text>,
+                              routeName: RouteConstants.toPipelineEdit
                             }
                           }
                         ]

@@ -9,7 +9,9 @@ export enum RouteConstants {
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',
-  toRepoFiles = 'toRepoFiles'
+  toRepoFiles = 'toRepoFiles',
+  toPullRequestCompare = 'toPullRequestCompare',
+  toPipelineEdit = 'toPipelineEdit'
 }
 
 export interface RouteEntry {

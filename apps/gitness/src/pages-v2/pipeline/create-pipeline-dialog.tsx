@@ -6,7 +6,6 @@ import { CreatePipelineDialog as CreatePipelineDialogView, CreatePipelineFormTyp
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
 import { apiBranches2BranchNames, apiBranches2DefaultBranchName } from '../repo/transform-utils/branch-transform'
 import { useCreatePipelineStore } from './stores/create-pipeline-dialog.store'
@@ -18,8 +17,7 @@ interface CreatePipelineDialogProps {
 
 export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDialogProps) {
   const routes = useRoutes()
-  const { repoId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam()
+  const { repoId, spaceId } = useParams<PathParams>()
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
 

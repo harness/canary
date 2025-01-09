@@ -5,7 +5,6 @@ import { useGetPullReqQuery, useUpdatePullReqMutation } from '@harnessio/code-se
 import { PullRequestLayout as PullRequestLayoutView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestStore } from './stores/pull-request-store'
@@ -13,8 +12,7 @@ import { usePullRequestStore } from './stores/pull-request-store'
 const PullRequestLayout = () => {
   const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
 
-  const { pullRequestId, repoId, projectId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { pullRequestId, repoId, spaceId } = useParams<PathParams>()
 
   const repoRef = useGetRepoRef()
 

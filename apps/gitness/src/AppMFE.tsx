@@ -9,8 +9,8 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import styles from '!!raw-loader!@harnessio/ui/styles.css'
-import { TooltipProvider } from '@harnessio/canary'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
+import { TooltipProvider } from '@harnessio/ui/components'
 
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'

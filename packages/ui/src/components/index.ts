@@ -64,6 +64,7 @@ export * from './repo-subheader'
 export * from './switch'
 export * from './meter'
 export * from './filters'
+export * from './tooltip'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

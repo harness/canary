@@ -259,7 +259,8 @@ export const routes: CustomRouteObject[] = [
                       {
                         path: 'webhooks',
                         handle: {
-                          breadcrumb: () => <Text>Webhooks</Text>
+                          breadcrumb: () => <Text>Webhooks</Text>,
+                          routeName: RouteConstants.toRepoWebhooks
                         },
                         children: [
                           {

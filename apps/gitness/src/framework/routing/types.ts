@@ -11,8 +11,10 @@ export enum RouteConstants {
   toRepoBranches = 'toRepoBranches',
   toRepoFiles = 'toRepoFiles',
   toRepoWebhooks = 'toRepoWebhooks',
+  toPullRequests = 'toPullRequests',
   toPullRequestCompare = 'toPullRequestCompare',
-  toPipelineEdit = 'toPipelineEdit'
+  toPipelineEdit = 'toPipelineEdit',
+  toRepoGeneralSettings = 'toRepoGeneralSettings'
 }
 
 export interface RouteEntry {

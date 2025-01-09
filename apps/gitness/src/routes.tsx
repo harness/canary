@@ -137,7 +137,8 @@ export const routes: CustomRouteObject[] = [
                   {
                     path: 'pulls',
                     handle: {
-                      breadcrumb: () => <Text>Pull Requests</Text>
+                      breadcrumb: () => <Text>Pull Requests</Text>,
+                      routeName: RouteConstants.toPullRequests
                     },
                     children: [
                       { index: true, element: <PullRequestListPage /> },
@@ -236,7 +237,8 @@ export const routes: CustomRouteObject[] = [
                         path: 'general',
                         element: <RepoSettingsGeneralPageContainer />,
                         handle: {
-                          breadcrumb: () => <Text>General</Text>
+                          breadcrumb: () => <Text>General</Text>,
+                          routeName: RouteConstants.toRepoGeneralSettings
                         }
                       },
                       {

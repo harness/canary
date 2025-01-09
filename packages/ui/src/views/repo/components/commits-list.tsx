@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
@@ -11,6 +12,7 @@ interface CommitProps {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data }) => {
+  const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -39,9 +41,10 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
 
                   return (
                     <StackedList.Item
-                      className="!cursor-default items-start py-3"
+                      className="items-start py-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
+                      onClick={() => navigate(`${commit?.sha?.substring(0, 7)}`)}
                     >
                       <StackedList.Field
                         title={

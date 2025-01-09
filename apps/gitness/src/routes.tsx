@@ -1,4 +1,5 @@
-import { Navigate } from 'react-router-dom'
+import { ReactElement } from 'react'
+import { Params, RouteObject } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
@@ -49,10 +50,25 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
-export const routes: CustomRouteObject[] = [
+// Define a custom handle with the breadcrumb property
+export interface CustomHandle {
+  breadcrumb?: (params: Params<string>) => string
+}
+
+// Create a new type by intersecting RouteObject with the custom handle
+type CustomRouteObject = RouteObject & {
+  handle?: CustomHandle
+}
+
+export const routes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null = null): CustomRouteObject[] => [
   {
     path: '/',
-    element: <AppShell />,
+    element: (
+      <>
+        {mfeRouteRenderer}
+        <AppShell isMFE={Boolean(mfeProjectId)} />
+      </>
+    ),
     handle: { routeName: 'toHome' },
     children: [
       {
@@ -349,11 +365,13 @@ export const routes: CustomRouteObject[] = [
       {
         path: ':spaceId',
         handle: {
-          breadcrumb: () => <ProjectDropdown />
+          handle: {
+            breadcrumb: () => (mfeProjectId ? <span>{mfeProjectId}</span> : <ProjectDropdown />)
+          }
         },
         children: [
           {
-            path: 'repos',
+            path: `repos`,
             handle: {
               breadcrumb: () => <Text>Repositories</Text>,
               routeName: RouteConstants.toRepositories
@@ -377,7 +395,11 @@ export const routes: CustomRouteObject[] = [
                 children: [
                   {
                     index: true,
-                    element: <Navigate to="summary" replace />
+                    element: <RepoSummaryPage />,
+                    handle: {
+                      breadcrumb: () => <Text>Summary</Text>,
+                      routeName: RouteConstants.toRepoSummary
+                    }
                   },
                   {
                     path: 'summary',
@@ -470,7 +492,11 @@ export const routes: CustomRouteObject[] = [
                         children: [
                           {
                             index: true,
-                            element: <Navigate to="conversation" replace />
+                            element: (
+                              <PullRequestDataProvider>
+                                <PullRequestConversationPage />
+                              </PullRequestDataProvider>
+                            )
                           },
                           {
                             path: 'conversation',
@@ -559,7 +585,10 @@ export const routes: CustomRouteObject[] = [
                     children: [
                       {
                         index: true,
-                        element: <Navigate to="general" replace />
+                        element: <RepoSettingsGeneralPageContainer />,
+                        handle: {
+                          breadcrumb: () => <Text>General</Text>
+                        }
                       },
                       {
                         path: 'general',
@@ -638,7 +667,10 @@ export const routes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <Navigate to="general" replace />
+                element: <>General</>,
+                handle: {
+                  breadcrumb: () => <Text>General</Text>
+                }
               },
               {
                 path: 'general',
@@ -737,7 +769,10 @@ export const routes: CustomRouteObject[] = [
         children: [
           {
             index: true,
-            element: <Navigate to="general" replace />
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <Text>General</Text>
+            }
           },
           {
             path: 'general',

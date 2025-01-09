@@ -31,7 +31,7 @@ export default function AppV1() {
   })
 
   // Router Configuration
-  const router = createBrowserRouter(routes)
+  const router = createBrowserRouter(routes())
 
   return (
     <AppProvider>

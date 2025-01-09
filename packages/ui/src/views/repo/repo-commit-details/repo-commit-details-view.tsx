@@ -6,7 +6,6 @@ import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
 import { HeaderProps } from '../pull-request/compare/pull-request-compare.types'
-// import { PullRequestChanges } from '../pull-request/details/components/changes/pull-request-changes'
 import { CommitChanges } from './components/commit-changes'
 
 interface CommitDetails extends TypesCommit {
@@ -87,17 +86,6 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, 
           }
           useTranslationStore={useTranslationStore}
           diffMode={2}
-          //   currentUser={currentUser?.display_name}
-          //   comments={[]}
-          //   handleSaveComment={() => {}}
-          //   deleteComment={() => {}}
-          //   updateComment={() => {}}
-          //   defaultCommitFilter={{ name: '', value: '' }}
-          //   selectedCommits={[]}
-          //   markViewed={() => {}}
-          //   unmarkViewed={() => {}}
-          //   commentId={commentId}
-          //   onCopyClick={onCopyClick}
         />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

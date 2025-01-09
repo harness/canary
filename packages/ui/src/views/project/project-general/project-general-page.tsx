@@ -15,7 +15,7 @@ import {
   Spacer,
   Text
 } from '@/components'
-import { ISPaceStore, SandboxLayout } from '@/views'
+import { ISpaceStore, SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -23,9 +23,9 @@ interface ProjectSettingsGeneralPageProps {
   // spaceData: InputProps
   onFormSubmit: (formData: InputProps) => void
   isUpdating: boolean
-  isUpateSuccess: boolean
+  isUpdateSuccess: boolean
   updateError: string | null
-  useSpaceStore: () => ISPaceStore
+  useSpaceStore: () => ISpaceStore
   setOpenDeleteDialog: () => void
 }
 interface InputProps {
@@ -44,7 +44,7 @@ export const ProjectSettingsGeneralPage = ({
   useSpaceStore,
   onFormSubmit,
   isUpdating,
-  isUpateSuccess,
+  isUpdateSuccess,
   updateError,
   setOpenDeleteDialog
 }: ProjectSettingsGeneralPageProps) => {
@@ -74,7 +74,7 @@ export const ProjectSettingsGeneralPage = ({
   }
 
   useEffect(() => {
-    if (isUpateSuccess) {
+    if (isUpdateSuccess) {
       setSubmitted(true)
 
       const timer = setTimeout(() => {
@@ -88,7 +88,7 @@ export const ProjectSettingsGeneralPage = ({
 
       return () => clearTimeout(timer)
     }
-  }, [isUpateSuccess])
+  }, [isUpdateSuccess])
 
   useEffect(() => {
     setValue('description', spaceData?.description ?? '')
@@ -130,7 +130,7 @@ export const ProjectSettingsGeneralPage = ({
               <Input
                 id="description"
                 {...register('description')}
-                placeholder="Enter unique description"
+                placeholder="Enter description"
                 label="Description"
                 onChange={e => setValue('description', e.target.value)}
                 error={errors.description?.message?.toString()}

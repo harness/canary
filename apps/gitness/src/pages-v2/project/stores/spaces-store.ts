@@ -1,8 +1,8 @@
 import { create } from 'zustand'
 
-import { ISPaceStore } from '@harnessio/ui/views'
+import { ISpaceStore } from '@harnessio/ui/views'
 
-export const useSpaceStore = create<ISPaceStore>(set => ({
+export const useSpaceStore = create<ISpaceStore>(set => ({
   space: null,
   setSpace: space => set({ space })
 }))

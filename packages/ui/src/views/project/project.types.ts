@@ -19,7 +19,7 @@ export interface TypesSpace {
   updated?: number
 }
 
-export interface ISPaceStore {
+export interface ISpaceStore {
   space: TypesSpace | null
   setSpace: (space: TypesSpace | null) => void
 }

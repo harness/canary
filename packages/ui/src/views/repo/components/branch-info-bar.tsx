@@ -77,17 +77,13 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           </div>
           <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
-              <Link
-                to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-              >
+              <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}>
                 Compare
               </Link>
             </Button>
 
             <Button className="w-full" asChild>
-              <Link
-                to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
-              >
+              <Link to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}>
                 Open pull request
               </Link>
             </Button>

@@ -83,14 +83,14 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
                 </span>
                 <span>into</span>
                 <Button variant="secondary" size="xs" asChild>
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}>
+                  <Link to={`/${spaceId}/repos/${repoId}/code/${target_branch}`}>
                     <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
                     {target_branch}
                   </Link>
                 </Button>
                 <span>from</span>
                 <Button asChild variant="secondary" size="xs">
-                  <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}>
+                  <Link to={`/${spaceId}/repos/${repoId}/code/${source_branch}`}>
                     <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
                     {source_branch}
                   </Link>

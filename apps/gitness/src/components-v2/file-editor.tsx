@@ -10,7 +10,6 @@ import GitCommitDialog from '../components-v2/git-commit-dialog'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
-import { useIsMFE } from '../framework/hooks/useIsMFE'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
@@ -27,11 +26,10 @@ export interface FileEditorProps {
 export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const { repoId } = useParams<PathParams>()
+  const { repoId, projectId } = useParams<PathParams>()
   const spaceId = useGetSpaceURLParam() ?? ''
-  const isMFE = useIsMFE()
   const { show } = useExitConfirm()
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+  const repoPath = `/${projectId || spaceId}/repos/${repoId}/code/${fullGitRef}`
 
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
@@ -131,9 +129,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * Navigate to file view route
    */
   const onExitConfirm = useCallback(() => {
-    const navigateTo = `${isMFE ? '' : `/${spaceId}`}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = `/${projectId || spaceId}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
-  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId])
+  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, projectId])
 
   /**
    * Cancel edit handler
@@ -171,9 +169,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
+            navigate(`/${projectId || spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${newBranchName}`)
+            navigate(`/${projectId || spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}

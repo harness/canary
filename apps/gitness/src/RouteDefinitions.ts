@@ -1,5 +1,6 @@
 export type PathParams = {
   spaceId?: string
+  projectId?: string
   repoId?: string
   pipelineId?: string
   executionId?: string
@@ -11,6 +12,7 @@ export type PathParams = {
 
 export const PathProps = {
   spaceId: ':spaceId*',
+  projectId: ':projectId*',
   repoId: ':repoId',
   pipelineId: ':pipelineId',
   executionId: ':executionId',

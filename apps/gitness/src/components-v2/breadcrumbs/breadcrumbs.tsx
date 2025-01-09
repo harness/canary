@@ -1,10 +1,11 @@
-import { useMatches } from 'react-router-dom'
+import { Link, useMatches } from 'react-router-dom'
 
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator,
   Topbar
 } from '@harnessio/ui/components'
@@ -19,24 +20,45 @@ function Breadcrumbs() {
       <Topbar.Left>
         <Breadcrumb className="select-none">
           <BreadcrumbList>
-            {matches.map((match, index) => {
-              const { breadcrumb } = (match.handle || {}) as CustomHandle
-              const isFirst = index === 1
-              const isLast = index === matches.length - 1
+            <nav className="flex items-start gap-1">
+              {matches.map((match, index) => {
+                const { breadcrumb } = (match.handle || {}) as CustomHandle
+                const isFirst = index === 0
+                const isLast = index === matches.length - 1
 
-              if (!breadcrumb) return null
+                if (!breadcrumb) return null
 
-              return (
-                <BreadcrumbItem key={index}>
-                  {!isFirst ? <BreadcrumbSeparator>/</BreadcrumbSeparator> : null}
-                  {isLast ? (
-                    breadcrumb(match.params)
-                  ) : (
-                    <BreadcrumbLink href={match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>
-                  )}
-                </BreadcrumbItem>
-              )
-            })}
+                return (
+                  <div key={match.pathname} className="flex items-center">
+                    {!isFirst ? <BreadcrumbSeparator className="mr-1">/</BreadcrumbSeparator> : null}
+                    <BreadcrumbItem>
+                      <BreadcrumbItem>
+                        {isLast ? (
+                          <BreadcrumbPage>{breadcrumb(match.params)}</BreadcrumbPage>
+                        ) : (
+                          <BreadcrumbLink asChild>
+                            <Link to={match.pathname}>{breadcrumb(match.params)}</Link>
+                          </BreadcrumbLink>
+                        )}
+                      </BreadcrumbItem>
+                    </BreadcrumbItem>
+                  </div>
+                )
+
+                // return (
+                //   <BreadcrumbItem key={index}>
+                //     {!isFirst ? <BreadcrumbSeparator className="mr-1">/</BreadcrumbSeparator> : null}
+                //     {isLast ? (
+                //       <BreadcrumbPage>{breadcrumb(match.params)}</BreadcrumbPage>
+                //     ) : (
+                //       <BreadcrumbLink asChild>
+                //         <Link to={match.pathname}>{breadcrumb(match.params)}</Link>
+                //       </BreadcrumbLink>
+                //     )}
+                //   </BreadcrumbItem>
+                // )
+              })}
+            </nav>
           </BreadcrumbList>
         </Breadcrumb>
       </Topbar.Left>

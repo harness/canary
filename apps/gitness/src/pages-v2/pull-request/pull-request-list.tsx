@@ -8,7 +8,6 @@ import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/vie
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
@@ -16,9 +15,8 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestListStore()
-  const { repoId } = useParams<PathParams>()
+  const { repoId, projectId } = useParams<PathParams>()
   const spaceId = useGetSpaceURLParam() ?? ''
-  const isMFE = useIsMFE()
 
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
@@ -55,7 +53,7 @@ export default function PullRequestListPage() {
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
-      spaceId={isMFE ? '' : spaceId}
+      spaceId={projectId || spaceId}
       isLoading={fetchingPullReqData}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}

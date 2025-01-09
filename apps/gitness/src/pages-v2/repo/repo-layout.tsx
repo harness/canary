@@ -2,19 +2,15 @@ import { Outlet } from 'react-router-dom'
 
 import { RepoSubheader } from '@harnessio/ui/components'
 
-import BreadcrumbsMFE from '../../components/breadcrumbs/breadcrumbs-mfe'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
-import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 const RepoLayout = () => {
-  const { scope } = useMFEContext()
   const isMFE = useIsMFE()
 
   return (
     <>
-      <div className="top-0 bg-background-1 sticky" style={{ zIndex: 19 }}>
-        {!isMFE ? null : <BreadcrumbsMFE selectedProject={scope.projectIdentifier || '...'} />}
+      <div className="top-breadcrumbs bg-background-1 sticky" style={{ zIndex: 19, top: '55px' }}>
         <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
       </div>
       <Outlet />

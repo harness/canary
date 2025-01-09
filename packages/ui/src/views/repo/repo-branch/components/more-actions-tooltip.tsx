@@ -32,7 +32,7 @@ export const MoreActionsTooltip: React.FC<MoreActionsTooltipProps> = ({
         <DropdownMenuGroup>
           <Link
             replace
-            to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranch}...${branchInfo.name}`}
+            to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${branchInfo.name}`}
           >
             <DropdownMenuItem className="cursor-pointer">
               <DropdownMenuShortcut className="ml-0">

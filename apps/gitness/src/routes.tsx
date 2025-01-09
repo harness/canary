@@ -296,7 +296,7 @@ export const routes: CustomRouteObject[] = [
               },
               {
                 path: 'general',
-                element: <>General</>,
+                element: <ProjectGeneralSettingsPageContainer />,
                 handle: {
                   breadcrumb: () => <Text>General</Text>
                 }

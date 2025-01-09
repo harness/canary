@@ -11,6 +11,7 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import styles from '!!raw-loader!@harnessio/ui/styles.css'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
+import { PortalProvider } from '@harnessio/ui/context'
 
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
@@ -124,28 +125,31 @@ export default function AppMFE({
     { basename }
   )
 
+  const portalContainer = document.getElementById('gitness-shadow-root')?.shadowRoot
+
   return (
     <div id="gitness-shadow-root">
       <ReactShadowRoot>
         <style>{`${styles}`}</style>
-
-        <MFEContext.Provider value={{ scope, renderUrl }}>
-          <AppProvider>
-            <I18nextProvider i18n={i18n}>
-              <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                <QueryClientProvider client={queryClient}>
-                  <TooltipProvider>
-                    <ExitConfirmProvider>
-                      <NuqsAdapter>
-                        <RouterProvider router={router} />
-                      </NuqsAdapter>
-                    </ExitConfirmProvider>
-                  </TooltipProvider>
-                </QueryClientProvider>
-              </ThemeProvider>
-            </I18nextProvider>
-          </AppProvider>
-        </MFEContext.Provider>
+        <PortalProvider portalContainer={portalContainer as Element | undefined}>
+          <MFEContext.Provider value={{ scope, renderUrl }}>
+            <AppProvider>
+              <I18nextProvider i18n={i18n}>
+                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                  <QueryClientProvider client={queryClient}>
+                    <TooltipProvider>
+                      <ExitConfirmProvider>
+                        <NuqsAdapter>
+                          <RouterProvider router={router} />
+                        </NuqsAdapter>
+                      </ExitConfirmProvider>
+                    </TooltipProvider>
+                  </QueryClientProvider>
+                </ThemeProvider>
+              </I18nextProvider>
+            </AppProvider>
+          </MFEContext.Provider>
+        </PortalProvider>
       </ReactShadowRoot>
     </div>
   )

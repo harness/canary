@@ -208,7 +208,7 @@ export default AppShell
 function BreadcrumbsAndOutlet() {
   return (
     <div className="flex flex-col">
-      <div className="sticky top-0 bg-background-1" style={{ zIndex: 19 }}>
+      <div className="sticky top-0 bg-background-1 layer-high">
         <Breadcrumbs />
       </div>
       <Outlet />

@@ -37,7 +37,6 @@ import {
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
   capitalizeFirstLetter,
@@ -72,8 +71,7 @@ export default function PullRequestConversationPage() {
   }))
   const { currentUser: currentUserData } = useAppContext()
   const [checkboxBypass, setCheckboxBypass] = useState(false)
-  const { repoId, projectId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, spaceId } = useParams<PathParams>()
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user' }
@@ -416,7 +414,7 @@ export default function PullRequestConversationPage() {
         <SandboxLayout.Content className="pl-0 pt-0">
           {/* TODO: fix handleaction for comment section in panel */}
           <PullRequestPanel
-            spaceId={projectId || spaceId}
+            spaceId={spaceId}
             repoId={repoId}
             changesInfo={{
               header: changesInfo?.title,

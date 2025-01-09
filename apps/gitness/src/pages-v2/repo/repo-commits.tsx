@@ -12,7 +12,6 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -22,8 +21,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
-  const { repoId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, spaceId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
 

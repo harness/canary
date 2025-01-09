@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   ImportRepositoryErrorResponse,
@@ -10,10 +10,12 @@ import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@har
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { PathParams } from '../../RouteDefinitions'
 
 export const ImportRepo = () => {
   const routes = useRoutes()
-  const spaceId = useGetSpaceURLParam()
+  const { spaceId } = useParams<PathParams>()
+  const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const importRepoMutation = useImportRepositoryMutation({})
 
@@ -21,7 +23,7 @@ export const ImportRepo = () => {
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,
-      parent_ref: spaceId,
+      parent_ref: spaceURL,
       pipelines: data.pipelines === true ? 'convert' : 'ignore',
       provider: {
         host: '',

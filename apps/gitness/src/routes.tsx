@@ -213,7 +213,7 @@ export const routes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null 
         },
         children: [
           {
-            path: `repos`,
+            path: 'repos',
             handle: {
               breadcrumb: () => <Text>Repositories</Text>,
               routeName: RouteConstants.toRepositories

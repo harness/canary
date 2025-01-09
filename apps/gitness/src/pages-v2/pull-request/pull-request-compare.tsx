@@ -31,7 +31,6 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
@@ -48,8 +47,7 @@ import { transformBranchList } from '../repo/transform-utils/branch-transform'
 export const CreatePullRequest = () => {
   const routes = useRoutes()
   const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, diffRefs, projectId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, diffRefs, spaceId } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [branchTagQuery, setBranchTagQuery] = useState('')
@@ -383,7 +381,7 @@ export const CreatePullRequest = () => {
         searchCommitQuery={query}
         useRepoCommitsStore={useRepoCommitsStore}
         repoId={repoId}
-        spaceId={projectId || spaceId}
+        spaceId={spaceId}
         onSelectCommit={selectCommit}
         isBranchSelected={isBranchSelected}
         setIsBranchSelected={setIsBranchSelected}

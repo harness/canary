@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   CreateRepositoryErrorResponse,
@@ -12,17 +12,19 @@ import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { PathParams } from '../../RouteDefinitions'
 
 export const CreateRepo = () => {
   const routes = useRoutes()
   const createRepositoryMutation = useCreateRepositoryMutation({})
-  const spaceId = useGetSpaceURLParam()
+  const { spaceId } = useParams<PathParams>()
+  const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
 
   const onSubmit = (data: FormFields) => {
     const repositoryRequest: OpenapiCreateRepositoryRequest = {
       default_branch: 'main',
-      parent_ref: spaceId,
+      parent_ref: spaceURL,
       description: data.description,
       git_ignore: data.gitignore,
       license: data.license,

@@ -13,7 +13,6 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarVi
 
 import Explorer from '../../components/FileExplorer'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
@@ -39,8 +38,7 @@ export const RepoSidebar = () => {
   } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
-  const { repoId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, spaceId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')

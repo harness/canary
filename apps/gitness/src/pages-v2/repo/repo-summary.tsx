@@ -30,7 +30,6 @@ import {
 import { SummaryItemType } from '@harnessio/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
@@ -46,8 +45,7 @@ export default function RepoSummaryPage() {
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { repoId, projectId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, spaceId } = useParams<PathParams>()
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
@@ -274,7 +272,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `/${projectId || spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
+              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }

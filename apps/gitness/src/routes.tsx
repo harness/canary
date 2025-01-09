@@ -74,10 +74,10 @@ export const routes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null 
         element: <LandingPage />
       },
       {
-        path: `${mfeProjectId ? ':projectId' : ':spaceId'}`,
+        path: ':spaceId',
         children: [
           {
-            path: `repos`,
+            path: 'repos',
             handle: {
               breadcrumb: () => <Text>Repositories</Text>
             },

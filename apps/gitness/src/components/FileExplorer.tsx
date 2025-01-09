@@ -8,7 +8,6 @@ import { FileExplorer } from '@harnessio/ui/components'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
@@ -34,8 +33,7 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
  */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
-  const { repoId, projectId } = useParams<PathParams>()
-  const spaceId = useGetSpaceURLParam() ?? ''
+  const { repoId, spaceId } = useParams<PathParams>()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const location = useLocation()
   const isFileEditMode = location.pathname.includes('edit')
@@ -89,7 +87,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/${projectId || spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
+      const fullPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
         return (

@@ -12,7 +12,7 @@ import { usePullRequestStore } from './stores/pull-request-store'
 const PullRequestLayout = () => {
   const { setPullRequest, setRefetchPullReq, setPullReqError, setPullReqLoading } = usePullRequestStore()
 
-  const { pullRequestId, repoId, spaceId } = useParams<PathParams>()
+  const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
 
   const repoRef = useGetRepoRef()
 

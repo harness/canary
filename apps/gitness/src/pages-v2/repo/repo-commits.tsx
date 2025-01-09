@@ -21,7 +21,7 @@ import { transformBranchList } from './transform-utils/branch-transform'
 
 export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
 

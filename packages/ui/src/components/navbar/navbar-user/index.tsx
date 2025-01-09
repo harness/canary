@@ -1,9 +1,12 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  ColorType,
+  ContrastType,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
@@ -16,8 +19,10 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
   FullTheme,
+  getModeColorContrastFromFullTheme,
   Icon,
   IThemeStore,
+  ModeType,
   Text
 } from '@/components'
 import { TypesUser } from '@/types'
@@ -78,6 +83,7 @@ export const NavbarUser = ({
   const username = currentUser?.display_name || currentUser?.uid || ''
   const { theme, setTheme } = useThemeStore()
   const { t, i18n, changeLanguage } = useTranslationStore()
+  const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 
   return (
     <DropdownMenu>
@@ -107,15 +113,41 @@ export const NavbarUser = ({
           </DropdownMenuSubTrigger>
           <DropdownMenuPortal>
             <DropdownMenuSubContent>
+              <DropdownMenuItem disabled>Color Scheme</DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
-                value={theme}
+                value={mode}
                 onValueChange={value => {
-                  setTheme(value as FullTheme)
+                  setTheme(`${value}-${color}-${contrast}` as FullTheme)
                 }}
               >
-                <DropdownMenuRadioItem value="light-std-std">Light</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="dark-std-std">Dark</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="system-std-std">System</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ModeType.System}>System</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ModeType.Light}>Light</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ModeType.Dark}>Dark</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+              <DropdownMenuItem disabled>Color Correction</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={color}
+                onValueChange={value => {
+                  setTheme(`${mode}-${value}-${contrast}` as FullTheme)
+                }}
+              >
+                <DropdownMenuRadioItem value={ColorType.Standard}>None</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ColorType.ProtanopiaAndDeuteranopia}>Red-Green</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ColorType.Tritanopia}>Blue-Yellow</DropdownMenuRadioItem>
+              </DropdownMenuRadioGroup>
+              <DropdownMenuItem disabled>Contrast</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuRadioGroup
+                value={contrast}
+                onValueChange={value => {
+                  setTheme(`${mode}-${color}-${value}` as FullTheme)
+                }}
+              >
+                <DropdownMenuRadioItem value={ContrastType.Standard}>Standard</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ContrastType.Low}>Low</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value={ContrastType.High}>High</DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuSubContent>
           </DropdownMenuPortal>

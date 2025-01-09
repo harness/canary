@@ -48,7 +48,7 @@ export default function RepoSummaryPage() {
   const [files, setFiles] = useState<RepoFile[]>([])
   const repoRef = useGetRepoRef()
   const navigate = useNavigate()
-  const { repoId } = useParams<PathParams>()
+  const { repoId, projectId } = useParams<PathParams>()
   const spaceId = useGetSpaceURLParam() ?? ''
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
@@ -86,7 +86,7 @@ export default function RepoSummaryPage() {
     })
 
   useEffect(() => {
-    setSpaceIdAndRepoId(isMFE ? '' : spaceId || '', repoId || '')
+    setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
   useEffect(() => {
@@ -274,7 +274,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `${!isMFE ? `/${spaceId}` : ''}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
+              path: `/${projectId || spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
             }))
           )
         }

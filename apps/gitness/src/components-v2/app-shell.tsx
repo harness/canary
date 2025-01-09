@@ -21,7 +21,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
-import BreadcrumbsV1 from './breadcrumbs/breadcrumbs'
+import Breadcrumbs from './breadcrumbs/breadcrumbs'
 
 interface NavLinkStorageInterface {
   state: {
@@ -161,6 +161,10 @@ const AppShell = () => {
     [setPinned]
   )
 
+  if (isMFE) {
+    return <BreadcrumbsAndOutlet />
+  }
+
   return (
     <SandboxLayout.Root>
       <SandboxLayout.LeftPanel>
@@ -180,12 +184,9 @@ const AppShell = () => {
           useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>
-      <div className="flex flex-col">
-        <div className="sticky top-0 z-40 bg-background-1">
-          <BreadcrumbsV1 />
-        </div>
-        <Outlet />
-      </div>
+
+      <BreadcrumbsAndOutlet />
+
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
       <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
       <ManageNavigation
@@ -203,3 +204,14 @@ const AppShell = () => {
 }
 
 export default AppShell
+
+function BreadcrumbsAndOutlet() {
+  return (
+    <div className="flex flex-col">
+      <div className="sticky top-0 bg-background-1" style={{ zIndex: 19 }}>
+        <Breadcrumbs />
+      </div>
+      <Outlet />
+    </div>
+  )
+}

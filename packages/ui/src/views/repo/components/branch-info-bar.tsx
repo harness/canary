@@ -30,14 +30,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           This branch is{' '}
           {hasAhead && (
             <>
-              <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pull-requests/compare/`}>
+              <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
                 <span className="text-foreground-accent">{ahead} commits ahead of</span>
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
-            <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pull-requests/compare/`}>
+            <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
               <span className="text-foreground-accent">{behind} commits behind</span>
             </StyledLink>
           )}
@@ -78,7 +78,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
               <Link
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
               >
                 Compare
               </Link>
@@ -86,7 +86,7 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
 
             <Button className="w-full" asChild>
               <Link
-                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+                to={`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
               >
                 Open pull request
               </Link>

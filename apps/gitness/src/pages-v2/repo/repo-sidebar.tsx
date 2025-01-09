@@ -40,7 +40,7 @@ export const RepoSidebar = () => {
   } = useRepoBranchesStore()
 
   const repoRef = useGetRepoRef()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')

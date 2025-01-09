@@ -33,7 +33,7 @@ const sortEntriesByType = (entries: OpenapiContentInfo[]): OpenapiContentInfo[] 
  */
 export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps) {
   const repoRef = useGetRepoRef()
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const location = useLocation()
   const isFileEditMode = location.pathname.includes('edit')

@@ -8,9 +8,11 @@ import {
 import { toast, Toaster } from '@harnessio/ui/components'
 import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
 export const ImportRepo = () => {
+  const routes = useRoutes()
   const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
   const importRepoMutation = useImportRepositoryMutation({})
@@ -36,7 +38,7 @@ export const ImportRepo = () => {
       },
       {
         onSuccess: () => {
-          navigate(`/${spaceId}/repos`)
+          navigate(routes.toRepositories({ spaceId }))
         },
         onError: (error: ImportRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
@@ -50,7 +52,7 @@ export const ImportRepo = () => {
   }
 
   const onCancel = () => {
-    navigate(`/${spaceId}/repos`)
+    navigate(routes.toRepositories({ spaceId }))
   }
 
   return (

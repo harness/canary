@@ -22,6 +22,7 @@ import {
 import { SkeletonList } from '@harnessio/ui/components'
 import { SandboxPullRequestCompare } from '@harnessio/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
@@ -30,6 +31,7 @@ import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState, FormFields } f
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from './utils'
 
 export const CreatePullRequest = () => {
+  const routes = useRoutes()
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
@@ -188,7 +190,7 @@ export const CreatePullRequest = () => {
   }
 
   const onCancel = () => {
-    navigate(`/${spaceId}/repos`)
+    navigate(routes.toRepositories({ spaceId }))
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,

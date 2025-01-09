@@ -29,6 +29,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
@@ -44,6 +45,7 @@ import { transformBranchList } from '../repo/transform-utils/branch-transform'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const CreatePullRequest = () => {
+  const routes = useRoutes()
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
@@ -208,7 +210,7 @@ export const CreatePullRequest = () => {
   }
 
   const onCancel = () => {
-    navigate(`/${spaceId}/repos`)
+    navigate(routes.toRepositories({ spaceId }))
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,

@@ -1,6 +1,7 @@
 import { FC } from 'react'
+import { Outlet } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon } from '@/components'
+import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon, Text } from '@/components'
 import { DiffFileEntry, SandboxLayout, TranslationStore, TypesCommit, TypesDiffStats } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -22,14 +23,12 @@ export interface RepoCommitDetailsViewProps {
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, useTranslationStore }) => {
   const { t } = useTranslationStore()
 
-  console.log(commit.diffStats)
-
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-5 pt-7">
-        <span className="text-24 text-foreground-1 mt-7 font-medium leading-snug tracking-tight">
+        <Text size={5} weight={'medium'}>
           Commit <span className="text-foreground-4 ml-1.5 font-normal">{commit?.sha?.substring(0, 7)}</span>
-        </span>
+        </Text>
         <div className="mt-4 flex items-center">
           {commit?.author?.identity?.name && commit?.author?.when && (
             <>
@@ -66,7 +65,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, 
             <CommitCopyActions sha={commit?.sha || ''} />
           </div>
         </div>
-        <p className="text-14 leading-tight text-foreground-4 py-2">
+        {/* <p className="text-14 leading-tight text-foreground-4 py-2">
           Showing <span className="text-foreground-accent">{commit?.diffStats?.files_changed || 0} changed files </span>
           with {commit?.diffStats?.additions || 0} additions and {commit?.diffStats?.deletions || 0} deletions
         </p>
@@ -86,7 +85,8 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({ commit, 
           }
           useTranslationStore={useTranslationStore}
           diffMode={2}
-        />
+        /> */}
+        <Outlet />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

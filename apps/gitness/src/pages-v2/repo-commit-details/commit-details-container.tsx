@@ -37,7 +37,7 @@ export default function RepoCommitDetailsPage() {
   )
 
   // TODO: add diff to the view
-  console.log(Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG))
+  // console.log(Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG))
 
   useEffect(() => {
     if (currentCommitDiffData) {

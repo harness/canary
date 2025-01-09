@@ -2,6 +2,9 @@ import { Params, RouteObject } from 'react-router-dom'
 
 // Enum defining the route constants
 export enum RouteConstants {
+  toHome = 'toHome',
+  toLogout = 'toLogout',
+  toSignIn = 'toSignIn',
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',

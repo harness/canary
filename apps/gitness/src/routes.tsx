@@ -49,6 +49,7 @@ export const routes: CustomRouteObject[] = [
   {
     path: '/',
     element: <AppShell />,
+    handle: { routeName: 'toHome' },
     children: [
       {
         index: true,
@@ -409,7 +410,8 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'signin',
-    element: <SignIn />
+    element: <SignIn />,
+    handle: { routeName: RouteConstants.toSignIn }
   },
   {
     path: 'signup',
@@ -422,7 +424,10 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'logout',
-    element: <Logout />
+    element: <Logout />,
+    handle: {
+      routeName: RouteConstants.toLogout
+    }
   },
   {
     path: 'chaos',

@@ -26,6 +26,7 @@ export default defineConfig({
         views: resolve(__dirname, 'src/views/index.ts'),
         hooks: resolve(__dirname, 'src/hooks/index.ts'),
         locales: resolve(__dirname, 'locales/index.ts'),
+        context: resolve(__dirname, 'src/context/index.ts'),
         index: resolve(__dirname, 'src/index.ts')
       },
       formats: ['es']

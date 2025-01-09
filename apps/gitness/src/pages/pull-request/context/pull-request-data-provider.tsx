@@ -23,7 +23,7 @@ import { usePullRequestDataStore } from '../stores/pull-request-store'
 import { extractSpecificViolations } from '../utils'
 
 const PullRequestDataProviderV1: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
-  const space = useGetSpaceURLParam() ?? ''
+  const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()
   const pullRequestTab = useGetPullRequestTab({ spaceId, repoId, pullRequestId })
@@ -87,10 +87,10 @@ const PullRequestDataProviderV1: React.FC<PropsWithChildren<unknown>> = ({ child
     [pullRequestId, refetchPullReq]
   )
   useSpaceSSE({
-    space,
+    space: spaceURL,
     events: [SSEEvent.PULLREQ_UPDATED],
     onEvent: handleEvent,
-    shouldRun: !!(space && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
+    shouldRun: !!(spaceURL && pullRequestId) // Ensure shouldRun is true only when space and pullRequestId are valid
   })
   useEffect(() => {
     if (repoMetadata) {

@@ -83,7 +83,7 @@ export default function AppMFE({
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
-      `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=dummy`,
+      `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
     requestInterceptor: (request: Request) => {
       const token = decode(localStorage.getItem('token') || '')
       const newRequest = request.clone()

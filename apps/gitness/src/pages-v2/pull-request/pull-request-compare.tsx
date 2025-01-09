@@ -45,7 +45,7 @@ import { transformBranchList } from '../repo/transform-utils/branch-transform'
  */
 export const CreatePullRequest = () => {
   const createPullRequestMutation = useCreatePullReqMutation({})
-  const { repoId, diffRefs, spaceId } = useParams<PathParams>()
+  const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
   const [branchTagQuery, setBranchTagQuery] = useState('')

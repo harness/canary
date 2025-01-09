@@ -71,7 +71,7 @@ export default function PullRequestConversationPage() {
   }))
   const { currentUser: currentUserData } = useAppContext()
   const [checkboxBypass, setCheckboxBypass] = useState(false)
-  const { repoId, spaceId } = useParams<PathParams>()
+  const { spaceId, repoId } = useParams<PathParams>()
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user' }

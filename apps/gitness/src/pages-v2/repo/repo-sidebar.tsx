@@ -163,20 +163,24 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+          )
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+          )
         }
       })
     } else {
-      navigate(`new/${fullGitRef || selectedBranchTag.name}/~/`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/`)
     }
   }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
     },
     [fullGitRef, selectedBranchTag.name, navigate, repoId]
   )

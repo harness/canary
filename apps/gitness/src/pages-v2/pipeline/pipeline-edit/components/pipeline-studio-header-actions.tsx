@@ -4,10 +4,12 @@ import { useParams } from 'react-router-dom'
 import { Button } from '@harnessio/canary'
 import { OpenapiCommitFilesRequest, useCommitFilesMutation } from '@harnessio/code-service-client'
 
+import { useRoutes } from '../../../../framework/context/NavigationContext'
 import RunPipelineDialog from '../../../../pages/run-pipeline-dialog/run-pipeline-dialog'
 import { PipelineParams, usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 
 const PipelineStudioHeaderActions = (): JSX.Element => {
+  const routes = useRoutes()
   const {
     state: {
       pipelineData,
@@ -97,7 +99,6 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
         }}
         pipelineId={pipelineData?.identifier}
         branch={currentBranch}
-        toExecutions={'../executions'}
       />
     </>
   )

@@ -14,6 +14,8 @@ export enum RouteConstants {
   toPullRequests = 'toPullRequests',
   toPullRequestCompare = 'toPullRequestCompare',
   toPipelineEdit = 'toPipelineEdit',
+  toPipelineExecutions = 'toPipelineExecutions',
+  toPipelineExecution = 'toPipelineExecution',
   toRepoGeneralSettings = 'toRepoGeneralSettings',
   toRepoBranchRule = 'toRepoBranchRule'
 }

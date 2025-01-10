@@ -218,6 +218,22 @@ export const routes: CustomRouteObject[] = [
                               breadcrumb: () => <Text>Edit</Text>,
                               routeName: RouteConstants.toPipelineEdit
                             }
+                          },
+                          {
+                            path: 'executions',
+                            handle: {
+                              routeName: RouteConstants.toPipelineExecutions
+                            },
+                            children: [
+                              {
+                                path: ':executionId',
+                                element: <>Execution Details Page</>,
+                                handle: {
+                                  breadcrumb: ({ executionId }: { executionId: string }) => <Text>{executionId}</Text>,
+                                  routeName: RouteConstants.toPipelineExecution
+                                }
+                              }
+                            ]
                           }
                         ]
                       }

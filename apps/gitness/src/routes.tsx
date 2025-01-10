@@ -29,7 +29,6 @@ import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
 import RepoCommitDetailsPage from './pages-v2/repo-commit-details/commit-details-container'
 import RepoCommitDiffsPage from './pages-v2/repo-commit-details/commit-diffs-container'
-import { CommitSidebarContainer } from './pages-v2/repo-commit-details/commit-sidebar-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
@@ -258,26 +257,17 @@ export const routes: CustomRouteObject[] = [
                     element: <RepoCommitDetailsPage />,
                     children: [
                       {
-                        element: (
-                          <ExplorerPathsProvider>
-                            <CommitSidebarContainer />
-                          </ExplorerPathsProvider>
-                        ),
-                        children: [
-                          {
-                            index: true,
-                            element: <RepoCommitDiffsPage />,
-                            handle: {
-                              breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                                <>
-                                  <Text>Commits</Text>
-                                  <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                                  <Text>{commitSHA}</Text>
-                                </>
-                              )
-                            }
-                          }
-                        ]
+                        index: true,
+                        element: <RepoCommitDiffsPage />,
+                        handle: {
+                          breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
+                            <>
+                              <Text>Commits</Text>
+                              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                              <Text>{commitSHA}</Text>
+                            </>
+                          )
+                        }
                       }
                     ]
                   },

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
 
-import { useDiffStatsQuery, useGetCommitDiffQuery, useGetCommitQuery } from '@harnessio/code-service-client'
-import { CommitDiffsView, DiffFileEntry } from '@harnessio/ui/views'
+import { useDiffStatsQuery, useGetCommitDiffQuery } from '@harnessio/code-service-client'
+import { CommitDiffsView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -17,13 +17,7 @@ import { useCommitDetailsStore } from './stores/commit-details-store'
 export default function RepoCommitDiffsPage() {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
-  // const [diffs, setDiffs] = useState<DiffFileEntry[]>([])
-  const { setDiffs, diffs } = useCommitDetailsStore()
-
-  const { data: { body: commitData } = {} } = useGetCommitQuery({
-    repo_ref: repoRef,
-    commit_sha: commitSHA || ''
-  })
+  const { setDiffs, setDiffStats } = useCommitDetailsStore()
 
   const { data: currentCommitDiffData } = useGetCommitDiffQuery({
     repo_ref: repoRef,
@@ -38,8 +32,11 @@ export default function RepoCommitDiffsPage() {
     { enabled: !!repoRef && !!diffApiPath }
   )
 
-  // TODO: add diff to the view
-  // console.log(Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG))
+  useEffect(() => {
+    if (diffStats) {
+      setDiffStats(diffStats)
+    }
+  }, [diffStats, setDiffStats])
 
   useEffect(() => {
     if (currentCommitDiffData) {
@@ -60,7 +57,6 @@ export default function RepoCommitDiffsPage() {
             contentId,
             fileId,
             filePath,
-            // fileViews: cachedDiff.fileViews,
             raw: diffString
           }
         })
@@ -70,22 +66,7 @@ export default function RepoCommitDiffsPage() {
     } else {
       setDiffs([])
     }
-  }, [
-    // readOnly,
-    currentCommitDiffData
-  ])
-  // if (diffs.length) console.log('diffs', diffs[0].filePath)
+  }, [currentCommitDiffData])
 
-  return (
-    <CommitDiffsView
-      commit={{
-        ...commitData,
-        // TODO: get this data from backend if possible
-        isVerified: true,
-        diffs: diffs,
-        diffStats: diffStats
-      }}
-      useTranslationStore={useTranslationStore}
-    />
-  )
+  return <CommitDiffsView useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
 }

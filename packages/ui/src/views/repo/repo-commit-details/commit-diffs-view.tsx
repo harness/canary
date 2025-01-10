@@ -1,28 +1,23 @@
-import { DiffFileEntry, SandboxLayout, TranslationStore, TypesCommit, TypesDiffStats } from '@/views'
+import { ICommitDetailsStore, TranslationStore } from '@/views'
 
 import { CommitChanges } from './components/commit-changes'
 
-interface CommitDetails extends TypesCommit {
-  isVerified?: boolean
-  diffs: DiffFileEntry[]
-  diffStats?: TypesDiffStats
-}
-
 export interface CommitDiffsViewProps {
-  commit: CommitDetails
+  useCommitDetailsStore: () => ICommitDetailsStore
   useTranslationStore: () => TranslationStore
 }
 
-export const CommitDiffsView: React.FC<CommitDiffsViewProps> = ({ commit, useTranslationStore }) => {
+export const CommitDiffsView: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore, useTranslationStore }) => {
+  const { diffs, diffStats } = useCommitDetailsStore()
   return (
     <>
       <p className="text-14 leading-tight text-foreground-4 py-2">
-        Showing <span className="text-foreground-accent">{commit?.diffStats?.files_changed || 0} changed files </span>
-        with {commit?.diffStats?.additions || 0} additions and {commit?.diffStats?.deletions || 0} deletions
+        Showing <span className="text-foreground-accent">{diffStats?.files_changed || 0} changed files </span>
+        with {diffStats?.additions || 0} additions and {diffStats?.deletions || 0} deletions
       </p>
       <CommitChanges
         data={
-          commit.diffs?.map(item => ({
+          diffs?.map(item => ({
             text: item.filePath,
             numAdditions: item.addedLines,
             numDeletions: item.deletedLines,

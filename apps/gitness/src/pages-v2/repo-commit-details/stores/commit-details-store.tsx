@@ -1,13 +1,14 @@
 import { create } from 'zustand'
 
-import { DiffFileEntry } from '@harnessio/ui/views'
-
-interface ICommitDetailsStore {
-  diffs: DiffFileEntry[]
-  setDiffs: (diffs: DiffFileEntry[]) => void
-}
+import { ICommitDetailsStore } from '@harnessio/ui/views'
 
 export const useCommitDetailsStore = create<ICommitDetailsStore>(set => ({
   diffs: [],
-  setDiffs: diffs => set({ diffs })
+  commitData: null,
+  diffStats: null,
+  isVerified: true,
+  setDiffs: diffs => set({ diffs }),
+  setCommitData: commitData => set({ commitData }),
+  setDiffStats: diffStats => set({ diffStats }),
+  setIsVerified: isVerified => set({ isVerified })
 }))

@@ -45,3 +45,4 @@ export * from '@views/repo/repo-branch-rules/types'
 
 // repo commit details
 export * from '@views/repo/repo-commit-details'
+export * from '@views/repo/repo-commit-details/types'

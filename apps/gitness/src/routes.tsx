@@ -56,6 +56,139 @@ export const routes: CustomRouteObject[] = [
         element: <LandingPage />
       },
       {
+        path: 'create',
+        element: <CreateProject />,
+        handle: {
+          breadcrumb: () => <Text>Create project</Text>
+        },
+        children: []
+      },
+      {
+        path: 'repos',
+        element: (
+          <SandboxLayout.Main>
+            <h1>Repo</h1>
+          </SandboxLayout.Main>
+        )
+      },
+      {
+        path: 'pipelines',
+        element: (
+          <SandboxLayout.Main>
+            <h1>pipelines</h1>
+          </SandboxLayout.Main>
+        )
+      },
+      {
+        path: 'executions',
+        element: (
+          <SandboxLayout.Main>
+            <h1>executions</h1>
+          </SandboxLayout.Main>
+        )
+      },
+      {
+        path: 'databases',
+        element: (
+          <SandboxLayout.Main>
+            <h1>databases</h1>
+          </SandboxLayout.Main>
+        )
+      },
+      {
+        path: 'signin',
+        element: <SignIn />
+      },
+      {
+        path: 'signup',
+        element: <SignUp />
+      },
+
+      {
+        path: 'theme',
+        element: <ProfileSettingsThemePage />
+      },
+      {
+        path: 'logout',
+        element: <Logout />
+      },
+      {
+        path: 'chaos',
+        element: <EmptyPage pathName="Chaos Engineering" />
+      },
+      {
+        path: 'artifacts',
+        element: <EmptyPage pathName="Artifacts" />
+      },
+      {
+        path: 'secrets',
+        element: <EmptyPage pathName="Secrets" />
+      },
+      {
+        path: 'connectors',
+        element: <EmptyPage pathName="Connectors" />
+      },
+      {
+        path: 'continuous-delivery-gitops',
+        element: <EmptyPage pathName="Continuous Delivery Gitops" />
+      },
+      {
+        path: 'continuous-integration',
+        element: <EmptyPage pathName="Continuous Integration" />
+      },
+      {
+        path: 'feature-flags',
+        element: <EmptyPage pathName="Feature Flags" />
+      },
+      {
+        path: 'infrastructure-as-code',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'service-reliability',
+        element: <EmptyPage pathName="Service Reliability" />
+      },
+      {
+        path: 'developer/portal',
+        element: <EmptyPage pathName="Internal Developer Portal" />
+      },
+      {
+        path: 'developer/environments',
+        element: <EmptyPage pathName="Environments" />
+      },
+      {
+        path: 'developer/insights',
+        element: <EmptyPage pathName="Software Engineering Insights" />
+      },
+      {
+        path: 'infrastructure',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'code-repository',
+        element: <EmptyPage pathName="Code Repository" />
+      },
+      {
+        path: 'supply-chain',
+        element: <EmptyPage pathName="Software Supply Chain Assurance" />
+      },
+      {
+        path: 'security-tests',
+        element: <EmptyPage pathName="Security Testing Orchestration" />
+      },
+      {
+        path: 'cloud-costs',
+        element: <EmptyPage pathName="Cloud Cost Management" />
+      },
+      {
+        path: 'incidents',
+        element: <EmptyPage pathName="Incidents" />
+      },
+      {
+        path: 'dashboards',
+        element: <EmptyPage pathName="Dashboards" />
+      },
+      {
         path: ':spaceId',
         handle: {
           breadcrumb: () => <ProjectDropdown />
@@ -367,138 +500,5 @@ export const routes: CustomRouteObject[] = [
         ]
       }
     ]
-  },
-  {
-    path: 'create',
-    element: <CreateProject />,
-    handle: {
-      breadcrumb: () => <Text>Create project</Text>
-    },
-    children: []
-  },
-  {
-    path: 'repos',
-    element: (
-      <SandboxLayout.Main>
-        <h1>Repo</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'pipelines',
-    element: (
-      <SandboxLayout.Main>
-        <h1>pipelines</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'executions',
-    element: (
-      <SandboxLayout.Main>
-        <h1>executions</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'databases',
-    element: (
-      <SandboxLayout.Main>
-        <h1>databases</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'signin',
-    element: <SignIn />
-  },
-  {
-    path: 'signup',
-    element: <SignUp />
-  },
-
-  {
-    path: 'theme',
-    element: <ProfileSettingsThemePage />
-  },
-  {
-    path: 'logout',
-    element: <Logout />
-  },
-  {
-    path: 'chaos',
-    element: <EmptyPage pathName="Chaos Engineering" />
-  },
-  {
-    path: 'artifacts',
-    element: <EmptyPage pathName="Artifacts" />
-  },
-  {
-    path: 'secrets',
-    element: <EmptyPage pathName="Secrets" />
-  },
-  {
-    path: 'connectors',
-    element: <EmptyPage pathName="Connectors" />
-  },
-  {
-    path: 'continuous-delivery-gitops',
-    element: <EmptyPage pathName="Continuous Delivery Gitops" />
-  },
-  {
-    path: 'continuous-integration',
-    element: <EmptyPage pathName="Continuous Integration" />
-  },
-  {
-    path: 'feature-flags',
-    element: <EmptyPage pathName="Feature Flags" />
-  },
-  {
-    path: 'infrastructure-as-code',
-    element: <EmptyPage pathName="Infrastructure as Code" />
-  },
-  {
-    path: 'service-reliability',
-    element: <EmptyPage pathName="Service Reliability" />
-  },
-  {
-    path: 'developer/portal',
-    element: <EmptyPage pathName="Internal Developer Portal" />
-  },
-  {
-    path: 'developer/environments',
-    element: <EmptyPage pathName="Environments" />
-  },
-  {
-    path: 'developer/insights',
-    element: <EmptyPage pathName="Software Engineering Insights" />
-  },
-  {
-    path: 'infrastructure',
-    element: <EmptyPage pathName="Infrastructure as Code" />
-  },
-  {
-    path: 'code-repository',
-    element: <EmptyPage pathName="Code Repository" />
-  },
-  {
-    path: 'supply-chain',
-    element: <EmptyPage pathName="Software Supply Chain Assurance" />
-  },
-  {
-    path: 'security-tests',
-    element: <EmptyPage pathName="Security Testing Orchestration" />
-  },
-  {
-    path: 'cloud-costs',
-    element: <EmptyPage pathName="Cloud Cost Management" />
-  },
-  {
-    path: 'incidents',
-    element: <EmptyPage pathName="Incidents" />
-  },
-  {
-    path: 'dashboards',
-    element: <EmptyPage pathName="Dashboards" />
   }
 ]

@@ -1,9 +1,9 @@
 import './AppMFE.css'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
-import ReactShadowRoot from 'react-shadow-root'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
@@ -127,34 +127,43 @@ export default function AppMFE({
     { basename }
   )
 
-  const portalContainer = document.getElementById('gitness-shadow-root')?.shadowRoot
+  const portalRef = useRef(null)
+  const portalContainer = portalRef.current?.shadowRoot
+  useEffect(() => {
+    portalRef.current?.attachShadow({ mode: 'open' })
+  }, [])
 
   return (
-    <div id="gitness-shadow-root">
-      <ReactShadowRoot>
-        <style>{`${styles}`}</style>
-        <style>{`${monacoStyles}`}</style>
+    <div id="gitness-shadow-root" ref={portalRef}>
+      {portalContainer
+        ? createPortal(
+            <>
+              <style>{`${styles}`}</style>
+              <style>{`${monacoStyles}`}</style>
 
-        <PortalProvider portalContainer={portalContainer as Element | undefined}>
-          <MFEContext.Provider value={{ scope, renderUrl }}>
-            <AppProvider>
-              <I18nextProvider i18n={i18n}>
-                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                  <QueryClientProvider client={queryClient}>
-                    <TooltipProvider>
-                      <ExitConfirmProvider>
-                        <NuqsAdapter>
-                          <RouterProvider router={router} />
-                        </NuqsAdapter>
-                      </ExitConfirmProvider>
-                    </TooltipProvider>
-                  </QueryClientProvider>
-                </ThemeProvider>
-              </I18nextProvider>
-            </AppProvider>
-          </MFEContext.Provider>
-        </PortalProvider>
-      </ReactShadowRoot>
+              <PortalProvider portalContainer={portalContainer}>
+                <MFEContext.Provider value={{ scope, renderUrl }}>
+                  <AppProvider>
+                    <I18nextProvider i18n={i18n}>
+                      <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                        <QueryClientProvider client={queryClient}>
+                          <TooltipProvider>
+                            <ExitConfirmProvider>
+                              <NuqsAdapter>
+                                <RouterProvider router={router} />
+                              </NuqsAdapter>
+                            </ExitConfirmProvider>
+                          </TooltipProvider>
+                        </QueryClientProvider>
+                      </ThemeProvider>
+                    </I18nextProvider>
+                  </AppProvider>
+                </MFEContext.Provider>
+              </PortalProvider>
+            </>,
+            portalContainer
+          )
+        : null}
     </div>
   )
 }

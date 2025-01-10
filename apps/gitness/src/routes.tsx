@@ -17,6 +17,7 @@ import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
+import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -307,7 +308,7 @@ export const routes: CustomRouteObject[] = [
               },
               {
                 path: 'general',
-                element: <>General</>,
+                element: <ProjectGeneralSettingsPageContainer />,
                 handle: {
                   breadcrumb: () => <Text>General</Text>
                 }

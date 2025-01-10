@@ -16,7 +16,7 @@ function ProjectSettingsPage() {
               <TabsTrigger value="general">General</TabsTrigger>
             </NavLink>
             <NavLink to={`members`}>
-              <TabsTrigger value="keys">Members</TabsTrigger>
+              <TabsTrigger value="members">Members</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>

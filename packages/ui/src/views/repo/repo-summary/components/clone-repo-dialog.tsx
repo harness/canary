@@ -39,14 +39,14 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="gap-x-2 items-center pl-5 pr-2.5">
+        <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
           <Icon name="chevron-down" size={12} className="text-icons-5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[328px] p-0 shadow-2" align="end">
         <div className="px-4 pt-4 leading-none">
-          <span className="text-14 font-medium inline-block">{t('views:repos.cloneRepo', 'Clone repository')}</span>
+          <span className="inline-block text-14 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
         <Tabs
           className="mt-4"
@@ -62,7 +62,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 setCurrentTab(CloneRepoTabs.HTTPS)
               }}
             >
-              <TabsTrigger className="data-[state=active]:bg-background-2 px-4" value={CloneRepoTabs.HTTPS}>
+              <TabsTrigger className="px-4 data-[state=active]:bg-background-2" value={CloneRepoTabs.HTTPS}>
                 {t('views:repos.cloneHttps', 'HTTPS')}
               </TabsTrigger>
             </DropdownMenuItem>
@@ -74,7 +74,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               }}
             >
               <TabsTrigger
-                className="data-[state=active]:bg-background-2 px-4"
+                className="px-4 data-[state=active]:bg-background-2"
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
               >
@@ -84,15 +84,15 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           </TabsList>
         </Tabs>
         <div className="p-4">
-          <div className="flex items-center mb-2.5">
-            <span className="text-foreground-2 leading-none inline-block">
+          <div className="mb-2.5 flex items-center">
+            <span className="inline-block leading-none text-foreground-2">
               {t('views:repos.gitCloneUrl', 'Git clone URL')}
             </span>
           </div>
           {currentTab === 'https' ? (
             <>
               <Input
-                className="text-foreground-1 py-px"
+                className="py-px text-foreground-1"
                 id="httpsUrl"
                 readOnly
                 value={httpsUrl}
@@ -101,7 +101,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 rightElement={<CopyButton name={httpsUrl} />}
               />
               <div className="mt-4 flex items-center">
-                <span className="text-foreground-4 leading-snug">
+                <span className="leading-snug text-foreground-4">
                   {t('views:repos.generateCredential', 'Please generate a clone credential if its your first time.')}
                 </span>
               </div>
@@ -113,7 +113,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             </>
           ) : (
             <Input
-              className="text-foreground-1 py-px"
+              className="py-px text-foreground-1"
               id="sshUrl"
               readOnly
               value={sshUrl}

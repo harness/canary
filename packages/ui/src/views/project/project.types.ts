@@ -7,6 +7,23 @@ export interface MemberData {
   uid: string
 }
 
+export interface TypesSpace {
+  created?: number
+  created_by?: number
+  deleted?: number | null
+  description?: string
+  id?: number
+  identifier?: string
+  parent_id?: number
+  path?: string
+  updated?: number
+}
+
+export interface ISpaceStore {
+  space: TypesSpace | null
+  setSpace: (space: TypesSpace | null) => void
+}
+
 export interface IMemberListStore {
   memberList: MemberData[]
   spaceId: string

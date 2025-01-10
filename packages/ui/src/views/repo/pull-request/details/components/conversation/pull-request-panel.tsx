@@ -2,17 +2,17 @@ import { useEffect, useMemo, useState } from 'react'
 
 import {
   Accordion,
+  Badge,
   Button,
   Checkbox,
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
   Icon,
   Layout,
-  StackedList,
-  Text
+  StackedList
 } from '@components/index'
 import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
@@ -86,19 +86,19 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
     return (
       <>
         <div className="inline-flex w-full items-center justify-between gap-2">
-          <Text className="flex items-center gap-2 space-x-2" weight="medium">
-            <Text>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</Text>
-            <Button variant="secondary" size="xs">
+          <div className="flex items-center gap-2 font-medium">
+            <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
+            <Badge variant="secondary" size="xs">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.source_branch}
-            </Button>
-            <Text>{'into'}</Text>
-            <Button variant="secondary" size="xs">
+            </Badge>
+            <span>into</span>
+            <Badge variant="secondary" size="xs">
               <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
               {props?.pullReqMetadata?.target_branch}
-            </Button>
-            <Text>{formattedTime}</Text>
-          </Text>
+            </Badge>
+            <span>{formattedTime}</span>
+          </div>
           {props.showRestoreBranchButton ? (
             <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
               Restore Branch
@@ -111,9 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <Text size={1} className="text-destructive">
-              {props.headerMsg}
-            </Text>
+            <span className="text-destructive text-12">{props.headerMsg}</span>
           </div>
         )}
       </>
@@ -121,7 +119,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   }
   return (
     <div className="inline-flex items-center gap-2">
-      <Text weight="medium">
+      <h2 className="font-medium text-foreground-1">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -133,7 +131,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
                 : props.ruleViolation
                   ? 'Cannot merge pull request'
                   : `Pull request can be merged`}
-      </Text>
+      </h2>
     </div>
   )
 }
@@ -193,9 +191,10 @@ const PullRequestPanel = ({
       setNotBypassable(checkIfBypassAllowed)
     }
   }, [ruleViolationArr])
+
   return (
     <StackedList.Root>
-      <StackedList.Item className="items-center" isHeader disableHover>
+      <StackedList.Item className="items-center py-2.5" disableHover>
         <StackedList.Field
           className={cn({ 'w-full': !pullReqMetadata?.merged })}
           title={
@@ -232,14 +231,12 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <Text size={1} className="text-primary">
-                        Bypass and merge anyway
-                      </Text>
+                      <span className="text-primary text-12">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
                   <Button
-                    variant="split"
-                    size="xs_split"
+                    variant={actions ? 'split' : 'default'}
+                    size={actions ? 'xs_split' : 'xs'}
                     theme={
                       mergeable && !ruleViolation
                         ? 'success'
@@ -250,26 +247,33 @@ const PullRequestPanel = ({
                     disabled={!checkboxBypass && ruleViolation}
                     onClick={actions[0]?.action}
                     dropdown={
-                      <DropdownMenu>
-                        <DropdownMenuTrigger insideSplitButton>
-                          <Icon name="chevron-down" size={11} className="chevron-down" />
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="mt-1">
-                          <DropdownMenuGroup>
-                            {actions &&
-                              actions.map((action, action_idx) => {
+                      actions && (
+                        <DropdownMenu>
+                          <DropdownMenuTrigger insideSplitButton>
+                            <Icon name="chevron-down" size={11} className="chevron-down" />
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="mt-1 max-w-80" align="end">
+                            {/* TODO: it is required to add the state by which the current active action will be determined */}
+                            <DropdownMenuRadioGroup value={actions[0]?.id}>
+                              {actions.map((action, action_idx) => {
                                 return (
-                                  <DropdownMenuItem onClick={action.action} key={action_idx}>
+                                  <DropdownMenuRadioItem
+                                    className="items-start"
+                                    value={action.id}
+                                    onClick={action.action}
+                                    key={action_idx}
+                                  >
                                     <div className="flex flex-col">
-                                      <Text color="primary">{action.title}</Text>
-                                      <Text color="tertiaryBackground">{action.description}</Text>
+                                      <span className="text-foreground-8 leading-none">{action.title}</span>
+                                      <span className="text-foreground-4 mt-1.5">{action.description}</span>
                                     </div>
-                                  </DropdownMenuItem>
+                                  </DropdownMenuRadioItem>
                                 )
                               })}
-                          </DropdownMenuGroup>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                            </DropdownMenuRadioGroup>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
+                      )
                     }
                   >
                     Squash and merge

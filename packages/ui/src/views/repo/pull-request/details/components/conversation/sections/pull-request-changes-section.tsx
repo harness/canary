@@ -4,9 +4,9 @@ import {
   AccordionTrigger,
   Avatar,
   AvatarFallback,
+  Badge,
   Icon,
-  StackedList,
-  Text
+  StackedList
 } from '@components/index'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -67,11 +67,7 @@ interface HeaderItemProps {
   header: string
 }
 const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return (
-    <Text size={0} color="tertiaryBackground">
-      {header}
-    </Text>
-  )
+  return <span className="text-foreground-3 text-12">{header}</span>
 }
 
 const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
@@ -84,18 +80,18 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
             evaluations.map(({ owner }, idx) => {
               if (idx < 2) {
                 return (
-                  <Avatar key={owner?.id} className={cn('h-6 w-6 rounded-full')}>
+                  <Avatar key={owner?.id} className="size-6 rounded-full">
                     <AvatarFallback>
-                      <Text size={1} color="tertiaryBackground">
+                      <span className="text-12 text-foreground-4">
                         {owner?.display_name && getInitials(owner?.display_name)}
-                      </Text>
+                      </span>
                     </AvatarFallback>
                   </Avatar>
                 )
               }
               if (idx === 2 && evaluations.length && evaluations.length > 2) {
                 // TODO: do popover with all the names
-                return <Text key={owner?.id} size={0}>{`+${evaluations.length - 2}`}</Text>
+                return <span key={owner?.id} className="text-12">{`+${evaluations.length - 2}`}</span>
               }
               return null
             })}
@@ -138,21 +134,23 @@ const PullRequestChangesSection = ({
         return <Icon name="success" className="text-success" />
     }
   }
+
+  // TODO: refactoring of icon styles is required
   function renderCodeOwnerStatus() {
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
-        <div className="flex pl-2">
+        <div className="flex items-center">
           <Icon name="circle" className="text-warning" />
-          <Text className="pl-2 text-xs">{'Waiting on code owner reviews of latest changes'}</Text>
+          <span className="text-14 text-foreground-1">Waiting on code owner reviews of latest changes</span>
         </div>
       )
     }
 
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
-        <div className="flex pl-2">
+        <div className="flex items-center">
           <Icon name="circle" className="text-warning" />
-          <Text className="pl-2 text-xs">{`Changes are pending approval from code owners`}</Text>
+          <span className="text-14 text-foreground-1">Changes are pending approval from code owners</span>
         </div>
       )
     }
@@ -164,26 +162,26 @@ const PullRequestChangesSection = ({
       codeOwnerPendingEntries?.length > 0
     ) {
       return (
-        <div className="flex pl-2">
+        <div className="flex items-center">
           <Icon name="circle" className="text-tertiary-background" />
-          <Text className="pl-2 text-xs">{`Some changes were approved by code owners`}</Text>
+          <span className="text-14 text-foreground-1">Some changes were approved by code owners</span>
         </div>
       )
     }
     if (latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
-        <Text className="ml-2 flex">
+        <div className="flex items-center">
           <Icon name="success" className="text-success" />
-          <Text className="pl-2 text-xs">{`Latest changes were approved by code owners`}</Text>
-        </Text>
+          <span className="text-14 text-foreground-1">Latest changes were approved by code owners</span>
+        </div>
       )
     }
     if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
-        <Text className="ml-2 flex">
+        <div className="flex items-center">
           <Icon name="success" className="text-success" />
-          <Text className="pl-2 text-xs">{`Changes were approved by code owners`}</Text>
-        </Text>
+          <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
+        </div>
       )
     }
     if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0) {
@@ -194,42 +192,40 @@ const PullRequestChangesSection = ({
         latestCodeOwnerApprovalArr.length < minReqLatestApproval
       ) {
         return (
-          <div className="flex pl-2">
+          <div className="flex items-center">
             <Icon name="pending-clock" className="text-warning" />
-            <Text className="pl-2 text-xs">{`Latest changes are pending approval from required reviewers`}</Text>
+            <span className="text-14 text-foreground-1">
+              Latest changes are pending approval from required reviewers
+            </span>
           </div>
         )
       }
       return (
-        <div className="flex pl-2">
+        <div className="flex items-center">
           <Icon name="circle" className="text-warning" />
-          <Text className="pl-2 text-xs">{`Changes were approved by code owners`}</Text>
+          <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
         </div>
       )
     }
 
     return (
-      <div className="flex pl-2">
+      <div className="flex items-center">
         <Icon name="circle" className="text-tertiary-background" />
-
-        <Text className="pl-2 text-xs">{`No codeowner reviews`}</Text>
+        <span className="text-14 text-foreground-1">No codeowner reviews</span>
       </div>
     )
   }
 
   const viewBtn =
-    (minApproval && minReqLatestApproval && minApproval > minReqLatestApproval) ||
-    (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0) ||
-    (minApproval && minApproval > 0 && minReqLatestApproval === undefined) ||
-    (minReqLatestApproval && minReqLatestApproval > 0) ||
+    (minApproval && minApproval > 0 && !isEmpty(approvedEvaluations)) ||
+    (minReqLatestApproval && minReqLatestApproval > 0 && !isEmpty(latestApprovalArr)) ||
     !isEmpty(changeReqEvaluations) ||
-    !isEmpty(codeOwners) ||
-    false
+    (!isEmpty(codeOwners) && !isEmpty(codeOwners?.evaluation_entries))
   return (
     <AccordionItem value="item-1">
       <AccordionTrigger
-        hideChevron={!viewBtn}
         className="text-left"
+        hideChevron={!viewBtn}
         onClick={e => {
           if (!viewBtn) e.preventDefault()
         }}
@@ -238,106 +234,102 @@ const PullRequestChangesSection = ({
           title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
           description={<LineDescription text={changesInfo.content} />}
         />
-        {viewBtn && <Text className="px-2 py-1.5 text-xs">Show more</Text>}
+        {viewBtn && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
       </AccordionTrigger>
+
       <AccordionContent>
-        <div>
+        <>
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
-            <div className="ml-4">
-              <div className="ml-2 mt-3 flex items-center justify-between border-t pt-2">
-                {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
-                  <Text className="ml-2 flex">
-                    <Icon name="success" className="text-success" />
-                    <Text className="pl-2 text-xs">
-                      {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
-                    </Text>
-                  </Text>
-                ) : (
-                  <div className="ml-2 flex">
-                    <Icon name="circle" className="text-warning" />
-                    <Text className="pl-2 text-xs">
-                      {`${(approvedEvaluations && approvedEvaluations.length) || ''}/${minApproval} approvals completed`}
-                    </Text>
-                  </div>
-                )}
-                <div className="rounded-full border bg-transparent">
-                  <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
+            <div className="ml-6 flex items-center justify-between">
+              {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
+                <div className="flex gap-x-2 items-center">
+                  <Icon name="success" className="text-icons-success" />
+                  <span className="text-14 text-foreground-1">
+                    {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
+                  </span>
                 </div>
-              </div>
+              ) : (
+                <div className="flex gap-x-2 items-center">
+                  <Icon name="circle" className="text-icons-7 fill-transparent" />
+                  <span className="text-14 text-foreground-1">
+                    {`${(approvedEvaluations && approvedEvaluations.length) || ''}/${minApproval} approvals completed`}
+                  </span>
+                </div>
+              )}
+              <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
+                Required
+              </Badge>
             </div>
           )}
 
           {(minReqLatestApproval ?? 0) > 0 && (
-            <div className="ml-4">
-              <div className="ml-2 mt-3 flex items-center justify-between border-t pt-2">
-                {latestApprovalArr !== undefined &&
-                minReqLatestApproval !== undefined &&
-                minReqLatestApproval <= latestApprovalArr?.length ? (
-                  <Text className="ml-2 flex">
-                    <Icon name="success" className="text-success" />
-                    <Text className="pl-2 text-xs">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</Text>
-                  </Text>
-                ) : (
-                  <div className="ml-2 flex">
-                    <Icon name="circle" className="text-warning" />
-                    <Text className="pl-2 text-xs">
-                      {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
-                    </Text>
-                  </div>
-                )}
-                <div className="rounded-full border bg-transparent">
-                  <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
+            <div className="ml-6 flex items-center justify-between">
+              {latestApprovalArr !== undefined &&
+              minReqLatestApproval !== undefined &&
+              minReqLatestApproval <= latestApprovalArr?.length ? (
+                <div className="flex gap-x-2 items-center">
+                  <Icon name="success" className="text-icons-success" />
+                  <span className="text-14 text-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
-              </div>
+              ) : (
+                <div className="flex gap-x-2 items-center">
+                  <Icon name="circle" className="text-icons-7 fill-transparent" />
+                  <span className="text-14 text-foreground-1">
+                    {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
+                  </span>
+                </div>
+              )}
+              <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
+                Required
+              </Badge>
             </div>
           )}
 
           {!isEmpty(changeReqEvaluations) && (
-            <div className="ml-4">
-              <div className="ml-2 mt-3 flex items-center justify-between border-t pt-2">
-                <Text className="ml-2 flex">
-                  <Icon
-                    name="triangle-warning"
-                    className={cn('', {
-                      'text-destructive': reqNoChangeReq,
-                      'text-tertiary-background': !reqNoChangeReq
-                    })}
-                  />
-                  <Text className="pl-2 text-xs">{`${changeReqReviewer} requested changes to the pull request`}</Text>
-                </Text>
-                {reqNoChangeReq && (
-                  <div className="rounded-full border bg-transparent">
-                    <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
-                  </div>
-                )}
+            <div className="ml-6 flex items-center justify-between">
+              <div className="flex gap-x-2 items-center">
+                <Icon
+                  name="triangle-warning"
+                  className={cn({
+                    'text-icons-danger': reqNoChangeReq,
+                    'text-icons-alert': !reqNoChangeReq
+                  })}
+                />
+                <span className="text-14 text-foreground-1">{`${changeReqReviewer} requested changes to the pull request`}</span>
               </div>
+              {reqNoChangeReq && (
+                <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
+                  Required
+                </Badge>
+              )}
             </div>
           )}
+
           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (
-            <div className="ml-4">
-              <div className="ml-2 mt-3 flex items-center justify-between border-t pt-2">
-                {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
-                  <Text className="ml-2 flex">
-                    <Icon
-                      name="triangle-warning"
-                      className={cn('', {
-                        'text-destructive': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
-                        'text-tertiary-background': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
-                      })}
-                    />
-                    <Text className="pl-2 text-xs">{'Code owners requested changes to the pull request'}</Text>
-                  </Text>
-                ) : (
-                  renderCodeOwnerStatus()
-                )}
-                {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
-                  <div className="rounded-full border bg-transparent">
-                    <Text className="px-2 py-1.5 text-xs text-tertiary-background">required</Text>
-                  </div>
-                )}
-              </div>
+            <div className="ml-6 flex items-center justify-between">
+              {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
+                <div className="flex gap-x-2 items-center">
+                  <Icon
+                    name="triangle-warning"
+                    className={cn({
+                      'text-icons-danger': reqCodeOwnerApproval || reqCodeOwnerLatestApproval,
+                      'text-icons-alert': !reqCodeOwnerApproval || !reqCodeOwnerLatestApproval
+                    })}
+                  />
+                  <span className="text-14 text-foreground-1">
+                    {'Code owners requested changes to the pull request'}
+                  </span>
+                </div>
+              ) : (
+                renderCodeOwnerStatus()
+              )}
+              {(reqCodeOwnerApproval || reqCodeOwnerLatestApproval) && (
+                <Badge variant="quaternary" borderRadius="full" size="xl" disableHover>
+                  Required
+                </Badge>
+              )}
             </div>
           )}
           {/* TODO: add codeowners table */}
@@ -374,7 +366,7 @@ const PullRequestChangesSection = ({
               </StackedList.Root>
             </div>
           )}
-        </div>
+        </>
       </AccordionContent>
     </AccordionItem>
   )

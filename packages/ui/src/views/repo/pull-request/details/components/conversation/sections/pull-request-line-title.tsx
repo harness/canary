@@ -1,5 +1,3 @@
-import { Text } from '@components/index'
-
 interface LineTitleProps {
   text?: string
   icon?: React.ReactElement
@@ -13,7 +11,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {
   return (
     <div className="inline-flex items-center gap-2">
       {props.icon}
-      <Text weight="medium">{props.text}</Text>
+      <h3 className="font-medium text-14">{props.text}</h3>
     </div>
   )
 }
@@ -21,9 +19,7 @@ export const LineTitle = ({ ...props }: LineTitleProps) => {
 export const LineDescription = ({ ...props }: LineDescriptionProps) => {
   return (
     <div className="ml-6 inline-flex items-center gap-2">
-      <Text size={1} weight="normal" color={'tertiaryBackground'}>
-        {props.text}
-      </Text>
+      <p className="text-foreground-4 text-14 font-normal">{props.text}</p>
     </div>
   )
 }

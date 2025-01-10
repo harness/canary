@@ -271,7 +271,8 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                       ) : null}
                       <Input
                         value={comment}
-                        placeholder={'Reply here'}
+                        placeholder="Reply here"
+                        size="md"
                         onClick={() => {
                           setHideReplyBox?.(true)
                         }}
@@ -279,15 +280,6 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                           setComment(e.target.value)
                         }}
                       />
-                      <Button
-                        disabled={!comment.trim()}
-                        onClick={() => {
-                          handleSaveComment?.(comment, parentCommentId)
-                          setComment('')
-                        }}
-                      >
-                        Reply
-                      </Button>
                     </div>
                   )}
                 </>

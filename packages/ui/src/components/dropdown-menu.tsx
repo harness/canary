@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
+import { ChevronRightIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
 import { Icon } from './icon'
@@ -148,9 +148,9 @@ const DropdownMenuRadioItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">
       <DropdownMenuPrimitive.ItemIndicator>
-        <DotFilledIcon className="size-4 fill-current" />
+        <span className="size-2 bg-icons-2 rounded-full block" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}

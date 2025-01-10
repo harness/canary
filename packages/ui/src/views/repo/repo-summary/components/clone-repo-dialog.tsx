@@ -50,7 +50,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         </div>
         <Tabs
           className="mt-4"
-          variant="branch"
+          variant="tabnav"
           value={currentTab}
           onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
         >

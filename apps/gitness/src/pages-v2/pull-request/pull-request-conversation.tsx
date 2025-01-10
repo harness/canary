@@ -405,10 +405,13 @@ export default function PullRequestConversationPage() {
   if (prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
   }
+
+  // TODO: we only need to plug in one component from @harnessio/ui/views
+  // for the PullRequestConversationView example and pass it the required props
   return (
     <SandboxLayout.Columns columnWidths="1fr 220px">
       <SandboxLayout.Column>
-        <SandboxLayout.Content className="pl-0">
+        <SandboxLayout.Content className="pl-0 pt-0">
           {/* TODO: fix handleaction for comment section in panel */}
           <PullRequestPanel
             spaceId={spaceId}
@@ -457,7 +460,7 @@ export default function PullRequestConversationPage() {
             showRestoreBranchButton={showRestoreBranchButton}
             headerMsg={errorMsg}
           />
-          <Spacer size={9} />
+          <Spacer size={12} />
           <PullRequestFilters
             activityFilters={activityFilters}
             dateFilters={dateFilters}
@@ -516,7 +519,7 @@ export default function PullRequestConversationPage() {
         </SandboxLayout.Content>
       </SandboxLayout.Column>
       <SandboxLayout.Column>
-        <SandboxLayout.Content className="px-0">
+        <SandboxLayout.Content className="px-0 pt-0">
           <PullRequestSideBar
             addReviewers={handleAddReviewer}
             usersList={principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid }))}

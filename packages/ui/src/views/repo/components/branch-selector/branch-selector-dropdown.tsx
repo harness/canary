@@ -66,14 +66,14 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       {!isBranchOnly && (
         <Tabs
           className="mt-2"
-          variant="branch"
+          variant="tabnav"
           value={activeTab}
           onValueChange={value => {
             setActiveTab(value as BranchSelectorTab)
             setSearchQuery('')
           }}
         >
-          <TabsList>
+          <TabsList className="px-3">
             <DropdownMenuItem
               className="rounded-t-md p-0"
               onSelect={e => {

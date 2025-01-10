@@ -8,6 +8,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
   caption?: ReactNode
   error?: string
   optional?: boolean
+  resizable?: boolean
 }
 
 /**
@@ -16,7 +17,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
  * <Textarea name="textarea" label="Textarea" placeholder="Enter text here" />
  */
 const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ id, disabled, label, caption, error, optional, className, ...props }, ref) => {
+  ({ id, disabled, label, caption, error, optional, className, resizable = false, ...props }, ref) => {
     return (
       <ControlGroup>
         {label && (
@@ -26,7 +27,8 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         )}
         <textarea
           className={cn(
-            'placeholder:text-foreground-4 flex min-h-[74px] w-full rounded border bg-transparent px-3 py-1.5 text-sm shadow-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed resize-none',
+            'placeholder:text-foreground-4 flex min-h-[74px] w-full rounded border bg-transparent px-3 py-1.5 text-sm shadow-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed',
+            resizable ? 'resize-y [field-sizing:content] whitespace-pre-wrap [word-break:break-word]' : 'resize-none',
             className,
             error
               ? 'border-borders-danger'

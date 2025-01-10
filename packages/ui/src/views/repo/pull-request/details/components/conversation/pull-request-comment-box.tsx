@@ -4,14 +4,12 @@ import {
   Avatar,
   AvatarFallback,
   Button,
-  Layout,
   MarkdownViewer,
-  Spacer,
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
-  Text
+  Textarea
 } from '@components/index'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -24,7 +22,6 @@ import { getInitials } from '@utils/stringUtils'
 //   title?: string
 //   size?: number
 // }
-
 interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   comment: string
@@ -41,7 +38,6 @@ interface PullRequestCommentBoxProps {
 }
 
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
-
 const PullRequestCommentBox = ({
   onSaveComment,
   currentUser,
@@ -57,105 +53,96 @@ const PullRequestCommentBox = ({
       setComment('') // Clear the comment box after saving
     }
   }
+
   const avatar = useMemo(() => {
     return (
       <Avatar size="6">
         {/* <AvatarImage src={AvatarUrl} /> */}
         <AvatarFallback>
-          <Text size={0} color="tertiaryBackground">
-            {getInitials(currentUser || '')}
-          </Text>
+          <span className="text-12 text-foreground-3">{getInitials(currentUser || '')}</span>
         </AvatarFallback>
       </Avatar>
     )
   }, [currentUser])
+
   // TODO: add back when functionality is added
   // const toolbar: ToolbarItem[] = useMemo(() => {
-  //   const initial: ToolbarItem[] = []
-  //   return [
-  //     ...initial,
-
-  //     { icon: 'header', action: ToolbarAction.HEADER },
-  //     { icon: 'bold', action: ToolbarAction.BOLD },
-  //     { icon: 'italicize', action: ToolbarAction.ITALIC },
-  //     { icon: 'attachment', action: ToolbarAction.UPLOAD },
-  //     { icon: 'list', action: ToolbarAction.UNORDER_LIST },
-  //     { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
-  //     { icon: 'code', action: ToolbarAction.CODE_BLOCK }
-  //   ]
+  //  const initial: ToolbarItem[] = []
+  //  return [
+  //    ...initial,
+  //    { icon: 'header', action: ToolbarAction.HEADER },
+  //    { icon: 'bold', action: ToolbarAction.BOLD },
+  //    { icon: 'italicize', action: ToolbarAction.ITALIC },
+  //    { icon: 'attachment', action: ToolbarAction.UPLOAD },
+  //    { icon: 'list', action: ToolbarAction.UNORDER_LIST },
+  //    { icon: 'checklist', action: ToolbarAction.CHECK_LIST },
+  //    { icon: 'code', action: ToolbarAction.CODE_BLOCK }
+  //  ]
   // }, [])
+
   return (
     <div className="flex items-start space-x-4">
       {!inReplyMode && avatar}
       <div
-        className={cn('min-w-0 flex-1  px-3 pb-3 pt-2', {
+        className={cn('min-w-0 flex-1 px-4 pb-5 pt-1.5', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t ': inReplyMode
         })}
       >
-        <Tabs variant="navigation" defaultValue="write">
-          <TabsList className="px-0">
-            <TabsTrigger value={'write'}>
-              <Text size={2}>{'Write'}</Text>
-            </TabsTrigger>
-            <TabsTrigger value={'preview'}>
-              <Text size={2}>{'Preview'}</Text>
-            </TabsTrigger>
+        <Tabs variant="tabnav" defaultValue="write">
+          <TabsList className="relative left-1/2 w-[calc(100%+32px)] -translate-x-1/2 px-4">
+            <TabsTrigger value="write">Write</TabsTrigger>
+            <TabsTrigger value="preview">Preview</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="write">
-            <Spacer size={2} />
-            <textarea
-              autoFocus={inReplyMode}
-              className="focus!:outline-none w-full resize-none bg-transparent p-2 focus-visible:outline-1  focus-visible:outline-white"
-              placeholder="Add your comment here"
-              value={comment}
-              onChange={e => setComment(e.target.value)}
-            />
+          <TabsContent className="mt-4" value="write">
+            <div className="relative">
+              <Textarea
+                className="min-h-24 p-3 pb-10"
+                autoFocus={inReplyMode}
+                placeholder="Add your comment here"
+                value={comment}
+                onChange={e => setComment(e.target.value)}
+                resizable
+              />
+
+              {/* TODO: add back when functionality is implemented */}
+              {/* <div className="absolute pb-2 pt-1 px-1 bottom-px bg-background-1 left-1/2 w-[calc(100%-2px)] -translate-x-1/2 rounded">
+                {toolbar.map((item, index) => {
+                  return (
+                    <Button key={`${comment}-${index}`} size="icon" variant="ghost">
+                      <Icon name={item.icon} />
+                    </Button>
+                  )
+                })}
+              </div> */}
+            </div>
           </TabsContent>
-          <TabsContent value="preview">
-            <Spacer size={2} />
-            <div className="min-h-4">
-              <MarkdownViewer source={comment || ''} />
+          <TabsContent className="mt-4" value="preview">
+            <div className="min-h-24">
+              {comment ? <MarkdownViewer source={comment} /> : <span>Nothing to preview</span>}
             </div>
           </TabsContent>
         </Tabs>
-        <div className="mt-2 flex items-center justify-between space-x-2">
-          {/* TODO : add back when functionality is implemented
-          <Layout.Horizontal>
-            {toolbar.map((item, index) => {
-              return (
-                <Button key={`${comment}-${index}`} size="icon" variant="ghost">
-                  <Icon name={item.icon} />
-                </Button>
-              )
-            })}
-          </Layout.Horizontal> */}
-          {!inReplyMode && (
-            <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
-              Comment
-            </Button>
-          )}
-        </div>
-        {inReplyMode && (
-          <Layout.Horizontal className="pl-2 pt-2">
-            {isEditMode ? (
-              <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
-                Save
-              </Button>
-            ) : (
-              <Button variant={'default'} className="float-right" onClick={handleSaveComment}>
-                Reply
-              </Button>
-            )}
-            {/* <Button variant={'outline'} onClick={handleSaveComment}>
+        <div className="mt-4 flex items-center gap-x-3">
+          {!inReplyMode && <Button onClick={handleSaveComment}>Comment</Button>}
+
+          {inReplyMode && (
+            <>
+              {isEditMode ? (
+                <Button onClick={handleSaveComment}>Save</Button>
+              ) : (
+                <Button onClick={handleSaveComment}>Reply</Button>
+              )}
+              {/* <Button variant={'outline'} onClick={handleSaveComment}>
               Reply & Resolve
             </Button> */}
-            <Button variant={'outline'} onClick={onCancelClick}>
-              Cancel
-            </Button>
-          </Layout.Horizontal>
-        )}
+              <Button variant="outline" onClick={onCancelClick}>
+                Cancel
+              </Button>
+            </>
+          )}
+        </div>
       </div>
     </div>
   )

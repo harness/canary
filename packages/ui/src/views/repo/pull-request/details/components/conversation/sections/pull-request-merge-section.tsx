@@ -1,4 +1,4 @@
-import { AccordionContent, AccordionItem, AccordionTrigger, Icon, StackedList, Text } from '@components/index'
+import { AccordionContent, AccordionItem, AccordionTrigger, Icon, StackedList } from '@components/index'
 import { isEmpty } from 'lodash-es'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
@@ -17,11 +17,7 @@ const PullRequestMergeSection = ({
 }: PullRequestMergeSectionProps) => {
   return (
     <AccordionItem value="item-4" isLast>
-      <AccordionTrigger
-        className="text-left"
-        hideChevron
-        // hideChevron={!mergeable || !unchecked}
-      >
+      <AccordionTrigger className="text-left" hideChevron={mergeable || unchecked}>
         <StackedList.Field
           title={
             <LineTitle
@@ -53,7 +49,7 @@ const PullRequestMergeSection = ({
               <LineDescription text={'Checking for ability to merge automatically...'} />
             ) : !mergeable ? (
               <div className="ml-6 inline-flex items-center gap-2">
-                <Text size={1} weight="normal" color={'tertiaryBackground'}>
+                <p className="text-foreground-4 text-14 font-normal">
                   Use the
                   <span
                     // onClick={() => {
@@ -69,39 +65,33 @@ const PullRequestMergeSection = ({
                   </span>
                   to resolve conflicts
                   {/* {getString('pr.useCmdLineToResolveConflicts')} */}
-                </Text>
+                </p>
               </div>
             ) : (
               ''
             )
           }
         />
-        {!mergeable && !unchecked && (
-          <Text className="pr-2" size={1}>
-            Show more
-          </Text>
-        )}
+        {!mergeable && !unchecked && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
       </AccordionTrigger>
       {!mergeable && !unchecked && (
         <AccordionContent>
-          <StackedList.Root className="ml-2 border-transparent bg-inherit">
-            <StackedList.Item className="ml-2 px-0.5 pt-0.5">
-              <Text
-                size={1}
-                weight="normal"
-                color={'tertiaryBackground'}
-              >{`Conflicting files (${conflictingFiles?.length || 0})`}</Text>
-            </StackedList.Item>
-            {!isEmpty(conflictingFiles) &&
-              conflictingFiles?.map((file, idx) => (
-                <StackedList.Item className="ml-2 px-2 py-1" key={`${file}-${idx}`}>
-                  <Icon size={14} name="changes" />
-                  <Text size={1} className="pl-1">
-                    {file}
-                  </Text>
-                </StackedList.Item>
-              ))}
-          </StackedList.Root>
+          <div className="ml-6">
+            <span className="text-14 text-foreground-2">
+              Conflicting files <span className="text-foreground-4">{`(${conflictingFiles?.length || 0})`}</span>
+            </span>
+
+            {!isEmpty(conflictingFiles) && (
+              <div className="mt-2">
+                {conflictingFiles?.map((file, idx) => (
+                  <div className="py-1.5 flex items-center gap-x-2" key={`${file}-${idx}`}>
+                    <Icon className="text-icons-1" size={16} name="file" />
+                    <span className="text-14 text-foreground-1">{file}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </AccordionContent>
       )}
     </AccordionItem>

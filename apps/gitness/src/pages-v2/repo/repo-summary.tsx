@@ -300,7 +300,7 @@ export default function RepoSummaryPage() {
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchTag.name}/~/${filePath}`)
     },
     [gitRef, selectedBranchTag, navigate, repoId, spaceId]
   )

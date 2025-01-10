@@ -51,7 +51,7 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
         body: { config_path: yamlPath, default_branch: branch, identifier: name }
       })
 
-      navigate(`/${routes.toPipelineEdit({ spaceId, repoId, pipelineId: name })}`)
+      navigate(routes.toPipelineEdit({ spaceId, repoId, pipelineId: name }))
     } catch (e: any) {
       if ('message' in e) {
         setError({ message: e.message })

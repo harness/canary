@@ -138,14 +138,14 @@ export const RepoSidebar = () => {
         if (branch) {
           setSelectedBranchTag(branch)
           setSelectedRefType(type)
-          navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
           setSelectedRefType(type)
-          navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + tag.name}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + tag.name}`)
         }
       }
     },

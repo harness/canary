@@ -62,7 +62,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         const repoName = repoRef.split('/')[1]
-        navigate(`/${routes.toRepoGeneralSettings({ spaceId, repoId: repoName })}`)
+        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
   )
@@ -85,7 +85,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
-        navigate(`/${routes.toRepoGeneralSettings({ spaceId, repoId: repoName })}`)
+        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
   )

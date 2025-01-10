@@ -38,7 +38,7 @@ export const CreateRepo = () => {
       },
       {
         onSuccess: ({ body: data }) => {
-          navigate(`/${routes.toRepoSummary({ spaceId, repoId: data?.identifier })}`)
+          navigate(routes.toRepoSummary({ spaceId, repoId: data?.identifier }))
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

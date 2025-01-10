@@ -93,7 +93,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
    * Navigate to Edit file route
    */
   const handleEditFile = () => {
-    navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
+    navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
   return (
@@ -106,11 +106,9 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
-            navigate(
-              `/${routes.toPullRequestCompare({ spaceId, repoId })}/${selectedBranchTag.name}...${newBranchName}`
-            )
+            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${selectedBranchTag.name}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}

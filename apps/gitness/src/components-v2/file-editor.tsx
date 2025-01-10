@@ -169,9 +169,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`/${routes.toPullRequestCompare({ spaceId, repoId })}/${defaultBranch}...${newBranchName}`)
+            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${defaultBranch}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}

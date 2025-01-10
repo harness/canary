@@ -42,7 +42,7 @@ export const CreateWebhookContainer = () => {
     { repo_ref: repo_ref },
     {
       onSuccess: () => {
-        navigate(`/${routes.toRepoWebhooks({ spaceId, repoId })}`)
+        navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
   )
@@ -55,7 +55,7 @@ export const CreateWebhookContainer = () => {
     { repo_ref: repo_ref, webhook_identifier: Number(webhookId) },
     {
       onSuccess: () => {
-        navigate(`/${routes.toRepoWebhooks({ spaceId, repoId })}`)
+        navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
   )
@@ -121,7 +121,7 @@ export const CreateWebhookContainer = () => {
   }
 
   const onCancel = () => {
-    navigate(`/${routes.toRepoWebhooks({ spaceId, repoId })}`)
+    navigate(routes.toRepoWebhooks({ spaceId, repoId }))
   }
 
   const apiError = createWebHookError?.message || updateWebhookError?.message || null

@@ -251,10 +251,10 @@ importers:
         version: 3.7.2(@swc/helpers@0.5.2)(vite@6.0.3(@types/node@22.10.2)(jiti@1.21.6)(sass@1.77.8)(terser@5.31.3)(yaml@2.5.0))
       '@vitest/coverage-istanbul':
         specifier: ^2.1.8
-        version: 2.1.8(vitest@2.1.8(@types/node@22.10.5)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.77.8)(terser@5.31.3))
+        version: 2.1.8(vitest@2.1.8)
       css-loader:
         specifier: ^7.1.2
-        version: 7.1.2(webpack@5.93.0(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack-cli@5.1.4))
+        version: 7.1.2(webpack@5.93.0)
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -17972,7 +17972,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-istanbul@2.1.8(vitest@2.1.8(@types/node@22.10.5)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.77.8)(terser@5.31.3))':
+  '@vitest/coverage-istanbul@2.1.8(vitest@2.1.8)':
     dependencies:
       '@istanbuljs/schema': 0.1.3
       debug: 4.3.7
@@ -17985,22 +17985,6 @@ snapshots:
       test-exclude: 7.0.1
       tinyrainbow: 1.2.0
       vitest: 2.1.8(@types/node@22.10.2)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.77.8)(terser@5.31.3)
-    transitivePeerDependencies:
-      - supports-color
-
-  '@vitest/coverage-istanbul@2.1.8(vitest@2.1.8(@types/node@22.9.1)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.77.8)(terser@5.31.3))':
-    dependencies:
-      '@istanbuljs/schema': 0.1.3
-      debug: 4.3.7
-      istanbul-lib-coverage: 3.2.2
-      istanbul-lib-instrument: 6.0.3
-      istanbul-lib-report: 3.0.1
-      istanbul-lib-source-maps: 5.0.6
-      istanbul-reports: 3.1.7
-      magicast: 0.3.5
-      test-exclude: 7.0.1
-      tinyrainbow: 1.2.0
-      vitest: 2.1.8(@types/node@22.9.1)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.77.8)(terser@5.31.3)
     transitivePeerDependencies:
       - supports-color
 
@@ -18550,7 +18534,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  babel-loader@9.1.3(@babel/core@7.24.9)(webpack@5.93.0(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack-cli@5.1.4)):
+  babel-loader@9.1.3(@babel/core@7.24.9)(webpack@5.93.0):
     dependencies:
       '@babel/core': 7.24.9
       find-cache-dir: 4.0.0
@@ -22927,7 +22911,7 @@ snapshots:
       postcss: 8.4.49
       ts-node: 10.9.2(@swc/core@1.10.4(@swc/helpers@0.5.2))(@types/node@22.9.1)(typescript@5.6.3)
 
-  postcss-loader@8.1.1(postcss@8.4.44)(typescript@5.5.3)(webpack@5.93.0(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack-cli@5.1.4)):
+  postcss-loader@8.1.1(postcss@8.4.44)(typescript@5.5.3)(webpack@5.93.0):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.5.3)
       jiti: 1.21.6
@@ -24283,7 +24267,7 @@ snapshots:
     dependencies:
       streamx: 2.20.2
 
-  terser-webpack-plugin@5.3.10(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack@5.93.0(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack-cli@5.1.4)):
+  terser-webpack-plugin@5.3.10(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack@5.93.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -25517,7 +25501,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack@5.93.0(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack-cli@5.1.4))
+      terser-webpack-plugin: 5.3.10(@swc/core@1.10.4(@swc/helpers@0.5.2))(webpack@5.93.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     optionalDependencies:

@@ -4,14 +4,14 @@ import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 
-type BreadcrumbProps = ComponentPropsWithoutRef<'nav'> & {
+type BreadcrumbRootProps = ComponentPropsWithoutRef<'nav'> & {
   separator?: ReactNode
 }
 
-const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => {
+const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) => {
   return <nav ref={ref} aria-label="breadcrumb" {...props} />
 })
-Breadcrumb.displayName = 'Breadcrumb'
+BreadcrumbRoot.displayName = 'BreadcrumbRoot'
 
 type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>
 
@@ -83,19 +83,23 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'
 
+const Breadcrumb = {
+  Root: BreadcrumbRoot,
+  List: BreadcrumbList,
+  Item: BreadcrumbItem,
+  Link: BreadcrumbLink,
+  Page: BreadcrumbPage,
+  Separator: BreadcrumbSeparator,
+  Ellipsis: BreadcrumbEllipsis
+}
+
 export {
   Breadcrumb,
-  BreadcrumbProps,
-  BreadcrumbList,
+  BreadcrumbRootProps,
   BreadcrumbListProps,
-  BreadcrumbItem,
   BreadcrumbItemProps,
-  BreadcrumbLink,
   BreadcrumbLinkProps,
-  BreadcrumbPage,
   BreadcrumbPageProps,
-  BreadcrumbSeparator,
   BreadcrumbSeparatorProps,
-  BreadcrumbEllipsis,
   BreadcrumbEllipsisProps
 }

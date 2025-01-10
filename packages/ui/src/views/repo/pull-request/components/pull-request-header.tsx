@@ -50,7 +50,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   return (
     <div className="flex flex-col gap-y-4">
       <div className="flex items-center">
-        <h1 className="text-foreground-1 font-medium text-24 flex gap-x-2.5">
+        <h1 className="flex gap-x-2.5 text-24 font-medium text-foreground-1">
           {original}
           <span className="font-normal text-foreground-4">#{number}</span>
         </h1>
@@ -82,7 +82,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
               {source_branch}
             </Link>
           </Badge>
-          <span className="w-px h-4 mx-1.5 bg-borders-2" />
+          <span className="mx-1.5 h-4 w-px bg-borders-2" />
           <span className="text-foreground-4">{formattedTime}</span>
         </div>
       </div>

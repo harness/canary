@@ -4,14 +4,14 @@ import { Text } from '@harnessio/ui/components'
 
 import css from './section.module.css'
 
-export interface SectionProps extends PropsWithChildren {
+export interface SubSectionProps extends PropsWithChildren {
   title: string
   description?: ReactNode
 }
 
-const Section: FC<SectionProps> = ({ title, description, children }) => (
+const SubSection: FC<SubSectionProps> = ({ title, description, children }) => (
   <section className={css.section}>
-    <Text as="h3" size={5}>
+    <Text as="h4" size={4}>
       {title}
     </Text>
     {description}
@@ -19,4 +19,4 @@ const Section: FC<SectionProps> = ({ title, description, children }) => (
   </section>
 )
 
-export default Section
+export default SubSection

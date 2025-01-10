@@ -1,8 +1,9 @@
 import type { RouteProps } from 'react-router-dom'
 
-import AlertComponent from '@subjects/components/alert'
-import BadgeComponent from '@subjects/components/badge'
-import ButtonComponent from '@subjects/components/button'
+import AlertComponent from './alert'
+import BadgeComponent from './badge'
+import BreadcrumbComponent from './breadcrumb'
+import ButtonComponent from './button'
 
 interface ComponentPage {
   name: string
@@ -13,5 +14,6 @@ interface ComponentPage {
 export const componentPages: ComponentPage[] = [
   { name: 'Alert', path: 'alert', Component: AlertComponent },
   { name: 'Badge', path: 'badge', Component: BadgeComponent },
+  { name: 'Breadcrumb', path: 'breadcrumb', Component: BreadcrumbComponent },
   { name: 'Button', path: 'button', Component: ButtonComponent }
 ]

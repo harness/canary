@@ -1,13 +1,6 @@
 import { useMatches } from 'react-router-dom'
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  Topbar
-} from '@harnessio/ui/components'
+import { Breadcrumb, Topbar } from '@harnessio/ui/components'
 
 import { CustomHandle } from '../../framework/routing/types'
 
@@ -17,8 +10,8 @@ function Breadcrumbs() {
   return (
     <Topbar.Root>
       <Topbar.Left>
-        <Breadcrumb className="select-none">
-          <BreadcrumbList>
+        <Breadcrumb.Root className="select-none">
+          <Breadcrumb.List>
             {matches.map((match, index) => {
               const { breadcrumb } = (match.handle || {}) as CustomHandle
               const isFirst = index === 1
@@ -27,18 +20,18 @@ function Breadcrumbs() {
               if (!breadcrumb) return null
 
               return (
-                <BreadcrumbItem key={index}>
-                  {!isFirst ? <BreadcrumbSeparator /> : null}
+                <Breadcrumb.Item key={index}>
+                  {!isFirst ? <Breadcrumb.Separator /> : null}
                   {isLast ? (
                     breadcrumb(match.params)
                   ) : (
-                    <BreadcrumbLink href={match.pathname}>{breadcrumb(match.params)}</BreadcrumbLink>
+                    <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>
                   )}
-                </BreadcrumbItem>
+                </Breadcrumb.Item>
               )
             })}
-          </BreadcrumbList>
-        </Breadcrumb>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
       </Topbar.Left>
     </Topbar.Root>
   )

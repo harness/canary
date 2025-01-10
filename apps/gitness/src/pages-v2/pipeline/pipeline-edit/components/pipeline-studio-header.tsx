@@ -1,11 +1,4 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
-} from '@harnessio/canary'
+import { Breadcrumb } from '@harnessio/ui/components'
 import { Topbar } from '@harnessio/views'
 
 import PipelineStudioHeaderActions from './pipeline-studio-header-actions'
@@ -16,17 +9,17 @@ export function PipelineStudioHeader(): JSX.Element {
     <Topbar.Root>
       <Topbar.Left>
         {/** TODO: common component */}
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/">harness-next</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="font-thin">/</BreadcrumbSeparator>
-            <BreadcrumbPage>
-              <BreadcrumbLink href="/components">pipeline.yml</BreadcrumbLink>
-            </BreadcrumbPage>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <Breadcrumb.Root>
+          <Breadcrumb.List>
+            <Breadcrumb.Item>
+              <Breadcrumb.Link href="/">harness-next</Breadcrumb.Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Separator />
+            <Breadcrumb.Page>
+              <Breadcrumb.Link href="/components">pipeline.yml</Breadcrumb.Link>
+            </Breadcrumb.Page>
+          </Breadcrumb.List>
+        </Breadcrumb.Root>
       </Topbar.Left>
       <Topbar.Right>
         <PipelineStudioHeaderActions />

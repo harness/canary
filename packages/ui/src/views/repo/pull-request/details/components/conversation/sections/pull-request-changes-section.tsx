@@ -67,7 +67,7 @@ interface HeaderItemProps {
   header: string
 }
 const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return <span className="text-foreground-3 text-12">{header}</span>
+  return <span className="text-12 text-foreground-3">{header}</span>
 }
 
 const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
@@ -244,15 +244,15 @@ const PullRequestChangesSection = ({
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
             <div className="ml-6 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
-                <div className="flex gap-x-2 items-center">
+                <div className="flex items-center gap-x-2">
                   <Icon name="success" className="text-icons-success" />
                   <span className="text-14 text-foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </span>
                 </div>
               ) : (
-                <div className="flex gap-x-2 items-center">
-                  <Icon name="circle" className="text-icons-7 fill-transparent" />
+                <div className="flex items-center gap-x-2">
+                  <Icon name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-14 text-foreground-1">
                     {`${(approvedEvaluations && approvedEvaluations.length) || ''}/${minApproval} approvals completed`}
                   </span>
@@ -269,13 +269,13 @@ const PullRequestChangesSection = ({
               {latestApprovalArr !== undefined &&
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
-                <div className="flex gap-x-2 items-center">
+                <div className="flex items-center gap-x-2">
                   <Icon name="success" className="text-icons-success" />
                   <span className="text-14 text-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (
-                <div className="flex gap-x-2 items-center">
-                  <Icon name="circle" className="text-icons-7 fill-transparent" />
+                <div className="flex items-center gap-x-2">
+                  <Icon name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-14 text-foreground-1">
                     {`${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval || 0, 'approval', 'approvals')} pending on latest changes`}
                   </span>
@@ -289,7 +289,7 @@ const PullRequestChangesSection = ({
 
           {!isEmpty(changeReqEvaluations) && (
             <div className="ml-6 flex items-center justify-between">
-              <div className="flex gap-x-2 items-center">
+              <div className="flex items-center gap-x-2">
                 <Icon
                   name="triangle-warning"
                   className={cn({
@@ -310,7 +310,7 @@ const PullRequestChangesSection = ({
           {!isEmpty(codeOwners) && !isEmpty(codeOwners.evaluation_entries) && (
             <div className="ml-6 flex items-center justify-between">
               {codeOwnerChangeReqEntries && codeOwnerChangeReqEntries?.length > 0 ? (
-                <div className="flex gap-x-2 items-center">
+                <div className="flex items-center gap-x-2">
                   <Icon
                     name="triangle-warning"
                     className={cn({

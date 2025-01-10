@@ -3,16 +3,7 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop, useThemeStore, useTranslationsStore } from '@utils/viewUtils'
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbSeparator,
-  Navbar,
-  NavbarItemType,
-  Topbar
-} from '@harnessio/ui/components'
+import { Breadcrumb, Navbar, NavbarItemType, Topbar } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
 
 const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {
@@ -62,19 +53,19 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
               <div className="bg-background-1 sticky top-0 z-40">
                 <Topbar.Root>
                   <Topbar.Left>
-                    <Breadcrumb className="select-none">
-                      <BreadcrumbList>
-                        <BreadcrumbItem>
-                          <BreadcrumbLink href="#">Lorem</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                          <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>Dolor</BreadcrumbItem>
-                      </BreadcrumbList>
-                    </Breadcrumb>
+                    <Breadcrumb.Root className="select-none">
+                      <Breadcrumb.List>
+                        <Breadcrumb.Item>
+                          <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Separator />
+                        <Breadcrumb.Item>
+                          <Breadcrumb.Link href="#">Ipsum</Breadcrumb.Link>
+                        </Breadcrumb.Item>
+                        <Breadcrumb.Separator />
+                        <Breadcrumb.Item>Dolor</Breadcrumb.Item>
+                      </Breadcrumb.List>
+                    </Breadcrumb.Root>
                   </Topbar.Left>
                 </Topbar.Root>
               </div>

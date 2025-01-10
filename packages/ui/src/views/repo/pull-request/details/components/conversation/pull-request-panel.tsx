@@ -111,7 +111,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
         </div>
         {props.headerMsg && (
           <div className="flex w-full justify-end">
-            <span className="text-destructive text-12">{props.headerMsg}</span>
+            <span className="text-12 text-destructive">{props.headerMsg}</span>
           </div>
         )}
       </>
@@ -231,7 +231,7 @@ const PullRequestPanel = ({
                           }
                         }}
                       />
-                      <span className="text-primary text-12">Bypass and merge anyway</span>
+                      <span className="text-12 text-primary">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
                   <Button
@@ -264,8 +264,8 @@ const PullRequestPanel = ({
                                     key={action_idx}
                                   >
                                     <div className="flex flex-col">
-                                      <span className="text-foreground-8 leading-none">{action.title}</span>
-                                      <span className="text-foreground-4 mt-1.5">{action.description}</span>
+                                      <span className="leading-none text-foreground-8">{action.title}</span>
+                                      <span className="mt-1.5 text-foreground-4">{action.description}</span>
                                     </div>
                                   </DropdownMenuRadioItem>
                                 )

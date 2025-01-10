@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
 import AppShell from './components-v2/app-shell'
@@ -486,7 +486,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>Account</Text>
-              <BreadcrumbSeparator />
+              <Breadcrumb.Separator />
               <Text>Users</Text>
             </>
           )
@@ -499,7 +499,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>User</Text>
-              <BreadcrumbSeparator className="mx-2.5" />
+              <Breadcrumb.Separator className="mx-2.5" />
               <Text>Settings</Text>
             </>
           )

@@ -12,11 +12,13 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
+import { useCommitDetailsStore } from './stores/commit-details-store'
 
 export default function RepoCommitDiffsPage() {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
-  const [diffs, setDiffs] = useState<DiffFileEntry[]>([])
+  // const [diffs, setDiffs] = useState<DiffFileEntry[]>([])
+  const { setDiffs, diffs } = useCommitDetailsStore()
 
   const { data: { body: commitData } = {} } = useGetCommitQuery({
     repo_ref: repoRef,
@@ -72,6 +74,7 @@ export default function RepoCommitDiffsPage() {
     // readOnly,
     currentCommitDiffData
   ])
+  // if (diffs.length) console.log('diffs', diffs[0].filePath)
 
   return (
     <CommitDiffsView

@@ -18,6 +18,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { orderSortDate } from '../../types.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
+import { useCommitDetailsStore } from './stores/commit-details-store.tsx'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
@@ -26,6 +27,7 @@ export const CommitSidebarContainer = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
+  const { diffs } = useCommitDetailsStore()
   const navigate = useNavigate()
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -110,6 +112,10 @@ export const CommitSidebarContainer = () => {
   })
 
   const filesList = filesData?.body?.files || []
+  console.log(
+    'diffs are',
+    diffs.forEach(diff => console.log(diff.filePath))
+  )
 
   // TODO: repoId and spaceId must be defined
   if (!repoId || !spaceId) return <></>

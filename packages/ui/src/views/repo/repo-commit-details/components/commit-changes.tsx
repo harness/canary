@@ -40,7 +40,7 @@ interface DataProps {
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({ header, useTranslationStore }) => {
-  //   const { t } = useTranslationStore()
+  const { t: _t } = useTranslationStore()
   const { text, numAdditions, numDeletions } = header
   return (
     <div className="flex items-center justify-between gap-3">
@@ -70,7 +70,7 @@ const LineTitle: React.FC<LineTitleProps> = ({ header, useTranslationStore }) =>
   )
 }
 
-const PullRequestAccordion: React.FC<{
+const CommitsAccordion: React.FC<{
   header: HeaderProps
   data?: string
   diffMode: DiffModeEnum
@@ -82,18 +82,6 @@ const PullRequestAccordion: React.FC<{
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
 
   const [openItems, setOpenItems] = useState<string[]>([])
-
-  const setCollapsed = (val: boolean) => {
-    setOpenItems(curr => {
-      if (val) {
-        // close
-        return curr.filter(item => item !== header.text)
-      } else {
-        // open
-        return curr.includes(header.text) ? curr : [...curr, header.text]
-      }
-    })
-  }
 
   return (
     <StackedList.Root>
@@ -142,7 +130,7 @@ export function CommitChanges({ data, diffMode, useTranslationStore }: DataProps
     <div className="flex flex-col gap-4">
       {data.map((item, index) => {
         return (
-          <PullRequestAccordion
+          <CommitsAccordion
             key={`${item.title}-${index}`}
             header={item}
             diffMode={diffMode}

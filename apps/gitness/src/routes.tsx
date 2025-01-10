@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import { Params, RouteObject } from 'react-router-dom'
 
 import { BreadcrumbSeparator, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
@@ -46,16 +45,6 @@ import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
-
-// Define a custom handle with the breadcrumb property
-export interface CustomHandle {
-  breadcrumb?: (params: Params<string>) => string
-}
-
-// Create a new type by intersecting RouteObject with the custom handle
-type CustomRouteObject = RouteObject & {
-  handle?: CustomHandle
-}
 
 export const routes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null = null): CustomRouteObject[] => [
   {

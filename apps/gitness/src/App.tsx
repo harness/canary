@@ -41,7 +41,7 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NuqsAdapter>
-                  <NavigationProvider routes={routes}>
+                  <NavigationProvider routes={routes()}>
                     <RouterProvider router={router} />
                   </NavigationProvider>
                 </NuqsAdapter>

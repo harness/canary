@@ -13,7 +13,7 @@ import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface ExplorerProps {
-  selectedBranch?: string
+  selectedBranch: string
   repoDetails: OpenapiGetContentOutput
 }
 

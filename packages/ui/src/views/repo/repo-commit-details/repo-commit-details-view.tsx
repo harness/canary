@@ -2,28 +2,11 @@ import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
 import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon, Text } from '@/components'
-import {
-  DiffFileEntry,
-  ICommitDetailsStore,
-  SandboxLayout,
-  TranslationStore,
-  TypesCommit,
-  TypesDiffStats
-} from '@/views'
+import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
-import { HeaderProps } from '../pull-request/compare/pull-request-compare.types'
-import { CommitChanges } from './components/commit-changes'
-
-// interface CommitDetails extends TypesCommit {
-//   isVerified?: boolean
-//   diffs: DiffFileEntry[]
-//   diffStats?: TypesDiffStats
-// }
-
 export interface RepoCommitDetailsViewProps {
-  //   commit: CommitDetails
   useCommitDetailsStore: () => ICommitDetailsStore
   useTranslationStore: () => TranslationStore
 }
@@ -32,7 +15,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
   useTranslationStore
 }) => {
-  const { t } = useTranslationStore()
+  const { t: _t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
 
   return (
@@ -77,27 +60,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             <CommitCopyActions sha={commitData?.sha || ''} />
           </div>
         </div>
-        {/* <p className="text-14 leading-tight text-foreground-4 py-2">
-          Showing <span className="text-foreground-accent">{commit?.diffStats?.files_changed || 0} changed files </span>
-          with {commit?.diffStats?.additions || 0} additions and {commit?.diffStats?.deletions || 0} deletions
-        </p>
-        <CommitChanges
-          data={
-            commit.diffs?.map(item => ({
-              text: item.filePath,
-              numAdditions: item.addedLines,
-              numDeletions: item.deletedLines,
-              data: item.raw,
-              title: item.filePath,
-              lang: item.filePath.split('.')[1],
-              fileViews: item.fileViews,
-              checksumAfter: item.checksumAfter,
-              filePath: item.filePath
-            })) || []
-          }
-          useTranslationStore={useTranslationStore}
-          diffMode={2}
-        /> */}
+
         <Outlet />
       </SandboxLayout.Content>
     </SandboxLayout.Main>

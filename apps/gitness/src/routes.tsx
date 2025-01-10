@@ -239,19 +239,6 @@ export const routes: CustomRouteObject[] = [
                       routeName: RouteConstants.toRepoCommits
                     }
                   },
-                  // {
-                  //   path: 'commits/:commitSHA',
-                  //   element: <RepoCommitDetailsPage />,
-                  //   handle: {
-                  //     breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                  //       <>
-                  //         <Text>Commits</Text>
-                  //         <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                  //         <Text>{commitSHA}</Text>
-                  //       </>
-                  //     )
-                  //   }
-                  // },
                   {
                     path: 'commits/:commitSHA',
                     element: <RepoCommitDetailsPage />,

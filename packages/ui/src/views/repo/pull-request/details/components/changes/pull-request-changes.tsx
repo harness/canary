@@ -148,7 +148,7 @@ const PullRequestAccordion: React.FC<{
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
   commentId?: string
-  autoExpand: boolean
+  autoExpand?: boolean
   onCopyClick?: (commentId?: number) => void
 }> = ({
   header,

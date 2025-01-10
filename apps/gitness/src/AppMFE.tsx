@@ -8,6 +8,7 @@ import ReactShadowRoot from 'react-shadow-root'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
+import monacoStyles from '!!raw-loader!@harnessio/ui/monaco-styles.css'
 import styles from '!!raw-loader!@harnessio/ui/styles.css'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
@@ -132,6 +133,8 @@ export default function AppMFE({
     <div id="gitness-shadow-root">
       <ReactShadowRoot>
         <style>{`${styles}`}</style>
+        <style>{`${monacoStyles}`}</style>
+
         <PortalProvider portalContainer={portalContainer as Element | undefined}>
           <MFEContext.Provider value={{ scope, renderUrl }}>
             <AppProvider>

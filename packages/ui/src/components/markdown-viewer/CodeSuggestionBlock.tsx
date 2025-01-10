@@ -34,16 +34,12 @@ export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum 
           : 'Suggested change'}
       </span>
       <div className="pt-1">
-        <div>
-          <pre className={`!bg-background-danger ${language}`}>
-            <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html1 }}></code>
-          </pre>
-        </div>
-        <div>
-          <pre className={`!bg-background-success ${language}`}>
-            <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html2 }}></code>
-          </pre>
-        </div>
+        <pre className={`!bg-background-danger ${language}`}>
+          <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html1 }}></code>
+        </pre>
+        <pre className={`!bg-background-success ${language}`}>
+          <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html2 }}></code>
+        </pre>
       </div>
     </div>
   )

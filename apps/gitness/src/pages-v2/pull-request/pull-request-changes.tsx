@@ -9,8 +9,6 @@ import { useQueryState } from 'nuqs'
 
 import {
   commentCreatePullReq,
-  commentDeletePullReq,
-  commentUpdatePullReq,
   EnumPullReqReviewDecision,
   reviewSubmitPullReq,
   TypesPullReqActivity,
@@ -23,7 +21,6 @@ import {
 } from '@harnessio/code-service-client'
 import {
   CommitFilterItemProps,
-  CommitSuggestion,
   CreateCommentPullReqRequest,
   DiffViewerExchangeState,
   FILE_VIEWED_OBSOLETE_SHA,
@@ -39,6 +36,7 @@ import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
+import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { normalizeGitFilePath } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
@@ -74,9 +72,6 @@ export default function PullRequestChanges() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId', { defaultValue: '' })
 
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const [suggestionsBatch, setSuggestionsBatch] = useState<CommitSuggestion[]>([])
-  const [suggestionToCommit, setSuggestionToCommit] = useState<CommitSuggestion>()
   const {
     data: { body: reviewers } = {},
     refetch: refetchReviewers,
@@ -86,24 +81,6 @@ export default function PullRequestChanges() {
     pullreq_number: prId
   })
 
-  const deleteComment = (id: number) => {
-    commentDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to delete comment:', error)
-      })
-  }
-  const updateComment = (id: number, comment: string) => {
-    commentUpdatePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id, body: { text: comment } })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to update comment:', error)
-      })
-  }
   const submitReview = useCallback(
     (decision: PullReqReviewDecision) => {
       reviewSubmitPullReq({
@@ -370,42 +347,26 @@ export default function PullRequestChanges() {
     setCommitRange(newCommitRange)
   }, [selectedCommits])
 
-  const onCommentSaveAndStatusChange = (comment: string, status: string, parentId?: number) => {
-    handleSaveComment(comment, parentId)
-      .then(() => {
-        if (parentId) {
-          updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
-        }
-      })
-      .catch(error => {
-        // TODO: Handle error
-        console.error('Failed to save comment:', error)
-      })
-  }
-
-  const toggleConversationStatus = (status: string, parentId?: number) => {
-    if (parentId) {
-      updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
-    }
-  }
-
-  const onCommitSuggestion = (suggestion: CommitSuggestion) => {
-    setSuggestionToCommit(suggestion)
-    setIsCommitDialogOpen(true)
-  }
-
-  const onCommitSuggestionSuccess = () => {
-    refetchActivities()
-  }
-
-  const addSuggestionToBatch = (suggestion: CommitSuggestion) => {
-    setSuggestionsBatch(prev => [...prev, suggestion])
-  }
-
-  const removeSuggestionFromBatch = (commentId: number) => {
-    const suggestions = suggestionsBatch.filter(suggestion => suggestion.comment_id !== commentId)
-    setSuggestionsBatch(suggestions)
-  }
+  const {
+    updateComment,
+    deleteComment,
+    onCommitSuggestion,
+    onCommitSuggestionSuccess,
+    addSuggestionToBatch,
+    removeSuggestionFromBatch,
+    onCommitSuggestionsBatch,
+    isCommitDialogOpen,
+    setIsCommitDialogOpen,
+    suggestionsBatch,
+    suggestionToCommit,
+    onCommentSaveAndStatusChange,
+    toggleConversationStatus
+  } = usePRCommonInteractions({
+    repoRef,
+    prId,
+    refetchActivities,
+    updateCommentStatus
+  })
 
   return (
     <>
@@ -447,6 +408,8 @@ export default function PullRequestChanges() {
         removeSuggestionFromBatch={removeSuggestionFromBatch}
         filenameToLanguage={filenameToLanguage}
         toggleConversationStatus={toggleConversationStatus}
+        commitSuggestionsBatchCount={suggestionsBatch?.length}
+        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
       />
     </>
   )

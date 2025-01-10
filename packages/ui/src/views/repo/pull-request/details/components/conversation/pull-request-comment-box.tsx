@@ -131,13 +131,17 @@ const PullRequestCommentBox = ({
           </TabsContent>
         </Tabs>
         <div className="mt-4 flex items-center gap-x-3">
-          {!inReplyMode && (
+          {!inReplyMode && !isEditMode ? (
+            <Button onClick={handleSaveComment}>Comment</Button>
+          ) : isEditMode ? (
             <>
-              <Button onClick={handleSaveComment}>Comment</Button>
+              <Button onClick={handleSaveComment}>Save</Button>
               <Button variant="outline" onClick={onCancelClick}>
                 Cancel
               </Button>
             </>
+          ) : (
+            <></>
           )}
 
           {inReplyMode && (

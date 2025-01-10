@@ -51,6 +51,8 @@ export interface FilterViewProps {
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
   viewedFiles: number
   totalFiles: number
+  commitSuggestionsBatchCount: number
+  onCommitSuggestionsBatch: () => void
 }
 
 export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
@@ -67,7 +69,9 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
   selectedCommits,
   setSelectedCommits,
   viewedFiles,
-  totalFiles
+  totalFiles,
+  commitSuggestionsBatchCount,
+  onCommitSuggestionsBatch
 }) => {
   const { t } = useTranslationStore()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -252,6 +256,13 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
           </FileViewGauge.Content>
           <FileViewGauge.Bar total={totalFiles} filled={viewedFiles} />
         </FileViewGauge.Root>
+        {commitSuggestionsBatchCount > 0 ? (
+          <Button variant={'outline'} onClick={() => onCommitSuggestionsBatch()}>
+            {`Commit suggestion (${commitSuggestionsBatchCount})`}
+          </Button>
+        ) : (
+          <></>
+        )}
         {!shouldHideReviewButton && currentUser && (
           <Button
             hidden={loading}

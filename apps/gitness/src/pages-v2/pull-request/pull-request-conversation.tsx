@@ -1,14 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
 
 import {
-  commentCreatePullReq,
-  commentDeletePullReq,
   commentStatusPullReq,
-  commentUpdatePullReq,
   EnumCheckStatus,
   EnumMergeMethod,
   mergePullReqOp,
@@ -27,7 +24,6 @@ import {
 } from '@harnessio/code-service-client'
 import { SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
-  CommitSuggestion,
   PullRequestCommentBox,
   PullRequestFilters,
   PullRequestOverview,
@@ -45,14 +41,14 @@ import {
   checkIfOutdatedSha,
   extractInfoForCodeOwnerContent,
   findChangeReqDecisions,
-  findWaitingDecisions,
-  generateAlphaNumericHash
+  findWaitingDecisions
 } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
 import { useActivityFilters } from './hooks/useActivityFilters'
 import { useDateFilters } from './hooks/useDataFilters'
+import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
@@ -110,9 +106,6 @@ export default function PullRequestConversationPage() {
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const [isCommitDialogOpen, setIsCommitDialogOpen] = useState(false)
-  const [suggestionsBatch, setSuggestionsBatch] = useState<CommitSuggestion[]>([])
-  const [suggestionToCommit, setSuggestionToCommit] = useState<CommitSuggestion>()
   const { mutateAsync: saveBranch } = useCreateBranchMutation({})
   const onRestoreBranch = () => {
     saveBranch({
@@ -247,76 +240,6 @@ export default function PullRequestConversationPage() {
   useEffect(() => {
     setActivities(activityData)
   }, [activityData])
-  const currentUser = useMemo(() => currentUserData?.display_name, [currentUserData?.display_name])
-
-  let count = generateAlphaNumericHash(5)
-
-  const deleteComment = (id: number) => {
-    commentDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to delete comment:', error)
-      })
-  }
-  const updateComment = (id: number, comment: string) => {
-    commentUpdatePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id, body: { text: comment } })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to update comment:', error)
-      })
-  }
-  const handleSaveComment = (comment: string, parentId?: number) => {
-    // Create a temporary comment object
-
-    const newComment: TypesPullReqActivity = {
-      id: parentId, // Temporary ID
-      author: { display_name: currentUser }, // Replace with actual user data
-      created: Date.now(),
-      edited: Date.now(),
-      updated: Date.now(),
-      deleted: 0,
-      code_comment: undefined,
-      text: comment,
-      payload: {
-        message: comment,
-        parent_id: parentId,
-        author: { display_name: currentUser },
-        id: count, // Temporary ID
-        created: Date.now(),
-        edited: Date.now(),
-        updated: Date.now(),
-        deleted: 0,
-        code_comment: undefined,
-        text: comment
-      }
-    }
-    count = count + 1
-
-    // Update the state locally
-    // setActivities(prevData => [...(prevData || []), newComment])
-
-    // Persist the new comment to the API
-    commentCreatePullReq({
-      repo_ref: repoRef,
-      pullreq_number: prId,
-      body: { text: comment, parent_id: parentId }
-    })
-      .then(() => {
-        refetchActivities()
-        // TODO: set response after saving the comment to update the local state with the new comment data
-        // Update the state with the response from the API
-        // setMockActivities(prevData => prevData.map(item => (item.id === newComment.id ? response.data : item)))
-      })
-      .catch(error => {
-        // Handle error (e.g., remove the temporary comment or show an error message)
-        setActivities(prevData => prevData?.filter(item => item.id !== newComment.id))
-        console.error('Failed to save comment:', error)
-      })
-  }
 
   const onCopyClick = (commentId?: number) => {
     if (commentId) {
@@ -424,36 +347,29 @@ export default function PullRequestConversationPage() {
     }
   ]
 
-  const onCommentSaveAndStatusChange = (comment: string, status: string, parentId?: number) => {
-    handleSaveComment(comment, parentId)
-    if (parentId) {
-      updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
-    }
-  }
-
-  const toggleConversationStatus = (status: string, parentId?: number) => {
-    if (parentId) {
-      updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
-    }
-  }
-
-  const onCommitSuggestion = (suggestion: CommitSuggestion) => {
-    setSuggestionToCommit(suggestion)
-    setIsCommitDialogOpen(true)
-  }
-
-  const onCommitSuggestionSuccess = () => {
-    refetchActivities()
-  }
-
-  const addSuggestionToBatch = (suggestion: CommitSuggestion) => {
-    setSuggestionsBatch(prev => [...prev, suggestion])
-  }
-
-  const removeSuggestionFromBatch = (commentId: number) => {
-    const suggestions = suggestionsBatch.filter(suggestion => suggestion.comment_id !== commentId)
-    setSuggestionsBatch(suggestions)
-  }
+  const {
+    handleSaveComment,
+    updateComment,
+    deleteComment,
+    onCommitSuggestion,
+    onCommitSuggestionSuccess,
+    addSuggestionToBatch,
+    removeSuggestionFromBatch,
+    isCommitDialogOpen,
+    setIsCommitDialogOpen,
+    onCommitSuggestionsBatch,
+    suggestionsBatch,
+    suggestionToCommit,
+    onCommentSaveAndStatusChange,
+    toggleConversationStatus
+  } = usePRCommonInteractions({
+    repoRef,
+    prId,
+    refetchActivities,
+    updateCommentStatus,
+    currentUserName: currentUserData?.display_name,
+    setActivities // pass setActivities if you want ephemeral logic
+  })
 
   if (prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
@@ -521,7 +437,7 @@ export default function PullRequestConversationPage() {
               showRestoreBranchButton={showRestoreBranchButton}
               headerMsg={errorMsg}
               commitSuggestionsBatchCount={suggestionsBatch?.length}
-              onCommitSuggestions={() => setIsCommitDialogOpen(true)}
+              onCommitSuggestions={onCommitSuggestionsBatch}
             />
             <Spacer size={12} />
             <PullRequestFilters

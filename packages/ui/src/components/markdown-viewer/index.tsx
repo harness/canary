@@ -196,17 +196,7 @@ export function MarkdownViewer({
                 )
               }
 
-              return (
-                <code
-                  onClick={event => {
-                    event.stopPropagation()
-                    event.preventDefault()
-                  }}
-                  className={String(_className)}
-                >
-                  {children}
-                </code>
-              )
+              return <code className={String(_className)}>{children}</code>
             }
           }}
         />

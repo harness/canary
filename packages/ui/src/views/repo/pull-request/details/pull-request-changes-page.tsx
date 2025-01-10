@@ -49,6 +49,8 @@ interface RepoPullRequestChangesPageProps {
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
+  commitSuggestionsBatchCount: number
+  onCommitSuggestionsBatch: () => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   useTranslationStore,
@@ -80,7 +82,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   addSuggestionToBatch,
   removeSuggestionFromBatch,
   filenameToLanguage,
-  toggleConversationStatus
+  toggleConversationStatus,
+  commitSuggestionsBatchCount,
+  onCommitSuggestionsBatch
 }) => {
   const { diffs } = usePullRequestProviderStore()
   // Convert activities to comment threads
@@ -163,6 +167,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         setSelectedCommits={setSelectedCommits}
         viewedFiles={diffs?.[0]?.fileViews?.size || 0}
         totalFiles={diffs?.length || 0}
+        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+        commitSuggestionsBatchCount={commitSuggestionsBatchCount}
       />
       <Spacer aria-setsize={5} />
 

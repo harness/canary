@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@components/index'
+import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { getInitials, timeAgo } from '@utils/utils'
 import {

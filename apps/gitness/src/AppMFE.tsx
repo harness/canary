@@ -1,7 +1,6 @@
 import './AppMFE.css'
 
 import { useEffect, useRef } from 'react'
-import { createPortal } from 'react-dom'
 import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
@@ -14,6 +13,7 @@ import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
 import { PortalProvider } from '@harnessio/ui/context'
 
+import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext } from './framework/context/MFEContext'
@@ -125,42 +125,34 @@ export default function AppMFE({
   )
 
   const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current?.shadowRoot
-  useEffect(() => {
-    portalRef.current?.attachShadow({ mode: 'open' })
-  }, [])
+  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
 
   return (
-    <div id="gitness-shadow-root" ref={portalRef}>
-      {portalContainer
-        ? createPortal(
-            <>
-              <style>{`${styles}`}</style>
-              <style>{`${monacoStyles}`}</style>
+    <div ref={portalRef}>
+      <ShadowRootWrapper>
+        <style>{`${styles}`}</style>
+        <style>{`${monacoStyles}`}</style>
 
-              <PortalProvider portalContainer={portalContainer as unknown as Element | undefined}>
-                <MFEContext.Provider value={{ scope, renderUrl }}>
-                  <AppProvider>
-                    <I18nextProvider i18n={i18n}>
-                      <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                        <QueryClientProvider client={queryClient}>
-                          <TooltipProvider>
-                            <ExitConfirmProvider>
-                              <NuqsAdapter>
-                                <RouterProvider router={router} />
-                              </NuqsAdapter>
-                            </ExitConfirmProvider>
-                          </TooltipProvider>
-                        </QueryClientProvider>
-                      </ThemeProvider>
-                    </I18nextProvider>
-                  </AppProvider>
-                </MFEContext.Provider>
-              </PortalProvider>
-            </>,
-            portalContainer
-          )
-        : null}
+        <PortalProvider portalContainer={portalContainer}>
+          <MFEContext.Provider value={{ scope, renderUrl }}>
+            <AppProvider>
+              <I18nextProvider i18n={i18n}>
+                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                  <QueryClientProvider client={queryClient}>
+                    <TooltipProvider>
+                      <ExitConfirmProvider>
+                        <NuqsAdapter>
+                          <RouterProvider router={router} />
+                        </NuqsAdapter>
+                      </ExitConfirmProvider>
+                    </TooltipProvider>
+                  </QueryClientProvider>
+                </ThemeProvider>
+              </I18nextProvider>
+            </AppProvider>
+          </MFEContext.Provider>
+        </PortalProvider>
+      </ShadowRootWrapper>
     </div>
   )
 }

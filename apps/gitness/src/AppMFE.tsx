@@ -109,14 +109,6 @@ export default function AppMFE({
     }
   }, [theme])
 
-  // Handle redirects
-  useEffect(() => {
-    const redirectPath = getRedirectPath(renderUrl, scope)
-    if (redirectPath) {
-      onRouteChange?.(redirectPath)
-    }
-  }, [])
-
   // Router Configuration
   const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
   const router = createBrowserRouter(
@@ -178,23 +170,4 @@ function replaceProjectPath(renderUrl: string, projectIdentifier?: string): stri
     return renderUrl.replace(`/projects/${projectIdentifier}`, '/projects')
   }
   return renderUrl
-}
-
-function getRedirectPath(
-  url: string,
-  scope: { accountId?: string; orgIdentifier?: string; projectIdentifier?: string }
-): string | undefined {
-  const removeTrailingSlash = (url: string) => url.replace(/\/$/, '')
-
-  const redirectPaths = {
-    [`/account/${scope.accountId}`]: '/home',
-    [`/orgs/${scope.orgIdentifier}`]: '/settings',
-    [`/projects/${scope.projectIdentifier}`]: '/repos'
-  }
-
-  for (const [key, redirect] of Object.entries(redirectPaths)) {
-    if (url.endsWith(key)) {
-      return `${removeTrailingSlash(url)}${redirect}`
-    }
-  }
 }

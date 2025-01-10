@@ -191,3 +191,8 @@ export interface CreateCommentPullReqRequest {
   target_commit_sha?: string
   text?: string
 }
+
+export interface CommitSuggestion {
+  check_sum: string
+  comment_id: number
+}

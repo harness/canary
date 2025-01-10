@@ -25,7 +25,7 @@ import { routes } from './routes'
 // const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
 export interface MFERouteRendererProps {
-  projectIdentifier: string | undefined
+  projectIdentifier?: string
   renderUrl: string
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
@@ -35,10 +35,7 @@ function MFERouteRenderer({ projectIdentifier, renderUrl, parentLocationPath, on
   const navigate = useNavigate()
   useEffect(() => {
     if (renderUrl) {
-      const pathToNavigate = parentLocationPath.replace(
-        renderUrl.replace(`/projects/${projectIdentifier}`, '/projects'),
-        ''
-      )
+      const pathToNavigate = parentLocationPath.replace(replaceProjectPath(renderUrl, projectIdentifier), '')
       navigate(pathToNavigate, { replace: true })
     }
   }, [parentLocationPath])
@@ -47,7 +44,7 @@ function MFERouteRenderer({ projectIdentifier, renderUrl, parentLocationPath, on
   const location = useLocation()
   useEffect(() => {
     if (location.pathname !== parentLocationPath) {
-      onRouteChange?.(`${renderUrl.replace(`/projects/${projectIdentifier}`, '/projects')}${location.pathname}`)
+      onRouteChange?.(`${replaceProjectPath(renderUrl, projectIdentifier)}${location.pathname}`)
     }
   }, [location])
 
@@ -101,8 +98,8 @@ export default function AppMFE({
     }
   })
 
+  // Apply host theme to MFE
   const { theme } = useMFEThemeContext()
-
   const { setTheme } = useThemeStore()
   useEffect(() => {
     if (theme === 'Light') {
@@ -112,8 +109,16 @@ export default function AppMFE({
     }
   }, [theme])
 
+  // Handle redirects
+  useEffect(() => {
+    const redirectPath = getRedirectPath(renderUrl, scope)
+    if (redirectPath) {
+      onRouteChange?.(redirectPath)
+    }
+  }, [])
+
   // Router Configuration
-  const basename = `/ng${renderUrl.replace(`/projects/${scope.projectIdentifier}`, '/projects')}`
+  const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
   const router = createBrowserRouter(
     routes(
       scope.projectIdentifier,
@@ -127,7 +132,7 @@ export default function AppMFE({
     { basename }
   )
 
-  const portalRef = useRef(null)
+  const portalRef = useRef<HTMLDivElement>(null)
   const portalContainer = portalRef.current?.shadowRoot
   useEffect(() => {
     portalRef.current?.attachShadow({ mode: 'open' })
@@ -141,7 +146,7 @@ export default function AppMFE({
               <style>{`${styles}`}</style>
               <style>{`${monacoStyles}`}</style>
 
-              <PortalProvider portalContainer={portalContainer}>
+              <PortalProvider portalContainer={portalContainer as unknown as Element | undefined}>
                 <MFEContext.Provider value={{ scope, renderUrl }}>
                   <AppProvider>
                     <I18nextProvider i18n={i18n}>
@@ -166,4 +171,30 @@ export default function AppMFE({
         : null}
     </div>
   )
+}
+
+function replaceProjectPath(renderUrl: string, projectIdentifier?: string): string {
+  if (projectIdentifier) {
+    return renderUrl.replace(`/projects/${projectIdentifier}`, '/projects')
+  }
+  return renderUrl
+}
+
+function getRedirectPath(
+  url: string,
+  scope: { accountId?: string; orgIdentifier?: string; projectIdentifier?: string }
+): string | undefined {
+  const removeTrailingSlash = (url: string) => url.replace(/\/$/, '')
+
+  const redirectPaths = {
+    [`/account/${scope.accountId}`]: '/home',
+    [`/orgs/${scope.orgIdentifier}`]: '/settings',
+    [`/projects/${scope.projectIdentifier}`]: '/repos'
+  }
+
+  for (const [key, redirect] of Object.entries(redirectPaths)) {
+    if (url.endsWith(key)) {
+      return `${removeTrailingSlash(url)}${redirect}`
+    }
+  }
 }

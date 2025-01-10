@@ -50,6 +50,9 @@ interface TimelineItemProps {
   hideReplyBox?: boolean
   setHideReplyBox?: (state: boolean) => void
   id?: string
+  isResolved?: boolean
+  toggleConversationStatus?: (status: string, parentId?: number) => void
+  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
 }
 
 interface ItemHeaderProps {
@@ -183,7 +186,10 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   hideReplyBox,
   setHideReplyBox,
   currentUser,
-  id
+  id,
+  isResolved,
+  toggleConversationStatus,
+  onCommentSaveAndStatusChange
 }) => {
   const [comment, setComment] = useState<string>('')
   const onQuote = (content: string) => {
@@ -227,7 +233,6 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
               {isEditMode ? (
                 <PullRequestCommentBox
                   isEditMode
-                  inReplyMode
                   onSaveComment={() => {
                     handleSaveComment?.(comment, parentCommentId)
                     setComment('')
@@ -236,6 +241,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                   onCancelClick={() => {
                     setComment('')
                   }}
+                  isResolved={isResolved}
                   comment={comment}
                   setComment={setComment}
                 />
@@ -256,31 +262,46 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                         setHideReplyBox?.(false)
                       }}
                       comment={comment}
+                      isResolved={isResolved}
                       setComment={setComment}
+                      parentCommentId={parentCommentId}
+                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                     />
                   ) : (
-                    <div className={cn('flex items-center gap-3 border-t', replyBoxClassName)}>
-                      {currentUser ? (
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <Text size={1} color="tertiaryBackground">
-                              {getInitials(currentUser ?? '', 2)}
-                            </Text>
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : null}
-                      <Input
-                        value={comment}
-                        placeholder="Reply here"
-                        size="md"
-                        onClick={() => {
-                          setHideReplyBox?.(true)
-                        }}
-                        onChange={e => {
-                          setComment(e.target.value)
-                        }}
-                      />
-                    </div>
+                    <>
+                      <div className={cn('flex items-center gap-3 border-t', replyBoxClassName)}>
+                        {currentUser ? (
+                          <Avatar className="size-6 rounded-full p-0">
+                            <AvatarFallback>
+                              <Text size={1} color="tertiaryBackground">
+                                {getInitials(currentUser ?? '', 2)}
+                              </Text>
+                            </AvatarFallback>
+                          </Avatar>
+                        ) : null}
+                        <Input
+                          value={comment}
+                          placeholder="Reply here"
+                          size="md"
+                          onClick={() => {
+                            setHideReplyBox?.(true)
+                          }}
+                          onChange={e => {
+                            setComment(e.target.value)
+                          }}
+                        />
+                      </div>
+                      <div className={cn('flex gap-3 border-t', replyBoxClassName)}>
+                        <Button
+                          variant={'outline'}
+                          onClick={() => {
+                            toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                          }}
+                        >
+                          {isResolved ? 'Reactivate' : 'Resolve Conversation'}
+                        </Button>
+                      </div>
+                    </>
                   )}
                 </>
               )}

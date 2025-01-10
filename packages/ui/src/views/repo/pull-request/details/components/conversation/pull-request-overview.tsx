@@ -1,13 +1,13 @@
 import { useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout, MarkdownViewer, Text } from '@components/index'
+import { Avatar, AvatarFallback, Icon, Layout, Text } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 import { PullRequestCommentBox, TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
 import { get, orderBy } from 'lodash-es'
 
@@ -23,6 +23,7 @@ import {
   TypesPullReqActivity
 } from '../../pull-request-details-types'
 import { isCodeComment, isComment, isSystemComment, removeLastPlus } from '../../pull-request-utils'
+import PRCommentView from '../common/pull-request-comment-view'
 import PullRequestDescBox from './pull-request-description-box'
 // import { PullRequestStatusSelect } from './pull-request-status-select-button'
 import PullRequestSystemComments from './pull-request-system-comments'
@@ -45,6 +46,13 @@ interface PullRequestOverviewProps {
   repoId: string
   diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
   onCopyClick: (commentId?: number) => void
+  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
+  suggestionsBatch: CommitSuggestion[]
+  onCommitSuggestion: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch: (commentId: number) => void
+  filenameToLanguage: (fileName: string) => string | undefined
+  toggleConversationStatus: (status: string, parentId?: number) => void
 }
 export const activityToCommentItem = (activity: TypesPullReqActivity): CommentItem<TypesPullReqActivity> => ({
   id: activity.id || 0,
@@ -64,12 +72,18 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   activityFilter,
   dateOrderSort,
   handleSaveComment,
-
   currentUser,
   handleDeleteComment,
   handleUpdateComment,
   useTranslationStore,
-  onCopyClick
+  onCopyClick,
+  onCommentSaveAndStatusChange,
+  suggestionsBatch,
+  onCommitSuggestion,
+  addSuggestionToBatch,
+  removeSuggestionFromBatch,
+  filenameToLanguage,
+  toggleConversationStatus
 }) => {
   const { t } = useTranslationStore()
 
@@ -209,6 +223,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       key={payload?.id}
                       currentUser={currentUser?.display_name}
                       replyBoxClassName="p-4"
+                      toggleConversationStatus={toggleConversationStatus}
+                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                      isResolved={!!payload?.resolved}
                       header={[
                         {
                           avatar: (
@@ -266,7 +283,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           <div className="px-4 py-2">
                             {commentItems?.map((commentItem, idx) => {
                               const componentId = `activity-code-${commentItem?.id}`
-
                               return (
                                 payload?.id && (
                                   <PullRequestTimelineItem
@@ -327,6 +343,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     }
                                     contentClassName="border-transparent"
                                     replyBoxClassName="p-4"
+                                    toggleConversationStatus={toggleConversationStatus}
+                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                     content={
                                       commentItem?.deleted ? (
                                         <div className="rounded-md border bg-primary-background p-1">
@@ -334,8 +352,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                         </div>
                                       ) : editModes[componentId] ? (
                                         <PullRequestCommentBox
-                                          inReplyMode
                                           isEditMode
+                                          isResolved={!!payload?.resolved}
                                           onSaveComment={() => {
                                             if (commentItem?.id) {
                                               handleUpdateComment?.(commentItem?.id, editComments[componentId])
@@ -350,9 +368,18 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                           setComment={text =>
                                             setEditComments(prev => ({ ...prev, [componentId]: text }))
                                           }
+                                          onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                                          parentCommentId={payload?.id}
                                         />
                                       ) : (
-                                        <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
+                                        <PRCommentView
+                                          commentItem={commentItem}
+                                          filenameToLanguage={filenameToLanguage}
+                                          suggestionsBatch={suggestionsBatch}
+                                          onCommitSuggestion={onCommitSuggestion}
+                                          addSuggestionToBatch={addSuggestionToBatch}
+                                          removeSuggestionFromBatch={removeSuggestionFromBatch}
+                                        />
                                       )
                                     }
                                     key={`${commentItem.id}-${commentItem.author}`}
@@ -417,17 +444,22 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     ]}
                     currentUser={currentUser?.display_name}
                     replyBoxClassName="p-4"
+                    isResolved={!!payload?.resolved}
+                    toggleConversationStatus={toggleConversationStatus}
+                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                     content={
                       <div className="px-4 pt-4">
                         {commentItems?.map((commentItem, idx) => {
                           const componentId = `activity-comment-${commentItem?.id}`
-
+                          // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
                           return (
                             payload?.id && (
                               <PullRequestTimelineItem
                                 hideReplyBox={hideReplyBoxes[payload?.id]}
                                 setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                                 parentCommentId={payload?.id}
+                                toggleConversationStatus={toggleConversationStatus}
+                                onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                 titleClassName="!flex max-w-full"
                                 currentUser={currentUser?.display_name}
                                 icon={
@@ -489,8 +521,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     </div>
                                   ) : editModes[componentId] ? (
                                     <PullRequestCommentBox
-                                      inReplyMode
                                       isEditMode
+                                      isResolved={!!payload?.resolved}
                                       onSaveComment={() => {
                                         if (commentItem?.id) {
                                           handleUpdateComment?.(commentItem?.id, editComments[componentId])
@@ -503,9 +535,18 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       }}
                                       comment={editComments[componentId]}
                                       setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                                      parentCommentId={payload?.id}
                                     />
                                   ) : (
-                                    <MarkdownViewer source={commentItem?.payload?.payload?.text || ''} />
+                                    <PRCommentView
+                                      commentItem={commentItem}
+                                      filenameToLanguage={filenameToLanguage}
+                                      suggestionsBatch={suggestionsBatch}
+                                      onCommitSuggestion={onCommitSuggestion}
+                                      addSuggestionToBatch={addSuggestionToBatch}
+                                      removeSuggestionFromBatch={removeSuggestionFromBatch}
+                                    />
                                   )
                                 }
                                 key={`${commentItem.id}-${commentItem.author}-pr-comment`}

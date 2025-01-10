@@ -35,6 +35,9 @@ interface PullRequestCommentBoxProps {
   inReplyMode?: boolean
   isEditMode?: boolean
   onCancelClick?: () => void
+  isResolved?: boolean
+  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
+  parentCommentId?: number
 }
 
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
@@ -45,7 +48,10 @@ const PullRequestCommentBox = ({
   onCancelClick,
   comment,
   setComment,
-  isEditMode
+  isEditMode,
+  isResolved,
+  onCommentSaveAndStatusChange,
+  parentCommentId
 }: PullRequestCommentBoxProps) => {
   const handleSaveComment = () => {
     if (comment.trim()) {
@@ -82,7 +88,7 @@ const PullRequestCommentBox = ({
 
   return (
     <div className="flex items-start space-x-4">
-      {!inReplyMode && avatar}
+      {!isEditMode && avatar}
       <div
         className={cn('min-w-0 flex-1 px-4 pb-5 pt-1.5', {
           'border rounded-md': !inReplyMode || isEditMode,
@@ -125,7 +131,14 @@ const PullRequestCommentBox = ({
           </TabsContent>
         </Tabs>
         <div className="mt-4 flex items-center gap-x-3">
-          {!inReplyMode && <Button onClick={handleSaveComment}>Comment</Button>}
+          {!inReplyMode && (
+            <>
+              <Button onClick={handleSaveComment}>Comment</Button>
+              <Button variant="outline" onClick={onCancelClick}>
+                Cancel
+              </Button>
+            </>
+          )}
 
           {inReplyMode && (
             <>
@@ -134,9 +147,15 @@ const PullRequestCommentBox = ({
               ) : (
                 <Button onClick={handleSaveComment}>Reply</Button>
               )}
-              {/* <Button variant={'outline'} onClick={handleSaveComment}>
-              Reply & Resolve
-            </Button> */}
+              <Button
+                variant={'outline'}
+                onClick={() => {
+                  onCommentSaveAndStatusChange?.(comment, isResolved ? 'active' : 'resolved', parentCommentId)
+                  onCancelClick?.()
+                }}
+              >
+                {isResolved ? 'Reply & Reactivate' : 'Reply & Resolve'}
+              </Button>
               <Button variant="outline" onClick={onCancelClick}>
                 Cancel
               </Button>

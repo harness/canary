@@ -218,7 +218,7 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10, query: branchTagQuery }
+    queryParams: { page: 0, limit: 10, query: branchTagQuery, include_pullreqs: true }
   })
 
   useEffect(() => {

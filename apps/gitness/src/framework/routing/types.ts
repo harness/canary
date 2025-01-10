@@ -25,16 +25,19 @@ export interface RouteEntry {
   path: string // e.g., ":spaceId/repos/create"
 }
 
-// Type for a mapping of enum keys to functions that generate paths
+/**
+ * Type for a mapping of enum keys to functions that generate paths.
+ * Params are optional since some functions may not require params at all, for e.g. logout, login, etc.
+ */
 export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params?: Params<string>) => string>
 
-// Define a custom handle with the breadcrumb property
+// Custom handle with the breadcrumb property
 export interface CustomHandle {
   breadcrumb?: (params: Params<string>) => string
   routeName?: string
 }
 
-// Create a new type by intersecting RouteObject with the custom handle
+// Intersection of RouteObject with the custom handle
 export type CustomRouteObject = RouteObject & {
   handle?: CustomHandle
 }

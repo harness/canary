@@ -108,21 +108,8 @@ export const routes: CustomRouteObject[] = [
         }
       },
       {
-        path: 'signin',
-        element: <SignIn />
-      },
-      {
-        path: 'signup',
-        element: <SignUp />
-      },
-
-      {
         path: 'theme',
         element: <ProfileSettingsThemePage />
-      },
-      {
-        path: 'logout',
-        element: <Logout />
       },
       {
         path: 'chaos',
@@ -464,7 +451,6 @@ export const routes: CustomRouteObject[] = [
           }
         ]
       },
-
       {
         path: 'admin/default-settings',
         element: <UserManagementPageContainer />,
@@ -512,5 +498,17 @@ export const routes: CustomRouteObject[] = [
         ]
       }
     ]
+  },
+  {
+    path: 'signin',
+    element: <SignIn />
+  },
+  {
+    path: 'signup',
+    element: <SignUp />
+  },
+  {
+    path: 'logout',
+    element: <Logout />
   }
 ]

@@ -93,7 +93,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
    * Navigate to Edit file route
    */
   const handleEditFile = () => {
-    navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
+    navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
   return (

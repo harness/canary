@@ -106,7 +106,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${routes.toRepoFiles({ spaceId, repoId })}/${parentPath ? `/~/${parentPath}` : ''}`)
+            navigate(`/${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
             navigate(
               `/${routes.toPullRequestCompare({ spaceId, repoId })}/${selectedBranchTag.name}...${newBranchName}`

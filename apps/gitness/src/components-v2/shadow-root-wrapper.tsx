@@ -13,7 +13,7 @@ function ShadowRootWrapper({ children }: { children?: ReactNode }) {
     )
   }, [])
 
-  return shadowRoot ? <>{createPortal(children, shadowRoot)}</> : <div ref={placeholderRef}></div>
+  return shadowRoot ? createPortal(children, shadowRoot) : <div ref={placeholderRef}></div>
 }
 
 export default ShadowRootWrapper

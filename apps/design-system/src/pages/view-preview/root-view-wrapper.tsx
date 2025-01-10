@@ -67,11 +67,11 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
                         <BreadcrumbItem>
                           <BreadcrumbLink href="#">Lorem</BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                        <BreadcrumbSeparator />
                         <BreadcrumbItem>
                           <BreadcrumbLink href="#">Ipsum</BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                        <BreadcrumbSeparator />
                         <BreadcrumbItem>Dolor</BreadcrumbItem>
                       </BreadcrumbList>
                     </Breadcrumb>

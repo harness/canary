@@ -70,7 +70,7 @@ export default function Breadcrumbs() {
   const getBreadcrumbSegment = ({ label, path, isLast }: { label?: string; path: string; isLast: boolean }) => {
     return (
       <>
-        <BreadcrumbSeparator>/</BreadcrumbSeparator>
+        <BreadcrumbSeparator />
         <BreadcrumbItem>
           {!isLast ? (
             <BreadcrumbLink asChild>

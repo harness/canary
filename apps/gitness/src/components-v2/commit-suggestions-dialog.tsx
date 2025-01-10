@@ -6,8 +6,8 @@ import {
   UsererrorError
 } from '@harnessio/code-service-client'
 import {
-  CommitSuggestionsFormType,
-  CommitSuggestionsDialog as CommitSuggestiosDialogComp
+  CommitSuggestionsDialog as CommitSuggestionsDialogComp,
+  CommitSuggestionsFormType
 } from '@harnessio/ui/components'
 import { CommitSuggestion } from '@harnessio/ui/views'
 
@@ -58,7 +58,7 @@ export default function CommitSuggestionsDialog({
   }
 
   return (
-    <CommitSuggestiosDialogComp
+    <CommitSuggestionsDialogComp
       isOpen={open}
       onClose={onClose}
       onFormSubmit={onSubmit}

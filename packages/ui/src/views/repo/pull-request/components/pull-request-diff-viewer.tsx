@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@/components'
+import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
 import {
   CommentItem,
   CommitSuggestion,

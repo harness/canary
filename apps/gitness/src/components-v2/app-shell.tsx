@@ -30,7 +30,7 @@ interface NavLinkStorageInterface {
   }
 }
 
-const AppShell = () => {
+const AppShell = ({ isMFE }: { isMFE: boolean }) => {
   const routes = useRoutes()
   const { currentUser, spaces } = useAppContext()
   const navigate = useNavigate()

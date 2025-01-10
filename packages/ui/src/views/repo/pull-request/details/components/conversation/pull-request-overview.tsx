@@ -153,7 +153,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   }
 
   const toggleReplyBox = (state: boolean, id?: number) => {
-    console.log(id, state)
     if (id === undefined) {
       console.error('toggleEditMode called with undefined id')
       return

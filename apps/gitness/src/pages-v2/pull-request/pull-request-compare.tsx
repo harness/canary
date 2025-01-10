@@ -62,7 +62,11 @@ export const CreatePullRequest = () => {
   const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
     diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
   )
-  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<number | null>(null)
+  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<{
+    number: number
+    title: string
+    description: string
+  } | null>(null)
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const [
@@ -250,8 +254,12 @@ export const CreatePullRequest = () => {
   })
 
   useEffect(() => {
-    if (pullReqData) {
-      setPrBranchCombinationExists(pullReqData.number || null)
+    if (pullReqData?.number && pullReqData.title && pullReqData.description) {
+      setPrBranchCombinationExists({
+        number: pullReqData.number,
+        title: pullReqData.title,
+        description: pullReqData.description
+      })
     } else {
       setPrBranchCombinationExists(null)
     }

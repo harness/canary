@@ -327,7 +327,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>Account</Text>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbSeparator />
               <Text>Users</Text>
             </>
           )
@@ -340,7 +340,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>User</Text>
-              <BreadcrumbSeparator className="mx-2.5">/</BreadcrumbSeparator>
+              <BreadcrumbSeparator className="mx-2.5" />
               <Text>Settings</Text>
             </>
           )

@@ -133,14 +133,14 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
                   <Link to={parentPath}>{path}</Link>
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbSeparator />
             </Fragment>
           )
         })}
 
         {isNew && (
           <>
-            {!!items.length && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
+            {!!items.length && <BreadcrumbSeparator />}
             <BreadcrumbItem>{renderInput()}</BreadcrumbItem>
           </>
         )}

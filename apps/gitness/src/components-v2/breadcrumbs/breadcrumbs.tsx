@@ -28,7 +28,7 @@ function Breadcrumbs() {
 
               return (
                 <BreadcrumbItem key={index}>
-                  {!isFirst ? <BreadcrumbSeparator>/</BreadcrumbSeparator> : null}
+                  {!isFirst ? <BreadcrumbSeparator /> : null}
                   {isLast ? (
                     breadcrumb(match.params)
                   ) : (

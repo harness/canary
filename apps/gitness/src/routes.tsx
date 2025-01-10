@@ -67,33 +67,45 @@ export const routes: CustomRouteObject[] = [
         path: 'repos',
         element: (
           <SandboxLayout.Main>
-            <h1>Repo</h1>
+            <h1>Repositories</h1>
           </SandboxLayout.Main>
-        )
+        ),
+        handle: {
+          breadcrumb: () => <Text>Repositories</Text>
+        }
       },
       {
         path: 'pipelines',
         element: (
           <SandboxLayout.Main>
-            <h1>pipelines</h1>
+            <h1>Pipelines</h1>
           </SandboxLayout.Main>
-        )
+        ),
+        handle: {
+          breadcrumb: () => <Text>Pipelines</Text>
+        }
       },
       {
         path: 'executions',
         element: (
           <SandboxLayout.Main>
-            <h1>executions</h1>
+            <h1>Executions</h1>
           </SandboxLayout.Main>
-        )
+        ),
+        handle: {
+          breadcrumb: () => <Text>Executions</Text>
+        }
       },
       {
         path: 'databases',
         element: (
           <SandboxLayout.Main>
-            <h1>databases</h1>
+            <h1>Databases</h1>
           </SandboxLayout.Main>
-        )
+        ),
+        handle: {
+          breadcrumb: () => <Text>Databases</Text>
+        }
       },
       {
         path: 'signin',

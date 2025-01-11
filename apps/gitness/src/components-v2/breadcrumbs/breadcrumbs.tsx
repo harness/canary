@@ -23,14 +23,14 @@ function Breadcrumbs() {
             <nav className="flex items-start gap-1">
               {matches.map((match, index) => {
                 const { breadcrumb } = (match.handle || {}) as CustomHandle
-                const isFirst = index === 0
+                const isFirst = index === 1
                 const isLast = index === matches.length - 1
 
                 if (!breadcrumb) return null
 
                 return (
                   <div key={match.pathname} className="flex items-center">
-                    {!isFirst ? <BreadcrumbSeparator className="mr-1">/</BreadcrumbSeparator> : null}
+                    {!isFirst ? <BreadcrumbSeparator className="mr-1" /> : null}
                     <BreadcrumbItem>
                       <BreadcrumbItem>
                         {isLast ? (

@@ -196,9 +196,7 @@ export const routes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null 
       {
         path: ':spaceId',
         handle: {
-          handle: {
-            breadcrumb: () => (mfeProjectId ? <span>{mfeProjectId}</span> : <ProjectDropdown />)
-          }
+          breadcrumb: () => (mfeProjectId ? <span>{mfeProjectId}</span> : <ProjectDropdown />)
         },
         children: [
           {

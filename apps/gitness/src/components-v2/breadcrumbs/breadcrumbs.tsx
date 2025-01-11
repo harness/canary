@@ -22,7 +22,7 @@ function Breadcrumbs() {
 
                 return (
                   <div key={match.pathname} className="flex items-center">
-                    {!isFirst ? <Breadcrumb.Separator className="mr-1">/</Breadcrumb.Separator> : null}
+                    {!isFirst ? <Breadcrumb.Separator className="mr-1" /> : null}
                     <Breadcrumb.Item>
                       <Breadcrumb.Item>
                         {isLast ? (

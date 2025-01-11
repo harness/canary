@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, Button, Icon, Text } from '@components/index'
+import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, Layout, Text } from '@components/index'
 import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -88,34 +88,46 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
           isLast={isLast}
         />
       )
-    case CommentType.BRANCH_UPDATE:
+    case CommentType.BRANCH_UPDATE: {
+      const payloadData = payload?.payload?.payload as GeneralPayload
+      const author = payload?.author as PayloadAuthor
+
+      const authorAvatar = (
+        <Avatar className="size-6 rounded-full p-0">
+          <AvatarFallback>
+            <Text size={1} color="tertiaryBackground">
+              {getInitials(author?.display_name || '')}
+            </Text>
+          </AvatarFallback>
+        </Avatar>
+      )
+
       return (
         <PullRequestTimelineItem
           key={payload?.id}
           header={[
             {
-              avatar: (
-                <Avatar className="size-6 rounded-full p-0">
-                  {/* <AvatarImage src={AvatarUrl} /> */}
-
-                  <AvatarFallback>
-                    <Text size={1} color="tertiaryBackground">
-                      {/* TODO: fix fallback string */}
-                      {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </Text>
-                  </AvatarFallback>
-                </Avatar>
-              ),
-              // TODO: fix timeline item to handle commit update as rn it doesnt work
-              name: (payload?.payload?.payload as GeneralPayload)?.commit_title as string,
-              // TODO: add modals or popovers to substring stuff
-              description: `${((payload?.payload?.payload as GeneralPayload)?.new as string)?.substring(0, 6)}`
+              avatar: authorAvatar,
+              name: !payloadData?.forced
+                ? (payloadData?.commit_title as string) || `${author?.display_name} pushed a new commit`
+                : author?.display_name,
+              description: !payloadData?.forced ? (
+                <CommitCopyActions sha={payloadData?.new as string} />
+              ) : (
+                <Layout.Horizontal gap="gap-x-1.5" className="items-center">
+                  <span>forced pushed</span>
+                  <CommitCopyActions sha={payloadData?.old as string} />
+                  <span>to</span>
+                  <CommitCopyActions sha={payloadData?.new as string} />
+                </Layout.Horizontal>
+              )
             }
           ]}
           icon={<Icon name="tube-sign" size={14} />}
           isLast={isLast}
         />
       )
+    }
     case CommentType.BRANCH_DELETE:
       return (
         <PullRequestTimelineItem

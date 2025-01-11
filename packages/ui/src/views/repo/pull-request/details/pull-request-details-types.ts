@@ -147,6 +147,7 @@ export interface TypesPullReqActivity {
   text?: string
   type?: EnumPullReqActivityType
   updated?: number
+  forced?: boolean
 }
 export declare type EnumPullReqReviewerType = 'assigned' | 'requested' | 'self_assigned'
 

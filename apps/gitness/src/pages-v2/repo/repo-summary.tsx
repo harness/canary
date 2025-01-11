@@ -31,7 +31,6 @@ import { SummaryItemType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
@@ -303,7 +302,7 @@ export default function RepoSummaryPage() {
     (filePath: string) => {
       navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${gitRef || selectedBranchTag.name}/~/${filePath}`)
     },
-    [gitRef, selectedBranchTag, navigate, repoId, spaceId, isMFE]
+    [gitRef, selectedBranchTag, navigate, repoId, spaceId]
   )
 
   const latestCommitInfo = useMemo(() => {

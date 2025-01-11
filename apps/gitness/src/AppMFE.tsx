@@ -17,6 +17,7 @@ import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { MFEContext } from './framework/context/MFEContext'
+import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
@@ -111,18 +112,17 @@ export default function AppMFE({
 
   // Router Configuration
   const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
-  const router = createBrowserRouter(
-    routes(
-      scope.projectIdentifier,
-      <MFERouteRenderer
-        projectIdentifier={scope.projectIdentifier}
-        renderUrl={renderUrl}
-        onRouteChange={onRouteChange}
-        parentLocationPath={parentLocationPath}
-      />
-    ),
-    { basename }
+
+  const routesToRender = routes(
+    scope.projectIdentifier,
+    <MFERouteRenderer
+      projectIdentifier={scope.projectIdentifier}
+      renderUrl={renderUrl}
+      onRouteChange={onRouteChange}
+      parentLocationPath={parentLocationPath}
+    />
   )
+  const router = createBrowserRouter(routesToRender, { basename })
 
   const portalRef = useRef<HTMLDivElement>(null)
   const portalContainer = portalRef.current?.shadowRoot as Element | undefined
@@ -142,7 +142,9 @@ export default function AppMFE({
                     <TooltipProvider>
                       <ExitConfirmProvider>
                         <NuqsAdapter>
-                          <RouterProvider router={router} />
+                          <NavigationProvider routes={routesToRender}>
+                            <RouterProvider router={router} />
+                          </NavigationProvider>
                         </NuqsAdapter>
                       </ExitConfirmProvider>
                     </TooltipProvider>

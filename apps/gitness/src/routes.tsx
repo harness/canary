@@ -250,10 +250,11 @@ export const routes: CustomRouteObject[] = [
                           breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                             <>
                               <Text>Commits</Text>
-                              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                              <Breadcrumb.Separator />
                               <Text>{commitSHA}</Text>
                             </>
-                          )
+                          ),
+                          routeName: RouteConstants.toRepoCommitDetails
                         }
                       }
                     ]

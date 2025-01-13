@@ -29,12 +29,11 @@ import PullRequestConversationPage from './pages-v2/pull-request/pull-request-co
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
-import RepoCommitDetailsPage from './pages-v2/repo-commit-details/commit-details-container'
-import RepoCommitDiffsPage from './pages-v2/repo-commit-details/commit-diffs-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
 import RepoCommitDetailsPage from './pages-v2/repo/repo-commit-details'
+import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
@@ -90,33 +89,38 @@ const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'commits',
-            element: <RepoCommitsPage />,
             handle: {
               breadcrumb: () => <Text>Commits</Text>,
               routeName: RouteConstants.toRepoCommits
-            }
-          },
-          {
-            path: 'commits/:commitSHA',
-            element: <RepoCommitDetailsPage />,
+            },
             children: [
               {
                 index: true,
-                element: <RepoCommitDiffsPage />,
+                element: <RepoCommitsPage />
+              },
+              {
+                path: ':commitSHA',
+                element: <RepoCommitDetailsPage />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                     <>
-                      <Text>Commits</Text>
-                      <Breadcrumb.Separator />
-                      <Text>{commitSHA}</Text>
+                      <Text>{commitSHA.substring(0, 7)}</Text>
                     </>
-                  ),
-                  routeName: RouteConstants.toRepoCommitDetails
-                }
+                  )
+                },
+                children: [
+                  {
+                    index: true,
+                    element: (
+                      <ExplorerPathsProvider>
+                        <CommitDiffContainer />
+                      </ExplorerPathsProvider>
+                    )
+                  }
+                ]
               }
             ]
           },
-
           {
             path: 'branches',
             element: <RepoBranchesListPage />,

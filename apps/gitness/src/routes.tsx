@@ -18,6 +18,7 @@ import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-set
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
+import { ProjectLabelsList } from './pages-v2/project/project-labels-list-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -489,6 +490,13 @@ export const routes: CustomRouteObject[] = [
                 element: <ProjectMemberListPage />,
                 handle: {
                   breadcrumb: () => <Text>Members</Text>
+                }
+              },
+              {
+                path: 'labels',
+                element: <ProjectLabelsList />,
+                handle: {
+                  breadcrumb: () => <Text>Labels</Text>
                 }
               }
             ]

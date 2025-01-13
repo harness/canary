@@ -583,7 +583,7 @@ export const routes: CustomRouteObject[] = [
                             path: ':identifier',
                             element: <RepoBranchSettingsRulesPageContainer />,
                             handle: {
-                              routeName: RouteConstants.toRepoBranchRules
+                              routeName: RouteConstants.toRepoBranchRule
                             }
                           }
                         ]

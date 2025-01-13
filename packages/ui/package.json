@@ -13,7 +13,6 @@
     "./tailwind.config": "./tailwind.config.js",
     "./styles.css": "./dist/styles.css",
     "./shared-style-variables.css": "./src/shared-style-variables.css",
-    "./monaco-styles.css": "./src/monaco-styles.css",
     "./context": "./dist/context.js"
   },
   "scripts": {

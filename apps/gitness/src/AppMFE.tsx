@@ -1,4 +1,4 @@
-import './AppMFE.css'
+import './styles/AppMFE.css'
 
 import { useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'

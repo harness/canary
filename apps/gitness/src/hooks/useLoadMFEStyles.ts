@@ -8,9 +8,7 @@ const fetchUIStyles = async () => {
 }
 
 const fetchMonacoStyles = async () => {
-  const monacoStyles = await import(
-    /* webpackChunkName: "monaco-styles" */ '!!raw-loader!@harnessio/ui/monaco-styles.css'
-  )
+  const monacoStyles = await import(/* webpackChunkName: "monaco-styles" */ '!!raw-loader!../styles/monaco-styles.css')
   return monacoStyles.default
 }
 

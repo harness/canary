@@ -49,6 +49,12 @@
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-autofocus": "warn",
 
+    /*
+     * It is a temporary change.
+     * It will be updated as "error" after fixing all the components.
+     */
+    "i18next/no-literal-string": "warn",
+
     "@typescript-eslint/no-unused-vars": [
       "error",
       {

@@ -5,8 +5,10 @@ import { getUser, useOnLoginMutation } from '@harnessio/code-service-client'
 import { SignInData, SignInPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../framework/context/AppContext'
+import { useRoutes } from '../framework/context/NavigationContext'
 
 export const SignIn: FC = () => {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const { setCurrentUser } = useAppContext()
   const {
@@ -24,7 +26,7 @@ export const SignIn: FC = () => {
           .catch(_e => {
             // Ignore/toast error
           })
-        navigate('/') // Redirect to Home page
+        navigate(routes.toHome()) // Redirect to Home page
       }
     }
   )

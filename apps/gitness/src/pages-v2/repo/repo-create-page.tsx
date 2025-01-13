@@ -10,9 +10,11 @@ import {
 import { toast, Toaster } from '@harnessio/ui/components'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 
 export const CreateRepo = () => {
+  const routes = useRoutes()
   const createRepositoryMutation = useCreateRepositoryMutation({})
   const spaceId = useGetSpaceURLParam()
   const navigate = useNavigate()
@@ -36,7 +38,7 @@ export const CreateRepo = () => {
       },
       {
         onSuccess: ({ body: data }) => {
-          navigate(`/${spaceId}/repos/${data?.identifier}`)
+          navigate(routes.toRepoSummary({ spaceId, repoId: data?.identifier }))
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
@@ -54,7 +56,7 @@ export const CreateRepo = () => {
   const { data: { body: licenseOptions } = {} } = useListLicensesQuery({})
 
   const onCancel = () => {
-    navigate(`/${spaceId}/repos`)
+    navigate(routes.toRepositories({ spaceId }))
   }
 
   return (

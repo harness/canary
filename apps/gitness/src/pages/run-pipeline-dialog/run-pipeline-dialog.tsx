@@ -32,6 +32,7 @@ import {
 } from '@harnessio/ui/components'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { PipelineParams } from '../../pages-v2/pipeline/pipeline-edit/context/PipelineStudioDataProvider'
 import { Inputs } from '../../types/pipeline-schema'
@@ -43,13 +44,13 @@ const ADDITIONAL_INPUTS_PREFIX = '_'
 export interface RunPipelineFormProps {
   pipelineId?: string
   branch?: string
-  toExecutions: string
   open: boolean
   onClose: () => void
 }
 
-export default function RunPipelineForm({ pipelineId, branch, toExecutions, onClose, open }: RunPipelineFormProps) {
-  const { pipelineId: pipelineIdFromParams = '' } = useParams<PipelineParams>()
+export default function RunPipelineForm({ pipelineId, branch, onClose, open }: RunPipelineFormProps) {
+  const routes = useRoutes()
+  const { spaceId, repoId, pipelineId: pipelineIdFromParams = '' } = useParams<PipelineParams>()
   const navigate = useNavigate()
 
   const [loading, setLoading] = useState(true)
@@ -130,8 +131,14 @@ export default function RunPipelineForm({ pipelineId, branch, toExecutions, onCl
       .then(
         response => {
           onClose()
-          const executionId = response.body.number
-          navigate(`${toExecutions}/${executionId}`)
+          navigate(
+            routes.toPipelineExecution({
+              spaceId,
+              repoId,
+              pipelineId: pipelineIdFromParams,
+              executionId: response.body.number?.toString()
+            })
+          )
         },
         ex => {
           setErrorMessage(ex.message)

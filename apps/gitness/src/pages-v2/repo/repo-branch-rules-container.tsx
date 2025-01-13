@@ -17,6 +17,7 @@ import {
   RepoBranchSettingsRulesPage
 } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -26,6 +27,7 @@ import { useBranchRulesStore } from './stores/repo-branch-rules-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
   const repoName = useGetRepoId()
@@ -60,8 +62,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     {
       onSuccess: () => {
         const repoName = repoRef.split('/')[1]
-
-        navigate(`/${spaceId}/repos/${repoName}/settings/general`)
+        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
   )
@@ -84,7 +85,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
-        navigate(`/${spaceId}/repos/${repoName}/settings/general`)
+        navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
   )

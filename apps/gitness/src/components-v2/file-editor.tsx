@@ -7,6 +7,7 @@ import { PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
@@ -23,6 +24,7 @@ export interface FileEditorProps {
 }
 
 export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { spaceId, repoId } = useParams<PathParams>()
@@ -167,9 +169,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${newBranchName}`)
+            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${defaultBranch}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}

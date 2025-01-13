@@ -7,6 +7,7 @@ export type PathParams = {
   gitRef?: string
   resourcePath?: string
   diffRefs?: string
+  webhookId?: string
 }
 
 export const PathProps = {

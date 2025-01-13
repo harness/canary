@@ -50,10 +50,143 @@ export const routes: CustomRouteObject[] = [
   {
     path: '/',
     element: <AppShell />,
+    handle: { routeName: 'toHome' },
     children: [
       {
         index: true,
         element: <LandingPage />
+      },
+      {
+        path: 'create',
+        element: <CreateProject />,
+        handle: {
+          breadcrumb: () => <Text>Create project</Text>
+        },
+        children: []
+      },
+      {
+        path: 'repos',
+        element: (
+          <SandboxLayout.Main>
+            <h1>Repositories</h1>
+          </SandboxLayout.Main>
+        ),
+        handle: {
+          breadcrumb: () => <Text>Repositories</Text>
+        }
+      },
+      {
+        path: 'pipelines',
+        element: (
+          <SandboxLayout.Main>
+            <h1>Pipelines</h1>
+          </SandboxLayout.Main>
+        ),
+        handle: {
+          breadcrumb: () => <Text>Pipelines</Text>
+        }
+      },
+      {
+        path: 'executions',
+        element: (
+          <SandboxLayout.Main>
+            <h1>Executions</h1>
+          </SandboxLayout.Main>
+        ),
+        handle: {
+          breadcrumb: () => <Text>Executions</Text>
+        }
+      },
+      {
+        path: 'databases',
+        element: (
+          <SandboxLayout.Main>
+            <h1>Databases</h1>
+          </SandboxLayout.Main>
+        ),
+        handle: {
+          breadcrumb: () => <Text>Databases</Text>
+        }
+      },
+      {
+        path: 'theme',
+        element: <ProfileSettingsThemePage />
+      },
+      {
+        path: 'chaos',
+        element: <EmptyPage pathName="Chaos Engineering" />
+      },
+      {
+        path: 'artifacts',
+        element: <EmptyPage pathName="Artifacts" />
+      },
+      {
+        path: 'secrets',
+        element: <EmptyPage pathName="Secrets" />
+      },
+      {
+        path: 'connectors',
+        element: <EmptyPage pathName="Connectors" />
+      },
+      {
+        path: 'continuous-delivery-gitops',
+        element: <EmptyPage pathName="Continuous Delivery Gitops" />
+      },
+      {
+        path: 'continuous-integration',
+        element: <EmptyPage pathName="Continuous Integration" />
+      },
+      {
+        path: 'feature-flags',
+        element: <EmptyPage pathName="Feature Flags" />
+      },
+      {
+        path: 'infrastructure-as-code',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'service-reliability',
+        element: <EmptyPage pathName="Service Reliability" />
+      },
+      {
+        path: 'developer/portal',
+        element: <EmptyPage pathName="Internal Developer Portal" />
+      },
+      {
+        path: 'developer/environments',
+        element: <EmptyPage pathName="Environments" />
+      },
+      {
+        path: 'developer/insights',
+        element: <EmptyPage pathName="Software Engineering Insights" />
+      },
+      {
+        path: 'infrastructure',
+        element: <EmptyPage pathName="Infrastructure as Code" />
+      },
+      {
+        path: 'code-repository',
+        element: <EmptyPage pathName="Code Repository" />
+      },
+      {
+        path: 'supply-chain',
+        element: <EmptyPage pathName="Software Supply Chain Assurance" />
+      },
+      {
+        path: 'security-tests',
+        element: <EmptyPage pathName="Security Testing Orchestration" />
+      },
+      {
+        path: 'cloud-costs',
+        element: <EmptyPage pathName="Cloud Cost Management" />
+      },
+      {
+        path: 'incidents',
+        element: <EmptyPage pathName="Incidents" />
+      },
+      {
+        path: 'dashboards',
+        element: <EmptyPage pathName="Dashboards" />
       },
       {
         path: ':spaceId',
@@ -64,7 +197,8 @@ export const routes: CustomRouteObject[] = [
           {
             path: 'repos',
             handle: {
-              breadcrumb: () => <Text>Repositories</Text>
+              breadcrumb: () => <Text>Repositories</Text>,
+              routeName: RouteConstants.toRepositories
             },
             children: [
               { index: true, element: <ReposListPage /> },
@@ -136,13 +270,17 @@ export const routes: CustomRouteObject[] = [
                   {
                     path: 'pulls',
                     handle: {
-                      breadcrumb: () => <Text>Pull Requests</Text>
+                      breadcrumb: () => <Text>Pull Requests</Text>,
+                      routeName: RouteConstants.toPullRequests
                     },
                     children: [
                       { index: true, element: <PullRequestListPage /> },
                       {
                         path: 'compare/:diffRefs*?',
-                        element: <CreatePullRequest />
+                        element: <CreatePullRequest />,
+                        handle: {
+                          routeName: RouteConstants.toPullRequestCompare
+                        }
                       },
                       {
                         path: ':pullRequestId',
@@ -209,8 +347,25 @@ export const routes: CustomRouteObject[] = [
                             path: 'edit',
                             element: <PipelineEditPage />,
                             handle: {
-                              breadcrumb: () => <Text>Edit</Text>
+                              breadcrumb: () => <Text>Edit</Text>,
+                              routeName: RouteConstants.toPipelineEdit
                             }
+                          },
+                          {
+                            path: 'executions',
+                            handle: {
+                              routeName: RouteConstants.toPipelineExecutions
+                            },
+                            children: [
+                              {
+                                path: ':executionId',
+                                element: <>Execution Details Page</>,
+                                handle: {
+                                  breadcrumb: ({ executionId }: { executionId: string }) => <Text>{executionId}</Text>,
+                                  routeName: RouteConstants.toPipelineExecution
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
@@ -231,7 +386,8 @@ export const routes: CustomRouteObject[] = [
                         path: 'general',
                         element: <RepoSettingsGeneralPageContainer />,
                         handle: {
-                          breadcrumb: () => <Text>General</Text>
+                          breadcrumb: () => <Text>General</Text>,
+                          routeName: RouteConstants.toRepoGeneralSettings
                         }
                       },
                       {
@@ -247,14 +403,18 @@ export const routes: CustomRouteObject[] = [
                         children: [
                           {
                             path: ':identifier',
-                            element: <RepoBranchSettingsRulesPageContainer />
+                            element: <RepoBranchSettingsRulesPageContainer />,
+                            handle: {
+                              routeName: RouteConstants.toRepoBranchRule
+                            }
                           }
                         ]
                       },
                       {
                         path: 'webhooks',
                         handle: {
-                          breadcrumb: () => <Text>Webhooks</Text>
+                          breadcrumb: () => <Text>Webhooks</Text>,
+                          routeName: RouteConstants.toRepoWebhooks
                         },
                         children: [
                           {
@@ -319,7 +479,6 @@ export const routes: CustomRouteObject[] = [
           }
         ]
       },
-
       {
         path: 'admin/default-settings',
         element: <UserManagementPageContainer />,
@@ -327,7 +486,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>Account</Text>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+              <BreadcrumbSeparator />
               <Text>Users</Text>
             </>
           )
@@ -340,7 +499,7 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => (
             <>
               <Text>User</Text>
-              <BreadcrumbSeparator className="mx-2.5">/</BreadcrumbSeparator>
+              <BreadcrumbSeparator className="mx-2.5" />
               <Text>Settings</Text>
             </>
           )
@@ -369,136 +528,16 @@ export const routes: CustomRouteObject[] = [
     ]
   },
   {
-    path: 'create',
-    element: <CreateProject />,
-    handle: {
-      breadcrumb: () => <Text>Create project</Text>
-    },
-    children: []
-  },
-  {
-    path: 'repos',
-    element: (
-      <SandboxLayout.Main>
-        <h1>Repo</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'pipelines',
-    element: (
-      <SandboxLayout.Main>
-        <h1>pipelines</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'executions',
-    element: (
-      <SandboxLayout.Main>
-        <h1>executions</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
-    path: 'databases',
-    element: (
-      <SandboxLayout.Main>
-        <h1>databases</h1>
-      </SandboxLayout.Main>
-    )
-  },
-  {
     path: 'signin',
-    element: <SignIn />
+    element: <SignIn />,
+    handle: { routeName: RouteConstants.toSignIn }
   },
   {
     path: 'signup',
     element: <SignUp />
   },
-
-  {
-    path: 'theme',
-    element: <ProfileSettingsThemePage />
-  },
   {
     path: 'logout',
     element: <Logout />
-  },
-  {
-    path: 'chaos',
-    element: <EmptyPage pathName="Chaos Engineering" />
-  },
-  {
-    path: 'artifacts',
-    element: <EmptyPage pathName="Artifacts" />
-  },
-  {
-    path: 'secrets',
-    element: <EmptyPage pathName="Secrets" />
-  },
-  {
-    path: 'connectors',
-    element: <EmptyPage pathName="Connectors" />
-  },
-  {
-    path: 'continuous-delivery-gitops',
-    element: <EmptyPage pathName="Continuous Delivery Gitops" />
-  },
-  {
-    path: 'continuous-integration',
-    element: <EmptyPage pathName="Continuous Integration" />
-  },
-  {
-    path: 'feature-flags',
-    element: <EmptyPage pathName="Feature Flags" />
-  },
-  {
-    path: 'infrastructure-as-code',
-    element: <EmptyPage pathName="Infrastructure as Code" />
-  },
-  {
-    path: 'service-reliability',
-    element: <EmptyPage pathName="Service Reliability" />
-  },
-  {
-    path: 'developer/portal',
-    element: <EmptyPage pathName="Internal Developer Portal" />
-  },
-  {
-    path: 'developer/environments',
-    element: <EmptyPage pathName="Environments" />
-  },
-  {
-    path: 'developer/insights',
-    element: <EmptyPage pathName="Software Engineering Insights" />
-  },
-  {
-    path: 'infrastructure',
-    element: <EmptyPage pathName="Infrastructure as Code" />
-  },
-  {
-    path: 'code-repository',
-    element: <EmptyPage pathName="Code Repository" />
-  },
-  {
-    path: 'supply-chain',
-    element: <EmptyPage pathName="Software Supply Chain Assurance" />
-  },
-  {
-    path: 'security-tests',
-    element: <EmptyPage pathName="Security Testing Orchestration" />
-  },
-  {
-    path: 'cloud-costs',
-    element: <EmptyPage pathName="Cloud Cost Management" />
-  },
-  {
-    path: 'incidents',
-    element: <EmptyPage pathName="Incidents" />
-  },
-  {
-    path: 'dashboards',
-    element: <EmptyPage pathName="Dashboards" />
   }
 ]

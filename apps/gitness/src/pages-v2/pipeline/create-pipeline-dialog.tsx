@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useCreatePipelineMutation, useListBranchesQuery } from '@harnessio/code-service-client'
 import { CreatePipelineDialog as CreatePipelineDialogView, CreatePipelineFormType } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
@@ -16,6 +17,7 @@ interface CreatePipelineDialogProps {
 }
 
 export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDialogProps) {
+  const routes = useRoutes()
   const { repoId } = useParams<PathParams>()
   const spaceId = useGetSpaceURLParam()
   const repoRef = useGetRepoRef()
@@ -49,7 +51,7 @@ export default function CreatePipelineDialog({ open, onClose }: CreatePipelineDi
         body: { config_path: yamlPath, default_branch: branch, identifier: name }
       })
 
-      navigate(`/spaces/${spaceId}/repos/${repoId}/pipelines/${name}/edit`)
+      navigate(routes.toPipelineEdit({ spaceId, repoId, pipelineId: name }))
     } catch (e: any) {
       if ('message' in e) {
         setError({ message: e.message })

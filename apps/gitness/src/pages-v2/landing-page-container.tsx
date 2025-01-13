@@ -5,9 +5,11 @@ import { membershipSpaces, TypesSpace } from '@harnessio/code-service-client'
 import { LandingPageView } from '@harnessio/ui/views'
 
 import { useAppContext } from '../framework/context/AppContext'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 
 export const LandingPage = () => {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const { spaces, setSpaces } = useAppContext()
 
@@ -22,7 +24,7 @@ export const LandingPage = () => {
         })
         .catch(_e => {
           // Ignore/toast error
-          navigate('/signin')
+          navigate(routes.toSignIn())
         })
     }
   }, [])

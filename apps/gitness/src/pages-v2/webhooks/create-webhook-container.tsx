@@ -14,14 +14,17 @@ import {
   WebhookTriggerEnum
 } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
 export const CreateWebhookContainer = () => {
+  const routes = useRoutes()
   const repo_ref = useGetRepoRef()
   const navigate = useNavigate()
-  const { webhookId } = useParams()
+  const { spaceId, repoId, webhookId } = useParams<PathParams>()
 
   const { setPreSetWebhookData } = useWebhookStore()
 
@@ -39,7 +42,7 @@ export const CreateWebhookContainer = () => {
     { repo_ref: repo_ref },
     {
       onSuccess: () => {
-        navigate(`../webhooks`)
+        navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
   )
@@ -52,7 +55,7 @@ export const CreateWebhookContainer = () => {
     { repo_ref: repo_ref, webhook_identifier: Number(webhookId) },
     {
       onSuccess: () => {
-        navigate(`../webhooks`)
+        navigate(routes.toRepoWebhooks({ spaceId, repoId }))
       }
     }
   )
@@ -118,7 +121,7 @@ export const CreateWebhookContainer = () => {
   }
 
   const onCancel = () => {
-    navigate(`../webhooks`)
+    navigate(routes.toRepoWebhooks({ spaceId, repoId }))
   }
 
   const apiError = createWebHookError?.message || updateWebhookError?.message || null

@@ -2,10 +2,22 @@ import { Params, RouteObject } from 'react-router-dom'
 
 // Enum defining the route constants
 export enum RouteConstants {
+  toHome = 'toHome',
+  toLogout = 'toLogout',
+  toSignIn = 'toSignIn',
+  toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',
   toRepoBranches = 'toRepoBranches',
-  toRepoFiles = 'toRepoFiles'
+  toRepoFiles = 'toRepoFiles',
+  toRepoWebhooks = 'toRepoWebhooks',
+  toPullRequests = 'toPullRequests',
+  toPullRequestCompare = 'toPullRequestCompare',
+  toPipelineEdit = 'toPipelineEdit',
+  toPipelineExecutions = 'toPipelineExecutions',
+  toPipelineExecution = 'toPipelineExecution',
+  toRepoGeneralSettings = 'toRepoGeneralSettings',
+  toRepoBranchRule = 'toRepoBranchRule'
 }
 
 export interface RouteEntry {
@@ -13,16 +25,19 @@ export interface RouteEntry {
   path: string // e.g., ":spaceId/repos/create"
 }
 
-// Type for a mapping of enum keys to functions that generate paths
-export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params: Params<string>) => string>
+/**
+ * Type for a mapping of enum keys to functions that generate paths.
+ * Params are optional since some functions may not require params at all, for e.g. logout, login, etc.
+ */
+export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params?: Params<string>) => string>
 
-// Define a custom handle with the breadcrumb property
+// Custom handle with the breadcrumb property
 export interface CustomHandle {
   breadcrumb?: (params: Params<string>) => string
   routeName?: string
 }
 
-// Create a new type by intersecting RouteObject with the custom handle
+// Intersection of RouteObject with the custom handle
 export type CustomRouteObject = RouteObject & {
   handle?: CustomHandle
 }

@@ -17,6 +17,7 @@ import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
@@ -30,6 +31,7 @@ interface NavLinkStorageInterface {
 }
 
 const AppShell = () => {
+  const routes = useRoutes()
   const { currentUser, spaces } = useAppContext()
   const navigate = useNavigate()
   const location = useLocation()
@@ -95,7 +97,7 @@ const AppShell = () => {
   /**
    * Handle logout
    */
-  const handleLogOut = () => navigate('/logout')
+  const handleLogOut = () => navigate(routes.toLogout())
 
   /**
    * Toggle show more menu

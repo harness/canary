@@ -12,6 +12,7 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
+import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
@@ -25,6 +26,7 @@ import { transformBranchList } from './transform-utils/branch-transform.ts'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
+  const routes = useRoutes()
   const {
     branchList,
     tagList,
@@ -136,14 +138,14 @@ export const RepoSidebar = () => {
         if (branch) {
           setSelectedBranchTag(branch)
           setSelectedRefType(type)
-          navigate(`${branch.name}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
           setSelectedRefType(type)
-          navigate(`${REFS_TAGS_PREFIX + tag.name}`)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + tag.name}`)
         }
       }
     },
@@ -161,20 +163,24 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+          )
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+          )
         }
       })
     } else {
-      navigate(`new/${fullGitRef || selectedBranchTag.name}/~/`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/`)
     }
   }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
     },
     [fullGitRef, selectedBranchTag.name, navigate, repoId]
   )

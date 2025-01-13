@@ -36,6 +36,7 @@ import {
   SecurityScanning
 } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -45,6 +46,7 @@ import { useRepoRulesStore } from './stores/repo-settings-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 export const RepoSettingsGeneralPageContainer = () => {
+  const routes = useRoutes()
   const repoRef = useGetRepoRef()
   const repoName = useGetRepoId()
   const navigate = useNavigate()
@@ -220,7 +222,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     { repo_ref: repoRef },
     {
       onSuccess: ({ body: _data }) => {
-        navigate(`/${spaceId}/repos`)
+        navigate(routes.toRepositories({ spaceId }))
         setApiError(null)
       },
       onError: (error: DeleteRepositoryErrorResponse) => {
@@ -301,9 +303,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    const url = `/${spaceId}/repos/${repoName}/settings/rules/create/${identifier}`
-
-    navigate(url)
+    navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
   }
 
   const handleDeleteRule = (ruleIdentifier: string) => {

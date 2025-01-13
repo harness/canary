@@ -97,7 +97,6 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
         }}
         pipelineId={pipelineData?.identifier}
         branch={currentBranch}
-        toExecutions={'../executions'}
       />
     </>
   )

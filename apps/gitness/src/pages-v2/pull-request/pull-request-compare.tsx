@@ -29,6 +29,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
@@ -44,6 +45,7 @@ import { transformBranchList } from '../repo/transform-utils/branch-transform'
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const CreatePullRequest = () => {
+  const routes = useRoutes()
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
@@ -60,7 +62,11 @@ export const CreatePullRequest = () => {
   const [selectedSourceBranch, setSelectedSourceBranch] = useState<BranchSelectorListItem>(
     diffSourceBranch ? { name: diffSourceBranch, sha: '' } : { name: 'main', sha: '' }
   )
-  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<number | null>(null)
+  const [prBranchCombinationExists, setPrBranchCombinationExists] = useState<{
+    number: number
+    title: string
+    description: string
+  } | null>(null)
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const [
@@ -189,7 +195,7 @@ export const CreatePullRequest = () => {
         onSuccess: () => {
           setApiError(null)
 
-          navigate(`/${spaceId}/repos/${repoId}/pulls`)
+          navigate(routes.toPullRequests({ spaceId, repoId }))
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
@@ -208,7 +214,7 @@ export const CreatePullRequest = () => {
   }
 
   const onCancel = () => {
-    navigate(`/${spaceId}/repos`)
+    navigate(routes.toRepositories({ spaceId }))
   }
   const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -248,8 +254,12 @@ export const CreatePullRequest = () => {
   })
 
   useEffect(() => {
-    if (pullReqData) {
-      setPrBranchCombinationExists(pullReqData.number || null)
+    if (pullReqData?.number && pullReqData.title && pullReqData.description) {
+      setPrBranchCombinationExists({
+        number: pullReqData.number,
+        title: pullReqData.title,
+        description: pullReqData.description
+      })
     } else {
       setPrBranchCombinationExists(null)
     }

@@ -7,6 +7,7 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import GitBlame from '../components/GitBlame'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
@@ -30,6 +31,7 @@ interface FileContentViewerProps {
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
+  const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
@@ -91,7 +93,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
    * Navigate to Edit file route
    */
   const handleEditFile = () => {
-    navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
+    navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
   }
 
   return (
@@ -104,9 +106,9 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code${parentPath ? `/~/${parentPath}` : ''}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${selectedBranchTag.name}...${newBranchName}`)
+            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${selectedBranchTag.name}...${newBranchName}`)
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}

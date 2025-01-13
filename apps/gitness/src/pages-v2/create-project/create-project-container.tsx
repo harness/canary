@@ -4,9 +4,11 @@ import { useCreateSpaceMutation } from '@harnessio/code-service-client'
 import { CreateProjectFormFields, CreateProjectPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 
 export default function CreateProject() {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const { addSpaces } = useAppContext()
 
@@ -18,7 +20,7 @@ export default function CreateProject() {
         const { body: project } = response
         addSpaces([project])
         //onSuccess in react-query has allowed 200-299
-        navigate(`/${project?.identifier}/repos`)
+        navigate(routes.toRepositories({ spaceId: project?.identifier }))
       }
     }
   )

@@ -1,6 +1,6 @@
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
-import { ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 
@@ -63,7 +63,7 @@ type BreadcrumbSeparatorProps = ComponentProps<'li'>
 
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
   <span role="presentation" aria-hidden="true" className={cn('[&>svg]:size-3.5', className)} {...props}>
-    {children ?? <ChevronRightIcon />}
+    {children ?? '/'}
   </span>
 )
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'

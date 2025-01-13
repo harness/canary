@@ -69,7 +69,7 @@ export interface PullRequestComparePageProps {
   diffStats: TypesDiffStats
   isBranchSelected: boolean
   setIsBranchSelected: (val: boolean) => void
-  prBranchCombinationExists: number | null
+  prBranchCombinationExists: { number: number; title: string; description: string } | null
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
   repoId?: string
@@ -109,7 +109,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
   const { t } = useTranslationStore()
-
   const {
     register,
     handleSubmit,
@@ -155,7 +154,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     // Return a default value
     return review_decision
   }
-
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
@@ -286,21 +284,27 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         {prBranchCombinationExists && (
           <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
             <div className="flex items-center gap-x-1.5">
-              <Icon name="compare" size={14} className="text-icons-success" />
-              <div className="flex gap-x-1.5">
-                {/* TODO: add the name of the PR instead this placeholder */}
-                <p className="text-14 text-foreground-1">PR for this combination of branches already exists.</p>
-                <span className="text-foreground-4">{`#${prBranchCombinationExists}`}</span>
+              <div>
+                <Layout.Horizontal className="items-center">
+                  <Icon name="compare" size={14} className="text-icons-success" />
+                  <div className="flex gap-x-1">
+                    {/* TODO: add the name of the PR instead this placeholder */}
+                    <p className="text-14 text-foreground-1">{prBranchCombinationExists.title}</p>
+                    <span className="text-foreground-4">{`#${prBranchCombinationExists.number}`}</span>
+                  </div>
+                </Layout.Horizontal>
+
+                <p className="text-14  text-foreground-2">{prBranchCombinationExists.description}</p>
               </div>
             </div>
-            <Button onClick={() => navigate(`../${prBranchCombinationExists}/conversation`)}>
+            <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>
               {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
             </Button>
           </Layout.Horizontal>
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" defaultValue={!prBranchCombinationExists ? 'overview' : 'commits'}>
+            <Tabs variant="tabnav" value={prBranchCombinationExists ? 'commits' : 'overview'}>
               <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem

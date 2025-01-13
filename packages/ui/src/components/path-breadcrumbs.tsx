@@ -1,16 +1,7 @@
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  Icon,
-  Input
-} from '@/components'
+import { Breadcrumb, Icon, Input } from '@/components'
 import { debounce } from 'lodash-es'
 
 interface InputPathBreadcrumbItemProps {
@@ -113,38 +104,38 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   }
 
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
         {items.map(({ parentPath, path }, idx) => {
           const isLast = length === idx + 1
 
           if (isLast) {
             return (
-              <BreadcrumbItem key={idx}>
-                {isEdit ? renderInput() : <BreadcrumbPage>{path}</BreadcrumbPage>}
-              </BreadcrumbItem>
+              <Breadcrumb.Item key={idx}>
+                {isEdit ? renderInput() : <Breadcrumb.Page>{path}</Breadcrumb.Page>}
+              </Breadcrumb.Item>
             )
           }
 
           return (
             <Fragment key={idx}>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link asChild>
                   <Link to={parentPath}>{path}</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
+                </Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
             </Fragment>
           )
         })}
 
         {isNew && (
           <>
-            {!!items.length && <BreadcrumbSeparator />}
-            <BreadcrumbItem>{renderInput()}</BreadcrumbItem>
+            {!!items.length && <Breadcrumb.Separator />}
+            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>
           </>
         )}
-      </BreadcrumbList>
-    </Breadcrumb>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
   )
 }

@@ -49,7 +49,7 @@ const PullRequestMergeSection = ({
               <LineDescription text={'Checking for ability to merge automatically...'} />
             ) : !mergeable ? (
               <div className="ml-6 inline-flex items-center gap-2">
-                <p className="text-foreground-4 text-14 font-normal">
+                <p className="text-14 font-normal text-foreground-4">
                   Use the
                   <span
                     // onClick={() => {
@@ -84,7 +84,7 @@ const PullRequestMergeSection = ({
             {!isEmpty(conflictingFiles) && (
               <div className="mt-2">
                 {conflictingFiles?.map((file, idx) => (
-                  <div className="py-1.5 flex items-center gap-x-2" key={`${file}-${idx}`}>
+                  <div className="flex items-center gap-x-2 py-1.5" key={`${file}-${idx}`}>
                     <Icon className="text-icons-1" size={16} name="file" />
                     <span className="text-14 text-foreground-1">{file}</span>
                   </div>

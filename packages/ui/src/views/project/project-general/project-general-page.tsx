@@ -166,7 +166,7 @@ export const ProjectSettingsGeneralPage = ({
           </Fieldset>
         </FormWrapper>
 
-        <Button size="sm" theme="error" className="self-start mt-7" onClick={setOpenDeleteDialog}>
+        <Button size="sm" theme="error" className="mt-7 self-start" onClick={setOpenDeleteDialog}>
           Delete project
         </Button>
       </SandboxLayout.Content>

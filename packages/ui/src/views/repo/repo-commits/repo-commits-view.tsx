@@ -45,7 +45,6 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   commitsPath
 }) => {
   const { t } = useTranslationStore()
-  console.log(commitsList)
 
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)

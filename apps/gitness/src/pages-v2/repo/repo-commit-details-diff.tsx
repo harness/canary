@@ -1,26 +1,36 @@
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
+import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
 
-import { useDiffStatsQuery, useGetContentQuery, useListPathsQuery } from '@harnessio/code-service-client'
+import {
+  useDiffStatsQuery,
+  useGetCommitDiffQuery,
+  useGetContentQuery,
+  useListPathsQuery
+} from '@harnessio/code-service-client'
 import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer.tsx'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
+import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PathParams } from '../../RouteDefinitions.ts'
 import { normalizeGitRef } from '../../utils/git-utils.ts'
+import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
 import { useCommitDetailsStore } from './stores/commit-details-store.ts'
 
 /**
- * TODO: This code was migrated from V2 and needs to be refactored.
+ * TODO: For now, file-tree is static and contains all files.
+ * Needs to filter files for current commit and add opportunity to navigate to diff for each file from file-tree
  */
 export const CommitDiffContainer = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
-  const { diffs } = useCommitDetailsStore()
+  const { setDiffs, setDiffStats } = useCommitDetailsStore()
 
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
@@ -30,71 +40,46 @@ export const CommitDiffContainer = () => {
     { enabled: !!repoRef && !!diffApiPath }
   )
 
-  //   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  useEffect(() => {
+    if (diffStats) {
+      setDiffStats(diffStats)
+    }
+  }, [diffStats, setDiffStats])
 
-  //   const { data: { body: branches } = {} } = useListBranchesQuery({
-  //     repo_ref: repoRef,
-  //     queryParams: {
-  //       include_commit: false,
-  //       sort: 'date',
-  //       order: orderSortDate.ASC,
-  //       limit: 50,
-  //       query: searchQuery
-  //     }
-  //   })
+  const { data: currentCommitDiffData } = useGetCommitDiffQuery({
+    repo_ref: repoRef,
+    commit_sha: commitSHA || ''
+  })
 
-  //   useEffect(() => {
-  //     if (branches) {
-  //       setBranchList(transformBranchList(branches, repository?.default_branch))
-  //     }
-  //     if (repository?.default_branch) {
-  //       setDefaultBranch(repository?.default_branch)
-  //     }
-  //   }, [branches, repository?.default_branch])
+  useEffect(() => {
+    if (currentCommitDiffData) {
+      const _diffs = Diff2Html.parse((currentCommitDiffData?.body as string) || '', DIFF2HTML_CONFIG)
+        .map(diff => {
+          diff.oldName = normalizeGitFilePath(diff.oldName)
+          diff.newName = normalizeGitFilePath(diff.newName)
 
-  //   const { data: { body: tags } = {} } = useListTagsQuery({
-  //     repo_ref: repoRef,
-  //     queryParams: {
-  //       include_commit: false,
-  //       sort: 'date',
-  //       order: orderSortDate.DESC,
-  //       limit: 50
-  //     }
-  //   })
+          const fileId = changedFileId([diff.oldName, diff.newName])
+          const containerId = `container-${fileId}`
+          const contentId = `content-${fileId}`
 
-  //   useEffect(() => {
-  //     if (tags) {
-  //       setTagList(
-  //         tags.map(item => ({
-  //           name: item?.name || '',
-  //           sha: item?.sha || '',
-  //           default: false
-  //         }))
-  //       )
-  //     }
-  //   }, [tags])
+          const filePath = diff.isDeleted ? diff.oldName : diff.newName
+          const diffString = parseSpecificDiff((currentCommitDiffData.body as string) ?? '', diff.oldName, diff.newName)
+          return {
+            ...diff,
+            containerId,
+            contentId,
+            fileId,
+            filePath,
+            raw: diffString
+          }
+        })
+        .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
 
-  //   useEffect(() => {
-  //     if (!repository?.default_branch || !branchList.length) {
-  //       return
-  //     }
-  //     if (!fullGitRef) {
-  //       const defaultBranch = branchList.find(branch => branch.default)
-  //       setSelectedBranchTag({
-  //         name: defaultBranch?.name || repository?.default_branch || '',
-  //         sha: defaultBranch?.sha || '',
-  //         default: true
-  //       })
-  //     } else {
-  //       const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
-  //       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
-  //       if (selectedGitRefBranch) {
-  //         setSelectedBranchTag(selectedGitRefBranch)
-  //       } else if (selectedGitRefTag) {
-  //         setSelectedBranchTag(selectedGitRefTag)
-  //       }
-  //     }
-  //   }, [repository?.default_branch, fullGitRef, branchList, tagList])
+      setDiffs(_diffs)
+    } else {
+      setDiffs([])
+    }
+  }, [currentCommitDiffData])
 
   const { data: repoDetails } = useGetContentQuery({
     path: '',
@@ -111,29 +96,13 @@ export const CommitDiffContainer = () => {
   })
 
   const filesList = filesData?.body?.files || []
-  console.log(
-    'diffs are',
-    diffs.forEach(diff => console.log(diff.filePath))
-  )
-
-  // TODO: repoId and spaceId must be defined
-  if (!repoId || !spaceId) return <></>
 
   return (
     <>
-      <CommitSidebar
-        //   selectBranchOrTag={selectBranchOrTag}
-        //   useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        //   navigateToNewFile={navigateToNewFile}
-        navigateToFile={() => {}}
-        filesList={filesList}
-        //   searchQuery={searchQuery}
-        //   setSearchQuery={setSearchQuery}
-      >
+      <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
         {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
       </CommitSidebar>
-      <CommitDiff diffs={diffs} diffStats={diffStats} useTranslationStore={useTranslationStore} />
+      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
     </>
   )
 }

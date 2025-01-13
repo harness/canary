@@ -1,19 +1,26 @@
-import { DiffFileEntry, TranslationStore, TypesDiffStats } from '@/views'
+import { ICommitDetailsStore, TranslationStore } from '@/views'
 
 import { CommitChanges } from './commit-changes'
 
 export interface CommitDiffsViewProps {
-  diffs: DiffFileEntry[]
-  diffStats?: TypesDiffStats
+  useCommitDetailsStore: () => ICommitDetailsStore
   useTranslationStore: () => TranslationStore
 }
 
-export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ diffs, diffStats, useTranslationStore }) => {
+export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsStore, useTranslationStore }) => {
+  const { t } = useTranslationStore()
+  const { diffs, diffStats } = useCommitDetailsStore()
+
   return (
     <div className="min-h-[calc(100vh-100px)] pl-6 pt-5">
-      <p className="text-14 text-foreground-4 py-2 leading-tight">
-        Showing <span className="text-foreground-accent">{diffStats?.files_changed || 0} changed files </span>
-        with {diffStats?.additions || 0} additions and {diffStats?.deletions || 0} deletions
+      <p className="text-14 text-foreground-4 mb-3.5 leading-tight">
+        {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
+        <span className="text-foreground-accent">
+          {diffStats?.files_changed || 0} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
+        </span>{' '}
+        {t('views:commits.commitDetailsDiffWith', 'with')} {diffStats?.additions || 0}{' '}
+        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {diffStats?.deletions || 0}{' '}
+        {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
       </p>
       <CommitChanges
         data={

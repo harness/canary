@@ -4,29 +4,13 @@ import { ScrollArea, SearchFiles, Spacer } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 interface CommitsSidebarProps {
-  //   navigateToNewFile: () => void
   navigateToFile: (file: string) => void
   filesList?: string[]
   children: ReactNode
-  //   selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
-  //   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
-  //   searchQuery: string
-  //   setSearchQuery: (query: string) => void
 }
 
-export const CommitSidebar = ({
-  //   navigateToNewFile,
-  navigateToFile,
-  filesList,
-  children,
-  //   selectBranchOrTag,
-  //   useRepoBranchesStore,
-  useTranslationStore
-  //   searchQuery,
-  //   setSearchQuery
-}: CommitsSidebarProps) => {
-  //   console.log(filesList)
+export const CommitSidebar = ({ navigateToFile, filesList, children, useTranslationStore }: CommitsSidebarProps) => {
   return (
     // 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px)
     // Total height of topbar and outlet should be 100vh

@@ -15,8 +15,6 @@ export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = f
   const navigate = useNavigate()
   const { t } = useTranslationStore()
 
-  console.log(latestFile)
-
   return (
     <>
       {!hideHeader && (

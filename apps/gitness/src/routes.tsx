@@ -169,6 +169,104 @@ export const routes: CustomRouteObject[] = [
         }
       },
       {
+        path: 'notifications',
+        element: <EmptyPage pathName="Notifications" />,
+        handle: {
+          routeName: RouteConstants.toNotifications
+        }
+      },
+      {
+        path: 'environments',
+        element: <EmptyPage pathName="Environments" />,
+        handle: {
+          routeName: RouteConstants.toEnvironments
+        }
+      },
+      {
+        path: 'delegates',
+        element: <EmptyPage pathName="File Store" />,
+        handle: {
+          routeName: RouteConstants.toFileStore
+        }
+      },
+      {
+        path: 'file-store',
+        element: <EmptyPage pathName="Delegates" />,
+        handle: {
+          routeName: RouteConstants.toDelegates
+        }
+      },
+      {
+        path: 'templates',
+        element: <EmptyPage pathName="Templates" />,
+        handle: {
+          routeName: RouteConstants.toTemplates
+        }
+      },
+      {
+        path: 'variables',
+        element: <EmptyPage pathName="Variables" />,
+        handle: {
+          routeName: RouteConstants.toVariables
+        }
+      },
+      {
+        path: 'slo-downtime',
+        element: <EmptyPage pathName="SLO Downtime" />,
+        handle: {
+          routeName: RouteConstants.toSloDowntime
+        }
+      },
+      {
+        path: 'discovery',
+        element: <EmptyPage pathName="Discovery" />,
+        handle: {
+          routeName: RouteConstants.toDiscovery
+        }
+      },
+      {
+        path: 'monitored-services',
+        element: <EmptyPage pathName="Monitored Services" />,
+        handle: {
+          routeName: RouteConstants.toMonitoredServices
+        }
+      },
+      {
+        path: 'overrides',
+        element: <EmptyPage pathName="Overrides" />,
+        handle: {
+          routeName: RouteConstants.toOverrides
+        }
+      },
+      {
+        path: 'certificates',
+        element: <EmptyPage pathName="Certificates" />,
+        handle: {
+          routeName: RouteConstants.toCertificates
+        }
+      },
+      {
+        path: 'policies',
+        element: <EmptyPage pathName="Policies" />,
+        handle: {
+          routeName: RouteConstants.toPolicies
+        }
+      },
+      {
+        path: 'freeze-windows',
+        element: <EmptyPage pathName="Freeze Windows" />,
+        handle: {
+          routeName: RouteConstants.toFreezeWindows
+        }
+      },
+      {
+        path: 'external-tickets',
+        element: <EmptyPage pathName="External Tickets" />,
+        handle: {
+          routeName: RouteConstants.toExternalTickets
+        }
+      },
+      {
         path: 'infrastructure-as-code',
         element: <EmptyPage pathName="Infrastructure as Code" />,
         handle: {
@@ -522,7 +620,8 @@ export const routes: CustomRouteObject[] = [
                 path: 'members',
                 element: <ProjectMemberListPage />,
                 handle: {
-                  breadcrumb: () => <Text>Members</Text>
+                  breadcrumb: () => <Text>Members</Text>,
+                  routeName: RouteConstants.toProjectMembers
                 }
               }
             ]
@@ -548,6 +647,55 @@ export const routes: CustomRouteObject[] = [
             </>
           )
         }
+      },
+      {
+        path: 'admin',
+        handle: {
+          breadcrumb: () => <Text>Account</Text>
+        },
+        children: [
+          {
+            index: true,
+            path: 'default-settings',
+            element: <UserManagementPageContainer />,
+            handle: {
+              breadcrumbs: () => <Text>Users</Text>,
+              routeName: RouteConstants.toAdminUsers
+            }
+          },
+          {
+            path: 'user-groups',
+            element: <EmptyPage pathName="User Groups" />,
+            handle: {
+              breadcrumbs: () => <Text>User Groups</Text>,
+              routeName: RouteConstants.toUserGroups
+            }
+          },
+          {
+            path: 'service-accounts',
+            element: <EmptyPage pathName="Service Accounts" />,
+            handle: {
+              breadcrumbs: () => <Text>Service Accounts</Text>,
+              routeName: RouteConstants.toServiceAccounts
+            }
+          },
+          {
+            path: 'resource-groups',
+            element: <EmptyPage pathName="Resource Groups" />,
+            handle: {
+              breadcrumbs: () => <Text>Resource Groups</Text>,
+              routeName: RouteConstants.toResourceGroups
+            }
+          },
+          {
+            path: 'roles',
+            element: <EmptyPage pathName="Roles" />,
+            handle: {
+              breadcrumbs: () => <Text>Roles</Text>,
+              routeName: RouteConstants.toRoles
+            }
+          }
+        ]
       },
       {
         path: 'profile-settings',
@@ -595,6 +743,7 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'logout',
-    element: <Logout />
+    element: <Logout />,
+    handle: { routeName: RouteConstants.toLogout }
   }
 ]

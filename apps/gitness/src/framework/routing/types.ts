@@ -31,7 +31,7 @@ export enum RouteConstants {
   toSupplyChain = 'toSupplyChain',
   toCloudCosts = 'toCloudCosts',
   toIncidents = 'toIncidents',
-  toChaos = 'toChaosEngineering',
+  toChaos = 'toChaos',
   toDashboards = 'toDashboards',
   toNotifications = 'toNotifications',
   toServiceReliability = 'toServiceReliability',
@@ -56,6 +56,7 @@ export enum RouteConstants {
   toPolicies = 'toPolicies',
   toFreezeWindows = 'toFreezeWindows',
   toExternalTickets = 'toExternalTickets',
+  toProjectMembers = 'toProjectMembers',
   toGitOps = 'toGitOps',
   toCI = 'toCI',
   toCode = 'toCode'

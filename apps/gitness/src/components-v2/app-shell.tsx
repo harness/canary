@@ -73,7 +73,11 @@ const AppShell = () => {
    * Map mock data menu by type to Settings and More
    */
   const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData(t, space_ref ?? (spaces.length > 0 ? spaces[0].path : ''))
+    const navbarMenuData = getNavbarMenuData({
+      t,
+      space_ref: space_ref ?? spaces[0]?.path ?? '',
+      routes
+    })
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
@@ -191,7 +195,7 @@ const AppShell = () => {
       <ManageNavigation
         pinnedItems={pinnedMenu}
         recentItems={recentMenu}
-        navbarMenuData={getNavbarMenuData(t)}
+        navbarMenuData={getNavbarMenuData({ t, routes })}
         showManageNavigation={showCustomNav}
         isSubmitting={false}
         submitted={false}

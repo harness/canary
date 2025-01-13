@@ -2,9 +2,17 @@ import { TFunction } from 'i18next'
 
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
-import { RouteConstants } from '../framework/routing/types'
+import { RouteFunctionMap } from '../framework/routing/types'
 
-export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupType[] => [
+export const getNavbarMenuData = ({
+  t,
+  space_ref,
+  routes
+}: {
+  t: TFunction
+  space_ref?: string
+  routes: RouteFunctionMap
+}): MenuGroupType[] => [
   {
     groupId: 0,
     title: t('component:navbar.devops'),
@@ -15,49 +23,49 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'repositories-gradient',
         title: t('component:navbar.repositories'),
         description: 'Integrated & familiar git experience.',
-        to: RouteConstants.toRepositories
+        to: routes.toRepositories()
       },
       {
         id: 1,
         iconName: 'pipelines-gradient',
         title: t('component:navbar.pipelines'),
         description: 'Up to 4X faster than other solutions.',
-        to: RouteConstants.toPipelines
+        to: routes.toPipelines()
       },
       {
         id: 2,
         iconName: 'execution-gradient',
         title: t('component:navbar.executions'),
         description: 'Optimize feature rollout velocity.',
-        to: RouteConstants.toExecutions
+        to: routes.toExecutions()
       },
       {
         id: 3,
         iconName: 'database-gradient',
         title: t('component:navbar.databases'),
         description: 'Manage all your infrastructure.',
-        to: RouteConstants.toDatabases
+        to: routes.toDatabases()
       },
       {
         id: 4,
         iconName: 'artifacts-gradient',
         title: t('component:navbar.artifacts'),
         description: 'Validate service resilience.',
-        to: RouteConstants.toArtifacts
+        to: routes.toArtifacts()
       },
       {
         id: 5,
         iconName: 'infrastructure-gradient',
         title: t('component:navbar.infrastructure'),
         description: 'Manage all your infrastructure.',
-        to: RouteConstants.toInfrastructureAsCode
+        to: routes.toInfrastructureAsCode()
       },
       {
         id: 6,
         iconName: 'flag-gradient',
         title: t('component:navbar.feature-flags'),
         description: 'Optimize feature rollout velocity.',
-        to: RouteConstants.toFeatureFlags
+        to: routes.toFeatureFlags()
       }
     ]
   },
@@ -71,21 +79,21 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'dev-portal-gradient',
         title: t('component:navbar.developer-portal'),
         description: 'Built for developers, onboard in minutes.',
-        to: RouteConstants.toDevPortal
+        to: routes.toDevPortal()
       },
       {
         id: 8,
         iconName: 'dev-envs-gradient',
         title: t('component:navbar.developer-environments'),
         description: 'Integrated & familiar git experience.',
-        to: RouteConstants.toDevEnvironments
+        to: routes.toDevEnvironments()
       },
       {
         id: 9,
         iconName: 'dev-insights-gradient',
         title: t('component:navbar.developer-insights'),
         description: 'Actionable insights on SDLC.',
-        to: RouteConstants.toDevInsights
+        to: routes.toDevInsights()
       }
     ]
   },
@@ -99,14 +107,14 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'security-tests-gradient',
         title: t('component:navbar.security-tests'),
         description: 'Shift left security testing.',
-        to: RouteConstants.toSecurityTests
+        to: routes.toSecurityTests()
       },
       {
         id: 11,
         iconName: 'supply-chain-gradient',
         title: t('component:navbar.supply-chain'),
         description: 'Artifact integrity and governance.',
-        to: RouteConstants.toSupplyChain
+        to: routes.toSupplyChain()
       }
     ]
   },
@@ -120,7 +128,7 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'cloud-costs-gradient',
         title: t('component:navbar.cloud-costs'),
         description: 'Intelligent cost management.',
-        to: RouteConstants.toCloudCosts
+        to: routes.toCloudCosts()
       }
     ]
   },
@@ -134,14 +142,14 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'incidents-gradient',
         title: t('component:navbar.incidents'),
         description: 'Shift left security testing.',
-        to: RouteConstants.toIncidents
+        to: routes.toIncidents()
       },
       {
         id: 14,
         iconName: 'chaos-engineering-gradient',
         title: t('component:navbar.chaos-engineering'),
         description: 'Validate service resilience.',
-        to: RouteConstants.toChaos
+        to: routes.toChaos()
       }
     ]
   },
@@ -155,7 +163,7 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'dashboards-gradient',
         title: t('component:navbar.dashboards'),
         description: 'Intelligent cost management.',
-        to: RouteConstants.toCloudCosts
+        to: routes.toCloudCosts()
       }
     ]
   },
@@ -168,13 +176,13 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
-        to: space_ref ? `${space_ref}/settings/members` : '/'
+        to: space_ref ? routes.toProjectMembers({ spaceId: space_ref }) : '/'
       },
       {
         id: 17,
         iconName: 'notification',
         title: t('component:navbar.notifications'),
-        to: RouteConstants.toNotifications
+        to: routes.toNotifications()
       }
     ]
   },
@@ -187,85 +195,85 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         id: 18,
         iconName: 'wrench',
         title: t('component:navbar.services'),
-        to: RouteConstants.toServiceReliability
+        to: routes.toServiceReliability()
       },
       {
         id: 19,
         iconName: 'environment',
         title: t('component:navbar.environments'),
-        to: RouteConstants.toEnvironments
+        to: routes.toEnvironments()
       },
       {
         id: 20,
         iconName: 'connectors',
         title: t('component:navbar.connectors'),
-        to: RouteConstants.toConnectors
+        to: routes.toConnectors()
       },
       {
         id: 21,
         iconName: 'hierarchy',
         title: t('component:navbar.delegates'),
-        to: RouteConstants.toDelegates
+        to: routes.toDelegates()
       },
       {
         id: 22,
         iconName: 'key',
         title: t('component:navbar.secrets'),
-        to: RouteConstants.toSecrets
+        to: routes.toSecrets()
       },
       {
         id: 23,
         iconName: 'file-icon',
         title: t('component:navbar.file-store'),
-        to: RouteConstants.toFileStore
+        to: routes.toFileStore()
       },
       {
         id: 24,
         iconName: 'sidebar-icon',
         title: t('component:navbar.templates'),
-        to: RouteConstants.toTemplates
+        to: routes.toTemplates()
       },
       {
         id: 25,
         iconName: 'variable',
         title: t('component:navbar.variables'),
-        to: RouteConstants.toVariables
+        to: routes.toVariables()
       },
       {
         id: 26,
         iconName: 'clock-icon',
         title: t('component:navbar.slo-downtime'),
-        to: RouteConstants.toSloDowntime
+        to: routes.toSloDowntime()
       },
       {
         id: 27,
         iconName: 'search',
         title: t('component:navbar.discovery'),
-        to: RouteConstants.toDiscovery
+        to: routes.toDiscovery()
       },
       {
         id: 28,
         iconName: 'eye',
         title: t('component:navbar.monitored-services'),
-        to: RouteConstants.toMonitoredServices
+        to: routes.toMonitoredServices()
       },
       {
         id: 29,
         iconName: 'stack',
         title: t('component:navbar.overrides'),
-        to: RouteConstants.toOverrides
+        to: routes.toOverrides()
       },
       {
         id: 30,
         iconName: 'bookmark-icon',
         title: t('component:navbar.certificates'),
-        to: RouteConstants.toCertificates
+        to: routes.toCertificates()
       },
       {
         id: 31,
         iconName: 'webhook',
         title: t('component:navbar.webhooks'),
-        to: RouteConstants.toWebhooks
+        to: routes.toRepoWebhooks()
       }
     ]
   },
@@ -278,31 +286,31 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         id: 32,
         iconName: 'user',
         title: t('component:navbar.users'),
-        to: RouteConstants.toAdminUsers
+        to: routes.toAdminUsers()
       },
       {
         id: 33,
         iconName: 'users',
         title: t('component:navbar.user-groups'),
-        to: RouteConstants.toUserGroups
+        to: routes.toUserGroups()
       },
       {
         id: 34,
         iconName: 'account-icon',
         title: t('component:navbar.service-accounts'),
-        to: RouteConstants.toServiceAccounts
+        to: routes.toServiceAccounts()
       },
       {
         id: 35,
         iconName: 'folder-icon',
         title: t('component:navbar.resource-groups'),
-        to: RouteConstants.toResourceGroups
+        to: routes.toResourceGroups()
       },
       {
         id: 36,
         iconName: 'briefcase',
         title: t('component:navbar.roles'),
-        to: RouteConstants.toRoles
+        to: routes.toRoles()
       }
     ]
   },
@@ -315,13 +323,13 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         id: 37,
         iconName: 'shield',
         title: t('component:navbar.policies'),
-        to: RouteConstants.toPolicies
+        to: routes.toPolicies()
       },
       {
         id: 38,
         iconName: 'snow',
         title: t('component:navbar.freeze-windows'),
-        to: RouteConstants.toFreezeWindows
+        to: routes.toFreezeWindows()
       }
     ]
   },
@@ -334,7 +342,7 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         id: 39,
         iconName: 'ticket',
         title: t('component:navbar.external-tickets'),
-        to: RouteConstants.toExternalTickets
+        to: routes.toExternalTickets()
       }
     ]
   }

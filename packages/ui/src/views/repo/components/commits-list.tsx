@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
@@ -12,7 +12,6 @@ interface CommitProps {
 }
 
 export const CommitsList: FC<CommitProps> = ({ data }) => {
-  const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -40,7 +39,7 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
                   const authorName = commit.author?.identity?.name
 
                   return (
-                    <Link to={`${commit?.sha?.substring(0, 7)}`}>
+                    <Link to={`${commit?.sha?.substring(0, 7)}`} key={commit?.sha}>
                       <StackedList.Item
                         className="items-start py-3"
                         key={commit?.sha || repo_idx}

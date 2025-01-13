@@ -50,13 +50,13 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath }) => {
                           <div className="flex flex-col gap-y-1.5">
                             {commitsPath ? (
                               <Link
-                                className="text-16 truncate font-medium leading-snug"
+                                className="truncate text-16 font-medium leading-snug"
                                 to={`${commitsPath}/${commit?.sha}`}
                               >
                                 {commit.title}
                               </Link>
                             ) : (
-                              <span className="text-16 truncate font-medium leading-snug">{commit.title}</span>
+                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
                             )}
                             <div className="flex items-center gap-x-1.5">
                               {authorName && (

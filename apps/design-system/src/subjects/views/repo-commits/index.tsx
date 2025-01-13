@@ -44,6 +44,7 @@ export const RepoCommitsView = () => {
       useTranslationStore={useTranslationsStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
+      commitsPath=""
     />
   )
 }

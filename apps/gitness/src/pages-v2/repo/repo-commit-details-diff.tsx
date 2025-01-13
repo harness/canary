@@ -28,7 +28,7 @@ import { useCommitDetailsStore } from './stores/commit-details-store.ts'
  */
 export const CommitDiffContainer = () => {
   const repoRef = useGetRepoRef()
-  const { spaceId, repoId, commitSHA } = useParams<PathParams>()
+  const { commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats } = useCommitDetailsStore()
 

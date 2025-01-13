@@ -312,16 +312,16 @@
     "members": ""
   },
   "commits": {
-    "createNewCommit": "Crear nuevo commit",
-    "commitDetailsTitle": "Commit",
-    "commitDetailsAuthored": "creado",
-    "verified": "Verificado",
-    "browseFiles": "Explorar archivos",
     "commitDetailsDiffShowing": "Mostrando",
     "commitDetailsDiffChangedFiles": "archivos modificados",
     "commitDetailsDiffWith": "con",
     "commitDetailsDiffAdditionsAnd": "adiciones y",
-    "commitDetailsDiffDeletions": "eliminaciones"
+    "commitDetailsDiffDeletions": "eliminaciones",
+    "commitDetailsTitle": "Commit",
+    "commitDetailsAuthored": "creado",
+    "verified": "Verificado",
+    "browseFiles": "Explorar archivos",
+    "createNewCommit": "Crear nuevo commit"
   },
   "rules": {
     "edit": "Edit rule",

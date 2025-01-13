@@ -243,6 +243,12 @@
     "commits": "Commits",
     "noUsers": "No users found."
   },
+  "notFound": {
+    "title": "Something went wrong…",
+    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
+    "description": "The requested page is not found.",
+    "button": "Reload page"
+  },
   "profileSettings": {
     "name": "Name",
     "added": "Added",

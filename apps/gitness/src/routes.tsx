@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
-import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
+import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
@@ -257,7 +257,7 @@ const repoRoutes: CustomRouteObject[] = [
           },
           {
             path: 'settings',
-            element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
+            element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
             handle: {
               breadcrumb: () => <Text>Settings</Text>
             },

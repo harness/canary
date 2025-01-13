@@ -114,7 +114,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="h-full">
+      <SandboxLayout.Content className="h-full pt-4">
         {isView && (
           <PathActionBar
             codeMode={codeMode}

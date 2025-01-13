@@ -70,82 +70,77 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
     setPage(1)
   }
 
-  if (error)
-    return (
-      <SandboxLayout.Main>
-        <SandboxLayout.Content>
-          <Spacer size={2} />
-          <Text size={1} className="text-destructive">
-            {error || 'Something went wrong'}
-          </Text>
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    )
-
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content className="pt-7">
-        <Text size={5} weight={'medium'}>
-          Webhooks
-        </Text>
-        <Spacer size={6} />
-        {(!!webhooksWithFormattedDates.length || (!webhooksWithFormattedDates.length && isDirtyList)) && (
-          <>
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={value}
-                  handleChange={handleInputChange}
-                  placeholder="Search"
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  layoutOptions={LAYOUT_OPTIONS}
-                  currentLayout={currentLayout}
-                  onLayoutChange={setCurrentLayout}
-                  viewManagement={viewManagement}
-                  t={t}
-                />
-                <Button asChild>
-                  <Link to="create">New webhook</Link>
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              viewManagement={viewManagement}
-              t={t}
-            />
-            <Spacer size={4.5} />
-          </>
-        )}
+    <SandboxLayout.Content className="px-0">
+      <Text size={5} weight={'medium'}>
+        Webhooks
+      </Text>
+      <Spacer size={6} />
 
-        {webhookLoading ? (
-          <SkeletonList />
-        ) : (
-          <RepoWebhookList
-            error={error}
-            isDirtyList={isDirtyList}
-            webhooks={webhooksWithFormattedDates}
-            useTranslationStore={useTranslationStore}
-            handleReset={handleResetFiltersQueryAndPages}
-            totalPages={totalPages}
-            page={page}
-            setPage={setPage}
-            openDeleteWebhookDialog={openDeleteWebhookDialog}
-          />
-        )}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+      {error ? (
+        <Text size={1} className="text-destructive">
+          {error || 'Something went wrong'}
+        </Text>
+      ) : (
+        <>
+          {(!!webhooksWithFormattedDates.length || (!webhooksWithFormattedDates.length && isDirtyList)) && (
+            <>
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    width="full"
+                    className="max-w-96"
+                    value={value}
+                    handleChange={handleInputChange}
+                    placeholder="Search"
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Filters
+                    filterOptions={FILTER_OPTIONS}
+                    sortOptions={SORT_OPTIONS}
+                    filterHandlers={filterHandlers}
+                    layoutOptions={LAYOUT_OPTIONS}
+                    currentLayout={currentLayout}
+                    onLayoutChange={setCurrentLayout}
+                    viewManagement={viewManagement}
+                    t={t}
+                  />
+                  <Button asChild>
+                    <Link to="create">New webhook</Link>
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+              <FiltersBar
+                filterOptions={FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                sortDirections={SORT_DIRECTIONS}
+                filterHandlers={filterHandlers}
+                viewManagement={viewManagement}
+                t={t}
+              />
+              <Spacer size={4.5} />
+            </>
+          )}
+
+          {webhookLoading ? (
+            <SkeletonList />
+          ) : (
+            <RepoWebhookList
+              error={error}
+              isDirtyList={isDirtyList}
+              webhooks={webhooksWithFormattedDates}
+              useTranslationStore={useTranslationStore}
+              handleReset={handleResetFiltersQueryAndPages}
+              totalPages={totalPages}
+              page={page}
+              setPage={setPage}
+              openDeleteWebhookDialog={openDeleteWebhookDialog}
+            />
+          )}
+        </>
+      )}
+    </SandboxLayout.Content>
   )
 }
 

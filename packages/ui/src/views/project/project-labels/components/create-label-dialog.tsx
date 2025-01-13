@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -44,6 +45,7 @@ export function CreateLabelDialog({
     handleSubmit,
     setValue,
     watch,
+    reset,
     formState: { errors }
   } = useForm<CreateLabelFormFields>({
     resolver: zodResolver(createLabelFormSchema),
@@ -57,7 +59,11 @@ export function CreateLabelDialog({
 
   const colorValue = watch('color')
 
-  //   const memberRole = watch('role')
+  useEffect(() => {
+    if (open) {
+      reset()
+    }
+  }, [open, reset])
 
   const handleSelectChange = (fieldName: keyof CreateLabelFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -74,7 +80,7 @@ export function CreateLabelDialog({
             <Fieldset>
               <Label>Label name</Label>
               <ControlGroup className="flex flex-row gap-2">
-                <div className="min-w-[100px]">
+                <div className="min-w-[120px]">
                   <Select
                     {...register('color')}
                     name="coloor"
@@ -90,7 +96,10 @@ export function CreateLabelDialog({
                     <SelectContent>
                       {Object.values(ColorsEnum)?.map(color => (
                         <SelectItem key={color} value={color}>
-                          {color}
+                          <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
+                            {color}
+                          </div>
                         </SelectItem>
                       ))}
                     </SelectContent>
@@ -128,7 +137,7 @@ export function CreateLabelDialog({
               <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingLabel}>
                 {t('views:repos.cancel', 'Cancel')}
               </Button>
-              <Button type="submit">Save</Button>
+              <Button type="submit">{isCreatingLabel ? 'Saving...' : 'Save'}</Button>
             </ButtonGroup>
           </FormWrapper>
         </DialogDescription>

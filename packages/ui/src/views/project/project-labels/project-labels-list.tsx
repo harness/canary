@@ -20,13 +20,15 @@ interface PageProps {
   useTranslationStore: () => TranslationStore
   labels: any
   space_ref: string
+  openCreateLabelDialog: () => void
 }
 
 export const ProjectLabelsListView: React.FC<PageProps> = ({
   /*tokens,*/ openAlertDeleteDialog,
   useTranslationStore,
   space_ref,
-  labels
+  labels,
+  openCreateLabelDialog
 }) => {
   const { t } = useTranslationStore()
   return (
@@ -48,17 +50,12 @@ export const ProjectLabelsListView: React.FC<PageProps> = ({
             />
           </ListActions.Left>
           <ListActions.Right>
-            <Button
-              variant="default"
-              onClick={() => {
-                // setIsInviteMemberDialogOpen(true)
-              }}
-            >
+            <Button variant="default" onClick={openCreateLabelDialog}>
               New label
             </Button>
           </ListActions.Right>
         </ListActions.Root>
-        <Spacer size={5} />{' '}
+        <Spacer size={5} />
         <Table variant="asStackedList">
           <TableHeader>
             <TableRow>
@@ -73,7 +70,10 @@ export const ProjectLabelsListView: React.FC<PageProps> = ({
               labels.map(label => (
                 <TableRow key={label.key}>
                   <TableCell>
-                    <Text>{label.key}</Text>
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 rounded-full" style={{ backgroundColor: label.color }}></div>
+                      {label.key}
+                    </div>{' '}
                   </TableCell>
                   <TableCell>{space_ref}</TableCell>
                   <TableCell>{label.description}</TableCell>

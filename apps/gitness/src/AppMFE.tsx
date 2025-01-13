@@ -7,8 +7,6 @@ import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'r
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
-import monacoStyles from '!!raw-loader!@harnessio/ui/monaco-styles.css'
-import styles from '!!raw-loader!@harnessio/ui/styles.css'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
 import { PortalProvider } from '@harnessio/ui/context'
@@ -20,10 +18,9 @@ import { MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
+import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
 import { routes } from './routes'
-
-// const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
 export interface MFERouteRendererProps {
   projectIdentifier?: string
@@ -49,7 +46,7 @@ function MFERouteRenderer({ projectIdentifier, renderUrl, parentLocationPath, on
     }
   }, [location])
 
-  return <></>
+  return null
 }
 
 interface AppMFEProps {
@@ -102,6 +99,7 @@ export default function AppMFE({
   // Apply host theme to MFE
   const { theme } = useMFEThemeContext()
   const { setTheme } = useThemeStore()
+
   useEffect(() => {
     if (theme === 'Light') {
       setTheme('light-std-std')
@@ -109,6 +107,11 @@ export default function AppMFE({
       setTheme('dark-std-std')
     }
   }, [theme])
+
+  const portalRef = useRef<HTMLDivElement>(null)
+  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
+
+  const isStylesLoaded = useLoadMFEStyles(portalContainer)
 
   // Router Configuration
   const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
@@ -124,36 +127,36 @@ export default function AppMFE({
   )
   const router = createBrowserRouter(routesToRender, { basename })
 
-  const portalRef = useRef<HTMLDivElement>(null)
-  const portalContainer = portalRef.current?.shadowRoot as Element | undefined
-
   return (
     <div ref={portalRef}>
       <ShadowRootWrapper>
-        <style>{`${styles}`}</style>
-        <style>{`${monacoStyles}`}</style>
-
-        <PortalProvider portalContainer={portalContainer}>
-          <MFEContext.Provider value={{ scope, renderUrl }}>
-            <AppProvider>
-              <I18nextProvider i18n={i18n}>
-                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                  <QueryClientProvider client={queryClient}>
-                    <TooltipProvider>
-                      <ExitConfirmProvider>
-                        <NuqsAdapter>
-                          <NavigationProvider routes={routesToRender}>
-                            <RouterProvider router={router} />
-                          </NavigationProvider>
-                        </NuqsAdapter>
-                      </ExitConfirmProvider>
-                    </TooltipProvider>
-                  </QueryClientProvider>
-                </ThemeProvider>
-              </I18nextProvider>
-            </AppProvider>
-          </MFEContext.Provider>
-        </PortalProvider>
+        {/* <style>{`${styles}`}</style> */}
+        {/* <style>{`${monacoStyles}`}</style> */}
+        {!isStylesLoaded ? (
+          'Loading...'
+        ) : (
+          <PortalProvider portalContainer={portalContainer}>
+            <MFEContext.Provider value={{ scope, renderUrl }}>
+              <AppProvider>
+                <I18nextProvider i18n={i18n}>
+                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                    <QueryClientProvider client={queryClient}>
+                      <TooltipProvider>
+                        <ExitConfirmProvider>
+                          <NuqsAdapter>
+                            <NavigationProvider routes={routesToRender}>
+                              <RouterProvider router={router} />
+                            </NavigationProvider>
+                          </NuqsAdapter>
+                        </ExitConfirmProvider>
+                      </TooltipProvider>
+                    </QueryClientProvider>
+                  </ThemeProvider>
+                </I18nextProvider>
+              </AppProvider>
+            </MFEContext.Provider>
+          </PortalProvider>
+        )}
       </ShadowRootWrapper>
     </div>
   )

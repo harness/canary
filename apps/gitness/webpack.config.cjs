@@ -1,20 +1,20 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { container } = require('webpack')
 
 const { ModuleFederationPlugin } = container
 
 module.exports = {
   mode: 'development',
+  // mode: 'production',
   devtool: 'cheap-module-source-map',
   entry: './src/mfe-entry.ts',
   devServer: {
     port: 5137,
-    historyApiFallback: true,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
-    }
+    historyApiFallback: true
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*',
+    //   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    //   'Access-Control-Allow-Headers': 'X-Requested-With, content-type, Authorization'
+    // }
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']

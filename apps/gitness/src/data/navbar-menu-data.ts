@@ -2,6 +2,8 @@ import { TFunction } from 'i18next'
 
 import { MenuGroupType, MenuGroupTypes } from '@harnessio/ui/components'
 
+import { RouteConstants } from '../framework/routing/types'
+
 export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupType[] => [
   {
     groupId: 0,
@@ -13,21 +15,21 @@ export const getNavbarMenuData = (t: TFunction, space_ref?: string): MenuGroupTy
         iconName: 'repositories-gradient',
         title: t('component:navbar.repositories'),
         description: 'Integrated & familiar git experience.',
-        to: '/repos'
+        to: RouteConstants.toRepositories
       },
       {
         id: 1,
         iconName: 'pipelines-gradient',
         title: t('component:navbar.pipelines'),
         description: 'Up to 4X faster than other solutions.',
-        to: '/pipelines'
+        to: RouteConstants.toPipelines
       },
       {
         id: 2,
         iconName: 'execution-gradient',
         title: t('component:navbar.executions'),
         description: 'Optimize feature rollout velocity.',
-        to: '/executions'
+        to: RouteConstants.toPipelineExecutions
       },
       {
         id: 3,

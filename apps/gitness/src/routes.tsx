@@ -72,7 +72,8 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Repositories</Text>
+          breadcrumb: () => <Text>Repositories</Text>,
+          routeName: RouteConstants.toRepositories
         }
       },
       {
@@ -83,7 +84,8 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Pipelines</Text>
+          breadcrumb: () => <Text>Pipelines</Text>,
+          routeName: RouteConstants.toPipelines
         }
       },
       {

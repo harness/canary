@@ -659,19 +659,6 @@ export const routes: CustomRouteObject[] = [
         ]
       },
       {
-        path: 'admin/default-settings',
-        element: <UserManagementPageContainer />,
-        handle: {
-          breadcrumb: () => (
-            <>
-              <Text>Account</Text>
-              <Breadcrumb.Separator />
-              <Text>Users</Text>
-            </>
-          )
-        }
-      },
-      {
         path: 'admin',
         handle: {
           breadcrumb: () => <Text>Account</Text>
@@ -682,7 +669,7 @@ export const routes: CustomRouteObject[] = [
             path: 'default-settings',
             element: <UserManagementPageContainer />,
             handle: {
-              breadcrumbs: () => <Text>Users</Text>,
+              breadcrumb: () => <Text>Users</Text>,
               routeName: RouteConstants.toAdminUsers
             }
           },
@@ -690,7 +677,7 @@ export const routes: CustomRouteObject[] = [
             path: 'user-groups',
             element: <EmptyPage pathName="User Groups" />,
             handle: {
-              breadcrumbs: () => <Text>User Groups</Text>,
+              breadcrumb: () => <Text>User Groups</Text>,
               routeName: RouteConstants.toUserGroups
             }
           },
@@ -698,7 +685,7 @@ export const routes: CustomRouteObject[] = [
             path: 'service-accounts',
             element: <EmptyPage pathName="Service Accounts" />,
             handle: {
-              breadcrumbs: () => <Text>Service Accounts</Text>,
+              breadcrumb: () => <Text>Service Accounts</Text>,
               routeName: RouteConstants.toServiceAccounts
             }
           },
@@ -706,7 +693,7 @@ export const routes: CustomRouteObject[] = [
             path: 'resource-groups',
             element: <EmptyPage pathName="Resource Groups" />,
             handle: {
-              breadcrumbs: () => <Text>Resource Groups</Text>,
+              breadcrumb: () => <Text>Resource Groups</Text>,
               routeName: RouteConstants.toResourceGroups
             }
           },
@@ -714,7 +701,7 @@ export const routes: CustomRouteObject[] = [
             path: 'roles',
             element: <EmptyPage pathName="Roles" />,
             handle: {
-              breadcrumbs: () => <Text>Roles</Text>,
+              breadcrumb: () => <Text>Roles</Text>,
               routeName: RouteConstants.toRoles
             }
           }

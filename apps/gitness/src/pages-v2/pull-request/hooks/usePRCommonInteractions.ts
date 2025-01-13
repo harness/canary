@@ -126,8 +126,9 @@ export function usePRCommonInteractions({
   }, [])
 
   const onCommitSuggestionSuccess = useCallback(() => {
-    refetchActivities()
     setIsCommitDialogOpen(false)
+    setSuggestionsBatch([])
+    refetchActivities()
   }, [refetchActivities])
 
   const addSuggestionToBatch = useCallback((suggestion: CommitSuggestion) => {

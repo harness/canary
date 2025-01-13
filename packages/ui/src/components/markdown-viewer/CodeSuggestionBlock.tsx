@@ -1,6 +1,6 @@
-import type { Nodes } from 'hast'
-import { toHtml } from 'hast-util-to-html'
-import { refractor } from 'refractor'
+import { useMemo } from 'react'
+
+import hljs from 'highlight.js'
 
 export interface SuggestionBlock {
   source: string
@@ -22,10 +22,17 @@ interface CodeSuggestionBlockProps {
 }
 export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum }: CodeSuggestionBlockProps) {
   const codeBlockContent = suggestionBlock?.source || ''
-  const lang = suggestionBlock?.lang || 'plaintext'
-  const language = `language-${lang}`
-  const html1 = toHtml(refractor.highlight(codeBlockContent, lang) as unknown as Nodes)
-  const html2 = toHtml(refractor.highlight(code, lang) as unknown as Nodes)
+  const language = suggestionBlock?.lang || 'plaintext'
+
+  const highlightedHtmlOld = useMemo(() => {
+    if (!language) return hljs.highlightAuto(codeBlockContent).value
+    return hljs.highlight(codeBlockContent, { language }).value
+  }, [code, language])
+
+  const highlightedHtmlNew = useMemo(() => {
+    if (!language) return hljs.highlightAuto(code).value
+    return hljs.highlight(code, { language }).value
+  }, [code, language])
   return (
     <div>
       <span>
@@ -34,11 +41,17 @@ export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum 
           : 'Suggested change'}
       </span>
       <div className="pt-1">
-        <pre className={`!bg-background-danger ${language}`}>
-          <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html1 }}></code>
+        <pre className="!bg-background-danger">
+          <code
+            className={`${language} code-highlight`}
+            dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}
+          ></code>
         </pre>
-        <pre className={`!bg-background-success ${language}`}>
-          <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: html2 }}></code>
+        <pre className="!bg-background-success">
+          <code
+            className={`${language} code-highlight`}
+            dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}
+          ></code>
         </pre>
       </div>
     </div>

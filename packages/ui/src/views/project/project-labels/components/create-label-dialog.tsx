@@ -22,7 +22,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Label } from '@radix-ui/react-dropdown-menu'
 import { z } from 'zod'
 
-// import { InviteMemberDialogProps, InviteMemberFormFields } from '../types'
 import { ColorsEnum, CreateLabelDialogProps, CreateLabelFormFields } from '../types'
 
 export const createLabelFormSchema = z.object({
@@ -37,7 +36,8 @@ export function CreateLabelDialog({
   onSubmit,
   useTranslationStore,
   isCreatingLabel,
-  error
+  error,
+  useLabelsStore
 }: CreateLabelDialogProps) {
   const { t } = useTranslationStore()
   const {
@@ -58,10 +58,15 @@ export function CreateLabelDialog({
   })
 
   const colorValue = watch('color')
+  const { presetEditLabel } = useLabelsStore()
 
   useEffect(() => {
     if (open) {
-      reset()
+      reset({
+        name: presetEditLabel?.key ?? '',
+        description: presetEditLabel?.description ?? '',
+        color: presetEditLabel?.color ?? ColorsEnum.BLUE
+      })
     }
   }, [open, reset])
 
@@ -71,16 +76,16 @@ export function CreateLabelDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px] border-border bg-background-1">
+      <DialogContent className="border-border bg-background-1">
         <DialogHeader>
           <DialogTitle>Create Label</DialogTitle>
         </DialogHeader>
         <DialogDescription>
-          <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
+          <FormWrapper onSubmit={handleSubmit(data => onSubmit(data, presetEditLabel?.key))}>
             <Fieldset>
-              <Label>Label name</Label>
               <ControlGroup className="flex flex-row gap-2">
                 <div className="min-w-[120px]">
+                  <Label className="mb-2">Label name</Label>
                   <Select
                     {...register('color')}
                     name="coloor"
@@ -110,7 +115,7 @@ export function CreateLabelDialog({
                   name="name"
                   placeholder="Enter label name"
                   error={errors.name?.message?.toString()}
-                  className="min-w-[352px]"
+                  className="min-w-[352px] mt-7"
                   size="md"
                   autoFocus
                 />

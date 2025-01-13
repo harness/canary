@@ -48,7 +48,6 @@ export enum RouteConstants {
   toMonitoredServices = 'toMonitoredServices',
   toOverrides = 'toOverrides',
   toCertificates = 'toCertificates',
-  toWebhooks = 'toWebhooks',
   toAdminUsers = 'toAdminUsers',
   toUserGroups = 'toUserGroups',
   toServiceAccounts = 'toServiceAccounts',

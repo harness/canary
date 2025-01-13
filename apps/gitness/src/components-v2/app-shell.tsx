@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import {
   ManageNavigation,
@@ -19,8 +19,8 @@ import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
-import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { PathParams } from '../RouteDefinitions'
 import BreadcrumbsV1 from './breadcrumbs/breadcrumbs'
 
 interface NavLinkStorageInterface {
@@ -37,7 +37,7 @@ const AppShell = () => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
-  const space_ref = useGetSpaceURLParam()
+  const { spaceId, repoId } = useParams<PathParams>()
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
@@ -75,8 +75,9 @@ const AppShell = () => {
   const { moreMenu, settingsMenu } = useMemo(() => {
     const navbarMenuData = getNavbarMenuData({
       t,
-      space_ref: space_ref ?? spaces[0]?.path ?? '',
-      routes
+      routes,
+      spaceId: spaceId ?? spaces[0]?.path ?? '',
+      repoId
     })
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
@@ -96,7 +97,7 @@ const AppShell = () => {
         settingsMenu: []
       }
     )
-  }, [t, space_ref])
+  }, [t, spaceId, repoId])
 
   /**
    * Handle logout

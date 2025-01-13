@@ -6,12 +6,14 @@ import { RouteFunctionMap } from '../framework/routing/types'
 
 export const getNavbarMenuData = ({
   t,
-  space_ref,
+  spaceId,
+  repoId,
   routes
 }: {
   t: TFunction
-  space_ref?: string
   routes: RouteFunctionMap
+  spaceId?: string
+  repoId?: string
 }): MenuGroupType[] => [
   {
     groupId: 0,
@@ -23,7 +25,7 @@ export const getNavbarMenuData = ({
         iconName: 'repositories-gradient',
         title: t('component:navbar.repositories'),
         description: 'Integrated & familiar git experience.',
-        to: routes.toRepositories()
+        to: routes.toRepositories({ spaceId })
       },
       {
         id: 1,
@@ -176,7 +178,7 @@ export const getNavbarMenuData = ({
         id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
-        to: space_ref ? routes.toProjectMembers({ spaceId: space_ref }) : '/'
+        to: spaceId ? routes.toProjectMembers({ spaceId }) : '/'
       },
       {
         id: 17,
@@ -273,7 +275,7 @@ export const getNavbarMenuData = ({
         id: 31,
         iconName: 'webhook',
         title: t('component:navbar.webhooks'),
-        to: routes.toRepoWebhooks()
+        to: routes.toRepoWebhooks({ spaceId, repoId })
       }
     ]
   },

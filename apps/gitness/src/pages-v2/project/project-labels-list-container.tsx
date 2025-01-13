@@ -61,7 +61,6 @@ export const ProjectLabelsList = () => {
     },
     {
       onSuccess: (data, variables) => {
-        console.log(data)
         setOpenCreateLabelDialog(false)
         deleteLabel(variables.key)
         addLabel(data.body as ILabelType)

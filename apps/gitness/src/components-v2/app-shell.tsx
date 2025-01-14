@@ -38,12 +38,16 @@ const AppShell = () => {
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
   const { spaceId, repoId } = useParams<PathParams>()
+  const spaceIdPathParam = spaceId ?? spaces[0]?.path ?? ''
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
+  const pinnedMenuItemsData = useMemo(
+    () => getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
+    [t, routes, spaceIdPathParam]
+  )
 
   useLocationChange({ t, onRouteChange: setRecent })
 
@@ -76,7 +80,7 @@ const AppShell = () => {
     const navbarMenuData = getNavbarMenuData({
       t,
       routes,
-      spaceId: spaceId ?? spaces[0]?.path ?? '',
+      spaceId: spaceIdPathParam,
       repoId
     })
     return navbarMenuData.reduce<{
@@ -97,7 +101,7 @@ const AppShell = () => {
         settingsMenu: []
       }
     )
-  }, [t, spaceId, repoId])
+  }, [t, routes, spaceIdPathParam, repoId])
 
   /**
    * Handle logout

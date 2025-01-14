@@ -59,8 +59,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       setSearchCommitQuery={noop}
       useTranslationStore={useTranslationsStore}
       isLoading={false}
-      searchQuery=""
-      setSearchQuery={noop}
+      searchBranchQuery=""
+      setSearchBranchQuery={noop}
       {...props}
     />
   )

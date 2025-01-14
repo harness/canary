@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
 import { Button, ButtonGroup, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
@@ -59,10 +59,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }, [])
+  }
 
   if (isError)
     return (

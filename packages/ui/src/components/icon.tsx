@@ -76,7 +76,6 @@ import GitBranch from '../icons/git-branch.svg'
 import GithubActions from '../icons/github-actions.svg'
 import GitnessLogo from '../icons/gitness-logo.svg'
 import GreenCircle from '../icons/green-circle.svg'
-import GreenTick from '../icons/green-tick-nobg.svg'
 import GridDots from '../icons/grid-dots.svg'
 import HarnessLogoText from '../icons/harness-logo-text.svg'
 import HarnessPlugin from '../icons/harness-plugin.svg'
@@ -158,6 +157,7 @@ import SupplyChainGradient from '../icons/supply-chain-gradient.svg'
 import SupplyChain from '../icons/supply-chain-icon.svg'
 import Tag from '../icons/tag.svg'
 import Tasks from '../icons/tasks.svg'
+import TickCircle from '../icons/tick-circle.svg'
 import Tick from '../icons/tick-icon.svg'
 import Ticket from '../icons/ticket-icon.svg'
 import Trash from '../icons/trash.svg'
@@ -271,7 +271,7 @@ const IconNameMap = {
   'run-test': RunTest,
   'ssh-key': SshKey,
   'green-dot': GreenCircle,
-  'green-tick': GreenTick,
+  'tick-circle': TickCircle,
   'cancel-grey': CancelGrey,
   'harness-logo-text': HarnessLogoText,
   account: Account,

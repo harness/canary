@@ -1,9 +1,10 @@
-import { JSXElementConstructor, ReactElement } from 'react'
+import { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from 'react'
 
+import { CiStatus, PipelineExecutionStatus } from '@/views'
 import { TranslationStore } from '@views/repo'
 import { TLinkComponent } from '@views/types/link-types'
 
-import { CiStatus, PipelineExecutionStatus } from '../common/execution-types'
+export type IExecutionType = string | ReactElement<unknown, string | JSXElementConstructor<unknown>>
 
 export interface IExecution {
   id: string
@@ -12,7 +13,7 @@ export interface IExecution {
   name?: string
   version?: string
   sha?: string
-  description?: string | ReactElement<any, string | JSXElementConstructor<any>>
+  description?: IExecutionType
   started?: number
   finished?: number
 }
@@ -39,7 +40,7 @@ export interface IExecutionListPageProps {
 
 export interface IExecutionListProps {
   executions: IExecution[] | null
-  LinkComponent: React.ComponentType<{ to: string; children: React.ReactNode }>
+  LinkComponent: ComponentType<{ to: string; children: ReactNode }>
   query?: string
   handleResetQuery: () => void
   useTranslationStore: () => TranslationStore

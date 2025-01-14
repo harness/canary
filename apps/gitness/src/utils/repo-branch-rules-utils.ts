@@ -5,7 +5,8 @@ import {
   RuleAddRequestBody,
   RuleGetOkResponse
 } from '@harnessio/code-service-client'
-import { BranchRuleId, MergeStrategy, PatternsButtonType, RepoBranchSettingsFormFields, Rule } from '@harnessio/views'
+import { RepoBranchSettingsFormFields } from '@harnessio/ui/views'
+import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/views'
 
 const ruleIds = [
   BranchRuleId.REQUIRE_LATEST_COMMIT,
@@ -92,6 +93,21 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
 
   const rules = extractBranchRules(data)
 
+  const bypass = data?.definition?.bypass?.user_ids
+    ? data?.definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) => {
+        const user = data?.users?.[userId]
+
+        if (user) {
+          acc.push({
+            id: userId,
+            display_name: user?.display_name || ''
+          })
+        }
+
+        return acc
+      }, [])
+    : []
+
   return {
     identifier: data.identifier || '',
     description: data.description || '',
@@ -99,7 +115,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
     patterns: formatPatterns,
     rules: rules,
     state: data.state === 'active',
-    bypass: data?.definition?.bypass?.user_ids || [],
+    bypass,
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
   }
@@ -125,11 +141,11 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     { include: [], exclude: [] }
   )
 
-  const transformed: RuleAddRequestBody = {
+  return {
     identifier: formOutput.identifier,
     type: 'branch',
     description: formOutput.description,
-    state: (formOutput.state === true ? 'active' : 'disabled') as EnumRuleState,
+    state: (formOutput.state ? 'active' : 'disabled') as EnumRuleState,
     pattern: {
       default: formOutput.default || false,
       include,
@@ -137,7 +153,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     },
     definition: {
       bypass: {
-        user_ids: formOutput.bypass,
+        user_ids: formOutput.bypass.map(it => it.id),
         repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {
@@ -167,8 +183,6 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       }
     }
   }
-
-  return transformed
 }
 
 export const getTotalRulesApplied = (obj: OpenapiRule) => {

@@ -96,7 +96,6 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               size="md"
               {...register('email', { onChange: handleInputChange })}
               error={errors.email?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
             <Input

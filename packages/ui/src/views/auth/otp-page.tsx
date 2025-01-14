@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
@@ -68,11 +68,14 @@ export function OTPPage({
   })
   const otpValue = watch('otp')
 
-  const onSubmit = (data: OtpPageData) => {
-    setServerError(null)
-    handleFormSubmit?.({ ...data, email })
-    reset()
-  }
+  const onSubmit = useCallback(
+    (data: OtpPageData) => {
+      setServerError(null)
+      handleFormSubmit?.({ ...data, email })
+      reset()
+    },
+    [email, handleFormSubmit, reset]
+  )
 
   useEffect(() => {
     setServerError(null)

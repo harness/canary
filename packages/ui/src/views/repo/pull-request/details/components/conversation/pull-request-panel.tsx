@@ -61,6 +61,8 @@ interface PullRequestPanelProps extends PullRequestChangesSectionProps {
   showDeleteBranchButton: boolean
   showRestoreBranchButton: boolean
   headerMsg?: string
+  commitSuggestionsBatchCount: number
+  onCommitSuggestions: () => void
 }
 
 interface HeaderProps {
@@ -171,7 +173,9 @@ const PullRequestPanel = ({
   onDeleteBranch,
   showRestoreBranchButton,
   showDeleteBranchButton,
-  headerMsg
+  headerMsg,
+  commitSuggestionsBatchCount,
+  onCommitSuggestions
 }: PullRequestPanelProps) => {
   const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
@@ -221,6 +225,13 @@ const PullRequestPanel = ({
             title={
               !pullReqMetadata?.merged && (
                 <Layout.Horizontal className="items-center justify-center">
+                  {commitSuggestionsBatchCount > 0 ? (
+                    <Button variant={'outline'} onClick={() => onCommitSuggestions()}>
+                      {`Commit suggestion (${commitSuggestionsBatchCount})`}
+                    </Button>
+                  ) : (
+                    <></>
+                  )}
                   {!notBypassable && mergeable && !isDraft && ruleViolation && (
                     <Layout.Horizontal className="items-center justify-center">
                       <Checkbox

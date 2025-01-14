@@ -7,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
+  MoreActionsTooltip,
   Table,
   TableBody,
   TableCell,
@@ -19,7 +20,6 @@ import { getInitials } from '@utils/stringUtils'
 import { upperFirst } from 'lodash-es'
 
 import { MembersProps } from '../types'
-import { moreActionsDropdown } from './moreActionsDropdown'
 
 interface PageProps {
   members: MembersProps[]
@@ -118,8 +118,16 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
-            <TableCell className="my-6 content-center">
-              <div className="flex items-center justify-end gap-1.5">{moreActionsDropdown({ member, onDelete })}</div>
+            <TableCell className="text-right">
+              <MoreActionsTooltip
+                actions={[
+                  {
+                    isDanger: true,
+                    title: 'Remove member',
+                    onClick: () => onDelete(member)
+                  }
+                ]}
+              />
             </TableCell>
           </TableRow>
         ))}

@@ -3,6 +3,7 @@
     "title": "Are you sure?",
     "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
+    "inputLabel": "To confirm, type",
     "cancel": "Cancel"
   },
   "filter": {
@@ -42,6 +43,7 @@
     "pullRequests": "Pull Requests",
     "title": "Title"
   },
+  "andQuantityMore": "and {{quantity}} more",
   "navbar": {
     "settings": "",
     "profile": "Profile",

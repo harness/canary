@@ -1,20 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Layout, MarkdownViewer, Text } from '@components/index'
-import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
-import { getInitials, timeAgo } from '@utils/utils'
 import {
   CommentItem,
+  CommitSuggestion,
   CreateCommentPullReqRequest,
   PullRequestCommentBox,
   TranslationStore,
   TypesPullReqActivity
-} from '@views/index'
+} from '@/views'
+import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
+import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
 import constants from '../constants'
+import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
 
@@ -47,6 +49,13 @@ interface PullRequestDiffviewerProps {
   useTranslationStore: () => TranslationStore
   commentId?: string
   onCopyClick?: (commentId?: number) => void
+  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
+  suggestionsBatch?: CommitSuggestion[]
+  onCommitSuggestion?: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch?: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch?: (commentId: number) => void
+  filenameToLanguage?: (fileName: string) => string | undefined
+  toggleConversationStatus?: (status: string, parentId?: number) => void
 }
 
 const PullRequestDiffViewer = ({
@@ -72,7 +81,14 @@ const PullRequestDiffViewer = ({
   updateComment,
   useTranslationStore,
   commentId,
-  onCopyClick
+  onCopyClick,
+  onCommentSaveAndStatusChange,
+  suggestionsBatch,
+  onCommitSuggestion,
+  addSuggestionToBatch,
+  removeSuggestionFromBatch,
+  filenameToLanguage,
+  toggleConversationStatus
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -109,7 +125,7 @@ const PullRequestDiffViewer = ({
     expandAll
     //  setExpandAll
   ] = useState(false)
-
+  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
   const [extend, setExtend] = useState<{
     oldFile: Record<number, { data: Thread[] }>
     newFile: Record<number, { data: Thread[] }>
@@ -309,7 +325,6 @@ const PullRequestDiffViewer = ({
         <div className="flex w-full flex-col border px-[4px] py-[8px]">
           <PullRequestCommentBox
             isEditMode
-            inReplyMode
             onSaveComment={() => {
               onClose()
               if (commentText.trim() && handleSaveComment) {
@@ -363,18 +378,12 @@ const PullRequestDiffViewer = ({
                 replyBoxClassName="py-4"
                 hideReplyBox={hideReplyBoxes[parent?.id]}
                 setHideReplyBox={state => toggleReplyBox(state, parent?.id)}
+                isResolved={!!parent.payload?.resolved}
+                toggleConversationStatus={toggleConversationStatus}
+                onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                 content={
                   <div className="flex-col">
                     <PullRequestTimelineItem
-                      icon={
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <Text size={1} color="tertiaryBackground">
-                              {parentInitials}
-                            </Text>
-                          </AvatarFallback>
-                        </Avatar>
-                      }
                       titleClassName="!flex max-w-full"
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
@@ -387,6 +396,15 @@ const PullRequestDiffViewer = ({
                       contentClassName="border-transparent"
                       onCopyClick={onCopyClick}
                       commentId={parent.id}
+                      icon={
+                        <Avatar className="size-6 rounded-full p-0">
+                          <AvatarFallback>
+                            <Text size={1} color="tertiaryBackground">
+                              {parentInitials}
+                            </Text>
+                          </AvatarFallback>
+                        </Avatar>
+                      }
                       header={[
                         {
                           name: parent.author,
@@ -410,7 +428,6 @@ const PullRequestDiffViewer = ({
                           </div>
                         ) : editModes[componentId] ? (
                           <PullRequestCommentBox
-                            inReplyMode
                             isEditMode
                             onSaveComment={() => {
                               if (parent?.id) {
@@ -426,7 +443,14 @@ const PullRequestDiffViewer = ({
                             setComment={(text: string) => setEditComments(prev => ({ ...prev, [componentId]: text }))}
                           />
                         ) : (
-                          <MarkdownViewer source={parent?.payload?.payload?.text || parent.content} />
+                          <PRCommentView
+                            commentItem={parent}
+                            filenameToLanguage={filenameToLanguage}
+                            suggestionsBatch={suggestionsBatch}
+                            onCommitSuggestion={onCommitSuggestion}
+                            addSuggestionToBatch={addSuggestionToBatch}
+                            removeSuggestionFromBatch={removeSuggestionFromBatch}
+                          />
                         )
                       }
                     />
@@ -442,15 +466,6 @@ const PullRequestDiffViewer = ({
                               key={reply.id}
                               id={replyIdAttr}
                               parentCommentId={parent?.id}
-                              icon={
-                                <Avatar className="size-6 rounded-full p-0">
-                                  <AvatarFallback>
-                                    <Text size={1} color="tertiaryBackground">
-                                      {replyInitials}
-                                    </Text>
-                                  </AvatarFallback>
-                                </Avatar>
-                              }
                               isLast={isLastComment}
                               handleSaveComment={handleSaveComment}
                               hideReply
@@ -462,6 +477,15 @@ const PullRequestDiffViewer = ({
                               onEditClick={() => toggleEditMode(replyComponentId, reply?.payload?.payload?.text || '')}
                               contentClassName="border-transparent"
                               titleClassName="!flex max-w-full"
+                              icon={
+                                <Avatar className="size-6 rounded-full p-0">
+                                  <AvatarFallback>
+                                    <Text size={1} color="tertiaryBackground">
+                                      {replyInitials}
+                                    </Text>
+                                  </AvatarFallback>
+                                </Avatar>
+                              }
                               header={[
                                 {
                                   name: reply.author,
@@ -485,8 +509,8 @@ const PullRequestDiffViewer = ({
                                   </div>
                                 ) : editModes[replyComponentId] ? (
                                   <PullRequestCommentBox
-                                    inReplyMode
                                     isEditMode
+                                    isResolved={!!parent?.payload?.resolved}
                                     onSaveComment={() => {
                                       if (reply?.id) {
                                         updateComment?.(reply?.id, editComments[replyComponentId])
@@ -501,9 +525,17 @@ const PullRequestDiffViewer = ({
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }
+                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                   />
                                 ) : (
-                                  <MarkdownViewer source={reply?.payload?.payload?.text || reply.content} />
+                                  <PRCommentView
+                                    commentItem={reply}
+                                    filenameToLanguage={filenameToLanguage}
+                                    suggestionsBatch={suggestionsBatch}
+                                    onCommitSuggestion={onCommitSuggestion}
+                                    addSuggestionToBatch={addSuggestionToBatch}
+                                    removeSuggestionFromBatch={removeSuggestionFromBatch}
+                                  />
                                 )
                               }
                             />
@@ -523,13 +555,13 @@ const PullRequestDiffViewer = ({
 
   // Scroll to commentId whenever extendData or commentId changes
   useEffect(() => {
-    if (!commentId) return
+    if (!commentId || isScrolledToComment) return
     // Slight timeout so the UI has time to expand/hydrate
     const timeoutId = setTimeout(() => {
       const elem = document.getElementById(`comment-${commentId}`)
       if (!elem) return
-      console.log('element mil gya timeout')
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setIsScrolledToComment(true)
     }, 500)
 
     return () => {

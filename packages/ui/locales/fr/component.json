@@ -3,6 +3,7 @@
     "title": "Êtes-vous sûr ?",
     "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
     "description": "This will permanently remove all data. This action cannot be undone.",
+    "inputLabel": "To confirm, type",
     "cancel": "Annuler"
   },
   "filter": {
@@ -42,6 +43,7 @@
     "pullRequests": "Demandes de fusion",
     "title": "Titre"
   },
+  "andQuantityMore": "and {{quantity}} more",
   "navbar": {
     "settings": "Paramètres",
     "profile": "Profile",

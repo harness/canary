@@ -152,7 +152,7 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
    * Memoized set of existing view names for validation
    * Updates when local views change
    */
-  const existingNames = useMemo(() => viewManagement.getExistingNames(localViews), [localViews])
+  const existingNames = useMemo(() => viewManagement.getExistingNames(localViews), [localViews, viewManagement])
 
   /**
    * Handles local view rename operations

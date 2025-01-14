@@ -38,6 +38,7 @@ export interface NoDataProps {
   loadState?: string
   setLoadState?: Dispatch<SetStateAction<string>>
   textWrapperClassName?: string
+  className?: string
 }
 
 export const NoData: FC<NoDataProps> = ({
@@ -48,13 +49,16 @@ export const NoData: FC<NoDataProps> = ({
   primaryButton,
   secondaryButton,
   withBorder = false,
-  textWrapperClassName
+  textWrapperClassName,
+  className
 }) => {
   return (
     <div
-      className={cn('flex h-full w-full flex-col place-content-center place-items-center gap-4', {
-        'py-20 pb-24 h-auto min-h-[75vh] border border-borders-4 rounded-md': withBorder
-      })}
+      className={cn(
+        'flex h-full w-full flex-col place-content-center place-items-center gap-4',
+        { 'py-20 pb-24 h-auto min-h-[75vh] border border-borders-4 rounded-md': withBorder },
+        className
+      )}
     >
       {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5', textWrapperClassName)}>

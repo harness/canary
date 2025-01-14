@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import {
@@ -27,6 +27,7 @@ import { useBranchRulesStore } from './stores/repo-branch-rules-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 
 export const RepoBranchSettingsRulesPageContainer = () => {
+  const { t } = useTranslationStore()
   const routes = useRoutes()
   const navigate = useNavigate()
   const repoRef = useGetRepoRef()
@@ -35,16 +36,23 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const spaceId = useGetSpaceURLParam()
   const { identifier } = useParams()
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
+  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch } = useBranchRulesStore()
-  const branchRules = getBranchRules(useTranslationStore().t)
 
+  const branchRules = useMemo(() => {
+    return getBranchRules(t)
+  }, [t])
+
+  /**
+   * Reset form data
+   */
   useEffect(() => {
-    if (!identifier) {
+    return () => {
       setPresetRuleData(null)
       setPrincipals(null)
       setRecentStatusChecks(null)
     }
-  }, [identifier, setPresetRuleData, setPrincipals, setRecentStatusChecks])
+  }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
   const { data: { body: rulesData } = {} } = useRuleGetQuery(
     { repo_ref: repoRef, rule_identifier: identifier ?? '' },
@@ -52,6 +60,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       enabled: !!identifier
     }
   )
+
+  // console.log(rulesData)
 
   const {
     mutate: addRule,
@@ -61,7 +71,6 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef },
     {
       onSuccess: () => {
-        const repoName = repoRef.split('/')[1]
         navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
@@ -69,7 +78,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   const { data: { body: principals } = {}, error: principalsError } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user' }
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
   })
 
   const { data: { body: recentStatusChecks } = {}, error: statusChecksError } = useListStatusCheckRecentQuery({
@@ -122,31 +131,35 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     dispatch({ type: BranchRulesActionType.SET_INPUT_VALUE, ruleId, value })
   }
 
-  const handleInitialRules = (presetRuleData: RepoBranchSettingsFormFields | null) => {
-    if (!presetRuleData) {
+  const handleInitialRules = useCallback(
+    (presetRuleData: RepoBranchSettingsFormFields | null) => {
+      if (!presetRuleData) {
+        dispatch({
+          type: BranchRulesActionType.SET_INITIAL_RULES,
+          payload: branchRules.map(rule => ({
+            id: rule.id,
+            checked: false,
+            submenu: [],
+            selectOptions: [],
+            input: ''
+          }))
+        })
+        return
+      }
+
       dispatch({
         type: BranchRulesActionType.SET_INITIAL_RULES,
-        payload: branchRules.map(rule => ({
+        payload: presetRuleData.rules.map(rule => ({
           id: rule.id,
-          checked: false,
-          submenu: [],
-          selectOptions: [],
-          input: ''
+          checked: rule.checked || false,
+          submenu: (rule.submenu || []) as MergeStrategy[],
+          selectOptions: rule.selectOptions || [],
+          input: rule.input || ''
         }))
       })
-      return
-    }
-    dispatch({
-      type: BranchRulesActionType.SET_INITIAL_RULES,
-      payload: presetRuleData.rules.map(rule => ({
-        id: rule.id,
-        checked: rule.checked || false,
-        submenu: (rule.submenu || []) as MergeStrategy[],
-        selectOptions: rule.selectOptions || [],
-        input: rule.input || ''
-      }))
-    })
-  }
+    },
+    [branchRules, dispatch]
+  )
 
   useEffect(() => {
     if (rulesData) {
@@ -186,6 +199,8 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       handleInputChange={handleInputChange}
       handleInitialRules={handleInitialRules}
       useTranslationStore={useTranslationStore}
+      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+      principalsSearchQuery={principalsSearchQuery}
     />
   )
 }

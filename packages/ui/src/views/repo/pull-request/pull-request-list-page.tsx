@@ -11,7 +11,7 @@ import {
   Spacer,
   StackedList
 } from '@/components'
-import { SandboxLayout, TranslationStore } from '@/views'
+import { PullRequestListStore, SandboxLayout, TranslationStore } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { debounce, noop } from 'lodash-es'
 
@@ -20,7 +20,6 @@ import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import { PullRequestListStore } from './pull-request.types'
 
 export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
@@ -58,10 +57,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
    */
   const filterHandlers = useFilters()
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }, [])
+  }
 
   const handleResetQuery = useCallback(() => {
     setSearchInput('')

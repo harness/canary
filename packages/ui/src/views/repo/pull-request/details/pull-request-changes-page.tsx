@@ -7,7 +7,7 @@ import { activityToCommentItem, TypesCommit } from '@views/index'
 import { TranslationStore } from '@views/repo/repo-list/types'
 import { orderBy } from 'lodash-es'
 
-import { PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
+import { CommitSuggestion, PullReqReviewDecision, TypesPullReq } from '../pull-request.types'
 import { PullRequestChanges } from './components/changes/pull-request-changes'
 import { CommitFilterItemProps, PullRequestChangesFilter } from './components/changes/pull-request-changes-filter'
 import {
@@ -42,6 +42,15 @@ interface RepoPullRequestChangesPageProps {
   unmarkViewed: (filePath: string) => void
   commentId?: string
   onCopyClick?: (commentId?: number) => void
+  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
+  suggestionsBatch: CommitSuggestion[]
+  onCommitSuggestion: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch: (commentId: number) => void
+  filenameToLanguage: (fileName: string) => string | undefined
+  toggleConversationStatus: (status: string, parentId?: number) => void
+  commitSuggestionsBatchCount: number
+  onCommitSuggestionsBatch: () => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   useTranslationStore,
@@ -66,7 +75,16 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   markViewed,
   unmarkViewed,
   commentId,
-  onCopyClick
+  onCopyClick,
+  onCommentSaveAndStatusChange,
+  suggestionsBatch,
+  onCommitSuggestion,
+  addSuggestionToBatch,
+  removeSuggestionFromBatch,
+  filenameToLanguage,
+  toggleConversationStatus,
+  commitSuggestionsBatchCount,
+  onCommitSuggestionsBatch
 }) => {
   const { diffs } = usePullRequestProviderStore()
   // Convert activities to comment threads
@@ -119,6 +137,13 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         unmarkViewed={unmarkViewed}
         commentId={commentId}
         onCopyClick={onCopyClick}
+        onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+        onCommitSuggestion={onCommitSuggestion}
+        addSuggestionToBatch={addSuggestionToBatch}
+        suggestionsBatch={suggestionsBatch}
+        removeSuggestionFromBatch={removeSuggestionFromBatch}
+        filenameToLanguage={filenameToLanguage}
+        toggleConversationStatus={toggleConversationStatus}
       />
     )
   }
@@ -142,6 +167,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         setSelectedCommits={setSelectedCommits}
         viewedFiles={diffs?.[0]?.fileViews?.size || 0}
         totalFiles={diffs?.length || 0}
+        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+        commitSuggestionsBatchCount={commitSuggestionsBatchCount}
       />
       <Spacer aria-setsize={5} />
 

@@ -120,10 +120,10 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
         email: userData.email
       })
     }
-  }, [userData])
+  }, [resetProfileForm, userData])
 
   useEffect(() => {
-    if (profileUpdateSuccess === true) {
+    if (profileUpdateSuccess) {
       resetProfileForm({
         name: userData?.name,
         username: userData?.username,
@@ -132,16 +132,16 @@ const SettingsAccountGeneralPage: React.FC<SettingsAccountGeneralPageProps> = ({
       setProfileSubmitted(true)
       setTimeout(() => setProfileSubmitted(false), 2000)
     }
-  }, [profileUpdateSuccess])
+  }, [profileUpdateSuccess, resetProfileForm, userData?.email, userData?.name, userData?.username])
 
   useEffect(() => {
-    if (passwordUpdateSuccess === true) {
+    if (passwordUpdateSuccess) {
       resetPasswordForm()
 
       setPasswordSubmitted(true)
       setTimeout(() => setPasswordSubmitted(false), 2000)
     }
-  }, [passwordUpdateSuccess])
+  }, [passwordUpdateSuccess, resetPasswordForm])
 
   // Profile form submit handler
   const onProfileSubmit: SubmitHandler<ProfileFields> = data => {

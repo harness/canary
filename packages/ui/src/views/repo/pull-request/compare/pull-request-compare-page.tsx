@@ -134,11 +134,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   }, [commitData, reset])
 
   useEffect(() => {
-    if (isSuccess === true) {
+    if (isSuccess) {
       reset()
       setIsSubmitted(true)
     }
-  }, [isSuccess])
+  }, [isSuccess, reset])
 
   const handleBranchSelection = () => {
     setIsBranchSelected(true) // Update state when a branch is selected

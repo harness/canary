@@ -76,7 +76,8 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Repositories</Text>
+          breadcrumb: () => <Text>Repositories</Text>,
+          routeName: RouteConstants.toRepositories
         }
       },
       {
@@ -87,7 +88,8 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Pipelines</Text>
+          breadcrumb: () => <Text>Pipelines</Text>,
+          routeName: RouteConstants.toPipelines
         }
       },
       {
@@ -98,7 +100,8 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Executions</Text>
+          breadcrumb: () => <Text>Executions</Text>,
+          routeName: RouteConstants.toExecutions
         }
       },
       {
@@ -109,88 +112,240 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Databases</Text>
+          breadcrumb: () => <Text>Databases</Text>,
+          routeName: RouteConstants.toDatabases
         }
       },
       {
         path: 'theme',
-        element: <ProfileSettingsThemePage />
+        element: <ProfileSettingsThemePage />,
+        handle: {
+          routeName: RouteConstants.toTheme
+        }
       },
       {
         path: 'chaos',
-        element: <EmptyPage pathName="Chaos Engineering" />
+        element: <EmptyPage pathName="Chaos Engineering" />,
+        handle: {
+          routeName: RouteConstants.toChaos
+        }
       },
       {
         path: 'artifacts',
-        element: <EmptyPage pathName="Artifacts" />
+        element: <EmptyPage pathName="Artifacts" />,
+        handle: {
+          routeName: RouteConstants.toArtifacts
+        }
       },
       {
         path: 'secrets',
-        element: <EmptyPage pathName="Secrets" />
+        element: <EmptyPage pathName="Secrets" />,
+        handle: {
+          routeName: RouteConstants.toSecrets
+        }
       },
       {
         path: 'connectors',
-        element: <EmptyPage pathName="Connectors" />
+        element: <EmptyPage pathName="Connectors" />,
+        handle: {
+          routeName: RouteConstants.toConnectors
+        }
       },
       {
         path: 'continuous-delivery-gitops',
-        element: <EmptyPage pathName="Continuous Delivery Gitops" />
+        element: <EmptyPage pathName="Continuous Delivery GitOps" />,
+        handle: {
+          routeName: RouteConstants.toGitOps
+        }
       },
       {
         path: 'continuous-integration',
-        element: <EmptyPage pathName="Continuous Integration" />
+        element: <EmptyPage pathName="Continuous Integration" />,
+        handle: {
+          routeName: RouteConstants.toCI
+        }
       },
       {
         path: 'feature-flags',
-        element: <EmptyPage pathName="Feature Flags" />
+        element: <EmptyPage pathName="Feature Flags" />,
+        handle: {
+          routeName: RouteConstants.toFeatureFlags
+        }
+      },
+      {
+        path: 'notifications',
+        element: <EmptyPage pathName="Notifications" />,
+        handle: {
+          routeName: RouteConstants.toNotifications
+        }
+      },
+      {
+        path: 'environments',
+        element: <EmptyPage pathName="Environments" />,
+        handle: {
+          routeName: RouteConstants.toEnvironments
+        }
+      },
+      {
+        path: 'delegates',
+        element: <EmptyPage pathName="File Store" />,
+        handle: {
+          routeName: RouteConstants.toFileStore
+        }
+      },
+      {
+        path: 'file-store',
+        element: <EmptyPage pathName="Delegates" />,
+        handle: {
+          routeName: RouteConstants.toDelegates
+        }
+      },
+      {
+        path: 'templates',
+        element: <EmptyPage pathName="Templates" />,
+        handle: {
+          routeName: RouteConstants.toTemplates
+        }
+      },
+      {
+        path: 'variables',
+        element: <EmptyPage pathName="Variables" />,
+        handle: {
+          routeName: RouteConstants.toVariables
+        }
+      },
+      {
+        path: 'slo-downtime',
+        element: <EmptyPage pathName="SLO Downtime" />,
+        handle: {
+          routeName: RouteConstants.toSloDowntime
+        }
+      },
+      {
+        path: 'discovery',
+        element: <EmptyPage pathName="Discovery" />,
+        handle: {
+          routeName: RouteConstants.toDiscovery
+        }
+      },
+      {
+        path: 'monitored-services',
+        element: <EmptyPage pathName="Monitored Services" />,
+        handle: {
+          routeName: RouteConstants.toMonitoredServices
+        }
+      },
+      {
+        path: 'overrides',
+        element: <EmptyPage pathName="Overrides" />,
+        handle: {
+          routeName: RouteConstants.toOverrides
+        }
+      },
+      {
+        path: 'certificates',
+        element: <EmptyPage pathName="Certificates" />,
+        handle: {
+          routeName: RouteConstants.toCertificates
+        }
+      },
+      {
+        path: 'policies',
+        element: <EmptyPage pathName="Policies" />,
+        handle: {
+          routeName: RouteConstants.toPolicies
+        }
+      },
+      {
+        path: 'freeze-windows',
+        element: <EmptyPage pathName="Freeze Windows" />,
+        handle: {
+          routeName: RouteConstants.toFreezeWindows
+        }
+      },
+      {
+        path: 'external-tickets',
+        element: <EmptyPage pathName="External Tickets" />,
+        handle: {
+          routeName: RouteConstants.toExternalTickets
+        }
       },
       {
         path: 'infrastructure-as-code',
-        element: <EmptyPage pathName="Infrastructure as Code" />
+        element: <EmptyPage pathName="Infrastructure as Code" />,
+        handle: {
+          routeName: RouteConstants.toInfrastructureAsCode
+        }
       },
       {
         path: 'service-reliability',
-        element: <EmptyPage pathName="Service Reliability" />
+        element: <EmptyPage pathName="Service Reliability" />,
+        handle: {
+          routeName: RouteConstants.toServiceReliability
+        }
       },
       {
         path: 'developer/portal',
-        element: <EmptyPage pathName="Internal Developer Portal" />
+        element: <EmptyPage pathName="Internal Developer Portal" />,
+        handle: {
+          routeName: RouteConstants.toDevPortal
+        }
       },
       {
         path: 'developer/environments',
-        element: <EmptyPage pathName="Environments" />
+        element: <EmptyPage pathName="Environments" />,
+        handle: {
+          routeName: RouteConstants.toDevEnvironments
+        }
       },
       {
         path: 'developer/insights',
-        element: <EmptyPage pathName="Software Engineering Insights" />
-      },
-      {
-        path: 'infrastructure',
-        element: <EmptyPage pathName="Infrastructure as Code" />
+        element: <EmptyPage pathName="Software Engineering Insights" />,
+        handle: {
+          routeName: RouteConstants.toDevInsights
+        }
       },
       {
         path: 'code-repository',
-        element: <EmptyPage pathName="Code Repository" />
+        element: <EmptyPage pathName="Code Repository" />,
+        handle: {
+          routeName: RouteConstants.toCode
+        }
       },
       {
         path: 'supply-chain',
-        element: <EmptyPage pathName="Software Supply Chain Assurance" />
+        element: <EmptyPage pathName="Software Supply Chain Assurance" />,
+        handle: {
+          routeName: RouteConstants.toSupplyChain
+        }
       },
       {
         path: 'security-tests',
-        element: <EmptyPage pathName="Security Testing Orchestration" />
+        element: <EmptyPage pathName="Security Testing Orchestration" />,
+        handle: {
+          routeName: RouteConstants.toSecurityTests
+        }
       },
       {
         path: 'cloud-costs',
-        element: <EmptyPage pathName="Cloud Cost Management" />
+        element: <EmptyPage pathName="Cloud Cost Management" />,
+        handle: {
+          routeName: RouteConstants.toCloudCosts
+        }
       },
       {
         path: 'incidents',
-        element: <EmptyPage pathName="Incidents" />
+        element: <EmptyPage pathName="Incidents" />,
+        handle: {
+          routeName: RouteConstants.toIncidents
+        }
       },
       {
         path: 'dashboards',
-        element: <EmptyPage pathName="Dashboards" />
+        element: <EmptyPage pathName="Dashboards" />,
+        handle: {
+          routeName: RouteConstants.toDashboards
+        }
       },
       {
         path: ':spaceId',
@@ -379,7 +534,7 @@ export const routes: CustomRouteObject[] = [
                           {
                             path: 'executions',
                             handle: {
-                              routeName: RouteConstants.toPipelineExecutions
+                              routeName: RouteConstants.toExecutions
                             },
                             children: [
                               {
@@ -387,7 +542,7 @@ export const routes: CustomRouteObject[] = [
                                 element: <>Execution Details Page</>,
                                 handle: {
                                   breadcrumb: ({ executionId }: { executionId: string }) => <Text>{executionId}</Text>,
-                                  routeName: RouteConstants.toPipelineExecution
+                                  routeName: RouteConstants.toExecution
                                 }
                               }
                             ]
@@ -417,19 +572,26 @@ export const routes: CustomRouteObject[] = [
                       },
                       {
                         path: 'rules',
-                        element: <RepoSettingsGeneralPageContainer />,
                         handle: {
                           breadcrumb: () => <Text>Rules</Text>
-                        }
-                      },
-                      {
-                        path: 'rules/create',
-                        element: <RepoBranchSettingsRulesPageContainer />,
+                        },
                         children: [
+                          {
+                            index: true,
+                            element: <RepoSettingsGeneralPageContainer />
+                          },
+                          {
+                            path: 'create',
+                            element: <RepoBranchSettingsRulesPageContainer />,
+                            handle: {
+                              breadcrumb: () => <Text>Create a rule</Text>
+                            }
+                          },
                           {
                             path: ':identifier',
                             element: <RepoBranchSettingsRulesPageContainer />,
                             handle: {
+                              breadcrumb: ({ identifier }: { identifier: string }) => <Text>{identifier}</Text>,
                               routeName: RouteConstants.toRepoBranchRule
                             }
                           }
@@ -494,7 +656,8 @@ export const routes: CustomRouteObject[] = [
                 path: 'members',
                 element: <ProjectMemberListPage />,
                 handle: {
-                  breadcrumb: () => <Text>Members</Text>
+                  breadcrumb: () => <Text>Members</Text>,
+                  routeName: RouteConstants.toProjectMembers
                 }
               },
               {
@@ -516,17 +679,53 @@ export const routes: CustomRouteObject[] = [
         ]
       },
       {
-        path: 'admin/default-settings',
-        element: <UserManagementPageContainer />,
+        path: 'admin',
         handle: {
-          breadcrumb: () => (
-            <>
-              <Text>Account</Text>
-              <Breadcrumb.Separator />
-              <Text>Users</Text>
-            </>
-          )
-        }
+          breadcrumb: () => <Text>Account</Text>
+        },
+        children: [
+          {
+            index: true,
+            path: 'default-settings',
+            element: <UserManagementPageContainer />,
+            handle: {
+              breadcrumb: () => <Text>Users</Text>,
+              routeName: RouteConstants.toAdminUsers
+            }
+          },
+          {
+            path: 'user-groups',
+            element: <EmptyPage pathName="User Groups" />,
+            handle: {
+              breadcrumb: () => <Text>User Groups</Text>,
+              routeName: RouteConstants.toUserGroups
+            }
+          },
+          {
+            path: 'service-accounts',
+            element: <EmptyPage pathName="Service Accounts" />,
+            handle: {
+              breadcrumb: () => <Text>Service Accounts</Text>,
+              routeName: RouteConstants.toServiceAccounts
+            }
+          },
+          {
+            path: 'resource-groups',
+            element: <EmptyPage pathName="Resource Groups" />,
+            handle: {
+              breadcrumb: () => <Text>Resource Groups</Text>,
+              routeName: RouteConstants.toResourceGroups
+            }
+          },
+          {
+            path: 'roles',
+            element: <EmptyPage pathName="Roles" />,
+            handle: {
+              breadcrumb: () => <Text>Roles</Text>,
+              routeName: RouteConstants.toRoles
+            }
+          }
+        ]
       },
       {
         path: 'profile-settings',
@@ -574,6 +773,7 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'logout',
-    element: <Logout />
+    element: <Logout />,
+    handle: { routeName: RouteConstants.toLogout }
   }
 ]

@@ -1,5 +1,5 @@
 import { TypesUser } from '@/types'
-import { isEmpty } from 'lodash-es'
+import { get, isEmpty } from 'lodash-es'
 
 import { PullReqReviewDecision } from '../pull-request.types'
 import {
@@ -168,3 +168,59 @@ export function getFileViewedState(
 }
 
 export const FILE_VIEWED_OBSOLETE_SHA = 'ffffffffffffffffffffffffffffffffffffffff'
+
+export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullReqActivity>) {
+  const right = get(commentItem.payload?.payload, 'line_start_new', false)
+  const span = right
+    ? commentItem?.payload?.payload?.code_comment?.span_new || 0
+    : commentItem?.payload?.payload?.code_comment?.span_old || 0
+  const lineNumberStart = (
+    right
+      ? commentItem?.payload?.payload?.code_comment?.line_new
+      : commentItem?.payload?.payload?.code_comment?.line_old
+  ) as number
+  const lineNumberEnd = lineNumberStart + span - 1
+  const diffSnapshotLines = get(commentItem.payload?.payload?.payload, 'lines', []) as string[]
+  const leftLines: string[] = []
+  const rightLines: string[] = []
+  diffSnapshotLines.forEach(line => {
+    const lineContent = line.substring(1) // line has a `prefix` (space, +, or -), always remove it
+
+    if (line.startsWith('-')) {
+      leftLines.push(lineContent)
+    } else if (line.startsWith('+')) {
+      rightLines.push(lineContent)
+    } else {
+      leftLines.push(lineContent)
+      rightLines.push(lineContent)
+    }
+  })
+  const diffHeader = get(commentItem.payload?.payload?.payload, 'title', '') as string
+  const [oldStartLine, newStartLine] = diffHeader
+    .replaceAll(/@|\+|-/g, '')
+    .trim()
+    .split(' ')
+    .map(token => token.split(',')[0])
+    .map(Number)
+  const _startLine = right ? newStartLine : oldStartLine
+  const codeLines = right ? rightLines : leftLines
+  let lineIndex = 0
+
+  while (lineIndex + _startLine < lineNumberStart) {
+    lineIndex++
+  }
+  const codeBlockContent = codeLines
+    .slice(lineNumberStart - _startLine, lineNumberStart - _startLine + lineNumberEnd - lineNumberStart + 1)
+    .join('\n')
+
+  return {
+    commentItem: commentItem,
+    left: !right,
+    right,
+    height: 0,
+    lineNumberStart,
+    lineNumberEnd,
+    span,
+    codeBlockContent
+  }
+}

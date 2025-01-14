@@ -1,6 +1,7 @@
-import { useRef } from 'react'
+import { FC, useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 
-import { Fieldset, FormSeparator } from '@/components'
+import { Fieldset, FormSeparator, Text } from '@/components'
 import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
 
@@ -15,7 +16,9 @@ interface ILoadingStates {
   isUpdatingRepoData: boolean
   isLoadingSecuritySettings: boolean
   isUpdatingSecuritySettings: boolean
+  isRulesLoading: boolean
 }
+
 interface RepoSettingsGeneralPageProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   handleRepoUpdate: (data: RepoUpdateData) => void
@@ -31,8 +34,11 @@ interface RepoSettingsGeneralPageProps {
   useTranslationStore: () => TranslationStore
   searchQuery: string
   setSearchQuery: (query: string) => void
+  rulesSearchQuery: string
+  setRulesSearchQuery: (query: string) => void
 }
-const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
+
+const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   handleRepoUpdate,
   handleUpdateSecuritySettings,
   apiError,
@@ -46,63 +52,77 @@ const RepoSettingsGeneralPage: React.FC<RepoSettingsGeneralPageProps> = ({
   useTranslationStore,
   selectBranchOrTag,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  rulesSearchQuery,
+  setRulesSearchQuery
 }) => {
+  const { t } = useTranslationStore()
+  const location = useLocation()
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
-  if (window.location.pathname.endsWith('/rules')) {
-    rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-  if (window.location.pathname.endsWith('/general')) {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  useEffect(() => {
+    if (location.pathname.endsWith('/rules')) {
+      rulesRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    if (location.pathname.endsWith('/general')) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
+  }, [location.pathname])
 
   const { repoData, securityScanning, rules } = useRepoRulesStore()
 
   return (
-    <SandboxLayout.Content className="ml-0" maxWidth="2xl">
-      <Fieldset>
-        <RepoSettingsGeneralForm
-          repoData={repoData}
-          handleRepoUpdate={handleRepoUpdate}
-          apiError={apiError}
-          isLoadingRepoData={loadingStates.isLoadingRepoData}
-          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
-          isRepoUpdateSuccess={isRepoUpdateSuccess}
-          useRepoBranchesStore={useRepoBranchesStore}
-          useTranslationStore={useTranslationStore}
-          selectBranchOrTag={selectBranchOrTag}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
-        <FormSeparator />
-        <div ref={rulesRef}>
-          <RepoSettingsGeneralRules
-            rules={rules}
+    <SandboxLayout.Main>
+      <SandboxLayout.Content className="mx-auto max-w-[610px] pt-7">
+        <Text className="mb-10" size={5} weight="medium" as="div">
+          {t('views:repos.settings', 'Settings')}
+        </Text>
+        <Fieldset>
+          <RepoSettingsGeneralForm
+            repoData={repoData}
+            handleRepoUpdate={handleRepoUpdate}
             apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+            isLoadingRepoData={loadingStates.isLoadingRepoData}
+            isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+            isRepoUpdateSuccess={isRepoUpdateSuccess}
+            useRepoBranchesStore={useRepoBranchesStore}
+            useTranslationStore={useTranslationStore}
+            selectBranchOrTag={selectBranchOrTag}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          />
+          <FormSeparator />
+          <div ref={rulesRef}>
+            <RepoSettingsGeneralRules
+              isLoading={loadingStates.isRulesLoading}
+              rules={rules}
+              apiError={apiError}
+              handleRuleClick={handleRuleClick}
+              openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+              useTranslationStore={useTranslationStore}
+              rulesSearchQuery={rulesSearchQuery}
+              setRulesSearchQuery={setRulesSearchQuery}
+            />
+          </div>
+          <FormSeparator />
+          <RepoSettingsSecurityForm
+            securityScanning={securityScanning}
+            handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+            apiError={apiError}
+            isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+            isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
             useTranslationStore={useTranslationStore}
           />
-        </div>
-
-        <FormSeparator />
-        <RepoSettingsSecurityForm
-          securityScanning={securityScanning}
-          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-          apiError={apiError}
-          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
-          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-          useTranslationStore={useTranslationStore}
-        />
-        <FormSeparator />
-        <RepoSettingsGeneralDelete
-          apiError={apiError}
-          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-          useTranslationStore={useTranslationStore}
-        />
-      </Fieldset>
-    </SandboxLayout.Content>
+          <FormSeparator />
+          <RepoSettingsGeneralDelete
+            apiError={apiError}
+            openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
+          />
+        </Fieldset>
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 

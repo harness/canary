@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ci": "vite build",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "pre-commit": "lint-staged",

@@ -88,7 +88,7 @@ export const ProjectSettingsGeneralPage = ({
 
       return () => clearTimeout(timer)
     }
-  }, [isUpdateSuccess])
+  }, [isUpdateSuccess, reset, spaceData?.description, spaceData?.identifier])
 
   useEffect(() => {
     setValue('description', spaceData?.description ?? '')

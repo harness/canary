@@ -1,40 +1,44 @@
-import { useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
-  Button,
+  ButtonWithOptions,
   Checkbox,
   ControlGroup,
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  // DropdownMenuGroup,
-  // DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  // Fieldset,
+  Fieldset,
   Icon,
   Input,
   Label,
   Message,
   MessageTheme,
+  MultiSelect,
+  MultiSelectOptionType,
   Option,
-  ScrollArea,
   StackedList,
   Switch,
-  Text,
   Textarea
 } from '@/components'
-import { MergeStrategy } from '@views/repo/pull-request'
+import { BypassUsersList, FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
-import { BypassUsersList, FieldProps, PatternsButtonType, Rule } from '../types'
-import { getBranchRules } from './repo-branch-rules-data'
-
-export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root className="border-none">
-    <StackedList.Item disableHover isHeader>
+export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue, t }) => (
+  <StackedList.Root withoutBorder borderBackground>
+    <StackedList.Item
+      className="!rounded px-5 py-3.5"
+      disableHover
+      isHeader
+      actions={
+        <Switch
+          {...register!('state')}
+          checked={watch!('state')}
+          onCheckedChange={() => setValue!('state', !watch!('state'))}
+        />
+      }
+    >
       <StackedList.Field
         title={t('views:repos.enableRule', 'Enable the rule')}
         description={t(
@@ -42,25 +46,11 @@ export const BranchSettingsRuleToggleField: React.FC<FieldProps> = ({ register, 
           'By enabling the toggle, the branch rule will be enforced.'
         )}
       />
-      <StackedList.Field
-        label
-        secondary
-        title={
-          <div className="flex cursor-pointer items-center justify-end gap-1.5">
-            <Switch
-              {...register!('state')}
-              checked={watch!('state')}
-              onCheckedChange={() => setValue!('state', !watch!('state'))}
-            />
-          </div>
-        }
-        right
-      />
     </StackedList.Item>
   </StackedList.Root>
 )
 
-export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: boolean }> = ({
+export const BranchSettingsRuleNameField: FC<FieldProps & { disabled: boolean }> = ({
   register,
   errors,
   disabled,
@@ -71,36 +61,29 @@ export const BranchSettingsRuleNameField: React.FC<FieldProps & { disabled: bool
       id="name"
       label={t('views:repos.name', 'Name')}
       {...register!('identifier')}
-      placeholder={t('views:repos.enterRuleName', 'Enter rule name')}
+      placeholder={t('views:repos.enterRuleName', 'Enter the rule name here')}
       autoFocus
       disabled={disabled}
       error={errors?.identifier?.message?.toString()}
+      size="md"
     />
   </ControlGroup>
 )
 
-export const BranchSettingsRuleDescriptionField: React.FC<FieldProps> = ({ register, errors, t }) => (
+export const BranchSettingsRuleDescriptionField: FC<FieldProps> = ({ register, errors, t }) => (
   <ControlGroup>
     <Textarea
       label={t('views:repos.description', 'Description')}
       id="description"
       {...register!('description')}
-      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter a description of this rule...')}
+      placeholder={t('views:repos.ruleDescriptionPlaceholder', 'Enter the description here')}
       error={errors?.description?.message?.toString()}
     />
   </ControlGroup>
 )
 
-export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({
-  setValue,
-  watch,
-  register,
-  errors,
-  t
-}) => {
-  const [selectedOption, _setSelectedOption] = useState<PatternsButtonType.INCLUDE | PatternsButtonType.EXCLUDE>(
-    PatternsButtonType.INCLUDE
-  )
+export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue, watch, register, errors, t }) => {
+  const [selectedOption, setSelectedOption] = useState<PatternsButtonType>(PatternsButtonType.INCLUDE)
 
   const patterns = watch!('patterns') || []
 
@@ -118,62 +101,44 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({
   }
 
   return (
-    <ControlGroup>
-      <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
-        {t('views:repos.targetPatterns', 'Target patterns')}
-      </Label>
-      <div className="grid grid-cols-5 grid-rows-1">
-        <div className="col-span-4 mr-2">
+    <Fieldset className="gap-y-4">
+      <ControlGroup>
+        <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
+          {t('views:repos.targetPatterns', 'Target patterns')}
+        </Label>
+        <div className="flex items-start gap-x-3.5">
           <Input
             id="pattern"
+            size="md"
             {...register!('pattern')}
-            // label="Target Patterns"
-            // caption="Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)"
-            // leftStyle={true}
-            // left={
-            //   <Button
-            //     variant="split"
-            //     type="button"
-            //     className="min-w-28 px-0"
-            //     dropdown={
-            //       <DropdownMenu key="dropdown-menu">
-            //         <span>
-            //           <DropdownMenuTrigger insideSplitButton>
-            //             <Icon name="chevron-down" className="chevron-down" />
-            //           </DropdownMenuTrigger>
-            //         </span>
-            //         <DropdownMenuContent align="end" className="mt-1">
-            //           <DropdownMenuGroup>
-            //             <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.INCLUDE)}>
-            //               Include
-            //             </DropdownMenuItem>
-            //             <DropdownMenuItem onSelect={() => setSelectedOption(PatternsButtonType.EXCLUDE)}>
-            //               Exclude
-            //             </DropdownMenuItem>
-            //           </DropdownMenuGroup>
-            //         </DropdownMenuContent>
-            //       </DropdownMenu>
-            //     }
-            //   >
-            //     {selectedOption}
-            //   </Button>
-            // }
+            caption={t(
+              'views:repos.createRuleCaption',
+              'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
+            )}
+            placeholder={t('views:repos.rulePatternPlaceholder', 'Enter the target patterns')}
+            error={errors?.pattern?.message?.toString()}
+          />
+          <ButtonWithOptions<PatternsButtonType>
+            id="patterns-type"
+            buttonSizeClassName="h-9"
+            handleButtonClick={handleAddPattern}
+            buttonText={t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
+            selectedValue={selectedOption}
+            handleOptionChange={setSelectedOption}
+            options={[
+              {
+                value: PatternsButtonType.INCLUDE,
+                label: t(`views:repos.include`, 'Include')
+              },
+              {
+                value: PatternsButtonType.EXCLUDE,
+                label: t(`views:repos.exclude`, 'Exclude')
+              }
+            ]}
           />
         </div>
-        <Button variant="outline" type="button" className="col-span-1" onClick={handleAddPattern}>
-          {t('views:repos.add', 'Add')}
-        </Button>
-        {errors!.pattern && <Message theme={MessageTheme.ERROR}>{errors!.pattern.message?.toString()}</Message>}
-      </div>
-      <Text size={2} as="p" color="tertiaryBackground" className="mt-2.5 max-w-full">
-        {t(
-          'views:repos.createRuleCaption',
-          'Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)'
-        )}
-      </Text>
-      <div className="flex flex-wrap">
-        {patterns &&
-          patterns.map(pattern => (
+        <div className="flex flex-wrap">
+          {patterns.map(pattern => (
             <Badge
               variant="outline"
               theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
@@ -186,130 +151,128 @@ export const BranchSettingsRuleTargetPatternsField: React.FC<FieldProps> = ({
               </button>
             </Badge>
           ))}
-      </div>
-    </ControlGroup>
+        </div>
+      </ControlGroup>
+
+      <ControlGroup>
+        <Option
+          control={
+            <Checkbox
+              {...register!('default')}
+              checked={watch!('default')}
+              onCheckedChange={() => setValue!('default', !watch!('default'))}
+              id="default-branch"
+            />
+          }
+          id="default-branch"
+          label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
+          className="mt-0"
+        />
+
+        {!!errors?.default && <Message theme={MessageTheme.ERROR}>{errors?.default?.message?.toString()}</Message>}
+      </ControlGroup>
+    </Fieldset>
   )
 }
 
-export const BranchSettingsRuleDefaultBranchField: React.FC<FieldProps> = ({
-  register,
-  errors,
-  watch,
-  setValue,
-  t
-}) => (
-  <ControlGroup>
-    <Option
-      control={
-        <Checkbox
-          {...register!('default')}
-          checked={watch!('default')}
-          onCheckedChange={() => setValue!('default', !watch!('default'))}
-          id="default-branch"
-        />
-      }
-      id="default-branch"
-      label={t('views:repos.applyRuleDefaultBranch', 'Apply this rule to the default branch')}
-      className="mt-0"
-    />
+const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<BypassUsersList>) => {
+  return (
+    <>
+      <Avatar className="overflow-hidden rounded-md" size="6">
+        {!!option.url && <AvatarImage src={option.url} alt={option.display_name} />}
+        <AvatarFallback>{getInitials(option.display_name)}</AvatarFallback>
+      </Avatar>
+      <span className="font-medium">{option.display_name}</span>
+    </>
+  )
+}
 
-    {errors!.default && <Message theme={MessageTheme.ERROR}>{errors!.default.message?.toString()}</Message>}
-  </ControlGroup>
-)
-
-export const BranchSettingsRuleBypassListField: React.FC<FieldProps & { bypassOptions: BypassUsersList[] }> = ({
-  watch,
-  setValue,
-  bypassOptions,
-  t
-}) => {
-  const selectedBypassUsers = watch!('bypass') || []
-
-  const handleCheckboxChange = (optionId: number) => {
-    setValue!(
-      'bypass',
-      selectedBypassUsers.includes(optionId)
-        ? selectedBypassUsers.filter(item => item !== optionId)
-        : [...selectedBypassUsers, optionId],
-      { shouldValidate: true }
-    )
+export const BranchSettingsRuleBypassListField: FC<
+  FieldProps & {
+    bypassOptions: BypassUsersList[] | null
+    setPrincipalsSearchQuery: (val: string) => void
+    principalsSearchQuery: string
   }
-  const triggerText = selectedBypassUsers.length
-    ? selectedBypassUsers
-        .map(id => bypassOptions.find(option => option.id === id)?.display_name)
-        .filter(Boolean)
-        .join(', ')
-    : t('views:repos.selectUsers', 'Select Users')
+> = ({ watch, setValue, bypassOptions, t, register, errors, setPrincipalsSearchQuery, principalsSearchQuery }) => {
+  const selectedBypassUsers = watch!('bypass').map(user => ({
+    ...user,
+    label: user.display_name
+  }))
+
+  const handleCheckboxChange = useCallback(
+    (option: MultiSelectOptionType<Partial<BypassUsersList>>) => {
+      const selectedIds = selectedBypassUsers.map(it => it.id)
+
+      setValue!(
+        'bypass',
+        selectedIds.includes(Number(option.id))
+          ? selectedBypassUsers.filter(item => item.id !== option.id)
+          : [
+              ...selectedBypassUsers,
+              {
+                id: option.id,
+                display_name: option.label
+              }
+            ],
+        { shouldValidate: true }
+      )
+    },
+    [selectedBypassUsers, setValue]
+  )
+
+  const multiSelectOptions: MultiSelectOptionType<BypassUsersList>[] = useMemo(() => {
+    return (
+      bypassOptions?.map(option => ({
+        ...option,
+        label: option.display_name
+      })) || []
+    )
+  }, [bypassOptions])
 
   return (
-    <ControlGroup>
-      <Label className="mb-2.5" htmlFor="bypassValue">
-        {t('views:repos.bypassList', 'Bypass list')}
-      </Label>
+    <Fieldset className="gap-y-4">
+      <ControlGroup>
+        <Label className="mb-2.5" htmlFor="bypassValue" color="secondary">
+          {t('views:repos.bypassList', 'Bypass list')}
+        </Label>
 
-      <DropdownMenu>
-        <DropdownMenuTrigger className="flex w-full items-center justify-between rounded-md border">
-          <Text className="p-2" color={selectedBypassUsers.length ? 'primary' : 'tertiaryBackground'}>
-            {triggerText}
-          </Text>
-          <Icon name="chevron-down" className="chevron-down mr-2" />
-        </DropdownMenuTrigger>
+        <MultiSelect<BypassUsersList>
+          selectedItems={selectedBypassUsers}
+          t={t}
+          placeholder={t('views:repos.selectUsers', 'Select users')}
+          handleChange={handleCheckboxChange}
+          options={multiSelectOptions}
+          searchValue={principalsSearchQuery}
+          handleChangeSearchValue={setPrincipalsSearchQuery}
+          customOptionElem={BranchSettingsRuleBypassListOption}
+        />
+      </ControlGroup>
 
-        <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-          <DropdownMenuLabel>{t('views:repos.users', 'Users')}</DropdownMenuLabel>
-          <ScrollArea className="h-[300px]">
-            <DropdownMenuSeparator />
-            {bypassOptions &&
-              bypassOptions.map(option => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={option.id}
-                    onCheckedChange={() => handleCheckboxChange(option.id)}
-                    checked={selectedBypassUsers.includes(option.id)}
-                    onSelect={event => event.preventDefault()}
-                    className="overflow-hidden"
-                  >
-                    {option.display_name}
-                  </DropdownMenuCheckboxItem>
-                )
-              })}
-          </ScrollArea>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </ControlGroup>
+      <ControlGroup>
+        <Option
+          control={
+            <Checkbox
+              {...register!('repo_owners')}
+              checked={watch!('repo_owners')}
+              onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
+              id="edit-permissons"
+            />
+          }
+          id="edit-permissons"
+          label={t(
+            'views:repos.editPermissionsCheckboxDescription',
+            'Allow users with edit permission on the repository to bypass'
+          )}
+          className="mt-0"
+        />
+
+        {errors!.repo_owners && <Message theme={MessageTheme.ERROR}>{errors!.repo_owners.message?.toString()}</Message>}
+      </ControlGroup>
+    </Fieldset>
   )
 }
 
-export const BranchSettingsRuleEditPermissionsField: React.FC<FieldProps> = ({
-  register,
-  errors,
-  watch,
-  setValue,
-  t
-}) => (
-  <ControlGroup className="min-h-8 justify-center">
-    <Option
-      control={
-        <Checkbox
-          {...register!('repo_owners')}
-          checked={watch!('repo_owners')}
-          onCheckedChange={() => setValue!('repo_owners', !watch!('repo_owners'))}
-          id="edit-permissons"
-        />
-      }
-      id="edit-permissons"
-      label={t(
-        'views:repos.editPermissionsCheckboxDescription',
-        'Allow users with edit permission on the repository to bypass'
-      )}
-      className="mt-0"
-    />
-
-    {errors!.repo_owners && <Message theme={MessageTheme.ERROR}>{errors!.repo_owners.message?.toString()}</Message>}
-  </ControlGroup>
-)
-
-export const BranchSettingsRuleListField: React.FC<{
+export const BranchSettingsRuleListField: FC<{
   rules: Rule[]
   recentStatusChecks?: string[] | null
   handleCheckboxChange: (ruleId: string, checked: boolean) => void
@@ -327,94 +290,84 @@ export const BranchSettingsRuleListField: React.FC<{
   t
 }) => {
   const branchRules = getBranchRules(t)
+
   return (
-    <ControlGroup className="max-w-sm">
-      <Label className="mb-5">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
-      {branchRules.map((rule, index) => (
-        <div key={rule.id}>
-          <Option
-            className="mb-5"
-            control={
-              <Checkbox
+    <ControlGroup className="max-w-[476px]">
+      <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Fieldset className="gap-y-5">
+        {branchRules.map((rule, index) => {
+          const isChecked = rules[index]?.checked ?? false
+
+          return (
+            <Fieldset key={rule.id} className="gap-y-4">
+              <Option
+                control={
+                  <Checkbox
+                    id={rule.id}
+                    checked={isChecked}
+                    onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                  />
+                }
                 id={rule.id}
-                checked={rules[index]?.checked}
-                onCheckedChange={checked => handleCheckboxChange(rule.id, checked === true)}
+                label={rule.label}
+                description={rule.description}
               />
-            }
-            id={rule.id}
-            label={rule.label}
-            description={rule.description}
-          />
 
-          {/* Conditionally render the submenu if this rule has a submenu and is checked */}
-          {rule.hasSubmenu && rules[index].checked && (
-            <div className="mb-4 pl-8">
-              {rule.submenuOptions.map(subOption => (
-                <Option
-                  className="min-h-6"
-                  key={subOption.id}
-                  control={
-                    <Checkbox
+              {/* Conditionally render the submenu if this rule has a submenu and is checked */}
+              {!!rule?.submenuOptions && !!rule?.submenuOptions.length && isChecked && (
+                <Fieldset className="gap-y-4 pl-[26px]">
+                  {rule.submenuOptions.map(subOption => (
+                    <Option
+                      key={subOption.id}
+                      control={
+                        <Checkbox
+                          id={subOption.id}
+                          checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
+                          onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
+                        />
+                      }
                       id={subOption.id}
-                      checked={rules[index].submenu?.includes(subOption.id as MergeStrategy)}
-                      onCheckedChange={checked => handleSubmenuChange(rule.id, subOption.id, checked === true)}
+                      label={subOption.label}
                     />
-                  }
-                  id={subOption.id}
-                  label={subOption.label}
-                />
-              ))}
-            </div>
-          )}
+                  ))}
+                </Fieldset>
+              )}
 
-          {rule.hasSelect && rules[index].checked && (
-            <div className="mb-4 mt-2 w-full pl-8">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="w-full">
-                  <div className="flex items-center justify-between rounded-md border">
-                    <Button variant="ghost" className="w-full">
-                      <Text color={rules[index].selectOptions?.length ? 'primary' : 'tertiaryBackground'}>
-                        {rules[index].selectOptions?.length
-                          ? rules[index].selectOptions.join(', ')
-                          : 'Select Status Checks'}
-                      </Text>
-                    </Button>
-                    <Icon name="chevron-down" className="mr-2" />
-                  </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
-                  <DropdownMenuLabel>{t('views:repos.statusChecks', 'Status Checks')}</DropdownMenuLabel>
-                  <DropdownMenuSeparator />
+              {!!rule?.hasSelect && isChecked && (
+                <div className="pl-[26px]">
+                  <MultiSelect
+                    selectedItems={rules[index].selectOptions.map(option => ({
+                      id: option,
+                      label: option
+                    }))}
+                    t={t}
+                    placeholder={t('views:repos.selectStatusesPlaceholder', 'Select status checks')}
+                    handleChange={val => handleSelectChangeForRule(rule.id, val.label)}
+                    options={
+                      recentStatusChecks?.map(check => ({
+                        id: check,
+                        label: check
+                      })) ?? []
+                    }
+                  />
+                </div>
+              )}
 
-                  {recentStatusChecks?.map(checks => {
-                    return (
-                      <DropdownMenuCheckboxItem
-                        key={checks}
-                        checked={rules[index].selectOptions?.includes(checks)}
-                        onCheckedChange={() => handleSelectChangeForRule(rule.id, checks)}
-                        onSelect={e => e.preventDefault()}
-                      >
-                        {checks}
-                      </DropdownMenuCheckboxItem>
-                    )
-                  })}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          )}
-
-          {rule.hasInput && rules[index].checked && (
-            <div className="mt-2 pl-8">
-              <Input
-                id="name"
-                placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
-                value={rules[index].input || ''}
-                onChange={e => handleInputChange(rule.id, e.target.value)}
-              />
-            </div>
-          )}
-        </div>
-      ))}
+              {!!rule?.hasInput && isChecked && (
+                <div className="pl-[26px]">
+                  <Input
+                    id="name"
+                    size="md"
+                    placeholder={t('views:repos.enterMinReviewers', 'Enter minimum number of reviewers')}
+                    value={rules[index].input || ''}
+                    onChange={e => handleInputChange(rule.id, e.target.value)}
+                  />
+                </div>
+              )}
+            </Fieldset>
+          )
+        })}
+      </Fieldset>
     </ControlGroup>
   )
 }

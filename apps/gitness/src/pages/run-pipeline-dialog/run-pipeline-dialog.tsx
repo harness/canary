@@ -132,7 +132,7 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
         response => {
           onClose()
           navigate(
-            routes.toPipelineExecution({
+            routes.toExecution({
               spaceId,
               repoId,
               pipelineId: pipelineIdFromParams,

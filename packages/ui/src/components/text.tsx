@@ -24,7 +24,8 @@ const textVariants = cva('text-base', {
       9: 'text-6xl',
       10: 'text-7xl',
       11: 'text-8xl',
-      12: 'text-9xl'
+      12: 'text-9xl',
+      13: 'text-lg'
     },
     trim: {
       normal: '',
@@ -80,7 +81,7 @@ interface TextProps extends React.ComponentProps<'span'> {
   /**
    * Sets the text size.
    */
-  size?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  size?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13
 
   /**
    * Trims the leading whitespace from the start or end

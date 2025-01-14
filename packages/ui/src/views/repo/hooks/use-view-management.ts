@@ -21,7 +21,7 @@ interface UseViewManagementProps {
  * const hasViewChanges = !areArraysEqual(currentView.filters, activeFilters) ||
  *                       !areArraysEqual(currentView.sorts, activeSorts)
  */
-export const areArraysEqual = (arr1: any[], arr2: any[]) => {
+export const areArraysEqual = (arr1: unknown[], arr2: unknown[]) => {
   if (!arr1 || !arr2) return false
   if (arr1.length !== arr2.length) return false
 

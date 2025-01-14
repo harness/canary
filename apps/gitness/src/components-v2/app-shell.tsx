@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet, useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
 import {
   ManageNavigation,
@@ -19,8 +19,8 @@ import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
-import { useGetSpaceURLParam } from '../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { PathParams } from '../RouteDefinitions'
 import BreadcrumbsV1 from './breadcrumbs/breadcrumbs'
 
 interface NavLinkStorageInterface {
@@ -37,13 +37,17 @@ const AppShell = () => {
   const location = useLocation()
   const { pinnedMenu, recentMenu, setPinned, setRecent, setNavLinks } = useNav()
   const { t } = useTranslationStore()
-  const space_ref = useGetSpaceURLParam()
+  const { spaceId, repoId } = useParams<PathParams>()
+  const spaceIdPathParam = spaceId ?? spaces[0]?.path ?? ''
 
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingMenu, setShowSettingMenu] = useState(false)
   const [showCustomNav, setShowCustomNav] = useState(false)
 
-  const pinnedMenuItemsData = useMemo(() => getPinnedMenuItemsData(t), [t])
+  const pinnedMenuItemsData = useMemo(
+    () => getPinnedMenuItemsData({ t, routes, spaceId: spaceIdPathParam }),
+    [t, routes, spaceIdPathParam]
+  )
 
   useLocationChange({ t, onRouteChange: setRecent })
 
@@ -73,7 +77,12 @@ const AppShell = () => {
    * Map mock data menu by type to Settings and More
    */
   const { moreMenu, settingsMenu } = useMemo(() => {
-    const navbarMenuData = getNavbarMenuData(t, space_ref ?? (spaces.length > 0 ? spaces[0].path : ''))
+    const navbarMenuData = getNavbarMenuData({
+      t,
+      routes,
+      spaceId: spaceIdPathParam,
+      repoId
+    })
     return navbarMenuData.reduce<{
       moreMenu: MenuGroupType[]
       settingsMenu: MenuGroupType[]
@@ -92,7 +101,7 @@ const AppShell = () => {
         settingsMenu: []
       }
     )
-  }, [t, space_ref])
+  }, [t, routes, spaceIdPathParam, repoId])
 
   /**
    * Handle logout
@@ -191,7 +200,7 @@ const AppShell = () => {
       <ManageNavigation
         pinnedItems={pinnedMenu}
         recentItems={recentMenu}
-        navbarMenuData={getNavbarMenuData(t)}
+        navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
         showManageNavigation={showCustomNav}
         isSubmitting={false}
         submitted={false}

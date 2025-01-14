@@ -40,10 +40,6 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
     setErrorMessage(error?.message)
   }, [error])
 
-  const resetError = () => {
-    setErrorMessage(undefined)
-  }
-
   const {
     register,
     handleSubmit,
@@ -79,11 +75,11 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
       }
 
       if (error) {
-        resetError()
+        setErrorMessage(undefined)
       }
     })
     return () => subscription.unsubscribe()
-  }, [watch, setValue, clearErrors, error, resetError])
+  }, [watch, setValue, clearErrors, error, trigger])
 
   const handleSelectChange = (fieldName: keyof CreatePipelineFormType, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -135,7 +131,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </SelectContent>
               </Select>
             </ControlGroup>
-            <Message className="mt-1" theme={MessageTheme.ERROR}>
+            <Message className="mt-0.5" theme={MessageTheme.ERROR}>
               {errorMessage}
             </Message>
             <div className="flex justify-end gap-3">

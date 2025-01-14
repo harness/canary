@@ -9,8 +9,6 @@ import { useQueryState } from 'nuqs'
 
 import {
   commentCreatePullReq,
-  commentDeletePullReq,
-  commentUpdatePullReq,
   EnumPullReqReviewDecision,
   reviewSubmitPullReq,
   TypesPullReqActivity,
@@ -29,6 +27,7 @@ import {
   PullRequestChangesPage
 } from '@harnessio/ui/views'
 
+import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -36,7 +35,8 @@ import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
-import { normalizeGitRef } from '../../utils/git-utils'
+import { filenameToLanguage, normalizeGitRef } from '../../utils/git-utils'
+import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { normalizeGitFilePath } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
@@ -56,7 +56,7 @@ const sortSelectedCommits = (selectedCommits: string[], sortedCommits?: string[]
 }
 
 export default function PullRequestChanges() {
-  const { pullReqMetadata, refetchPullReq, refetchActivities, diffs, setDiffs, pullReqCommits } =
+  const { pullReqMetadata, refetchPullReq, refetchActivities, diffs, setDiffs, pullReqCommits, updateCommentStatus } =
     usePullRequestProviderStore()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
@@ -71,6 +71,7 @@ export default function PullRequestChanges() {
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId', { defaultValue: '' })
+
   const {
     data: { body: reviewers } = {},
     refetch: refetchReviewers,
@@ -80,24 +81,6 @@ export default function PullRequestChanges() {
     pullreq_number: prId
   })
 
-  const deleteComment = (id: number) => {
-    commentDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to delete comment:', error)
-      })
-  }
-  const updateComment = (id: number, comment: string) => {
-    commentUpdatePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_comment_id: id, body: { text: comment } })
-      .then(() => {
-        refetchActivities()
-      })
-      .catch(error => {
-        console.error('Failed to update comment:', error)
-      })
-  }
   const submitReview = useCallback(
     (decision: PullReqReviewDecision) => {
       reviewSubmitPullReq({
@@ -308,7 +291,7 @@ export default function PullRequestChanges() {
     )
   }, [activityData])
 
-  const handleSaveComment = (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => {
+  const handleSaveComment = async (comment: string, parentId?: number, extra?: CreateCommentPullReqRequest) => {
     const reqBody = parentId
       ? {
           text: comment,
@@ -324,7 +307,7 @@ export default function PullRequestChanges() {
           source_commit_sha: sourceRef,
           target_commit_sha: targetRef
         }
-    commentCreatePullReq({
+    return commentCreatePullReq({
       repo_ref: repoRef,
       pullreq_number: prId,
       body: reqBody
@@ -364,8 +347,36 @@ export default function PullRequestChanges() {
     setCommitRange(newCommitRange)
   }, [selectedCommits])
 
+  const {
+    updateComment,
+    deleteComment,
+    onCommitSuggestion,
+    onCommitSuggestionSuccess,
+    addSuggestionToBatch,
+    removeSuggestionFromBatch,
+    onCommitSuggestionsBatch,
+    isCommitDialogOpen,
+    setIsCommitDialogOpen,
+    suggestionsBatch,
+    suggestionToCommit,
+    onCommentSaveAndStatusChange,
+    toggleConversationStatus
+  } = usePRCommonInteractions({
+    repoRef,
+    prId,
+    refetchActivities,
+    updateCommentStatus
+  })
+
   return (
     <>
+      <CommitSuggestionsDialog
+        open={isCommitDialogOpen}
+        onClose={() => setIsCommitDialogOpen(false)}
+        onSuccess={onCommitSuggestionSuccess}
+        suggestions={suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
+        prId={prId}
+      />
       <PullRequestChangesPage
         usePullRequestProviderStore={usePullRequestProviderStore}
         useTranslationStore={useTranslationStore}
@@ -390,6 +401,15 @@ export default function PullRequestChanges() {
         activities={activities}
         commentId={commentId}
         onCopyClick={onCopyClick}
+        onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+        onCommitSuggestion={onCommitSuggestion}
+        addSuggestionToBatch={addSuggestionToBatch}
+        suggestionsBatch={suggestionsBatch}
+        removeSuggestionFromBatch={removeSuggestionFromBatch}
+        filenameToLanguage={filenameToLanguage}
+        toggleConversationStatus={toggleConversationStatus}
+        commitSuggestionsBatchCount={suggestionsBatch?.length}
+        onCommitSuggestionsBatch={onCommitSuggestionsBatch}
       />
     </>
   )

@@ -1,9 +1,20 @@
-import { MergeStrategy } from '@views/repo/pull-request'
+import { BranchRuleId, MergeStrategy } from '@/views'
 import { TFunction } from 'i18next'
 
-import { BranchRuleId } from '../types'
+export interface BranchRuleType {
+  id: BranchRuleId
+  label: string
+  description: string
+  hasSelect?: boolean
+  hasSubmenu?: boolean
+  submenuOptions?: {
+    id: string
+    label: string
+  }[]
+  hasInput?: boolean
+}
 
-export const getBranchRules = (t: TFunction) => [
+export const getBranchRules = (t: TFunction): BranchRuleType[] => [
   {
     id: BranchRuleId.REQUIRE_LATEST_COMMIT,
     label: t('views:repos.RequestApprovalRule', 'Request approval of new changes'),
@@ -44,7 +55,6 @@ export const getBranchRules = (t: TFunction) => [
       'views:repos.LimitMergeStrategiesDescription',
       'Limit which merge strategies are available to merge a pull request'
     ),
-    hasSubmenu: true,
     submenuOptions: [
       { id: MergeStrategy.MERGE, label: t('views:repos.MergeStrategy.Merge', 'Allow Merge Commit') },
       { id: MergeStrategy.SQUASH, label: t('views:repos.MergeStrategy.Squash', 'Allow Squash and Merge') },

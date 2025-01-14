@@ -48,7 +48,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   defaultBranchName,
   currentBranchDivergence
 }) => {
-  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
@@ -105,10 +105,11 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     loading,
     isShowSummary,
     files,
-    selectedBranchTag,
+    selectedBranchTag.name,
     defaultBranchName,
-    spaceId,
-    repoId
+    useRepoBranchesStore,
+    currentBranchDivergence.ahead,
+    currentBranchDivergence.behind
   ])
 
   return (

@@ -3,15 +3,7 @@ import {
   AvatarFallback,
   AvatarImage,
   Badge,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-  Icon,
+  MoreActionsTooltip,
   Table,
   TableBody,
   TableCell,
@@ -30,50 +22,6 @@ interface PageProps {
 
 // fix the edit form dialog and mock data and coressponding props
 export const UsersList = ({ users }: PageProps) => {
-  const moreActionsTooltip = ({ user }: { user: UsersProps }) => {
-    return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="xs">
-            <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
-          className="w-[180px] rounded-[10px] border border-gray-800 bg-primary-background py-2 shadow-sm"
-          onCloseAutoFocus={event => event.preventDefault()}
-        >
-          <DropdownMenuGroup>
-            <DropdownMenuItem className="cursor-pointer">
-              <DropdownMenuShortcut className="ml-0">
-                <Icon name="trash" className="mr-2" />
-              </DropdownMenuShortcut>
-              {user.admin ? 'Remove Admin' : 'Set as Admin'}
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <DropdownMenuShortcut className="ml-0">
-                <Icon name="cog-6" className="mr-2" />
-              </DropdownMenuShortcut>
-              Reset Password
-            </DropdownMenuItem>
-            <DropdownMenuItem className="cursor-pointer">
-              <DropdownMenuShortcut className="ml-0">
-                <Icon name="edit-pen" className="mr-2" />
-              </DropdownMenuShortcut>
-              Edit User
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="cursor-pointer text-red-400 hover:text-red-400 focus:text-red-400">
-              <DropdownMenuShortcut className="ml-0">
-                <Icon name="trash" className="mr-2 text-red-400" />
-              </DropdownMenuShortcut>
-              Delete User
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    )
-  }
-
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -131,8 +79,32 @@ export const UsersList = ({ users }: PageProps) => {
 
                 {/* @TODO: add roll binding data when available */}
 
-                <TableCell className="my-6 content-center">
-                  <div className="flex items-center justify-end">{moreActionsTooltip({ user })}</div>
+                <TableCell className="text-right">
+                  <MoreActionsTooltip
+                    actions={[
+                      {
+                        title: user.admin ? 'Remove Admin' : 'Set as Admin',
+                        // TODO: add onClick
+                        onClick: () => {}
+                      },
+                      {
+                        title: 'Reset Password',
+                        // TODO: add onClick
+                        onClick: () => {}
+                      },
+                      {
+                        title: 'Edit User',
+                        // TODO: add onClick
+                        onClick: () => {}
+                      },
+                      {
+                        isDanger: true,
+                        title: 'Delete User',
+                        // TODO: add onClick
+                        onClick: () => {}
+                      }
+                    ]}
+                  />
                 </TableCell>
               </TableRow>
             )

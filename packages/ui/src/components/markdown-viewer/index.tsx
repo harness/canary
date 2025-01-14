@@ -10,6 +10,8 @@ import rehypeVideo from 'rehype-video'
 
 import './style.css'
 
+import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
+
 // TODO: add ai stuff at a later point for code suggestions
 // import type { SuggestionBlock } from 'components/SuggestionBlock/SuggestionBlock'
 // import { CodeSuggestionBlock } from './CodeSuggestionBlock'
@@ -31,16 +33,18 @@ interface MarkdownViewerProps {
   maxHeight?: string | number
   withBorderWrapper?: boolean
   // TODO: add ai stuff at a later point for code suggestions
-  //   suggestionBlock?: SuggestionBlock
-  //   suggestionCheckSums?: string[]
+  suggestionBlock?: SuggestionBlock
+  suggestionCheckSum?: string
+  isSuggestion?: boolean
 }
 
 export function MarkdownViewer({
   source,
   maxHeight,
-  withBorderWrapper = false
-  //   suggestionBlock,
-  //   suggestionCheckSums
+  withBorderWrapper = false,
+  suggestionBlock,
+  suggestionCheckSum,
+  isSuggestion
 }: MarkdownViewerProps) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
@@ -172,31 +176,28 @@ export function MarkdownViewer({
                   <pre>{children}</pre>
                 </div>
               )
+            },
+            // Rewriting the code component to support code suggestions
+            code: ({ children = [], className: _className, ...props }) => {
+              const code = props.node && props.node.children ? getCodeString(props.node.children) : children
+
+              if (
+                typeof code === 'string' &&
+                isSuggestion &&
+                typeof _className === 'string' &&
+                'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
+              ) {
+                return (
+                  <CodeSuggestionBlock
+                    code={code}
+                    suggestionBlock={suggestionBlock}
+                    suggestionCheckSum={suggestionCheckSum}
+                  />
+                )
+              }
+
+              return <code className={String(_className)}>{children}</code>
             }
-            //   // Rewriting the code component to support code suggestions
-            //   code: ({ children = [], className: _className, ...props }) => {
-            //     const code = props.node && props.node.children ? getCodeString(props.node.children) : children
-
-            //     if (
-            //       typeof code === 'string' &&
-            //       typeof _className === 'string' &&
-            //       'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
-            //     ) {
-            //       return (
-            //         <CodeSuggestionBlock
-            //           code={code}
-            //           suggestionBlock={suggestionBlock}
-            //           suggestionCheckSums={suggestionCheckSums}
-            //         />
-            //       )
-            //     }
-
-            //     return (
-            //       <code onClick={Utils.stopEvent} className={String(_className)}>
-            //         {children}
-            //       </code>
-            //     )
-            //   }
           }}
         />
 

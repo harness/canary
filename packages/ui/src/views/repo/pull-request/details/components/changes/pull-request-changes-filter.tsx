@@ -269,9 +269,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   onClick={() => {}}
                   className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
                 >
-                  <span className="text-12 flex-1 overflow-hidden truncate text-primary">
-                    {diff.filePath}
-                  </Text>
+                  <span className="text-12 flex-1 overflow-hidden truncate text-primary">{diff.filePath}</span>
                   <div className="ml-4 flex items-center space-x-2">
                     {diff.addedLines != null && diff.addedLines > 0 && (
                       <Badge variant="outline" size="sm" theme="success">

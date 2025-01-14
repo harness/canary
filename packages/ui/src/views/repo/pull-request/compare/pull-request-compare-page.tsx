@@ -367,7 +367,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         />
                       </div>
                     </div>
-               
                     <PullRequestSideBar
                       addReviewers={handleAddReviewer}
                       usersList={usersList ?? []}

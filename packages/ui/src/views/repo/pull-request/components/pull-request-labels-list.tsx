@@ -1,4 +1,4 @@
-import { Button, Icon, Text } from '@components/index'
+import { Button, Icon } from '@components/index'
 
 interface LabelsListProps {
   labels?: { key?: string; id?: number; color?: string }[]
@@ -10,9 +10,7 @@ interface LabelsListProps {
 const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelError, removeLabelError }) => (
   <div className="flex flex-col gap-3">
     {addLabelError || removeLabelError ? (
-      <span className="text-12 text-destructive">
-        {addLabelError ?? removeLabelError}
-      </Text>
+      <span className="text-12 text-destructive">{addLabelError ?? removeLabelError}</span>
     ) : (
       <></>
     )}
@@ -36,9 +34,7 @@ const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelE
         </div>
       ))
     ) : (
-      <span className="text-14 font-medium text-foreground-5">
-        No labels
-      </Text>
+      <span className="text-14 font-medium text-foreground-5">No labels</span>
     )}
   </div>
 )

@@ -30,9 +30,7 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
 }) => (
   <div className="flex flex-col gap-3">
     {addReviewerError || removeReviewerError ? (
-      <span className="text-12 text-destructive">
-        {addReviewerError ?? removeReviewerError}
-      </Text>
+      <span className="text-12 text-destructive">{addReviewerError ?? removeReviewerError}</span>
     ) : (
       <></>
     )}

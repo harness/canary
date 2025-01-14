@@ -6,8 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
-  SearchBox,
-  Text
+  SearchBox
 } from '@components/index'
 import { cn } from '@utils/cn'
 
@@ -35,9 +34,7 @@ const LabelsHeader = ({
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-14 font-medium">
-        {t('views:pullRequests.labels')}
-      </Text>
+      <span className="text-14 font-medium">{t('views:pullRequests.labels')}</span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button size="sm" variant="ghost" className="px-2 py-1 text-tertiary-background">

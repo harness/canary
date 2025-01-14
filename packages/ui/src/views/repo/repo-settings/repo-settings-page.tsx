@@ -15,9 +15,9 @@ export const getNavItems = (t: TFunction) => [
     items: [{ id: 0, title: t('views:repos.generalSettings', 'General Settings'), to: 'general' }]
   },
   // {
-  //   groupId: 1,
-  //   title: 'Access',
-  //   type: MenuGroupTypes.GENERAL,
+  // groupId: 1,
+  // title: 'Access',
+  // type: MenuGroupTypes.GENERAL,
 
   //   items: [
   //     { id: 0, title: 'Collaborations', to: 'collaborations' },
@@ -34,7 +34,8 @@ export const getNavItems = (t: TFunction) => [
       // { id: 1, text: 'Tags', to: 'tags' },
       { id: 0, title: t('views:repos.rules', 'Rules'), to: 'rules' },
       // { id: 3, text: 'Actions', to: 'actions' },
-      { id: 1, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' }
+      { id: 1, title: t('views:repos.webhooks', 'Webhooks'), to: 'webhooks' },
+      { id: 2, title: t('views:repos.labels', 'Labels'), to: 'labels' }
       // { id: 5, text: 'Environments', to: 'environments' },
       // { id: 6, text: 'Codespaces', to: 'codespaces' },
       // { id: 7, text: 'Pages', to: 'pages' }

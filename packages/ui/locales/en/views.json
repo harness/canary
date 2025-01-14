@@ -116,6 +116,7 @@
     "general": "General",
     "codeAutomation": "Code and automation",
     "webhooks": "Webhooks",
+    "labels": "Labels",
     "cloneRepo": "Clone repository",
     "cloneHttps": "HTTPS",
     "cloneSsh": "SSH",

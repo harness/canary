@@ -37,6 +37,7 @@ import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
+import { RepoLabelsList } from './pages-v2/repo/repo-labels-container'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
@@ -460,6 +461,10 @@ export const routes: CustomRouteObject[] = [
                             }
                           }
                         ]
+                      },
+                      {
+                        path: 'labels',
+                        element: <RepoLabelsList />
                       }
                     ]
                   }

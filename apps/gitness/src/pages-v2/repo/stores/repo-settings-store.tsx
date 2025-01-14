@@ -4,8 +4,8 @@ import {
   FindRepositoryOkResponse,
   ListPrincipalsOkResponse,
   ListStatusCheckRecentOkResponse,
-  RuleGetOkResponse,
-  RuleListOkResponse
+  RepoRuleGetOkResponse,
+  RepoRuleListOkResponse
 } from '@harnessio/code-service-client'
 import { BypassUsersList, RepoBranchSettingsFormFields, RepoData, RuleDataType } from '@harnessio/ui/views'
 
@@ -20,9 +20,9 @@ interface IRepoStore {
   recentStatusChecks: ListStatusCheckRecentOkResponse | null
 
   setRepoData: (data: FindRepositoryOkResponse) => void
-  setRules: (data: RuleListOkResponse) => void
+  setRules: (data: RepoRuleListOkResponse) => void
   setSecurityScanning: (enabled: boolean) => void
-  setPresetRuleData: (data: RuleGetOkResponse | null) => void
+  setPresetRuleData: (data: RepoRuleGetOkResponse | null) => void
   setPrincipals: (data: ListPrincipalsOkResponse | null) => void
   setRecentStatusChecks: (data: ListStatusCheckRecentOkResponse | null) => void
 }

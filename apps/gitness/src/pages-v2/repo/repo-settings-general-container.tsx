@@ -8,8 +8,8 @@ import {
   FindRepositoryErrorResponse,
   FindSecuritySettingsErrorResponse,
   ListBranchesErrorResponse,
-  RuleDeleteErrorResponse,
-  RuleListErrorResponse,
+  RepoRuleDeleteErrorResponse,
+  RepoRuleListErrorResponse,
   UpdateDefaultBranchErrorResponse,
   UpdatePublicAccessErrorResponse,
   UpdateRepositoryErrorResponse,
@@ -18,8 +18,8 @@ import {
   useFindRepositoryQuery,
   useFindSecuritySettingsQuery,
   useListBranchesQuery,
-  useRuleDeleteMutation,
-  useRuleListQuery,
+  useRepoRuleDeleteMutation,
+  useRepoRuleListQuery,
   useUpdateDefaultBranchMutation,
   useUpdatePublicAccessMutation,
   useUpdateRepositoryMutation,
@@ -102,7 +102,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     data: { body: rulesData } = {},
     refetch: refetchRulesList,
     isLoading: isRulesLoading
-  } = useRuleListQuery(
+  } = useRepoRuleListQuery(
     {
       repo_ref: repoRef,
       queryParams: {
@@ -110,7 +110,7 @@ export const RepoSettingsGeneralPageContainer = () => {
       }
     },
     {
-      onError: (error: RuleListErrorResponse) => {
+      onError: (error: RepoRuleListErrorResponse) => {
         const message = error.message || 'Error fetching rules'
         setApiError({ type: ErrorTypes.FETCH_RULES, message })
       }
@@ -137,7 +137,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { mutate: deleteRule, isLoading: isDeletingRule } = useRuleDeleteMutation(
+  const { mutate: deleteRule, isLoading: isDeletingRule } = useRepoRuleDeleteMutation(
     { repo_ref: repoRef },
     {
       onSuccess: () => {
@@ -145,7 +145,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setIsRulesAlertDeleteDialogOpen(false)
         setApiError(null)
       },
-      onError: (error: RuleDeleteErrorResponse) => {
+      onError: (error: RepoRuleDeleteErrorResponse) => {
         // Invalidate queries to refetch data from server
         queryClient.invalidateQueries(['ruleList', repoRef])
 

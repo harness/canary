@@ -4,9 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import {
   useListPrincipalsQuery,
   useListStatusCheckRecentQuery,
-  useRuleAddMutation,
-  useRuleGetQuery,
-  useRuleUpdateMutation
+  useRepoRuleAddMutation,
+  useRepoRuleGetQuery,
+  useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import {
   BranchRulesActionType,
@@ -54,7 +54,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
-  const { data: { body: rulesData } = {} } = useRuleGetQuery(
+  const { data: { body: rulesData } = {} } = useRepoRuleGetQuery(
     { repo_ref: repoRef, rule_identifier: identifier ?? '' },
     {
       enabled: !!identifier
@@ -67,7 +67,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     mutate: addRule,
     error: addRuleError,
     isLoading: addingRule
-  } = useRuleAddMutation(
+  } = useRepoRuleAddMutation(
     { repo_ref: repoRef },
     {
       onSuccess: () => {
@@ -90,7 +90,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     mutate: updateRule,
     error: updateRuleError,
     isLoading: updatingRule
-  } = useRuleUpdateMutation(
+  } = useRepoRuleUpdateMutation(
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {

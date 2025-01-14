@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon, Text } from '@/components'
+import { Avatar, AvatarFallback, Badge, Button, CommitCopyActions, Icon } from '@/components'
 import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -15,7 +15,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
   useTranslationStore
 }) => {
-  const { t: _t } = useTranslationStore()
+  const { t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
 
   return (
@@ -42,7 +42,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
                 <>
                   <span className="mx-2.5 h-4 w-px bg-borders-2" />
                   <Badge size="md" theme="success" borderRadius="full">
-                    Verified
+                    {t('views:commits.verified', 'Verified')}
                   </Badge>
                 </>
               )}

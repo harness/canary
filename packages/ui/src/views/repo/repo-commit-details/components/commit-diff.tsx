@@ -23,19 +23,17 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
         {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
       </p>
       <CommitChanges
-        data={
-          diffs?.map(item => ({
-            text: item.filePath,
-            numAdditions: item.addedLines,
-            numDeletions: item.deletedLines,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')[1],
-            fileViews: item.fileViews,
-            checksumAfter: item.checksumAfter,
-            filePath: item.filePath
-          })) || []
-        }
+        data={diffs.map(item => ({
+          text: item.filePath,
+          numAdditions: item.addedLines,
+          numDeletions: item.deletedLines,
+          data: item.raw,
+          title: item.filePath,
+          lang: item.filePath.split('.')[1],
+          fileViews: item.fileViews,
+          checksumAfter: item.checksumAfter,
+          filePath: item.filePath
+        }))}
         useTranslationStore={useTranslationStore}
         diffMode={2}
       />

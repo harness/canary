@@ -102,7 +102,7 @@ export function CreateLabelDialog({
                       {Object.values(ColorsEnum)?.map(color => (
                         <SelectItem key={color} value={color}>
                           <div className="flex items-center gap-2">
-                            <div className="w-4 h-4 rounded-full" style={{ backgroundColor: color }}></div>
+                            <div className="size-4 rounded-full" style={{ backgroundColor: color }}></div>
                             {color}
                           </div>
                         </SelectItem>
@@ -115,7 +115,7 @@ export function CreateLabelDialog({
                   name="name"
                   placeholder="Enter label name"
                   error={errors.name?.message?.toString()}
-                  className="min-w-[352px] mt-7"
+                  className="mt-7 min-w-[352px]"
                   size="md"
                   autoFocus
                 />

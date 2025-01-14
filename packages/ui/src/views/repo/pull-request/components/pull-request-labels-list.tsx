@@ -10,7 +10,7 @@ interface LabelsListProps {
 const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelError, removeLabelError }) => (
   <div className="flex flex-col gap-3">
     {addLabelError || removeLabelError ? (
-      <Text size={1} className="text-destructive">
+      <span className="text-12 text-destructive">
         {addLabelError ?? removeLabelError}
       </Text>
     ) : (

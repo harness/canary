@@ -18,6 +18,7 @@ import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-set
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
+import { ProjectLabelsList } from './pages-v2/project/project-labels-list-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -27,6 +28,8 @@ import PullRequestConversationPage from './pages-v2/pull-request/pull-request-co
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import RepoCommitDetailsPage from './pages-v2/repo-commit-details/commit-details-container'
+import RepoCommitDiffsPage from './pages-v2/repo-commit-details/commit-diffs-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
@@ -237,6 +240,27 @@ export const routes: CustomRouteObject[] = [
                       routeName: RouteConstants.toRepoCommits
                     }
                   },
+                  {
+                    path: 'commits/:commitSHA',
+                    element: <RepoCommitDetailsPage />,
+                    children: [
+                      {
+                        index: true,
+                        element: <RepoCommitDiffsPage />,
+                        handle: {
+                          breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
+                            <>
+                              <Text>Commits</Text>
+                              <Breadcrumb.Separator />
+                              <Text>{commitSHA}</Text>
+                            </>
+                          ),
+                          routeName: RouteConstants.toRepoCommitDetails
+                        }
+                      }
+                    ]
+                  },
+
                   {
                     path: 'branches',
                     element: <RepoBranchesListPage />,
@@ -466,6 +490,13 @@ export const routes: CustomRouteObject[] = [
                 element: <ProjectMemberListPage />,
                 handle: {
                   breadcrumb: () => <Text>Members</Text>
+                }
+              },
+              {
+                path: 'labels',
+                element: <ProjectLabelsList />,
+                handle: {
+                  breadcrumb: () => <Text>Labels</Text>
                 }
               }
             ]

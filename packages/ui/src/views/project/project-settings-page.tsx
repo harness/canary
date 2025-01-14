@@ -18,6 +18,9 @@ function ProjectSettingsPage() {
             <NavLink to={`members`}>
               <TabsTrigger value="members">Members</TabsTrigger>
             </NavLink>
+            <NavLink to={`labels`}>
+              <TabsTrigger value="labels">Labels</TabsTrigger>
+            </NavLink>
           </TabsList>
         </Tabs>
       </SandboxLayout.SubHeader>

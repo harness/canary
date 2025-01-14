@@ -286,16 +286,9 @@
     "GeneralTab": "General",
     "KeysTab": "Keys and Tokens"
   },
-  "projectSettings": {
-    "newMember": "",
-    "member": "",
-    "role": "",
-    "addMember": "",
-    "members": ""
-  },
   "forms": {
-    "selectMember": "",
     "selectMemberError": "",
+    "selectMember": "",
     "selectRole": "",
     "selectRoleError": "",
     "enterBranchName": "Enter branch name",
@@ -303,6 +296,13 @@
     "select": "Select",
     "baseBranch": "Base Branch",
     "selectBranchError": ""
+  },
+  "projectSettings": {
+    "newMember": "",
+    "member": "",
+    "role": "",
+    "addMember": "",
+    "members": ""
   },
   "commits": {
     "createNewCommit": "Create new commit"

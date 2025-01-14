@@ -17,7 +17,8 @@ export enum RouteConstants {
   toPipelineExecutions = 'toPipelineExecutions',
   toPipelineExecution = 'toPipelineExecution',
   toRepoGeneralSettings = 'toRepoGeneralSettings',
-  toRepoBranchRule = 'toRepoBranchRule'
+  toRepoBranchRule = 'toRepoBranchRule',
+  toRepoCommitDetails = 'toRepoCommitDetails'
 }
 
 export interface RouteEntry {

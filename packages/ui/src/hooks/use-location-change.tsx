@@ -22,7 +22,7 @@ const useLocationChange = ({ t, onRouteChange }: { t: TFunction; onRouteChange: 
     if (currentRoute) {
       onRouteChange(currentRoute)
     }
-  }, [location.pathname])
+  }, [location.pathname, onRouteChange, routes])
 }
 
 export { useLocationChange }

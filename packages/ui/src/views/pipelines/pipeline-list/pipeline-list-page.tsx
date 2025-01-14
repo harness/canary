@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { debounce } from 'lodash-es'
@@ -27,10 +27,10 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
-  }, [])
+  }
 
   if (isError)
     // TODO: improve error handling

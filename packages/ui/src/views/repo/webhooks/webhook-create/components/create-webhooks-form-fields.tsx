@@ -47,7 +47,6 @@ export const WebhookNameField: FC<WebhookFormFieldProps & { disabled: boolean }>
       id="name"
       {...register!('identifier')}
       placeholder="Name your webhook"
-      // eslint-disable-next-line jsx-a11y/no-autofocus
       autoFocus
       disabled={disabled}
       label={t('views:repos.name', 'Name')}

@@ -25,7 +25,7 @@ import {
   useUpdateRepositoryMutation,
   useUpdateSecuritySettingsMutation
 } from '@harnessio/code-service-client'
-import { AlertDeleteDialog, DeleteAlertDialog } from '@harnessio/ui/components'
+import { DeleteAlertDialog } from '@harnessio/ui/components'
 import {
   AccessLevel,
   BranchSelectorListItem,
@@ -55,10 +55,11 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
   const { branchList, setBranchList, setSelectedBranchTag, setSelectedRefType } = useRepoBranchesStore()
   const [branchQuery, setBranchQuery] = useState('')
+  const [rulesSearchQuery, setRulesSearchQuery] = useState('')
   const [apiError, setApiError] = useState<{ type: ErrorTypes; message: string } | null>(null)
-  const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState<boolean>(false)
-  const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState<boolean>(false)
-  const [alertDeleteParams, setAlertDeleteParams] = useState<string>('')
+  const [isRulesAlertDeleteDialogOpen, setIsRulesAlertDeleteDialogOpen] = useState(false)
+  const [isRepoAlertDeleteDialogOpen, setRepoAlertDeleteDialogOpen] = useState(false)
+  const [alertDeleteParams, setAlertDeleteParams] = useState('')
 
   const closeRulesAlertDeleteDialog = () => setIsRulesAlertDeleteDialogOpen(false)
   const openRulesAlertDeleteDialog = (identifier: string) => {
@@ -97,10 +98,16 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { data: { body: rulesData } = {}, refetch: refetchRulesList } = useRuleListQuery(
+  const {
+    data: { body: rulesData } = {},
+    refetch: refetchRulesList,
+    isLoading: isRulesLoading
+  } = useRuleListQuery(
     {
       repo_ref: repoRef,
-      queryParams: {}
+      queryParams: {
+        query: rulesSearchQuery
+      }
     },
     {
       onError: (error: RuleListErrorResponse) => {
@@ -204,7 +211,7 @@ export const RepoSettingsGeneralPageContainer = () => {
     }
   )
 
-  const { mutate: updateSecuritySettings, isLoading: UpdatingSecuritySettings } = useUpdateSecuritySettingsMutation(
+  const { mutate: updateSecuritySettings, isLoading: isUpdatingSecuritySettings } = useUpdateSecuritySettingsMutation(
     { repo_ref: repoRef },
     {
       onSuccess: ({ body: data }) => {
@@ -314,8 +321,10 @@ export const RepoSettingsGeneralPageContainer = () => {
     isLoadingRepoData: isLoadingRepoData || isLoadingSecuritySettings,
     isUpdatingRepoData: updatingPublicAccess || updatingDescription || updatingBranch,
     isLoadingSecuritySettings,
-    isUpdatingSecuritySettings: UpdatingSecuritySettings
+    isUpdatingSecuritySettings,
+    isRulesLoading
   }
+
   return (
     <>
       <RepoSettingsGeneralPage
@@ -333,26 +342,31 @@ export const RepoSettingsGeneralPageContainer = () => {
         openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
         searchQuery={branchQuery}
         setSearchQuery={setBranchQuery}
+        rulesSearchQuery={rulesSearchQuery}
+        setRulesSearchQuery={setRulesSearchQuery}
       />
 
       <DeleteAlertDialog
         open={isRulesAlertDeleteDialogOpen}
         onClose={closeRulesAlertDeleteDialog}
         deleteFn={handleDeleteRule}
-        error={apiError}
+        error={apiError?.type === ErrorTypes.DELETE_RULE ? apiError : null}
         type="rule"
         identifier={alertDeleteParams}
         isLoading={isDeletingRule}
         useTranslationStore={useTranslationStore}
       />
-      <AlertDeleteDialog
+
+      <DeleteAlertDialog
         open={isRepoAlertDeleteDialogOpen}
-        onOpenChange={closeRepoAlertDeleteDialog}
-        handleDeleteRepository={handleDeleteRepository}
-        identifier={repoRef}
-        isDeletingRepo={isDeletingRepo}
-        error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError.message : null}
+        onClose={closeRepoAlertDeleteDialog}
+        deleteFn={handleDeleteRepository}
+        error={apiError?.type === ErrorTypes.DELETE_REPO ? apiError : null}
         type="repository"
+        identifier={repoRef}
+        isLoading={isDeletingRepo}
+        useTranslationStore={useTranslationStore}
+        withForm
       />
     </>
   )

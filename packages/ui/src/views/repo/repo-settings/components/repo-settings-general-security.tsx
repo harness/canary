@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -33,7 +33,7 @@ interface RepoSettingsSecurityFormProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> = ({
+export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   securityScanning,
   handleUpdateSecuritySettings,
   apiError,
@@ -64,11 +64,7 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
 
   useEffect(() => {
     setValue('secretScanning', securityScanning)
-  }, [securityScanning])
-
-  if (isLoadingSecuritySettings) {
-    return <SkeletonList />
-  }
+  }, [securityScanning, setValue])
 
   const isDisabled =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
@@ -79,11 +75,13 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
     : ''
 
   return (
-    <>
-      <Text size={4} weight="medium">
+    <Fieldset>
+      <Text size={13} weight="medium">
         {t('views:repos.security', 'Security')}
       </Text>
-      <Fieldset className="mb-0">
+      {isLoadingSecuritySettings ? (
+        <SkeletonList />
+      ) : (
         <ControlGroup>
           <Option
             className="mt-0"
@@ -107,16 +105,16 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
           )}
         </ControlGroup>
+      )}
 
-        {apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
-          <>
-            <Spacer size={2} />
-            <Text size={1} className="text-destructive">
-              {apiError.message}
-            </Text>
-          </>
-        )}
-      </Fieldset>
-    </>
+      {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
+        <>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {apiError.message}
+          </Text>
+        </>
+      )}
+    </Fieldset>
   )
 }

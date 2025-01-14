@@ -34,15 +34,15 @@ export const Option: FC<OptionProps> = ({ control, id, label, description, ariaS
     >
       {control}
       <div className="flex flex-col gap-0">
-        <Label htmlFor={id} className="cursor-pointer pl-4 leading-tight">
+        <Label htmlFor={id} className="cursor-pointer pl-2.5 leading-tight">
           {label}
         </Label>
         {description && (
           <Text
-            className="ml-4 mt-1.5 leading-snug tracking-tight"
+            className="ml-2.5 mt-1.5 leading-snug tracking-tight"
             as="p"
             size={2}
-            color="tertiaryBackground"
+            color="foreground-4"
             id={`${id}-description`}
             role="note"
           >

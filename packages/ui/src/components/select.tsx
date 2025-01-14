@@ -44,7 +44,7 @@ const Select: FC<SelectProps> = ({
     </SelectTrigger>
     {children}
     {error && (
-      <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-1')} theme={MessageTheme.ERROR}>
+      <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-0.5')} theme={MessageTheme.ERROR}>
         {error}
       </Message>
     )}

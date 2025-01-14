@@ -22,26 +22,26 @@ export function Root({ className, children, isSubMenu = false }: RootProps) {
       {!isSubMenu && (
         <>
           <div
-            className="absolute -top-[82px] left-1/2 z-[-1] h-[164px] w-[392px] -translate-x-1/2 rounded-[392px]"
+            className="absolute left-1/2 top-[-82px] z-[-1] h-[164px] w-[392px] -translate-x-1/2 rounded-[392px]"
             // style={{
             //   background: 'radial-gradient(50% 50% at 50% 50%, rgba(48, 48, 54, 0.4) 0%, rgba(48, 48, 54, 0) 100%)'
             // }}
           />
           <div
-            className="absolute -left-[132px] -top-[51px] z-[-1] h-[325px] w-[263px] rounded-[325px]"
+            className="absolute left-[-132px] top-[-51px] z-[-1] h-[325px] w-[263px] rounded-[325px]"
             // style={{
             //   background:
             //     'radial-gradient(50% 50% at 50% 50%, rgba(73, 73, 73, 0.25) 0%, rgba(73, 73, 73, 0.15) 44.95%, rgba(73, 73, 73, 0) 100%)'
             // }}
           />
           <div
-            className="absolute -right-[93px] top-[22%] z-[-1] h-[333px] w-[186px] rounded-[333px]"
+            className="absolute right-[-93px] top-[22%] z-[-1] h-[333px] w-[186px] rounded-[333px]"
             // style={{
             //   background: 'radial-gradient(50% 50% at 50% 50%, rgba(58, 58, 58, 0.2) 0%, rgba(58, 58, 58, 0) 100%)'
             // }}
           />
           <div
-            className="absolute -left-[139px] bottom-[161px] z-[-1] h-[362px] w-[297px] rounded-[362px]"
+            className="absolute bottom-[161px] left-[-139px] z-[-1] h-[362px] w-[297px] rounded-[362px]"
             // style={{
             //   background: 'radial-gradient(50% 50% at 50% 50%, rgba(73, 73, 73, 0.2) 0%, rgba(73, 73, 73, 0) 100%)'
             // }}

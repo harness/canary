@@ -10,7 +10,7 @@ import {
   Icon
 } from '@/components'
 
-export const RepoSettingsToolTip = ({
+export const LabelToolTip = ({
   onEdit,
   identifier,
   onDelete
@@ -38,7 +38,7 @@ export const RepoSettingsToolTip = ({
             <DropdownMenuShortcut className="ml-0">
               <Icon name="edit-pen" className="mr-2" />
             </DropdownMenuShortcut>
-            Edit rule
+            Edit label
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem
@@ -51,7 +51,7 @@ export const RepoSettingsToolTip = ({
             <DropdownMenuShortcut className="ml-0">
               <Icon name="trash" className="mr-2 text-destructive" />
             </DropdownMenuShortcut>
-            Delete rule
+            Delete label
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

@@ -1,10 +1,7 @@
-import { Avatar, AvatarFallback, Icon, Text } from '@components/index'
+import { Avatar, AvatarFallback, Icon, MoreActionsTooltip, Text } from '@/components'
+import { PullReqReviewDecision, ReviewerItemProps } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-
-import { ReviewerItemProps } from '../details/pull-request-details-types'
-import { PullReqReviewDecision } from '../pull-request.types'
-import { PullRequestReviewersTooltip } from './pull-request-reviewers-tooltip'
 
 const ReviewerItem = ({
   reviewer,
@@ -46,7 +43,15 @@ const ReviewerItem = ({
       <div className="grow" />
 
       {updatedReviewDecision && getReviewDecisionIcon(updatedReviewDecision as PullReqReviewDecision)}
-      <PullRequestReviewersTooltip reviewer={reviewer} handleDelete={handleDelete} />
+      <MoreActionsTooltip
+        actions={[
+          {
+            isDanger: true,
+            title: 'Delete Reviewer',
+            onClick: () => (reviewer?.id ? handleDelete(reviewer.id) : {})
+          }
+        ]}
+      />
     </div>
   )
 }

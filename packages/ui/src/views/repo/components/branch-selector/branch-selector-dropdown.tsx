@@ -1,4 +1,4 @@
-import { FC, useMemo, useState } from 'react'
+import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -33,9 +33,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   const filteredItems = useMemo(() => {
     return activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
-  }, [activeTab, branchList, tagList, searchQuery])
+  }, [activeTab, branchList, tagList])
 
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
   }
 
@@ -111,7 +111,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-foreground-2">Nothing to show</span>
+            <span className="text-14 leading-tight text-foreground-2">
+              {t('views:noData.noResults', 'No search results')}
+            </span>
           </div>
         )}
 

@@ -13,11 +13,10 @@ import {
   Spacer,
   Text
 } from '@/components'
+import { TokenFormType } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
-
-import { TokenFormType } from '../../types'
 
 export const tokenCreateFormSchema = z.object({
   identifier: z.string().min(1, { message: 'Please provide a name' }),

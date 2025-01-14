@@ -144,7 +144,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               placeholder="Add a file name"
               size="md"
               error={errors.fileName?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
           )}
@@ -214,7 +213,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               />
             </RadioGroup>
             {violation && (
-              <Message className="ml-8 mt-1" theme={MessageTheme.ERROR}>
+              <Message className="ml-8 mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
                   ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
                     ? 'Some rules will be bypassed to commit directly'
@@ -225,7 +224,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Message>
             )}
             {errors.commitToGitRef && (
-              <Message className="ml-8 mt-1" theme={MessageTheme.ERROR}>
+              <Message className="ml-8 mt-0.5" theme={MessageTheme.ERROR}>
                 {errors.commitToGitRef?.message?.toString()}
               </Message>
             )}
@@ -238,7 +237,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   })}
                   placeholder="New Branch Name"
                   error={errors.newBranchName?.message?.toString()}
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                   inputIconName="branch"
                 />

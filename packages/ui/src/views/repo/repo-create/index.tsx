@@ -132,7 +132,6 @@ export function RepoCreatePage({
               placeholder="Enter repository name"
               size="md"
               error={errors.name?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
             {/* DESCRIPTION */}
@@ -217,7 +216,7 @@ export function RepoCreatePage({
                 />
               </RadioGroup>
               {errors.access && (
-                <Message className="mt-1" theme={MessageTheme.ERROR}>
+                <Message className="mt-0.5" theme={MessageTheme.ERROR}>
                   {errors.access.message?.toString()}
                 </Message>
               )}

@@ -1,9 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Badge, NoData, PaginationComponent, Spacer, StackedList, Text } from '@/components'
+import { Badge, MoreActionsTooltip, NoData, PaginationComponent, Spacer, StackedList, Text } from '@/components'
 import { TranslationStore, WebhookType } from '@/views'
-
-import { MoreActionsTooltip } from './more-actions-tooltip'
 
 const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
   <div className="inline-flex items-center gap-2.5">
@@ -70,7 +68,7 @@ export function RepoWebhookList({
           isDirtyList
             ? t(
                 'views:noData.noResultsDescription',
-                'There are no search results to show here for the selected filters, search query, or current page.'
+                'No rules match your search. Try adjusting your keywords or filters.'
               )
             : t(
                 'views:noData.noWebhooksDescription',
@@ -110,9 +108,17 @@ export function RepoWebhookList({
             <StackedList.Field
               title={
                 <MoreActionsTooltip
-                  useTranslationStore={useTranslationStore}
-                  id={webhook.id}
-                  openDeleteWebhookDialog={openDeleteWebhookDialog}
+                  actions={[
+                    {
+                      title: t('views:webhookData.edit', 'Edit webhook'),
+                      to: `${webhook.id}`
+                    },
+                    {
+                      isDanger: true,
+                      title: t('views:webhookData.delete', 'Delete webhook'),
+                      onClick: () => openDeleteWebhookDialog(webhook.id)
+                    }
+                  ]}
                 />
               }
               right

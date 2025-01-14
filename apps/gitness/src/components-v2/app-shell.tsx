@@ -200,7 +200,7 @@ const AppShell = () => {
       <ManageNavigation
         pinnedItems={pinnedMenu}
         recentItems={recentMenu}
-        navbarMenuData={getNavbarMenuData({ t, routes })}
+        navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
         showManageNavigation={showCustomNav}
         isSubmitting={false}
         submitted={false}

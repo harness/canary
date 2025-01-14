@@ -7,8 +7,7 @@ import {
   AccordionTrigger,
   Badge,
   CopyButton,
-  StackedList,
-  Text
+  StackedList
 } from '@/components'
 import { TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -45,7 +44,7 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
-        <Text weight="medium">{text}</Text>
+        <span className="text-14 font-medium">{text}</span>
         <CopyButton name={text} className="text-icons-1" />
         {!!numAdditions && (
           <Badge variant="outline" size="sm" theme="success">

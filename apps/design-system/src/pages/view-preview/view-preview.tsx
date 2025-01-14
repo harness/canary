@@ -19,6 +19,8 @@ import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 
+import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
+import CommitDetailsViewWrapper from './commit-details-view-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
@@ -71,6 +73,13 @@ export const viewPreviews: Record<string, ReactNode> = {
       <RepoFilesViewWrapper>
         <RepoFilesEditView />
       </RepoFilesViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'commit-details': (
+    <RepoViewWrapper>
+      <CommitDetailsViewWrapper>
+        <CommitDetailsDiffViewWrapper />
+      </CommitDetailsViewWrapper>
     </RepoViewWrapper>
   ),
   'pipeline-list': (

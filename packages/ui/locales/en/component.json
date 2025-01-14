@@ -113,12 +113,8 @@
     "input": "Search files...",
     "noFile": "No file found."
   },
-  "There are no labels in this project yet": {
-    " Create a new label to get started": ""
-  },
   "layout": {
     "table": "Table",
     "list": "List"
-  },
-  "No search results": ""
+  }
 }

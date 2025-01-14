@@ -28,7 +28,7 @@ export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+  const repoPath = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [

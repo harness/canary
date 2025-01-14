@@ -29,7 +29,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const { repoId, spaceId } = useParams<PathParams>()
   const { show } = useExitConfirm()
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+  const repoPath = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${fullGitRef}`
 
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
@@ -129,7 +129,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * Navigate to file view route
    */
   const onExitConfirm = useCallback(() => {
-    const navigateTo = `/${spaceId}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
   }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId])
 

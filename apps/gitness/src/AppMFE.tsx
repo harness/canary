@@ -23,17 +23,16 @@ import i18n from './i18n/i18n'
 import { mfeRoutes } from './routes'
 
 export interface MFERouteRendererProps {
-  projectIdentifier?: string
   renderUrl: string
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
 }
-function MFERouteRenderer({ projectIdentifier, renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
+function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
   // Handle location change detected from parent route
   const navigate = useNavigate()
   useEffect(() => {
     if (renderUrl) {
-      const pathToNavigate = parentLocationPath.replace(replaceProjectPath(renderUrl, projectIdentifier), '')
+      const pathToNavigate = parentLocationPath.replace(renderUrl, '')
       navigate(pathToNavigate, { replace: true })
     }
   }, [parentLocationPath])
@@ -42,7 +41,7 @@ function MFERouteRenderer({ projectIdentifier, renderUrl, parentLocationPath, on
   const location = useLocation()
   useEffect(() => {
     if (location.pathname !== parentLocationPath) {
-      onRouteChange?.(`${replaceProjectPath(renderUrl, projectIdentifier)}${location.pathname}`)
+      onRouteChange?.(`${renderUrl}${location.pathname}`)
     }
   }, [location])
 
@@ -114,16 +113,11 @@ export default function AppMFE({
   const isStylesLoaded = useLoadMFEStyles(portalContainer)
 
   // Router Configuration
-  const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
+  const basename = `/ng${renderUrl}`
 
   const routesToRender = mfeRoutes(
     scope.projectIdentifier,
-    <MFERouteRenderer
-      projectIdentifier={scope.projectIdentifier}
-      renderUrl={renderUrl}
-      onRouteChange={onRouteChange}
-      parentLocationPath={parentLocationPath}
-    />
+    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
   )
   const router = createBrowserRouter(routesToRender, { basename })
 
@@ -158,13 +152,6 @@ export default function AppMFE({
       </ShadowRootWrapper>
     </div>
   )
-}
-
-function replaceProjectPath(renderUrl: string, projectIdentifier?: string): string {
-  if (projectIdentifier) {
-    return renderUrl.replace(`/projects/${projectIdentifier}`, '/projects')
-  }
-  return renderUrl
 }
 
 function ShadowRootLoader({ theme }: { theme: string }) {

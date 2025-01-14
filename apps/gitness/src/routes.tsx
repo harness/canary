@@ -49,7 +49,7 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
-const spaceIdReposChildren = [
+const repoRoutes = [
   {
     path: 'repos',
     handle: {
@@ -687,7 +687,7 @@ export const routes: CustomRouteObject[] = [
         handle: {
           breadcrumb: () => <ProjectDropdown />
         },
-        children: spaceIdReposChildren
+        children: repoRoutes
       },
       {
         path: 'admin',
@@ -815,11 +815,11 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | nu
         children: [{ index: true, element: <ReposListPage /> }]
       },
       {
-        path: ':spaceId',
+        path: '',
         handle: {
           breadcrumb: () => <span>{mfeProjectId ?? ''}</span>
         },
-        children: spaceIdReposChildren
+        children: repoRoutes
       }
     ]
   }

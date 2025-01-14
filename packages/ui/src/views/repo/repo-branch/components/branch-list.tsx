@@ -129,11 +129,11 @@ export const BranchesList = ({
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),
-                        to: `/${spaceId}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
+                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
-                        to: `/${spaceId}/repos/${repoId}/settings/rules`
+                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/settings/rules`
                       },
                       {
                         isDanger: true,

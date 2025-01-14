@@ -87,7 +87,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
+      const fullPath = `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
         return (

@@ -49,17 +49,20 @@ export declare type EnumWebhookParent = 'repo' | 'space'
 
 export declare type EnumWebhookExecutionResult = 'fatal_error' | 'retriable_error' | 'success' | null
 
-export declare type EnumWebhookTrigger =
+export type EnumWebhookTrigger =
   | 'branch_created'
   | 'branch_deleted'
   | 'branch_updated'
   | 'pullreq_branch_updated'
   | 'pullreq_closed'
   | 'pullreq_comment_created'
+  | 'pullreq_comment_status_updated'
+  | 'pullreq_comment_updated'
   | 'pullreq_created'
   | 'pullreq_label_assigned'
   | 'pullreq_merged'
   | 'pullreq_reopened'
+  | 'pullreq_review_submitted'
   | 'pullreq_updated'
   | 'tag_created'
   | 'tag_deleted'

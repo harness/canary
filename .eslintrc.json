@@ -12,6 +12,8 @@
     "plugin:import/typescript",
     "plugin:@typescript-eslint/recommended",
 
+    "plugin:i18next/recommended",
+
     "plugin:react/recommended",
     "plugin:react-hooks/recommended",
 
@@ -46,6 +48,12 @@
 
     "jsx-a11y/click-events-have-key-events": "warn",
     "jsx-a11y/no-autofocus": "off",
+
+    /*
+     * It is a temporary change.
+     * It will be updated as "error" after fixing all the components.
+     */
+    "i18next/no-literal-string": "warn",
 
     "@typescript-eslint/no-unused-vars": [
       "error",

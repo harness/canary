@@ -36,7 +36,7 @@ const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelE
         </div>
       ))
     ) : (
-      <Text size={2} weight="medium" color="foreground-5">
+      <span className="text-14 font-medium text-foreground-5">
         No labels
       </Text>
     )}

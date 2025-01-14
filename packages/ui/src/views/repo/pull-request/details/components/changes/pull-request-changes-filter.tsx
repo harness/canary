@@ -269,7 +269,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   onClick={() => {}}
                   className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
                 >
-                  <Text size={1} className="flex-1 overflow-hidden truncate text-primary">
+                  <span className="text-12 flex-1 overflow-hidden truncate text-primary">
                     {diff.filePath}
                   </Text>
                   <div className="ml-4 flex items-center space-x-2">

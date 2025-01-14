@@ -16,6 +16,7 @@ import {
   useGetPullReqByBranchesQuery,
   useListBranchesQuery,
   useListCommitsQuery,
+  useListPrincipalsQuery,
   useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
@@ -25,6 +26,8 @@ import {
   BranchSelectorTab,
   CommitSelectorListItem,
   CompareFormFields,
+  PRReviewer,
+  PullReqReviewDecision,
   PullRequestComparePage
 } from '@harnessio/ui/views'
 
@@ -50,7 +53,6 @@ export const CreatePullRequest = () => {
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
   const { currentUser } = useAppContext()
-  const [branchTagQuery, setBranchTagQuery] = useState('')
   const [diffTargetBranch, diffSourceBranch] = diffRefs ? diffRefs.split('...') : [undefined, undefined]
 
   const navigate = useNavigate()
@@ -67,6 +69,8 @@ export const CreatePullRequest = () => {
     title: string
     description: string
   } | null>(null)
+  const [reviewers, setReviewers] = useState<PRReviewer[]>([])
+  const [diffs, setDiffs] = useState<DiffFileEntry[]>()
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const [
@@ -88,7 +92,9 @@ export const CreatePullRequest = () => {
   )
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
-  const [diffs, setDiffs] = useState<DiffFileEntry[]>()
+  const [branchTagQuery, setBranchTagQuery] = useQueryState('branch', { defaultValue: '' })
+  const [searchReviewers, setSearchReviewers] = useQueryState('reviewer', { defaultValue: '' })
+
   const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {
       repo_ref: repoRef,
@@ -100,6 +106,10 @@ export const CreatePullRequest = () => {
       enabled: targetRef !== undefined && sourceRef !== undefined && cachedDiff.path !== path
     }
   )
+  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+  })
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
@@ -181,7 +191,8 @@ export const CreatePullRequest = () => {
       is_draft: isDraft,
       target_branch: selectedTargetBranch.name || repoMetadata?.default_branch,
       source_branch: selectedSourceBranch.name,
-      title: data.title
+      title: data.title,
+      reviewer_ids: reviewers.map(reviewer => reviewer.reviewer.id)
     }
 
     createPullRequestMutation.mutate(
@@ -371,6 +382,27 @@ export const CreatePullRequest = () => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
+  const handleAddReviewer = (id?: number) => {
+    if (!id) return
+    const reviewer = principals?.find(principal => principal.id === id)
+    if (reviewer?.display_name && reviewer.id) {
+      setReviewers(prev => [
+        ...prev,
+        {
+          reviewer: { display_name: reviewer?.display_name || '', id: reviewer?.id || 0 },
+          review_decision: PullReqReviewDecision.pending,
+          sha: ''
+        }
+      ])
+    }
+  }
+
+  const handleDeleteReviewer = (id?: number) => {
+    if (!id) return
+    const newReviewers = reviewers.filter(reviewer => reviewer?.reviewer?.id !== id)
+    setReviewers(newReviewers)
+  }
+
   const renderContent = () => {
     if (isFetchingBranches) return <SkeletonList />
 
@@ -409,7 +441,8 @@ export const CreatePullRequest = () => {
             isBinary: item.isBinary,
             deleted: item.isDeleted,
             unchangedPercentage: item.unchangedPercentage,
-            blocks: item.blocks
+            blocks: item.blocks,
+            filePath: item.filePath
           })) || []
         }
         diffStats={
@@ -422,8 +455,14 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
-        searchQuery={branchTagQuery}
-        setSearchQuery={setBranchTagQuery}
+        searchBranchQuery={branchTagQuery}
+        setSearchBranchQuery={setBranchTagQuery}
+        usersList={principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid }))}
+        searchReviewersQuery={searchReviewers}
+        setSearchReviewersQuery={setSearchReviewers}
+        reviewers={reviewers}
+        handleAddReviewer={handleAddReviewer}
+        handleDeleteReviewer={handleDeleteReviewer}
       />
     )
   }

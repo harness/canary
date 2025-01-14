@@ -224,6 +224,11 @@
     "compareChangesTabChanges": "Modifications",
     "deleted": "Supprimé",
     "deletedComment": "Ce commentaire a été supprimé.",
+    "labels": "Étiquettes",
+    "searchLabels": "Rechercher des étiquettes..",
+    "noLabels": "Aucune étiquette trouvée.",
+    "reviewers": "Réviseurs",
+    "searchUsers": "Rechercher des utilisateurs..",
     "approve": "Approuver",
     "approved": "Approuvée",
     "changereq": "Changement Demandé",
@@ -231,7 +236,8 @@
     "unified": "Unifié",
     "viewed": "Vu",
     "replyHere": "Repondre ici",
-    "commits": "Commets"
+    "commits": "Commets",
+    "noUsers": "Aucun utilisateur trouvé."
   },
   "profileSettings": {
     "name": "Nom",

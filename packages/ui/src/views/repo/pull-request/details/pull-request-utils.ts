@@ -170,7 +170,7 @@ export function getFileViewedState(
 export const FILE_VIEWED_OBSOLETE_SHA = 'ffffffffffffffffffffffffffffffffffffffff'
 
 export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullReqActivity>) {
-  const right = get(commentItem.payload?.payload, 'line_start_new', false)
+  const right = get(commentItem.payload?.payload?.payload, 'line_start_new', false)
   const span = right
     ? commentItem?.payload?.payload?.code_comment?.span_new || 0
     : commentItem?.payload?.payload?.code_comment?.span_old || 0

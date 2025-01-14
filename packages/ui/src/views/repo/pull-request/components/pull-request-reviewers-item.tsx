@@ -29,7 +29,7 @@ const ReviewerItem = ({
   return (
     <div key={reviewer?.id} className="mr-1 flex items-center space-x-2">
       <Avatar
-        className={cn('h-7 w-7 rounded-full', {
+        className={cn('h-6 w-6 rounded-full', {
           'p-0': updatedReviewDecision !== PullReqReviewDecision.changeReq
         })}
       >

@@ -251,22 +251,24 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
               {!hideReply && (
                 <>
                   {hideReplyBox ? (
-                    <PullRequestCommentBox
-                      inReplyMode
-                      onSaveComment={() => {
-                        handleSaveComment?.(comment, parentCommentId)
-                        setHideReplyBox?.(false)
-                      }}
-                      currentUser={currentUser}
-                      onCancelClick={() => {
-                        setHideReplyBox?.(false)
-                      }}
-                      comment={comment}
-                      isResolved={isResolved}
-                      setComment={setComment}
-                      parentCommentId={parentCommentId}
-                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-                    />
+                    <div className="flex w-full flex-col px-4">
+                      <PullRequestCommentBox
+                        inReplyMode
+                        onSaveComment={() => {
+                          handleSaveComment?.(comment, parentCommentId)
+                          setHideReplyBox?.(false)
+                        }}
+                        currentUser={currentUser}
+                        onCancelClick={() => {
+                          setHideReplyBox?.(false)
+                        }}
+                        comment={comment}
+                        isResolved={isResolved}
+                        setComment={setComment}
+                        parentCommentId={parentCommentId}
+                        onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                      />
+                    </div>
                   ) : (
                     <>
                       <div className={cn('flex items-center gap-3 border-t', replyBoxClassName)}>

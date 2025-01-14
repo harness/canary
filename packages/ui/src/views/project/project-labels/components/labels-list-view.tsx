@@ -10,7 +10,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
   handleDeleteLabel,
   useTranslationStore
 }) => {
-  const { t } = useTranslationStore()
+  const { t: _t } = useTranslationStore()
   return (
     <Table variant="asStackedList">
       <TableHeader>

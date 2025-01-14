@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
 import {
   CommentItem,
   CommitSuggestion,
@@ -9,6 +8,7 @@ import {
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
+import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'

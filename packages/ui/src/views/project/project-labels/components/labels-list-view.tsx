@@ -42,7 +42,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
           <TableRow>
             <TableCell colSpan={5}>
               <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
-                {t('There are no labels in this project yet. Create a new label to get started.')}
+                There are no labels in this project yet. Create a new label to get started.
               </Text>
             </TableCell>
           </TableRow>

@@ -118,7 +118,6 @@ export const ProjectLabelsList = () => {
   return (
     <>
       <ProjectLabelsListView
-        openAlertDeleteDialog={() => {}}
         useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
         createdIn={space_ref}

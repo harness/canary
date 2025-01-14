@@ -127,11 +127,40 @@ export default function AppMFE({
   )
   const router = createBrowserRouter(routesToRender, { basename })
 
+  const shadowRootLoader = (
+    <>
+      <div className="loading-container">
+        <p className="loading-text">Loading, please wait...</p>
+      </div>
+      <style>
+        {`
+        @keyframes blink {
+          0% { opacity: 1; }
+          50% { opacity: 0.5; }
+          100% { opacity: 1; }
+        }
+        .loading-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+        }
+        .loading-text {
+          color: ${theme === 'Light' ? '#000' : '#fff'};
+          font-weight: bold;
+          font-size: 40px;
+          animation: blink 1s infinite;
+        }
+        `}
+      </style>
+    </>
+  )
+
   return (
     <div ref={portalRef}>
       <ShadowRootWrapper>
         {!isStylesLoaded ? (
-          'Loading...'
+          shadowRootLoader
         ) : (
           <PortalProvider portalContainer={portalContainer}>
             <MFEContext.Provider value={{ scope, renderUrl }}>

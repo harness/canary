@@ -125,6 +125,7 @@ export default function AppMFE({
     <div ref={portalRef}>
       <ShadowRootWrapper>
         {!isStylesLoaded ? (
+          // Replace it with spinner once it is available
           <ShadowRootLoader theme={theme} />
         ) : (
           <PortalProvider portalContainer={portalContainer}>
@@ -175,8 +176,7 @@ function ShadowRootLoader({ theme }: { theme: string }) {
       }
       .loading-text {
         color: ${theme === 'Light' ? '#000' : '#fff'};
-        font-weight: bold;
-        font-size: 40px;
+        font-size: 16px;
         animation: blink 1s infinite;
       }
       `}

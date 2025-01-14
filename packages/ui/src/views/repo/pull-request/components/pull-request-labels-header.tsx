@@ -35,7 +35,7 @@ const LabelsHeader = ({
 
   return (
     <div className="flex items-center justify-between">
-      <Text size={2} weight="medium">
+      <span className="text-14 font-medium">
         {t('views:pullRequests.labels')}
       </Text>
       <DropdownMenu>

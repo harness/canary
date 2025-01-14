@@ -30,7 +30,7 @@ interface NavLinkStorageInterface {
   }
 }
 
-const AppShell = ({ isMFE }: { isMFE: boolean }) => {
+export const AppShell = () => {
   const routes = useRoutes()
   const { currentUser, spaces } = useAppContext()
   const navigate = useNavigate()
@@ -170,10 +170,6 @@ const AppShell = ({ isMFE }: { isMFE: boolean }) => {
     [setPinned]
   )
 
-  if (isMFE) {
-    return <BreadcrumbsAndOutlet />
-  }
-
   return (
     <SandboxLayout.Root>
       <SandboxLayout.LeftPanel>
@@ -212,7 +208,9 @@ const AppShell = ({ isMFE }: { isMFE: boolean }) => {
   )
 }
 
-export default AppShell
+export const AppShellMFE = () => {
+  return <BreadcrumbsAndOutlet />
+}
 
 function BreadcrumbsAndOutlet() {
   return (

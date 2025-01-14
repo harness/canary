@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
-import AppShell from './components-v2/app-shell'
+import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
@@ -388,7 +388,7 @@ const spaceIdReposChildren = [
 export const routes: CustomRouteObject[] = [
   {
     path: '/',
-    element: <AppShell isMFE={true} />,
+    element: <AppShell />,
     handle: { routeName: 'toHome' },
     children: [
       {
@@ -798,7 +798,7 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | nu
     element: (
       <>
         {mfeRouteRenderer}
-        <AppShell isMFE={true} />
+        <AppShellMFE />
       </>
     ),
     handle: { routeName: 'toHome' },

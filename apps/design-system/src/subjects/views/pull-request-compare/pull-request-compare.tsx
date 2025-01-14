@@ -25,6 +25,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
 
   return (
     <PullRequestComparePage
+      handleDeleteReviewer={noop}
+      handleAddReviewer={noop}
       onFormSubmit={noop}
       onFormDraftSubmit={noop}
       onFormCancel={noop}
@@ -61,6 +63,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       isLoading={false}
       searchBranchQuery=""
       setSearchBranchQuery={noop}
+      searchReviewersQuery=""
+      setSearchReviewersQuery={noop}
       {...props}
     />
   )

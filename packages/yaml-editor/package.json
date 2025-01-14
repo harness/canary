@@ -14,6 +14,7 @@
   "scripts": {
     "webpack": "webpack",
     "build": "vite build",
+    "build:ci": "vite build",
     "watch:build": "watch 'pnpm build-yalc' ./src",
     "build-yalc": "pnpm build && pnpm yalc-push",
     "yalc-push": "yalc push",

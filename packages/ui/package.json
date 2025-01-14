@@ -16,6 +16,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && pnpm extract",
+    "build:ci": "vite build --config ./vite-base.config.ts",
     "build:analyse": "vite build --config ./vite-analyse.config.ts",
     "build:watch": "vite build --watch --emptyOutDir=false",
     "lint": "eslint ./src",
@@ -134,7 +135,7 @@
     "typescript": "~5.6.2",
     "vite": "^6.0.3",
     "vite-bundle-analyzer": "^0.15.2",
-    "vite-plugin-dts": "^4.3.0",
+    "vite-plugin-dts": "^4.5.0",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^2.1.8"

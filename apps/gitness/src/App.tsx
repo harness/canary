@@ -31,7 +31,7 @@ export default function AppV1() {
   })
 
   // Router Configuration
-  const router = createBrowserRouter(routes())
+  const router = createBrowserRouter(routes)
 
   return (
     <AppProvider>
@@ -41,7 +41,7 @@ export default function AppV1() {
             <TooltipProvider>
               <ExitConfirmProvider>
                 <NuqsAdapter>
-                  <NavigationProvider routes={routes()}>
+                  <NavigationProvider routes={routes}>
                     <RouterProvider router={router} />
                   </NavigationProvider>
                 </NuqsAdapter>

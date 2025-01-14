@@ -20,7 +20,7 @@ import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { routes } from './routes'
+import { mfeRoutes } from './routes'
 
 export interface MFERouteRendererProps {
   projectIdentifier?: string
@@ -116,7 +116,7 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${replaceProjectPath(renderUrl, scope.projectIdentifier)}`
 
-  const routesToRender = routes(
+  const routesToRender = mfeRoutes(
     scope.projectIdentifier,
     <MFERouteRenderer
       projectIdentifier={scope.projectIdentifier}
@@ -130,8 +130,6 @@ export default function AppMFE({
   return (
     <div ref={portalRef}>
       <ShadowRootWrapper>
-        {/* <style>{`${styles}`}</style> */}
-        {/* <style>{`${monacoStyles}`}</style> */}
         {!isStylesLoaded ? (
           'Loading...'
         ) : (

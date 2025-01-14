@@ -1,14 +1,18 @@
 import { useEffect, useMemo } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { getNavbarMenuData } from '@/data/navbar-menu-data'
-import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { TFunction } from 'i18next'
 
+import { MenuGroupType, NavbarItemType } from '@harnessio/ui/components'
+
+import { getNavbarMenuData } from '../../data/navbar-menu-data'
+import { useRoutes } from '../context/NavigationContext'
+
 const useLocationChange = ({ t, onRouteChange }: { t: TFunction; onRouteChange: (item: NavbarItemType) => void }) => {
+  const routeMapping = useRoutes()
   const location = useLocation()
 
-  const navbarMenuData = useMemo(() => getNavbarMenuData(t), [t])
+  const navbarMenuData = useMemo(() => getNavbarMenuData({ t, routes: routeMapping }), [t])
 
   const routes = useMemo(() => {
     return navbarMenuData.reduce((acc: NavbarItemType[], item: MenuGroupType) => {

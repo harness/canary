@@ -111,7 +111,9 @@
     "input": "Rechercher des fichiers...",
     "noFile": "Aucun fichier trouvé."
   },
-
+  "There are no labels in this project yet": {
+    " Create a new label to get started": ""
+  },
   "layout": {
     "table": "Table",
     "list": "List"

@@ -56,18 +56,18 @@ export interface ILabelsStore {
 }
 
 export interface ProjectLabelPageProps {
-  openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
   useTranslationStore: () => TranslationStore
   useLabelsStore: () => ILabelsStore
-  space_ref?: string
+  createdIn?: string
   handleEditLabel: (identifier: string) => void
   openCreateLabelDialog: () => void
   handleDeleteLabel: (identifier: string) => void
+  showSpacer?: boolean
 }
 
 export interface LabelsListViewProps {
   useTranslationStore: () => TranslationStore
-  space_ref?: string
+  createdIn?: string
   labels: ILabelType[]
   handleEditLabel: (identifier: string) => void
   handleDeleteLabel: (identifier: string) => void

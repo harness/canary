@@ -9,13 +9,14 @@ import {
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateLabelDialog, CreateLabelFormFields, ILabelType, ProjectLabelsListView } from '@harnessio/ui/views'
 
+import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useRepoLabelsStore } from './stores/repo-labels-store'
 
 export const RepoLabelsList = () => {
-  //   const space_ref = useGetSpaceURLParam()
   const repo_ref = useGetRepoRef()
+  const repoId = useGetRepoId()
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
@@ -41,7 +42,7 @@ export const RepoLabelsList = () => {
   }, [labels, setLabels])
 
   const {
-    mutate: defineSpaceLabel,
+    mutate: defineRepoLabel,
     isLoading: isCreatingLabel,
     error
   } = useDefineRepoLabelMutation(
@@ -56,7 +57,7 @@ export const RepoLabelsList = () => {
     }
   )
 
-  const { mutate: updateSpaceLabel } = useUpdateRepoLabelMutation(
+  const { mutate: updateRepoLabel } = useUpdateRepoLabelMutation(
     {
       repo_ref: repo_ref ?? ''
     },
@@ -69,7 +70,7 @@ export const RepoLabelsList = () => {
     }
   )
 
-  const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteRepoLabelMutation(
+  const { mutate: deleteRepoLabel, isLoading: isDeletingRepoLabel } = useDeleteRepoLabelMutation(
     {
       repo_ref: repo_ref ?? ''
     },
@@ -83,7 +84,7 @@ export const RepoLabelsList = () => {
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {
-      updateSpaceLabel({
+      updateRepoLabel({
         key: identifier,
         body: {
           key: data.name,
@@ -93,7 +94,7 @@ export const RepoLabelsList = () => {
       })
       return
     }
-    defineSpaceLabel({
+    defineRepoLabel({
       body: {
         key: data.name,
         color: data.color,
@@ -111,7 +112,7 @@ export const RepoLabelsList = () => {
   }
 
   const handleDeleteLabel = (identifier: string) => {
-    deleteSpaceLabel({
+    deleteRepoLabel({
       key: identifier
     })
   }
@@ -119,13 +120,13 @@ export const RepoLabelsList = () => {
   return (
     <>
       <ProjectLabelsListView
-        openAlertDeleteDialog={() => {}}
         useTranslationStore={useTranslationStore}
         useLabelsStore={useRepoLabelsStore}
-        space_ref={repo_ref}
+        createdIn={repoId}
         openCreateLabelDialog={handleOpenCreateLabelDialog}
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
+        showSpacer={false}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}
@@ -142,7 +143,7 @@ export const RepoLabelsList = () => {
         identifier={identifier ?? ''}
         type="label"
         deleteFn={handleDeleteLabel}
-        isLoading={isDeletingSpaceLabel}
+        isLoading={isDeletingRepoLabel}
         useTranslationStore={useTranslationStore}
       />
     </>

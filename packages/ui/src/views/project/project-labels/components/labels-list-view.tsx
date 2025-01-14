@@ -5,7 +5,7 @@ import { LabelToolTip } from './label-tool-tip'
 
 export const LabelsListView: React.FC<LabelsListViewProps> = ({
   labels,
-  space_ref,
+  createdIn,
   handleEditLabel,
   handleDeleteLabel,
   useTranslationStore
@@ -31,7 +31,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
                   {label.key}
                 </div>
               </TableCell>
-              <TableCell>{space_ref}</TableCell>
+              <TableCell>{createdIn}</TableCell>
               <TableCell>{label.description}</TableCell>
               <TableCell className="flex justify-end">
                 <LabelToolTip onEdit={handleEditLabel} onDelete={handleDeleteLabel} identifier={label.key} />

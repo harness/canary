@@ -121,7 +121,7 @@ export const ProjectLabelsList = () => {
         openAlertDeleteDialog={() => {}}
         useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
-        space_ref={space_ref}
+        createdIn={space_ref}
         openCreateLabelDialog={handleOpenCreateLabelDialog}
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}

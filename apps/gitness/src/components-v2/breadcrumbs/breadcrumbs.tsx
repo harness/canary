@@ -20,10 +20,10 @@ function Breadcrumbs() {
               if (!breadcrumb) return null
 
               return (
-                <Breadcrumb.Item key={index}>
+                <Breadcrumb.Item key={match.pathname}>
                   {!isFirst ? <Breadcrumb.Separator /> : null}
                   {isLast ? (
-                    breadcrumb(match.params)
+                    <Breadcrumb.Page>{breadcrumb(match.params)}</Breadcrumb.Page>
                   ) : (
                     <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>
                   )}

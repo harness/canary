@@ -560,7 +560,8 @@ export enum CommentType {
   BRANCH_DELETE = 'branch-delete',
   STATE_CHANGE = 'state-change',
   REVIEW_ADD = 'reviewer-add',
-  LABEL_MODIFY = 'label-modify'
+  LABEL_MODIFY = 'label-modify',
+  BRANCH_RESTORE = 'branch-restore'
 }
 
 export enum LabelActivity {

@@ -1,8 +1,8 @@
 import './styles/AppMFE.css'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 import { NuqsAdapter } from 'nuqs/adapters/react-router'
@@ -20,27 +20,47 @@ import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { mfeRoutes } from './routes'
+import { extractRedirectRouteObjects, mfeRoutes, repoRoutes } from './routes'
 
 export interface MFERouteRendererProps {
   renderUrl: string
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
 }
+
+const filteredRoutes = extractRedirectRouteObjects(repoRoutes)
+const isRouteMatchingRedirectRoutes = (pathToValidate: string) => {
+  return filteredRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
+}
+
 function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
-  // Handle location change detected from parent route
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const parentPath = parentLocationPath.replace(renderUrl, '')
+  const isNotRedirectPath = isRouteMatchingRedirectRoutes(location.pathname)
+
+  /**
+   * renderUrl ==> base URL of parent application
+   * parentPath ==> path name of parent application after base URL
+   * location.pathname ==> path name of MFE
+   * isNotRedirectPath ==> check if the current path is not a redirect path
+   */
+  const canNavigate = useMemo(
+    () => renderUrl && parentPath !== location.pathname && isNotRedirectPath,
+    [isNotRedirectPath, location.pathname, parentPath, renderUrl]
+  )
+
+  // Updates MFE location
   useEffect(() => {
-    if (renderUrl) {
-      const pathToNavigate = parentLocationPath.replace(renderUrl, '')
-      navigate(pathToNavigate, { replace: true })
+    if (canNavigate) {
+      navigate(parentPath, { replace: true })
     }
   }, [parentLocationPath])
 
-  // Notify parent about route change
-  const location = useLocation()
+  // Updates parent location
   useEffect(() => {
-    if (location.pathname !== parentLocationPath) {
+    if (canNavigate) {
       onRouteChange?.(`${renderUrl}${location.pathname}`)
     }
   }, [location])

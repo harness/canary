@@ -34,6 +34,9 @@ export interface AppRoutes {
   toRepoCommits: ({ spaceId, repoId }: PathParams) => string
 }
 
+/**
+ * @deprecated
+ */
 export const routes: AppRoutes = {
   toPullRequest: ({ spaceId, repoId, pullRequestId }: PullRequestRoutePathParams) =>
     `spaces/${spaceId}/repos/${repoId}/pull-requests/${pullRequestId}`,

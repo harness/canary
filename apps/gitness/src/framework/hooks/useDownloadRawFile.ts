@@ -11,7 +11,7 @@ interface UseDownloadRawFileParams {
 
 export function useDownloadRawFile() {
   const mutation = useMutation(async ({ repoRef, resourcePath, gitRef }: UseDownloadRawFileParams) => {
-    const url = `/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`
+    const url = `/code/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`
 
     const response = await fetch(url)
     if (!response.ok) {

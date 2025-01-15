@@ -41,7 +41,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
-  const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
+  const rawURL = `/code/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()

@@ -76,7 +76,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
       <Spacer size={6} />
 
       {error ? (
-        <span className="text-destructive text-xs">{error || 'Something went wrong'}</span>
+        <span className="text-xs text-destructive">{error || 'Something went wrong'}</span>
       ) : (
         <>
           {(!!webhooksWithFormattedDates.length || (!webhooksWithFormattedDates.length && isDirtyList)) && (

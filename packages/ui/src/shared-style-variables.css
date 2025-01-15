@@ -7,6 +7,8 @@
   --canary-grey-12: 240 5% 11%;
   --canary-grey-15: 240 6% 15%;
   --canary-grey-20: 240 6% 20%;
+  --canary-grey-23: 0 0% 23%;
+  --canary-grey-29: 0 0% 29%;
   --canary-grey-30: 240 6% 30%;
   --canary-grey-40: 240 6% 40%;
   --canary-grey-50: 240 6% 50%;
@@ -467,25 +469,33 @@
     --canary-button-background-disabled-01: var(--canary-harness-grey-400) / 0.15;
     --canary-button-border-disabled-01: var(--canary-harness-grey-400) / 0.2;
 
-    /* 🚨 Need these colors for other themes */
+    /* Box shadow colors */
+    --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
+    --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
+
+    /* Navigation gradients */
+    --canary-nav-gradient-1-1: var(--canary-harness-grey-0) / 0.4;
+    --canary-nav-gradient-1-2: var(--canary-harness-grey-0) / 0;
+    --canary-nav-gradient-2-1: var(--canary-harness-grey-200) / 0.25;
+    --canary-nav-gradient-2-2: var(--canary-harness-grey-200) / 0.15;
+    --canary-nav-gradient-2-3: var(--canary-harness-grey-200) / 0;
+    --canary-nav-gradient-3-1: var(--canary-harness-grey-200) / 0.2;
+    --canary-nav-gradient-3-2: var(--canary-harness-grey-200) / 0;
+    --canary-nav-gradient-4-1: var(--canary-harness-grey-200) / 0.2;
+    --canary-nav-gradient-4-2: var(--canary-harness-grey-200) / 0;
+    --canary-nav-item-gradient-1: var(--canary-harness-grey-0) / 0.12;
+    --canary-nav-item-gradient-2: var(--canary-harness-grey-0) / 0.11;
+    --canary-nav-item-gradient-3: var(--canary-harness-grey-0) / 0.07;
+    --canary-nav-item-gradient-4: var(--canary-harness-grey-0) / 0.03;
+    --canary-nav-item-gradient-5: var(--canary-harness-grey-0) / 0.01;
+    --canary-nav-item-gradient-6: var(--canary-harness-grey-0) / 0;
+
     /* Selected tab bg element*/
     --canary-tab-item-gradient-from: var(--canary-harness-grey-400) / 15%;
     --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0%;
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
-    /* Navigation vertical element gradients*/
-    --canary-nav-gradient-item-y-from: var(--canary-harness-grey-200);
-    --canary-nav-gradient-item-y-to: var(--canary-harness-grey-200) / 0;
-    --canary-tab-gradient-item-y-stops: var(--canary-nav-gradient-item-y-from), var(--canary-nav-gradient-item-y-to);
-    /* Navigation horizontal element gradients*/
-    --canary-nav-gradient-item-x-from: var(--canary-harness-grey-0);
-    --canary-nav-gradient-item-x-to: var(--canary-harness-grey-0) / 0;
-    --canary-tab-gradient-item-x-stops: var(--canary-nav-gradient-item-x-from), var(--canary-nav-gradient-item-x-to);
-
-    /* Box shadow colors */
-    --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
-    --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
-    --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
   }
   .dark,
   .dark-std-std {
@@ -653,5 +663,28 @@
     --canary-box-shadow-1: var(--canary-solid-black) / 0.3;
     --canary-box-shadow-2: var(--canary-solid-black) / 0.6;
     --canary-box-shadow-pagination: var(--canary-solid-black) / 0.5;
+
+    /* Navigation gradients */
+    --canary-nav-gradient-1-1: var(--canary-grey-20) / 0.4;
+    --canary-nav-gradient-1-2: var(--canary-grey-20) / 0;
+    --canary-nav-gradient-2-1: var(--canary-grey-29) / 0.25;
+    --canary-nav-gradient-2-2: var(--canary-grey-29) / 0.15;
+    --canary-nav-gradient-2-3: var(--canary-grey-29) / 0;
+    --canary-nav-gradient-3-1: var(--canary-grey-23) / 0.2;
+    --canary-nav-gradient-3-2: var(--canary-grey-23) / 0;
+    --canary-nav-gradient-4-1: var(--canary-grey-29) / 0.2;
+    --canary-nav-gradient-4-2: var(--canary-grey-29) / 0;
+    --canary-nav-item-gradient-1: var(--canary-white) / 0.12;
+    --canary-nav-item-gradient-2: var(--canary-white) / 0.11;
+    --canary-nav-item-gradient-3: var(--canary-white) / 0.07;
+    --canary-nav-item-gradient-4: var(--canary-white) / 0.03;
+    --canary-nav-item-gradient-5: var(--canary-white) / 0.01;
+    --canary-nav-item-gradient-6: var(--canary-white) / 0;
+
+    /* Selected tab bg element*/
+    --canary-tab-item-gradient-from: var(--canary-grey-20) / 0.3;
+    --canary-tab-item-gradient-to: var(--canary-grey-20) / 0;
+    --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
+      hsla(var(--canary-tab-item-gradient-to));
   }
 }

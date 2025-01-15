@@ -121,9 +121,8 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
           />
           <ButtonWithOptions<PatternsButtonType>
             id="patterns-type"
-            buttonSizeClassName="h-9"
+            size="md"
             handleButtonClick={handleAddPattern}
-            buttonText={t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
             selectedValue={selectedOption}
             handleOptionChange={setSelectedOption}
             options={[
@@ -136,7 +135,9 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
                 label: t(`views:repos.exclude`, 'Exclude')
               }
             ]}
-          />
+          >
+            {t(`views:repos.${selectedOption.toLowerCase()}`, `${selectedOption}`)}
+          </ButtonWithOptions>
         </div>
         {!!patterns.length && (
           <div className="mt-2 flex flex-wrap gap-1.5">

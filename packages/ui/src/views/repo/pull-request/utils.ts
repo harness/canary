@@ -6,11 +6,11 @@ export const getPrState = (
   state?: string
 ): { icon: IconType; text: string; theme: string } => {
   if (state === 'open' && is_draft) {
-    return { icon: 'pr-draft', text: 'Draft', theme: 'warning' }
+    return { icon: 'pr-draft', text: 'Draft', theme: 'muted' }
   } else if (merged) {
     return { icon: 'pr-merge', text: 'Merged', theme: 'emphasis' }
   } else if (state === 'closed') {
-    return { icon: 'pr-closed', text: 'Closed', theme: 'muted' }
+    return { icon: 'pr-closed', text: 'Closed', theme: 'destructive' }
   } else {
     return { icon: 'pr-open', text: 'Open', theme: 'success' }
   }

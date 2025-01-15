@@ -300,6 +300,12 @@ export interface DiffViewerExchangeState {
   commentsVisibilityAtLineNumber?: Map<number, boolean>
 }
 
+export interface DiffViewerState {
+  collapsed?: boolean
+  useFullDiff?: boolean
+  fullRawDiff?: string
+}
+
 export interface CommentRestorationTrackingState extends DiffCommentItem<TypesPullReqActivity> {
   uncommittedText?: string
   showReplyPlaceHolder?: boolean

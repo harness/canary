@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   Accordion,
@@ -6,8 +6,10 @@ import {
   AccordionItem,
   AccordionTrigger,
   Badge,
+  Button,
   Checkbox,
   CopyButton,
+  Icon,
   StackedList,
   Text
 } from '@components/index'
@@ -16,6 +18,8 @@ import {
   CommentItem,
   CommitFilterItemProps,
   CommitSuggestion,
+  DiffFileEntry,
+  DiffViewerState,
   FileViewedState,
   getFileViewedState,
   TranslationStore,
@@ -35,6 +39,7 @@ interface HeaderProps {
   fileViews?: Map<string, string>
   checksumAfter?: string
   filePath: string
+  diffData: DiffFileEntry
 }
 
 interface LineTitleProps {
@@ -46,6 +51,8 @@ interface LineTitleProps {
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
   setCollapsed: (val: boolean) => void
+  toggleFullDiff: () => void
+  useFullDiff?: boolean
 }
 
 interface DataProps {
@@ -71,6 +78,9 @@ interface DataProps {
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  scrolledToComment?: boolean
+  setScrolledToComment?: (val: boolean) => void
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -81,7 +91,9 @@ const LineTitle: React.FC<LineTitleProps> = ({
   showViewed,
   markViewed,
   unmarkViewed,
-  setCollapsed
+  setCollapsed,
+  toggleFullDiff,
+  useFullDiff
 }) => {
   const { t } = useTranslationStore()
   const { text, numAdditions, numDeletions, filePath, checksumAfter } = header
@@ -97,6 +109,23 @@ const LineTitle: React.FC<LineTitleProps> = ({
           }}
         >
           <CopyButton name={text} className="text-tertiary-background" />
+        </div>
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={e => {
+            e.preventDefault()
+          }}
+        >
+          <Button
+            className="text-tertiary-background"
+            variant="custom"
+            size="icon"
+            aria-label="expand diff"
+            onClick={() => toggleFullDiff()}
+          >
+            <Icon name={useFullDiff ? 'collapse-diff' : 'expand-diff'} size={16} />
+          </Button>
         </div>
         {numAdditions != null && numAdditions > 0 && (
           <Badge variant="outline" size="sm" theme="success">
@@ -167,6 +196,9 @@ const PullRequestAccordion: React.FC<{
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  scrolledToComment?: boolean
+  setScrolledToComment?: (val: boolean) => void
 }> = ({
   header,
   diffMode,
@@ -190,10 +222,17 @@ const PullRequestAccordion: React.FC<{
   removeSuggestionFromBatch,
   filenameToLanguage,
   toggleConversationStatus,
-  handleUpload
+  handleUpload,
+  onGetFullDiff,
+  scrolledToComment,
+  setScrolledToComment
 }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
-
+  const [useFullDiff, setUseFullDiff] = useState(false)
+  const diffViewerState = useMemo(() => new Map<string, DiffViewerState>(), [])
+  const [rawDiffData, setRawDiffData] = useState(
+    useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data
+  )
   // File viewed feature is only enabled if no commit range is provided ie defaultCommitFilter is selected (otherwise component is hidden, too)
   const [showViewedCheckbox, setShowViewedCheckbox] = useState(
     selectedCommits?.[0].value === defaultCommitFilter?.value
@@ -207,6 +246,29 @@ const PullRequestAccordion: React.FC<{
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
 
   const [openItems, setOpenItems] = useState<string[]>([])
+
+  useEffect(() => {
+    setRawDiffData(useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data)
+  }, [useFullDiff])
+
+  const toggleFullDiff = useCallback(() => {
+    if (!useFullDiff && !diffViewerState.get(header.filePath)?.fullRawDiff) {
+      onGetFullDiff(header.filePath).then(rawDiff => {
+        if (rawDiff && typeof rawDiff === 'string') {
+          diffViewerState.set(header.filePath, {
+            ...diffViewerState.get(header.filePath),
+            fullRawDiff: rawDiff
+          })
+          setRawDiffData(rawDiff)
+        }
+      })
+    }
+    diffViewerState.set(header.filePath, {
+      ...diffViewerState.get(header.filePath),
+      useFullDiff: !useFullDiff
+    })
+    setUseFullDiff(prev => !prev)
+  }, [diffViewerState.get(header.filePath)])
 
   const setCollapsed = (val: boolean) => {
     setOpenItems(curr => {
@@ -258,6 +320,8 @@ const PullRequestAccordion: React.FC<{
                     markViewed={markViewed}
                     unmarkViewed={unmarkViewed}
                     setCollapsed={setCollapsed}
+                    toggleFullDiff={toggleFullDiff}
+                    useFullDiff={useFullDiff}
                   />
                 }
               />
@@ -272,7 +336,7 @@ const PullRequestAccordion: React.FC<{
                   ) : null}
                   <PullRequestDiffViewer
                     handleUpload={handleUpload}
-                    data={header?.data}
+                    data={rawDiffData}
                     fontsize={fontsize}
                     highlight={highlight}
                     mode={diffMode}
@@ -295,6 +359,8 @@ const PullRequestAccordion: React.FC<{
                     removeSuggestionFromBatch={removeSuggestionFromBatch}
                     filenameToLanguage={filenameToLanguage}
                     toggleConversationStatus={toggleConversationStatus}
+                    scrolledToComment={scrolledToComment}
+                    setScrolledToComment={setScrolledToComment}
                   />
                 </div>
               </div>
@@ -328,7 +394,10 @@ export function PullRequestChanges({
   removeSuggestionFromBatch,
   filenameToLanguage,
   toggleConversationStatus,
-  handleUpload
+  handleUpload,
+  onGetFullDiff,
+  scrolledToComment,
+  setScrolledToComment
 }: DataProps) {
   const [autoExpandFiles, setAutoExpandFiles] = useState<{ [fileText: string]: boolean }>({})
 
@@ -389,6 +458,9 @@ export function PullRequestChanges({
             removeSuggestionFromBatch={removeSuggestionFromBatch}
             filenameToLanguage={filenameToLanguage}
             toggleConversationStatus={toggleConversationStatus}
+            onGetFullDiff={onGetFullDiff}
+            scrolledToComment={scrolledToComment}
+            setScrolledToComment={setScrolledToComment}
           />
         )
       })}

@@ -43,6 +43,7 @@ import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../icons/cloud-costs-icon.svg'
 import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
+import CollapseDiff from '../icons/collapse-diff.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
@@ -63,6 +64,7 @@ import Edit from '../icons/edit-icon.svg'
 import Environment from '../icons/environment-icon.svg'
 import ExecutionGradient from '../icons/execution-gradient.svg'
 import Execution from '../icons/execution-icon.svg'
+import ExpandDiff from '../icons/expand-diff.svg'
 import Eye from '../icons/eye-icon.svg'
 import Fail from '../icons/fail.svg'
 import FileIcon from '../icons/file-icon.svg'
@@ -349,7 +351,9 @@ const IconNameMap = {
   checklist: Checklist,
   italicize: Italicize,
   'no-data-commits': NoDataCommits,
-  compare: Compare
+  compare: Compare,
+  'collapse-diff': CollapseDiff,
+  'expand-diff': ExpandDiff
   // fork: Fork
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 

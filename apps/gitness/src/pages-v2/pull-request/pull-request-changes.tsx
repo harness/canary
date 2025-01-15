@@ -10,6 +10,7 @@ import { useQueryState } from 'nuqs'
 import {
   commentCreatePullReq,
   EnumPullReqReviewDecision,
+  rawDiff,
   reviewSubmitPullReq,
   TypesPullReqActivity,
   useFileViewAddPullReqMutation,
@@ -71,6 +72,7 @@ export default function PullRequestChanges() {
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [scrolledToComment, setScrolledToComment] = useState(false)
 
   const {
     data: { body: reviewers } = {},
@@ -110,7 +112,7 @@ export default function PullRequestChanges() {
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
-  const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
+  const { data: { body: rawDiffData } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {
       repo_ref: repoRef,
       range: diffApiPath.replace('/diff', ''),
@@ -131,6 +133,27 @@ export default function PullRequestChanges() {
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
+  const onGetFullDiff = async (path?: string) => {
+    if (!path) return
+    return rawDiff({
+      repo_ref: repoRef,
+      range: diffApiPath.replace('/diff', ''),
+      queryParams: {
+        // @ts-expect-error : BE issue - path should be string and include_patch is a missing param
+        path: path,
+        include_patch: true,
+        range: 1
+      },
+      headers: { Accept: 'text/plain' }
+    })
+      .then(res => {
+        if (path && res.body && typeof res.body === 'string') {
+          return res.body as string
+        }
+      })
+      .catch(error => console.warn(error))
+  }
 
   const handleMarkViewed = (filePath: string, checksumAfter: string) => {
     if (diffs) {
@@ -182,7 +205,7 @@ export default function PullRequestChanges() {
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
-      if (path && rawDiff && typeof rawDiff === 'string') {
+      if (path && rawDiffData && typeof rawDiffData === 'string') {
         const fileViews = fileViewsData
           ?.filter(({ path: _path, sha }) => _path && sha)
           .reduce((map, { path: _path, sha, obsolete }) => {
@@ -192,13 +215,13 @@ export default function PullRequestChanges() {
 
         setCachedDiff({
           path,
-          raw: rawDiff,
+          raw: rawDiffData,
           fileViews
         })
       }
     },
     [
-      rawDiff,
+      rawDiffData,
       path,
       setCachedDiff,
       fileViewsData
@@ -412,6 +435,9 @@ export default function PullRequestChanges() {
         toggleConversationStatus={toggleConversationStatus}
         commitSuggestionsBatchCount={suggestionsBatch?.length}
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
+        onGetFullDiff={onGetFullDiff}
+        scrolledToComment={scrolledToComment}
+        setScrolledToComment={setScrolledToComment}
       />
     </>
   )

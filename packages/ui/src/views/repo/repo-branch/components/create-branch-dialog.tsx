@@ -76,7 +76,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px] border-border bg-background-1">
+      <DialogContent className="max-w-[500px]">
         <DialogHeader>
           <DialogTitle>{t('views:repos.createBranch', 'Create Branch')}</DialogTitle>
         </DialogHeader>

@@ -1,62 +1,62 @@
-import React from 'react'
+import { FC } from 'react'
 
-import { NoData, SkeletonList } from '@/components'
+import { NoData, PaginationComponent, SkeletonList } from '@/components'
 
 import { MembersList } from './member-list'
 import { ProjectMembersListProps } from './types'
 
-const ProjectMembersList: React.FC<ProjectMembersListProps> = ({
+const ProjectMembersList: FC<ProjectMembersListProps> = ({
   isLoading,
   memberList,
-  searchQuery,
   useTranslationStore,
-  setSearchInput,
-  setSearchQuery,
-  setIsInviteMemberDialogOpen,
-  onEditMember
+  handleResetFiltersQueryAndPages,
+  onEditMember,
+  totalPages,
+  page,
+  setPage,
+  onDeleteHandler
 }) => {
   const { t } = useTranslationStore()
+
   if (isLoading) {
     return <SkeletonList />
   }
 
-  if (!memberList?.length) {
-    if (searchQuery) {
-      return (
-        <NoData
-          iconName="no-search-magnifying-glass"
-          title={t('views:noData.noResults', 'No search results')}
-          description={[
-            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-            t('views:noData.changeSearch', 'or search for a different keyword.')
-          ]}
-          primaryButton={{
-            label: t('views:noData.clearSearch', 'Clear search'),
-            onClick: () => {
-              setSearchInput('')
-              setSearchQuery(null)
-            }
-          }}
-        />
-      )
-    }
-
+  if (!memberList.length) {
     return (
       <NoData
-        iconName="no-data-branches"
-        title={t('views:noData.members', 'No members yet')}
-        description={[t('views:noData.inviteMembers', 'Invite members to this project.')]}
+        withBorder
+        textWrapperClassName="max-w-[350px]"
+        iconName="no-search-magnifying-glass"
+        title={t('views:noData.noResults', 'No search results')}
+        description={[
+          t(
+            'views:noData.noResultsDescription',
+            'No members match your search. Try adjusting your keywords or filters.',
+            {
+              type: 'members'
+            }
+          )
+        ]}
         primaryButton={{
-          label: t('views:projectSettings.newMember', 'Invite New Member'),
-          onClick: () => {
-            setIsInviteMemberDialogOpen(true)
-          }
+          label: t('views:noData.clearFilters', 'Clear filters'),
+          onClick: handleResetFiltersQueryAndPages
         }}
       />
     )
   }
 
-  return <MembersList members={memberList} onEdit={onEditMember} onDelete={() => {}} />
+  return (
+    <>
+      <MembersList
+        members={memberList}
+        onEdit={onEditMember}
+        onDelete={onDeleteHandler}
+        useTranslationStore={useTranslationStore}
+      />
+      <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+    </>
+  )
 }
 
 export default ProjectMembersList

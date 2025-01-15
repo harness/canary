@@ -186,7 +186,7 @@ const PullRequestPanel = ({
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
   const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
   //   const isConflict = pullReqMetadata?.merge_check_status === MergeCheckStatus.CONFLICT
-  const isDraft = pullReqMetadata?.is_draft
+  const isDraft = useMemo(() => pullReqMetadata?.is_draft, [pullReqMetadata?.is_draft])
   const unchecked = useMemo(
     () => pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
     [pullReqMetadata, isClosed]

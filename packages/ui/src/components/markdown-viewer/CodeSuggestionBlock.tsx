@@ -21,18 +21,20 @@ interface CodeSuggestionBlockProps {
   suggestionCheckSum?: string
 }
 export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum }: CodeSuggestionBlockProps) {
-  const codeBlockContent = suggestionBlock?.source || ''
-  const language = suggestionBlock?.lang || 'plaintext'
+  const language = useMemo(() => suggestionBlock?.lang || 'plaintext', [suggestionBlock?.lang])
 
   const highlightedHtmlOld = useMemo(() => {
+    const codeBlockContent = suggestionBlock?.source || ''
+
     if (!language) return hljs.highlightAuto(codeBlockContent).value
     return hljs.highlight(codeBlockContent, { language }).value
-  }, [language, codeBlockContent])
+  }, [suggestionBlock?.source, language])
 
   const highlightedHtmlNew = useMemo(() => {
     if (!language) return hljs.highlightAuto(code).value
     return hljs.highlight(code, { language }).value
   }, [code, language])
+
   return (
     <div>
       <span>

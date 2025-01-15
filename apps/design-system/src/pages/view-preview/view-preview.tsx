@@ -25,9 +25,10 @@ import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import { useTranslationsStore } from '@utils/viewUtils'
 
-import { NotFoundPage, ProjectSettingsPage } from '@harnessio/ui/views'
+import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
@@ -166,10 +167,14 @@ export const viewPreviews: Record<string, ReactNode> = {
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   ),
-  'labels-list-page': (
+  'space-settings-labels': (
     <ProjectSettingsWrapper>
-      <ProjectSettingsPage />
       <ProjectLabelsList />
+    </ProjectSettingsWrapper>
+  ),
+  'space-settings-members': (
+    <ProjectSettingsWrapper>
+      <SpaceSettingsMembers />
     </ProjectSettingsWrapper>
   )
 }

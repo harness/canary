@@ -1,9 +1,19 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Button, ButtonGroup, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
-import { Filters, FiltersBar } from '@components/filters'
-import { debounce } from 'lodash-es'
+import {
+  Button,
+  ButtonGroup,
+  Filters,
+  FiltersBar,
+  ListActions,
+  NoData,
+  PaginationComponent,
+  SearchBox,
+  Spacer,
+  Text
+} from '@/components'
+import { useDebounceSearch } from '@/hooks'
 
 import { SandboxLayout } from '../../index'
 import { getFilterOptions, getLayoutOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
@@ -34,7 +44,14 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const SORT_DIRECTIONS = getSortDirections(t)
   const LAYOUT_OPTIONS = getLayoutOptions(t)
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   // State for storing saved filters and sorts
   // null means no saved state exists
@@ -55,15 +72,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const filteredRepos = filterRepositories(repositories, filterHandlers.activeFilters)
   const sortedRepos = sortRepositories(filteredRepos, filterHandlers.activeSorts)
   const reposWithFormattedDates = formatRepositories(sortedRepos)
-
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
 
   if (isError)
     return (
@@ -164,10 +172,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           handleResetFilters={filterHandlers.handleResetFilters}
           hasActiveFilters={filterHandlers.activeFilters.length > 0}
           query={searchQuery ?? ''}
-          handleResetQuery={() => {
-            setSearchInput('')
-            setSearchQuery(null)
-          }}
+          handleResetQuery={handleResetSearch}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           {...routingProps}

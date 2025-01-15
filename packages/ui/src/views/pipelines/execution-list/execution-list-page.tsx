@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
-import { debounce } from 'lodash-es'
+import { useDebounceSearch } from '@/hooks'
 
 import { SandboxLayout } from '../../index'
 import { ExecutionList } from './execution-list'
@@ -22,16 +22,14 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   const { t } = useTranslationStore()
   const { executions, totalPages, page, setPage } = useExecutionListStore()
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
-
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   if (isError)
     // TODO: improve error handling
@@ -87,10 +85,7 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
           executions={executions}
           LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
-          handleResetQuery={() => {
-            setSearchInput('')
-            setSearchQuery(null)
-          }}
+          handleResetQuery={handleResetSearch}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleExecutePipeline={handleExecutePipeline}

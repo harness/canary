@@ -21,7 +21,7 @@ export const SshKeyCreateDialog: React.FC<SshKeyCreateDialogProps> = ({
   const { t } = useTranslationStore()
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px] border-border bg-primary-background">
+      <DialogContent className="max-w-[500px]">
         <DialogHeader>
           <DialogTitle className="text-left">{t('views:profileSettings.newSshKey', 'New SSH key')}</DialogTitle>
         </DialogHeader>

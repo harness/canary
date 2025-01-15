@@ -72,7 +72,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <h1 className="text-2xl font-medium">Webhooks</h1>
+      <h1 className="text-2xl font-medium text-foreground-1">Webhooks</h1>
       <Spacer size={6} />
 
       {error ? (
@@ -88,7 +88,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                     className="max-w-96"
                     value={value}
                     handleChange={handleInputChange}
-                    placeholder="Search"
+                    placeholder={t('views:repos.search')}
                   />
                 </ListActions.Left>
                 <ListActions.Right>

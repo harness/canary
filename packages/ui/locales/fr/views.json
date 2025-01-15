@@ -156,11 +156,12 @@
     "clearSearch": "Effacer la recherche",
     "labels": "No labels yet",
     "createLabel": "Create a new label to get started.",
+    "noResultsDescription": "No {{type}} match your search. Try adjusting your keywords or filters.",
+    "clearFilters": "Effacer les filtres",
     "members": "",
     "inviteMembers": "",
     "compareChanges": "Comparez et révisez pratiquement tout",
     "compareChangesDescription": "Branches, tags, plages de commits et périodes. Dans le même dépôt et entre les forks.",
-    "clearFilters": "Effacer les filtres",
     "noPullRequests": "Il n'y a pas encore de demandes de tirage dans ce projet.",
     "createNewPullRequest": "Créez une nouvelle demande de tirage.",
     "noBranches": "Pas encore de branches",
@@ -174,7 +175,6 @@
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
-    "noResultsDescription": "No rules match your search. Try adjusting your keywords or filters.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
     "noLabels": "No labels yet",
@@ -308,12 +308,12 @@
     "selectMemberError": "",
     "selectMember": "",
     "selectRole": "",
-    "selectRoleError": "",
     "enterBranchName": "Entrez le nom de la branche",
     "createBranchError": "Le nom de la branche est requis",
     "select": "Sélectionner",
     "baseBranch": "Branche de base",
-    "selectBranchError": "La branche de base est requise"
+    "selectBranchError": "La branche de base est requise",
+    "selectRoleError": ""
   },
   "projectSettings": {
     "newLabels": "Create label",
@@ -321,7 +321,24 @@
     "member": "",
     "role": "",
     "addMember": "",
+    "membersTable": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role"
+    },
+    "removeMember": "Remove member",
+    "inviteNewMember": "Invite new member",
     "members": ""
+  },
+  "roles": {
+    "owner": "Owner",
+    "ownerDesc": "Admin-level access to all resources.",
+    "contributor": "Contributor",
+    "contributorDesc": "Can view, comment, and edit resources.",
+    "executor": "Executor",
+    "executorDesc": "Can view and leave comments.",
+    "reader": "Reader",
+    "readerDesc": "Can view but cannot make changes or leave comments."
   },
   "commits": {
     "commitDetailsDiffShowing": "Affichage de",

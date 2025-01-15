@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
   DeleteRepoWebhookErrorResponse,
@@ -12,6 +11,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getErrorMessage } from '../../utils/error-utils'
@@ -21,11 +21,12 @@ export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setWebhooks, page, setPage, setWebhookLoading, setError } = useWebhookStore()
   const [query] = useDebouncedQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const queryClient = useQueryClient()
 
   const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
   const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
+
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   /**
    * Fetching webhooks
@@ -38,7 +39,10 @@ export default function WebhookListPage() {
     refetch
   } = useListRepoWebhooksQuery(
     {
-      queryParams: { page, query },
+      queryParams: {
+        page: queryPage,
+        query
+      },
       repo_ref: repoRef
     },
     { retry: false }
@@ -103,12 +107,6 @@ export default function WebhookListPage() {
       setError(getErrorMessage(error))
     }
   }, [isError, setError, error])
-
-  useEffect(() => {
-    setQueryPage(page)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
 
   return (
     <>

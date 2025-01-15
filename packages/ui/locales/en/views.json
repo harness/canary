@@ -156,11 +156,12 @@
     "clearSearch": "Clear search",
     "labels": "No labels yet",
     "createLabel": "Create a new label to get started.",
-    "members": "No members yet.",
-    "inviteMembers": "Add your first team members by inviting them to join this project.",
+    "noResultsDescription": "No {{type}} match your search. Try adjusting your keywords or filters.",
+    "clearFilters": "Clear filters",
+    "members": "No members yet",
+    "inviteMembers": "There are no members in this project. Click on the button below to start adding them.",
     "compareChanges": "Compare and review just about anything",
     "compareChangesDescription": "Branches, tags, commit ranges, and time ranges. In the same repository and across forks.",
-    "clearFilters": "Clear filters",
     "noPullRequests": "There are no pull requests in this project yet.",
     "createNewPullRequest": "Create a new pull request.",
     "noBranches": "No branches yet",
@@ -174,7 +175,6 @@
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
-    "noResultsDescription": "No rules match your search. Try adjusting your keywords or filters.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
     "noLabels": "No labels yet",
@@ -312,12 +312,12 @@
     "selectMemberError": "Member is required",
     "selectMember": "Select member",
     "selectRole": "Select role",
-    "selectRoleError": "Role is required",
     "enterBranchName": "Enter branch name",
     "createBranchError": "Branch name is required",
     "select": "Select",
     "baseBranch": "Base Branch",
-    "selectBranchError": "Base branch is required"
+    "selectBranchError": "Base branch is required",
+    "selectRoleError": "Role is required"
   },
   "projectSettings": {
     "newLabels": "Create label",
@@ -325,7 +325,24 @@
     "member": "Member",
     "role": "Role",
     "addMember": "Add member to this project",
+    "membersTable": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role"
+    },
+    "removeMember": "Remove member",
+    "inviteNewMember": "Invite new member",
     "members": "Members"
+  },
+  "roles": {
+    "owner": "Owner",
+    "ownerDesc": "Admin-level access to all resources.",
+    "contributor": "Contributor",
+    "contributorDesc": "Can view, comment, and edit resources.",
+    "executor": "Executor",
+    "executorDesc": "Can view and leave comments.",
+    "reader": "Reader",
+    "readerDesc": "Can view but cannot make changes or leave comments."
   },
   "commits": {
     "commitDetailsDiffShowing": "Showing",

@@ -1,13 +1,13 @@
-import { ChangeEvent, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { debounce } from 'lodash-es'
 
 import { LabelsListView } from './components/labels-list-view'
 import { ProjectLabelPageProps } from './types'
 
-export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
+export const ProjectLabelsListView: FC<ProjectLabelPageProps> = ({
   useTranslationStore,
   useLabelsStore,
   openCreateLabelDialog,
@@ -20,24 +20,19 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { spaceLabels, totalPages, page, setPage, spaceValues } = useLabelsStore()
-  const [searchInput, setSearchInput] = useState(searchQuery)
 
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
-
-  const handleResetSearch = () => {
-    setSearchInput('')
-    setSearchQuery(null)
-  }
 
   return (
     <SandboxLayout.Main>

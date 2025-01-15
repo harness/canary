@@ -1,13 +1,16 @@
+import { Link } from 'react-router-dom'
+
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
   Badge,
   Button,
-  CommitCopyActions,
   CopyButton,
   Icon,
+  IconProps,
   MoreActionsTooltip,
+  SkeletonTable,
   Table,
   TableBody,
   TableCell,
@@ -16,12 +19,15 @@ import {
   TableRow,
   Text
 } from '@/components'
+import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
+import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
 
 export const BranchesList = ({
+  isLoading,
   branches,
   defaultBranch,
   useTranslationStore,
@@ -32,7 +38,10 @@ export const BranchesList = ({
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()
   return (
-    <Table variant="asStackedList">
+    <Table
+      className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
+      variant="asStackedList"
+    >
       <TableHeader>
         <TableRow>
           <TableHead>{t('views:repos.branch', 'Branch')}</TableHead>
@@ -41,18 +50,17 @@ export const BranchesList = ({
             <TableHead>{t('views:repos.checkStatus', 'Check status')}</TableHead>
           )}
           <TableHead>
-            <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-items-end gap-x-2">
-              <Text as="p" size={1} truncate color="tertiaryBackground" className="leading-none">
+            <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-items-end gap-x-1.5">
+              <Text className="leading-none" size={2} truncate color="foreground-4" weight="medium">
                 {t('views:repos.behind', 'Behind')}
               </Text>
-              <div className="h-full border-r-2 border-tertiary-background/30" />
-              <Text as="p" size={1} truncate color="tertiaryBackground" className="place-self-start leading-none">
+              <div className="h-3 w-px bg-borders-2" aria-hidden />
+              <Text className="place-self-start leading-none" size={2} truncate color="foreground-4" weight="medium">
                 {t('views:repos.ahead', 'Ahead')}
               </Text>
             </div>
           </TableHead>
-          {/* since we don't have the data for pull request, we can change data to Commit to match the original gitness */}
-          {branches[0]?.sha && <TableHead>{t('views:repos.commit', 'Commit')}</TableHead>}
+          <TableHead className="max-w-28 whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</TableHead>
           <TableHead>
             <></>
           </TableHead>

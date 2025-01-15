@@ -39,8 +39,9 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
+  // TODO: confirm that we receive pullreqst and update render column and logic depend on that
   const { isLoading, data: { body: branches, headers } = {} } = useListBranchesQuery({
-    queryParams: { page, query: query ?? '', order: orderSortDate.DESC, include_commit: true },
+    queryParams: { page, query: query ?? '', order: orderSortDate.DESC, include_commit: true, include_pullreqs: true },
     repo_ref: repoRef
   })
 
@@ -106,12 +107,6 @@ export function RepoBranchesListPage() {
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId, setSpaceIdAndRepoId])
-
-  useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repoMetadata?.default_branch, branchDivergence))
-    }
-  }, [branches, repoMetadata?.default_branch, setBranchList])
 
   useEffect(() => {
     setDefaultBranch(repoMetadata?.default_branch || '')

@@ -9,6 +9,7 @@ import {
   Dialog,
   Fieldset,
   FormWrapper,
+  Icon,
   Input,
   Select,
   SelectContent,
@@ -71,7 +72,7 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={onClose}>
-      <Dialog.Content className="max-w-[500px]">
+      <Dialog.Content className="max-w-xl border-border bg-background-1">
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
         </Dialog.Header>
@@ -112,7 +113,10 @@ export function CreateBranchDialog({
                       branch =>
                         branch?.name && (
                           <SelectItem key={branch?.name} value={branch?.name as string}>
-                            {branch?.name}
+                            <span className="flex items-center gap-1.5">
+                              <Icon name="branch" size={14} />
+                              {branch?.name}
+                            </span>
                           </SelectItem>
                         )
                     )}
@@ -131,7 +135,7 @@ export function CreateBranchDialog({
 
             <Dialog.Footer className="-mx-5 -mb-5 mt-5">
               <ButtonGroup className="flex justify-end">
-                <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingBranch}>
+                <Button variant="outline" onClick={onClose} loading={isCreatingBranch}>
                   {t('views:repos.cancel', 'Cancel')}
                 </Button>
                 <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>

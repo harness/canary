@@ -224,3 +224,36 @@ export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullR
     codeBlockContent
   }
 }
+type FileDropCallback = (file: File) => void
+
+//handle file drop in image upload
+export const handleFileDrop = (event: DragEvent, callback: FileDropCallback): void => {
+  event.preventDefault()
+
+  const file = event?.dataTransfer?.files[0]
+  if (file) {
+    callback(file)
+  }
+}
+
+type PasteCallback = (file: File) => void
+
+// handle file paste in image upload
+export const handlePaste = (
+  event: { preventDefault: () => void; clipboardData: DataTransfer },
+  callback: PasteCallback
+) => {
+  event.preventDefault()
+  const clipboardData = event.clipboardData
+  const items = clipboardData.items
+
+  if (items.length > 0) {
+    const firstItem = items[0]
+    if (firstItem.type.startsWith('image/') || firstItem.type.startsWith('video/')) {
+      const blob = firstItem.getAsFile()
+      if (blob) {
+        callback(blob)
+      }
+    }
+  }
+}

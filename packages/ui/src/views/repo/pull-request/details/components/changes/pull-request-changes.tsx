@@ -70,6 +70,7 @@ interface DataProps {
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
+  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -165,6 +166,7 @@ const PullRequestAccordion: React.FC<{
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
+  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
 }> = ({
   header,
   diffMode,
@@ -187,7 +189,8 @@ const PullRequestAccordion: React.FC<{
   addSuggestionToBatch,
   removeSuggestionFromBatch,
   filenameToLanguage,
-  toggleConversationStatus
+  toggleConversationStatus,
+  handleUpload
 }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
 
@@ -268,6 +271,7 @@ const PullRequestAccordion: React.FC<{
                     </div>
                   ) : null}
                   <PullRequestDiffViewer
+                    handleUpload={handleUpload}
                     data={header?.data}
                     fontsize={fontsize}
                     highlight={highlight}
@@ -323,7 +327,8 @@ export function PullRequestChanges({
   addSuggestionToBatch,
   removeSuggestionFromBatch,
   filenameToLanguage,
-  toggleConversationStatus
+  toggleConversationStatus,
+  handleUpload
 }: DataProps) {
   const [autoExpandFiles, setAutoExpandFiles] = useState<{ [fileText: string]: boolean }>({})
 
@@ -360,6 +365,7 @@ export function PullRequestChanges({
 
         return (
           <PullRequestAccordion
+            handleUpload={handleUpload}
             key={`${item.title}-${index}`}
             header={item}
             diffMode={diffMode}

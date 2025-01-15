@@ -84,6 +84,8 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user' }
   })
   const [comment, setComment] = useState<string>('')
+  const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
@@ -178,6 +180,7 @@ export default function PullRequestConversationPage() {
           setErrorMsg('')
           setShowRestoreBranchButton(false)
           setShowDeleteBranchButton(true)
+          refetchActivities()
         }
       })
       .catch(err => {
@@ -219,6 +222,7 @@ export default function PullRequestConversationPage() {
         }
         setShowRestoreBranchButton(true)
         setErrorMsg('')
+        refetchActivities()
       })
       .catch(err => {
         setErrorMsg(err.message)
@@ -302,14 +306,30 @@ export default function PullRequestConversationPage() {
     setActivities(activityData)
   }, [activityData])
 
-  const onCopyClick = (commentId?: number) => {
+  const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
     if (commentId) {
       const url = new URL(window.location.href)
-      url.pathname = url.pathname.replace('/conversation', '/changes')
+      if (isNotCodeComment) {
+        url.pathname = url.pathname.replace('/conversation', '/changes')
+      }
       url.searchParams.set('commentId', commentId.toString())
       copy(url.toString())
     }
   }
+  useEffect(() => {
+    if (!commentId || isScrolledToComment) return
+    // Slight timeout so the UI has time to expand/hydrate
+    const timeoutId = setTimeout(() => {
+      const elem = document.getElementById(`comment-${commentId}`)
+      if (!elem) return
+      elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setIsScrolledToComment(true)
+    }, 2500)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [commentId])
 
   const changesInfo = extractInfoForCodeOwnerContent({
     approvedEvaluations,
@@ -381,6 +401,7 @@ export default function PullRequestConversationPage() {
     //todo: add catch t o show errors
     // .catch(exception => showError(getErrorMessage(exception)))
   }
+
   const mockPullRequestActions = [
     {
       id: '0',
@@ -422,7 +443,8 @@ export default function PullRequestConversationPage() {
     suggestionsBatch,
     suggestionToCommit,
     onCommentSaveAndStatusChange,
-    toggleConversationStatus
+    toggleConversationStatus,
+    handleUpload
   } = usePRCommonInteractions({
     repoRef,
     prId,
@@ -554,6 +576,7 @@ export default function PullRequestConversationPage() {
               suggestionsBatch={suggestionsBatch}
               removeSuggestionFromBatch={removeSuggestionFromBatch}
               filenameToLanguage={filenameToLanguage}
+              handleUpload={handleUpload}
             />
             <Spacer size={9} />
             <PullRequestCommentBox
@@ -561,6 +584,7 @@ export default function PullRequestConversationPage() {
               setComment={setComment}
               currentUser={currentUserData?.display_name}
               onSaveComment={handleSaveComment}
+              handleUpload={handleUpload}
             />
             <Spacer size={9} />
           </SandboxLayout.Content>

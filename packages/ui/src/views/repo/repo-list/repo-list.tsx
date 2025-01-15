@@ -1,14 +1,13 @@
 import { Link } from 'react-router-dom'
 
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
-import { RoutingProps } from '@/types/routing.types'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
 import { TranslationStore } from './types'
 
-export interface PageProps extends RoutingProps {
+export interface PageProps {
   repos?: RepositoryType[]
   handleResetFilters?: () => void
   hasActiveFilters?: boolean

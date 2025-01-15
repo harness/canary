@@ -170,7 +170,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           }}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
-          routes={routes}
         />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>

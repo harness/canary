@@ -84,9 +84,6 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
-        routes={{
-          toCreateRepo: routes.toCreateRepo
-        }}
       />
     </>
   )

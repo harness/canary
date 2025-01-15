@@ -37,7 +37,7 @@ interface PullRequestOverviewProps {
   refetchActivities: () => void
   useTranslationStore: () => TranslationStore
   handleDeleteComment: (id: number) => void
-
+  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
   // data: CommentItem<TypesPullReqActivity>[][]
   pullReqMetadata: TypesPullReq | undefined
   activityFilter: { label: string; value: string }
@@ -77,6 +77,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   handleUpdateComment,
   useTranslationStore,
   onCopyClick,
+  handleUpload,
   onCommentSaveAndStatusChange,
   suggestionsBatch,
   onCommitSuggestion,
@@ -173,7 +174,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     }
     setHideReplyBoxes(prev => ({ ...prev, [id]: state }))
   }
-
+  console.log(hideReplyBoxes)
   const renderedActivityBlocks = useMemo(() => {
     return (
       <div className="flex flex-col">
@@ -199,6 +200,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
               )
             } else {
               const payload = commentItems[0]?.payload?.payload // Ensure payload is typed correctly
+              const parentIdAttr = `comment-${payload?.id}`
+
               const codeDiffSnapshot = [
                 `diff --git a/src b/dest`,
                 `new file mode 100644`,
@@ -218,6 +221,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                 return (
                   payload?.id && (
                     <PullRequestTimelineItem
+                      handleUpload={handleUpload}
+                      data={payload?.text as string}
+                      isNotCodeComment
+                      id={parentIdAttr}
                       hideReplyBox={hideReplyBoxes[payload?.id]}
                       setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                       key={payload?.id}
@@ -270,6 +277,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           ) : null}
 
                           <PullRequestDiffViewer
+                            handleUpload={handleUpload}
                             data={removeLastPlus(codeDiffSnapshot)}
                             fileName={payload?.code_comment?.path ?? ''}
                             lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
@@ -283,9 +291,15 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           <div className="px-4 py-2">
                             {commentItems?.map((commentItem, idx) => {
                               const componentId = `activity-code-${commentItem?.id}`
+                              const commentIdAttr = `comment-${payload?.id}`
+
                               return (
                                 payload?.id && (
                                   <PullRequestTimelineItem
+                                    handleUpload={handleUpload}
+                                    id={commentIdAttr}
+                                    data={commentItem.payload?.payload?.text as string}
+                                    isNotCodeComment
                                     hideReplyBox={hideReplyBoxes[payload?.id]}
                                     setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                                     parentCommentId={payload?.id}
@@ -353,6 +367,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       ) : editModes[componentId] ? (
                                         <PullRequestCommentBox
                                           isEditMode
+                                          handleUpload={handleUpload}
                                           isResolved={!!payload?.resolved}
                                           onSaveComment={() => {
                                             if (commentItem?.id) {
@@ -402,6 +417,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
               return (
                 payload?.id && (
                   <PullRequestTimelineItem
+                    handleUpload={handleUpload}
+                    data={payload?.text as string}
+                    id={parentIdAttr}
                     hideReplyBox={hideReplyBoxes[payload?.id]}
                     setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                     key={payload?.id}
@@ -452,9 +470,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         {commentItems?.map((commentItem, idx) => {
                           const componentId = `activity-comment-${commentItem?.id}`
                           // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
+                          const commentIdAttr = `comment-${payload?.id}`
+
                           return (
                             payload?.id && (
                               <PullRequestTimelineItem
+                                handleUpload={handleUpload}
+                                id={commentIdAttr}
+                                data={commentItem.payload?.payload?.text as string}
                                 hideReplyBox={hideReplyBoxes[payload?.id]}
                                 setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
                                 parentCommentId={payload?.id}
@@ -521,6 +544,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     </div>
                                   ) : editModes[componentId] ? (
                                     <PullRequestCommentBox
+                                      handleUpload={handleUpload}
                                       isEditMode
                                       isResolved={!!payload?.resolved}
                                       onSaveComment={() => {

@@ -56,6 +56,7 @@ interface PullRequestDiffviewerProps {
   removeSuggestionFromBatch?: (commentId: number) => void
   filenameToLanguage?: (fileName: string) => string | undefined
   toggleConversationStatus?: (status: string, parentId?: number) => void
+  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
 }
 
 const PullRequestDiffViewer = ({
@@ -88,7 +89,8 @@ const PullRequestDiffViewer = ({
   addSuggestionToBatch,
   removeSuggestionFromBatch,
   filenameToLanguage,
-  toggleConversationStatus
+  toggleConversationStatus,
+  handleUpload
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -324,6 +326,7 @@ const PullRequestDiffViewer = ({
       return (
         <div className="flex w-full flex-col border px-[4px] py-[8px]">
           <PullRequestCommentBox
+            handleUpload={handleUpload}
             isEditMode
             onSaveComment={() => {
               onClose()
@@ -428,6 +431,7 @@ const PullRequestDiffViewer = ({
                           </div>
                         ) : editModes[componentId] ? (
                           <PullRequestCommentBox
+                            handleUpload={handleUpload}
                             isEditMode
                             onSaveComment={() => {
                               if (parent?.id) {
@@ -509,6 +513,7 @@ const PullRequestDiffViewer = ({
                                   </div>
                                 ) : editModes[replyComponentId] ? (
                                   <PullRequestCommentBox
+                                    handleUpload={handleUpload}
                                     isEditMode
                                     isResolved={!!parent?.payload?.resolved}
                                     onSaveComment={() => {

@@ -51,6 +51,7 @@ interface RepoPullRequestChangesPageProps {
   toggleConversationStatus: (status: string, parentId?: number) => void
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
+  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   useTranslationStore,
@@ -84,7 +85,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   filenameToLanguage,
   toggleConversationStatus,
   commitSuggestionsBatchCount,
-  onCommitSuggestionsBatch
+  onCommitSuggestionsBatch,
+  handleUpload
 }) => {
   const { diffs } = usePullRequestProviderStore()
   // Convert activities to comment threads
@@ -111,6 +113,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     }
     return (
       <PullRequestChanges
+        handleUpload={handleUpload}
         data={
           diffs?.map(item => ({
             text: item.filePath,

@@ -246,14 +246,16 @@ const PullRequestPanel = ({
                     </Layout.Horizontal>
                   )}
                   <Button
-                    variant={actions ? 'split' : 'default'}
-                    size={actions ? 'xs_split' : 'xs'}
+                    variant={actions && !pullReqMetadata?.closed ? 'split' : 'default'}
+                    size={actions && !pullReqMetadata?.closed ? 'xs_split' : 'xs'}
                     theme={
                       mergeable && !ruleViolation
                         ? 'success'
-                        : checksInfo.status === 'pending' || checksInfo.status === 'running'
-                          ? 'warning'
-                          : 'error'
+                        : pullReqMetadata?.is_draft || pullReqMetadata?.closed
+                          ? 'primary'
+                          : checksInfo.status === 'pending' || checksInfo.status === 'running'
+                            ? 'warning'
+                            : 'error'
                     }
                     disabled={!checkboxBypass && ruleViolation}
                     onClick={actions[0]?.action}
@@ -287,7 +289,11 @@ const PullRequestPanel = ({
                       )
                     }
                   >
-                    Squash and merge
+                    {pullReqMetadata?.closed
+                      ? 'Open for review'
+                      : pullReqMetadata?.is_draft
+                        ? 'Ready for review'
+                        : 'Squash and merge'}
                   </Button>
                 </Layout.Horizontal>
               )

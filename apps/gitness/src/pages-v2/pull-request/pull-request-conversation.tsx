@@ -9,10 +9,13 @@ import {
   commentStatusPullReq,
   EnumCheckStatus,
   EnumMergeMethod,
+  EnumPullReqState,
   mergePullReqOp,
   OpenapiMergePullReq,
+  OpenapiStatePullReqRequest,
   reviewerAddPullReq,
   reviewerDeletePullReq,
+  statePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
   useAssignLabelMutation,
@@ -402,31 +405,73 @@ export default function PullRequestConversationPage() {
     // .catch(exception => showError(getErrorMessage(exception)))
   }
 
-  const mockPullRequestActions = [
-    {
-      id: '0',
-      title: 'Squash and merge',
-      description: 'All commits from this branch will be combined into one commit in the base branch.',
-      action: () => {
-        handleMerge('squash')
-      }
-    },
-    {
-      id: '1',
-      title: 'Merge pull request',
-      description: 'All commits from this branch will be added to the base branch via a merge commit.',
-      action: () => {
-        handleMerge('merge')
-      }
-    },
-    {
-      id: '2',
-      title: 'Rebase and merge',
-      description: 'All commits from this branch will be rebased and added to the base branch.',
-      action: () => {
-        handleMerge('rebase')
-      }
+  const handlePrState = (state: string) => {
+    const payload: OpenapiStatePullReqRequest = {
+      state: state as EnumPullReqState
     }
+    statePullReq({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
+      onPRStateChanged()
+      setRuleViolationArr(undefined)
+    })
+  }
+
+  const mockPullRequestActions = [
+    ...(pullReqMetadata?.closed
+      ? [
+          {
+            id: '0',
+            title: 'Open for review',
+            description: 'Open this pull request for review.',
+            action: () => {
+              handlePrState('open')
+            }
+          }
+        ]
+      : pullReqMetadata?.is_draft
+        ? [
+            {
+              id: '0',
+              title: 'Ready for review',
+              description: 'Open this pull request for review.',
+              action: () => {
+                handlePrState('open')
+              }
+            },
+            {
+              id: '1',
+              title: 'Close pull request',
+              description: 'Close this pull request. You can still re-open the request after closing.',
+              action: () => {
+                handlePrState('closed')
+              }
+            }
+          ]
+        : [
+            {
+              id: '0',
+              title: 'Squash and merge',
+              description: 'All commits from this branch will be combined into one commit in the base branch.',
+              action: () => {
+                handleMerge('squash')
+              }
+            },
+            {
+              id: '1',
+              title: 'Merge pull request',
+              description: 'All commits from this branch will be added to the base branch via a merge commit.',
+              action: () => {
+                handleMerge('merge')
+              }
+            },
+            {
+              id: '2',
+              title: 'Rebase and merge',
+              description: 'All commits from this branch will be rebased and added to the base branch.',
+              action: () => {
+                handleMerge('rebase')
+              }
+            }
+          ])
   ]
 
   const {

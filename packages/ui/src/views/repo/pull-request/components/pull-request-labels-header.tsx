@@ -1,54 +1,40 @@
 import { TranslationStore } from '@/views'
 import {
-  Avatar,
-  AvatarFallback,
   Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
-  SearchBox,
-  Text
+  SearchBox
 } from '@components/index'
 import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
 
-import { EnumPullReqReviewDecision } from '../pull-request.types'
-
-interface ReviewersHeaderProps {
-  usersList?: { display_name?: string; id?: number; uid?: string }[]
-  reviewers: {
-    reviewer?: { display_name?: string; id?: number }
-    review_decision?: EnumPullReqReviewDecision
-    sha?: string
-  }[]
-  addReviewers?: (id?: number) => void
-  currentUserId?: string
-  searchQuery: string
-  setSearchQuery: (query: string) => void
+interface LabelsHeaderProps {
+  labelsList?: { key?: string; id?: number; color?: string }[]
+  selectedLabels?: { key?: string; id?: number; color?: string }[]
+  addLabel?: (id?: number) => void
+  searchQuery?: string
+  setSearchQuery?: (query: string) => void
   useTranslationStore: () => TranslationStore
 }
 
-const ReviewersHeader = ({
-  usersList,
-  reviewers,
-  addReviewers,
-  currentUserId,
+const LabelsHeader = ({
+  labelsList,
+  selectedLabels,
+  addLabel,
   searchQuery,
   setSearchQuery,
   useTranslationStore
-}: ReviewersHeaderProps) => {
+}: LabelsHeaderProps) => {
   const { t } = useTranslationStore()
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(event.target.value)
+    setSearchQuery?.(event.target.value)
   }
 
   return (
     <div className="flex items-center justify-between">
-      <Text size={2} weight="medium">
-        {t('views:pullRequests.reviewers')}
-      </Text>
+      <span className="text-14 font-medium">{t('views:pullRequests.labels')}</span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button size="sm" variant="ghost" className="px-2 py-1 text-tertiary-background">
@@ -60,50 +46,40 @@ const ReviewersHeader = ({
             <div role="presentation" onKeyDown={e => e.stopPropagation()}>
               <SearchBox.Root
                 className="mt-2 w-full"
-                placeholder={t('views:pullRequests.searchUsers')}
+                placeholder={t('views:pullRequests.searchLabels')}
                 value={searchQuery}
                 handleChange={handleSearchChange}
                 showOnFocus
               />
             </div>
             <div className="mt-1">
-              {usersList?.length === 0 && (
+              {labelsList?.length === 0 && (
                 <div className="px-5 py-4 text-center">
-                  <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.searchUsers')}</span>
+                  <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.noLabels')}</span>
                 </div>
               )}
               <div className="max-h-[360px] overflow-y-auto px-1">
-                {usersList?.map(({ display_name, id, uid }) => {
-                  if (uid === currentUserId) return null
-                  const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+                {labelsList?.map(({ key, id }) => {
+                  const isSelected = selectedLabels?.find(label => label.id === id)
                   return (
                     <DropdownMenuItem
                       className={cn('hover:bg-background-4 cursor-pointer py-1', {
                         'bg-background-4': isSelected,
                         'pl-7': !isSelected
                       })}
-                      key={uid}
+                      key={id}
                       onClick={() => {
-                        if (display_name) {
-                          addReviewers?.(id)
-                        }
+                        addLabel?.(id)
                       }}
                     >
                       <div className="flex w-full min-w-0 items-center gap-x-2">
                         {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
-                        <Avatar className="h-6 w-6 rounded-full">
-                          <AvatarFallback>
-                            <Text size={1} color="tertiaryBackground">
-                              {getInitials(display_name || '')}
-                            </Text>
-                          </AvatarFallback>
-                        </Avatar>
                         <span
                           className={cn('text-foreground-2 truncate', {
                             'text-foreground-1': isSelected
                           })}
                         >
-                          {display_name}
+                          {key}
                         </span>
                       </div>
                     </DropdownMenuItem>
@@ -118,4 +94,4 @@ const ReviewersHeader = ({
   )
 }
 
-export { ReviewersHeader }
+export { LabelsHeader }

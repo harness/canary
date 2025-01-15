@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { get } from 'lodash-es'
 import { parse } from 'yaml'
 
 import { Button, Icon } from '@harnessio/canary'
-import { listGlobalTemplates } from '@harnessio/code-service-client'
+import { listTemplates } from '@harnessio/code-service-client'
 import {
   getTransformers,
   IFormDefinition,
@@ -26,6 +27,7 @@ import {
   TEMPLATE_STEP_IDENTIFIER
 } from '@harnessio/views'
 
+import { PathParams } from '../../../../RouteDefinitions'
 import { StepSource } from '../context/data-store/types'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { StepDefinitionType } from '../types/api-types'
@@ -42,6 +44,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
     requestYamlModifications,
     setFormStep
   } = usePipelineDataContext()
+  const { spaceId } = useParams<PathParams>()
 
   const [defaultStepValues, setDefaultStepValues] = useState({})
 
@@ -71,7 +74,7 @@ export const PipelineStudioStepForm = (props: PipelineStudioStepFormProps): JSX.
       // process templates step
       else if (step[TEMPLATE_STEP_IDENTIFIER]) {
         setDefaultStepValues(step)
-        listGlobalTemplates({ queryParams: { query: step.template.uses } }).then(response => {
+        listTemplates({ space_ref: spaceId || '', queryParams: { query: step.template.uses } }).then(response => {
           const editStep = response.body.find(plugin => plugin.identifier === step.template.uses)
           setFormStep(editStep ? { stepSource: StepSource.Templates, data: editStep } : null)
         })

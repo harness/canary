@@ -154,6 +154,12 @@ export interface TypesPullReqStats {
   unresolved_count?: number
 }
 
+export interface PRReviewer {
+  reviewer: { display_name: string; id: number }
+  review_decision?: EnumPullReqReviewDecision
+  sha?: string
+}
+
 export interface TypesLabelPullReqAssignmentInfo {
   color?: EnumLabelColor
   id?: number

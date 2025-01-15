@@ -5,12 +5,12 @@ import { LabelToolTip } from './label-tool-tip'
 
 export const LabelsListView: React.FC<LabelsListViewProps> = ({
   labels,
-  space_ref,
+  createdIn,
   handleEditLabel,
   handleDeleteLabel,
   useTranslationStore
 }) => {
-  const { t } = useTranslationStore()
+  const { t: _t } = useTranslationStore()
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -31,7 +31,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
                   {label.key}
                 </div>
               </TableCell>
-              <TableCell>{space_ref}</TableCell>
+              <TableCell>{createdIn}</TableCell>
               <TableCell>{label.description}</TableCell>
               <TableCell className="flex justify-end">
                 <LabelToolTip onEdit={handleEditLabel} onDelete={handleDeleteLabel} identifier={label.key} />
@@ -42,7 +42,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
           <TableRow>
             <TableCell colSpan={5}>
               <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
-                {t('There are no labels in this project yet. Create a new label to get started.')}
+                There are no labels in this project yet. Create a new label to get started.
               </Text>
             </TableCell>
           </TableRow>

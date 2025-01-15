@@ -2,8 +2,8 @@ import {
   EnumRuleState,
   OpenapiRule,
   OpenapiRuleDefinition,
-  RuleAddRequestBody,
-  RuleGetOkResponse
+  RepoRuleAddRequestBody,
+  RepoRuleGetOkResponse
 } from '@harnessio/code-service-client'
 import { RepoBranchSettingsFormFields } from '@harnessio/ui/views'
 import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/views'
@@ -23,7 +23,7 @@ const ruleIds = [
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
+const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   const rules = []
 
   for (const rule of ruleIds) {
@@ -83,7 +83,7 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
   return rules
 }
 
-export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSettingsFormFields => {
+export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSettingsFormFields => {
   const includedPatterns = data?.pattern?.include || []
   const excludedPatterns = data?.pattern?.exclude || []
   const formatPatterns = [
@@ -123,7 +123,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
 
 // Util to transform form format to expected-API format for branch-rules-edit
 
-export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RuleAddRequestBody => {
+export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
     acc[rule.id] = rule
     return acc

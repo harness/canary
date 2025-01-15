@@ -169,6 +169,11 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         totalFiles={diffs?.length || 0}
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
         commitSuggestionsBatchCount={commitSuggestionsBatchCount}
+        diffData={diffs?.map(diff => ({
+          filePath: diff.filePath,
+          addedLines: diff.addedLines,
+          deletedLines: diff.deletedLines
+        }))}
       />
       <Spacer aria-setsize={5} />
 

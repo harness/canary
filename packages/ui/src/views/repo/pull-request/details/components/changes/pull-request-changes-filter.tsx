@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { TypesUser } from '@/types'
 import {
+  Badge,
   Button,
   Checkbox,
   DropdownMenu,
@@ -34,7 +35,7 @@ export interface CommitFilterItemProps {
   value: string
 }
 
-export interface FilterViewProps {
+export interface PullRequestChangesFilterProps {
   active?: string
   currentUser: TypesUser
   pullRequestMetadata?: TypesPullReq | undefined
@@ -53,9 +54,14 @@ export interface FilterViewProps {
   totalFiles: number
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
+  diffData?: {
+    filePath: string
+    addedLines: number
+    deletedLines: number
+  }[]
 }
 
-export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
+export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
   currentUser,
   pullRequestMetadata,
   reviewers,
@@ -71,7 +77,8 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
   viewedFiles,
   totalFiles,
   commitSuggestionsBatchCount,
-  onCommitSuggestionsBatch
+  onCommitSuggestionsBatch,
+  diffData
 }) => {
   const { t } = useTranslationStore()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -243,11 +250,43 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
           title={diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
           items={DiffModeOptions}
         />
-        <Text size={2}>
-          {`Showing ${pullRequestMetadata?.stats?.files_changed || 0} changed files with ${
-            pullRequestMetadata?.stats?.additions || 0
-          } additions and ${pullRequestMetadata?.stats?.deletions || 0} deletions `}
-        </Text>
+        <DropdownMenu>
+          <p className="text-14 leading-tight text-foreground-4">
+            Showing{' '}
+            <DropdownMenuTrigger asChild>
+              <span className="text-foreground-accent cursor-pointer ease-in-out">
+                {pullRequestMetadata?.stats?.files_changed || 0} changed files
+              </span>
+            </DropdownMenuTrigger>{' '}
+            with {pullRequestMetadata?.stats?.additions || 0} additions and {pullRequestMetadata?.stats?.deletions || 0}{' '}
+            deletions
+          </p>
+          <DropdownMenuContent align="end">
+            <DropdownMenuGroup>
+              {diffData?.map(diff => (
+                <DropdownMenuItem
+                  key={diff.filePath}
+                  onClick={() => {}}
+                  className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
+                >
+                  <span className="text-12 flex-1 overflow-hidden truncate text-primary">{diff.filePath}</span>
+                  <div className="ml-4 flex items-center space-x-2">
+                    {diff.addedLines != null && diff.addedLines > 0 && (
+                      <Badge variant="outline" size="sm" theme="success">
+                        +{diff.addedLines}
+                      </Badge>
+                    )}
+                    {diff.deletedLines != null && diff.deletedLines > 0 && (
+                      <Badge variant="outline" size="sm" theme="destructive">
+                        -{diff.deletedLines}
+                      </Badge>
+                    )}
+                  </div>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </ListActions.Left>
       <ListActions.Right>
         <FileViewGauge.Root>

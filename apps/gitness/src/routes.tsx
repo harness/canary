@@ -37,6 +37,7 @@ import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
+import { RepoLabelsList } from './pages-v2/repo/repo-labels-container'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
@@ -75,11 +76,7 @@ const repoRoutes = [
         children: [
           {
             index: true,
-            element: <RepoSummaryPage />,
-            handle: {
-              breadcrumb: () => <Text>Summary</Text>,
-              routeName: RouteConstants.toRepoSummary
-            }
+            element: <Navigate to="summary" replace />
           },
           {
             path: 'summary',
@@ -172,11 +169,7 @@ const repoRoutes = [
                 children: [
                   {
                     index: true,
-                    element: (
-                      <PullRequestDataProvider>
-                        <PullRequestConversationPage />
-                      </PullRequestDataProvider>
-                    )
+                    element: <Navigate to="conversation" replace />
                   },
                   {
                     path: 'conversation',
@@ -265,10 +258,7 @@ const repoRoutes = [
             children: [
               {
                 index: true,
-                element: <RepoSettingsGeneralPageContainer />,
-                handle: {
-                  breadcrumb: () => <Text>General</Text>
-                }
+                element: <Navigate to="general" replace />
               },
               {
                 path: 'general',
@@ -331,6 +321,10 @@ const repoRoutes = [
                     }
                   }
                 ]
+              },
+              {
+                path: 'labels',
+                element: <RepoLabelsList />
               }
             ]
           }
@@ -347,10 +341,7 @@ const repoRoutes = [
     children: [
       {
         index: true,
-        element: <>General</>,
-        handle: {
-          breadcrumb: () => <Text>General</Text>
-        }
+        element: <Navigate to="general" replace />
       },
       {
         path: 'general',

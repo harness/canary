@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { Button, Icon, Input, Spacer } from '@harnessio/canary'
-import { useListGlobalTemplatesQuery } from '@harnessio/code-service-client'
+import { useListTemplatesQuery } from '@harnessio/code-service-client'
 import { SkeletonList } from '@harnessio/ui/components'
 import {
   harnessStepGroups,
@@ -13,6 +14,7 @@ import {
   StepsPaletteItem
 } from '@harnessio/views'
 
+import { PathParams } from '../../../../RouteDefinitions'
 import { PageResponseHeader } from '../../../../types'
 import { StepSource } from '../context/data-store/types'
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
@@ -30,11 +32,13 @@ const PipelineStudioStepPalette = (props: PipelineStudioStepFormProps): JSX.Elem
     requestYamlModifications
   } = usePipelineDataContext()
   const { setStepDrawerOpen } = usePipelineViewContext()
+  const { spaceId } = useParams<PathParams>()
 
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
 
-  const { data: { body: pluginsResponse, headers } = {}, isFetching } = useListGlobalTemplatesQuery({
+  const { data: { body: pluginsResponse, headers } = {}, isFetching } = useListTemplatesQuery({
+    space_ref: spaceId || '',
     queryParams: { limit: 100, page, query }
   })
 

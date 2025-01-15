@@ -78,8 +78,18 @@ export interface PullRequestComparePageProps {
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
-  searchQuery: string
-  setSearchQuery: (query: string) => void
+  searchBranchQuery: string
+  setSearchBranchQuery: (query: string) => void
+  searchReviewersQuery: string
+  setSearchReviewersQuery: (query: string) => void
+  usersList?: { display_name?: string; id?: number; uid?: string }[]
+  reviewers?: {
+    reviewer?: { display_name?: string; id?: number }
+    review_decision?: EnumPullReqReviewDecision
+    sha?: string
+  }[]
+  handleAddReviewer: (id?: number) => void
+  handleDeleteReviewer: (id?: number) => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -101,8 +111,14 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   useRepoBranchesStore,
   useRepoCommitsStore,
   currentUser,
-  searchQuery,
-  setSearchQuery
+  searchBranchQuery,
+  setSearchBranchQuery,
+  searchReviewersQuery,
+  setSearchReviewersQuery,
+  usersList,
+  reviewers,
+  handleAddReviewer,
+  handleDeleteReviewer
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -184,8 +200,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 selectBranch(branchTag, type, false)
                 handleBranchSelection()
               }}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
+              searchQuery={searchBranchQuery}
+              setSearchQuery={setSearchBranchQuery}
             />
 
             <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
@@ -198,8 +214,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 selectBranch(branchTag, type, true)
                 handleBranchSelection()
               }}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
+              searchQuery={searchBranchQuery}
+              setSearchQuery={setSearchBranchQuery}
             />
 
             {isBranchSelected &&
@@ -304,7 +320,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" value={prBranchCombinationExists ? 'commits' : 'overview'}>
+            <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
               <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
@@ -351,16 +367,18 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         />
                       </div>
                     </div>
-                    {/* TODO: Replace placeholder data with real implementation */}
                     <PullRequestSideBar
-                      addReviewers={noop}
-                      usersList={[]}
+                      addReviewers={handleAddReviewer}
+                      usersList={usersList ?? []}
                       currentUserId={currentUser}
                       pullRequestMetadata={{ source_sha: '' }}
                       processReviewDecision={mockProcessReviewDecision}
                       refetchReviewers={noop}
-                      handleDelete={noop}
-                      reviewers={[]}
+                      handleDelete={handleDeleteReviewer}
+                      reviewers={reviewers ?? []}
+                      searchQuery={searchReviewersQuery}
+                      setSearchQuery={setSearchReviewersQuery}
+                      useTranslationStore={useTranslationStore}
                     />
                   </div>
                 </TabsContent>

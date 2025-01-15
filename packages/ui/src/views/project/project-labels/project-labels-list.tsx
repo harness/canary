@@ -6,18 +6,19 @@ import { ProjectLabelPageProps } from './types'
 
 export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
   useTranslationStore,
-  space_ref,
+  createdIn,
   useLabelsStore,
   openCreateLabelDialog,
   handleEditLabel,
-  handleDeleteLabel
+  handleDeleteLabel,
+  showSpacer = true
 }) => {
   const { t } = useTranslationStore()
   const { labels } = useLabelsStore()
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content maxWidth="3xl">
-        <Spacer size={10} />
+        {showSpacer && <Spacer size={10} />}
         <Text size={5} weight={'medium'}>
           Labels
         </Text>
@@ -41,7 +42,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
         <Spacer size={5} />
         <LabelsListView
           labels={labels}
-          space_ref={space_ref}
+          createdIn={createdIn}
           handleDeleteLabel={handleDeleteLabel}
           handleEditLabel={handleEditLabel}
           useTranslationStore={useTranslationStore}

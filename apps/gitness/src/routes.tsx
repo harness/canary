@@ -51,7 +51,7 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
-const repoRoutes = [
+const repoRoutes: CustomRouteObject[] = [
   {
     path: 'repos',
     handle: {
@@ -373,7 +373,8 @@ const repoRoutes = [
     element: <ProjectPipelineListPage />,
     handle: {
       breadcrumb: () => <Text>Pipelines</Text>
-    }
+    },
+    children: []
   }
 ]
 

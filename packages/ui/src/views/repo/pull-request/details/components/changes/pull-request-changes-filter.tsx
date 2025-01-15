@@ -254,7 +254,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           <p className="text-14 leading-tight text-foreground-4">
             Showing{' '}
             <DropdownMenuTrigger asChild>
-              <span className="text-foreground-accent cursor-pointer ease-in-out">
+              <span className="cursor-pointer text-foreground-accent ease-in-out">
                 {pullRequestMetadata?.stats?.files_changed || 0} changed files
               </span>
             </DropdownMenuTrigger>{' '}
@@ -267,9 +267,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                 <DropdownMenuItem
                   key={diff.filePath}
                   onClick={() => {}}
-                  className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
+                  className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
                 >
-                  <span className="text-12 flex-1 overflow-hidden truncate text-primary">{diff.filePath}</span>
+                  <span className="flex-1 overflow-hidden truncate text-12 text-primary">{diff.filePath}</span>
                   <div className="ml-4 flex items-center space-x-2">
                     {diff.addedLines != null && diff.addedLines > 0 && (
                       <Badge variant="outline" size="sm" theme="success">

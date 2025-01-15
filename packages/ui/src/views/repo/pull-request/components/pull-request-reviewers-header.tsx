@@ -91,7 +91,7 @@ const ReviewersHeader = ({
                     >
                       <div className="flex w-full min-w-0 items-center gap-x-2">
                         {isSelected && <Icon name="tick" size={12} className="min-w-[12px] text-foreground-1" />}
-                        <Avatar className="h-6 w-6 rounded-full">
+                        <Avatar className="size-6 rounded-full">
                           <AvatarFallback>
                             <Text size={1} color="tertiaryBackground">
                               {getInitials(display_name || '')}

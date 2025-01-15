@@ -126,7 +126,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             <p className="text-14 leading-tight text-foreground-4">
               Showing{' '}
               <DropdownMenuTrigger asChild>
-                <span className="text-foreground-accent cursor-pointer ease-in-out">
+                <span className="cursor-pointer text-foreground-accent ease-in-out">
                   {diffStats.files_changed || 0} changed files
                 </span>
               </DropdownMenuTrigger>{' '}
@@ -138,7 +138,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                   <DropdownMenuItem
                     key={diff.filePath}
                     onClick={() => {}}
-                    className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
+                    className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
                   >
                     <Text size={1} className="flex-1 overflow-hidden truncate text-primary">
                       {diff.filePath}

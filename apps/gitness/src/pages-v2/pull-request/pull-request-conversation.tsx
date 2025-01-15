@@ -13,6 +13,8 @@ import {
   mergePullReqOp,
   OpenapiMergePullReq,
   OpenapiStatePullReqRequest,
+  rebaseBranch,
+  RebaseBranchRequestBody,
   reviewerAddPullReq,
   reviewerDeletePullReq,
   statePullReq,
@@ -407,14 +409,27 @@ export default function PullRequestConversationPage() {
 
   const handlePrState = (state: string) => {
     const payload: OpenapiStatePullReqRequest = {
-      state: state as EnumPullReqState
+      ...(state === 'draft' && { is_draft: true }),
+      state: state === 'draft' ? 'open' : (state as EnumPullReqState)
     }
     statePullReq({ body: payload, repo_ref: repoRef, pullreq_number: prId }).then(() => {
       onPRStateChanged()
       setRuleViolationArr(undefined)
     })
   }
-
+  const handleRebaseBranch = () => {
+    const payload: RebaseBranchRequestBody = {
+      base_branch: pullReqMetadata.target_branch,
+      bypass_rules: true,
+      dry_run_rules: false,
+      head_branch: pullReqMetadata.source_branch,
+      head_commit_sha: pullReqMetadata.source_sha
+    }
+    rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
+      onPRStateChanged()
+      setRuleViolationArr(undefined)
+    })
+  }
   const mockPullRequestActions = [
     ...(pullReqMetadata?.closed
       ? [
@@ -519,6 +534,8 @@ export default function PullRequestConversationPage() {
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}
             <PullRequestPanel
+              handleRebaseBranch={handleRebaseBranch}
+              handlePrState={handlePrState}
               spaceId={spaceId || ''}
               repoId={repoId}
               changesInfo={{

@@ -1,17 +1,6 @@
 import { ChangeEvent, useMemo, useState } from 'react'
 
-import {
-  Button,
-  Checkbox,
-  Label,
-  ListActions,
-  NoData,
-  PaginationComponent,
-  SearchBox,
-  SkeletonList,
-  Spacer,
-  Text
-} from '@/components'
+import { Button, ListActions, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -31,7 +20,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
   isLoadingSpaceLabels
 }) => {
   const { t } = useTranslationStore()
-  const { labels, totalPages, page, setPage, values } = useLabelsStore()
+  const { spaceLabels, totalPages, page, setPage, spaceValues } = useLabelsStore()
   const [searchInput, setSearchInput] = useState(searchQuery)
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
@@ -59,7 +48,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
           Labels
         </Text>
         <Spacer size={6} />
-        {(!!labels.length || (!labels.length && isDirtyList)) && (
+        {(!!spaceLabels.length || (!spaceLabels.length && isDirtyList)) && (
           <>
             <ListActions.Root>
               <ListActions.Left>
@@ -84,7 +73,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
           <SkeletonList />
         ) : (
           <LabelsListView
-            labels={labels}
+            labels={spaceLabels}
             // createdIn={createdIn}
             useLabelsStore={useLabelsStore}
             handleDeleteLabel={handleDeleteLabel}
@@ -94,7 +83,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
             handleResetSearch={handleResetSearch}
             searchQuery={searchQuery}
             openCreateLabelDialog={openCreateLabelDialog}
-            values={values}
+            values={spaceValues}
           />
         )}
 

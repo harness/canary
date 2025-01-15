@@ -24,12 +24,12 @@ export const ProjectLabelsList = () => {
   const {
     page,
     setPage,
-    labels: storeLabels,
-    setLabels,
-    addLabel,
+    spaceLabels: storeLabels,
+    setSpaceLabels,
+    addSpaceLabel,
     setPresetEditLabel,
-    deleteLabel,
-    setValues,
+    deleteSpaceLabel: deleteStoreSpaceLabel,
+    setSpaceValues,
     setRepoSpaceRef
   } = useLabelsStore()
 
@@ -52,9 +52,9 @@ export const ProjectLabelsList = () => {
 
   useEffect(() => {
     if (labels) {
-      setLabels(labels as ILabelType[])
+      setSpaceLabels(labels as ILabelType[])
     }
-  }, [labels, setLabels])
+  }, [labels, setSpaceLabels])
 
   useEffect(() => {
     setQueryPage(page)
@@ -75,7 +75,7 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: data => {
         setOpenCreateLabelDialog(false)
-        addLabel(data.body as ILabelType)
+        addSpaceLabel(data.body as ILabelType)
       }
     }
   )
@@ -87,8 +87,8 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteLabel(variables.key)
-        addLabel(data.body as ILabelType)
+        deleteStoreSpaceLabel(variables.key)
+        addSpaceLabel(data.body as ILabelType)
       }
     }
   )
@@ -100,24 +100,10 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteLabel(variables.key)
+        deleteStoreSpaceLabel(variables.key)
       }
     }
   )
-
-  // async function fetchAllLabelValues(storeLabels: ILabelType[], spaceRef: string) {
-  //   const valuesByKey = {}
-
-  //   for (const label of storeLabels ?? []) {
-  //     const response = await fetch(`/api/v1/spaces/${spaceRef}/labels/${label.key}/values`)
-  //     const json = await response.json()
-  //     valuesByKey[label.key] = json ?? [] // store the fetched data
-  //   }
-
-  //   // setValues(valuesByKey)
-  // }
-  // fetchAllLabelValues(storeLabels, space_ref!)
-  // console.log(values)
 
   useEffect(() => {
     async function fetchAllLabelValues(storeLabels: ILabelType[], spaceRef: string) {
@@ -135,11 +121,11 @@ export const ProjectLabelsList = () => {
         }
       }
 
-      setValues(valuesByKey)
+      setSpaceValues(valuesByKey)
     }
 
     fetchAllLabelValues(storeLabels, space_ref!)
-  }, [storeLabels, space_ref, setValues])
+  }, [storeLabels, space_ref, setSpaceValues])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {

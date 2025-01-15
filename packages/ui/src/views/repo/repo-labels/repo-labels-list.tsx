@@ -19,7 +19,6 @@ import { RepoLabelPageProps } from './types'
 
 export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
   useTranslationStore,
-  //   createdIn,
   useLabelsStore,
   openCreateLabelDialog,
   handleEditLabel,
@@ -30,9 +29,9 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
   isLoadingSpaceLabels
 }) => {
   const { t } = useTranslationStore()
-  const { labels, totalPages, page, setPage, values } = useLabelsStore()
+  const { repoLabels, totalPages, page, setPage, repoValues, setGetParentScopeLabels, getParentScopeLabels } =
+    useLabelsStore()
   const [searchInput, setSearchInput] = useState(searchQuery)
-  const [showParentLabels, setShowParentLabels] = useState(false)
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
     setSearchQuery(searchQuery || null)
@@ -52,8 +51,8 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
   }
 
   const filteredLabels = useMemo(() => {
-    return showParentLabels ? labels : labels?.filter(label => label.scope === 0)
-  }, [labels, showParentLabels])
+    return getParentScopeLabels ? repoLabels : repoLabels?.filter(label => label.scope === 0)
+  }, [repoLabels, getParentScopeLabels])
 
   return (
     <SandboxLayout.Main>
@@ -63,7 +62,7 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
           Labels
         </Text>
         <Spacer size={6} />
-        {(!!labels.length || (!labels.length && isDirtyList)) && (
+        {(!!repoLabels.length || (!repoLabels.length && isDirtyList)) && (
           <>
             <ListActions.Root>
               <ListActions.Left>
@@ -74,6 +73,14 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
                   handleChange={handleInputChange}
                   placeholder={t('views:repos.search')}
                 />
+                <div className="flex gap-2">
+                  <Checkbox
+                    checked={getParentScopeLabels}
+                    onCheckedChange={() => setGetParentScopeLabels(!getParentScopeLabels)}
+                    id="show-parent-labels"
+                  />
+                  <Label>Show parent lables</Label>
+                </div>
               </ListActions.Left>
               <ListActions.Right>
                 <Button variant="default" onClick={openCreateLabelDialog}>
@@ -89,7 +96,6 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
         ) : (
           <LabelsListView
             labels={filteredLabels}
-            // createdIn={createdIn}
             useLabelsStore={useLabelsStore}
             handleDeleteLabel={handleDeleteLabel}
             handleEditLabel={handleEditLabel}
@@ -98,18 +104,9 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
             handleResetSearch={handleResetSearch}
             searchQuery={searchQuery}
             openCreateLabelDialog={openCreateLabelDialog}
-            values={values}
+            values={repoValues}
           />
         )}
-        <Spacer size={4} />
-        <div className="flex gap-2">
-          <Checkbox
-            checked={showParentLabels}
-            onCheckedChange={() => setShowParentLabels(!showParentLabels)}
-            id="show-parent-labels"
-          />
-          <Label>Show parent lables</Label>
-        </div>
 
         <Spacer size={8} />
         <PaginationComponent

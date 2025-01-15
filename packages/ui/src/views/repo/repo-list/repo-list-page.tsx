@@ -23,8 +23,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery,
-  routes
+  setSearchQuery
 }) => {
   const { t } = useTranslationStore()
   const navigate = useNavigate()

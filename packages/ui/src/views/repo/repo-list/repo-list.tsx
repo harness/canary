@@ -46,8 +46,7 @@ export function RepoList({
   query,
   handleResetQuery,
   useTranslationStore,
-  isLoading,
-  routes
+  isLoading
 }: PageProps) {
   const noData = !(repos && repos.length > 0)
   const { t } = useTranslationStore()
@@ -89,7 +88,7 @@ export function RepoList({
           ]}
           primaryButton={{
             label: t('views:repos.create-repository', 'Create repository'),
-            to: routes?.toCreateRepo?.()
+            to: '/create'
           }}
           secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
         />

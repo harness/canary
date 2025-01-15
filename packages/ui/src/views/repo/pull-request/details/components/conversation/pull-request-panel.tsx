@@ -249,7 +249,7 @@ const PullRequestPanel = ({
                     variant={actions && !pullReqMetadata?.closed ? 'split' : 'default'}
                     size={actions && !pullReqMetadata?.closed ? 'xs_split' : 'xs'}
                     theme={
-                      mergeable && !ruleViolation
+                      mergeable && !ruleViolation && !pullReqMetadata?.is_draft && !pullReqMetadata?.closed
                         ? 'success'
                         : pullReqMetadata?.is_draft || pullReqMetadata?.closed
                           ? 'primary'

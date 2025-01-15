@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
+import { useQueryState } from 'nuqs'
 
 import {
   commentStatusPullReq,
@@ -14,13 +15,18 @@ import {
   reviewerDeletePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
+  useAssignLabelMutation,
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
-  useDeleteBranchMutation,
+  useDeletePullReqSourceBranchMutation,
   useGetBranchQuery,
+  useListLabelsQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
-  useReviewerListPullReqQuery
+  useListRepoLabelsQuery,
+  useRestorePullReqSourceBranchMutation,
+  useReviewerListPullReqQuery,
+  useUnassignLabelMutation
 } from '@harnessio/code-service-client'
 import { SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
@@ -78,6 +84,8 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user' }
   })
   const [comment, setComment] = useState<string>('')
+  const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
@@ -101,22 +109,78 @@ export default function PullRequestConversationPage() {
     queryParams: {}
   })
 
+  const [searchReviewers, setSearchReviewers] = useQueryState('reviewer', { defaultValue: '' })
+  const [addReviewerError, setAddReviewerError] = useState('')
+  const [removeReviewerError, setRemoveReviewerError] = useState('')
+  const [searchLabel, setSearchLabel] = useQueryState('label', { defaultValue: '' })
   const [changesLoading, setChangesLoading] = useState(true)
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const { mutateAsync: saveBranch } = useCreateBranchMutation({})
-  const onRestoreBranch = () => {
-    saveBranch({
+  const { data: { body: labelsList } = {} } = useListRepoLabelsQuery({
+    repo_ref: repoRef,
+    queryParams: { inherited: true, query: searchLabel }
+  })
+
+  const { data: { body: PRLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
+    repo_ref: repoRef,
+    pullreq_number: prId,
+    queryParams: {}
+  })
+
+  const { mutate: addLabel, error: addLabelError } = useAssignLabelMutation(
+    {
       repo_ref: repoRef,
-      body: { name: pullReqMetadata?.source_branch, target: pullReqMetadata?.source_sha, bypass_rules: false }
+      pullreq_number: prId
+    },
+    {
+      onSuccess: () => {
+        refetchPRLabels()
+      }
+    }
+  )
+
+  const { mutate: removeLabel, error: removeLabelError } = useUnassignLabelMutation(
+    {
+      repo_ref: repoRef,
+      pullreq_number: prId
+    },
+    {
+      onSuccess: () => {
+        refetchPRLabels()
+      }
+    }
+  )
+
+  const handleAddLabel = (id?: number) => {
+    if (!id) return
+    addLabel({
+      body: {
+        label_id: id
+      }
+    })
+  }
+
+  const handleRemoveLabel = (id: number) => {
+    removeLabel({
+      label_id: id
+    })
+  }
+
+  const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
+  const onRestoreBranch = () => {
+    restoreBranch({
+      repo_ref: repoRef,
+      pullreq_number: prId,
+      body: { bypass_rules: false }
     })
       .then(res => {
         if (res.body.name) {
           setErrorMsg('')
           setShowRestoreBranchButton(false)
           setShowDeleteBranchButton(true)
+          refetchActivities()
         }
       })
       .catch(err => {
@@ -132,9 +196,9 @@ export default function PullRequestConversationPage() {
     branch_name: pullReqMetadata?.source_branch || '',
     queryParams: { include_checks: true, include_rules: true }
   })
-  const { mutateAsync: deleteBranch } = useDeleteBranchMutation({
+  const { mutateAsync: deleteBranch } = useDeletePullReqSourceBranchMutation({
     repo_ref: repoRef,
-    branch_name: pullReqMetadata?.source_branch || '',
+    pullreq_number: prId,
     queryParams: { dry_run_rules: true }
   })
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
@@ -142,7 +206,7 @@ export default function PullRequestConversationPage() {
   const onDeleteBranch = () => {
     deleteBranch({
       repo_ref: repoRef,
-      branch_name: pullReqMetadata?.source_branch || '',
+      pullreq_number: prId,
       queryParams: { bypass_rules: true, dry_run_rules: false }
     })
       .then(res => {
@@ -158,6 +222,7 @@ export default function PullRequestConversationPage() {
         }
         setShowRestoreBranchButton(true)
         setErrorMsg('')
+        refetchActivities()
       })
       .catch(err => {
         setErrorMsg(err.message)
@@ -241,14 +306,30 @@ export default function PullRequestConversationPage() {
     setActivities(activityData)
   }, [activityData])
 
-  const onCopyClick = (commentId?: number) => {
+  const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
     if (commentId) {
       const url = new URL(window.location.href)
-      url.pathname = url.pathname.replace('/conversation', '/changes')
+      if (isNotCodeComment) {
+        url.pathname = url.pathname.replace('/conversation', '/changes')
+      }
       url.searchParams.set('commentId', commentId.toString())
       copy(url.toString())
     }
   }
+  useEffect(() => {
+    if (!commentId || isScrolledToComment) return
+    // Slight timeout so the UI has time to expand/hydrate
+    const timeoutId = setTimeout(() => {
+      const elem = document.getElementById(`comment-${commentId}`)
+      if (!elem) return
+      elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      setIsScrolledToComment(true)
+    }, 2500)
+
+    return () => {
+      clearTimeout(timeoutId)
+    }
+  }, [commentId])
 
   const changesInfo = extractInfoForCodeOwnerContent({
     approvedEvaluations,
@@ -290,14 +371,14 @@ export default function PullRequestConversationPage() {
       .then(() => {
         refetchReviewers()
       })
-      .catch(exception => console.warn(exception))
+      .catch(error => setAddReviewerError(error.message))
   }
   const handleDeleteReviewer = (id: number) => {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
       .then(() => {
         refetchReviewers()
       })
-      .catch(exception => console.warn(exception))
+      .catch(error => setRemoveReviewerError(error.message))
   }
   const onPRStateChanged = useCallback(() => {
     refetchCodeOwners()
@@ -320,6 +401,7 @@ export default function PullRequestConversationPage() {
     //todo: add catch t o show errors
     // .catch(exception => showError(getErrorMessage(exception)))
   }
+
   const mockPullRequestActions = [
     {
       id: '0',
@@ -361,7 +443,8 @@ export default function PullRequestConversationPage() {
     suggestionsBatch,
     suggestionToCommit,
     onCommentSaveAndStatusChange,
-    toggleConversationStatus
+    toggleConversationStatus,
+    handleUpload
   } = usePRCommonInteractions({
     repoRef,
     prId,
@@ -391,7 +474,7 @@ export default function PullRequestConversationPage() {
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}
             <PullRequestPanel
-              spaceId={spaceId}
+              spaceId={spaceId || ''}
               repoId={repoId}
               changesInfo={{
                 header: changesInfo?.title,
@@ -493,6 +576,7 @@ export default function PullRequestConversationPage() {
               suggestionsBatch={suggestionsBatch}
               removeSuggestionFromBatch={removeSuggestionFromBatch}
               filenameToLanguage={filenameToLanguage}
+              handleUpload={handleUpload}
             />
             <Spacer size={9} />
             <PullRequestCommentBox
@@ -500,6 +584,7 @@ export default function PullRequestConversationPage() {
               setComment={setComment}
               currentUser={currentUserData?.display_name}
               onSaveComment={handleSaveComment}
+              handleUpload={handleUpload}
             />
             <Spacer size={9} />
           </SandboxLayout.Content>
@@ -515,11 +600,36 @@ export default function PullRequestConversationPage() {
               processReviewDecision={processReviewDecision}
               refetchReviewers={refetchReviewers}
               handleDelete={handleDeleteReviewer}
+              addReviewerError={addReviewerError}
+              removeReviewerError={removeReviewerError}
               reviewers={reviewers?.map((val: TypesPullReqReviewer) => ({
                 reviewer: { display_name: val.reviewer?.display_name, id: val.reviewer?.id },
                 review_decision: val.review_decision,
                 sha: val.sha
               }))}
+              searchQuery={searchReviewers}
+              setSearchQuery={setSearchReviewers}
+              labelsList={labelsList?.map(label => {
+                return {
+                  id: label.id,
+                  key: label.key,
+                  color: label.color
+                }
+              })}
+              PRLabels={PRLabels?.label_data?.map(label => {
+                return {
+                  id: label.id,
+                  key: label.key,
+                  color: label.color
+                }
+              })}
+              searchLabelQuery={searchLabel}
+              setSearchLabelQuery={setSearchLabel}
+              addLabel={handleAddLabel}
+              removeLabel={handleRemoveLabel}
+              addLabelError={addLabelError?.message}
+              removeLabelError={removeLabelError?.message}
+              useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

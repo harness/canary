@@ -382,7 +382,7 @@ function PullRequestConversationPage() {
           <SandboxLayout.Content className="pl-0">
             {/* TODO: fix handleaction for comment section in panel */}
             <PullRequestPanel
-              spaceId={spaceId}
+              spaceId={spaceId || ''}
               repoId={repoId}
               changesInfo={{
                 header: changesInfo?.title,

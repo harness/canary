@@ -186,7 +186,7 @@ export const RepoSidebar = () => {
   )
 
   // TODO: repoId and spaceId must be defined
-  if (!repoId || !spaceId) return <></>
+  if (!repoId) return <></>
 
   return (
     <>

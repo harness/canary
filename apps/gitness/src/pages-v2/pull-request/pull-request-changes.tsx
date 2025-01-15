@@ -360,7 +360,8 @@ export default function PullRequestChanges() {
     suggestionsBatch,
     suggestionToCommit,
     onCommentSaveAndStatusChange,
-    toggleConversationStatus
+    toggleConversationStatus,
+    handleUpload
   } = usePRCommonInteractions({
     repoRef,
     prId,
@@ -378,6 +379,7 @@ export default function PullRequestChanges() {
         prId={prId}
       />
       <PullRequestChangesPage
+        handleUpload={handleUpload}
         usePullRequestProviderStore={usePullRequestProviderStore}
         useTranslationStore={useTranslationStore}
         setDiffMode={setDiffMode}

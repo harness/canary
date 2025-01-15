@@ -8,4 +8,5 @@ export interface HeaderProps {
   isBinary?: boolean
   deleted?: boolean
   unchangedPercentage?: number
+  filePath?: string
 }

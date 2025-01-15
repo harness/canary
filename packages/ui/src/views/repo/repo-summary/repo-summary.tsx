@@ -193,9 +193,9 @@ export function RepoSummaryView({
                 <ButtonGroup>
                   <FileAdditionsTrigger
                     useTranslationStore={useTranslationStore}
-                    pathNewFile={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                    pathNewFile={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
                     // TODO: set the actual file upload path
-                    pathUploadFiles={`/${spaceId}/repos/${repoId}/code/upload/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                    pathUploadFiles={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/upload/${gitRef || selectedBranchTag?.name || ''}/~/`}
                   />
                   <CloneRepoDialog
                     sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
@@ -247,7 +247,7 @@ export function RepoSummaryView({
                       asChild
                     >
                       <Link
-                        to={`/${spaceId}/repos/${repoId}/code/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}
+                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}
                       >
                         <Icon name="edit-pen" size={16} className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>

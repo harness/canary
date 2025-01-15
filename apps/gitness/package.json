@@ -16,7 +16,9 @@
     "test:watch": "vitest",
     "test:changed": "vitest --run --changed=origin/main",
     "extract": "i18next --config './i18n.config.ts'",
-    "typecheck": "tsc -b"
+    "typecheck": "tsc -b",
+    "build:webpack": "webpack --config webpack.config.cjs",
+    "start:webpack": "webpack serve --config webpack.config.cjs"
   },
   "dependencies": {
     "@harnessio/canary": "workspace:*",
@@ -32,7 +34,7 @@
     "clsx": "^2.1.1",
     "diff2html": "3.4.22",
     "event-source-polyfill": "^1.0.22",
-    "highlight.js": "^11.9.0",
+    "highlight.js": "^11.11.1",
     "i18next": "^24.0.2",
     "i18next-browser-languagedetector": "^8.0.0",
     "jotai": "^2.6.3",
@@ -53,6 +55,7 @@
   "devDependencies": {
     "@eslint/js": "^9.9.0",
     "@git-diff-view/react": "^0.0.16",
+    "@swc/core": "^1.9.3",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^13.4.0",
     "@types/event-source-polyfill": "^1.0.0",
@@ -62,19 +65,29 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.2",
     "@vitest/coverage-istanbul": "^2.1.8",
+    "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^5.1.0-rc.0",
     "eslint-plugin-react-refresh": "^0.4.9",
     "globals": "^15.9.0",
+    "html-webpack-plugin": "^5.6.0",
     "immer": "^10.1.1",
     "npm-run-all": "^4.1.5",
+    "postcss-loader": "^8.1.1",
     "prettier": "^3.0.3",
+    "raw-loader": "^4.0.2",
+    "react-router-dom": "^6.26.0",
+    "style-loader": "^4.0.0",
+    "swc-loader": "^0.2.6",
     "tailwindcss": "^3.4.4",
     "typescript": "^5.5.3",
     "typescript-eslint": "^8.0.1",
     "vite": "^6.0.3",
     "vite-plugin-monaco-editor": "^1.1.0",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.2",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

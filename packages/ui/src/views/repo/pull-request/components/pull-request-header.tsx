@@ -138,14 +138,20 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </span>
           <span>into</span>
           <Badge variant="tertiary" size="md" borderRadius="base">
-            <Link className="flex items-center gap-x-1" to={`/${spaceId}/repos/${repoId}/code/${target_branch}`}>
+            <Link
+              className="flex items-center gap-x-1"
+              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${target_branch}`}
+            >
               <Icon name="branch" size={12} className="text-icons-9" />
               {target_branch}
             </Link>
           </Badge>
           <span>from</span>
           <Badge variant="tertiary" size="md" borderRadius="base">
-            <Link className="flex items-center gap-x-1" to={`/${spaceId}/repos/${repoId}/code/${source_branch}`}>
+            <Link
+              className="flex items-center gap-x-1"
+              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${source_branch}`}
+            >
               <Icon name="branch" size={12} className="text-icons-9" />
               {source_branch}
             </Link>

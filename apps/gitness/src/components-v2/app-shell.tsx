@@ -21,7 +21,7 @@ import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
-import BreadcrumbsV1 from './breadcrumbs/breadcrumbs'
+import Breadcrumbs from './breadcrumbs/breadcrumbs'
 
 interface NavLinkStorageInterface {
   state: {
@@ -30,7 +30,7 @@ interface NavLinkStorageInterface {
   }
 }
 
-const AppShell = () => {
+export const AppShell = () => {
   const routes = useRoutes()
   const { currentUser, spaces } = useAppContext()
   const navigate = useNavigate()
@@ -189,12 +189,9 @@ const AppShell = () => {
           useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>
-      <div className="flex flex-col">
-        <div className="sticky top-0 z-40 bg-background-1">
-          <BreadcrumbsV1 />
-        </div>
-        <Outlet />
-      </div>
+
+      <BreadcrumbsAndOutlet />
+
       <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
       <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
       <ManageNavigation
@@ -211,4 +208,17 @@ const AppShell = () => {
   )
 }
 
-export default AppShell
+export const AppShellMFE = () => {
+  return <BreadcrumbsAndOutlet />
+}
+
+function BreadcrumbsAndOutlet() {
+  return (
+    <div className="flex flex-col">
+      <div className="sticky top-0 bg-background-1 layer-high">
+        <Breadcrumbs />
+      </div>
+      <Outlet />
+    </div>
+  )
+}

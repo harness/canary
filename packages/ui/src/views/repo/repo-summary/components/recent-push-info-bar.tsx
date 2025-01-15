@@ -27,7 +27,9 @@ export const RecentPushInfoBar: FC<RecentPushInfoBarProps> = ({ recentPushes, sp
         </div>
 
         <Button asChild>
-          <Link to={`/${spaceId}/repos/${repoId}/pull-requests/new?source=${branchName}`}>Compare & pull request</Link>
+          <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pull-requests/new?source=${branchName}`}>
+            Compare & pull request
+          </Link>
         </Button>
       </div>
     ))}

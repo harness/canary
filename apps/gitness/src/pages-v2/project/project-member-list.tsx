@@ -20,7 +20,7 @@ import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
 
 export function ProjectMemberListPage() {
-  const space_ref = useGetSpaceURLParam()
+  const spaceURL = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
@@ -40,7 +40,7 @@ export function ProjectMemberListPage() {
     data: { body: membersData } = {},
     refetch
   } = useMembershipListQuery({
-    space_ref: space_ref ?? '',
+    space_ref: spaceURL ?? '',
     queryParams: {
       page,
       query: query ?? '',
@@ -49,7 +49,7 @@ export function ProjectMemberListPage() {
   })
 
   const { mutateAsync: updateRole } = useMembershipUpdateMutation(
-    { space_ref },
+    { space_ref: spaceURL },
     {
       onError: _error => {
         /**
@@ -76,7 +76,7 @@ export function ProjectMemberListPage() {
     const { member, role } = formValues
 
     await inviteMember({
-      space_ref: space_ref ?? '',
+      space_ref: spaceURL ?? '',
       body: { role: mapToEnumMembershipRole(role), user_uid: member }
     })
     queryClient.invalidateQueries({ queryKey: ['membershipList'] })

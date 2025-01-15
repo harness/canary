@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { Button, Icon } from '@/components'
+import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 
@@ -34,6 +35,7 @@ interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof Dialo
 
 const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
   ({ className, children, onOverlayClick, ...props }, ref) => {
+    const { portalContainer } = usePortal()
     const mainContent: React.ReactNode[] = []
     let footer: React.ReactNode = null
 
@@ -46,7 +48,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
     })
 
     return (
-      <DialogPortal>
+      <DialogPortal container={portalContainer}>
         <DialogOverlay onClick={onOverlayClick} />
         <DialogPrimitive.Content
           ref={ref}

@@ -13,6 +13,7 @@ import { CodeModes, CommitDivergenceType, RepoFile, RepoFiles, SummaryItemType }
 
 import FileContentViewer from '../../components-v2/file-content-viewer'
 import { FileEditor } from '../../components-v2/file-editor'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -28,7 +29,8 @@ export const RepoCode = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId, selectedBranchTag } = useRepoBranchesStore()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+  const routes = useRoutes()
+  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   // TODO: pathParts - should have all data for files path breadcrumbs
   const pathParts = [

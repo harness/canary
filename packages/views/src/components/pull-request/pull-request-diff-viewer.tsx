@@ -284,7 +284,7 @@ const PullRequestDiffViewer = ({
                   </Text>
                 </div>
                 <div className="flex items-center gap-3 border-t p-4">
-                  <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="size-6 rounded-full bg-tertiary-background bg-cover"></div>
                   <Input placeholder={'Reply here'} />
                 </div>
               </Card>

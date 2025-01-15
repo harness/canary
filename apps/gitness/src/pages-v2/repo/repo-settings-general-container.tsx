@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -39,8 +39,8 @@ import {
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { useRepoRulesStore } from './stores/repo-settings-store'
 import { transformBranchList } from './transform-utils/branch-transform'
@@ -50,7 +50,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const repoRef = useGetRepoRef()
   const repoName = useGetRepoId()
   const navigate = useNavigate()
-  const spaceId = useGetSpaceURLParam()
+  const { spaceId } = useParams<PathParams>()
   const queryClient = useQueryClient()
   const { setRepoData, setRules, setSecurityScanning } = useRepoRulesStore()
   const { branchList, setBranchList, setSelectedBranchTag, setSelectedRefType } = useRepoBranchesStore()

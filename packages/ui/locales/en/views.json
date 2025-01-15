@@ -224,6 +224,11 @@
     "compareChangesTabChanges": "Changes",
     "deleted": "Deleted",
     "deletedComment": "This comment was deleted.",
+    "labels": "Labels",
+    "searchLabels": "Search labels..",
+    "noLabels": "No labels found.",
+    "reviewers": "Reviewers",
+    "searchUsers": "Search users..",
     "approve": "Approve",
     "approved": "Approved",
     "changereq": "Changes Requested",
@@ -235,7 +240,8 @@
     "compareChangesDraftButton": "Draft pull request",
     "compareChangesDraftButtonLoading": "Drafting pull request...",
     "replyHere": "Reply here",
-    "commits": "Commits"
+    "commits": "Commits",
+    "noUsers": "No users found."
   },
   "profileSettings": {
     "name": "Name",

@@ -271,7 +271,7 @@ export default function RepoSummaryPage() {
               timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
               user: { name: item?.last_commit?.author?.identity?.name || '' },
               sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `/${spaceId}/repos/${repoId}/code/${gitRef}/~/${item?.path}`
+              path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
             }))
           )
         }

@@ -16,15 +16,24 @@ interface ReviewersListProps {
     sourceSHA?: string
   ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
   handleDelete: (id: number) => void
+  addReviewerError?: string
+  removeReviewerError?: string
 }
 
 const ReviewersList: React.FC<ReviewersListProps> = ({
   reviewers,
   pullRequestMetadata,
   processReviewDecision,
-  handleDelete
+  handleDelete,
+  addReviewerError,
+  removeReviewerError
 }) => (
   <div className="flex flex-col gap-3">
+    {addReviewerError || removeReviewerError ? (
+      <span className="text-12 text-destructive">{addReviewerError ?? removeReviewerError}</span>
+    ) : (
+      <></>
+    )}
     {reviewers.length ? (
       reviewers.map(({ reviewer, review_decision, sha }) => (
         <ReviewerItem

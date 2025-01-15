@@ -27,8 +27,8 @@ const PullRequestSystemTitleItem: React.FC<PullRequestSystemTitleItemProps> = ({
           name: (payload?.payload?.author as PayloadAuthor)?.display_name,
           description: (
             <Text color="tertiaryBackground">
-              changed title from
-              <span className="line-through">{(payload?.payload?.payload as GeneralPayload)?.old as string}</span> to
+              changed title from{' '}
+              <span className="line-through">{(payload?.payload?.payload as GeneralPayload)?.old as string}</span> to{' '}
               {(payload?.payload?.payload as GeneralPayload)?.new as string}
             </Text>
           )

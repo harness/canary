@@ -5,10 +5,13 @@ import {
   commentDeletePullReq,
   commentUpdatePullReq,
   ListPullReqActivitiesOkResponse,
+  // repoArtifactUpload,
   TypesPullReqActivity
 } from '@harnessio/code-service-client'
 import { CommitSuggestion } from '@harnessio/ui/views'
 import { generateAlphaNumericHash } from '@harnessio/views'
+
+import { getErrorMessage } from '../pull-request-utils'
 
 interface usePRCommonInteractionsProps {
   repoRef: string
@@ -28,7 +31,56 @@ export function usePRCommonInteractions({
   setActivities
 }: usePRCommonInteractionsProps) {
   let count = generateAlphaNumericHash(5)
+  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
+    const reader = new FileReader()
+    // Set up a function to be called when the load event is triggered
+    reader.onload = async function () {
+      if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
+        const markdown = await uploadImage(reader.result)
+        if (blob.type.startsWith('image/')) {
+          setMarkdownContent(`![image](${markdown})`) // Set the markdown content
+        } else {
+          setMarkdownContent(markdown) // Set the markdown content
+        }
+      }
+    }
+    reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
+  }
+  const uploadImage = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fileBlob: any
+  ) => {
+    try {
+      const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/octet-stream'
+        },
+        body: fileBlob,
+        redirect: 'follow'
+      })
+      // const response = await repoArtifactUpload({
+      //   method: 'POST',
+      //   headers: { 'content-type': 'application/octet-stream' },
+      //   body: fileBlob,
+      //   redirect: 'follow',
+      //   repo_ref: repoRef
+      // })
 
+      const result = await response.json()
+      if (!response.ok && result) {
+        // TODO: fix error state
+        console.warn(getErrorMessage(result))
+        return ''
+      }
+      const filePath = result.file_path
+      return `${window.location.origin}/api/v1/repos/${repoRef}/uploads/${filePath}`
+    } catch (exception) {
+      console.warn(getErrorMessage(exception))
+      return ''
+    }
+  }
   const handleSaveComment = useCallback(
     async (text: string, parentId?: number) => {
       // Optionally replicate ephemeral logic from conversation page:
@@ -161,6 +213,7 @@ export function usePRCommonInteractions({
   )
 
   return {
+    handleUpload,
     handleSaveComment,
     updateComment,
     deleteComment,

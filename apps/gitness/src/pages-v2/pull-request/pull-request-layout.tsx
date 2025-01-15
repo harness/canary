@@ -56,7 +56,7 @@ const PullRequestLayout = () => {
     <PullRequestLayoutView
       useTranslationStore={useTranslationStore}
       usePullRequestStore={usePullRequestStore}
-      spaceId={spaceId}
+      spaceId={spaceId || ''}
       repoId={repoId}
       updateTitle={handleUpdateTitle}
     />

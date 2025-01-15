@@ -67,6 +67,7 @@ export * from './filters'
 export * from './more-actions-tooltip'
 export * from './multi-select'
 export * from './button-with-options'
+export * from './tooltip'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

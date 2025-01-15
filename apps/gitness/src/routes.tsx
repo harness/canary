@@ -1,9 +1,10 @@
+import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'
 
-import AppShell from './components-v2/app-shell'
+import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
@@ -49,6 +50,333 @@ import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
+
+const repoRoutes: CustomRouteObject[] = [
+  {
+    path: 'repos',
+    handle: {
+      breadcrumb: () => <Text>Repositories</Text>,
+      routeName: RouteConstants.toRepositories
+    },
+    children: [
+      { index: true, element: <ReposListPage /> },
+      {
+        path: 'create',
+        element: <CreateRepo />
+      },
+      {
+        path: 'import',
+        element: <ImportRepo />
+      },
+      {
+        path: ':repoId',
+        element: <RepoLayout />,
+        handle: {
+          breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+        },
+        children: [
+          {
+            index: true,
+            element: <Navigate to="summary" replace />
+          },
+          {
+            path: 'summary',
+            element: <RepoSummaryPage />,
+            handle: {
+              breadcrumb: () => <Text>Summary</Text>,
+              routeName: RouteConstants.toRepoSummary
+            }
+          },
+          {
+            path: 'commits',
+            element: <RepoCommitsPage />,
+            handle: {
+              breadcrumb: () => <Text>Commits</Text>,
+              routeName: RouteConstants.toRepoCommits
+            }
+          },
+          {
+            path: 'commits/:commitSHA',
+            element: <RepoCommitDetailsPage />,
+            children: [
+              {
+                index: true,
+                element: <RepoCommitDiffsPage />,
+                handle: {
+                  breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
+                    <>
+                      <Text>Commits</Text>
+                      <Breadcrumb.Separator />
+                      <Text>{commitSHA}</Text>
+                    </>
+                  ),
+                  routeName: RouteConstants.toRepoCommitDetails
+                }
+              }
+            ]
+          },
+
+          {
+            path: 'branches',
+            element: <RepoBranchesListPage />,
+            handle: {
+              breadcrumb: () => <Text>Branches</Text>,
+              routeName: RouteConstants.toRepoBranches
+            }
+          },
+          {
+            path: 'code',
+            element: (
+              <ExplorerPathsProvider>
+                <RepoSidebar />
+              </ExplorerPathsProvider>
+            ),
+            handle: {
+              breadcrumb: () => <Text>Files</Text>,
+              routeName: RouteConstants.toRepoFiles
+            },
+            children: [
+              {
+                index: true,
+                element: <RepoCode />
+              },
+              {
+                path: '*',
+                element: <RepoCode />
+              }
+            ]
+          },
+          {
+            path: 'pulls',
+            handle: {
+              breadcrumb: () => <Text>Pull Requests</Text>,
+              routeName: RouteConstants.toPullRequests
+            },
+            children: [
+              { index: true, element: <PullRequestListPage /> },
+              {
+                path: 'compare/:diffRefs*?',
+                element: <CreatePullRequest />,
+                handle: {
+                  routeName: RouteConstants.toPullRequestCompare
+                }
+              },
+              {
+                path: ':pullRequestId',
+                element: <PullRequestLayout />,
+                handle: {
+                  breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <Navigate to="conversation" replace />
+                  },
+                  {
+                    path: 'conversation',
+                    element: (
+                      <PullRequestDataProvider>
+                        <PullRequestConversationPage />
+                      </PullRequestDataProvider>
+                    )
+                  },
+                  {
+                    path: 'commits',
+                    element: <PullRequestCommitPage />,
+                    handle: {
+                      breadcrumb: () => <Text>Commits</Text>
+                    }
+                  },
+                  {
+                    path: 'changes',
+                    element: (
+                      <PullRequestDataProvider>
+                        <PullRequestChanges />
+                      </PullRequestDataProvider>
+                    ),
+                    handle: {
+                      breadcrumb: () => <Text>Changes</Text>
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'pipelines',
+            handle: {
+              breadcrumb: () => <Text>Pipelines</Text>
+            },
+            children: [
+              { index: true, element: <RepoPipelineListPage /> },
+              {
+                path: ':pipelineId',
+                handle: {
+                  breadcrumb: ({ pipelineId }: { pipelineId: string }) => <Text>{pipelineId}</Text>
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <RepoExecutionListPage />,
+                    handle: {
+                      breadcrumb: () => <Text>Executions</Text>
+                    }
+                  },
+                  {
+                    path: 'edit',
+                    element: <PipelineEditPage />,
+                    handle: {
+                      breadcrumb: () => <Text>Edit</Text>,
+                      routeName: RouteConstants.toPipelineEdit
+                    }
+                  },
+                  {
+                    path: 'executions',
+                    handle: {
+                      routeName: RouteConstants.toExecutions
+                    },
+                    children: [
+                      {
+                        path: ':executionId',
+                        element: <>Execution Details Page</>,
+                        handle: {
+                          breadcrumb: ({ executionId }: { executionId: string }) => <Text>{executionId}</Text>,
+                          routeName: RouteConstants.toExecution
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            path: 'settings',
+            element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
+            handle: {
+              breadcrumb: () => <Text>Settings</Text>
+            },
+            children: [
+              {
+                index: true,
+                element: <Navigate to="general" replace />
+              },
+              {
+                path: 'general',
+                element: <RepoSettingsGeneralPageContainer />,
+                handle: {
+                  breadcrumb: () => <Text>General</Text>,
+                  routeName: RouteConstants.toRepoGeneralSettings
+                }
+              },
+              {
+                path: 'rules',
+                handle: {
+                  breadcrumb: () => <Text>Rules</Text>
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <RepoSettingsGeneralPageContainer />
+                  },
+                  {
+                    path: 'create',
+                    element: <RepoBranchSettingsRulesPageContainer />,
+                    handle: {
+                      breadcrumb: () => <Text>Create a rule</Text>
+                    }
+                  },
+                  {
+                    path: ':identifier',
+                    element: <RepoBranchSettingsRulesPageContainer />,
+                    handle: {
+                      breadcrumb: ({ identifier }: { identifier: string }) => <Text>{identifier}</Text>,
+                      routeName: RouteConstants.toRepoBranchRule
+                    }
+                  }
+                ]
+              },
+              {
+                path: 'webhooks',
+                handle: {
+                  breadcrumb: () => <Text>Webhooks</Text>,
+                  routeName: RouteConstants.toRepoWebhooks
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <WebhookListPage />
+                  },
+                  {
+                    path: 'create',
+                    element: <CreateWebhookContainer />,
+                    handle: {
+                      breadcrumb: () => <Text>Create a webhook</Text>
+                    }
+                  },
+                  {
+                    path: ':webhookId',
+                    element: <CreateWebhookContainer />,
+                    handle: {
+                      breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                    }
+                  }
+                ]
+              },
+              {
+                path: 'labels',
+                element: <RepoLabelsList />
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: 'settings',
+    element: <ProjectSettingsLayout />,
+    handle: {
+      breadcrumb: () => <Text>Settings</Text>
+    },
+    children: [
+      {
+        index: true,
+        element: <Navigate to="general" replace />
+      },
+      {
+        path: 'general',
+        element: <ProjectGeneralSettingsPageContainer />,
+        handle: {
+          breadcrumb: () => <Text>General</Text>
+        }
+      },
+      {
+        path: 'members',
+        element: <ProjectMemberListPage />,
+        handle: {
+          breadcrumb: () => <Text>Members</Text>,
+          routeName: RouteConstants.toProjectMembers
+        }
+      },
+      {
+        path: 'labels',
+        element: <ProjectLabelsList />,
+        handle: {
+          breadcrumb: () => <Text>Labels</Text>
+        }
+      }
+    ]
+  },
+  {
+    path: 'pipelines',
+    element: <ProjectPipelineListPage />,
+    handle: {
+      breadcrumb: () => <Text>Pipelines</Text>
+    },
+    children: []
+  }
+]
 
 export const routes: CustomRouteObject[] = [
   {
@@ -352,331 +680,7 @@ export const routes: CustomRouteObject[] = [
         handle: {
           breadcrumb: () => <ProjectDropdown />
         },
-        children: [
-          {
-            path: 'repos',
-            handle: {
-              breadcrumb: () => <Text>Repositories</Text>,
-              routeName: RouteConstants.toRepositories
-            },
-            children: [
-              { index: true, element: <ReposListPage /> },
-              {
-                path: 'create',
-                element: <CreateRepo />
-              },
-              {
-                path: 'import',
-                element: <ImportRepo />
-              },
-              {
-                path: ':repoId',
-                element: <RepoLayout />,
-                handle: {
-                  breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
-                },
-                children: [
-                  {
-                    index: true,
-                    element: <Navigate to="summary" replace />
-                  },
-                  {
-                    path: 'summary',
-                    element: <RepoSummaryPage />,
-                    handle: {
-                      breadcrumb: () => <Text>Summary</Text>,
-                      routeName: RouteConstants.toRepoSummary
-                    }
-                  },
-                  {
-                    path: 'commits',
-                    element: <RepoCommitsPage />,
-                    handle: {
-                      breadcrumb: () => <Text>Commits</Text>,
-                      routeName: RouteConstants.toRepoCommits
-                    }
-                  },
-                  {
-                    path: 'commits/:commitSHA',
-                    element: <RepoCommitDetailsPage />,
-                    children: [
-                      {
-                        index: true,
-                        element: <RepoCommitDiffsPage />,
-                        handle: {
-                          breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
-                            <>
-                              <Text>Commits</Text>
-                              <Breadcrumb.Separator />
-                              <Text>{commitSHA}</Text>
-                            </>
-                          ),
-                          routeName: RouteConstants.toRepoCommitDetails
-                        }
-                      }
-                    ]
-                  },
-
-                  {
-                    path: 'branches',
-                    element: <RepoBranchesListPage />,
-                    handle: {
-                      breadcrumb: () => <Text>Branches</Text>,
-                      routeName: RouteConstants.toRepoBranches
-                    }
-                  },
-                  {
-                    path: 'code',
-                    element: (
-                      <ExplorerPathsProvider>
-                        <RepoSidebar />
-                      </ExplorerPathsProvider>
-                    ),
-                    handle: {
-                      breadcrumb: () => <Text>Files</Text>,
-                      routeName: RouteConstants.toRepoFiles
-                    },
-                    children: [
-                      {
-                        index: true,
-                        element: <RepoCode />
-                      },
-                      {
-                        path: '*',
-                        element: <RepoCode />
-                      }
-                    ]
-                  },
-                  {
-                    path: 'pulls',
-                    handle: {
-                      breadcrumb: () => <Text>Pull Requests</Text>,
-                      routeName: RouteConstants.toPullRequests
-                    },
-                    children: [
-                      { index: true, element: <PullRequestListPage /> },
-                      {
-                        path: 'compare/:diffRefs*?',
-                        element: <CreatePullRequest />,
-                        handle: {
-                          routeName: RouteConstants.toPullRequestCompare
-                        }
-                      },
-                      {
-                        path: ':pullRequestId',
-                        element: <PullRequestLayout />,
-                        handle: {
-                          breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>
-                        },
-                        children: [
-                          {
-                            index: true,
-                            element: <Navigate to="conversation" replace />
-                          },
-                          {
-                            path: 'conversation',
-                            element: (
-                              <PullRequestDataProvider>
-                                <PullRequestConversationPage />
-                              </PullRequestDataProvider>
-                            )
-                          },
-                          {
-                            path: 'commits',
-                            element: <PullRequestCommitPage />,
-                            handle: {
-                              breadcrumb: () => <Text>Commits</Text>
-                            }
-                          },
-                          {
-                            path: 'changes',
-                            element: (
-                              <PullRequestDataProvider>
-                                <PullRequestChanges />
-                              </PullRequestDataProvider>
-                            ),
-                            handle: {
-                              breadcrumb: () => <Text>Changes</Text>
-                            }
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    path: 'pipelines',
-                    handle: {
-                      breadcrumb: () => <Text>Pipelines</Text>
-                    },
-                    children: [
-                      { index: true, element: <RepoPipelineListPage /> },
-                      {
-                        path: ':pipelineId',
-                        handle: {
-                          breadcrumb: ({ pipelineId }: { pipelineId: string }) => <Text>{pipelineId}</Text>
-                        },
-                        children: [
-                          {
-                            index: true,
-                            element: <RepoExecutionListPage />,
-                            handle: {
-                              breadcrumb: () => <Text>Executions</Text>
-                            }
-                          },
-                          {
-                            path: 'edit',
-                            element: <PipelineEditPage />,
-                            handle: {
-                              breadcrumb: () => <Text>Edit</Text>,
-                              routeName: RouteConstants.toPipelineEdit
-                            }
-                          },
-                          {
-                            path: 'executions',
-                            handle: {
-                              routeName: RouteConstants.toExecutions
-                            },
-                            children: [
-                              {
-                                path: ':executionId',
-                                element: <>Execution Details Page</>,
-                                handle: {
-                                  breadcrumb: ({ executionId }: { executionId: string }) => <Text>{executionId}</Text>,
-                                  routeName: RouteConstants.toExecution
-                                }
-                              }
-                            ]
-                          }
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    path: 'settings',
-                    element: <RepoSettingsPage useTranslationStore={useTranslationStore} />,
-                    handle: {
-                      breadcrumb: () => <Text>Settings</Text>
-                    },
-                    children: [
-                      {
-                        index: true,
-                        element: <Navigate to="general" replace />
-                      },
-                      {
-                        path: 'general',
-                        element: <RepoSettingsGeneralPageContainer />,
-                        handle: {
-                          breadcrumb: () => <Text>General</Text>,
-                          routeName: RouteConstants.toRepoGeneralSettings
-                        }
-                      },
-                      {
-                        path: 'rules',
-                        handle: {
-                          breadcrumb: () => <Text>Rules</Text>
-                        },
-                        children: [
-                          {
-                            index: true,
-                            element: <RepoSettingsGeneralPageContainer />
-                          },
-                          {
-                            path: 'create',
-                            element: <RepoBranchSettingsRulesPageContainer />,
-                            handle: {
-                              breadcrumb: () => <Text>Create a rule</Text>
-                            }
-                          },
-                          {
-                            path: ':identifier',
-                            element: <RepoBranchSettingsRulesPageContainer />,
-                            handle: {
-                              breadcrumb: ({ identifier }: { identifier: string }) => <Text>{identifier}</Text>,
-                              routeName: RouteConstants.toRepoBranchRule
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        path: 'webhooks',
-                        handle: {
-                          breadcrumb: () => <Text>Webhooks</Text>,
-                          routeName: RouteConstants.toRepoWebhooks
-                        },
-                        children: [
-                          {
-                            index: true,
-                            element: <WebhookListPage />
-                          },
-                          {
-                            path: 'create',
-                            element: <CreateWebhookContainer />,
-                            handle: {
-                              breadcrumb: () => <Text>Create a webhook</Text>
-                            }
-                          },
-                          {
-                            path: ':webhookId',
-                            element: <CreateWebhookContainer />,
-                            handle: {
-                              breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
-                            }
-                          }
-                        ]
-                      },
-                      {
-                        path: 'labels',
-                        element: <RepoLabelsList />
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            path: 'settings',
-            element: <ProjectSettingsLayout />,
-            handle: {
-              breadcrumb: () => <Text>Settings</Text>
-            },
-            children: [
-              {
-                index: true,
-                element: <Navigate to="general" replace />
-              },
-              {
-                path: 'general',
-                element: <ProjectGeneralSettingsPageContainer />,
-                handle: {
-                  breadcrumb: () => <Text>General</Text>
-                }
-              },
-              {
-                path: 'members',
-                element: <ProjectMemberListPage />,
-                handle: {
-                  breadcrumb: () => <Text>Members</Text>,
-                  routeName: RouteConstants.toProjectMembers
-                }
-              },
-              {
-                path: 'labels',
-                element: <ProjectLabelsList />,
-                handle: {
-                  breadcrumb: () => <Text>Labels</Text>
-                }
-              }
-            ]
-          },
-          {
-            path: 'pipelines',
-            element: <ProjectPipelineListPage />,
-            handle: {
-              breadcrumb: () => <Text>Pipelines</Text>
-            }
-          }
-        ]
+        children: repoRoutes
       },
       {
         path: 'admin',
@@ -742,7 +746,10 @@ export const routes: CustomRouteObject[] = [
         children: [
           {
             index: true,
-            element: <Navigate to="general" replace />
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <Text>General</Text>
+            }
           },
           {
             path: 'general',
@@ -775,5 +782,38 @@ export const routes: CustomRouteObject[] = [
     path: 'logout',
     element: <Logout />,
     handle: { routeName: RouteConstants.toLogout }
+  }
+]
+
+export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null = null): CustomRouteObject[] => [
+  {
+    path: '/',
+    element: (
+      <>
+        {mfeRouteRenderer}
+        <AppShellMFE />
+      </>
+    ),
+    handle: { routeName: 'toHome' },
+    children: [
+      {
+        index: true,
+        element: <LandingPage />
+      },
+      {
+        path: 'repos',
+        handle: {
+          breadcrumb: () => <Text>Repositories</Text>
+        },
+        children: [{ index: true, element: <ReposListPage /> }]
+      },
+      {
+        path: '',
+        handle: {
+          breadcrumb: () => <span>{mfeProjectId ?? ''}</span>
+        },
+        children: repoRoutes
+      }
+    ]
   }
 ]

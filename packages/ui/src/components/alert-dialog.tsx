@@ -1,6 +1,7 @@
 import * as React from 'react'
 
 import { buttonVariants } from '@/components/button'
+import { usePortal } from '@/context'
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog'
 import { cn } from '@utils/cn'
 
@@ -35,6 +36,7 @@ const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   AlertDialogContentProps
 >(({ className = 'max-w-lg', children, onOverlayClick, ...props }, ref) => {
+  const { portalContainer } = usePortal()
   const mainContent: React.ReactNode[] = []
   let footer: React.ReactNode = null
 
@@ -47,7 +49,7 @@ const AlertDialogContent = React.forwardRef<
   })
 
   return (
-    <AlertDialogPortal>
+    <AlertDialogPortal container={portalContainer}>
       <AlertDialogOverlay onClick={onOverlayClick} />
       <AlertDialogPrimitive.Content
         ref={ref}

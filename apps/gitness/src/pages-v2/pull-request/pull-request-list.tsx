@@ -51,7 +51,7 @@ export default function PullRequestListPage() {
   return (
     <SandboxPullRequestListPage
       repoId={repoId}
-      spaceId={spaceId}
+      spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}

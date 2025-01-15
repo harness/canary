@@ -5,11 +5,18 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Badge,
   CopyButton,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
   Icon,
   ListActions,
   Spacer,
-  StackedList
+  StackedList,
+  Text
 } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@views/index'
@@ -115,10 +122,44 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     <>
       <ListActions.Root>
         <ListActions.Left>
-          <p className="text-14 leading-tight text-foreground-4">
-            Showing <span className="text-foreground-accent">{diffStats.files_changed || 0} changed files </span>
-            with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
-          </p>
+          <DropdownMenu>
+            <p className="text-14 leading-tight text-foreground-4">
+              Showing{' '}
+              <DropdownMenuTrigger asChild>
+                <span className="text-foreground-accent cursor-pointer ease-in-out">
+                  {diffStats.files_changed || 0} changed files
+                </span>
+              </DropdownMenuTrigger>{' '}
+              with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
+            </p>
+            <DropdownMenuContent align="end">
+              <DropdownMenuGroup>
+                {diffData?.map(diff => (
+                  <DropdownMenuItem
+                    key={diff.filePath}
+                    onClick={() => {}}
+                    className="flex w-80 items-center justify-between cursor-pointer px-3 py-2"
+                  >
+                    <Text size={1} className="flex-1 overflow-hidden truncate text-primary">
+                      {diff.filePath}
+                    </Text>
+                    <div className="ml-4 flex items-center space-x-2">
+                      {diff.addedLines != null && diff.addedLines > 0 && (
+                        <Badge variant="outline" size="sm" theme="success">
+                          +{diff.addedLines}
+                        </Badge>
+                      )}
+                      {diff.removedLines != null && diff.removedLines > 0 && (
+                        <Badge variant="outline" size="sm" theme="destructive">
+                          -{diff.removedLines}
+                        </Badge>
+                      )}
+                    </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </ListActions.Left>
         <ListActions.Right>
           <ListActions.Dropdown

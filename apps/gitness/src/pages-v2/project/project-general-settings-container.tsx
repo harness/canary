@@ -17,10 +17,10 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { useSpaceStore } from './stores/spaces-store'
 
 export const ProjectGeneralSettingsPageContainer = () => {
-  const spaceId = useGetSpaceURLParam()
+  const spaceURL = useGetSpaceURLParam()
   const { spaces } = useAppContext()
   const { setSpace } = useSpaceStore()
-  const space = spaces.find((space: TypesSpace) => space?.identifier === spaceId)
+  const space = spaces.find((space: TypesSpace) => space?.identifier === spaceURL)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [updateError, setUpdateError] = useState<string | null>(null)
   const [deleteError, setDeleteError] = useState<{ type: string; message: string } | null>(null)

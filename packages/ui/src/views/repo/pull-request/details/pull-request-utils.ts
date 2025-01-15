@@ -170,7 +170,7 @@ export function getFileViewedState(
 export const FILE_VIEWED_OBSOLETE_SHA = 'ffffffffffffffffffffffffffffffffffffffff'
 
 export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullReqActivity>) {
-  const right = get(commentItem.payload?.payload, 'line_start_new', false)
+  const right = get(commentItem.payload?.payload?.payload, 'line_start_new', false)
   const span = right
     ? commentItem?.payload?.payload?.code_comment?.span_new || 0
     : commentItem?.payload?.payload?.code_comment?.span_old || 0
@@ -222,5 +222,38 @@ export function activitiesToDiffCommentItems(commentItem: CommentItem<TypesPullR
     lineNumberEnd,
     span,
     codeBlockContent
+  }
+}
+type FileDropCallback = (file: File) => void
+
+//handle file drop in image upload
+export const handleFileDrop = (event: DragEvent, callback: FileDropCallback): void => {
+  event.preventDefault()
+
+  const file = event?.dataTransfer?.files[0]
+  if (file) {
+    callback(file)
+  }
+}
+
+type PasteCallback = (file: File) => void
+
+// handle file paste in image upload
+export const handlePaste = (
+  event: { preventDefault: () => void; clipboardData: DataTransfer },
+  callback: PasteCallback
+) => {
+  event.preventDefault()
+  const clipboardData = event.clipboardData
+  const items = clipboardData.items
+
+  if (items.length > 0) {
+    const firstItem = items[0]
+    if (firstItem.type.startsWith('image/') || firstItem.type.startsWith('video/')) {
+      const blob = firstItem.getAsFile()
+      if (blob) {
+        callback(blob)
+      }
+    }
   }
 }

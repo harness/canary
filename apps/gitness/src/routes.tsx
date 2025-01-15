@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsPage, SandboxLayout } from '@harnessio/ui/views'

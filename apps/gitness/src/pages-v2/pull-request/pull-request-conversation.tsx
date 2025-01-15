@@ -178,6 +178,7 @@ export default function PullRequestConversationPage() {
           setErrorMsg('')
           setShowRestoreBranchButton(false)
           setShowDeleteBranchButton(true)
+          refetchActivities()
         }
       })
       .catch(err => {
@@ -219,6 +220,7 @@ export default function PullRequestConversationPage() {
         }
         setShowRestoreBranchButton(true)
         setErrorMsg('')
+        refetchActivities()
       })
       .catch(err => {
         setErrorMsg(err.message)

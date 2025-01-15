@@ -128,7 +128,10 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
         />
       )
     }
-    case CommentType.BRANCH_DELETE:
+    case CommentType.BRANCH_RESTORE:
+    case CommentType.BRANCH_DELETE: {
+      const isSourceBranchDeleted = type === CommentType.BRANCH_DELETE
+
       return (
         <PullRequestTimelineItem
           key={payload?.id}
@@ -148,13 +151,25 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               description: (
-                <Text color="tertiaryBackground">
-                  deleted the
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {pullReqMetadata?.source_branch}
-                  </Button>
-                  branch
-                </Text>
+                <>
+                  {isSourceBranchDeleted ? (
+                    <Text color="tertiaryBackground">
+                      deleted the
+                      <Button className="mx-1" variant="secondary" size="xs">
+                        {pullReqMetadata?.source_branch}
+                      </Button>
+                      branch
+                    </Text>
+                  ) : (
+                    <Text color="tertiaryBackground">
+                      restored the
+                      <Button className="mx-1" variant="secondary" size="xs">
+                        {pullReqMetadata?.source_branch}
+                      </Button>
+                      branch
+                    </Text>
+                  )}
+                </>
               )
             }
           ]}
@@ -162,6 +177,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
           isLast={isLast}
         />
       )
+    }
     case CommentType.STATE_CHANGE:
       return (
         <PullRequestTimelineItem

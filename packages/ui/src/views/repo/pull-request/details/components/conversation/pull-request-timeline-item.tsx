@@ -113,7 +113,6 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
                     if (comment) {
                       handleReplyBox(comment, true)
                     }
-                    console.log(comment)
 
                     e.stopPropagation()
                   }}
@@ -212,9 +211,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
     setHideReplyBox?.(state)
 
     if (data) {
-      console.log(data, 23)
       setQuoteData(content)
-      // onQuote(data)
     }
   }
   useEffect(() => {
@@ -228,7 +225,6 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
       setComment(replyContent)
     }
   }, [hideReplyBox, setQuoteData])
-  console.log(hideReplyBox, 'hideReplyBox')
 
   return (
     <div id={id}>

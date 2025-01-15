@@ -174,7 +174,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     }
     setHideReplyBoxes(prev => ({ ...prev, [id]: state }))
   }
-  console.log(hideReplyBoxes)
   const renderedActivityBlocks = useMemo(() => {
     return (
       <div className="flex flex-col">

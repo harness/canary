@@ -33,7 +33,6 @@ export function usePRCommonInteractions({
   let count = generateAlphaNumericHash(5)
   const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
     const reader = new FileReader()
-    console.log(reader, blob)
     // Set up a function to be called when the load event is triggered
     reader.onload = async function () {
       if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
@@ -52,7 +51,6 @@ export function usePRCommonInteractions({
     fileBlob: any
   ) => {
     try {
-      console.log(fileBlob)
       const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
         method: 'POST',
         headers: {

@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom'
 
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { RoutingProps } from '@/types/routing.types'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
 import { TranslationStore } from './types'
 
-export interface PageProps {
+export interface PageProps extends RoutingProps {
   repos?: RepositoryType[]
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
@@ -46,7 +47,8 @@ export function RepoList({
   query,
   handleResetQuery,
   useTranslationStore,
-  isLoading
+  isLoading,
+  routes
 }: PageProps) {
   const noData = !(repos && repos.length > 0)
   const { t } = useTranslationStore()
@@ -88,7 +90,7 @@ export function RepoList({
           ]}
           primaryButton={{
             label: t('views:repos.create-repository', 'Create repository'),
-            to: 'create'
+            to: routes?.toCreateRepo?.()
           }}
           secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
         />

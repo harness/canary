@@ -62,7 +62,10 @@ const repoRoutes: CustomRouteObject[] = [
       { index: true, element: <ReposListPage /> },
       {
         path: 'create',
-        element: <CreateRepo />
+        element: <CreateRepo />,
+        handle: {
+          routeName: RouteConstants.toCreateRepo
+        }
       },
       {
         path: 'import',

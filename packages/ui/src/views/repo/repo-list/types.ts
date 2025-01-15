@@ -1,3 +1,4 @@
+import { RoutingProps } from '@/types/routing.types'
 import { RepositoryType } from '@views/repo/repo.types'
 import { i18n, TFunction } from 'i18next'
 
@@ -15,7 +16,7 @@ export interface TranslationStore {
   changeLanguage: (lng: string) => void
 }
 
-export interface RepoListProps {
+export interface RepoListProps extends RoutingProps {
   useRepoStore: () => RepoStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean

@@ -5,6 +5,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
 import { SandboxRepoListPage } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -13,6 +14,7 @@ import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
+  const routes = useRoutes()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
@@ -82,6 +84,9 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        routes={{
+          toCreateRepo: routes.toCreateRepo
+        }}
       />
     </>
   )

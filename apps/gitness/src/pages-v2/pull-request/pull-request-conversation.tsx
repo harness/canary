@@ -419,11 +419,11 @@ export default function PullRequestConversationPage() {
   }
   const handleRebaseBranch = () => {
     const payload: RebaseBranchRequestBody = {
-      base_branch: pullReqMetadata.target_branch,
+      base_branch: pullReqMetadata?.target_branch,
       bypass_rules: true,
       dry_run_rules: false,
-      head_branch: pullReqMetadata.source_branch,
-      head_commit_sha: pullReqMetadata.source_sha
+      head_branch: pullReqMetadata?.source_branch,
+      head_commit_sha: pullReqMetadata?.source_sha
     }
     rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
       onPRStateChanged()

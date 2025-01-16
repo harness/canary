@@ -1,4 +1,4 @@
-import { useMatches } from 'react-router-dom'
+import { Link, useMatches } from 'react-router-dom'
 
 import { Breadcrumb, Topbar } from '@harnessio/ui/components'
 
@@ -25,7 +25,9 @@ function Breadcrumbs() {
                   {isLast ? (
                     <Breadcrumb.Page>{breadcrumb(match.params)}</Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>
+                    <Breadcrumb.Link asChild href={match.pathname}>
+                      <Link to={match.pathname}>{breadcrumb(match.params)}</Link>
+                    </Breadcrumb.Link>
                   )}
                 </Breadcrumb.Item>
               )

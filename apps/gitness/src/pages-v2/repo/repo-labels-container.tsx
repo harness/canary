@@ -44,7 +44,7 @@ export const RepoLabelsList = () => {
     setIdentifier(identifier)
   }
 
-  const { data: { body: labels } = {} } = useListRepoLabelsQuery({
+  const { data: { body: labels } = {}, isLoading: isLoadingRepoLabels } = useListRepoLabelsQuery({
     repo_ref: repo_ref ?? '',
     queryParams: { page, limit: 100, query: query ?? '' }
   })
@@ -147,6 +147,7 @@ export const RepoLabelsList = () => {
         showSpacer={false}
         searchQuery={query}
         setSearchQuery={setQuery}
+        isLoadingSpaceLabels={isLoadingRepoLabels}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}

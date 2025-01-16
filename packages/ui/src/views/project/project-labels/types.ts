@@ -68,6 +68,7 @@ export interface ProjectLabelPageProps {
   showSpacer?: boolean
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  isLoadingSpaceLabels: boolean
 }
 
 export interface LabelsListViewProps {
@@ -76,4 +77,8 @@ export interface LabelsListViewProps {
   labels: ILabelType[]
   handleEditLabel: (identifier: string) => void
   handleDeleteLabel: (identifier: string) => void
+  isDirtyList: boolean
+  handleResetSearch: () => void
+  searchQuery: string | null
+  openCreateLabelDialog: () => void
 }

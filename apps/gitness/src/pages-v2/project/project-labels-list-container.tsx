@@ -34,7 +34,7 @@ export const ProjectLabelsList = () => {
     setIdentifier(identifier)
   }
 
-  const { data: { body: labels } = {} } = useListSpaceLabelsQuery({
+  const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery({
     space_ref: space_ref ?? '',
     queryParams: { page, limit: 100, query: query ?? '' }
   })
@@ -136,6 +136,7 @@ export const ProjectLabelsList = () => {
         handleDeleteLabel={handleOpenDeleteDialog}
         searchQuery={query}
         setSearchQuery={setQuery}
+        isLoadingSpaceLabels={isLoadingSpaceLabels}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}

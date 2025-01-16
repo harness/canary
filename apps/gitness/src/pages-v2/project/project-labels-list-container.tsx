@@ -105,15 +105,16 @@ export const ProjectLabelsList = () => {
     }
   )
 
+  // temporary solution to fetch all label values - should be reworked once BE changes are done
   useEffect(() => {
-    async function fetchAllLabelValues(storeLabels: ILabelType[], spaceRef: string) {
-      if (!spaceRef || !storeLabels) return
+    async function fetchAllLabelValues(storeLabels: ILabelType[]) {
+      if (!space_ref || !storeLabels) return
 
       const valuesByKey: Record<string, any> = {}
 
       for (const label of storeLabels) {
         try {
-          const response = await fetch(`/api/v1/spaces/${spaceRef}/labels/${label.key}/values`)
+          const response = await fetch(`/api/v1/spaces/${space_ref}/labels/${label.key}/values`)
           const json = await response.json()
           valuesByKey[label.key] = json ?? []
         } catch (error) {
@@ -124,7 +125,7 @@ export const ProjectLabelsList = () => {
       setSpaceValues(valuesByKey)
     }
 
-    fetchAllLabelValues(storeLabels, space_ref!)
+    fetchAllLabelValues(storeLabels)
   }, [storeLabels, space_ref, setSpaceValues])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {

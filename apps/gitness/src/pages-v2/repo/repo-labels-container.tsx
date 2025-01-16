@@ -30,7 +30,6 @@ export const RepoLabelsList = () => {
     page,
     setPage,
     repoLabels: storeLabels,
-    spaceLabels,
     setRepoLabels,
 
     addRepoLabel,
@@ -144,25 +143,34 @@ export const RepoLabelsList = () => {
   )
 
   useEffect(() => {
-    async function fetchAllLabelValues(storeLabels: ILabelType[], repo_ref: string) {
+    async function fetchAllLabelValues(storeLabels: ILabelType[]) {
       if (!repo_ref || !storeLabels) return
 
       const valuesByKey: Record<string, any> = {}
 
       for (const label of storeLabels) {
-        try {
-          const response = await fetch(`/api/v1/repos/${repo_ref}/labels/${label.key}/values`)
-          const json = await response.json()
-          valuesByKey[label.key] = json ?? []
-        } catch (error) {
-          console.error(`Error fetching values for label ${label.key}:`, error)
+        if (label.scope === 0) {
+          try {
+            const response = await fetch(`/api/v1/repos/${repo_ref}/labels/${label.key}/values`)
+            const json = await response.json()
+            valuesByKey[label.key] = json ?? []
+          } catch (error) {
+            console.error(`Error fetching values for label ${label.key}:`, error)
+          }
+        } else {
+          try {
+            const response = await fetch(`/api/v1/spaces/${space_ref}/labels/${label.key}/values`)
+            const json = await response.json()
+            valuesByKey[label.key] = json ?? []
+          } catch (error) {
+            console.error(`Error fetching values for label ${label.key}:`, error)
+          }
         }
       }
       setRepoValues(valuesByKey)
     }
-
-    fetchAllLabelValues(storeLabels, repo_ref)
-  }, [storeLabels, space_ref, setRepoValues])
+    fetchAllLabelValues(storeLabels)
+  }, [storeLabels, space_ref, setRepoValues, getParentScopeLabels])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {
@@ -247,7 +255,7 @@ export const RepoLabelsList = () => {
         identifier={identifier ?? ''}
         type="label"
         deleteFn={handleDeleteLabel}
-        isLoading={isDeletingRepoLabel}
+        isLoading={isDeletingRepoLabel || isDeletingSpaceLabel}
         useTranslationStore={useTranslationStore}
       />
     </>

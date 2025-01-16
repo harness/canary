@@ -19,6 +19,7 @@ import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-vi
 import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list'
 import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view'
 import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-general-settings'
+import { RepoLabelsList } from '@subjects/views/repo-labels/repo-labels-list'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
@@ -153,6 +154,13 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RepoViewWrapper>
       <RepoSettingsViewWrapper>
         <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'labels-list': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoLabelsList />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   )

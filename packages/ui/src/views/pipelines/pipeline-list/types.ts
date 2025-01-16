@@ -30,6 +30,9 @@ interface RoutingProps {
   toPipelineDetails: (pipeline: IPipeline) => string
 }
 
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
 export interface IPipelineListPageProps extends Partial<RoutingProps> {
   usePipelineListStore: () => IPipelineListStore
   useTranslationStore: () => TranslationStore
@@ -42,6 +45,9 @@ export interface IPipelineListPageProps extends Partial<RoutingProps> {
   LinkComponent: TLinkComponent
 }
 
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
 export interface IPipelineListProps extends Partial<RoutingProps> {
   pipelines: IPipeline[] | null
   LinkComponent: TLinkComponent

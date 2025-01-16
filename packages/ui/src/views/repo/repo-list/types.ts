@@ -21,6 +21,9 @@ export interface RoutingProps {
   toImportRepo: () => string
 }
 
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
 export interface RepoListProps extends Partial<RoutingProps> {
   useRepoStore: () => RepoStore
   useTranslationStore: () => TranslationStore

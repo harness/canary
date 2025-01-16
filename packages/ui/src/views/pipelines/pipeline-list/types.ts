@@ -26,7 +26,11 @@ export interface IPipelineListStore {
   setPage: (page: number) => void
 }
 
-export interface IPipelineListPageProps {
+interface RoutingProps {
+  toPipelineDetails: (pipeline: IPipeline) => string
+}
+
+export interface IPipelineListPageProps extends RoutingProps {
   usePipelineListStore: () => IPipelineListStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean
@@ -38,7 +42,7 @@ export interface IPipelineListPageProps {
   LinkComponent: TLinkComponent
 }
 
-export interface IPipelineListProps {
+export interface IPipelineListProps extends RoutingProps {
   pipelines: IPipeline[] | null
   LinkComponent: TLinkComponent
   query?: string

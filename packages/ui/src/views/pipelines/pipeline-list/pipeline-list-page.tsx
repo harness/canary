@@ -16,7 +16,8 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   searchQuery,
   setSearchQuery,
   handleCreatePipeline,
-  LinkComponent
+  LinkComponent,
+  toPipelineDetails
 }) => {
   const { t } = useTranslationStore()
   const { pipelines, totalPages, page, setPage } = usePipelineListStore()
@@ -87,6 +88,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleCreatePipeline={handleCreatePipeline}
+          toPipelineDetails={toPipelineDetails}
         />
         <Spacer size={8} />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />

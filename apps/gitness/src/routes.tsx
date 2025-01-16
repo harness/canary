@@ -244,6 +244,7 @@ const repoRoutes: CustomRouteObject[] = [
                       routeName: RouteConstants.toExecutions
                     },
                     children: [
+                      { index: true, element: <RepoExecutionListPage /> },
                       {
                         path: ':executionId',
                         element: <>Execution Details Page</>,

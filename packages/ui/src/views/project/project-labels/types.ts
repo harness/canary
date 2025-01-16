@@ -49,10 +49,13 @@ export interface ILabelType {
 export interface ILabelsStore {
   labels: ILabelType[]
   presetEditLabel: ILabelType | null
+  page: number
+  totalPages: number
   setLabels: (labels: ILabelType[]) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPresetEditLabel: (label: ILabelType | null) => void
+  setPage: (page: number) => void
 }
 
 export interface ProjectLabelPageProps {
@@ -63,6 +66,8 @@ export interface ProjectLabelPageProps {
   openCreateLabelDialog: () => void
   handleDeleteLabel: (identifier: string) => void
   showSpacer?: boolean
+  searchQuery: string | null
+  setSearchQuery: (query: string | null) => void
 }
 
 export interface LabelsListViewProps {

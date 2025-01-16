@@ -46,13 +46,41 @@ export interface ILabelType {
   value_count?: number
 }
 
+export interface LabelValueType {
+  color?: ColorsEnum
+  created?: number
+  created_by?: number
+  id?: number
+  label_id?: number
+  updated?: number
+  updated_by?: number
+  value?: string
+}
+
 export interface ILabelsStore {
-  labels: ILabelType[]
+  spaceLabels: ILabelType[]
+  repoLabels: ILabelType[]
   presetEditLabel: ILabelType | null
-  setLabels: (labels: ILabelType[]) => void
-  addLabel: (label: ILabelType) => void
-  deleteLabel: (key: string) => void
+  page: number
+  totalPages: number
+  spaceValues: Record<string, LabelValueType[]>
+  repo_ref: string | null
+  space_ref: string | null
+  repoValues: Record<string, LabelValueType[]>
+  getParentScopeLabels: boolean
+
+  setSpaceLabels: (labels: ILabelType[]) => void
+  setRepoLabels: (labels: ILabelType[]) => void
+  addSpaceLabel: (label: ILabelType) => void
+  addRepoLabel: (label: ILabelType) => void
+  deleteSpaceLabel: (key: string) => void
+  deleteRepoLabel: (key: string) => void
   setPresetEditLabel: (label: ILabelType | null) => void
+  setPage: (page: number) => void
+  setSpaceValues: (values: Record<string, LabelValueType[]>) => void
+  setRepoValues: (values: Record<string, LabelValueType[]>) => void
+  setRepoSpaceRef: (repo_ref?: string, space_ref?: string) => void
+  setGetParentScopeLabels: (getParentScopeLabels: boolean) => void
 }
 
 export interface ProjectLabelPageProps {
@@ -63,6 +91,9 @@ export interface ProjectLabelPageProps {
   openCreateLabelDialog: () => void
   handleDeleteLabel: (identifier: string) => void
   showSpacer?: boolean
+  searchQuery: string | null
+  setSearchQuery: (query: string | null) => void
+  isLoadingSpaceLabels: boolean
 }
 
 export interface LabelsListViewProps {
@@ -71,4 +102,10 @@ export interface LabelsListViewProps {
   labels: ILabelType[]
   handleEditLabel: (identifier: string) => void
   handleDeleteLabel: (identifier: string) => void
+  isDirtyList: boolean
+  handleResetSearch: () => void
+  searchQuery: string | null
+  openCreateLabelDialog: () => void
+  values: Record<string, LabelValueType[]>
+  useLabelsStore: () => ILabelsStore
 }

@@ -25,7 +25,6 @@ export * from '@views/repo/components'
 
 // repo commits
 export * from '@views/repo/repo-commits'
-export * from '@views/repo/repo-commit-details'
 
 // repo branches
 export * from '@views/repo/repo-branch'
@@ -42,3 +41,9 @@ export * from '@views/repo/repo-import/repo-import'
 // repo branch rules
 export * from '@views/repo/repo-branch-rules'
 export * from '@views/repo/repo-branch-rules/types'
+
+// repo commit details
+export * from '@views/repo/repo-commit-details'
+
+// repo labels
+export * from '@views/repo/repo-labels'

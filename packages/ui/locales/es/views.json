@@ -154,6 +154,8 @@
     "checkSpelling": "Check your spelling and filter options,",
     "changeSearch": "or search for a different keyword.",
     "clearSearch": "Clear search",
+    "labels": "No labels yet",
+    "createLabel": "Create a new label to get started.",
     "members": "",
     "inviteMembers": "",
     "compareChanges": "Compare and review just about anything",
@@ -174,7 +176,9 @@
     "createOrImportRepos": "Create new or import an existing repository.",
     "noResultsDescription": "No rules match your search. Try adjusting your keywords or filters.",
     "noWebhooks": "No webhooks yet",
-    "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project."
+    "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
+    "noLabels": "No labels yet",
+    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "createProject": {
     "newProject": "Create your new project",
@@ -311,6 +315,7 @@
     "selectBranchError": ""
   },
   "projectSettings": {
+    "newLabels": "Create label",
     "newMember": "",
     "member": "",
     "role": "",
@@ -350,6 +355,9 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
+  },
+  "labelData": {
+    "create": "Create labels"
   },
   "profileSettingsTableHeader": {
     "token": "Token",

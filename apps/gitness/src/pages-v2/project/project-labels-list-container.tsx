@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 
+import { parseAsInteger, useQueryState } from 'nuqs'
+
 import {
   useDefineSpaceLabelMutation,
   useDeleteSpaceLabelMutation,
   useListSpaceLabelsQuery,
+  // useListSpaceLabelValuesQuery,
   useUpdateSpaceLabelMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -18,7 +21,21 @@ export const ProjectLabelsList = () => {
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
-  const { labels: storeLabels, setLabels, addLabel, setPresetEditLabel, deleteLabel } = useLabelsStore()
+  const {
+    page,
+    setPage,
+    spaceLabels: storeLabels,
+    setSpaceLabels,
+    addSpaceLabel,
+    setPresetEditLabel,
+    deleteSpaceLabel: deleteStoreSpaceLabel,
+    setSpaceValues,
+    setRepoSpaceRef
+  } = useLabelsStore()
+
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
     setOpenCreateLabelDialog(true)
@@ -28,16 +45,24 @@ export const ProjectLabelsList = () => {
     setIdentifier(identifier)
   }
 
-  const { data: { body: labels } = {} } = useListSpaceLabelsQuery({
+  const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery({
     space_ref: space_ref ?? '',
-    queryParams: { page: 1, limit: 100 }
+    queryParams: { page, limit: 100, query: query ?? '' }
   })
 
   useEffect(() => {
     if (labels) {
-      setLabels(labels as ILabelType[])
+      setSpaceLabels(labels as ILabelType[])
     }
-  }, [labels, setLabels])
+  }, [labels, setSpaceLabels])
+
+  useEffect(() => {
+    setQueryPage(page)
+  }, [page, setPage, queryPage])
+
+  useEffect(() => {
+    setRepoSpaceRef(space_ref ?? '')
+  }, [space_ref])
 
   const {
     mutate: defineSpaceLabel,
@@ -50,7 +75,7 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: data => {
         setOpenCreateLabelDialog(false)
-        addLabel(data.body as ILabelType)
+        addSpaceLabel(data.body as ILabelType)
       }
     }
   )
@@ -62,8 +87,8 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteLabel(variables.key)
-        addLabel(data.body as ILabelType)
+        deleteStoreSpaceLabel(variables.key)
+        addSpaceLabel(data.body as ILabelType)
       }
     }
   )
@@ -75,10 +100,33 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteLabel(variables.key)
+        deleteStoreSpaceLabel(variables.key)
       }
     }
   )
+
+  // temporary solution to fetch all label values - should be reworked once BE changes are done
+  useEffect(() => {
+    async function fetchAllLabelValues(storeLabels: ILabelType[]) {
+      if (!space_ref || !storeLabels) return
+
+      const valuesByKey: Record<string, any> = {}
+
+      for (const label of storeLabels) {
+        try {
+          const response = await fetch(`/api/v1/spaces/${space_ref}/labels/${label.key}/values`)
+          const json = await response.json()
+          valuesByKey[label.key] = json ?? []
+        } catch (error) {
+          console.error(`Error fetching values for label ${label.key}:`, error)
+        }
+      }
+
+      setSpaceValues(valuesByKey)
+    }
+
+    fetchAllLabelValues(storeLabels)
+  }, [storeLabels, space_ref, setSpaceValues])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {
@@ -124,6 +172,9 @@ export const ProjectLabelsList = () => {
         openCreateLabelDialog={handleOpenCreateLabelDialog}
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        isLoadingSpaceLabels={isLoadingSpaceLabels}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}

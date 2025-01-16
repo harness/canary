@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
 
-import { prRoutes, PullRequestRoutePathParams } from '../RouteDefinitions'
+import { useRoutes } from '../framework/context/NavigationContext'
+import { PullRequestRoutePathParams } from '../RouteDefinitions'
 
 export enum PullRequestTab {
   CONVERSATION = 'conversation',
@@ -20,6 +21,7 @@ const useGetPullRequestTab = ({
   repoId,
   pullRequestId
 }: PullRequestRoutePathParams): PullRequestTab | null => {
+  const routes = useRoutes()
   const [pullRequestTab, setPullRequestTab] = useState<PullRequestTab | null>(null)
 
   const urlMatchArgs: PullRequestRoutePathParams = {
@@ -30,16 +32,16 @@ const useGetPullRequestTab = ({
 
   const routeTabMapping: RouteTabMapping[] = [
     {
-      match: useMatch(prRoutes.toPullRequest(urlMatchArgs)),
+      match: useMatch(routes.toPullRequest(urlMatchArgs)),
       tab: PullRequestTab.CONVERSATION
     },
     {
-      match: useMatch(prRoutes.toPullRequestConversation(urlMatchArgs)),
+      match: useMatch(routes.toPullRequestConversation(urlMatchArgs)),
       tab: PullRequestTab.CONVERSATION
     },
-    { match: useMatch(prRoutes.toPullRequestCommits(urlMatchArgs)), tab: PullRequestTab.COMMITS },
-    { match: useMatch(prRoutes.toPullRequestChanges(urlMatchArgs)), tab: PullRequestTab.CHANGES },
-    { match: useMatch(prRoutes.toPullRequestChecks(urlMatchArgs)), tab: PullRequestTab.CHECKS }
+    { match: useMatch(routes.toPullRequestCommits(urlMatchArgs)), tab: PullRequestTab.COMMITS },
+    { match: useMatch(routes.toPullRequestChanges(urlMatchArgs)), tab: PullRequestTab.CHANGES },
+    { match: useMatch(routes.toPullRequestChecks(urlMatchArgs)), tab: PullRequestTab.CHECKS }
   ]
 
   useEffect(() => {

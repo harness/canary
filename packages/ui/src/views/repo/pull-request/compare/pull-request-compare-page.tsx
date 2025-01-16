@@ -386,6 +386,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 <CommitsList
+                  inCompare
                   data={commitData?.map((item: TypesCommit) => ({
                     sha: item.sha,
                     parent_shas: item.parent_shas,

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
 
-import { PullRequestRoutePathParams, routes } from '../RouteDefinitions'
+import { prRoutes, PullRequestRoutePathParams } from '../RouteDefinitions'
 
 export enum PullRequestTab {
   CONVERSATION = 'conversation',
@@ -30,16 +30,16 @@ const useGetPullRequestTab = ({
 
   const routeTabMapping: RouteTabMapping[] = [
     {
-      match: useMatch(routes.toPullRequest(urlMatchArgs)),
+      match: useMatch(prRoutes.toPullRequest(urlMatchArgs)),
       tab: PullRequestTab.CONVERSATION
     },
     {
-      match: useMatch(routes.toPullRequestConversation(urlMatchArgs)),
+      match: useMatch(prRoutes.toPullRequestConversation(urlMatchArgs)),
       tab: PullRequestTab.CONVERSATION
     },
-    { match: useMatch(routes.toPullRequestCommits(urlMatchArgs)), tab: PullRequestTab.COMMITS },
-    { match: useMatch(routes.toPullRequestChanges(urlMatchArgs)), tab: PullRequestTab.CHANGES },
-    { match: useMatch(routes.toPullRequestChecks(urlMatchArgs)), tab: PullRequestTab.CHECKS }
+    { match: useMatch(prRoutes.toPullRequestCommits(urlMatchArgs)), tab: PullRequestTab.COMMITS },
+    { match: useMatch(prRoutes.toPullRequestChanges(urlMatchArgs)), tab: PullRequestTab.CHANGES },
+    { match: useMatch(prRoutes.toPullRequestChecks(urlMatchArgs)), tab: PullRequestTab.CHECKS }
   ]
 
   useEffect(() => {

@@ -239,10 +239,10 @@
     "commits": ""
   },
   "notFound": {
-    "title": "Something went wrong…",
-    "descriptionWithType": "The requested page is not found. You can go back to view all {{type}} and manage your settings.",
-    "description": "The requested page is not found.",
-    "button": "Reload page"
+    "title": "Algo salió mal…",
+    "descriptionWithType": "La página solicitada no se encontró. Puedes volver para ver todos los {{type}} y gestionar tus configuraciones.",
+    "description": "La página solicitada no se encontró.",
+    "button": "Recargar página"
   },
   "profileSettings": {
     "name": "Name",

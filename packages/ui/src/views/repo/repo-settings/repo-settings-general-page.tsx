@@ -1,7 +1,7 @@
 import { FC, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Fieldset, FormSeparator, Text } from '@/components'
+import { Fieldset, FormSeparator } from '@/components'
 import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
 
@@ -74,9 +74,7 @@ const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <Text className="mb-10" size={5} weight="medium" as="div">
-        {t('views:repos.settings', 'Settings')}
-      </Text>
+      <h1 className="mb-10 text-2xl font-medium">{t('views:repos.settings', 'Settings')}</h1>
       <Fieldset>
         <RepoSettingsGeneralForm
           repoData={repoData}

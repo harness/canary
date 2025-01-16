@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { Button, ButtonGroup, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonGroup, Fieldset, FormWrapper } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createWebhookFormSchema } from '@views/repo/webhooks/webhook-create/components/create-webhooks-form-schema'
@@ -91,11 +91,11 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <Text size={5} weight="medium" as="div" className="mb-10">
+      <h1 className="mb-10 text-2xl font-medium">
         {preSetWebhookData
           ? t('views:repos.editWebhookTitle', 'Webhook details')
           : t('views:repos.createWebhookTitle', 'Create a webhook')}
-      </Text>
+      </h1>
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         <Fieldset>
           <WebhookToggleField register={register} setValue={setValue} watch={watch} t={t} />
@@ -145,11 +145,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
           </ButtonGroup>
         </Fieldset>
 
-        {apiError && (
-          <Text size={1} className="text-destructive">
-            {apiError?.toString()}
-          </Text>
-        )}
+        {!!apiError && <span className="text-xs text-destructive">{apiError?.toString()}</span>}
       </FormWrapper>
     </SandboxLayout.Content>
   )

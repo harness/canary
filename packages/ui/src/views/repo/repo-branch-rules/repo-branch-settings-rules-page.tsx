@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Text } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
 import { IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -112,9 +112,9 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
   return (
     <SandboxLayout.Content className="max-w-[570px] px-0">
-      <Text size={5} weight="medium" as="div" className="mb-10">
+      <h1 className="mb-10 text-2xl font-medium">
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
-      </Text>
+      </h1>
 
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
@@ -171,11 +171,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
           </ControlGroup>
         </Fieldset>
 
-        {!!apiErrorsValue && (
-          <Text size={1} className="text-destructive">
-            {apiErrorsValue}
-          </Text>
-        )}
+        {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
       </FormWrapper>
     </SandboxLayout.Content>
   )

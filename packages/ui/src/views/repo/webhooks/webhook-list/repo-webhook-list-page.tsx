@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Button, Filters, FiltersBar, ListActions, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { Button, Filters, FiltersBar, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { useCommonFilter } from '@hooks/use-common-filter'
 import {
@@ -72,15 +72,11 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
 
   return (
     <SandboxLayout.Content className="px-0">
-      <Text size={5} weight={'medium'}>
-        Webhooks
-      </Text>
+      <h1 className="text-2xl font-medium">Webhooks</h1>
       <Spacer size={6} />
 
       {error ? (
-        <Text size={1} className="text-destructive">
-          {error || 'Something went wrong'}
-        </Text>
+        <span className="text-destructive text-xs">{error || 'Something went wrong'}</span>
       ) : (
         <>
           {(!!webhooksWithFormattedDates.length || (!webhooksWithFormattedDates.length && isDirtyList)) && (

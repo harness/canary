@@ -40,26 +40,36 @@ export function RepoBranchesListPage() {
   })
 
   // TODO: confirm that we receive pullreqst and update render column and logic depend on that
-  const { isLoading, data: { body: branches, headers } = {} } = useListBranchesQuery({
-    queryParams: { page, query: query ?? '', order: orderSortDate.DESC, include_commit: true, include_pullreqs: true },
+  const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
+    queryParams: {
+      page,
+      limit: 10,
+      query: query ?? '',
+      order: orderSortDate.DESC,
+      include_commit: true,
+      include_pullreqs: true
+    },
     repo_ref: repoRef
   })
 
-  const { data: { body: branchDivergence = [] } = {}, mutate: calculateBranchDivergence } =
-    useCalculateCommitDivergenceMutation(
-      {
-        repo_ref: repoRef
-      },
-      {
-        onSuccess: data => {
-          if (data.body) {
-            if (branches) {
-              setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
-            }
+  const {
+    isLoading: isLoadingDivergence,
+    data: { body: _branchDivergence = [] } = {},
+    mutate: calculateBranchDivergence
+  } = useCalculateCommitDivergenceMutation(
+    {
+      repo_ref: repoRef
+    },
+    {
+      onSuccess: data => {
+        if (data.body) {
+          if (branches) {
+            setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
           }
         }
       }
-    )
+    }
+  )
 
   const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
   const { mutateAsync: deleteBranch } = useDeleteBranchMutation({ queryParams: {} })
@@ -95,12 +105,16 @@ export function RepoBranchesListPage() {
   }, [page, setPage, queryPage])
 
   useEffect(() => {
-    if (branches?.length !== 0 && branches !== undefined) {
-      calculateBranchDivergence({
-        body: {
-          requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || []
-        }
-      })
+    if (branches) {
+      if (branches?.length !== 0) {
+        calculateBranchDivergence({
+          body: {
+            requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || []
+          }
+        })
+      } else {
+        setBranchList([])
+      }
     }
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 
@@ -115,7 +129,7 @@ export function RepoBranchesListPage() {
   return (
     <RepoBranchListView
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      isLoading={isLoading}
+      isLoading={isLoadingBranches || isLoadingDivergence}
       isCreatingBranch={isCreatingBranch}
       onSubmit={onSubmit}
       useRepoBranchesStore={useRepoBranchesStore}

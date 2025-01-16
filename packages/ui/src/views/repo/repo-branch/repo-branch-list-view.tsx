@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 
-import { Button, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 import { cn } from '@utils/cn'
 import { debounce } from 'lodash-es'
@@ -33,59 +33,6 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
     setSearchInput(e.target.value)
     debouncedSetSearchQuery(e.target.value)
   }, [])
-
-  const renderListContent = () => {
-    if (!branchList?.length && !isLoading) {
-      if (searchQuery) {
-        return (
-          <NoData
-            className="pt-[100px] pb-[157px] border border-borders-4 rounded-md"
-            iconName="no-search-magnifying-glass"
-            title={t('views:noData.noResults', 'No search results')}
-            description={[
-              t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-              t('views:noData.changeSearch', 'or search for a different keyword.')
-            ]}
-            primaryButton={{
-              label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: () => {
-                setSearchInput('')
-                setSearchQuery(null)
-              }
-            }}
-          />
-        )
-      }
-
-      return (
-        <NoData
-          iconName="no-data-branches"
-          title={t('views:noData.noBranches', 'No branches yet')}
-          description={[
-            t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
-            t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
-          ]}
-          primaryButton={{
-            label: t('views:noData.createBranch', 'Create branch'),
-            onClick: () => {
-              setCreateBranchDialogOpen(true)
-            }
-          }}
-        />
-      )
-    }
-
-    return (
-      <BranchesList
-        isLoading={isLoading}
-        defaultBranch={defaultBranch}
-        repoId={repoId}
-        spaceId={spaceId}
-        branches={branchList}
-        useTranslationStore={useTranslationStore}
-      />
-    )
-  }
 
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
@@ -122,14 +69,27 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
             <Spacer size={5} />
           </>
         )}
-        {renderListContent()}
-        <PaginationComponent
-          nextPage={xNextPage}
-          previousPage={xPrevPage}
-          currentPage={page}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-          t={t}
+        <BranchesList
+          isLoading={isLoading}
+          defaultBranch={defaultBranch}
+          repoId={repoId}
+          spaceId={spaceId}
+          branches={branchList}
+          useTranslationStore={useTranslationStore}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          setSearchInput={setSearchInput}
+          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
         />
+        {!isLoading && (
+          <PaginationComponent
+            nextPage={xNextPage}
+            previousPage={xPrevPage}
+            currentPage={page}
+            goToPage={(pageNum: number) => setPage(pageNum)}
+            t={t}
+          />
+        )}
       </SandboxLayout.Content>
       <CreateBranchDialog
         open={isCreateBranchDialogOpen}

@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, Icon, Text } from '@components/index'
+import { Avatar, AvatarFallback, Badge, Icon, Text } from '@components/index'
 import { getInitials } from '@utils/stringUtils'
 
 import { GeneralPayload, LabelActivity, PayloadAuthor, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -9,6 +9,7 @@ interface PullRequestSystemLabelItemProps {
   isLast: boolean
 }
 const PullRequestSystemLabelItem: React.FC<PullRequestSystemLabelItemProps> = ({ payload, isLast }) => {
+  const data = payload?.payload?.payload as GeneralPayload
   return (
     <PullRequestTimelineItem
       key={payload?.id} // Consider using a unique ID if available
@@ -36,7 +37,16 @@ const PullRequestSystemLabelItem: React.FC<PullRequestSystemLabelItemProps> = ({
                     : 'removed'}
                 </>
               )}{' '}
-              label
+              label{'  '}
+              <Badge
+                variant="outline"
+                size="sm"
+                borderRadius="full"
+                className="ml-2 outline outline-1"
+                style={{ outlineColor: data?.label_color as string, color: data?.label_color as string }}
+              >
+                <p className="max-w-[376px] truncate">{data?.label as string}</p>
+              </Badge>
             </Text>
           )
         }

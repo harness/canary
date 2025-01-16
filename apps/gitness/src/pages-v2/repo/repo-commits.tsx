@@ -13,7 +13,7 @@ import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@har
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
+import { PathParams, routes } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import { normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
@@ -24,6 +24,7 @@ export default function RepoCommitsPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
+  const commitsPath = routes.toRepoCommits({ spaceId, repoId })
 
   const {
     branchList,
@@ -125,6 +126,7 @@ export default function RepoCommitsPage() {
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
+      commitsPath={commitsPath}
     />
   )
 }

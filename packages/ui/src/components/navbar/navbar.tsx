@@ -48,6 +48,7 @@ export const Navbar = ({
   const navigate = useNavigate()
   const { t } = useTranslationStore()
   const adminMenuItem = getAdminMenuItem(t)
+
   const showNavbar = useMemo(() => {
     return !hideNavbarPaths.includes(location.pathname)
   }, [location.pathname])
@@ -114,7 +115,7 @@ export const Navbar = ({
         </ScrollArea>
 
         {/*<NavbarAi />*/}
-        {currentUser?.admin && (
+        {!!currentUser?.admin && (
           <NavbarSkeleton.Group>
             <Link to="/admin/default-settings">
               <NavbarSkeleton.Item text="User Management" icon={<Icon name="account" size={12} />} />

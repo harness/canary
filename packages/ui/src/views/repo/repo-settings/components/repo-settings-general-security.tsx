@@ -8,7 +8,7 @@ import {
   Message,
   MessageTheme,
   Option,
-  SkeletonList,
+  SkeletonForm,
   Spacer,
   Text
 } from '@/components'
@@ -80,7 +80,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
         {t('views:repos.security', 'Security')}
       </Text>
       {isLoadingSecuritySettings ? (
-        <SkeletonList />
+        <SkeletonForm linesCount={2} />
       ) : (
         <ControlGroup>
           <Option

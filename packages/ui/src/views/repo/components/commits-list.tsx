@@ -1,17 +1,21 @@
 import { FC, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList } from '@/components'
+import { Avatar, AvatarFallback, Button, CommitCopyActions, Layout, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface CommitProps {
+  inCompare?: boolean
+  inPr?: boolean
   data?: TypesCommit[]
+  commitsPath?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data }) => {
+export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = false, inPr = false }) => {
+  const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -39,33 +43,66 @@ export const CommitsList: FC<CommitProps> = ({ data }) => {
                   const authorName = commit.author?.identity?.name
 
                   return (
-                    <Link to={`${commit?.sha?.substring(0, 7)}`} key={commit?.sha}>
-                      <StackedList.Item
-                        className="items-start py-3"
-                        key={commit?.sha || repo_idx}
-                        isLast={commitData.length - 1 === repo_idx}
-                      >
+                    <StackedList.Item
+                      className="!cursor-default items-start py-3"
+                      key={commit?.sha || repo_idx}
+                      isLast={commitData.length - 1 === repo_idx}
+                    >
+                      <StackedList.Field
+                        title={
+                          <div className="flex flex-col gap-y-1.5">
+                            {commitsPath ? (
+                              <Link
+                                className="truncate text-16 font-medium leading-snug"
+                                to={`${commitsPath}/${commit?.sha}`}
+                              >
+                                {commit.title}
+                              </Link>
+                            ) : (
+                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                            )}
+                            <div className="flex items-center gap-x-1.5">
+                              {authorName && (
+                                <Avatar className="size-[18px]">
+                                  <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
+                                </Avatar>
+                              )}
+                              <span className="text-foreground-3">{authorName || ''}</span>
+                              <span className="text-foreground-4">committed on {date}</span>
+                            </div>
+                          </div>
+                        }
+                      />
+                      {!!commit?.sha && (
                         <StackedList.Field
                           title={
-                            <div className="flex flex-col gap-y-1.5">
-                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
-                              <div className="flex items-center gap-x-1.5">
-                                {authorName && (
-                                  <Avatar className="size-[18px]">
-                                    <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
-                                  </Avatar>
-                                )}
-                                <span className="text-foreground-3">{authorName || ''}</span>
-                                <span className="text-foreground-4">committed on {date}</span>
+                            <Layout.Horizontal>
+                              <CommitCopyActions sha={commit.sha} />
+                              <div title="View repository at this point of history">
+                                <Button
+                                  variant="outline"
+                                  size="sm_icon"
+                                  onClick={() => {
+                                    navigate(
+                                      inCompare
+                                        ? `../../code/${commit.sha}`
+                                        : inPr
+                                          ? `../../../code/${commit.sha}`
+                                          : `../code/${commit.sha}`
+                                    )
+                                  }}
+                                >
+                                  <>{'<>'}</>
+                                </Button>
                               </div>
-                            </div>
+                            </Layout.Horizontal>
                           }
+                          right
+                          label
+                          secondary
                         />
-                        {!!commit?.sha && (
-                          <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
-                        )}
-                      </StackedList.Item>
-                    </Link>
+                      )}
+                    </StackedList.Item>
                   )
                 })}
               </StackedList.Root>

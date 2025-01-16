@@ -7,8 +7,11 @@ import {
   Checkbox,
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuRadioGroup,
   DropdownMenuRadioItem,
+  DropdownMenuShortcut,
   DropdownMenuTrigger,
   Icon,
   Layout,
@@ -35,6 +38,8 @@ import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
 
 interface PullRequestPanelProps extends PullRequestChangesSectionProps {
+  handleRebaseBranch: () => void
+  handlePrState: (state: string) => void
   pullReqMetadata: TypesPullReq | undefined
   conflictingFiles?: string[]
   PRStateLoading: boolean
@@ -175,7 +180,9 @@ const PullRequestPanel = ({
   showDeleteBranchButton,
   headerMsg,
   commitSuggestionsBatchCount,
-  onCommitSuggestions
+  onCommitSuggestions,
+  handlePrState,
+  handleRebaseBranch
 }: PullRequestPanelProps) => {
   const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
@@ -195,7 +202,58 @@ const PullRequestPanel = ({
       setNotBypassable(checkIfBypassAllowed)
     }
   }, [ruleViolationArr])
+  const rebasePossible = useMemo(
+    () => pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
+    [pullReqMetadata]
+  )
+  const moreTooltip = () => {
+    return (
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
+            <Icon name="vertical-ellipsis" size={12} />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-[180px] rounded-[10px] border border-borders-1 bg-background-2 py-2 shadow-sm">
+          <DropdownMenuGroup>
+            <DropdownMenuItem
+              onClick={e => {
+                handlePrState('draft')
 
+                e.stopPropagation()
+              }}
+              className="cursor-pointer"
+            >
+              <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
+              {'Mark as draft'}
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={e => {
+                handlePrState('closed')
+                e.stopPropagation()
+              }}
+              className="cursor-pointer"
+            >
+              <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
+              {'Close pull request'}
+            </DropdownMenuItem>
+            {rebasePossible && (
+              <DropdownMenuItem
+                onClick={e => {
+                  handleRebaseBranch()
+                  e.stopPropagation()
+                }}
+                className="cursor-pointer"
+              >
+                <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
+                {'Rebase'}
+              </DropdownMenuItem>
+            )}
+          </DropdownMenuGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+  }
   return (
     <StackedList.Root>
       <StackedList.Item className="items-center py-2.5" disableHover>
@@ -246,14 +304,16 @@ const PullRequestPanel = ({
                     </Layout.Horizontal>
                   )}
                   <Button
-                    variant={actions ? 'split' : 'default'}
-                    size={actions ? 'xs_split' : 'xs'}
+                    variant={actions && !pullReqMetadata?.closed ? 'split' : 'default'}
+                    size={actions && !pullReqMetadata?.closed ? 'xs_split' : 'xs'}
                     theme={
-                      mergeable && !ruleViolation
+                      mergeable && !ruleViolation && !pullReqMetadata?.is_draft && !pullReqMetadata?.closed
                         ? 'success'
-                        : checksInfo.status === 'pending' || checksInfo.status === 'running'
-                          ? 'warning'
-                          : 'error'
+                        : pullReqMetadata?.is_draft || pullReqMetadata?.closed
+                          ? 'primary'
+                          : checksInfo.status === 'pending' || checksInfo.status === 'running'
+                            ? 'warning'
+                            : 'error'
                     }
                     disabled={!checkboxBypass && ruleViolation}
                     onClick={actions[0]?.action}
@@ -287,8 +347,13 @@ const PullRequestPanel = ({
                       )
                     }
                   >
-                    Squash and merge
+                    {pullReqMetadata?.closed
+                      ? 'Open for review'
+                      : pullReqMetadata?.is_draft
+                        ? 'Ready for review'
+                        : 'Squash and merge'}
                   </Button>
+                  {pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft && moreTooltip()}
                 </Layout.Horizontal>
               )
             }

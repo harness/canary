@@ -57,6 +57,8 @@ interface PullRequestDiffviewerProps {
   filenameToLanguage?: (fileName: string) => string | undefined
   toggleConversationStatus?: (status: string, parentId?: number) => void
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  scrolledToComment?: boolean
+  setScrolledToComment?: (val: boolean) => void
 }
 
 const PullRequestDiffViewer = ({
@@ -90,7 +92,9 @@ const PullRequestDiffViewer = ({
   removeSuggestionFromBatch,
   filenameToLanguage,
   toggleConversationStatus,
-  handleUpload
+  handleUpload,
+  scrolledToComment,
+  setScrolledToComment
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -127,7 +131,6 @@ const PullRequestDiffViewer = ({
     expandAll
     //  setExpandAll
   ] = useState(false)
-  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
   const [extend, setExtend] = useState<{
     oldFile: Record<number, { data: Thread[] }>
     newFile: Record<number, { data: Thread[] }>
@@ -560,13 +563,13 @@ const PullRequestDiffViewer = ({
 
   // Scroll to commentId whenever extendData or commentId changes
   useEffect(() => {
-    if (!commentId || isScrolledToComment) return
+    if (!commentId || scrolledToComment) return
     // Slight timeout so the UI has time to expand/hydrate
     const timeoutId = setTimeout(() => {
       const elem = document.getElementById(`comment-${commentId}`)
       if (!elem) return
       elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      setIsScrolledToComment(true)
+      setScrolledToComment?.(true)
     }, 500)
 
     return () => {

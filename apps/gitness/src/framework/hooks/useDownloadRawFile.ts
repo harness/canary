@@ -2,6 +2,8 @@ import { useCallback } from 'react'
 
 import { useMutation } from '@tanstack/react-query'
 
+import { useIsMFE } from './useIsMFE'
+
 interface UseDownloadRawFileParams {
   repoRef: string
   resourcePath: string
@@ -10,8 +12,9 @@ interface UseDownloadRawFileParams {
 }
 
 export function useDownloadRawFile() {
+  const isMFE = useIsMFE()
   const mutation = useMutation(async ({ repoRef, resourcePath, gitRef }: UseDownloadRawFileParams) => {
-    const url = `/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`
+    const url = `${isMFE ? '/code' : ''}/api/v1/repos/${repoRef}/raw/${resourcePath}?git_ref=${gitRef ?? ''}`
 
     const response = await fetch(url)
     if (!response.ok) {

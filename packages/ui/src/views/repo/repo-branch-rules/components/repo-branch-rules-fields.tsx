@@ -4,7 +4,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
-  Badge,
+  Button,
   ButtonWithOptions,
   Checkbox,
   ControlGroup,
@@ -22,6 +22,7 @@ import {
   Textarea
 } from '@/components'
 import { BypassUsersList, FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
@@ -137,21 +138,33 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             ]}
           />
         </div>
-        <div className="flex flex-wrap">
-          {patterns.map(pattern => (
-            <Badge
-              variant="outline"
-              theme={pattern.option === PatternsButtonType.INCLUDE ? 'success' : 'destructive'}
-              key={pattern.pattern}
-              className="m-1 inline-flex"
-            >
-              {pattern.pattern}
-              <button className="ml-2" onClick={() => handleRemovePattern(pattern.pattern)}>
-                <Icon name="x-mark" size={12} className="text-current" />
-              </button>
-            </Badge>
-          ))}
-        </div>
+        {!!patterns.length && (
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {patterns.map(pattern => (
+              <Button
+                key={pattern.pattern}
+                className="group flex h-6 items-center gap-x-1.5 bg-background-8 px-2.5 text-foreground-8"
+                type="button"
+                variant="custom"
+                onClick={() => handleRemovePattern(pattern.pattern)}
+              >
+                <span className="flex items-center gap-1">
+                  <Icon
+                    className={cn('text-icons-success', {
+                      'rotate-45 text-icons-danger': pattern.option !== PatternsButtonType.INCLUDE
+                    })}
+                    name="circle-plus"
+                    size={10}
+                  />
+                  {pattern.pattern}
+                </span>
+                <span className="text-icons-1 transition-colors group-hover:text-foreground-1">
+                  <Icon className="rotate-45" name="plus" size={10} />
+                </span>
+              </Button>
+            ))}
+          </div>
+        )}
       </ControlGroup>
 
       <ControlGroup>

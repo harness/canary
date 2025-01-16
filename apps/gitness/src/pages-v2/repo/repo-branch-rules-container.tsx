@@ -8,11 +8,13 @@ import {
   useRepoRuleGetQuery,
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
+import { SkeletonForm } from '@harnessio/ui/components'
 import {
   BranchRulesActionType,
   BypassUsersList,
   getBranchRules,
   MergeStrategy,
+  NotFoundPage,
   RepoBranchSettingsFormFields,
   RepoBranchSettingsRulesPage
 } from '@harnessio/ui/views'
@@ -54,14 +56,16 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     }
   }, [setPresetRuleData, setPrincipals, setRecentStatusChecks])
 
-  const { data: { body: rulesData } = {} } = useRepoRuleGetQuery(
+  const {
+    data: { body: rulesData } = {},
+    error: fetchRuleError,
+    isLoading: fetchRuleIsLoading
+  } = useRepoRuleGetQuery(
     { repo_ref: repoRef, rule_identifier: identifier ?? '' },
     {
       enabled: !!identifier
     }
   )
-
-  // console.log(rulesData)
 
   const {
     mutate: addRule,
@@ -184,6 +188,14 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     statusChecks: statusChecksError?.message || null,
     addRule: addRuleError?.message || null,
     updateRule: updateRuleError?.message || null
+  }
+
+  if (!!identifier && fetchRuleIsLoading) {
+    return <SkeletonForm className="mt-7" />
+  }
+
+  if (!!identifier && !!fetchRuleError) {
+    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
   }
 
   return (

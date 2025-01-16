@@ -238,6 +238,12 @@
     "replyHere": "",
     "commits": ""
   },
+  "notFound": {
+    "title": "Algo salió mal…",
+    "descriptionWithType": "La página solicitada no se encontró. Puedes volver para ver todos los {{type}} y gestionar tus configuraciones.",
+    "description": "La página solicitada no se encontró.",
+    "button": "Recargar página"
+  },
   "profileSettings": {
     "name": "Name",
     "added": "Added",
@@ -312,7 +318,16 @@
     "members": ""
   },
   "commits": {
-    "createNewCommit": "Create new commit"
+    "commitDetailsDiffShowing": "Mostrando",
+    "commitDetailsDiffChangedFiles": "archivos modificados",
+    "commitDetailsDiffWith": "con",
+    "commitDetailsDiffAdditionsAnd": "adiciones y",
+    "commitDetailsDiffDeletions": "eliminaciones",
+    "commitDetailsTitle": "Commit",
+    "commitDetailsAuthored": "creado",
+    "verified": "Verificado",
+    "browseFiles": "Explorar archivos",
+    "createNewCommit": "Crear nuevo commit"
   },
   "rules": {
     "edit": "Edit rule",

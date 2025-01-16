@@ -33,7 +33,7 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-6 pt-7" maxWidth="4xl">
+      <SandboxLayout.Content className="px-6" maxWidth="4xl">
         {pullRequest && (
           <>
             <PullRequestHeader

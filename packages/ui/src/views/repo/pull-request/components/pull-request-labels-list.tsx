@@ -17,7 +17,7 @@ const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelE
     {labels?.length ? (
       labels?.map(({ key, id, color }) => (
         <div key={id} className="mr-1 flex items-center space-x-2">
-          <div className="outline outline-1 p-0.5" style={{ outlineColor: color }}>
+          <div className="p-0.5 outline outline-1" style={{ outlineColor: color }}>
             <span className="px-1" style={{ color: color }}>
               {key}
             </span>

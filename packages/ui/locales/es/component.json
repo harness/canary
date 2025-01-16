@@ -43,7 +43,6 @@
     "pullRequests": "Pull Requests",
     "title": "Title"
   },
-  "andQuantityMore": "and {{quantity}} more",
   "navbar": {
     "settings": "",
     "profile": "Profile",
@@ -113,10 +112,8 @@
     "input": "Search files...",
     "noFile": "No file found."
   },
-
   "layout": {
     "table": "Table",
     "list": "List"
-  },
-  "No search results": ""
+  }
 }

@@ -52,6 +52,9 @@ interface RepoPullRequestChangesPageProps {
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  onGetFullDiff: (path?: string) => Promise<string | void>
+  scrolledToComment?: boolean
+  setScrolledToComment?: (val: boolean) => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   useTranslationStore,
@@ -86,7 +89,10 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   toggleConversationStatus,
   commitSuggestionsBatchCount,
   onCommitSuggestionsBatch,
-  handleUpload
+  handleUpload,
+  onGetFullDiff,
+  scrolledToComment,
+  setScrolledToComment
 }) => {
   const { diffs } = usePullRequestProviderStore()
   // Convert activities to comment threads
@@ -124,7 +130,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             lang: item.filePath.split('.')[1],
             fileViews: item.fileViews,
             checksumAfter: item.checksumAfter,
-            filePath: item.filePath
+            filePath: item.filePath,
+            diffData: item
           })) || []
         }
         useTranslationStore={useTranslationStore}
@@ -147,6 +154,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         removeSuggestionFromBatch={removeSuggestionFromBatch}
         filenameToLanguage={filenameToLanguage}
         toggleConversationStatus={toggleConversationStatus}
+        onGetFullDiff={onGetFullDiff}
+        scrolledToComment={scrolledToComment}
+        setScrolledToComment={setScrolledToComment}
       />
     )
   }

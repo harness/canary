@@ -4,25 +4,33 @@ import { useParams } from 'react-router-dom'
 import * as Diff2Html from 'diff2html'
 import { compact } from 'lodash-es'
 
-import { useDiffStatsQuery, useGetCommitDiffQuery } from '@harnessio/code-service-client'
-import { CommitDiffsView } from '@harnessio/ui/views'
+import {
+  useDiffStatsQuery,
+  useGetCommitDiffQuery,
+  useGetContentQuery,
+  useListPathsQuery
+} from '@harnessio/code-service-client'
+import { CommitDiff, CommitSidebar } from '@harnessio/ui/views'
 
-import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import Explorer from '../../components/FileExplorer.tsx'
+import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
+import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
+import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { PathParams } from '../../RouteDefinitions'
+import { PathParams } from '../../RouteDefinitions.ts'
+import { normalizeGitRef } from '../../utils/git-utils.ts'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../pull-request/pull-request-utils'
-import { useCommitDetailsStore } from './stores/commit-details-store'
+import { useCommitDetailsStore } from './stores/commit-details-store.ts'
 
-export default function RepoCommitDiffsPage() {
+/**
+ * TODO: For now, file-tree is static and contains all files.
+ * Needs to filter files for current commit and add opportunity to navigate to diff for each file from file-tree
+ */
+export const CommitDiffContainer = () => {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
+  const { fullGitRef } = useCodePathDetails()
   const { setDiffs, setDiffStats } = useCommitDetailsStore()
-
-  const { data: currentCommitDiffData } = useGetCommitDiffQuery({
-    repo_ref: repoRef,
-    commit_sha: commitSHA || ''
-  })
 
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
   const diffApiPath = `${defaultCommitRange[0]}~1...${defaultCommitRange[defaultCommitRange.length - 1]}`
@@ -37,6 +45,11 @@ export default function RepoCommitDiffsPage() {
       setDiffStats(diffStats)
     }
   }, [diffStats, setDiffStats])
+
+  const { data: currentCommitDiffData } = useGetCommitDiffQuery({
+    repo_ref: repoRef,
+    commit_sha: commitSHA || ''
+  })
 
   useEffect(() => {
     if (currentCommitDiffData) {
@@ -68,5 +81,28 @@ export default function RepoCommitDiffsPage() {
     }
   }, [currentCommitDiffData])
 
-  return <CommitDiffsView useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+  const { data: repoDetails } = useGetContentQuery({
+    path: '',
+    repo_ref: repoRef,
+    queryParams: {
+      include_commit: true,
+      git_ref: normalizeGitRef(fullGitRef)
+    }
+  })
+
+  const { data: filesData } = useListPathsQuery({
+    repo_ref: repoRef,
+    queryParams: { git_ref: normalizeGitRef(fullGitRef) }
+  })
+
+  const filesList = filesData?.body?.files || []
+
+  return (
+    <>
+      <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
+        {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
+      </CommitSidebar>
+      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+    </>
+  )
 }

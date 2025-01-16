@@ -103,7 +103,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
         */}
         {showTopBar ? (
           <>
-            <Spacer size={10} />
+            <Spacer size={8} />
             <div className="flex items-end">
               <Text className="leading-none" size={5} weight={'medium'}>
                 {t('views:repos.repositories')}

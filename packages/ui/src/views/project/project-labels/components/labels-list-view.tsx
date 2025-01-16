@@ -27,7 +27,7 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
             <TableRow key={label.key}>
               <TableCell>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: label.color }}></div>
+                  <div className="size-4 rounded-full" style={{ backgroundColor: label.color }}></div>
                   {label.key}
                 </div>
               </TableCell>

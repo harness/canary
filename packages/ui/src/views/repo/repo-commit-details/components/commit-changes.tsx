@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 import {
   Accordion,
@@ -7,8 +7,7 @@ import {
   AccordionTrigger,
   Badge,
   CopyButton,
-  StackedList,
-  Text
+  StackedList
 } from '@/components'
 import { TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -39,28 +38,20 @@ interface DataProps {
   useTranslationStore: () => TranslationStore
 }
 
-const LineTitle: React.FC<LineTitleProps> = ({ header, useTranslationStore }) => {
+const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
   const { t: _t } = useTranslationStore()
   const { text, numAdditions, numDeletions } = header
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
-        <Text weight="medium">{text}</Text>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={e => {
-            e.preventDefault()
-          }}
-        >
-          <CopyButton name={text} className="text-tertiary-background" />
-        </div>
-        {numAdditions != null && numAdditions > 0 && (
+        <span className="text-14 font-medium">{text}</span>
+        <CopyButton name={text} className="text-icons-1" />
+        {!!numAdditions && (
           <Badge variant="outline" size="sm" theme="success">
             +{numAdditions}
           </Badge>
         )}
-        {numDeletions != null && numDeletions > 0 && (
+        {!!numDeletions && (
           <Badge variant="outline" size="sm" theme="destructive">
             -{numDeletions}
           </Badge>
@@ -70,7 +61,7 @@ const LineTitle: React.FC<LineTitleProps> = ({ header, useTranslationStore }) =>
   )
 }
 
-const CommitsAccordion: React.FC<{
+const CommitsAccordion: FC<{
   header: HeaderProps
   data?: string
   diffMode: DiffModeEnum
@@ -78,8 +69,7 @@ const CommitsAccordion: React.FC<{
 }> = ({ header, diffMode, useTranslationStore }) => {
   const { highlight, wrap, fontsize } = useDiffConfig()
 
-  const startingLine =
-    parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
+  const startingLine = parseStartingLineIfOne(header?.data ?? '')
 
   const [openItems, setOpenItems] = useState<string[]>([])
 
@@ -92,7 +82,7 @@ const CommitsAccordion: React.FC<{
           value={openItems}
           onValueChange={val => setOpenItems(val as string[])}
         >
-          <AccordionItem isLast value={header?.text ?? ''}>
+          <AccordionItem isLast value={header.text}>
             <AccordionTrigger leftChevron className="p-4 text-left">
               <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
             </AccordionTrigger>
@@ -111,8 +101,8 @@ const CommitsAccordion: React.FC<{
                     mode={diffMode}
                     wrap={wrap}
                     addWidget
-                    fileName={header?.title ?? ''}
-                    lang={header?.lang ?? ''}
+                    fileName={header.title}
+                    lang={header.lang}
                     useTranslationStore={useTranslationStore}
                   />
                 </div>

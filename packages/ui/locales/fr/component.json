@@ -43,7 +43,6 @@
     "pullRequests": "Demandes de fusion",
     "title": "Titre"
   },
-  "andQuantityMore": "and {{quantity}} more",
   "navbar": {
     "settings": "Paramètres",
     "profile": "Profile",

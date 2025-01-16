@@ -15,7 +15,7 @@ import {
   Option,
   RadioButton,
   RadioGroup,
-  SkeletonList,
+  SkeletonForm,
   Text,
   Textarea
 } from '@/components'
@@ -121,7 +121,7 @@ export const RepoSettingsGeneralForm: FC<{
         {t('views:repos.generalSettings', 'General settings')}
       </Text>
       {isLoadingRepoData ? (
-        <SkeletonList />
+        <SkeletonForm />
       ) : (
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}

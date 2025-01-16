@@ -27,7 +27,7 @@ export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum 
   const highlightedHtmlOld = useMemo(() => {
     if (!language) return hljs.highlightAuto(codeBlockContent).value
     return hljs.highlight(codeBlockContent, { language }).value
-  }, [code, language])
+  }, [code, language, codeBlockContent])
 
   const highlightedHtmlNew = useMemo(() => {
     if (!language) return hljs.highlightAuto(code).value

@@ -1,18 +1,21 @@
 import { FC, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, CommitCopyActions, NodeGroup, StackedList } from '@/components'
+import { Avatar, AvatarFallback, Button, CommitCopyActions, Layout, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface CommitProps {
+  inCompare?: boolean
+  inPr?: boolean
   data?: TypesCommit[]
   commitsPath?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, commitsPath }) => {
+export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = false, inPr = false }) => {
+  const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
       ? {}
@@ -71,7 +74,33 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath }) => {
                         }
                       />
                       {!!commit?.sha && (
-                        <StackedList.Field title={<CommitCopyActions sha={commit.sha} />} right label secondary />
+                        <StackedList.Field
+                          title={
+                            <Layout.Horizontal>
+                              <CommitCopyActions sha={commit.sha} />
+                              <div title="View repository at this point of history">
+                                <Button
+                                  variant="outline"
+                                  size="sm_icon"
+                                  onClick={() => {
+                                    navigate(
+                                      inCompare
+                                        ? `../../code/${commit.sha}`
+                                        : inPr
+                                          ? `../../../code/${commit.sha}`
+                                          : `../code/${commit.sha}`
+                                    )
+                                  }}
+                                >
+                                  <>{'<>'}</>
+                                </Button>
+                              </div>
+                            </Layout.Horizontal>
+                          }
+                          right
+                          label
+                          secondary
+                        />
                       )}
                     </StackedList.Item>
                   )

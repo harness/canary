@@ -15,7 +15,7 @@
     "pre-commit": "pnpm run -r --workspace-concurrency=1 pre-commit"
   },
   "engines": {
-    "node": ">=18.20.4"
+    "node": ">=18.17.1"
   },
   "license": "Apache-2.0",
   "resolutions": {

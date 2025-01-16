@@ -19,6 +19,7 @@ import constants from '../constants'
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
+import { quoteTransform } from '../utils'
 
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
@@ -122,6 +123,17 @@ const PullRequestDiffViewer = ({
   )
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
+
+  const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
+  const handleQuoteReply = useCallback((parentId: number, originalText: string) => {
+    const quoted = quoteTransform(originalText)
+    setQuoteReplies(prev => ({
+      ...prev,
+      [parentId]: {
+        text: quoted
+      }
+    }))
+  }, [])
 
   const [
     scrollBar
@@ -292,7 +304,7 @@ const PullRequestDiffViewer = ({
 
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
-  const [hideReplyBoxes, setHideReplyBoxes] = useState<{ [key: string]: boolean }>({})
+  const [hideReplyHeres, setHideReplyHeres] = useState<{ [key: string]: boolean }>({})
 
   const toggleEditMode = (id: string, initialText: string) => {
     setEditModes(prev => ({ ...prev, [id]: !prev[id] }))
@@ -306,7 +318,7 @@ const PullRequestDiffViewer = ({
       console.error('toggleEditMode called with undefined id')
       return
     }
-    setHideReplyBoxes(prev => ({ ...prev, [id]: state }))
+    setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }
 
   const [newComments, setNewComments] = useState<Record<string, string>>({})
@@ -355,7 +367,7 @@ const PullRequestDiffViewer = ({
         </div>
       )
     },
-    [handleSaveComment, fileName, newComments, currentUser]
+    [handleSaveComment, fileName, newComments, currentUser, getNewCommentValue, handleUpload, setNewCommentValue]
   )
 
   const renderExtendLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderExtendLine']>>(
@@ -382,11 +394,13 @@ const PullRequestDiffViewer = ({
                 currentUser={currentUser}
                 isComment
                 replyBoxClassName="py-4"
-                hideReplyBox={hideReplyBoxes[parent?.id]}
-                setHideReplyBox={state => toggleReplyBox(state, parent?.id)}
+                hideReplyHere={hideReplyHeres[parent?.id]}
+                setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
                 toggleConversationStatus={toggleConversationStatus}
                 onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                onQuoteReply={handleQuoteReply}
+                quoteReplyText={quoteReplies[parent.id]?.text || ''}
                 content={
                   <div className="flex-col">
                     <PullRequestTimelineItem
@@ -394,14 +408,17 @@ const PullRequestDiffViewer = ({
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
-                      hideReply
+                      hideReplySection
                       isComment
                       replyBoxClassName=""
                       handleDeleteComment={() => deleteComment?.(parent?.id)}
                       onEditClick={() => toggleEditMode(componentId, parent?.payload?.payload?.text || '')}
+                      data={parent?.payload?.payload?.text}
                       contentClassName="border-transparent"
                       onCopyClick={onCopyClick}
                       commentId={parent.id}
+                      setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
+                      onQuoteReply={handleQuoteReply}
                       icon={
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
@@ -475,15 +492,18 @@ const PullRequestDiffViewer = ({
                               parentCommentId={parent?.id}
                               isLast={isLastComment}
                               handleSaveComment={handleSaveComment}
-                              hideReply
+                              hideReplySection
                               isComment
                               onCopyClick={onCopyClick}
                               commentId={reply.id}
                               isDeleted={!!reply?.deleted}
                               handleDeleteComment={() => deleteComment?.(reply?.id)}
                               onEditClick={() => toggleEditMode(replyComponentId, reply?.payload?.payload?.text || '')}
+                              data={reply?.payload?.payload?.text}
                               contentClassName="border-transparent"
                               titleClassName="!flex max-w-full"
+                              setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
+                              onQuoteReply={handleQuoteReply}
                               icon={
                                 <Avatar className="size-6 rounded-full p-0">
                                   <AvatarFallback>
@@ -558,7 +578,7 @@ const PullRequestDiffViewer = ({
         </div>
       )
     },
-    [currentUser, handleSaveComment, updateComment, deleteComment, fileName, hideReplyBoxes, editModes, editComments, t]
+    [currentUser, handleSaveComment, updateComment, deleteComment, fileName, hideReplyHeres, editModes, editComments, t]
   )
 
   // Scroll to commentId whenever extendData or commentId changes
@@ -575,7 +595,7 @@ const PullRequestDiffViewer = ({
     return () => {
       clearTimeout(timeoutId)
     }
-  }, [commentId, extend])
+  }, [commentId, extend, scrolledToComment, setScrolledToComment])
 
   return (
     <>

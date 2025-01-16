@@ -37,7 +37,7 @@ interface TimelineItemProps {
   isLast: boolean
   isComment?: boolean
   hideIconBorder?: boolean
-  hideReply?: boolean
+  hideReplySection?: boolean
   contentClassName?: string
   replyBoxClassName?: string
   titleClassName?: string
@@ -48,24 +48,23 @@ interface TimelineItemProps {
   handleDeleteComment?: () => void
   isDeleted?: boolean
   isNotCodeComment?: boolean
-  hideReplyBox?: boolean
-  setHideReplyBox?: (state: boolean) => void
+  hideReplyHere?: boolean
+  setHideReplyHere?: (state: boolean) => void
   id?: string
   isResolved?: boolean
   toggleConversationStatus?: (status: string, parentId?: number) => void
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   data?: string
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  onQuoteReply?: (parentId: number, rawText: string) => void
+  quoteReplyText?: string
 }
 
 interface ItemHeaderProps {
-  handleReplyBox: (content: string, state: boolean) => void
   avatar?: React.ReactNode
   name?: string
   isComment?: boolean
   description?: React.ReactNode
-  comment?: string
-  setComment?: React.Dispatch<React.SetStateAction<string>>
   selectStatus?: React.ReactNode
   onEditClick?: () => void
   onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
@@ -73,13 +72,11 @@ interface ItemHeaderProps {
   handleDeleteComment?: () => void
   isDeleted?: boolean
   isNotCodeComment?: boolean
+  onQuoteReply?: () => void
 }
-const CRLF = '\n'
 
-// Use React.memo for performance optimization if appropriate
 const ItemHeader: React.FC<ItemHeaderProps> = memo(
   ({
-    handleReplyBox,
     onEditClick,
     onCopyClick,
     commentId,
@@ -91,57 +88,53 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
     handleDeleteComment,
     isDeleted = false,
     isNotCodeComment = false,
-    comment
+    onQuoteReply
   }) => {
-    const moreTooltip = () => {
+    const renderMenu = () => {
+      // We only show the menu if it's an actual comment and not deleted
+      if (!isComment || isDeleted) return null
       return (
-        !isDeleted && (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-                <Icon name="vertical-ellipsis" size={12} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-[180px] rounded-[10px] border border-borders-1 bg-background-2 py-2 shadow-sm">
-              <DropdownMenuGroup>
-                <DropdownMenuItem onClick={onEditClick} className="cursor-pointer">
-                  <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-                  {'Edit'}
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={e => {
-                    if (comment) {
-                      handleReplyBox(comment, true)
-                    }
-
-                    e.stopPropagation()
-                  }}
-                  className="cursor-pointer"
-                >
-                  <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-                  {'Quote reply'}
-                </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer" onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
-                  <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-                  {'Copy Link'}
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer text-destructive"
-                  onClick={e => {
-                    e.stopPropagation()
-                    handleDeleteComment?.()
-                  }}
-                >
-                  <DropdownMenuShortcut className="ml-0">
-                    <Icon name="trash" className="mr-2 text-destructive" />
-                  </DropdownMenuShortcut>
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        )
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
+              <Icon name="vertical-ellipsis" size={12} />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-[180px] rounded-[10px] border bg-background-2 py-2 shadow-sm">
+            <DropdownMenuGroup>
+              <DropdownMenuItem onClick={onEditClick} className="cursor-pointer">
+                <DropdownMenuShortcut className="ml-0" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  onQuoteReply?.()
+                }}
+                className="cursor-pointer"
+              >
+                <DropdownMenuShortcut className="ml-0" />
+                Quote reply
+              </DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
+                <DropdownMenuShortcut className="ml-0" />
+                Copy Link
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="cursor-pointer text-destructive"
+                onClick={ev => {
+                  ev.stopPropagation()
+                  handleDeleteComment?.()
+                }}
+              >
+                <DropdownMenuShortcut className="ml-0">
+                  <Icon name="trash" className="mr-2 text-destructive" />
+                </DropdownMenuShortcut>
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )
     }
     return (
@@ -166,7 +159,7 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
             </Text>
           </div>
         )}
-        {isComment && moreTooltip()}
+        {renderMenu()}
       </div>
     )
   }
@@ -179,7 +172,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   icon,
   isLast,
   hideIconBorder,
-  hideReply = false,
+  hideReplySection = false,
   contentClassName,
   replyBoxClassName,
   handleSaveComment,
@@ -192,8 +185,8 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   isEditMode,
   handleDeleteComment,
   isDeleted = false,
-  hideReplyBox,
-  setHideReplyBox,
+  hideReplyHere,
+  setHideReplyHere,
   currentUser,
   id,
   isResolved,
@@ -201,30 +194,14 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
   onCommentSaveAndStatusChange,
   isNotCodeComment,
   data,
-  handleUpload
+  handleUpload,
+  onQuoteReply,
+  quoteReplyText
 }) => {
-  const [quoteData, setQuoteData] = useState<string>('')
-  const [comment, setComment] = useState<string>(quoteData ? quoteData : '')
-
-  const handleReplyBox = (content: string, state: boolean) => {
-    setComment(content)
-    setHideReplyBox?.(state)
-
-    if (data) {
-      setQuoteData(content)
-    }
-  }
+  const [comment, setComment] = useState('')
   useEffect(() => {
-    if (quoteData) {
-      const replyContent = quoteData
-        .split(CRLF)
-        .map(line => `> ${line}`)
-        .concat([CRLF])
-        .join(CRLF)
-
-      setComment(replyContent)
-    }
-  }, [hideReplyBox, setQuoteData])
+    if (quoteReplyText) setComment(quoteReplyText)
+  }, [quoteReplyText])
 
   return (
     <div id={id}>
@@ -234,17 +211,18 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
           {/* Ensure that header has at least one item */}
           {header.length > 0 && (
             <ItemHeader
-              handleReplyBox={handleReplyBox}
               isDeleted={isDeleted}
-              setComment={setComment}
               onEditClick={onEditClick}
               onCopyClick={onCopyClick}
-              comment={data}
               isComment={isComment}
               isNotCodeComment={isNotCodeComment}
               handleDeleteComment={handleDeleteComment}
               commentId={commentId}
               {...header[0]}
+              onQuoteReply={() => {
+                setHideReplyHere?.(true)
+                if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
+              }}
             />
           )}
         </NodeGroup.Title>
@@ -270,20 +248,20 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
               ) : (
                 content
               )}
-              {!hideReply && (
+              {!hideReplySection && (
                 <>
-                  {hideReplyBox ? (
+                  {hideReplyHere ? (
                     <div className="flex w-full flex-col px-4">
                       <PullRequestCommentBox
                         handleUpload={handleUpload}
                         inReplyMode
                         onSaveComment={() => {
                           handleSaveComment?.(comment, parentCommentId)
-                          setHideReplyBox?.(false)
+                          setHideReplyHere?.(false)
                         }}
                         currentUser={currentUser}
                         onCancelClick={() => {
-                          setHideReplyBox?.(false)
+                          setHideReplyHere?.(false)
                         }}
                         comment={comment}
                         isResolved={isResolved}
@@ -305,11 +283,10 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                           </Avatar>
                         ) : null}
                         <Input
-                          value={comment}
                           placeholder="Reply here"
                           size="md"
                           onClick={() => {
-                            setHideReplyBox?.(true)
+                            setHideReplyHere?.(true)
                           }}
                           onChange={e => {
                             setComment(e.target.value)

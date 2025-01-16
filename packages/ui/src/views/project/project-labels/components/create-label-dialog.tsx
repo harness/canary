@@ -68,7 +68,7 @@ export function CreateLabelDialog({
         color: presetEditLabel?.color ?? ColorsEnum.BLUE
       })
     }
-  }, [open, reset])
+  }, [open, reset, presetEditLabel])
 
   const handleSelectChange = (fieldName: keyof CreateLabelFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })

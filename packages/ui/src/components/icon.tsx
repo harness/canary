@@ -34,6 +34,7 @@ import ChevronUp from '../icons/chevron-up.svg'
 import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../icons/circle-arrows-updown.svg'
+import CirclePlus from '../icons/circle-plus.svg'
 import Circle from '../icons/circle.svg'
 import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
@@ -353,8 +354,8 @@ const IconNameMap = {
   'no-data-commits': NoDataCommits,
   compare: Compare,
   'collapse-diff': CollapseDiff,
-  'expand-diff': ExpandDiff
-  // fork: Fork
+  'expand-diff': ExpandDiff,
+  'circle-plus': CirclePlus
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

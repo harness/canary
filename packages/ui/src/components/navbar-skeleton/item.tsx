@@ -25,7 +25,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
       >
         <div
           className={cn(
-            'group-hover:bg-background-4 absolute -inset-x-3 z-0 h-full w-auto rounded-[10px] bg-transparent',
+            'group-hover:bg-background-4 absolute -inset-x-3 z-0 h-full w-auto rounded-[10px] bg-transparent transition-colors',
             { 'bg-background-4': active }
           )}
         />
@@ -74,13 +74,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
           )}
         >
           {active && (
-            <span
-              className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2"
-              style={{
-                background:
-                  'radial-gradient(50% 50% at 50% 50%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.11) 17.63%, rgba(255, 255, 255, 0.07) 40.23%, rgba(255, 255, 255, 0.03) 61.54%, rgba(255, 255, 255, 0.01) 80%, rgba(255, 255, 255, 0.00) 100%)'
-              }}
-            />
+            <span className="absolute left-1/2 top-1/2 z-[-1] size-7 -translate-x-1/2 -translate-y-1/2 bg-navbar-item-gradient" />
           )}
           {icon}
         </div>

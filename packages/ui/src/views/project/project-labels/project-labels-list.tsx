@@ -9,7 +9,6 @@ import { ProjectLabelPageProps } from './types'
 
 export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
   useTranslationStore,
-  createdIn,
   useLabelsStore,
   openCreateLabelDialog,
   handleEditLabel,

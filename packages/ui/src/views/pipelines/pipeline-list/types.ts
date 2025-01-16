@@ -30,7 +30,7 @@ interface RoutingProps {
   toPipelineDetails: (pipeline: IPipeline) => string
 }
 
-export interface IPipelineListPageProps extends RoutingProps {
+export interface IPipelineListPageProps extends Partial<RoutingProps> {
   usePipelineListStore: () => IPipelineListStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean
@@ -42,7 +42,7 @@ export interface IPipelineListPageProps extends RoutingProps {
   LinkComponent: TLinkComponent
 }
 
-export interface IPipelineListProps extends RoutingProps {
+export interface IPipelineListProps extends Partial<RoutingProps> {
   pipelines: IPipeline[] | null
   LinkComponent: TLinkComponent
   query?: string

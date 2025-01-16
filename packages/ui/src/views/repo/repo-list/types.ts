@@ -21,7 +21,7 @@ export interface RoutingProps {
   toImportRepo: () => string
 }
 
-export interface RepoListProps extends RoutingProps {
+export interface RepoListProps extends Partial<RoutingProps> {
   useRepoStore: () => RepoStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean

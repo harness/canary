@@ -93,7 +93,7 @@ export const PipelineList = ({
   return (
     <StackedList.Root>
       {pipelines.map((pipeline, idx) => (
-        <LinkComponent key={pipeline.id} to={toPipelineDetails(pipeline)}>
+        <LinkComponent key={pipeline.id} to={toPipelineDetails?.(pipeline) || ''}>
           <StackedList.Item key={pipeline.name} isLast={pipelines.length - 1 === idx}>
             <StackedList.Field
               title={<Title status={pipeline.status} title={pipeline.name || ''} />}

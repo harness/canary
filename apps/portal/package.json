@@ -1,0 +1,50 @@
+{
+  "name": "portal",
+  "private": "true",
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "astro check",
+    "pretty": "prettier --check ./src",
+    "pretty:fix": "prettier --write ./src",
+    "typecheck": "tsc -b"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.1.5",
+    "@astrojs/starlight": "^0.31.0",
+    "@astrojs/starlight-tailwind": "^3.0.0",
+    "@astrojs/tailwind": "^5.1.4",
+    "@harnessio/ui": "workspace:*",
+    "@types/react-dom": "^19.0.3",
+    "astro": "^5.1.5",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.407.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-live": "^4.1.8",
+    "sharp": "^0.32.5",
+    "tailwind-merge": "^2.3.0",
+    "tailwindcss": "^3.4.4",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/react": "^18.3.12",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.4.2",
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript": "^5.7.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,md,mdx}": [
+      "astro check",
+      "prettier ./src --write"
+    ]
+  }
+}

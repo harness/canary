@@ -40,18 +40,6 @@ module.exports = {
       filename: 'remoteEntry.js',
       exposes: {
         './MicroFrontendApp': './src/AppMFE.tsx'
-      },
-      shared: {
-        react: {
-          singleton: true,
-          requiredVersion: false,
-          eager: true
-        },
-        'react-dom': {
-          singleton: true,
-          requiredVersion: false,
-          eager: true
-        }
       }
     })
   ]

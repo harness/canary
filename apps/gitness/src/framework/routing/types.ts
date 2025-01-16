@@ -6,6 +6,7 @@ export enum RouteConstants {
   toLogout = 'toLogout',
   toSignIn = 'toSignIn',
   toCreateRepo = 'toCreateRepo',
+  toImportRepo = 'toImportRepo',
   toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',

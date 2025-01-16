@@ -17,6 +17,8 @@ export interface TranslationStore {
 
 export interface RoutingProps {
   toRepository: (repo: RepositoryType) => string
+  toCreateRepo: () => string
+  toImportRepo: () => string
 }
 
 export interface RepoListProps extends RoutingProps {

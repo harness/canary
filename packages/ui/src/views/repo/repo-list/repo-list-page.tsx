@@ -24,7 +24,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   errorMessage,
   searchQuery,
   setSearchQuery,
-  toRepository
+  ...routingProps
 }) => {
   const { t } = useTranslationStore()
   const navigate = useNavigate()
@@ -170,7 +170,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           }}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
-          toRepository={toRepository}
+          {...routingProps}
         />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>

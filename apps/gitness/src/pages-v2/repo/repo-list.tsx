@@ -88,6 +88,8 @@ export default function ReposListPage() {
         searchQuery={query}
         setSearchQuery={setQuery}
         toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
       />
     </>
   )

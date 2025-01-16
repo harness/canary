@@ -69,7 +69,10 @@ const repoRoutes: CustomRouteObject[] = [
       },
       {
         path: 'import',
-        element: <ImportRepo />
+        element: <ImportRepo />,
+        handle: {
+          routeName: RouteConstants.toImportRepo
+        }
       },
       {
         path: ':repoId',

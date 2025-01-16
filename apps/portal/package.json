@@ -41,6 +41,9 @@
     "prettier-plugin-astro": "^0.14.1",
     "typescript": "^5.7.3"
   },
+  "engines": {
+    "node": ">=18.17.1"
+  },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,md,mdx}": [
       "astro check",

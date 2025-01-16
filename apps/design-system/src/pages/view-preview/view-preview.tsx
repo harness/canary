@@ -21,16 +21,13 @@ import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-vi
 import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list'
 import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view'
 import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-general-settings'
-import { RepoLabelsList } from '@subjects/views/repo-labels/repo-labels-list'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 import { useTranslationsStore } from '@utils/viewUtils'
 
-import { NotFoundPage } from '@harnessio/ui/views'
-
-import { ProjectSettingsPage } from '@harnessio/ui/views'
+import { NotFoundPage, ProjectSettingsPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'

@@ -1,6 +1,6 @@
 import { TFunction } from 'i18next'
 
-import { NavbarItemType, UserMenuItemType, UserMenuKeys } from './types'
+import { NavbarItemType } from './types'
 
 export const getAdminMenuItem = (t: TFunction): Pick<NavbarItemType, 'title' | 'iconName'> => {
   return {

@@ -5,15 +5,18 @@ import { LabelToolTip } from './label-tool-tip'
 
 export const LabelsListView: React.FC<LabelsListViewProps> = ({
   labels,
-  createdIn,
+  // createdIn,
   handleEditLabel,
   handleDeleteLabel,
   useTranslationStore,
   searchQuery,
   handleResetSearch,
-  openCreateLabelDialog
+  openCreateLabelDialog,
+  values,
+  useLabelsStore
 }) => {
   const { t } = useTranslationStore()
+  const { space_ref, repo_ref } = useLabelsStore!()
 
   if (!labels?.length) {
     if (searchQuery) {
@@ -53,11 +56,13 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
           <TableHead>Name</TableHead>
           <TableHead>Created In</TableHead>
           <TableHead>Description</TableHead>
+          <TableHead>Values</TableHead>
           <TableHead></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {labels && labels.length > 0 ? (
+        {labels &&
+          labels.length > 0 &&
           labels.map(label => (
             <TableRow key={label.key}>
               <TableCell className="flex items-center">
@@ -67,23 +72,32 @@ export const LabelsListView: React.FC<LabelsListViewProps> = ({
                 </div>
               </TableCell>
               <TableCell className="content-center">
-                <Text>{createdIn}</Text>
+                {label.scope === 0 ? <Text>{repo_ref}</Text> : <Text>{space_ref}</Text>}
               </TableCell>
               <TableCell className="content-center">{label.description}</TableCell>
+              <TableCell className="content-center">
+                {values[label.key]?.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {values[label.key].map(val => (
+                      <span
+                        key={val.value}
+                        className="rounded border px-2"
+                        style={{
+                          borderColor: val.color,
+                          color: val.color
+                        }}
+                      >
+                        {val.value}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </TableCell>
               <TableCell className="flex justify-end">
                 <LabelToolTip onEdit={handleEditLabel} onDelete={handleDeleteLabel} identifier={label.key} />
               </TableCell>
             </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell colSpan={5}>
-              <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
-                There are no labels in this project yet. Create a new label to get started.
-              </Text>
-            </TableCell>
-          </TableRow>
-        )}
+          ))}
       </TableBody>
     </Table>
   )

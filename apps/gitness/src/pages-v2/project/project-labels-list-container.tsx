@@ -6,6 +6,7 @@ import {
   useDefineSpaceLabelMutation,
   useDeleteSpaceLabelMutation,
   useListSpaceLabelsQuery,
+  // useListSpaceLabelValuesQuery,
   useUpdateSpaceLabelMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -20,7 +21,17 @@ export const ProjectLabelsList = () => {
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
-  const { page, setPage, labels: storeLabels, setLabels, addLabel, setPresetEditLabel, deleteLabel } = useLabelsStore()
+  const {
+    page,
+    setPage,
+    labels: storeLabels,
+    setLabels,
+    addLabel,
+    setPresetEditLabel,
+    deleteLabel,
+    setValues,
+    setRepoSpaceRef
+  } = useLabelsStore()
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
@@ -48,6 +59,10 @@ export const ProjectLabelsList = () => {
   useEffect(() => {
     setQueryPage(page)
   }, [page, setPage, queryPage])
+
+  useEffect(() => {
+    setRepoSpaceRef(space_ref ?? '')
+  }, [space_ref])
 
   const {
     mutate: defineSpaceLabel,
@@ -89,6 +104,42 @@ export const ProjectLabelsList = () => {
       }
     }
   )
+
+  // async function fetchAllLabelValues(storeLabels: ILabelType[], spaceRef: string) {
+  //   const valuesByKey = {}
+
+  //   for (const label of storeLabels ?? []) {
+  //     const response = await fetch(`/api/v1/spaces/${spaceRef}/labels/${label.key}/values`)
+  //     const json = await response.json()
+  //     valuesByKey[label.key] = json ?? [] // store the fetched data
+  //   }
+
+  //   // setValues(valuesByKey)
+  // }
+  // fetchAllLabelValues(storeLabels, space_ref!)
+  // console.log(values)
+
+  useEffect(() => {
+    async function fetchAllLabelValues(storeLabels: ILabelType[], spaceRef: string) {
+      if (!spaceRef || !storeLabels) return
+
+      const valuesByKey: Record<string, any> = {}
+
+      for (const label of storeLabels) {
+        try {
+          const response = await fetch(`/api/v1/spaces/${spaceRef}/labels/${label.key}/values`)
+          const json = await response.json()
+          valuesByKey[label.key] = json ?? []
+        } catch (error) {
+          console.error(`Error fetching values for label ${label.key}:`, error)
+        }
+      }
+
+      setValues(valuesByKey)
+    }
+
+    fetchAllLabelValues(storeLabels, space_ref!)
+  }, [storeLabels, space_ref, setValues])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {

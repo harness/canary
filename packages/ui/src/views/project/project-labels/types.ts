@@ -46,16 +46,34 @@ export interface ILabelType {
   value_count?: number
 }
 
+export interface LabelValueType {
+  color?: ColorsEnum
+  created?: number
+  created_by?: number
+  id?: number
+  label_id?: number
+  updated?: number
+  updated_by?: number
+  value?: string
+}
+
 export interface ILabelsStore {
   labels: ILabelType[]
+  parentLabels?: ILabelType[]
   presetEditLabel: ILabelType | null
   page: number
   totalPages: number
+  values: Record<string, LabelValueType[]>
+  repo_ref?: string | null
+  space_ref?: string | null
+  setParentLabels?: (parentLabels: ILabelType[]) => void
   setLabels: (labels: ILabelType[]) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void
   setPresetEditLabel: (label: ILabelType | null) => void
   setPage: (page: number) => void
+  setValues: (values: Record<string, LabelValueType[]>) => void
+  setRepoSpaceRef: (repo_ref?: string, space_ref?: string) => void
 }
 
 export interface ProjectLabelPageProps {
@@ -81,4 +99,6 @@ export interface LabelsListViewProps {
   handleResetSearch: () => void
   searchQuery: string | null
   openCreateLabelDialog: () => void
+  values: Record<string, LabelValueType[]>
+  useLabelsStore: () => ILabelsStore
 }

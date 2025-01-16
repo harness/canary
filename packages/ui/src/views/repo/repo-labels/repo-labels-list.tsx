@@ -5,7 +5,6 @@ import {
   Checkbox,
   Label,
   ListActions,
-  NoData,
   PaginationComponent,
   SearchBox,
   SkeletonList,
@@ -13,14 +12,14 @@ import {
   Text
 } from '@/components'
 import { SandboxLayout } from '@/views'
+import { LabelsListView } from '@views/project/project-labels/components/labels-list-view'
 import { debounce } from 'lodash-es'
 
-import { LabelsListView } from './components/labels-list-view'
-import { ProjectLabelPageProps } from './types'
+import { RepoLabelPageProps } from './types'
 
-export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
+export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
   useTranslationStore,
-  createdIn,
+  //   createdIn,
   useLabelsStore,
   openCreateLabelDialog,
   handleEditLabel,
@@ -33,6 +32,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
   const { t } = useTranslationStore()
   const { labels, totalPages, page, setPage, values } = useLabelsStore()
   const [searchInput, setSearchInput] = useState(searchQuery)
+  const [showParentLabels, setShowParentLabels] = useState(false)
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
     setSearchQuery(searchQuery || null)
@@ -50,6 +50,10 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
     setSearchInput('')
     setSearchQuery(null)
   }
+
+  const filteredLabels = useMemo(() => {
+    return showParentLabels ? labels : labels?.filter(label => label.scope === 0)
+  }, [labels, showParentLabels])
 
   return (
     <SandboxLayout.Main>
@@ -84,7 +88,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
           <SkeletonList />
         ) : (
           <LabelsListView
-            labels={labels}
+            labels={filteredLabels}
             // createdIn={createdIn}
             useLabelsStore={useLabelsStore}
             handleDeleteLabel={handleDeleteLabel}
@@ -97,6 +101,15 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
             values={values}
           />
         )}
+        <Spacer size={4} />
+        <div className="flex gap-2">
+          <Checkbox
+            checked={showParentLabels}
+            onCheckedChange={() => setShowParentLabels(!showParentLabels)}
+            id="show-parent-labels"
+          />
+          <Label>Show parent lables</Label>
+        </div>
 
         <Spacer size={8} />
         <PaginationComponent

@@ -35,7 +35,7 @@ export const CreateRepo = () => {
 
     createRepositoryMutation.mutate(
       {
-        queryParams: {},
+        queryParams: { space_path: spaceURL },
         body: repositoryRequest
       },
       {

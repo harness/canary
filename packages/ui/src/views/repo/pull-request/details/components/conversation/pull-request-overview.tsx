@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import { Avatar, AvatarFallback, Icon, Layout, Text } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -8,7 +8,7 @@ import { PullRequestCommentBox, TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
-import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
+import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get, orderBy } from 'lodash-es'
 
 import {
@@ -158,7 +158,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   ])
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
-  const [hideReplyBoxes, setHideReplyBoxes] = useState<{ [key: string]: boolean }>({})
+  const [hideReplyHeres, setHideReplyHeres] = useState<{ [key: string]: boolean }>({})
 
   const toggleEditMode = (id: string, initialText: string) => {
     setEditModes(prev => ({ ...prev, [id]: !prev[id] }))
@@ -172,8 +172,20 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
       console.error('toggleEditMode called with undefined id')
       return
     }
-    setHideReplyBoxes(prev => ({ ...prev, [id]: state }))
+    setHideReplyHeres(prev => ({ ...prev, [id]: state }))
   }
+
+  const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
+  const handleQuoteReply = useCallback((commentId: number, originalText: string) => {
+    const quoted = quoteTransform(originalText)
+    setQuoteReplies(prev => ({
+      ...prev,
+      [commentId]: {
+        text: quoted
+      }
+    }))
+  }, [])
+
   const renderedActivityBlocks = useMemo(() => {
     return (
       <div className="flex flex-col">
@@ -224,14 +236,20 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       data={payload?.text as string}
                       isNotCodeComment
                       id={parentIdAttr}
-                      hideReplyBox={hideReplyBoxes[payload?.id]}
-                      setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
+                      hideReplyHere={hideReplyHeres[payload?.id]}
+                      setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                      quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                      onQuoteReply={handleQuoteReply}
                       key={payload?.id}
                       currentUser={currentUser?.display_name}
                       replyBoxClassName="p-4"
                       toggleConversationStatus={toggleConversationStatus}
                       onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                       isResolved={!!payload?.resolved}
+                      icon={<Icon name="pr-review" size={12} />}
+                      isLast={(data && data?.length - 1 === index) ?? false}
+                      handleSaveComment={handleSaveComment}
+                      parentCommentId={payload?.id}
                       header={[
                         {
                           avatar: (
@@ -257,17 +275,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             <Text size={3} color="primary">
                               {(payload?.code_comment as PayloadCodeComment)?.path}
                             </Text>
-                            <div className="flex items-center gap-x-2">
-                              {/* TODO: fix states on this on a comment like resolved and active */}
-                              {/* <PullRequestStatusSelect
-                              refetchActivities={refetchActivities}
-                              commentStatusPullReq={commentStatusPullReq}
-                              comment={{ commentItems: commentItems }}
-                              pullReqMetadata={pullReqMetadata}
-                              repoId={repoId}
-                            /> */}
-                              {/* TODO: add on click or other menu options */}
-                            </div>
                           </div>
                           {startingLine ? (
                             <div className="bg-[--diff-hunk-lineNumber--]">
@@ -299,10 +306,25 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     id={commentIdAttr}
                                     data={commentItem.payload?.payload?.text as string}
                                     isNotCodeComment
-                                    hideReplyBox={hideReplyBoxes[payload?.id]}
-                                    setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
+                                    hideReplySection
+                                    setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                                    quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                                    onQuoteReply={handleQuoteReply}
                                     parentCommentId={payload?.id}
                                     titleClassName="!flex max-w-full"
+                                    isComment
+                                    onCopyClick={onCopyClick}
+                                    commentId={commentItem.id}
+                                    isLast={commentItems.length - 1 === idx}
+                                    isDeleted={!!commentItem?.deleted}
+                                    handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
+                                    onEditClick={() =>
+                                      toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
+                                    }
+                                    contentClassName="border-transparent"
+                                    replyBoxClassName="p-4"
+                                    toggleConversationStatus={toggleConversationStatus}
+                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                     icon={
                                       <Avatar className="size-6 rounded-full p-0">
                                         {/* <AvatarImage src={AvatarUrl} /> */}
@@ -320,10 +342,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                         </AvatarFallback>
                                       </Avatar>
                                     }
-                                    isComment
-                                    onCopyClick={onCopyClick}
-                                    commentId={commentItem.id}
-                                    isLast={commentItems.length - 1 === idx}
                                     header={[
                                       {
                                         name: (
@@ -348,16 +366,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                         )
                                       }
                                     ]}
-                                    hideReply
-                                    isDeleted={!!commentItem?.deleted}
-                                    handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
-                                    onEditClick={() =>
-                                      toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
-                                    }
-                                    contentClassName="border-transparent"
-                                    replyBoxClassName="p-4"
-                                    toggleConversationStatus={toggleConversationStatus}
-                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                     content={
                                       commentItem?.deleted ? (
                                         <div className="rounded-md border bg-primary-background p-1">
@@ -403,12 +411,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             })}
                           </div>
                         </div>
-                        //
                       }
-                      icon={<Icon name="pr-review" size={12} />}
-                      isLast={(data && data?.length - 1 === index) ?? false}
-                      handleSaveComment={handleSaveComment}
-                      parentCommentId={payload?.id}
                     />
                   )
                 )
@@ -419,10 +422,17 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     handleUpload={handleUpload}
                     data={payload?.text as string}
                     id={parentIdAttr}
-                    hideReplyBox={hideReplyBoxes[payload?.id]}
-                    setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
+                    hideReplyHere={hideReplyHeres[payload?.id]}
+                    setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                    quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                    onQuoteReply={handleQuoteReply}
                     key={payload?.id}
                     titleClassName="!flex max-w-full"
+                    currentUser={currentUser?.display_name}
+                    replyBoxClassName="p-4"
+                    isResolved={!!payload?.resolved}
+                    toggleConversationStatus={toggleConversationStatus}
+                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                     header={[
                       {
                         avatar: (
@@ -444,26 +454,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             <div className="pr-2">{payload?.created && `commented ${timeAgo(payload?.created)}`} </div>
                           </div>
                         )
-                        // selectStatus: (
-                        //   <div className="flex items-center gap-x-2">
-                        //     <PullRequestStatusSelect
-                        //       refetchActivities={refetchActivities}
-                        //       commentStatusPullReq={commentStatusPullReq}
-                        //       comment={{
-                        //         commentItems: commentItems
-                        //       }}
-                        //       pullReqMetadata={pullReqMetadata}
-                        //       repoId={repoId}
-                        //     />
-                        //   </div>
-                        // )
                       }
                     ]}
-                    currentUser={currentUser?.display_name}
-                    replyBoxClassName="p-4"
-                    isResolved={!!payload?.resolved}
-                    toggleConversationStatus={toggleConversationStatus}
-                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                     content={
                       <div className="px-4 pt-4">
                         {commentItems?.map((commentItem, idx) => {
@@ -477,13 +469,27 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 handleUpload={handleUpload}
                                 id={commentIdAttr}
                                 data={commentItem.payload?.payload?.text as string}
-                                hideReplyBox={hideReplyBoxes[payload?.id]}
-                                setHideReplyBox={state => toggleReplyBox(state, payload?.id)}
+                                hideReplySection
+                                setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                                quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                                onQuoteReply={handleQuoteReply}
                                 parentCommentId={payload?.id}
                                 toggleConversationStatus={toggleConversationStatus}
                                 onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                 titleClassName="!flex max-w-full"
                                 currentUser={currentUser?.display_name}
+                                isLast={commentItems.length - 1 === idx}
+                                isComment
+                                onCopyClick={onCopyClick}
+                                commentId={commentItem.id}
+                                isDeleted={!!commentItem?.deleted}
+                                handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
+                                onEditClick={() =>
+                                  toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
+                                }
+                                contentClassName="border-transparent pb-0"
+                                replyBoxClassName="p-4"
+                                key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
                                     {/* <AvatarImage src={AvatarUrl} /> */}
@@ -501,7 +507,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     </AvatarFallback>
                                   </Avatar>
                                 }
-                                isLast={commentItems.length - 1 === idx}
                                 header={[
                                   {
                                     name: (
@@ -525,17 +530,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     )
                                   }
                                 ]}
-                                isComment
-                                onCopyClick={onCopyClick}
-                                commentId={commentItem.id}
-                                hideReply
-                                isDeleted={!!commentItem?.deleted}
-                                handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
-                                onEditClick={() =>
-                                  toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
-                                }
-                                contentClassName="border-transparent pb-0"
-                                replyBoxClassName="p-4"
                                 content={
                                   commentItem?.deleted ? (
                                     <div className="rounded-md border bg-primary-background p-1">
@@ -572,7 +566,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     />
                                   )
                                 }
-                                key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                               />
                             )
                           )
@@ -602,7 +595,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
     editModes,
     editComments,
     handleUpdateComment,
-    hideReplyBoxes
+    hideReplyHeres
   ])
 
   return <div>{renderedActivityBlocks}</div>

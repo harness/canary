@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { parseAsInteger, useQueryState } from 'nuqs'
+
 import {
   useDefineRepoLabelMutation,
   useDeleteRepoLabelMutation,
@@ -20,7 +22,19 @@ export const RepoLabelsList = () => {
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
-  const { labels: storeLabels, setLabels, addLabel, setPresetEditLabel, deleteLabel } = useRepoLabelsStore()
+  const {
+    page,
+    setPage,
+    labels: storeLabels,
+    setLabels,
+    addLabel,
+    setPresetEditLabel,
+    deleteLabel
+  } = useRepoLabelsStore()
+
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
     setOpenCreateLabelDialog(true)
@@ -32,7 +46,7 @@ export const RepoLabelsList = () => {
 
   const { data: { body: labels } = {} } = useListRepoLabelsQuery({
     repo_ref: repo_ref ?? '',
-    queryParams: { page: 1, limit: 100 }
+    queryParams: { page, limit: 100, query: query ?? '' }
   })
 
   useEffect(() => {
@@ -40,6 +54,10 @@ export const RepoLabelsList = () => {
       setLabels(labels as ILabelType[])
     }
   }, [labels, setLabels])
+
+  useEffect(() => {
+    setQueryPage(page)
+  }, [page, setPage, queryPage])
 
   const {
     mutate: defineRepoLabel,
@@ -127,6 +145,8 @@ export const RepoLabelsList = () => {
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
         showSpacer={false}
+        searchQuery={query}
+        setSearchQuery={setQuery}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}

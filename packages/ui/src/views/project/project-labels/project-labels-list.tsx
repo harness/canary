@@ -14,7 +14,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
   openCreateLabelDialog,
   handleEditLabel,
   handleDeleteLabel,
-  showSpacer = true
+  showSpacer = true,
   searchQuery,
   setSearchQuery
 }) => {

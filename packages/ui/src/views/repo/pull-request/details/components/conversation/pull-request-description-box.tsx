@@ -44,7 +44,7 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({ isLast, author,
           )
         }
       ]}
-      hideReply
+      hideReplySection
       contentClassName="pb-0"
       content={
         description && (

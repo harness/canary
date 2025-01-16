@@ -37,3 +37,14 @@ export function parseStartingLineIfOne(diffString: string) {
   // Return null if the starting line is not 1 or if the header is not found
   return null
 }
+
+export const CRLF = '\n'
+
+// helper to transform lines to quote format: each line => '> line' + blank line at end
+export function quoteTransform(raw: string): string {
+  return raw
+    .split(CRLF)
+    .map(line => `> ${line}`)
+    .concat([CRLF])
+    .join(CRLF)
+}

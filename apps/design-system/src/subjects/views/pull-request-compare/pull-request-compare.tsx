@@ -4,7 +4,7 @@ import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
 
-import { repoBranchListStore } from './repo-branch-store'
+import { repoBranchListStore } from '../../stores/repo-branch-store.ts'
 import { repoCommitStore } from './repo-commit-store'
 
 const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = props => {

@@ -6,8 +6,10 @@ import {
   useGetRepoWebhookQuery,
   useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
+import { SkeletonForm } from '@harnessio/ui/components'
 import {
   CreateWebhookFormFields,
+  NotFoundPage,
   RepoWebhooksCreatePage,
   SSLVerificationEnum,
   TriggerEventsEnum,
@@ -60,7 +62,7 @@ export const CreateWebhookContainer = () => {
     }
   )
 
-  const { data: { body: webhookData } = {} } = useGetRepoWebhookQuery(
+  const { data: { body: webhookData } = {}, isLoading: getWebhookIsLoading } = useGetRepoWebhookQuery(
     {
       repo_ref,
       webhook_identifier: Number(webhookId)
@@ -126,8 +128,12 @@ export const CreateWebhookContainer = () => {
 
   const apiError = createWebHookError?.message || updateWebhookError?.message || null
 
-  // TODO: Here, we need to display the view of the 404 page
-  if (!!webhookId && !webhookData) return <span className="text-destructive">404</span>
+  if (!!webhookId && getWebhookIsLoading) {
+    return <SkeletonForm className="mt-7" />
+  }
+
+  if (!!webhookId && !webhookData)
+    return <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="webhooks" />
 
   return (
     <>

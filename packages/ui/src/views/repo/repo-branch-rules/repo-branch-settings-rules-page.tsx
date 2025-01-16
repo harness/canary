@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Spacer, Text } from '@/components'
+import { Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper } from '@/components'
 import { IRepoStore, repoBranchSettingsFormSchema, SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -111,77 +111,68 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[610px] pt-7">
-        <Text size={5} weight="medium" as="div" className="mb-10">
-          {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
-        </Text>
+    <SandboxLayout.Content className="max-w-[570px] px-0">
+      <h1 className="mb-10 text-2xl font-medium">
+        {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
+      </h1>
 
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-          <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
+      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
 
-          <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />
+        <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />
 
-          <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
+        <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
 
-          <BranchSettingsRuleTargetPatternsField
-            watch={watch}
-            setValue={setValue}
-            register={register}
-            errors={errors}
-            t={t}
-          />
+        <BranchSettingsRuleTargetPatternsField
+          watch={watch}
+          setValue={setValue}
+          register={register}
+          errors={errors}
+          t={t}
+        />
 
-          <BranchSettingsRuleBypassListField
-            register={register}
-            errors={errors}
-            setValue={setValue}
-            watch={watch}
-            bypassOptions={principals}
-            t={t}
-            setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-            principalsSearchQuery={principalsSearchQuery}
-          />
+        <BranchSettingsRuleBypassListField
+          register={register}
+          errors={errors}
+          setValue={setValue}
+          watch={watch}
+          bypassOptions={principals}
+          t={t}
+          setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+          principalsSearchQuery={principalsSearchQuery}
+        />
 
-          <BranchSettingsRuleListField
-            rules={rules}
-            recentStatusChecks={recentStatusChecks}
-            handleCheckboxChange={handleCheckboxChange}
-            handleSubmenuChange={handleSubmenuChange}
-            handleSelectChangeForRule={handleSelectChangeForRule}
-            handleInputChange={handleInputChange}
-            t={t}
-          />
+        <BranchSettingsRuleListField
+          rules={rules}
+          recentStatusChecks={recentStatusChecks}
+          handleCheckboxChange={handleCheckboxChange}
+          handleSubmenuChange={handleSubmenuChange}
+          handleSelectChangeForRule={handleSelectChangeForRule}
+          handleInputChange={handleInputChange}
+          t={t}
+        />
 
-          <Fieldset className="mt-5">
-            <ControlGroup>
-              <ButtonGroup>
-                <Button type="submit" disabled={!isValid || isLoading}>
-                  {!isLoading
-                    ? presetRuleData
-                      ? t('views:repos.updateRule', 'Update rule')
-                      : t('views:repos.createRuleButton', 'Create rule')
-                    : presetRuleData
-                      ? t('views:repos.updatingRule', 'Updating rule...')
-                      : t('views:repos.creatingRuleButton', 'Creating rule...')}
-                </Button>
-                <Button type="button" variant="outline">
-                  <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
-                </Button>
-              </ButtonGroup>
-            </ControlGroup>
-          </Fieldset>
+        <Fieldset className="mt-5">
+          <ControlGroup>
+            <ButtonGroup>
+              <Button type="submit" disabled={!isValid || isLoading}>
+                {!isLoading
+                  ? presetRuleData
+                    ? t('views:repos.updateRule', 'Update rule')
+                    : t('views:repos.createRuleButton', 'Create rule')
+                  : presetRuleData
+                    ? t('views:repos.updatingRule', 'Updating rule...')
+                    : t('views:repos.creatingRuleButton', 'Creating rule...')}
+              </Button>
+              <Button type="button" variant="outline">
+                <NavLink to="..">{t('views:repos.cancel', 'Cancel')}</NavLink>
+              </Button>
+            </ButtonGroup>
+          </ControlGroup>
+        </Fieldset>
 
-          {!!apiErrorsValue && (
-            <>
-              <Spacer size={2} />
-              <Text size={1} className="text-destructive">
-                {apiErrorsValue}
-              </Text>
-            </>
-          )}
-        </FormWrapper>
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+        {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
+      </FormWrapper>
+    </SandboxLayout.Content>
   )
 }

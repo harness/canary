@@ -32,13 +32,12 @@ export * from '@views/repo/repo-branch'
 export * from '@views/repo/repo-branch/types'
 
 // repo settings
-export * from '@views/repo/repo-settings'
+export * from '@views/repo/repo-settings/repo-settings-layout'
+export * from '@views/repo/repo-settings/repo-settings-general-page'
 export * from '@views/repo/repo-settings/types'
 
 // repo import
 export * from '@views/repo/repo-import/repo-import'
-
-export * from '@views/repo/repo-settings/repo-settings-page'
 
 // repo branch rules
 export * from '@views/repo/repo-branch-rules'

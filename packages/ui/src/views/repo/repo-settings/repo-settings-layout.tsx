@@ -1,24 +1,17 @@
 import { Outlet } from 'react-router-dom'
 
-import { SandboxLayout, TranslationStore } from '@/views'
-import { MenuGroupTypes } from '@components/navbar/types'
+import { ContentLayoutWithSidebar, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
 
-import { RepoSidebar } from './components/repo-sidebar'
-
-export const getNavItems = (t: TFunction) => [
+const getNavItems = (t: TFunction) => [
   {
     groupId: 0,
     title: t('views:repos.general', 'General'),
-    type: MenuGroupTypes.GENERAL,
-
     items: [{ id: 0, title: t('views:repos.generalSettings', 'General Settings'), to: 'general' }]
   },
   // {
-  // groupId: 1,
-  // title: 'Access',
-  // type: MenuGroupTypes.GENERAL,
-
+  //   groupId: 1,
+  //   title: 'Access',
   //   items: [
   //     { id: 0, title: 'Collaborations', to: 'collaborations' },
   //     { id: 1, title: 'Moderation options', to: 'moderation' }
@@ -27,8 +20,6 @@ export const getNavItems = (t: TFunction) => [
   {
     groupId: 2,
     title: t('views:repos.codeAutomation', 'Code and automation'),
-    type: MenuGroupTypes.GENERAL,
-
     items: [
       // { id: 0, text: 'Branches', to: 'branches' },
       // { id: 1, text: 'Tags', to: 'tags' },
@@ -57,32 +48,12 @@ export const getNavItems = (t: TFunction) => [
   // }
 ]
 
-export function SettingsSidebar({ t }: { t: TFunction }) {
-  return (
-    <SandboxLayout.LeftSubPanel>
-      <SandboxLayout.Content className="px-6">
-        <RepoSidebar items={getNavItems(t)} />
-      </SandboxLayout.Content>
-    </SandboxLayout.LeftSubPanel>
-  )
-}
-
-function SettingsContent() {
-  return <Outlet />
-}
-
-export function RepoSettingsPage({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
+export function RepoSettingsLayout({ useTranslationStore }: { useTranslationStore: () => TranslationStore }) {
   const { t } = useTranslationStore()
+
   return (
-    <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Columns columnWidths="auto 1fr">
-        <SandboxLayout.Column>
-          <SettingsSidebar t={t} />
-        </SandboxLayout.Column>
-        <SandboxLayout.Column>
-          <SettingsContent />
-        </SandboxLayout.Column>
-      </SandboxLayout.Columns>
-    </SandboxLayout.Main>
+    <ContentLayoutWithSidebar sidebarMenu={getNavItems(t)} sidebarOffsetTop={100} sidebarViewportClassName="pt-7">
+      <Outlet />
+    </ContentLayoutWithSidebar>
   )
 }

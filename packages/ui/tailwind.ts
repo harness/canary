@@ -102,6 +102,7 @@ export default {
           7: 'hsl(var(--canary-foreground-07))',
           8: 'hsl(var(--canary-foreground-08))',
           9: 'hsl(var(--canary-foreground-09))',
+          10: 'hsl(var(--canary-foreground-10))',
           danger: 'hsl(var(--canary-foreground-danger))',
           alert: 'hsl(var(--canary-foreground-alert))',
           success: 'hsl(var(--canary-foreground-success))',

@@ -25,7 +25,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
       >
         <div
           className={cn(
-            'group-hover:bg-background-4 absolute -inset-x-3 z-0 h-full w-auto rounded-[10px] bg-transparent',
+            'group-hover:bg-background-4 absolute -inset-x-3 z-0 h-full w-auto rounded-[10px] bg-transparent transition-colors',
             { 'bg-background-4': active }
           )}
         />

@@ -25,7 +25,7 @@ export interface CreateLabelDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (data: CreateLabelFormFields, identifier?: string) => void
-  useTranslationStore: () => any
+  useTranslationStore: () => TranslationStore
   isCreatingLabel: boolean
   error: string
   useLabelsStore: () => ILabelsStore

@@ -239,6 +239,12 @@
     "commits": "Commets",
     "noUsers": "Aucun utilisateur trouvé."
   },
+  "notFound": {
+    "title": "Quelque chose s'est mal passé…",
+    "descriptionWithType": "La page demandée est introuvable. Vous pouvez revenir pour voir tous les {{type}} et gérer vos paramètres.",
+    "description": "La page demandée est introuvable.",
+    "button": "Recharger la page"
+  },
   "profileSettings": {
     "name": "Nom",
     "added": "Ajouté",

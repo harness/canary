@@ -146,6 +146,7 @@
     --canary-foreground-07: var(--canary-grey-40);
     --canary-foreground-08: var(--canary-grey-90);
     --canary-foreground-09: var(--canary-grey-30);
+    --canary-foreground-10: var(--canary-grey-15);
     --canary-foreground-danger: var(--canary-red-65);
     --canary-foreground-alert: var(--canary-orange-55);
     --canary-foreground-success: var(--canary-green-65);
@@ -537,6 +538,7 @@
     --canary-foreground-07: var(--canary-grey-40);
     --canary-foreground-08: var(--canary-grey-90);
     --canary-foreground-09: var(--canary-grey-30);
+    --canary-foreground-10: var(--canary-grey-15);
     --canary-foreground-danger: var(--canary-red-65);
     --canary-foreground-alert: var(--canary-orange-55);
     --canary-foreground-success: var(--canary-green-65);

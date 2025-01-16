@@ -238,6 +238,12 @@
     "replyHere": "",
     "commits": ""
   },
+  "notFound": {
+    "title": "Algo salió mal…",
+    "descriptionWithType": "La página solicitada no se encontró. Puedes volver para ver todos los {{type}} y gestionar tus configuraciones.",
+    "description": "La página solicitada no se encontró.",
+    "button": "Recargar página"
+  },
   "profileSettings": {
     "name": "Name",
     "added": "Added",

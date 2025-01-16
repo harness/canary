@@ -10,14 +10,19 @@ import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
 import { RepoCommitsView } from '@subjects/views/repo-commits'
+import { RepoCreateRule } from '@subjects/views/repo-create-rule'
 import { RepoFilesEditView } from '@subjects/views/repo-files/repo-files-edit-view'
 import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-view'
 import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list'
 import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view'
+import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-general-settings'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { useTranslationsStore } from '@utils/viewUtils'
+
+import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
@@ -108,6 +113,27 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RepoViewWrapper>
       <RepoSettingsViewWrapper>
         <RepoWebhooksCreate />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'general-settings': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoGeneralSettings />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'create-rule': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoCreateRule />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'rule-not-found': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   )

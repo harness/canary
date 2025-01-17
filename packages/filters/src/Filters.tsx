@@ -230,6 +230,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   useImperativeHandle(ref, () => ({
     // @ts-ignore
     getValues,
+    addFilter,
     reset: resetFilters
   }))
 

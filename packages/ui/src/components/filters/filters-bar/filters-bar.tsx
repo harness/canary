@@ -6,6 +6,15 @@ import { FilterHandlers, FilterOption, SortDirection, SortOption, ViewManagement
 import Filters from './actions/filters'
 import Sorts from './actions/sorts'
 import Views from './actions/views'
+import { createFilters, FilterRefType, stringArrayParser } from '@harnessio/filters'
+import { useRef } from 'react'
+
+interface RepoListFilters {
+  name: string[]
+  type: string[]
+  stars: string[]
+  created_time: string[]
+}
 
 interface FiltersBarProps {
   filterOptions: FilterOption[]
@@ -47,6 +56,8 @@ interface FiltersBarProps {
     | 'renameView'
   >
 }
+
+const FilterV2 = createFilters<RepoListFilters>()
 
 /**
  * FiltersBar component displays active filters and sorts with the ability to manage them.
@@ -92,53 +103,70 @@ const FiltersBar = ({
     clearFilterToOpen
   } = filterHandlers
 
-  const hasActiveFilters = !!activeFilters.length || !!activeSorts.length
-
-  if (!hasActiveFilters) return null
+  const filtersRef = useRef<FilterRefType<RepoListFilters>>(null)
 
   return (
-    <div className="flex items-center gap-x-2">
-      {!!activeSorts.length && (
-        <Sorts
-          activeSorts={activeSorts}
-          handleSortChange={handleSortChange}
-          handleUpdateSort={handleUpdateSort}
-          handleRemoveSort={handleRemoveSort}
-          handleResetSorts={handleResetSorts}
-          sortOptions={sortOptions}
-          sortDirections={sortDirections}
-          searchQueries={searchQueries}
-          handleSearchChange={handleSearchChange}
-          handleReorderSorts={handleReorderSorts}
-          filterToOpen={filterToOpen}
-          onOpen={clearFilterToOpen}
-        />
-      )}
+    <div className="mt-2 flex items-center gap-x-2">
+      <FilterV2 ref={filtersRef as any} view='dropdown'>
+        {!!activeSorts.length && (
+          <Sorts
+            activeSorts={activeSorts}
+            handleSortChange={handleSortChange}
+            handleUpdateSort={handleUpdateSort}
+            handleRemoveSort={handleRemoveSort}
+            handleResetSorts={handleResetSorts}
+            sortOptions={sortOptions}
+            sortDirections={sortDirections}
+            searchQueries={searchQueries}
+            handleSearchChange={handleSearchChange}
+            handleReorderSorts={handleReorderSorts}
+            filterToOpen={filterToOpen}
+            onOpen={clearFilterToOpen}
+          />
+        )}
+  
+        {activeFilters.length > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
+        <FilterV2.Content className={"flex w-full"} >
+          {filterOptions.map((filterOption) => {
 
-      {activeFilters.length > 0 && activeSorts.length > 0 && <div className="h-7 w-px bg-borders-1" />}
+            return (
+              <FilterV2.Component key={filterOption.value} filterKey={filterOption.value as keyof RepoListFilters} parser={stringArrayParser}>
+                {({onChange, removeFilter, value}) => {
+                  const activeFilterOption = {
+                    type: filterOption.value as keyof RepoListFilters,
+                    selectedValues: value || [],
+                  }
+                  // Will be replaced by filter-box-wrapper
+                  return <Filters
+                    key={filterOption.type}
+                    filter={activeFilterOption}
+                    filterOptions={filterOptions}
+                    handleUpdateFilter={(filterType, values) => {
+                      handleUpdateFilter(filterType, values)
+                      onChange(values)
+                    }}
+                    handleRemoveFilter={(type) => {
+                      handleRemoveFilter(type)
+                      removeFilter(type as keyof RepoListFilters)
+                    }}
+                    handleSearchChange={handleSearchChange}
+                    searchQueries={searchQueries}
+                    filterToOpen={filterToOpen}
+                    onOpen={clearFilterToOpen}
+                  />
+                }}
+              </FilterV2.Component>
+              )
+          })}
 
-      {activeFilters.map(filter => (
-        <Filters
-          key={filter.type}
-          filter={filter}
-          filterOptions={filterOptions}
-          handleUpdateFilter={handleUpdateFilter}
-          handleRemoveFilter={handleRemoveFilter}
-          handleUpdateCondition={handleUpdateCondition}
-          handleSearchChange={handleSearchChange}
-          searchQueries={searchQueries}
-          filterToOpen={filterToOpen}
-          onOpen={clearFilterToOpen}
-        />
-      ))}
-
-      {hasActiveFilters && (
-        <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
+      <FilterV2.Dropdown className={"flex w-full"}>
+        {(addFilter, _availableFilters) => {
+       return <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
           <div className="flex items-center gap-x-4">
             <FilterTrigger
               type="filter"
               customLabel={
-                <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
+                <div className="text-foreground-4 hover:text-foreground-1 flex items-center gap-x-1.5 transition-colors duration-200">
                   <Icon name="plus" size={10} />
                   <span>{t('component:filter.add-filter', 'Add filter')}</span>
                 </div>
@@ -146,15 +174,21 @@ const FiltersBar = ({
               hideCount
               dropdownAlign="start"
               activeFilters={activeFilters}
-              onChange={handleFilterChange}
+              onChange={(value) => {
+                handleFilterChange(value)
+                addFilter(value.type as keyof RepoListFilters)
+              }}
               searchQueries={searchQueries}
               onSearchChange={handleSearchChange}
               options={filterOptions}
               t={t}
             />
             <button
-              className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
-              onClick={handleResetAll}
+              className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
+              onClick={() => {
+                handleResetAll()
+                filtersRef.current?.reset()
+              }}
             >
               <Icon className="rotate-45" name="plus" size={12} />
               {t('component:filter.reset', 'Reset')}
@@ -175,7 +209,10 @@ const FiltersBar = ({
             />
           )}
         </div>
-      )}
+    }}
+      </FilterV2.Dropdown>
+        </FilterV2.Content>
+      </FilterV2>
     </div>
   )
 }

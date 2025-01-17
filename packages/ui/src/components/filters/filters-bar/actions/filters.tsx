@@ -57,7 +57,6 @@ interface FiltersProps {
   filterOptions: FilterOption[]
   handleUpdateFilter: FilterHandlers['handleUpdateFilter']
   handleRemoveFilter: FilterHandlers['handleRemoveFilter']
-  handleUpdateCondition: FilterHandlers['handleUpdateCondition']
   handleSearchChange: FilterHandlers['handleSearchChange']
   searchQueries: FilterSearchQueries
   filterToOpen: FilterAction | null
@@ -68,7 +67,6 @@ const Filters = ({
   filter,
   filterOptions,
   handleUpdateFilter,
-  handleUpdateCondition,
   handleRemoveFilter,
   handleSearchChange,
   searchQueries,
@@ -93,7 +91,7 @@ const Filters = ({
         <div className="flex items-center gap-x-1.5 text-13">
           <span className="text-foreground-1">
             {filterOption.label}
-            {!!filter.selectedValues.length && ': '}
+            {!!filter.selectedValues?.length && ': '}
           </span>
           <span className="text-foreground-4">{getFilterDisplayValue(filterOption, filter)}</span>
         </div>
@@ -110,23 +108,6 @@ const Filters = ({
           <div className="flex w-full items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2">
               <span className="text-14 text-foreground-4">{filterOption.label}</span>
-
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex h-[18px] items-center gap-x-1 rounded bg-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
-                  {filterOption.conditions?.find(c => c.value === filter.condition)?.label}
-                  <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
-                  {filterOption.conditions?.map(condition => (
-                    <DropdownMenuItem
-                      onSelect={() => handleUpdateCondition?.(filter.type, condition.value)}
-                      key={condition.value}
-                    >
-                      {condition.label}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
             </div>
 
             <DropdownMenu>
@@ -153,10 +134,9 @@ const Filters = ({
         </div>
 
         <div>
-          {filter.condition !== 'is_empty' &&
-            renderFilterValues(filter, filterOption, handleUpdateFilter, searchQueries, handleSearchChange)}
+          {renderFilterValues(filter, filterOption, handleUpdateFilter, searchQueries, handleSearchChange)}
 
-          {filterOption.type === 'checkbox' && getFilteredOptions(filterOption, filter, searchQueries).length === 0 && (
+          {filterOption.type === 'checkbox' && getFilteredOptions(filterOption, filter, searchQueries)?.length === 0 && (
             <div className="flex items-center justify-center p-4">
               <span className="text-1 leading-none text-foreground-2">No results</span>
             </div>

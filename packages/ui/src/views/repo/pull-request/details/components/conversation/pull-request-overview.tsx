@@ -30,6 +30,7 @@ import PullRequestSystemComments from './pull-request-system-comments'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
 interface PullRequestOverviewProps {
+  handleUpdateDescription: (title: string, description: string) => void
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
   handleUpdateComment: (id: number, comment: string) => void
@@ -84,7 +85,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   addSuggestionToBatch,
   removeSuggestionFromBatch,
   filenameToLanguage,
-  toggleConversationStatus
+  toggleConversationStatus,
+  handleUpdateDescription
 }) => {
   const { t } = useTranslationStore()
 
@@ -192,6 +194,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
         <div>
           {activityFilter.value === PRCommentFilterType.SHOW_EVERYTHING && (
             <PullRequestDescBox
+              handleUpload={handleUpload}
+              title={pullReqMetadata?.title}
+              handleUpdateDescription={handleUpdateDescription}
               createdAt={pullReqMetadata?.created}
               isLast={!(activityBlocks?.length > 0)}
               author={pullReqMetadata?.author?.display_name}

@@ -31,7 +31,6 @@ export const UserManagementPageContainer = () => {
     useAdminListUsersStore()
   const queryClient = useQueryClient()
 
-  // const [user, setUser] = useState<UsersProps>({})
   const [isDeleteUserDialogOpen, setDeleteUserDialogOpen] = useState(false)
   const [isEditUserDialogOpen, setEditUserDialogOpen] = useState(false)
   const [isAdminDialogOpen, setAdminDialogOpen] = useState(false)
@@ -85,7 +84,7 @@ export const UserManagementPageContainer = () => {
     setQueryPage(page)
   }, [queryPage, page, setPage])
 
-  const { mutate: updateUser } = useAdminUpdateUserMutation(
+  const { mutate: updateUser, isLoading: isUpdatingUser } = useAdminUpdateUserMutation(
     {},
     {
       onSuccess: () => {
@@ -98,7 +97,7 @@ export const UserManagementPageContainer = () => {
     }
   )
 
-  const { mutate: deleteUser } = useAdminDeleteUserMutation(
+  const { mutate: deleteUser, isLoading: isDeletingUser } = useAdminDeleteUserMutation(
     {},
     {
       onSuccess: () => {
@@ -199,13 +198,13 @@ export const UserManagementPageContainer = () => {
         open={isDeleteUserDialogOpen}
         useAdminListUsersStore={useAdminListUsersStore}
         onClose={() => setDeleteUserDialogOpen(false)}
-        isDeleting={false}
+        isDeleting={isDeletingUser}
         handleDeleteUser={handleDeleteUser}
       />
       <EditUserDialog
         open={isEditUserDialogOpen}
         useAdminListUsersStore={useAdminListUsersStore}
-        isSubmitting={false}
+        isSubmitting={isUpdatingUser}
         onClose={() => setEditUserDialogOpen(false)}
         handleUpdateUser={handleUpdateUser}
       />

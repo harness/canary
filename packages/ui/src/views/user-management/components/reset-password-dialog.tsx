@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import {
   AlertDialog,
   AlertDialogContent,
@@ -14,8 +12,6 @@ import {
   Text
 } from '@/components'
 
-// import { generateAlphaNumericHash } from '@/utils/utils'
-
 import { IResetPasswordDialogProps } from '../types'
 
 export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
@@ -23,12 +19,8 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
   useAdminListUsersStore,
   onClose,
   handleUpdatePassword
-  // password,
-  // isConfirm
 }) => {
   const { user, generatePassword, setGeteneratePassword, password } = useAdminListUsersStore()
-  // const [isConfirm, setIsConfirm] = useState(false)
-  // const [password] = useState(generateAlphaNumericHash(10))
 
   const handleResetPassword = () => {
     handleUpdatePassword(user?.uid ?? '')

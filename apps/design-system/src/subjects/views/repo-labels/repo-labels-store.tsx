@@ -42,7 +42,31 @@ export const RepoLabelsListStore: RepoLabelsListStore = {
     repo_ref: 'canary',
     space_ref: 'P1org',
     spaceValues: {},
-    repoValues: {},
+    repoValues: {
+      ajshdas: [],
+      asd: [
+        {
+          id: 4,
+          label_id: 27,
+          value: 'afdvfd',
+          color: ColorsEnum.BROWN,
+          created: 1736884858877,
+          created_by: 4,
+          updated: 1736925926933,
+          updated_by: 4
+        },
+        {
+          id: 5,
+          label_id: 27,
+          value: 'xc.m,vndaf',
+          color: ColorsEnum.VIOLET,
+          created: 1736884887529,
+          created_by: 4,
+          updated: 1736925926934,
+          updated_by: 4
+        }
+      ]
+    },
     getParentScopeLabels: false,
     setSpaceLabels: (_: ILabelType[]) => {},
     setRepoLabels: (_: ILabelType[]) => {},

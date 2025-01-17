@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:pointer-events-none',
+  'inline-flex items-center justify-center whitespace-nowrap rounded text-sm font-medium transition-colors disabled:pointer-events-none disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
@@ -51,7 +51,7 @@ const buttonVariants = cva(
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',
         primary: 'border-primary-foreground/20 bg-background-5 text-foreground-6',
         disabled:
-          'border-button-border-disabled-1 bg-button-background-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1 text-button-foreground-disabled-1'
+          'border-button-border-disabled-1 bg-button-background-disabled-1 text-button-foreground-disabled-1 disabled:bg-button-background-disabled-1 disabled:text-button-foreground-disabled-1'
       },
       padding: {
         default: '',

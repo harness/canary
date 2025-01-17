@@ -19,7 +19,6 @@ import { useSpaceStore } from './stores/spaces-store'
 export const ProjectGeneralSettingsPageContainer = () => {
   const spaceURL = useGetSpaceURLParam()
   const { spaces } = useAppContext()
-  console.log('spaces', spaces)
   const { setSpace } = useSpaceStore()
   const space = spaces.find((space: TypesSpace) => space?.identifier === spaceURL)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)

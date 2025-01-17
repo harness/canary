@@ -8,6 +8,7 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
+import PullRequestChanges from '@subjects/views/pull-request-conversation/pull-request-changes'
 import PullRequestCommits from '@subjects/views/pull-request-conversation/pull-request-commits'
 import PullRequestConversation from '@subjects/views/pull-request-conversation/pull-request-conversation'
 import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
@@ -62,7 +63,12 @@ export const viewPreviews: Record<string, ReactNode> = {
   ),
   'pull-request-commits': (
     <PullRequestLayoutWrapper>
-      <PullRequestCommits />{' '}
+      <PullRequestCommits />
+    </PullRequestLayoutWrapper>
+  ),
+  'pull-request-changes': (
+    <PullRequestLayoutWrapper>
+      <PullRequestChanges />
     </PullRequestLayoutWrapper>
   ),
   'repo-files-list': (

@@ -31,7 +31,8 @@ import {
   useListRepoLabelsQuery,
   useRestorePullReqSourceBranchMutation,
   useReviewerListPullReqQuery,
-  useUnassignLabelMutation
+  useUnassignLabelMutation,
+  useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
 import { SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
@@ -209,7 +210,17 @@ export default function PullRequestConversationPage() {
     queryParams: { dry_run_rules: true }
   })
   const { mutateAsync: createBranch } = useCreateBranchMutation({})
+  const { mutateAsync: updateTitle } = useUpdatePullReqMutation({
+    repo_ref: repoRef,
+    pullreq_number: Number(pullRequestId)
+  })
 
+  const handleUpdateDescription = (title: string, description: string) => {
+    updateTitle({ body: { title, description } }).catch(err => {
+      setErrorMsg(err.message)
+    })
+    refetchPullReq()
+  }
   const onDeleteBranch = () => {
     deleteBranch({
       repo_ref: repoRef,
@@ -598,6 +609,7 @@ export default function PullRequestConversationPage() {
             <Spacer size={6} />
 
             <PullRequestOverview
+              handleUpdateDescription={handleUpdateDescription}
               handleDeleteComment={deleteComment}
               handleUpdateComment={updateComment}
               useTranslationStore={useTranslationStore}

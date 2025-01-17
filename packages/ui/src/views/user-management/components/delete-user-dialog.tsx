@@ -12,7 +12,6 @@ import {
 
 import { IDeleteDialogProps } from '../types'
 
-//Form Delete Member Dialog
 export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
   user,
   onClose,

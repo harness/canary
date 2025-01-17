@@ -9,12 +9,11 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
+  CopyButton,
   Input,
   Text
 } from '@/components'
 import { generateAlphaNumericHash } from '@/utils/utils'
-
-import { CopyButton } from '@harnessio/ui/components'
 
 import { IResetPasswordDialogProps } from '../types'
 

@@ -351,6 +351,7 @@ export default function RepoSummaryPage() {
         currentBranchDivergence={currBranchDivergence}
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
+        toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
       />
       {createdTokenData && (
         <CloneCredentialDialog

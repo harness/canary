@@ -6,7 +6,8 @@ import { IUserManagementPageProps, UsersProps } from './types'
 
 export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   useAdminListUsersStore,
-  useTranslationStore
+  useTranslationStore,
+  handleDialogOpen
 }) => {
   const { users: userData, totalPages, page: currentPage, setPage } = useAdminListUsersStore()
   const { t } = useTranslationStore()
@@ -14,7 +15,7 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   const renderUserListContent = () => {
     return (
       <>
-        <UsersList users={userData as UsersProps[]} />
+        <UsersList users={userData as UsersProps[]} handleDialogOpen={handleDialogOpen} />
       </>
     )
   }
@@ -35,7 +36,6 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
             <Button variant="default">New user</Button>
           </ListActions.Right>
         </ListActions.Root>
-        <Spacer size={5} />
         <Spacer size={5} />
         {renderUserListContent()}
         <Spacer size={8} />

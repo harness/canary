@@ -14,14 +14,15 @@ import {
 } from '@/components'
 import { getInitials } from '@/utils/utils'
 
-import { UsersProps } from '../types'
+import { DialogLabels, UsersProps } from '../types'
 
 interface PageProps {
   users: UsersProps[]
+  handleDialogOpen: (user: UsersProps, dialogLabel: string) => void
 }
 
 // fix the edit form dialog and mock data and coressponding props
-export const UsersList = ({ users }: PageProps) => {
+export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
   return (
     <Table variant="asStackedList">
       <TableHeader>
@@ -77,31 +78,25 @@ export const UsersList = ({ users }: PageProps) => {
                   </div>
                 </TableCell>
 
-                {/* @TODO: add roll binding data when available */}
-
                 <TableCell className="text-right">
                   <MoreActionsTooltip
                     actions={[
                       {
                         title: user.admin ? 'Remove Admin' : 'Set as Admin',
-                        // TODO: add onClick
-                        onClick: () => {}
+                        onClick: () => handleDialogOpen(user, DialogLabels.TOGGLE_ADMIN)
                       },
                       {
                         title: 'Reset Password',
-                        // TODO: add onClick
-                        onClick: () => {}
+                        onClick: () => handleDialogOpen(user, DialogLabels.RESET_PASSWORD)
                       },
                       {
                         title: 'Edit User',
-                        // TODO: add onClick
-                        onClick: () => {}
+                        onClick: () => handleDialogOpen(user, DialogLabels.EDIT_USER)
                       },
                       {
                         isDanger: true,
                         title: 'Delete User',
-                        // TODO: add onClick
-                        onClick: () => {}
+                        onClick: () => handleDialogOpen(user, DialogLabels.DELETE_USER)
                       }
                     ]}
                   />

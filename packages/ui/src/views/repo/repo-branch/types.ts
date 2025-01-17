@@ -49,9 +49,8 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   defaultBranch?: string
   useTranslationStore: () => TranslationStore
   searchQuery?: string | null
-  setSearchQuery: (query: string | null) => void
-  setSearchInput: (input: string) => void
   setCreateBranchDialogOpen: (isOpen: boolean) => void
+  handleResetFiltersAndPages: () => void
   onDeleteBranch: (branchName: string) => void
 }
 

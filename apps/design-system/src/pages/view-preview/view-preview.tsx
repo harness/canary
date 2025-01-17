@@ -14,6 +14,7 @@ import PullRequestChanges from '@subjects/views/pull-request-conversation/pull-r
 import PullRequestCommits from '@subjects/views/pull-request-conversation/pull-request-commits'
 import PullRequestConversation from '@subjects/views/pull-request-conversation/pull-request-conversation'
 import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
+import { RepoBranchesView } from '@subjects/views/repo-branches'
 import { RepoCommitsView } from '@subjects/views/repo-commits'
 import { RepoCreateRule } from '@subjects/views/repo-create-rule'
 import { RepoFilesEditView } from '@subjects/views/repo-files/repo-files-edit-view'
@@ -137,6 +138,11 @@ export const viewPreviews: Record<string, ReactNode> = {
       <RepoSettingsViewWrapper>
         <RepoWebhooksCreate />
       </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'repo-branches': (
+    <RepoViewWrapper>
+      <RepoBranchesView />
     </RepoViewWrapper>
   ),
   'general-settings': (

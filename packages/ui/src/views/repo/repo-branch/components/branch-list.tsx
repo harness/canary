@@ -33,9 +33,8 @@ export const BranchesList = ({
   defaultBranch,
   useTranslationStore,
   searchQuery,
-  setSearchInput,
-  setSearchQuery,
   setCreateBranchDialogOpen,
+  handleResetFiltersAndPages,
   toBranchRules,
   toPullRequestCompare,
   toCommitDetails,
@@ -56,10 +55,7 @@ export const BranchesList = ({
           ]}
           primaryButton={{
             label: t('views:noData.clearSearch', 'Clear search'),
-            onClick: () => {
-              setSearchInput('')
-              setSearchQuery(null)
-            }
+            onClick: handleResetFiltersAndPages
           }}
         />
       )
@@ -74,7 +70,7 @@ export const BranchesList = ({
           t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
         ]}
         primaryButton={{
-          label: t('views:noData.createBranch', 'Create branch'),
+          label: t('views:noData.createBranch', 'Create new branch'),
           onClick: () => {
             setCreateBranchDialogOpen(true)
           }
@@ -82,8 +78,6 @@ export const BranchesList = ({
       />
     )
   }
-
-  console.log(branches)
 
   return (
     <Table
@@ -157,23 +151,25 @@ export const BranchesList = ({
                   {/* TODO: update pending icon */}
                   {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
                   <TableCell className="content-center">
-                    {branch?.checks?.done && branch?.checks?.total && branch?.checks?.status && (
-                      <div className="flex items-center justify-center gap-1.5">
-                        <Icon
-                          className={cn('text-icons-1', {
-                            'text-icons-success': checkState === 'success',
-                            'text-icons-danger': checkState === 'failure',
-                            'text-icons-warning': checkState === 'running'
-                          })}
-                          name={
-                            cn({
-                              tick: checkState === 'success',
-                              cross: checkState === 'failure',
-                              running: checkState === 'running'
-                            }) as IconProps['name']
-                          }
-                          size={12}
-                        />
+                    {branch?.checks && (
+                      <div className="flex items-center gap-1.5">
+                        {checkState === 'running' ? (
+                          <span className="bg-icons-alert size-2 rounded-full" />
+                        ) : (
+                          <Icon
+                            className={cn('text-icons-1', {
+                              'text-icons-success': checkState === 'success',
+                              'text-icons-danger': checkState === 'failure'
+                            })}
+                            name={
+                              cn({
+                                tick: checkState === 'success',
+                                cross: checkState === 'failure'
+                              }) as IconProps['name']
+                            }
+                            size={12}
+                          />
+                        )}
                         <Text size={2} wrap="nowrap" truncate color="tertiaryBackground">
                           {branch?.checks?.done}
                           <span className="mx-px">/</span>

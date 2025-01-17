@@ -2,7 +2,10 @@ import { ChangeEvent, useCallback, useState } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
+import { Filters, FiltersBar } from '@components/filters'
 import { cn } from '@utils/cn'
+import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
+import { useFilters } from '@views/repo/hooks'
 import { debounce } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
@@ -34,6 +37,18 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
     debouncedSetSearchQuery(e.target.value)
   }, [])
 
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+  const filterHandlers = useFilters()
+
+  const handleResetFiltersAndPages = () => {
+    setPage(1)
+    setSearchInput('')
+    setSearchQuery(null)
+    filterHandlers.handleResetFilters()
+  }
+
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
@@ -55,16 +70,30 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
+                <Filters
+                  filterOptions={FILTER_OPTIONS}
+                  sortOptions={SORT_OPTIONS}
+                  filterHandlers={filterHandlers}
+                  t={t}
+                />
                 <Button
                   variant="default"
                   onClick={() => {
                     setCreateBranchDialogOpen(true)
                   }}
                 >
-                  {t('views:repos.createBranch', 'New branch')}
+                  {t('views:repos.newBranch', 'New branch')}
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
+
+            <FiltersBar
+              filterOptions={FILTER_OPTIONS}
+              sortOptions={SORT_OPTIONS}
+              sortDirections={SORT_DIRECTIONS}
+              filterHandlers={filterHandlers}
+              t={t}
+            />
 
             <Spacer size={5} />
           </>
@@ -77,9 +106,8 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
           branches={branchList}
           useTranslationStore={useTranslationStore}
           searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          setSearchInput={setSearchInput}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+          handleResetFiltersAndPages={handleResetFiltersAndPages}
         />
         {!isLoading && (
           <PaginationComponent

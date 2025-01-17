@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import {
   AlertDialog,
@@ -13,21 +13,25 @@ import {
   Input,
   Text
 } from '@/components'
-import { generateAlphaNumericHash } from '@/utils/utils'
+
+// import { generateAlphaNumericHash } from '@/utils/utils'
 
 import { IResetPasswordDialogProps } from '../types'
 
 export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
   open,
-  user,
+  useAdminListUsersStore,
   onClose,
   handleUpdatePassword
+  // password,
+  // isConfirm
 }) => {
-  const [isConfirm, setIsConfirm] = useState(false)
-  const [password] = useState(generateAlphaNumericHash(10))
+  const { user, generatePassword, setGeteneratePassword, password } = useAdminListUsersStore()
+  // const [isConfirm, setIsConfirm] = useState(false)
+  // const [password] = useState(generateAlphaNumericHash(10))
 
   const handleResetPassword = () => {
-    handleUpdatePassword(user?.uid ?? '', password)
+    handleUpdatePassword(user?.uid ?? '')
   }
 
   return (
@@ -35,16 +39,13 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
       <AlertDialogTrigger asChild></AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          {isConfirm ? (
+          {generatePassword ? (
             <AlertDialogTitle>Reset Password</AlertDialogTitle>
           ) : (
-            <AlertDialogTitle>
-              Are you sure you want to reset password for
-              {user?.display_name}?
-            </AlertDialogTitle>
+            <AlertDialogTitle>Are you sure you want to reset password for {user?.display_name}?</AlertDialogTitle>
           )}
           <AlertDialogDescription>
-            {isConfirm ? (
+            {generatePassword ? (
               <Text as="div" color="tertiaryBackground" className="mb-4">
                 Your password has been generated. Please make sure to copy and store your password somewhere safe, you
                 won&apos;t be able to see it again.
@@ -54,23 +55,28 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
                 A new password will be generated to assist {user?.display_name} in resetting their current password.
               </Text>
             )}
-            {isConfirm && (
-              <Input id="identifier" value={password} readOnly rightElement={<CopyButton name={password} />} />
+            {generatePassword && (
+              <Input
+                id="identifier"
+                value={password ?? ''}
+                readOnly
+                rightElement={<CopyButton name={password ?? ''} />}
+              />
             )}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <Button variant="outline" onClick={onClose}>
-            {isConfirm ? `Close` : `Cancel`}
+            {generatePassword ? `Close` : `Cancel`}
           </Button>
-          {!isConfirm && (
+          {!generatePassword && (
             <Button
               size="default"
               variant="secondary"
               className="self-start"
               onClick={() => {
                 handleResetPassword()
-                setIsConfirm(true)
+                setGeteneratePassword(true)
               }}
             >
               Confirm

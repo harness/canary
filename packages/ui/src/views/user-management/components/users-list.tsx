@@ -18,10 +18,9 @@ import { DialogLabels, UsersProps } from '../types'
 
 interface PageProps {
   users: UsersProps[]
-  handleDialogOpen: (user: UsersProps, dialogLabel: string) => void
+  handleDialogOpen: (user: UsersProps | null, dialogLabel: string) => void
 }
 
-// fix the edit form dialog and mock data and coressponding props
 export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
   return (
     <Table variant="asStackedList">

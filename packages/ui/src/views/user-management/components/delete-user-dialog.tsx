@@ -13,12 +13,13 @@ import {
 import { IDeleteDialogProps } from '../types'
 
 export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
-  user,
+  useAdminListUsersStore,
   onClose,
   isDeleting,
   handleDeleteUser,
   open
 }) => {
+  const { user } = useAdminListUsersStore()
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogTrigger asChild></AlertDialogTrigger>

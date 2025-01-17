@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
+  useAdminCreateUserMutation,
   useAdminDeleteUserMutation,
   useAdminListUsersQuery,
   useAdminUpdateUserMutation,
@@ -11,6 +12,7 @@ import {
 } from '@harnessio/code-service-client'
 import {
   AdminDialog,
+  CreateUserDialog,
   DeleteUserDialog,
   DialogLabels,
   EditUserDialog,
@@ -20,20 +22,25 @@ import {
 } from '@harnessio/ui/views'
 
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 import { useAdminListUsersStore } from './stores/admin-list-store'
 
 export const UserManagementPageContainer = () => {
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const { setUsers, setTotalPages, setPage, page } = useAdminListUsersStore()
+  const { setUsers, setTotalPages, setPage, page, password, setUser, setPassword, setGeteneratePassword } =
+    useAdminListUsersStore()
   const queryClient = useQueryClient()
 
-  const [user, setUser] = useState<UsersProps>({})
+  // const [user, setUser] = useState<UsersProps>({})
   const [isDeleteUserDialogOpen, setDeleteUserDialogOpen] = useState(false)
   const [isEditUserDialogOpen, setEditUserDialogOpen] = useState(false)
   const [isAdminDialogOpen, setAdminDialogOpen] = useState(false)
   const [isResetPasswordDialogOpen, setResetPasswordDialogOpen] = useState(false)
+  const [isCreateUserDialogOpen, setCreateUserDialogOpen] = useState(false)
 
-  const handleDialogOpen = (user: UsersProps, dialogTypeLabel: string) => {
+  const handleDialogOpen = (user: UsersProps | null, dialogTypeLabel: string) => {
+    if (user) setUser(user)
+
     switch (dialogTypeLabel) {
       case DialogLabels.DELETE_USER:
         setDeleteUserDialogOpen(true)
@@ -45,12 +52,18 @@ export const UserManagementPageContainer = () => {
         setAdminDialogOpen(true)
         break
       case DialogLabels.RESET_PASSWORD:
+        setGeteneratePassword(false)
+        setPassword(generateAlphaNumericHash(10))
         setResetPasswordDialogOpen(true)
+        break
+      case DialogLabels.CREATE_USER:
+        setPassword(generateAlphaNumericHash(10))
+        setCreateUserDialogOpen(true)
+        setGeteneratePassword(true)
         break
       default:
         break
     }
-    setUser(user)
   }
 
   const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
@@ -111,6 +124,35 @@ export const UserManagementPageContainer = () => {
     }
   )
 
+  const {
+    mutate: createUser,
+    isLoading: isCreatingUser,
+    error: createUserError
+  } = useAdminCreateUserMutation(
+    {},
+    {
+      onSuccess: () => {
+        setCreateUserDialogOpen(false)
+        setResetPasswordDialogOpen(true)
+        queryClient.invalidateQueries({ queryKey: ['adminListUsers'] })
+      },
+      onError: error => {
+        console.error(error)
+      }
+    }
+  )
+
+  const handleCreateUser = (data: { uid: string; email: string; display_name: string }) => {
+    createUser({
+      body: {
+        uid: data.uid,
+        email: data.email,
+        display_name: data.display_name,
+        password: password ?? ''
+      }
+    })
+  }
+
   const handleUpdateUser = (data: { email: string; displayName: string; userID: string }) => {
     updateUser({
       user_uid: data.userID,
@@ -136,7 +178,7 @@ export const UserManagementPageContainer = () => {
     })
   }
 
-  const handleUpdatePassword = (userId: string, password: string) => {
+  const handleUpdatePassword = (userId: string) => {
     updateUser({
       user_uid: userId,
       body: {
@@ -144,6 +186,7 @@ export const UserManagementPageContainer = () => {
       }
     })
   }
+
   return (
     <>
       <UserManagementPage
@@ -154,30 +197,37 @@ export const UserManagementPageContainer = () => {
 
       <DeleteUserDialog
         open={isDeleteUserDialogOpen}
-        user={user}
+        useAdminListUsersStore={useAdminListUsersStore}
         onClose={() => setDeleteUserDialogOpen(false)}
         isDeleting={false}
         handleDeleteUser={handleDeleteUser}
       />
       <EditUserDialog
         open={isEditUserDialogOpen}
-        user={user}
+        useAdminListUsersStore={useAdminListUsersStore}
         isSubmitting={false}
         onClose={() => setEditUserDialogOpen(false)}
         handleUpdateUser={handleUpdateUser}
       />
       <AdminDialog
         open={isAdminDialogOpen}
-        user={user}
+        useAdminListUsersStore={useAdminListUsersStore}
         onClose={() => setAdminDialogOpen(false)}
         isLoading={isUpdatingUserAdmin}
         updateUserAdmin={handleUpdateUserAdmin}
       />
       <ResetPasswordDialog
         open={isResetPasswordDialogOpen}
+        useAdminListUsersStore={useAdminListUsersStore}
         onClose={() => setResetPasswordDialogOpen(false)}
         handleUpdatePassword={handleUpdatePassword}
-        user={user}
+      />
+      <CreateUserDialog
+        open={isCreateUserDialogOpen}
+        onClose={() => setCreateUserDialogOpen(false)}
+        isLoading={isCreatingUser}
+        apiError={createUserError?.message?.toString() ?? ''}
+        handleCreateUser={handleCreateUser}
       />
     </>
   )

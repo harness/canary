@@ -12,7 +12,14 @@ import {
 import { IRemoveAdminDialogProps } from '../types'
 
 // Form Remove/Add Admin Dialog
-export const AdminDialog: React.FC<IRemoveAdminDialogProps> = ({ user, open, onClose, isLoading, updateUserAdmin }) => {
+export const AdminDialog: React.FC<IRemoveAdminDialogProps> = ({
+  useAdminListUsersStore,
+  open,
+  onClose,
+  isLoading,
+  updateUserAdmin
+}) => {
+  const { user } = useAdminListUsersStore()
   const isAdmin = user?.admin ?? false
 
   return (

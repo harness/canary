@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
@@ -20,12 +21,13 @@ import { z } from 'zod'
 import { IEditUserDialogProps } from '../types'
 
 export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
-  user,
+  useAdminListUsersStore,
   onClose,
   isSubmitting,
   handleUpdateUser,
   open
 }) => {
+  const { user } = useAdminListUsersStore()
   const newUserSchema = z.object({
     userID: z.string(),
     email: z.string().email({ message: 'Please provide a valid email, ex: example@yourcompany.com' }),
@@ -41,12 +43,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
     formState: { errors }
   } = useForm<MemberFields>({
     resolver: zodResolver(newUserSchema),
-    mode: 'onChange',
-    defaultValues: {
-      userID: user.uid,
-      email: user.email,
-      displayName: user.display_name
-    }
+    mode: 'onChange'
   })
 
   // Form edit submit handler
@@ -54,6 +51,14 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
     handleUpdateUser(data)
     resetNewMemberForm(data)
   }
+
+  useEffect(() => {
+    resetNewMemberForm({
+      userID: user?.uid,
+      email: user?.email,
+      displayName: user?.display_name
+    })
+  }, [user, resetNewMemberForm])
 
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
@@ -63,7 +68,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
         </AlertDialogHeader>
 
         {/* Accessibility: Add Description */}
-        <AlertDialogDescription>Update information for {user.uid} and confirm changes.</AlertDialogDescription>
+        <AlertDialogDescription>Update information for {user?.uid} and confirm changes.</AlertDialogDescription>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             {/* User ID */}
@@ -72,7 +77,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
                 id="userID"
                 {...register('userID')}
                 placeholder="Enter User ID"
-                value={user.uid}
+                value={user?.uid}
                 readOnly
                 className="cursor-not-allowed"
                 label="User ID cannot be changed once created"
@@ -85,7 +90,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
               <Input
                 id="email"
                 {...register('email')}
-                defaultValue={user.email}
+                defaultValue={user?.email}
                 label="Email"
                 error={errors.email?.message?.toString()}
               />
@@ -96,7 +101,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
               <Input
                 id="displayName"
                 {...register('displayName')}
-                defaultValue={user.display_name}
+                defaultValue={user?.display_name}
                 placeholder="Enter a display name"
                 label="Display Name"
                 error={errors.displayName?.message?.toString()}

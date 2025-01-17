@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
+import { Outlet, useLocation, useMatches, useNavigate, useParams } from 'react-router-dom'
 
 import {
   ManageNavigation,
@@ -8,7 +8,8 @@ import {
   MoreSubmenu,
   Navbar,
   NavbarItemType,
-  SettingsMenu
+  SettingsMenu,
+  Text
 } from '@harnessio/ui/components'
 import { useLocationChange } from '@harnessio/ui/hooks'
 import { SandboxLayout } from '@harnessio/ui/views'
@@ -209,7 +210,11 @@ export const AppShell = () => {
 }
 
 export const AppShellMFE = () => {
-  return <BreadcrumbsAndOutlet />
+  return (
+    <>
+      <BreadcrumbsAndOutlet />
+    </>
+  )
 }
 
 function BreadcrumbsAndOutlet() {

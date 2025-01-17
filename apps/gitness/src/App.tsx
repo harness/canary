@@ -9,11 +9,12 @@ import { TooltipProvider } from '@harnessio/ui/components'
 
 import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
+import { MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import i18n from './i18n/i18n'
-import { routes } from './routes'
+import { mfeRoutes, routes } from './routes'
 
 const BASE_URL_PREFIX = `${window.apiUrl || ''}/api/v1`
 
@@ -31,7 +32,15 @@ export default function AppV1() {
   })
 
   // Router Configuration
-  const router = createBrowserRouter(routes)
+  const standaloneRouter = createBrowserRouter(routes)
+  const mfeRouter = createBrowserRouter(mfeRoutes())
+
+  const searchParams = new URLSearchParams(window.location.search)
+  const isMfe = searchParams.get('mfe') === 'true'
+  const accountId = searchParams.get('accountId') || ''
+  const orgIdentifier = searchParams.get('orgIdentifier') || ''
+  const projectIdentifier = searchParams.get('projectIdentifier') || ''
+  const scope = { accountId, orgIdentifier, projectIdentifier }
 
   return (
     <AppProvider>
@@ -42,7 +51,13 @@ export default function AppV1() {
               <ExitConfirmProvider>
                 <NuqsAdapter>
                   <NavigationProvider routes={routes}>
-                    <RouterProvider router={router} />
+                    {isMfe ? (
+                      <MFEContext.Provider value={{ scope }}>
+                        <RouterProvider router={mfeRouter} />
+                      </MFEContext.Provider>
+                    ) : (
+                      <RouterProvider router={standaloneRouter} />
+                    )}
                   </NavigationProvider>
                 </NuqsAdapter>
               </ExitConfirmProvider>

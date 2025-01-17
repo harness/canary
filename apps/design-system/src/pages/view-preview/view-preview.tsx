@@ -8,6 +8,7 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
+import PullRequestConversationWrapper from '@subjects/views/pull-request-conversation/pull-request-conversation'
 import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
 import { RepoCommitsView } from '@subjects/views/repo-commits'
 import { RepoCreateRule } from '@subjects/views/repo-create-rule'
@@ -26,6 +27,7 @@ import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
+import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
@@ -51,6 +53,11 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RepoViewWrapper>
       <PullRequestCompareWrapper />
     </RepoViewWrapper>
+  ),
+  'pull-request-conversation': (
+    <PullRequestLayoutWrapper>
+      <PullRequestConversationWrapper />
+    </PullRequestLayoutWrapper>
   ),
   'repo-files-list': (
     <RepoViewWrapper>

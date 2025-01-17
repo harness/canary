@@ -1,6 +1,6 @@
 import { MouseEvent, ReactNode } from 'react'
 
-import { buttonVariants , Button } from '@/components/button'
+import { Button, buttonVariants } from '@/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,

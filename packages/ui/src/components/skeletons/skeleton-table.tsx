@@ -1,5 +1,7 @@
-import { Skeleton, TableBody, TableCell, TableRow } from '@/components'
+import { TableBody, TableCell, TableRow } from '@/components'
 import { cn } from '@utils/cn'
+
+import { Skeleton } from './components/skeleton'
 
 // Helper function to generate random percentage width within a range
 const getRandomPercentageWidth = (min: number, max: number) => `${Math.floor(Math.random() * (max - min + 1)) + min}%`

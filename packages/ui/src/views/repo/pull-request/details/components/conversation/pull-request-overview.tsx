@@ -230,7 +230,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                 `--- a/src/${get(payload, 'code_comment.path')}`,
                 `+++ b/dest/${get(payload, 'code_comment.path')}`,
                 `${get(payload, 'payload.title', '')} ttttt`,
-                ...get(payload, 'payload.lines', [])
+                ...(get(payload, 'payload.lines', []) as string[])
               ].join('\n')
 
               if (payload?.type === ('code-comment' as EnumPullReqActivityType)) {
@@ -378,7 +378,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     ]}
                                     content={
                                       commentItem?.deleted ? (
-                                        <div className="rounded-md border bg-primary-background p-1">
+                                        <div className="bg-primary-background rounded-md border p-1">
                                           {t('views:pullRequests.deletedComment')}
                                         </div>
                                       ) : editModes[componentId] ? (
@@ -542,7 +542,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 ]}
                                 content={
                                   commentItem?.deleted ? (
-                                    <div className="rounded-md border bg-primary-background p-1">
+                                    <div className="bg-primary-background rounded-md border p-1">
                                       {t('views:pullRequests.deletedComment')}
                                     </div>
                                   ) : editModes[componentId] ? (

@@ -267,7 +267,7 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
 
   useEffect(() => {
     setRawDiffData(useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data)
-  }, [useFullDiff])
+  }, [useFullDiff, diffViewerState, header?.data, header?.filePath])
 
   useEffect(() => {
     if (autoExpand && !isOpen) {
@@ -295,7 +295,7 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
       useFullDiff: !useFullDiff
     })
     setUseFullDiff(prev => !prev)
-  }, [diffViewerState.get(header.filePath)])
+  }, [diffViewerState, header?.filePath, onGetFullDiff, setCollapsed, useFullDiff])
 
   return (
     <StackedList.Root>
@@ -305,6 +305,8 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
             className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
                        [&>svg]:duration-100 [&>svg]:ease-in-out"
             onClick={onToggle}
+            role="button"
+            tabIndex={0}
           >
             <StackedList.Field
               title={
@@ -427,7 +429,7 @@ export function PullRequestChanges({
     )
 
     setOpenItems(expanded)
-  }, [commentId, data, comments])
+  }, [commentId, data, comments, openItems])
 
   const isOpen = useCallback(
     (fileText: string) => {

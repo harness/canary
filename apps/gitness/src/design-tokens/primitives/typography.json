@@ -1,0 +1,66 @@
+{
+  "tracking": {
+    "tighter": {
+      "$type": "letterSpacing",
+      "$value": "-0.05em",
+      "$description": "Very tight, display text"
+    },
+    "tight": {
+      "$type": "letterSpacing",
+      "$value": "-0.025em",
+      "$description": "Headings"
+    },
+    "normal": {
+      "$type": "letterSpacing",
+      "$value": "0em",
+      "$description": "Default body text"
+    },
+    "wide": {
+      "$type": "letterSpacing",
+      "$value": "0.025em",
+      "$description": "Improved readability"
+    },
+    "wider": {
+      "$type": "letterSpacing",
+      "$value": "0.05em",
+      "$description": "Spaced text"
+    },
+    "widest": {
+      "$type": "letterSpacing",
+      "$value": "0.1em",
+      "$description": "All caps text"
+    }
+  },
+  "leading": {
+    "none": {
+      "$type": "lineHeights",
+      "$value": "1",
+      "$description": "Compressed, for special cases"
+    },
+    "tight": {
+      "$type": "lineHeights",
+      "$value": "1.25",
+      "$description": "Headings, display text"
+    },
+    "snug": {
+      "$type": "lineHeights",
+      "$value": "1.375",
+      "$description": "Subheadings"
+    },
+    "normal": {
+      "$type": "lineHeights",
+      "$value": "1.5",
+      "$description": "Body text, default"
+    },
+    "relaxed": {
+      "$type": "lineHeights",
+      "$value": "1.625",
+      "$description": "Long-form reading"
+    },
+    "loose": {
+      "$type": "lineHeights",
+      "$value": "2",
+      "$description": "Widely spaced text"
+    }
+  }
+}

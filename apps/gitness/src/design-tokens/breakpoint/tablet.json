@@ -1,0 +1,58 @@
+{
+  "spacing": {
+    "base": {
+      "$type": "spacing",
+      "$value": "{step.base}"
+    },
+    "3xs": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.tablet}, 1) / 2) * 2"
+    },
+    "2xs": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.tablet}, 1.4) / 2) * 2"
+    },
+    "xs": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 2) / 2) * 2"
+    },
+    "sm": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 2.2) / 2) * 2"
+    },
+    "md": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 2.5)/ 2) * 2"
+    },
+    "lg": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 3) / 2) * 2"
+    },
+    "xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 3.6) / 2) * 2"
+    },
+    "2xl": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.tablet}, 4) / 2) * 2"
+    },
+    "3xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 4.6) / 2) * 2"
+    },
+    "4xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 5) / 2) * 2"
+    },
+    "5xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.tablet}, 5.58) / 2) * 2"
+    }
+  },
+  "breakpoint": {
+    "viewport": {
+      "$type": "number",
+      "$value": "768"
+    }
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "spacing": {
+    "base": {
+      "$type": "spacing",
+      "$value": "{step.base}"
+    },
+    "3xs": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.desktop}, 1) / 2) * 2"
+    },
+    "2xs": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.desktop}, 1.4) / 2) * 2"
+    },
+    "xs": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 2) / 2) * 2"
+    },
+    "sm": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 2.2) / 2) * 2"
+    },
+    "md": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 2.5)/ 2) * 2"
+    },
+    "lg": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 3) / 2) * 2"
+    },
+    "xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 3.6) / 2) * 2"
+    },
+    "2xl": {
+      "$type": "spacing",
+      "$value": "round({step.base}* pow({multiplier.desktop}, 4) / 2) * 2"
+    },
+    "3xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 4.6) / 2) * 2"
+    },
+    "4xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 5) / 2) * 2"
+    },
+    "5xl": {
+      "$type": "spacing",
+      "$value": "round({step.base} * pow({multiplier.desktop}, 5.58) / 2) * 2"
+    }
+  },
+  "breakpoint": {
+    "viewport": {
+      "$type": "number",
+      "$value": "1440"
+    }
+  },
+  "fontSize": {
+    "f-3": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    }
+  },
+  "typography": {
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamilies.inter}",
+        "fontWeight": "{fontWeights.inter-regular}",
+        "fontSize": "{fontSize.f-3}",
+        "lineHeight": "round({fontSize.f-3}* {leading.none}/2) * 2",
+        "letterSpacing": "{tracking.tight}"
+      }
+    }
+  }
+}

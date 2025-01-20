@@ -33,7 +33,7 @@ const PropsTable: FC<PropsTableProps> = ({ props }) => (
       {props.map(({ name, required, defaultValue, description }) => (
         <TableRow key={name}>
           <TableCell title={description}>{name}</TableCell>
-          <TableCell>{required ? "yup" : "nope"}</TableCell>
+          <TableCell>{required ? "true" : "false"}</TableCell>
           <TableCell>{defaultValue}</TableCell>
         </TableRow>
       ))}

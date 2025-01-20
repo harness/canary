@@ -1,5 +1,5 @@
 import { ListBranchesOkResponse, TypesBranchExtended, TypesCommitDivergence } from '@harnessio/code-service-client'
-import { BranchData } from '@harnessio/ui/views'
+import { BranchData, PullRequestType } from '@harnessio/ui/views'
 
 import { timeAgoFromISOTime } from '../../../pages/pipeline-edit/utils/time-utils'
 
@@ -25,7 +25,7 @@ export const transformBranchList = (
         ahead: ahead || 0,
         default: defaultBranch === branch.name || branch.is_default || false
       },
-      pullRequests: branch.pull_requests
+      pullRequests: (branch.pull_requests as PullRequestType[]) || []
     }
   })
 }

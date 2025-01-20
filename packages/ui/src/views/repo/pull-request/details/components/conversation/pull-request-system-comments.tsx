@@ -112,13 +112,13 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                 ? (payloadData?.commit_title as string) || `${author?.display_name} pushed a new commit`
                 : author?.display_name,
               description: !payloadData?.forced ? (
-                <CommitCopyActions sha={payloadData?.new as string} />
+                <CommitCopyActions inPr sha={payloadData?.new as string} />
               ) : (
                 <Layout.Horizontal gap="gap-x-1.5" className="items-center">
                   <span>forced pushed</span>
-                  <CommitCopyActions sha={payloadData?.old as string} />
+                  <CommitCopyActions inPr sha={payloadData?.old as string} />
                   <span>to</span>
-                  <CommitCopyActions sha={payloadData?.new as string} />
+                  <CommitCopyActions inPr sha={payloadData?.new as string} />
                 </Layout.Horizontal>
               )
             }

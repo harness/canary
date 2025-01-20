@@ -9,9 +9,10 @@ interface SummaryProps {
   files: RepoFile[]
   useTranslationStore: () => TranslationStore
   hideHeader?: boolean
+  commitPath?: string
 }
 
-export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = false }: SummaryProps) => {
+export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = false, commitPath }: SummaryProps) => {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
 
@@ -19,7 +20,7 @@ export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = f
     <>
       {!hideHeader && (
         <>
-          <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          <FileLastChangeBar commitPath={commitPath} useTranslationStore={useTranslationStore} {...latestFile} />
           <Spacer size={4} />
         </>
       )}
@@ -41,6 +42,7 @@ export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = f
                 <FileLastChangeBar
                   onlyTopRounded
                   withoutBorder
+                  commitPath={commitPath}
                   useTranslationStore={useTranslationStore}
                   {...latestFile}
                 />

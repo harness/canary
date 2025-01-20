@@ -62,7 +62,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               {/* TODO: get branch name from commitData */}
               <span className="text-14 font-medium leading-snug text-foreground-8">main</span>
             </div>
-            <CommitCopyActions sha={commitData?.sha || ''} />
+            <CommitCopyActions inDetails sha={commitData?.sha || ''} />
           </div>
         </div>
         {!showSidebar && <Outlet />}

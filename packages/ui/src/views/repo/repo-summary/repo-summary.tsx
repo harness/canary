@@ -80,6 +80,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
 
 export function RepoSummaryView({
   loading,
+  commitPath,
   filesList,
   navigateToFile,
   repository,
@@ -215,6 +216,7 @@ export function RepoSummaryView({
             )}
             <Spacer size={5} />
             <Summary
+              commitPath={commitPath}
               latestFile={{
                 user: { name: latestCommitInfo?.userName || '' },
                 lastCommitMessage: latestCommitInfo?.message || '',

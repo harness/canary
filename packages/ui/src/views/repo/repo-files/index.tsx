@@ -31,6 +31,7 @@ interface RepoFilesProps {
   useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
   currentBranchDivergence: CommitDivergenceType
+  commitPath?: string
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -61,7 +62,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     if (!isDir)
       return (
         <>
-          <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          <FileLastChangeBar commitPath={commitPath} useTranslationStore={useTranslationStore} {...latestFile} />
           <Spacer size={4} />
           {children}
         </>
@@ -86,7 +87,12 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             </>
           )}
           <Spacer size={4} />
-          <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+          <Summary
+            commitPath={commitPath}
+            latestFile={latestFile}
+            files={files}
+            useTranslationStore={useTranslationStore}
+          />
         </>
       )
 

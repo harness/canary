@@ -26,10 +26,10 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   )
 }
 
-const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp }) => {
+const TopDetails: FC<LatestFileTypes> = ({ sha, timestamp, commitPath }) => {
   return (
     <div className="flex items-center gap-2">
-      <CommitCopyActions sha={sha || ''} />
+      <CommitCopyActions inDetails commitPath={commitPath} sha={sha || ''} />
       <span className="h-3 border-l border-borders-2" />
       <span className="text-sm text-foreground-3">{timestamp}</span>
     </div>
@@ -40,12 +40,14 @@ export interface FileLastChangeBarProps extends LatestFileTypes {
   useTranslationStore: () => TranslationStore
   onlyTopRounded?: boolean
   withoutBorder?: boolean
+  commitPath?: string
 }
 
 export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
   useTranslationStore,
   onlyTopRounded = false,
   withoutBorder = false,
+  commitPath,
   ...props
 }) => {
   const { t } = useTranslationStore()
@@ -56,7 +58,7 @@ export const FileLastChangeBar: FC<FileLastChangeBarProps> = ({
         {props ? (
           <>
             <StackedList.Field title={<TopTitle {...props} />} />
-            <StackedList.Field right title={<TopDetails {...props} />} />
+            <StackedList.Field right title={<TopDetails commitPath={commitPath} {...props} />} />
           </>
         ) : (
           <Text>{t('views:repos.noFile', 'No files available')}</Text>

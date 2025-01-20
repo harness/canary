@@ -111,7 +111,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
     })
 
     return parentActivities.map(thread => thread.map(activityToCommentItem))
-  }, [activities, currentUser?.uid, orderSortDate])
+  }, [activities])
 
   const renderContent = () => {
     if (loadingRawDiff) {

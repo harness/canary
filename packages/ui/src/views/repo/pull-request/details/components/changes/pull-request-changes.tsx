@@ -249,7 +249,7 @@ const PullRequestAccordion: React.FC<{
 
   useEffect(() => {
     setRawDiffData(useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data)
-  }, [useFullDiff])
+  }, [useFullDiff, diffViewerState, header?.filePath, header?.data])
 
   const toggleFullDiff = useCallback(() => {
     if (!useFullDiff && !diffViewerState.get(header.filePath)?.fullRawDiff) {
@@ -268,7 +268,7 @@ const PullRequestAccordion: React.FC<{
       useFullDiff: !useFullDiff
     })
     setUseFullDiff(prev => !prev)
-  }, [diffViewerState.get(header.filePath)])
+  }, [diffViewerState, header?.filePath, onGetFullDiff, useFullDiff])
 
   const setCollapsed = (val: boolean) => {
     setOpenItems(curr => {

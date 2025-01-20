@@ -160,6 +160,12 @@ export interface PRReviewer {
   sha?: string
 }
 
+export interface PRReviewUsers {
+  display_name?: string
+  id?: number
+  uid?: string
+}
+
 export interface TypesLabelPullReqAssignmentInfo {
   color?: EnumLabelColor
   id?: number

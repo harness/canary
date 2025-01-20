@@ -199,7 +199,7 @@ const PullRequestPanel = ({
       const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(ruleViolationArr.data.rule_violations)
       setNotBypassable(checkIfBypassAllowed)
     }
-  }, [ruleViolationArr])
+  }, [ruleViolationArr, isDraft])
 
   const rebasePossible = useMemo(
     () => pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,

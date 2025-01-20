@@ -36,6 +36,7 @@ interface PullRequestCommentBoxProps {
   onCommentSubmit?: () => void
   inReplyMode?: boolean
   isEditMode?: boolean
+  hideAvatar?: boolean
   onCancelClick?: () => void
   isResolved?: boolean
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
@@ -52,6 +53,7 @@ const PullRequestCommentBox = ({
   comment,
   setComment,
   isEditMode,
+  hideAvatar,
   isResolved,
   onCommentSaveAndStatusChange,
   parentCommentId,
@@ -106,8 +108,8 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex w-full items-start space-x-4">
-      {!isEditMode && avatar}
+    <div className="flex items-start space-x-4">
+      {(!isEditMode || !hideAvatar) && avatar}
       <div
         className={cn('min-w-0 flex-1 px-4 pb-5 pt-1.5', {
           'border rounded-md': !inReplyMode || isEditMode,

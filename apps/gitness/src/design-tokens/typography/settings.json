@@ -62,5 +62,53 @@
       "$value": "2",
       "$description": "Widely spaced text"
     }
+  },
+  "font-weight": {
+    "100": {
+      "$type": "fontWeights",
+      "$value": "100"
+    },
+    "200": {
+      "$type": "fontWeights",
+      "$value": "200"
+    },
+    "300": {
+      "$type": "fontWeights",
+      "$value": "300"
+    },
+    "400": {
+      "$type": "fontWeights",
+      "$value": "400"
+    },
+    "500": {
+      "$type": "fontWeights",
+      "$value": "500"
+    },
+    "600": {
+      "$type": "fontWeights",
+      "$value": "600"
+    },
+    "700": {
+      "$type": "fontWeights",
+      "$value": "700"
+    },
+    "800": {
+      "$type": "fontWeights",
+      "$value": "800"
+    },
+    "900": {
+      "$type": "fontWeights",
+      "$value": "900"
+    }
+  },
+  "font-family": {
+    "default": {
+      "$type": "fontFamilies",
+      "$value": "Inter"
+    },
+    "mono": {
+      "$type": "fontFamilies",
+      "$value": "JetBrains Mono"
+    }
   }
 }

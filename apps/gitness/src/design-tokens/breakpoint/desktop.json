@@ -69,8 +69,8 @@
     "body-sm": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{fontFamilies.inter}",
-        "fontWeight": "{fontWeights.inter-regular}",
+        "fontFamily": "{font-family.default}",
+        "fontWeight": "{font-weight.400}",
         "fontSize": "{fontSize.f-3}",
         "lineHeight": "round({fontSize.f-3}* {leading.none}/2) * 2",
         "letterSpacing": "{tracking.tight}"

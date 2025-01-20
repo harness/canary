@@ -5,9 +5,9 @@ import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'
-import { TranslationStore } from './types'
+import { RoutingProps, TranslationStore } from './types'
 
-export interface PageProps {
+export interface PageProps extends Partial<RoutingProps> {
   repos?: RepositoryType[]
   handleResetFilters?: () => void
   hasActiveFilters?: boolean
@@ -46,7 +46,10 @@ export function RepoList({
   query,
   handleResetQuery,
   useTranslationStore,
-  isLoading
+  isLoading,
+  toRepository,
+  toCreateRepo,
+  toImportRepo
 }: PageProps) {
   const noData = !(repos && repos.length > 0)
   const { t } = useTranslationStore()
@@ -88,9 +91,9 @@ export function RepoList({
           ]}
           primaryButton={{
             label: t('views:repos.create-repository', 'Create repository'),
-            to: 'create'
+            to: toCreateRepo?.()
           }}
-          secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: 'import' }}
+          secondaryButton={{ label: t('views:repos.import-repository', 'Import repository'), to: toImportRepo?.() }}
         />
       </div>
     )
@@ -102,7 +105,7 @@ export function RepoList({
         {repos.map((repo, repo_idx) => (
           <Link
             key={repo.name}
-            to={repo.name}
+            to={toRepository?.(repo) || ''}
             className={cn({
               'pointer-events-none': repo.importing
             })}

@@ -43,7 +43,6 @@
     "pullRequests": "Pull Requests",
     "title": "Title"
   },
-  "andQuantityMore": "and {{quantity}} more",
   "navbar": {
     "settings": "",
     "profile": "Profile",

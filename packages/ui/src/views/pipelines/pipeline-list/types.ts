@@ -26,7 +26,14 @@ export interface IPipelineListStore {
   setPage: (page: number) => void
 }
 
-export interface IPipelineListPageProps {
+interface RoutingProps {
+  toPipelineDetails: (pipeline: IPipeline) => string
+}
+
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
+export interface IPipelineListPageProps extends Partial<RoutingProps> {
   usePipelineListStore: () => IPipelineListStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean
@@ -38,7 +45,10 @@ export interface IPipelineListPageProps {
   LinkComponent: TLinkComponent
 }
 
-export interface IPipelineListProps {
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
+export interface IPipelineListProps extends Partial<RoutingProps> {
   pipelines: IPipeline[] | null
   LinkComponent: TLinkComponent
   query?: string

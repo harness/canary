@@ -11,6 +11,7 @@ import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../framework/hooks/useIsMFE'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
@@ -33,6 +34,7 @@ interface FileContentViewerProps {
 export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
   const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
+  const isMFE = useIsMFE()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)
@@ -41,7 +43,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
-  const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
+  const rawURL = `${isMFE ? '/code' : ''}/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag } = useRepoBranchesStore()

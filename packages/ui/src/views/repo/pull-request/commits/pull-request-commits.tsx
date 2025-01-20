@@ -30,6 +30,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
 
       {commitsList?.length && (
         <CommitsList
+          inPr
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,
             parent_shas: item.parent_shas,

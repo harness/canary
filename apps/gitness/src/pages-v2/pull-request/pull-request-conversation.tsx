@@ -142,6 +142,7 @@ export default function PullRequestConversationPage() {
     {
       onSuccess: () => {
         refetchPRLabels()
+        refetchActivities()
       }
     }
   )
@@ -154,6 +155,7 @@ export default function PullRequestConversationPage() {
     {
       onSuccess: () => {
         refetchPRLabels()
+        refetchActivities()
       }
     }
   )

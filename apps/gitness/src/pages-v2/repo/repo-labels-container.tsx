@@ -1,26 +1,50 @@
 import { useEffect, useState } from 'react'
 
+import { parseAsInteger, useQueryState } from 'nuqs'
+
 import {
   useDefineRepoLabelMutation,
   useDeleteRepoLabelMutation,
+  useDeleteSpaceLabelMutation,
   useListRepoLabelsQuery,
-  useUpdateRepoLabelMutation
+  useUpdateRepoLabelMutation,
+  useUpdateSpaceLabelMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CreateLabelDialog, CreateLabelFormFields, ILabelType, ProjectLabelsListView } from '@harnessio/ui/views'
+import { CreateLabelDialog, CreateLabelFormFields, ILabelType, RepoLabelsListView } from '@harnessio/ui/views'
 
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { useRepoLabelsStore } from './stores/repo-labels-store'
+import { useLabelsStore } from '../project/stores/labels-store'
 
 export const RepoLabelsList = () => {
   const repo_ref = useGetRepoRef()
+  const space_ref = useGetSpaceURLParam()
   const repoId = useGetRepoId()
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
-  const { labels: storeLabels, setLabels, addLabel, setPresetEditLabel, deleteLabel } = useRepoLabelsStore()
+  const {
+    page,
+    setPage,
+    repoLabels: storeLabels,
+    setRepoLabels,
+
+    addRepoLabel,
+    addSpaceLabel,
+    setPresetEditLabel,
+    deleteRepoLabel: deleteRepoStoreLabel,
+    deleteSpaceLabel: deleteStoreSpaceLabel,
+    setRepoSpaceRef,
+    setRepoValues,
+    getParentScopeLabels
+  } = useLabelsStore()
+
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
     setOpenCreateLabelDialog(true)
@@ -30,16 +54,24 @@ export const RepoLabelsList = () => {
     setIdentifier(identifier)
   }
 
-  const { data: { body: labels } = {} } = useListRepoLabelsQuery({
+  const { data: { body: labels } = {}, isLoading: isLoadingRepoLabels } = useListRepoLabelsQuery({
     repo_ref: repo_ref ?? '',
-    queryParams: { page: 1, limit: 100 }
+    queryParams: { page, limit: 100, query: query ?? '', inherited: getParentScopeLabels }
   })
 
   useEffect(() => {
+    setRepoSpaceRef!(repoId ?? '', space_ref ?? '')
+  }, [repoId, space_ref])
+
+  useEffect(() => {
     if (labels) {
-      setLabels(labels as ILabelType[])
+      setRepoLabels(labels as ILabelType[])
     }
-  }, [labels, setLabels])
+  }, [labels, setRepoLabels])
+
+  useEffect(() => {
+    setQueryPage(page)
+  }, [page, setPage, queryPage])
 
   const {
     mutate: defineRepoLabel,
@@ -52,7 +84,7 @@ export const RepoLabelsList = () => {
     {
       onSuccess: data => {
         setOpenCreateLabelDialog(false)
-        addLabel(data.body as ILabelType)
+        addRepoLabel(data.body as ILabelType)
       }
     }
   )
@@ -64,8 +96,8 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteLabel(variables.key)
-        addLabel(data.body as ILabelType)
+        deleteRepoStoreLabel(variables.key)
+        addRepoLabel(data.body as ILabelType)
       }
     }
   )
@@ -77,21 +109,91 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteLabel(variables.key)
+        deleteRepoStoreLabel(variables.key)
       }
     }
   )
 
+  const { mutate: updateSpaceLabel } = useUpdateSpaceLabelMutation(
+    {
+      space_ref: space_ref ?? ''
+    },
+    {
+      onSuccess: (data, variables) => {
+        setOpenCreateLabelDialog(false)
+        deleteStoreSpaceLabel(variables.key)
+        addSpaceLabel(data.body as ILabelType)
+        deleteRepoStoreLabel(variables.key)
+        addRepoLabel(data.body as ILabelType)
+      }
+    }
+  )
+
+  const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
+    {
+      space_ref: space_ref ?? ''
+    },
+    {
+      onSuccess: (_data, variables) => {
+        setOpenAlertDeleteDialog(false)
+        deleteStoreSpaceLabel(variables.key)
+        deleteRepoStoreLabel(variables.key)
+      }
+    }
+  )
+
+  useEffect(() => {
+    async function fetchAllLabelValues(storeLabels: ILabelType[]) {
+      if (!repo_ref || !storeLabels) return
+
+      const valuesByKey: Record<string, any> = {}
+
+      for (const label of storeLabels) {
+        if (label.scope === 0) {
+          try {
+            const response = await fetch(`/api/v1/repos/${repo_ref}/labels/${label.key}/values`)
+            const json = await response.json()
+            valuesByKey[label.key] = json ?? []
+          } catch (error) {
+            console.error(`Error fetching values for label ${label.key}:`, error)
+          }
+        } else {
+          try {
+            const response = await fetch(`/api/v1/spaces/${space_ref}/labels/${label.key}/values`)
+            const json = await response.json()
+            valuesByKey[label.key] = json ?? []
+          } catch (error) {
+            console.error(`Error fetching values for label ${label.key}:`, error)
+          }
+        }
+      }
+      setRepoValues(valuesByKey)
+    }
+    fetchAllLabelValues(storeLabels)
+  }, [storeLabels, space_ref, setRepoValues, getParentScopeLabels])
+
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {
-      updateRepoLabel({
-        key: identifier,
-        body: {
-          key: data.name,
-          color: data.color,
-          description: data.description
-        }
-      })
+      const label = (storeLabels ?? []).find(label => label.key === identifier)
+      if (label?.scope === 0) {
+        updateRepoLabel({
+          key: identifier,
+          body: {
+            key: data.name,
+            color: data.color,
+            description: data.description
+          }
+        })
+      } else {
+        updateSpaceLabel({
+          key: identifier,
+          body: {
+            key: data.name,
+            color: data.color,
+            description: data.description
+          }
+        })
+      }
       return
     }
     defineRepoLabel({
@@ -112,21 +214,31 @@ export const RepoLabelsList = () => {
   }
 
   const handleDeleteLabel = (identifier: string) => {
-    deleteRepoLabel({
-      key: identifier
-    })
+    const label = (storeLabels ?? []).find(label => label.key === identifier)
+    if (label?.scope === 0) {
+      deleteRepoLabel({
+        key: identifier
+      })
+    } else {
+      deleteSpaceLabel({
+        key: identifier
+      })
+    }
   }
 
   return (
     <>
-      <ProjectLabelsListView
+      <RepoLabelsListView
         useTranslationStore={useTranslationStore}
-        useLabelsStore={useRepoLabelsStore}
-        createdIn={repoId}
+        useLabelsStore={useLabelsStore}
+        // createdIn={space_ref}
         openCreateLabelDialog={handleOpenCreateLabelDialog}
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
         showSpacer={false}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        isLoadingSpaceLabels={isLoadingRepoLabels}
       />
       <CreateLabelDialog
         open={openCreateLabelDialog}
@@ -135,7 +247,7 @@ export const RepoLabelsList = () => {
         useTranslationStore={useTranslationStore}
         isCreatingLabel={isCreatingLabel}
         error={error?.message ?? ''}
-        useLabelsStore={useRepoLabelsStore}
+        useLabelsStore={useLabelsStore}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}
@@ -143,7 +255,7 @@ export const RepoLabelsList = () => {
         identifier={identifier ?? ''}
         type="label"
         deleteFn={handleDeleteLabel}
-        isLoading={isDeletingRepoLabel}
+        isLoading={isDeletingRepoLabel || isDeletingSpaceLabel}
         useTranslationStore={useTranslationStore}
       />
     </>

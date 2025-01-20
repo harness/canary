@@ -60,7 +60,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="pt-7">
+      <SandboxLayout.Content>
         <Text size={5} weight={'medium'}>
           Commits
         </Text>

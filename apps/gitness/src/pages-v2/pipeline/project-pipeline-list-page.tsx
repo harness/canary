@@ -1,17 +1,22 @@
 import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListSpacePipelinesQuery } from '@harnessio/code-service-client'
-import { PipelineListPage } from '@harnessio/ui/views'
+import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { usePipelineListStore } from './stores/project-pipeline-list-store'
 
 export default function ProjectPipelineListPage() {
+  const routes = useRoutes()
+  const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const { setPipelinesData, page, setPage } = usePipelineListStore()
   const [query, setQuery] = useQueryState('query')
@@ -52,6 +57,7 @@ export default function ProjectPipelineListPage() {
       handleCreatePipeline={noop}
       useTranslationStore={useTranslationStore}
       LinkComponent={LinkComponent}
+      toPipelineDetails={(pipeline: IPipeline) => routes.toExecutions({ spaceId, pipelineId: pipeline.id })}
     />
   )
 }

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useMatch } from 'react-router-dom'
 
-import { PullRequestRoutePathParams, routes } from '../RouteDefinitions'
+import { useRoutes } from '../framework/context/NavigationContext'
+import { PullRequestRoutePathParams } from '../RouteDefinitions'
 
 export enum PullRequestTab {
   CONVERSATION = 'conversation',
@@ -20,6 +21,7 @@ const useGetPullRequestTab = ({
   repoId,
   pullRequestId
 }: PullRequestRoutePathParams): PullRequestTab | null => {
+  const routes = useRoutes()
   const [pullRequestTab, setPullRequestTab] = useState<PullRequestTab | null>(null)
 
   const urlMatchArgs: PullRequestRoutePathParams = {

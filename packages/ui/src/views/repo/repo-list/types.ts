@@ -15,7 +15,16 @@ export interface TranslationStore {
   changeLanguage: (lng: string) => void
 }
 
-export interface RepoListProps {
+export interface RoutingProps {
+  toRepository: (repo: RepositoryType) => string
+  toCreateRepo: () => string
+  toImportRepo: () => string
+}
+
+/**
+ * RoutingProps made optional for usage in apps/design-system
+ */
+export interface RepoListProps extends Partial<RoutingProps> {
   useRepoStore: () => RepoStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean

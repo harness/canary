@@ -23,7 +23,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  ...routingProps
 }) => {
   const { t } = useTranslationStore()
   const navigate = useNavigate()
@@ -103,7 +104,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
         */}
         {showTopBar ? (
           <>
-            <Spacer size={10} />
+            <Spacer size={8} />
             <div className="flex items-end">
               <Text className="leading-none" size={5} weight={'medium'}>
                 {t('views:repos.repositories')}
@@ -169,6 +170,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           }}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
+          {...routingProps}
         />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
       </SandboxLayout.Content>

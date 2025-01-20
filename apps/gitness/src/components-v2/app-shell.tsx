@@ -10,7 +10,6 @@ import {
   NavbarItemType,
   SettingsMenu
 } from '@harnessio/ui/components'
-import { useLocationChange } from '@harnessio/ui/hooks'
 import { SandboxLayout } from '@harnessio/ui/views'
 
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
@@ -19,6 +18,7 @@ import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
+import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
@@ -215,7 +215,7 @@ export const AppShellMFE = () => {
 function BreadcrumbsAndOutlet() {
   return (
     <div className="flex flex-col">
-      <div className="sticky top-0 bg-background-1 layer-high">
+      <div className="layer-high sticky top-0 bg-background-1">
         <Breadcrumbs />
       </div>
       <Outlet />

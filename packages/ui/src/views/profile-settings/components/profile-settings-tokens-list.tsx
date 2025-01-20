@@ -58,8 +58,8 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={5}>
-              <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
+            <TableCell className="!p-4" colSpan={5}>
+              <Text className="w-full text-center" as="p" size={2} align="center" color="foreground-4">
                 {t(
                   'views:profileSettings.noTokenDescription',
                   'There are no personal access tokens associated with this account.'

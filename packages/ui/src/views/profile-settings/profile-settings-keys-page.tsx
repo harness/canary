@@ -1,3 +1,5 @@
+import { FC } from 'react'
+
 import { Button, ControlGroup, Fieldset, FormSeparator, FormWrapper, Legend, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
@@ -15,7 +17,8 @@ interface SettingsAccountKeysPageProps {
   useProfileSettingsStore: () => IProfileSettingsStore
   useTranslationStore: () => TranslationStore
 }
-const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
+
+const SettingsAccountKeysPage: FC<SettingsAccountKeysPageProps> = ({
   useProfileSettingsStore,
   openTokenDialog,
   openSshKeyDialog,
@@ -29,16 +32,17 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
   // const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '')
   const { publicKeys, tokens } = useProfileSettingsStore()
   const { t } = useTranslationStore()
+
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[812px]">
       <SandboxLayout.Content>
         <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
+        <Text size={5} weight={'medium'} as="h1">
           {t('views:profileSettings.keysAndTokens', 'Keys and Tokens')}
         </Text>
-        <Spacer size={6} />
+        <Spacer size={10} />
         <FormWrapper>
-          <Fieldset>
+          <Fieldset className="gap-y-5">
             {/* PERSONAL ACCESS TOKEN */}
             <Legend
               title={
@@ -74,25 +78,24 @@ const SettingsAccountKeysPage: React.FC<SettingsAccountKeysPageProps> = ({
               </>
             </ControlGroup>
           </Fieldset>
-          <Fieldset>
-            <FormSeparator />
-          </Fieldset>
-          <Fieldset>
+
+          <FormSeparator />
+
+          <Fieldset className="gap-y-5">
             {/* PERSONAL ACCESS TOKEN */}
-            <Legend
-              title={
-                <span className="flex justify-between">
-                  {t('views:profileSettings.sshKeys', 'My SSH keys')}
-                  <Button variant="outline" className="text-primary" type="button" onClick={openSshKeyDialog}>
-                    {t('views:profileSettings.addSshKey', 'Add new SSH key')}
-                  </Button>
-                </span>
-              }
-              description={t(
-                'views:profileSettings.addSshKeyDescription',
-                'SSH keys allow you to establish a secure connection to your code repository.'
-              )}
-            />
+            <div className="flex items-end justify-between">
+              <Legend
+                className="max-w-[500px]"
+                title={t('views:profileSettings.sshKeys', 'My SSH keys')}
+                description={t(
+                  'views:profileSettings.addSshKeyDescription',
+                  'SSH keys allow you to establish a secure connection to your code repository.'
+                )}
+              />
+              <Button className="text-primary" variant="outline" type="button" onClick={openSshKeyDialog}>
+                {t('views:profileSettings.addSshKey', 'Add new SSH key')}
+              </Button>
+            </div>
 
             <ControlGroup>
               <>

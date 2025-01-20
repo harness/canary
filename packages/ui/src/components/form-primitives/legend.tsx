@@ -20,11 +20,11 @@ interface LegendProps {
 export function Legend({ title, description, className }: LegendProps) {
   return (
     <div className={className}>
-      <Text size={3} weight={'medium'} as="p" role="heading">
+      <Text size={13} weight="medium" as="h2">
         {title}
       </Text>
       {description && (
-        <Text size={2} as="p" id="fieldset-description">
+        <Text className="mt-2" size={2} as="p" id="fieldset-description" color="foreground-2">
           {description}
         </Text>
       )}

@@ -48,6 +48,7 @@ const textVariants = cva('text-base', {
       tertiary: 'text-tertiary',
       tertiaryBackground: 'text-foreground-3',
       inherit: 'text-inherit',
+      'foreground-2': 'text-foreground-2',
       'foreground-4': 'text-foreground-4',
       'foreground-5': 'text-foreground-5'
     },
@@ -102,7 +103,15 @@ interface TextProps extends React.ComponentProps<'span'> {
   /**
    * Sets the color property.
    */
-  color?: 'primary' | 'secondary' | 'tertiary' | 'tertiaryBackground' | 'foreground-5' | 'foreground-4' | 'inherit'
+  color?:
+    | 'primary'
+    | 'secondary'
+    | 'tertiary'
+    | 'tertiaryBackground'
+    | 'foreground-2'
+    | 'foreground-4'
+    | 'foreground-5'
+    | 'inherit'
 
   /**
    * Controls the wrapping behavior of the text.

@@ -61,8 +61,8 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDele
           ))
         ) : (
           <TableRow>
-            <TableCell colSpan={4}>
-              <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
+            <TableCell className="!p-4" colSpan={4}>
+              <Text className="w-full text-center" as="p" size={2} align="center" color="foreground-4">
                 {t(
                   'views:profileSettings.noDataKeysDescription',
                   'There are no SSH keys associated with this account.'

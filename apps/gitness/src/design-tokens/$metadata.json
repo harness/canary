@@ -6,7 +6,6 @@
     "theme/color-dark",
     "breakpoint/mobile",
     "breakpoint/tablet",
-    "breakpoint/laptop",
     "breakpoint/desktop",
     "breakpoint/wide",
     "components/button"

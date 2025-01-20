@@ -54,6 +54,14 @@
       "$type": "number",
       "$value": "1440"
     },
+    "viewport-min": {
+      "$type": "number",
+      "$value": "1080"
+    },
+    "viewport-max": {
+      "$type": "number",
+      "$value": "1919"
+    },
     "container": {
       "$type": "number",
       "$value": "{spacing.2xl}"

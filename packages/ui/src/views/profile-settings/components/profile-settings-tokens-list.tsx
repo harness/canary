@@ -1,16 +1,22 @@
+import { FC } from 'react'
+
 import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 import { timeAgo } from '@/utils/utils'
 import { TranslationStore } from '@/views'
 
 import { TokensList } from '../types'
 
-interface PageProps {
+interface ProfileTokensListProps {
   tokens: TokensList[]
   openAlertDeleteDialog: (params: { identifier: string; type: string }) => void
   useTranslationStore: () => TranslationStore
 }
 
-export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDeleteDialog, useTranslationStore }) => {
+export const ProfileTokensList: FC<ProfileTokensListProps> = ({
+  tokens,
+  openAlertDeleteDialog,
+  useTranslationStore
+}) => {
   const { t } = useTranslationStore()
   return (
     <Table variant="asStackedList">
@@ -44,14 +50,13 @@ export const ProfileTokensList: React.FC<PageProps> = ({ tokens, openAlertDelete
               <TableCell>{timeAgo(new Date(token.issued_at!).getTime())}</TableCell>
               <TableCell className="content-center">
                 <div
+                  className="p-1"
                   role="button"
                   tabIndex={0}
-                  className="flex cursor-pointer items-center justify-end gap-1.5"
-                  onClick={() => {
-                    openAlertDeleteDialog({ identifier: token.identifier!, type: 'token' })
-                  }}
+                  onClick={() => openAlertDeleteDialog({ identifier: token.identifier!, type: 'token' })}
                 >
-                  <Icon name="trash" size={14} className="text-tertiary-background" />
+                  <span className="sr-only">Delete personal access token</span>
+                  <Icon className="text-tertiary-background" name="trash" size={14} />
                 </div>
               </TableCell>
             </TableRow>

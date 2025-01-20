@@ -1,13 +1,13 @@
 ---
-import type { Props } from '@astrojs/starlight/props';
-import DocTemplate from './DocTemplate.astro';
-import SplashTemplate from './SplashTemplate.astro';
+import type { Props } from "@astrojs/starlight/props";
+import DocTemplate from "./DocTemplate.astro";
+import SplashTemplate from "./SplashTemplate.astro";
 
-const { template } = Astro.props.entry.data
+const { template } = Astro.props.entry.data;
 ---
 
 {
-  template === 'doc' ? (
+  template === "doc" ? (
     <DocTemplate {...Astro.props}>
       <slot />
     </DocTemplate>
@@ -15,5 +15,5 @@ const { template } = Astro.props.entry.data
     <SplashTemplate {...Astro.props}>
       <slot />
     </SplashTemplate>
-  ) 
+  )
 }

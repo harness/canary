@@ -45,7 +45,7 @@ export const BranchesList = ({
     if (searchQuery) {
       return (
         <NoData
-          className="border-borders-4 rounded-md border pb-[157px] pt-[100px]"
+          className="rounded-md border border-borders-4 pb-[157px] pt-[100px]"
           iconName="no-search-magnifying-glass"
           title={t('views:noData.noResults', 'No search results')}
           description={[
@@ -91,7 +91,7 @@ export const BranchesList = ({
           <TableHead className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="bg-borders-2 h-3 w-px" aria-hidden />
+              <div className="h-3 w-px bg-borders-2" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </TableHead>
@@ -115,12 +115,12 @@ export const BranchesList = ({
                   <TableCell className="content-center">
                     <div className="flex h-6 items-center">
                       <Button
-                        className="text-foreground-8 bg-background-8 hover:bg-background-9 hover:text-foreground-1 inline-block max-w-80 truncate px-2.5 text-sm"
+                        className="inline-block max-w-80 truncate bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
                         variant="custom"
                         size="xs"
                       >
                         {defaultBranch === branch?.name && (
-                          <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
+                          <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                         )}
                         {branch?.name}
                       </Button>
@@ -132,11 +132,11 @@ export const BranchesList = ({
                     <div className="flex items-center gap-2">
                       <Avatar className="size-[1.125rem]">
                         {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
-                        <AvatarFallback className="text-center text-[0.625rem]">
+                        <AvatarFallback className="text-center text-10">
                           {getInitials(branch?.user?.name ?? '', 2)}
                         </AvatarFallback>
                       </Avatar>
-                      <span className="text-foreground-1 truncate">{branch?.timestamp}</span>
+                      <span className="truncate text-foreground-1">{branch?.timestamp}</span>
                     </div>
                   </TableCell>
                   {/* TODO: update pending icon */}
@@ -145,7 +145,7 @@ export const BranchesList = ({
                     {branch?.checks && (
                       <div className="flex items-center gap-1.5">
                         {checkState === 'running' ? (
-                          <span className="bg-icons-alert size-2 rounded-full" />
+                          <span className="size-2 rounded-full bg-icons-alert" />
                         ) : (
                           <Icon
                             className={cn('text-icons-1', {
@@ -161,9 +161,9 @@ export const BranchesList = ({
                             size={12}
                           />
                         )}
-                        <span className="text-foreground-3 truncate">{branch?.checks?.done}</span>
+                        <span className="truncate text-foreground-3">{branch?.checks?.done}</span>
                         <span className="mx-px">/</span>
-                        <span className="text-foreground-3 truncate">{branch?.checks?.total}</span>
+                        <span className="truncate text-foreground-3">{branch?.checks?.total}</span>
                       </div>
                     )}
                   </TableCell>
@@ -172,7 +172,7 @@ export const BranchesList = ({
                     <div className="flex items-center justify-center gap-1.5 align-middle">
                       {branch?.behindAhead?.default ? (
                         <Badge
-                          className="text-foreground-3 bg-background-2 m-auto rounded-full px-2 text-center font-medium"
+                          className="m-auto rounded-full bg-background-2 px-2 text-center font-medium text-foreground-3"
                           variant="outline"
                           size="sm"
                         >
@@ -191,7 +191,7 @@ export const BranchesList = ({
                   <TableCell className="max-w-20 content-center">
                     {branch.pullRequests && branch.pullRequests.length > 0 && (
                       <Button
-                        className="text-foreground-8 bg-background-8 hover:bg-background-9 hover:text-foreground-1 flex w-fit items-center gap-1 px-2.5 text-sm"
+                        className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
                         variant="custom"
                         size="xs"
                         asChild

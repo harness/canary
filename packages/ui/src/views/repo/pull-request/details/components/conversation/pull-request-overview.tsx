@@ -378,7 +378,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     ]}
                                     content={
                                       commentItem?.deleted ? (
-                                        <div className="bg-primary-background rounded-md border p-1">
+                                        <div className="rounded-md border bg-primary-background p-1">
                                           {t('views:pullRequests.deletedComment')}
                                         </div>
                                       ) : editModes[componentId] ? (
@@ -542,7 +542,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 ]}
                                 content={
                                   commentItem?.deleted ? (
-                                    <div className="bg-primary-background rounded-md border p-1">
+                                    <div className="rounded-md border bg-primary-background p-1">
                                       {t('views:pullRequests.deletedComment')}
                                     </div>
                                   ) : editModes[componentId] ? (

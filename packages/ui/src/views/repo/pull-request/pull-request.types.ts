@@ -155,7 +155,7 @@ export interface TypesPullReqStats {
 }
 
 export interface PRReviewer {
-  reviewer: { display_name: string; id: number }
+  reviewer: { display_name?: string; id?: number }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
 }

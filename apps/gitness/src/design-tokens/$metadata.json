@@ -8,6 +8,7 @@
     "breakpoint/tablet",
     "breakpoint/laptop",
     "breakpoint/desktop",
-    "breakpoint/wide"
+    "breakpoint/wide",
+    "components/button"
   ]
 }

@@ -59,8 +59,40 @@
       "$value": "{spacing.2xl}"
     }
   },
-  "fontSize": {
+  "font-size": {
     "f-3": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f-2": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f-1": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f0": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f1": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f2": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f3": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f4": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+    },
+    "f5": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
     }
@@ -71,8 +103,8 @@
       "$value": {
         "fontFamily": "{font-family.default}",
         "fontWeight": "{default-font-weight-normal.400}",
-        "fontSize": "{fontSize.f-3}",
-        "lineHeight": "round({fontSize.f-3}* {leading.normal}/2) * 2",
+        "fontSize": "{font-size.f-3}",
+        "lineHeight": "round({font-size.f-3}* {leading.normal}/2) * 2",
         "letterSpacing": "{tracking.tight}"
       }
     }

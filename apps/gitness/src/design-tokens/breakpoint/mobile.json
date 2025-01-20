@@ -58,5 +58,43 @@
       "$type": "number",
       "$value": "{spacing.lg}"
     }
+  },
+  "font-size": {
+    "f-3": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f-2": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f-1": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f0": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f1": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f2": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f3": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f4": {
+      "$type": "fontSizes",
+      "$value": "1"
+    },
+    "f5": {
+      "$type": "fontSizes",
+      "$value": "1"
+    }
   }
 }

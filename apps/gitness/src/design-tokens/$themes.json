@@ -391,7 +391,16 @@
       "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf"
+      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
+      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
+      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
+      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
+      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
+      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
+      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
+      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
     },
     "group": "breakpoint"
   },
@@ -418,7 +427,16 @@
       "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf"
+      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
+      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
+      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
+      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
+      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
+      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
+      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
+      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
     },
     "group": "breakpoint"
   },
@@ -445,7 +463,16 @@
       "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf"
+      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
+      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
+      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
+      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
+      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
+      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
+      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
+      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
     },
     "group": "breakpoint"
   },
@@ -475,7 +502,15 @@
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
       "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
-      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d"
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
+      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
+      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
+      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
+      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
+      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
+      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
+      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
     },
     "group": "breakpoint"
   },
@@ -502,7 +537,16 @@
       "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf"
+      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
+      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
+      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
+      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
+      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
+      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
+      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
+      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
     },
     "group": "breakpoint"
   }

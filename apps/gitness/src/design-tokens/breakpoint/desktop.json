@@ -66,35 +66,35 @@
     },
     "f-2": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, -0.4))"
     },
     "f-1": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, -0.2))"
     },
     "f0": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 0))"
     },
     "f1": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 0.6))"
     },
     "f2": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 1))"
     },
     "f3": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 1.4))"
     },
     "f4": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 1.8))"
     },
     "f5": {
       "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
+      "$value": "round(16 * pow({multiplier.desktop}, 2.2))"
     }
   },
   "typography": {

@@ -62,7 +62,7 @@
   "font-size": {
     "f-3": {
       "$type": "fontSizes",
-      "$value": "1"
+      "$value": "round(16 * pow( {multiplier.wide} , -0.5))"
     },
     "f-2": {
       "$type": "fontSizes",

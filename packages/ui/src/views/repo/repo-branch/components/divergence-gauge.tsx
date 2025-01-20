@@ -1,4 +1,4 @@
-import { Progress, Text } from '@/components'
+import { Progress } from '@/components'
 import { cn } from '@/utils/cn'
 import { TranslationStore } from '@/views'
 
@@ -27,22 +27,22 @@ export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }:
 
   return (
     <div className={cn('mt-0.5 flex w-full flex-col gap-[3px]', className)}>
-      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-items-end gap-x-1.5">
-        <Text size={1} truncate color="tertiaryBackground" className="leading-none">
+      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
+        <span className="text-foreground-3 text-13 truncate text-right leading-none">
           {behindAhead.behind ?? 0}
           <span className="sr-only">
             {t('views:repos.commits', 'commits')}
             {t('views:repos.behind', 'behind')}
           </span>
-        </Text>
-        <div className="h-3 w-px bg-borders-2" aria-hidden />
-        <Text size={1} truncate color="tertiaryBackground" className="place-self-start leading-none">
+        </span>
+        <div className="bg-borders-2 h-3 w-px" aria-hidden />
+        <span className="text-foreground-3 text-13 truncate leading-none">
           {behindAhead.ahead ?? 0}
           <span className="sr-only">
             {t('views:repos.commits', 'commits')}
             {t('views:repos.ahead', 'ahead')}
           </span>
-        </Text>
+        </span>
       </div>
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
@@ -53,14 +53,14 @@ export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }:
             size="sm"
             rotated="180deg"
             indicatorRounded="right-sm"
-            indicatorColor="blackground-12"
+            indicatorColor="dark-gray"
           />
           <Progress
             variant="divergence"
             value={adjustedAheadPercentage}
             size="sm"
             indicatorRounded="right-sm"
-            indicatorColor="blackground-13"
+            indicatorColor="light-gray"
           />
         </div>
       )}

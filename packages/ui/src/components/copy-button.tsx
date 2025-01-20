@@ -1,14 +1,13 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { Button, ButtonProps, Icon } from '@/components'
-import { cva } from 'class-variance-authority'
+import { cva, type VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
-export interface CopyButtonProps {
+export interface CopyButtonProps extends VariantProps<typeof copyIconVariants> {
   name: string
   className?: string
   buttonVariant?: ButtonProps['variant']
-  color?: 'icons-1' | 'icons-3' | 'success'
   iconSize?: number
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
@@ -16,10 +15,13 @@ export interface CopyButtonProps {
 const copyIconVariants = cva('transition-colors duration-200', {
   variants: {
     color: {
-      'icons-1': 'text-icons-1 hover:text-icons-2',
-      'icons-3': 'text-icons-3 hover:text-icons-2',
+      gray: 'text-icons-1 hover:text-icons-2',
+      white: 'text-icons-3 hover:text-icons-2',
       success: 'text-icons-success'
     }
+  },
+  defaultVariants: {
+    color: 'white'
   }
 })
 
@@ -29,7 +31,7 @@ export const CopyButton: FC<CopyButtonProps> = ({
   buttonVariant = 'custom',
   iconSize = 16,
   onClick,
-  color = 'icons-3'
+  color
 }) => {
   const [copied, setCopied] = useState(false)
 

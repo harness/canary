@@ -1,6 +1,6 @@
-import { ChangeEvent, useCallback, useState } from 'react'
+import { ChangeEvent, FC, useCallback, useState } from 'react'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, PaginationComponent, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { cn } from '@utils/cn'
@@ -12,7 +12,7 @@ import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
 import { RepoBranchListViewProps } from './types'
 
-export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
+export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isLoading,
   useRepoBranchesStore,
   useTranslationStore,
@@ -30,12 +30,15 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
     setSearchQuery(searchQuery || null)
-  }, 300)
+  }, 500)
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }, [])
+  const handleInputChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      setSearchInput(e.target.value)
+      debouncedSetSearchQuery(e.target.value)
+    },
+    [debouncedSetSearchQuery]
+  )
 
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
@@ -55,9 +58,7 @@ export const RepoBranchListView: React.FC<RepoBranchListViewProps> = ({
         <Spacer size={2} />
         {(isLoading || !!branchList.length || searchQuery) && (
           <>
-            <Text size={5} weight={'medium'}>
-              {t('views:repos.branches', 'Branches')}
-            </Text>
+            <span className="text-24 font-medium">{t('views:repos.branches', 'Branches')}</span>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

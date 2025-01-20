@@ -17,8 +17,7 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-  Text
+  TableRow
 } from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -91,13 +90,9 @@ export const BranchesList = ({
           <TableHead>{t('views:repos.checkStatus', 'Check status')}</TableHead>
           <TableHead className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
-              <Text className="leading-none" size={2} truncate color="foreground-4" weight="medium">
-                {t('views:repos.behind', 'Behind')}
-              </Text>
+              <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
               <div className="bg-borders-2 h-3 w-px" aria-hidden />
-              <Text className="place-self-start leading-none" size={2} truncate color="foreground-4" weight="medium">
-                {t('views:repos.ahead', 'Ahead')}
-              </Text>
+              <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </TableHead>
           <TableHead className="w-40 whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</TableHead>
@@ -119,19 +114,17 @@ export const BranchesList = ({
                   {/* branch name */}
                   <TableCell className="content-center">
                     <div className="flex h-6 items-center">
-                      <Text wrap="nowrap" truncate>
-                        <Button
-                          className="text-foreground-8 bg-background-8 hover:bg-background-9 hover:text-foreground-1 inline-block max-w-80 truncate px-2.5 text-sm"
-                          variant="custom"
-                          size="xs"
-                        >
-                          {defaultBranch === branch?.name && (
-                            <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
-                          )}
-                          {branch?.name}
-                        </Button>
-                      </Text>
-                      <CopyButton color="icons-1" name={branch?.name} />
+                      <Button
+                        className="text-foreground-8 bg-background-8 hover:bg-background-9 hover:text-foreground-1 inline-block max-w-80 truncate px-2.5 text-sm"
+                        variant="custom"
+                        size="xs"
+                      >
+                        {defaultBranch === branch?.name && (
+                          <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
+                        )}
+                        {branch?.name}
+                      </Button>
+                      <CopyButton color="gray" name={branch?.name} />
                     </div>
                   </TableCell>
                   {/* user avatar and timestamp */}
@@ -143,9 +136,7 @@ export const BranchesList = ({
                           {getInitials(branch?.user?.name ?? '', 2)}
                         </AvatarFallback>
                       </Avatar>
-                      <Text color="primary" wrap="nowrap" truncate size={2}>
-                        {branch?.timestamp}
-                      </Text>
+                      <span className="text-foreground-1 truncate">{branch?.timestamp}</span>
                     </div>
                   </TableCell>
                   {/* TODO: update pending icon */}
@@ -170,11 +161,9 @@ export const BranchesList = ({
                             size={12}
                           />
                         )}
-                        <Text size={2} wrap="nowrap" truncate color="tertiaryBackground">
-                          {branch?.checks?.done}
-                          <span className="mx-px">/</span>
-                          {branch?.checks?.total}
-                        </Text>
+                        <span className="text-foreground-3 truncate">{branch?.checks?.done}</span>
+                        <span className="mx-px">/</span>
+                        <span className="text-foreground-3 truncate">{branch?.checks?.total}</span>
                       </div>
                     )}
                   </TableCell>

@@ -1,6 +1,6 @@
 ---
-title: Breadcrumb
-description: Breadcrumb component
+title: Alert
+description: Alert component
 ---
 
 A breadcrumbs is a list of links that help visualize the location of a page within the hierarchical structure of
@@ -10,7 +10,8 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Breadcrumb.Root className="select-none">
+  code={`
+  <Breadcrumb.Root className="select-none">
     <Breadcrumb.List>
       <Breadcrumb.Item>
         <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
@@ -24,7 +25,8 @@ import { DocsPage } from "@/components/docs-page";
       <Breadcrumb.Separator />
       <Breadcrumb.Page>Dolor</Breadcrumb.Page>
     </Breadcrumb.List>
-  </Breadcrumb.Root>`}
+  </Breadcrumb.Root>
+    `}
 />
 
 ## Usage

@@ -1,16 +1,16 @@
 ---
-title: Breadcrumb
-description: Breadcrumb component
+title: Accordion
+description: Accordion list component
 ---
 
-A breadcrumbs is a list of links that help visualize the location of a page within the hierarchical structure of
-a site, it allows navigation up to any of the ancestors.
+Description goes here
 
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Breadcrumb.Root className="select-none">
+  code={`
+  <Breadcrumb.Root className="select-none">
     <Breadcrumb.List>
       <Breadcrumb.Item>
         <Breadcrumb.Link href="#">Lorem</Breadcrumb.Link>
@@ -24,13 +24,14 @@ import { DocsPage } from "@/components/docs-page";
       <Breadcrumb.Separator />
       <Breadcrumb.Page>Dolor</Breadcrumb.Page>
     </Breadcrumb.List>
-  </Breadcrumb.Root>`}
+  </Breadcrumb.Root>
+    `}
 />
 
 ## Usage
 
 ```typescript jsx
-import { Breadcrumb } from '@harnessio/ui/components'
+import { Accordion } from '@harnessio/ui/components'
 
 //...
 

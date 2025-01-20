@@ -2,6 +2,8 @@ import { type ComponentProps, type FC, useMemo } from "react";
 import { LiveEditor, LiveError, LivePreview, LiveProvider } from "react-live";
 
 import ExampleLayout from "./example-layout";
+import { Text } from "@harnessio/ui/components";
+import { themes } from "prism-react-renderer";
 
 import css from "./example.module.css";
 
@@ -16,30 +18,61 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
   );
 
   return (
-    <div className={css.root}>
-      <LiveProvider
-        code={`<ExampleLayout>${code}</ExampleLayout>`}
-        scope={scopeWithLayout}
-        theme={theme}
-      >
-        <div className={css.preview}>
+    <div className="mt-12 mb-12 flex flex-col justify-start gap-0 pb-3">
+      <LiveProvider code={code} scope={scopeWithLayout}>
+        <h2>Preview</h2>
+        <div className="flex px-6 py-3 mb-0 border border-borders-4 rounded-lg shadow-md bg-background-4">
           <LivePreview />
-          <LiveError />
         </div>
-        <details className={css.editor}>
-          <summary tabIndex={-1}>Code Editor</summary>
-          <LiveEditor code={code} />
-        </details>
+        <h3>Live editor</h3>
+        <LiveEditor theme={themes["vsDark"]} />
       </LiveProvider>
     </div>
   );
+
+  // return (
+  //   <div className="flex flex-col gap-6 mt-6 items-start">
+  //     <LiveProvider
+  //       code={`<ExampleLayout>${code}</ExampleLayout>`}
+  //       scope={scopeWithLayout}
+  //       theme={theme}
+  //     >
+  //       <div className="flex flex-col justify-start gap-6 w-full mb-6">
+  //         <Text size={4} className="text-primary-foreground">
+  //           Preview
+  //         </Text>
+  //         <LivePreview />
+  //         <LiveEditor style={{ backgroundColor: "transparent" }} />
+  //       </div>
+  //     </LiveProvider>
+  //   </div>
+  // );
+
+  // return (
+  //   <div className={css.root}>
+  //     <LiveProvider
+  //       code={`<ExampleLayout className="mt-6">${code}</ExampleLayout>`}
+  //       scope={scopeWithLayout}
+  //       theme={theme}
+  //     >
+  //       <div className={css.preview}>
+  //         <LivePreview />
+  //         <LiveError />
+  //       </div>
+  //       <details className={css.editor}>
+  //         <summary tabIndex={-1}>Code Editor</summary>
+  //         <LiveEditor code={code} />
+  //       </details>
+  //     </LiveProvider>
+  //   </div>
+  // );
 };
 
 export default Example;
 
 const theme: LiveProviderProps["theme"] = {
   plain: {
-    backgroundColor: "#fff",
+    backgroundColor: "#000",
     color: "#1f2937", // ?
     fontWeight: "400",
     fontStyle: "normal",

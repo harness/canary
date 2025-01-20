@@ -21,7 +21,6 @@
     "@astrojs/tailwind": "^5.1.4",
     "@harnessio/ui": "workspace:*",
     "@radix-ui/react-navigation-menu": "^1.2.0",
-    "@types/react-dom": "^19.0.3",
     "astro": "^5.1.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
@@ -47,7 +46,7 @@
     "node": ">=18.17.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md,mdx}": [
+    "*.{js,jsx,ts,tsx,md,mdx,astro}": [
       "astro check",
       "prettier ./src --write"
     ]

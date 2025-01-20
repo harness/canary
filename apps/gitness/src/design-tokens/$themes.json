@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "primitives/colors": "enabled",
       "primitives/multiplier": "enabled",
-      "typography/settings": "enabled",
-      "components/button": "disabled"
+      "typography/settings": "enabled"
     },
     "$figmaStyleReferences": {},
     "$figmaVariableReferences": {
@@ -193,8 +192,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "theme/color-dark": "enabled",
-      "components/button": "disabled"
+      "theme/color-dark": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -375,8 +373,7 @@
     "name": "mobile",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "breakpoint/mobile": "enabled",
-      "components/button": "disabled"
+      "breakpoint/mobile": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:474:90577",
     "$figmaModeId": "474:5",
@@ -403,8 +400,7 @@
     "name": "tablet",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "breakpoint/tablet": "enabled",
-      "components/button": "disabled"
+      "breakpoint/tablet": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:474:90577",
     "$figmaModeId": "474:6",
@@ -431,8 +427,7 @@
     "name": "laptop",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "breakpoint/laptop": "enabled",
-      "components/button": "disabled"
+      "breakpoint/laptop": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:474:90577",
     "$figmaModeId": "474:7",
@@ -461,8 +456,7 @@
       "typography.body-sm": "S:bb256a17dbdec1f2e7d7684a62169c513387510d,"
     },
     "selectedTokenSets": {
-      "breakpoint/desktop": "enabled",
-      "components/button": "disabled"
+      "breakpoint/desktop": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:474:90577",
     "$figmaModeId": "474:8",
@@ -481,7 +475,7 @@
       "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
       "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
-      "fontSize.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d"
+      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d"
     },
     "group": "breakpoint"
   },
@@ -490,8 +484,7 @@
     "name": "wide",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "breakpoint/wide": "enabled",
-      "components/button": "disabled"
+      "breakpoint/wide": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:474:90577",
     "$figmaModeId": "474:9",

@@ -1,10 +1,8 @@
 {
   "tokenSetOrder": [
-    "typeface/inter",
-    "typeface/jetbrains-mono",
+    "typography/settings",
     "primitives/colors",
     "primitives/multiplier",
-    "primitives/typography",
     "theme/color-dark",
     "breakpoint/mobile",
     "breakpoint/tablet",

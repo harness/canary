@@ -10,6 +10,8 @@
     "pull-requests": "Requêtes de tirage",
     "branches": "Branches",
     "settings": "Paramètres",
+    "generalTab": "General",
+    "keysTab": "Keys and tokens",
     "error": "Erreur :",
     "cancel": "Annuler",
     "tags": "Étiquettes",
@@ -299,10 +301,10 @@
     "addToken": "Ajouter un nouveau jeton",
     "addTokenDescription": "Les jetons d'accès personnels vous permettent de vous authentifier avec l'API.",
     "sshKeys": "Mes clés SSH",
-    "addSshKey": "Ajouter une nouvelle clé SSH",
     "addSshKeyDescription": "Les clés SSH vous permettent d'établir une connexion sécurisée avec votre dépôt de code.",
-    "GeneralTab": "Général",
-    "KeysTab": "Clés et Jetons"
+    "addSshKey": "Ajouter une nouvelle clé SSH",
+    "generalTab": "Général",
+    "keysTab": "Clés et Jetons"
   },
   "forms": {
     "selectMemberError": "",

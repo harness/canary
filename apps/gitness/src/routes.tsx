@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
-import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
+import { EmptyPage, ProfileSettingsLayout, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
@@ -17,7 +17,6 @@ import ProjectPipelineListPage from './pages-v2/pipeline/project-pipeline-list-p
 import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-settings-general-container'
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
-import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ProjectLabelsList } from './pages-v2/project/project-labels-list-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
@@ -759,37 +758,19 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'profile-settings',
-        element: <ProfileSettingsLayout />,
-        handle: {
-          breadcrumb: () => (
-            <>
-              <Text>User</Text>
-              <Breadcrumb.Separator className="mx-2.5" />
-              <Text>Settings</Text>
-            </>
-          )
-        },
+        element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} />,
         children: [
           {
             index: true,
-            element: <SettingsProfileGeneralPage />,
-            handle: {
-              breadcrumb: () => <Text>General</Text>
-            }
+            element: <Navigate to="general" replace />
           },
           {
             path: 'general',
-            element: <SettingsProfileGeneralPage />,
-            handle: {
-              breadcrumb: () => <Text>General</Text>
-            }
+            element: <SettingsProfileGeneralPage />
           },
           {
             path: 'keys',
-            element: <SettingsProfileKeysPage />,
-            handle: {
-              breadcrumb: () => <Text>Keys</Text>
-            }
+            element: <SettingsProfileKeysPage />
           }
         ]
       }

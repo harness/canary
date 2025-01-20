@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import {
   GetUserErrorResponse,
@@ -17,7 +17,7 @@ import {
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
-export const SettingsProfileGeneralPage: React.FC = () => {
+export const SettingsProfileGeneralPage: FC = () => {
   const { setUserData } = useProfileSettingsStore()
   const [apiError, setApiError] = useState<{ type: ProfileSettingsErrorType; message: string } | null>(null)
 

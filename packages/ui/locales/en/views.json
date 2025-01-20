@@ -10,6 +10,8 @@
     "pull-requests": "Pull Requests",
     "branches": "Branches",
     "settings": "Settings",
+    "generalTab": "General",
+    "keysTab": "Keys and tokens",
     "error": "Error:",
     "cancel": "Cancel",
     "tags": "Tags",
@@ -303,10 +305,10 @@
     "addToken": "Add new token",
     "addTokenDescription": "Personal access tokens allow you to authenticate with the API.",
     "sshKeys": "My SSH keys",
-    "addSshKey": "Add new SSH key",
     "addSshKeyDescription": "SSH keys allow you to establish a secure connection to your code repository.",
-    "GeneralTab": "General",
-    "KeysTab": "Keys and Tokens"
+    "addSshKey": "Add new SSH key",
+    "generalTab": "General",
+    "keysTab": "Keys and Tokens"
   },
   "forms": {
     "selectMemberError": "Member is required",

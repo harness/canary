@@ -33,8 +33,6 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useProfileSettingsStore } from './stores/profile-settings-store'
 
 export const SettingsProfileKeysPage = () => {
-  const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
-
   const {
     createdTokenData,
     setCreatedTokenData,
@@ -51,6 +49,7 @@ export const SettingsProfileKeysPage = () => {
   const [isAlertDeleteDialogOpen, setIsAlertDeleteDialogOpen] = useState(false)
   const [alertParams, setAlertParams] = useState<AlertDeleteParams | null>(null)
   const [searchParams] = useSearchParams()
+  const CONVERT_DAYS_TO_NANO_SECONDS = 24 * 60 * 60 * 1000 * 1000000
 
   const [apiError, setApiError] = useState<{
     type: ApiErrorType
@@ -63,15 +62,18 @@ export const SettingsProfileKeysPage = () => {
     setCreateTokenDialog(true)
     setApiError(null)
   }
+
   const closeTokenDialog = () => setCreateTokenDialog(false)
 
   const openSshKeyDialog = () => {
     setSshKeyDialog(true)
     setApiError(null)
   }
+
   const closeSshKeyDialog = () => setSshKeyDialog(false)
 
   const closeAlertDeleteDialog = () => setIsAlertDeleteDialogOpen(false)
+
   const openAlertDeleteDialog = ({ identifier, type }: AlertDeleteParams) => {
     setIsAlertDeleteDialogOpen(true)
     setAlertParams({ identifier, type })
@@ -193,8 +195,7 @@ export const SettingsProfileKeysPage = () => {
     }
 
     if (tokenData.lifetime.toLowerCase() !== 'never') {
-      const convertedLifetime = parseInt(tokenData.lifetime, 10) * CONVERT_DAYS_TO_NANO_SECONDS
-      body.lifetime = convertedLifetime
+      body.lifetime = parseInt(tokenData.lifetime, 10) * CONVERT_DAYS_TO_NANO_SECONDS
     }
 
     createTokenMutation.mutate({ body })

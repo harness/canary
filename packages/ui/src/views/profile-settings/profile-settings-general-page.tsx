@@ -8,7 +8,6 @@ import {
   Button,
   ButtonGroup,
   ControlGroup,
-  Fieldset,
   FormSeparator,
   FormWrapper,
   Icon,
@@ -74,18 +73,17 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   onUpdatePassword,
   useTranslationStore
 }) => {
-  // Profile form handling
   const { t } = useTranslationStore()
   const { userData } = useProfileSettingsStore()
   const [profileSubmitted, setProfileSubmitted] = useState(false)
   const [passwordSubmitted, setPasswordSubmitted] = useState(false)
   const TRUNCATE_INITIALS_LEN = 2
 
+  // Profile form handling
   const {
     register: registerProfile,
     handleSubmit: handleProfileSubmit,
     reset: resetProfileForm,
-
     formState: { errors: profileErrors, isValid: isProfileValid, dirtyFields: profileDirtyFields }
   } = useForm<ProfileFields>({
     resolver: zodResolver(profileSchema),
@@ -100,7 +98,7 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   // Password form handling
   const {
     register: registerPassword,
-    reset: resetPasswordForm, // Add reset for password form
+    reset: resetPasswordForm,
     handleSubmit: handlePasswordSubmit,
     formState: { errors: passwordErrors, isValid: isPasswordValid }
   } = useForm<PasswordFields>({
@@ -149,7 +147,7 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
     onUpdateUser(updatedData)
   }
 
-  // Password form submit
+  // Password form submit handler
   const onPasswordSubmit: SubmitHandler<PasswordFields> = data => {
     onUpdatePassword(data)
   }
@@ -165,159 +163,156 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="max-w-[516px]">
-      <SandboxLayout.Content>
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'} as="h1" className="text-center">
-          {t('views:profileSettings.accountSettings', 'Account settings')}
-        </Text>
-        <Spacer size={10} />
-        <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
-          <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
-          <ControlGroup>
-            <Avatar size="80" className="bg-primary/[0.02] size-20 rounded-full shadow-md">
-              <AvatarImage src="/images/anon.jpg" />
-              <AvatarFallback>
-                <Text size={5} weight="medium" color="tertiaryBackground">
-                  {getInitials(userData?.name || '', TRUNCATE_INITIALS_LEN)}
-                </Text>
-              </AvatarFallback>
-            </Avatar>
-          </ControlGroup>
+    <SandboxLayout.Content className="max-w-[476px] px-0">
+      <Text size={5} weight={'medium'} as="h1">
+        {t('views:profileSettings.accountSettings', 'Account settings')}
+      </Text>
+      <Spacer size={10} />
+      <FormWrapper onSubmit={handleProfileSubmit(onProfileSubmit)}>
+        <Legend title={t('views:profileSettings.personalInfo', 'Personal information')} />
+        <ControlGroup>
+          <Avatar size="80" className="bg-primary/[0.02] size-20 rounded-full shadow-md">
+            <AvatarImage src="/images/anon.jpg" />
+            <AvatarFallback>
+              <Text size={5} weight="medium" color="tertiaryBackground">
+                {getInitials(userData?.name || '', TRUNCATE_INITIALS_LEN)}
+              </Text>
+            </AvatarFallback>
+          </Avatar>
+        </ControlGroup>
 
-          {/* NAME */}
-          <ControlGroup>
-            <Input
-              id="name"
-              size="md"
-              {...registerProfile('name')}
-              placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
-              label={t('views:profileSettings.name', 'Name')}
-            />
-            {profileErrors.name && (
-              <Message className="mt-1.5" theme={MessageTheme.ERROR}>
-                {profileErrors.name.message?.toString()}
-              </Message>
-            )}
-          </ControlGroup>
-
-          {/* USERNAME */}
-          <ControlGroup>
-            <Input
-              id="username"
-              size="md"
-              {...registerProfile('username')}
-              placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
-              disabled
-              label={t('views:profileSettings.username', 'Username')}
-            />
-            <Message className="mt-1.5" theme={MessageTheme.DEFAULT}>
-              This username will be shown across the platform.
-            </Message>
-            {profileErrors.username && (
-              <Message theme={MessageTheme.ERROR}>{profileErrors.username.message?.toString()}</Message>
-            )}
-          </ControlGroup>
-
-          {/* EMAIL */}
-          <ControlGroup>
-            <Input
-              id="email"
-              size="md"
-              {...registerProfile('email')}
-              placeholder="name@domain.com"
-              label={t('views:profileSettings.accountEmail', 'Account email')}
-            />
-            {profileErrors.email && (
-              <Message theme={MessageTheme.ERROR}>{profileErrors.email.message?.toString()}</Message>
-            )}
-          </ControlGroup>
-
-          {error && error.type === 'profile' && <Message theme={MessageTheme.ERROR}>{error.message}</Message>}
-
-          {/* UPDATE PROFILE BUTTON */}
-          <ControlGroup type="button">
-            <ButtonGroup>
-              {!profileSubmitted ? (
-                <Button
-                  type="submit"
-                  disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}
-                >
-                  {isUpdatingUser
-                    ? t('views:profileSettings.updatingProfileButton', 'Updating...')
-                    : t('views:profileSettings.updateProfileButton', 'Update profile')}
-                </Button>
-              ) : (
-                <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-                  {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                  <Icon name="tick" size={14} />
-                </Button>
-              )}
-            </ButtonGroup>
-          </ControlGroup>
-        </FormWrapper>
-
-        <FormSeparator className="my-7" />
-
-        <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
-          <Legend
-            title={t('views:profileSettings.passwordSettingsTitle', 'Password settings')}
-            description={t(
-              'views:profileSettings.passwordSettingsDesc',
-              'Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase letters.'
-            )}
+        {/* NAME */}
+        <ControlGroup>
+          <Input
+            id="name"
+            size="md"
+            {...registerProfile('name')}
+            placeholder={t('views:profileSettings.enterNamePlaceholder', 'Enter your name')}
+            label={t('views:profileSettings.name', 'Name')}
           />
-          <ControlGroup>
-            <Input
-              id="newPassword"
-              type="password"
-              size="md"
-              {...registerPassword('newPassword')}
-              placeholder={t('views:profileSettings.enterPasswordPlaceholder', 'Enter a new password')}
-              label={t('views:profileSettings.newPassword', 'New password')}
-            />
-            {passwordErrors.newPassword && (
-              <Message theme={MessageTheme.ERROR}>{passwordErrors.newPassword.message?.toString()}</Message>
+          {profileErrors.name && (
+            <Message className="mt-1.5" theme={MessageTheme.ERROR}>
+              {profileErrors.name.message?.toString()}
+            </Message>
+          )}
+        </ControlGroup>
+
+        {/* USERNAME */}
+        <ControlGroup>
+          <Input
+            id="username"
+            size="md"
+            {...registerProfile('username')}
+            placeholder={t('views:profileSettings.enterUsernamePlaceholder', 'Enter your username')}
+            disabled
+            label={t('views:profileSettings.username', 'Username')}
+          />
+          <Message className="mt-1.5" theme={MessageTheme.DEFAULT}>
+            This username will be shown across the platform.
+          </Message>
+          {profileErrors.username && (
+            <Message theme={MessageTheme.ERROR}>{profileErrors.username.message?.toString()}</Message>
+          )}
+        </ControlGroup>
+
+        {/* EMAIL */}
+        <ControlGroup>
+          <Input
+            id="email"
+            size="md"
+            {...registerProfile('email')}
+            placeholder="name@domain.com"
+            label={t('views:profileSettings.accountEmail', 'Account email')}
+          />
+          {profileErrors.email && (
+            <Message theme={MessageTheme.ERROR}>{profileErrors.email.message?.toString()}</Message>
+          )}
+        </ControlGroup>
+
+        {error && error.type === 'profile' && <Message theme={MessageTheme.ERROR}>{error.message}</Message>}
+
+        {/* UPDATE PROFILE BUTTON */}
+        <ControlGroup type="button">
+          <ButtonGroup>
+            {!profileSubmitted ? (
+              <Button
+                type="submit"
+                disabled={!isProfileValid || isUpdatingUser || !Object.keys(profileDirtyFields).length}
+              >
+                {isUpdatingUser
+                  ? t('views:profileSettings.updatingProfileButton', 'Updating...')
+                  : t('views:profileSettings.updateProfileButton', 'Update profile')}
+              </Button>
+            ) : (
+              <Button className="pointer-events-none" variant="ghost" type="button" size="sm" theme="success">
+                {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
+                <Icon name="tick" size={14} />
+              </Button>
             )}
-          </ControlGroup>
+          </ButtonGroup>
+        </ControlGroup>
+      </FormWrapper>
 
-          {/* CONFIRM PASSWORD */}
-          <ControlGroup>
-            <Input
-              id="confirmPassword"
-              type="password"
-              size="md"
-              {...registerPassword('confirmPassword')}
-              placeholder={t('views:profileSettings.confirmPasswordPlaceholder', 'Confirm your new password')}
-              label={t('views:profileSettings.confirmPassword', 'Confirm password')}
-            />
-            {passwordErrors.confirmPassword && (
-              <Message theme={MessageTheme.ERROR}>{passwordErrors.confirmPassword.message?.toString()}</Message>
+      <FormSeparator className="my-7" />
+
+      <FormWrapper onSubmit={handlePasswordSubmit(onPasswordSubmit)}>
+        <Legend
+          title={t('views:profileSettings.passwordSettingsTitle', 'Password settings')}
+          description={t(
+            'views:profileSettings.passwordSettingsDesc',
+            'Minimum of 6 characters long containing at least one number and a mixture of uppercase and lowercase letters.'
+          )}
+        />
+        <ControlGroup>
+          <Input
+            id="newPassword"
+            type="password"
+            size="md"
+            {...registerPassword('newPassword')}
+            placeholder={t('views:profileSettings.enterPasswordPlaceholder', 'Enter a new password')}
+            label={t('views:profileSettings.newPassword', 'New password')}
+          />
+          {passwordErrors.newPassword && (
+            <Message theme={MessageTheme.ERROR}>{passwordErrors.newPassword.message?.toString()}</Message>
+          )}
+        </ControlGroup>
+
+        {/* CONFIRM PASSWORD */}
+        <ControlGroup>
+          <Input
+            id="confirmPassword"
+            type="password"
+            size="md"
+            {...registerPassword('confirmPassword')}
+            placeholder={t('views:profileSettings.confirmPasswordPlaceholder', 'Confirm your new password')}
+            label={t('views:profileSettings.confirmPassword', 'Confirm password')}
+          />
+          {passwordErrors.confirmPassword && (
+            <Message theme={MessageTheme.ERROR}>{passwordErrors.confirmPassword.message?.toString()}</Message>
+          )}
+        </ControlGroup>
+
+        {error && error.type === 'password' && <Message theme={MessageTheme.ERROR}>{error.message}</Message>}
+
+        {/* UPDATE PASSWORD BUTTON */}
+        <ControlGroup type="button">
+          <ButtonGroup>
+            {!passwordSubmitted ? (
+              <Button type="submit" disabled={!isPasswordValid || isUpdatingPassword}>
+                {isUpdatingPassword
+                  ? t('views:profileSettings.updatingPasswordButton', 'Updating...')
+                  : t('views:profileSettings.updatePasswordButton', 'Update password')}
+              </Button>
+            ) : (
+              <Button className="pointer-events-none" variant="ghost" type="button" theme="success">
+                {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
+                <Icon name="tick" size={14} />
+              </Button>
             )}
-          </ControlGroup>
-
-          {error && error.type === 'password' && <Message theme={MessageTheme.ERROR}>{error.message}</Message>}
-
-          {/* UPDATE PASSWORD BUTTON */}
-          <ControlGroup type="button">
-            <ButtonGroup>
-              {!passwordSubmitted ? (
-                <Button type="submit" disabled={!isPasswordValid || isUpdatingPassword}>
-                  {isUpdatingPassword
-                    ? t('views:profileSettings.updatingPasswordButton', 'Updating...')
-                    : t('views:profileSettings.updatePasswordButton', 'Update password')}
-                </Button>
-              ) : (
-                <Button variant="ghost" type="button" theme="success" className="pointer-events-none">
-                  {t('views:profileSettings.updatedButton', 'Updated')}&nbsp;&nbsp;
-                  <Icon name="tick" size={14} />
-                </Button>
-              )}
-            </ButtonGroup>
-          </ControlGroup>
-        </FormWrapper>
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+          </ButtonGroup>
+        </ControlGroup>
+      </FormWrapper>
+    </SandboxLayout.Content>
   )
 }
 

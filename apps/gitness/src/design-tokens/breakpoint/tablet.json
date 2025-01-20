@@ -53,6 +53,10 @@
     "viewport": {
       "$type": "number",
       "$value": "768"
+    },
+    "container": {
+      "$type": "number",
+      "$value": "{spacing.xl}"
     }
   }
 }

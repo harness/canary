@@ -53,6 +53,10 @@
     "viewport": {
       "$type": "number",
       "$value": "360"
+    },
+    "container": {
+      "$type": "number",
+      "$value": "{spacing.lg}"
     }
   }
 }

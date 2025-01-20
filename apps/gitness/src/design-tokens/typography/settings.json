@@ -63,7 +63,7 @@
       "$description": "Widely spaced text"
     }
   },
-  "font-weight": {
+  "default-font-weight-normal": {
     "100": {
       "$type": "fontWeights",
       "$value": "100"
@@ -109,6 +109,136 @@
     "mono": {
       "$type": "fontFamilies",
       "$value": "JetBrains Mono"
+    }
+  },
+  "text-decoration": {
+    "none": {
+      "$type": "textDecoration",
+      "$value": "none"
+    },
+    "underline": {
+      "$type": "textDecoration",
+      "$value": "underline"
+    },
+    "line-through": {
+      "$type": "textDecoration",
+      "$value": "line-through"
+    }
+  },
+  "text-case": {
+    "none": {
+      "$type": "textCase",
+      "$value": "none"
+    },
+    "uppercase": {
+      "$type": "textCase",
+      "$value": "uppercase"
+    },
+    "lowercase": {
+      "$type": "textCase",
+      "$value": "lowercase"
+    },
+    "capitalize": {
+      "$type": "textCase",
+      "$value": "capitalize"
+    }
+  },
+  "default-font-weight-italic": {
+    "100": {
+      "$type": "fontWeights",
+      "$value": "100"
+    },
+    "200": {
+      "$type": "fontWeights",
+      "$value": "200"
+    },
+    "300": {
+      "$type": "fontWeights",
+      "$value": "300"
+    },
+    "400": {
+      "$type": "fontWeights",
+      "$value": "400"
+    },
+    "500": {
+      "$type": "fontWeights",
+      "$value": "500"
+    },
+    "600": {
+      "$type": "fontWeights",
+      "$value": "600"
+    },
+    "700": {
+      "$type": "fontWeights",
+      "$value": "700"
+    },
+    "800": {
+      "$type": "fontWeights",
+      "$value": "800"
+    },
+    "900": {
+      "$type": "fontWeights",
+      "$value": "900"
+    }
+  },
+  "mono-font-weight-normal": {
+    "100": {
+      "$type": "fontWeights",
+      "$value": "100"
+    },
+    "200": {
+      "$type": "fontWeights",
+      "$value": "200"
+    },
+    "300": {
+      "$type": "fontWeights",
+      "$value": "300"
+    },
+    "400": {
+      "$type": "fontWeights",
+      "$value": "400"
+    },
+    "500": {
+      "$type": "fontWeights",
+      "$value": "500"
+    },
+    "700": {
+      "$type": "fontWeights",
+      "$value": "700"
+    },
+    "800": {
+      "$type": "fontWeights",
+      "$value": "800"
+    }
+  },
+  "mono-font-weight-italic": {
+    "100": {
+      "$type": "fontWeights",
+      "$value": "100"
+    },
+    "200": {
+      "$type": "fontWeights",
+      "$value": "200"
+    },
+    "300": {
+      "$type": "fontWeights",
+      "$value": "300"
+    },
+    "400": {
+      "$type": "fontWeights",
+      "$value": "400"
+    },
+    "500": {
+      "$type": "fontWeights",
+      "$value": "500"
+    },
+    "700": {
+      "$type": "fontWeights",
+      "$value": "700"
+    },
+    "800": {
+      "$type": "fontWeights",
+      "$value": "800"
     }
   }
 }

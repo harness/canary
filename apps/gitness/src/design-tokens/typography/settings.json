@@ -49,7 +49,7 @@
     },
     "normal": {
       "$type": "lineHeights",
-      "$value": "1.5",
+      "$value": "1.4",
       "$description": "Body text, default"
     },
     "relaxed": {

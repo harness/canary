@@ -679,7 +679,7 @@ export default function PullRequestConversationPage() {
               addReviewerError={addReviewerError}
               removeReviewerError={removeReviewerError}
               reviewers={reviewers?.map((val: TypesPullReqReviewer) => ({
-                reviewer: { display_name: val.reviewer?.display_name, id: val.reviewer?.id },
+                reviewer: { display_name: val.reviewer?.display_name || '', id: val.reviewer?.id || 0 },
                 review_decision: val.review_decision,
                 sha: val.sha
               }))}

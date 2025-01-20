@@ -240,10 +240,7 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [useFullDiff, setUseFullDiff] = useState(false)
   const diffViewerState = useMemo(() => new Map<string, DiffViewerState>(), [])
-  const [rawDiffData, setRawDiffData] = useState(
-    useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data
-  )
-  // File viewed feature is only enabled if no commit range is provided ie defaultCommitFilter is selected (otherwise component is hidden, too)
+  const [rawDiffData, setRawDiffData] = useState(header?.data)
   const [showViewedCheckbox, setShowViewedCheckbox] = useState(
     selectedCommits?.[0].value === defaultCommitFilter?.value
   )
@@ -254,7 +251,6 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
   )
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
-
   // If commits change, check if "viewed" should be updated
   useEffect(() => {
     if (selectedCommits?.[0].value === defaultCommitFilter?.value) {
@@ -265,10 +261,19 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
     }
   }, [selectedCommits, defaultCommitFilter, header.filePath, header.checksumAfter, header.fileViews])
 
+  // Update rawDiffData if full vs partial changes
   useEffect(() => {
-    setRawDiffData(useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data)
-  }, [useFullDiff, diffViewerState, header?.data, header?.filePath])
+    if (!useFullDiff) {
+      setRawDiffData(header?.data)
+    } else {
+      const fullRaw = diffViewerState.get(header.filePath)?.fullRawDiff
+      if (fullRaw) {
+        setRawDiffData(fullRaw)
+      }
+    }
+  }, [useFullDiff, diffViewerState, header?.data, header.filePath])
 
+  // Auto-expand if needed
   useEffect(() => {
     if (autoExpand && !isOpen) {
       onToggle()
@@ -277,6 +282,7 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
 
   const toggleFullDiff = useCallback(() => {
     if (!useFullDiff) {
+      // fetch the full diff if not already
       if (!diffViewerState.get(header.filePath)?.fullRawDiff) {
         onGetFullDiff(header.filePath).then(rawDiff => {
           if (rawDiff && typeof rawDiff === 'string') {
@@ -295,18 +301,20 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
       useFullDiff: !useFullDiff
     })
     setUseFullDiff(prev => !prev)
-  }, [diffViewerState, header?.filePath, onGetFullDiff, setCollapsed, useFullDiff])
+  }, [useFullDiff, onGetFullDiff, diffViewerState, header.filePath, setCollapsed])
 
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <div className="w-full border-b last:border-b-0">
-          <div
+        <details className="w-full border-b last:border-b-0" open={isOpen}>
+          <summary
             className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
-                       [&>svg]:duration-100 [&>svg]:ease-in-out"
-            onClick={onToggle}
-            role="button"
-            tabIndex={0}
+                       appearance-none list-none outline-none [&::-webkit-details-marker]:hidden
+                       [&>svg]:duration-100 [&>svg]:ease-in-out cursor-pointer"
+            onClick={e => {
+              e.preventDefault()
+              onToggle()
+            }}
           >
             <StackedList.Field
               title={
@@ -325,9 +333,9 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
                 />
               }
             />
-          </div>
+          </summary>
           {isOpen && (
-            <div className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+            <div className="overflow-hidden text-sm">
               <div className="flex w-full border-t">
                 <div className="bg-transparent">
                   {startingLine && (
@@ -367,7 +375,7 @@ const PullRequestAccordion: React.FC<PullRequestAccordionProps> = ({
               </div>
             </div>
           )}
-        </div>
+        </details>
       </StackedList.Item>
     </StackedList.Root>
   )

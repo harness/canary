@@ -448,7 +448,24 @@
     "id": "859ec40c364b0922f609dfa64a502a7a90feb206",
     "name": "desktop",
     "$figmaStyleReferences": {
-      "typography.body-sm": "S:bb256a17dbdec1f2e7d7684a62169c513387510d,"
+      "typography.interface.display.base": "S:bb256a17dbdec1f2e7d7684a62169c513387510d,",
+      "typography.interface.display.strong": "S:9533c858c9d1654919a626ee5e01b82aa7b9116f,",
+      "typography.interface.title.base": "S:4e9364b1e78fd4fad0158e3c51db48342dcdc284,",
+      "typography.interface.title.strong": "S:424a09ddaed50ce2d3773e72acba431ae01904e6,",
+      "typography.interface.body.subtle": "S:ca7f305c207d44110b5d205671b2a3f08e2717ad,",
+      "typography.interface.body.base": "S:7b8ea2853286c57e652bdcc1117667dd188cec64,",
+      "typography.interface.body.emphasized": "S:a0e926ac67e86ba7426b1cac95cff65456c509f0,",
+      "typography.interface.body.strong": "S:a6ac7eb3165b4cc662cf91d50447eb7bf3629c53,",
+      "typography.interface.caption.subtle": "S:4001db9ef1d2a8de3ddfc597f59393fd429e330a,",
+      "typography.interface.caption.base": "S:e14660a6016b116a52d79dcea725415c96530e4d,",
+      "typography.interface.code.subtle": "S:ad0b1455c84d6a46a510759a1a486b734955485f,",
+      "typography.interface.code.base": "S:918522d679beb596b24e975608cfcc3895836a7c,",
+      "typography.article.title.h1": "S:5a4810277be4e770987e9fc17c8d6922368b0514,",
+      "typography.article.title.h2": "S:cef3ddf8f9fe299e8df62c62bc5bbb10bd1d1f04,",
+      "typography.article.title.h3": "S:608197739eb9b74d55c007a662570d199702b4d5,",
+      "typography.article.content.lead": "S:ee7c605c726957a678a2e66aab1a62e906f270e3,",
+      "typography.article.content.emphasized": "S:3b906fb5db9a237e75dc16e991169e2a4786b46c,",
+      "typography.article.content.paragraph": "S:863ed911254cf895fb4dbca49918ae95069ed94a,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled"

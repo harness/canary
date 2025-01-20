@@ -1,11 +1,8 @@
 import { type ComponentProps, type FC, useMemo } from "react";
-import { LiveEditor, LiveError, LivePreview, LiveProvider } from "react-live";
+import { LiveEditor, LivePreview, LiveProvider } from "react-live";
 
 import ExampleLayout from "./example-layout";
-import { Text } from "@harnessio/ui/components";
 import { themes } from "prism-react-renderer";
-
-import css from "./example.module.css";
 
 type LiveProviderProps = ComponentProps<typeof LiveProvider>;
 
@@ -18,10 +15,10 @@ const Example: FC<ExampleProps> = ({ code, scope }) => {
   );
 
   return (
-    <div className="mt-12 mb-12 flex flex-col justify-start gap-0 pb-3">
+    <div className="my-12 flex flex-col justify-start gap-0 pb-3">
       <LiveProvider code={code} scope={scopeWithLayout}>
         <h2>Preview</h2>
-        <div className="flex px-6 py-3 mb-0 border border-borders-4 rounded-lg shadow-md bg-background-4">
+        <div className="border-borders-4 bg-background-4 dark-std-std mb-0 flex rounded-lg border px-6 py-3 shadow-md">
           <LivePreview />
         </div>
         <h3>Live editor</h3>

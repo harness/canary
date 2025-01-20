@@ -37,8 +37,8 @@ export default defineConfig({
       ],
       customCss: [
         "./src/tailwind.css",
-        "@harnessio/ui/styles.css",
         "./src/styles.css",
+        "@harnessio/ui/styles.css",
       ],
       components: {
         PageFrame: "./src/components/layout/PageFrame.astro",

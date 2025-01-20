@@ -66,39 +66,39 @@
   "default-font-weight-normal": {
     "100": {
       "$type": "fontWeights",
-      "$value": "100"
+      "$value": "Thin"
     },
     "200": {
       "$type": "fontWeights",
-      "$value": "200"
+      "$value": "Extra Light"
     },
     "300": {
       "$type": "fontWeights",
-      "$value": "300"
+      "$value": "Light"
     },
     "400": {
       "$type": "fontWeights",
-      "$value": "400"
+      "$value": "Regular"
     },
     "500": {
       "$type": "fontWeights",
-      "$value": "500"
+      "$value": "Medium"
     },
     "600": {
       "$type": "fontWeights",
-      "$value": "600"
+      "$value": "Semi Bold"
     },
     "700": {
       "$type": "fontWeights",
-      "$value": "700"
+      "$value": "Bold"
     },
     "800": {
       "$type": "fontWeights",
-      "$value": "800"
+      "$value": "Extra Bold"
     },
     "900": {
       "$type": "fontWeights",
-      "$value": "900"
+      "$value": "Black"
     }
   },
   "font-family": {
@@ -146,99 +146,99 @@
   "default-font-weight-italic": {
     "100": {
       "$type": "fontWeights",
-      "$value": "100"
+      "$value": "Thin Italic"
     },
     "200": {
       "$type": "fontWeights",
-      "$value": "200"
+      "$value": "Extra Light Italic"
     },
     "300": {
       "$type": "fontWeights",
-      "$value": "300"
+      "$value": "Light Italic"
     },
     "400": {
       "$type": "fontWeights",
-      "$value": "400"
+      "$value": "Italic"
     },
     "500": {
       "$type": "fontWeights",
-      "$value": "500"
+      "$value": "Medium Italic"
     },
     "600": {
       "$type": "fontWeights",
-      "$value": "600"
+      "$value": "Semi Bold Italic"
     },
     "700": {
       "$type": "fontWeights",
-      "$value": "700"
+      "$value": "Bold Italic"
     },
     "800": {
       "$type": "fontWeights",
-      "$value": "800"
+      "$value": "Extra Bold Italic"
     },
     "900": {
       "$type": "fontWeights",
-      "$value": "900"
+      "$value": "Black Italic"
     }
   },
   "mono-font-weight-normal": {
     "100": {
       "$type": "fontWeights",
-      "$value": "100"
+      "$value": "Thin"
     },
     "200": {
       "$type": "fontWeights",
-      "$value": "200"
+      "$value": "ExtraLight"
     },
     "300": {
       "$type": "fontWeights",
-      "$value": "300"
+      "$value": "Light"
     },
     "400": {
       "$type": "fontWeights",
-      "$value": "400"
+      "$value": "Regular"
     },
     "500": {
       "$type": "fontWeights",
-      "$value": "500"
+      "$value": "Medium"
     },
     "700": {
       "$type": "fontWeights",
-      "$value": "700"
+      "$value": "Bold"
     },
     "800": {
       "$type": "fontWeights",
-      "$value": "800"
+      "$value": "ExtraBold"
     }
   },
   "mono-font-weight-italic": {
     "100": {
       "$type": "fontWeights",
-      "$value": "100"
+      "$value": "Thin Italic"
     },
     "200": {
       "$type": "fontWeights",
-      "$value": "200"
+      "$value": "ExtraLight Italic"
     },
     "300": {
       "$type": "fontWeights",
-      "$value": "300"
+      "$value": "Light Italic"
     },
     "400": {
       "$type": "fontWeights",
-      "$value": "400"
+      "$value": "Italic"
     },
     "500": {
       "$type": "fontWeights",
-      "$value": "500"
+      "$value": "Medium Italic"
     },
     "700": {
       "$type": "fontWeights",
-      "$value": "700"
+      "$value": "Bold Italic"
     },
     "800": {
       "$type": "fontWeights",
-      "$value": "800"
+      "$value": "ExtraBold Italic"
     }
   }
 }

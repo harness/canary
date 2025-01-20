@@ -72,7 +72,7 @@
         "fontFamily": "{font-family.default}",
         "fontWeight": "{default-font-weight-normal.400}",
         "fontSize": "{fontSize.f-3}",
-        "lineHeight": "round({fontSize.f-3}* {leading.none}/2) * 2",
+        "lineHeight": "round({fontSize.f-3}* {leading.normal}/2) * 2",
         "letterSpacing": "{tracking.tight}"
       }
     }

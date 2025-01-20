@@ -73,7 +73,7 @@ ul.top-level summary .group-label span {
 }
 
 ul.top-level summary svg {
-  @apply font-normal text-foreground-4 text-lg;
+  @apply font-normal text-foreground-5 text-lg;
 }
 
 /* Right-hand page sidebar overrides */

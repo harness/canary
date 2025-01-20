@@ -30,6 +30,10 @@ export default defineConfig({
           label: "Components",
           autogenerate: { directory: "components" },
         },
+        {
+          label: "Coming soon",
+          autogenerate: { directory: "soon" },
+        },
       ],
       customCss: [
         "./src/tailwind.css",
@@ -46,6 +50,6 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/components/accordion", // Redirect root to /components/accordion
+    "/": "/components/breadcrumb", //
   },
 });

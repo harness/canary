@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom'
 
-import { AccordionContent, AccordionItem, AccordionTrigger, Badge, Icon, StackedList, Text } from '@components/index'
+import { Accordion, Badge, Icon, StackedList, Text } from '@/components'
+import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '@/views'
 import { cn } from '@utils/cn'
 import { timeDistance } from '@utils/utils'
 import { isEmpty } from 'lodash-es'
 
-import { EnumCheckStatus, ExecutionState, TypesPullReqCheck } from '../../../pull-request-details-types'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 interface ExecutionPayloadType {
@@ -37,8 +37,8 @@ const PullRequestCheckSection = ({ checkData, checksInfo, spaceId, repoId }: Pul
 
   return (
     !isEmpty(checkData) && (
-      <AccordionItem value="item-3">
-        <AccordionTrigger className="text-left">
+      <Accordion.Item value="item-3">
+        <Accordion.Trigger className="text-left">
           <StackedList.Field
             title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
             description={<LineDescription text={checksInfo.content} />}
@@ -46,8 +46,8 @@ const PullRequestCheckSection = ({ checkData, checksInfo, spaceId, repoId }: Pul
           <Text className="pr-2" size={1}>
             Show more
           </Text>
-        </AccordionTrigger>
-        <AccordionContent className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
+        </Accordion.Trigger>
+        <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
           {checkData.map(check => {
             const time = timeDistance(check?.check?.created, check?.check?.updated)
 
@@ -158,8 +158,8 @@ const PullRequestCheckSection = ({ checkData, checksInfo, spaceId, repoId }: Pul
             //   </div>
             // )
           })}
-        </AccordionContent>
-      </AccordionItem>
+        </Accordion.Content>
+      </Accordion.Item>
     )
   )
 }

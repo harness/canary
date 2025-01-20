@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon, Text } from '@/components'
+import { Accordion, Icon, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 interface FolderItemProps {
@@ -15,8 +15,8 @@ interface FolderItemProps {
 
 function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
   return (
-    <AccordionItem value={value} className="border-none">
-      <AccordionTrigger
+    <Accordion.Item value={value} className="border-none">
+      <Accordion.Trigger
         className={cn(
           `relative w-full p-0 pr-1.5
           before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
@@ -56,9 +56,11 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
             </Link>
           </div>
         </div>
-      </AccordionTrigger>
-      {!!content && <AccordionContent className="flex w-full items-center gap-2 pb-0 pl-4">{content}</AccordionContent>}
-    </AccordionItem>
+      </Accordion.Trigger>
+      {!!content && (
+        <Accordion.Content className="flex w-full items-center gap-2 pb-0 pl-4">{content}</Accordion.Content>
+      )}
+    </Accordion.Item>
   )
 }
 
@@ -104,9 +106,9 @@ interface RootProps {
 
 function Root({ children, onValueChange, value }: RootProps) {
   return (
-    <Accordion type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
+    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
       {children}
-    </Accordion>
+    </Accordion.Root>
   )
 }
 

@@ -2,9 +2,6 @@ import { FC, useState } from 'react'
 
 import {
   Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
   Badge,
   CopyButton,
   DropdownMenu,
@@ -17,9 +14,9 @@ import {
   Spacer,
   StackedList,
   Text
-} from '@components/index'
+} from '@/components'
+import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@views/index'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
 import { useDiffConfig } from '../../hooks/useDiffConfig'
@@ -60,12 +57,12 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion type="multiple" className="w-full">
-          <AccordionItem isLast value={header?.text ?? ''}>
-            <AccordionTrigger leftChevron className="p-4 text-left">
+        <Accordion.Root type="multiple" className="w-full">
+          <Accordion.Item isLast value={header?.text ?? ''}>
+            <Accordion.Trigger leftChevron className="p-4 text-left">
               <StackedList.Field title={<LineTitle text={header?.text ?? ''} />} />
-            </AccordionTrigger>
-            <AccordionContent>
+            </Accordion.Trigger>
+            <Accordion.Content>
               <div className="flex w-full border-t">
                 <div className="w-full bg-transparent">
                   {startingLine ? (
@@ -92,9 +89,9 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                   />
                 </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

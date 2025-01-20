@@ -14,13 +14,10 @@ import {
   Icon,
   Layout,
   StackedList
-} from '@components/index'
-import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
-
+} from '@/components'
 import {
   EnumCheckStatus,
+  extractInfoFromRuleViolationArr,
   MergeCheckStatus,
   PullRequestAction,
   PullRequestChangesSectionProps,
@@ -28,8 +25,11 @@ import {
   PullRequestState,
   TypesPullReqCheck,
   TypesRuleViolations
-} from '../../pull-request-details-types'
-import { extractInfoFromRuleViolationArr } from '../../pull-request-utils'
+} from '@/views'
+import { cn } from '@utils/cn'
+import { timeAgo } from '@utils/utils'
+import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -345,7 +345,7 @@ const PullRequestPanel = ({
         )}
       </StackedList.Item>
       <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
-        <Accordion type="multiple" className="w-full">
+        <Accordion.Root type="multiple" className="w-full">
           {!pullReqMetadata?.merged && (
             <PullRequestChangesSection
               changesInfo={changesInfo}
@@ -378,7 +378,7 @@ const PullRequestPanel = ({
               conflictingFiles={conflictingFiles}
             />
           )}
-        </Accordion>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

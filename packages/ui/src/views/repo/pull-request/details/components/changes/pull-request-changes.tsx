@@ -1,19 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Badge,
-  Button,
-  Checkbox,
-  CopyButton,
-  Icon,
-  StackedList,
-  Text
-} from '@components/index'
-import { DiffModeEnum } from '@git-diff-view/react'
+import { Accordion, Badge, Button, Checkbox, CopyButton, Icon, StackedList, Text } from '@/components'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -24,7 +11,8 @@ import {
   getFileViewedState,
   TranslationStore,
   TypesPullReqActivity
-} from '@views/index'
+} from '@/views'
+import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
@@ -301,14 +289,14 @@ const PullRequestAccordion: React.FC<{
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion
+        <Accordion.Root
           type="multiple"
           className="w-full"
           value={openItems}
           onValueChange={val => setOpenItems(val as string[])}
         >
-          <AccordionItem isLast value={header?.text ?? ''}>
-            <AccordionTrigger leftChevron className="p-4 text-left">
+          <Accordion.Item isLast value={header?.text ?? ''}>
+            <Accordion.Trigger leftChevron className="p-4 text-left">
               <StackedList.Field
                 title={
                   <LineTitle
@@ -325,8 +313,8 @@ const PullRequestAccordion: React.FC<{
                   />
                 }
               />
-            </AccordionTrigger>
-            <AccordionContent>
+            </Accordion.Trigger>
+            <Accordion.Content>
               <div className="flex w-full border-t">
                 <div className="bg-transparent">
                   {startingLine ? (
@@ -364,9 +352,9 @@ const PullRequestAccordion: React.FC<{
                   />
                 </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

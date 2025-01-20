@@ -56,7 +56,7 @@ export const ProjectLabelsListView: React.FC<ProjectLabelPageProps> = ({
                   className="max-w-96"
                   value={searchInput || ''}
                   handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
               </ListActions.Left>
               <ListActions.Right>

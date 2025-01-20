@@ -71,7 +71,7 @@ export const RepoLabelsListView: React.FC<RepoLabelPageProps> = ({
                   className="max-w-96"
                   value={searchInput || ''}
                   handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
                 <div className="flex gap-2">
                   <Checkbox

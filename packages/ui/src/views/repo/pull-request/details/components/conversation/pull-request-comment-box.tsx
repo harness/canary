@@ -106,7 +106,7 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start space-x-4">
+    <div className="flex w-full items-start space-x-4">
       {!isEditMode && avatar}
       <div
         className={cn('min-w-0 flex-1 px-4 pb-5 pt-1.5', {

@@ -150,6 +150,7 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
             <Spacer size={6} />
 
             <PullRequestOverview
+              handleUpdateDescription={noop}
               handleDeleteComment={noop}
               handleUpdateComment={noop}
               useTranslationStore={useTranslationsStore}

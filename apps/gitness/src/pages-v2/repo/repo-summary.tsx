@@ -50,7 +50,6 @@ export default function RepoSummaryPage() {
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const manageTokensLink = '/profile-settings/keys'
   const {
     branchList,
     tagList,
@@ -356,7 +355,7 @@ export default function RepoSummaryPage() {
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          toManageToken={manageTokensLink}
+          toManageToken={() => routes.toProfileKeys({ spaceId, repoId })}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

@@ -1,17 +1,15 @@
-import { FC, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { FC, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
-  Button,
-  ButtonGroup,
+  ButtonWithOptions,
   Filters,
   FiltersBar,
   ListActions,
   NoData,
   PaginationComponent,
   SearchBox,
-  Spacer,
-  Text
+  Spacer
 } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 
@@ -23,8 +21,6 @@ import { formatRepositories } from '../utils/formatting/repos'
 import { sortRepositories } from '../utils/sorting/repos'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
-
-const DEFAULT_ERROR_MESSAGE = ['An error occurred while loading the data. ', 'Please try again and reload the page.']
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -75,50 +71,54 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const sortedRepos = sortRepositories(filteredRepos, filterHandlers.activeSorts)
   const reposWithFormattedDates = formatRepositories(sortedRepos)
 
-  if (isError)
-    return (
-      <>
-        <SandboxLayout.Main>
-          <SandboxLayout.Content>
-            <div className="flex min-h-[70vh] items-center justify-center py-20">
-              <NoData
-                iconName="no-data-error"
-                title="Failed to load repositories"
-                description={errorMessage ? [errorMessage] : DEFAULT_ERROR_MESSAGE}
-                primaryButton={{
-                  label: 'Reload',
-                  onClick: () => {
-                    navigate(0) // Reload the page
-                  }
-                }}
-              />
-            </div>
-          </SandboxLayout.Content>
-        </SandboxLayout.Main>
-      </>
-    )
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
+  }, [page, filterHandlers.activeFilters, searchQuery])
 
-  const noData = !(reposWithFormattedDates && reposWithFormattedDates.length > 0)
-  const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
+  if (isError) {
+    return (
+      <NoData
+        textWrapperClassName="max-w-[350px]"
+        iconName="no-data-error"
+        title={t('views:noData.errorApiTitle', 'Failed to load repositories', {
+          type: 'repositories'
+        })}
+        description={[
+          errorMessage ||
+            t(
+              'views:noData.errorApiDescription',
+              'An error occurred while loading the data. Please try again and reload the page.'
+            )
+        ]}
+        primaryButton={{
+          label: t('views:notFound.button', 'Reload page'),
+          onClick: () => {
+            navigate(0) // Reload the page
+          }
+        }}
+      />
+    )
+  }
+
+  const noData = !(reposWithFormattedDates && !!reposWithFormattedDates.length)
+  const showTopBar = !noData || !!filterHandlers.activeFilters.length || !!searchQuery?.length || page !== 1
+
+  const handleResetFiltersQueryAndPages = () => {
+    filterHandlers.handleResetFilters()
+    handleResetSearch()
+    setPage(1)
+  }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        {/*
-          TODO: Replace the Text component with a Title component in the future.
-          Consider using a Title component that supports a prefix prop for displaying the selected saved filter name.
-          Example:
-          <Title prefix={filterHandlers.currentView?.name}>
-            {t('views:repos.repositories')}
-          </Title>
-        */}
-        {showTopBar ? (
+        {showTopBar && (
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <Text className="leading-none" size={5} weight={'medium'}>
-                {t('views:repos.repositories')}
-              </Text>
+              <h1 className="text-2xl font-medium text-foreground-1">
+                {t('views:repos.repositories', 'Repositories')}
+              </h1>
               {viewManagement.currentView && (
                 <>
                   <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
@@ -134,7 +134,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   className="max-w-96"
                   value={searchInput || ''}
                   handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
               </ListActions.Left>
               <ListActions.Right>
@@ -148,14 +148,20 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   onLayoutChange={setCurrentLayout}
                   t={t}
                 />
-                <ButtonGroup>
-                  <Button variant="default" asChild>
-                    <Link to={toCreateRepo?.() || ''}>{t('views:repos.create-repository')}</Link>
-                  </Button>
-                  <Button variant="outline" asChild>
-                    <Link to={toImportRepo?.() || ''}>{t('views:repos.import-repository', 'Import repository')}</Link>
-                  </Button>
-                </ButtonGroup>
+                <ButtonWithOptions<string>
+                  id="repository"
+                  dropdownContentClassName="mt-0 min-w-[170px]"
+                  handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+                  handleOptionChange={() => navigate(toImportRepo?.() || '')}
+                  options={[
+                    {
+                      value: 'import',
+                      label: t('views:repos.import-repository', 'Import repository')
+                    }
+                  ]}
+                >
+                  {t('views:repos.create-repository', 'Create repository')}
+                </ButtonWithOptions>
               </ListActions.Right>
             </ListActions.Root>
             <FiltersBar
@@ -167,21 +173,21 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               t={t}
             />
           </>
-        ) : null}
+        )}
         <Spacer size={5} />
         <RepoList
           repos={reposWithFormattedDates}
-          handleResetFilters={filterHandlers.handleResetFilters}
-          hasActiveFilters={filterHandlers.activeFilters.length > 0}
-          query={searchQuery ?? ''}
-          handleResetQuery={handleResetSearch}
+          handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+          isDirtyList={isDirtyList}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           toCreateRepo={toCreateRepo}
           toImportRepo={toImportRepo}
           {...routingProps}
         />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        {!!reposWithFormattedDates.length && (
+          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

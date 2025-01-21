@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useQueryState } from 'nuqs'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
@@ -9,6 +9,7 @@ import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader, SSEEvent } from '../../types'
@@ -21,9 +22,8 @@ export default function ReposListPage() {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
-  /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     data: { body: repoData, headers } = {},
@@ -33,7 +33,10 @@ export default function ReposListPage() {
     error
   } = useListReposQuery(
     {
-      queryParams: { page, query: query ?? '' },
+      queryParams: {
+        page: queryPage,
+        query: query ?? ''
+      },
       space_ref: `${spaceURL}/+`
     },
     {
@@ -51,10 +54,6 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
-
   const isRepoStillImporting: boolean = useMemo(() => {
     return repoData?.some(repository => repository.importing) ?? false
   }, [repoData])
@@ -65,7 +64,7 @@ export default function ReposListPage() {
         refetch()
       }
     },
-    [repoData]
+    [repoData, refetch]
   )
 
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])

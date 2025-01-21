@@ -148,7 +148,8 @@
     "add": "Ajouter",
     "users": "Utilisateurs",
     "clone": "Cloner",
-    "addFile": "Ajouter un fichier"
+    "addFile": "Ajouter un fichier",
+    "importing": "Importing…"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",
@@ -179,7 +180,9 @@
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
     "noLabels": "No labels yet",
-    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
+    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently.",
+    "errorApiTitle": "Failed to load {{type}}",
+    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page."
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

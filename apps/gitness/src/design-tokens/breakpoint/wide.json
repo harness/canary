@@ -261,7 +261,7 @@
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.600}",
             "fontSize": "{font-size.f1}",
-            "lineHeight": "{line-height.lh1}",
+            "lineHeight": "{line-height.lh1-relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article section heading."
@@ -272,7 +272,7 @@
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.600}",
             "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0}",
+            "lineHeight": "{line-height.lh0-relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article subsection heading."
@@ -296,7 +296,7 @@
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.400}",
             "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0-relax}",
+            "lineHeight": "{line-height.lh0-relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article paragraph text."
@@ -307,7 +307,7 @@
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.500}",
             "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0-relax}",
+            "lineHeight": "{line-height.lh0-relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Emphasized paragraph text."
@@ -342,7 +342,7 @@
       "$type": "lineHeights",
       "$value": "round({font-size.f0}* {leading.snug}/2) * 2"
     },
-    "lh0-relax": {
+    "lh0-relaxed": {
       "$type": "lineHeights",
       "$value": "round({font-size.f0}* {leading.relaxed}/2) * 2"
     },

@@ -705,7 +705,8 @@ export const routes: CustomRouteObject[] = [
       {
         path: ':spaceId',
         handle: {
-          breadcrumb: () => <ProjectDropdown />
+          breadcrumb: () => <ProjectDropdown />,
+          asLink: false
         },
         children: repoRoutes
       },

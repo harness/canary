@@ -1,5 +1,7 @@
+import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { membershipSpaces, TypesSpace } from '@harnessio/code-service-client'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,7 +19,24 @@ function ProjectDropdown(): JSX.Element {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
-  const { spaces } = useAppContext()
+  const { spaces, setSpaces } = useAppContext()
+
+  useEffect(() => {
+    if (!spaces?.length) {
+      membershipSpaces({
+        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+      })
+        .then(({ body: memberships }) => {
+          const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
+          setSpaces(spaceList)
+        })
+        .catch(() => {
+          // Optionally handle error or show toast
+          navigate(routes.toSignIn())
+        })
+    }
+  }, [spaces, membershipSpaces, navigate])
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger className="flex items-center gap-x-1.5">

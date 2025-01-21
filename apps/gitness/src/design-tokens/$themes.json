@@ -369,82 +369,6 @@
     "group": "theme"
   },
   {
-    "id": "a7de84c646606762e99950fdd7da8c5e0b65831c",
-    "name": "mobile",
-    "$figmaStyleReferences": {},
-    "selectedTokenSets": {
-      "breakpoint/mobile": "enabled"
-    },
-    "$figmaCollectionId": "VariableCollectionId:474:90577",
-    "$figmaModeId": "474:5",
-    "$figmaVariableReferences": {
-      "spacing.base": "10d079e0f6b928494ca72b2ddfbf6b54c877d8b9",
-      "spacing.3xs": "7e996abd2295305cdd215acf562faccde1c33928",
-      "spacing.2xs": "5bc2be0aa5c59b726e97ff381f1818707a0b9a40",
-      "spacing.xs": "76f5b54b0a6cdecf97737fba19d8c645c4777568",
-      "spacing.sm": "3d955d320191ed9ff0729d579a9f7424c855bc85",
-      "spacing.md": "14d652af33cf895334a54b329e1d50bfdd4447fd",
-      "spacing.lg": "8b1d23b421ea1036dd2e3a8487667f43b39c297b",
-      "spacing.xl": "b2c499e499101834714692806ca47aa5f399663f",
-      "spacing.2xl": "d4514da0b01b7c4f9d368e995d89f06443fb107d",
-      "spacing.3xl": "0becf86faf84b70ecc11549b897c72967ab3732b",
-      "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
-      "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
-      "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.viewport-max": "5679382d4b32aea2d23240068053e37c8d53d6e1",
-      "breakpoint.viewport-min": "17144765101788f070f8c60f27f2cb6f2459a671",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
-      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
-      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
-      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
-      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
-      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
-      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
-      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
-      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
-      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
-    },
-    "group": "breakpoint"
-  },
-  {
-    "id": "02cbfc094badad14ccc6890da696798cf9d586be",
-    "name": "tablet",
-    "$figmaStyleReferences": {},
-    "selectedTokenSets": {
-      "breakpoint/tablet": "enabled"
-    },
-    "$figmaCollectionId": "VariableCollectionId:474:90577",
-    "$figmaModeId": "474:6",
-    "$figmaVariableReferences": {
-      "spacing.base": "10d079e0f6b928494ca72b2ddfbf6b54c877d8b9",
-      "spacing.3xs": "7e996abd2295305cdd215acf562faccde1c33928",
-      "spacing.2xs": "5bc2be0aa5c59b726e97ff381f1818707a0b9a40",
-      "spacing.xs": "76f5b54b0a6cdecf97737fba19d8c645c4777568",
-      "spacing.sm": "3d955d320191ed9ff0729d579a9f7424c855bc85",
-      "spacing.md": "14d652af33cf895334a54b329e1d50bfdd4447fd",
-      "spacing.lg": "8b1d23b421ea1036dd2e3a8487667f43b39c297b",
-      "spacing.xl": "b2c499e499101834714692806ca47aa5f399663f",
-      "spacing.2xl": "d4514da0b01b7c4f9d368e995d89f06443fb107d",
-      "spacing.3xl": "0becf86faf84b70ecc11549b897c72967ab3732b",
-      "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
-      "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
-      "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
-      "breakpoint.viewport-max": "5679382d4b32aea2d23240068053e37c8d53d6e1",
-      "breakpoint.viewport-min": "17144765101788f070f8c60f27f2cb6f2459a671",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
-      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
-      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
-      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
-      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
-      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
-      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
-      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
-      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
-      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
-    },
-    "group": "breakpoint"
-  },
-  {
     "id": "859ec40c364b0922f609dfa64a502a7a90feb206",
     "name": "desktop",
     "$figmaStyleReferences": {
@@ -477,8 +401,8 @@
       "typography.caption.subtle": "S:091a47f6dcbf55798b7ab35bf84361e1e73f46a5,",
       "typography.caption.base": "S:e0b97380f361e43786feb322cf4c6deb5b88af35,",
       "typography.code.subtle": "S:cd77c886d0451353ddfc72cf041bc852b626f01a,",
-      "typography.code.base": "S:c777999f7aee81c5a7699800749f97f2ed577063,",
-      "typography.caption.data": "S:cdf87ce5931691b600efd057a0f6d2d08c43b534,"
+      "typography.caption.data": "S:cdf87ce5931691b600efd057a0f6d2d08c43b534,",
+      "typography.code.base": "S:c777999f7aee81c5a7699800749f97f2ed577063,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled"
@@ -501,42 +425,6 @@
       "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
       "breakpoint.viewport-max": "5679382d4b32aea2d23240068053e37c8d53d6e1",
       "breakpoint.viewport-min": "17144765101788f070f8c60f27f2cb6f2459a671",
-      "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
-      "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
-      "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",
-      "font-size.f-1": "e1bfbfdbc17238fb89c881a03cc2c6f9bec48b68",
-      "font-size.f0": "921d2bc3e4b09cc4ba57e0474c9dbfd0fe710bae",
-      "font-size.f1": "1cddd85206161adac2cb8f61bec4f7c6998b2376",
-      "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
-      "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
-      "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
-      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
-    },
-    "group": "breakpoint"
-  },
-  {
-    "id": "c6393bee72422a303546325f1602ccc02a525eba",
-    "name": "wide",
-    "$figmaStyleReferences": {},
-    "selectedTokenSets": {
-      "breakpoint/wide": "enabled"
-    },
-    "$figmaCollectionId": "VariableCollectionId:474:90577",
-    "$figmaModeId": "474:9",
-    "$figmaVariableReferences": {
-      "spacing.base": "10d079e0f6b928494ca72b2ddfbf6b54c877d8b9",
-      "spacing.3xs": "7e996abd2295305cdd215acf562faccde1c33928",
-      "spacing.2xs": "5bc2be0aa5c59b726e97ff381f1818707a0b9a40",
-      "spacing.xs": "76f5b54b0a6cdecf97737fba19d8c645c4777568",
-      "spacing.sm": "3d955d320191ed9ff0729d579a9f7424c855bc85",
-      "spacing.md": "14d652af33cf895334a54b329e1d50bfdd4447fd",
-      "spacing.lg": "8b1d23b421ea1036dd2e3a8487667f43b39c297b",
-      "spacing.xl": "b2c499e499101834714692806ca47aa5f399663f",
-      "spacing.2xl": "d4514da0b01b7c4f9d368e995d89f06443fb107d",
-      "spacing.3xl": "0becf86faf84b70ecc11549b897c72967ab3732b",
-      "spacing.4xl": "abae46b5955c1b8f208f333e7a3a9eea97c34405",
-      "spacing.5xl": "d5bebc053b6a44da21bb0dab1a23456a6920e515",
-      "breakpoint.viewport": "6e226e1a8e911ad462e7c9f56972f7d72d27aa94",
       "breakpoint.container": "813b53c8505021f8a538730127c555d66f5e99cf",
       "font-size.f-3": "ea98d9300f818e3f6ec02fdac77cbbbf49fd6b8d",
       "font-size.f-2": "3efd10decaf0f4335099cada2f0340e8f0cdbe31",

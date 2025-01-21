@@ -1,4 +1,4 @@
-import { Parser } from "@harnessio/filters"
+import { Parser } from '@harnessio/filters'
 
 type FilterActionKind = 'filter' | 'sort'
 
@@ -14,7 +14,11 @@ interface FilterOptionBase<T extends object> {
   conditions?: FilterCondition[]
 }
 
-type FilterOption<T extends object = object> = CalendarFilterOption<T> | CheckboxFilterOption<T> | TextFilterOption<T> | NumberFilterOption<T>
+type FilterOption<T extends object = object> =
+  | CalendarFilterOption<T>
+  | CheckboxFilterOption<T>
+  | TextFilterOption<T>
+  | NumberFilterOption<T>
 
 interface CalendarFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'calendar'

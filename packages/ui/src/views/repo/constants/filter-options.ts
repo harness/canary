@@ -5,8 +5,10 @@ import {
   type SortOption,
   type ViewLayoutOption
 } from '@components/filters'
-import { stringArrayParser } from '@harnessio/filters'
 import { TFunction } from 'i18next'
+
+import { stringArrayParser } from '@harnessio/filters'
+
 import { RepoListFilters } from '../repo-list/types'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
@@ -62,17 +64,17 @@ export const getFilterOptions = (t: TFunction): FilterOption<RepoListFilters>[] 
   {
     label: t('component:filter.createdTime', 'Created Time'),
     value: 'created_time',
-    type: 'calendar',
+    type: 'calendar'
   },
   {
     label: t('component:filter.name', 'Name'),
     value: 'name',
-    type: 'text',
+    type: 'text'
   },
   {
     label: t('component:filter.stars', 'Stars'),
     value: 'stars',
-    type: 'number',
+    type: 'number'
   }
 ]
 

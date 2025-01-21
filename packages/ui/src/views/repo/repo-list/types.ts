@@ -1,6 +1,7 @@
-import { FilterRefType } from '@harnessio/filters'
 import { RepositoryType } from '@views/repo/repo.types'
 import i18n, { TFunction } from 'i18next'
+
+import { FilterRefType } from '@harnessio/filters'
 
 export interface RepoStore {
   repositories: RepositoryType[] | null

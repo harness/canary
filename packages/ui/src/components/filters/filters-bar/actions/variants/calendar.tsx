@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { FilterValue } from '../../../types'
 
 interface CalendarProps<T extends object> {
-  filter: FilterValue<{[key in keyof T]: string[]}>
+  filter: FilterValue<{ [key in keyof T]: string[] }>
   onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void
 }
 

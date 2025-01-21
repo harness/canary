@@ -1,29 +1,20 @@
-import { useState } from 'react'
-
 import { Icon, Input } from '@/components'
 
 import { FilterValue } from '../../../types'
 
 interface NumberFilterProps<T extends object> {
-  filter: FilterValue<{[key in keyof T]: string}>
+  filter: FilterValue<{ [key in keyof T]: string }>
   onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void
 }
 
 const Number = <T extends object>({ filter, onUpdateFilter }: NumberFilterProps<T>) => {
-  const [value, setValue] = useState<string>(filter.selectedValues || '')
-  const emptyValue =  '' as T[keyof T]
+  const value = filter.selectedValues || ''
+  const emptyValue = '' as T[keyof T]
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
 
     if (!/^\d*\.?\d*$/.test(newValue) && newValue !== '') {
-      return
-    }
-
-    setValue(newValue)
-
-    if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-      onUpdateFilter(filter.type, emptyValue)
       return
     }
 
@@ -36,12 +27,7 @@ const Number = <T extends object>({ filter, onUpdateFilter }: NumberFilterProps<
   }
 
   const handleClear = () => {
-    setValue('')
     onUpdateFilter(filter.type, emptyValue)
-  }
-
-  if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-    return null
   }
 
   return (

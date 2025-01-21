@@ -1,26 +1,18 @@
-import { useState } from 'react'
-
 import { DropdownMenuItem, Icon, Input } from '@/components'
 
 import { FilterValue } from '../../../types'
 
 interface TextFilterProps<T extends object> {
-  filter: FilterValue<{[key in keyof T]: string}>
+  filter: FilterValue<{ [key in keyof T]: string }>
   onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void
 }
 
 const Text = <T extends object>({ filter, onUpdateFilter }: TextFilterProps<T>) => {
-  const [value, setValue] = useState<string>(filter.selectedValues || '')
-  const emptyValue =  '' as T[keyof T]
+  const value = filter.selectedValues || ''
+  const emptyValue = '' as T[keyof T]
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
-    setValue(newValue)
-
-    if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-      onUpdateFilter(filter.type, emptyValue)
-      return
-    }
 
     if (!newValue) {
       onUpdateFilter(filter.type, emptyValue)
@@ -31,12 +23,7 @@ const Text = <T extends object>({ filter, onUpdateFilter }: TextFilterProps<T>) 
   }
 
   const handleClear = () => {
-    setValue('')
     onUpdateFilter(filter.type, emptyValue)
-  }
-
-  if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-    return null
   }
 
   return (

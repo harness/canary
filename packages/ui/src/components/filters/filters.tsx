@@ -1,20 +1,21 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { TFunction } from 'i18next'
+
+import { createFilters } from '@harnessio/filters'
 
 import FilterSelect, { FilterSelectLabel } from './filter-select'
 import ManageViews from './manage-views'
 import FilterTrigger from './triggers/filter-trigger'
 import ViewTrigger from './triggers/view-trigger'
 import { FilterHandlers, FilterOption, SortOption, ViewLayoutOption, ViewManagement } from './types'
-import { createFilters } from '@harnessio/filters'
 
-interface FiltersProps {
+interface FiltersProps<T extends object> {
   showFilter?: boolean
   showSort?: boolean
   selectedFilters?: number
-  setOpenedFilter: (filter: string) => void
-  filterOptions: FilterOption[]
+  setOpenedFilter: (filter: keyof T) => void
+  filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
   filterHandlers: Pick<
     FilterHandlers,
@@ -52,7 +53,6 @@ interface FiltersProps {
   onLayoutChange?: (layout: string) => void
   t: TFunction
 }
-const FilterV2 = createFilters<RepoListFilters>()
 
 /**
  * Filters component for handling filtering, sorting, and view management
@@ -74,36 +74,31 @@ const FilterV2 = createFilters<RepoListFilters>()
  * />
  * ```
  */
-const Filters = ({
+const Filters = <T extends object>({
   showFilter = true,
   showSort = true,
   filterOptions,
   setOpenedFilter,
   sortOptions,
-  filterHandlers: {
-    activeSorts,
-    searchQueries,
-    handleSearchChange,
-    handleSortChange,
-    handleResetSorts
-  },
+  filterHandlers: { activeSorts, searchQueries, handleSearchChange, handleSortChange, handleResetSorts },
   viewManagement,
   layoutOptions,
   currentLayout,
   onLayoutChange,
   t
-}: FiltersProps) => {
+}: FiltersProps<T>) => {
   const [isManageDialogOpen, setIsManageDialogOpen] = useState(false)
+  const FilterV2 = useMemo(() => createFilters<T>(), [])
 
   return (
     <>
       <div className="flex items-center gap-x-5">
         {showFilter && (
-          <FilterV2.Dropdown className={"flex w-full"}>
+          <FilterV2.Dropdown className={'flex w-full'}>
             {(addFilter, availableFilters, resetFilters) => (
-                <FilterSelect
+              <FilterSelect<T>
                 options={filterOptions}
-                onChange={(option) => {
+                onChange={option => {
                   addFilter(option.value)
                   setOpenedFilter(option.value)
                 }}

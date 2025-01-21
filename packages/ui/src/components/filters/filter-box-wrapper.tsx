@@ -1,7 +1,8 @@
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@components/dropdown-menu"
-import { Icon } from "@components/icon"
-import { cn } from "@utils/cn"
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
+
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
+import { Icon } from '@components/icon'
+import { cn } from '@utils/cn'
 
 interface FiltersProps<T> {
   filterKey: keyof T
@@ -29,22 +30,19 @@ const FilterBoxWrapper = <T extends object>({
   }, [shouldOpen])
 
   return (
-    <DropdownMenu key={filterKey} open={isOpen} onOpenChange={setIsOpen}>
+    <DropdownMenu key={filterKey as string} open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger className="bg-background-3 hover:bg-background-8 flex h-8 items-center gap-x-3 whitespace-nowrap rounded pl-2.5 pr-2 transition-colors duration-200">
         <div className="text-13 flex items-center gap-x-1.5">
           <span className="text-foreground-1">
             {filterLabel}
-            {(!!valueLabel) && ': '}
+            {!!valueLabel && ': '}
           </span>
           <span className="text-foreground-4">{valueLabel}</span>
         </div>
         <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent
-        className={cn('w-[276px] p-0')}
-        align="start"
-      >
+      <DropdownMenuContent className={cn('w-[276px] p-0')} align="start">
         <div className="flex items-center justify-between px-3 py-2.5">
           <div className="flex w-full items-center justify-between gap-x-2">
             <div className="flex items-center gap-x-2">
@@ -74,9 +72,7 @@ const FilterBoxWrapper = <T extends object>({
           </div>
         </div>
 
-        <div>
-          {children}
-        </div>
+        <div>{children}</div>
       </DropdownMenuContent>
     </DropdownMenu>
   )

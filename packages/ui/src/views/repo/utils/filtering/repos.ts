@@ -47,7 +47,7 @@ const applyTypeFilter = (repo: RepositoryType, filter: FilterValue): boolean => 
   const isPublic = !repo.private
   const isFork = repo.forks > 0
 
-  const matchesType = filter.selectedValues.some(value => {
+  const matchesType = filter.selectedValues.some((value: string) => {
     switch (value) {
       case 'private':
         return isPrivate

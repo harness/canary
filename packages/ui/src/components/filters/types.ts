@@ -11,9 +11,10 @@ interface FilterOptionBase<T extends object> {
   label: string
   value: keyof T
   type: string
+  conditions?: FilterCondition[]
 }
 
-type FilterOption<T extends object> = CalendarFilterOption<T> | CheckboxFilterOption<T> | TextFilterOption<T> | NumberFilterOption<T>
+type FilterOption<T extends object = object> = CalendarFilterOption<T> | CheckboxFilterOption<T> | TextFilterOption<T> | NumberFilterOption<T>
 
 interface CalendarFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'calendar'

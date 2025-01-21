@@ -1,29 +1,32 @@
-import { useMemo } from 'react';
-import { Icon } from '@/components';
-import { TFunction } from 'i18next';
+import { useMemo } from 'react'
 
-import { createFilters } from '@harnessio/filters';
-import FilterBoxWrapper from '../filter-box-wrapper';
-import FilterSelect, { FilterSelectAddIconLabel } from '../filter-select';
-import { CheckboxFilterOption, FilterHandlers, FilterOption, FilterValue, SortDirection, SortOption, ViewManagement } from '../types';
-import { getFilterDisplayValue } from '../utils';
-import Sorts from './actions/sorts';
-import Calendar from './actions/variants/calendar';
-import Checkbox from './actions/variants/checkbox';
-import Number from './actions/variants/number';
-import Text from './actions/variants/text';
-import Views from './actions/views';
+import { Icon } from '@/components'
+import { TFunction } from 'i18next'
 
+import { createFilters } from '@harnessio/filters'
 
-interface RepoListFilters {
-  name: string
-  type: string[]
-  stars: string
-  created_time: string[]
-}
+import FilterBoxWrapper from '../filter-box-wrapper'
+import FilterSelect, { FilterSelectAddIconLabel } from '../filter-select'
+import {
+  CheckboxFilterOption,
+  FilterHandlers,
+  FilterOption,
+  FilterValue,
+  SortDirection,
+  SortOption,
+  ViewManagement
+} from '../types'
+import { getFilterDisplayValue } from '../utils'
+import Sorts from './actions/sorts'
+import Calendar from './actions/variants/calendar'
+import Checkbox from './actions/variants/checkbox'
+import Number from './actions/variants/number'
+import Text from './actions/variants/text'
+import Views from './actions/views'
+
 interface FiltersBarProps<T extends object> {
-  openedFilter: string
-  setOpenedFilter: (filter: string) => void
+  openedFilter: keyof T | undefined
+  setOpenedFilter: (filter: keyof T) => void
   filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
   selectedFiltersCnt: number
@@ -114,7 +117,7 @@ const renderFilterValues = <T extends object>(
   }
 }
 
-const FiltersBar = <T extends object = RepoListFilters>({
+const FiltersBar = <T extends object>({
   filterOptions,
   sortOptions,
   sortDirections,
@@ -139,7 +142,7 @@ const FiltersBar = <T extends object = RepoListFilters>({
     clearFilterToOpen
   } = filterHandlers
 
-  const FilterV2 = useMemo(() => createFilters<T>(), []) 
+  const FilterV2 = useMemo(() => createFilters<T>(), [])
 
   return (
     <div className="mt-2 flex items-center gap-x-2">
@@ -186,7 +189,7 @@ const FiltersBar = <T extends object = RepoListFilters>({
                     handleRemoveFilter={type => removeFilter(type)}
                     shouldOpen={openedFilter === filterOption.value}
                     filterLabel={filterOption.label}
-                    valueLabel={getFilterDisplayValue(filterOption, activeFilterOption)}
+                    valueLabel={getFilterDisplayValue<T>(filterOption, activeFilterOption)}
                   >
                     {renderFilterValues(activeFilterOption, filterOption, onFilterValueChange)}
                   </FilterBoxWrapper>
@@ -209,7 +212,7 @@ const FiltersBar = <T extends object = RepoListFilters>({
                 <div className="flex items-center gap-x-4">
                   <FilterSelect
                     options={filterOptions}
-                    dropdownAlign='start'
+                    dropdownAlign="start"
                     onChange={option => {
                       addFilter(option.value)
                       setOpenedFilter(option.value)

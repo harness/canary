@@ -3,8 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import { Button, ButtonGroup, ListActions, NoData, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
 import { Filters, FiltersBar, FilterValue } from '@components/filters'
-import { createFilters } from '@harnessio/filters'
 import { debounce } from 'lodash-es'
+
+import { createFilters } from '@harnessio/filters'
 
 import { SandboxLayout } from '../../index'
 import { getFilterOptions, getLayoutOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
@@ -59,19 +60,22 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const filteredRepos = filterRepositories(repositories, filterValues)
   const sortedRepos = sortRepositories(filteredRepos, filterHandlers.activeSorts)
   const reposWithFormattedDates = formatRepositories(sortedRepos)
-  const [openedFilter, setOpenedFilter] = useState<string>('')
+  const [openedFilter, setOpenedFilter] = useState<keyof RepoListFilters>()
 
   const debouncedSetSearchQuery = debounce(searchQuery => {
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const onFilterValueChange = useCallback((filterValues: {key: keyof RepoListFilters, value: RepoListFilters[keyof RepoListFilters]}[]) => {
-    setFilterValues(
-      filterValues
-        .map(({ key, value }) => ({ type: key, selectedValues: value }))
-        .filter(({ selectedValues }) => !!selectedValues)
-    )
-  }, [])
+  const onFilterValueChange = useCallback(
+    (filterValues: { key: keyof RepoListFilters; value: RepoListFilters[keyof RepoListFilters] }[]) => {
+      setFilterValues(
+        filterValues
+          .map(({ key, value }) => ({ type: key, selectedValues: value }))
+          .filter(({ selectedValues }) => !!selectedValues)
+      )
+    },
+    []
+  )
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
@@ -143,7 +147,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   />
                 </ListActions.Left>
                 <ListActions.Right>
-                  <Filters
+                  <Filters<RepoListFilters>
                     setOpenedFilter={setOpenedFilter}
                     filterOptions={FILTER_OPTIONS}
                     sortOptions={SORT_OPTIONS}

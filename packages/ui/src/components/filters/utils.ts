@@ -60,7 +60,7 @@ export const getSortTriggerLabel = (activeSorts: SortValue[], sortOptions: SortO
  *   - Single date: "MMM d" or "MMM d, yyyy"
  *   - Date range: "MMM d - MMM d" or "MMM d, yyyy - MMM d, yyyy"
  */
-export const getFilterDisplayValue = (filterOption: FilterOption, filter: FilterValue): string => {
+export const getFilterDisplayValue = <T extends object = object>(filterOption: FilterOption<T>, filter: FilterValue): string => {
   switch (filterOption.type) {
     case 'checkbox':
       return Array.isArray(filter.selectedValues) ? filter.selectedValues

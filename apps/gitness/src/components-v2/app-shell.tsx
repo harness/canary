@@ -15,7 +15,7 @@ import { SandboxLayout } from '@harnessio/ui/views'
 import { useNav } from '../components/stores/recent-pinned-nav-links.store'
 import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
-import { useAppContext } from '../framework/context/AppContext'
+import { AppProvider, useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
@@ -171,40 +171,42 @@ export const AppShell = () => {
   )
 
   return (
-    <SandboxLayout.Root>
-      <SandboxLayout.LeftPanel>
-        <Navbar
-          showMoreMenu={showMoreMenu}
-          showSettingMenu={showSettingMenu}
-          handleMoreMenu={handleMoreMenu}
-          handleSettingsMenu={handleSettingsMenu}
-          currentUser={currentUser}
-          handleCustomNav={handleCustomNav}
-          handleLogOut={handleLogOut}
-          recentMenuItems={recentMenu}
-          pinnedMenuItems={pinnedMenu}
-          handleChangePinnedMenuItem={handleChangePinnedMenuItem}
-          handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          useThemeStore={useThemeStore}
-          useTranslationStore={useTranslationStore}
+    <AppProvider>
+      <SandboxLayout.Root>
+        <SandboxLayout.LeftPanel>
+          <Navbar
+            showMoreMenu={showMoreMenu}
+            showSettingMenu={showSettingMenu}
+            handleMoreMenu={handleMoreMenu}
+            handleSettingsMenu={handleSettingsMenu}
+            currentUser={currentUser}
+            handleCustomNav={handleCustomNav}
+            handleLogOut={handleLogOut}
+            recentMenuItems={recentMenu}
+            pinnedMenuItems={pinnedMenu}
+            handleChangePinnedMenuItem={handleChangePinnedMenuItem}
+            handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
+            useThemeStore={useThemeStore}
+            useTranslationStore={useTranslationStore}
+          />
+        </SandboxLayout.LeftPanel>
+
+        <BreadcrumbsAndOutlet />
+
+        <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
+        <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
+        <ManageNavigation
+          pinnedItems={pinnedMenu}
+          recentItems={recentMenu}
+          navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
+          showManageNavigation={showCustomNav}
+          isSubmitting={false}
+          submitted={false}
+          onSave={handleSave}
+          onClose={handleCustomNav}
         />
-      </SandboxLayout.LeftPanel>
-
-      <BreadcrumbsAndOutlet />
-
-      <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={handleMoreMenu} items={moreMenu} />
-      <SettingsMenu showSettingMenu={showSettingMenu} handleSettingsMenu={handleSettingsMenu} items={settingsMenu} />
-      <ManageNavigation
-        pinnedItems={pinnedMenu}
-        recentItems={recentMenu}
-        navbarMenuData={getNavbarMenuData({ t, routes, spaceId: spaceIdPathParam, repoId })}
-        showManageNavigation={showCustomNav}
-        isSubmitting={false}
-        submitted={false}
-        onSave={handleSave}
-        onClose={handleCustomNav}
-      />
-    </SandboxLayout.Root>
+      </SandboxLayout.Root>
+    </AppProvider>
   )
 }
 

@@ -255,6 +255,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                       <PullRequestCommentBox
                         handleUpload={handleUpload}
                         inReplyMode
+                        hideAvatar
                         onSaveComment={() => {
                           handleSaveComment?.(comment, parentCommentId)
                           setHideReplyHere?.(false)

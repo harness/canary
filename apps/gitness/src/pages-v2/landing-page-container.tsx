@@ -16,7 +16,7 @@ export const LandingPage = () => {
   useEffect(() => {
     if (spaces.length === 0) {
       membershipSpaces({
-        queryParams: { page: 1, limit: 10, sort: 'identifier', order: 'asc' }
+        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
       })
         .then(({ body: memberships }) => {
           const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)

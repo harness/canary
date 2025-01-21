@@ -1,8 +1,7 @@
-// ToDo: Need to be reviewed by the XD team
-
 import { Children, ComponentPropsWithoutRef, ElementRef, FC, forwardRef, PropsWithChildren, ReactNode } from 'react'
 
-import { Caption, Label, Message, MessageTheme } from '@/components'
+import { Caption, Label, Message, MessageTheme, SearchBox } from '@/components'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
@@ -13,6 +12,7 @@ interface SelectProps extends PropsWithChildren, SelectPrimitive.SelectProps {
   caption?: ReactNode
   disabled?: boolean
   placeholder: string
+  selectValueChildren?: ReactNode
 }
 
 /**
@@ -31,6 +31,7 @@ const Select: FC<SelectProps> = ({
   disabled = false,
   placeholder,
   children,
+  selectValueChildren,
   ...props
 }) => (
   <SelectPrimitive.Root {...props}>
@@ -40,7 +41,9 @@ const Select: FC<SelectProps> = ({
       </Label>
     )}
     <SelectTrigger id={name} disabled={disabled}>
-      <SelectValue placeholder={placeholder} />
+      <SelectValue placeholder={placeholder} asChild={!!selectValueChildren}>
+        {selectValueChildren}
+      </SelectValue>
     </SelectTrigger>
     {children}
     {error && (
@@ -80,37 +83,78 @@ const SelectTrigger = forwardRef<
 ))
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
 
+export interface SelectContentSearchProps {
+  placeholder?: string
+  searchValue: string
+  handleChangeSearchValue: (data: string) => void
+}
+
+export type SelectContentSearchType =
+  | {
+      withSearch: true
+      searchProps: SelectContentSearchProps
+    }
+  | {
+      withSearch?: false
+      searchProps?: SelectContentSearchProps
+    }
+
 /**
  * The content container for the select dropdown
+ * *Can include a search panel for options if withSearch is true and searchProps are provided.
  */
 const SelectContent = forwardRef<
   ElementRef<typeof SelectPrimitive.Content>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        'bg-popover text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded-md box-border shadow-md',
-        position === 'popper' &&
-          'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-        className
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectPrimitive.Viewport
+  ComponentPropsWithoutRef<typeof SelectPrimitive.Content> & SelectContentSearchType
+>(({ className, children, position = 'popper', withSearch, searchProps, ...props }, ref) => {
+  const { search, handleSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: searchProps?.handleChangeSearchValue,
+    searchValue: searchProps?.searchValue
+  })
+
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
         className={cn(
-          'p-1 rounded-md border',
+          'bg-background-2 text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded-md box-border shadow-md',
           position === 'popper' &&
-            'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+            'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
+          className
         )}
+        position={position}
+        {...props}
       >
-        {Children.count(children) > 0 ? children : <div className="pl-2">Nothing to select</div>}
-      </SelectPrimitive.Viewport>
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-))
+        <SelectPrimitive.Viewport
+          className={cn(
+            '!p-1 rounded-md border',
+            position === 'popper' &&
+              'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
+          )}
+        >
+          {!!withSearch && (
+            <div className="sticky -top-1 z-[1] -mx-1 -mt-1 mb-1 border-b bg-background-2 px-3 py-2.5">
+              <SearchBox.Root
+                className="w-full"
+                placeholder={searchProps?.placeholder || ''}
+                value={search}
+                handleChange={handleSearchChange}
+              />
+            </div>
+          )}
+
+          {children && !!Children.count(children) ? (
+            children
+          ) : (
+            <div className="px-5 py-4 text-center">
+              <span className="leading-tight text-foreground-2">Nothing to select</span>
+            </div>
+          )}
+        </SelectPrimitive.Viewport>
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  )
+})
 SelectContent.displayName = SelectPrimitive.Content.displayName
 
 /**
@@ -129,8 +173,10 @@ SelectLabel.displayName = SelectPrimitive.Label.displayName
  */
 const SelectItem = forwardRef<
   ElementRef<typeof SelectPrimitive.Item>,
-  ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
+  ComponentPropsWithoutRef<typeof SelectPrimitive.Item> & {
+    isItemTextAsChild?: boolean
+  }
+>(({ className, children, isItemTextAsChild, ...props }, ref) => (
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
@@ -144,7 +190,7 @@ const SelectItem = forwardRef<
         <CheckIcon className="size-4" />
       </SelectPrimitive.ItemIndicator>
     </span>
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
+    <SelectPrimitive.ItemText asChild={!!isItemTextAsChild}>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ))
 SelectItem.displayName = SelectPrimitive.Item.displayName

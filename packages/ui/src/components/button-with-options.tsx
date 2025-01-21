@@ -1,6 +1,6 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, ReactNode } from 'react'
 
-import { Button } from '@components/button'
+import { Button, buttonVariants } from '@/components/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,6 +12,26 @@ import { Icon } from '@components/icon'
 import { Option } from '@components/option'
 import { RadioButton, RadioGroup } from '@components/radio'
 import { cn } from '@utils/cn'
+import { type VariantProps } from 'class-variance-authority'
+
+type ButtonWithOptionsSizes = Extract<VariantProps<typeof buttonVariants>['size'], 'default' | 'md'>
+type ButtonWithOptionsTheme = Exclude<NonNullable<VariantProps<typeof buttonVariants>['theme']>, null | undefined>
+
+const buttonPaddings: Record<ButtonWithOptionsSizes, string> = {
+  default: 'pl-4 pr-2.5',
+  md: 'pl-5 pr-2.5'
+}
+
+const separatorThemes: Record<ButtonWithOptionsTheme, string> = {
+  default: 'after:bg-inherit',
+  primary: 'after:bg-borders-7',
+  error: 'after:bg-button-border-danger-1',
+  success: 'after:bg-button-border-success-1',
+  disabled: 'after:bg-button-border-disabled-1',
+  // TODO: Add warning and muted themes
+  warning: '',
+  muted: ''
+}
 
 export interface ButtonWithOptionsOptionType<T extends string> {
   value: T
@@ -22,45 +42,54 @@ export interface ButtonWithOptionsOptionType<T extends string> {
 export interface ButtonWithOptionsProps<T extends string> {
   id: string
   handleButtonClick: (e: MouseEvent) => void
-  isLoading?: boolean
-  buttonText: string
+  loading?: boolean
   selectedValue: T
   options: ButtonWithOptionsOptionType<T>[]
   handleOptionChange: (val: T) => void
   className?: string
-  buttonSizeClassName?: 'h-8' | 'h-9'
+  size?: ButtonWithOptionsSizes
+  theme?: ButtonWithOptionsTheme
+  disabled?: boolean
+  children: ReactNode
 }
 
 export const ButtonWithOptions = <T extends string>({
   id,
   handleButtonClick,
-  isLoading = false,
-  buttonText,
+  loading = false,
   selectedValue,
   options,
   handleOptionChange,
   className,
-  buttonSizeClassName = 'h-8'
+  size = 'default',
+  theme = 'primary',
+  disabled = false,
+  children
 }: ButtonWithOptionsProps<T>) => {
   return (
-    <div className={cn('flex rounded bg-background-5', className)}>
+    <div className={cn('flex', className)}>
       <Button
-        className={cn('rounded-r-none pr-2.5 pl-5', buttonSizeClassName)}
-        theme="primary"
+        className={cn('rounded-r-none', theme !== 'primary' && 'border-y border-l', buttonPaddings[size])}
+        theme={theme}
+        size={size}
         onClick={handleButtonClick}
         type="button"
-        disabled={!!isLoading}
+        disabled={disabled}
+        loading={loading}
       >
-        {buttonText}
+        {children}
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger
           className={cn(
-            'relative flex size-8 items-center justify-center rounded-r after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-6 after:w-px after:bg-borders-7 hover:bg-background-10',
-            buttonSizeClassName
+            buttonVariants({ theme }),
+            'relative h-[inherit] w-8 p-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
+            theme !== 'primary' && 'border-y border-r',
+            (disabled || loading) && 'pointer-events-none',
+            separatorThemes[theme || 'default']
           )}
         >
-          <Icon name="chevron-down" size={12} className="text-icons-10" />
+          <Icon name="chevron-down" size={12} className="chevron-down" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
           className="mt-1 max-w-80"
@@ -73,7 +102,7 @@ export const ButtonWithOptions = <T extends string>({
                 <DropdownMenuItem
                   key={String(option.value)}
                   onClick={() => handleOptionChange(option.value)}
-                  disabled={!!isLoading}
+                  disabled={!!loading}
                 >
                   <Option
                     control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}

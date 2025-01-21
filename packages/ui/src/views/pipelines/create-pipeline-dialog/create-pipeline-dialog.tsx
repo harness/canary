@@ -93,7 +93,7 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         reset()
       }}
     >
-      <DialogContent className="max-w-[500px] border-border bg-primary-background">
+      <DialogContent className="max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Create Pipeline</DialogTitle>
         </DialogHeader>

@@ -1,0 +1,57 @@
+---
+title: Badge
+description: Badge component
+---
+
+The `Badge` component allows you to display a small tag to show the status of an item.
+
+import { DocsPage } from "@/components/docs-page";
+import { Badge } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+  <div className="flex flex-wrap gap-2 items-baseline">
+    <Badge>Default variant</Badge>
+    <Badge variant="secondary">Secondary variant</Badge>
+    <Badge variant="tertiary">Tertiary variant</Badge>
+    <Badge variant="quaternary">Quaternary variant</Badge>
+    <Badge variant="destructive">Destructive variant</Badge>
+    <Badge variant="outline">Outline variant</Badge>
+  </div>
+  <div className="flex flex-wrap gap-2 items-baseline">
+    <Badge>Default size</Badge>
+    <Badge size="xl">XL size</Badge>
+    <Badge size="lg">LG size</Badge>
+    <Badge size="md">MD size</Badge>
+    <Badge size="sm">SM size</Badge>
+    <Badge size="xs">XS size</Badge>
+  </div>
+  <div className="flex flex-wrap gap-2 items-baseline">
+    <Badge>Default theme</Badge>
+    <Badge theme="destructive">Destructive theme</Badge>
+    <Badge theme="warning">Warning theme</Badge>
+    <Badge theme="success">Success theme</Badge>
+    <Badge theme="emphasis">Emphasis theme</Badge>
+    <Badge theme="muted">Muted theme</Badge>
+  </div>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Badge } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Badge variant="secondary" size="lg" theme="success">
+    Secondary large success badge
+  </Badge>
+)
+```
+
+## API Reference
+
+<Badge theme="emphasis">Coming soon</Badge>

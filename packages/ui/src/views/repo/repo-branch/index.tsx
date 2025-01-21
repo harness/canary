@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC } from 'react'
 
 import { Button, ListActions, NoData, PaginationComponent, SearchBox, SkeletonList, Spacer, Text } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { debounce } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
@@ -22,16 +22,15 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
-  const [searchInput, setSearchInput] = useState(searchQuery)
 
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   const renderListContent = () => {
     if (isLoading && !branchList.length) return <SkeletonList />
@@ -48,10 +47,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
             ]}
             primaryButton={{
               label: t('views:noData.clearSearch', 'Clear search'),
-              onClick: () => {
-                setSearchInput('')
-                setSearchQuery(null)
-              }
+              onClick: handleResetSearch
             }}
           />
         )

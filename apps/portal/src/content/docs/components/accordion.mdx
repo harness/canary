@@ -1,0 +1,177 @@
+---
+title: Accordion
+description: Accordion component
+---
+
+The `Accordion` allows content to be hidden or displayed by clicking a trigger. Multiple items can be shown simultaneously, or restricted to a single item using the `type` prop.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+<h5>Single non-collapsible</h5>
+<Accordion.Root type="single" defaultValue="item1">
+  <Accordion.Item value="item1">
+    <Accordion.Trigger className="text-foreground">Item 1</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 1</p>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="item2" isLast>
+    <Accordion.Trigger className="text-foreground">Item 2</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 2</p>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+
+<h5>Single collapsible</h5>
+<Accordion.Root type="single" collapsible>
+  <Accordion.Item value="item1">
+    <Accordion.Trigger className="text-foreground">Item 1</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 1</p>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="item2" isLast>
+    <Accordion.Trigger className="text-foreground">Item 2</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 2</p>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+
+<h5>Multiple</h5>
+<Accordion.Root type="multiple">
+  <Accordion.Item value="item1">
+    <Accordion.Trigger className="text-foreground">Item 1</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 1</p>
+    </Accordion.Content>
+  </Accordion.Item>
+
+  <Accordion.Item value="item2" isLast>
+    <Accordion.Trigger className="text-foreground">Item 2</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 2</p>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Accordion } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Accordion.Root type="multiple">
+    <Accordion.Item value="item1">
+      <Accordion.Trigger className="text-foreground">Item 1</Accordion.Trigger>
+      <Accordion.Content>
+        <p>This is the content of item 1</p>
+      </Accordion.Content>
+    </Accordion.Item>
+
+    <Accordion.Item value="item2" isLast>
+      <Accordion.Trigger className="text-foreground">Item 2</Accordion.Trigger>
+      <Accordion.Content>
+        <p>This is the content of item 2</p>
+      </Accordion.Content>
+    </Accordion.Item>
+  </Accordion.Root>
+)
+```
+
+## Anatomy
+
+Coming soon.
+
+```typescript jsx
+<Accordion.Root type="multiple">
+  <Accordion.Item value="item1">
+    <Accordion.Trigger className="text-foreground">Item 1</Accordion.Trigger>
+    <Accordion.Content>
+      <p>This is the content of item 1</p>
+    </Accordion.Content>
+  </Accordion.Item>
+</Accordion.Root>
+```
+
+## API Reference
+
+### `Root`
+
+The `Accordion.Root` component wraps and controls the `Accordion.Item`s. The `type` prop controls whether the accordion
+allows the display of `multiple` items or a `single` item. The accordion can be either **controlled** or **uncontrolled**.
+By default, the accordion is **uncontrolled** and will manage its own internal state. When the `value` and `onValueChange`
+props are supplied, the accordion becomes **controlled** and state is handled externally.
+
+```typescript jsx
+<Accordion.Root
+  type="single"                // single|multiple
+  collapsible                  // [OPTIONAL] allow all panels to be collapsed
+                               //            when type is "single"
+  defaultValue="ItemValue"     // [OPTIONAL] value of item to expand initially
+  disabled                     // [OPTIONAL] disable the accordion
+                               //            expanded when type is "single"
+  onValueChange={handleChange} // [OPTIONAL] handler triggered when value changes
+                               //            when externally controlled
+  value={currentValue}         // [OPTIONAL] value of item currently selected
+                               //            when externally controlled
+>
+  {/* <Accordion.Item>'s as children */}
+</Accordion.Root>
+```
+
+### `Item`
+
+The `Accordion.Item` component represents an individual collapsible panel consisting of a trigger and content to display.
+The `value` prop is required and can be thought of as the identifier of the individual `Accordion.Item`. When multiple
+`Accordion.Item`s are wrapped in an `Accordion.Root`, the last `Accordion.Item` should include the `isLast` prop to allow
+for a different visual treatment.
+
+```typescript jsx
+<Accordion.Item
+  value="ItemValue" // item value
+  disabled          // [OPTIONAL] disable item
+  isLast            // [OPTIONAL] mark item as the last in the accordion
+>
+  {/* <Accordion.Trigger> and <Accordion.Content> as children */}
+</Accordion.Item>
+```
+
+### `Trigger`
+
+The `Accordion.Trigger` component displays the item with a chevron disclosure icon.
+
+```typescript jsx
+<Accordion.Trigger
+  chevronClassName="size-5" // [OPTIONAL] class to apply to chevron icon
+  hideChevron               // [OPTIONAL] hide the disclosure icon
+  leftChevron               // [OPTIONAL] display the chevron disclosure
+                            //            icon to the left
+  rotateChevron             // [OPTIONAL] `false` to point chevron down/up
+                            //            when closed/opened
+                            //            `true` to point chevron right/down
+                            //            when closed/opened
+>
+  Item name
+</Accordion.Trigger>
+```
+
+### `Content`
+
+The `Accordion.Content` component displays the item contents when triggered using the `Accordion.Trigger`.
+
+```typescript jsx
+<Accordion.Content>
+  <p>This is the item content</p>
+</Accordion.Content>
+```

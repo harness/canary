@@ -20,7 +20,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface ProjectSettingsGeneralPageProps {
-  // spaceData: InputProps
   onFormSubmit: (formData: InputProps) => void
   isUpdating: boolean
   isUpdateSuccess: boolean
@@ -97,6 +96,13 @@ export const ProjectSettingsGeneralPage = ({
   useEffect(() => {
     setValue('identifier', spaceData?.identifier ?? '')
   }, [spaceData?.identifier, setValue])
+
+  useEffect(() => {
+    reset({
+      identifier: spaceData?.identifier,
+      description: spaceData?.description
+    })
+  }, [spaceData, reset])
 
   const handleCancel = () => {
     resetField('description', { defaultValue: spaceData?.description })

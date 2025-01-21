@@ -79,6 +79,7 @@ export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
 
                 <TableCell className="text-right">
                   <MoreActionsTooltip
+                    isInTable
                     actions={[
                       {
                         title: user.admin ? 'Remove Admin' : 'Set as Admin',

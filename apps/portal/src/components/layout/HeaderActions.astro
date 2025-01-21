@@ -1,0 +1,28 @@
+---
+import type { Props } from "@astrojs/starlight/props";
+import { Badge, Button, ButtonGroup, Icon } from "@harnessio/ui/components";
+---
+
+<ButtonGroup spacing="8">
+  <Button
+    variant="ghost"
+    className="text-primary-foreground-4 p-0 hover:bg-transparent hover:text-primary-foreground"
+    >Sandbox&nbsp;&nbsp;<Badge
+      variant="outline"
+      theme="warning"
+      borderRadius="full">New</Badge
+    ></Button
+  >
+  <Button
+    variant="ghost"
+    className="text-primary-foreground-4 p-0 hover:bg-transparent hover:text-primary-foreground"
+    >Blog</Button
+  >
+  <Button
+    variant="ghost"
+    size="icon"
+    className="text-primary-foreground-4 p-0 hover:bg-transparent hover:text-primary-foreground"
+  >
+    <Icon name="environment" size={16} />
+  </Button>
+</ButtonGroup>

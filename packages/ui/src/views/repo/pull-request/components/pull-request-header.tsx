@@ -7,7 +7,7 @@ import { timeAgo } from '@utils/utils'
 import { IconType } from '../pull-request.types'
 import { getPrState } from '../utils'
 
-type ThemeType = 'default' | 'destructive' | 'warning' | 'success' | 'emphasis' | 'muted' | null | undefined
+type ThemeType = 'default' | 'destructive' | 'success' | 'emphasis' | 'muted' | null | undefined
 interface PullRequestTitleProps {
   data: {
     title?: string

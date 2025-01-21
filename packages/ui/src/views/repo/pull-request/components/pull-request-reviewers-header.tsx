@@ -14,15 +14,11 @@ import {
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { EnumPullReqReviewDecision } from '../pull-request.types'
+import { PRReviewer, PRReviewUsers } from '../pull-request.types'
 
 interface ReviewersHeaderProps {
-  usersList?: { display_name?: string; id?: number; uid?: string }[]
-  reviewers: {
-    reviewer?: { display_name?: string; id?: number }
-    review_decision?: EnumPullReqReviewDecision
-    sha?: string
-  }[]
+  usersList?: PRReviewUsers[]
+  reviewers: PRReviewer[]
   addReviewers?: (id?: number) => void
   currentUserId?: string
   searchQuery: string

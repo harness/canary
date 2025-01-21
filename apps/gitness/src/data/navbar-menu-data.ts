@@ -178,7 +178,7 @@ export const getNavbarMenuData = ({
         id: 16,
         iconName: 'settings-2',
         title: t('component:navbar.settings'),
-        to: spaceId ? routes.toProjectMembers({ spaceId }) : '/'
+        to: spaceId ? routes.toProjectGeneral({ spaceId }) : '/'
       },
       {
         id: 17,

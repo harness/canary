@@ -1,20 +1,25 @@
 import { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListPipelinesQuery } from '@harnessio/code-service-client'
-import { PipelineListPage } from '@harnessio/ui/views'
+import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
 import CreatePipelineDialog from '../pipeline/create-pipeline-dialog'
 import { usePipelineListStore } from './stores/repo-pipeline-list-store'
 import { apiPipelines2Pipelines } from './transform-utils/pipeline-list-transform'
 
 export default function RepoPipelineListPage() {
+  const routes = useRoutes()
   const repoRef = useGetRepoRef()
+  const { spaceId, repoId } = useParams<PathParams>()
 
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
@@ -68,6 +73,7 @@ export default function RepoPipelineListPage() {
           setCreatePipelineDialogOpen(true)
         }}
         LinkComponent={LinkComponent}
+        toPipelineDetails={(pipeline: IPipeline) => routes.toExecutions({ spaceId, repoId, pipelineId: pipeline.id })}
       />
       <CreatePipelineDialog open={isCreatePipelineDialogOpen} onClose={closeSearchDialog} />
     </>

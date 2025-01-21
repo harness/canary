@@ -91,7 +91,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<FormFields>({
     resolver: zodResolver(gitCommitSchema),
     mode: 'onChange',
@@ -104,8 +104,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     }
   })
 
-  const isDisabledSubmission = disableCTA || isSubmitting || !isValid
-
+  const isDisabledSubmission = disableCTA || isSubmitting
   const onSubmit: SubmitHandler<FormFields> = data => {
     if (isDisabledSubmission) return
 

@@ -61,11 +61,8 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
         <ButtonWithOptions<PR_TYPE>
           id="pr-type"
           handleButtonClick={handleButtonClick}
-          isLoading={isLoading}
-          buttonText={t(
-            `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
-            `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`
-          )}
+          loading={isLoading}
+          size="md"
           selectedValue={prType}
           handleOptionChange={handlePrTypeChange}
           options={[
@@ -86,7 +83,12 @@ const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
               )
             }
           ]}
-        />
+        >
+          {t(
+            `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
+            `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`
+          )}
+        </ButtonWithOptions>
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
           {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;

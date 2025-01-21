@@ -76,7 +76,7 @@ export function CreateLabelDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="border-border bg-background-1">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Create Label</DialogTitle>
         </DialogHeader>

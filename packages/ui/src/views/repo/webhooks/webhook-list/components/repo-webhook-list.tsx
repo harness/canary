@@ -68,7 +68,10 @@ export function RepoWebhookList({
           isDirtyList
             ? t(
                 'views:noData.noResultsDescription',
-                'No rules match your search. Try adjusting your keywords or filters.'
+                'No webhooks match your search. Try adjusting your keywords or filters.',
+                {
+                  type: 'webhooks'
+                }
               )
             : t(
                 'views:noData.noWebhooksDescription',

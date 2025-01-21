@@ -323,20 +323,11 @@ const PullRequestDiffViewer = ({
 
   const [newComments, setNewComments] = useState<Record<string, string>>({})
 
-  function getNewCommentKey(side: SplitSide, lineNumber: number) {
-    return `${side}:${lineNumber}`
-  }
-  function getNewCommentValue(side: SplitSide, lineNumber: number) {
-    return newComments[getNewCommentKey(side, lineNumber)] ?? ''
-  }
-  function setNewCommentValue(side: SplitSide, lineNumber: number, text: string) {
-    setNewComments(prev => ({ ...prev, [getNewCommentKey(side, lineNumber)]: text }))
-  }
-
   const renderWidgetLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderWidgetLine']>>(
     ({ onClose, side, lineNumber }) => {
       const sideKey = side === SplitSide.old ? 'oldFile' : 'newFile'
-      const commentText = getNewCommentValue(side, lineNumber)
+      const commentKey = `${side}:${lineNumber}`
+      const commentText = newComments[commentKey] ?? ''
 
       return (
         <div className="flex w-full flex-col border px-[4px] py-[8px]">
@@ -354,20 +345,20 @@ const PullRequestDiffViewer = ({
                   path: fileName
                 })
               }
-              setNewCommentValue(side, lineNumber, '')
+              setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
             currentUser={currentUser}
             onCancelClick={() => {
               onClose()
-              setNewCommentValue(side, lineNumber, '')
+              setNewComments(prev => ({ ...prev, [commentKey]: '' }))
             }}
             comment={commentText}
-            setComment={value => setNewCommentValue(side, lineNumber, value)}
+            setComment={value => setNewComments(prev => ({ ...prev, [commentKey]: value }))}
           />
         </div>
       )
     },
-    [handleSaveComment, fileName, newComments, currentUser, getNewCommentValue, handleUpload, setNewCommentValue]
+    [handleSaveComment, fileName, newComments, currentUser, handleUpload]
   )
 
   const renderExtendLine = useCallback<NonNullable<DiffViewProps<Thread[]>['renderExtendLine']>>(

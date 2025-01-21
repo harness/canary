@@ -11,7 +11,7 @@ function ProjectSettingsPage() {
     <>
       <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
         <Tabs variant="navigation" value={activeTab}>
-          <TabsList>
+          <TabsList fontSize="xs">
             <NavLink to={`general`}>
               <TabsTrigger value="general">General</TabsTrigger>
             </NavLink>

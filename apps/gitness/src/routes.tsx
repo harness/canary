@@ -62,11 +62,17 @@ const repoRoutes: CustomRouteObject[] = [
       { index: true, element: <ReposListPage /> },
       {
         path: 'create',
-        element: <CreateRepo />
+        element: <CreateRepo />,
+        handle: {
+          routeName: RouteConstants.toCreateRepo
+        }
       },
       {
         path: 'import',
-        element: <ImportRepo />
+        element: <ImportRepo />,
+        handle: {
+          routeName: RouteConstants.toImportRepo
+        }
       },
       {
         path: ':repoId',
@@ -100,7 +106,7 @@ const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: ':commitSHA',
-                element: <RepoCommitDetailsPage />,
+                element: <RepoCommitDetailsPage showSidebar={false} />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                     <>
@@ -113,7 +119,7 @@ const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: (
                       <ExplorerPathsProvider>
-                        <CommitDiffContainer />
+                        <CommitDiffContainer showSidebar={false} />
                       </ExplorerPathsProvider>
                     )
                   }
@@ -170,7 +176,8 @@ const repoRoutes: CustomRouteObject[] = [
                 path: ':pullRequestId',
                 element: <PullRequestLayout />,
                 handle: {
-                  breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>
+                  breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>,
+                  routeName: RouteConstants.toPullRequest
                 },
                 children: [
                   {
@@ -183,13 +190,17 @@ const repoRoutes: CustomRouteObject[] = [
                       <PullRequestDataProvider>
                         <PullRequestConversationPage />
                       </PullRequestDataProvider>
-                    )
+                    ),
+                    handle: {
+                      routeName: RouteConstants.toPullRequestConversation
+                    }
                   },
                   {
                     path: 'commits',
                     element: <PullRequestCommitPage />,
                     handle: {
-                      breadcrumb: () => <Text>Commits</Text>
+                      breadcrumb: () => <Text>Commits</Text>,
+                      routeName: RouteConstants.toPullRequestCommits
                     }
                   },
                   {
@@ -200,7 +211,16 @@ const repoRoutes: CustomRouteObject[] = [
                       </PullRequestDataProvider>
                     ),
                     handle: {
-                      breadcrumb: () => <Text>Changes</Text>
+                      breadcrumb: () => <Text>Changes</Text>,
+                      routeName: RouteConstants.toPullRequestChanges
+                    }
+                  },
+                  {
+                    path: 'checks',
+                    element: <EmptyPage pathName="PR Checks" />,
+                    handle: {
+                      breadcrumb: () => <Text>Checks</Text>,
+                      routeName: RouteConstants.toPullRequestChecks
                     }
                   }
                 ]
@@ -241,6 +261,7 @@ const repoRoutes: CustomRouteObject[] = [
                       routeName: RouteConstants.toExecutions
                     },
                     children: [
+                      { index: true, element: <RepoExecutionListPage /> },
                       {
                         path: ':executionId',
                         element: <>Execution Details Page</>,
@@ -353,7 +374,8 @@ const repoRoutes: CustomRouteObject[] = [
         path: 'general',
         element: <ProjectGeneralSettingsPageContainer />,
         handle: {
-          breadcrumb: () => <Text>General</Text>
+          breadcrumb: () => <Text>General</Text>,
+          routeName: RouteConstants.toProjectGeneral
         }
       },
       {

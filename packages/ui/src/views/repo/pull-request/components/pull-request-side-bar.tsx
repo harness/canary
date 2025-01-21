@@ -1,17 +1,13 @@
 import { TranslationStore } from '@/views'
 
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../pull-request.types'
+import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../pull-request.types'
 import { LabelsHeader } from './pull-request-labels-header'
 import { LabelsList } from './pull-request-labels-list'
 import { ReviewersHeader } from './pull-request-reviewers-header'
 import { ReviewersList } from './pull-request-reviewers-list'
 
 interface PullRequestSideBarProps {
-  reviewers?: {
-    reviewer?: { display_name?: string; id?: number }
-    review_decision?: EnumPullReqReviewDecision
-    sha?: string
-  }[]
+  reviewers?: PRReviewer[]
   processReviewDecision: (
     review_decision: EnumPullReqReviewDecision,
     reviewedSHA?: string,

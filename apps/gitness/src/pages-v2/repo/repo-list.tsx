@@ -1,18 +1,23 @@
 import { useCallback, useEffect, useMemo } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
-import { SandboxRepoListPage } from '@harnessio/ui/views'
+import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader, SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
+  const routes = useRoutes()
+  const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
@@ -82,6 +87,9 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
       />
     </>
   )

@@ -27,6 +27,7 @@ import {
   CommitSelectorListItem,
   CompareFormFields,
   PRReviewer,
+  PRReviewUsers,
   PullReqReviewDecision,
   PullRequestComparePage
 } from '@harnessio/ui/views'
@@ -70,6 +71,7 @@ export const CreatePullRequest = () => {
     description: string
   } | null>(null)
   const [reviewers, setReviewers] = useState<PRReviewer[]>([])
+  const [reviewUsers, setReviewUsers] = useState<PRReviewUsers[]>()
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
   const commitSHA = '' // TODO: when you implement commit filter will need commitSHA
   const defaultCommitRange = compact(commitSHA?.split(/~1\.\.\.|\.\.\./g))
@@ -110,6 +112,12 @@ export const CreatePullRequest = () => {
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
+
+  useEffect(() => {
+    if (principals?.length) {
+      setReviewUsers(principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid })))
+    }
+  }, [principals])
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
@@ -367,6 +375,7 @@ export const CreatePullRequest = () => {
           }
         }
       }
+      setBranchTagQuery('')
     },
     [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
   )
@@ -374,8 +383,15 @@ export const CreatePullRequest = () => {
   const { setTagList, setBranchList, setSpaceIdAndRepoId } = useRepoBranchesStore()
 
   useEffect(() => {
-    setTagList(tagsList)
-    setBranchList(transformBranchList(branchList, repoMetadata?.default_branch))
+    if (tagsList.length) {
+      setTagList(tagsList)
+    }
+  }, [tagsList])
+
+  useEffect(() => {
+    if (branchList.length) {
+      setBranchList(transformBranchList(branchList, repoMetadata?.default_branch))
+    }
   }, [tagsList, branchList, repoMetadata?.default_branch])
 
   useEffect(() => {
@@ -404,7 +420,7 @@ export const CreatePullRequest = () => {
   }
 
   const renderContent = () => {
-    if (isFetchingBranches) return <SkeletonList />
+    if (isFetchingBranches && branchTagQuery?.length === 0) return <SkeletonList />
 
     return (
       <PullRequestComparePage
@@ -457,7 +473,7 @@ export const CreatePullRequest = () => {
         }
         searchBranchQuery={branchTagQuery}
         setSearchBranchQuery={setBranchTagQuery}
-        usersList={principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid }))}
+        usersList={reviewUsers}
         searchReviewersQuery={searchReviewers}
         setSearchReviewersQuery={setSearchReviewers}
         reviewers={reviewers}

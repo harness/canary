@@ -1,14 +1,6 @@
 import { FC, useState } from 'react'
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Badge,
-  CopyButton,
-  StackedList
-} from '@/components'
+import { Accordion, Badge, CopyButton, StackedList } from '@/components'
 import { TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
@@ -76,17 +68,17 @@ const CommitsAccordion: FC<{
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion
+        <Accordion.Root
           type="multiple"
           className="w-full"
           value={openItems}
           onValueChange={val => setOpenItems(val as string[])}
         >
-          <AccordionItem isLast value={header.text}>
-            <AccordionTrigger leftChevron className="p-4 text-left">
+          <Accordion.Item isLast value={header.text}>
+            <Accordion.Trigger leftChevron className="p-4 text-left">
               <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
-            </AccordionTrigger>
-            <AccordionContent>
+            </Accordion.Trigger>
+            <Accordion.Content>
               <div className="flex w-full border-t">
                 <div className="bg-transparent">
                   {startingLine ? (
@@ -107,9 +99,9 @@ const CommitsAccordion: FC<{
                   />
                 </div>
               </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

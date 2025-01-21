@@ -21,18 +21,25 @@ export interface ActionData {
 
 export interface MoreActionsTooltipProps {
   actions: ActionData[]
+  isInTable?: boolean
 }
 
 /**
  * A component for displaying a button that, when clicked, shows a tooltip with a list of actions.
  */
-export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions }) => {
+export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInTable = false }) => {
   if (!actions.length) return <></>
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2" variant="custom" size="icon">
+        <Button
+          className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2', {
+            '-mr-2.5 -my-0.5': isInTable
+          })}
+          variant="custom"
+          size="icon"
+        >
           <Icon name="vertical-ellipsis" size={14} />
         </Button>
       </DropdownMenuTrigger>

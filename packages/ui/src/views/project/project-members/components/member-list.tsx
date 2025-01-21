@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import {
   Avatar,
   AvatarFallback,
@@ -13,118 +15,89 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-  Text
+  TableRow
 } from '@/components'
+import { MembersProps, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
-import { upperFirst } from 'lodash-es'
+import { getRolesData } from '@views/project/project-members/constants'
 
-import { MembersProps } from '../types'
-
-interface PageProps {
+interface MembersListProps {
   members: MembersProps[]
-  onDelete: (member: MembersProps) => void
+  onDelete: (member: string) => void
   onEdit: (member: MembersProps) => void
+  useTranslationStore: () => TranslationStore
 }
 
-export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
+export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: MembersListProps) => {
+  const { t } = useTranslationStore()
+
+  const roleOptions = useMemo(() => getRolesData(t), [t])
+
+  const getRoleLabel = (role: string) => {
+    return roleOptions.find(it => it.uid === role)?.label || ''
+  }
+
   return (
     <Table variant="asStackedList">
       <TableHeader>
         <TableRow>
-          <TableHead className="text-primary">User</TableHead>
-          <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-primary">Role</TableHead>
-          <TableHead>
-            <></> {/* For 3-dot menu */}
-          </TableHead>
+          <TableHead>{t('views:projectSettings.membersTable.user', 'User')}</TableHead>
+          <TableHead>{t('views:projectSettings.membersTable.email', 'Email')}</TableHead>
+          <TableHead>{t('views:projectSettings.membersTable.role', 'Role')}</TableHead>
+          <TableHead />
         </TableRow>
       </TableHeader>
       <TableBody>
         {members.map(member => (
           <TableRow key={member.uid}>
             {/* USER */}
-            <TableCell className="my-6 content-center">
+            <TableCell className="content-center">
               <div className="flex items-center gap-2">
-                <div className="size-6 rounded-full bg-tertiary-background bg-cover">
-                  <Avatar className="size-6 rounded-full p-0">
-                    {member.avatarUrl && <AvatarImage src={member.avatarUrl} />}
-                    <AvatarFallback>
-                      <Text size={1} color="tertiaryBackground">
-                        {getInitials(member.display_name, 2)}
-                      </Text>
-                    </AvatarFallback>
-                  </Avatar>
-                </div>
-                <Text size={1} weight="medium" wrap="nowrap" truncate className="text-primary">
-                  {member.display_name}
-                </Text>
+                <Avatar size="6">
+                  {!!member.avatarUrl && <AvatarImage src={member.avatarUrl} />}
+                  <AvatarFallback>{getInitials(member.display_name)}</AvatarFallback>
+                </Avatar>
+                <span className="font-medium text-foreground-8">{member.display_name}</span>
               </div>
             </TableCell>
+
             {/* EMAIL */}
-            <TableCell className="my-6 content-center">
-              <div className="flex gap-1.5">
-                <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
-                  {member.email}
-                </Text>
-              </div>
-            </TableCell>
+            <TableCell className="content-center text-foreground-2">{member.email}</TableCell>
+
             {/* ROLE */}
-            <TableCell className="my-6 content-center">
+            <TableCell className="w-1/5 content-center">
               <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-x-1.5">
-                  {upperFirst(member.role)}
-                  <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
+                <DropdownMenuTrigger className="flex items-center gap-x-1.5 text-foreground-2 hover:text-foreground-1">
+                  {getRoleLabel(member.role)}
+                  <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-[300px]">
-                  <DropdownMenuItem
-                    className="flex flex-col"
-                    key="owner"
-                    onClick={() => onEdit({ ...member, role: 'space_owner' })}
-                  >
-                    <Text className="inline-block w-full text-left">Owner</Text>
-                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
-                      Admin-level access to all resources.
-                    </Text>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="flex flex-col"
-                    key="contributor"
-                    onClick={() => onEdit({ ...member, role: 'contributor' })}
-                  >
-                    <Text className="inline-block w-full text-left">Contributor</Text>
-                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
-                      Can view, comment, and edit resources.
-                    </Text>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="flex flex-col"
-                    key="reader"
-                    onClick={() => onEdit({ ...member, role: 'reader' })}
-                  >
-                    <Text className="inline-block w-full text-left">Reader</Text>
-                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">Can view and comment.</Text>
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    className="flex flex-col"
-                    key="executor"
-                    onClick={() => onEdit({ ...member, role: 'executor' })}
-                  >
-                    <Text className="inline-block w-full text-left">Executor</Text>
-                    <Text className="mt-1.5 inline-block w-full text-muted-foreground">
-                      Can view but cannot make changes or leave comments.
-                    </Text>
-                  </DropdownMenuItem>
+                <DropdownMenuContent
+                  align="start"
+                  className="w-[300px]"
+                  onCloseAutoFocus={event => event.preventDefault()}
+                >
+                  {roleOptions.map(role => (
+                    <DropdownMenuItem
+                      key={role.uid}
+                      className="flex-col items-start gap-y-1.5 px-3 py-2"
+                      onClick={() => onEdit({ ...member, role: role.uid })}
+                    >
+                      <span className="leading-none">{role.label}</span>
+                      <span className="leading-tight text-foreground-4">{role.description}</span>
+                    </DropdownMenuItem>
+                  ))}
                 </DropdownMenuContent>
               </DropdownMenu>
             </TableCell>
+
             <TableCell className="text-right">
               <MoreActionsTooltip
+                isInTable
                 actions={[
                   {
                     isDanger: true,
-                    title: 'Remove member',
-                    onClick: () => onDelete(member)
+                    title: t('views:projectSettings.removeMember', 'Remove member'),
+                    onClick: () => onDelete(member.uid)
                   }
                 ]}
               />

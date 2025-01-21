@@ -109,7 +109,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
       })
       setCommitFilterOptions(commitsList)
     }
-  }, [pullReqCommits])
+  }, [pullReqCommits, defaultCommitFilter])
 
   useEffect(() => {
     if (refetchReviewers) {

@@ -1,0 +1,80 @@
+---
+title: Button
+description: Button component
+---
+
+The `Button` component allows you to display a button the user can use to trigger actions or submit forms.
+
+import { DocsPage } from "@/components/docs-page";
+import { Badge } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+<h5>Variants</h5>
+<div className="flex items-baseline flex-wrap gap-2">
+  <Button>Default variant</Button>
+  <Button variant="destructive">Destructive variant</Button>
+  <Button variant="outline">Outline variant</Button>
+  <Button variant="secondary">Secondary variant</Button>
+  <Button variant="tertiary">Tertiary variant</Button>
+  <Button variant="ghost">Ghost variant</Button>
+  <Button variant="link">Link variant</Button>
+  <Button variant="link_accent">Link accent variant</Button>
+  <Button variant="custom">Custom variant</Button>
+</div>
+
+<h5>Sizes</h5>
+<div className="flex items-baseline flex-wrap gap-2">
+  <Button>Default size</Button>
+  <Button size="sm">sm size</Button>
+  <Button size="xs">xs size</Button>
+  <Button size="md">md size</Button>
+  <Button size="lg">lg size</Button>
+  <Button size="icon">
+    <Icon name="tick" />
+  </Button>
+  <Button size="sm_icon">
+    <Icon name="tick" size="12" />
+  </Button>
+</div>
+
+<h5>Themes</h5>
+<div className="flex items-baseline flex-wrap gap-2">
+  <Button>Default theme</Button>
+  <Button theme="error">Error theme</Button>
+  <Button theme="warning">Warning theme</Button>
+  <Button theme="success">Success theme</Button>
+  <Button theme="muted">Muted theme</Button>
+  <Button theme="primary">Primary theme</Button>
+  <Button theme="disabled" disabled>
+    Disabled theme
+  </Button>
+</div>
+
+<h5>Border radii</h5>
+<div className="flex items-baseline flex-wrap gap-2">
+  <Button>Default border radius</Button>
+  <Button borderRadius="full">Full border radius</Button>
+  <Button borderRadius="none">No border radius</Button>
+</div>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Button } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Button variant="destructive" size="lg" onClick={handleDelete}>
+    Delete
+  </Button>
+)
+```
+
+## API Reference
+
+<Badge theme="emphasis">Coming soon</Badge>

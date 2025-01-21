@@ -4,25 +4,20 @@ import {
   Accordion,
   Badge,
   Button,
+  ButtonWithOptions,
   Checkbox,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
   Icon,
   Layout,
   StackedList
-} from '@components/index'
-import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
-
+} from '@/components'
 import {
   EnumCheckStatus,
+  extractInfoFromRuleViolationArr,
   MergeCheckStatus,
   PullRequestAction,
   PullRequestChangesSectionProps,
@@ -30,8 +25,11 @@ import {
   PullRequestState,
   TypesPullReqCheck,
   TypesRuleViolations
-} from '../../pull-request-details-types'
-import { extractInfoFromRuleViolationArr } from '../../pull-request-utils'
+} from '@/views'
+import { cn } from '@utils/cn'
+import { timeAgo } from '@utils/utils'
+import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -188,7 +186,7 @@ const PullRequestPanel = ({
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
   const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
   //   const isConflict = pullReqMetadata?.merge_check_status === MergeCheckStatus.CONFLICT
-  const isDraft = pullReqMetadata?.is_draft
+  const isDraft = useMemo(() => pullReqMetadata?.is_draft, [pullReqMetadata?.is_draft])
   const unchecked = useMemo(
     () => pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
     [pullReqMetadata, isClosed]
@@ -201,11 +199,13 @@ const PullRequestPanel = ({
       const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(ruleViolationArr.data.rule_violations)
       setNotBypassable(checkIfBypassAllowed)
     }
-  }, [ruleViolationArr])
+  }, [ruleViolationArr, isDraft])
+
   const rebasePossible = useMemo(
     () => pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
     [pullReqMetadata]
   )
+
   const moreTooltip = () => {
     return (
       <DropdownMenu>
@@ -214,7 +214,7 @@ const PullRequestPanel = ({
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[180px] rounded-[10px] border border-borders-1 bg-background-2 py-2 shadow-sm">
+        <DropdownMenuContent className="w-[200px]" align="end">
           <DropdownMenuGroup>
             <DropdownMenuItem
               onClick={e => {
@@ -222,20 +222,16 @@ const PullRequestPanel = ({
 
                 e.stopPropagation()
               }}
-              className="cursor-pointer"
             >
-              <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-              {'Mark as draft'}
+              Mark as draft
             </DropdownMenuItem>
             <DropdownMenuItem
               onClick={e => {
                 handlePrState('closed')
                 e.stopPropagation()
               }}
-              className="cursor-pointer"
             >
-              <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-              {'Close pull request'}
+              Close pull request
             </DropdownMenuItem>
             {rebasePossible && (
               <DropdownMenuItem
@@ -243,10 +239,8 @@ const PullRequestPanel = ({
                   handleRebaseBranch()
                   e.stopPropagation()
                 }}
-                className="cursor-pointer"
               >
-                <DropdownMenuShortcut className="ml-0"></DropdownMenuShortcut>
-                {'Rebase'}
+                Rebase
               </DropdownMenuItem>
             )}
           </DropdownMenuGroup>
@@ -303,56 +297,46 @@ const PullRequestPanel = ({
                       <span className="text-12 text-primary">Bypass and merge anyway</span>
                     </Layout.Horizontal>
                   )}
-                  <Button
-                    variant={actions && !pullReqMetadata?.closed ? 'split' : 'default'}
-                    size={actions && !pullReqMetadata?.closed ? 'xs_split' : 'xs'}
-                    theme={
-                      mergeable && !ruleViolation && !pullReqMetadata?.is_draft && !pullReqMetadata?.closed
-                        ? 'success'
-                        : pullReqMetadata?.is_draft || pullReqMetadata?.closed
-                          ? 'primary'
-                          : checksInfo.status === 'pending' || checksInfo.status === 'running'
-                            ? 'warning'
-                            : 'error'
-                    }
-                    disabled={!checkboxBypass && ruleViolation}
-                    onClick={actions[0]?.action}
-                    dropdown={
-                      actions && (
-                        <DropdownMenu>
-                          <DropdownMenuTrigger insideSplitButton>
-                            <Icon name="chevron-down" size={11} className="chevron-down" />
-                          </DropdownMenuTrigger>
-                          <DropdownMenuContent className="mt-1 max-w-80" align="end">
-                            {/* TODO: it is required to add the state by which the current active action will be determined */}
-                            <DropdownMenuRadioGroup value={actions[0]?.id}>
-                              {actions.map((action, action_idx) => {
-                                return (
-                                  <DropdownMenuRadioItem
-                                    className="items-start"
-                                    value={action.id}
-                                    onClick={action.action}
-                                    key={action_idx}
-                                  >
-                                    <div className="flex flex-col">
-                                      <span className="leading-none text-foreground-8">{action.title}</span>
-                                      <span className="mt-1.5 text-foreground-4">{action.description}</span>
-                                    </div>
-                                  </DropdownMenuRadioItem>
-                                )
-                              })}
-                            </DropdownMenuRadioGroup>
-                          </DropdownMenuContent>
-                        </DropdownMenu>
-                      )
-                    }
-                  >
-                    {pullReqMetadata?.closed
-                      ? 'Open for review'
-                      : pullReqMetadata?.is_draft
-                        ? 'Ready for review'
-                        : 'Squash and merge'}
-                  </Button>
+
+                  {actions && !pullReqMetadata?.closed ? (
+                    <ButtonWithOptions
+                      id="pr-type"
+                      theme={
+                        mergeable && !ruleViolation && !pullReqMetadata?.is_draft
+                          ? 'success'
+                          : pullReqMetadata?.is_draft
+                            ? 'primary'
+                            : checksInfo.status === 'pending' || checksInfo.status === 'running'
+                              ? 'warning'
+                              : 'disabled'
+                      }
+                      disabled={
+                        (!checkboxBypass && ruleViolation) ||
+                        !mergeable ||
+                        ['pending', 'running', 'failed'].includes(checksInfo.status)
+                      }
+                      selectedValue={actions[0].id}
+                      handleOptionChange={() => {}}
+                      options={actions.map(action => ({
+                        value: action.id,
+                        label: action.title,
+                        description: action.description
+                      }))}
+                      handleButtonClick={() => actions[0]?.action?.()}
+                    >
+                      {pullReqMetadata?.is_draft ? 'Ready for review' : 'Squash and merge'}
+                    </ButtonWithOptions>
+                  ) : (
+                    <Button
+                      size="md"
+                      theme="primary"
+                      disabled={!checkboxBypass && ruleViolation}
+                      onClick={actions[0].action}
+                    >
+                      Open for review
+                    </Button>
+                  )}
+
                   {pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft && moreTooltip()}
                 </Layout.Horizontal>
               )
@@ -361,7 +345,7 @@ const PullRequestPanel = ({
         )}
       </StackedList.Item>
       <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
-        <Accordion type="multiple" className="w-full">
+        <Accordion.Root type="multiple" className="w-full">
           {!pullReqMetadata?.merged && (
             <PullRequestChangesSection
               changesInfo={changesInfo}
@@ -394,7 +378,7 @@ const PullRequestPanel = ({
               conflictingFiles={conflictingFiles}
             />
           )}
-        </Accordion>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

@@ -96,5 +96,223 @@
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 2.2))"
     }
+  },
+  "typography": {
+    "display": {
+      "strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.500}",
+          "fontSize": "{font-size.f3}",
+          "lineHeight": "round({font-size.f3}* {leading.tight}/2) * 2",
+          "letterSpacing": "{tracking.tight}",
+          "textCase": "{text-case.none}"
+        },
+        "$description": "Large headlines with extra emphasis."
+      },
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.400}",
+          "fontSize": "{font-size.f2}",
+          "lineHeight": "round({font-size.f2}* {leading.tight}/2) * 2",
+          "letterSpacing": "{tracking.tight}",
+          "textCase": "{text-case.none}"
+        },
+        "$description": "Large headlines, hero sections."
+      }
+    },
+    "title": {
+      "strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.500}",
+          "fontSize": "{font-size.f1}",
+          "lineHeight": "round({font-size.f1}* {leading.tight}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Emphasized section headers."
+      },
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.500}",
+          "fontSize": "{font-size.f0}",
+          "lineHeight": "round({font-size.f0}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Section headers."
+      }
+    },
+    "body": {
+      "subtle": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.300}",
+          "fontSize": "{font-size.f-1}",
+          "lineHeight": "round({font-size.f-1}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "De-emphasized body text, secondary information."
+      },
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.400}",
+          "fontSize": "{font-size.f-1}",
+          "lineHeight": "round({font-size.f-1}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      },
+      "emphasized": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.500}",
+          "fontSize": "{font-size.f-1}",
+          "lineHeight": "round({font-size.f-1}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Emphasized body text for important information."
+      },
+      "strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.600}",
+          "fontSize": "{font-size.f-1}",
+          "lineHeight": "round({font-size.f-1}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Strongly emphasized body text for high importance."
+      }
+    },
+    "caption": {
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.500}",
+          "fontSize": "{font-size.f-2}",
+          "lineHeight": "round({font-size.f-2}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary caption style, small but important text."
+      },
+      "subtle": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.400}",
+          "fontSize": "{font-size.f-2}",
+          "lineHeight": "round({font-size.f-2}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Helper text, meta information."
+      },
+      "data": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{default-font-weight-normal.600}",
+          "fontSize": "{font-size.f-3}",
+          "lineHeight": "round({font-size.f-3}* {leading.snug}/2) * 2",
+          "letterSpacing": "{tracking.wide}"
+        },
+        "$description": "Small informational text used for displaying numerical, statistical, or technical data. "
+      }
+    },
+    "code": {
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.mono}",
+          "fontWeight": "{default-font-weight-normal.400}",
+          "fontSize": "{font-size.f-1}",
+          "lineHeight": "round({font-size.f-1}* {leading.normal}/2) * 2",
+          "letterSpacing": "{tracking.tight}"
+        },
+        "$description": "Code blocks and larger code snippets."
+      }
+    },
+    "article": {
+      "title": {
+        "h1": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.600}",
+            "fontSize": "{font-size.f2}",
+            "lineHeight": "round({font-size.f2}* {leading.tight}/2) * 2",
+            "letterSpacing": "{tracking.tight}"
+          },
+          "$description": "Article main heading."
+        },
+        "h2": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.600}",
+            "fontSize": "{font-size.f1}",
+            "lineHeight": "round({font-size.f1}* {leading.normal}/2) * 2",
+            "letterSpacing": "{tracking.tight}"
+          },
+          "$description": "Article section heading."
+        },
+        "h3": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.600}",
+            "fontSize": "{font-size.f0}",
+            "lineHeight": "round({font-size.f0}* {leading.normal}/2) * 2",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Article subsection heading."
+        }
+      },
+      "content": {
+        "lead": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.400}",
+            "fontSize": "{font-size.f1}",
+            "lineHeight": "round({font-size.f1}* {leading.normal}/2) * 2",
+            "letterSpacing": "{tracking.tight}"
+          },
+          "$description": "Article introduction paragraph."
+        },
+        "paragraph": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.400}",
+            "fontSize": "{font-size.f0}",
+            "lineHeight": "round({font-size.f0}* {leading.relaxed}/2) * 2",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Article paragraph text."
+        },
+        "emphasized": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{default-font-weight-normal.500}",
+            "fontSize": "{font-size.f0}",
+            "lineHeight": "round({font-size.f0}* {leading.relaxed}/2) * 2",
+            "letterSpacing": "{tracking.tight}"
+          },
+          "$description": "Emphasized paragraph text."
+        }
+      }
+    }
   }
 }

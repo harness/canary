@@ -717,6 +717,10 @@ export const routes: CustomRouteObject[] = [
         children: [
           {
             index: true,
+            element: <Navigate to="default-settings" replace />
+          },
+          {
+            index: true,
             path: 'default-settings',
             element: <UserManagementPageContainer />,
             handle: {

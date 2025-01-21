@@ -1,11 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import {
-  ImportRepositoryErrorResponse,
-  ImportRepositoryRequestBody,
-  useImportRepositoryMutation
-} from '@harnessio/code-service-client'
-import { toast, Toaster } from '@harnessio/ui/components'
+import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
 import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -17,7 +12,7 @@ export const ImportRepo = () => {
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
-  const importRepoMutation = useImportRepositoryMutation({})
+  const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
 
   const onSubmit = async (data: ImportRepoFormFields) => {
     const body: ImportRepositoryRequestBody = {
@@ -33,7 +28,7 @@ export const ImportRepo = () => {
       },
       provider_repo: `${data.organization}/${data.repository}`
     }
-    importRepoMutation.mutate(
+    importRepoMutation(
       {
         queryParams: {},
         body: body
@@ -41,13 +36,6 @@ export const ImportRepo = () => {
       {
         onSuccess: () => {
           navigate(routes.toRepositories({ spaceId }))
-        },
-        onError: (error: ImportRepositoryErrorResponse) => {
-          const message = error.message || 'An unknown error occurred.'
-          toast({
-            title: message,
-            variant: 'destructive'
-          })
         }
       }
     )
@@ -59,8 +47,12 @@ export const ImportRepo = () => {
 
   return (
     <>
-      <RepoImportPageView onFormSubmit={onSubmit} onFormCancel={onCancel} isLoading={importRepoMutation.isLoading} />
-      <Toaster />
+      <RepoImportPageView
+        onFormSubmit={onSubmit}
+        onFormCancel={onCancel}
+        isLoading={isLoading}
+        apiErrorsValue={error?.message?.toString()}
+      />
     </>
   )
 }

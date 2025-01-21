@@ -29,8 +29,15 @@ export const RepoLabelsListView: FC<RepoLabelPageProps> = ({
   isLoadingSpaceLabels
 }) => {
   const { t } = useTranslationStore()
-  const { repoLabels, totalPages, page, setPage, repoValues, setGetParentScopeLabels, getParentScopeLabels } =
-    useLabelsStore()
+  const {
+    labels: repoLabels,
+    totalPages,
+    page,
+    setPage,
+    values: repoValues,
+    setGetParentScopeLabels,
+    getParentScopeLabels
+  } = useLabelsStore()
 
   const {
     search: searchInput,

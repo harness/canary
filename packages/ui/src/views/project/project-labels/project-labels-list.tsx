@@ -19,7 +19,7 @@ export const ProjectLabelsListView: FC<ProjectLabelPageProps> = ({
   isLoadingSpaceLabels
 }) => {
   const { t } = useTranslationStore()
-  const { spaceLabels, totalPages, page, setPage, spaceValues } = useLabelsStore()
+  const { labels: spaceLabels, totalPages, page, setPage, values: spaceValues } = useLabelsStore()
 
   const {
     search: searchInput,
@@ -68,7 +68,6 @@ export const ProjectLabelsListView: FC<ProjectLabelPageProps> = ({
         ) : (
           <LabelsListView
             labels={spaceLabels}
-            // createdIn={createdIn}
             useLabelsStore={useLabelsStore}
             handleDeleteLabel={handleDeleteLabel}
             handleEditLabel={handleEditLabel}

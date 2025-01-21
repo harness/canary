@@ -38,6 +38,7 @@ interface RepoImportPageProps {
   onFormSubmit: (data: ImportRepoFormFields) => void
   onFormCancel: () => void
   isLoading: boolean
+  apiErrorsValue?: string
 }
 
 const providerOptions = [
@@ -52,7 +53,7 @@ const providerOptions = [
   `Gogs`
 ]
 
-export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoImportPageProps) {
+export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
   const {
     register,
     handleSubmit,
@@ -187,6 +188,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
             <Fieldset>
               <ControlGroup>
                 <Input
+                  type="password"
                   id="password"
                   label="Token"
                   {...register('password')}
@@ -228,8 +230,10 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
             </ControlGroup>
           </Fieldset>
 
+          {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
+
           {/* SUBMIT BUTTONS */}
-          <Fieldset className="mt-6">
+          <Fieldset>
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}

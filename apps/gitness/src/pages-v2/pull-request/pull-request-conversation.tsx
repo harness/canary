@@ -46,6 +46,7 @@ import {
 
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
@@ -65,6 +66,7 @@ import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-r
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
 export default function PullRequestConversationPage() {
+  const routes = useRoutes()
   const {
     pullReqMetadata,
     refetchPullReq,
@@ -596,6 +598,9 @@ export default function PullRequestConversationPage() {
               headerMsg={errorMsg}
               commitSuggestionsBatchCount={suggestionsBatch?.length}
               onCommitSuggestions={onCommitSuggestionsBatch}
+              toPRCheck={({ pipelineId, executionId }: { pipelineId: string; executionId: string }) =>
+                routes.toExecution({ spaceId, repoId, pipelineId, executionId })
+              }
             />
             <Spacer size={12} />
             <PullRequestFilters

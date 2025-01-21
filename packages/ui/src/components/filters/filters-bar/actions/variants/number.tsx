@@ -2,15 +2,16 @@ import { useState } from 'react'
 
 import { Icon, Input } from '@/components'
 
-import { FilterHandlers, FilterValue } from '../../../types'
+import { FilterValue } from '../../../types'
 
-interface NumberFilterProps {
-  filter: FilterValue
-  onUpdateFilter: FilterHandlers['handleUpdateFilter']
+interface NumberFilterProps<T extends object> {
+  filter: FilterValue<{[key in keyof T]: string}>
+  onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void
 }
 
-const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
-  const [value, setValue] = useState<string>(filter.selectedValues[0] || '')
+const Number = <T extends object>({ filter, onUpdateFilter }: NumberFilterProps<T>) => {
+  const [value, setValue] = useState<string>(filter.selectedValues || '')
+  const emptyValue =  '' as T[keyof T]
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = event.target.value
@@ -22,21 +23,21 @@ const Number = ({ filter, onUpdateFilter }: NumberFilterProps) => {
     setValue(newValue)
 
     if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-      onUpdateFilter(filter.type, [])
+      onUpdateFilter(filter.type, emptyValue)
       return
     }
 
     if (!newValue) {
-      onUpdateFilter(filter.type, [])
+      onUpdateFilter(filter.type, emptyValue)
       return
     }
 
-    onUpdateFilter(filter.type, [newValue])
+    onUpdateFilter(filter.type, newValue as T[keyof T])
   }
 
   const handleClear = () => {
     setValue('')
-    onUpdateFilter(filter.type, [])
+    onUpdateFilter(filter.type, emptyValue)
   }
 
   if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {

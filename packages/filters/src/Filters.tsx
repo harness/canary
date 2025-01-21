@@ -1,26 +1,29 @@
 import React, {
-  ReactNode,
-  useImperativeHandle,
   createContext,
+  forwardRef,
+  ReactNode,
+  useCallback,
   useContext,
   useEffect,
+  useImperativeHandle,
   useRef,
-  useState,
-  forwardRef
+  useState
 } from 'react'
-import { FilterType, FilterStatus, FilterConfig, InitializeFiltersConfigType, FilterRefType } from './types'
-import { createQueryString, mergeURLSearchParams } from './utils'
-import useRouter from './useRouter'
+
 import { debug, warn } from './debug'
-import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
 import Filter, { FilterProps } from './Filter'
 import FiltersContent, { FiltersContentProps } from './FiltersContent'
+import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
+import { FilterConfig, FilterRefType, FilterStatus, FilterType, InitializeFiltersConfigType } from './types'
+import useRouter from './useRouter'
+import { createQueryString, mergeURLSearchParams } from './utils'
 
 interface FiltersContextType<T extends Record<string, unknown>> {
   visibleFilters: (keyof T)[]
   availableFilters: (keyof T)[]
   removeFilter: (filterKey: keyof T) => void
   addFilter: (filterKey: keyof T) => void
+  resetFilters: () => void
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
   addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType>) => void
@@ -31,10 +34,16 @@ const FiltersContext = createContext<FiltersContextType<Record<string, unknown>>
 interface FiltersProps {
   children: ReactNode
   allFiltersSticky?: boolean
+  onChange: (filters: FilterValue[]) => void
+}
+
+interface FilterValue {
+  key: string
+  value: any
 }
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
-  { children, allFiltersSticky }: FiltersProps,
+  { children, allFiltersSticky, onChange }: FiltersProps,
   ref: React.Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
@@ -79,6 +88,15 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     debug('Updating URL with query: %s', query)
     updateURL(new URLSearchParams(query))
   }
+
+  const getValues = useCallback(() => {
+    const filters = Object.keys(filtersMap).length === 0 ? initialFiltersRef.current : filtersMap
+
+    return Object.keys(filters || {}).map(key => {
+      const filter = filters?.[key as FilterKeys]
+      return { key, value: filter?.value }
+    })
+  }, [filtersMap])
 
   const updateFilter = (filterKey: FilterKeys, parsedValue: any, value: any) => {
     debug('Updating filter: %s with value: %O', filterKey, value)
@@ -145,6 +163,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   }
 
   useEffect(() => {
+    onChange(getValues())
+  }, [filtersMap, getValues, onChange])
+
+  useEffect(() => {
     if (!initialFiltersRef.current) return
 
     const currentQuery = createQueryString(filtersOrder, filtersMap)
@@ -193,15 +215,6 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }
   }
 
-  const getValues = () => {
-    const filters = Object.keys(filtersMap).length === 0 ? initialFiltersRef.current : filtersMap
-
-    return Object.keys(filters || {}).map(key => {
-      const filter = filters?.[key as FilterKeys]
-      return { key, value: filter?.value }
-    })
-  }
-
   const resetFilters = () => {
     // add only sticky filters and remove other filters.
     // remove values also from sticky filters
@@ -247,6 +260,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       value={
         {
           visibleFilters: filtersOrder as string[],
+          resetFilters,
           availableFilters,
           removeFilter,
           getFilterValue,

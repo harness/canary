@@ -1,3 +1,5 @@
+import { Parser } from "@harnessio/filters"
+
 type FilterActionKind = 'filter' | 'sort'
 
 interface FilterAction {
@@ -5,32 +7,32 @@ interface FilterAction {
   kind: FilterActionKind
 }
 
-interface FilterOptionBase {
+interface FilterOptionBase<T extends object> {
   label: string
-  value: string
+  value: keyof T
   type: string
-  conditions?: FilterCondition[]
 }
 
-type FilterOption = CalendarFilterOption | CheckboxFilterOption | TextFilterOption | NumberFilterOption
+type FilterOption<T extends object> = CalendarFilterOption<T> | CheckboxFilterOption<T> | TextFilterOption<T> | NumberFilterOption<T>
 
-interface CalendarFilterOption extends FilterOptionBase {
+interface CalendarFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'calendar'
 }
 
-interface CheckboxFilterOption extends FilterOptionBase {
+interface CheckboxFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'checkbox'
   options: Array<{
     label: string
     value: string
   }>
+  parser: Parser<any>
 }
 
-interface TextFilterOption extends FilterOptionBase {
+interface TextFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'text'
 }
 
-interface NumberFilterOption extends FilterOptionBase {
+interface NumberFilterOption<T extends object = object> extends FilterOptionBase<T> {
   type: 'number'
 }
 
@@ -39,10 +41,10 @@ interface FilterCondition {
   value: string
 }
 
-interface FilterValue {
-  type: string
+interface FilterValue<T extends object = any> {
+  type: keyof T
   condition: string
-  selectedValues: string[]
+  selectedValues: T[keyof T] | undefined
 }
 
 interface SortOption {

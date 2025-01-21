@@ -2,14 +2,18 @@ import { useState } from 'react'
 
 import { TFunction } from 'i18next'
 
+import FilterSelect, { FilterSelectLabel } from './filter-select'
 import ManageViews from './manage-views'
 import FilterTrigger from './triggers/filter-trigger'
 import ViewTrigger from './triggers/view-trigger'
 import { FilterHandlers, FilterOption, SortOption, ViewLayoutOption, ViewManagement } from './types'
+import { createFilters } from '@harnessio/filters'
 
 interface FiltersProps {
   showFilter?: boolean
   showSort?: boolean
+  selectedFilters?: number
+  setOpenedFilter: (filter: string) => void
   filterOptions: FilterOption[]
   sortOptions: SortOption[]
   filterHandlers: Pick<
@@ -48,6 +52,7 @@ interface FiltersProps {
   onLayoutChange?: (layout: string) => void
   t: TFunction
 }
+const FilterV2 = createFilters<RepoListFilters>()
 
 /**
  * Filters component for handling filtering, sorting, and view management
@@ -73,12 +78,10 @@ const Filters = ({
   showFilter = true,
   showSort = true,
   filterOptions,
+  setOpenedFilter,
   sortOptions,
   filterHandlers: {
-    activeFilters,
     activeSorts,
-    handleFilterChange,
-    handleResetFilters,
     searchQueries,
     handleSearchChange,
     handleSortChange,
@@ -96,16 +99,26 @@ const Filters = ({
     <>
       <div className="flex items-center gap-x-5">
         {showFilter && (
-          <FilterTrigger
-            type="filter"
-            activeFilters={activeFilters}
-            onChange={handleFilterChange}
-            onReset={handleResetFilters}
-            searchQueries={searchQueries}
-            onSearchChange={handleSearchChange}
-            options={filterOptions}
-            t={t}
-          />
+          <FilterV2.Dropdown className={"flex w-full"}>
+            {(addFilter, availableFilters, resetFilters) => (
+                <FilterSelect
+                options={filterOptions}
+                onChange={(option) => {
+                  addFilter(option.value)
+                  setOpenedFilter(option.value)
+                }}
+                onReset={resetFilters}
+                inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+                buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+                displayLabel={
+                  <FilterSelectLabel
+                    selectedFilters={filterOptions.length - availableFilters.length}
+                    displayLabel={t('component:filter.defaultLabel', 'Filter')}
+                  />
+                }
+              />
+            )}
+          </FilterV2.Dropdown>
         )}
 
         {showSort && (

@@ -39,10 +39,6 @@ const applyFilter = (repo: RepositoryType, filter: FilterValue): boolean => {
  * Applies type-based filtering (private/public/fork)
  */
 const applyTypeFilter = (repo: RepositoryType, filter: FilterValue): boolean => {
-  if (filter.condition === 'is_empty' || filter.condition === 'is_not_empty') {
-    return true
-  }
-
   if (filter.selectedValues.length === 0) {
     return true
   }
@@ -64,7 +60,7 @@ const applyTypeFilter = (repo: RepositoryType, filter: FilterValue): boolean => 
     }
   })
 
-  return filter.condition === 'is' ? matchesType : !matchesType
+  return matchesType
 }
 
 /**
@@ -75,105 +71,39 @@ const applyDateFilter = (repo: RepositoryType, filter: FilterValue): boolean => 
     return true
   }
 
-  if (filter.condition === 'is_empty') {
-    return !repo.createdAt
-  }
-  if (filter.condition === 'is_not_empty') {
-    return !!repo.createdAt
-  }
-
   const createdDate = new Date(repo.createdAt)
   const selectedDate = new Date(filter.selectedValues[0])
 
   createdDate.setHours(0, 0, 0, 0)
   selectedDate.setHours(0, 0, 0, 0)
 
-  switch (filter.condition) {
-    case 'is':
-      return createdDate.getTime() === selectedDate.getTime()
-    case 'is_before':
-      return createdDate.getTime() < selectedDate.getTime()
-    case 'is_after':
-      return createdDate.getTime() > selectedDate.getTime()
-    case 'is_between': {
-      if (filter.selectedValues.length !== 2) return true
-      const endDate = new Date(filter.selectedValues[1])
-      endDate.setHours(0, 0, 0, 0)
-      return createdDate.getTime() >= selectedDate.getTime() && createdDate.getTime() <= endDate.getTime()
-    }
-    default:
-      return true
-  }
+  return createdDate.getTime() === selectedDate.getTime()
 }
 
 /**
  * Applies name-based filtering
  */
 const applyNameFilter = (repo: RepositoryType, filter: FilterValue): boolean => {
-  if (filter.condition === 'is_empty') {
-    return !repo.name
-  }
-  if (filter.condition === 'is_not_empty') {
-    return !!repo.name
-  }
-
-  if (filter.selectedValues.length === 0) {
+  if (!filter.selectedValues) {
     return true
   }
 
-  const value = filter.selectedValues[0].toLowerCase()
+  const value = filter.selectedValues.toLowerCase()
   const name = repo.name.toLowerCase()
 
-  switch (filter.condition) {
-    case 'is':
-      return name === value
-    case 'is_not':
-      return name !== value
-    case 'contains':
-      return name.includes(value)
-    case 'does_not_contain':
-      return !name.includes(value)
-    case 'starts_with':
-      return name.startsWith(value)
-    case 'ends_with':
-      return name.endsWith(value)
-    default:
-      return true
-  }
+  return name.includes(value)
 }
 
 /**
  * Applies stars-based filtering
  */
 const applyStarsFilter = (repo: RepositoryType, filter: FilterValue): boolean => {
-  if (filter.condition === 'is_empty') {
-    return !repo.stars
-  }
-  if (filter.condition === 'is_not_empty') {
-    return !!repo.stars
-  }
-
-  if (filter.selectedValues.length === 0) {
+  if (!filter.selectedValues) {
     return true
   }
 
-  const filterValue = Number(filter.selectedValues[0])
+  const filterValue = Number(filter.selectedValues)
   const repoValue = repo.stars || 0
 
-  switch (filter.condition) {
-    case 'equals':
-      return repoValue === filterValue
-    case 'not_equals':
-      return repoValue !== filterValue
-    case 'greater':
-      return repoValue > filterValue
-    case 'less':
-      return repoValue < filterValue
-    case 'greater_equals':
-      return repoValue >= filterValue
-    case 'less_equals':
-      return repoValue <= filterValue
-    default:
-      return true
-  }
+  return repoValue === filterValue
 }

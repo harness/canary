@@ -1,3 +1,4 @@
+import { FilterRefType } from '@harnessio/filters'
 import { RepositoryType } from '@views/repo/repo.types'
 import i18n, { TFunction } from 'i18next'
 
@@ -8,6 +9,15 @@ export interface RepoStore {
   setPage: (page: number) => void
   setRepositories: (data: RepositoryType[], totalPages: number) => void
 }
+
+export interface RepoListFilters {
+  name: string
+  type: string[]
+  stars: string
+  created_time: string
+}
+
+export type filterRef = FilterRefType<RepoListFilters>
 
 export interface TranslationStore {
   t: TFunction

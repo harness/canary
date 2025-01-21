@@ -3,11 +3,11 @@ import { useState } from 'react'
 import { Input, Calendar as UICalendar, type CalendarDateRange } from '@/components'
 import { cn } from '@utils/cn'
 
-import { FilterHandlers, FilterValue } from '../../../types'
+import { FilterValue } from '../../../types'
 
-interface CalendarProps {
-  filter: FilterValue
-  onUpdateFilter: FilterHandlers['handleUpdateFilter']
+interface CalendarProps<T extends object> {
+  filter: FilterValue<{[key in keyof T]: string[]}>
+  onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void
 }
 
 interface DateInputState {
@@ -112,7 +112,7 @@ const parseDateString = (dateStr: string): ParsedDateResult => {
   }
 }
 
-const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
+const Calendar = <T extends object>({ filter, onUpdateFilter }: CalendarProps<T>) => {
   // Initialize states based on filter mode
   const isBetweenMode = filter.condition === 'is_between'
   const initialDate = filter.selectedValues[0] ? new Date(filter.selectedValues[0]) : new Date()

@@ -3,23 +3,23 @@ import { Icon } from "@components/icon"
 import { cn } from "@utils/cn"
 import { useEffect, useState } from "react"
 
-interface FiltersProps {
-  filterKey: string
-  handleRemoveFilter: (filterKey: string) => void
+interface FiltersProps<T> {
+  filterKey: keyof T
+  handleRemoveFilter: (filterKey: keyof T) => void
   shouldOpen: boolean
   filterLabel: string
-  valueLabel: string
-  children: React.ReactElement
+  valueLabel?: string
+  children?: React.ReactElement | null
 }
 
-const FilterBoxWrapper = ({
+const FilterBoxWrapper = <T extends object>({
   filterKey,
   handleRemoveFilter,
   shouldOpen,
   children,
   filterLabel,
   valueLabel
-}: FiltersProps) => {
+}: FiltersProps<T>) => {
   const [isOpen, setIsOpen] = useState(false)
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const FilterBoxWrapper = ({
         <div className="text-13 flex items-center gap-x-1.5">
           <span className="text-foreground-1">
             {filterLabel}
-            {valueLabel ?? ': '}
+            {(!!valueLabel) && ': '}
           </span>
           <span className="text-foreground-4">{valueLabel}</span>
         </div>

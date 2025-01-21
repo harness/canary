@@ -101,7 +101,7 @@
     "lodash-es": "^4.17.21",
     "overlayscrollbars": "^2.10.0",
     "react-day-picker": "^8.10.1",
-    "react-hook-form": "^7.53.0",
+    "react-hook-form": "^7.28.0",
     "react-i18next": "^15.1.1",
     "react-resizable-panels": "^2.0.19",
     "react-router-dom": "^6.26.0",

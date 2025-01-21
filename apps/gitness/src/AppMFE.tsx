@@ -28,21 +28,21 @@ export interface MFERouteRendererProps {
 }
 function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
   // Handle location change detected from parent route
-  const navigate = useNavigate()
-  useEffect(() => {
-    if (renderUrl) {
-      const pathToNavigate = parentLocationPath.replace(renderUrl, '')
-      navigate(pathToNavigate, { replace: true })
-    }
-  }, [parentLocationPath])
+  // const navigate = useNavigate()
+  // useEffect(() => {
+  //   if (renderUrl) {
+  //     const pathToNavigate = parentLocationPath.replace(renderUrl, '')
+  //     navigate(pathToNavigate, { replace: true })
+  //   }
+  // }, [parentLocationPath])
 
-  // Notify parent about route change
-  const location = useLocation()
-  useEffect(() => {
-    if (location.pathname !== parentLocationPath) {
-      onRouteChange?.(`${renderUrl}${location.pathname}`)
-    }
-  }, [location])
+  // // Notify parent about route change
+  // const location = useLocation()
+  // useEffect(() => {
+  //   if (location.pathname !== parentLocationPath) {
+  //     onRouteChange?.(`${renderUrl}${location.pathname}`)
+  //   }
+  // }, [location])
 
   return null
 }

@@ -127,6 +127,7 @@ export const BranchesList = ({
                 )}
                 <TableCell className="text-right">
                   <MoreActionsTooltip
+                    isInTable
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),

@@ -1,14 +1,6 @@
 import { useState } from 'react'
 
-import {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  CopyButton,
-  Icon,
-  Layout,
-  StackedList
-} from '@components/index'
+import { Accordion, CopyButton, Icon, Layout, StackedList } from '@/components'
 import { cn } from '@utils/cn'
 import { isEmpty } from 'lodash-es'
 
@@ -79,8 +71,8 @@ const PullRequestMergeSection = ({
     )
   }
   return (
-    <AccordionItem value="item-4" isLast>
-      <AccordionTrigger className="text-left" hideChevron={mergeable || unchecked}>
+    <Accordion.Item value="item-4" isLast>
+      <Accordion.Trigger className="text-left" hideChevron={mergeable || unchecked}>
         <StackedList.Field
           title={
             <LineTitle
@@ -144,9 +136,9 @@ const PullRequestMergeSection = ({
           }
         />
         {!mergeable && !unchecked && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
-      </AccordionTrigger>
+      </Accordion.Trigger>
       {!mergeable && !unchecked && (
-        <AccordionContent>
+        <Accordion.Content>
           <div className="ml-6">
             {showCommandLineInfo && (
               <div className="mb-2 rounded-md border border-border p-1 px-4 py-2">
@@ -177,9 +169,9 @@ const PullRequestMergeSection = ({
               </div>
             )}
           </div>
-        </AccordionContent>
+        </Accordion.Content>
       )}
-    </AccordionItem>
+    </Accordion.Item>
   )
 }
 

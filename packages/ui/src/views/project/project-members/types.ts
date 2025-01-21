@@ -29,6 +29,9 @@ export interface ProjectMemberListViewProps {
   inviteMemberError?: string
   onSubmit: (formValues: InviteMemberFormFields) => void
   onEditMember: (updatedMember: MembersProps) => void
+  setPrincipalsSearchQuery: (val: string) => void
+  principalsSearchQuery: string
+  onDeleteHandler: (id: string) => void
 }
 
 export interface InviteMemberDialogProps {
@@ -39,4 +42,13 @@ export interface InviteMemberDialogProps {
   isInvitingMember: boolean
   principals: Array<PrincipalData>
   error?: string
+  setPrincipalsSearchQuery: (val: string) => void
+  principalsSearchQuery: string
+}
+
+export enum EnumMembershipRole {
+  CONTRIBUTOR = 'contributor',
+  EXECUTOR = 'executor',
+  READER = 'reader',
+  SPACE_OWNER = 'space_owner'
 }

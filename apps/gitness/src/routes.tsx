@@ -375,7 +375,8 @@ const repoRoutes: CustomRouteObject[] = [
         path: 'general',
         element: <ProjectGeneralSettingsPageContainer />,
         handle: {
-          breadcrumb: () => <Text>General</Text>
+          breadcrumb: () => <Text>General</Text>,
+          routeName: RouteConstants.toProjectGeneral
         }
       },
       {

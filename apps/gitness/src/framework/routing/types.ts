@@ -65,6 +65,7 @@ export enum RouteConstants {
   toFreezeWindows = 'toFreezeWindows',
   toExternalTickets = 'toExternalTickets',
   toProjectMembers = 'toProjectMembers',
+  toProjectGeneral = 'toProjectGeneral',
   toGitOps = 'toGitOps',
   toCI = 'toCI',
   toCode = 'toCode'

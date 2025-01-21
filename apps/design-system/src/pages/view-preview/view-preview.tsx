@@ -6,6 +6,8 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view-wrapper'
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
+import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
+import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestChanges from '@subjects/views/pull-request-conversation/pull-request-changes'
@@ -23,12 +25,14 @@ import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import { useTranslationsStore } from '@utils/viewUtils'
 
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
+import { ProjectSettingsWrapper } from './project-settings-wrapper'
 import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
 import RepoViewWrapper from './repo-view-wrapper'
@@ -155,6 +159,23 @@ export const viewPreviews: Record<string, ReactNode> = {
         <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
+  ),
+  'repo-labels-list': (
+    <RepoViewWrapper>
+      <RepoSettingsViewWrapper>
+        <RepoLabelsList />
+      </RepoSettingsViewWrapper>
+    </RepoViewWrapper>
+  ),
+  'space-settings-labels': (
+    <ProjectSettingsWrapper>
+      <ProjectLabelsList />
+    </ProjectSettingsWrapper>
+  ),
+  'space-settings-members': (
+    <ProjectSettingsWrapper>
+      <SpaceSettingsMembers />
+    </ProjectSettingsWrapper>
   )
 }
 

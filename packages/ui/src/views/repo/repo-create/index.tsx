@@ -158,14 +158,12 @@ export function RepoCreatePage({
                 caption="Choose which files not to track from a list of templates."
               >
                 <SelectContent>
-                  {gitIgnoreOptions &&
-                    gitIgnoreOptions?.map(option => {
-                      return (
-                        <SelectItem key={option} value={option}>
-                          {option}
-                        </SelectItem>
-                      )
-                    })}
+                  {!!gitIgnoreOptions &&
+                    gitIgnoreOptions.map(option => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </ControlGroup>

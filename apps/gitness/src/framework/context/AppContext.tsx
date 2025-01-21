@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
@@ -23,7 +23,7 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [spaces, setSpaces] = useLocalStorage<TypesSpace[]>('spaces', [])
+  const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {

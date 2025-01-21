@@ -20,10 +20,12 @@
     "@astrojs/starlight-tailwind": "^3.0.0",
     "@astrojs/tailwind": "^5.1.4",
     "@harnessio/ui": "workspace:*",
+    "@radix-ui/react-navigation-menu": "^1.2.0",
     "astro": "^5.1.5",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.407.0",
+    "prism-react-renderer": "^2.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-live": "^4.1.8",
@@ -44,7 +46,7 @@
     "node": ">=18.17.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,md,mdx}": [
+    "*.{js,jsx,ts,tsx,md,mdx,astro}": [
       "astro check",
       "prettier ./src --write"
     ]

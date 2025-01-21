@@ -14,13 +14,10 @@ import {
   Icon,
   Layout,
   StackedList
-} from '@components/index'
-import { cn } from '@utils/cn'
-import { timeAgo } from '@utils/utils'
-import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
-
+} from '@/components'
 import {
   EnumCheckStatus,
+  extractInfoFromRuleViolationArr,
   MergeCheckStatus,
   PullRequestAction,
   PullRequestChangesSectionProps,
@@ -28,8 +25,11 @@ import {
   PullRequestState,
   TypesPullReqCheck,
   TypesRuleViolations
-} from '../../pull-request-details-types'
-import { extractInfoFromRuleViolationArr } from '../../pull-request-utils'
+} from '@/views'
+import { cn } from '@utils/cn'
+import { timeAgo } from '@utils/utils'
+import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
+
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
@@ -186,7 +186,7 @@ const PullRequestPanel = ({
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
   const isOpen = pullReqMetadata?.state === PullRequestState.OPEN
   //   const isConflict = pullReqMetadata?.merge_check_status === MergeCheckStatus.CONFLICT
-  const isDraft = pullReqMetadata?.is_draft
+  const isDraft = useMemo(() => pullReqMetadata?.is_draft, [pullReqMetadata?.is_draft])
   const unchecked = useMemo(
     () => pullReqMetadata?.merge_check_status === MergeCheckStatus.UNCHECKED && !isClosed,
     [pullReqMetadata, isClosed]
@@ -199,7 +199,7 @@ const PullRequestPanel = ({
       const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(ruleViolationArr.data.rule_violations)
       setNotBypassable(checkIfBypassAllowed)
     }
-  }, [ruleViolationArr])
+  }, [ruleViolationArr, isDraft])
 
   const rebasePossible = useMemo(
     () => pullReqMetadata?.merge_target_sha !== pullReqMetadata?.merge_base_sha && !pullReqMetadata?.merged,
@@ -345,7 +345,7 @@ const PullRequestPanel = ({
         )}
       </StackedList.Item>
       <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
-        <Accordion type="multiple" className="w-full">
+        <Accordion.Root type="multiple" className="w-full">
           {!pullReqMetadata?.merged && (
             <PullRequestChangesSection
               changesInfo={changesInfo}
@@ -378,7 +378,7 @@ const PullRequestPanel = ({
               conflictingFiles={conflictingFiles}
             />
           )}
-        </Accordion>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )

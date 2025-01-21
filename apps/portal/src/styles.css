@@ -1,0 +1,115 @@
+body {
+  @apply text-foreground-3 text-base overscroll-none;
+}
+
+main {
+  @apply px-0 py-10 w-full !important;
+}
+
+.sl-container h1 {
+  @apply text-4xl font-normal text-primary-foreground;
+}
+
+.sl-container h2 {
+  @apply text-3xl font-normal text-primary-foreground;
+}
+
+.sl-container h3 {
+  @apply text-2xl font-normal text-primary-foreground;
+}
+
+code {
+  @apply bg-background-3 !important;
+}
+
+.content-panel {
+  @apply px-0 pb-0 m-0 border-none !important;
+}
+
+/* Global sidebar style overrides */
+
+.sidebar {
+  @apply p-0;
+}
+
+mobile-starlight-toc {
+  display: none;
+}
+
+ul.top-level {
+  @apply flex flex-col w-full justify-start;
+}
+
+ul.top-level ul {
+  @apply border-b border-borders-4 px-3 py-6 flex flex-col gap-3 pt-5 justify-start;
+}
+
+ul.top-level li {
+  @apply font-normal text-secondary text-sm border-none p-0 m-0;
+}
+
+ul.top-level li a {
+  @apply py-1 px-2 m-0 text-foreground-4 hover:text-foreground-1;
+}
+
+ul.top-level li a[aria-current="page"] {
+  @apply font-normal bg-primary-background rounded-md text-foreground-1;
+}
+
+ul.top-level li details summary {
+  @apply flex items-center mt-6 !important;
+}
+
+ul.top-level li details summary .group-label {
+  @apply p-0 px-3;
+}
+
+ul.top-level summary .group-label span {
+  @apply font-normal text-sm text-foreground-5;
+}
+
+ul.top-level summary svg {
+  @apply font-normal text-foreground-5 text-lg;
+}
+
+/* Right-hand page sidebar overrides */
+
+.right-sidebar-panel {
+  @apply px-3 pl-0 py-6 pt-16;
+}
+
+.right-sidebar-panel h2 {
+  @apply font-normal text-secondary-muted text-sm;
+}
+
+.right-sidebar-panel ul {
+  @apply m-0 p-0 flex flex-col gap-4 mt-4;
+}
+
+.right-sidebar-panel li a {
+  @apply m-0 p-0 text-foreground-4;
+}
+
+.right-sidebar-panel li ul {
+  @apply pl-4 border-l border-borders-4;
+}
+
+/* Search override */
+
+[aria-label="Search"] {
+  @apply bg-background-4 border border-borders-4 rounded-md h-[36px] !important;
+}
+
+[aria-label="Search"] > kbd:first-of-type {
+  @apply bg-background-2 border border-borders-2 !important;
+}
+
+/* Code/Preview override */
+
+.expressive-code pre {
+  @apply rounded-md overflow-hidden border border-borders-4 bg-foreground-2 !important;
+}
+
+pre.prism-code {
+  @apply rounded-md overflow-hidden border border-borders-4 bg-background-2 !important;
+}

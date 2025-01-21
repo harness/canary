@@ -1,4 +1,4 @@
-import { AccordionItem, AccordionTrigger, Icon, StackedList, Text } from '@components/index'
+import { Accordion, Icon, StackedList, Text } from '@/components'
 
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
@@ -8,8 +8,8 @@ interface PullRequestMergeSectionProps {
 }
 const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMergeSectionProps) => {
   return (
-    <AccordionItem value="item-2">
-      <AccordionTrigger className="text-left" hideChevron>
+    <Accordion.Item value="item-2">
+      <Accordion.Trigger className="text-left" hideChevron>
         <StackedList.Field
           title={
             <LineTitle
@@ -36,8 +36,8 @@ const PullRequestCommentSection = ({ commentsInfo, handleAction }: PullRequestMe
             View
           </Text>
         )}
-      </AccordionTrigger>
-    </AccordionItem>
+      </Accordion.Trigger>
+    </Accordion.Item>
   )
 }
 

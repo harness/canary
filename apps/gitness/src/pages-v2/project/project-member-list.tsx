@@ -1,77 +1,126 @@
 import { useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useQueryState } from 'nuqs'
 
 import {
   EnumMembershipRole,
   TypesPrincipalInfo,
   useListPrincipalsQuery,
   useMembershipAddMutation,
+  useMembershipDeleteMutation,
   useMembershipListQuery,
   useMembershipUpdateMutation
 } from '@harnessio/code-service-client'
+import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { orderSortDate } from '../../types'
 import { usePrincipalListStore } from '../account/stores/principal-list-store'
 import { useMemberListStore } from './stores/member-list-store'
+
+const mapToEnumMembershipRole = (role: string): EnumMembershipRole | undefined =>
+  (['contributor', 'executor', 'reader', 'space_owner'] as const).includes(role as EnumMembershipRole)
+    ? (role as EnumMembershipRole)
+    : undefined
 
 export function ProjectMemberListPage() {
   const spaceURL = useGetSpaceURLParam()
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
-
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
-
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
+  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
+  const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
+  const [deleteMemberId, setDeleteMemberId] = useState<string | null>(null)
+
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const { data: { body: principalData } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user' }
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
   })
 
-  const {
-    isLoading,
-    data: { body: membersData } = {},
-    refetch
-  } = useMembershipListQuery({
+  const { isLoading, data: { body: membersData } = {} } = useMembershipListQuery({
     space_ref: spaceURL ?? '',
     queryParams: {
-      page,
+      page: queryPage,
       query: query ?? '',
       order: orderSortDate.DESC
     }
   })
 
-  const { mutateAsync: updateRole } = useMembershipUpdateMutation(
-    { space_ref: spaceURL },
+  const { mutateAsync: updateRole } = useMembershipUpdateMutation({
+    space_ref: spaceURL ?? ''
+  })
+
+  /**
+   * Close dialog for Delete member and if it was API error - reset it
+   */
+  const handleResetDeleteMember = () => {
+    setDeleteMemberId(null)
+    if (deleteMemberError) {
+      resetDeleteMember()
+    }
+  }
+
+  const handleSetDeleteMember = (id: string) => {
+    setDeleteMemberId(id)
+  }
+
+  const {
+    mutate: deleteMember,
+    isLoading: isDeletingMember,
+    error: deleteMemberError,
+    reset: resetDeleteMember
+  } = useMembershipDeleteMutation(
+    { space_ref: spaceURL ?? '' },
     {
-      onError: _error => {
-        /**
-         * Ignore error
-         * No error handling design spec available yet
-         * @TODO fix when available
-         */
+      onSuccess: () => {
+        handleResetDeleteMember()
+        handleInvalidateMemberList()
       }
     }
   )
 
-  const mapToEnumMembershipRole = (role: string): EnumMembershipRole | undefined =>
-    (['contributor', 'executor', 'reader', 'space_owner'] as const).includes(role as EnumMembershipRole)
-      ? (role as EnumMembershipRole)
-      : undefined
-
   const {
     mutateAsync: inviteMember,
     isLoading: isInvitingMember,
-    error: inviteMemberError
-  } = useMembershipAddMutation({})
+    error: inviteMemberError,
+    reset
+  } = useMembershipAddMutation({
+    space_ref: spaceURL ?? ''
+  })
 
+  const handleDeleteMember = (user_uid: string) => {
+    deleteMember({ user_uid })
+  }
+
+  const handleInvalidateMemberList = () => {
+    queryClient.invalidateQueries({ queryKey: ['membershipList'] })
+  }
+
+  /**
+   * - Reset principalsSearchQuery to empty state, need to trigger fetch useListPrincipalsQuery with no search state.
+   * - Reset useMembershipAddMutation
+   */
+  useEffect(() => {
+    if (!isInviteDialogOpen) {
+      reset()
+
+      if (principalsSearchQuery.length) setPrincipalsSearchQuery('')
+    }
+  }, [isInviteDialogOpen, principalsSearchQuery, reset])
+
+  /**
+   * Submit form of inviting member
+   * - invalidate members list query
+   * - close dialog
+   */
   const onSubmit = async (formValues: InviteMemberFormFields) => {
     const { member, role } = formValues
 
@@ -79,13 +128,9 @@ export function ProjectMemberListPage() {
       space_ref: spaceURL ?? '',
       body: { role: mapToEnumMembershipRole(role), user_uid: member }
     })
-    queryClient.invalidateQueries({ queryKey: ['membershipList'] })
-    setIsDialogOpen(false)
+    handleInvalidateMemberList()
+    setIsInviteDialogOpen(false)
   }
-
-  useEffect(() => {
-    setQueryPage(page)
-  }, [page, setPage, queryPage])
 
   useEffect(() => {
     if (membersData) {
@@ -100,46 +145,77 @@ export function ProjectMemberListPage() {
           display_name: member?.display_name ?? '',
           uid: member?.uid ?? '',
           email: member?.email ?? '',
+          // TODO: add avatar to API response
           avatar_url: ''
         }))
       )
     }
   }, [principalData, setPrincipalList])
 
+  /**
+   * Handle to change member role
+   * TODO: This check for a single user with the space_owner role is not accurate because the list is paginated, and it does not include all users.
+   * TODO: In this case, the check should be performed on the backend, returning an error when the request is made.
+   */
   const handleRoleChange = async (user_uid: string, newRole: EnumMembershipRole): Promise<void> => {
     const owners = membersData?.filter(member => (member.role as EnumMembershipRole) === 'space_owner') ?? []
     const isOnlyOwner = owners.length === 1
     const isCurrentUserOwner = owners.some(member => member.principal?.uid === user_uid)
 
-    // Check if the current user is the only owner and is trying to change their role
     if (isOnlyOwner && isCurrentUserOwner && newRole !== 'space_owner') {
       alert('Cannot change role. At least one owner is required.')
       return
     }
 
     await updateRole({ user_uid, body: { role: newRole } })
-    refetch()
+    handleInvalidateMemberList()
+  }
+
+  const handleOnEditMember = (member: MembersProps) => {
+    const mappedRole = mapToEnumMembershipRole(member.role)
+    if (mappedRole) {
+      handleRoleChange(member.uid, mappedRole)
+    }
   }
 
   return (
-    <ProjectMemberListView
-      isLoading={isLoading}
-      useTranslationStore={useTranslationStore}
-      useMemberListStore={useMemberListStore}
-      usePrincipalListStore={usePrincipalListStore}
-      isInvitingMember={isInvitingMember}
-      inviteMemberError={inviteMemberError?.message}
-      onSubmit={onSubmit}
-      isInviteMemberDialogOpen={isDialogOpen}
-      setIsInviteMemberDialogOpen={setIsDialogOpen}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      onEditMember={(member: MembersProps) => {
-        const mappedRole = mapToEnumMembershipRole(member.role)
-        if (mappedRole) {
-          handleRoleChange(member.uid, mappedRole)
+    <>
+      <ProjectMemberListView
+        isLoading={isLoading}
+        useTranslationStore={useTranslationStore}
+        useMemberListStore={useMemberListStore}
+        usePrincipalListStore={usePrincipalListStore}
+        isInvitingMember={isInvitingMember}
+        inviteMemberError={inviteMemberError?.message}
+        onSubmit={onSubmit}
+        onDeleteHandler={handleSetDeleteMember}
+        isInviteMemberDialogOpen={isInviteDialogOpen}
+        setIsInviteMemberDialogOpen={setIsInviteDialogOpen}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        onEditMember={handleOnEditMember}
+        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+        principalsSearchQuery={principalsSearchQuery}
+      />
+
+      <DeleteAlertDialog
+        open={deleteMemberId !== null}
+        onClose={handleResetDeleteMember}
+        deleteFn={handleDeleteMember}
+        error={
+          deleteMemberError
+            ? {
+                type: '',
+                message: deleteMemberError?.message || ''
+              }
+            : null
         }
-      }}
-    />
+        type="member"
+        identifier={deleteMemberId ?? undefined}
+        isLoading={isDeletingMember}
+        useTranslationStore={useTranslationStore}
+        withForm
+      />
+    </>
   )
 }

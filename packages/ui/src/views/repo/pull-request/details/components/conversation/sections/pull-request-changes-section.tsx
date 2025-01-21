@@ -1,25 +1,16 @@
+import { Accordion, Avatar, AvatarFallback, Badge, Icon, StackedList } from '@/components'
 import {
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-  Avatar,
-  AvatarFallback,
-  Badge,
-  Icon,
-  StackedList
-} from '@components/index'
-import { cn } from '@utils/cn'
-import { getInitials } from '@utils/stringUtils'
-import { isEmpty } from 'lodash-es'
-
-import {
+  easyPluralize,
   TypesCodeOwnerEvaluation,
   TypesCodeOwnerEvaluationEntry,
   TypesOwnerEvaluation,
   TypesPullReqReviewer,
   TypesUserGroupOwnerEvaluation
-} from '../../../pull-request-details-types'
-import { easyPluralize } from '../../../pull-request-utils'
+} from '@/views'
+import { cn } from '@utils/cn'
+import { getInitials } from '@utils/stringUtils'
+import { isEmpty } from 'lodash-es'
+
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 interface PullRequestChangesSectionProps {
@@ -222,8 +213,8 @@ const PullRequestChangesSection = ({
     !isEmpty(changeReqEvaluations) ||
     (!isEmpty(codeOwners) && !isEmpty(codeOwners?.evaluation_entries))
   return (
-    <AccordionItem value="item-1">
-      <AccordionTrigger
+    <Accordion.Item value="item-1">
+      <Accordion.Trigger
         className="text-left"
         hideChevron={!viewBtn}
         onClick={e => {
@@ -235,9 +226,9 @@ const PullRequestChangesSection = ({
           description={<LineDescription text={changesInfo.content} />}
         />
         {viewBtn && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
-      </AccordionTrigger>
+      </Accordion.Trigger>
 
-      <AccordionContent>
+      <Accordion.Content>
         <>
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
@@ -367,8 +358,8 @@ const PullRequestChangesSection = ({
             </div>
           )}
         </>
-      </AccordionContent>
-    </AccordionItem>
+      </Accordion.Content>
+    </Accordion.Item>
   )
 }
 

@@ -221,7 +221,7 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.600}",
+          "fontWeight": "{default-font-weight-normal.500}",
           "fontSize": "{font-size.f-3}",
           "lineHeight": "round({font-size.f-3}* {leading.snug}/2) * 2",
           "letterSpacing": "{tracking.wide}"

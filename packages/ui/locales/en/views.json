@@ -1,5 +1,6 @@
 {
   "repos": {
+    "emptyRepo": "This repository is empty.",
     "create-new-file-no-plus": "Create new file",
     "upload-files": "Upload files",
     "search": "Search",

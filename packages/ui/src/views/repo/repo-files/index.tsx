@@ -20,6 +20,7 @@ interface RepoFilesProps {
   loading: boolean
   files: RepoFile[]
   isDir: boolean
+  isRepoEmpty?: boolean
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
@@ -46,14 +47,17 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   codeMode,
   useRepoBranchesStore,
   defaultBranchName,
-  currentBranchDivergence
+  currentBranchDivergence,
+  isRepoEmpty
 }) => {
   const { selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
-
+  const { t } = useTranslationStore()
   const content = useMemo(() => {
     if (!isView) return children
-
+    if (isRepoEmpty) {
+      return <p>{t('views:repos.emptyRepo')}</p>
+    }
     if (!isDir)
       return (
         <>
@@ -115,7 +119,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   return (
     <SandboxLayout.Main className="max-w-[1000px]">
       <SandboxLayout.Content className="h-full pt-4">
-        {isView && (
+        {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}
             pathParts={pathParts}

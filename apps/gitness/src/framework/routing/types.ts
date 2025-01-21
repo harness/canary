@@ -83,7 +83,19 @@ export type RouteFunctionMap = Record<keyof typeof RouteConstants, (params?: Par
 
 // Custom handle with the breadcrumb property
 export interface CustomHandle {
+  /**
+   * Defines the breadcrumb text or label using route parameters.
+   */
   breadcrumb?: (params: Params<string>) => string
+
+  /**
+   * Renders the breadcrumb as a custom React component instead of a link.
+   */
+  asLink?: boolean
+
+  /**
+   * Associated route name for the breadcrumb.
+   */
   routeName?: string
 }
 

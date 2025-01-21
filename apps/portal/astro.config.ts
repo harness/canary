@@ -18,6 +18,7 @@ export default defineConfig({
         src: "./src/assets/harness-design-system-logo.svg",
         replacesTitle: true,
       },
+      favicon: "./src/assets/favicon.png",
       social: {
         github: "https://github.com/harness/canary",
       },

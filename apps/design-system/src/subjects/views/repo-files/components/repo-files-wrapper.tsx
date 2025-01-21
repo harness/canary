@@ -53,6 +53,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
 
   return (
     <RepoFiles
+      isRepoEmpty={repoFilesStore.repository.is_empty}
       pathParts={repoFilesStore.pathParts}
       loading={false}
       files={repoFilesStore.files}

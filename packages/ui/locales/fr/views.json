@@ -1,5 +1,6 @@
 {
   "repos": {
+    "emptyRepo": "Ce référentiel est vide.",
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
     "search": "Rechercher",

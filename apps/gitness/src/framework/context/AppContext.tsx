@@ -1,8 +1,8 @@
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { TypesSpace, TypesUser } from '@harnessio/code-service-client'
+import { membershipSpaces, TypesSpace, TypesUser } from '@harnessio/code-service-client'
 
 import useLocalStorage from '../hooks/useLocalStorage'
 
@@ -25,6 +25,21 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
+
+  useEffect(() => {
+    if (!spaces?.length) {
+      membershipSpaces({
+        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+      })
+        .then(({ body: memberships }) => {
+          const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
+          setSpaces(spaceList)
+        })
+        .catch(() => {
+          // Optionally handle error or show toast
+        })
+    }
+  }, [])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {
     setSpaces([...spaces, ...newSpaces])

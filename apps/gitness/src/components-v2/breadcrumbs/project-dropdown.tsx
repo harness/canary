@@ -19,27 +19,11 @@ function ProjectDropdown(): JSX.Element {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
-  const { spaces, setSpaces } = useAppContext()
-
-  useEffect(() => {
-    if (!spaces?.length) {
-      membershipSpaces({
-        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
-      })
-        .then(({ body: memberships }) => {
-          const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
-          setSpaces(spaceList)
-        })
-        .catch(() => {
-          // Optionally handle error or show toast
-          navigate(routes.toSignIn())
-        })
-    }
-  }, [spaces, membershipSpaces, navigate])
+  const { spaces } = useAppContext()
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-x-1.5">
+      <DropdownMenuTrigger className="flex items-center gap-x-1.5" disabled={!spaces.length}>
         {spaceId ?? 'Select project'}
         <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
       </DropdownMenuTrigger>

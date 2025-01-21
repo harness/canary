@@ -187,25 +187,24 @@ export const RepoCode = () => {
   if (!repoId) return <></>
 
   return (
-    <>
-      <RepoFiles
-        pathParts={pathParts}
-        loading={loading}
-        files={files}
-        isDir={repoDetails?.type === 'dir'}
-        isShowSummary={!!repoEntryPathToFileTypeMap.size}
-        latestFile={latestFiles}
-        useTranslationStore={useTranslationStore}
-        pathNewFile={pathToNewFile}
-        // TODO: add correct path to Upload files page
-        pathUploadFiles="/upload-file"
-        codeMode={codeMode}
-        useRepoBranchesStore={useRepoBranchesStore}
-        defaultBranchName={repository?.default_branch}
-        currentBranchDivergence={currBranchDivergence}
-      >
-        {renderCodeView}
-      </RepoFiles>
-    </>
+    <RepoFiles
+      isRepoEmpty={repository?.is_empty}
+      pathParts={pathParts}
+      loading={loading}
+      files={files}
+      isDir={repoDetails?.type === 'dir'}
+      isShowSummary={!!repoEntryPathToFileTypeMap.size}
+      latestFile={latestFiles}
+      useTranslationStore={useTranslationStore}
+      pathNewFile={pathToNewFile}
+      // TODO: add correct path to Upload files page
+      pathUploadFiles="/upload-file"
+      codeMode={codeMode}
+      useRepoBranchesStore={useRepoBranchesStore}
+      defaultBranchName={repository?.default_branch}
+      currentBranchDivergence={currBranchDivergence}
+    >
+      {renderCodeView}
+    </RepoFiles>
   )
 }

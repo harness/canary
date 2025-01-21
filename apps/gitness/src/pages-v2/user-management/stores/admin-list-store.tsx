@@ -8,6 +8,9 @@ export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
   users: [],
   totalPages: 1,
   page: 1,
+  password: null,
+  user: null,
+  generatePassword: false,
   setPage: page =>
     set({
       page
@@ -22,6 +25,21 @@ export const useAdminListUsersStore = create<IAdminListUsersStore>(set => ({
 
     set({
       totalPages
+    })
+  },
+  setPassword: (password: string) => {
+    set({
+      password
+    })
+  },
+  setUser: (user: UsersProps) => {
+    set({
+      user
+    })
+  },
+  setGeteneratePassword: (generatePassword: boolean) => {
+    set({
+      generatePassword
     })
   }
 }))

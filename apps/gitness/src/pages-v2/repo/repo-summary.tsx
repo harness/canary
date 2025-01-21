@@ -325,7 +325,7 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
-  const isLoading = loading || isLoadingRepoDetails
+  const isLoading = (loading || isLoadingRepoDetails) && !repository?.is_empty
 
   return (
     <>

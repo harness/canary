@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { membershipSpaces, TypesSpace } from '@harnessio/code-service-client'
 import {
   DropdownMenu,
   DropdownMenuContent,

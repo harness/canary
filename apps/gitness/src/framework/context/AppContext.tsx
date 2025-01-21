@@ -27,18 +27,16 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
 
   useEffect(() => {
-    if (!spaces?.length) {
-      membershipSpaces({
-        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+    membershipSpaces({
+      queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+    })
+      .then(({ body: memberships }) => {
+        const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
+        setSpaces(spaceList)
       })
-        .then(({ body: memberships }) => {
-          const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
-          setSpaces(spaceList)
-        })
-        .catch(() => {
-          // Optionally handle error or show toast
-        })
-    }
+      .catch(() => {
+        // Optionally handle error or show toast
+      })
   }, [])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {

@@ -2,11 +2,12 @@ import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } fro
 import { SandboxLayout } from '@/views'
 
 import { UsersList } from './components/users-list'
-import { IUserManagementPageProps, UsersProps } from './types'
+import { DialogLabels, IUserManagementPageProps, UsersProps } from './types'
 
 export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   useAdminListUsersStore,
-  useTranslationStore
+  useTranslationStore,
+  handleDialogOpen
 }) => {
   const { users: userData, totalPages, page: currentPage, setPage } = useAdminListUsersStore()
   const { t } = useTranslationStore()
@@ -14,7 +15,7 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   const renderUserListContent = () => {
     return (
       <>
-        <UsersList users={userData as UsersProps[]} />
+        <UsersList users={userData as UsersProps[]} handleDialogOpen={handleDialogOpen} />
       </>
     )
   }
@@ -32,10 +33,11 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
             <SearchBox.Root width="full" className="max-w-96" placeholder="search" />
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default">New user</Button>
+            <Button variant="default" onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
+              New user
+            </Button>
           </ListActions.Right>
         </ListActions.Root>
-        <Spacer size={5} />
         <Spacer size={5} />
         {renderUserListContent()}
         <Spacer size={8} />

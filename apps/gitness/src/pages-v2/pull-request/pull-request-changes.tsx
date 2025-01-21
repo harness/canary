@@ -1,11 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { DiffModeEnum } from '@git-diff-view/react'
 import copy from 'clipboard-copy'
 import * as Diff2Html from 'diff2html'
 import { atom, useAtom } from 'jotai'
-import { useQueryState } from 'nuqs'
 
 import {
   commentCreatePullReq,
@@ -71,7 +70,8 @@ export default function PullRequestChanges() {
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [commentId, setCommentId] = useState(searchParams.get('commentId') || '')
   const [scrolledToComment, setScrolledToComment] = useState(false)
 
   const {

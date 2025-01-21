@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useListPipelinesQuery } from '@harnessio/code-service-client'
 import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
@@ -21,8 +19,9 @@ export default function RepoPipelineListPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
 
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+  const [query, setQuery] = useState(searchParams.get('query') || '')
 
   const { setPipelinesData, page, setPage } = usePipelineListStore()
 
@@ -56,8 +55,12 @@ export default function RepoPipelineListPage() {
   }, [pipelinesBody, headers])
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
+    setSearchParams({ page: String(queryPage), query })
+  }, [queryPage, query, setSearchParams])
+
+  const handleSetQuery = (query: string | null) => {
+    setQuery(query ?? '')
+  }
 
   return (
     <>
@@ -68,7 +71,7 @@ export default function RepoPipelineListPage() {
         isError={isError}
         errorMessage={error?.message}
         searchQuery={query}
-        setSearchQuery={setQuery}
+        setSearchQuery={handleSetQuery}
         handleCreatePipeline={() => {
           setCreatePipelineDialogOpen(true)
         }}

@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListSpacePipelinesQuery } from '@harnessio/code-service-client'
 import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
@@ -19,16 +18,20 @@ export default function ProjectPipelineListPage() {
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const { setPipelinesData, page, setPage } = usePipelineListStore()
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get('query') || '')
+  const [queryPage, setQueryPage] = useState(() => {
+    const pageParam = searchParams.get('page')
+    return pageParam ? parseInt(pageParam, 10) : 1
+  })
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
     queryParams: { page, query: query ?? '' },
     space_ref: spaceURL || ''
   })
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
+    setSearchParams({ query, page: queryPage.toString() })
+  }, [query, queryPage, setSearchParams])
 
   useEffect(() => {
     if (data) {
@@ -53,7 +56,7 @@ export default function ProjectPipelineListPage() {
       isError={isError}
       usePipelineListStore={usePipelineListStore}
       searchQuery={query}
-      setSearchQuery={setQuery}
+      setSearchQuery={(query: string | null) => setQuery(query ?? '')}
       handleCreatePipeline={noop}
       useTranslationStore={useTranslationStore}
       LinkComponent={LinkComponent}

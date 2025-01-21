@@ -1,10 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact, isEqual } from 'lodash-es'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { compact, isEqual, toInteger } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
@@ -96,6 +95,19 @@ export const CreatePullRequest = () => {
   const [sourceQuery, setSourceQuery] = useState('')
   const [targetQuery, setTargetQuery] = useState('')
   const [searchReviewers, setSearchReviewers] = useState('')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [branchTagQuery, setBranchTagQuery] = useState(searchParams.get('branch') || '')
+  const [query, setQuery] = useState<string | null>(searchParams.get('query'))
+  const [queryPage, setQueryPage] = useState(toInteger(searchParams.get('page')) || 1)
+
+  useEffect(() => {
+    setSearchParams({
+      branch: branchTagQuery,
+      reviewer: searchReviewers,
+      query: query || '',
+      page: queryPage.toString()
+    })
+  }, [branchTagQuery, searchReviewers, query, queryPage, setSearchParams])
 
   const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {
@@ -290,7 +302,6 @@ export const CreatePullRequest = () => {
       setPrBranchCombinationExists(null)
     }
   }, [pullReqData])
-  const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
   const { data: { body: commitData, headers } = {} } = useListCommitsQuery({
@@ -307,7 +318,6 @@ export const CreatePullRequest = () => {
     }
   })
   const { setCommits, page, setPage, setSelectedCommit } = useRepoCommitsStore()
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   useEffect(() => {
     if (commitData) {
@@ -317,7 +327,7 @@ export const CreatePullRequest = () => {
 
   useEffect(() => {
     setQueryPage(page)
-  }, [queryPage, page, setPage])
+  }, [page])
 
   const branchList: BranchSelectorListItem[] = useMemo(() => {
     if (!branches) return []

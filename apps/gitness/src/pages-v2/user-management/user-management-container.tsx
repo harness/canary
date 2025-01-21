@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useSearchParams } from 'react-router-dom'
+
+// import { useQueryClient } from '@tanstack/react-query'
 
 import {
   useAdminCreateUserMutation,
@@ -26,8 +28,17 @@ import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 import { useAdminListUsersStore } from './stores/admin-list-store'
 
 export const UserManagementPageContainer = () => {
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const { setUsers, setTotalPages, setPage, page, password, setUser, setPassword, setGeteneratePassword } =
+  // const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+  // const { setUsers, setTotalPages, setPage, page } = useAdminListUsersStore()
+  // const queryClient = useQueryClient()
+  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
+    queryParams: {
+      page: queryPage
+    }
+  })
+  const { setUsers, setTotalPages, password, setUser, setPassword, setGeteneratePassword } =
     useAdminListUsersStore()
   const queryClient = useQueryClient()
 
@@ -63,13 +74,7 @@ export const UserManagementPageContainer = () => {
       default:
         break
     }
-  }
-
-  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
-    queryParams: {
-      page: queryPage
-    }
-  })
+  }  
 
   useEffect(() => {
     if (userData) {
@@ -81,8 +86,8 @@ export const UserManagementPageContainer = () => {
   }, [userData, setUsers, setTotalPages, headers])
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
+    setSearchParams({ page: String(queryPage) })
+  }, [queryPage, setSearchParams])
 
   const { mutate: updateUser, isLoading: isUpdatingUser } = useAdminUpdateUserMutation(
     {},

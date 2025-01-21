@@ -5,7 +5,6 @@ import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
-import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
@@ -136,11 +135,9 @@ export default function AppMFE({
                     <QueryClientProvider client={queryClient}>
                       <TooltipProvider>
                         <ExitConfirmProvider>
-                          <NuqsAdapter>
-                            <NavigationProvider routes={routesToRender}>
-                              <RouterProvider router={router} />
-                            </NavigationProvider>
-                          </NuqsAdapter>
+                          <NavigationProvider routes={routesToRender}>
+                            <RouterProvider router={router} />
+                          </NavigationProvider>
                         </ExitConfirmProvider>
                       </TooltipProvider>
                     </QueryClientProvider>

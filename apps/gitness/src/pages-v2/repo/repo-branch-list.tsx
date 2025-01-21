@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 import { useQueryState } from 'nuqs'

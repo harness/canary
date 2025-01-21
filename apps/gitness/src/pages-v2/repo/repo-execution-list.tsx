@@ -1,8 +1,7 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
@@ -20,8 +19,13 @@ export default function RepoExecutionListPage() {
   const repoRef = useGetRepoRef()
   const { pipelineId } = useParams<PathParams>()
 
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('query') || ''
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+
+  const setQuery = (newQuery: string | null) => {
+    setSearchParams({ query: newQuery ?? '', page: String(queryPage) })
+  }
 
   const { setExecutionsData, page, setPage } = useExecutionListStore()
 
@@ -50,8 +54,8 @@ export default function RepoExecutionListPage() {
   }, [executionsBody, headers])
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
+    setSearchParams({ page: String(queryPage), query })
+  }, [queryPage, query, setSearchParams])
 
   return (
     <>

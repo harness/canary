@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   useDefineSpaceLabelMutation,
@@ -32,8 +31,16 @@ export const ProjectLabelsList = () => {
     setRepoSpaceRef
   } = useLabelsStore()
 
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [query, setQuery] = useState(searchParams.get('query') || '')
+  const [queryPage, setQueryPage] = useState(() => {
+    const pageParam = searchParams.get('page')
+    return pageParam ? parseInt(pageParam, 10) : 1
+  })
+
+  useEffect(() => {
+    setSearchParams({ query, page: queryPage.toString() })
+  }, [query, queryPage, setSearchParams])
 
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
@@ -175,7 +182,7 @@ export const ProjectLabelsList = () => {
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
         searchQuery={query}
-        setSearchQuery={setQuery}
+        setSearchQuery={(query: string | null) => setQuery(query ?? '')}
         isLoadingSpaceLabels={isLoadingSpaceLabels}
       />
       <CreateLabelDialog

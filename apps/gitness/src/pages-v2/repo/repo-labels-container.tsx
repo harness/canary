@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   useDefineRepoLabelMutation,
@@ -26,6 +25,7 @@ export const RepoLabelsList = () => {
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
+  const [query, setQuery] = useState<string | null>(null)
   const {
     page,
     setPage,
@@ -42,8 +42,8 @@ export const RepoLabelsList = () => {
     getParentScopeLabels
   } = useLabelsStore()
 
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
@@ -70,8 +70,8 @@ export const RepoLabelsList = () => {
   }, [labels, setLabels])
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [page, setPage, queryPage])
+    setSearchParams({ page: String(queryPage), query: query ?? '' })
+  }, [queryPage, query, setSearchParams])
 
   const {
     mutate: defineRepoLabel,
@@ -228,6 +228,10 @@ export const RepoLabelsList = () => {
     }
   }
 
+  const handleSetQuery = (query: string | null) => {
+    setQuery(query ?? '')
+  }
+
   return (
     <>
       <RepoLabelsListView
@@ -238,7 +242,7 @@ export const RepoLabelsList = () => {
         handleDeleteLabel={handleOpenDeleteDialog}
         showSpacer={false}
         searchQuery={query}
-        setSearchQuery={setQuery}
+        setSearchQuery={handleSetQuery}
         isLoadingSpaceLabels={isLoadingRepoLabels}
       />
       <CreateLabelDialog

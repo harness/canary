@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
-import { useQueryState } from 'nuqs'
 
 import {
   commentStatusPullReq,
@@ -101,8 +100,23 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
   const [comment, setComment] = useState<string>('')
-  const [commentId] = useQueryState('commentId', { defaultValue: '' })
-  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
+
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [commentId, setCommentId] = useState(searchParams.get('commentId') || '')
+  const [searchReviewers, setSearchReviewers] = useState(searchParams.get('reviewer') || '')
+  const [searchLabel, setSearchLabel] = useState(searchParams.get('label') || '')
+
+  const handleSetCommentId = (newCommentId: string | null) => {
+    setSearchParams({ commentId: newCommentId ?? '', reviewer: searchReviewers, label: searchLabel })
+  }
+
+  const handleSetSearchReviewers = (newSearchReviewers: string | null) => {
+    setSearchParams({ commentId, reviewer: newSearchReviewers ?? '', label: searchLabel })
+  }
+
+  const handleSetSearchLabel = (newSearchLabel: string | null) => {
+    setSearchParams({ commentId, reviewer: searchReviewers, label: newSearchLabel ?? '' })
+  }
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
@@ -336,6 +350,7 @@ export default function PullRequestConversationPage() {
       copy(url.toString())
     }
   }
+  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
   useEffect(() => {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate
@@ -670,6 +685,12 @@ export default function PullRequestConversationPage() {
               removeSuggestionFromBatch={removeSuggestionFromBatch}
               filenameToLanguage={filenameToLanguage}
               handleUpload={handleUpload}
+              commentId={commentId}
+              setCommentId={handleSetCommentId}
+              searchReviewers={searchReviewers}
+              setSearchReviewers={handleSetSearchReviewers}
+              searchLabel={searchLabel}
+              setSearchLabel={handleSetSearchLabel}
             />
             <Spacer size={9} />
             <PullRequestCommentBox
@@ -701,7 +722,7 @@ export default function PullRequestConversationPage() {
                 sha: val.sha
               }))}
               searchQuery={searchReviewers}
-              setSearchQuery={setSearchReviewers}
+              setSearchQuery={handleSetSearchReviewers}
               labelsList={labelsList?.map(label => {
                 return {
                   id: label.id,
@@ -717,7 +738,7 @@ export default function PullRequestConversationPage() {
                 }
               })}
               searchLabelQuery={searchLabel}
-              setSearchLabelQuery={setSearchLabel}
+              setSearchLabelQuery={handleSetSearchLabel}
               addLabel={handleAddLabel}
               removeLabel={handleRemoveLabel}
               addLabelError={addLabelError?.message}

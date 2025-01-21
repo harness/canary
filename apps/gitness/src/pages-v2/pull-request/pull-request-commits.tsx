@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useEffect, useState } from 'react'
+import { useLocation, useParams, useSearchParams } from 'react-router-dom'
 
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
 import { PullRequestCommitsView } from '@harnessio/ui/views'
@@ -19,7 +17,11 @@ export function PullRequestCommitPage() {
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const [queryPage, setQueryPage] = useState(() => {
+    const pageParam = searchParams.get('page')
+    return pageParam ? parseInt(pageParam, 10) : 1
+  })
   const { pathname } = useLocation()
 
   const { page, setPage, setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
@@ -49,8 +51,8 @@ export function PullRequestCommitPage() {
 
   useEffect(() => {
     setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
+    setSearchParams({ page: queryPage.toString() })
+  }, [page, queryPage, setPage, setSearchParams])
 
   return (
     <PullRequestCommitsView

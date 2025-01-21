@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useQueryState } from 'nuqs'
 
 import {
   EnumMembershipRole,
@@ -32,7 +32,11 @@ export function ProjectMemberListPage() {
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
-  const [query, setQuery] = useQueryState('query')
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('query') || ''
+  const setQuery = (newQuery: string | null) => {
+    setSearchParams({ query: newQuery ?? '' })
+  }
 
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)

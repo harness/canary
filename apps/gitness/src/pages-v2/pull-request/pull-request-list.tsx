@@ -1,7 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
@@ -17,8 +15,13 @@ export default function PullRequestListPage() {
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
-  const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const query = searchParams.get('query') || ''
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+
+  const setQuery = (newQuery: string | null) => {
+    setSearchParams({ query: newQuery ?? '', page: String(queryPage) })
+  }
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -44,9 +47,8 @@ export default function PullRequestListPage() {
   }, [pullRequestData, headers, setPullRequests])
 
   useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
+    setSearchParams({ page: String(queryPage), query })
+  }, [queryPage, query, setSearchParams])
 
   return (
     <SandboxPullRequestListPage

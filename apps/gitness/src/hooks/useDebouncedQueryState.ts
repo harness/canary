@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { debounce } from 'lodash-es'
-import { useQueryState } from 'nuqs'
 
 interface UseDebouncedQueryStateProps {
   key: string
@@ -19,17 +19,23 @@ type UseDebouncedQueryStateParams = [string] | [string, string] | [string, UseDe
  * useDebouncedQueryState('key', { defaultValue: 'value', delay: 500 })
  */
 export function useDebouncedQueryState(...args: UseDebouncedQueryStateParams): [string, (value: string) => void] {
+  const [searchParams, setSearchParams] = useSearchParams()
   const [key, options] = args
   const defaultValue = typeof options === 'string' ? options : (options?.defaultValue ?? '')
   const delay = typeof options === 'object' && options?.delay !== undefined ? options.delay : 300
 
-  const [query, setQuery] = useQueryState(key, { defaultValue })
+  const query = searchParams.get(key) || defaultValue
   const [debouncedQuery, setDebouncedQuery] = useState(query)
 
   const debouncedSetQuery = useCallback(
     debounce((newQuery: string) => setDebouncedQuery(newQuery), delay),
     [delay]
   )
+
+  const setQuery = (value: string) => {
+    searchParams.set(key, value)
+    setSearchParams(searchParams)
+  }
 
   useEffect(() => {
     debouncedSetQuery(query)

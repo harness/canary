@@ -298,7 +298,8 @@ const repoRoutes: CustomRouteObject[] = [
               {
                 path: 'rules',
                 handle: {
-                  breadcrumb: () => <Text>Rules</Text>
+                  breadcrumb: () => <Text>Rules</Text>,
+                  routeName: RouteConstants.toRepoBranchRules
                 },
                 children: [
                   {

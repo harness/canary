@@ -26,7 +26,8 @@ export const BranchesList = ({
   spaceId,
   repoId,
   defaultBranch,
-  useTranslationStore
+  useTranslationStore,
+  toBranchRule
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()
   return (
@@ -133,7 +134,7 @@ export const BranchesList = ({
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
-                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/settings/rules`
+                        to: toBranchRule?.()
                       },
                       {
                         isDanger: true,

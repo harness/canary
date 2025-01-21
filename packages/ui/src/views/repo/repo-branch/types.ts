@@ -1,3 +1,5 @@
+import { Params } from 'react-router-dom'
+
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
@@ -27,7 +29,11 @@ export interface BranchProps {
   }
 }
 
-export interface BranchListPageProps {
+interface RoutingProps {
+  toBranchRule: () => string
+}
+
+export interface BranchListPageProps extends Partial<RoutingProps> {
   branches: BranchProps[]
   spaceId?: string
   repoId?: string
@@ -43,7 +49,7 @@ export interface MoreActionsTooltipProps {
   useTranslationStore: () => TranslationStore
 }
 
-export interface RepoBranchListViewProps {
+export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore

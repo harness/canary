@@ -18,7 +18,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   createBranchError,
   isCreatingBranch,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  ...routingProps
 }) => {
   const { t } = useTranslationStore()
   const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
@@ -81,6 +82,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         spaceId={spaceId}
         branches={branchList}
         useTranslationStore={useTranslationStore}
+        {...routingProps}
       />
     )
   }

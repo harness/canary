@@ -36,7 +36,7 @@ import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
 
-interface PullRequestPanelProps extends PullRequestChangesSectionProps, PullRequestRoutingProps {
+interface PullRequestPanelProps extends PullRequestChangesSectionProps, Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   pullReqMetadata: TypesPullReq | undefined

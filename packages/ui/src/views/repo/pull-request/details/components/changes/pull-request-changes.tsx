@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Accordion, Badge, Button, Checkbox, CopyButton, Icon, StackedList, Text } from '@/components'
+import { Badge, Button, Checkbox, CopyButton, Icon, Layout, StackedList, Text } from '@/components'
 import {
   CommentItem,
   CommitFilterItemProps,
@@ -13,9 +13,10 @@ import {
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
-import { parseStartingLineIfOne } from '@views/repo/pull-request/utils'
+import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
 
 interface HeaderProps {
   text: string
@@ -28,6 +29,9 @@ interface HeaderProps {
   checksumAfter?: string
   filePath: string
   diffData: DiffFileEntry
+  isDeleted: boolean
+  unchangedPercentage?: number
+  isBinary?: boolean
 }
 
 interface LineTitleProps {
@@ -41,6 +45,7 @@ interface LineTitleProps {
   setCollapsed: (val: boolean) => void
   toggleFullDiff: () => void
   useFullDiff?: boolean
+  isOpen?: boolean
 }
 
 interface DataProps {
@@ -81,13 +86,21 @@ const LineTitle: React.FC<LineTitleProps> = ({
   unmarkViewed,
   setCollapsed,
   toggleFullDiff,
-  useFullDiff
+  useFullDiff,
+  isOpen
 }) => {
   const { t } = useTranslationStore()
   const { text, numAdditions, numDeletions, filePath, checksumAfter } = header
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
+        <Icon
+          name="chevron-right"
+          size={10}
+          className={cn(`text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0 duration-100 ease-in-out`, {
+            'rotate-90': isOpen
+          })}
+        />
         <Text weight="medium">{text}</Text>
         <div
           role="button"
@@ -98,19 +111,17 @@ const LineTitle: React.FC<LineTitleProps> = ({
         >
           <CopyButton name={text} className="text-tertiary-background" />
         </div>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={e => {
-            e.preventDefault()
-          }}
-        >
+        <div role="button" tabIndex={0}>
           <Button
             className="text-tertiary-background"
             variant="custom"
             size="icon"
             aria-label="expand diff"
-            onClick={() => toggleFullDiff()}
+            onClick={e => {
+              e.preventDefault()
+              e.stopPropagation()
+              toggleFullDiff()
+            }}
           >
             <Icon name={useFullDiff ? 'collapse-diff' : 'expand-diff'} size={16} />
           </Button>
@@ -187,6 +198,9 @@ const PullRequestAccordion: React.FC<{
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  isOpen: boolean
+  onToggle: () => void
+  setCollapsed: (val: boolean) => void
 }> = ({
   header,
   diffMode,
@@ -213,13 +227,29 @@ const PullRequestAccordion: React.FC<{
   handleUpload,
   onGetFullDiff,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  isOpen,
+  onToggle,
+  setCollapsed
 }) => {
+  const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [useFullDiff, setUseFullDiff] = useState(false)
   const diffViewerState = useMemo(() => new Map<string, DiffViewerState>(), [])
   const [rawDiffData, setRawDiffData] = useState(
     useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data
+  )
+  const [showHiddenDiff, setShowHiddenDiff] = useState(false)
+  const fileDeleted = useMemo(() => header.isDeleted, [header.isDeleted])
+  const isDiffTooLarge = useMemo(
+    () => header.diffData.addedLines + header.diffData.deletedLines > PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT,
+    [header.diffData.addedLines, header.diffData.deletedLines]
+  )
+  const fileUnchanged = useMemo(
+    () =>
+      header?.diffData?.unchangedPercentage === 100 ||
+      (header?.diffData?.addedLines === 0 && header?.diffData?.deletedLines === 0),
+    [header?.diffData?.addedLines, header?.diffData?.deletedLines, header?.diffData?.unchangedPercentage]
   )
   // File viewed feature is only enabled if no commit range is provided ie defaultCommitFilter is selected (otherwise component is hidden, too)
   const [showViewedCheckbox, setShowViewedCheckbox] = useState(
@@ -228,98 +258,113 @@ const PullRequestAccordion: React.FC<{
   const [viewed, setViewed] = useState(
     selectedCommits?.[0] === defaultCommitFilter &&
       getFileViewedState(header?.filePath, header?.checksumAfter, header?.fileViews) === FileViewedState.VIEWED
-    // && !shouldDiffBeShownByDefault
   )
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
-
-  const [openItems, setOpenItems] = useState<string[]>([])
 
   useEffect(() => {
     setRawDiffData(useFullDiff ? diffViewerState.get(header.filePath)?.fullRawDiff : header?.data)
   }, [useFullDiff, diffViewerState, header?.filePath, header?.data])
 
+  useEffect(() => {
+    if (autoExpand && !isOpen) {
+      onToggle()
+    }
+  }, [autoExpand, isOpen, onToggle])
+
   const toggleFullDiff = useCallback(() => {
-    if (!useFullDiff && !diffViewerState.get(header.filePath)?.fullRawDiff) {
-      onGetFullDiff(header.filePath).then(rawDiff => {
-        if (rawDiff && typeof rawDiff === 'string') {
-          diffViewerState.set(header.filePath, {
-            ...diffViewerState.get(header.filePath),
-            fullRawDiff: rawDiff
-          })
-          setRawDiffData(rawDiff)
-        }
-      })
+    if (!useFullDiff) {
+      // fetch the full diff if not already
+      if (!diffViewerState.get(header.filePath)?.fullRawDiff) {
+        onGetFullDiff(header.filePath).then(rawDiff => {
+          if (rawDiff && typeof rawDiff === 'string') {
+            diffViewerState.set(header.filePath, {
+              ...diffViewerState.get(header.filePath),
+              fullRawDiff: rawDiff
+            })
+            setRawDiffData(rawDiff)
+          }
+        })
+      }
+      if (!isOpen) {
+        setCollapsed(false)
+      }
+      if (fileDeleted || isDiffTooLarge) {
+        setShowHiddenDiff(true)
+      }
     }
     diffViewerState.set(header.filePath, {
       ...diffViewerState.get(header.filePath),
       useFullDiff: !useFullDiff
     })
     setUseFullDiff(prev => !prev)
-  }, [diffViewerState, header?.filePath, onGetFullDiff, useFullDiff])
+  }, [useFullDiff, onGetFullDiff, diffViewerState, header.filePath, setCollapsed])
 
-  const setCollapsed = (val: boolean) => {
-    setOpenItems(curr => {
-      if (val) {
-        // close
-        return curr.filter(item => item !== header.text)
-      } else {
-        // open
-        return curr.includes(header.text) ? curr : [...curr, header.text]
-      }
-    })
-  }
-
-  // On mount or if `autoExpand` becomes true, ensure this item is expanded
-  useEffect(() => {
-    if (autoExpand) {
-      setOpenItems(curr => (curr.includes(header.text) ? curr : [...curr, header.text]))
-    }
-  }, [autoExpand, header.text])
-
+  // If commits change, check if "viewed" should be updated
   useEffect(() => {
     if (selectedCommits?.[0].value === defaultCommitFilter?.value) {
-      setViewed(
-        getFileViewedState(header?.filePath, header?.checksumAfter, header?.fileViews) === FileViewedState.VIEWED
-      )
+      setViewed(getFileViewedState(header.filePath, header.checksumAfter, header.fileViews) === FileViewedState.VIEWED)
       setShowViewedCheckbox(true)
+    } else {
+      setShowViewedCheckbox(false)
     }
-  }, [setViewed, header?.fileViews, header?.filePath, header?.checksumAfter, selectedCommits, defaultCommitFilter])
+  }, [selectedCommits, defaultCommitFilter, header.filePath, header.checksumAfter, header.fileViews])
 
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root
-          type="multiple"
-          className="w-full"
-          value={openItems}
-          onValueChange={val => setOpenItems(val as string[])}
-        >
-          <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
-              <StackedList.Field
-                title={
-                  <LineTitle
-                    useTranslationStore={useTranslationStore}
-                    header={header}
-                    viewed={viewed}
-                    setViewed={setViewed}
-                    showViewed={showViewedCheckbox}
-                    markViewed={markViewed}
-                    unmarkViewed={unmarkViewed}
-                    setCollapsed={setCollapsed}
-                    toggleFullDiff={toggleFullDiff}
-                    useFullDiff={useFullDiff}
-                  />
-                }
-              />
-            </Accordion.Trigger>
-            <Accordion.Content>
-              <div className="flex w-full border-t">
-                <div className="bg-transparent">
+        <div className="w-full border-b last:border-b-0">
+          <div
+            className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
+                       [&>svg]:duration-100 [&>svg]:ease-in-out"
+            onClick={onToggle}
+          >
+            <StackedList.Field
+              title={
+                <LineTitle
+                  useTranslationStore={useTranslationStore}
+                  header={header}
+                  viewed={viewed}
+                  setViewed={setViewed}
+                  showViewed={showViewedCheckbox}
+                  markViewed={markViewed}
+                  unmarkViewed={unmarkViewed}
+                  setCollapsed={setCollapsed}
+                  toggleFullDiff={toggleFullDiff}
+                  useFullDiff={useFullDiff}
+                  isOpen={isOpen}
+                />
+              }
+            />
+          </div>
+          {isOpen && (
+            <div className="bg-transparent border-t">
+              {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
+                <Layout.Vertical className="flex w-full items-center py-5">
+                  <Button
+                    className="text-tertiary-background"
+                    variant="secondary"
+                    size="md"
+                    aria-label="show diff"
+                    onClick={() => setShowHiddenDiff(true)}
+                  >
+                    {_ts('views:pullRequests.showDiff')}
+                  </Button>
+                  <p className="font-medium">
+                    {fileDeleted
+                      ? _ts('views:pullRequests.deletedFileDiff')
+                      : isDiffTooLarge
+                        ? _ts('views:pullRequests.largeDiff')
+                        : header?.isBinary
+                          ? _ts('views:pullRequests.binaryNotShown')
+                          : _ts('views:pullRequests.fileNoChanges')}
+                  </p>
+                </Layout.Vertical>
+              ) : (
+                <>
                   {startingLine ? (
                     <div className="bg-[--diff-hunk-lineNumber--]">
-                      <div className="ml-16 w-full px-2 py-1 font-mono">{startingLine}</div>
+                      <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
                     </div>
                   ) : null}
                   <PullRequestDiffViewer
@@ -350,11 +395,11 @@ const PullRequestAccordion: React.FC<{
                     scrolledToComment={scrolledToComment}
                     setScrolledToComment={setScrolledToComment}
                   />
-                </div>
-              </div>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion.Root>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </StackedList.Item>
     </StackedList.Root>
   )
@@ -387,13 +432,29 @@ export function PullRequestChanges({
   scrolledToComment,
   setScrolledToComment
 }: DataProps) {
-  const [autoExpandFiles, setAutoExpandFiles] = useState<{ [fileText: string]: boolean }>({})
+  const [openItems, setOpenItems] = useState<string[]>([])
+
+  useEffect(() => {
+    if (data.length > 0) {
+      const itemsToOpen: string[] = []
+      data.map(diffItem => {
+        const isFileViewed =
+          getFileViewedState(diffItem?.filePath, diffItem?.checksumAfter, diffItem?.fileViews) ===
+          FileViewedState.VIEWED
+        if (!isFileViewed) {
+          itemsToOpen.push(diffItem.text)
+        }
+      })
+      setOpenItems(itemsToOpen)
+    }
+  }, [data])
 
   // On mount (or commentId change), find which file (or files) contain that commentId and mark them to auto-expand
   useEffect(() => {
-    if (!commentId) return
-    const newMap: { [fileText: string]: boolean } = {}
+    if (!commentId || scrolledToComment) return
+    const newOpenItems: { [fileText: string]: boolean } = {}
 
+    // find comment from commentId
     data.forEach(item => {
       const fileComments =
         comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
@@ -403,11 +464,45 @@ export function PullRequestChanges({
         ) || []
       const found = fileComments.some(thread => thread.some(c => String(c.id) === commentId))
       if (found) {
-        newMap[item.text] = true
+        newOpenItems[item.text] = true
       }
     })
-    setAutoExpandFiles(newMap)
-  }, [commentId, data, comments])
+    // merge with existing openItems
+    const expanded = Object.keys(newOpenItems).reduce(
+      (acc, key) => {
+        if (!acc.includes(key)) acc.push(key)
+        return acc
+      },
+      [...openItems]
+    )
+    setOpenItems(expanded)
+  }, [commentId, data, comments, openItems])
+
+  const isOpen = useCallback(
+    (fileText: string) => {
+      return openItems.includes(fileText)
+    },
+    [openItems]
+  )
+  const toggleOpen = useCallback(
+    (fileText: string) => {
+      setOpenItems(curr => (curr.includes(fileText) ? curr.filter(t => t !== fileText) : [...curr, fileText]))
+    },
+    [setOpenItems]
+  )
+
+  const setCollapsed = useCallback(
+    (fileText: string, val: boolean) => {
+      setOpenItems(items => {
+        if (val) {
+          return items.filter(item => item !== fileText)
+        } else {
+          return items.includes(fileText) ? items : [...items, fileText]
+        }
+      })
+    },
+    [setOpenItems]
+  )
 
   return (
     <div className="flex flex-col gap-4">
@@ -437,7 +532,7 @@ export function PullRequestChanges({
             markViewed={markViewed}
             unmarkViewed={unmarkViewed}
             commentId={commentId}
-            autoExpand={!!autoExpandFiles[item.text]}
+            autoExpand={openItems.includes(item.text)}
             onCopyClick={onCopyClick}
             onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
             onCommitSuggestion={onCommitSuggestion}
@@ -449,6 +544,9 @@ export function PullRequestChanges({
             onGetFullDiff={onGetFullDiff}
             scrolledToComment={scrolledToComment}
             setScrolledToComment={setScrolledToComment}
+            isOpen={isOpen(item.text)}
+            onToggle={() => toggleOpen(item.text)}
+            setCollapsed={val => setCollapsed(item.text, val)}
           />
         )
       })}

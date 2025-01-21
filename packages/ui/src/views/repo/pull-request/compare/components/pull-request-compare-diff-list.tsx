@@ -1,8 +1,8 @@
-import { FC, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
-  Accordion,
   Badge,
+  Button,
   CopyButton,
   DropdownMenu,
   DropdownMenuContent,
@@ -10,22 +10,36 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   Icon,
+  Layout,
   ListActions,
   Spacer,
   StackedList,
   Text
 } from '@/components'
-import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, DiffViewerState, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { cn } from '@utils/cn'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
 import { useDiffConfig } from '../../hooks/useDiffConfig'
-import { parseStartingLineIfOne } from '../../utils'
+import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '../../utils'
 import { HeaderProps } from '../pull-request-compare.types'
 
-const LineTitle: FC<Omit<HeaderProps, 'title' | 'data' | 'lang'>> = ({ text }) => (
+interface LineTitleProps {
+  text: string
+  isOpen?: boolean
+}
+
+const LineTitle: FC<LineTitleProps> = ({ text, isOpen }) => (
   <div className="flex items-center justify-between gap-3">
     <div className="inline-flex items-center gap-2">
+      <Icon
+        name="chevron-right"
+        size={10}
+        className={cn(`text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0 duration-100 ease-in-out`, {
+          'rotate-90': isOpen
+        })}
+      />
       <p className="font-medium">{text}</p>
       <CopyButton name={text} />
     </div>
@@ -43,31 +57,75 @@ interface PullRequestAccordionProps {
   diffMode: DiffModeEnum
   currentUser?: string
   useTranslationStore: () => TranslationStore
+  isOpen: boolean
+  onToggle: () => void
 }
 
 const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   header,
   diffMode,
   currentUser,
-  useTranslationStore
+  useTranslationStore,
+  isOpen,
+  onToggle
 }) => {
+  const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const startingLine =
     parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
+  const [showHiddenDiff, setShowHiddenDiff] = useState(false)
+
+  const fileDeleted = useMemo(() => header?.deleted, [header?.deleted])
+  const isDiffTooLarge = useMemo(() => {
+    if (header?.addedLines && header?.removedLines) {
+      return header?.addedLines + header?.removedLines > PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT
+    }
+    return false
+  }, [header?.addedLines, header?.removedLines])
+  const fileUnchanged = useMemo(
+    () => header?.unchangedPercentage === 100 || (header?.addedLines === 0 && header?.removedLines === 0),
+    [header?.addedLines, header?.removedLines, header?.unchangedPercentage]
+  )
+
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <Accordion.Root type="multiple" className="w-full">
-          <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
-              <StackedList.Field title={<LineTitle text={header?.text ?? ''} />} />
-            </Accordion.Trigger>
-            <Accordion.Content>
-              <div className="flex w-full border-t">
-                <div className="w-full bg-transparent">
+        <div className="w-full border-b last:border-b-0">
+          <div
+            className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
+                       [&>svg]:duration-100 [&>svg]:ease-in-out"
+            onClick={onToggle}
+          >
+            <StackedList.Field title={<LineTitle text={header?.text ?? ''} isOpen={isOpen} />} />
+          </div>
+          {isOpen && (
+            <div className="bg-transparent border-t">
+              {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
+                <Layout.Vertical className="flex w-full items-center py-5">
+                  <Button
+                    className="text-tertiary-background"
+                    variant="secondary"
+                    size="md"
+                    aria-label="show diff"
+                    onClick={() => setShowHiddenDiff(true)}
+                  >
+                    {_ts('views:pullRequests.showDiff')}
+                  </Button>
+                  <span>
+                    {fileDeleted
+                      ? _ts('views:pullRequests.deletedFileDiff')
+                      : isDiffTooLarge
+                        ? _ts('views:pullRequests.largeDiff')
+                        : header?.isBinary
+                          ? _ts('views:pullRequests.binaryNotShown')
+                          : _ts('views:pullRequests.fileNoChanges')}
+                  </span>
+                </Layout.Vertical>
+              ) : (
+                <>
                   {startingLine ? (
-                    <div className="bg-tag-background-code-8">
-                      <div className="ml-16 w-full px-2 py-1 font-mono">{startingLine}</div>
+                    <div className="bg-[--diff-hunk-lineNumber--]">
+                      <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
                     </div>
                   ) : null}
                   <PullRequestDiffViewer
@@ -87,11 +145,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                     unchangedPercentage={header?.unchangedPercentage}
                     useTranslationStore={useTranslationStore}
                   />
-                </div>
-              </div>
-            </Accordion.Content>
-          </Accordion.Item>
-        </Accordion.Root>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </StackedList.Item>
     </StackedList.Root>
   )
@@ -114,6 +172,30 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
+  const [openItems, setOpenItems] = useState<string[]>([])
+
+  useEffect(() => {
+    if (diffData.length > 0) {
+      const itemsToOpen: string[] = []
+      diffData.map(diffItem => {
+        itemsToOpen.push(diffItem.text)
+      })
+      setOpenItems(itemsToOpen)
+    }
+  }, [diffData])
+
+  const isOpen = useCallback(
+    (fileText: string) => {
+      return openItems.includes(fileText)
+    },
+    [openItems]
+  )
+  const toggleOpen = useCallback(
+    (fileText: string) => {
+      setOpenItems(curr => (curr.includes(fileText) ? curr.filter(t => t !== fileText) : [...curr, fileText]))
+    },
+    [setOpenItems]
+  )
 
   return (
     <>
@@ -178,6 +260,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             data={item?.data}
             diffMode={diffMode}
             useTranslationStore={useTranslationStore}
+            isOpen={isOpen(item.text)}
+            onToggle={() => toggleOpen(item.text)}
           />
         </>
       ))}

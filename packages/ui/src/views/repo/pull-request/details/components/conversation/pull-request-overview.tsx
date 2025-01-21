@@ -283,7 +283,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           </div>
                           {startingLine ? (
                             <div className="bg-[--diff-hunk-lineNumber--]">
-                              <div className="ml-16 w-full px-8 py-1 font-mono">{startingLine}</div>
+                              <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
                             </div>
                           ) : null}
 

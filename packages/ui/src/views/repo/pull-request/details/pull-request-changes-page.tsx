@@ -131,7 +131,10 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
             fileViews: item.fileViews,
             checksumAfter: item.checksumAfter,
             filePath: item.filePath,
-            diffData: item
+            diffData: item,
+            isDeleted: !!item.isDeleted,
+            unchangedPercentage: item.unchangedPercentage,
+            isBinary: item.isBinary
           })) || []
         }
         useTranslationStore={useTranslationStore}

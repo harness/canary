@@ -32,7 +32,10 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
           lang: item.filePath.split('.')[1],
           fileViews: item.fileViews,
           checksumAfter: item.checksumAfter,
-          filePath: item.filePath
+          filePath: item.filePath,
+          isDeleted: item.isDeleted,
+          unchangedPercentage: item.unchangedPercentage,
+          isBinary: item.isBinary
         }))}
         useTranslationStore={useTranslationStore}
         diffMode={2}

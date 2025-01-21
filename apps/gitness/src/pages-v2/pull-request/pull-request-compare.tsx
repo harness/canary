@@ -420,7 +420,6 @@ export const CreatePullRequest = () => {
   }
 
   const renderContent = () => {
-    if (isFetchingBranches && branchTagQuery?.length === 0) return <SkeletonList />
 
     return (
       <PullRequestComparePage

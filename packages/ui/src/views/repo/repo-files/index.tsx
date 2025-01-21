@@ -52,11 +52,11 @@ export const RepoFiles: FC<RepoFilesProps> = ({
 }) => {
   const { selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
-
+  const { t } = useTranslationStore()
   const content = useMemo(() => {
     if (!isView) return children
     if (isRepoEmpty) {
-      return <p>This repository is empty.</p>
+      return <p>{t('views:repos.emptyRepo')}</p>
     }
     if (!isDir)
       return (

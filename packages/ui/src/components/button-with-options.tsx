@@ -47,6 +47,7 @@ export interface ButtonWithOptionsProps<T extends string> {
   options: ButtonWithOptionsOptionType<T>[]
   handleOptionChange: (val: T) => void
   className?: string
+  buttonClassName?: string
   size?: ButtonWithOptionsSizes
   theme?: ButtonWithOptionsTheme
   disabled?: boolean
@@ -67,6 +68,7 @@ export const ButtonWithOptions = <T extends string>({
   options,
   handleOptionChange,
   className,
+  buttonClassName,
   size = 'default',
   theme = 'primary',
   disabled = false,
@@ -76,7 +78,12 @@ export const ButtonWithOptions = <T extends string>({
   return (
     <div className={cn('flex', className)}>
       <Button
-        className={cn('rounded-r-none', theme !== 'primary' && 'border-y border-l', buttonPaddings[size])}
+        className={cn(
+          'rounded-r-none',
+          theme !== 'primary' && 'border-y border-l',
+          buttonPaddings[size],
+          buttonClassName
+        )}
         theme={theme}
         size={size}
         onClick={handleButtonClick}
@@ -90,7 +97,7 @@ export const ButtonWithOptions = <T extends string>({
         <DropdownMenuTrigger
           className={cn(
             buttonVariants({ theme }),
-            'relative h-[inherit] w-8 p-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
+            'relative h-[inherit] w-8 p-0 flex-shrink-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
             theme !== 'primary' && 'border-y border-r',
             (!!disabled || !!loading) && 'pointer-events-none',
             separatorThemes[theme || 'default']

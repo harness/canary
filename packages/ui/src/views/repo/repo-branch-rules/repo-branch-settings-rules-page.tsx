@@ -116,42 +116,43 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
 
         <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />
 
         <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
 
-        <BranchSettingsRuleTargetPatternsField
-          watch={watch}
-          setValue={setValue}
-          register={register}
-          errors={errors}
-          t={t}
-        />
+        <div className="flex flex-col gap-y-11">
+          <BranchSettingsRuleTargetPatternsField
+            watch={watch}
+            setValue={setValue}
+            register={register}
+            errors={errors}
+            t={t}
+          />
 
-        <BranchSettingsRuleBypassListField
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          watch={watch}
-          bypassOptions={principals}
-          t={t}
-          setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-          principalsSearchQuery={principalsSearchQuery}
-        />
+          <BranchSettingsRuleBypassListField
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            watch={watch}
+            bypassOptions={principals}
+            t={t}
+            setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+            principalsSearchQuery={principalsSearchQuery}
+          />
 
-        <BranchSettingsRuleListField
-          rules={rules}
-          recentStatusChecks={recentStatusChecks}
-          handleCheckboxChange={handleCheckboxChange}
-          handleSubmenuChange={handleSubmenuChange}
-          handleSelectChangeForRule={handleSelectChangeForRule}
-          handleInputChange={handleInputChange}
-          t={t}
-        />
-
+          <BranchSettingsRuleListField
+            rules={rules}
+            recentStatusChecks={recentStatusChecks}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSubmenuChange={handleSubmenuChange}
+            handleSelectChangeForRule={handleSelectChangeForRule}
+            handleInputChange={handleInputChange}
+            t={t}
+          />
+        </div>
         <Fieldset className="mt-5">
           <ControlGroup>
             <ButtonGroup>

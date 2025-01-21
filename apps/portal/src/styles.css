@@ -1,5 +1,5 @@
 body {
-  @apply text-foreground-3 text-base overscroll-none;
+  @apply text-foreground-3 text-base overscroll-none !important;
 }
 
 main {
@@ -112,4 +112,14 @@ ul.top-level summary svg {
 
 pre.prism-code {
   @apply rounded-md overflow-hidden border border-borders-4 bg-background-2 !important;
+}
+
+/* Pagination overrides */
+
+.pagination-links a {
+  @apply border border-borders-4 rounded-md text-xs text-foreground-4;
+}
+
+.pagination-links a .link-title {
+  @apply text-lg leading-tight;
 }

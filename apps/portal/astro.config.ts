@@ -23,6 +23,10 @@ export default defineConfig({
       },
       sidebar: [
         {
+          label: "Getting started",
+          autogenerate: { directory: "getting-started" },
+        },
+        {
           label: "Foundations",
           autogenerate: { directory: "foundations" },
         },
@@ -50,6 +54,6 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/components/breadcrumb", //
+    "/": "/components/accordion",
   },
 });

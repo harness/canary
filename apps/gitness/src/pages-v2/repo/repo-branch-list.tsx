@@ -119,7 +119,8 @@ export function RepoBranchesListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       createBranchError={createBranchError?.message}
-      toBranchRule={() => routes.toRepoBranchRules({ spaceId, repoId })}
+      toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
+      toPullRequestCompare={() => routes.toPullRequestCompare({ spaceId, repoId })}
     />
   )
 }

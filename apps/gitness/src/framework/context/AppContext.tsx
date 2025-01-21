@@ -2,7 +2,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 
 import { noop } from 'lodash-es'
 
-import { membershipSpaces, TypesSpace, TypesUser } from '@harnessio/code-service-client'
+import { getUser, membershipSpaces, TypesSpace, TypesUser } from '@harnessio/code-service-client'
 
 import useLocalStorage from '../hooks/useLocalStorage'
 
@@ -27,12 +27,15 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
 
   useEffect(() => {
-    membershipSpaces({
-      queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
-    })
-      .then(({ body: memberships }) => {
-        const spaceList = memberships.filter(item => item?.space).map(item => item.space as TypesSpace)
-        setSpaces(spaceList)
+    Promise.all([
+      membershipSpaces({
+        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+      }),
+      getUser({})
+    ])
+      .then(([membershipResponse, userResponse]) => {
+        setSpaces(membershipResponse.body.filter(item => item?.space).map(item => item.space as TypesSpace))
+        setCurrentUser(userResponse.body)
       })
       .catch(() => {
         // Optionally handle error or show toast

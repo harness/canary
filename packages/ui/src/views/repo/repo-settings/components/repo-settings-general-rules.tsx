@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useMemo, useRef, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
@@ -14,9 +14,9 @@ import {
   StackedList,
   Text
 } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { ErrorTypes, RuleDataType, TranslationStore } from '@/views'
 import { TFunction } from 'i18next'
-import { debounce } from 'lodash-es'
 
 interface DescriptionProps {
   targetPatternsCount: number
@@ -71,35 +71,19 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
   setRulesSearchQuery
 }) => {
   const { t } = useTranslationStore()
-  const [search, setSearch] = useState('')
-  const debouncedChangeSearchRef = useRef(debounce((value: string) => setRulesSearchQuery(value), 300))
+
+  const {
+    search,
+    handleSearchChange: handleInputChange,
+    handleResetSearch: resetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: setRulesSearchQuery,
+    searchValue: rulesSearchQuery
+  })
 
   const isShowRulesContent = useMemo(() => {
     return (!!rules && !!rules.length) || !!rulesSearchQuery.length
   }, [rulesSearchQuery, rules])
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e?.target?.value ?? ''
-    setSearch(value)
-    debouncedChangeSearchRef.current(value)
-  }
-
-  const resetSearch = () => {
-    setSearch('')
-    setRulesSearchQuery('')
-  }
-
-  useEffect(() => {
-    const debouncedChangeSearch = debouncedChangeSearchRef.current
-
-    return () => {
-      debouncedChangeSearch.cancel()
-    }
-  }, [])
-
-  useEffect(() => {
-    setSearch(rulesSearchQuery)
-  }, [rulesSearchQuery])
 
   return (
     <>
@@ -210,7 +194,10 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
                 description={[
                   t(
                     'views:noData.noResultsDescription',
-                    'No rules match your search. Try adjusting your keywords or filters.'
+                    'No rules match your search. Try adjusting your keywords or filters.',
+                    {
+                      type: 'rules'
+                    }
                   )
                 ]}
                 primaryButton={{

@@ -1,8 +1,8 @@
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Breadcrumb, Icon, Input } from '@/components'
-import { debounce } from 'lodash-es'
+import { useDebounceSearch } from '@/hooks'
 
 interface InputPathBreadcrumbItemProps {
   path: string
@@ -19,27 +19,10 @@ const InputPathBreadcrumbItem = ({
   isNew = false,
   handleOnBlur
 }: InputPathBreadcrumbItemProps) => {
-  const [fileName, setFileName] = useState('')
-
-  const debouncedChangeFileNameRef = useRef(debounce((value: string) => changeFileName(value), 300))
-
-  useEffect(() => {
-    const debouncedChangeFileName = debouncedChangeFileNameRef.current
-
-    return () => {
-      debouncedChangeFileName.cancel()
-    }
-  }, [])
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setFileName(value)
-    debouncedChangeFileNameRef.current(value)
-  }
-
-  useEffect(() => {
-    setFileName(path)
-  }, [path])
+  const { search: fileName, handleSearchChange: handleInputChange } = useDebounceSearch({
+    handleChangeSearchValue: changeFileName,
+    searchValue: path
+  })
 
   return (
     <div className="flex items-center gap-1.5 text-foreground-4">

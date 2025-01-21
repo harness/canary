@@ -1,9 +1,9 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { cn } from '@utils/cn'
-import { debounce } from 'lodash-es'
 
 const filterItems = (categories: MenuGroupType[], query: string): MenuGroupType[] => {
   if (!query.trim()) return categories
@@ -27,30 +27,21 @@ interface ManageNavigationSearchProps {
 
 export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: ManageNavigationSearchProps) => {
   const [filteredItems, setFilteredItems] = useState<MenuGroupType[]>(navbarMenuData)
-  const [searchQuery, setSearchQuery] = useState('')
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
   const inputRef = useRef<HTMLInputElement | null>(null)
   const popoverRef = useRef<HTMLDivElement | null>(null)
-  const debouncedSearch = useRef(debounce((value: string) => setFilteredItems(filterItems(navbarMenuData, value)), 300))
 
-  useEffect(() => {
-    const debouncedChangeSearch = debouncedSearch.current
-
-    return () => {
-      debouncedChangeSearch.cancel()
-    }
-  }, [])
-
-  const handleSearchChange = (event: ChangeEvent) => {
-    event.preventDefault()
-    const query = (event.target as HTMLInputElement).value
-    setSearchQuery(query)
-    debouncedSearch.current(query)
-  }
+  const {
+    search: searchQuery,
+    handleSearchChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setFilteredItems(filterItems(navbarMenuData, val))
+  })
 
   const handleItemClick = (item: NavbarItemType) => {
     addToPinnedItems(item)
-    setSearchQuery('')
+    handleResetSearch()
     setSearchDialogOpen(false)
   }
 

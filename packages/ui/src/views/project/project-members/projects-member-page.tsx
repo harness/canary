@@ -1,8 +1,10 @@
-import { ChangeEvent, FC, useState } from 'react'
+import React, { FC, useMemo } from 'react'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, Filters, FiltersBar, ListActions, NoData, SearchBox, Spacer } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { debounce } from 'lodash-es'
+import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
+import { useFilters } from '@views/repo/hooks'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
 import ProjectMembersList from './components/project-member-list'
@@ -20,70 +22,117 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onSubmit,
-  onEditMember
+  onEditMember,
+  setPrincipalsSearchQuery,
+  principalsSearchQuery,
+  onDeleteHandler
 }) => {
   const { t } = useTranslationStore()
   const { memberList, totalPages, page, setPage } = useMemberListStore()
   const { principalList } = usePrincipalListStore()
-  const [searchInput, setSearchInput] = useState(searchQuery)
 
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
+  const { search, handleSearchChange, handleResetSearch } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+  const filterHandlers = useFilters()
+
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
+  }, [page, filterHandlers.activeFilters, searchQuery])
+
+  const handleResetFiltersQueryAndPages = () => {
+    filterHandlers.handleResetFilters()
+    handleResetSearch()
+    setPage(1)
   }
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="3xl">
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
-          {t('views:projectSettings.members')}
-        </Text>
-        <Spacer size={6} />
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchBox.Root
-              width="full"
-              className="max-w-96"
-              value={searchInput || ''}
-              handleChange={handleInputChange}
-              placeholder={t('views:repos.search')}
+    <>
+      {!memberList.length && !isDirtyList && !isLoading ? (
+        <NoData
+          textWrapperClassName="max-w-[350px]"
+          iconName="no-data-members"
+          title={t('views:noData.members', 'No members yet')}
+          description={[
+            t(
+              'views:noData.inviteMembers',
+              'There are no members in this project. Click on the button below to start adding them.'
+            )
+          ]}
+          primaryButton={{
+            label: t('views:projectSettings.inviteNewMember', 'Invite new member'),
+            onClick: () => {
+              setIsInviteMemberDialogOpen(true)
+            }
+          }}
+        />
+      ) : (
+        <SandboxLayout.Main>
+          <SandboxLayout.Content maxWidth="3xl">
+            <h1 className="mb-6 text-2xl font-medium text-foreground-1">
+              {t('views:projectSettings.members', 'Member')}
+            </h1>
+
+            {(!!memberList.length || (!memberList.length && isDirtyList)) && (
+              <>
+                <ListActions.Root>
+                  <ListActions.Left>
+                    <SearchBox.Root
+                      width="full"
+                      className="max-w-96"
+                      value={search}
+                      handleChange={handleSearchChange}
+                      placeholder={t('views:repos.search', 'Search')}
+                    />
+                  </ListActions.Left>
+                  <ListActions.Right>
+                    <Filters
+                      filterOptions={FILTER_OPTIONS}
+                      sortOptions={SORT_OPTIONS}
+                      filterHandlers={filterHandlers}
+                      t={t}
+                    />
+                    <Button
+                      variant="default"
+                      onClick={() => {
+                        setIsInviteMemberDialogOpen(true)
+                      }}
+                    >
+                      {t('views:projectSettings.newMember', 'New member')}
+                    </Button>
+                  </ListActions.Right>
+                </ListActions.Root>
+                <FiltersBar
+                  filterOptions={FILTER_OPTIONS}
+                  sortOptions={SORT_OPTIONS}
+                  sortDirections={SORT_DIRECTIONS}
+                  filterHandlers={filterHandlers}
+                  t={t}
+                />
+                <Spacer size={4.5} />
+              </>
+            )}
+
+            <ProjectMembersList
+              isLoading={isLoading}
+              memberList={memberList}
+              handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+              onDeleteHandler={onDeleteHandler}
+              useTranslationStore={useTranslationStore}
+              onEditMember={onEditMember}
+              totalPages={totalPages}
+              page={page}
+              setPage={setPage}
             />
-          </ListActions.Left>
-          <ListActions.Right>
-            <Button
-              variant="default"
-              onClick={() => {
-                setIsInviteMemberDialogOpen(true)
-              }}
-            >
-              {t('views:projectSettings.newMember')}
-            </Button>
-          </ListActions.Right>
-        </ListActions.Root>
-        <Spacer size={5} />
-        <ProjectMembersList
-          isLoading={isLoading}
-          memberList={memberList}
-          searchQuery={searchQuery}
-          useTranslationStore={useTranslationStore}
-          setSearchInput={setSearchInput}
-          setSearchQuery={setSearchQuery}
-          setIsInviteMemberDialogOpen={setIsInviteMemberDialogOpen}
-          onEditMember={onEditMember}
-        />
-        <Spacer size={8} />
-        <PaginationComponent
-          totalPages={totalPages}
-          currentPage={page}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-          t={t}
-        />
-      </SandboxLayout.Content>
+          </SandboxLayout.Content>
+        </SandboxLayout.Main>
+      )}
+
       <InviteMemberDialog
         open={isInviteMemberDialogOpen}
         onClose={() => {
@@ -94,7 +143,9 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
         principals={principalList}
         isInvitingMember={isInvitingMember}
         error={inviteMemberError}
+        setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+        principalsSearchQuery={principalsSearchQuery}
       />
-    </SandboxLayout.Main>
+    </>
   )
 }

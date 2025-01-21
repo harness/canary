@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { FC } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
-import { debounce } from 'lodash-es'
+import { useDebounceSearch } from '@/hooks'
 
 import { SandboxLayout } from '../../index'
 import { PipelineList } from './pipeline-list'
@@ -22,16 +22,14 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   const { t } = useTranslationStore()
   const { pipelines, totalPages, page, setPage } = usePipelineListStore()
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
-
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   if (isError)
     // TODO: improve error handling
@@ -81,10 +79,7 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
           pipelines={pipelines}
           LinkComponent={LinkComponent}
           query={searchQuery ?? ''}
-          handleResetQuery={() => {
-            setSearchInput('')
-            setSearchQuery(null)
-          }}
+          handleResetQuery={handleResetSearch}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
           handleCreatePipeline={handleCreatePipeline}

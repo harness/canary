@@ -1,14 +1,12 @@
-import { MembersProps, ProjectMemberListViewProps } from '../../project-members/types'
+import { MembersProps, ProjectMemberListViewProps } from '@/views'
 
 export type ProjectMembersListProps = Pick<
   ProjectMemberListViewProps,
-  | 'isLoading'
-  | 'searchQuery'
-  | 'setSearchQuery'
-  | 'setIsInviteMemberDialogOpen'
-  | 'onEditMember'
-  | 'useTranslationStore'
+  'isLoading' | 'onEditMember' | 'useTranslationStore' | 'onDeleteHandler'
 > & {
   memberList: MembersProps[]
-  setSearchInput: (value: string) => void
+  handleResetFiltersQueryAndPages: () => void
+  totalPages: number
+  page: number
+  setPage: (val: number) => void
 }

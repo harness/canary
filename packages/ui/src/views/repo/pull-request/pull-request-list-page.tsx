@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -11,9 +11,10 @@ import {
   Spacer,
   StackedList
 } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { PullRequestListStore, SandboxLayout, TranslationStore } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
-import { debounce, noop } from 'lodash-es'
+import { noop } from 'lodash-es'
 
 import { getFilterOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
 import { useFilters } from '../hooks'
@@ -47,25 +48,19 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 500)
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch: handleResetQuery
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   /**
    * Initialize filters hook with handlers for managing filter state
    */
   const filterHandlers = useFilters()
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }
-
-  const handleResetQuery = useCallback(() => {
-    setSearchInput('')
-    setSearchQuery(null)
-  }, [setSearchQuery])
 
   const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)

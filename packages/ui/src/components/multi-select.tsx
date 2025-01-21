@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { ReactNode } from 'react'
 
 import {
   Button,
@@ -9,12 +9,15 @@ import {
   DropdownMenuTrigger,
   Fieldset,
   Icon,
+  Label,
+  Message,
+  MessageTheme,
   ScrollArea,
   SearchBox
 } from '@/components'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
-import { debounce } from 'lodash-es'
 
 export type MultiSelectOptionType<T = unknown> = T & {
   id: string | number
@@ -30,6 +33,8 @@ export interface MultiSelectProps<T = unknown> {
   searchValue?: string
   handleChangeSearchValue?: (data: string) => void
   customOptionElem?: (data: MultiSelectOptionType<T>) => ReactNode
+  error?: string
+  label?: string
 }
 
 export const MultiSelect = <T = unknown,>({
@@ -40,30 +45,22 @@ export const MultiSelect = <T = unknown,>({
   options,
   searchValue = '',
   handleChangeSearchValue,
-  customOptionElem
+  customOptionElem,
+  error,
+  label
 }: MultiSelectProps<T>) => {
-  const [search, setSearch] = useState('')
-
-  const debouncedChangeSearchRef = useRef(debounce((value: string) => handleChangeSearchValue?.(value), 300))
-
-  useEffect(() => setSearch(searchValue ?? ''), [searchValue])
-
-  useEffect(() => {
-    const debouncedChangeSearch = debouncedChangeSearchRef.current
-
-    return () => {
-      debouncedChangeSearch.cancel()
-    }
-  }, [])
-
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setSearch(value)
-    debouncedChangeSearchRef.current(value)
-  }
+  const { search, handleSearchChange } = useDebounceSearch({
+    handleChangeSearchValue,
+    searchValue
+  })
 
   return (
     <Fieldset className="gap-y-2">
+      {!!label && (
+        <Label className="mb-0.5" color="secondary" htmlFor={''}>
+          {label}
+        </Label>
+      )}
       <DropdownMenu>
         <DropdownMenuTrigger className="flex h-9 w-full items-center justify-between rounded border border-borders-2 px-3 transition-colors data-[state=open]:border-borders-8">
           {placeholder}
@@ -140,6 +137,11 @@ export const MultiSelect = <T = unknown,>({
             </Button>
           ))}
         </div>
+      )}
+      {!!error && (
+        <Message className="absolute top-full translate-y-0.5" theme={MessageTheme.ERROR}>
+          {error}
+        </Message>
       )}
     </Fieldset>
   )

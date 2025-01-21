@@ -20,7 +20,7 @@ interface RepoFilesProps {
   loading: boolean
   files: RepoFile[]
   isDir: boolean
-  isRepoEmpty: boolean
+  isRepoEmpty?: boolean
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode

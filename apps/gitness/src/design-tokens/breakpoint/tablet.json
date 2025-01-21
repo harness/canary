@@ -324,9 +324,30 @@
     }
   },
   "radii": {
+    "xs": {
+      "$type": "borderRadius",
+      "$value": "{spacing.base}",
+      "$description": "Extra small border radius for minimal rounding."
+    },
     "sm": {
       "$type": "borderRadius",
-      "$value": "{spacing.2xs}"
+      "$value": "{spacing.3xs}",
+      "$description": "Small rounding for compact components like form controls, small buttons, and tight UI elements."
+    },
+    "md": {
+      "$type": "borderRadius",
+      "$value": "{spacing.sm}",
+      "$description": "Medium border radius for standard interactive elements like cards, standard buttons, and content containers. "
+    },
+    "lg": {
+      "$type": "borderRadius",
+      "$value": "{spacing.md}",
+      "$description": "Large border radius for prominent UI elements like feature cards, significant content blocks, and main interactive surfaces."
+    },
+    "circle": {
+      "$type": "borderRadius",
+      "$value": "999",
+      "$description": "Circular radius used for avatars, circular buttons, and other symmetrical, rounded elements that require a completely round shape."
     }
   },
   "line-height": {

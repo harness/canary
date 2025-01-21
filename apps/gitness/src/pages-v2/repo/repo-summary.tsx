@@ -50,7 +50,7 @@ export default function RepoSummaryPage() {
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const manageTokensLink = '/settings/keys'
+  const manageTokensLink = '/profile-settings/keys'
   const {
     branchList,
     tagList,

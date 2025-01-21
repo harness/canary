@@ -16,7 +16,7 @@ interface TabTriggerItemProps {
 const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCount }) => {
   return (
     <TabsTrigger value={value} className="data-[state=active]:bg-background-1">
-      <Layout.Horizontal className="items-center">
+      <Layout.Horizontal className="items-center" gap="gap-x-1.5">
         <div>
           <Icon size={16} name={icon as IconProps['name']} />
         </div>

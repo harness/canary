@@ -124,8 +124,8 @@ export function RepoSummaryView({
   }
 
   return (
-    <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Columns columnWidths="1fr 255px">
+    <SandboxLayout.Main>
+      <SandboxLayout.Columns columnWidths="1fr 256px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-6">
             {/*
@@ -256,7 +256,7 @@ export function RepoSummaryView({
                   }
                 />
               </StackedList.Item>
-              <StackedList.Item disableHover>
+              <StackedList.Item className="px-16 py-6" disableHover>
                 <MarkdownViewer source={decodedReadmeContent || ''} />
               </StackedList.Item>
             </StackedList.Root>

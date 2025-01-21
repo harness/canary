@@ -26,7 +26,7 @@ import { useCommitDetailsStore } from './stores/commit-details-store.ts'
  * TODO: For now, file-tree is static and contains all files.
  * Needs to filter files for current commit and add opportunity to navigate to diff for each file from file-tree
  */
-export const CommitDiffContainer = () => {
+export const CommitDiffContainer = ({ showSidebar = true }: { showSidebar?: boolean }) => {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
   const { fullGitRef } = useCodePathDetails()
@@ -99,9 +99,12 @@ export const CommitDiffContainer = () => {
 
   return (
     <>
-      <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
-        {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
-      </CommitSidebar>
+      {showSidebar && (
+        <CommitSidebar useTranslationStore={useTranslationStore} navigateToFile={() => {}} filesList={filesList}>
+          {!!repoDetails?.body?.content?.entries?.length && <Explorer repoDetails={repoDetails?.body} />}
+        </CommitSidebar>
+      )}
+
       <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
     </>
   )

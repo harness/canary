@@ -12,15 +12,20 @@ const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
       navigation: 'h-[44px] w-full justify-start gap-6 border-b border-borders-5 px-6',
       tabnav:
         'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-borders-1'
+    },
+    fontSize: {
+      xs: 'text-12',
+      sm: 'text-14'
     }
   },
   defaultVariants: {
-    variant: 'default'
+    variant: 'default',
+    fontSize: 'sm'
   }
 })
 
 const tabsTriggerVariants = cva(
-  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground-1',
+  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground-1',
   {
     variants: {
       variant: {
@@ -28,7 +33,7 @@ const tabsTriggerVariants = cva(
         underline:
           'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
         navigation:
-          'm-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 text-xs font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
+          'm-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
         tabnav:
           'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1'
       }
@@ -77,7 +82,7 @@ interface TabsListProps
     VariantProps<typeof tabsListVariants> {}
 
 const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, TabsListProps>(
-  ({ className, variant, ...props }, ref) => {
+  ({ className, variant, fontSize, ...props }, ref) => {
     const context = React.useContext(TabsContext)
 
     return (
@@ -86,6 +91,7 @@ const TabsList = React.forwardRef<React.ElementRef<typeof TabsPrimitive.List>, T
         className={cn(
           tabsListVariants({
             variant: context.variant ?? variant,
+            fontSize,
             className
           })
         )}
@@ -110,7 +116,7 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
         {...props}
       >
         {context.variant === 'navigation' && (
-          <span className="bg-tab-gradient-radial absolute -inset-y-5 inset-x-[-20px] hidden group-data-[state=active]:block" />
+          <span className="bg-tab-gradient-radial absolute left-1/2 top-1/2 -z-10 hidden h-[calc(100%+40px)] w-[calc(100%+60px)] -translate-x-1/2 -translate-y-1/2 group-data-[state=active]:block" />
         )}
         {children}
       </TabsPrimitive.Trigger>

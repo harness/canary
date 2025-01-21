@@ -62,7 +62,6 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
-                <Icon name="plus" size={12} className="text-tertiary-background" />
                 <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -87,7 +86,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
               <div key={item.id} className="flex items-center gap-1.5">
                 <Icon name={item.iconName} size={14} className="fill-none text-tertiary-background" />
                 <Text>{item.name}</Text>
-                <Badge variant="outline" size="sm">
+                <Badge className="hover:bg-tag-background-gray-1" theme="muted" size="sm">
                   {item.count}
                 </Badge>
               </div>

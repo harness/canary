@@ -8,14 +8,14 @@ export function Agreements() {
       By joining, you agree to{' '}
       <Link
         className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
-        to="/"
+        to="https://harness.io/privacy"
       >
         Terms of Service
       </Link>{' '}
       and&nbsp;
       <Link
         className="whitespace-nowrap text-foreground-1 underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-1"
-        to="/"
+        to="https://harness.io/subscriptionterms"
       >
         Privacy Policy
       </Link>

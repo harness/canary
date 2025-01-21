@@ -42,14 +42,6 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
 }
 
-export interface MoreActionsTooltipProps {
-  spaceId?: string
-  repoId?: string
-  defaultBranch?: string
-  branchInfo: BranchProps
-  useTranslationStore: () => TranslationStore
-}
-
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore

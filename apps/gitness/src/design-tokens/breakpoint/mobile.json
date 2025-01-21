@@ -231,7 +231,7 @@
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
           "fontSize": "{font-size.f-3}",
-          "lineHeight": "{line-height.lh-2}",
+          "lineHeight": "{line-height.lh-3}",
           "letterSpacing": "{tracking.wide}"
         },
         "$description": "Small informational text used for displaying numerical, statistical, or technical data. "

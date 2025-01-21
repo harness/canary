@@ -434,7 +434,8 @@
       "font-size.f2": "e9fef60cbf80d8b20cd8ee819050250970a3ec2f",
       "font-size.f3": "daaee641c76388f3552b0daee1933544d01a79db",
       "font-size.f4": "de3f96381af0e5a31f13ed1479a32d59f78fd846",
-      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2"
+      "font-size.f5": "93460d68423c83ed7e4f49e1d5f8ffe3ad3253f2",
+      "radii.sm": "024ee7c552015925081d9c2cae38cdf9dcdeeb86"
     },
     "group": "breakpoint"
   },

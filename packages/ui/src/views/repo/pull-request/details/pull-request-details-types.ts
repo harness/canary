@@ -480,7 +480,7 @@ export interface TypesCodeOwnerEvaluationEntry {
 }
 
 export interface PullRequestRoutingProps {
-  toPRCheck: ({}: { pipelineId: string; executionId: string }) => string
+  toPRCheck: ({ pipelineId, executionId }: { pipelineId: string; executionId: string }) => string
 }
 
 export interface PullRequestChangesSectionProps {

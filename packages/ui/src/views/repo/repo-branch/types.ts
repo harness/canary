@@ -1,5 +1,3 @@
-import { Params } from 'react-router-dom'
-
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 

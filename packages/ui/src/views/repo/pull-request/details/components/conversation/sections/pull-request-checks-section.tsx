@@ -19,13 +19,7 @@ interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> 
   repoId?: string
 }
 
-const PullRequestCheckSection = ({
-  checkData,
-  checksInfo,
-  spaceId,
-  repoId,
-  toPRCheck
-}: PullRequestMergeSectionProps) => {
+const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullRequestMergeSectionProps) => {
   const getStatusIcon = (status: EnumCheckStatus) => {
     switch (status) {
       // TODO: fix icons to use from nucleo

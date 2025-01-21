@@ -16,7 +16,7 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { DiffModeOptions, DiffViewerState, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
 
@@ -92,6 +92,8 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
         <div className="w-full border-b last:border-b-0">
           <div
+            role="button"
+            tabIndex={0}
             className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
                        [&>svg]:duration-100 [&>svg]:ease-in-out"
             onClick={onToggle}
@@ -99,7 +101,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
             <StackedList.Field title={<LineTitle text={header?.text ?? ''} isOpen={isOpen} />} />
           </div>
           {isOpen && (
-            <div className="bg-transparent border-t">
+            <div className="border-t bg-transparent">
               {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                 <Layout.Vertical className="flex w-full items-center py-5">
                   <Button

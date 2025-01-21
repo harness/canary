@@ -105,6 +105,8 @@ const CommitsAccordion: FC<{
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
         <div className="w-full border-b last:border-b-0">
           <div
+            role="button"
+            tabIndex={0}
             className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
                        [&>svg]:duration-100 [&>svg]:ease-in-out"
             onClick={onToggle}
@@ -114,7 +116,7 @@ const CommitsAccordion: FC<{
             />
           </div>
           {isOpen && (
-            <div className="bg-transparent border-t">
+            <div className="border-t bg-transparent">
               {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                 <Layout.Vertical className="flex w-full items-center py-5">
                   <Button

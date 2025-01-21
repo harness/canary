@@ -289,7 +289,7 @@ const PullRequestAccordion: React.FC<{
       if (!isOpen) {
         setCollapsed(false)
       }
-      if (fileDeleted || isDiffTooLarge) {
+      if (fileDeleted || isDiffTooLarge || header?.isBinary || fileUnchanged) {
         setShowHiddenDiff(true)
       }
     }
@@ -298,7 +298,18 @@ const PullRequestAccordion: React.FC<{
       useFullDiff: !useFullDiff
     })
     setUseFullDiff(prev => !prev)
-  }, [useFullDiff, onGetFullDiff, diffViewerState, header.filePath, setCollapsed])
+  }, [
+    useFullDiff,
+    onGetFullDiff,
+    diffViewerState,
+    header.filePath,
+    setCollapsed,
+    header?.isBinary,
+    fileDeleted,
+    isDiffTooLarge,
+    fileUnchanged,
+    isOpen
+  ])
 
   // If commits change, check if "viewed" should be updated
   useEffect(() => {
@@ -315,6 +326,8 @@ const PullRequestAccordion: React.FC<{
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
         <div className="w-full border-b last:border-b-0">
           <div
+            role="button"
+            tabIndex={0}
             className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
                        [&>svg]:duration-100 [&>svg]:ease-in-out"
             onClick={onToggle}
@@ -338,7 +351,7 @@ const PullRequestAccordion: React.FC<{
             />
           </div>
           {isOpen && (
-            <div className="bg-transparent border-t">
+            <div className="border-t bg-transparent">
               {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                 <Layout.Vertical className="flex w-full items-center py-5">
                   <Button
@@ -476,7 +489,7 @@ export function PullRequestChanges({
       [...openItems]
     )
     setOpenItems(expanded)
-  }, [commentId, data, comments, openItems])
+  }, [commentId, data, comments, openItems, scrolledToComment])
 
   const isOpen = useCallback(
     (fileText: string) => {

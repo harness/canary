@@ -20,7 +20,6 @@ import {
   useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
-import { SkeletonList } from '@harnessio/ui/components'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -235,7 +234,7 @@ export const CreatePullRequest = () => {
   const onCancel = () => {
     navigate(routes.toRepositories({ spaceId }))
   }
-  const { data: { body: branches } = {}, isFetching: isFetchingBranches } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
     queryParams: { page: 0, limit: 10, query: branchTagQuery, include_pullreqs: true }
   })
@@ -420,7 +419,6 @@ export const CreatePullRequest = () => {
   }
 
   const renderContent = () => {
-
     return (
       <PullRequestComparePage
         currentUser={currentUser?.display_name}

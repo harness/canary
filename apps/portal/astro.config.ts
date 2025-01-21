@@ -18,10 +18,15 @@ export default defineConfig({
         src: "./src/assets/harness-design-system-logo.svg",
         replacesTitle: true,
       },
+      favicon: "./src/assets/favicon.png",
       social: {
         github: "https://github.com/harness/canary",
       },
       sidebar: [
+        {
+          label: "Getting started",
+          autogenerate: { directory: "getting-started" },
+        },
         {
           label: "Foundations",
           autogenerate: { directory: "foundations" },
@@ -50,6 +55,6 @@ export default defineConfig({
     react(),
   ],
   redirects: {
-    "/": "/components/breadcrumb", //
+    "/": "/components/accordion",
   },
 });

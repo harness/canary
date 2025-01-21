@@ -367,7 +367,6 @@
     --canary-code-background-07: var(--canary-harness-yellow-800) / 0.25;
     --canary-code-background-08: var(--canary-blue) / 0.1;
   }
-
   .light-pnd-std {
     --canary-background: 0 0% 100%;
     --canary-foreground: 240 10% 3.9%;
@@ -1139,7 +1138,7 @@ mark {
 }
 
 .bg-tab-gradient-radial {
-  background-image: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
+  background-image: var(--canary-tab-background-gradient);
 }
 
 .top-\[100px\] {

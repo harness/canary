@@ -263,6 +263,13 @@
     --canary-box-shadow-1: var(--canary-harness-grey-400) / 0.1;
     --canary-box-shadow-2: var(--canary-harness-grey-400) / 0.1;
     --canary-box-shadow-pagination: var(--canary-harness-grey-400) / 0.1;
+
+    /* Gradient colors */
+    --canary-tab-background-gradient: radial-gradient(
+      50% 50% at 50% 50%,
+      hsl(240deg 6% 20%/40%),
+      hsl(240deg 6% 20%/0%)
+    );
   }
 
   /* Need .light and .dark classes for MFE */
@@ -496,6 +503,9 @@
     --canary-tab-item-gradient-to: var(--canary-harness-grey-400) / 0%;
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
+
+    /* Gradient colors */
+    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
   }
   .dark,
   .dark-std-std {
@@ -696,5 +706,12 @@
     --canary-tab-item-gradient-to: var(--canary-grey-20) / 0;
     --canary-tab-item-gradient-stops: hsla(var(--canary-tab-item-gradient-from)),
       hsla(var(--canary-tab-item-gradient-to));
+
+    /* Gradient colors */
+    --canary-tab-background-gradient: radial-gradient(
+      50% 50% at 50% 50%,
+      hsl(240deg 6% 20%/40%),
+      hsl(240deg 6% 20%/0%)
+    );
   }
 }

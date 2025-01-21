@@ -106,7 +106,7 @@ const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: ':commitSHA',
-                element: <RepoCommitDetailsPage />,
+                element: <RepoCommitDetailsPage showSidebar={false} />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                     <>
@@ -119,7 +119,7 @@ const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: (
                       <ExplorerPathsProvider>
-                        <CommitDiffContainer />
+                        <CommitDiffContainer showSidebar={false} />
                       </ExplorerPathsProvider>
                     )
                   }

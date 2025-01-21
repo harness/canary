@@ -28,12 +28,7 @@ export const FileAdditionsTrigger: FC<FileAdditionsTriggerProps> = ({
           </span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        style={{
-          width: triggerRef.current ? `${triggerRef.current.offsetWidth}px` : 'auto'
-        }}
-      >
+      <DropdownMenuContent className="min-w-[157px]" align="end">
         <DropdownMenuItem>
           <Link className="relative grid grid-cols-[auto_1fr] items-center gap-2.5" to={pathNewFile}>
             <Icon name="plus" size={12} />

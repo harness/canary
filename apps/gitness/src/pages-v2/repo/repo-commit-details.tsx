@@ -9,7 +9,7 @@ import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { useCommitDetailsStore } from './stores/commit-details-store'
 
-export default function RepoCommitDetailsPage() {
+export default function RepoCommitDetailsPage({ showSidebar = true }: { showSidebar?: boolean }) {
   const repoRef = useGetRepoRef()
   const { commitSHA } = useParams<PathParams>()
   const { setCommitData } = useCommitDetailsStore()
@@ -26,6 +26,10 @@ export default function RepoCommitDetailsPage() {
   }, [commitData, setCommitData])
 
   return (
-    <RepoCommitDetailsView useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
+    <RepoCommitDetailsView
+      useCommitDetailsStore={useCommitDetailsStore}
+      useTranslationStore={useTranslationStore}
+      showSidebar={showSidebar}
+    />
   )
 }

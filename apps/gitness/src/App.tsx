@@ -37,9 +37,9 @@ export default function AppV1() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <ExitConfirmProvider>
-                <NavigationProvider routes={routes}>
-                  <RouterProvider router={router} />
-                </NavigationProvider>
+              <NavigationProvider routes={routes}>
+                <RouterProvider router={router} />
+              </NavigationProvider>
             </ExitConfirmProvider>
           </TooltipProvider>
         </QueryClientProvider>

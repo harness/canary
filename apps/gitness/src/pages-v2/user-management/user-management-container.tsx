@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useSearchParams } from 'react-router-dom'
 
 // import { useQueryClient } from '@tanstack/react-query'
 
@@ -38,8 +38,7 @@ export const UserManagementPageContainer = () => {
       page: queryPage
     }
   })
-  const { setUsers, setTotalPages, password, setUser, setPassword, setGeteneratePassword } =
-    useAdminListUsersStore()
+  const { setUsers, setTotalPages, password, setUser, setPassword, setGeteneratePassword } = useAdminListUsersStore()
   const queryClient = useQueryClient()
 
   const [isDeleteUserDialogOpen, setDeleteUserDialogOpen] = useState(false)
@@ -74,7 +73,7 @@ export const UserManagementPageContainer = () => {
       default:
         break
     }
-  }  
+  }
 
   useEffect(() => {
     if (userData) {

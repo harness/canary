@@ -416,35 +416,35 @@
     },
     "3": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 3.6) / 2) * 2"
     },
     "4": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 3.8) / 2) * 2"
     },
     "5": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 4) / 2) * 2"
     },
     "6": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 4.3) / 2) * 2"
     },
     "7": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 4.6) / 2) * 2"
     },
     "8": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 5) / 2) * 2"
     },
     "9": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 5.32) / 2) * 2"
     },
     "10": {
       "$type": "sizing",
-      "$value": "4"
+      "$value": "round({step.base}* pow({multiplier.desktop}, 5.58) / 2) * 2"
     }
   },
   "width": {

@@ -404,5 +404,17 @@
       "$type": "lineHeights",
       "$value": "round({font-size.1}* {leading.normal}/2) * 2"
     }
+  },
+  "height": {
+    "1": {
+      "$type": "sizing",
+      "$value": "4"
+    }
+  },
+  "width": {
+    "1": {
+      "$type": "sizing",
+      "$value": "4"
+    }
   }
 }

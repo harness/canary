@@ -113,7 +113,8 @@ const repoRoutes: CustomRouteObject[] = [
                     <>
                       <Text>{commitSHA.substring(0, 7)}</Text>
                     </>
-                  )
+                  ),
+                  routeName: RouteConstants.toRepoCommitDetails
                 },
                 children: [
                   {

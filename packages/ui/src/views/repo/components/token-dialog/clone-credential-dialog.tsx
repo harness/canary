@@ -18,7 +18,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface RoutingProps {
-  toManageToken: () => string
+  toManageToken?: () => string
 }
 interface CloneCredentialDialogProps extends Partial<RoutingProps> {
   open: boolean

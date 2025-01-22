@@ -7,14 +7,14 @@ import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
-interface CommitProps {
-  inCompare?: boolean
-  inPr?: boolean
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+interface CommitProps extends Partial<RoutingProps> {
   data?: TypesCommit[]
-  commitsPath?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = false, inPr = false }) => {
+export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails }) => {
   const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -43,7 +43,7 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = fa
                   const authorName = commit.author?.identity?.name
 
                   return (
-                    <Link key={commit?.sha} to={`${commitsPath}/${commit?.sha}`}>
+                    <Link key={commit?.sha} to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
                       <StackedList.Item
                         className="!cursor-default items-start py-3"
                         key={commit?.sha || repo_idx}
@@ -52,10 +52,10 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = fa
                         <StackedList.Field
                           title={
                             <div className="flex flex-col gap-y-1.5">
-                              {commitsPath ? (
+                              {toCommitDetails ? (
                                 <Link
                                   className="truncate text-16 font-medium leading-snug"
-                                  to={`${commitsPath}/${commit?.sha}`}
+                                  to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                                 >
                                   {commit.title}
                                 </Link>
@@ -84,13 +84,7 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = fa
                                     variant="outline"
                                     size="sm_icon"
                                     onClick={() => {
-                                      navigate(
-                                        inCompare
-                                          ? `../../code/${commit.sha}`
-                                          : inPr
-                                            ? `../../../code/${commit.sha}`
-                                            : `../code/${commit.sha}`
-                                      )
+                                      navigate(toCommitDetails?.({ sha: commit?.sha || '' }) || '')
                                     }}
                                   >
                                     <>{'<>'}</>

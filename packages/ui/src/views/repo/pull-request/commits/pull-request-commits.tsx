@@ -6,14 +6,18 @@ import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@view
 
 import { IPullRequestCommitsStore } from './pull-request-commits.types'
 
-interface RepoPullRequestCommitsViewProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
   usePullRequestCommitsStore: () => IPullRequestCommitsStore
 }
 
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   useTranslationStore,
-  usePullRequestCommitsStore
+  usePullRequestCommitsStore,
+  toCommitDetails
 }) => {
   const { commitsList, xNextPage, xPrevPage, page, setPage } = usePullRequestCommitsStore()
   const { t } = useTranslationStore()
@@ -30,7 +34,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
 
       {commitsList?.length && (
         <CommitsList
-          inPr
+          toCommitDetails={toCommitDetails}
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,
             parent_shas: item.parent_shas,

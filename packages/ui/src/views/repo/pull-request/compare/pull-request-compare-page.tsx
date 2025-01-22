@@ -52,8 +52,10 @@ export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
   { name: 'Unified', value: 'Unified' }
 ]
-
-export interface PullRequestComparePageProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
   onFormCancel: () => void
@@ -114,7 +116,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   usersList,
   reviewers,
   handleAddReviewer,
-  handleDeleteReviewer
+  handleDeleteReviewer,
+  toCommitDetails
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -382,7 +385,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 <CommitsList
-                  inCompare
+                  toCommitDetails={toCommitDetails}
                   data={commitData?.map((item: TypesCommit) => ({
                     sha: item.sha,
                     parent_shas: item.parent_shas,

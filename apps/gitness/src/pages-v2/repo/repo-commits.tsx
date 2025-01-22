@@ -26,7 +26,6 @@ export default function RepoCommitsPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
-  const commitsPath = routes.toRepoCommits({ spaceId, repoId })
 
   const {
     branchList,
@@ -129,7 +128,6 @@ export default function RepoCommitsPage() {
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
-      commitsPath={commitsPath}
     />
   )
 }

@@ -1,13 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  Button
-} from '@/components'
+import { AlertDialog, Button } from '@/components'
 
 import { IRemoveAdminDialogProps } from '../types'
 
@@ -23,22 +14,22 @@ export const AdminDialog: React.FC<IRemoveAdminDialogProps> = ({
   const isAdmin = user?.admin ?? false
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogTrigger asChild></AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Trigger asChild></AlertDialog.Trigger>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>
             {isAdmin ? `Are you sure you want to remove ` : `Are you sure you want to grant `}
             {user?.display_name}
             {isAdmin ? ` as an admin?` : ` admin privileges?`}
-          </AlertDialogTitle>
-          <AlertDialogDescription>
+          </AlertDialog.Title>
+          <AlertDialog.Description>
             {isAdmin
               ? `This will remove the admin tag for "${user?.display_name}".`
               : `This will grant admin privileges to "${user?.display_name}".`}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
+          </AlertDialog.Description>
+        </AlertDialog.Header>
+        <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose}>
             Cancel
           </Button>
@@ -59,8 +50,8 @@ export const AdminDialog: React.FC<IRemoveAdminDialogProps> = ({
                 ? 'Yes, remove admin'
                 : 'Yes, grant admin'}
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

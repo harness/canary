@@ -1,20 +1,7 @@
 import { useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  ButtonGroup,
-  ControlGroup,
-  Fieldset,
-  FormWrapper,
-  Input
-} from '@/components'
+import { AlertDialog, Button, ButtonGroup, ControlGroup, Fieldset, FormWrapper, Input } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -61,14 +48,14 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
   }, [user, resetNewMemberForm])
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Update User</AlertDialogTitle>
-        </AlertDialogHeader>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Update User</AlertDialog.Title>
+        </AlertDialog.Header>
 
         {/* Accessibility: Add Description */}
-        <AlertDialogDescription>Update information for {user?.uid} and confirm changes.</AlertDialogDescription>
+        <AlertDialog.Description>Update information for {user?.uid} and confirm changes.</AlertDialog.Description>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             {/* User ID */}
@@ -110,7 +97,7 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
 
             {/* Footer */}
             {/* <Spacer size={5} /> */}
-            <AlertDialogFooter>
+            <AlertDialog.Footer>
               <ControlGroup>
                 <ButtonGroup>
                   <>
@@ -123,10 +110,10 @@ export const EditUserDialog: React.FC<IEditUserDialogProps> = ({
                   </>
                 </ButtonGroup>
               </ControlGroup>
-            </AlertDialogFooter>
+            </AlertDialog.Footer>
           </Fieldset>
         </FormWrapper>
-      </AlertDialogContent>
-    </AlertDialog>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

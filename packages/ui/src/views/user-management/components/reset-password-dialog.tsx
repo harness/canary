@@ -1,20 +1,10 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  Button,
-  CopyButton,
-  Input,
-  Text
-} from '@/components'
+import { FC } from 'react'
+
+import { AlertDialog, Button, CopyButton, Input, Text } from '@/components'
 
 import { IResetPasswordDialogProps } from '../types'
 
-export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
+export const ResetPasswordDialog: FC<IResetPasswordDialogProps> = ({
   open,
   useAdminListUsersStore,
   onClose,
@@ -27,16 +17,16 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogTrigger asChild></AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Trigger asChild></AlertDialog.Trigger>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
           {generatePassword ? (
-            <AlertDialogTitle>Reset Password</AlertDialogTitle>
+            <AlertDialog.Title>Reset Password</AlertDialog.Title>
           ) : (
-            <AlertDialogTitle>Are you sure you want to reset password for {user?.display_name}?</AlertDialogTitle>
+            <AlertDialog.Title>Are you sure you want to reset password for {user?.display_name}?</AlertDialog.Title>
           )}
-          <AlertDialogDescription>
+          <AlertDialog.Description>
             {generatePassword ? (
               <Text as="div" color="tertiaryBackground" className="mb-4">
                 Your password has been generated. Please make sure to copy and store your password somewhere safe, you
@@ -55,9 +45,9 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
                 rightElement={<CopyButton name={password ?? ''} />}
               />
             )}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
+          </AlertDialog.Description>
+        </AlertDialog.Header>
+        <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose}>
             {generatePassword ? `Close` : `Cancel`}
           </Button>
@@ -74,8 +64,8 @@ export const ResetPasswordDialog: React.FC<IResetPasswordDialogProps> = ({
               Confirm
             </Button>
           )}
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

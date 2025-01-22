@@ -2,11 +2,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import {
   AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
   Button,
   ButtonGroup,
   ControlGroup,
@@ -61,12 +56,12 @@ export function CreateUserDialog({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Add a new user</AlertDialogTitle>
-        </AlertDialogHeader>
-        <AlertDialogDescription asChild>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Add a new user</AlertDialog.Title>
+        </AlertDialog.Header>
+        <AlertDialog.Description asChild>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
               {/* USER ID */}
@@ -119,7 +114,7 @@ export function CreateUserDialog({
                 </>
               )}
               {/* SAVE BUTTON */}
-              <AlertDialogFooter>
+              <AlertDialog.Footer>
                 <ControlGroup>
                   <ButtonGroup>
                     <>
@@ -140,11 +135,11 @@ export function CreateUserDialog({
                     </>
                   </ButtonGroup>
                 </ControlGroup>
-              </AlertDialogFooter>
+              </AlertDialog.Footer>
             </Fieldset>
           </FormWrapper>
-        </AlertDialogDescription>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Description>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

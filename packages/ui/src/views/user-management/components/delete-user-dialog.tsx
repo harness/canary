@@ -1,14 +1,4 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  Button,
-  Spacer
-} from '@/components'
+import { AlertDialog, Button, Spacer } from '@/components'
 
 import { IDeleteDialogProps } from '../types'
 
@@ -21,17 +11,17 @@ export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
 }) => {
   const { user } = useAdminListUsersStore()
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogTrigger asChild></AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to delete {user?.display_name}?</AlertDialogTitle>
-          <AlertDialogDescription>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Trigger asChild></AlertDialog.Trigger>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>Are you sure you want to delete {user?.display_name}?</AlertDialog.Title>
+          <AlertDialog.Description>
             This will permanently delete the user &quot;{user?.display_name}&quot; from the system.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </AlertDialog.Description>
+        </AlertDialog.Header>
         <Spacer size={3} />
-        <AlertDialogFooter>
+        <AlertDialog.Footer>
           {!isDeleting && (
             <Button variant="outline" onClick={onClose}>
               Cancel
@@ -49,8 +39,8 @@ export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
           >
             {isDeleting ? 'Deleting user...' : 'Yes, delete user'}
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

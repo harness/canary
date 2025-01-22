@@ -1,17 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  ButtonGroup,
-  Icon,
-  ScrollArea,
-  Text
-} from '@/components'
+import { AlertDialog, Button, ButtonGroup, Icon, ScrollArea, Text } from '@/components'
 import useDragAndDrop from '@/hooks/use-drag-and-drop'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { closestCenter, DndContext } from '@dnd-kit/core'
@@ -125,15 +114,15 @@ export const ManageNavigation = ({
   )
 
   return (
-    <AlertDialog open={showManageNavigation} onOpenChange={handleCancel}>
-      <AlertDialogContent className="h-[574px] max-h-[70vh] max-w-[410px]" onOverlayClick={handleCancel}>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="mb-4">Manage navigation</AlertDialogTitle>
+    <AlertDialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
+      <AlertDialog.Content className="h-[574px] max-h-[70vh] max-w-[410px]" onOverlayClick={handleCancel}>
+        <AlertDialog.Header>
+          <AlertDialog.Title className="mb-4">Manage navigation</AlertDialog.Title>
           <ManageNavigationSearch
             navbarMenuData={filterMenuData(navbarMenuData, currentPinnedItems)}
             addToPinnedItems={addToPinnedItems}
           />
-        </AlertDialogHeader>
+        </AlertDialog.Header>
         <ScrollArea className="-mx-5 -mb-5 mt-1">
           <div className="px-5">
             <Text className="inline-block leading-none text-foreground-7" size={1}>
@@ -221,7 +210,7 @@ export const ManageNavigation = ({
             )}
           </div>
         </ScrollArea>
-        <AlertDialogFooter>
+        <AlertDialog.Footer>
           <ButtonGroup>
             {!submitted ? (
               <>
@@ -246,8 +235,8 @@ export const ManageNavigation = ({
               </Button>
             )}
           </ButtonGroup>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

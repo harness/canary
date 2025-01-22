@@ -1,18 +1,6 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  Fieldset,
-  Input,
-  Spacer,
-  Text
-} from '@/components'
+import { AlertDialog, Button, Fieldset, Input, Spacer, Text } from '@/components'
 import { TranslationStore } from '@views/repo'
 
 const DELETE = 'DELETE'
@@ -56,11 +44,11 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
   }
 
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialogTitle>
-          <AlertDialogDescription>
+    <AlertDialog.Root open={open} onOpenChange={onClose}>
+      <AlertDialog.Content>
+        <AlertDialog.Header>
+          <AlertDialog.Title>{t('component:deleteDialog.title', 'Are you sure?')}</AlertDialog.Title>
+          <AlertDialog.Description>
             {type
               ? t('component:deleteDialog.descriptionWithType', {
                   defaultValue: `This will permanently delete your ${type} and remove all data. This action cannot be undone.`,
@@ -70,8 +58,8 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
                   'component:deleteDialog.description',
                   `This will permanently remove all data. This action cannot be undone.`
                 )}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+          </AlertDialog.Description>
+        </AlertDialog.Header>
         {withForm && (
           <Fieldset>
             <Input
@@ -93,15 +81,15 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
             <Spacer size={4} />
           </>
         )}
-        <AlertDialogFooter>
+        <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
             {t('component:deleteDialog.cancel', 'Cancel')}
           </Button>
           <Button variant="destructive" disabled={isDisabled} onClick={handleDelete}>
             {isLoading ? `Deleting ${type}...` : `Yes, delete ${type}`}
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

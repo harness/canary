@@ -575,6 +575,16 @@
       }
     },
     "danger": {
+      "fg": {
+        "$type": "color",
+        "$value": "{colors.red.700}",
+        "$description": "Primary text color for error content.\nCommon uses: error message text, validation text."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{colors.red.150}",
+        "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
+      },
       "intense": {
         "bg": {
           "$type": "color",
@@ -585,16 +595,6 @@
           "$type": "color",
           "$value": "{colors.base-chrome.black}"
         }
-      },
-      "fg": {
-        "$type": "color",
-        "$value": "{colors.red.700}",
-        "$description": "Primary text color for error content.\nCommon uses: error message text, validation text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.red.150}",
-        "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
       },
       "subtle": {
         "default": {
@@ -668,6 +668,16 @@
       }
     },
     "warning": {
+      "fg": {
+        "$type": "color",
+        "$value": "{colors.amber.800}",
+        "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{colors.amber.150}",
+        "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
+      },
       "intense": {
         "bg": {
           "$type": "color",
@@ -678,16 +688,6 @@
           "$type": "color",
           "$value": "{colors.base-chrome.black}"
         }
-      },
-      "fg": {
-        "$type": "color",
-        "$value": "{colors.amber.800}",
-        "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.amber.150}",
-        "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
       },
       "subtle": {
         "default": {
@@ -761,42 +761,42 @@
       }
     },
     "info": {
-      "intense": {
-        "bg": {
-          "$type": "color",
-          "$value": "{colors.accent.300}",
-          "$description": "Default info background color. \nCommon uses: info alerts, help messages."
-        },
-        "fg": {
-          "$type": "color",
-          "$value": "{colors.base-chrome.black}"
-        }
-      },
       "fg": {
         "$type": "color",
-        "$value": "{colors.accent.200}",
+        "$value": "{colors.accent.600}",
         "$description": "Primary text color for info content.\nCommon uses: info message text, help text."
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.accent.800}",
+        "$value": "{colors.accent.150}",
         "$description": "Border color for info containers.\nCommon uses: info alert borders, message boundaries."
+      },
+      "intense": {
+        "fg": {
+          "$type": "color",
+          "$value": "{colors.base-chrome.black}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{colors.accent.300}",
+          "$description": "Default info background color. \nCommon uses: info alerts, help messages."
+        }
       },
       "subtle": {
         "default": {
           "bg": {
             "$type": "color",
-            "$value": "{colors.accent.950}",
+            "$value": "{colors.accent.50}",
             "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
           },
           "fg": {
             "$type": "color",
-            "$value": "{colors.accent.200}",
+            "$value": "{colors.accent.700}",
             "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
           },
           "border": {
             "$type": "color",
-            "$value": "{colors.accent.800}",
+            "$value": "{colors.accent.100}",
             "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
           }
         },

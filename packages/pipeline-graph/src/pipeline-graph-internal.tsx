@@ -12,13 +12,16 @@ import { addPaths } from './utils/path-utils'
 
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
+  config?: {
+    edgeClassName?: string
+  }
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
 
-  const { data } = props
+  const { data, config = {} } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -65,7 +68,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
       if (svgGroupRef.current) {
         let allPaths: string[] = []
         connections.map(portPair => {
-          const path = getPortsConnectionPath(rootContainerEl, portPair)
+          const path = getPortsConnectionPath(rootContainerEl, portPair, config.edgeClassName)
           allPaths.push(path)
         })
         svgGroupRef.current.innerHTML = allPaths.join('')

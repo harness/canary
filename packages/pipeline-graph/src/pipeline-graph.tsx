@@ -10,12 +10,12 @@ export interface PipelineGraphProps extends PipelineGraphInternalProps {
 }
 
 export function PipelineGraph(props: PipelineGraphProps) {
-  const { data, nodes } = props
+  const { data, nodes, config } = props
 
   return (
     <GraphProvider nodes={nodes}>
       <Canvas>
-        <PipelineGraphInternal data={data} />
+        <PipelineGraphInternal data={data} config={config} />
       </Canvas>
     </GraphProvider>
   )

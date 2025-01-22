@@ -45,8 +45,12 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         flexShrink: 0 // IMPORTANT: do not remove this
       }}
     >
-      <Port side="left" id={`left-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      <Port side="right" id={`right-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      {!node.config?.hideLeftPort && (
+        <Port side="left" id={`left-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      )}
+      {!node.config?.hideRightPort && (
+        <Port side="right" id={`right-port-${props.node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      )}
 
       <div
         className="parallel-node-header"

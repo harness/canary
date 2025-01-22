@@ -7,11 +7,9 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { Button } from './button'
 import { Icon } from './icon'
 
-const Sheet = SheetPrimitive.Root
+const SheetRoot = SheetPrimitive.Root
 
 const SheetTrigger = SheetPrimitive.Trigger
-
-const SheetClose = SheetPrimitive.Close
 
 const SheetPortal = SheetPrimitive.Portal
 
@@ -135,15 +133,14 @@ const SheetDescription = React.forwardRef<
 ))
 SheetDescription.displayName = SheetPrimitive.Description.displayName
 
-export {
-  Sheet,
-  SheetPortal,
-  SheetOverlay,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription
+const Sheet = {
+  Root: SheetRoot,
+  Trigger: SheetTrigger,
+  Content: SheetContent,
+  Header: SheetHeader,
+  Footer: SheetFooter,
+  Title: SheetTitle,
+  Description: SheetDescription
 }
+
+export { Sheet }

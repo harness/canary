@@ -50,7 +50,6 @@ export default function RepoSummaryPage() {
   const [gitRef, setGitRef] = useState<string>('')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const manageTokensLink = '/settings/keys'
   const {
     branchList,
     tagList,
@@ -325,7 +324,7 @@ export default function RepoSummaryPage() {
     [default_branch_commit_count, branch_count, tag_count, pull_req_summary]
   )
 
-  const isLoading = loading || isLoadingRepoDetails
+  const isLoading = (loading || isLoadingRepoDetails) && !repository?.is_empty
 
   return (
     <>
@@ -351,12 +350,13 @@ export default function RepoSummaryPage() {
         currentBranchDivergence={currBranchDivergence}
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
+        toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
       />
       {createdTokenData && (
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          toManageToken={manageTokensLink}
+          toManageToken={() => routes.toProfileKeys({ spaceId, repoId })}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

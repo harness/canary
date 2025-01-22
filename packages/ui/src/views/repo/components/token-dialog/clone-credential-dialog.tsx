@@ -17,10 +17,12 @@ import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-interface CloneCredentialDialogProps {
+interface RoutingProps {
+  toManageToken?: () => string
+}
+interface CloneCredentialDialogProps extends Partial<RoutingProps> {
   open: boolean
   onClose: () => void
-  toManageToken: string
   useTranslationStore: () => TranslationStore
   tokenData: {
     identifier: string
@@ -98,7 +100,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
                 Close
               </Button>
               <Button type="button">
-                <Link to={toManageToken}>{t('views:repos.manageAPIToken')}</Link>
+                <Link to={`${toManageToken?.()}`}>{t('views:repos.manageAPIToken')}</Link>
               </Button>
             </>
           </ButtonGroup>

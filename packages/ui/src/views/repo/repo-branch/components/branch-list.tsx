@@ -23,10 +23,10 @@ import { DivergenceGauge } from './divergence-gauge'
 
 export const BranchesList = ({
   branches,
-  spaceId,
-  repoId,
   defaultBranch,
-  useTranslationStore
+  useTranslationStore,
+  toBranchRules,
+  toPullRequestCompare
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()
   return (
@@ -130,11 +130,11 @@ export const BranchesList = ({
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),
-                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
+                        to: `${toPullRequestCompare?.() || ''}/${defaultBranch}...${branch.name}`
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
-                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/settings/rules`
+                        to: toBranchRules?.()
                       },
                       {
                         isDanger: true,

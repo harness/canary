@@ -30,12 +30,13 @@ import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
+import { PullRequestRoutingProps } from '../../pull-request-details-types'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
 import PullRequestCommentSection from './sections/pull-request-comment-section'
 import PullRequestMergeSection from './sections/pull-request-merge-section'
 
-interface PullRequestPanelProps extends PullRequestChangesSectionProps {
+interface PullRequestPanelProps extends PullRequestChangesSectionProps, Partial<PullRequestRoutingProps> {
   handleRebaseBranch: () => void
   handlePrState: (state: string) => void
   pullReqMetadata: TypesPullReq | undefined
@@ -180,7 +181,8 @@ const PullRequestPanel = ({
   commitSuggestionsBatchCount,
   onCommitSuggestions,
   handlePrState,
-  handleRebaseBranch
+  handleRebaseBranch,
+  ...routingProps
 }: PullRequestPanelProps) => {
   const mergeable = useMemo(() => pullReqMetadata?.merge_check_status === MergeCheckStatus.MERGEABLE, [pullReqMetadata])
   const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
@@ -368,7 +370,13 @@ const PullRequestPanel = ({
           {(!!resolvedCommentArr || requiresCommentApproval) && !pullReqMetadata?.merged && (
             <PullRequestCommentSection commentsInfo={commentsInfo} />
           )}
-          <PullRequestCheckSection checkData={checkData} checksInfo={checksInfo} spaceId={spaceId} repoId={repoId} />
+          <PullRequestCheckSection
+            checkData={checkData}
+            checksInfo={checksInfo}
+            spaceId={spaceId}
+            repoId={repoId}
+            {...routingProps}
+          />
 
           {!pullReqMetadata?.merged && (
             <PullRequestMergeSection

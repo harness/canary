@@ -7,7 +7,6 @@ import { NuqsAdapter } from 'nuqs/adapters/react-router'
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
 
-import { AppProvider } from './framework/context/AppContext'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider } from './framework/context/ThemeContext'
@@ -34,22 +33,20 @@ export default function AppV1() {
   const router = createBrowserRouter(routes)
 
   return (
-    <AppProvider>
-      <I18nextProvider i18n={i18n}>
-        <ThemeProvider defaultTheme="dark-std-std">
-          <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <ExitConfirmProvider>
-                <NuqsAdapter>
-                  <NavigationProvider routes={routes}>
-                    <RouterProvider router={router} />
-                  </NavigationProvider>
-                </NuqsAdapter>
-              </ExitConfirmProvider>
-            </TooltipProvider>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </I18nextProvider>
-    </AppProvider>
+    <I18nextProvider i18n={i18n}>
+      <ThemeProvider defaultTheme="dark-std-std">
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <ExitConfirmProvider>
+              <NuqsAdapter>
+                <NavigationProvider routes={routes}>
+                  <RouterProvider router={router} />
+                </NavigationProvider>
+              </NuqsAdapter>
+            </ExitConfirmProvider>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
+    </I18nextProvider>
   )
 }

@@ -29,7 +29,7 @@ export const CreateRepo = () => {
       git_ignore: data.gitignore,
       license: data.license,
       is_public: data.access === '1',
-      readme: true,
+      readme: data.readme,
       identifier: data.name
     }
 

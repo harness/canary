@@ -84,6 +84,7 @@
     "viewRules": "Voir les règles",
     "renameBranch": "Renommer la branche",
     "createBranch": "Créer une branche",
+    "emptyRepo": "Ce référentiel est vide.",
     "repositories": "Dépôts",
     "create-repository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",

@@ -9,11 +9,13 @@ import { timeAgo } from '@utils/utils'
 export interface RepoCommitDetailsViewProps {
   useCommitDetailsStore: () => ICommitDetailsStore
   useTranslationStore: () => TranslationStore
+  showSidebar?: boolean
 }
 
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
-  useTranslationStore
+  useTranslationStore,
+  showSidebar = true
 }) => {
   const { t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
@@ -63,10 +65,13 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
             <CommitCopyActions sha={commitData?.sha || ''} />
           </div>
         </div>
+        {!showSidebar && <Outlet />}
       </SandboxLayout.Content>
-      <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-borders-4 py-0 pl-0 pr-5">
-        <Outlet />
-      </SandboxLayout.Content>
+      {showSidebar && (
+        <SandboxLayout.Content className="mt-5 grid grid-cols-[auto_1fr] border-t border-borders-4 py-0 pl-0 pr-5">
+          <Outlet />
+        </SandboxLayout.Content>
+      )}
     </SandboxLayout.Main>
   )
 }

@@ -12,6 +12,7 @@ import {
 } from '@harnessio/code-service-client'
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -20,6 +21,7 @@ import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 export function RepoBranchesListPage() {
+  const routes = useRoutes()
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
@@ -117,6 +119,8 @@ export function RepoBranchesListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       createBranchError={createBranchError?.message}
+      toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
+      toPullRequestCompare={() => routes.toPullRequestCompare({ spaceId, repoId })}
     />
   )
 }

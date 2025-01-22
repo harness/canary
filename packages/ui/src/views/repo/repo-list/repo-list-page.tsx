@@ -34,6 +34,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   errorMessage,
   searchQuery,
   setSearchQuery,
+  toCreateRepo,
+  toImportRepo,
   ...routingProps
 }) => {
   const { t } = useTranslationStore()
@@ -148,10 +150,10 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 />
                 <ButtonGroup>
                   <Button variant="default" asChild>
-                    <Link to={`create`}>{t('views:repos.create-repository')}</Link>
+                    <Link to={toCreateRepo?.() || ''}>{t('views:repos.create-repository')}</Link>
                   </Button>
                   <Button variant="outline" asChild>
-                    <Link to={`import`}>{t('views:repos.import-repository', 'Import repository')}</Link>
+                    <Link to={toImportRepo?.() || ''}>{t('views:repos.import-repository', 'Import repository')}</Link>
                   </Button>
                 </ButtonGroup>
               </ListActions.Right>
@@ -175,6 +177,8 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           handleResetQuery={handleResetSearch}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
+          toCreateRepo={toCreateRepo}
+          toImportRepo={toImportRepo}
           {...routingProps}
         />
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />

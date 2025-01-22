@@ -84,6 +84,7 @@
     "viewRules": "View Rules",
     "renameBranch": "Rename Branch",
     "createBranch": "Create branch",
+    "emptyRepo": "This repository is empty.",
     "repositories": "Repositories",
     "create-repository": "Create repository",
     "import-repository": "Import repository",

@@ -27,7 +27,12 @@ export interface BranchProps {
   }
 }
 
-export interface BranchListPageProps {
+interface RoutingProps {
+  toBranchRules: () => string
+  toPullRequestCompare: () => string
+}
+
+export interface BranchListPageProps extends Partial<RoutingProps> {
   branches: BranchProps[]
   spaceId?: string
   repoId?: string
@@ -35,15 +40,7 @@ export interface BranchListPageProps {
   useTranslationStore: () => TranslationStore
 }
 
-export interface MoreActionsTooltipProps {
-  spaceId?: string
-  repoId?: string
-  defaultBranch?: string
-  branchInfo: BranchProps
-  useTranslationStore: () => TranslationStore
-}
-
-export interface RepoBranchListViewProps {
+export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore

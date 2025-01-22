@@ -1,6 +1,5 @@
 {
   "repos": {
-    "emptyRepo": "Ce référentiel est vide.",
     "create-new-file-no-plus": "Créer un nouveau fichier",
     "upload-files": "Télécharger des fichiers",
     "search": "Rechercher",
@@ -85,6 +84,7 @@
     "viewRules": "Voir les règles",
     "renameBranch": "Renommer la branche",
     "createBranch": "Créer une branche",
+    "emptyRepo": "Ce référentiel est vide.",
     "repositories": "Dépôts",
     "create-repository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",

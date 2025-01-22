@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { Icon, NavbarSkeleton, ScrollArea, Sheet, SheetContent, SheetTitle, Spacer } from '@/components'
+import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface MoreSubmenuProps {
@@ -11,14 +11,14 @@ interface MoreSubmenuProps {
 
 export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenuProps) {
   return (
-    <Sheet modal={false} open={showMoreMenu}>
-      <SheetContent
+    <Sheet.Root modal={false} open={showMoreMenu}>
+      <Sheet.Content
         className="inset-y-0 left-[220px] z-40 h-screen w-[328px] bg-transparent p-0"
         side="left"
         onClick={handleMoreMenu}
         modal={false}
       >
-        <SheetTitle className="sr-only">More Menu</SheetTitle>
+        <Sheet.Title className="sr-only">More Menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[328px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea>
@@ -44,7 +44,7 @@ export function MoreSubmenu({ showMoreMenu, handleMoreMenu, items }: MoreSubmenu
             </ScrollArea>
           </NavbarSkeleton.Content>
         </NavbarSkeleton.Root>
-      </SheetContent>
-    </Sheet>
+      </Sheet.Content>
+    </Sheet.Root>
   )
 }

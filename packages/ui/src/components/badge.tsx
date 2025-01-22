@@ -17,7 +17,7 @@ enum BadgesHoverStates {
 }
 
 const badgeVariants = cva(
-  'inline-flex items-center border !leading-none transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+  'inline-flex items-center border transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
   {
     variants: {
       variant: {
@@ -29,12 +29,12 @@ const badgeVariants = cva(
         outline: 'text-foreground'
       },
       size: {
-        default: 'px-2.5 py-0.5 text-xs font-semibold',
-        xl: 'h-[18px] px-2 text-12',
-        lg: 'px-3 py-1 text-xs font-normal',
-        md: 'h-6 px-2.5',
-        sm: 'h-5 px-1 text-12',
-        xs: 'px-1.5 py-0 text-11 font-light'
+        default: 'px-2.5 py-0.5 text-xs font-semibold leading-none',
+        xl: 'h-[18px] px-2 text-12 leading-none',
+        lg: 'px-3 py-1 text-xs font-normal leading-none',
+        md: 'h-6 px-2.5 leading-none',
+        sm: 'h-5 px-1 text-12 leading-none',
+        xs: 'px-1.5 py-0 text-11 font-light leading-none'
       },
       borderRadius: {
         default: 'rounded-md',

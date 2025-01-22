@@ -86,10 +86,11 @@
     "createBranch": "Create branch",
     "emptyRepo": "This repository is empty.",
     "repositories": "Repositories",
-    "create-repository": "Create repository",
     "import-repository": "Import repository",
+    "create-repository": "Create repository",
     "private": "Private",
     "public": "Public",
+    "importing": "Importing…",
     "updated": "Updated",
     "deleteRepo": "Delete Repository",
     "deleteRepoDescription": "This will permanently delete this repository, and everything contained in it.",
@@ -148,8 +149,7 @@
     "add": "Add",
     "users": "Users",
     "clone": "Clone",
-    "addFile": "Add file",
-    "importing": "Importing…"
+    "addFile": "Add file"
   },
   "noData": {
     "noResults": "No search results",
@@ -174,15 +174,15 @@
     "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
+    "errorApiTitle": "Failed to load {{type}}",
+    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "No repositories yet",
     "noReposProject": "There are no repositories in this project yet.",
     "createOrImportRepos": "Create new or import an existing repository.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
     "noLabels": "No labels yet",
-    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently.",
-    "errorApiTitle": "Failed to load {{type}}",
-    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page."
+    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "createProject": {
     "newProject": "Create your new project",

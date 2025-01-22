@@ -86,10 +86,11 @@
     "createBranch": "Créer une branche",
     "emptyRepo": "Ce référentiel est vide.",
     "repositories": "Dépôts",
-    "create-repository": "Créer un dépôt",
     "import-repository": "Importer un dépôt",
+    "create-repository": "Créer un dépôt",
     "private": "Privé",
     "public": "Public",
+    "importing": "Importing…",
     "updated": "Mis à jour",
     "deleteRepo": "Supprimer le dépôt",
     "deleteRepoDescription": "Cette action supprimera définitivement ce dépôt et son contenu.",
@@ -148,8 +149,7 @@
     "add": "Ajouter",
     "users": "Utilisateurs",
     "clone": "Cloner",
-    "addFile": "Ajouter un fichier",
-    "importing": "Importing…"
+    "addFile": "Ajouter un fichier"
   },
   "noData": {
     "noResults": "Aucun résultat de recherche",
@@ -174,15 +174,15 @@
     "noCommitsYet": "No commits yet",
     "noCommitsHistoryDescription": "There isn't any commit history to show here for the selected user, time range, or current page.",
     "noCommitsYetDescription": "Your commits will appear here once they're made. Start committing to see your changes reflected.",
+    "errorApiTitle": "Failed to load {{type}}",
+    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page.",
     "noRepos": "Pas encore de dépôts",
     "noReposProject": "Il n'y a pas encore de dépôts dans ce projet.",
     "createOrImportRepos": "Créer un nouveau dépôt ou importer un dépôt existant.",
     "noWebhooks": "No webhooks yet",
     "noWebhooksDescription": "Add or manage webhooks to automate tasks and connect external services to your project.",
     "noLabels": "No labels yet",
-    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently.",
-    "errorApiTitle": "Failed to load {{type}}",
-    "errorApiDescription": "An error occurred while loading the data. Please try again and reload the page."
+    "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
   "createProject": {
     "newProject": "Créez votre nouveau projet",

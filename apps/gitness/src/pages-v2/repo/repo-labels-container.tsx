@@ -29,16 +29,16 @@ export const RepoLabelsList = () => {
   const {
     page,
     setPage,
-    repoLabels: storeLabels,
-    setRepoLabels,
 
-    addRepoLabel,
-    addSpaceLabel,
+    labels: storeLabels,
+    setLabels,
+
+    addLabel,
     setPresetEditLabel,
-    deleteRepoLabel: deleteRepoStoreLabel,
-    deleteSpaceLabel: deleteStoreSpaceLabel,
+
+    deleteLabel: deleteStoreLabel,
     setRepoSpaceRef,
-    setRepoValues,
+    setValues,
     getParentScopeLabels
   } = useLabelsStore()
 
@@ -65,9 +65,9 @@ export const RepoLabelsList = () => {
 
   useEffect(() => {
     if (labels) {
-      setRepoLabels(labels as ILabelType[])
+      setLabels(labels as ILabelType[])
     }
-  }, [labels, setRepoLabels])
+  }, [labels, setLabels])
 
   useEffect(() => {
     setQueryPage(page)
@@ -84,7 +84,7 @@ export const RepoLabelsList = () => {
     {
       onSuccess: data => {
         setOpenCreateLabelDialog(false)
-        addRepoLabel(data.body as ILabelType)
+        addLabel(data.body as ILabelType)
       }
     }
   )
@@ -96,8 +96,8 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteRepoStoreLabel(variables.key)
-        addRepoLabel(data.body as ILabelType)
+        deleteStoreLabel(variables.key)
+        addLabel(data.body as ILabelType)
       }
     }
   )
@@ -109,7 +109,7 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteRepoStoreLabel(variables.key)
+        deleteStoreLabel(variables.key)
       }
     }
   )
@@ -121,10 +121,9 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteStoreSpaceLabel(variables.key)
-        addSpaceLabel(data.body as ILabelType)
-        deleteRepoStoreLabel(variables.key)
-        addRepoLabel(data.body as ILabelType)
+
+        deleteStoreLabel(variables.key)
+        addLabel(data.body as ILabelType)
       }
     }
   )
@@ -136,8 +135,8 @@ export const RepoLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteStoreSpaceLabel(variables.key)
-        deleteRepoStoreLabel(variables.key)
+
+        deleteStoreLabel(variables.key)
       }
     }
   )
@@ -149,6 +148,9 @@ export const RepoLabelsList = () => {
       const valuesByKey: Record<string, any> = {}
 
       for (const label of storeLabels) {
+        if (label.value_count === 0) {
+          continue
+        }
         if (label.scope === 0) {
           try {
             const response = await fetch(`/api/v1/repos/${repo_ref}/labels/${label.key}/values`)
@@ -167,10 +169,10 @@ export const RepoLabelsList = () => {
           }
         }
       }
-      setRepoValues(valuesByKey)
+      setValues(valuesByKey)
     }
     fetchAllLabelValues(storeLabels)
-  }, [storeLabels, space_ref, setRepoValues, getParentScopeLabels])
+  }, [storeLabels, space_ref, setValues, getParentScopeLabels])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {
@@ -231,7 +233,6 @@ export const RepoLabelsList = () => {
       <RepoLabelsListView
         useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
-        // createdIn={space_ref}
         openCreateLabelDialog={handleOpenCreateLabelDialog}
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}

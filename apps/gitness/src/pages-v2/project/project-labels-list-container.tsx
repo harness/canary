@@ -6,7 +6,6 @@ import {
   useDefineSpaceLabelMutation,
   useDeleteSpaceLabelMutation,
   useListSpaceLabelsQuery,
-  // useListSpaceLabelValuesQuery,
   useUpdateSpaceLabelMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -24,12 +23,12 @@ export const ProjectLabelsList = () => {
   const {
     page,
     setPage,
-    spaceLabels: storeLabels,
-    setSpaceLabels,
-    addSpaceLabel,
+    labels: storeLabels,
+    setLabels,
+    addLabel,
     setPresetEditLabel,
-    deleteSpaceLabel: deleteStoreSpaceLabel,
-    setSpaceValues,
+    deleteLabel: deleteStoreLabel,
+    setValues,
     setRepoSpaceRef
   } = useLabelsStore()
 
@@ -52,9 +51,9 @@ export const ProjectLabelsList = () => {
 
   useEffect(() => {
     if (labels) {
-      setSpaceLabels(labels as ILabelType[])
+      setLabels(labels as ILabelType[])
     }
-  }, [labels, setSpaceLabels])
+  }, [labels, setLabels])
 
   useEffect(() => {
     setQueryPage(page)
@@ -75,7 +74,7 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: data => {
         setOpenCreateLabelDialog(false)
-        addSpaceLabel(data.body as ILabelType)
+        addLabel(data.body as ILabelType)
       }
     }
   )
@@ -87,8 +86,8 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (data, variables) => {
         setOpenCreateLabelDialog(false)
-        deleteStoreSpaceLabel(variables.key)
-        addSpaceLabel(data.body as ILabelType)
+        deleteStoreLabel(variables.key)
+        addLabel(data.body as ILabelType)
       }
     }
   )
@@ -100,7 +99,7 @@ export const ProjectLabelsList = () => {
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
-        deleteStoreSpaceLabel(variables.key)
+        deleteStoreLabel(variables.key)
       }
     }
   )
@@ -113,6 +112,9 @@ export const ProjectLabelsList = () => {
       const valuesByKey: Record<string, any> = {}
 
       for (const label of storeLabels) {
+        if (label.value_count === 0) {
+          continue
+        }
         try {
           const response = await fetch(`/api/v1/spaces/${space_ref}/labels/${label.key}/values`)
           const json = await response.json()
@@ -122,11 +124,11 @@ export const ProjectLabelsList = () => {
         }
       }
 
-      setSpaceValues(valuesByKey)
+      setValues(valuesByKey)
     }
 
     fetchAllLabelValues(storeLabels)
-  }, [storeLabels, space_ref, setSpaceValues])
+  }, [storeLabels, space_ref, setValues])
 
   const handleLabelCreate = (data: CreateLabelFormFields, identifier?: string) => {
     if (identifier) {

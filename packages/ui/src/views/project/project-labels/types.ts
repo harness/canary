@@ -58,27 +58,24 @@ export interface LabelValueType {
 }
 
 export interface ILabelsStore {
-  spaceLabels: ILabelType[]
-  repoLabels: ILabelType[]
+  labels: ILabelType[]
   presetEditLabel: ILabelType | null
   page: number
   totalPages: number
-  spaceValues: Record<string, LabelValueType[]>
+
+  values: Record<string, LabelValueType[]>
+
   repo_ref: string | null
   space_ref: string | null
-  repoValues: Record<string, LabelValueType[]>
   getParentScopeLabels: boolean
 
-  setSpaceLabels: (labels: ILabelType[]) => void
-  setRepoLabels: (labels: ILabelType[]) => void
-  addSpaceLabel: (label: ILabelType) => void
-  addRepoLabel: (label: ILabelType) => void
-  deleteSpaceLabel: (key: string) => void
-  deleteRepoLabel: (key: string) => void
+  setLabels: (labels: ILabelType[]) => void
+  addLabel: (label: ILabelType) => void
+  deleteLabel: (key: string) => void
   setPresetEditLabel: (label: ILabelType | null) => void
   setPage: (page: number) => void
-  setSpaceValues: (values: Record<string, LabelValueType[]>) => void
-  setRepoValues: (values: Record<string, LabelValueType[]>) => void
+
+  setValues: (values: Record<string, LabelValueType[]>) => void
   setRepoSpaceRef: (repo_ref?: string, space_ref?: string) => void
   setGetParentScopeLabels: (getParentScopeLabels: boolean) => void
 }

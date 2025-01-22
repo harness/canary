@@ -1,5 +1,5 @@
 import { FC, useMemo } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Fragment } from 'react/jsx-runtime'
 
 import {
@@ -137,49 +137,51 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
               <StackedList.Root>
                 {rules.map((rule, idx) =>
                   rule?.identifier ? (
-                    <StackedList.Item key={rule.identifier} className="!cursor-default py-3 pr-1.5">
-                      <StackedList.Field
-                        className="gap-1.5"
-                        title={
-                          <div className="flex items-center gap-2">
-                            {rule.state === 'active' ? (
-                              <Icon className="text-icons-success" name="tick-circle" />
-                            ) : (
-                              <Icon className="text-icons-9" name="cancel-grey" />
-                            )}
-                            <span className="text-16 font-medium leading-snug">{rule.identifier}</span>
-                          </div>
-                        }
-                        description={
-                          <Description
-                            targetPatternsCount={rule.targetPatternsCount ?? 0}
-                            rulesAppliedCount={rule.rulesAppliedCount ?? 0}
-                            bypassAllowed={rule.bypassAllowed ?? false}
-                            t={t}
-                          />
-                        }
-                      />
-                      <StackedList.Field
-                        title={
-                          <MoreActionsTooltip
-                            actions={[
-                              {
-                                title: t('views:rules.edit', 'Edit rule'),
-                                onClick: () => handleRuleClick(rule.identifier!)
-                              },
-                              {
-                                isDanger: true,
-                                title: t('views:rules.delete', 'Delete rule'),
-                                onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                              }
-                            ]}
-                          />
-                        }
-                        right
-                        label
-                        secondary
-                      />
-                    </StackedList.Item>
+                    <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
+                      <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
+                        <StackedList.Field
+                          className="gap-1.5"
+                          title={
+                            <div className="flex items-center gap-2">
+                              {rule.state === 'active' ? (
+                                <Icon className="text-icons-success" name="tick-circle" />
+                              ) : (
+                                <Icon className="text-icons-9" name="cancel-grey" />
+                              )}
+                              <span className="text-16 font-medium leading-snug">{rule.identifier}</span>
+                            </div>
+                          }
+                          description={
+                            <Description
+                              targetPatternsCount={rule.targetPatternsCount ?? 0}
+                              rulesAppliedCount={rule.rulesAppliedCount ?? 0}
+                              bypassAllowed={rule.bypassAllowed ?? false}
+                              t={t}
+                            />
+                          }
+                        />
+                        <StackedList.Field
+                          title={
+                            <MoreActionsTooltip
+                              actions={[
+                                {
+                                  title: t('views:rules.edit', 'Edit rule'),
+                                  onClick: () => handleRuleClick(rule.identifier!)
+                                },
+                                {
+                                  isDanger: true,
+                                  title: t('views:rules.delete', 'Delete rule'),
+                                  onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                                }
+                              ]}
+                            />
+                          }
+                          right
+                          label
+                          secondary
+                        />
+                      </StackedList.Item>
+                    </Link>
                   ) : (
                     <Fragment key={idx} />
                   )

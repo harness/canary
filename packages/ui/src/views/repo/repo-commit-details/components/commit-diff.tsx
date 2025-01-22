@@ -12,7 +12,7 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
   const { diffs, diffStats } = useCommitDetailsStore()
 
   return (
-    <div className="min-h-[calc(100vh-100px)] pl-6 pt-5">
+    <div className="min-h-[calc(100vh-100px)] pt-5">
       <p className="mb-3.5 text-14 leading-tight text-foreground-4">
         {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
         <span className="text-foreground-accent">

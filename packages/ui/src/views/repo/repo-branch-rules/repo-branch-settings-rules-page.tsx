@@ -116,7 +116,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         {presetRuleData ? t('views:repos.updateRule', 'Update rule') : t('views:repos.CreateRule', 'Create a rule')}
       </h1>
 
-      <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
+      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
         <BranchSettingsRuleToggleField register={register} setValue={setValue} watch={watch} t={t} />
 
         <BranchSettingsRuleNameField register={register} errors={errors} disabled={!!presetRuleData} t={t} />

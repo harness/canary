@@ -408,11 +408,83 @@
   "height": {
     "1": {
       "$type": "sizing",
+      "$value": "round({step.base}* pow({multiplier.desktop}, 2.8) / 2) * 2"
+    },
+    "2": {
+      "$type": "sizing",
+      "$value": "round({step.base}* pow({multiplier.desktop}, 3) / 2) * 2"
+    },
+    "3": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "4": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "5": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "6": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "7": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "8": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "9": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "10": {
+      "$type": "sizing",
       "$value": "4"
     }
   },
   "width": {
     "1": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "2": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "3": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "4": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "5": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "6": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "7": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "8": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "9": {
+      "$type": "sizing",
+      "$value": "4"
+    },
+    "10": {
       "$type": "sizing",
       "$value": "4"
     }

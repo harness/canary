@@ -327,11 +327,16 @@
     "2xs": {
       "$type": "borderRadius",
       "$value": "{spacing.base}",
-      "$description": "Extra small border radius for minimal rounding."
+      "$description": "Super small border radius for minimal rounding."
     },
     "xs": {
       "$type": "borderRadius",
       "$value": "{spacing.1}",
+      "$description": "Extra small border radius for minimal rounding."
+    },
+    "sm": {
+      "$type": "borderRadius",
+      "$value": "{spacing.2}",
       "$description": "Small rounding for compact components like form controls, small buttons, and tight UI elements."
     },
     "md": {
@@ -398,6 +403,18 @@
     "1-relaxed": {
       "$type": "lineHeights",
       "$value": "round({font-size.1}* {leading.normal}/2) * 2"
+    }
+  },
+  "height": {
+    "1": {
+      "$type": "sizing",
+      "$value": "4"
+    }
+  },
+  "width": {
+    "1": {
+      "$type": "sizing",
+      "$value": "4"
     }
   }
 }

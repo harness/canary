@@ -45,10 +45,6 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) 
 
                   return (
                     <StackedList.Item
-                      // onClick={e => {
-                      //   // navigate(toCommitDetails?.({ sha: commit?.sha || '' }) || '')
-                      //   e.stopPropagation()
-                      // }}
                       className="!cursor-default items-start py-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}

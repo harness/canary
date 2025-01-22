@@ -68,7 +68,7 @@ const ReviewersHeader = ({
                   <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.searchUsers')}</span>
                 </div>
               )}
-              <div className="max-h-[360px] overflow-y-auto px-1">
+              <div className="max-h-[360px] overflow-y-auto p-1">
                 {usersList?.map(({ display_name, id, uid }) => {
                   if (uid === currentUserId) return null
                   const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)

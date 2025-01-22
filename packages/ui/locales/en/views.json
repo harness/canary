@@ -246,7 +246,12 @@
     "compareChangesDraftButtonLoading": "Drafting pull request...",
     "replyHere": "Reply here",
     "commits": "Commits",
-    "noUsers": "No users found."
+    "noUsers": "No users found.",
+    "showDiff": "Show Diff",
+    "deletedFileDiff": "This file was deleted.",
+    "largeDiff": "Large diffs are not rendered by default.",
+    "fileNoChanges": "File without changes.",
+    "binaryNotShown": "Binary file not shown."
   },
   "notFound": {
     "title": "Something went wrong…",

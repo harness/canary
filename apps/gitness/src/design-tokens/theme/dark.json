@@ -1,5 +1,5 @@
 {
-  "bg": {
+  "background": {
     "canvas": {
       "$type": "color",
       "$value": "{colors.base-chrome.black}",
@@ -26,7 +26,7 @@
       "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
     }
   },
-  "fg": {
+  "foreground": {
     "highlight": {
       "$type": "color",
       "$value": "{colors.base-chrome.white}",
@@ -122,7 +122,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.muted}",
+            "$value": "{foreground.muted}",
             "$description": "Text/icon color for disabled state.\nCommon uses: disabled text, inactive icons."
           }
         }
@@ -138,7 +138,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.highlight}",
+            "$value": "{foreground.highlight}",
             "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
           }
         },
@@ -150,7 +150,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.highlight}",
+            "$value": "{foreground.highlight}",
             "$description": "Text color during hover.\nCommon uses: hover state labels, interactive text."
           }
         },
@@ -162,7 +162,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.highlight}",
+            "$value": "{foreground.highlight}",
             "$description": "Text color during press state.\nCommon uses: active text color, pressed state content."
           }
         },
@@ -174,7 +174,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.muted}",
+            "$value": "{foreground.muted}",
             "$description": "Text color for disabled state.\nCommon uses: disabled secondary text, inactive labels."
           }
         }
@@ -188,7 +188,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.base}",
+            "$value": "{foreground.base}",
             "$description": "Text color for outlined variants.\nCommon uses: outlined button text, bordered control labels."
           }
         },
@@ -200,7 +200,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.highlight}",
+            "$value": "{foreground.highlight}",
             "$description": "Text color during hover state.\nCommon uses: hover text in outlined variant."
           }
         },
@@ -212,7 +212,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.highlight}",
+            "$value": "{foreground.highlight}",
             "$description": "Text color during press state.\nCommon uses: active text in outlined variant."
           }
         },
@@ -224,7 +224,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.muted}",
+            "$value": "{foreground.muted}",
             "$description": "Text color when disabled.\nCommon uses: disabled text in outlined variant."
           }
         }
@@ -236,12 +236,12 @@
       "default": {
         "bg": {
           "$type": "color",
-          "$value": "{bg.highlight}",
+          "$value": "{background.highlight}",
           "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
         },
         "fg": {
           "$type": "color",
-          "$value": "{fg.base}",
+          "$value": "{foreground.base}",
           "$description": "Default text color for input content.\nCommon uses: input text, entered content."
         },
         "border": {
@@ -251,19 +251,19 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{fg.secondary}",
+          "$value": "{foreground.secondary}",
           "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
         }
       },
       "hover": {
         "bg": {
           "$type": "color",
-          "$value": "{bg.highlight}",
+          "$value": "{background.highlight}",
           "$description": "Background color when hovering inputs.\nCommon uses: hover state for input fields."
         },
         "fg": {
           "$type": "color",
-          "$value": "{fg.base}",
+          "$value": "{foreground.base}",
           "$description": "Text color during hover state.\nCommon uses: text appearance on hover."
         },
         "border": {
@@ -273,19 +273,19 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{fg.secondary}",
+          "$value": "{foreground.secondary}",
           "$description": "Icon color during hover.\nCommon uses: interactive icon states."
         }
       },
       "active": {
         "bg": {
           "$type": "color",
-          "$value": "{bg.highlight}",
+          "$value": "{background.highlight}",
           "$description": "Background color for focused/active inputs.\nCommon uses: active input field, focused state."
         },
         "fg": {
           "$type": "color",
-          "$value": "{fg.base}",
+          "$value": "{foreground.base}",
           "$description": "Text color when input is active.\nCommon uses: text in focused input."
         },
         "border": {
@@ -295,19 +295,19 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{fg.secondary}",
+          "$value": "{foreground.secondary}",
           "$description": "Icon color in active state.\nCommon uses: active state indicators."
         }
       },
       "disabled": {
         "bg": {
           "$type": "color",
-          "$value": "{bg.canvas}",
+          "$value": "{background.canvas}",
           "$description": "Background for disabled input elements.\nCommon uses: non-interactive inputs."
         },
         "fg": {
           "$type": "color",
-          "$value": "{fg.muted}",
+          "$value": "{foreground.muted}",
           "$description": "Text color for disabled inputs.\nCommon uses: disabled input content."
         },
         "border": {
@@ -317,7 +317,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{fg.muted}",
+          "$value": "{foreground.muted}",
           "$description": "Icon color when disabled.\nCommon uses: disabled state indicators."
         }
       }
@@ -326,12 +326,12 @@
       "unselected": {
         "bg": {
           "$type": "color",
-          "$value": "{bg.canvas}",
+          "$value": "{background.canvas}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
         },
         "fg": {
           "$type": "color",
-          "$value": "{fg.base}",
+          "$value": "{foreground.base}",
           "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
         },
         "border": {
@@ -656,7 +656,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{fg.muted}",
+            "$value": "{foreground.muted}",
             "$description": "Text color for disabled error content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {

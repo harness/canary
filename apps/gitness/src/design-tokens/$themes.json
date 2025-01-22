@@ -215,16 +215,6 @@
       "brand_typography.text-lg.underline": "S:28d3e50cf6bd4742b62cbc5ae84a21a22779e859,"
     },
     "$figmaVariableReferences": {
-      "bg.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
-      "bg.card": "ca3bf672f182c26dc70a531309ebec3680559452",
-      "bg.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
-      "bg.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
-      "bg.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
-      "fg.highlight": "cf2439e780377bcd2600d9b6fd5e65791c500510",
-      "fg.base": "8121f13c0c9d577a4d7f1624e1c71a4d57ba8c17",
-      "fg.secondary": "810a0b6930496b47c997dcce7232f14a9e653bb1",
-      "fg.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
-      "fg.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e",
       "border.base": "4890ce84e07a0c8c449b752ad1ef5f773a1f9f39",
       "border.hover": "ce46286e4b64363aaa879c2d79a005c1e836a8be",
       "border.subtle": "ab498cc9b4c01f7aca0448f2db3e9b3b684f08e2",
@@ -362,7 +352,17 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83"
+      "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
+      "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
+      "background.card": "ca3bf672f182c26dc70a531309ebec3680559452",
+      "background.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
+      "background.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
+      "background.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
+      "foreground.highlight": "cf2439e780377bcd2600d9b6fd5e65791c500510",
+      "foreground.base": "8121f13c0c9d577a4d7f1624e1c71a4d57ba8c17",
+      "foreground.secondary": "810a0b6930496b47c997dcce7232f14a9e653bb1",
+      "foreground.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
+      "foreground.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -730,16 +730,6 @@
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "622:0",
     "$figmaVariableReferences": {
-      "bg.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
-      "bg.card": "ca3bf672f182c26dc70a531309ebec3680559452",
-      "bg.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
-      "bg.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
-      "bg.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
-      "fg.highlight": "cf2439e780377bcd2600d9b6fd5e65791c500510",
-      "fg.base": "8121f13c0c9d577a4d7f1624e1c71a4d57ba8c17",
-      "fg.secondary": "810a0b6930496b47c997dcce7232f14a9e653bb1",
-      "fg.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
-      "fg.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e",
       "border.base": "4890ce84e07a0c8c449b752ad1ef5f773a1f9f39",
       "border.hover": "ce46286e4b64363aaa879c2d79a005c1e836a8be",
       "border.subtle": "ab498cc9b4c01f7aca0448f2db3e9b3b684f08e2",
@@ -877,7 +867,17 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83"
+      "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
+      "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
+      "background.card": "ca3bf672f182c26dc70a531309ebec3680559452",
+      "background.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
+      "background.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
+      "background.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
+      "foreground.highlight": "cf2439e780377bcd2600d9b6fd5e65791c500510",
+      "foreground.base": "8121f13c0c9d577a4d7f1624e1c71a4d57ba8c17",
+      "foreground.secondary": "810a0b6930496b47c997dcce7232f14a9e653bb1",
+      "foreground.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
+      "foreground.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e"
     }
   }
 ]

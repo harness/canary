@@ -1,9 +1,8 @@
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, CopyButton, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Badge, Button, CopyButton, Layout, StackedList } from '@/components'
 import { TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
@@ -26,7 +25,6 @@ interface HeaderProps {
 interface LineTitleProps {
   useTranslationStore: () => TranslationStore
   header: HeaderProps
-  isOpen: boolean
 }
 
 interface DataProps {
@@ -35,19 +33,12 @@ interface DataProps {
   useTranslationStore: () => TranslationStore
 }
 
-const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore, isOpen }) => {
+const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
   const { t: _t } = useTranslationStore()
   const { text, numAdditions, numDeletions } = header
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
-        <Icon
-          name="chevron-right"
-          size={10}
-          className={cn(`text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0 duration-100 ease-in-out`, {
-            'rotate-90': isOpen
-          })}
-        />
         <span className="text-14 font-medium">{text}</span>
         <div
           role="button"
@@ -79,9 +70,9 @@ const CommitsAccordion: FC<{
   data?: string
   diffMode: DiffModeEnum
   useTranslationStore: () => TranslationStore
-  isOpen: boolean
+  openItems: string[]
   onToggle: () => void
-}> = ({ header, diffMode, useTranslationStore, isOpen, onToggle }) => {
+}> = ({ header, diffMode, useTranslationStore, openItems, onToggle }) => {
   const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
@@ -103,64 +94,58 @@ const CommitsAccordion: FC<{
   return (
     <StackedList.Root>
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
-        <div className="w-full border-b last:border-b-0">
-          <div
-            role="button"
-            tabIndex={0}
-            className="group flex w-full items-center justify-between p-4 text-left text-sm font-medium transition-all
-                       [&>svg]:duration-100 [&>svg]:ease-in-out"
-            onClick={onToggle}
-          >
-            <StackedList.Field
-              title={<LineTitle useTranslationStore={useTranslationStore} header={header} isOpen={isOpen} />}
-            />
-          </div>
-          {isOpen && (
-            <div className="border-t bg-transparent">
-              {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                <Layout.Vertical className="flex w-full items-center py-5">
-                  <Button
-                    className="text-tertiary-background"
-                    variant="secondary"
-                    size="md"
-                    aria-label="show diff"
-                    onClick={() => setShowHiddenDiff(true)}
-                  >
-                    {_ts('views:pullRequests.showDiff')}
-                  </Button>
-                  <span>
-                    {fileDeleted
-                      ? _ts('views:pullRequests.deletedFileDiff')
-                      : isDiffTooLarge
-                        ? _ts('views:pullRequests.largeDiff')
-                        : header?.isBinary
-                          ? _ts('views:pullRequests.binaryNotShown')
-                          : _ts('views:pullRequests.fileNoChanges')}
-                  </span>
-                </Layout.Vertical>
-              ) : (
-                <>
-                  {startingLine ? (
-                    <div className="bg-[--diff-hunk-lineNumber--]">
-                      <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
-                    </div>
-                  ) : null}
-                  <PullRequestDiffViewer
-                    data={header?.data}
-                    fontsize={fontsize}
-                    highlight={highlight}
-                    mode={diffMode}
-                    wrap={wrap}
-                    addWidget
-                    fileName={header.title}
-                    lang={header.lang}
-                    useTranslationStore={useTranslationStore}
-                  />
-                </>
-              )}
-            </div>
-          )}
-        </div>
+        <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
+          <Accordion.Item isLast value={header?.text ?? ''}>
+            <Accordion.Trigger leftChevron className="p-4 text-left">
+              <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
+            </Accordion.Trigger>
+            <Accordion.Content>
+              <div className="border-t bg-transparent">
+                {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
+                  <Layout.Vertical className="flex w-full items-center py-5">
+                    <Button
+                      className="text-tertiary-background"
+                      variant="secondary"
+                      size="md"
+                      aria-label="show diff"
+                      onClick={() => setShowHiddenDiff(true)}
+                    >
+                      {_ts('views:pullRequests.showDiff')}
+                    </Button>
+                    <span>
+                      {fileDeleted
+                        ? _ts('views:pullRequests.deletedFileDiff')
+                        : isDiffTooLarge
+                          ? _ts('views:pullRequests.largeDiff')
+                          : header?.isBinary
+                            ? _ts('views:pullRequests.binaryNotShown')
+                            : _ts('views:pullRequests.fileNoChanges')}
+                    </span>
+                  </Layout.Vertical>
+                ) : (
+                  <>
+                    {startingLine ? (
+                      <div className="bg-[--diff-hunk-lineNumber--]">
+                        <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
+                      </div>
+                    ) : null}
+                    <PullRequestDiffViewer
+                      data={header?.data}
+                      fontsize={fontsize}
+                      highlight={highlight}
+                      mode={diffMode}
+                      wrap={wrap}
+                      addWidget
+                      fileName={header.title}
+                      lang={header.lang}
+                      useTranslationStore={useTranslationStore}
+                    />
+                  </>
+                )}
+              </div>
+            </Accordion.Content>
+          </Accordion.Item>
+        </Accordion.Root>
       </StackedList.Item>
     </StackedList.Root>
   )
@@ -179,12 +164,6 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode, useTranslationSto
     }
   }, [data])
 
-  const isOpen = useCallback(
-    (fileText: string) => {
-      return openItems.includes(fileText)
-    },
-    [openItems]
-  )
   const toggleOpen = useCallback(
     (fileText: string) => {
       setOpenItems(curr => (curr.includes(fileText) ? curr.filter(t => t !== fileText) : [...curr, fileText]))
@@ -200,7 +179,7 @@ export const CommitChanges: FC<DataProps> = ({ data, diffMode, useTranslationSto
             header={item}
             diffMode={diffMode}
             useTranslationStore={useTranslationStore}
-            isOpen={isOpen(item.text)}
+            openItems={openItems}
             onToggle={() => toggleOpen(item.text)}
           />
         )

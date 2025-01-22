@@ -9,6 +9,6 @@
     "breakpoint/tablet",
     "breakpoint/desktop",
     "breakpoint/wide",
-    "components/button"
+    "components/base"
   ]
 }

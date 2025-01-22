@@ -20,6 +20,16 @@
         "height": "{sizing.4}"
       }
     },
+    "lg": {
+      "$type": "composition",
+      "$value": {
+        "borderRadius": "{radii.circle}",
+        "horizontalPadding": "{spacing.8}",
+        "verticalPadding": "{spacing.2}",
+        "itemSpacing": "{spacing.2}",
+        "height": "{sizing.6}"
+      }
+    },
     "icon": {
       "$type": "composition",
       "$value": {

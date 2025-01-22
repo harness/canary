@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useEffect, useState } from 'react'
 
 export interface UsePaginationQueryStateWithStoreProps {
   page: number
@@ -14,7 +12,7 @@ export interface UsePaginationQueryStateWithStoreProps {
  * @param setPage - setPage from store
  */
 const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryStateWithStoreProps) => {
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [queryPage, setQueryPage] = useState(page)
 
   /**
    * Update query state if store page change

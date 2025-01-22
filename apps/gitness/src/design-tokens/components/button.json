@@ -8,7 +8,7 @@
         "horizontalPadding": "{spacing.7}",
         "verticalPadding": "{spacing.2}",
         "itemSpacing": "{spacing.3}",
-        "height": "{height.5}"
+        "height": "{sizing.5}"
       }
     },
     "default-icon": {
@@ -16,7 +16,7 @@
       "$value": {
         "typography": "{typography.body.emphasized}",
         "borderRadius": "{radii.xs}",
-        "sizing": "{height.5}"
+        "sizing": "{sizing.5}"
       }
     }
   }

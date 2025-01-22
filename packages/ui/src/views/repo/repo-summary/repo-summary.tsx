@@ -32,6 +32,7 @@ import SummaryPanel from './components/summary-panel'
 
 interface RoutingProps {
   toRepoFiles: () => string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -80,7 +81,6 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
 
 export function RepoSummaryView({
   loading,
-  commitPath,
   filesList,
   navigateToFile,
   repository,
@@ -101,7 +101,8 @@ export function RepoSummaryView({
   searchQuery,
   setSearchQuery,
   handleCreateToken,
-  toRepoFiles
+  toRepoFiles,
+  toCommitDetails
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -216,7 +217,7 @@ export function RepoSummaryView({
             )}
             <Spacer size={5} />
             <Summary
-              commitPath={commitPath}
+              toCommitDetails={toCommitDetails}
               latestFile={{
                 user: { name: latestCommitInfo?.userName || '' },
                 lastCommitMessage: latestCommitInfo?.message || '',

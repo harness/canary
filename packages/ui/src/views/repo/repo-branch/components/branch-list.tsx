@@ -26,7 +26,8 @@ export const BranchesList = ({
   defaultBranch,
   useTranslationStore,
   toBranchRules,
-  toPullRequestCompare
+  toPullRequestCompare,
+  toCommitDetails
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()
   return (
@@ -119,7 +120,7 @@ export const BranchesList = ({
                     <div className="flex items-center gap-1.5">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
                       <Text wrap="nowrap" size={1} truncate className="font-mono text-tertiary-background">
-                        <CommitCopyActions sha={branch.sha} />
+                        <CommitCopyActions toCommitDetails={toCommitDetails} sha={branch.sha} />
                       </Text>
                     </div>
                   </TableCell>

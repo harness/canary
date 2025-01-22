@@ -61,7 +61,6 @@ export default function RepoSummaryPage() {
     setSelectedBranchTag,
     setSelectedRefType
   } = useRepoBranchesStore()
-  const commitPath = routes.toRepoCommits({ spaceId, repoId })
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -330,7 +329,7 @@ export default function RepoSummaryPage() {
   return (
     <>
       <RepoSummaryView
-        commitPath={commitPath}
+        toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         loading={isLoading}
         filesList={filesList}
         navigateToFile={navigateToFile}

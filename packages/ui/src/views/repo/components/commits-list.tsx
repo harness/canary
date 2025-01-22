@@ -78,7 +78,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails }) => {
                           <StackedList.Field
                             title={
                               <Layout.Horizontal>
-                                <CommitCopyActions sha={commit.sha} />
+                                <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                                 <div title="View repository at this point of history">
                                   <Button
                                     variant="outline"

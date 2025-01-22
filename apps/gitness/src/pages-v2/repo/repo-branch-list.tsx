@@ -109,6 +109,7 @@ export function RepoBranchesListPage() {
 
   return (
     <RepoBranchListView
+      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       isLoading={isLoading}
       isCreatingBranch={isCreatingBranch}
       onSubmit={onSubmit}

@@ -6,17 +6,10 @@ import copy from 'clipboard-copy'
 
 export const CommitCopyActions = ({
   sha,
-  inCompare = false,
-  inPr = false,
-  inDetails = false,
-  commitPath
+  toCommitDetails
 }: {
   sha: string
-  inCompare?: boolean
-  inPr?: boolean
-  inDetails?: boolean
-  inSummary?: boolean
-  commitPath?: string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }) => {
   const [copied, setCopied] = useState(false)
   const navigate = useNavigate()
@@ -39,31 +32,11 @@ export const CommitCopyActions = ({
           role="button"
           tabIndex={0}
           onClick={() => {
-            let path
-            if (commitPath) {
-              path = `${commitPath}/${sha}`
-            } else if (inCompare || inDetails) {
-              path = `../../commits/${sha}`
-            } else if (inPr) {
-              path = `../../../commits/${sha}`
-            } else {
-              path = `../commits/${sha}`
-            }
-            navigate(path)
+            navigate(toCommitDetails?.({ sha: sha || '' }) || '')
           }}
           onKeyDown={e => {
             if (e.key === 'Enter' || e.key === ' ') {
-              let path
-              if (commitPath) {
-                path = `${commitPath}/${sha}`
-              } else if (inCompare || inDetails) {
-                path = `../../commits/${sha}`
-              } else if (inPr) {
-                path = `../../../commits/${sha}`
-              } else {
-                path = `../commits/${sha}`
-              }
-              navigate(path)
+              navigate(toCommitDetails?.({ sha: sha || '' }) || '')
             }
           }}
           className="text-13 text-foreground-3"
@@ -71,7 +44,11 @@ export const CommitCopyActions = ({
           {sha.substring(0, 7)}
         </span>
       </ShaBadge.Content>
-      <ShaBadge.Icon handleClick={() => setCopied(true)}>
+      <ShaBadge.Icon
+        handleClick={() => {
+          setCopied(true)
+        }}
+      >
         <Icon size={16} name={copied ? 'tick' : 'clone'} className="text-icons-3" />
       </ShaBadge.Icon>
     </ShaBadge.Root>

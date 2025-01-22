@@ -30,6 +30,7 @@ export interface BranchProps {
 interface RoutingProps {
   toBranchRules: () => string
   toPullRequestCompare: () => string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export interface BranchListPageProps extends Partial<RoutingProps> {

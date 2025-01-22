@@ -614,6 +614,9 @@ export default function PullRequestConversationPage() {
             <Spacer size={6} />
 
             <PullRequestOverview
+              toCommitDetails={({ sha }: { sha: string }) =>
+                routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+              }
               handleUpdateDescription={handleUpdateDescription}
               handleDeleteComment={deleteComment}
               handleUpdateComment={updateComment}

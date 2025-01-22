@@ -44,7 +44,6 @@ export const RepoCode = () => {
   const [loading, setLoading] = useState(false)
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
-  const commitPath = routes.toRepoCommits({ spaceId, repoId })
 
   const { data: { body: repoDetails } = {}, refetch: refetchRepoContent } = useGetContentQuery({
     path: fullResourcePath || '',
@@ -189,6 +188,7 @@ export const RepoCode = () => {
 
   return (
     <RepoFiles
+      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       isRepoEmpty={repository?.is_empty}
       pathParts={pathParts}
       loading={loading}

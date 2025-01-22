@@ -4,15 +4,24 @@ import { Icon, Spacer, Table, TableBody, TableCell, TableHead, TableHeader, Tabl
 import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
-interface SummaryProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+interface SummaryProps extends RoutingProps {
   latestFile: LatestFileTypes
   files: RepoFile[]
   useTranslationStore: () => TranslationStore
   hideHeader?: boolean
-  commitPath?: string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
-export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = false, commitPath }: SummaryProps) => {
+export const Summary = ({
+  latestFile,
+  files,
+  useTranslationStore,
+  hideHeader = false,
+  toCommitDetails
+}: SummaryProps) => {
   const navigate = useNavigate()
   const { t } = useTranslationStore()
 
@@ -20,7 +29,11 @@ export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = f
     <>
       {!hideHeader && (
         <>
-          <FileLastChangeBar commitPath={commitPath} useTranslationStore={useTranslationStore} {...latestFile} />
+          <FileLastChangeBar
+            toCommitDetails={toCommitDetails}
+            useTranslationStore={useTranslationStore}
+            {...latestFile}
+          />
           <Spacer size={4} />
         </>
       )}
@@ -42,7 +55,7 @@ export const Summary = ({ latestFile, files, useTranslationStore, hideHeader = f
                 <FileLastChangeBar
                   onlyTopRounded
                   withoutBorder
-                  commitPath={commitPath}
+                  toCommitDetails={toCommitDetails}
                   useTranslationStore={useTranslationStore}
                   {...latestFile}
                 />

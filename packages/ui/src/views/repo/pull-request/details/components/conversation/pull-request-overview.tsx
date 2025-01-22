@@ -29,7 +29,10 @@ import PullRequestDescBox from './pull-request-description-box'
 import PullRequestSystemComments from './pull-request-system-comments'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
-interface PullRequestOverviewProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+interface PullRequestOverviewProps extends RoutingProps {
   handleUpdateDescription: (title: string, description: string) => void
   data?: TypesPullReqActivity[]
   currentUser?: { display_name?: string; uid?: string }
@@ -86,7 +89,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   removeSuggestionFromBatch,
   filenameToLanguage,
   toggleConversationStatus,
-  handleUpdateDescription
+  handleUpdateDescription,
+  toCommitDetails
 }) => {
   const { t } = useTranslationStore()
 
@@ -208,6 +212,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
             if (isSystemComment(commentItems)) {
               return (
                 <PullRequestSystemComments
+                  toCommitDetails={toCommitDetails}
                   key={index}
                   commentItems={commentItems}
                   isLast={activityBlocks.length - 1 === index}

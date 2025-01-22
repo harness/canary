@@ -1158,3 +1158,12 @@ mark {
 .layer-low {
   @apply z-10;
 }
+
+/*  MONACO EDITOR  */
+.monaco-scrollable-element > .scrollbar > .slider {
+  @apply rounded;
+}
+
+.monaco-diff-editor.side-by-side .editor.modified {
+  @apply !border-borders-1 !border-l !border-solid !shadow-none;
+}

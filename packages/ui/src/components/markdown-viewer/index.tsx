@@ -151,7 +151,7 @@ export function MarkdownViewer({
 
   return (
     <Wrapper>
-      <div ref={ref} style={styles}>
+      <div className="m-auto max-w-[836px]" ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
           className="prose prose-invert"

@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
-import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
+import Editor, { EditorProps, loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 
+import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
 import { useTheme } from '../hooks/useTheme'
 import { BlameItem } from '../types/blame'
 import { ThemeDefinition } from '../types/themes'
@@ -16,10 +17,8 @@ const COMMIT_MESSAGE_LENGTH = 30
 const DATE_WIDTH = 140
 const AVATAR_SIZE = 24
 
-const LINE_NUMBERS_HOLDER_WIDTH = 46
-
 const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true,
+  ...MonacoCommonDefaultOptions,
   readOnly: true,
   matchBrackets: 'never',
   renderValidationDecorations: 'off',
@@ -27,15 +26,10 @@ const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
   folding: false,
   stickyScroll: { enabled: false },
   renderWhitespace: 'none',
-  renderLineHighlight: 'none',
-  minimap: { enabled: false },
-  scrollBeyondLastLine: false,
-  fontSize: 14,
-  fontFamily: '"JetBrains Mono", "monospace"',
-  lineHeight: 20
+  renderLineHighlight: 'none'
 }
 
-export interface BlameEditorProps<_> {
+export interface BlameEditorProps {
   code: string
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
@@ -43,20 +37,20 @@ export interface BlameEditorProps<_> {
   lineNumbersPosition?: 'left' | 'center'
   blameData: BlameItem[]
   showSeparators?: boolean
+  height?: EditorProps['height']
 }
 
-export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
-  const {
-    code,
-    language,
-    themeConfig,
-    lineNumbersPosition = 'left',
-    blameData,
-    showSeparators = true,
-    theme: themeFromProps
-  } = props
+export function BlameEditor({
+  code,
+  language,
+  themeConfig,
+  lineNumbersPosition = 'left',
+  blameData,
+  showSeparators = true,
+  theme: themeFromProps,
+  height = '75vh'
+}: BlameEditorProps): JSX.Element {
   const blameDataRef = useRef(blameData)
-  blameDataRef.current = blameData
 
   const instanceId = useRef(createRandomString(5))
   const monaco = useMonaco()
@@ -66,6 +60,10 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
 
   const monacoRef = useRef<typeof monaco | null>(null)
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+
+  useEffect(() => {
+    blameDataRef.current = blameData
+  }, [blameData])
 
   function setupBlameEditor() {
     const editor = editorRef.current
@@ -191,7 +189,7 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
   const lineNumbersCss = useMemo(() => {
     return `
       .monaco-editor-${instanceId.current} .margin {
-        left: ${BLAME_MESSAGE_WIDTH - LINE_NUMBERS_HOLDER_WIDTH + lineNumbersDelta}px !important;
+        left: ${BLAME_MESSAGE_WIDTH + 16 + lineNumbersDelta}px !important;
         pointer-events: none;
       }`
   }, [lineNumbersDelta])
@@ -210,8 +208,8 @@ export function BlameEditor<T>(props: BlameEditorProps<T>): JSX.Element {
         }}
       />
       <Editor
-        height="75vh"
         className={`monaco-editor-${instanceId.current} overflow-hidden rounded-b-md border-x border-b`}
+        height={height}
         language={language}
         theme={theme}
         options={defaultOptions}

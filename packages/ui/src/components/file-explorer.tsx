@@ -27,12 +27,12 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
         leftChevron
         rotateChevron
         chevronClassName={
-          chevronClassName || 'text-icons-7 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
+          chevronClassName || 'text-icons-9 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
         }
       >
         <div
           className={cn(
-            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-3
+            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-2
             group-hover:text-foreground-1
             group-data-[state=open]:text-foreground-1`,
             {
@@ -43,7 +43,7 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           <div className="flex w-full items-center gap-1.5 py-1.5">
             <Icon
               className={cn(
-                'min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
+                'min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
                 { 'text-icons-2': isActive }
               )}
               name="folder"
@@ -74,7 +74,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
   const comp = (
     <div
       className={cn(
-        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-3
+        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-2
         hover:text-foreground-1
         before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
         {
@@ -83,7 +83,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
       )}
     >
       <Icon
-        className={cn('min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2', {
+        className={cn('min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2', {
           'text-icons-2': isActive
         })}
         name="file"

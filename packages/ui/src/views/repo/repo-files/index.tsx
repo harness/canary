@@ -32,6 +32,7 @@ interface RepoFilesProps {
   defaultBranchName?: string
   currentBranchDivergence: CommitDivergenceType
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  isLoadingRepoDetails: boolean
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -50,37 +51,46 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   defaultBranchName,
   currentBranchDivergence,
   isRepoEmpty,
-  toCommitDetails
+  toCommitDetails,
+  isLoadingRepoDetails
 }) => {
   const { selectedBranchTag } = useRepoBranchesStore()
-  const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
   const { t } = useTranslationStore()
+
+  const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
+
   const content = useMemo(() => {
+    if (loading) return <SkeletonList />
+
     if (!isView) return children
+
     if (isRepoEmpty) {
       return <p>{t('views:repos.emptyRepo')}</p>
     }
-    if (!isDir)
+
+    if (!isDir) {
       return (
         <>
-          <FileLastChangeBar
-            toCommitDetails={toCommitDetails}
-            useTranslationStore={useTranslationStore}
-            {...latestFile}
-          />
-          <Spacer size={4} />
+          {!isLoadingRepoDetails && (
+            <>
+              <FileLastChangeBar
+                toCommitDetails={toCommitDetails}
+                useTranslationStore={useTranslationStore}
+                {...latestFile}
+              />
+              <Spacer size={4} />
+            </>
+          )}
           {children}
         </>
       )
-
-    if (loading) return <SkeletonList />
+    }
 
     if (isShowSummary && files.length)
       return (
         <>
           {selectedBranchTag.name !== defaultBranchName && (
             <>
-              <Spacer size={4} />
               <BranchInfoBar
                 defaultBranchName={defaultBranchName}
                 useRepoBranchesStore={useRepoBranchesStore}
@@ -89,9 +99,9 @@ export const RepoFiles: FC<RepoFilesProps> = ({
                   behind: currentBranchDivergence.behind || 0
                 }}
               />
+              <Spacer size={4} />
             </>
           )}
-          <Spacer size={4} />
           <Summary
             toCommitDetails={toCommitDetails}
             latestFile={latestFile}
@@ -124,12 +134,16 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     defaultBranchName,
     useRepoBranchesStore,
     currentBranchDivergence.ahead,
-    currentBranchDivergence.behind
+    currentBranchDivergence.behind,
+    isLoadingRepoDetails,
+    isRepoEmpty,
+    t,
+    toCommitDetails
   ])
 
   return (
-    <SandboxLayout.Main className="max-w-[1000px]">
-      <SandboxLayout.Content className="h-full pt-4">
+    <SandboxLayout.Main className="max-w-[1400px]">
+      <SandboxLayout.Content className="flex h-full flex-col pt-4">
         {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}

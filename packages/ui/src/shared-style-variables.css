@@ -35,6 +35,10 @@
   --canary-green: 150 75% 65%;
   --canary-red: 0 80% 65%;
   --canary-orange: 35 74% 54%;
+
+  --vscode-scrollbarSlider-background: hsl(240 6% 15%);
+  /*--vscode-scrollbarSlider-hoverBackground: #00ff00;*/
+  /*--vscode-scrollbarSlider-activeBackground: #0000ff;*/
 }
 
 @layer themes {

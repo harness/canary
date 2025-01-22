@@ -9,14 +9,10 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
     <div className="flex items-center gap-2">
       <Avatar size="6">
         <AvatarImage src={user?.avatarUrl || ''} />
-        <AvatarFallback>
-          <Text size={0} color="tertiaryBackground">
-            {getInitials(user?.name || '')}
-          </Text>
-        </AvatarFallback>
+        <AvatarFallback className="text-12">{getInitials(user?.name || '')}</AvatarFallback>
       </Avatar>
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
-        {user?.name}
+        {user?.name || ''}
       </Text>
       <Text size={2} weight="normal" color="primary" className="line-clamp-1 truncate text-wrap">
         {lastCommitMessage}

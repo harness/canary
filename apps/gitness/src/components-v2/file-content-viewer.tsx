@@ -139,11 +139,16 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'preview':
         // For Markdown 'preview'
         if (getIsMarkdown(language)) {
-          return <MarkdownViewer source={fileContent} withBorderWrapper />
+          return (
+              <div className="pb-11">
+                  <MarkdownViewer source={fileContent} withBorderWrapper />
+              </div>
+          )
         }
         // If a non-markdown file somehow has 'preview', we could fallback to 'code'
         return (
           <CodeEditor
+              height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
             onCodeRevisionChange={() => undefined}
@@ -157,6 +162,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'code':
         return (
           <CodeEditor
+              height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
             onCodeRevisionChange={() => undefined}
@@ -168,7 +174,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         )
 
       case 'blame':
-        return <GitBlame themeConfig={themeConfig} codeContent={fileContent} language={language} />
+        return <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
 
       case 'history':
         if (isFetchingCommits) {

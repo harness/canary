@@ -229,7 +229,7 @@ export const RepoSidebar = () => {
         )}
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
         {/* Total height of both the divs should be 100vh */}
-        <div className="min-h-[calc(100vh-100px)]">
+        <div className="h-[calc(100vh-100px)]">
           <Outlet />
         </div>
       </div>

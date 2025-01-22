@@ -36,7 +36,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
 
   return (
-    <DropdownMenu.Content className="w-[298px] p-0" align="start">
+    <DropdownMenu.Content
+      className="w-[298px] p-0"
+      align="start"
+      onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
+    >
       <div className="px-3 pt-2">
         {isBranchOnly ? (
           <span className="text-14 font-medium leading-none">Switch branches</span>

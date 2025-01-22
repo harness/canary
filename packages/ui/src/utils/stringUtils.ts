@@ -1,4 +1,4 @@
-export const getInitials = (name: string, length?: number) => {
+export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)
 

@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
-import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
+import Editor, { EditorProps, loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 
+import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
 import { useTheme } from '../hooks/useTheme'
 import { ThemeDefinition } from '../types/themes'
 
@@ -14,15 +15,7 @@ export interface CodeRevision {
 }
 
 const defaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true,
-  scrollBeyondLastLine: false,
-  padding: {
-    top: 10
-  },
-  minimap: { enabled: false },
-  fontSize: 14,
-  fontFamily: '"JetBrains Mono", "monospace"',
-  lineHeight: 20
+  ...MonacoCommonDefaultOptions
 }
 
 export interface CodeEditorProps<_> {
@@ -34,45 +27,55 @@ export interface CodeEditorProps<_> {
   options?: {
     readOnly?: boolean
   }
+  height?: EditorProps['height']
 }
 
-export function CodeEditor<T>(props: CodeEditorProps<T>): JSX.Element {
-  const { codeRevision, onCodeRevisionChange, language, themeConfig, options, theme: themeFromProps } = props
+export function CodeEditor<T>({
+  codeRevision,
+  onCodeRevisionChange,
+  language,
+  themeConfig,
+  options,
+  theme: themeFromProps,
+  height = '75vh'
+}: CodeEditorProps<T>): JSX.Element {
   const monaco = useMonaco()
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor | undefined>()
-
   const monacoRef = useRef<typeof monaco>()
   const currentRevisionRef = useRef<CodeRevision>({ code: '', revisionId: 0 })
-
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
 
-  function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
-    editorRef.current = editor
-    monacoRef.current = monaco
+  const handleEditorDidMount = useCallback(
+    (editorVal: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
+      editorRef.current = editorVal
+      monacoRef.current = monaco
 
-    editor.setValue(codeRevision.code)
+      editorVal.setValue(codeRevision.code)
 
-    setEditor(editor)
-  }
+      setEditor(editorVal)
+    },
+    [codeRevision.code]
+  )
 
   useEffect(() => {
-    if (editorRef.current) {
-      if (!codeRevision.revisionId || codeRevision.revisionId > Number(currentRevisionRef.current?.revisionId)) {
-        const model = editorRef.current.getModel()
-        if (model) {
-          // NOTE: if it's a readonly no need to create undo stop points
-          if (options?.readOnly) {
-            editorRef.current?.setValue(codeRevision.code)
-          } else {
-            editorRef.current.pushUndoStop()
-            editorRef.current.executeEdits('edit', [
-              {
-                range: model.getFullModelRange(),
-                text: codeRevision.code
-              }
-            ])
-            editorRef.current.pushUndoStop()
-          }
+    if (!editorRef.current) return
+
+    if (!codeRevision.revisionId || codeRevision.revisionId > Number(currentRevisionRef.current?.revisionId)) {
+      const model = editorRef.current.getModel()
+
+      if (model) {
+        // NOTE: if it's a readonly no need to create undo stop points
+        if (options?.readOnly) {
+          editorRef.current?.setValue(codeRevision.code)
+        } else {
+          editorRef.current.pushUndoStop()
+          editorRef.current.executeEdits('edit', [
+            {
+              range: model.getFullModelRange(),
+              text: codeRevision.code
+            }
+          ])
+          editorRef.current.pushUndoStop()
         }
       }
     }
@@ -88,7 +91,7 @@ export function CodeEditor<T>(props: CodeEditorProps<T>): JSX.Element {
     <>
       <Editor
         className="overflow-hidden rounded-b-md border-x border-b"
-        height={'75vh'}
+        height={height}
         onChange={(value, data) => {
           currentRevisionRef.current = { code: value ?? '', revisionId: data.versionId }
           onCodeRevisionChange({ ...currentRevisionRef.current }, data)

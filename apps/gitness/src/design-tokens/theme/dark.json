@@ -79,7 +79,7 @@
     "primary": {
       "solid": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.accent.600}",
             "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
@@ -91,7 +91,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.accent.500}",
             "$description": "Fill color when hovering primary actions.\nCommon uses: button hover state, interactive feedback."
@@ -103,7 +103,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.accent.500}",
             "$description": "Background color when action is pressed.\nCommon uses: pressed state, click feedback, active indication."
@@ -115,7 +115,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.950}",
             "$description": "Background for unavailable actions.\nCommon uses: disabled buttons, unavailable actions."
@@ -131,7 +131,7 @@
     "secondary": {
       "solid": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.850}",
             "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
@@ -143,7 +143,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.800}",
             "$description": "Background color for hover interaction.\nCommon uses: secondary button hover, interactive state."
@@ -155,7 +155,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.800}",
             "$description": "Background when secondary action is pressed.\nCommon uses: active state, press feedback."
@@ -167,12 +167,12 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.950}",
             "$description": "Background for disabled secondary actions.\nCommon uses: inactive secondary buttons, disabled alternatives."
           },
-          "fg": {
+          "foreground": {
             "$type": "color",
             "$value": "{foreground.muted}",
             "$description": "Text color for disabled state.\nCommon uses: disabled secondary text, inactive labels."
@@ -186,7 +186,7 @@
             "$value": "{border.base}",
             "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
           },
-          "fg": {
+          "foreground": {
             "$type": "color",
             "$value": "{foreground.base}",
             "$description": "Text color for outlined variants.\nCommon uses: outlined button text, bordered control labels."
@@ -234,7 +234,7 @@
   "control": {
     "interactive": {
       "default": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{background.highlight}",
           "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
@@ -256,7 +256,7 @@
         }
       },
       "hover": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{background.highlight}",
           "$description": "Background color when hovering inputs.\nCommon uses: hover state for input fields."
@@ -278,7 +278,7 @@
         }
       },
       "active": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{background.highlight}",
           "$description": "Background color for focused/active inputs.\nCommon uses: active input field, focused state."
@@ -300,7 +300,7 @@
         }
       },
       "disabled": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{background.canvas}",
           "$description": "Background for disabled input elements.\nCommon uses: non-interactive inputs."
@@ -324,7 +324,7 @@
     },
     "selection": {
       "unselected": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{background.canvas}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
@@ -341,7 +341,7 @@
         }
       },
       "hover": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "#fff",
           "$description": "Background when hovering selectable items.\nCommon uses: hover state for options."
@@ -358,7 +358,7 @@
         }
       },
       "selected": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "#fff",
           "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
@@ -375,7 +375,7 @@
         }
       },
       "disabled": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "#fff",
           "$description": "Background for non-interactive options.\nCommon uses: disabled checkboxes, inactive options."
@@ -429,7 +429,7 @@
       },
       "handle": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
@@ -441,7 +441,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Handle surface in hover state.\nCommon uses: interactive feedback, hoverable controls, adjustable grips."
@@ -453,7 +453,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Handle surface while dragging.\nCommon uses: active drag state."
@@ -465,7 +465,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Handle surface when inactive.\nCommon uses: non-interactive handle."
@@ -497,7 +497,7 @@
           "$value": "{colors.base-chrome.black}",
           "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
         },
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{colors.green.300}",
           "$description": "Default success background color.\nCommon uses: success alerts, confirmation messages."
@@ -505,7 +505,7 @@
       },
       "subtle": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.green.900}",
             "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
@@ -522,7 +522,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
@@ -539,7 +539,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
@@ -556,7 +556,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Background for non-interactive success elements.\nCommon uses: disabled success messages, inactive states."
@@ -586,7 +586,7 @@
         "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
       },
       "intense": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{colors.red.300}",
           "$description": "Default error background color.\nCommon uses: error alerts, validation messages."
@@ -598,7 +598,7 @@
       },
       "subtle": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.red.900}",
             "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
@@ -615,7 +615,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.red.850}",
             "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
@@ -632,7 +632,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.red.850}",
             "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
@@ -649,7 +649,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.base-chrome.950}",
             "$description": "Background for non-interactive error elements.\nCommon uses: disabled error messages, inactive states."
@@ -679,7 +679,7 @@
         "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
       },
       "intense": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{colors.amber.300}",
           "$description": "Default warning background color.\nCommon uses: warning alerts, caution messages."
@@ -708,7 +708,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
@@ -725,7 +725,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
@@ -742,7 +742,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Background for non-interactive warning elements.\nCommon uses: disabled warning messages, inactive states."
@@ -772,7 +772,7 @@
         "$description": "Border color for info containers.\nCommon uses: info alert borders, message boundaries."
       },
       "intense": {
-        "bg": {
+        "background": {
           "$type": "color",
           "$value": "{colors.accent.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
@@ -784,7 +784,7 @@
       },
       "subtle": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "{colors.accent.950}",
             "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
@@ -801,7 +801,7 @@
           }
         },
         "hover": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
@@ -818,7 +818,7 @@
           }
         },
         "active": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
@@ -835,7 +835,7 @@
           }
         },
         "disabled": {
-          "bg": {
+          "background": {
             "$type": "color",
             "$value": "#fff",
             "$description": "Background for non-interactive info elements.\nCommon uses: disabled help messages, inactive states."

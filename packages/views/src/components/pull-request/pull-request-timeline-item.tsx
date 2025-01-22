@@ -83,9 +83,9 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
       {content && (
         <NodeGroup.Content>
           {/* Remove h-32, only for show */}
-          <Card className={cx('rounded-md bg-transparent', contentClassName)}>
+          <Card.Root className={cx('rounded-md bg-transparent', contentClassName)}>
             {content}
-            {/* TODO: will have to eventually implement a commenting and reply system similiar to gitness */}
+            {/* TODO: will have to eventually implement a commenting and reply system similar to gitness */}
             {!hideReply && (
               <div className="flex items-center gap-3 border-t p-4">
                 {header.length > 0 && header[0].avatar}
@@ -107,7 +107,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                 </Button>
               </div>
             )}
-          </Card>
+          </Card.Root>
         </NodeGroup.Content>
       )}
       {!isLast && <NodeGroup.Connector />}

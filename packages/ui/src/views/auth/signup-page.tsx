@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
+import { Button, Card, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -73,17 +73,17 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
       highlightTheme={hasError ? 'error' : 'green'}
       verticalCenter
     >
-      <Card className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <CardHeader className="items-center">
+      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
+        <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'green'} />
-          <CardTitle className="mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center" as="h1">
             Sign up to Harness
-          </CardTitle>
+          </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Let’s start your journey with us today.
           </Text>
-        </CardHeader>
-        <CardContent className="mt-10">
+        </Card.Header>
+        <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               id="userId"
@@ -154,8 +154,8 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
               Sign in
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Agreements />
     </Floating1ColumnLayout>
   )

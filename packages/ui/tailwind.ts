@@ -366,6 +366,6 @@ export default {
     'prose-img',
     'prose-code',
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-border-2'
+    'stroke-borders-2'
   ]
 } satisfies TailwindConfig

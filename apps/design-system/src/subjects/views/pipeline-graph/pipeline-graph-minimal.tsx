@@ -10,7 +10,7 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Icon, PipelineNodes, Text } from '@harnessio/ui/components'
+import { Icon, Text } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
@@ -97,9 +97,16 @@ export function ParallelGroupNodeComponent({
   const { name } = node.data
 
   return (
-    <PipelineNodes.ParallelGroupNode name={name} onEllipsisClick={() => undefined} onAddClick={() => undefined}>
+    <>
+      <div className="border-borders-2 absolute inset-0 -z-10 rounded-xl border" />
+      <div className="absolute inset-x-0 top-0 h-0">
+        <div title={name} className="text-primary-muted h-9 cursor-default truncate px-9 pt-2.5">
+          {name}
+        </div>
+      </div>
+
       {children}
-    </PipelineNodes.ParallelGroupNode>
+    </>
   )
 }
 

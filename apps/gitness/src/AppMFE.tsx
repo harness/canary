@@ -1,8 +1,8 @@
 import './styles/AppMFE.css'
 
-import { useEffect, useMemo, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { I18nextProvider } from 'react-i18next'
-import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigate } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
 

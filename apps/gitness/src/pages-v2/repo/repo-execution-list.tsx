@@ -27,7 +27,7 @@ export default function RepoExecutionListPage() {
     setSearchParams({ query: newQuery ?? '', page: String(queryPage) })
   }
 
-  const { setExecutionsData, page, setPage } = useExecutionListStore()
+  const { setExecutionsData, page } = useExecutionListStore()
 
   const {
     data: { body: executionsBody, headers } = {},
@@ -107,16 +107,16 @@ const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement
   )
 }
 
-export const Description = (props: { execution: TypesExecution }): string | React.ReactElement => {
+export const Description = (props: { execution: TypesExecution }): React.ReactElement | null => {
   const {
     execution: { author_name, event, source, target }
   } = props
   if (!author_name || !event) {
-    return ''
+    return null
   }
   switch (event) {
     case 'manual':
-      return `${author_name} triggered manually`
+      return <span>{`${author_name} triggered manually`}</span>
     case 'pull_request':
       return (
         <div className="flex items-center gap-1">
@@ -131,6 +131,6 @@ export const Description = (props: { execution: TypesExecution }): string | Reac
         </div>
       )
     default:
-      return ''
+      return null
   }
 }

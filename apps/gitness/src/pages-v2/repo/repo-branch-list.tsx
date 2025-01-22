@@ -29,7 +29,7 @@ export function RepoBranchesListPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
 
-  const { page, setPage, setBranchList, setDefaultBranch, setSpaceIdAndRepoId, setPaginationFromHeaders } =
+  const { page, setBranchList, setDefaultBranch, setSpaceIdAndRepoId, setPaginationFromHeaders } =
     useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')

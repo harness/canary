@@ -90,6 +90,8 @@ const PipelineStudioHeaderActions = (): JSX.Element => {
           {renderActionButton({ disabled: !isInitialized || fetchingPipelineFileContent })}
         </div>
       </div>
+      {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+      {/* @ts-ignore */}
       <RunPipelineDialog
         open={openRunPipeline}
         onClose={() => {

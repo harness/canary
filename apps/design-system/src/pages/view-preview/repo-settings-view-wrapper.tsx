@@ -5,7 +5,7 @@ import { useTranslationsStore } from '@utils/viewUtils'
 
 import { RepoSettingsLayout } from '@harnessio/ui/views'
 
-export const RepoSettingsViewWrapper: FC<PropsWithChildren> = ({ children }) => {
+export const RepoSettingsViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => {
   return (
     <Routes>
       <Route path="*" element={<RepoSettingsLayout useTranslationStore={useTranslationsStore} />}>

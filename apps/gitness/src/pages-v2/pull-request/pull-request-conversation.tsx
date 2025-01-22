@@ -102,13 +102,9 @@ export default function PullRequestConversationPage() {
   const [comment, setComment] = useState<string>('')
 
   const [searchParams, setSearchParams] = useSearchParams()
-  const [commentId, setCommentId] = useState(searchParams.get('commentId') || '')
-  const [searchReviewers, setSearchReviewers] = useState(searchParams.get('reviewer') || '')
-  const [searchLabel, setSearchLabel] = useState(searchParams.get('label') || '')
-
-  const handleSetCommentId = (newCommentId: string | null) => {
-    setSearchParams({ commentId: newCommentId ?? '', reviewer: searchReviewers, label: searchLabel })
-  }
+  const [commentId] = useState(searchParams.get('commentId') || '')
+  const [searchReviewers] = useState(searchParams.get('reviewer') || '')
+  const [searchLabel] = useState(searchParams.get('label') || '')
 
   const handleSetSearchReviewers = (newSearchReviewers: string | null) => {
     setSearchParams({ commentId, reviewer: newSearchReviewers ?? '', label: searchLabel })
@@ -685,12 +681,6 @@ export default function PullRequestConversationPage() {
               removeSuggestionFromBatch={removeSuggestionFromBatch}
               filenameToLanguage={filenameToLanguage}
               handleUpload={handleUpload}
-              commentId={commentId}
-              setCommentId={handleSetCommentId}
-              searchReviewers={searchReviewers}
-              setSearchReviewers={handleSetSearchReviewers}
-              searchLabel={searchLabel}
-              setSearchLabel={handleSetSearchLabel}
             />
             <Spacer size={9} />
             <PullRequestCommentBox

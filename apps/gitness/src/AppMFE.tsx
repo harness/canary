@@ -19,54 +19,7 @@ import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { extractRedirectRouteObjects, mfeRoutes, repoRoutes } from './routes'
-
-export interface MFERouteRendererProps {
-  renderUrl: string
-  parentLocationPath: string
-  onRouteChange: (updatedLocationPathname: string) => void
-}
-
-const filteredRoutes = extractRedirectRouteObjects(repoRoutes)
-const isRouteMatchingRedirectRoutes = (pathToValidate: string) => {
-  return filteredRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
-}
-
-function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
-  const navigate = useNavigate()
-  const location = useLocation()
-  const parentPath = parentLocationPath.replace(renderUrl, '')
-  const isNotRedirectPath = isRouteMatchingRedirectRoutes(location.pathname)
-
-  /**
-   * renderUrl ==> base URL of parent application
-   * parentPath ==> path name of parent application after base URL
-   * location.pathname ==> path name of MFE
-   * isNotRedirectPath ==> check if the current path is not a redirect path
-   */
-  const canNavigate = useMemo(
-    () => renderUrl && parentPath !== location.pathname && isNotRedirectPath,
-    [isNotRedirectPath, location.pathname, parentPath, renderUrl]
-  )
-
-  // Handle location change detected from parent route
-
-  useEffect(() => {
-    if (canNavigate) {
-      const pathToNavigate = parentLocationPath.replace(renderUrl, '')
-      navigate(pathToNavigate, { replace: true })
-    }
-  }, [parentLocationPath])
-
-  // Notify parent about route change
-  useEffect(() => {
-    if (canNavigate) {
-      onRouteChange?.(`${renderUrl}${location.pathname}`)
-    }
-  }, [location])
-
-  return null
-}
+import { mfeRoutes } from './routes'
 
 interface AppMFEProps {
   /**
@@ -88,14 +41,7 @@ function decode<T = unknown>(arg: string): T {
   return JSON.parse(decodeURIComponent(atob(arg)))
 }
 
-export default function AppMFE({
-  scope,
-  renderUrl,
-  on401,
-  useMFEThemeContext,
-  parentLocationPath,
-  onRouteChange
-}: AppMFEProps) {
+export default function AppMFE({ scope, renderUrl, on401, useMFEThemeContext }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
       `${window.apiUrl || ''}/code/api/v1${url}${url.includes('?') ? '&' : '?'}routingId=${scope.accountId}`,
@@ -135,10 +81,7 @@ export default function AppMFE({
   // Router Configuration
   const basename = `/ng${renderUrl}`
 
-  const routesToRender = mfeRoutes(
-    scope.projectIdentifier,
-    <MFERouteRenderer renderUrl={renderUrl} onRouteChange={onRouteChange} parentLocationPath={parentLocationPath} />
-  )
+  const routesToRender = mfeRoutes(scope.projectIdentifier)
   const router = createBrowserRouter(routesToRender, { basename })
 
   return (

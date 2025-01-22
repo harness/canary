@@ -7,7 +7,7 @@ import { noop, useTranslationsStore } from '@utils/viewUtils'
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
-export const RepoFilesViewWrapper: FC<PropsWithChildren> = ({ children }) => {
+export const RepoFilesViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => {
   const useRepoBranchesStore = useCallback(
     (): IBranchSelectorStore => ({
       ...repoFilesStore.branchSelectorStore,

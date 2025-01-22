@@ -317,7 +317,7 @@ export const CreatePullRequest = () => {
       include_stats: true
     }
   })
-  const { setCommits, page, setPage, setSelectedCommit } = useRepoCommitsStore()
+  const { setCommits, page, setSelectedCommit } = useRepoCommitsStore()
 
   useEffect(() => {
     if (commitData) {

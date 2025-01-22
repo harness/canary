@@ -23,7 +23,7 @@ export default function RepoPipelineListPage() {
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
   const [query, setQuery] = useState(searchParams.get('query') || '')
 
-  const { setPipelinesData, page, setPage } = usePipelineListStore()
+  const { setPipelinesData, page } = usePipelineListStore()
 
   const [isCreatePipelineDialogOpen, setCreatePipelineDialogOpen] = useState(false)
 

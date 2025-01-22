@@ -20,7 +20,7 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage } = useRepoStore()
+  const { setRepositories, page } = useRepoStore()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })

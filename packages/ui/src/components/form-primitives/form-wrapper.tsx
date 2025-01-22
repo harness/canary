@@ -2,7 +2,7 @@ import { FormHTMLAttributes, PropsWithChildren } from 'react'
 
 import { cn } from '@utils/cn'
 
-interface FormWrapperProps extends PropsWithChildren<any>, FormHTMLAttributes<HTMLFormElement> {
+interface FormWrapperProps extends PropsWithChildren<unknown>, FormHTMLAttributes<HTMLFormElement> {
   className?: string
 }
 

@@ -94,7 +94,7 @@ const ListItem = ({
   disableHover = false,
   ...props
 }: ListItemProps) => {
-  const Comp = asChild ? Slot : 'div'
+  const Comp = asChild ? Slot : ('div' as any)
   return (
     <Comp
       className={cn(

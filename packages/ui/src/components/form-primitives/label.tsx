@@ -32,7 +32,7 @@ const LabelRoot = forwardRef<
 ))
 LabelRoot.displayName = LabelPrimitive.Root.displayName
 
-interface LabelProps extends VariantProps<typeof labelVariants>, PropsWithChildren<any> {
+interface LabelProps extends VariantProps<typeof labelVariants>, PropsWithChildren<unknown> {
   htmlFor?: string
   optional?: boolean
   className?: string

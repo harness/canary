@@ -11,7 +11,7 @@ import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestListStore()
+  const { setPullRequests, page, setOpenClosePullRequests } = usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */

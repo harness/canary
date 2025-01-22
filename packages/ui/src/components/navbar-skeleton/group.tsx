@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 import { cn } from '@utils/cn'
 
-export interface GroupProps extends PropsWithChildren<any> {
+export interface GroupProps extends PropsWithChildren<unknown> {
   title?: string
   topBorder?: boolean
   isSubMenu?: boolean

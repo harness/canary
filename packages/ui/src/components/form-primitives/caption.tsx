@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import { Text } from '@/components'
 import { cn } from '@utils/cn'
 
-interface CaptionProps extends PropsWithChildren<any> {
+interface CaptionProps extends PropsWithChildren<unknown> {
   className?: string
 }
 

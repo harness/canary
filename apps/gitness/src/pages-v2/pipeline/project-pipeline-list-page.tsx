@@ -17,10 +17,10 @@ export default function ProjectPipelineListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
-  const { setPipelinesData, page, setPage } = usePipelineListStore()
+  const { setPipelinesData, page } = usePipelineListStore()
   const [searchParams, setSearchParams] = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('query') || '')
-  const [queryPage, setQueryPage] = useState(() => {
+  const [queryPage] = useState(() => {
     const pageParam = searchParams.get('page')
     return pageParam ? parseInt(pageParam, 10) : 1
   })

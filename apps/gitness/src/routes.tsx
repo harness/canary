@@ -1,4 +1,3 @@
-import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
@@ -851,15 +850,10 @@ export const routes: CustomRouteObject[] = [
   }
 ]
 
-export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null = null): CustomRouteObject[] => [
+export const mfeRoutes = (mfeProjectId = ''): CustomRouteObject[] => [
   {
     path: '/',
-    element: (
-      <>
-        {mfeRouteRenderer}
-        <AppShellMFE />
-      </>
-    ),
+    element: <AppShellMFE />,
     handle: { routeName: 'toHome' },
     children: [
       {

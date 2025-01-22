@@ -24,7 +24,7 @@ export default function RepoCommitsPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
   const [searchParams, setSearchParams] = useSearchParams()
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)  
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
   const {
     branchList,
@@ -89,7 +89,7 @@ export default function RepoCommitsPage() {
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
 
-  const [page, setPage] = useState(queryPage)
+  const [_page, setPage] = useState(queryPage)
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {

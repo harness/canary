@@ -9,7 +9,7 @@ import { commitData, currentUser } from './pull-request-changes-data'
 import { mockDiffs, pullRequestProviderStore } from './pull-request-provider-store'
 import { pullRequestStore } from './pull-request-store'
 
-interface PullRequestChangesProps extends PropsWithChildren {
+interface PullRequestChangesProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   state: string
 }
 

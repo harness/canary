@@ -33,7 +33,7 @@ import {
   pullReqChecksDecisionSucceeded
 } from './pull-request-panelData'
 
-interface PullRequestConversationProps extends PropsWithChildren {
+interface PullRequestConversationProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   state: string
 }
 

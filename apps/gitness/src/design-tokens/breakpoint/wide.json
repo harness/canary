@@ -1,52 +1,52 @@
 {
   "spacing": {
-    "base": {
-      "$type": "spacing",
-      "$value": "{step.base}"
-    },
-    "3xs": {
+    "1": {
       "$type": "spacing",
       "$value": "round({step.base}* pow({multiplier.wide}, 1) / 2) * 2"
     },
-    "2xs": {
+    "2": {
       "$type": "spacing",
       "$value": "round({step.base}* pow({multiplier.wide}, 1.4) / 2) * 2"
     },
-    "xs": {
+    "3": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 2) / 2) * 2"
     },
-    "sm": {
+    "4": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 2.2) / 2) * 2"
     },
-    "md": {
+    "5": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 2.5)/ 2) * 2"
     },
-    "lg": {
+    "6": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 3) / 2) * 2"
     },
-    "xl": {
+    "7": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 3.6) / 2) * 2"
     },
-    "2xl": {
+    "8": {
       "$type": "spacing",
       "$value": "round({step.base}* pow({multiplier.wide}, 4) / 2) * 2"
     },
-    "3xl": {
+    "9": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 4.6) / 2) * 2"
     },
-    "4xl": {
+    "10": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 5) / 2) * 2"
     },
-    "5xl": {
+    "11": {
       "$type": "spacing",
       "$value": "round({step.base} * pow({multiplier.wide}, 5.58) / 2) * 2"
+    },
+    "base": {
+      "$type": "spacing",
+      "$value": "{step.base}"
     }
   },
   "breakpoint": {
@@ -56,45 +56,45 @@
     },
     "container": {
       "$type": "number",
-      "$value": "{spacing.2xl}"
+      "$value": "{spacing.8}"
     }
   },
   "font-size": {
-    "f-3": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.wide}, -0.5))"
-    },
-    "f-2": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.wide}, -0.4))"
-    },
-    "f-1": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.wide}, -0.2))"
-    },
-    "f0": {
+    "0": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 0))"
     },
-    "f1": {
+    "1": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 0.6) / 2) * 2"
     },
-    "f2": {
+    "2": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 1))"
     },
-    "f3": {
+    "3": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 1.4))"
     },
-    "f4": {
+    "4": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 1.8))"
     },
-    "f5": {
+    "5": {
       "$type": "fontSizes",
       "$value": "round(16 * pow({multiplier.wide}, 2.2))"
+    },
+    "-3": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.wide}, -0.5))"
+    },
+    "-2": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.wide}, -0.4))"
+    },
+    "-1": {
+      "$type": "fontSizes",
+      "$value": "round(16 * pow({multiplier.wide}, -0.2))"
     }
   },
   "typography": {
@@ -104,8 +104,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f3}",
-          "lineHeight": "{line-height.lh3}",
+          "fontSize": "{font-size.3}",
+          "lineHeight": "{line-height.3}",
           "letterSpacing": "{tracking.tight}",
           "textCase": "{text-case.none}"
         },
@@ -116,8 +116,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.f2}",
-          "lineHeight": "{line-height.lh2}",
+          "fontSize": "{font-size.2}",
+          "lineHeight": "{line-height.2}",
           "letterSpacing": "{tracking.tight}",
           "textCase": "{text-case.none}"
         },
@@ -130,8 +130,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f1}",
-          "lineHeight": "{line-height.lh1}",
+          "fontSize": "{font-size.1}",
+          "lineHeight": "{line-height.1}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Emphasized section headers."
@@ -141,8 +141,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f0}",
-          "lineHeight": "{line-height.lh0}",
+          "fontSize": "{font-size.0}",
+          "lineHeight": "{line-height.0}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Section headers."
@@ -154,8 +154,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.300}",
-          "fontSize": "{font-size.f-1}",
-          "lineHeight": "{line-height.lh-1}",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-1}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "De-emphasized body text, secondary information."
@@ -165,8 +165,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.f-1}",
-          "lineHeight": "{line-height.lh-1}",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-1}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary text style for UI and content."
@@ -176,8 +176,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f-1}",
-          "lineHeight": "{line-height.lh-1}",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-1}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Emphasized body text for important information."
@@ -187,8 +187,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.600}",
-          "fontSize": "{font-size.f-1}",
-          "lineHeight": "{line-height.lh-1}",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-1}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Strongly emphasized body text for high importance."
@@ -200,8 +200,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f-2}",
-          "lineHeight": "{line-height.lh-2}",
+          "fontSize": "{font-size.-2}",
+          "lineHeight": "{line-height.-2}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
@@ -211,8 +211,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.f-2}",
-          "lineHeight": "{line-height.lh-2}",
+          "fontSize": "{font-size.-2}",
+          "lineHeight": "{line-height.-2}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Helper text, meta information."
@@ -222,8 +222,8 @@
         "$value": {
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.f-3}",
-          "lineHeight": "{line-height.lh-3}",
+          "fontSize": "{font-size.-3}",
+          "lineHeight": "{line-height.-3}",
           "letterSpacing": "{tracking.wide}"
         },
         "$description": "Small informational text used for displaying numerical, statistical, or technical data. "
@@ -235,8 +235,8 @@
         "$value": {
           "fontFamily": "{font-family.mono}",
           "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.f-1}",
-          "lineHeight": "{line-height.lh-1-relaxed}",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-1-relaxed}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Code blocks and larger code snippets."
@@ -249,8 +249,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.600}",
-            "fontSize": "{font-size.f2}",
-            "lineHeight": "{line-height.lh2}",
+            "fontSize": "{font-size.2}",
+            "lineHeight": "{line-height.2}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article main heading."
@@ -260,8 +260,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.600}",
-            "fontSize": "{font-size.f1}",
-            "lineHeight": "{line-height.lh1-relaxed}",
+            "fontSize": "{font-size.1}",
+            "lineHeight": "{line-height.1-relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article section heading."
@@ -271,8 +271,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.600}",
-            "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0-relaxed}",
+            "fontSize": "{font-size.0}",
+            "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article subsection heading."
@@ -284,8 +284,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.400}",
-            "fontSize": "{font-size.f1}",
-            "lineHeight": "{line-height.lh1-relaxed}",
+            "fontSize": "{font-size.1}",
+            "lineHeight": "{line-height.1-relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article introduction paragraph."
@@ -295,8 +295,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.400}",
-            "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0-relaxed}",
+            "fontSize": "{font-size.0}",
+            "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article paragraph text."
@@ -306,8 +306,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{default-font-weight-normal.500}",
-            "fontSize": "{font-size.f0}",
-            "lineHeight": "{line-height.lh0-relaxed}",
+            "fontSize": "{font-size.0}",
+            "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Emphasized paragraph text."
@@ -316,24 +316,24 @@
     }
   },
   "radii": {
-    "xs": {
+    "2xs": {
       "$type": "borderRadius",
       "$value": "{spacing.base}",
       "$description": "Extra small border radius for minimal rounding."
     },
-    "sm": {
+    "xs": {
       "$type": "borderRadius",
-      "$value": "{spacing.3xs}",
+      "$value": "{spacing.1}",
       "$description": "Small rounding for compact components like form controls, small buttons, and tight UI elements."
     },
     "md": {
       "$type": "borderRadius",
-      "$value": "{spacing.sm}",
+      "$value": "{spacing.4}",
       "$description": "Medium border radius for standard interactive elements like cards, standard buttons, and content containers. "
     },
     "lg": {
       "$type": "borderRadius",
-      "$value": "{spacing.md}",
+      "$value": "{spacing.5}",
       "$description": "Large border radius for prominent UI elements like feature cards, significant content blocks, and main interactive surfaces."
     },
     "circle": {
@@ -343,53 +343,53 @@
     }
   },
   "line-height": {
-    "lh-3": {
+    "0": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f-3}* {leading.snug}/2) * 2"
+      "$value": "round({font-size.0}* {leading.snug}/2) * 2"
     },
-    "lh-2": {
+    "1": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f-2}* {leading.normal}/2) * 2"
+      "$value": "round({font-size.1}* {leading.tight}/2) * 2"
     },
-    "lh-1": {
+    "2": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f-1}* {leading.snug}/2) * 2"
+      "$value": "round({font-size.2}* {leading.tight}/2) * 2"
     },
-    "lh-1-relaxed": {
+    "3": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f-1}* {leading.normal}/2) * 2"
+      "$value": "round({font-size.3}* {leading.tight}/2) * 2"
     },
-    "lh0": {
+    "4": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f0}* {leading.snug}/2) * 2"
+      "$value": "round({font-size.4}* {leading.tight}/2) * 2"
     },
-    "lh0-relaxed": {
+    "5": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f0}* {leading.relaxed}/2) * 2"
+      "$value": "round({font-size.5}* {leading.tight}/2) * 2"
     },
-    "lh1": {
+    "-3": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f1}* {leading.tight}/2) * 2"
+      "$value": "round({font-size.-3}* {leading.snug}/2) * 2"
     },
-    "lh1-relaxed": {
+    "-2": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f1}* {leading.normal}/2) * 2"
+      "$value": "round({font-size.-2}* {leading.normal}/2) * 2"
     },
-    "lh2": {
+    "-1": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f2}* {leading.tight}/2) * 2"
+      "$value": "round({font-size.-1}* {leading.snug}/2) * 2"
     },
-    "lh3": {
+    "-1-relaxed": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f3}* {leading.tight}/2) * 2"
+      "$value": "round({font-size.-1}* {leading.normal}/2) * 2"
     },
-    "lh4": {
+    "0-relaxed": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f4}* {leading.tight}/2) * 2"
+      "$value": "round({font-size.0}* {leading.relaxed}/2) * 2"
     },
-    "lh5": {
+    "1-relaxed": {
       "$type": "lineHeights",
-      "$value": "round({font-size.f5}* {leading.tight}/2) * 2"
+      "$value": "round({font-size.1}* {leading.normal}/2) * 2"
     }
   }
 }

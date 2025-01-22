@@ -1,1 +1,13 @@
-{}
+{
+  "button": {
+    "default": {
+      "$type": "composition",
+      "$value": {
+        "typography": "{typography.body.emphasized}",
+        "borderRadius": "{radii.xs}",
+        "horizontalPadding": "{spacing.7}",
+        "verticalPadding": "{spacing.2}"
+      }
+    }
+  }
+}

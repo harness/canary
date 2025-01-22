@@ -4,18 +4,7 @@ import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Icon,
-  Input,
-  Label,
-  Spacer,
-  Text
-} from '@harnessio/ui/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
@@ -49,9 +38,9 @@ export function ForgotPasswordPage({ isLoading, onSubmit }: PageProps) {
 
   return (
     <Floating1ColumnLayout maxWidth="md" verticalCenter>
-      <Card variant="plain" width="full">
-        <CardHeader>
-          <CardTitle className="flex flex-col place-items-center">
+      <Card.Root variant="plain" width="full">
+        <Card.Header>
+          <Card.Title className="flex flex-col place-items-center">
             <Icon name="gitness-logo" size={104} />
             <Text size={6} weight="medium" color="primary">
               Forgot password?
@@ -60,10 +49,10 @@ export function ForgotPasswordPage({ isLoading, onSubmit }: PageProps) {
             <Text size={2} color="tertiaryBackground">
               Enter your email to receive the verification code.
             </Text>
-          </CardTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Spacer size={1} />
-        <CardContent>
+        <Card.Content>
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Label htmlFor="email">Email</Label>
             <Spacer size={1} />
@@ -88,8 +77,8 @@ export function ForgotPasswordPage({ isLoading, onSubmit }: PageProps) {
               Sign up
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
     </Floating1ColumnLayout>
   )
 }

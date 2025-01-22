@@ -43,16 +43,23 @@ export interface ButtonWithOptionsProps<T extends string> {
   id: string
   handleButtonClick: (e: MouseEvent) => void
   loading?: boolean
-  selectedValue: T
+  selectedValue?: T
   options: ButtonWithOptionsOptionType<T>[]
   handleOptionChange: (val: T) => void
   className?: string
+  buttonClassName?: string
   size?: ButtonWithOptionsSizes
   theme?: ButtonWithOptionsTheme
   disabled?: boolean
   children: ReactNode
+  dropdownContentClassName?: string
 }
 
+/**
+ * Button with options
+ * - If selectedValue exists, it will behave as a radio button
+ * - Otherwise, it will function as a regular dropdown item
+ */
 export const ButtonWithOptions = <T extends string>({
   id,
   handleButtonClick,
@@ -61,15 +68,22 @@ export const ButtonWithOptions = <T extends string>({
   options,
   handleOptionChange,
   className,
+  buttonClassName,
   size = 'default',
   theme = 'primary',
   disabled = false,
-  children
+  children,
+  dropdownContentClassName
 }: ButtonWithOptionsProps<T>) => {
   return (
     <div className={cn('flex', className)}>
       <Button
-        className={cn('rounded-r-none', theme !== 'primary' && 'border-y border-l', buttonPaddings[size])}
+        className={cn(
+          'rounded-r-none',
+          theme !== 'primary' && 'border-y border-l',
+          buttonPaddings[size],
+          buttonClassName
+        )}
         theme={theme}
         size={size}
         onClick={handleButtonClick}
@@ -83,38 +97,55 @@ export const ButtonWithOptions = <T extends string>({
         <DropdownMenuTrigger
           className={cn(
             buttonVariants({ theme }),
-            'relative h-[inherit] w-8 p-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
+            'relative h-[inherit] w-8 p-0 flex-shrink-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
             theme !== 'primary' && 'border-y border-r',
-            (disabled || loading) && 'pointer-events-none',
+            (!!disabled || !!loading) && 'pointer-events-none',
             separatorThemes[theme || 'default']
           )}
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="mt-1 max-w-80"
+          className={cn('mt-1 max-w-80', dropdownContentClassName)}
           align="end"
           onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
         >
-          <RadioGroup value={String(selectedValue)} id={id}>
+          {selectedValue ? (
+            <RadioGroup value={String(selectedValue)} id={id}>
+              <DropdownMenuGroup>
+                {options.map(option => (
+                  <DropdownMenuItem
+                    key={String(option.value)}
+                    onClick={() => handleOptionChange(option.value)}
+                    disabled={!!loading}
+                  >
+                    <Option
+                      control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}
+                      id={String(option.value)}
+                      label={option.label}
+                      ariaSelected={selectedValue === option.value}
+                      description={option?.description}
+                    />
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+            </RadioGroup>
+          ) : (
             <DropdownMenuGroup>
               {options.map(option => (
                 <DropdownMenuItem
                   key={String(option.value)}
+                  className="px-3 py-2.5"
                   onClick={() => handleOptionChange(option.value)}
-                  disabled={!!loading}
                 >
-                  <Option
-                    control={<RadioButton className="mt-px" value={String(option.value)} id={String(option.value)} />}
-                    id={String(option.value)}
-                    label={option.label}
-                    ariaSelected={selectedValue === option.value}
-                    description={option?.description}
-                  />
+                  <span className="flex flex-col gap-y-1.5">
+                    <span className="leading-none text-foreground-8">{option.label}</span>
+                    {option?.description && <span className="text-foreground-4">{option.description}</span>}
+                  </span>
                 </DropdownMenuItem>
               ))}
             </DropdownMenuGroup>
-          </RadioGroup>
+          )}
         </DropdownMenuContent>
       </DropdownMenu>
     </div>

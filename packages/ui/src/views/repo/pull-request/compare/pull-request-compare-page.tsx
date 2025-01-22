@@ -52,8 +52,11 @@ export const DiffModeOptions = [
   { name: 'Split', value: 'Split' },
   { name: 'Unified', value: 'Unified' }
 ]
-
-export interface PullRequestComparePageProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
+}
+export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
   onFormCancel: () => void
@@ -114,7 +117,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   usersList,
   reviewers,
   handleAddReviewer,
-  handleDeleteReviewer
+  handleDeleteReviewer,
+  toCommitDetails,
+  toCode
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -316,7 +321,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" value={prBranchCombinationExists ? 'commits' : 'overview'}>
+            <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
               <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
@@ -382,7 +387,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 <CommitsList
-                  inCompare
+                  toCode={toCode}
+                  toCommitDetails={toCommitDetails}
                   data={commitData?.map((item: TypesCommit) => ({
                     sha: item.sha,
                     parent_shas: item.parent_shas,

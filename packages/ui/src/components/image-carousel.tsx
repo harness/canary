@@ -3,8 +3,6 @@ import { FC, useState } from 'react'
 import {
   Button,
   Carousel,
-  CarouselContent,
-  CarouselItem,
   Dialog,
   DialogContent,
   DialogFooter,
@@ -38,23 +36,23 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
         <DialogHeader>
           <DialogTitle>{title ? title : <Spacer size={7} />}</DialogTitle>
         </DialogHeader>
-        <Carousel className="flex-1 overflow-hidden" initialSlide={initialSlide}>
-          <CarouselContent className="h-full" carouselBlockClassName="h-full">
+        <Carousel.Root className="flex-1 overflow-hidden" initialSlide={initialSlide}>
+          <Carousel.Content className="h-full" carouselBlockClassName="h-full">
             {imgEvent &&
               imgEvent.map((image, idx) => {
                 return (
-                  <CarouselItem key={idx} className="flex items-center justify-center">
+                  <Carousel.Item key={idx} className="flex items-center justify-center">
                     <img
                       className="max-h-full"
                       alt="slide"
                       style={{ transform: `scale(${zoomLevel || 1})` }}
                       src={image}
                     />
-                  </CarouselItem>
+                  </Carousel.Item>
                 )
               })}
-          </CarouselContent>
-        </Carousel>
+          </Carousel.Content>
+        </Carousel.Root>
         <DialogFooter className="!justify-center">
           <Button
             variant="outline"

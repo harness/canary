@@ -2,18 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-  Spacer,
-  Text
-} from '@/components'
+import { Button, Card, InputOTP, InputOTPGroup, InputOTPSlot, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -98,18 +87,18 @@ export function OTPPage({
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <CardHeader className="items-center">
+      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
+        <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <CardTitle className="mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center" as="h1">
             Verify your email
-          </CardTitle>
+          </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Please enter the verification code we’ve sent to your email{' '}
             <span className="text-foreground-1">{email}</span>
           </Text>
-        </CardHeader>
-        <CardContent className="mt-10">
+        </Card.Header>
+        <Card.Content className="mt-10">
           <form className="flex flex-col items-center" onSubmit={handleSubmit(onSubmit)}>
             <div className="relative">
               <Controller
@@ -157,8 +146,8 @@ export function OTPPage({
               Resend
             </Button>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Agreements />
     </Floating1ColumnLayout>
   )

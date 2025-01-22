@@ -21,8 +21,14 @@ interface SystemCommentProps extends TypesPullReq {
   repoMetadataPath?: string
   isLast: boolean
   pullReqMetadata: TypesPullReq | undefined
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
-const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems, isLast, pullReqMetadata }) => {
+const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
+  commentItems,
+  isLast,
+  pullReqMetadata,
+  toCommitDetails
+}) => {
   const payload = commentItems[0].payload
   const type = payload?.payload?.type
   const openFromDraft =
@@ -112,13 +118,13 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({ commentItems,
                 ? (payloadData?.commit_title as string) || `${author?.display_name} pushed a new commit`
                 : author?.display_name,
               description: !payloadData?.forced ? (
-                <CommitCopyActions sha={payloadData?.new as string} />
+                <CommitCopyActions toCommitDetails={toCommitDetails} sha={payloadData?.new as string} />
               ) : (
                 <Layout.Horizontal gap="gap-x-1.5" className="items-center">
                   <span>forced pushed</span>
-                  <CommitCopyActions sha={payloadData?.old as string} />
+                  <CommitCopyActions toCommitDetails={toCommitDetails} sha={payloadData?.old as string} />
                   <span>to</span>
-                  <CommitCopyActions sha={payloadData?.new as string} />
+                  <CommitCopyActions toCommitDetails={toCommitDetails} sha={payloadData?.new as string} />
                 </Layout.Horizontal>
               )
             }

@@ -1,20 +1,21 @@
 import { FC, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Button, CommitCopyActions, Layout, NodeGroup, StackedList } from '@/components'
+import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
 type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
-interface CommitProps {
-  inCompare?: boolean
-  inPr?: boolean
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
+}
+interface CommitProps extends Partial<RoutingProps> {
   data?: TypesCommit[]
-  commitsPath?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = false, inPr = false }) => {
+export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) => {
   const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -51,13 +52,15 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = fa
                       <StackedList.Field
                         title={
                           <div className="flex flex-col gap-y-1.5">
-                            {commitsPath ? (
-                              <Link
-                                className="truncate text-16 font-medium leading-snug"
-                                to={`${commitsPath}/${commit?.sha}`}
-                              >
-                                {commit.title}
-                              </Link>
+                            {toCommitDetails ? (
+                              <p>
+                                <Link
+                                  className="text-16 font-medium leading-snug hover:underline"
+                                  to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                                >
+                                  <span className="truncate">{commit.title}</span>
+                                </Link>
+                              </p>
                             ) : (
                               <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
                             )}
@@ -76,26 +79,20 @@ export const CommitsList: FC<CommitProps> = ({ data, commitsPath, inCompare = fa
                       {!!commit?.sha && (
                         <StackedList.Field
                           title={
-                            <Layout.Horizontal>
-                              <CommitCopyActions sha={commit.sha} />
-                              <div title="View repository at this point of history">
-                                <Button
-                                  variant="outline"
-                                  size="sm_icon"
-                                  onClick={() => {
-                                    navigate(
-                                      inCompare
-                                        ? `../../code/${commit.sha}`
-                                        : inPr
-                                          ? `../../../code/${commit.sha}`
-                                          : `../code/${commit.sha}`
-                                    )
-                                  }}
-                                >
-                                  <>{'<>'}</>
-                                </Button>
-                              </div>
-                            </Layout.Horizontal>
+                            <div className="flex gap-2.5">
+                              <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
+                              <Button
+                                className="border hover:bg-background-3"
+                                title="View repository at this point of history"
+                                variant="custom"
+                                size="sm_icon"
+                                onClick={() => {
+                                  navigate(toCode?.({ sha: commit?.sha || '' }) || '')
+                                }}
+                              >
+                                <Icon name="code-brackets" className="text-icons-3" />
+                              </Button>
+                            </div>
                           }
                           right
                           label

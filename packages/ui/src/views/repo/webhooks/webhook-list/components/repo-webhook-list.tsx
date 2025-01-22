@@ -104,7 +104,7 @@ export function RepoWebhookList({
           >
             <StackedList.Field
               primary
-              description={webhook.description}
+              description={<span className="leading-none">{webhook.description}</span>}
               title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
               className="gap-1.5"
             />

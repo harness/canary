@@ -123,35 +123,36 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
 
         <BranchSettingsRuleDescriptionField register={register} errors={errors} t={t} />
 
-        <BranchSettingsRuleTargetPatternsField
-          watch={watch}
-          setValue={setValue}
-          register={register}
-          errors={errors}
-          t={t}
-        />
+        <div className="flex flex-col gap-y-11">
+          <BranchSettingsRuleTargetPatternsField
+            watch={watch}
+            setValue={setValue}
+            register={register}
+            errors={errors}
+            t={t}
+          />
 
-        <BranchSettingsRuleBypassListField
-          register={register}
-          errors={errors}
-          setValue={setValue}
-          watch={watch}
-          bypassOptions={principals}
-          t={t}
-          setPrincipalsSearchQuery={setPrincipalsSearchQuery}
-          principalsSearchQuery={principalsSearchQuery}
-        />
+          <BranchSettingsRuleBypassListField
+            register={register}
+            errors={errors}
+            setValue={setValue}
+            watch={watch}
+            bypassOptions={principals}
+            t={t}
+            setPrincipalsSearchQuery={setPrincipalsSearchQuery}
+            principalsSearchQuery={principalsSearchQuery}
+          />
 
-        <BranchSettingsRuleListField
-          rules={rules}
-          recentStatusChecks={recentStatusChecks}
-          handleCheckboxChange={handleCheckboxChange}
-          handleSubmenuChange={handleSubmenuChange}
-          handleSelectChangeForRule={handleSelectChangeForRule}
-          handleInputChange={handleInputChange}
-          t={t}
-        />
-
+          <BranchSettingsRuleListField
+            rules={rules}
+            recentStatusChecks={recentStatusChecks}
+            handleCheckboxChange={handleCheckboxChange}
+            handleSubmenuChange={handleSubmenuChange}
+            handleSelectChangeForRule={handleSelectChangeForRule}
+            handleInputChange={handleInputChange}
+            t={t}
+          />
+        </div>
         <Fieldset className="mt-5">
           <ControlGroup>
             <ButtonGroup>

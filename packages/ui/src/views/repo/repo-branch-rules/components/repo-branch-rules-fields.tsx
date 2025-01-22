@@ -27,11 +27,12 @@ import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
 
 export const BranchSettingsRuleToggleField: FC<FieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root withoutBorder borderBackground>
+  <StackedList.Root className="overflow-hidden" borderBackground>
     <StackedList.Item
-      className="!rounded px-5 py-3.5"
+      className="!rounded px-5 py-3"
       disableHover
       isHeader
+      isLast
       actions={
         <Switch
           {...register!('state')}
@@ -107,7 +108,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
         <Label htmlFor="target-patterns" className="mb-2.5" color="secondary">
           {t('views:repos.targetPatterns', 'Target patterns')}
         </Label>
-        <div className="flex items-start gap-x-3.5">
+        <div className="grid grid-cols-[1fr_112px] items-start gap-x-3.5">
           <Input
             id="pattern"
             size="md"
@@ -120,6 +121,7 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
             error={errors?.pattern?.message?.toString()}
           />
           <ButtonWithOptions<PatternsButtonType>
+            buttonClassName="px-0 w-full"
             id="patterns-type"
             size="md"
             handleButtonClick={handleAddPattern}
@@ -307,7 +309,9 @@ export const BranchSettingsRuleListField: FC<{
 
   return (
     <ControlGroup className="max-w-[476px]">
-      <Label className="mb-6">{t('views:repos.rulesTitle', 'Rules: select all that apply')}</Label>
+      <Label className="mb-6" color="secondary">
+        {t('views:repos.rulesTitle', 'Rules: select all that apply')}
+      </Label>
       <Fieldset className="gap-y-5">
         {branchRules.map((rule, index) => {
           const isChecked = rules[index]?.checked ?? false

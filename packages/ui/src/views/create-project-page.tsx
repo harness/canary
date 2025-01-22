@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Icon, Input, Label, Spacer, Text } from '@/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -44,9 +44,9 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
   return (
     <SandboxLayout.Main className="flex items-center justify-center">
       <SandboxLayout.Content>
-        <Card variant="plain" width="full">
-          <CardHeader>
-            <CardTitle className="flex flex-col place-items-center">
+        <Card.Root variant="plain" width="full">
+          <Card.Header>
+            <Card.Title className="flex flex-col place-items-center">
               <Icon name="create-workspace" size={112} />
               <Spacer size={4} />
               <Text size={6} weight="medium" color="primary">
@@ -56,10 +56,10 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
               <Text size={2} color="tertiaryBackground">
                 {t('views:createProject.description', 'Organize your repositories, pipelines and more.')}{' '}
               </Text>
-            </CardTitle>
-          </CardHeader>
+            </Card.Title>
+          </Card.Header>
           <Spacer size={1} />
-          <CardContent>
+          <Card.Content>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Label htmlFor="identifier">{t('views:createProject.projectName', 'Project name')}</Label>
               <Spacer size={1} />
@@ -94,8 +94,8 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError, useTransl
               </Button>
             </form>
             <Spacer size={4} />
-          </CardContent>
-        </Card>
+          </Card.Content>
+        </Card.Root>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

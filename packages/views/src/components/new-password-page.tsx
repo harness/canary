@@ -4,18 +4,7 @@ import { Link } from 'react-router-dom'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Icon,
-  Input,
-  Label,
-  Spacer,
-  Text
-} from '@harnessio/ui/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
@@ -52,9 +41,9 @@ export function NewPasswordPage({ isLoading, handleFormSubmit }: PageProps) {
 
   return (
     <Floating1ColumnLayout maxWidth="md" verticalCenter>
-      <Card variant="plain" width="full">
-        <CardHeader>
-          <CardTitle className="flex flex-col place-items-center">
+      <Card.Root variant="plain" width="full">
+        <Card.Header>
+          <Card.Title className="flex flex-col place-items-center">
             <Icon name="gitness-logo" size={104} />
             <Text size={6} weight="medium" color="primary">
               Create new password
@@ -63,10 +52,10 @@ export function NewPasswordPage({ isLoading, handleFormSubmit }: PageProps) {
             <Text size={2} color="tertiaryBackground" align="center">
               Your new password must be different from your previously used password.
             </Text>
-          </CardTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Spacer size={1} />
-        <CardContent>
+        <Card.Content>
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Label htmlFor="password">New password</Label>
             <Spacer size={1} />
@@ -113,8 +102,8 @@ export function NewPasswordPage({ isLoading, handleFormSubmit }: PageProps) {
               Sign in
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
     </Floating1ColumnLayout>
   )
 }

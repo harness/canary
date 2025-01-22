@@ -20,6 +20,7 @@ interface RepoFilesProps {
   loading: boolean
   files: RepoFile[]
   isDir: boolean
+  isRepoEmpty?: boolean
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
@@ -30,6 +31,7 @@ interface RepoFilesProps {
   useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
   currentBranchDivergence: CommitDivergenceType
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -46,18 +48,26 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   codeMode,
   useRepoBranchesStore,
   defaultBranchName,
-  currentBranchDivergence
+  currentBranchDivergence,
+  isRepoEmpty,
+  toCommitDetails
 }) => {
   const { selectedBranchTag } = useRepoBranchesStore()
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
-
+  const { t } = useTranslationStore()
   const content = useMemo(() => {
     if (!isView) return children
-
+    if (isRepoEmpty) {
+      return <p>{t('views:repos.emptyRepo')}</p>
+    }
     if (!isDir)
       return (
         <>
-          <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          <FileLastChangeBar
+            toCommitDetails={toCommitDetails}
+            useTranslationStore={useTranslationStore}
+            {...latestFile}
+          />
           <Spacer size={4} />
           {children}
         </>
@@ -82,7 +92,12 @@ export const RepoFiles: FC<RepoFilesProps> = ({
             </>
           )}
           <Spacer size={4} />
-          <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+          <Summary
+            toCommitDetails={toCommitDetails}
+            latestFile={latestFile}
+            files={files}
+            useTranslationStore={useTranslationStore}
+          />
         </>
       )
 
@@ -115,7 +130,7 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   return (
     <SandboxLayout.Main className="max-w-[1000px]">
       <SandboxLayout.Content className="h-full pt-4">
-        {isView && (
+        {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}
             pathParts={pathParts}

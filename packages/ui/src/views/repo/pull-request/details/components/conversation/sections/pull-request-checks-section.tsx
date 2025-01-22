@@ -6,19 +6,20 @@ import { cn } from '@utils/cn'
 import { timeDistance } from '@utils/utils'
 import { isEmpty } from 'lodash-es'
 
+import { PullRequestRoutingProps } from '../../../pull-request-details-types'
 import { LineDescription, LineTitle } from './pull-request-line-title'
 
 interface ExecutionPayloadType {
   execution_number: number
 }
-interface PullRequestMergeSectionProps {
+interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> {
   checkData: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
   spaceId?: string
   repoId?: string
 }
 
-const PullRequestCheckSection = ({ checkData, checksInfo, spaceId, repoId }: PullRequestMergeSectionProps) => {
+const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullRequestMergeSectionProps) => {
   const getStatusIcon = (status: EnumCheckStatus) => {
     switch (status) {
       // TODO: fix icons to use from nucleo
@@ -85,7 +86,14 @@ const PullRequestCheckSection = ({ checkData, checksInfo, spaceId, repoId }: Pul
             ></Link> */}
                     {check?.check?.status !== ExecutionState.PENDING && (
                       <Link
-                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pipelines/${check?.check?.identifier}/executions/${(check?.check?.payload?.data as ExecutionPayloadType).execution_number}`}
+                        to={
+                          toPRCheck?.({
+                            pipelineId: check?.check?.identifier || '',
+                            executionId: (
+                              check?.check?.payload?.data as ExecutionPayloadType
+                            ).execution_number?.toString()
+                          }) || ''
+                        }
                         replace
                       >
                         <Text size={1} color="tertiaryBackground">

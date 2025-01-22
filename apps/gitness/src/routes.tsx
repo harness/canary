@@ -6,6 +6,7 @@ import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/view
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
+import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -106,20 +107,21 @@ const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: ':commitSHA',
-                element: <RepoCommitDetailsPage showSidebar={false} />,
+                element: <RepoCommitDetailsPage />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                     <>
                       <Text>{commitSHA.substring(0, 7)}</Text>
                     </>
-                  )
+                  ),
+                  routeName: RouteConstants.toRepoCommitDetails
                 },
                 children: [
                   {
                     index: true,
                     element: (
                       <ExplorerPathsProvider>
-                        <CommitDiffContainer showSidebar={false} />
+                        <CommitDiffContainer />
                       </ExplorerPathsProvider>
                     )
                   }
@@ -298,7 +300,8 @@ const repoRoutes: CustomRouteObject[] = [
               {
                 path: 'rules',
                 handle: {
-                  breadcrumb: () => <Text>Rules</Text>
+                  breadcrumb: () => <Text>Rules</Text>,
+                  routeName: RouteConstants.toRepoBranchRules
                 },
                 children: [
                   {
@@ -408,7 +411,11 @@ const repoRoutes: CustomRouteObject[] = [
 export const routes: CustomRouteObject[] = [
   {
     path: '/',
-    element: <AppShell />,
+    element: (
+      <AppProvider>
+        <AppShell />
+      </AppProvider>
+    ),
     handle: { routeName: 'toHome' },
     children: [
       {
@@ -705,7 +712,8 @@ export const routes: CustomRouteObject[] = [
       {
         path: ':spaceId',
         handle: {
-          breadcrumb: () => <ProjectDropdown />
+          breadcrumb: () => <ProjectDropdown />,
+          asLink: false
         },
         children: repoRoutes
       },
@@ -793,7 +801,8 @@ export const routes: CustomRouteObject[] = [
             path: 'keys',
             element: <SettingsProfileKeysPage />,
             handle: {
-              breadcrumb: () => <Text>Keys</Text>
+              breadcrumb: () => <Text>Keys</Text>,
+              routeName: RouteConstants.toProfileKeys
             }
           }
         ]

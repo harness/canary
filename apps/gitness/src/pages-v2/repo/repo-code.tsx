@@ -138,7 +138,7 @@ export const RepoCode = () => {
       },
       lastCommitMessage: message || '',
       timestamp: author?.when ? timeAgoFromISOTime(author.when) : '',
-      sha: sha && getTrimmedSha(sha)
+      sha: sha && sha
     }
   }, [repoDetails?.latest_commit])
 
@@ -187,25 +187,25 @@ export const RepoCode = () => {
   if (!repoId) return <></>
 
   return (
-    <>
-      <RepoFiles
-        pathParts={pathParts}
-        loading={loading}
-        files={files}
-        isDir={repoDetails?.type === 'dir'}
-        isShowSummary={!!repoEntryPathToFileTypeMap.size}
-        latestFile={latestFiles}
-        useTranslationStore={useTranslationStore}
-        pathNewFile={pathToNewFile}
-        // TODO: add correct path to Upload files page
-        pathUploadFiles="/upload-file"
-        codeMode={codeMode}
-        useRepoBranchesStore={useRepoBranchesStore}
-        defaultBranchName={repository?.default_branch}
-        currentBranchDivergence={currBranchDivergence}
-      >
-        {renderCodeView}
-      </RepoFiles>
-    </>
+    <RepoFiles
+      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
+      isRepoEmpty={repository?.is_empty}
+      pathParts={pathParts}
+      loading={loading}
+      files={files}
+      isDir={repoDetails?.type === 'dir'}
+      isShowSummary={!!repoEntryPathToFileTypeMap.size}
+      latestFile={latestFiles}
+      useTranslationStore={useTranslationStore}
+      pathNewFile={pathToNewFile}
+      // TODO: add correct path to Upload files page
+      pathUploadFiles="/upload-file"
+      codeMode={codeMode}
+      useRepoBranchesStore={useRepoBranchesStore}
+      defaultBranchName={repository?.default_branch}
+      currentBranchDivergence={currBranchDivergence}
+    >
+      {renderCodeView}
+    </RepoFiles>
   )
 }

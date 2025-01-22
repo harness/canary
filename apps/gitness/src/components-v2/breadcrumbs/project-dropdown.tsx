@@ -18,9 +18,10 @@ function ProjectDropdown(): JSX.Element {
   const { spaceId } = useParams<PathParams>()
   const navigate = useNavigate()
   const { spaces } = useAppContext()
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-x-1.5">
+      <DropdownMenuTrigger className="flex items-center gap-x-1.5" disabled={!spaces.length}>
         {spaceId ?? 'Select project'}
         <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />
       </DropdownMenuTrigger>

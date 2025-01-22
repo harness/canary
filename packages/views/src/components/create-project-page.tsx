@@ -3,18 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Icon,
-  Input,
-  Label,
-  Spacer,
-  Text
-} from '@harnessio/ui/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@harnessio/ui/components'
 
 import { SandboxLayout } from '..'
 
@@ -52,9 +41,9 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError }: PagePro
   return (
     <SandboxLayout.Main hasHeader hasLeftPanel className="flex items-center">
       <SandboxLayout.Content maxWidth="md">
-        <Card variant="plain" width="full">
-          <CardHeader>
-            <CardTitle className="flex flex-col place-items-center">
+        <Card.Root variant="plain" width="full">
+          <Card.Header>
+            <Card.Title className="flex flex-col place-items-center">
               <Icon name="create-workspace" size={112} />
               <Spacer size={4} />
               <Text size={6} weight="medium" color="primary">
@@ -64,10 +53,10 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError }: PagePro
               <Text size={2} color="tertiaryBackground">
                 Orginaze your projects, pipelines and more.
               </Text>
-            </CardTitle>
-          </CardHeader>
+            </Card.Title>
+          </Card.Header>
           <Spacer size={1} />
-          <CardContent>
+          <Card.Content>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Label htmlFor="identifier">Project name</Label>
               <Spacer size={1} />
@@ -100,8 +89,8 @@ export function CreateProjectPage({ isLoading, onFormSubmit, apiError }: PagePro
               </Button>
             </form>
             <Spacer size={4} />
-          </CardContent>
-        </Card>
+          </Card.Content>
+        </Card.Root>
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

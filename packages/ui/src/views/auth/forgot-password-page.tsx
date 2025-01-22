@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
+import { Button, Card, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -73,17 +73,17 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <CardHeader className="items-center">
+      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
+        <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <CardTitle className="mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center" as="h1">
             Forgot password?
-          </CardTitle>
+          </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Enter your email to receive the verification code.
           </Text>
-        </CardHeader>
-        <CardContent className="mt-10">
+        </Card.Header>
+        <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(handleOnSubmit)}>
             <Input
               id="email"
@@ -114,8 +114,8 @@ export function ForgotPasswordPage({ isLoading, onSubmit, error }: ForgotPasswor
               Sign up
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Agreements />
     </Floating1ColumnLayout>
   )

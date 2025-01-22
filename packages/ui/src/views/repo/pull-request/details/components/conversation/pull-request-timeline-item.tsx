@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react'
+import { FC, memo, ReactNode, useEffect, useState } from 'react'
 
 import {
   Avatar,
@@ -24,16 +24,16 @@ import { PullRequestCommentBox } from './pull-request-comment-box'
 
 interface TimelineItemProps {
   header: {
-    avatar?: React.ReactNode
+    avatar?: ReactNode
     name?: string
-    description?: React.ReactNode
-    selectStatus?: React.ReactNode
+    description?: ReactNode
+    selectStatus?: ReactNode
   }[]
   parentCommentId?: number
   commentId?: number
   currentUser?: string
-  content?: React.ReactNode
-  icon?: React.ReactNode
+  content?: ReactNode
+  icon?: ReactNode
   isLast: boolean
   isComment?: boolean
   hideIconBorder?: boolean
@@ -61,11 +61,11 @@ interface TimelineItemProps {
 }
 
 interface ItemHeaderProps {
-  avatar?: React.ReactNode
+  avatar?: ReactNode
   name?: string
   isComment?: boolean
-  description?: React.ReactNode
-  selectStatus?: React.ReactNode
+  description?: ReactNode
+  selectStatus?: ReactNode
   onEditClick?: () => void
   onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
   commentId?: number
@@ -75,7 +75,7 @@ interface ItemHeaderProps {
   onQuoteReply?: () => void
 }
 
-const ItemHeader: React.FC<ItemHeaderProps> = memo(
+const ItemHeader: FC<ItemHeaderProps> = memo(
   ({
     onEditClick,
     onCopyClick,
@@ -166,7 +166,7 @@ const ItemHeader: React.FC<ItemHeaderProps> = memo(
 )
 ItemHeader.displayName = 'ItemHeader'
 
-const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
+const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   header,
   content,
   icon,
@@ -228,7 +228,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
         </NodeGroup.Title>
         {content && (
           <NodeGroup.Content>
-            <Card className={cn('rounded-md bg-transparent', contentClassName)}>
+            <Card.Root className={cn('rounded-md bg-transparent', contentClassName)}>
               {isEditMode ? (
                 <PullRequestCommentBox
                   handleUpload={handleUpload}
@@ -308,7 +308,7 @@ const PullRequestTimelineItem: React.FC<TimelineItemProps> = ({
                   )}
                 </>
               )}
-            </Card>
+            </Card.Root>
           </NodeGroup.Content>
         )}
         {!isLast && <NodeGroup.Connector />}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import {
   CommentItem,
@@ -15,7 +15,6 @@ import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
 import { OverlayScrollbars } from 'overlayscrollbars'
 
-import constants from '../constants'
 import PRCommentView from '../details/components/common/pull-request-comment-view'
 import PullRequestTimelineItem from '../details/components/conversation/pull-request-timeline-item'
 import { useDiffHighlighter } from '../hooks/useDiffHighlighter'
@@ -72,12 +71,6 @@ const PullRequestDiffViewer = ({
   lang,
   fileName,
   fullContent,
-  addedLines,
-  removedLines,
-  unchangedPercentage,
-  deleted,
-  isBinary,
-  blocks,
   currentUser,
   comments,
   handleSaveComment,
@@ -104,23 +97,6 @@ const PullRequestDiffViewer = ({
   const reactWrapRef = useRef<HTMLDivElement>(null)
   const reactRef = useRef<HTMLDivElement | null>(null)
   const highlightRef = useRef(highlight)
-  const fileUnchanged = useMemo(
-    () => unchangedPercentage === 100 || (addedLines === 0 && removedLines === 0),
-    [addedLines, removedLines, unchangedPercentage]
-  )
-  const diffHasVeryLongLine = useMemo(
-    () => blocks?.some(block => block.lines?.some(line => line.content?.length > constants.MAX_TEXT_LINE_SIZE_LIMIT)),
-    [blocks]
-  )
-  const fileDeleted = useMemo(() => deleted, [deleted])
-  const isDiffTooLarge = useMemo(
-    () => addedLines && removedLines && addedLines + removedLines > constants.PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT,
-    [addedLines, removedLines]
-  )
-  const [renderCustomContent] = useState(
-    // !shouldDiffBeShownByDefault &&
-    fileUnchanged || fileDeleted || isDiffTooLarge || isBinary || diffHasVeryLongLine
-  )
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
 
@@ -590,7 +566,7 @@ const PullRequestDiffViewer = ({
 
   return (
     <>
-      {diffFileInstance && !renderCustomContent && (
+      {diffFileInstance && (
         <DiffView<Thread[]>
           ref={ref}
           className="bg-tr w-full text-tertiary-background"
@@ -605,17 +581,6 @@ const PullRequestDiffViewer = ({
           diffViewWrap={wrap}
           diffViewAddWidget={addWidget}
         />
-      )}
-      {renderCustomContent && (
-        <div className="pl-6 pt-4">
-          {fileDeleted
-            ? 'This file was deleted.'
-            : isDiffTooLarge || diffHasVeryLongLine
-              ? 'Large diffs are not rendered by default.'
-              : isBinary
-                ? 'Binary file not shown.'
-                : 'File without changes.'}
-        </div>
       )}
     </>
   )

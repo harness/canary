@@ -15,7 +15,7 @@ const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow'
   }
 })
 
-export interface CardProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
+export interface CardRootProps extends HTMLAttributes<HTMLDivElement>, VariantProps<typeof cardVariants> {
   width?: 'auto' | 'full' | 'screen' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | string
 }
 
@@ -32,13 +32,13 @@ const widthVariants = {
   '2xl': 'w-96'
 }
 
-const Card = forwardRef<HTMLDivElement, CardProps>(({ variant, className, width = 'auto', ...props }, ref) => {
+const CardRoot = forwardRef<HTMLDivElement, CardRootProps>(({ variant, className, width = 'auto', ...props }, ref) => {
   const widthClassName = widthVariants[width as keyof typeof widthVariants] || width
 
   return <div ref={ref} className={cn(cardVariants({ variant }), widthClassName, className)} {...props} />
 })
 
-Card.displayName = 'Card'
+CardRoot.displayName = 'CardRoot'
 
 const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className = 'space-y-1.5 p-6', ...props }, ref) => (
@@ -79,4 +79,13 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 )
 CardFooter.displayName = 'CardFooter'
 
-export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent, cardVariants }
+const Card = {
+  Root: CardRoot,
+  Header: CardHeader,
+  Footer: CardFooter,
+  Title: CardTitle,
+  Description: CardDescription,
+  Content: CardContent
+}
+
+export { Card, cardVariants }

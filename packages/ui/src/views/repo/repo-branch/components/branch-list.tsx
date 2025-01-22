@@ -23,10 +23,11 @@ import { DivergenceGauge } from './divergence-gauge'
 
 export const BranchesList = ({
   branches,
-  spaceId,
-  repoId,
   defaultBranch,
-  useTranslationStore
+  useTranslationStore,
+  toBranchRules,
+  toPullRequestCompare,
+  toCommitDetails
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()
   return (
@@ -119,7 +120,7 @@ export const BranchesList = ({
                     <div className="flex items-center gap-1.5">
                       {/* <Icon name="open-pr" size={11} className="text-success" /> */}
                       <Text wrap="nowrap" size={1} truncate className="font-mono text-tertiary-background">
-                        <CommitCopyActions sha={branch.sha} />
+                        <CommitCopyActions toCommitDetails={toCommitDetails} sha={branch.sha} />
                       </Text>
                     </div>
                   </TableCell>
@@ -130,11 +131,11 @@ export const BranchesList = ({
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),
-                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
+                        to: `${toPullRequestCompare?.() || ''}/${defaultBranch}...${branch.name}`
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
-                        to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/settings/rules`
+                        to: toBranchRules?.()
                       },
                       {
                         isDanger: true,

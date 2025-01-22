@@ -177,8 +177,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           <div className="mt-1 border-t border-borders-1 px-3 py-2">
             <Link to={viewAllUrl}>
               <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
-                {t('views:repos.viewAll', 'View all {{type}}', {
-                  type: activeTab === BranchSelectorTab.BRANCHES ? t('views:repos.branches') : t('views:repos.tags')
+                {t('views:repos.viewAll', `View all ${activeTab}`, {
+                  type:
+                    activeTab === BranchSelectorTab.BRANCHES
+                      ? t('views:repos.branchesLowercase', 'branches')
+                      : t('views:repos.tagsLowercase', 'tags')
                 })}
               </span>
             </Link>

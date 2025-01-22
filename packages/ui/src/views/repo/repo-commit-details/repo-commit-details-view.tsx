@@ -6,7 +6,10 @@ import { ICommitDetailsStore, SandboxLayout, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
-export interface RepoCommitDetailsViewProps {
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+export interface RepoCommitDetailsViewProps extends RoutingProps {
   useCommitDetailsStore: () => ICommitDetailsStore
   useTranslationStore: () => TranslationStore
   showSidebar?: boolean
@@ -15,7 +18,8 @@ export interface RepoCommitDetailsViewProps {
 export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
   useCommitDetailsStore,
   useTranslationStore,
-  showSidebar = true
+  showSidebar = true,
+  toCommitDetails
 }) => {
   const { t } = useTranslationStore()
   const { commitData, isVerified } = useCommitDetailsStore()
@@ -62,7 +66,7 @@ export const RepoCommitDetailsView: FC<RepoCommitDetailsViewProps> = ({
               {/* TODO: get branch name from commitData */}
               <span className="text-14 font-medium leading-snug text-foreground-8">main</span>
             </div>
-            <CommitCopyActions sha={commitData?.sha || ''} />
+            <CommitCopyActions toCommitDetails={toCommitDetails} sha={commitData?.sha || ''} />
           </div>
         </div>
         {!showSidebar && <Outlet />}

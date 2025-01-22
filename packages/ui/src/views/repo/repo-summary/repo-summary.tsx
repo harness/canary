@@ -28,10 +28,14 @@ import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/vie
 import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
-// import { RecentPushInfoBar } from './components/recent-push-info-bar'
 import SummaryPanel from './components/summary-panel'
 
-export interface RepoSummaryViewProps {
+interface RoutingProps {
+  toRepoFiles: () => string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+
+export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   loading: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
@@ -96,7 +100,9 @@ export function RepoSummaryView({
   currentBranchDivergence,
   searchQuery,
   setSearchQuery,
-  handleCreateToken
+  handleCreateToken,
+  toRepoFiles,
+  toCommitDetails
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -158,16 +164,6 @@ export function RepoSummaryView({
                 Example:
                 {selectedBranchTag.name !== repository?.default_branch && (
                   <>
-                    <RecentPushInfoBar
-                      recentPushes={[
-                        {
-                          branchName: 'new-branch',
-                          timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
-                        }
-                      ]}
-                      spaceId={spaceId}
-                      repoId={repoId}
-                    />
                     <Spacer size={6} />
                   </>
                 )}
@@ -221,6 +217,7 @@ export function RepoSummaryView({
             )}
             <Spacer size={5} />
             <Summary
+              toCommitDetails={toCommitDetails}
               latestFile={{
                 user: { name: latestCommitInfo?.userName || '' },
                 lastCommitMessage: latestCommitInfo?.message || '',
@@ -246,9 +243,7 @@ export function RepoSummaryView({
                       size="icon"
                       asChild
                     >
-                      <Link
-                        to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}
-                      >
+                      <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}>
                         <Icon name="edit-pen" size={16} className="text-icons-3" />
                         <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
                       </Link>

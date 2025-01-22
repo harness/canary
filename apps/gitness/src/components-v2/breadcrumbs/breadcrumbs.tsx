@@ -1,4 +1,4 @@
-import { useMatches } from 'react-router-dom'
+import { Link, useMatches } from 'react-router-dom'
 
 import { Breadcrumb, Topbar } from '@harnessio/ui/components'
 
@@ -13,19 +13,22 @@ function Breadcrumbs() {
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
             {matches.map((match, index) => {
-              const { breadcrumb } = (match.handle || {}) as CustomHandle
+              const { breadcrumb, asLink = true } = (match.handle || {}) as CustomHandle
+              if (!breadcrumb) return null
+
               const isFirst = index === 1
               const isLast = index === matches.length - 1
-
-              if (!breadcrumb) return null
+              const breadcrumbContent = breadcrumb(match.params)
 
               return (
                 <Breadcrumb.Item key={match.pathname}>
                   {!isFirst ? <Breadcrumb.Separator /> : null}
-                  {isLast ? (
-                    <Breadcrumb.Page>{breadcrumb(match.params)}</Breadcrumb.Page>
+                  {isLast || !asLink ? (
+                    <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
                   ) : (
-                    <Breadcrumb.Link href={match.pathname}>{breadcrumb(match.params)}</Breadcrumb.Link>
+                    <Breadcrumb.Link asChild>
+                      <Link to={match.pathname}>{breadcrumbContent}</Link>
+                    </Breadcrumb.Link>
                   )}
                 </Breadcrumb.Item>
               )

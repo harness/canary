@@ -479,6 +479,10 @@ export interface TypesCodeOwnerEvaluationEntry {
   user_group_owner_evaluations?: TypesUserGroupOwnerEvaluation[] | null
 }
 
+export interface PullRequestRoutingProps {
+  toPRCheck: ({ pipelineId, executionId }: { pipelineId: string; executionId: string }) => string
+}
+
 export interface PullRequestChangesSectionProps {
   changesInfo: { header: string; content: string; status: string }
   minApproval?: number

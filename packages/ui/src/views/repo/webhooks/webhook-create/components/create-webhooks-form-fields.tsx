@@ -15,9 +15,9 @@ import {
 import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerEnum } from '@/views'
 
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
-  <StackedList.Root borderBackground withoutBorder>
+  <StackedList.Root>
     <StackedList.Item
-      className="!rounded px-5 py-3.5"
+      className="!rounded px-5 py-3"
       disableHover
       isHeader
       actions={
@@ -102,7 +102,7 @@ export const WebhookSSLVerificationField: FC<WebhookFormFieldProps> = ({ watch, 
 
   return (
     <ControlGroup className="mt-4">
-      <Label htmlFor="insecure" className="mb-6">
+      <Label htmlFor="insecure" className="mb-6" color="secondary">
         {t('views:repos.sslVerification', 'SSL Verification')}
       </Label>
       <RadioGroup value={sslVerificationValue} onValueChange={handleAccessChange} id="insecure">
@@ -133,7 +133,7 @@ export const WebhookTriggerField: FC<WebhookFormFieldProps> = ({ watch, setValue
 
   return (
     <ControlGroup className="mt-4">
-      <Label htmlFor="trigger" className="mb-6">
+      <Label htmlFor="trigger" className="mb-6" color="secondary">
         {t('views:repos.evenTriggerLabel', 'Which events would you like to use to trigger this webhook?')}
       </Label>
       <RadioGroup value={sslVerificationValue} onValueChange={handleTriggerChange} id="trigger">

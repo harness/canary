@@ -5,18 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Dock } from '@harnessio/canary'
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Icon,
-  Input,
-  Label,
-  Spacer,
-  Text
-} from '@harnessio/ui/components'
+import { Button, Card, Icon, Input, Label, Spacer, Text } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
@@ -64,9 +53,9 @@ export function SignUpPage({ isLoading, handleSignUp, error }: PageProps) {
 
   return (
     <Floating1ColumnLayout maxWidth="md" verticalCenter>
-      <Card variant="plain" width="full">
-        <CardHeader>
-          <CardTitle className="flex flex-col place-items-center">
+      <Card.Root variant="plain" width="full">
+        <Card.Header>
+          <Card.Title className="flex flex-col place-items-center">
             <Icon name="gitness-logo" size={104} />
             <Text size={6} weight="medium" color="primary">
               Sign up to Playground
@@ -74,12 +63,12 @@ export function SignUpPage({ isLoading, handleSignUp, error }: PageProps) {
             <Spacer size={2} />
 
             <Text size={2} color="tertiaryBackground">
-              Let&apos;s start your journery with us today.
+              Let&apos;s start your journey with us today.
             </Text>
-          </CardTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Spacer size={1} />
-        <CardContent>
+        <Card.Content>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Label htmlFor="userId">User ID</Label>
             <Spacer size={1} />
@@ -164,8 +153,8 @@ export function SignUpPage({ isLoading, handleSignUp, error }: PageProps) {
               Sign in
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Dock.Root>
         <Text size={1} color="tertiaryBackground">
           By joining, you agree to{' '}

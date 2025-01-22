@@ -44,7 +44,7 @@
     },
     "muted": {
       "$type": "color",
-      "$value": "{colors.base-chrome.400}",
+      "$value": "{colors.base-chrome.500}",
       "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
     },
     "accent": {

@@ -132,7 +132,7 @@ export const BranchesList = ({
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),
-                        to: `${toPullRequestCompare?.() || ''}/${defaultBranch}...${branch.name}`
+                        to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),

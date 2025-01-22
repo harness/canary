@@ -29,7 +29,7 @@ export interface BranchProps {
 
 interface RoutingProps {
   toBranchRules: () => string
-  toPullRequestCompare: () => string
+  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 

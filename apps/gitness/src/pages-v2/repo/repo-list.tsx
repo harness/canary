@@ -15,6 +15,7 @@ import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader, SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 
 export default function ReposListPage() {
   const routes = useRoutes()

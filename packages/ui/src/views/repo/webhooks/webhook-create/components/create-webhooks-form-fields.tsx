@@ -17,7 +17,7 @@ import { TriggerEventsEnum, WebhookEvent, WebhookFormFieldProps, WebhookTriggerE
 export const WebhookToggleField: FC<WebhookFormFieldProps> = ({ register, watch, setValue, t }) => (
   <StackedList.Root>
     <StackedList.Item
-      className="!rounded px-5 py-3.5"
+      className="!rounded px-5 py-3"
       disableHover
       isHeader
       actions={

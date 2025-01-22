@@ -1,6 +1,6 @@
-import React, { FC, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 
-import { Button, Filters, FiltersBar, ListActions, NoData, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, NoData, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 

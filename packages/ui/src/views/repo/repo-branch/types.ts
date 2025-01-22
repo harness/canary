@@ -39,6 +39,7 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   repoId?: string
   defaultBranch?: string
   useTranslationStore: () => TranslationStore
+  onDeleteBranch: (branchName: string) => void
 }
 
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
@@ -52,6 +53,7 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  onDeleteBranch: (branchName: string) => void
 }
 
 interface Branch {

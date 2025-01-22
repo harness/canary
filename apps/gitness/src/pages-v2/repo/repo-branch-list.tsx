@@ -7,6 +7,7 @@ import { parseAsInteger, useQueryState } from 'nuqs'
 import {
   useCalculateCommitDivergenceMutation,
   useCreateBranchMutation,
+  useDeleteBranchMutation,
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
@@ -60,6 +61,7 @@ export function RepoBranchesListPage() {
     )
 
   const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
+  const { mutateAsync: deleteBranch } = useDeleteBranchMutation({ queryParams: {} })
 
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
@@ -70,6 +72,14 @@ export function RepoBranchesListPage() {
     })
     queryClient.invalidateQueries({ queryKey: ['listBranches'] })
     setCreateBranchDialogOpen(false)
+  }
+
+  const onDeleteBranch = async (branchName: string) => {
+    await deleteBranch({
+      repo_ref: repoRef,
+      branch_name: branchName
+    })
+    queryClient.invalidateQueries({ queryKey: ['listBranches'] })
   }
 
   useEffect(() => {
@@ -120,8 +130,12 @@ export function RepoBranchesListPage() {
       searchQuery={query}
       setSearchQuery={setQuery}
       createBranchError={createBranchError?.message}
+<<<<<<< HEAD
       toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
       toPullRequestCompare={() => routes.toPullRequestCompare({ spaceId, repoId })}
+=======
+      onDeleteBranch={onDeleteBranch}
+>>>>>>> 02e87d63e (chore: multiple bugs fixed)
     />
   )
 }

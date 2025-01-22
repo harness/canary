@@ -39,7 +39,7 @@ const ProjectMembersList: FC<ProjectMembersListProps> = ({
           )
         ]}
         primaryButton={{
-          label: t('views:noData.clearFilters', 'Clear filters'),
+          label: t('views:noData.clearSearch', 'Clear search'),
           onClick: handleResetFiltersQueryAndPages
         }}
       />

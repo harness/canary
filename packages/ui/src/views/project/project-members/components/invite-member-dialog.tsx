@@ -85,7 +85,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
     mode: 'onChange',
     defaultValues: {
       member: '',
-      role: ''
+      role: roleOptions[3].uid
     }
   })
 

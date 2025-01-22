@@ -3,8 +3,6 @@ import React, { FC, useMemo } from 'react'
 import { Button, Filters, FiltersBar, ListActions, NoData, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
-import { useFilters } from '@views/repo/hooks'
 
 import { InviteMemberDialog } from './components/invite-member-dialog'
 import ProjectMembersList from './components/project-member-list'
@@ -36,17 +34,11 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
     searchValue: searchQuery || ''
   })
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const filterHandlers = useFilters()
-
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
-  }, [page, filterHandlers.activeFilters, searchQuery])
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   const handleResetFiltersQueryAndPages = () => {
-    filterHandlers.handleResetFilters()
     handleResetSearch()
     setPage(1)
   }
@@ -91,12 +83,6 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                     />
                   </ListActions.Left>
                   <ListActions.Right>
-                    <Filters
-                      filterOptions={FILTER_OPTIONS}
-                      sortOptions={SORT_OPTIONS}
-                      filterHandlers={filterHandlers}
-                      t={t}
-                    />
                     <Button
                       variant="default"
                       onClick={() => {
@@ -107,13 +93,7 @@ export const ProjectMemberListView: FC<ProjectMemberListViewProps> = ({
                     </Button>
                   </ListActions.Right>
                 </ListActions.Root>
-                <FiltersBar
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  sortDirections={SORT_DIRECTIONS}
-                  filterHandlers={filterHandlers}
-                  t={t}
-                />
+
                 <Spacer size={4.5} />
               </>
             )}

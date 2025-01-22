@@ -20,6 +20,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   searchQuery,
   setSearchQuery,
   ...routingProps
+  onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
   const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
@@ -79,6 +80,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         branches={branchList}
         useTranslationStore={useTranslationStore}
         {...routingProps}
+        onDeleteBranch={onDeleteBranch}
       />
     )
   }

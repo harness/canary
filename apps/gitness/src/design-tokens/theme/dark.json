@@ -117,7 +117,7 @@
         "disabled": {
           "bg": {
             "$type": "color",
-            "$value": "{colors.base-chrome.900}",
+            "$value": "{colors.base-chrome.950}",
             "$description": "Background for unavailable actions.\nCommon uses: disabled buttons, unavailable actions."
           },
           "fg": {

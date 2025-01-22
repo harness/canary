@@ -850,10 +850,15 @@ export const routes: CustomRouteObject[] = [
   }
 ]
 
-export const mfeRoutes = (mfeProjectId = ''): CustomRouteObject[] => [
+export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | null = null): CustomRouteObject[] => [
   {
     path: '/',
-    element: <AppShellMFE />,
+    element: (
+      <>
+        {mfeRouteRenderer}
+        <AppShellMFE />
+      </>
+    ),
     handle: { routeName: 'toHome' },
     children: [
       {

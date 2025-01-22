@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import {
   Button,
   ButtonGroup,
-  FileAdditionsTrigger,
   Icon,
   ListActions,
   MarkdownViewer,
@@ -187,12 +186,15 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup>
-                  <FileAdditionsTrigger
-                    useTranslationStore={useTranslationStore}
-                    pathNewFile={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
-                    // TODO: set the actual file upload path
-                    pathUploadFiles={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/upload/${gitRef || selectedBranchTag?.name || ''}/~/`}
-                  />
+                  <Button variant="outline">
+                    <Link
+                      className="relative grid grid-cols-[auto_1fr] items-center gap-2.5"
+                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                    >
+                      <Icon name="plus" size={12} />
+                      <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+                    </Link>
+                  </Button>
                   <CloneRepoDialog
                     sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
                     httpsUrl={repository?.git_url ?? 'could not fetch url'}

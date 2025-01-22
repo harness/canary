@@ -142,12 +142,6 @@ export const BranchesList = ({
                         title: t('views:repos.browse', 'Browse'),
                         to: `../code/${branch.name}`
                       },
-                      // {
-                      //   isDanger: true,
-                      //   title: t('views:repos.renameBranch', 'Rename Branch'),
-                      //   // TODO: add remove fnc
-                      //   onClick: () => {}
-                      // }
                       {
                         isDanger: true,
                         title: t('views:repos.deleteBranch', 'Delete Branch'),

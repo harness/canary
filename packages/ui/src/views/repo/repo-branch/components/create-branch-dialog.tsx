@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
   Alert,
   Button,
-  ButtonGroup,
   ControlGroup,
   Dialog,
   Fieldset,
@@ -42,21 +41,25 @@ export function CreateBranchDialog({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors }
+    formState: { errors, isValid }
   } = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema),
     mode: 'onChange',
     defaultValues: {
       name: '',
-      target: defaultBranch
+      target: ''
     }
   })
 
-  const processedBranches = defaultBranch
-    ? branches?.some(branch => branch.name === defaultBranch)
-      ? branches
-      : [{ name: defaultBranch }, ...(branches || [])]
-    : branches
+  const processedBranches = useMemo(
+    () =>
+      defaultBranch
+        ? branches?.some(branch => branch.name === defaultBranch)
+          ? branches
+          : [{ name: defaultBranch }, ...(branches || [])]
+        : branches,
+    [branches, defaultBranch]
+  )
 
   const targetValue = watch('target')
 
@@ -76,73 +79,70 @@ export function CreateBranchDialog({
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
         </Dialog.Header>
-        <Dialog.Description>
-          <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-            <Fieldset>
-              <Input
-                id="name"
-                label="Branch name"
-                {...register('name')}
-                placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
-                size="md"
+        {/* ID for FormWrapper to fix accessibility issues */}
+        <FormWrapper id="radix-:ru:" onSubmit={handleSubmit(onSubmit)}>
+          <Fieldset>
+            <Input
+              id="name"
+              label="Branch name"
+              {...register('name')}
+              placeholder={t('views:forms.enterBranchName', 'Enter branch name')}
+              size="md"
+              error={
+                errors.name?.message ? t('views:forms.createBranchError', errors.name?.message?.toString()) : undefined
+              }
+            />
+          </Fieldset>
+
+          <Fieldset>
+            <ControlGroup>
+              <Select
+                name="target"
+                value={targetValue || defaultBranch}
+                onValueChange={value => handleSelectChange('target', value)}
+                placeholder={t('views:forms.select', 'Select')}
+                label={t('views:forms.baseBranch', 'Base Branch')}
                 error={
-                  errors.name?.message
-                    ? t('views:forms.createBranchError', errors.name?.message?.toString())
+                  errors.target?.message
+                    ? t('views:forms.selectBranchError', errors.target?.message?.toString())
                     : undefined
                 }
-              />
-            </Fieldset>
+                disabled={isLoadingBranches || !branches?.length}
+              >
+                <SelectContent>
+                  {processedBranches?.map(
+                    branch =>
+                      branch?.name && (
+                        <SelectItem key={branch.name} value={branch.name as string}>
+                          <span className="flex items-center gap-1.5">
+                            <Icon name="branch" size={14} />
+                            {branch.name}
+                          </span>
+                        </SelectItem>
+                      )
+                  )}
+                </SelectContent>
+              </Select>
+            </ControlGroup>
+          </Fieldset>
 
-            <Fieldset>
-              <ControlGroup>
-                <Select
-                  name="target"
-                  value={targetValue || defaultBranch}
-                  onValueChange={value => handleSelectChange('target', value)}
-                  placeholder={t('views:forms.select', 'Select')}
-                  label={t('views:forms.baseBranch', 'Base Branch')}
-                  error={
-                    errors.target?.message
-                      ? t('views:forms.selectBranchError', errors.target?.message?.toString())
-                      : undefined
-                  }
-                  disabled={isLoadingBranches || !branches?.length}
-                >
-                  <SelectContent>
-                    {processedBranches?.map(
-                      branch =>
-                        branch?.name && (
-                          <SelectItem key={branch?.name} value={branch?.name as string}>
-                            <span className="flex items-center gap-1.5">
-                              <Icon name="branch" size={14} />
-                              {branch?.name}
-                            </span>
-                          </SelectItem>
-                        )
-                    )}
-                  </SelectContent>
-                </Select>
-              </ControlGroup>
-            </Fieldset>
+          {error ? (
+            <Alert.Container variant="destructive">
+              <Alert.Title>
+                {t('views:repos.error', 'Error:')} {error}
+              </Alert.Title>
+            </Alert.Container>
+          ) : null}
 
-            {error ? (
-              <Alert.Container variant="destructive">
-                <Alert.Title>
-                  {t('views:repos.error', 'Error:')} {error}
-                </Alert.Title>
-              </Alert.Container>
-            ) : null}
-
-            <Dialog.Footer className="-mx-5 -mb-5">
-              <ButtonGroup className="flex justify-end">
-                <Button variant="outline" onClick={onClose} loading={isCreatingBranch}>
-                  {t('views:repos.cancel', 'Cancel')}
-                </Button>
-                <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>
-              </ButtonGroup>
-            </Dialog.Footer>
-          </FormWrapper>
-        </Dialog.Description>
+          <Dialog.Footer className="-mx-5 -mb-5">
+            <Button variant="outline" onClick={onClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+              {t('views:repos.cancel', 'Cancel')}
+            </Button>
+            <Button type="submit" disabled={isCreatingBranch || !isValid}>
+              {t('views:repos.createBranch', 'Create Branch')}
+            </Button>
+          </Dialog.Footer>
+        </FormWrapper>
       </Dialog.Content>
     </Dialog.Root>
   )

@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
@@ -26,54 +27,60 @@ import { getChecksState, getPrState } from '@views/repo/pull-request/utils'
 import { BranchListPageProps } from '../types'
 import { DivergenceGauge } from './divergence-gauge'
 
-export const BranchesList = ({
+export const BranchesList: FC<BranchListPageProps> = ({
   isLoading,
   branches,
   defaultBranch,
   useTranslationStore,
-  searchQuery,
+  isDirtyList,
   setCreateBranchDialogOpen,
   handleResetFiltersAndPages,
   toBranchRules,
   toPullRequestCompare,
-  toCommitDetails,
+  toPullRequest,
   onDeleteBranch
-}: BranchListPageProps) => {
+}) => {
   const { t } = useTranslationStore()
 
   if (!branches?.length && !isLoading) {
-    if (searchQuery) {
-      return (
-        <NoData
-          className="rounded-md border border-borders-4 pb-[157px] pt-[100px]"
-          iconName="no-search-magnifying-glass"
-          title={t('views:noData.noResults', 'No search results')}
-          description={[
-            t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
-            t('views:noData.changeSearch', 'or search for a different keyword.')
-          ]}
-          primaryButton={{
-            label: t('views:noData.clearSearch', 'Clear search'),
-            onClick: handleResetFiltersAndPages
-          }}
-        />
-      )
-    }
-
     return (
       <NoData
-        iconName="no-data-branches"
-        title={t('views:noData.noBranches', 'No branches yet')}
-        description={[
-          t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
-          t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
-        ]}
-        primaryButton={{
-          label: t('views:noData.createBranch', 'Create new branch'),
-          onClick: () => {
-            setCreateBranchDialogOpen(true)
-          }
-        }}
+        iconName={isDirtyList ? 'no-search-magnifying-glass' : 'no-data-branches'}
+        withBorder={isDirtyList}
+        title={
+          isDirtyList
+            ? t('views:noData.noResults', 'No search results')
+            : t('views:noData.noBranches', 'No branches yet')
+        }
+        description={
+          isDirtyList
+            ? [
+                t(
+                  'views:noData.noResultsDescription',
+                  'No branches match your search. Try adjusting your keywords or filters.',
+                  {
+                    type: 'branches'
+                  }
+                )
+              ]
+            : [
+                t('views:noData.createBranchDescription', "Your branches will appear here once they're created."),
+                t('views:noData.startBranchDescription', 'Start branching to see your work organized.')
+              ]
+        }
+        primaryButton={
+          isDirtyList
+            ? {
+                label: t('views:noData.clearSearch', 'Clear search'),
+                onClick: handleResetFiltersAndPages
+              }
+            : {
+                label: t('views:noData.createBranch', 'Create new branch'),
+                onClick: () => {
+                  setCreateBranchDialogOpen(true)
+                }
+              }
+        }
       />
     )
   }
@@ -114,16 +121,12 @@ export const BranchesList = ({
                   {/* branch name */}
                   <TableCell className="content-center">
                     <div className="flex h-6 items-center">
-                      <Button
-                        className="inline-block max-w-80 truncate bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
-                        variant="custom"
-                        size="xs"
-                      >
+                      <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-background-8 px-2.5 text-14 text-foreground-8">
                         {defaultBranch === branch?.name && (
                           <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
                         )}
                         {branch?.name}
-                      </Button>
+                      </div>
                       <CopyButton color="gray" name={branch?.name} />
                     </div>
                   </TableCell>
@@ -139,7 +142,6 @@ export const BranchesList = ({
                       <span className="truncate text-foreground-1">{branch?.timestamp}</span>
                     </div>
                   </TableCell>
-                  {/* TODO: update pending icon */}
                   {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
                   <TableCell className="content-center">
                     {branch?.checks && (
@@ -187,16 +189,16 @@ export const BranchesList = ({
                     </div>
                   </TableCell>
 
-                  {/* change commit data instead: SHA */}
+                  {/* PR link */}
                   <TableCell className="max-w-20 content-center">
-                    {branch.pullRequests && branch.pullRequests.length > 0 && (
+                    {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                       <Button
                         className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
                         variant="custom"
                         size="xs"
                         asChild
                       >
-                        <Link to={`/${spaceId}/repos/${repoId}/pulls/${branch.pullRequests[0].number}`}>
+                        <Link to={toPullRequest({ pullRequestId: branch.pullRequests[0].number })}>
                           <Icon
                             name={
                               getPrState(
@@ -205,7 +207,7 @@ export const BranchesList = ({
                                 branch.pullRequests[0].state
                               ).icon
                             }
-                            size={11}
+                            size={14}
                             className={cn({
                               'text-icons-success':
                                 branch.pullRequests[0].state === 'open' && !branch.pullRequests[0].is_draft,
@@ -220,38 +222,22 @@ export const BranchesList = ({
                       </Button>
                     )}
                   </TableCell>
-                  {/* <TableCell className="content-center">
-                    <div className="flex justify-end">
-                      <MoreActionsTooltip
-                        branchInfo={branch}
-                        spaceId={spaceId}
-                        repoId={repoId}
-                        defaultBranch={defaultBranch}
-                        useTranslationStore={useTranslationStore}
-                      />
-                    </div>
-                  </TableCell> */}
                   <TableCell className="text-right">
                     <MoreActionsTooltip
+                      isInTable
                       actions={[
                         {
                           title: t('views:repos.newPullReq', 'New pull request'),
-                          to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranch}...${branch.name}`
+                          to: toPullRequestCompare({ diffRefs: `${defaultBranch}...${branch.name}` })
                         },
                         {
                           title: t('views:repos.viewRules', 'View Rules'),
-                          to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/settings/rules`
-                        },
-                        {
-                          title: t('views:repos.renameBranch', 'Rename Branch'),
-                          // TODO: add rename fnc or path
-                          onClick: () => {}
+                          to: toBranchRules()
                         },
                         {
                           isDanger: true,
                           title: t('views:repos.deleteBranch', 'Delete Branch'),
-                          // TODO: add remove fnc
-                          onClick: () => {}
+                          onClick: () => onDeleteBranch(branch.name)
                         }
                       ]}
                     />

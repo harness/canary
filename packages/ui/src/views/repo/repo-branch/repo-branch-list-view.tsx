@@ -1,12 +1,12 @@
-import { ChangeEvent, FC, useCallback, useState } from 'react'
+import { FC, useMemo } from 'react'
 
 import { Button, ListActions, PaginationComponent, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
+import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
 import { useFilters } from '@views/repo/hooks'
-import { debounce } from 'lodash-es'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
@@ -22,23 +22,19 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   createBranchError,
   isCreatingBranch,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  toPullRequest,
+  toBranchRules,
+  toPullRequestCompare,
+  onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
-  const { repoId, spaceId, branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
-  const [searchInput, setSearchInput] = useState(searchQuery)
+  const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
 
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 500)
-
-  const handleInputChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setSearchInput(e.target.value)
-      debouncedSetSearchQuery(e.target.value)
-    },
-    [debouncedSetSearchQuery]
-  )
+  const { search, handleSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setSearchQuery,
+    searchValue: searchQuery || ''
+  })
 
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
@@ -47,16 +43,19 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
-    setSearchInput('')
     setSearchQuery(null)
     filterHandlers.handleResetFilters()
   }
+
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
+  }, [page, filterHandlers.activeFilters, searchQuery])
 
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
       <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
         <Spacer size={2} />
-        {(isLoading || !!branchList.length || searchQuery) && (
+        {(isLoading || !!branchList.length || isDirtyList) && (
           <>
             <span className="text-24 font-medium">{t('views:repos.branches', 'Branches')}</span>
             <Spacer size={6} />
@@ -65,8 +64,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 <SearchBox.Root
                   width="full"
                   className="max-w-80"
-                  value={searchInput || ''}
-                  handleChange={handleInputChange}
+                  value={search || ''}
+                  handleChange={handleSearchChange}
                   placeholder={t('views:repos.search')}
                 />
               </ListActions.Left>
@@ -102,13 +101,15 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         <BranchesList
           isLoading={isLoading}
           defaultBranch={defaultBranch}
-          repoId={repoId}
-          spaceId={spaceId}
           branches={branchList}
           useTranslationStore={useTranslationStore}
-          searchQuery={searchQuery}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           handleResetFiltersAndPages={handleResetFiltersAndPages}
+          toPullRequest={toPullRequest}
+          toBranchRules={toBranchRules}
+          toPullRequestCompare={toPullRequestCompare}
+          onDeleteBranch={onDeleteBranch}
+          isDirtyList={isDirtyList}
         />
         {!isLoading && (
           <PaginationComponent

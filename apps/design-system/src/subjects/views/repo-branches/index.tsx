@@ -22,6 +22,10 @@ export function RepoBranchesView() {
       searchQuery={''}
       setSearchQuery={noop}
       createBranchError={undefined}
+      toPullRequest={() => ''}
+      toBranchRules={() => ''}
+      toPullRequestCompare={() => ''}
+      onDeleteBranch={noop}
     />
   )
 }

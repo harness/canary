@@ -151,6 +151,7 @@
     "creatingWebhook": "Creating webhook...",
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
+    "renameBranch": "Renommer la branche",
     "commit": "Commit",
     "renameBranch": "Renommer la branche",
     "add": "Ajouter",

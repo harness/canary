@@ -37,21 +37,22 @@ export interface BranchProps {
 
 interface RoutingProps {
   toBranchRules: () => string
-  toPullRequestCompare: () => string
+  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export interface BranchListPageProps extends Partial<RoutingProps> {
   isLoading: boolean
   branches: BranchProps[]
-  spaceId?: string
-  repoId?: string
   defaultBranch?: string
   useTranslationStore: () => TranslationStore
-  searchQuery?: string | null
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   handleResetFiltersAndPages: () => void
+  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
+  toBranchRules: () => string
+  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   onDeleteBranch: (branchName: string) => void
+  isDirtyList: boolean
 }
 
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
@@ -65,6 +66,9 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
+  toBranchRules: () => string
+  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   onDeleteBranch: (branchName: string) => void
 }
 

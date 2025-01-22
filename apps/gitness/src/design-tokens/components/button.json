@@ -14,7 +14,6 @@
     "default-icon": {
       "$type": "composition",
       "$value": {
-        "typography": "{typography.body.emphasized}",
         "borderRadius": "{radii.xs}",
         "sizing": "{sizing.5}"
       }

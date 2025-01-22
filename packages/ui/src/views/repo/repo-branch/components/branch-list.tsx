@@ -27,7 +27,7 @@ export const BranchesList = ({
   useTranslationStore,
   toBranchRules,
   toPullRequestCompare,
-  toCommitDetails
+  toCommitDetails,
   onDeleteBranch
 }: BranchListPageProps) => {
   const { t } = useTranslationStore()

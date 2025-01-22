@@ -8,6 +8,8 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
+import PipelineGraphWrapper from '@subjects/views/pipeline-graph/pipeline-graph'
+import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline-graph-minimal'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestChanges from '@subjects/views/pull-request-conversation/pull-request-changes'
@@ -130,6 +132,16 @@ export const viewPreviews: Record<string, ReactNode> = {
   'pipeline-list': (
     <RepoViewWrapper>
       <PipelineListWrapper />
+    </RepoViewWrapper>
+  ),
+  'pipeline-graph': (
+    <RepoViewWrapper>
+      <PipelineGraphWrapper />
+    </RepoViewWrapper>
+  ),
+  'pipeline-graph-minimal': (
+    <RepoViewWrapper>
+      <PipelineGraphMinimalWrapper />
     </RepoViewWrapper>
   ),
   'execution-list': (

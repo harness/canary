@@ -17,7 +17,8 @@ export function getPortsConnectionPath(
     serial?: {
       position: 'left' | 'right'
     }
-  }
+  },
+  edgeClassName?: string
 ) {
   const { source, target, parallel, serial } = connection
 
@@ -31,15 +32,16 @@ export function getPortsConnectionPath(
 
   const pipelineGraphRootBB = pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
 
-  const pathHtml = getPath(
-    `${source}-${target}`,
-    fromElBB.left - pipelineGraphRootBB.left,
-    fromElBB.top - pipelineGraphRootBB.top,
-    toElBB.left - pipelineGraphRootBB.left,
-    toElBB.top - pipelineGraphRootBB.top,
+  const pathHtml = getPath({
+    id: `${source}-${target}`,
+    startX: fromElBB.left - pipelineGraphRootBB.left,
+    startY: fromElBB.top - pipelineGraphRootBB.top,
+    endX: toElBB.left - pipelineGraphRootBB.left,
+    endY: toElBB.top - pipelineGraphRootBB.top,
     parallel,
-    serial
-  )
+    serial,
+    edgeClassName
+  })
 
   return pathHtml
 }
@@ -76,19 +78,29 @@ function getVArcConfig(direction: 'down' | 'up') {
   }
 }
 
-function getPath(
-  id: string,
-  startX: number,
-  startY: number,
-  endX: number,
-  endY: number,
+function getPath({
+  id,
+  startX,
+  startY,
+  endX,
+  endY,
+  parallel,
+  serial,
+  edgeClassName
+}: {
+  id: string
+  startX: number
+  startY: number
+  endX: number
+  endY: number
   parallel?: {
     position: 'left' | 'right'
-  },
+  }
   serial?: {
     position: 'left' | 'right'
   }
-) {
+  edgeClassName?: string
+}) {
   const correction = 3
 
   let path = ''
@@ -136,6 +148,8 @@ function getPath(
       (endX + correction)
   }
 
-  // TODO: line style (color)
-  return `<path d="${path}" id="${id}" fill="none" stroke="#5D5B65" />`
+  // NOTE: if edgeClassName is not provided use hardcoded color
+  const pathStyle = edgeClassName ? ` class="${edgeClassName}"` : ` stroke="#5D5B65"`
+
+  return `<path d="${path}" id="${id}" fill="none" ${pathStyle}/>`
 }

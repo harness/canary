@@ -169,7 +169,7 @@
         "disabled": {
           "bg": {
             "$type": "color",
-            "$value": "{colors.base-chrome.900}",
+            "$value": "{colors.base-chrome.950}",
             "$description": "Background for disabled secondary actions.\nCommon uses: inactive secondary buttons, disabled alternatives."
           },
           "fg": {

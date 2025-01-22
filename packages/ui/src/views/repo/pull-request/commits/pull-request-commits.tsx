@@ -8,6 +8,7 @@ import { IPullRequestCommitsStore } from './pull-request-commits.types'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
 }
 interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
@@ -17,7 +18,8 @@ interface RepoPullRequestCommitsViewProps extends Partial<RoutingProps> {
 const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   useTranslationStore,
   usePullRequestCommitsStore,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
   const { commitsList, xNextPage, xPrevPage, page, setPage } = usePullRequestCommitsStore()
   const { t } = useTranslationStore()
@@ -34,6 +36,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
 
       {commitsList?.length && (
         <CommitsList
+          toCode={toCode}
           toCommitDetails={toCommitDetails}
           data={commitsList.map((item: TypesCommit) => ({
             sha: item.sha,

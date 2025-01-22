@@ -54,6 +54,7 @@ export function PullRequestCommitPage() {
 
   return (
     <PullRequestCommitsView
+      toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
       toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
       usePullRequestCommitsStore={usePullRequestCommitsStore}
       useTranslationStore={useTranslationStore}

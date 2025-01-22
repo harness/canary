@@ -9,12 +9,13 @@ type CommitsGroupedByDate = Record<string, TypesCommit[]>
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
 }
 interface CommitProps extends Partial<RoutingProps> {
   data?: TypesCommit[]
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails }) => {
+export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) => {
   const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -43,11 +44,22 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails }) => {
                   const authorName = commit.author?.identity?.name
 
                   return (
-                    <Link key={commit?.sha} to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}>
-                      <StackedList.Item
-                        className="!cursor-default items-start py-3"
-                        key={commit?.sha || repo_idx}
-                        isLast={commitData.length - 1 === repo_idx}
+                    <StackedList.Item
+                      // onClick={e => {
+                      //   // navigate(toCommitDetails?.({ sha: commit?.sha || '' }) || '')
+                      //   e.stopPropagation()
+                      // }}
+                      className="!cursor-default items-start py-3"
+                      key={commit?.sha || repo_idx}
+                      isLast={commitData.length - 1 === repo_idx}
+                    >
+                      <Link
+                        className="w-[85%]"
+                        onClick={e => {
+                          e.stopPropagation()
+                        }}
+                        key={commit?.sha}
+                        to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                       >
                         <StackedList.Field
                           title={
@@ -74,31 +86,31 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails }) => {
                             </div>
                           }
                         />
-                        {!!commit?.sha && (
-                          <StackedList.Field
-                            title={
-                              <Layout.Horizontal>
-                                <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
-                                <div title="View repository at this point of history">
-                                  <Button
-                                    variant="outline"
-                                    size="sm_icon"
-                                    onClick={() => {
-                                      navigate(toCommitDetails?.({ sha: commit?.sha || '' }) || '')
-                                    }}
-                                  >
-                                    <>{'<>'}</>
-                                  </Button>
-                                </div>
-                              </Layout.Horizontal>
-                            }
-                            right
-                            label
-                            secondary
-                          />
-                        )}
-                      </StackedList.Item>
-                    </Link>
+                      </Link>
+                      {!!commit?.sha && (
+                        <StackedList.Field
+                          title={
+                            <Layout.Horizontal>
+                              <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
+                              <div title="View repository at this point of history">
+                                <Button
+                                  variant="outline"
+                                  size="sm_icon"
+                                  onClick={() => {
+                                    navigate(toCode?.({ sha: commit?.sha || '' }) || '')
+                                  }}
+                                >
+                                  <>{'<>'}</>
+                                </Button>
+                              </div>
+                            </Layout.Horizontal>
+                          }
+                          right
+                          label
+                          secondary
+                        />
+                      )}
+                    </StackedList.Item>
                   )
                 })}
               </StackedList.Root>

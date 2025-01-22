@@ -28,6 +28,7 @@ export interface RepoCommitsViewProps {
   searchQuery: string
   setSearchQuery: (query: string) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
 }
 
 export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
@@ -42,7 +43,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   useRepoBranchesStore,
   searchQuery,
   setSearchQuery,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
   const { t } = useTranslationStore()
 
@@ -125,7 +127,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
               />
             ) : (
               <>
-                <CommitsList data={commitsList} toCommitDetails={toCommitDetails} />
+                <CommitsList data={commitsList} toCode={toCode} toCommitDetails={toCommitDetails} />
                 <PaginationComponent
                   className="pl-[26px]"
                   nextPage={xNextPage}

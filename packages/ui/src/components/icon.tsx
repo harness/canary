@@ -42,6 +42,7 @@ import Clone from '../icons/clone.svg'
 import Close from '../icons/close.svg'
 import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../icons/cloud-costs-icon.svg'
+import CodeBrackets from '../icons/code-brackets.svg'
 import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
@@ -176,8 +177,6 @@ import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
 import Webhook from '../icons/webhook-icon.svg'
 import Wrench from '../icons/wrench-icon.svg'
 import XMark from '../icons/x-mark.svg'
-
-// import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
   'chevron-down': ChevronDown,
@@ -355,7 +354,8 @@ const IconNameMap = {
   compare: Compare,
   'collapse-diff': CollapseDiff,
   'expand-diff': ExpandDiff,
-  'circle-plus': CirclePlus
+  'circle-plus': CirclePlus,
+  'code-brackets': CodeBrackets
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

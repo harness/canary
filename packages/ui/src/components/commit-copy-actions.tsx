@@ -25,24 +25,22 @@ export const CommitCopyActions = ({
     }
   }, [copied, sha])
 
+  const handleNavigation = () => {
+    navigate(toCommitDetails?.({ sha: sha || '' }) || '')
+  }
+
   return (
     <ShaBadge.Root>
-      <ShaBadge.Content className="hover:bg-transparent">
-        <span
-          role="button"
-          tabIndex={0}
-          onClick={() => {
-            navigate(toCommitDetails?.({ sha: sha || '' }) || '')
-          }}
+      <ShaBadge.Content className="p-0" asChild>
+        <button
+          className="size-full px-2.5 text-13 text-foreground-3"
+          onClick={() => handleNavigation()}
           onKeyDown={e => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              navigate(toCommitDetails?.({ sha: sha || '' }) || '')
-            }
+            if (e.key === 'Enter' || e.key === ' ') handleNavigation()
           }}
-          className="text-13 text-foreground-3"
         >
           {sha.substring(0, 7)}
-        </span>
+        </button>
       </ShaBadge.Content>
       <ShaBadge.Icon
         handleClick={() => {

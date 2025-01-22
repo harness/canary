@@ -1,7 +1,7 @@
 import { FC, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Button, CommitCopyActions, Layout, NodeGroup, StackedList } from '@/components'
+import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
@@ -49,57 +49,50 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) 
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <Link
-                        className="w-[85%]"
-                        onClick={e => {
-                          e.stopPropagation()
-                        }}
-                        key={commit?.sha}
-                        to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                      >
-                        <StackedList.Field
-                          title={
-                            <div className="flex flex-col gap-y-1.5">
-                              {toCommitDetails ? (
+                      <StackedList.Field
+                        title={
+                          <div className="flex flex-col gap-y-1.5">
+                            {toCommitDetails ? (
+                              <p>
                                 <Link
-                                  className="truncate text-16 font-medium leading-snug"
+                                  className="text-16 font-medium leading-snug hover:underline"
                                   to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
                                 >
-                                  {commit.title}
+                                  <span className="truncate">{commit.title}</span>
                                 </Link>
-                              ) : (
-                                <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                              </p>
+                            ) : (
+                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                            )}
+                            <div className="flex items-center gap-x-1.5">
+                              {authorName && (
+                                <Avatar className="size-[18px]">
+                                  <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
+                                </Avatar>
                               )}
-                              <div className="flex items-center gap-x-1.5">
-                                {authorName && (
-                                  <Avatar className="size-[18px]">
-                                    <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
-                                  </Avatar>
-                                )}
-                                <span className="text-foreground-3">{authorName || ''}</span>
-                                <span className="text-foreground-4">committed on {date}</span>
-                              </div>
+                              <span className="text-foreground-3">{authorName || ''}</span>
+                              <span className="text-foreground-4">committed on {date}</span>
                             </div>
-                          }
-                        />
-                      </Link>
+                          </div>
+                        }
+                      />
                       {!!commit?.sha && (
                         <StackedList.Field
                           title={
-                            <Layout.Horizontal>
+                            <div className="flex gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
-                              <div title="View repository at this point of history">
-                                <Button
-                                  variant="outline"
-                                  size="sm_icon"
-                                  onClick={() => {
-                                    navigate(toCode?.({ sha: commit?.sha || '' }) || '')
-                                  }}
-                                >
-                                  <>{'<>'}</>
-                                </Button>
-                              </div>
-                            </Layout.Horizontal>
+                              <Button
+                                className="border hover:bg-background-3"
+                                title="View repository at this point of history"
+                                variant="custom"
+                                size="sm_icon"
+                                onClick={() => {
+                                  navigate(toCode?.({ sha: commit?.sha || '' }) || '')
+                                }}
+                              >
+                                <Icon name="code-brackets" className="text-icons-3" />
+                              </Button>
+                            </div>
                           }
                           right
                           label

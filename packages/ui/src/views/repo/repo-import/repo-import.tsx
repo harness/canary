@@ -21,16 +21,27 @@ import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
-const formSchema = z.object({
-  identifier: z.string(),
-  description: z.string(),
-  pipelines: z.boolean().optional(),
-  authorization: z.boolean().optional(),
-  provider: z.string().min(1, { message: 'Please select a provider' }),
-  password: z.string().optional(),
-  organization: z.string().min(1, { message: 'Please enter an organization' }),
-  repository: z.string().min(1, { message: 'Please enter a repository' })
-})
+const formSchema = z
+  .object({
+    identifier: z.string(),
+    hostUrl: z.string().optional(),
+    description: z.string(),
+    pipelines: z.boolean().optional(),
+    authorization: z.boolean().optional(),
+    provider: z.string().min(1, { message: 'Please select a provider' }),
+    password: z.string().optional(),
+    organization: z.string().min(1, { message: 'Please enter an organization' }),
+    repository: z.string().min(1, { message: 'Please enter a repository' })
+  })
+  .superRefine((data, ctx) => {
+    if (data.provider === 'Github Enterprise' && !data.hostUrl) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['hostUrl'],
+        message: 'Repository URL is required'
+      })
+    }
+  })
 
 export type ImportRepoFormFields = z.infer<typeof formSchema>
 
@@ -42,14 +53,14 @@ interface RepoImportPageProps {
 
 const providerOptions = [
   `Github`,
-  `Gitlab`,
-  `Bitbucket`,
-  `Azure DevOps`,
   `Github Enterprise`,
+  `Gitlab`,
   `Gitlab Self-Hosted`,
+  `Bitbucket`,
   `Bitbucket Server`,
   `Gitea`,
-  `Gogs`
+  `Gogs`,
+  `Azure DevOps`
 ]
 
 export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoImportPageProps) {
@@ -58,7 +69,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<ImportRepoFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -116,7 +127,11 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
                   {providerOptions &&
                     providerOptions?.map(option => {
                       return (
-                        <SelectItem key={option} value={option}>
+                        <SelectItem
+                          key={option}
+                          value={option}
+                          disabled={option !== 'Github' && option !== `Github Enterprise`}
+                        >
                           {option}
                         </SelectItem>
                       )
@@ -125,6 +140,19 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
               </Select>
             </ControlGroup>
           </Fieldset>
+
+          {watch('provider') === 'Github Enterprise' && (
+            <Fieldset className="mt-4">
+              <Input
+                id="host"
+                label="Host URL"
+                {...register('hostUrl')}
+                placeholder="Enter the host URL"
+                size="md"
+                error={errors.hostUrl?.message?.toString()}
+              />
+            </Fieldset>
+          )}
 
           {/* organization */}
           <Fieldset className="mt-4">
@@ -233,7 +261,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading }: RepoIm
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}
-                <Button type="submit" disabled={!isValid || isLoading}>
+                <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import repository' : 'Importing repository...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>

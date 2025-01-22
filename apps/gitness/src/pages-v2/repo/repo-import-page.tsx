@@ -20,13 +20,14 @@ export const ImportRepo = () => {
   const importRepoMutation = useImportRepositoryMutation({})
 
   const onSubmit = async (data: ImportRepoFormFields) => {
+    console.log(data)
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,
       parent_ref: spaceURL,
       pipelines: data.pipelines === true ? 'convert' : 'ignore',
       provider: {
-        host: '',
+        host: data.hostUrl ?? '',
         password: data.password,
         type: 'github',
         username: ''

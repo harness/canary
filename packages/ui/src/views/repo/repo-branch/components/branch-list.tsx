@@ -66,11 +66,11 @@ export const BranchesList = ({
                 {/* branch name */}
                 <TableCell className="content-center">
                   <div className="flex items-center gap-1.5">
-                    <Text wrap="nowrap" truncate className="text-primary/90">
-                      <Button variant="secondary" size="xs">
+                    <Button variant="secondary" size="xs">
+                      <Text wrap="nowrap" truncate className="text-primary/90 max-w-[500px]">
                         {branch?.name}
-                      </Button>
-                    </Text>
+                      </Text>
+                    </Button>
                     <CopyButton name={branch?.name} />
                   </div>
                 </TableCell>

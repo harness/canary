@@ -5,8 +5,7 @@
     "selectedTokenSets": {
       "primitives/colors": "enabled",
       "primitives/multiplier": "enabled",
-      "typography/settings": "enabled",
-      "components/base": "disabled"
+      "typography/settings": "enabled"
     },
     "$figmaStyleReferences": {},
     "$figmaVariableReferences": {
@@ -193,8 +192,7 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "theme/dark": "enabled",
-      "components/base": "disabled"
+      "theme/dark": "enabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -407,8 +405,7 @@
       "typography.code.base": "S:decdbca6fcc957490a096ce04a89d958275e2a8a,"
     },
     "selectedTokenSets": {
-      "breakpoint/desktop": "enabled",
-      "components/base": "disabled"
+      "breakpoint/desktop": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -493,8 +490,7 @@
       "typography.article.content.emphasized": "S:39e9c3b9f59660cf56eb099f8694e6c1bff885f9,"
     },
     "selectedTokenSets": {
-      "breakpoint/wide": "enabled",
-      "components/base": "disabled"
+      "breakpoint/wide": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:8",
@@ -577,8 +573,7 @@
       "typography.article.content.emphasized": "S:39e9c3b9f59660cf56eb099f8694e6c1bff885f9,"
     },
     "selectedTokenSets": {
-      "breakpoint/tablet": "enabled",
-      "components/base": "disabled"
+      "breakpoint/tablet": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:9",
@@ -663,8 +658,7 @@
       "typography.article.content.emphasized": "S:39e9c3b9f59660cf56eb099f8694e6c1bff885f9,"
     },
     "selectedTokenSets": {
-      "breakpoint/mobile": "enabled",
-      "components/base": "disabled"
+      "breakpoint/mobile": "enabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:10",
@@ -730,8 +724,7 @@
     "name": "light",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "theme/light": "enabled",
-      "components/base": "disabled"
+      "theme/light": "enabled"
     },
     "group": "theme",
     "$figmaCollectionId": "VariableCollectionId:426:491162",

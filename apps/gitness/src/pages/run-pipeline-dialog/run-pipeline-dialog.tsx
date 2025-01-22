@@ -19,17 +19,7 @@ import {
   RootForm,
   useZodValidationResolver
 } from '@harnessio/forms'
-import {
-  Alert,
-  Button,
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Spacer
-} from '@harnessio/ui/components'
+import { Alert, Button, Dialog, Spacer } from '@harnessio/ui/components'
 import { inputComponentFactory, InputType } from '@harnessio/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -180,30 +170,30 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
       validateAfterFirstSubmit={true}
     >
       {rootForm => (
-        <Dialog
+        <Dialog.Root
           open={open}
           onOpenChange={open => {
             if (!open) onClose()
           }}
         >
-          <DialogContent className="max-w-[500px] border-border bg-primary-background">
-            <DialogHeader>
-              <DialogTitle>Run Pipeline</DialogTitle>
-            </DialogHeader>
-            <DialogDescription>
+          <Dialog.Content className="max-w-[500px] border-border bg-primary-background">
+            <Dialog.Header>
+              <Dialog.Title>Run Pipeline</Dialog.Title>
+            </Dialog.Header>
+            <Dialog.Description>
               <Spacer size={6} />
               <RenderForm className="space-y-4" factory={inputComponentFactory} inputs={formDefinition} />
-            </DialogDescription>
-            <DialogFooter>
+            </Dialog.Description>
+            <Dialog.Footer>
               <Button onClick={onClose} className="text-primary" variant="outline">
                 Cancel
               </Button>
               <Button loading={isLoadingCreateExecution} onClick={() => rootForm.submitForm()}>
                 Run pipeline
               </Button>
-            </DialogFooter>
-          </DialogContent>
-        </Dialog>
+            </Dialog.Footer>
+          </Dialog.Content>
+        </Dialog.Root>
       )}
     </RootForm>
   )

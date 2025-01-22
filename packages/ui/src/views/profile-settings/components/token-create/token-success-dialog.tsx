@@ -1,4 +1,6 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components'
+import { FC } from 'react'
+
+import { Dialog } from '@/components'
 import { IProfileSettingsStore } from '@views/profile-settings/types'
 import { TranslationStore } from '@views/repo'
 
@@ -11,7 +13,7 @@ interface TokenCreateDialogProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const TokenSuccessDialog: React.FC<TokenCreateDialogProps> = ({
+export const TokenSuccessDialog: FC<TokenCreateDialogProps> = ({
   open,
   onClose,
   useProfileSettingsStore,
@@ -20,17 +22,17 @@ export const TokenSuccessDialog: React.FC<TokenCreateDialogProps> = ({
   const { createdTokenData } = useProfileSettingsStore()
   const { t } = useTranslationStore()
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-left">{t('views:profileSettings.createToken', 'Create a token')}</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title className="text-left">{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
+        </Dialog.Header>
         <TokenSuccessForm
           defaultValues={createdTokenData}
           onClose={onClose}
           useTranslationStore={useTranslationStore}
         />
-      </DialogContent>
-    </Dialog>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

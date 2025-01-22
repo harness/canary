@@ -5,10 +5,6 @@ import {
   Button,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   FormWrapper,
   Input,
   Message,
@@ -86,18 +82,18 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
   }
 
   return (
-    <Dialog
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         onClose()
         reset()
       }}
     >
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>Create Pipeline</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title>Create Pipeline</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Input
               id="name"
@@ -151,8 +147,8 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               </Button>
             </div>
           </FormWrapper>
-        </DialogDescription>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Description>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

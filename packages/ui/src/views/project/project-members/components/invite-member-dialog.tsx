@@ -9,10 +9,6 @@ import {
   Button,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Fieldset,
   FormWrapper,
   Select,
@@ -119,11 +115,11 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
   }, [open, reset])
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[420px]">
-        <DialogHeader>
-          <DialogTitle>{t('views:projectSettings.newMember', 'New member')}</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[420px]">
+        <Dialog.Header>
+          <Dialog.Title>{t('views:projectSettings.newMember', 'New member')}</Dialog.Title>
+        </Dialog.Header>
         <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
@@ -189,15 +185,15 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
           )}
         </FormWrapper>
 
-        <DialogFooter>
+        <Dialog.Footer>
           <Button type="button" variant="outline" onClick={onClose} loading={isInvitingMember}>
             {t('views:repos.cancel', 'Cancel')}
           </Button>
           <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isInvitingMember || !isValid}>
             {t('views:projectSettings.addMember', 'Add member to this project')}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -2,17 +2,7 @@ import { FC } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  ButtonGroup,
-  CopyButton,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input
-} from '@/components'
+import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
 import { TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -51,11 +41,11 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
     defaultValues: tokenData
   })
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-xl">
-        <DialogHeader>
-          <DialogTitle>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-xl">
+        <Dialog.Header>
+          <Dialog.Title>{t('views:repos.cloneCredential', 'Generate Clone Credential')}</Dialog.Title>
+        </Dialog.Header>
         <div className="flex flex-col gap-y-7">
           {/* NAME */}
 
@@ -93,7 +83,7 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
 
           <span>{t('views:repos.cloneCredGenerated')}</span>
         </div>
-        <DialogFooter>
+        <Dialog.Footer>
           <ButtonGroup>
             <>
               <Button variant="outline" onClick={onClose}>
@@ -104,8 +94,8 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
               </Button>
             </>
           </ButtonGroup>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

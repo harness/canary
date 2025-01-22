@@ -5,13 +5,11 @@ import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 
-const Dialog = DialogPrimitive.Root
+const DialogRoot = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
-
-const DialogClose = DialogPrimitive.Close
 
 interface DialogOverlayProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
   onClick?: () => void
@@ -116,15 +114,14 @@ const DialogDescription = React.forwardRef<
 ))
 DialogDescription.displayName = DialogPrimitive.Description.displayName
 
-export {
-  Dialog,
-  DialogPortal,
-  DialogOverlay,
-  DialogTrigger,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription
+const Dialog = {
+  Root: DialogRoot,
+  Trigger: DialogTrigger,
+  Content: DialogContent,
+  Header: DialogHeader,
+  Footer: DialogFooter,
+  Title: DialogTitle,
+  Description: DialogDescription
 }
+
+export { Dialog }

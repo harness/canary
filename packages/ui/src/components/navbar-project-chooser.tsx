@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
+import { FormEvent, ReactNode, useState } from 'react'
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from './dialog'
+import { Dialog } from './dialog'
 import { Root as SearchBox } from './search-box'
 import { Spacer } from './spacer'
 
 interface ProjectProps {
-  logo: React.ReactNode
+  logo: ReactNode
 }
 
 function Root({ logo }: ProjectProps) {
   const [isSearchDialogOpen, setSearchDialogOpen] = useState(false)
 
-  const openSearchDialog = (e?: React.FormEvent<HTMLInputElement>) => {
+  const openSearchDialog = (e?: FormEvent<HTMLInputElement>) => {
     e?.preventDefault()
     e?.stopPropagation()
 
@@ -35,17 +35,17 @@ function Root({ logo }: ProjectProps) {
         onSearch={openSearchDialog}
         handleChange={openSearchDialog}
       />
-      <Dialog open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
-        <DialogContent className="h-[600px] max-w-[800px]">
-          <DialogHeader>
-            <DialogTitle>Search</DialogTitle>
-            <DialogDescription>
+      <Dialog.Root open={isSearchDialogOpen} onOpenChange={closeSearchDialog}>
+        <Dialog.Content className="h-[600px] max-w-[800px]">
+          <Dialog.Header>
+            <Dialog.Title>Search</Dialog.Title>
+            <Dialog.Description>
               <Spacer size={6} />
               <SearchBox width="full" placeholder="Search..." />
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+            </Dialog.Description>
+          </Dialog.Header>
+        </Dialog.Content>
+      </Dialog.Root>
     </div>
   )
 }

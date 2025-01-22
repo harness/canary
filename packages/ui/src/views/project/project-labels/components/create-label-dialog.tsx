@@ -7,10 +7,6 @@ import {
   ButtonGroup,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   Fieldset,
   FormWrapper,
   Input,
@@ -75,12 +71,12 @@ export function CreateLabelDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Create Label</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Create Label</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>
           <FormWrapper onSubmit={handleSubmit(data => onSubmit(data, presetEditLabel?.key))}>
             <Fieldset>
               <ControlGroup className="flex flex-row gap-2">
@@ -145,8 +141,8 @@ export function CreateLabelDialog({
               <Button type="submit">{isCreatingLabel ? 'Saving...' : 'Save'}</Button>
             </ButtonGroup>
           </FormWrapper>
-        </DialogDescription>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Description>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

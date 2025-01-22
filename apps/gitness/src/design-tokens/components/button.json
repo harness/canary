@@ -3,15 +3,24 @@
     "default": {
       "$type": "composition",
       "$value": {
-        "typography": "{typography.body.emphasized}",
         "borderRadius": "{radii.xs}",
         "horizontalPadding": "{spacing.7}",
         "verticalPadding": "{spacing.2}",
-        "itemSpacing": "{spacing.3}",
+        "itemSpacing": "{spacing.2}",
         "height": "{sizing.5}"
       }
     },
-    "default-icon": {
+    "sm": {
+      "$type": "composition",
+      "$value": {
+        "borderRadius": "{radii.xs}",
+        "horizontalPadding": "{spacing.5}",
+        "verticalPadding": "{spacing.2}",
+        "itemSpacing": "{spacing.2}",
+        "height": "{sizing.4}"
+      }
+    },
+    "icon": {
       "$type": "composition",
       "$value": {
         "borderRadius": "{radii.xs}",

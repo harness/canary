@@ -138,7 +138,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{fg.highlight}",
             "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
           }
         },
@@ -150,7 +150,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{fg.highlight}",
             "$description": "Text color during hover.\nCommon uses: hover state labels, interactive text."
           }
         },
@@ -162,7 +162,7 @@
           },
           "fg": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{fg.highlight}",
             "$description": "Text color during press state.\nCommon uses: active text color, pressed state content."
           }
         },
@@ -517,7 +517,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{colors.green.800}",
+            "$value": "{colors.green.850}",
             "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
           }
         },

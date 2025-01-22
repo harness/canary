@@ -26,6 +26,7 @@ export enum RouteConstants {
   toExecution = 'toExecution',
   toRepoGeneralSettings = 'toRepoGeneralSettings',
   toRepoBranchRule = 'toRepoBranchRule',
+  toRepoBranchRules = 'toRepoBranchRules',
   toRepoCommitDetails = 'toRepoCommitDetails',
   toDatabases = 'toDatabases',
   toArtifacts = 'toArtifacts',

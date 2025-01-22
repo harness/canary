@@ -75,7 +75,7 @@ export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
     : ''
 
   return (
-    <Fieldset>
+    <Fieldset className="gap-y-6">
       <Text size={13} weight="medium">
         {t('views:repos.security', 'Security')}
       </Text>

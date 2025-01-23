@@ -23,22 +23,15 @@ import {
   UsersProps
 } from '@harnessio/ui/views'
 
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 import { useAdminListUsersStore } from './stores/admin-list-store'
 
 export const UserManagementPageContainer = () => {
-  // const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [searchParams, setSearchParams] = useSearchParams()
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
-  // const { setUsers, setTotalPages, setPage, page } = useAdminListUsersStore()
-  // const queryClient = useQueryClient()
-  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
-    queryParams: {
-      page: queryPage
-    }
-  })
-  const { setUsers, setTotalPages, password, setUser, setPassword, setGeteneratePassword } = useAdminListUsersStore()
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { setUsers, setTotalPages, setPage, page, password, setUser, setPassword, setGeteneratePassword } =
+    useAdminListUsersStore()
   const queryClient = useQueryClient()
 
   const [isDeleteUserDialogOpen, setDeleteUserDialogOpen] = useState(false)
@@ -75,6 +68,12 @@ export const UserManagementPageContainer = () => {
     }
   }
 
+  const { data: { body: userData, headers } = {} } = useAdminListUsersQuery({
+    queryParams: {
+      page: queryPage
+    }
+  })
+
   useEffect(() => {
     if (userData) {
       setUsers(userData)
@@ -85,8 +84,8 @@ export const UserManagementPageContainer = () => {
   }, [userData, setUsers, setTotalPages, headers])
 
   useEffect(() => {
-    setSearchParams({ page: String(queryPage) })
-  }, [queryPage, setSearchParams])
+    setQueryPage(page)
+  }, [queryPage, page, setPage])
 
   const { mutate: updateUser, isLoading: isUpdatingUser } = useAdminUpdateUserMutation(
     {},

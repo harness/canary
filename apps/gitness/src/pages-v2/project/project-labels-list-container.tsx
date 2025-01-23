@@ -34,10 +34,6 @@ export const ProjectLabelsList = () => {
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  useEffect(() => {
-    setQueryPage(page)
-  }, [page, setQueryPage])
-
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
     setOpenCreateLabelDialog(true)

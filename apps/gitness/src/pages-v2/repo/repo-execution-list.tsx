@@ -9,6 +9,7 @@ import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -19,15 +20,10 @@ export default function RepoExecutionListPage() {
   const repoRef = useGetRepoRef()
   const { pipelineId } = useParams<PathParams>()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const query = searchParams.get('query') || ''
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const setQuery = (newQuery: string | null) => {
-    setSearchParams({ query: newQuery ?? '', page: String(queryPage) })
-  }
-
-  const { setExecutionsData, page } = useExecutionListStore()
+  const { setExecutionsData, page, setPage } = useExecutionListStore()
 
   const {
     data: { body: executionsBody, headers } = {},
@@ -54,8 +50,8 @@ export default function RepoExecutionListPage() {
   }, [executionsBody, headers])
 
   useEffect(() => {
-    setSearchParams({ page: String(queryPage), query })
-  }, [queryPage, query, setSearchParams])
+    setQueryPage(page)
+  }, [queryPage, page, setPage])
 
   return (
     <>

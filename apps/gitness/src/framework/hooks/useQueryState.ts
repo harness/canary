@@ -8,12 +8,13 @@ interface Parser<T> {
 
 const useQueryState = <T = string>(
   key: string,
-  parser: Parser<T> = parseAsString as unknown as Parser<T> // Default parser is for strings
+  parser: Parser<T> = parseAsString as unknown as Parser<T>, // Default parser is for strings
+  defaultValue?: T // Add defaultValue parameter
 ): [T, (value: T | null) => void] => {
   const [searchParams, setSearchParams] = useSearchParams()
 
   // Parse the current value or fallback to the default value
-  const value = parser.parse(searchParams.get(key))
+  const value = (parser.parse(searchParams.get(key)) ?? defaultValue) as T
 
   // Setter for query params
   const setValue = useCallback(

@@ -5,23 +5,19 @@ import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-ser
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestListStore } from './stores/pull-request-list-store'
 
 export default function PullRequestListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setPullRequests, page, setOpenClosePullRequests } = usePullRequestListStore()
+  const { setPullRequests, page, setPage, setOpenClosePullRequests } = usePullRequestListStore()
   const { spaceId, repoId } = useParams<PathParams>()
 
   /* Query and Pagination */
-  const [searchParams, setSearchParams] = useSearchParams()
-  const query = searchParams.get('query') || ''
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
-
-  const setQuery = (newQuery: string | null) => {
-    setSearchParams({ query: newQuery ?? '', page: String(queryPage) })
-  }
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -47,8 +43,9 @@ export default function PullRequestListPage() {
   }, [pullRequestData, headers, setPullRequests])
 
   useEffect(() => {
-    setSearchParams({ page: String(queryPage), query })
-  }, [queryPage, query, setSearchParams])
+    setQueryPage(page)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, queryPage, setPage])
 
   return (
     <SandboxPullRequestListPage

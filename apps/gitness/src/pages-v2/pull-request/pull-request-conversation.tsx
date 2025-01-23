@@ -47,7 +47,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useQueryState } from '../../framework/hooks/useQueryState'
+import { parseAsString, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
   capitalizeFirstLetter,
@@ -101,7 +101,7 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
   const [comment, setComment] = useState<string>('')
-  const [commentId] = useQueryState('commentId')
+  const [commentId] = useQueryState('commentId', parseAsString, '')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { useListPipelinesQuery } from '@harnessio/code-service-client'
 import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
@@ -7,6 +7,7 @@ import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -19,11 +20,10 @@ export default function RepoPipelineListPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
-  const [query, setQuery] = useState(searchParams.get('query') || '')
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
-  const { setPipelinesData, page } = usePipelineListStore()
+  const { setPipelinesData, page, setPage } = usePipelineListStore()
 
   const [isCreatePipelineDialogOpen, setCreatePipelineDialogOpen] = useState(false)
 
@@ -55,12 +55,8 @@ export default function RepoPipelineListPage() {
   }, [pipelinesBody, headers])
 
   useEffect(() => {
-    setSearchParams({ page: String(queryPage), query })
-  }, [queryPage, query, setSearchParams])
-
-  const handleSetQuery = (query: string | null) => {
-    setQuery(query ?? '')
-  }
+    setQueryPage(page)
+  }, [queryPage, page, setPage])
 
   return (
     <>
@@ -71,7 +67,7 @@ export default function RepoPipelineListPage() {
         isError={isError}
         errorMessage={error?.message}
         searchQuery={query}
-        setSearchQuery={handleSetQuery}
+        setSearchQuery={setQuery}
         handleCreatePipeline={() => {
           setCreatePipelineDialogOpen(true)
         }}

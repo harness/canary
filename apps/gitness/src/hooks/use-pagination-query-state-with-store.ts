@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+
+import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 
 export interface UsePaginationQueryStateWithStoreProps {
   page: number
@@ -12,7 +14,7 @@ export interface UsePaginationQueryStateWithStoreProps {
  * @param setPage - setPage from store
  */
 const usePaginationQueryStateWithStore = ({ page, setPage }: UsePaginationQueryStateWithStoreProps) => {
-  const [queryPage, setQueryPage] = useState(page)
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   /**
    * Update query state if store page change

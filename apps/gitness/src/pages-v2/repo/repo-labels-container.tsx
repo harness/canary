@@ -15,6 +15,7 @@ import { CreateLabelDialog, CreateLabelFormFields, ILabelType, RepoLabelsListVie
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../project/stores/labels-store'
 
@@ -25,7 +26,6 @@ export const RepoLabelsList = () => {
   const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
   const [identifier, setIdentifier] = useState<string | null>(null)
-  const [query, setQuery] = useState<string | null>(null)
   const {
     page,
     setPage,
@@ -42,8 +42,8 @@ export const RepoLabelsList = () => {
     getParentScopeLabels
   } = useLabelsStore()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const queryPage = parseInt(searchParams.get('page') || '1', 10)
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
@@ -70,8 +70,8 @@ export const RepoLabelsList = () => {
   }, [labels, setLabels])
 
   useEffect(() => {
-    setSearchParams({ page: String(queryPage), query: query ?? '' })
-  }, [queryPage, query, setSearchParams])
+    setQueryPage(page)
+  }, [page, setPage, queryPage])
 
   const {
     mutate: defineRepoLabel,
@@ -228,10 +228,6 @@ export const RepoLabelsList = () => {
     }
   }
 
-  const handleSetQuery = (query: string | null) => {
-    setQuery(query ?? '')
-  }
-
   return (
     <>
       <RepoLabelsListView
@@ -242,7 +238,7 @@ export const RepoLabelsList = () => {
         handleDeleteLabel={handleOpenDeleteDialog}
         showSpacer={false}
         searchQuery={query}
-        setSearchQuery={handleSetQuery}
+        setSearchQuery={setQuery}
         isLoadingSpaceLabels={isLoadingRepoLabels}
       />
       <CreateLabelDialog

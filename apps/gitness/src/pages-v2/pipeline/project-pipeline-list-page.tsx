@@ -18,11 +18,9 @@ export default function ProjectPipelineListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
-  const { setPipelinesData, page } = usePipelineListStore()
-
+  const { setPipelinesData, page, setPage } = usePipelineListStore()
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
     queryParams: { page: queryPage, query: query ?? '' },
     space_ref: spaceURL || ''
@@ -30,7 +28,7 @@ export default function ProjectPipelineListPage() {
 
   useEffect(() => {
     setQueryPage(page)
-  }, [page, setQueryPage])
+  }, [queryPage, page, setPage])
 
   useEffect(() => {
     if (data) {

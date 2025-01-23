@@ -32,7 +32,6 @@ export function ProjectMemberListPage() {
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
-
   const [query, setQuery] = useQueryState('query')
 
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')

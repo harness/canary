@@ -33,7 +33,7 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
+import { parseAsString, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
@@ -303,6 +303,7 @@ export const CreatePullRequest = () => {
       setPrBranchCombinationExists(null)
     }
   }, [pullReqData])
+  const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
   const { data: { body: commitData, headers } = {} } = useListCommitsQuery({
@@ -318,18 +319,13 @@ export const CreatePullRequest = () => {
       include_stats: true
     }
   })
-  const { setCommits, page, setSelectedCommit } = useRepoCommitsStore()
-  const [, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { setCommits, setSelectedCommit } = useRepoCommitsStore()
 
   useEffect(() => {
     if (commitData) {
       setCommits(commitData, headers)
     }
   }, [commitData, headers, setCommits])
-
-  useEffect(() => {
-    setQueryPage(page)
-  }, [page])
 
   const branchList: BranchSelectorListItem[] = useMemo(() => {
     if (!branches) return []

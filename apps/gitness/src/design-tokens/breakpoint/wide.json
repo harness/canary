@@ -378,7 +378,7 @@
     },
     "-2": {
       "$type": "lineHeights",
-      "$value": "round({font-size.-2}* {leading.normal}/2) * 2"
+      "$value": "round({font-size.-2}* {leading.snug}/2) * 2"
     },
     "-1": {
       "$type": "lineHeights",

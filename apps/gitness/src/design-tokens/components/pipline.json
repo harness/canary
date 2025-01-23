@@ -1,0 +1,12 @@
+{
+  "card": {
+    "$type": "composition",
+    "$value": {
+      "minHeight": "86",
+      "maxHeight": "86",
+      "minWidth": "140",
+      "maxWidth": "140",
+      "spacing": "{spacing.4}"
+    }
+  }
+}

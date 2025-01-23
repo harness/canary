@@ -9,6 +9,7 @@
     "breakpoint/tablet",
     "breakpoint/desktop",
     "breakpoint/wide",
+    "components/pipline",
     "components/base"
   ]
 }

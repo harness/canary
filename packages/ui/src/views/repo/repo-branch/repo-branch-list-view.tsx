@@ -23,12 +23,10 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   isCreatingBranch,
   searchQuery,
   setSearchQuery,
-  toPullRequest,
-  toBranchRules,
-  toPullRequestCompare,
   onDeleteBranch,
   searchBranches,
-  setCreateBranchSearchQuery
+  setCreateBranchSearchQuery,
+  ...routingProps
 }) => {
   const { t } = useTranslationStore()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
@@ -107,11 +105,9 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           useTranslationStore={useTranslationStore}
           setCreateBranchDialogOpen={setCreateBranchDialogOpen}
           handleResetFiltersAndPages={handleResetFiltersAndPages}
-          toPullRequest={toPullRequest}
-          toBranchRules={toBranchRules}
-          toPullRequestCompare={toPullRequestCompare}
           onDeleteBranch={onDeleteBranch}
           isDirtyList={isDirtyList}
+          {...routingProps}
         />
         {!isLoading && (
           <PaginationComponent

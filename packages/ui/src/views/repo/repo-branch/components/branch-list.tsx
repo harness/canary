@@ -197,7 +197,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="xs"
                       asChild
                     >
-                      <Link to={toPullRequest({ pullRequestId: branch.pullRequests[0].number })}>
+                      <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}>
                         <Icon
                           name={
                             getPrState(
@@ -226,11 +226,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     actions={[
                       {
                         title: t('views:repos.newPullReq', 'New pull request'),
-                        to: toPullRequestCompare({ diffRefs: `${defaultBranch}...${branch.name}` })
+                        to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
                       },
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
-                        to: toBranchRules()
+                        to: toBranchRules?.()
                       },
                       {
                         isDanger: true,

@@ -2,49 +2,49 @@
   "background": {
     "canvas": {
       "$type": "color",
-      "$value": "{colors.base-chrome.white}",
+      "$value": "{colors.base-gray.white}",
       "$description": "Primary background color for the application.\nCommon uses: app background, main content area, full-page layouts."
     },
     "card": {
       "$type": "color",
-      "$value": "{colors.base-chrome.50}",
+      "$value": "{colors.base-gray.50}",
       "$description": "Secondary surface color for contained content.\nCommon uses: cards, panels, sidebars, form containers."
     },
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-chrome.50}",
+      "$value": "{colors.base-gray.50}",
       "$description": "Emphasized surface color for important elements.\nCommon uses: selected states, active tabs, highlighted sections."
     },
     "overlay": {
       "$type": "color",
-      "$value": "{colors.base-chrome.white}",
+      "$value": "{colors.base-gray.white}",
       "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
     },
     "nav": {
       "$type": "color",
-      "$value": "{colors.base-chrome.50}",
+      "$value": "{colors.base-gray.50}",
       "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
     }
   },
   "foreground": {
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-chrome.black}",
+      "$value": "{colors.base-gray.black}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
     "base": {
       "$type": "color",
-      "$value": "{colors.base-chrome.850}",
+      "$value": "{colors.base-gray.850}",
       "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
     },
     "secondary": {
       "$type": "color",
-      "$value": "{colors.base-chrome.600}",
+      "$value": "{colors.base-gray.600}",
       "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
     },
     "muted": {
       "$type": "color",
-      "$value": "{colors.base-chrome.500}",
+      "$value": "{colors.base-gray.500}",
       "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
     },
     "accent": {
@@ -56,22 +56,22 @@
   "border": {
     "base": {
       "$type": "color",
-      "$value": "{colors.base-chrome.150}",
+      "$value": "{colors.base-gray.150}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
     },
     "hover": {
       "$type": "color",
-      "$value": "{colors.base-chrome.300}",
+      "$value": "{colors.base-gray.300}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "subtle": {
       "$type": "color",
-      "$value": "{colors.base-chrome.100}",
+      "$value": "{colors.base-gray.100}",
       "$description": "Softer border color for minimal separation.\nCommon uses: subtle dividers, grouped content."
     },
     "ring": {
       "$type": "color",
-      "$value": "{colors.base-chrome.500}",
+      "$value": "{colors.base-gray.500}",
       "$description": "Focus state indicator color.\nCommon uses: focus rings, keyboard navigation, selection indicators."
     }
   },
@@ -86,7 +86,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.base-gray.white}",
             "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
           }
         },
@@ -98,7 +98,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.base-gray.white}",
             "$description": "Text/icon color when hovering.\nCommon uses: hover state text, interactive icon color."
           }
         },
@@ -110,14 +110,14 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.base-gray.white}",
             "$description": "Text/icon color during press state.\nCommon uses: text color while pressing, active content."
           }
         },
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-chrome.100}",
+            "$value": "{colors.base-gray.100}",
             "$description": "Background for unavailable actions.\nCommon uses: disabled buttons, unavailable actions."
           },
           "foreground": {
@@ -133,7 +133,7 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-chrome.100}",
+            "$value": "{colors.base-gray.100}",
             "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
           },
           "foreground": {
@@ -145,7 +145,7 @@
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-chrome.200}",
+            "$value": "{colors.base-gray.200}",
             "$description": "Background color for hover interaction.\nCommon uses: secondary button hover, interactive state."
           },
           "foreground": {
@@ -157,7 +157,7 @@
         "active": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-chrome.200}",
+            "$value": "{colors.base-gray.200}",
             "$description": "Background when secondary action is pressed.\nCommon uses: active state, press feedback."
           },
           "foreground": {
@@ -169,7 +169,7 @@
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-chrome.100}",
+            "$value": "{colors.base-gray.100}",
             "$description": "Background for disabled secondary actions.\nCommon uses: inactive secondary buttons, disabled alternatives."
           },
           "foreground": {
@@ -494,7 +494,7 @@
       "intense": {
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.black}",
+          "$value": "{colors.base-gray.black}",
           "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
         },
         "background": {
@@ -593,7 +593,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.black}"
+          "$value": "{colors.base-gray.black}"
         }
       },
       "subtle": {
@@ -686,7 +686,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.black}"
+          "$value": "{colors.base-gray.black}"
         }
       },
       "subtle": {
@@ -774,7 +774,7 @@
       "intense": {
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.black}"
+          "$value": "{colors.base-gray.black}"
         },
         "background": {
           "$type": "color",
@@ -883,7 +883,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.base-chrome.black}",
+      "$value": "{colors.base-gray.black}",
       "$description": "Standard shadow color for basic elevation.\nCommon uses: color value for default shadow effects."
     }
   }

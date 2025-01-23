@@ -4,6 +4,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import {
   getContent,
   useFindRepositoryQuery,
+  useGetBranchQuery,
   useGetContentQuery,
   useListBranchesQuery,
   useListPathsQuery,
@@ -62,6 +63,17 @@ export const RepoSidebar = () => {
     }
   })
 
+  const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: fullGitRef,
+      queryParams: {}
+    },
+    {
+      enabled: !!fullGitRef
+    }
+  )
+
   useEffect(() => {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
@@ -105,10 +117,9 @@ export const RepoSidebar = () => {
         default: true
       })
     } else {
-      const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
-        setSelectedBranchTag(selectedGitRefBranch)
+        setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {
         setSelectedBranchTag(selectedGitRefTag)
       }

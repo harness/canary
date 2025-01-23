@@ -22,7 +22,7 @@ import { usePRChecksDecision } from '../hooks/usePRChecksDecision'
 import { usePullRequestDataStore } from '../stores/pull-request-store'
 import { extractSpecificViolations } from '../utils'
 
-const PullRequestDataProviderV1: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+const PullRequestDataProviderV1: React.FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()

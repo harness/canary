@@ -24,7 +24,7 @@ const themeConfig = {
   themes
 }
 
-export const YamlEditorWrapper: React.FC<React.PropsWithChildren<unknown>> = () => {
+export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = () => {
   const { yamlRevision, setYamlRevision } = useDataContext()
   const [showYamlEditor, setShowYamlEditor] = useState(true)
   const [selectedPath, setSelectedPath] = useState<string | undefined>('pipeline.stages.0.steps.0')

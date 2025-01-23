@@ -7,7 +7,7 @@ import { RepoSubheader } from '@harnessio/ui/components'
 
 import RootViewWrapper from './root-view-wrapper'
 
-const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (
+const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => (
   <RootViewWrapper asChild>
     <Route
       path="*"

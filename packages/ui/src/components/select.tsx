@@ -6,7 +6,9 @@ import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectProps extends PropsWithChildren<unknown>, SelectPrimitive.SelectProps {
+interface SelectProps
+  extends Omit<Omit<PropsWithChildren<React.HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
+    SelectPrimitive.SelectProps {
   label?: string
   error?: string
   caption?: ReactNode

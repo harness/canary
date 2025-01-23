@@ -1,12 +1,4 @@
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  Text
-} from '@components/index'
+import { Button, DropdownMenu, Icon, Text } from '@/components'
 
 interface DropdownButtonProps {
   label: string
@@ -34,18 +26,18 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
   onItemSelect
 }: DropdownMenuComponentProps<T>) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger>
         <DropdownButton label={selectedItem.label} onClick={() => {}} />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
         {items.map(item => (
-          <DropdownMenuItem key={item.value} onClick={() => onItemSelect(item)}>
+          <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)}>
             {item.label}
-          </DropdownMenuItem>
+          </DropdownMenu.Item>
         ))}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }
 

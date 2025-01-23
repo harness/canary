@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, Icon, StyledLink } from '@/components'
+import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
 import { IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
@@ -47,8 +47,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <span className="text-foreground-8">{defaultBranchName}</span>
         </Badge>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
           <Button
             className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
@@ -61,8 +61,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               size={12}
             />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-60 p-4" align="end">
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="w-60 p-4" align="end">
           <div className="flex gap-x-2">
             <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-borders-4">
               <Icon name="merged" size={12} />
@@ -96,8 +96,8 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
               </Link>
             </Button>
           </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   )
 }

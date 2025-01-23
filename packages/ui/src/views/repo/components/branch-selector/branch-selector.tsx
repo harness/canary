@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
+import { Button, DropdownMenu, Icon, Text } from '@/components'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, TranslationStore } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
@@ -34,8 +34,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     : false
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button
           className={
             'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
@@ -53,7 +53,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
           </Text>
           <Icon name="chevron-down" className="chevron-down" size={20} />
         </Button>
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
       <BranchSelectorDropdown
         isBranchOnly={isBranchOnly}
         branchList={branchList}
@@ -66,6 +66,6 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
       />
-    </DropdownMenu>
+    </DropdownMenu.Root>
   )
 }

@@ -1,20 +1,6 @@
 import { ReactNode } from 'react'
 
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-  Fieldset,
-  Icon,
-  Label,
-  Message,
-  MessageTheme,
-  ScrollArea,
-  SearchBox
-} from '@/components'
+import { Button, DropdownMenu, Fieldset, Icon, Label, Message, MessageTheme, ScrollArea, SearchBox } from '@/components'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
@@ -61,13 +47,13 @@ export const MultiSelect = <T = unknown,>({
           {label}
         </Label>
       )}
-      <DropdownMenu>
-        <DropdownMenuTrigger className="flex h-9 w-full items-center justify-between rounded border border-borders-2 px-3 transition-colors data-[state=open]:border-borders-8">
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger className="flex h-9 w-full items-center justify-between rounded border border-borders-2 px-3 transition-colors data-[state=open]:border-borders-8">
           {placeholder}
           <Icon name="chevron-down" className="chevron-down ml-auto" size={12} />
-        </DropdownMenuTrigger>
+        </DropdownMenu.Trigger>
 
-        <DropdownMenuContent
+        <DropdownMenu.Content
           style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
           onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
         >
@@ -82,7 +68,7 @@ export const MultiSelect = <T = unknown,>({
                   showOnFocus
                 />
               </div>
-              <DropdownMenuSeparator />
+              <DropdownMenu.Separator />
             </>
           )}
           {options.length ? (
@@ -91,7 +77,7 @@ export const MultiSelect = <T = unknown,>({
                 const isSelected = selectedItems.findIndex(it => it.id === option.id) > -1
 
                 return (
-                  <DropdownMenuItem
+                  <DropdownMenu.Item
                     key={option.id}
                     className={cn('px-3', { 'pl-8': !isSelected })}
                     onSelect={e => {
@@ -107,7 +93,7 @@ export const MultiSelect = <T = unknown,>({
                         <span className="font-medium">{option.label}</span>
                       )}
                     </div>
-                  </DropdownMenuItem>
+                  </DropdownMenu.Item>
                 )
               })}
             </ScrollArea>
@@ -118,8 +104,8 @@ export const MultiSelect = <T = unknown,>({
               </span>
             </div>
           )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
       {!!selectedItems.length && (
         <div className="flex flex-wrap gap-1.5">
           {selectedItems.map(it => (

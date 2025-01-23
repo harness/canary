@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
+import { Button, DropdownMenu, Icon, Text } from '@/components'
 import { CommitSelectorListItem, TranslationStore } from '@/views'
 
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
@@ -49,8 +49,8 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
   }, [selectedCommit, t])
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button
           className={
             'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
@@ -63,7 +63,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
       <CommitSelectorDropdown
         commitList={finalList}
         onSelectCommit={onSelectCommit}
@@ -74,6 +74,6 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
       />
-    </DropdownMenu>
+    </DropdownMenu.Root>
   )
 }

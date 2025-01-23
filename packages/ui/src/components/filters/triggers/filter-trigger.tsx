@@ -1,5 +1,5 @@
 import { Icon, Input } from '@/components'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@components/dropdown-menu'
+import { DropdownMenu } from '@components/dropdown-menu'
 import { TFunction } from 'i18next'
 
 import { FilterHandlers, FilterOption, SortOption } from '../types'
@@ -99,8 +99,8 @@ const FilterTrigger = ({
   )
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="flex items-center gap-x-1.5">
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
         <span className="flex items-center gap-x-1 text-14 text-foreground-2 hover:text-foreground-1">
           {displayLabel}
           {!hideCount && activeFilters.length > 0 && (
@@ -110,8 +110,8 @@ const FilterTrigger = ({
           )}
         </span>
         {!customLabel && <Icon className="chevron-down text-icons-4" name="chevron-fill-down" size={6} />}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="min-w-[224px] p-0" align={dropdownAlign}>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content className="min-w-[224px] p-0" align={dropdownAlign}>
         <div className="relative flex items-center justify-between border-b border-borders-4 px-3 py-2.5">
           <Input
             type="text"
@@ -139,9 +139,9 @@ const FilterTrigger = ({
 
         <div className="p-1">
           {filteredBySearchOptions.map(option => (
-            <DropdownMenuItem key={option.value} onSelect={() => onChangeOption(option)}>
+            <DropdownMenu.Item key={option.value} onSelect={() => onChangeOption(option)}>
               {option.label}
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
           ))}
 
           {filteredBySearchOptions.length === 0 && (
@@ -153,15 +153,15 @@ const FilterTrigger = ({
 
         {onReset && (
           <div className="border-t border-borders-4 p-1">
-            <DropdownMenuItem asChild>
+            <DropdownMenu.Item asChild>
               <button className="w-full font-medium" onClick={onReset}>
                 {buttonLabel}
               </button>
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
           </div>
         )}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }
 

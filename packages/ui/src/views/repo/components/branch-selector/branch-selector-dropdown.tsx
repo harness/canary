@@ -1,16 +1,7 @@
 import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Badge,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  Icon,
-  SearchBox,
-  Tabs,
-  TabsList,
-  TabsTrigger
-} from '@/components'
+import { Badge, DropdownMenu, Icon, SearchBox, Tabs, TabsList, TabsTrigger } from '@/components'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
@@ -45,7 +36,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
 
   return (
-    <DropdownMenuContent className="w-[298px] p-0" align="start">
+    <DropdownMenu.Content className="w-[298px] p-0" align="start">
       <div className="px-3 pt-2">
         {isBranchOnly ? (
           <span className="text-14 font-medium leading-none">Switch branches</span>
@@ -74,7 +65,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
           }}
         >
           <TabsList className="px-3">
-            <DropdownMenuItem
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -88,8 +79,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 {t('views:repos.branches', 'Branches')}
               </TabsTrigger>
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -103,7 +94,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 {t('views:repos.tags', 'Tags')}
               </TabsTrigger>
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
           </TabsList>
         </Tabs>
       )}
@@ -125,7 +116,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
 
             return (
-              <DropdownMenuItem
+              <DropdownMenu.Item
                 className={cn('hover:bg-background-4 cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
                   'bg-background-4': isSelected,
@@ -168,12 +159,12 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                     {t('views:repos.default', 'Default')}
                   </Badge>
                 )}
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           })}
         </div>
 
-        <DropdownMenuItem className="p-0" asChild>
+        <DropdownMenu.Item className="p-0" asChild>
           <div className="mt-1 border-t border-borders-1 px-3 py-2">
             <Link to={viewAllUrl}>
               <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
@@ -186,8 +177,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               </span>
             </Link>
           </div>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       </div>
-    </DropdownMenuContent>
+    </DropdownMenu.Content>
   )
 }

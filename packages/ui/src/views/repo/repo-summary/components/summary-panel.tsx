@@ -1,17 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Badge,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  IconProps,
-  Spacer,
-  Text
-} from '@/components'
+import { Badge, Button, DropdownMenu, Icon, IconProps, Spacer, Text } from '@/components'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -54,18 +43,18 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
       <div className="flex flex-col">
         <div className="flex items-center justify-between">
           <span className="truncate text-18 font-medium">{title}</span>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+          <DropdownMenu.Root>
+            <DropdownMenu.Trigger asChild>
               <Button variant="ghost" size="sm_icon" aria-label="More options">
                 <Icon name="more-dots-fill" size={12} className="text-icons-3" />
               </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
+            </DropdownMenu.Trigger>
+            <DropdownMenu.Content align="end">
+              <DropdownMenu.Item className="flex items-center gap-1.5" onClick={() => setEditDialogOpen(true)}>
                 <span>{description?.length ? 'Edit Description' : 'Add description'}</span>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenu.Item>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         </div>
         {!!timestamp?.length && (
           <>

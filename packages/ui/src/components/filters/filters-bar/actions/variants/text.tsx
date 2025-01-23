@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { DropdownMenuItem, Icon, Input } from '@/components'
+import { DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterHandlers, FilterValue } from '../../../types'
 
@@ -40,7 +40,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
 
   return (
     <div className="flex items-center px-2 pb-2.5">
-      <DropdownMenuItem className="relative w-full p-0">
+      <DropdownMenu.Item className="relative w-full p-0">
         <Input
           className="w-full"
           value={value}
@@ -64,7 +64,7 @@ const Text = ({ filter, onUpdateFilter }: TextFilterProps) => {
             <Icon className="rotate-45" name="plus" size={10} />
           </button>
         )}
-      </DropdownMenuItem>
+      </DropdownMenu.Item>
     </div>
   )
 }

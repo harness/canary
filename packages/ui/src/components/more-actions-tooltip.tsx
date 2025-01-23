@@ -2,13 +2,7 @@ import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button } from '@components/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@components/dropdown-menu'
+import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { cn } from '@utils/cn'
 
@@ -31,8 +25,8 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
   if (!actions.length) return <></>
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button
           className={cn('text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2', {
             '-mr-2.5 -my-0.5': isInTable
@@ -42,34 +36,34 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
         >
           <Icon name="vertical-ellipsis" size={14} />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content
         className="w-[180px]"
         align="end"
         sideOffset={-6}
         alignOffset={10}
         onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
       >
-        <DropdownMenuGroup>
+        <DropdownMenu.Group>
           {actions.map((action, idx) =>
             action.to ? (
               <Link key={`${action.title}-${idx}`} to={action.to} replace>
-                <DropdownMenuItem>
+                <DropdownMenu.Item>
                   <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
                     {action.title}
                   </span>
-                </DropdownMenuItem>
+                </DropdownMenu.Item>
               </Link>
             ) : (
-              <DropdownMenuItem key={`${action.title}-${idx}`} onClick={() => action?.onClick?.()}>
+              <DropdownMenu.Item key={`${action.title}-${idx}`} onClick={() => action?.onClick?.()}>
                 <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
                   {action.title}
                 </span>
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           )}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenu.Group>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

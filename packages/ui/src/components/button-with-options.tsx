@@ -1,13 +1,7 @@
 import { MouseEvent, ReactNode } from 'react'
 
 import { Button, buttonVariants } from '@/components/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@components/dropdown-menu'
+import { DropdownMenu } from '@components/dropdown-menu'
 import { Icon } from '@components/icon'
 import { Option } from '@components/option'
 import { RadioButton, RadioGroup } from '@components/radio'
@@ -93,8 +87,8 @@ export const ButtonWithOptions = <T extends string>({
       >
         {children}
       </Button>
-      <DropdownMenu>
-        <DropdownMenuTrigger
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger
           className={cn(
             buttonVariants({ theme }),
             'relative h-[inherit] w-8 p-0 flex-shrink-0 rounded-l-none after:absolute after:inset-y-0 after:left-0 after:my-auto after:h-3.5 after:w-px',
@@ -104,17 +98,17 @@ export const ButtonWithOptions = <T extends string>({
           )}
         >
           <Icon name="chevron-down" size={12} className="chevron-down" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content
           className={cn('mt-1 max-w-80', dropdownContentClassName)}
           align="end"
           onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
         >
           {selectedValue ? (
             <RadioGroup value={String(selectedValue)} id={id}>
-              <DropdownMenuGroup>
+              <DropdownMenu.Group>
                 {options.map(option => (
-                  <DropdownMenuItem
+                  <DropdownMenu.Item
                     key={String(option.value)}
                     onClick={() => handleOptionChange(option.value)}
                     disabled={!!loading}
@@ -126,14 +120,14 @@ export const ButtonWithOptions = <T extends string>({
                       ariaSelected={selectedValue === option.value}
                       description={option?.description}
                     />
-                  </DropdownMenuItem>
+                  </DropdownMenu.Item>
                 ))}
-              </DropdownMenuGroup>
+              </DropdownMenu.Group>
             </RadioGroup>
           ) : (
-            <DropdownMenuGroup>
+            <DropdownMenu.Group>
               {options.map(option => (
-                <DropdownMenuItem
+                <DropdownMenu.Item
                   key={String(option.value)}
                   className="px-3 py-2.5"
                   onClick={() => handleOptionChange(option.value)}
@@ -142,12 +136,12 @@ export const ButtonWithOptions = <T extends string>({
                     <span className="leading-none text-foreground-8">{option.label}</span>
                     {option?.description && <span className="text-foreground-4">{option.description}</span>}
                   </span>
-                </DropdownMenuItem>
+                </DropdownMenu.Item>
               ))}
-            </DropdownMenuGroup>
+            </DropdownMenu.Group>
           )}
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   )
 }

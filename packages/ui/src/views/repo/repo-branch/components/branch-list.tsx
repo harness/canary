@@ -67,7 +67,7 @@ export const BranchesList = ({
                 <TableCell className="content-center">
                   <div className="flex items-center gap-1.5">
                     <Button variant="secondary" size="xs">
-                      <Text wrap="nowrap" truncate className="text-primary/90 max-w-[500px]">
+                      <Text wrap="nowrap" truncate className="max-w-[500px] text-primary/90">
                         {branch?.name}
                       </Text>
                     </Button>

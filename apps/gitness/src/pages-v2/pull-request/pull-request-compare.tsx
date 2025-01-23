@@ -421,7 +421,7 @@ export const CreatePullRequest = () => {
   const renderContent = () => {
     return (
       <PullRequestComparePage
-        toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
+        toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         currentUser={currentUser?.display_name}
         setSearchCommitQuery={setQuery}

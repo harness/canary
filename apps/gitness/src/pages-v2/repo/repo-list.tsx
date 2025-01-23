@@ -6,7 +6,7 @@ import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { useQueryState } from '../../framework/hooks/useQueryState'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -34,7 +34,7 @@ export default function ReposListPage() {
     {
       queryParams: {
         page: queryPage,
-        query: query ?? ''
+        query: query
       },
       space_ref: `${spaceURL}/+`
     },

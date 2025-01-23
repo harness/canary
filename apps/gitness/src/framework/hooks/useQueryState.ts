@@ -1,33 +1,48 @@
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-type UseQueryStateReturn<T> = [T, (value: T | null) => void]
+type Parser<T> = {
+  parse: (value: string | null) => T
+  withDefault: (defaultValue: T) => Parser<T>
+}
 
-const useQueryState = <T extends string | number | null>(key: string, defaultValue: T): UseQueryStateReturn<T> => {
+const useQueryState = <T = string>(
+  key: string,
+  parser: Parser<T> = parseAsString as unknown as Parser<T> // Default parser is for strings
+): [T, (value: T | null) => void] => {
   const [searchParams, setSearchParams] = useSearchParams()
 
-  // Get the current value for the query param
-  const rawValue = searchParams.get(key)
+  // Parse the current value or fallback to the default value
+  const value = parser.parse(searchParams.get(key))
 
-  // Parse the value based on the type of defaultValue
-  const parsedValue =
-    rawValue !== null ? (typeof defaultValue === 'number' ? (Number(rawValue) as T) : (rawValue as T)) : defaultValue
-
-  // Setter to update the query param
+  // Setter for query params
   const setValue = useCallback(
     (newValue: T | null) => {
       const newParams = new URLSearchParams(searchParams)
-      if (newValue === null || newValue === '' || newValue === undefined) {
-        newParams.delete(key) // Remove the query param if value is null, empty, or undefined
+      if (newValue === null) {
+        newParams.delete(key)
       } else {
-        newParams.set(key, String(newValue)) // Set the query param
+        newParams.set(key, String(newValue))
       }
       setSearchParams(newParams)
     },
     [key, searchParams, setSearchParams]
   )
 
-  return [parsedValue, setValue]
+  return [value, setValue]
 }
 
-export { useQueryState }
+// Create parser utility
+const createParser = <T>(parseFn: (value: string | null) => T): Parser<T> => ({
+  parse: parseFn,
+  withDefault(defaultValue: T) {
+    return createParser(value => (value === null || value === undefined ? defaultValue : parseFn(value)))
+  }
+})
+
+// Default parsers
+const parseAsString = createParser((value: string | null) => value || '')
+const parseAsInteger = createParser((value: string | null) => (value ? parseInt(value, 10) : 0))
+const parseAsBoolean = createParser((value: string | null) => value === 'true')
+
+export { useQueryState, parseAsString, parseAsInteger, parseAsBoolean }

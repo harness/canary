@@ -1,4 +1,4 @@
-import { FormHTMLAttributes, PropsWithChildren } from 'react'
+import { FormHTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 

@@ -59,7 +59,7 @@
       "$value": "{colors.base-chrome.850}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
     },
-    "hover": {
+    "interactive": {
       "$type": "color",
       "$value": "{colors.base-chrome.700}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
@@ -195,7 +195,7 @@
         "hover": {
           "border": {
             "$type": "color",
-            "$value": "{border.hover}",
+            "$value": "{border.interactive}",
             "$description": "Border color during hover.\nCommon uses: hover state outline, interactive border."
           },
           "foreground": {
@@ -207,7 +207,7 @@
         "active": {
           "border": {
             "$type": "color",
-            "$value": "{border.hover}",
+            "$value": "{border.interactive}",
             "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
           },
           "foreground": {
@@ -268,7 +268,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.hover}",
+          "$value": "{border.interactive}",
           "$description": "Border color during hover.\nCommon uses: hover state boundaries."
         },
         "icon": {

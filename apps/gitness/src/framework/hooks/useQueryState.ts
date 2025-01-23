@@ -19,7 +19,8 @@ const useQueryState = <T = string>(
   const setValue = useCallback(
     (newValue: T | null) => {
       const newParams = new URLSearchParams(searchParams)
-      if (newValue === null) {
+      // If the new value is empty or null, remove the query param
+      if (newValue === null || newValue === undefined || newValue === '') {
         newParams.delete(key)
       } else {
         newParams.set(key, String(newValue))

@@ -5,9 +5,6 @@ import {
   AvatarFallback,
   AvatarImage,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Icon,
   MoreActionsTooltip,
   Table,
@@ -66,28 +63,28 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
 
             {/* ROLE */}
             <TableCell className="w-1/5 content-center">
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex items-center gap-x-1.5 text-foreground-2 hover:text-foreground-1">
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-foreground-2 hover:text-foreground-1">
                   {getRoleLabel(member.role)}
                   <Icon className="chevron-down text-icons-7" name="chevron-fill-down" size={6} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content
                   align="start"
                   className="w-[300px]"
                   onCloseAutoFocus={event => event.preventDefault()}
                 >
                   {roleOptions.map(role => (
-                    <DropdownMenuItem
+                    <DropdownMenu.Item
                       key={role.uid}
                       className="flex-col items-start gap-y-1.5 px-3 py-2"
                       onClick={() => onEdit({ ...member, role: role.uid })}
                     >
                       <span className="leading-none">{role.label}</span>
                       <span className="leading-tight text-foreground-4">{role.description}</span>
-                    </DropdownMenuItem>
+                    </DropdownMenu.Item>
                   ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             </TableCell>
 
             <TableCell className="text-right">

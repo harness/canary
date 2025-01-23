@@ -1,11 +1,6 @@
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  Icon,
-  Text
-} from '@harnessio/ui/components'
+import { ReactNode } from 'react'
+
+import { DropdownMenu, Icon, Text } from '@harnessio/ui/components'
 
 import { useNodeContext } from '../../../../context/NodeContextMenuProvider'
 import { YamlEntityType } from '../../types/nodes'
@@ -57,11 +52,11 @@ export const CommonNodeContextMenu = () => {
   const showRevealInYaml = contextMenuData?.nodeData.yamlEntityType === YamlEntityType.Step
 
   const getMenu = () => {
-    const menu: React.ReactNode[][] = []
+    const menu: ReactNode[][] = []
 
     if (!contextMenuData?.isIn) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="edit"
           disabled={!enableEdit}
           className="flex items-center gap-1.5"
@@ -71,13 +66,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="edit-pen" size={12} className="text-tertiary-background" />
           <Text>Edit</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showAddStepBeforeAfter) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-step-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -86,8 +81,8 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add step/group before</Text>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
+        </DropdownMenu.Item>,
+        <DropdownMenu.Item
           key="add-step-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -96,13 +91,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add step/group after</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showAddStageBeforeAfter) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-stage-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -111,8 +106,8 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add stage before</Text>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
+        </DropdownMenu.Item>,
+        <DropdownMenu.Item
           key="add-stage-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -121,13 +116,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add stage after</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showAddSerialParallelGroupBeforeAfter) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-serial-group-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -136,8 +131,8 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add serial group before</Text>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
+        </DropdownMenu.Item>,
+        <DropdownMenu.Item
           key="add-serial-group-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -146,11 +141,11 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add serial group after</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
 
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-parallel-group-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -159,8 +154,8 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add parallel group before</Text>
-        </DropdownMenuItem>,
-        <DropdownMenuItem
+        </DropdownMenu.Item>,
+        <DropdownMenu.Item
           key="add-parallel-group-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -169,13 +164,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add parallel group after</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showAddStageIn) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-stage"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -184,13 +179,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add stage</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showAddSerialParallelGroupIn) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-serial-group"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -199,11 +194,11 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add serial group</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
 
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="add-parallel-group"
           className="flex items-center gap-1.5"
           onSelect={() => {
@@ -212,13 +207,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="plus" size={12} className="text-tertiary-background" />
           <Text wrap="nowrap">Add parallel group</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (showRevealInYaml) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="edit"
           disabled={!enableEdit}
           className="flex items-center gap-1.5"
@@ -228,13 +223,13 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="circle" size={12} className="text-tertiary-background" />
           <Text>Reveal in Yaml</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
     if (!contextMenuData?.isIn) {
       menu.push([
-        <DropdownMenuItem
+        <DropdownMenu.Item
           key="delete"
           disabled={!enableDelete}
           className="flex items-center gap-1.5"
@@ -244,7 +239,7 @@ export const CommonNodeContextMenu = () => {
         >
           <Icon name="trash" size={12} className="text-primary" />
           <Text>Delete</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
       ])
     }
 
@@ -252,7 +247,7 @@ export const CommonNodeContextMenu = () => {
   }
 
   return (
-    <DropdownMenu
+    <DropdownMenu.Root
       open={!!contextMenuData}
       onOpenChange={open => {
         if (open === false) {
@@ -260,7 +255,7 @@ export const CommonNodeContextMenu = () => {
         }
       }}
     >
-      <DropdownMenuContent
+      <DropdownMenu.Content
         align="end"
         className="absolute"
         style={{ left: `${contextMenuData?.position.x}px`, top: `${contextMenuData?.position.y}px` }}
@@ -268,14 +263,14 @@ export const CommonNodeContextMenu = () => {
         {getMenu().map((menuItem, idx) => {
           return idx !== 0 ? (
             <>
-              <DropdownMenuSeparator />
+              <DropdownMenu.Separator />
               {menuItem}
             </>
           ) : (
             menuItem
           )
         })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

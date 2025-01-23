@@ -6,10 +6,6 @@ import {
   Button,
   CopyButton,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Icon,
   Layout,
   ListActions,
@@ -185,20 +181,20 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     <>
       <ListActions.Root>
         <ListActions.Left>
-          <DropdownMenu>
+          <DropdownMenu.Root>
             <p className="text-14 leading-tight text-foreground-4">
               Showing{' '}
-              <DropdownMenuTrigger asChild>
+              <DropdownMenu.Trigger asChild>
                 <span className="cursor-pointer text-foreground-accent ease-in-out">
                   {diffStats.files_changed || 0} changed files
                 </span>
-              </DropdownMenuTrigger>{' '}
+              </DropdownMenu.Trigger>{' '}
               with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
             </p>
-            <DropdownMenuContent align="end">
-              <DropdownMenuGroup>
+            <DropdownMenu.Content align="end">
+              <DropdownMenu.Group>
                 {diffData?.map(diff => (
-                  <DropdownMenuItem
+                  <DropdownMenu.Item
                     key={diff.filePath}
                     onClick={() => {}}
                     className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
@@ -218,11 +214,11 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                         </Badge>
                       )}
                     </div>
-                  </DropdownMenuItem>
+                  </DropdownMenu.Item>
                 ))}
-              </DropdownMenuGroup>
-            </DropdownMenuContent>
-          </DropdownMenu>
+              </DropdownMenu.Group>
+            </DropdownMenu.Content>
+          </DropdownMenu.Root>
         </ListActions.Left>
         <ListActions.Right>
           <ListActions.Dropdown

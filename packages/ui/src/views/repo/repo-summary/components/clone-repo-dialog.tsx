@@ -1,18 +1,6 @@
 import { FC, useState } from 'react'
 
-import {
-  Button,
-  CopyButton,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  Input,
-  Tabs,
-  TabsList,
-  TabsTrigger
-} from '@/components'
+import { Button, CopyButton, DropdownMenu, Icon, Input, Tabs, TabsList, TabsTrigger } from '@/components'
 import { TranslationStore } from '@/views'
 
 export interface CloneRepoDialogProps {
@@ -37,14 +25,14 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
   const { t } = useTranslationStore()
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
           <Icon name="chevron-down" size={12} className="text-icons-5" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-[328px] p-0 shadow-2" align="end">
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">
         <div className="px-4 pt-4 leading-none">
           <span className="inline-block text-14 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
@@ -55,7 +43,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
           onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
         >
           <TabsList className="px-4">
-            <DropdownMenuItem
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -65,8 +53,8 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               <TabsTrigger className="px-4 data-[state=active]:bg-background-2" value={CloneRepoTabs.HTTPS}>
                 {t('views:repos.cloneHttps', 'HTTPS')}
               </TabsTrigger>
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -80,7 +68,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
               >
                 {t('views:repos.cloneSsh', 'SSH')}
               </TabsTrigger>
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
           </TabsList>
         </Tabs>
         <div className="p-4">
@@ -123,7 +111,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
             />
           )}
         </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

@@ -1,7 +1,7 @@
 import { cn } from '@utils/cn'
 
 import { Button } from './button'
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './dropdown-menu'
+import { DropdownMenu } from './dropdown-menu'
 import { Icon } from './icon'
 import { Text } from './text'
 
@@ -30,8 +30,8 @@ export const BranchSelector = ({ ...props }: PageProps) => {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button
           variant="secondary"
           size={size}
@@ -48,17 +48,17 @@ export const BranchSelector = ({ ...props }: PageProps) => {
           </Text>
           <Icon name="chevron-down" size={10} className="chevron-down ml-0 min-w-[10px] text-tertiary-background" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent align="start">
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content align="start">
         {branchList &&
           branchList.map(branch => {
             return (
-              <DropdownMenuItem key={branch.name} onClick={() => selectBranch(branch.name ?? '')}>
+              <DropdownMenu.Item key={branch.name} onClick={() => selectBranch(branch.name ?? '')}>
                 {branch.name}
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           })}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

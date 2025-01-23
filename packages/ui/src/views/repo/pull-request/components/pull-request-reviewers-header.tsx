@@ -1,16 +1,5 @@
+import { Avatar, AvatarFallback, Button, DropdownMenu, Icon, SearchBox, Text } from '@/components'
 import { TranslationStore } from '@/views'
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  SearchBox,
-  Text
-} from '@components/index'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
@@ -45,13 +34,13 @@ const ReviewersHeader = ({
       <Text size={2} weight="medium">
         {t('views:pullRequests.reviewers')}
       </Text>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
           <Button size="sm" variant="ghost" className="px-2 py-1 text-tertiary-background">
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[298px] p-0" align="start">
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="w-[298px] p-0" align="start">
           <div className="px-3 pt-2">
             <div role="presentation" onKeyDown={e => e.stopPropagation()}>
               <SearchBox.Root
@@ -73,7 +62,7 @@ const ReviewersHeader = ({
                   if (uid === currentUserId) return null
                   const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
                   return (
-                    <DropdownMenuItem
+                    <DropdownMenu.Item
                       className={cn('hover:bg-background-4 cursor-pointer py-1', {
                         'bg-background-4': isSelected,
                         'pl-7': !isSelected
@@ -102,14 +91,14 @@ const ReviewersHeader = ({
                           {display_name}
                         </span>
                       </div>
-                    </DropdownMenuItem>
+                    </DropdownMenu.Item>
                   )
                 })}
               </div>
             </div>
           </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   )
 }

@@ -4,9 +4,6 @@ import {
   Button,
   ButtonGroup,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   FileToolbarActions,
   Icon,
   StackedList,
@@ -54,8 +51,8 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           onDownloadClick={handleDownloadFile}
           onEditClick={handleEditFile}
         />
-        <DropdownMenu>
-          <DropdownMenuTrigger className="-mr-2" asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className="-mr-2" asChild>
             <Button
               className="text-icons-3 hover:text-icons-2 data-[state=open]:text-icons-2"
               variant="custom"
@@ -63,16 +60,16 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
             >
               <Icon name="more-dots-fill" size={16} />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onSelect={handleViewRaw}>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="end">
+            <DropdownMenu.Item onSelect={handleViewRaw}>
               <span className="truncate text-sm">View Raw</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onSelect={handleOpenDeleteDialog}>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item onSelect={handleOpenDeleteDialog}>
               <span className="truncate text-sm text-foreground-danger">Delete</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       </ButtonGroup>
     )
   }

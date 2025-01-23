@@ -1,15 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import {
-  AlertDialog,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  Input
-} from '@/components'
+import { AlertDialog, Button, DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterValue, SavedView, SortValue, ViewManagement } from '../../types'
 
@@ -149,8 +140,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
           <span>Save view</span>
         </Button>
       ) : (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
             <Button
               className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
               variant="custom"
@@ -158,30 +149,30 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
               <Icon name="bookmark-icon" size={12} />
               <span>Manage view</span>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48" align="end">
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content className="w-48" align="end">
             {hasChanges && (
               <>
-                <DropdownMenuItem onSelect={handleUpdateCurrentView}>Update current view</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setIsNewViewDialogOpen(true)}>Save as new view</DropdownMenuItem>
+                <DropdownMenu.Item onSelect={handleUpdateCurrentView}>Update current view</DropdownMenu.Item>
+                <DropdownMenu.Item onSelect={() => setIsNewViewDialogOpen(true)}>Save as new view</DropdownMenu.Item>
               </>
             )}
-            <DropdownMenuItem
+            <DropdownMenu.Item
               onSelect={() => {
                 setNewViewName(currentView.name)
                 setIsRenameDialogOpen(true)
               }}
             >
               Rename
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               className="text-foreground-danger"
               onSelect={() => viewManagement.deleteView(currentView.id)}
             >
               Delete view
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )}
 
       <AlertDialog.Root open={isNewViewDialogOpen} onOpenChange={setIsNewViewDialogOpen}>

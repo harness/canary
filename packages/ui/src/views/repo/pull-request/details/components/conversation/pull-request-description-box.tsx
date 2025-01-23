@@ -1,18 +1,6 @@
 import { useState } from 'react'
 
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  MarkdownViewer,
-  Text
-} from '@components/index'
+import { Avatar, AvatarFallback, Button, DropdownMenu, Icon, MarkdownViewer, Text } from '@/components'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
@@ -46,25 +34,25 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({
   const formattedTime = timeAgo(createdAt || 0)
   const moreTooltip = () => {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
           <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[200px]" align="end">
-          <DropdownMenuGroup>
-            <DropdownMenuItem
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="w-[200px]" align="end">
+          <DropdownMenu.Group>
+            <DropdownMenu.Item
               onClick={e => {
                 setEdit(true)
                 e.stopPropagation()
               }}
             >
               Edit
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            </DropdownMenu.Item>
+          </DropdownMenu.Group>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     )
   }
   return (

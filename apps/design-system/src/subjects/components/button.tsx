@@ -5,17 +5,17 @@ import { DocsPage } from '@components/docs-page/docs-page'
 import { Text } from '@harnessio/ui/components'
 
 const dropdown = `
-      <DropdownMenu>
-        <DropdownMenuTrigger insideSplitButton>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger insideSplitButton>
           <Icon name="chevron-down" size={11} className="chevron-down" />
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="mt-1">
-          <DropdownMenuGroup>
-            <DropdownMenuItem>Item 1</DropdownMenuItem>
-            <DropdownMenuItem>Item 2</DropdownMenuItem>
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content align="end" className="mt-1">
+          <DropdownMenu.Group>
+            <DropdownMenu.Item>Item 1</DropdownMenu.Item>
+            <DropdownMenu.Item>Item 2</DropdownMenu.Item>
+          </DropdownMenu.Group>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
 `
 
 const onClick = () => alert('Button clicked')

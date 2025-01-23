@@ -1,22 +1,6 @@
 import { FC, memo, ReactNode, useEffect, useState } from 'react'
 
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  Card,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-  Icon,
-  Input,
-  NodeGroup,
-  Text
-} from '@components/index'
+import { Avatar, AvatarFallback, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/utils'
 
@@ -94,47 +78,47 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       // We only show the menu if it's an actual comment and not deleted
       if (!isComment || isDeleted) return null
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
             <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
               <Icon name="vertical-ellipsis" size={12} />
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-[180px] rounded-[10px] border bg-background-2 py-2 shadow-sm">
-            <DropdownMenuGroup>
-              <DropdownMenuItem onClick={onEditClick} className="cursor-pointer">
-                <DropdownMenuShortcut className="ml-0" />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content className="w-[180px] rounded-[10px] border bg-background-2 py-2 shadow-sm">
+            <DropdownMenu.Group>
+              <DropdownMenu.Item onClick={onEditClick} className="cursor-pointer">
+                <DropdownMenu.Shortcut className="ml-0" />
                 Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem
+              </DropdownMenu.Item>
+              <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
                 }}
                 className="cursor-pointer"
               >
-                <DropdownMenuShortcut className="ml-0" />
+                <DropdownMenu.Shortcut className="ml-0" />
                 Quote reply
-              </DropdownMenuItem>
-              <DropdownMenuItem className="cursor-pointer" onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
-                <DropdownMenuShortcut className="ml-0" />
+              </DropdownMenu.Item>
+              <DropdownMenu.Item className="cursor-pointer" onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
+                <DropdownMenu.Shortcut className="ml-0" />
                 Copy Link
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
+              </DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item
                 className="cursor-pointer text-destructive"
                 onClick={ev => {
                   ev.stopPropagation()
                   handleDeleteComment?.()
                 }}
               >
-                <DropdownMenuShortcut className="ml-0">
+                <DropdownMenu.Shortcut className="ml-0">
                   <Icon name="trash" className="mr-2 text-destructive" />
-                </DropdownMenuShortcut>
+                </DropdownMenu.Shortcut>
                 Delete
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
+              </DropdownMenu.Item>
+            </DropdownMenu.Group>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )
     }
     return (

@@ -7,7 +7,7 @@ import { cn } from '@utils/cn'
 
 import { Icon } from './icon'
 
-const DropdownMenu = DropdownMenuPrimitive.Root
+const DropdownMenuRoot = DropdownMenuPrimitive.Root
 
 const DropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
@@ -189,20 +189,22 @@ const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTML
 }
 DropdownMenuShortcut.displayName = 'DropdownMenuShortcut'
 
-export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuRadioGroup
+const DropdownMenu = {
+  Root: DropdownMenuRoot,
+  Trigger: DropdownMenuTrigger,
+  Content: DropdownMenuContent,
+  Item: DropdownMenuItem,
+  CheckboxItem: DropdownMenuCheckboxItem,
+  RadioItem: DropdownMenuRadioItem,
+  Label: DropdownMenuLabel,
+  Separator: DropdownMenuSeparator,
+  Shortcut: DropdownMenuShortcut,
+  Group: DropdownMenuGroup,
+  Portal: DropdownMenuPortal,
+  Sub: DropdownMenuSub,
+  SubContent: DropdownMenuSubContent,
+  SubTrigger: DropdownMenuSubTrigger,
+  RadioGroup: DropdownMenuRadioGroup
 }
+
+export { DropdownMenu }

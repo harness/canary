@@ -1,14 +1,4 @@
-import {
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-  Icon
-} from '@/components'
+import { Button, DropdownMenu, Icon } from '@/components'
 
 export const LabelToolTip = ({
   onEdit,
@@ -20,41 +10,41 @@ export const LabelToolTip = ({
   onDelete: (identifier: string) => void
 }) => {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button variant="ghost" size="icon">
           <Icon name="vertical-ellipsis" size={12} className="cursor-pointer text-tertiary-background" />
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent>
-        <DropdownMenuGroup>
-          <DropdownMenuItem
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content>
+        <DropdownMenu.Group>
+          <DropdownMenu.Item
             className="cursor-pointer"
             onClick={e => {
               e.stopPropagation()
               onEdit(identifier)
             }}
           >
-            <DropdownMenuShortcut className="ml-0">
+            <DropdownMenu.Shortcut className="ml-0">
               <Icon name="edit-pen" className="mr-2" />
-            </DropdownMenuShortcut>
+            </DropdownMenu.Shortcut>
             Edit label
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem
+          </DropdownMenu.Item>
+          <DropdownMenu.Separator />
+          <DropdownMenu.Item
             className="cursor-pointer text-destructive"
             onClick={e => {
               e.stopPropagation()
               onDelete(identifier)
             }}
           >
-            <DropdownMenuShortcut className="ml-0">
+            <DropdownMenu.Shortcut className="ml-0">
               <Icon name="trash" className="mr-2 text-destructive" />
-            </DropdownMenuShortcut>
+            </DropdownMenu.Shortcut>
             Delete label
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          </DropdownMenu.Item>
+        </DropdownMenu.Group>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

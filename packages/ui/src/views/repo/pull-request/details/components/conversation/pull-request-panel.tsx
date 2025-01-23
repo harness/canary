@@ -7,10 +7,6 @@ import {
   ButtonWithOptions,
   Checkbox,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Icon,
   Layout,
   StackedList
@@ -210,15 +206,15 @@ const PullRequestPanel = ({
 
   const moreTooltip = () => {
     return (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
           <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
             <Icon name="vertical-ellipsis" size={12} />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-[200px]" align="end">
-          <DropdownMenuGroup>
-            <DropdownMenuItem
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="w-[200px]" align="end">
+          <DropdownMenu.Group>
+            <DropdownMenu.Item
               onClick={e => {
                 handlePrState('draft')
 
@@ -226,28 +222,28 @@ const PullRequestPanel = ({
               }}
             >
               Mark as draft
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               onClick={e => {
                 handlePrState('closed')
                 e.stopPropagation()
               }}
             >
               Close pull request
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
             {rebasePossible && (
-              <DropdownMenuItem
+              <DropdownMenu.Item
                 onClick={e => {
                   handleRebaseBranch()
                   e.stopPropagation()
                 }}
               >
                 Rebase
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )}
-          </DropdownMenuGroup>
-        </DropdownMenuContent>
-      </DropdownMenu>
+          </DropdownMenu.Group>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     )
   }
   return (

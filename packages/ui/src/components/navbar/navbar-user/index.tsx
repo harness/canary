@@ -8,16 +8,6 @@ import {
   ColorType,
   ContrastType,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuPortal,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuSeparator,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
   FullTheme,
   getModeColorContrastFromFullTheme,
   Icon,
@@ -86,103 +76,103 @@ export const NavbarUser = ({
   const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <div>
           <UserBlock username={username} email={currentUser?.email} url={currentUser?.url} isButton />
         </div>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content
         className="ml-3 w-[230px] !rounded-lg bg-background-1"
         align="start"
         sideOffset={-40}
         alignOffset={187}
       >
         <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem asChild>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item asChild>
           <Link to="/profile-settings">
             <Icon size={12} name="user" className="mr-2" />
             <Text>{t('component:navbar.profile', 'Profile')}</Text>
           </Link>
-        </DropdownMenuItem>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+        </DropdownMenu.Item>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>
             <Icon size={12} name="paint" className="mr-2" />
             <Text>{t('component:navbar.theme', 'Theme')}</Text>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              <DropdownMenuItem disabled>Color Scheme</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.SubContent>
+              <DropdownMenu.Item disabled>Color Scheme</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
                 value={mode}
                 onValueChange={value => {
                   setTheme(`${value}-${color}-${contrast}` as FullTheme)
                 }}
               >
-                <DropdownMenuRadioItem value={ModeType.System}>System</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ModeType.Light}>Light</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ModeType.Dark}>Dark</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-              <DropdownMenuItem disabled>Color Correction</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
+                <DropdownMenu.RadioItem value={ModeType.System}>System</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ModeType.Light}>Light</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ModeType.Dark}>Dark</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+              <DropdownMenu.Item disabled>Color Correction</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
                 value={color}
                 onValueChange={value => {
                   setTheme(`${mode}-${value}-${contrast}` as FullTheme)
                 }}
               >
-                <DropdownMenuRadioItem value={ColorType.Standard}>None</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ColorType.ProtanopiaAndDeuteranopia}>Red-Green</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ColorType.Tritanopia}>Blue-Yellow</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-              <DropdownMenuItem disabled>Contrast</DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuRadioGroup
+                <DropdownMenu.RadioItem value={ColorType.Standard}>None</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ColorType.ProtanopiaAndDeuteranopia}>Red-Green</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ColorType.Tritanopia}>Blue-Yellow</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+              <DropdownMenu.Item disabled>Contrast</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
                 value={contrast}
                 onValueChange={value => {
                   setTheme(`${mode}-${color}-${value}` as FullTheme)
                 }}
               >
-                <DropdownMenuRadioItem value={ContrastType.Standard}>Standard</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ContrastType.Low}>Low</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value={ContrastType.High}>High</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
-        <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+                <DropdownMenu.RadioItem value={ContrastType.Standard}>Standard</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ContrastType.Low}>Low</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ContrastType.High}>High</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>
             <Icon size={12} name="environment" className="mr-2" />
             <Text>Language</Text>
-          </DropdownMenuSubTrigger>
-          <DropdownMenuPortal>
-            <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.SubContent>
+              <DropdownMenu.RadioGroup
                 value={i18n.language}
                 onValueChange={value => {
                   changeLanguage(value)
                 }}
               >
-                <DropdownMenuRadioItem value="en">English</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="fr">French</DropdownMenuRadioItem>
-                <DropdownMenuRadioItem value="system">System</DropdownMenuRadioItem>
-              </DropdownMenuRadioGroup>
-            </DropdownMenuSubContent>
-          </DropdownMenuPortal>
-        </DropdownMenuSub>
-        <DropdownMenuItem onClick={handleCustomNav}>
+                <DropdownMenu.RadioItem value="en">English</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value="fr">French</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value="system">System</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
+        <DropdownMenu.Item onClick={handleCustomNav}>
           <Icon size={12} name="navigation" className="mr-2" />
           <Text>{t('component:navbar.customNav', 'Customize navigation')}</Text>
-        </DropdownMenuItem>
+        </DropdownMenu.Item>
 
-        <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={handleLogOut}>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item onClick={handleLogOut}>
           <Icon size={12} name="logOut" className="mr-2" />
           <Text>{t('component:navbar.logout', 'Log out')}</Text>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

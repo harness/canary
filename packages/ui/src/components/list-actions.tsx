@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 import { CheckIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from './dropdown-menu'
+import { DropdownMenu } from './dropdown-menu'
 import { Icon } from './icon'
 import { Text } from './text'
 
@@ -33,8 +33,8 @@ function Right({ children }: { children: ReactNode }) {
 
 function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-primary">
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-primary">
         {selectedValue && <span className="size-[4px] rounded-full bg-primary"></span>}
         <Text
           size={2}
@@ -45,20 +45,20 @@ function Dropdown({ title, items, onChange, selectedValue }: DropdownProps) {
           {title}
         </Text>
         <Icon name="chevron-down" size={12} className="chevron-down" />
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
       {items && (
-        <DropdownMenuContent align="end">
+        <DropdownMenu.Content align="end">
           {items.map((i, i_idx) => {
             return (
-              <DropdownMenuItem className="cursor-pointer" onClick={() => onChange?.(i.value ?? i.name)} key={i_idx}>
+              <DropdownMenu.Item className="cursor-pointer" onClick={() => onChange?.(i.value ?? i.name)} key={i_idx}>
                 <div className="mr-1 w-4">{Boolean(i.value) && selectedValue === i.value ? <CheckIcon /> : null}</div>
                 {i.name}
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           })}
-        </DropdownMenuContent>
+        </DropdownMenu.Content>
       )}
-    </DropdownMenu>
+    </DropdownMenu.Root>
   )
 }
 

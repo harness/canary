@@ -1,4 +1,6 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components'
+import { FC } from 'react'
+
+import { Dialog } from '@/components'
 import { TranslationStore } from '@views/repo'
 
 import { SshKeyCreateForm, SshKeyFormType } from './ssh-key-create-form'
@@ -11,7 +13,7 @@ interface SshKeyCreateDialogProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const SshKeyCreateDialog: React.FC<SshKeyCreateDialogProps> = ({
+export const SshKeyCreateDialog: FC<SshKeyCreateDialogProps> = ({
   open,
   onClose,
   handleCreateSshKey,
@@ -20,18 +22,18 @@ export const SshKeyCreateDialog: React.FC<SshKeyCreateDialogProps> = ({
 }) => {
   const { t } = useTranslationStore()
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-left">{t('views:profileSettings.newSshKey', 'New SSH key')}</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title className="text-left">{t('views:profileSettings.newSshKey', 'New SSH key')}</Dialog.Title>
+        </Dialog.Header>
         <SshKeyCreateForm
           handleCreateSshKey={handleCreateSshKey}
           onClose={onClose}
           useTranslationStore={useTranslationStore}
           error={error}
         />
-      </DialogContent>
-    </Dialog>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

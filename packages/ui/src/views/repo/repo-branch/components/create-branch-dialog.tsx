@@ -7,11 +7,6 @@ import {
   ButtonGroup,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   Fieldset,
   FormWrapper,
   Input,
@@ -75,12 +70,12 @@ export function CreateBranchDialog({
   }, [defaultBranch, setValue])
 
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>{t('views:repos.createBranch', 'Create Branch')}</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>
           <FormWrapper onSubmit={handleSubmit(onSubmit)}>
             <Fieldset>
               <Input
@@ -134,17 +129,17 @@ export function CreateBranchDialog({
               </Alert.Container>
             ) : null}
 
-            <DialogFooter className="-mx-5 -mb-5 mt-5">
+            <Dialog.Footer className="-mx-5 -mb-5 mt-5">
               <ButtonGroup className="flex justify-end">
                 <Button onClick={onClose} className="text-primary" variant="outline" loading={isCreatingBranch}>
                   {t('views:repos.cancel', 'Cancel')}
                 </Button>
                 <Button type="submit">{t('views:repos.createBranch', 'Create Branch')}</Button>
               </ButtonGroup>
-            </DialogFooter>
+            </Dialog.Footer>
           </FormWrapper>
-        </DialogDescription>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Description>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

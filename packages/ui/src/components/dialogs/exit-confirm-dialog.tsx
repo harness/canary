@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Button, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components'
+import { Button, Dialog } from '@/components'
 
 export interface ExitConfirmOptions {
   title?: string
@@ -23,24 +23,24 @@ export const ExitConfirmDialog: FC<ExitConfirmDialogProps> = ({
   cancelText = 'Stay'
 }) => {
   return (
-    <Dialog
+    <Dialog.Root
       open={open}
       onOpenChange={open => {
         if (!open) onCancel?.()
       }}
     >
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>{subtitle}</DialogDescription>
-        <DialogFooter>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title>{title}</Dialog.Title>
+        </Dialog.Header>
+        <Dialog.Description>{subtitle}</Dialog.Description>
+        <Dialog.Footer>
           <Button variant="outline" onClick={() => onCancel?.()}>
             {cancelText}
           </Button>
           <Button onClick={onConfirm}>{confirmText}</Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

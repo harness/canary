@@ -1,4 +1,6 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components'
+import { FC } from 'react'
+
+import { Dialog } from '@/components'
 import { TranslationStore } from '@views/repo'
 
 import { TokenFormType } from '../../types'
@@ -13,7 +15,7 @@ interface TokenCreateDialogProps {
   useTranslationStore: () => TranslationStore
 }
 
-export const TokenCreateDialog: React.FC<TokenCreateDialogProps> = ({
+export const TokenCreateDialog: FC<TokenCreateDialogProps> = ({
   open,
   onClose,
   handleCreateToken,
@@ -23,11 +25,11 @@ export const TokenCreateDialog: React.FC<TokenCreateDialogProps> = ({
 }) => {
   const { t } = useTranslationStore()
   return (
-    <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px]">
-        <DialogHeader>
-          <DialogTitle className="text-left">{t('views:profileSettings.createToken', 'Create a token')}</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={open} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[500px]">
+        <Dialog.Header>
+          <Dialog.Title className="text-left">{t('views:profileSettings.createToken', 'Create a token')}</Dialog.Title>
+        </Dialog.Header>
         <TokenCreateForm
           handleCreateToken={handleCreateToken}
           onClose={onClose}
@@ -35,7 +37,7 @@ export const TokenCreateDialog: React.FC<TokenCreateDialogProps> = ({
           isLoading={isLoading}
           useTranslationStore={useTranslationStore}
         />
-      </DialogContent>
-    </Dialog>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

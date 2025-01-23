@@ -7,10 +7,6 @@ import {
   CommitToGitRefOption,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   GitCommitFormType,
   Icon,
   Input,
@@ -128,11 +124,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[576px]">
-        <DialogHeader>
-          <DialogTitle>Commit Changes</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[576px]">
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
         <form className="flex flex-col gap-y-7 pb-4" onSubmit={handleSubmit(onSubmit)}>
           {isFileNameRequired && (
@@ -244,7 +240,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
           </ControlGroup>
         </form>
 
-        <DialogFooter>
+        <Dialog.Footer>
           <ButtonGroup>
             <>
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
@@ -255,8 +251,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Button>
             </>
           </ButtonGroup>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -1,16 +1,6 @@
 import { FC, useState } from 'react'
 
-import {
-  Button,
-  Carousel,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Icon,
-  Spacer
-} from '@/components'
+import { Button, Carousel, Dialog, Icon, Spacer } from '@/components'
 import { INITIAL_ZOOM_LEVEL, ZOOM_INC_DEC_LEVEL } from '@/utils/utils'
 
 export interface ImageCarouselProps {
@@ -25,17 +15,17 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
   const [zoomLevel, setZoomLevel] = useState(INITIAL_ZOOM_LEVEL)
 
   return (
-    <Dialog
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         setIsOpen(false)
         setZoomLevel(1)
       }}
     >
-      <DialogContent className="h-[600px] max-w-[800px] grid-rows-[1fr_auto]">
-        <DialogHeader>
-          <DialogTitle>{title ? title : <Spacer size={7} />}</DialogTitle>
-        </DialogHeader>
+      <Dialog.Content className="h-[600px] max-w-[800px] grid-rows-[1fr_auto]">
+        <Dialog.Header>
+          <Dialog.Title>{title ? title : <Spacer size={7} />}</Dialog.Title>
+        </Dialog.Header>
         <Carousel.Root className="flex-1 overflow-hidden" initialSlide={initialSlide}>
           <Carousel.Content className="h-full" carouselBlockClassName="h-full">
             {imgEvent &&
@@ -53,7 +43,7 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
               })}
           </Carousel.Content>
         </Carousel.Root>
-        <DialogFooter className="!justify-center">
+        <Dialog.Footer className="!justify-center">
           <Button
             variant="outline"
             size="icon"
@@ -80,8 +70,8 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
           >
             <Icon name="plus" size={16} />
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

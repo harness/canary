@@ -1,17 +1,7 @@
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import {
-  Button,
-  ButtonGroup,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Input,
-  Textarea
-} from '@/components'
+import { Button, ButtonGroup, Dialog, Input, Textarea } from '@/components'
 import { UsererrorError } from '@/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -67,11 +57,11 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[576px]">
-        <DialogHeader>
-          <DialogTitle>Commit Changes</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[576px]">
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
         <form className="flex flex-col gap-y-7 pb-4" onSubmit={handleSubmit(onSubmit)}>
           <Input
@@ -91,7 +81,7 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
           />
         </form>
 
-        <DialogFooter>
+        <Dialog.Footer>
           <ButtonGroup>
             <>
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
@@ -102,8 +92,8 @@ export const CommitSuggestionsDialog: FC<CommitSuggestionsDialogProps> = ({
               </Button>
             </>
           </ButtonGroup>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

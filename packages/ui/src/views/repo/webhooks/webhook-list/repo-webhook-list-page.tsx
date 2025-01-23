@@ -1,11 +1,9 @@
-import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-
-// import { useCommonFilter } from '@hooks/use-common-filter'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { RepoWebhookListPageProps } from './types'
@@ -31,24 +29,11 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
     searchValue: searchQuery || ''
   })
 
-  // const [value, setValue] = useState('')
-
-  // useEffect(() => {
-  //   setValue(query || '')
-  // }, [query])
-
-  // const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setValue(e?.target?.value ?? '')
-  //   handleSearch(e)
-  // }
-
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
   const handleResetFiltersQueryAndPages = () => {
-    // setValue('')
-    // handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
     handleResetSearch()
     setPage(1)
   }

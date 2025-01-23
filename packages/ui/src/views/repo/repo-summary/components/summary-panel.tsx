@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Badge, Button, DropdownMenu, Icon, IconProps, Spacer, Text } from '@/components'
+import { TranslationStore } from '@views/repo/repo-list/types'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 

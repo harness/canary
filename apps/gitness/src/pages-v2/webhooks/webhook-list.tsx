@@ -13,7 +13,6 @@ import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-// import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
@@ -21,7 +20,6 @@ import { useWebhookStore } from './stores/webhook-store'
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
   const { setWebhooks, page, setPage, setError } = useWebhookStore()
-  // const [query] = useDebouncedQueryState('query')
   const [query, setQuery] = useQueryState('query')
 
   const queryClient = useQueryClient()

@@ -16,6 +16,25 @@ export const getPrState = (
   }
 }
 
+// TODO: check if this is the correct way to get the checks state
+export const getChecksState = (status: {
+  failure: number
+  error: number
+  pending: number
+  running: number
+  success: number
+}) => {
+  if (status.failure > 0 || status.error > 0) {
+    return 'failure'
+  }
+
+  if (status.pending > 0 || status.running > 0) {
+    return 'running'
+  }
+
+  return 'success'
+}
+
 //**
 //  * parses diff strings to extract the starting line number from the hunk header. this
 //  * function is needed because the diff viewer being used hides that info because it assumes

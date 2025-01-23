@@ -3,14 +3,17 @@ import { Outlet, Route, Routes } from 'react-router-dom'
 
 import { noop, useThemeStore, useTranslationsStore } from '@utils/viewUtils'
 
-import { Breadcrumb, Navbar, NavbarItemType, Topbar } from '@harnessio/ui/components'
+import { Breadcrumb, MoreSubmenu, Navbar, NavbarItemType, SettingsMenu, Topbar } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'
+
+import { useRootViewWrapperStore } from './root-view-wrapper-store'
 
 const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ children, asChild = false }) => {
   const [showMoreMenu, setShowMoreMenu] = useState(false)
   const [showSettingsMenu, setShowSettingsMenu] = useState(false)
   const [pinnedMenu, setPinnedMenu] = useState<NavbarItemType[]>([])
   const [recentMenu] = useState<NavbarItemType[]>([])
+  const { moreMenu, settingsMenu } = useRootViewWrapperStore()
 
   const setPinned = useCallback((item: NavbarItemType, pin: boolean) => {
     setPinnedMenu(current => (pin ? [...current, item] : current.filter(pinnedItem => pinnedItem !== item)))
@@ -18,6 +21,7 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
 
   const onToggleMoreMenu = useCallback(() => {
     setShowSettingsMenu(false)
+    console.log('open more menu')
     setShowMoreMenu(current => !current)
   }, [])
 
@@ -47,6 +51,12 @@ const RootViewWrapper: FC<PropsWithChildren<{ asChild?: boolean }>> = ({ childre
                 handleRemoveRecentMenuItem={noop}
                 useThemeStore={useThemeStore}
                 useTranslationStore={useTranslationsStore}
+              />
+              <MoreSubmenu showMoreMenu={showMoreMenu} handleMoreMenu={onToggleMoreMenu} items={moreMenu} />
+              <SettingsMenu
+                showSettingMenu={showSettingsMenu}
+                handleSettingsMenu={onToggleSettingsMenu}
+                items={settingsMenu}
               />
             </SandboxLayout.LeftPanel>
             <div className="flex flex-col">

@@ -88,7 +88,8 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                     )
                   }
                   description={
-                    pullRequest.author && (
+                    pullRequest.author &&
+                    typeof pullRequest.author === 'string' && (
                       <PullRequestItemDescription
                         number={pullRequest.number}
                         author={pullRequest.author}

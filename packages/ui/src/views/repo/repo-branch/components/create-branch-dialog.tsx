@@ -84,12 +84,11 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-xl border-border bg-background-1">
+      <Dialog.Content className="border-border bg-background-1 max-w-xl" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
         </Dialog.Header>
-        {/* ID for FormWrapper to fix accessibility issues */}
-        <FormWrapper id="radix-:ru:" onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <Input
               id="name"

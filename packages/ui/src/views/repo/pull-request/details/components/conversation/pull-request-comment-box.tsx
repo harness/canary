@@ -198,8 +198,10 @@ const PullRequestCommentBox = ({
               <Button
                 variant={'outline'}
                 onClick={() => {
-                  onCommentSaveAndStatusChange?.(comment, isResolved ? 'active' : 'resolved', parentCommentId)
-                  onCancelClick?.()
+                  if (comment.trim()) {
+                    onCommentSaveAndStatusChange?.(comment.trim(), isResolved ? 'active' : 'resolved', parentCommentId)
+                    onCancelClick?.()
+                  }
                 }}
               >
                 {isResolved ? 'Reply & Reactivate' : 'Reply & Resolve'}

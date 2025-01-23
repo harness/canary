@@ -71,7 +71,7 @@ export default function PullRequestChanges() {
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [commentId] = useQueryState('commentId', parseAsString, '')
+  const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
 
   const {

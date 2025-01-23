@@ -101,7 +101,7 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
   const [comment, setComment] = useState<string>('')
-  const [commentId] = useQueryState('commentId', parseAsString, '')
+  const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()

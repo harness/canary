@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 
+import { parse } from 'path'
+
 import {
   Accordion,
   Badge,
@@ -191,6 +193,7 @@ const PullRequestPanel = ({
   )
   const checkData = checks || []
   const [notBypassable, setNotBypassable] = useState(false)
+  const [mergeButtonValue, setMergeButtonValue] = useState(actions[0].id)
 
   useEffect(() => {
     if (ruleViolationArr && !isDraft && ruleViolationArr.data.rule_violations) {
@@ -217,7 +220,6 @@ const PullRequestPanel = ({
             <DropdownMenu.Item
               onClick={e => {
                 handlePrState('draft')
-
                 e.stopPropagation()
               }}
             >
@@ -313,16 +315,18 @@ const PullRequestPanel = ({
                         !mergeable ||
                         ['pending', 'running', 'failed'].includes(checksInfo.status)
                       }
-                      selectedValue={actions[0].id}
-                      handleOptionChange={() => {}}
+                      selectedValue={mergeButtonValue}
+                      handleOptionChange={value => setMergeButtonValue(value)}
                       options={actions.map(action => ({
                         value: action.id,
                         label: action.title,
                         description: action.description
                       }))}
-                      handleButtonClick={() => actions[0]?.action?.()}
+                      handleButtonClick={() => {
+                        actions[parseInt(mergeButtonValue)]?.action?.()
+                      }}
                     >
-                      {pullReqMetadata?.is_draft ? 'Ready for review' : 'Squash and merge'}
+                      {pullReqMetadata?.is_draft ? 'Ready for review' : actions[parseInt(mergeButtonValue)].title}
                     </ButtonWithOptions>
                   ) : (
                     <Button

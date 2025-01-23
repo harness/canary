@@ -1,4 +1,4 @@
-import { Icon } from '@harnessio/ui/components'
+import { Icon } from '..'
 
 export function StartNode() {
   return (

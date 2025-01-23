@@ -1,4 +1,4 @@
-import { Button, Icon } from '@harnessio/ui/components'
+import { Button, Icon } from '..'
 
 export interface SerialGroupNodeProps {
   name?: string

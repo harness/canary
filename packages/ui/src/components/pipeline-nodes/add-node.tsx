@@ -1,4 +1,4 @@
-import { Button, Icon } from '@harnessio/ui/components'
+import { Button, Icon } from '..'
 
 export interface AddNodeProp {
   onClick?: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void

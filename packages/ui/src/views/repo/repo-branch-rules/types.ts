@@ -60,7 +60,8 @@ export enum BranchRuleId {
   BLOCK_BRANCH_CREATION = 'create_forbidden',
   BLOCK_BRANCH_DELETION = 'delete_forbidden',
   REQUIRE_PULL_REQUEST = 'update_forbidden',
-  REQUIRE_CODE_REVIEW = 'require_minimum_count'
+  REQUIRE_CODE_REVIEW = 'require_minimum_count',
+  REQUIRE_CODE_OWNERS = 'require_code_owners'
 }
 
 export enum PatternsButtonType {
@@ -77,7 +78,7 @@ export type IBranchRulesStore = {
 
 export const repoBranchSettingsFormSchema = z.object({
   identifier: z.string().min(1, 'Name is required'),
-  description: z.string().min(1, 'Description is required'),
+  description: z.string(),
   pattern: z.string(),
   patterns: z.array(
     z.object({

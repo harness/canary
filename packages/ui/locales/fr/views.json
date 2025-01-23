@@ -54,6 +54,8 @@
     "RequirePullRequestDescription": "Interdire les modifications directes sur les branches sans requête de tirage",
     "RequireCodeReview": "Exiger un minimum de réviseurs",
     "RequireCodeReviewDescription": "Les requêtes de tirage doivent être approuvées par un nombre minimal de réviseurs",
+    "RequireCodeOwners": "Require review from code owners",
+    "RequireCodeOwnersDescription": "Require approval on pull requests from one reviewer for each Code Owner rule",
     "enableRule": "Activer la règle",
     "enableRuleDescription": "En activant cette option, la règle sera appliquée.",
     "enterRuleName": "Enter the rule name here",

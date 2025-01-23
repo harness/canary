@@ -101,5 +101,13 @@ export const getBranchRules = (t: TFunction): BranchRuleType[] => [
       'Require approval on pull requests from a minimum number of reviewers'
     ),
     hasInput: true
+  },
+  {
+    id: BranchRuleId.REQUIRE_CODE_OWNERS,
+    label: t('views:repos.RequireCodeOwners', 'Require review from code owners'),
+    description: t(
+      'views:repos.RequireCodeOwnersDescription',
+      'Require approval on pull requests from one reviewer for each Code Owner rule'
+    )
   }
 ]

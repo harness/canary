@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'

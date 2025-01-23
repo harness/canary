@@ -168,14 +168,18 @@ const repoRoutes: CustomRouteObject[] = [
             children: [
               { index: true, element: <PullRequestListPage /> },
               {
-                path: 'compare/:diffRefs',
+                path: 'compare',
                 handle: {
                   breadcrumb: () => <Text>Compare</Text>,
-                  asLink: false,
-                  routeName: RouteConstants.toPullRequestCompare
+                  asLink: false
                 },
                 children: [
                   { index: true, element: <CreatePullRequest /> },
+                  {
+                    path: ':diffRefs',
+                    element: <CreatePullRequest />,
+                    handle: { routeName: RouteConstants.toPullRequestCompare }
+                  },
                   { path: '*', element: <CreatePullRequest /> }
                 ]
               },

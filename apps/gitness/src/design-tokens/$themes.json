@@ -226,6 +226,7 @@
       "foreground.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
       "foreground.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e",
       "border.base": "4890ce84e07a0c8c449b752ad1ef5f773a1f9f39",
+      "border.interactive": "ce46286e4b64363aaa879c2d79a005c1e836a8be",
       "border.subtle": "ab498cc9b4c01f7aca0448f2db3e9b3b684f08e2",
       "border.ring": "2ddd56e1e5a3c0d7d16d6d35d123815eb7533485",
       "action.primary.solid.default.background": "c60ca07649c2414c8a21027ea629cc9c23e2754a",
@@ -361,8 +362,7 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.bg": "73c54b372ef0757e3b5f064898369cb18e6b0c79",
-      "border.interactive": "ce46286e4b64363aaa879c2d79a005c1e836a8be"
+      "feedback.warning.subtle.default.bg": "73c54b372ef0757e3b5f064898369cb18e6b0c79"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -741,6 +741,7 @@
       "foreground.muted": "d2d95ea204dd3ad0f6c22f03061ca75c7f4fcc1a",
       "foreground.accent": "0dd81a9f8cc7065372ed282cf24a647d0284bc4e",
       "border.base": "4890ce84e07a0c8c449b752ad1ef5f773a1f9f39",
+      "border.interactive": "ce46286e4b64363aaa879c2d79a005c1e836a8be",
       "border.subtle": "ab498cc9b4c01f7aca0448f2db3e9b3b684f08e2",
       "border.ring": "2ddd56e1e5a3c0d7d16d6d35d123815eb7533485",
       "action.primary.solid.default.background": "c60ca07649c2414c8a21027ea629cc9c23e2754a",
@@ -876,8 +877,7 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.background": "68226d79fda8d25e56aed5528ac71de1a59b37f0",
-      "border.interactive": "ce46286e4b64363aaa879c2d79a005c1e836a8be"
+      "feedback.warning.subtle.default.background": "68226d79fda8d25e56aed5528ac71de1a59b37f0"
     }
   }
 ]

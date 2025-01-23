@@ -390,27 +390,48 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               )}
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
-                <CommitsList
-                  toCode={toCode}
-                  toCommitDetails={toCommitDetails}
-                  data={commitData?.map((item: TypesCommit) => ({
-                    sha: item.sha,
-                    parent_shas: item.parent_shas,
-                    title: item.title,
-                    message: item.message,
-                    author: item.author,
-                    committer: item.committer
-                  }))}
-                />
+                {(commitData ?? []).length > 0 ? (
+                  <CommitsList
+                    toCode={toCode}
+                    toCommitDetails={toCommitDetails}
+                    data={commitData?.map((item: TypesCommit) => ({
+                      sha: item.sha,
+                      parent_shas: item.parent_shas,
+                      title: item.title,
+                      message: item.message,
+                      author: item.author,
+                      committer: item.committer
+                    }))}
+                  />
+                ) : (
+                  <NoData
+                    iconName={'no-data-commits'}
+                    title={t('views:noData.noCommitsYet', 'No commits yet')}
+                    description={[
+                      t(
+                        'views:noData.noCommitsYetDescription',
+                        "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                      )
+                    ]}
+                  />
+                )}
               </TabsContent>
               <TabsContent className="pt-7" value="changes">
                 {/* Content for Changes */}
-                <PullRequestCompareDiffList
-                  diffData={diffData}
-                  currentUser={currentUser}
-                  diffStats={diffStats}
-                  useTranslationStore={useTranslationStore}
-                />
+                {(diffData ?? []).length > 0 ? (
+                  <PullRequestCompareDiffList
+                    diffData={diffData}
+                    currentUser={currentUser}
+                    diffStats={diffStats}
+                    useTranslationStore={useTranslationStore}
+                  />
+                ) : (
+                  <NoData
+                    iconName="no-data-folder"
+                    title="No changes to display"
+                    description={['There are no changes to display for the selected branches.']}
+                  />
+                )}
               </TabsContent>
             </Tabs>
           </Layout.Vertical>

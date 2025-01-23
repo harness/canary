@@ -71,7 +71,6 @@ export const RepoCode = () => {
     if (repository && !fullGitRef) {
       setSelectedBranch(repository?.default_branch || '')
     } else if (fullGitRef) {
-      console.log('fullGitRef', fullGitRef)
       setSelectedBranch(fullGitRef)
     }
   }, [repository, fullGitRef])

@@ -6,15 +6,20 @@ import { CommitSuggestionsDialog } from '@harnessio/ui/components'
 import { PullRequestChangesPage, TypesCommit, TypesPullReqActivity } from '@harnessio/ui/views'
 
 import { commitData, currentUser } from './pull-request-changes-data'
-import { pullRequestProviderStore } from './pull-request-provider-store'
+import { mockDiffs, pullRequestProviderStore } from './pull-request-provider-store'
 import { pullRequestStore } from './pull-request-store'
 
-const PullRequestChanges: FC<PropsWithChildren> = () => {
+interface PullRequestChangesProps extends PropsWithChildren {
+  state: string
+}
+
+const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
   const isCommitDialogOpen = false
 
   const usePullRequestProviderStore = useCallback(
     () => ({
       ...pullRequestProviderStore,
+      diffs: state === 'complex-1' ? mockDiffs : pullRequestProviderStore.diffs,
       setRepoMetadata: noop,
       setPullReqCommits: noop,
       setShowEditDescription: noop,
@@ -37,7 +42,7 @@ const PullRequestChanges: FC<PropsWithChildren> = () => {
       }
     }),
 
-    []
+    [state]
   )
   return (
     <>
@@ -54,7 +59,7 @@ const PullRequestChanges: FC<PropsWithChildren> = () => {
         setDiffMode={noop}
         loadingReviewers={undefined}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        diffMode={'split' as any}
+        diffMode={3}
         reviewers={undefined}
         refetchReviewers={noop}
         submitReview={noop}
@@ -78,7 +83,7 @@ const PullRequestChanges: FC<PropsWithChildren> = () => {
         setSelectedCommits={noop}
         markViewed={noop}
         unmarkViewed={noop}
-        activities={undefined}
+        activities={pullRequestProviderStore?.pullReqActivities}
         commentId={undefined}
         onCopyClick={noop}
         onCommentSaveAndStatusChange={noop}

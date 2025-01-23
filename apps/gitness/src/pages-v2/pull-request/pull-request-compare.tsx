@@ -211,10 +211,17 @@ export const CreatePullRequest = () => {
       },
       {
         // TODO: fix this to navigate to the new pull request after transferring a pull request page to ui
-        onSuccess: () => {
+        onSuccess: data => {
           setApiError(null)
-
-          navigate(routes.toPullRequests({ spaceId, repoId }))
+          if (data?.body?.number) {
+            navigate(
+              routes.toPullRequest({
+                spaceId,
+                repoId,
+                pullRequestId: data?.body?.number.toString()
+              })
+            )
+          }
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'

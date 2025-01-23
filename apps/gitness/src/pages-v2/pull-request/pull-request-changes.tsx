@@ -30,7 +30,7 @@ import {
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { parseAsString, useQueryState } from '../../framework/hooks/useQueryState'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PullReqReviewDecision } from '../../pages/pull-request/types/types'

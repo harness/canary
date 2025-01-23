@@ -45,6 +45,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
         description?: string
         created?: number
         default_branch?: string
+        is_public?: boolean
       }
     | undefined
   handleCreateToken: () => void
@@ -295,6 +296,8 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
+              is_public={repository?.is_public}
+              useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

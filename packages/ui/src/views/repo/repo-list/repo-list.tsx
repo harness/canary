@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { Badge, Icon, NoData, SkeletonList, StackedList, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
@@ -30,7 +30,7 @@ const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
 
 const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
   <div className="inline-flex items-center gap-2.5">
-    <span className="font-medium">{title}</span>
+    <Text className="font-medium truncate max-w-full">{title}</Text>
     <Badge size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
       {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
     </Badge>
@@ -99,9 +99,15 @@ export function RepoList({
           <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
             <StackedList.Field
               primary
-              description={repo.importing ? t('views:repos.importing', 'Importing…') : repo.description}
+              description={
+                repo.importing ? (
+                  t('views:repos.importing', 'Importing…')
+                ) : (
+                  <Text className="truncate max-w-full">{repo.description}</Text>
+                )
+              }
               title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-              className="line-clamp-1 flex gap-1.5 text-wrap"
+              className="max-w-[80%] flex gap-1.5 text-wrap"
             />
             {!repo.importing && (
               <StackedList.Field

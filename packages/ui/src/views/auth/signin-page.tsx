@@ -22,7 +22,7 @@ export interface SignInData {
 }
 
 const signInSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.string(),
   password: z.string().min(1, { message: 'The field can’t be blank' })
 })
 
@@ -90,8 +90,7 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               id="email"
-              type="email"
-              label="Email"
+              label="Username/Email"
               placeholder="Your email"
               size="md"
               {...register('email', { onChange: handleInputChange })}

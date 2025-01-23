@@ -1,9 +1,9 @@
-import { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
-import { useCommonFilter } from '@hooks/use-common-filter'
 
 import { RepoWebhookList } from './components/repo-webhook-list'
 import { RepoWebhookListPageProps } from './types'
@@ -11,30 +11,30 @@ import { RepoWebhookListPageProps } from './types'
 const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   useWebhookStore,
   useTranslationStore,
-  openDeleteWebhookDialog
+  openDeleteWebhookDialog,
+  searchQuery,
+  setSearchQuery,
+  webhookLoading
 }) => {
   const { t } = useTranslationStore()
-  const { webhooks, totalPages, page, setPage, webhookLoading, error } = useWebhookStore()
+  const { webhooks, totalPages, page, setPage, error } = useWebhookStore()
 
-  const { query, handleSearch } = useCommonFilter()
-  const [value, setValue] = useState('')
-
-  useEffect(() => {
-    setValue(query || '')
-  }, [query])
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e?.target?.value ?? '')
-    handleSearch(e)
-  }
+  // const { query, handleSearch } = useCommonFilter()
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!query
-  }, [page, query])
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   const handleResetFiltersQueryAndPages = () => {
-    setValue('')
-    handleSearch({ target: { value: '' } } as ChangeEvent<HTMLInputElement>)
+    handleResetSearch()
     setPage(1)
   }
 
@@ -54,7 +54,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
                   <SearchBox.Root
                     width="full"
                     className="max-w-96"
-                    value={value}
+                    value={searchInput || ''}
                     handleChange={handleInputChange}
                     placeholder={t('views:repos.search', 'Search')}
                   />

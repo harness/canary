@@ -72,4 +72,7 @@ export interface RepoWebhookListPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
   openDeleteWebhookDialog: (id: number) => void
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
+  webhookLoading: boolean
 }

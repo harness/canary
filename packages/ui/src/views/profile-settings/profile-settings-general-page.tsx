@@ -33,11 +33,7 @@ const profileSchema = z.object({
 
 const passwordSchema = z
   .object({
-    newPassword: z
-      .string()
-      .min(6, { message: 'New password must be at least 6 characters' })
-      .regex(/[0-9]/, 'New password must contain at least one number')
-      .regex(/[A-Z]/, 'New password must contain at least one uppercase letter'),
+    newPassword: z.string().min(6, { message: 'New password must be at least 6 characters' }),
     confirmPassword: z.string().min(6, { message: 'Please confirm your new password' })
   })
   .refine(data => data.newPassword === data.confirmPassword, {

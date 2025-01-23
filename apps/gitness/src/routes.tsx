@@ -107,7 +107,7 @@ const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: ':commitSHA',
-                element: <RepoCommitDetailsPage />,
+                element: <RepoCommitDetailsPage showSidebar={false} />,
                 handle: {
                   breadcrumb: ({ commitSHA }: { commitSHA: string }) => (
                     <>
@@ -121,7 +121,7 @@ const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: (
                       <ExplorerPathsProvider>
-                        <CommitDiffContainer />
+                        <CommitDiffContainer showSidebar={false} />
                       </ExplorerPathsProvider>
                     )
                   }
@@ -169,10 +169,15 @@ const repoRoutes: CustomRouteObject[] = [
               { index: true, element: <PullRequestListPage /> },
               {
                 path: 'compare/:diffRefs',
-                element: <CreatePullRequest />,
                 handle: {
+                  breadcrumb: () => <Text>Compare</Text>,
+                  asLink: false,
                   routeName: RouteConstants.toPullRequestCompare
-                }
+                },
+                children: [
+                  { index: true, element: <CreatePullRequest /> },
+                  { path: '*', element: <CreatePullRequest /> }
+                ]
               },
               {
                 path: ':pullRequestId',

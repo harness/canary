@@ -217,7 +217,9 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           if (!isNewBranch) {
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
-            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${selectedBranchTag.name}...${newBranchName}`)
+            navigate(
+              routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${selectedBranchTag.name}...${newBranchName}` })
+            )
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}

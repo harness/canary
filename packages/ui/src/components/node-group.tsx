@@ -59,12 +59,8 @@ function Content({ children }: { children: ReactNode }) {
 function Connector({ first, last, className }: { first?: boolean; last?: boolean; className?: string }) {
   return (
     <div
-      className={cn(
-        'absolute bottom-0 left-[11px] top-0 z-10 w-1',
-        { 'top-3': first },
-        { 'bottom-8': last },
-        className
-      )}
+      className={cn('absolute bottom-0 left-2.5 top-0 z-10 w-1', { 'top-3': first }, { 'bottom-8': last }, className)}
+      data-connector
     >
       <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-borders-4" />
     </div>

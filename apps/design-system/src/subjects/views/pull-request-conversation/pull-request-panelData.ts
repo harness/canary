@@ -165,6 +165,144 @@ export const mockPullRequestActions = [
 
 export const mockActivities = [
   {
+    id: 795,
+    created: 1737660580605,
+    updated: 1737660580605,
+    edited: 1737660580605,
+    parent_id: null,
+    repo_id: 22,
+    pullreq_id: 174,
+    order: 2,
+    sub_order: 0,
+    type: 'code-comment',
+    kind: 'change-comment',
+    text: 'We should add type checking for this function to improve type safety',
+    payload: {
+      title: '@@ -0,0 +1,4 @@',
+      lines: [
+        "+import tailwindcssAnimate from 'tailwindcss-animate'",
+        "+import { PluginAPI } from 'tailwindcss/types/config'",
+        '+',
+        '+export default {'
+      ],
+      line_start_new: true,
+      line_end_new: true
+    },
+    author: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    },
+    resolved: 1737660580605,
+    resolver: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    },
+    code_comment: {
+      outdated: false,
+      merge_base_sha: '12421f51a7cca90376cba8de0fe9b3289eb6e218',
+      source_sha: '34f4d7bbfeda153e4965395ac6a20e80dec63e57',
+      path: 'packages/canary/configs/tailwind.ts',
+      line_new: 2,
+      span_new: 1,
+      line_old: 0,
+      span_old: 0
+    }
+  },
+  {
+    id: 796,
+    created: 1737660580605,
+    updated: 1737660580605,
+    edited: 1737660580605,
+    parent_id: null,
+    repo_id: 22,
+    pullreq_id: 174,
+    order: 2,
+    sub_order: 0,
+    type: 'comment',
+    kind: 'comment',
+    text: 'Should we consider adding unit tests for the new animation components?',
+    payload: {},
+    author: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    },
+    resolved: 1737660580607,
+    resolver: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    }
+  },
+
+  {
+    id: 797,
+    created: 1737660580606,
+    updated: 1737660580606,
+    edited: 1737660580606,
+    parent_id: 796,
+    repo_id: 22,
+    pullreq_id: 174,
+    order: 2,
+    sub_order: 1,
+    type: 'comment',
+    kind: 'comment',
+    text: 'Yes, I agree. I will add tests for basic animations first.',
+    payload: {},
+    author: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    }
+  },
+
+  {
+    id: 798,
+    created: 1737660580607,
+    updated: 1737660580607,
+    edited: 1737660580607,
+    parent_id: 796,
+    repo_id: 22,
+    pullreq_id: 174,
+    order: 2,
+    sub_order: 2,
+    type: 'comment',
+    kind: 'comment',
+    text: 'Tests have been added in PR #123. We can close this discussion.',
+    payload: {},
+    author: {
+      id: 3,
+      uid: 'admin',
+      display_name: 'Administrator',
+      email: 'admin@gitness.io',
+      type: 'user',
+      created: 1699863416002,
+      updated: 1699863416002
+    }
+  },
+  {
     id: 792,
     created: 1737660563002,
     updated: 1737660580604,

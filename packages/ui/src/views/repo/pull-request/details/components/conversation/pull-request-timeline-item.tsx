@@ -1,4 +1,4 @@
-import { FC, memo, ReactNode, useEffect, useState } from 'react'
+import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
 import { Avatar, AvatarFallback, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
 import { cn } from '@utils/cn'
@@ -16,6 +16,7 @@ interface TimelineItemProps {
   parentCommentId?: number
   commentId?: number
   currentUser?: string
+  contentHeader?: ReactNode
   content?: ReactNode
   icon?: ReactNode
   isLast: boolean
@@ -37,7 +38,6 @@ interface TimelineItemProps {
   id?: string
   isResolved?: boolean
   toggleConversationStatus?: (status: string, parentId?: number) => void
-  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   data?: string
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   onQuoteReply?: (parentId: number, rawText: string) => void
@@ -125,16 +125,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-center gap-1.5">
           {avatar && <div>{avatar}</div>}
-          {name && (
-            <Text size={2} color="primary" weight="medium">
-              {name}
-            </Text>
-          )}
-          {description && (
-            <Text size={2} color="tertiaryBackground">
-              {description}
-            </Text>
-          )}
+          {name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
+          {description && <span className="text-14 text-foreground-4">{description}</span>}
         </div>
         {selectStatus && (
           <div className="justify-end">
@@ -152,6 +144,7 @@ ItemHeader.displayName = 'ItemHeader'
 
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   header,
+  contentHeader,
   content,
   icon,
   isLast,
@@ -175,7 +168,6 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   id,
   isResolved,
   toggleConversationStatus,
-  onCommentSaveAndStatusChange,
   isNotCodeComment,
   data,
   handleUpload,
@@ -183,9 +175,41 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   quoteReplyText
 }) => {
   const [comment, setComment] = useState('')
+  const [isExpanded, setIsExpanded] = useState(!isResolved)
+
   useEffect(() => {
     if (quoteReplyText) setComment(quoteReplyText)
   }, [quoteReplyText])
+
+  useEffect(() => {
+    if (isResolved) {
+      setIsExpanded(false)
+    }
+  }, [isResolved])
+
+  const renderContent = () => {
+    if (!content) return null
+
+    // Show full content if not resolved or expanded
+    if (!isResolved || isExpanded) {
+      return content
+    }
+
+    // For resolved comments with contentHeader, hide all content when collapsed
+    if (contentHeader) {
+      return null
+    }
+
+    // For resolved comments without contentHeader, show only the first comment
+    const contentElement = content as ReactElement
+    if (contentElement.props?.children?.length) {
+      // If content is an array of comments, take the first one
+      const [firstComment] = Children.toArray(contentElement.props.children)
+      return <div className="px-4 pt-4 [&_[data-connector]]:hidden">{firstComment}</div>
+    }
+    // If content is a single element, return as is
+    return content
+  }
 
   return (
     <div id={id}>
@@ -194,102 +218,122 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
         <NodeGroup.Title className={titleClassName}>
           {/* Ensure that header has at least one item */}
           {header.length > 0 && (
-            <ItemHeader
-              isDeleted={isDeleted}
-              onEditClick={onEditClick}
-              onCopyClick={onCopyClick}
-              isComment={isComment}
-              isNotCodeComment={isNotCodeComment}
-              handleDeleteComment={handleDeleteComment}
-              commentId={commentId}
-              {...header[0]}
-              onQuoteReply={() => {
-                setHideReplyHere?.(true)
-                if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
-              }}
-            />
+            <div className="flex w-full items-center justify-between gap-x-2">
+              <ItemHeader
+                isDeleted={isDeleted}
+                onEditClick={onEditClick}
+                onCopyClick={onCopyClick}
+                isComment={isComment}
+                isNotCodeComment={isNotCodeComment}
+                handleDeleteComment={handleDeleteComment}
+                commentId={commentId}
+                {...header[0]}
+                onQuoteReply={() => {
+                  setHideReplyHere?.(true)
+                  if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
+                }}
+              />
+              {isResolved && !contentHeader && (
+                <Button
+                  className="h-auto gap-x-1.5 px-4 font-normal text-foreground-2 hover:text-foreground-8"
+                  variant="custom"
+                  onClick={() => setIsExpanded(prev => !prev)}
+                >
+                  <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                  {isExpanded ? 'Hide resolved' : 'Show resolved'}
+                </Button>
+              )}
+            </div>
           )}
         </NodeGroup.Title>
         {content && (
           <NodeGroup.Content>
-            <Card.Root className={cn('rounded-md bg-transparent', contentClassName)}>
+            <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
+              {contentHeader && (
+                <div
+                  className={cn('flex w-full items-center justify-between p-4 bg-background-2', {
+                    'pr-1.5': isResolved
+                  })}
+                >
+                  {contentHeader}
+                  {isResolved && (
+                    <Button
+                      className="h-auto gap-x-1.5 px-2.5 font-normal text-foreground-2 hover:text-foreground-8"
+                      variant="custom"
+                      onClick={() => setIsExpanded(prev => !prev)}
+                    >
+                      <Icon name={isExpanded ? 'collapse-comment' : 'expand-comment'} size={14} />
+                      {isExpanded ? 'Hide resolved' : 'Show resolved'}
+                    </Button>
+                  )}
+                </div>
+              )}
+
               {isEditMode ? (
                 <PullRequestCommentBox
                   handleUpload={handleUpload}
                   isEditMode
+                  currentUser={currentUser}
                   onSaveComment={() => {
                     handleSaveComment?.(comment, parentCommentId)
                     setComment('')
                   }}
-                  currentUser={currentUser}
                   onCancelClick={() => {
                     setComment('')
                   }}
-                  isResolved={isResolved}
                   comment={comment}
                   setComment={setComment}
                 />
               ) : (
-                content
+                renderContent()
               )}
-              {!hideReplySection && (
+              {!hideReplySection && (!isResolved || isExpanded) && (
                 <>
                   {hideReplyHere ? (
-                    <div className="flex w-full flex-col px-4">
-                      <PullRequestCommentBox
-                        handleUpload={handleUpload}
-                        inReplyMode
-                        hideAvatar
-                        onSaveComment={() => {
-                          handleSaveComment?.(comment, parentCommentId)
-                          setHideReplyHere?.(false)
+                    <PullRequestCommentBox
+                      handleUpload={handleUpload}
+                      inReplyMode
+                      onSaveComment={() => {
+                        handleSaveComment?.(comment, parentCommentId)
+                        setHideReplyHere?.(false)
+                      }}
+                      onCancelClick={() => {
+                        setHideReplyHere?.(false)
+                      }}
+                      comment={comment}
+                      setComment={setComment}
+                    />
+                  ) : (
+                    <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
+                      {currentUser ? (
+                        <Avatar className="size-6 rounded-full p-0">
+                          <AvatarFallback>
+                            <span className="text-12 text-foreground-3">{getInitials(currentUser ?? '', 2)}</span>
+                          </AvatarFallback>
+                        </Avatar>
+                      ) : null}
+                      <Input
+                        placeholder="Reply here"
+                        size="md"
+                        onClick={() => {
+                          setHideReplyHere?.(true)
                         }}
-                        currentUser={currentUser}
-                        onCancelClick={() => {
-                          setHideReplyHere?.(false)
+                        onChange={e => {
+                          setComment(e.target.value)
                         }}
-                        comment={comment}
-                        isResolved={isResolved}
-                        setComment={setComment}
-                        parentCommentId={parentCommentId}
-                        onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                       />
                     </div>
-                  ) : (
-                    <>
-                      <div className={cn('flex items-center gap-3 border-t', replyBoxClassName)}>
-                        {currentUser ? (
-                          <Avatar className="size-6 rounded-full p-0">
-                            <AvatarFallback>
-                              <Text size={1} color="tertiaryBackground">
-                                {getInitials(currentUser ?? '', 2)}
-                              </Text>
-                            </AvatarFallback>
-                          </Avatar>
-                        ) : null}
-                        <Input
-                          placeholder="Reply here"
-                          size="md"
-                          onClick={() => {
-                            setHideReplyHere?.(true)
-                          }}
-                          onChange={e => {
-                            setComment(e.target.value)
-                          }}
-                        />
-                      </div>
-                      <div className={cn('flex gap-3 border-t', replyBoxClassName)}>
-                        <Button
-                          variant={'outline'}
-                          onClick={() => {
-                            toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
-                          }}
-                        >
-                          {isResolved ? 'Reactivate' : 'Resolve Conversation'}
-                        </Button>
-                      </div>
-                    </>
                   )}
+                  <div className={cn('flex gap-3 border-t', replyBoxClassName)}>
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        toggleConversationStatus?.(isResolved ? 'active' : 'resolved', parentCommentId)
+                      }}
+                    >
+                      {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
+                    </Button>
+                  </div>
                 </>
               )}
             </Card.Root>

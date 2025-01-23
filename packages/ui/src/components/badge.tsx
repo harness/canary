@@ -34,7 +34,7 @@ const badgeVariants = cva(
         lg: 'px-3 py-1 text-xs font-normal',
         md: 'h-6 px-2.5',
         sm: 'h-5 px-1.5 text-12',
-        xs: 'px-1.5 py-0 text-11 font-light'
+        xs: 'h-[18px] px-1.5 text-11 font-light'
       },
       borderRadius: {
         default: 'rounded-md',

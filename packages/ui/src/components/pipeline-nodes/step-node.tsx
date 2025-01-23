@@ -1,6 +1,6 @@
 import { cn } from '@utils/cn'
 
-import { Button, Icon, Text } from '@harnessio/ui/components'
+import { Button, Icon, Text } from '..'
 
 export interface StepNodeProps {
   name?: string

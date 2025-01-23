@@ -1,8 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
-
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
 import {
   FileViewerControlBar,
@@ -21,6 +19,7 @@ import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../framework/hooks/useIsMFE'
+import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
@@ -66,7 +65,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
   const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
   const { t } = useTranslationStore()
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({

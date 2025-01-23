@@ -436,7 +436,7 @@
     },
     "10": {
       "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.wide}, 5.58) / 2) * 2"
+      "$value": "round({step.base}* pow({multiplier.wide}, 5.44) / 2) * 2"
     }
   }
 }

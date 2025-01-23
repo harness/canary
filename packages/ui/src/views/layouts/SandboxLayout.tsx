@@ -59,7 +59,7 @@ function Main({ children, fullWidth, className }: { children: ReactNode; fullWid
   }
 
   return (
-    <section className="size-full overflow-auto bg-background-1" aria-label="Main Content">
+    <section className="size-full overflow-auto bg-background-1 flex-1" aria-label="Main Content">
       <div className={cn('mx-auto h-full max-w-[1200px]', className)}>{children}</div>
     </section>
   )

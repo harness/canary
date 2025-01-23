@@ -81,8 +81,10 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   searchCommitQuery: string | null
   setSearchCommitQuery: (query: string | null) => void
   currentUser?: string
-  searchBranchQuery: string
-  setSearchBranchQuery: (query: string) => void
+  searchSourceQuery?: string
+  setSearchSourceQuery: (query: string) => void
+  searchTargetQuery?: string
+  setSearchTargetQuery: (query: string) => void
   searchReviewersQuery: string
   setSearchReviewersQuery: (query: string) => void
   usersList?: { display_name?: string; id?: number; uid?: string }[]
@@ -110,8 +112,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   useRepoBranchesStore,
   useRepoCommitsStore,
   currentUser,
-  searchBranchQuery,
-  setSearchBranchQuery,
+  searchSourceQuery,
+  setSearchSourceQuery,
+  searchTargetQuery,
+  setSearchTargetQuery,
   searchReviewersQuery,
   setSearchReviewersQuery,
   usersList,
@@ -201,8 +205,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 selectBranch(branchTag, type, false)
                 handleBranchSelection()
               }}
-              searchQuery={searchBranchQuery}
-              setSearchQuery={setSearchBranchQuery}
+              searchQuery={searchTargetQuery}
+              setSearchQuery={setSearchTargetQuery}
             />
 
             <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
@@ -215,8 +219,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                 selectBranch(branchTag, type, true)
                 handleBranchSelection()
               }}
-              searchQuery={searchBranchQuery}
-              setSearchQuery={setSearchBranchQuery}
+              searchQuery={searchSourceQuery}
+              setSearchQuery={setSearchSourceQuery}
             />
 
             {isBranchSelected &&

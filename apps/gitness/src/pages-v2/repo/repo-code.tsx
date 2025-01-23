@@ -22,6 +22,17 @@ import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-
 import { splitPathWithParents } from '../../utils/path-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
+const sortFilesByType = (entries: RepoFile[]): RepoFile[] => {
+  return entries.sort((a, b) => {
+    if (a.type === SummaryItemType.Folder && b.type === SummaryItemType.File) {
+      return -1
+    } else if (a.type === SummaryItemType.File && b.type === SummaryItemType.Folder) {
+      return 1
+    }
+    return 0
+  })
+}
+
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
@@ -104,20 +115,24 @@ export const RepoCode = () => {
         .then(({ body: response }) => {
           if (response?.details && response.details.length > 0) {
             setFiles(
-              response.details.map(
-                (item: GitPathDetails) =>
-                  ({
-                    id: item?.path || '',
-                    type: item?.path
-                      ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
-                      : SummaryItemType.File,
-                    name: getLastPathSegment(item?.path || ''),
-                    lastCommitMessage: item?.last_commit?.message || '',
-                    timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
-                    user: { name: item?.last_commit?.author?.identity?.name },
-                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                    path: `${fullGitRef || selectedBranch}/~/${item?.path}`
-                  }) as RepoFile
+              sortFilesByType(
+                response.details.map(
+                  (item: GitPathDetails) =>
+                    ({
+                      id: item?.path || '',
+                      type: item?.path
+                        ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
+                        : SummaryItemType.File,
+                      name: getLastPathSegment(item?.path || ''),
+                      lastCommitMessage: item?.last_commit?.message || '',
+                      timestamp: item?.last_commit?.author?.when
+                        ? timeAgoFromISOTime(item.last_commit.author.when)
+                        : '',
+                      user: { name: item?.last_commit?.author?.identity?.name },
+                      sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                      path: `${fullGitRef || selectedBranch}/~/${item?.path}`
+                    }) as RepoFile
+                )
               )
             )
           }

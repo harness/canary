@@ -116,23 +116,18 @@ export const RepoCode = () => {
           if (response?.details && response.details.length > 0) {
             setFiles(
               sortFilesByType(
-                response.details.map(
-                  (item: GitPathDetails) =>
-                    ({
-                      id: item?.path || '',
-                      type: item?.path
-                        ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
-                        : SummaryItemType.File,
-                      name: getLastPathSegment(item?.path || ''),
-                      lastCommitMessage: item?.last_commit?.message || '',
-                      timestamp: item?.last_commit?.author?.when
-                        ? timeAgoFromISOTime(item.last_commit.author.when)
-                        : '',
-                      user: { name: item?.last_commit?.author?.identity?.name },
-                      sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                      path: `${fullGitRef || selectedBranch}/~/${item?.path}`
-                    }) as RepoFile
-                )
+                response.details.map((item: GitPathDetails) => ({
+                  id: item?.path || '',
+                  type: item?.path
+                    ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
+                    : SummaryItemType.File,
+                  name: getLastPathSegment(item?.path || '') || '',
+                  lastCommitMessage: item?.last_commit?.message || '',
+                  timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                  user: { name: item?.last_commit?.author?.identity?.name || '' },
+                  sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                  path: `${fullGitRef || selectedBranch}/~/${item?.path}`
+                }))
               )
             )
           }

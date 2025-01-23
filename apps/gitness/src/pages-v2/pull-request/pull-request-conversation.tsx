@@ -101,8 +101,8 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
   const [comment, setComment] = useState<string>('')
-
   const [commentId] = useQueryState('commentId')
+  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
@@ -336,7 +336,6 @@ export default function PullRequestConversationPage() {
       copy(url.toString())
     }
   }
-  const [isScrolledToComment, setIsScrolledToComment] = useState(false)
   useEffect(() => {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate

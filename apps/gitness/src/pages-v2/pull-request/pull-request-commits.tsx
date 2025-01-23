@@ -6,6 +6,7 @@ import { PullRequestCommitsView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
@@ -17,17 +18,15 @@ export function PullRequestCommitPage() {
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [queryPage, setQueryPage] = useState(() => {
-    const pageParam = searchParams.get('page')
-    return pageParam ? parseInt(pageParam, 10) : 1
-  })
+
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
   const { pathname } = useLocation()
 
   const { page, setPage, setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
 
   const { isFetching, data: { body: commits, headers } = {} } = useListPullReqCommitsQuery({
-    queryParams: { page },
+    queryParams: { page: queryPage },
     repo_ref: repoRef,
     pullreq_number: prId
   })
@@ -51,8 +50,7 @@ export function PullRequestCommitPage() {
 
   useEffect(() => {
     setQueryPage(page)
-    setSearchParams({ page: queryPage.toString() })
-  }, [page, queryPage, setPage, setSearchParams])
+  }, [page, setQueryPage])
 
   return (
     <PullRequestCommitsView

@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { useParams, useSearchParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
 
@@ -9,6 +9,7 @@ import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePipelineListStore } from './stores/project-pipeline-list-store'
@@ -18,20 +19,18 @@ export default function ProjectPipelineListPage() {
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const { setPipelinesData, page } = usePipelineListStore()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('query') || '')
-  const [queryPage] = useState(() => {
-    const pageParam = searchParams.get('page')
-    return pageParam ? parseInt(pageParam, 10) : 1
-  })
+
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
-    queryParams: { page, query: query ?? '' },
+    queryParams: { page: queryPage, query: query ?? '' },
     space_ref: spaceURL || ''
   })
 
   useEffect(() => {
-    setSearchParams({ query, page: queryPage.toString() })
-  }, [query, queryPage, setSearchParams])
+    setQueryPage(page)
+  }, [page, setQueryPage])
 
   useEffect(() => {
     if (data) {
@@ -56,7 +55,7 @@ export default function ProjectPipelineListPage() {
       isError={isError}
       usePipelineListStore={usePipelineListStore}
       searchQuery={query}
-      setSearchQuery={(query: string | null) => setQuery(query ?? '')}
+      setSearchQuery={setQuery}
       handleCreatePipeline={noop}
       useTranslationStore={useTranslationStore}
       LinkComponent={LinkComponent}

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -16,6 +15,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { orderSortDate } from '../../types'
@@ -32,11 +32,8 @@ export function ProjectMemberListPage() {
   const { page, setPage, setMemberList } = useMemberListStore()
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
-  const [searchParams, setSearchParams] = useSearchParams()
-  const query = searchParams.get('query') || ''
-  const setQuery = (newQuery: string | null) => {
-    setSearchParams({ query: newQuery ?? '' })
-  }
+
+  const [query, setQuery] = useQueryState('query')
 
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)

@@ -47,6 +47,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
   capitalizeFirstLetter,
@@ -101,18 +102,7 @@ export default function PullRequestConversationPage() {
   })
   const [comment, setComment] = useState<string>('')
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [commentId] = useState(searchParams.get('commentId') || '')
-  const [searchReviewers] = useState(searchParams.get('reviewer') || '')
-  const [searchLabel] = useState(searchParams.get('label') || '')
-
-  const handleSetSearchReviewers = (newSearchReviewers: string | null) => {
-    setSearchParams({ commentId, reviewer: newSearchReviewers ?? '', label: searchLabel })
-  }
-
-  const handleSetSearchLabel = (newSearchLabel: string | null) => {
-    setSearchParams({ commentId, reviewer: searchReviewers, label: newSearchLabel ?? '' })
-  }
+  const [commentId] = useQueryState('commentId')
 
   const repoRef = useGetRepoRef()
   const { pullRequestId } = useParams<PathParams>()
@@ -712,7 +702,7 @@ export default function PullRequestConversationPage() {
                 sha: val.sha
               }))}
               searchQuery={searchReviewers}
-              setSearchQuery={handleSetSearchReviewers}
+              setSearchQuery={setSearchReviewers}
               labelsList={labelsList?.map(label => {
                 return {
                   id: label.id,
@@ -728,7 +718,7 @@ export default function PullRequestConversationPage() {
                 }
               })}
               searchLabelQuery={searchLabel}
-              setSearchLabelQuery={handleSetSearchLabel}
+              setSearchLabelQuery={setSearchLabel}
               addLabel={handleAddLabel}
               removeLabel={handleRemoveLabel}
               addLabelError={addLabelError?.message}

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact, isEqual, toInteger } from 'lodash-es'
+import { compact, isEqual } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
@@ -33,6 +33,7 @@ import {
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
@@ -318,6 +319,7 @@ export const CreatePullRequest = () => {
     }
   })
   const { setCommits, page, setSelectedCommit } = useRepoCommitsStore()
+  const [, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   useEffect(() => {
     if (commitData) {

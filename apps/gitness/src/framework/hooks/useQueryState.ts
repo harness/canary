@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { useSearchParams } from 'react-router-dom'
 
-type Parser<T> = {
+interface Parser<T> {
   parse: (value: string | null) => T
   withDefault: (defaultValue: T) => Parser<T>
 }

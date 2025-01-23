@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
 
 import {
   useDefineSpaceLabelMutation,
@@ -11,6 +10,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateLabelDialog, CreateLabelFormFields, ILabelType, ProjectLabelsListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useLabelsStore } from './stores/labels-store'
 
@@ -31,16 +31,12 @@ export const ProjectLabelsList = () => {
     setRepoSpaceRef
   } = useLabelsStore()
 
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get('query') || '')
-  const [queryPage, setQueryPage] = useState(() => {
-    const pageParam = searchParams.get('page')
-    return pageParam ? parseInt(pageParam, 10) : 1
-  })
+  const [query, setQuery] = useQueryState('query')
+  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
 
   useEffect(() => {
-    setSearchParams({ query, page: queryPage.toString() })
-  }, [query, queryPage, setSearchParams])
+    setQueryPage(page)
+  }, [page, setQueryPage])
 
   const handleOpenCreateLabelDialog = () => {
     setPresetEditLabel(null)
@@ -182,7 +178,7 @@ export const ProjectLabelsList = () => {
         handleEditLabel={handleEditLabel}
         handleDeleteLabel={handleOpenDeleteDialog}
         searchQuery={query}
-        setSearchQuery={(query: string | null) => setQuery(query ?? '')}
+        setSearchQuery={setQuery}
         isLoadingSpaceLabels={isLoadingSpaceLabels}
       />
       <CreateLabelDialog

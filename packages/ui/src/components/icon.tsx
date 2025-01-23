@@ -50,6 +50,7 @@ import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
 import Dashboards from '../icons/dashboards-icon.svg'
 import DatabaseGradient from '../icons/database-gradient.svg'
@@ -105,6 +106,7 @@ import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
 import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
 import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
 import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
+import Lock from '../icons/lock.svg'
 import LogOut from '../icons/log-out-icon.svg'
 import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
@@ -352,6 +354,8 @@ const IconNameMap = {
   italicize: Italicize,
   'no-data-commits': NoDataCommits,
   compare: Compare,
+  lock: Lock,
+  cross: Cross,
   'collapse-diff': CollapseDiff,
   'expand-diff': ExpandDiff,
   'circle-plus': CirclePlus,

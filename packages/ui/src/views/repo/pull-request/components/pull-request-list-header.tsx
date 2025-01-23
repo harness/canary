@@ -34,7 +34,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           className={cn(
             'text-14 leading-tight',
             headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
-              ? 'text-white font-medium'
+              ? 'text-foreground-4 font-medium'
               : 'text-foreground-4'
           )}
         >
@@ -53,7 +53,7 @@ export const PullRequestListHeader: FC<PullRequestListHeaderProps> = ({
           className={cn(
             'text-14 leading-tight',
             headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED
-              ? 'text-white font-medium'
+              ? 'text-foreground-4 font-medium'
               : 'text-foreground-4'
           )}
         >

@@ -1,3 +1,5 @@
+import { PullRequestType } from '@/views'
+
 import { BranchSelectorTab } from './components/branch-selector/types'
 
 export interface BranchSelectorListItem {
@@ -76,6 +78,18 @@ export interface BranchData {
     behind: number
     ahead: number
     default: boolean
+  }
+  pullRequests?: PullRequestType[]
+  checks?: {
+    done?: number
+    total?: number
+    status: {
+      failure: number
+      error: number
+      pending: number
+      running: number
+      success: number
+    }
   }
 }
 

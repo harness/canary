@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useQueryState } from 'nuqs'
 
 import {
   useCalculateCommitDivergenceMutation,
@@ -11,10 +11,12 @@ import {
   useFindRepositoryQuery,
   useListBranchesQuery
 } from '@harnessio/code-service-client'
+import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate, PageResponseHeader } from '../../types'
@@ -31,37 +33,89 @@ export function RepoBranchesListPage() {
     useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
+  const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
 
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({
     repo_ref: repoRef
   })
 
-  const { isLoading, data: { body: branches, headers } = {} } = useListBranchesQuery({
-    queryParams: { page, query: query ?? '', order: orderSortDate.DESC, include_commit: true },
+  const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
+    queryParams: {
+      page: queryPage,
+      limit: 10,
+      query: query ?? '',
+      order: orderSortDate.DESC,
+      include_commit: true,
+      include_pullreqs: true
+    },
     repo_ref: repoRef
   })
 
-  const { data: { body: branchDivergence = [] } = {}, mutate: calculateBranchDivergence } =
-    useCalculateCommitDivergenceMutation(
-      {
-        repo_ref: repoRef
-      },
-      {
-        onSuccess: data => {
-          if (data.body) {
-            if (branches) {
-              setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
-            }
-          }
+  const { data: { body: searchBranches } = {} } = useListBranchesQuery({
+    queryParams: {
+      query: createBranchSearchQuery,
+      limit: 10,
+      order: orderSortDate.DESC
+    },
+    repo_ref: repoRef
+  })
+
+  console.log('searchBranches', searchBranches)
+
+  const {
+    isLoading: isLoadingDivergence,
+    data: { body: _branchDivergence = [] } = {},
+    mutate: calculateBranchDivergence
+  } = useCalculateCommitDivergenceMutation(
+    {
+      repo_ref: repoRef
+    },
+    {
+      onSuccess: data => {
+        if (data.body && branches) {
+          setBranchList(transformBranchList(branches, repoMetadata?.default_branch, data.body))
         }
       }
-    )
+    }
+  )
+
+  const handleInvalidateBranchList = () => {
+    queryClient.invalidateQueries({ queryKey: ['listBranches'] })
+  }
+
+  const handleResetDeleteBranch = () => {
+    setDeleteBranchName(null)
+    if (deleteBranchError) {
+      resetDeleteBranch()
+    }
+  }
+
+  const handleSetDeleteBranch = (branchName: string) => {
+    setDeleteBranchName(branchName)
+  }
+
+  const {
+    mutateAsync: deleteBranch,
+    isLoading: isDeletingBranch,
+    error: deleteBranchError,
+    reset: resetDeleteBranch
+  } = useDeleteBranchMutation(
+    {
+      repo_ref: repoRef
+    },
+    {
+      onSuccess: () => {
+        handleResetDeleteBranch()
+        handleInvalidateBranchList()
+      }
+    }
+  )
 
   const { mutateAsync: saveBranch, isLoading: isCreatingBranch, error: createBranchError } = useCreateBranchMutation({})
-  const { mutateAsync: deleteBranch } = useDeleteBranchMutation({ queryParams: {} })
 
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
@@ -70,16 +124,15 @@ export function RepoBranchesListPage() {
       repo_ref: repoRef,
       body: { name, target, bypass_rules: false }
     })
-    queryClient.invalidateQueries({ queryKey: ['listBranches'] })
+    handleInvalidateBranchList()
     setCreateBranchDialogOpen(false)
   }
 
-  const onDeleteBranch = async (branchName: string) => {
-    await deleteBranch({
-      repo_ref: repoRef,
-      branch_name: branchName
+  const handleDeleteBranch = (branch_name: string) => {
+    deleteBranch({
+      branch_name,
+      queryParams: {}
     })
-    queryClient.invalidateQueries({ queryKey: ['listBranches'] })
   }
 
   useEffect(() => {
@@ -90,16 +143,16 @@ export function RepoBranchesListPage() {
   }, [headers, setPaginationFromHeaders])
 
   useEffect(() => {
-    setQueryPage(page)
-  }, [page, setPage, queryPage])
-
-  useEffect(() => {
-    if (branches?.length !== 0 && branches !== undefined) {
-      calculateBranchDivergence({
-        body: {
-          requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || []
-        }
-      })
+    if (branches) {
+      if (branches?.length !== 0) {
+        calculateBranchDivergence({
+          body: {
+            requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || []
+          }
+        })
+      } else {
+        setBranchList([])
+      }
     }
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 
@@ -108,31 +161,50 @@ export function RepoBranchesListPage() {
   }, [spaceId, repoId, setSpaceIdAndRepoId])
 
   useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repoMetadata?.default_branch, branchDivergence))
-    }
-  }, [branches, repoMetadata?.default_branch, setBranchList])
-
-  useEffect(() => {
     setDefaultBranch(repoMetadata?.default_branch || '')
   }, [repoMetadata, setDefaultBranch])
 
   return (
-    <RepoBranchListView
-      toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
-      isLoading={isLoading}
-      isCreatingBranch={isCreatingBranch}
-      onSubmit={onSubmit}
-      useRepoBranchesStore={useRepoBranchesStore}
-      useTranslationStore={useTranslationStore}
-      isCreateBranchDialogOpen={isCreateBranchDialogOpen}
-      setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-      searchQuery={query}
-      setSearchQuery={setQuery}
-      createBranchError={createBranchError?.message}
-      toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
-      toPullRequestCompare={() => routes.toPullRequestCompare({ spaceId, repoId })}
-      onDeleteBranch={onDeleteBranch}
-    />
+    <>
+      <RepoBranchListView
+        isLoading={isLoadingBranches || isLoadingDivergence}
+        isCreatingBranch={isCreatingBranch}
+        onSubmit={onSubmit}
+        useRepoBranchesStore={useRepoBranchesStore}
+        useTranslationStore={useTranslationStore}
+        isCreateBranchDialogOpen={isCreateBranchDialogOpen}
+        setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        createBranchError={createBranchError?.message}
+        toBranchRules={() => routes.toRepoBranchRules({ spaceId, repoId })}
+        toPullRequestCompare={({ diffRefs }: { diffRefs: string }) =>
+          routes.toPullRequestCompare({ spaceId, repoId, diffRefs })
+        }
+        toPullRequest={({ pullRequestId }: { pullRequestId: number }) =>
+          routes.toPullRequest({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
+        }
+        onDeleteBranch={handleSetDeleteBranch}
+        searchBranches={searchBranches || []}
+        setCreateBranchSearchQuery={setCreateBranchSearchQuery}
+      />
+      <DeleteAlertDialog
+        open={deleteBranchName !== null}
+        onClose={handleResetDeleteBranch}
+        deleteFn={handleDeleteBranch}
+        error={
+          deleteBranchError
+            ? {
+                type: '',
+                message: deleteBranchError?.message || ''
+              }
+            : null
+        }
+        type="branch"
+        identifier={deleteBranchName ?? undefined}
+        isLoading={isDeletingBranch}
+        useTranslationStore={useTranslationStore}
+      />
+    </>
   )
 }

@@ -30,14 +30,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           This branch is{' '}
           {hasAhead && (
             <>
-              <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pull-requests/compare/`}>
+              <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
                 <span className="text-foreground-accent">{ahead} commits ahead of</span>
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
-            <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pull-requests/compare/`}>
+            <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
               <span className="text-foreground-accent">{behind} commits behind</span>
             </StyledLink>
           )}

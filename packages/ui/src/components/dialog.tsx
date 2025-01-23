@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
 
 import { Button, Icon } from '@/components'
 import { usePortal } from '@/context'
@@ -11,11 +11,11 @@ const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
-interface DialogOverlayProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
+interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
   onClick?: () => void
 }
 
-const DialogOverlay = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
+const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
   ({ className, onClick, ...props }, ref) => (
     <DialogPrimitive.Overlay
       ref={ref}
@@ -27,18 +27,18 @@ const DialogOverlay = React.forwardRef<React.ElementRef<typeof DialogPrimitive.O
 )
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
-interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   onOverlayClick?: () => void
 }
 
-const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
   ({ className, children, onOverlayClick, ...props }, ref) => {
     const { portalContainer } = usePortal()
     const mainContent: React.ReactNode[] = []
     let footer: React.ReactNode = null
 
-    React.Children.forEach(children, child => {
-      if (React.isValidElement(child) && child.type === DialogFooter) {
+    Children.forEach(children, child => {
+      if (isValidElement(child) && child.type === DialogFooter) {
         footer = child
       } else {
         mainContent.push(child)
@@ -77,12 +77,12 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
 )
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} />
 )
 DialogHeader.displayName = 'DialogHeader'
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
       'bg-background-2 border-borders-1 relative mt-auto flex h-fit flex-col-reverse gap-x-4 border-t px-5 py-4 sm:flex-row sm:justify-end',
@@ -94,9 +94,9 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 )
 DialogFooter.displayName = 'DialogFooter'
 
-const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+const DialogTitle = forwardRef<
+  ElementRef<typeof DialogPrimitive.Title>,
+  ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
@@ -106,9 +106,9 @@ const DialogTitle = React.forwardRef<
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
-const DialogDescription = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+const DialogDescription = forwardRef<
+  ElementRef<typeof DialogPrimitive.Description>,
+  ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description ref={ref} className={cn('text-foreground-2 text-sm', className)} {...props} />
 ))

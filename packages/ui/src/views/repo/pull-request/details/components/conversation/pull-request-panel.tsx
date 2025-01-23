@@ -367,8 +367,6 @@ const PullRequestPanel = ({
           {(!!resolvedCommentArr || requiresCommentApproval) && !pullReqMetadata?.merged && (
             <PullRequestCommentSection commentsInfo={commentsInfo} />
           )}
-          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
-          {/* @ts-ignore */}
           <PullRequestCheckSection
             checkData={checkData}
             checksInfo={checksInfo}

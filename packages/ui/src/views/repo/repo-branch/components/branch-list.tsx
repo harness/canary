@@ -197,7 +197,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       size="xs"
                       asChild
                     >
-                      <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ""}>
+                      <Link to={toPullRequest?.({ pullRequestId: branch.pullRequests[0].number }) || ''}>
                         <Icon
                           name={
                             getPrState(

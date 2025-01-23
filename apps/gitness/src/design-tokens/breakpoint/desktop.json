@@ -209,7 +209,7 @@
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.500}",
           "fontSize": "{font-size.-2}",
-          "lineHeight": "{line-height.-2}",
+          "lineHeight": "{line-height.-3}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
@@ -220,7 +220,7 @@
           "fontFamily": "{font-family.default}",
           "fontWeight": "{default-font-weight-normal.400}",
           "fontSize": "{font-size.-2}",
-          "lineHeight": "{line-height.-2}",
+          "lineHeight": "{line-height.-3}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Helper text, meta information."

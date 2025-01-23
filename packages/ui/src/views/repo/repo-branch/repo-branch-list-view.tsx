@@ -26,7 +26,9 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   toPullRequest,
   toBranchRules,
   toPullRequestCompare,
-  onDeleteBranch
+  onDeleteBranch,
+  searchBranches,
+  setCreateBranchSearchQuery
 }) => {
   const { t } = useTranslationStore()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
@@ -57,7 +59,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         <Spacer size={2} />
         {(isLoading || !!branchList.length || isDirtyList) && (
           <>
-            <span className="text-24 font-medium">{t('views:repos.branches', 'Branches')}</span>
+            <span className="text-24 font-medium text-foreground-1">{t('views:repos.branches', 'Branches')}</span>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>
@@ -66,7 +68,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                   className="max-w-80"
                   value={search || ''}
                   handleChange={handleSearchChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
               </ListActions.Left>
               <ListActions.Right>
@@ -127,12 +129,13 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           setCreateBranchDialogOpen(false)
         }}
         onSubmit={onSubmit}
-        branches={branchList}
+        branches={searchBranches}
         isLoadingBranches={isLoading}
         isCreatingBranch={isCreatingBranch}
         useTranslationStore={useTranslationStore}
         error={createBranchError}
         defaultBranch={defaultBranch}
+        handleChangeSearchValue={setCreateBranchSearchQuery}
       />
     </SandboxLayout.Main>
   )

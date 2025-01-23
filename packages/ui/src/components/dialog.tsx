@@ -11,8 +11,6 @@ const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
-const DialogClose = DialogPrimitive.Close
-
 interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
   onClick?: () => void
 }

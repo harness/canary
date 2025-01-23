@@ -33,7 +33,8 @@ export function CreateBranchDialog({
   isCreatingBranch,
   error,
   useTranslationStore,
-  defaultBranch
+  defaultBranch,
+  handleChangeSearchValue
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
   const {
@@ -41,6 +42,7 @@ export function CreateBranchDialog({
     handleSubmit,
     setValue,
     watch,
+    resetField,
     formState: { errors, isValid }
   } = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema),
@@ -50,6 +52,13 @@ export function CreateBranchDialog({
       target: ''
     }
   })
+
+  const handleClose = () => {
+    resetField('name')
+    resetField('target', { defaultValue: defaultBranch })
+    handleChangeSearchValue('')
+    onClose()
+  }
 
   const processedBranches = useMemo(
     () =>
@@ -74,7 +83,7 @@ export function CreateBranchDialog({
   }, [defaultBranch, setValue])
 
   return (
-    <Dialog.Root open={open} onOpenChange={onClose}>
+    <Dialog.Root open={open} onOpenChange={handleClose}>
       <Dialog.Content className="max-w-xl border-border bg-background-1">
         <Dialog.Header>
           <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
@@ -109,7 +118,14 @@ export function CreateBranchDialog({
                 }
                 disabled={isLoadingBranches || !branches?.length}
               >
-                <SelectContent>
+                <SelectContent
+                  withSearch
+                  searchProps={{
+                    placeholder: t('views:repos.search', 'Search'),
+                    searchValue: '',
+                    handleChangeSearchValue
+                  }}
+                >
                   {processedBranches?.map(
                     branch =>
                       branch?.name && (

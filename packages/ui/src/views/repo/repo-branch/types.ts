@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
@@ -6,7 +8,6 @@ import { IBranchSelectorStore } from '../repo.types'
 import { createBranchFormSchema } from './components/create-branch-dialog'
 
 export type CreateBranchFormFields = z.infer<typeof createBranchFormSchema>
-
 export interface BranchProps {
   id: number
   name: string
@@ -70,6 +71,8 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   toBranchRules: () => string
   toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   onDeleteBranch: (branchName: string) => void
+  searchBranches: Branch[]
+  setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
 }
 
 interface Branch {
@@ -81,9 +84,10 @@ export interface CreateBranchDialogProps {
   onClose: () => void
   onSubmit: (formValues: CreateBranchFormFields) => void
   isLoadingBranches: boolean
-  branches?: Array<Branch>
+  branches?: Branch[]
   error?: string
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
   defaultBranch?: string
+  handleChangeSearchValue: Dispatch<SetStateAction<string>>
 }

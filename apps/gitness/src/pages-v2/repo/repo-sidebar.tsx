@@ -75,6 +75,15 @@ export const RepoSidebar = () => {
   )
 
   useEffect(() => {
+    if (selectedGitRefBranch) {
+      setSelectedBranchTag({
+        name: selectedGitRefBranch.name ?? '',
+        sha: selectedGitRefBranch.sha ?? ''
+      })
+    }
+  }, [selectedGitRefBranch, fullGitRef])
+
+  useEffect(() => {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
     }
@@ -118,6 +127,7 @@ export const RepoSidebar = () => {
       })
     } else {
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
+      // console.log('selectedGitRefBranch', fullGitRef)
       if (selectedGitRefBranch) {
         setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {

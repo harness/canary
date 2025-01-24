@@ -37,21 +37,19 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className={
-            'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
-          }
+          className="flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-9"
           variant="outline"
           size={buttonSize}
         >
           {!branchPrefix && (
-            <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={12} />
+            <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
           <Text className="w-full text-foreground-8" truncate align="left">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchTag.name}`
               : selectedBranch?.name || selectedBranchTag.name}
           </Text>
-          <Icon name="chevron-down" className="chevron-down" size={20} />
+          <Icon name="chevron-down" className="chevron-down text-icons-2" size={20} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

@@ -54,8 +54,8 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
 
   const stateObject = getPrState(is_draft, merged, state)
   const submitChange = useCallback(() => {
-    if (val && description) {
-      updateTitle(val, description)
+    if (val) {
+      updateTitle(val, description ?? '')
         .then(() => {
           setEdit(false)
           setOriginal(val)

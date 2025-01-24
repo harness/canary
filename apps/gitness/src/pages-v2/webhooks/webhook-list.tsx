@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
+import { useQueryState } from 'nuqs'
 
 import {
   DeleteRepoWebhookErrorResponse,
@@ -12,15 +13,15 @@ import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setWebhooks, page, setPage, setWebhookLoading, setError } = useWebhookStore()
-  const [query] = useDebouncedQueryState('query')
+  const { setWebhooks, page, setPage, setError } = useWebhookStore()
+  const [query, setQuery] = useQueryState('query')
+
   const queryClient = useQueryClient()
 
   const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
@@ -41,7 +42,7 @@ export default function WebhookListPage() {
     {
       queryParams: {
         page: queryPage,
-        query
+        query: query ?? ''
       },
       repo_ref: repoRef
     },
@@ -90,17 +91,10 @@ export default function WebhookListPage() {
   useEffect(() => {
     if (webhookData) {
       setWebhooks(webhookData, headers)
-      setWebhookLoading(false)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webhookData, headers, setWebhooks])
-
-  useEffect(() => {
-    if (isFetching) {
-      setWebhookLoading(isFetching)
-    }
-  }, [isFetching, setWebhookLoading])
 
   useEffect(() => {
     if (isError && error !== undefined) {
@@ -114,6 +108,9 @@ export default function WebhookListPage() {
         useWebhookStore={useWebhookStore}
         useTranslationStore={useTranslationStore}
         openDeleteWebhookDialog={openDeleteWebhookDialog}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        webhookLoading={isFetching}
       />
       <DeleteAlertDialog
         open={deleteWebhookId !== null}

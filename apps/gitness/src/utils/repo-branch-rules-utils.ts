@@ -5,8 +5,13 @@ import {
   RepoRuleAddRequestBody,
   RepoRuleGetOkResponse
 } from '@harnessio/code-service-client'
-import { RepoBranchSettingsFormFields } from '@harnessio/ui/views'
-import { BranchRuleId, MergeStrategy, PatternsButtonType, Rule } from '@harnessio/views'
+import {
+  BranchRuleId,
+  MergeStrategy,
+  PatternsButtonType,
+  RepoBranchSettingsFormFields,
+  Rule
+} from '@harnessio/ui/views'
 
 const ruleIds = [
   BranchRuleId.REQUIRE_LATEST_COMMIT,
@@ -18,7 +23,8 @@ const ruleIds = [
   BranchRuleId.BLOCK_BRANCH_CREATION,
   BranchRuleId.BLOCK_BRANCH_DELETION,
   BranchRuleId.REQUIRE_PULL_REQUEST,
-  BranchRuleId.REQUIRE_CODE_REVIEW
+  BranchRuleId.REQUIRE_CODE_REVIEW,
+  BranchRuleId.REQUIRE_CODE_OWNERS
 ]
 
 // Util to transform API response into expected-form format for branch-rules-edit
@@ -66,6 +72,9 @@ const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
       case BranchRuleId.REQUIRE_CODE_REVIEW:
         checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
         input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
+        break
+      case BranchRuleId.REQUIRE_CODE_OWNERS:
+        checked = definition?.pullreq?.approvals?.require_code_owners || false
         break
       default:
         continue
@@ -163,7 +172,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       },
       pullreq: {
         approvals: {
-          require_code_owners: true,
+          require_code_owners: rulesMap[BranchRuleId.REQUIRE_CODE_OWNERS]?.checked || false,
           require_latest_commit: rulesMap[BranchRuleId.REQUIRE_LATEST_COMMIT]?.checked || false,
           require_no_change_request: rulesMap[BranchRuleId.REQUIRE_NO_CHANGE_REQUEST]?.checked || false,
           require_minimum_count: rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].checked

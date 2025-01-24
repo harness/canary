@@ -438,45 +438,28 @@ export function PullRequestChanges({
     if (data.length > 0) {
       const itemsToOpen: string[] = []
       data.map(diffItem => {
-        const isFileViewed =
-          getFileViewedState(diffItem?.filePath, diffItem?.checksumAfter, diffItem?.fileViews) ===
-          FileViewedState.VIEWED
-        if (!isFileViewed) {
+        const fileComments =
+          comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
+            thread.some(
+              (comment: CommentItem<TypesPullReqActivity>) =>
+                comment.payload?.payload?.code_comment?.path === diffItem.text
+            )
+          ) || []
+        const found = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
+        if (commentId && found) {
           itemsToOpen.push(diffItem.text)
+        } else {
+          const isFileViewed =
+            getFileViewedState(diffItem?.filePath, diffItem?.checksumAfter, diffItem?.fileViews) ===
+            FileViewedState.VIEWED
+          if (!isFileViewed) {
+            itemsToOpen.push(diffItem.text)
+          }
         }
       })
       setOpenItems(itemsToOpen)
     }
-  }, [data])
-
-  // On mount (or commentId change), find which file (or files) contain that commentId and mark them to auto-expand
-  useEffect(() => {
-    if (!commentId || scrolledToComment) return
-    const newOpenItems: { [fileText: string]: boolean } = {}
-
-    // find comment from commentId
-    data.forEach(item => {
-      const fileComments =
-        comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-          thread.some(
-            (comment: CommentItem<TypesPullReqActivity>) => comment.payload?.payload?.code_comment?.path === item.text
-          )
-        ) || []
-      const found = fileComments.some(thread => thread.some(c => String(c.id) === commentId))
-      if (found) {
-        newOpenItems[item.text] = true
-      }
-    })
-    // merge with existing openItems
-    const expanded = Object.keys(newOpenItems).reduce(
-      (acc, key) => {
-        if (!acc.includes(key)) acc.push(key)
-        return acc
-      },
-      [...openItems]
-    )
-    setOpenItems(expanded)
-  }, [commentId, data, comments, openItems, scrolledToComment])
+  }, [data, commentId, setOpenItems])
 
   const isOpen = useCallback(
     (fileText: string) => {

@@ -36,7 +36,11 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
 
   return (
-    <DropdownMenu.Content className="w-[298px] p-0" align="start">
+    <DropdownMenu.Content
+      className="w-[298px] p-0"
+      align="start"
+      onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
+    >
       <div className="px-3 pt-2">
         {isBranchOnly ? (
           <span className="text-14 font-medium leading-none">Switch branches</span>
@@ -165,8 +169,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
         </div>
 
         <DropdownMenu.Item className="p-0" asChild>
-          <div className="mt-1 border-t border-borders-1 px-3 py-2">
-            <Link to={viewAllUrl}>
+          <Link to={viewAllUrl}>
+            <div className="w-full border-t border-borders-1 px-3 py-2">
               <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
                 {t('views:repos.viewAll', `View all ${activeTab}`, {
                   type:
@@ -175,8 +179,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                       : t('views:repos.tagsLowercase', 'tags')
                 })}
               </span>
-            </Link>
-          </div>
+            </div>
+          </Link>
         </DropdownMenu.Item>
       </div>
     </DropdownMenu.Content>

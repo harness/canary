@@ -6,7 +6,6 @@ import {
   Button,
   CopyButton,
   DropdownMenu,
-  Icon,
   Layout,
   ListActions,
   Spacer,
@@ -31,11 +30,11 @@ const LineTitle: FC<LineTitleProps> = ({ text }) => (
       <p className="font-medium">{text}</p>
       <CopyButton name={text} />
     </div>
-    <div className="inline-flex items-center gap-x-6">
+    {/* <div className="inline-flex items-center gap-x-6">
       <div className="flex items-center gap-2">
         <Icon name="ellipsis" size={12} />
       </div>
-    </div>
+    </div> */}
   </div>
 )
 

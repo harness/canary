@@ -22,6 +22,17 @@ import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-
 import { splitPathWithParents } from '../../utils/path-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 
+const sortFilesByType = (entries: RepoFile[]): RepoFile[] => {
+  return entries.sort((a, b) => {
+    if (a.type === SummaryItemType.Folder && b.type === SummaryItemType.File) {
+      return -1
+    } else if (a.type === SummaryItemType.File && b.type === SummaryItemType.Folder) {
+      return 1
+    }
+    return 0
+  })
+}
+
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
@@ -45,16 +56,19 @@ export const RepoCode = () => {
   const [selectedBranch, setSelectedBranch] = useState(gitRefName || '')
   const [currBranchDivergence, setCurrBranchDivergence] = useState<CommitDivergenceType>({ ahead: 0, behind: 0 })
 
-  const { data: { body: repoDetails } = {}, refetch: refetchRepoContent } = useGetContentQuery({
+  const {
+    data: { body: repoDetails } = {},
+    refetch: refetchRepoContent,
+    isLoading: isLoadingRepoDetails
+  } = useGetContentQuery({
     path: fullResourcePath || '',
     repo_ref: repoRef,
     queryParams: { include_commit: true, git_ref: normalizeGitRef(fullGitRef || '') }
   })
+
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =
-    useCalculateCommitDivergenceMutation({
-      repo_ref: repoRef
-    })
+    useCalculateCommitDivergenceMutation({ repo_ref: repoRef })
 
   useEffect(() => {
     if (repository && !fullGitRef) {
@@ -104,20 +118,19 @@ export const RepoCode = () => {
         .then(({ body: response }) => {
           if (response?.details && response.details.length > 0) {
             setFiles(
-              response.details.map(
-                (item: GitPathDetails) =>
-                  ({
-                    id: item?.path || '',
-                    type: item?.path
-                      ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
-                      : SummaryItemType.File,
-                    name: getLastPathSegment(item?.path || ''),
-                    lastCommitMessage: item?.last_commit?.message || '',
-                    timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
-                    user: { name: item?.last_commit?.author?.identity?.name },
-                    sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-                    path: `${fullGitRef || selectedBranch}/~/${item?.path}`
-                  }) as RepoFile
+              sortFilesByType(
+                response.details.map((item: GitPathDetails) => ({
+                  id: item?.path || '',
+                  type: item?.path
+                    ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path))
+                    : SummaryItemType.File,
+                  name: getLastPathSegment(item?.path || '') || '',
+                  lastCommitMessage: item?.last_commit?.message || '',
+                  timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                  user: { name: item?.last_commit?.author?.identity?.name || '' },
+                  sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                  path: `${fullGitRef || selectedBranch}/~/${item?.path}`
+                }))
               )
             )
           }
@@ -156,18 +169,18 @@ export const RepoCode = () => {
   }, [fullGitRef, fullResourcePath, repoDetails, selectedBranchTag.name])
 
   useEffect(() => {
-    if (fullGitRef) {
+    if (selectedBranchTag.name && repository?.default_branch) {
       calculateDivergence({
         body: {
           requests: [{ from: selectedBranchTag.name, to: repository?.default_branch }]
         }
       })
     }
-  }, [fullGitRef])
+  }, [selectedBranchTag.name, repository?.default_branch, calculateDivergence])
 
   useEffect(() => {
     refetchRepoContent()
-  }, [codeMode])
+  }, [codeMode, refetchRepoContent])
 
   /**
    * Render File content view or Edit file view
@@ -204,6 +217,7 @@ export const RepoCode = () => {
       useRepoBranchesStore={useRepoBranchesStore}
       defaultBranchName={repository?.default_branch}
       currentBranchDivergence={currBranchDivergence}
+      isLoadingRepoDetails={isLoadingRepoDetails}
     >
       {renderCodeView}
     </RepoFiles>

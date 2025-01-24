@@ -131,7 +131,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
   const onExitConfirm = useCallback(() => {
     const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
-  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId])
+  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
 
   /**
    * Cancel edit handler
@@ -171,7 +171,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
           if (!isNewBranch) {
             navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`${routes.toPullRequestCompare({ spaceId, repoId })}/${defaultBranch}...${newBranchName}`)
+            navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}
@@ -194,6 +194,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
       {view === 'edit' ? (
         <CodeEditor
+          height="100%"
           language={language}
           codeRevision={contentRevision}
           onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
@@ -205,6 +206,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         />
       ) : (
         <CodeDiffEditor
+          height="100%"
           language={language}
           original={originalFileContent}
           modified={contentRevision.code}

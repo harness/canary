@@ -62,7 +62,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     setValue,
     watch,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<RepoBranchSettingsFormFields>({
     resolver: zodResolver(repoBranchSettingsFormSchema),
     mode: 'onChange',
@@ -156,7 +156,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
         <Fieldset className="mt-5">
           <ControlGroup>
             <ButtonGroup>
-              <Button type="submit" disabled={!isValid || isLoading}>
+              <Button type="submit" disabled={isLoading}>
                 {!isLoading
                   ? presetRuleData
                     ? t('views:repos.updateRule', 'Update rule')

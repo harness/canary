@@ -4,6 +4,7 @@ import { Outlet, useNavigate, useParams } from 'react-router-dom'
 import {
   getContent,
   useFindRepositoryQuery,
+  useGetBranchQuery,
   useGetContentQuery,
   useListBranchesQuery,
   useListPathsQuery,
@@ -62,6 +63,26 @@ export const RepoSidebar = () => {
     }
   })
 
+  const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: fullGitRef,
+      queryParams: {}
+    },
+    {
+      enabled: !!fullGitRef
+    }
+  )
+
+  useEffect(() => {
+    if (selectedGitRefBranch) {
+      setSelectedBranchTag({
+        name: selectedGitRefBranch.name ?? '',
+        sha: selectedGitRefBranch.sha ?? ''
+      })
+    }
+  }, [selectedGitRefBranch, fullGitRef])
+
   useEffect(() => {
     if (branches) {
       setBranchList(transformBranchList(branches, repository?.default_branch))
@@ -105,10 +126,9 @@ export const RepoSidebar = () => {
         default: true
       })
     } else {
-      const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
-        setSelectedBranchTag(selectedGitRefBranch)
+        setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {
         setSelectedBranchTag(selectedGitRefTag)
       }
@@ -209,7 +229,7 @@ export const RepoSidebar = () => {
         )}
         {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
         {/* Total height of both the divs should be 100vh */}
-        <div className="min-h-[calc(100vh-100px)]">
+        <div className="h-[calc(100vh-100px)]">
           <Outlet />
         </div>
       </div>

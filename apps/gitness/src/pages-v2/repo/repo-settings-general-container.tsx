@@ -310,7 +310,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
+    navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
   }
 
   const handleDeleteRule = (ruleIdentifier: string) => {

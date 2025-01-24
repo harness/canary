@@ -45,6 +45,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
         description?: string
         created?: number
         default_branch?: string
+        is_public?: boolean
       }
     | undefined
   handleCreateToken: () => void
@@ -131,7 +132,7 @@ export function RepoSummaryView({
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Columns columnWidths="1fr 256px">
-        <SandboxLayout.Column>
+        <SandboxLayout.Column className="max-w-[1000px]">
           <SandboxLayout.Content className="pl-6">
             {/*
               TODO: Implement proper recent push detection logic:
@@ -231,7 +232,7 @@ export function RepoSummaryView({
               hideHeader
             />
             <Spacer size={5} />
-            <StackedList.Root>
+            <StackedList.Root onlyTopRounded borderBackground>
               <StackedList.Item className="py-2" isHeader disableHover>
                 <StackedList.Field
                   title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
@@ -253,10 +254,8 @@ export function RepoSummaryView({
                   }
                 />
               </StackedList.Item>
-              <StackedList.Item className="px-16 py-6" disableHover>
-                <MarkdownViewer source={decodedReadmeContent || ''} />
-              </StackedList.Item>
             </StackedList.Root>
+            <MarkdownViewer source={decodedReadmeContent || ''} withBorderWrapper />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>
@@ -295,6 +294,8 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
+              is_public={repository?.is_public}
+              useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

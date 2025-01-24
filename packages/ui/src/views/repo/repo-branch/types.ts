@@ -39,7 +39,7 @@ export interface BranchProps {
 interface RoutingProps {
   toBranchRules: () => string
   toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
-  toCommitDetails?: ({ sha }: { sha: string }) => string
+  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
 }
 
 export interface BranchListPageProps extends Partial<RoutingProps> {
@@ -49,9 +49,6 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
   useTranslationStore: () => TranslationStore
   setCreateBranchDialogOpen: (isOpen: boolean) => void
   handleResetFiltersAndPages: () => void
-  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
-  toBranchRules: () => string
-  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   onDeleteBranch: (branchName: string) => void
   isDirtyList: boolean
 }
@@ -67,9 +64,6 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
-  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
-  toBranchRules: () => string
-  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   onDeleteBranch: (branchName: string) => void
   searchBranches: Branch[]
   setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>

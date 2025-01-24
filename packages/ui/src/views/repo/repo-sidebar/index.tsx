@@ -48,9 +48,9 @@ export const RepoSidebar = ({
               )}
               <ButtonGroup spacing="0" className="h-full rounded shadow-as-border shadow-borders-2">
                 <Button
-                  className="border-borders-2 p-0"
+                  className="hover:border-borders-2 hover:bg-background-3"
                   size="icon"
-                  variant="ghost"
+                  variant="outline"
                   aria-label="Create new file"
                   onClick={navigateToNewFile}
                 >

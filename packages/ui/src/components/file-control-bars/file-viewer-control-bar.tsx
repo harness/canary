@@ -88,6 +88,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           {isMarkdown && <ToggleGroupItem value={'preview'}>Preview</ToggleGroupItem>}
           <ToggleGroupItem value={'code'}>Code</ToggleGroupItem>
           <ToggleGroupItem value={'blame'}>Blame</ToggleGroupItem>
+          <ToggleGroupItem value={'history'}>History</ToggleGroupItem>
         </ToggleGroup>
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>

@@ -93,8 +93,9 @@ export const CreatePullRequest = () => {
   )
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
-  const [branchTagQuery, setBranchTagQuery] = useQueryState('branch', { defaultValue: '' })
-  const [searchReviewers, setSearchReviewers] = useQueryState('reviewer', { defaultValue: '' })
+  const [sourceQuery, setSourceQuery] = useState('')
+  const [targetQuery, setTargetQuery] = useState('')
+  const [searchReviewers, setSearchReviewers] = useState('')
 
   const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {
@@ -210,10 +211,17 @@ export const CreatePullRequest = () => {
       },
       {
         // TODO: fix this to navigate to the new pull request after transferring a pull request page to ui
-        onSuccess: () => {
+        onSuccess: data => {
           setApiError(null)
-
-          navigate(routes.toPullRequests({ spaceId, repoId }))
+          if (data?.body?.number) {
+            navigate(
+              routes.toPullRequest({
+                spaceId,
+                repoId,
+                pullRequestId: data?.body?.number.toString()
+              })
+            )
+          }
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
@@ -236,7 +244,7 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10, query: branchTagQuery, include_pullreqs: true }
+    queryParams: { page: 0, limit: 10, query: sourceQuery || targetQuery || '', include_pullreqs: true }
   })
 
   useEffect(() => {
@@ -329,7 +337,7 @@ export const CreatePullRequest = () => {
       order: 'asc',
       limit: 20,
       page: 1,
-      query: branchTagQuery
+      query: sourceQuery || targetQuery || ''
     }
   })
 
@@ -374,7 +382,11 @@ export const CreatePullRequest = () => {
           }
         }
       }
-      setBranchTagQuery('')
+      if (sourceBranch) {
+        setSourceQuery('')
+      } else {
+        setTargetQuery('')
+      }
     },
     [branchList, tagsList, setSelectedSourceBranch, setSelectedTargetBranch]
   )
@@ -470,8 +482,10 @@ export const CreatePullRequest = () => {
               }
             : {}
         }
-        searchBranchQuery={branchTagQuery}
-        setSearchBranchQuery={setBranchTagQuery}
+        searchSourceQuery={sourceQuery}
+        setSearchSourceQuery={setSourceQuery}
+        searchTargetQuery={targetQuery}
+        setSearchTargetQuery={setTargetQuery}
         usersList={reviewUsers}
         searchReviewersQuery={searchReviewers}
         setSearchReviewersQuery={setSearchReviewers}

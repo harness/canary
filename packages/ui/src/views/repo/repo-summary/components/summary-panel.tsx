@@ -1,6 +1,7 @@
 import { FC } from 'react'
 
 import { Badge, Button, DropdownMenu, Icon, IconProps, Spacer, Text } from '@/components'
+import { TranslationStore } from '@views/repo/repo-list/types'
 
 import { EditRepoDetails } from './edit-repo-details-dialog'
 
@@ -16,10 +17,12 @@ interface SummaryPanelProps {
   details: DetailItem[]
   timestamp?: string
   description?: string
+  is_public?: boolean
   saveDescription: (description: string) => void
   updateRepoError?: string
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
+  useTranslationStore: () => TranslationStore
 }
 
 const SummaryPanel: FC<SummaryPanelProps> = ({
@@ -27,11 +30,14 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
   details,
   timestamp,
   description = '',
+  is_public,
   saveDescription,
   updateRepoError,
   isEditDialogOpen,
-  setEditDialogOpen
+  setEditDialogOpen,
+  useTranslationStore
 }) => {
+  const { t } = useTranslationStore()
   const onClose = () => {
     setEditDialogOpen(false)
   }
@@ -62,6 +68,16 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
             <span className="text-13 text-foreground-4">Created {timestamp}</span>
           </>
         )}
+        <Spacer size={3} />
+        <Badge
+          size="md"
+          disableHover
+          borderRadius="full"
+          theme={!is_public ? 'muted' : 'success'}
+          className="w-1/4 items-center justify-center"
+        >
+          {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
+        </Badge>
         {!!description?.length && (
           <>
             <Spacer size={3} />
@@ -69,6 +85,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           </>
         )}
         <Spacer size={5} />
+
         <div className="flex flex-col gap-3">
           {details &&
             details.map(item => (

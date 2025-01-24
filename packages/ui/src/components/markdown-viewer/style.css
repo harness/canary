@@ -201,7 +201,7 @@
   }
 
   code {
-    @apply bg-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-0.5 font-normal tracking-normal before:hidden after:hidden;
+    @apply bg-background-9 border-borders-2 font-code text-foreground-2 text-15 rounded border px-1 py-px font-normal tracking-normal before:hidden after:hidden;
   }
 
   strong {

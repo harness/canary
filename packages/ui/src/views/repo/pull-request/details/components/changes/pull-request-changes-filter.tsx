@@ -275,13 +275,17 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </ListActions.Left>
+
       <ListActions.Right>
-        <FileViewGauge.Root>
-          <FileViewGauge.Content>
-            {viewedFiles}/{totalFiles} file{totalFiles === 1 ? '' : 's'} viewed
-          </FileViewGauge.Content>
-          <FileViewGauge.Bar total={totalFiles} filled={viewedFiles} />
-        </FileViewGauge.Root>
+        {selectedCommits[0].value === 'ALL' && (
+          <FileViewGauge.Root>
+            <FileViewGauge.Content>
+              {viewedFiles}/{totalFiles} file{totalFiles === 1 ? '' : 's'} viewed
+            </FileViewGauge.Content>
+            <FileViewGauge.Bar total={totalFiles} filled={viewedFiles} />
+          </FileViewGauge.Root>
+        )}
+
         {commitSuggestionsBatchCount > 0 ? (
           <Button variant={'outline'} onClick={() => onCommitSuggestionsBatch()}>
             {`Commit suggestion (${commitSuggestionsBatchCount})`}

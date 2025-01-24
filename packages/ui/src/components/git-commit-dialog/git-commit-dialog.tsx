@@ -208,7 +208,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               />
             </RadioGroup>
             {violation && (
-              <Message className="ml-8 mt-0.5" theme={MessageTheme.ERROR}>
+              <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
                   ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
                     ? 'Some rules will be bypassed to commit directly'

@@ -79,24 +79,22 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
           removeReviewerError={removeReviewerError}
         />
       </div>
-      {labelsList && labelsList.length > 0 && (
-        <div className="flex flex-col gap-3 pt-5">
-          <LabelsHeader
-            labelsList={labelsList}
-            selectedLabels={PRLabels}
-            addLabel={addLabel}
-            searchQuery={searchLabelQuery}
-            setSearchQuery={setSearchLabelQuery}
-            useTranslationStore={useTranslationStore}
-          />
-          <LabelsList
-            labels={PRLabels}
-            handleDelete={removeLabel}
-            addLabelError={addLabelError}
-            removeLabelError={removeLabelError}
-          />
-        </div>
-      )}
+      <div className="flex flex-col gap-3 pt-5">
+        <LabelsHeader
+          labelsList={labelsList}
+          selectedLabels={PRLabels}
+          addLabel={addLabel}
+          searchQuery={searchLabelQuery}
+          setSearchQuery={setSearchLabelQuery}
+          useTranslationStore={useTranslationStore}
+        />
+        <LabelsList
+          labels={PRLabels}
+          handleDelete={removeLabel}
+          addLabelError={addLabelError}
+          removeLabelError={removeLabelError}
+        />
+      </div>
     </div>
   )
 }

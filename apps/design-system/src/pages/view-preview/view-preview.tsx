@@ -10,22 +10,26 @@ import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
-import PullRequestChanges from '@subjects/views/pull-request-conversation/pull-request-changes'
+import PullRequestChangesWrapper from '@subjects/views/pull-request-conversation/pull-request-changes-wrapper'
 import PullRequestCommits from '@subjects/views/pull-request-conversation/pull-request-commits'
-import PullRequestConversation from '@subjects/views/pull-request-conversation/pull-request-conversation'
+import PullRequestConversationWrapper from '@subjects/views/pull-request-conversation/pull-request-conversation-wrapper'
 import PullRequestListWrapper from '@subjects/views/pull-request-list/pull-request-list'
 import { RepoBranchesView } from '@subjects/views/repo-branches'
 import { RepoCommitsView } from '@subjects/views/repo-commits'
+import { CreateRepoView } from '@subjects/views/repo-create'
 import { RepoCreateRule } from '@subjects/views/repo-create-rule'
 import { RepoFilesEditView } from '@subjects/views/repo-files/repo-files-edit-view'
 import { RepoFilesJsonView } from '@subjects/views/repo-files/repo-files-json-view'
 import { RepoFilesList } from '@subjects/views/repo-files/repo-files-list'
 import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-markdown-view'
 import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-general-settings'
+import { ImportRepoView } from '@subjects/views/repo-import'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
+import { SignInView } from '@subjects/views/signin'
+import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import { useTranslationsStore } from '@utils/viewUtils'
 
@@ -41,6 +45,18 @@ import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
 
 export const viewPreviews: Record<string, ReactNode> = {
+  signin: <SignInView />,
+  signup: <SignUpView />,
+  'repo-create': (
+    <RootViewWrapper>
+      <CreateRepoView />
+    </RootViewWrapper>
+  ),
+  'repo-import': (
+    <RootViewWrapper>
+      <ImportRepoView />
+    </RootViewWrapper>
+  ),
   'repo-summary': (
     <RepoViewWrapper>
       <RepoSummaryViewWrapper />
@@ -63,7 +79,12 @@ export const viewPreviews: Record<string, ReactNode> = {
   ),
   'pull-request-conversation': (
     <PullRequestLayoutWrapper>
-      <PullRequestConversation />
+      <PullRequestConversationWrapper state={'simple'} />
+    </PullRequestLayoutWrapper>
+  ),
+  'pull-request-conversation-1': (
+    <PullRequestLayoutWrapper>
+      <PullRequestConversationWrapper state={'complex-1'} />
     </PullRequestLayoutWrapper>
   ),
   'pull-request-commits': (
@@ -73,7 +94,12 @@ export const viewPreviews: Record<string, ReactNode> = {
   ),
   'pull-request-changes': (
     <PullRequestLayoutWrapper>
-      <PullRequestChanges />
+      <PullRequestChangesWrapper state={'simple'} />
+    </PullRequestLayoutWrapper>
+  ),
+  'pull-request-changes-1': (
+    <PullRequestLayoutWrapper>
+      <PullRequestChangesWrapper state={'complex-1'} />
     </PullRequestLayoutWrapper>
   ),
   'repo-files-list': (

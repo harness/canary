@@ -856,8 +856,17 @@
   },
   "overlay": {
     "base": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.2",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "#fff",
+      "$value": "{colors.base-chrome.50}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "intense": {

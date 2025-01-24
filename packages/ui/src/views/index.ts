@@ -47,3 +47,6 @@ export * from './user-management'
 
 // not found (404)
 export * from './not-found-page'
+
+// labels
+export * from './labels'

@@ -14,7 +14,7 @@ interface SelectProps
   error?: string
   caption?: ReactNode
   disabled?: boolean
-  placeholder: string
+  placeholder?: string
   selectValueChildren?: ReactNode
 }
 
@@ -32,7 +32,7 @@ const Select: FC<SelectProps> = ({
   error,
   caption,
   disabled = false,
-  placeholder,
+  placeholder = '',
   children,
   selectValueChildren,
   ...props

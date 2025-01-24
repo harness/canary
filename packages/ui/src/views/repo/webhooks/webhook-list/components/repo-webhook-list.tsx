@@ -136,7 +136,7 @@ export function RepoWebhookList({
           {webhooks.map(webhook => (
             <TableRow onClick={() => navigate(`${webhook.id}`)} key={webhook.id}>
               <TableCell>
-                <StackedList.Item key={webhook.id} className="cursor-pointer py-3 pr-1.5 !p-0 max-w-full" isLast>
+                <StackedList.Item key={webhook.id} className="max-w-full cursor-pointer !p-0 py-3 pr-1.5" isLast>
                   <StackedList.Field
                     primary
                     description={
@@ -156,7 +156,7 @@ export function RepoWebhookList({
                         handleEnableWebhook={handleEnableWebhook}
                       />
                     }
-                    className="gap-1.5 max-w-full"
+                    className="max-w-full gap-1.5"
                   />
                 </StackedList.Item>
               </TableCell>
@@ -183,7 +183,7 @@ export function RepoWebhookList({
                 </Badge>
               </TableCell>
 
-              <TableCell className="text-right content-center">
+              <TableCell className="content-center text-right">
                 <MoreActionsTooltip
                   actions={[
                     {

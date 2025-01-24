@@ -34,7 +34,7 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
           variant="custom"
           size="icon"
         >
-          <Icon name="vertical-ellipsis" size={14} />
+          <Icon name="vertical-ellipsis" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content

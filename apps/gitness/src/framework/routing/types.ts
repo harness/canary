@@ -71,7 +71,9 @@ export enum RouteConstants {
   toCI = 'toCI',
   toCode = 'toCode',
   toProfileKeys = 'toProfileKeys',
-  toProfileGeneral = 'toProfileGeneral'
+  toProfileGeneral = 'toProfileGeneral',
+  toRepoLabels = 'toRepoLabels',
+  toProjectLabels = 'toProjectLabels'
 }
 
 export interface RouteEntry {

@@ -210,7 +210,7 @@ export const AppShell = () => {
 }
 
 export const AppShellMFE = () => {
-  return <BreadcrumbsAndOutlet className="text-foreground-2 min-h-screen" />
+  return <BreadcrumbsAndOutlet className="min-h-screen text-foreground-2" />
 }
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {

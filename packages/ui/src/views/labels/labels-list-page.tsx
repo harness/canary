@@ -1,42 +1,53 @@
 import { FC, useMemo } from 'react'
+import { Link } from 'react-router-dom'
 
 import {
   Button,
   Checkbox,
-  Label,
   ListActions,
+  Option,
   PaginationComponent,
   SearchBox,
   SkeletonList,
-  Spacer,
-  Text
+  Spacer
 } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { SandboxLayout } from '@/views'
-import { LabelsListView } from '@views/project/project-labels/components/labels-list-view'
+import { ILabelsStore, ILabelType, SandboxLayout, TranslationStore } from '@/views'
 
-import { RepoLabelPageProps } from './types'
+import { LabelsListView } from './components/labels-list-view'
 
-export const RepoLabelsListView: FC<RepoLabelPageProps> = ({
+export interface LabelsListPageProps {
+  useTranslationStore: () => TranslationStore
+  useLabelsStore: () => ILabelsStore
+  createdIn?: string
+  handleEditLabel: (label: ILabelType) => void
+  handleDeleteLabel: (identifier: string) => void
+  showSpacer?: boolean
+  searchQuery: string | null
+  setSearchQuery: (query: string | null) => void
+  isLoading: boolean
+  isRepository?: boolean
+}
+
+export const LabelsListPage: FC<LabelsListPageProps> = ({
   useTranslationStore,
   useLabelsStore,
-  openCreateLabelDialog,
   handleEditLabel,
   handleDeleteLabel,
-  showSpacer = true,
   searchQuery,
   setSearchQuery,
-  isLoadingSpaceLabels
+  isLoading,
+  isRepository = false
 }) => {
   const { t } = useTranslationStore()
   const {
-    labels: repoLabels,
+    labels: spaceLabels,
     totalPages,
     page,
     setPage,
-    values: repoValues,
-    setGetParentScopeLabels,
-    getParentScopeLabels
+    values: spaceValues,
+    getParentScopeLabels,
+    setGetParentScopeLabels
   } = useLabelsStore()
 
   const {
@@ -52,61 +63,65 @@ export const RepoLabelsListView: FC<RepoLabelPageProps> = ({
     return page !== 1 || !!searchQuery
   }, [page, searchQuery])
 
-  const filteredLabels = useMemo(() => {
-    return getParentScopeLabels ? repoLabels : repoLabels?.filter(label => label.scope === 0)
-  }, [repoLabels, getParentScopeLabels])
+  const handleResetQueryAndPages = () => {
+    handleResetSearch()
+    setPage(1)
+  }
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="3xl">
-        {showSpacer && <Spacer size={10} />}
-        <Text size={5} weight={'medium'}>
-          Labels
-        </Text>
+      <SandboxLayout.Content className="mx-auto max-w-[812px]">
+        <h1 className="text-2xl font-medium text-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
         <Spacer size={6} />
-        {(!!repoLabels.length || (!repoLabels.length && isDirtyList)) && (
+        {isRepository && (
+          <Option
+            className="mb-[18px]"
+            control={
+              <Checkbox
+                checked={getParentScopeLabels}
+                onCheckedChange={setGetParentScopeLabels}
+                id="show-parent-labels"
+              />
+            }
+            id="show-parent-labels"
+            label={t('views:labelData.showParentLabels', 'Show labels from parent scopes')}
+          />
+        )}
+
+        {(!!spaceLabels.length || (!spaceLabels.length && isDirtyList)) && (
           <>
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root
                   width="full"
                   className="max-w-96"
-                  value={searchInput || ''}
+                  value={searchInput}
                   handleChange={handleInputChange}
                   placeholder={t('views:repos.search', 'Search')}
                 />
-                <div className="flex gap-2">
-                  <Checkbox
-                    checked={getParentScopeLabels}
-                    onCheckedChange={() => setGetParentScopeLabels(!getParentScopeLabels)}
-                    id="show-parent-labels"
-                  />
-                  <Label>Show parent lables</Label>
-                </div>
               </ListActions.Left>
               <ListActions.Right>
-                <Button variant="default" onClick={openCreateLabelDialog}>
-                  New label
+                <Button asChild>
+                  <Link to="create">{t('views:labelData.newLabel', 'New label')}</Link>
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
           </>
         )}
         <Spacer size={5} />
-        {isLoadingSpaceLabels ? (
+        {isLoading ? (
           <SkeletonList />
         ) : (
           <LabelsListView
-            labels={filteredLabels}
+            labels={spaceLabels}
             useLabelsStore={useLabelsStore}
             handleDeleteLabel={handleDeleteLabel}
             handleEditLabel={handleEditLabel}
             useTranslationStore={useTranslationStore}
             isDirtyList={isDirtyList}
-            handleResetSearch={handleResetSearch}
+            handleResetQueryAndPages={handleResetQueryAndPages}
             searchQuery={searchQuery}
-            openCreateLabelDialog={openCreateLabelDialog}
-            values={repoValues}
+            values={spaceValues}
           />
         )}
 

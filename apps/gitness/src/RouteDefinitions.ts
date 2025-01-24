@@ -9,6 +9,7 @@ export type PathParams = {
   resourcePath?: string
   diffRefs?: string
   webhookId?: string
+  labelId?: string
 }
 
 export const PathProps = {

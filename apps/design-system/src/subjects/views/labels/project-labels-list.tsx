@@ -1,36 +1,25 @@
 import { useState } from 'react'
 
+import { LabelsListStore } from '@subjects/stores/labels-store'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CreateLabelDialog, ProjectLabelsListView } from '@harnessio/ui/views'
-
-import { RepoLabelsListStore } from './repo-labels-store'
+import { LabelsListPage } from '@harnessio/ui/views'
 
 export const ProjectLabelsList = () => {
-  const [openCreateLabelDialog, setOpenCreateLabelDialog] = useState(false)
   const [openAlertDeleteDialog, setOpenAlertDeleteDialog] = useState(false)
 
   return (
     <>
-      <ProjectLabelsListView
-        useLabelsStore={RepoLabelsListStore.useLabelsStore}
+      <LabelsListPage
         useTranslationStore={useTranslationsStore}
+        useLabelsStore={LabelsListStore.useLabelsStore}
+        createdIn={''}
+        handleEditLabel={() => {}}
         handleDeleteLabel={() => setOpenAlertDeleteDialog(true)}
-        handleEditLabel={() => setOpenCreateLabelDialog(true)}
-        openCreateLabelDialog={() => setOpenCreateLabelDialog(true)}
-        searchQuery={null}
-        setSearchQuery={noop}
-        isLoadingSpaceLabels={false}
-      />
-      <CreateLabelDialog
-        open={openCreateLabelDialog}
-        onClose={() => setOpenCreateLabelDialog(false)}
-        onSubmit={noop}
-        useTranslationStore={useTranslationsStore}
-        isCreatingLabel={false}
-        error={''}
-        useLabelsStore={RepoLabelsListStore.useLabelsStore}
+        searchQuery={''}
+        setSearchQuery={() => {}}
+        isLoading={false}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

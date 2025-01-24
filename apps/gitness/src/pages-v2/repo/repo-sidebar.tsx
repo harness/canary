@@ -127,7 +127,6 @@ export const RepoSidebar = () => {
       })
     } else {
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
-      // console.log('selectedGitRefBranch', fullGitRef)
       if (selectedGitRefBranch) {
         setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {

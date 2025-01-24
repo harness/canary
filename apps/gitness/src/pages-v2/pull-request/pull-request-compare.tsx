@@ -194,7 +194,6 @@ export const CreatePullRequest = () => {
   }, [repoMetadata, diffTargetBranch, diffSourceBranch])
 
   const handleSubmit = (data: CompareFormFields, isDraft: boolean) => {
-    console.log('data', data)
     const pullRequestBody: OpenapiCreatePullReqRequest = {
       description: data.description,
       is_draft: isDraft,

@@ -13,32 +13,25 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
   const initializedFiltersRef = useRef(false)
 
   const reducerInitialState = {
-    components: {
-      filters: {},
-      nonFilters: []
-    },
+    components: [],
     filtersConfig: {}
   }
 
   const { components, filtersConfig } = React.Children.toArray(children).reduce<{
-    components: {
-      filters: Record<string, ReactNode>
-      nonFilters: ReactNode[]
-    }
+    components: ReactNode[]
     filtersConfig: Record<string, InitializeFiltersConfigType>
   }>((acc, child) => {
     if (React.isValidElement(child) && child.props.filterKey !== null && typeof child.props.filterKey === 'string') {
       if (visibleFilters.includes(child.props.filterKey)) {
-        acc.components.filters[child.props.filterKey] = child
+        acc.components.push(child)
       }
 
       acc.filtersConfig[child.props.filterKey] = {
+        defaultValue: child.props.defaultValue,
         parser: child.props.parser,
         isSticky: child.props.sticky,
         state: FilterStatus.HIDDEN
       }
-    } else {
-      acc.components.nonFilters.push(child)
     }
     return acc
   }, reducerInitialState)
@@ -48,9 +41,7 @@ const FiltersContent: React.FC<FiltersContentProps> = ({ children, className }) 
     initializedFiltersRef.current = true
   }
 
-  const renderableComponents = visibleFilters.map(filterKey => components.filters[filterKey])
-
-  return <div className={className}>{renderableComponents.concat(components.nonFilters)}</div>
+  return <div className={className}>{components}</div>
 }
 
 export default FiltersContent

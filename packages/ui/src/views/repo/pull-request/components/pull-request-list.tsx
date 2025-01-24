@@ -73,7 +73,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             {pullRequest.number && (
               <>
                 <StackedList.Field
-                  className="gap-1.5"
+                  className="gap-1.5 max-w-full"
                   title={
                     pullRequest.name && (
                       <PullRequestItemTitle

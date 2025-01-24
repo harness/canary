@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
+  Alert,
   Button,
   ControlGroup,
   Dialog,
+  Fieldset,
   FormWrapper,
   Input,
-  Message,
-  MessageTheme,
   Select,
   SelectContent,
   SelectItem
@@ -89,12 +89,12 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
         reset()
       }}
     >
-      <Dialog.Content className="max-w-[500px]">
+      <Dialog.Content className="max-w-xl" aria-describedby={undefined}>
         <Dialog.Header>
           <Dialog.Title>Create Pipeline</Dialog.Title>
         </Dialog.Header>
-        <Dialog.Description>
-          <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+          <Fieldset>
             <Input
               id="name"
               label="Pipeline name *"
@@ -102,6 +102,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               size="md"
               error={errors.name?.message?.toString()}
             />
+          </Fieldset>
+
+          <Fieldset>
             <Input
               id="yamlPath"
               label="Yaml path *"
@@ -109,6 +112,9 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
               size="md"
               error={errors.name?.message?.toString()}
             />
+          </Fieldset>
+
+          <Fieldset>
             <ControlGroup>
               <Select
                 disabled={isLoadingBranchNames}
@@ -127,27 +133,31 @@ export function CreatePipelineDialog(props: CreatePipelineDialogProps) {
                 </SelectContent>
               </Select>
             </ControlGroup>
-            <Message className="mt-0.5" theme={MessageTheme.ERROR}>
-              {errorMessage}
-            </Message>
-            <div className="flex justify-end gap-3">
-              <Button
-                type="button"
-                onClick={() => {
-                  onCancel()
-                  reset()
-                }}
-                className="text-primary"
-                variant="outline"
-              >
-                Cancel
-              </Button>
-              <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
-                Create Pipeline
-              </Button>
-            </div>
-          </FormWrapper>
-        </Dialog.Description>
+          </Fieldset>
+
+          {errorMessage && (
+            <Alert.Container variant="destructive">
+              <Alert.Title>{errorMessage}</Alert.Title>
+            </Alert.Container>
+          )}
+
+          <Dialog.Footer className="-mx-5 -mb-5">
+            <Button
+              type="button"
+              onClick={() => {
+                onCancel()
+                reset()
+              }}
+              className="text-primary"
+              variant="outline"
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={!isValid || isLoadingBranchNames}>
+              Create Pipeline
+            </Button>
+          </Dialog.Footer>
+        </FormWrapper>
       </Dialog.Content>
     </Dialog.Root>
   )

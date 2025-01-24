@@ -32,7 +32,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
         {`#${number}`} opened {timestamp} by {author}
       </p>
 
-      <span className="pointer-events-none h-2.5 w-px bg-borders-2" aria-hidden />
+      <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
 
       <p>{reviewRequired ? 'Review required' : 'Draft'}</p>
 
@@ -45,7 +45,7 @@ export const PullRequestItemDescription: FC<PullRequestItemDescriptionProps> = (
           </p>
         </div>
       )}
-      <span className="pointer-events-none h-2.5 w-px bg-borders-2" aria-hidden />
+      <span className="pointer-events-none h-3.5 w-px bg-borders-2" aria-hidden />
 
       {sourceBranch && (
         <>

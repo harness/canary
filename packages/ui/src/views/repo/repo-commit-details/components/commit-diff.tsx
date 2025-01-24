@@ -13,11 +13,11 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
 
   return (
     <div className="min-h-[calc(100vh-100px)] pt-5">
-      <p className="mb-3.5 text-14 leading-tight text-foreground-4">
+      <p className="text-14 text-foreground-4 mb-3.5 leading-tight">
         {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
         <span className="text-foreground-accent">
           {diffStats?.files_changed || 0} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
-        </span>
+        </span>{' '}
         {t('views:commits.commitDetailsDiffWith', 'with')} {diffStats?.additions || 0}{' '}
         {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {diffStats?.deletions || 0}{' '}
         {t('views:commits.commitDetailsDiffDeletions', 'deletions')}

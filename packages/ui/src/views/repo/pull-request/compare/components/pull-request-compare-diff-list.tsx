@@ -82,7 +82,7 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
             <Accordion.Trigger leftChevron className="p-4 text-left">
               <StackedList.Field title={<LineTitle text={header?.text ?? ''} />} />
             </Accordion.Trigger>
-            <Accordion.Content>
+            <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
                   <Layout.Vertical className="flex w-full items-center py-5">

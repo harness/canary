@@ -36,13 +36,14 @@ const applyTypeFilter = (pr: PullRequestType, filter: FilterValue): boolean => {
 
   const isOpen = pr.state === 'open'
   const isClosed = pr.state === 'closed'
+  const isMerged = pr.merged !== null || undefined
 
   const matchesType = filter.selectedValues.some(value => {
     switch (value) {
       case 'enabled':
         return isOpen
       case 'disabled':
-        return isClosed
+        return isClosed || isMerged
       default:
         return false
     }

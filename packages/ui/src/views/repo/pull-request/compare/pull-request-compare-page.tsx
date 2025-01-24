@@ -185,14 +185,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <p className="max-w-xl text-14 leading-snug text-foreground-2">
             {t(
               'views:pullRequests.compareChangesDescription',
-              'Choose two branches to see what’s changed or to start a new pull request. If you need to, you can also'
-            )}{' '}
-            <StyledLink to="/">{t('views:pullRequests.compareChangesForkLink', 'compare across forks')}</StyledLink>{' '}
-            {t('views:pullRequests.compareChangesOr', 'or')}{' '}
-            <StyledLink to="/">
-              {t('views:pullRequests.compareChangesDiffLink', 'learn more about diff comparisons')}
-            </StyledLink>
-            .
+              'Choose two branches to see what’s changed or to start a new pull request.'
+            )}
           </p>
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />

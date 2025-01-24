@@ -45,37 +45,46 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) 
 
                   return (
                     <StackedList.Item
-                      className="!cursor-default items-start py-3"
+                      className="flex !cursor-default items-start py-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
-                      <StackedList.Field
-                        title={
-                          <div className="flex flex-col gap-y-1.5">
-                            {toCommitDetails ? (
-                              <p>
-                                <Link
-                                  className="text-16 font-medium leading-snug hover:underline"
-                                  to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
-                                >
-                                  <span className="truncate">{commit.title}</span>
-                                </Link>
-                              </p>
-                            ) : (
-                              <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
-                            )}
-                            <div className="flex items-center gap-x-1.5">
-                              {authorName && (
-                                <Avatar className="size-[18px]">
-                                  <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
-                                </Avatar>
+                      <Link
+                        className="grow "
+                        onClick={e => {
+                          e.stopPropagation()
+                        }}
+                        key={commit?.sha}
+                        to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                      >
+                        <StackedList.Field
+                          title={
+                            <div className="flex w-full max-w-full flex-col gap-y-1.5">
+                              {toCommitDetails ? (
+                                <p>
+                                  <Link
+                                    className="text-16 font-medium leading-snug hover:underline"
+                                    to={`${toCommitDetails?.({ sha: commit?.sha || '' })}`}
+                                  >
+                                    <span className="truncate">{commit.title}</span>
+                                  </Link>
+                                </p>
+                              ) : (
+                                <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
                               )}
-                              <span className="text-foreground-3">{authorName || ''}</span>
-                              <span className="text-foreground-4">committed on {date}</span>
+                              <div className="flex items-center gap-x-1.5">
+                                {authorName && (
+                                  <Avatar className="size-[18px]">
+                                    <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
+                                  </Avatar>
+                                )}
+                                <span className="text-foreground-3">{authorName || ''}</span>
+                                <span className="text-foreground-4">committed on {date}</span>
+                              </div>
                             </div>
-                          </div>
-                        }
-                      />
+                          }
+                        />
+                      </Link>
                       {!!commit?.sha && (
                         <StackedList.Field
                           title={

@@ -223,7 +223,7 @@
     "compareChangesFormDescription": "Add a description",
     "compareChangesFormDescriptionPlaceholder": "Add Pull Request description here.",
     "compareChanges": "Comparing changes",
-    "compareChangesDescription": "Choose two branches to see what’s changed or to start a new pull request. If you need to, you can also",
+    "compareChangesDescription": "Choose two branches to see what’s changed or to start a new pull request.",
     "compareChangesForkLink": "compare across forks",
     "compareChangesOr": "or",
     "compareChangesDiffLink": "learn more about diff comparisons",

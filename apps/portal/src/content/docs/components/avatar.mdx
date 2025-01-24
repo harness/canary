@@ -1,0 +1,50 @@
+---
+title: Avatar
+description: Avatar component
+---
+
+An image element with a fallback for representing the image
+
+import { DocsPage } from "@/components/docs-page";
+import { Avatar, AvatarImage, AvatarFallback } from "@harnessio/ui/components";
+import { Badge } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex w-full justify-center">
+    <Avatar size={10}>
+      <AvatarImage src="https://github.com/shadcn.png" alt="Avatar image" />
+      <AvatarFallback>JD</AvatarFallback>
+    </Avatar>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Avatar } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Avatar size={10}>
+    <AvatarImage src="https://github.com/shadcn.png" alt="Avatar image" />
+    <AvatarFallback>JD</AvatarFallback>
+  </Avatar>
+)
+```
+
+## Anatomy
+
+Coming soon.
+
+```typescript jsx
+<Avatar>
+  <AvatarImage/>
+  <AvatarFallback />
+</Avatar>
+```
+
+## API Reference
+
+<Badge theme="emphasis">Coming soon</Badge>

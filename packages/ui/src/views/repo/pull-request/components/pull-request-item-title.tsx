@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge, Icon, Text } from '@/components'
+import { Badge, Icon } from '@/components'
 import * as StackedList from '@/components/stacked-list'
 import { cn } from '@utils/cn'
 

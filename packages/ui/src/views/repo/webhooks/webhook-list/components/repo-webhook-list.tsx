@@ -97,10 +97,10 @@ export function RepoWebhookList({
     <>
       <StackedList.Root>
         {webhooks.map((webhook, webhook_idx) => (
-          <Link key={webhook.id} to={`${webhook.id}`} className="cursor-pointer">
+          <Link key={webhook.id} to={`${webhook.id}`}>
             <StackedList.Item
               key={webhook.createdAt}
-              className="!cursor-default py-3 pr-1.5"
+              className="py-3 pr-1.5 cursor-pointer"
               isLast={webhooks.length - 1 === webhook_idx}
             >
               <StackedList.Field

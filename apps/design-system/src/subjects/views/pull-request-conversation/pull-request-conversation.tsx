@@ -16,12 +16,28 @@ import {
   SandboxLayout,
   TypesCodeOwnerEvaluation,
   TypesCodeOwnerEvaluationEntry,
+  TypesPullReqActivity,
   TypesPullReqReviewer
 } from '@harnessio/ui/views'
 
-import { changesInfoData, mockPullRequestActions, prPanelInfo } from './pull-request-panelData'
+import {
+  changesInfoData,
+  Label,
+  mockActivities,
+  mockLabelList,
+  mockPrLabels,
+  mockPullRequestActions,
+  mockReviewers,
+  pendingChangesInfoData,
+  prPanelInfo,
+  pullReqChecksDecisionSucceeded
+} from './pull-request-panelData'
 
-const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
+interface PullRequestConversationProps extends PropsWithChildren {
+  state: string
+}
+
+const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) => {
   const isCommitDialogOpen = false
 
   const suggestionsBatch: CommitSuggestion[] = []
@@ -30,8 +46,11 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
   const handlePrState = () => {}
   const spaceId = ''
   const repoId = ''
-  const changesInfo = changesInfoData
-  const pullReqChecksDecision = { checkInfo: { title: '', status: '' }, summaryText: '', data: { checks: [] } }
+  const changesInfo = state === 'complex-1' ? pendingChangesInfoData : changesInfoData
+  const pullReqChecksDecision =
+    state === 'complex-1'
+      ? pullReqChecksDecisionSucceeded
+      : { checkInfo: { title: '', status: '' }, summaryText: '', data: { checks: [] } }
   const prPanelData = prPanelInfo
   const approvedEvaluations: TypesPullReqReviewer[] = []
   const changeReqEvaluations: TypesPullReqReviewer[] = []
@@ -51,7 +70,7 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
 
   const repoRef = ''
   const commentStatusPullReq = ''
-  const currentUserData = { display_name: '', uid: '' }
+  const currentUserData = { display_name: 'admin', uid: '' }
 
   const comment = ''
 
@@ -59,22 +78,18 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
     // Example implementation
     return 'approved'
   }
+  const activities = state === 'complex-1' ? mockActivities : undefined
 
   const addReviewerError = { message: '' }
   const removeReviewerError = { message: '' }
 
   const searchReviewers = ''
-  interface Label {
-    id: number
-    key: string
-    color: string
-  }
 
-  const labelsList: Label[] = []
-  const PRLabels = { label_data: [] as Label[] }
+  const labelsList: Label[] = state === 'complex-1' ? mockLabelList : []
+  const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as Label[] }
   const searchLabel = ''
   const pullReqMetadata = { source_sha: '' }
-
+  const reviewers = state === 'complex-1' ? mockReviewers : undefined
   return (
     <>
       <CommitSuggestionsDialog
@@ -157,7 +172,29 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
               repoId={repoRef}
               refetchActivities={noop}
               commentStatusPullReq={commentStatusPullReq}
-              data={undefined}
+              data={activities?.map((item: TypesPullReqActivity) => {
+                return {
+                  author: item?.author,
+                  created: item?.created,
+                  deleted: item?.deleted,
+                  edited: item?.edited,
+                  id: item?.id,
+                  kind: item?.kind,
+                  mentions: item?.mentions,
+                  metadata: item?.metadata,
+                  order: item?.order,
+                  parent_id: item?.parent_id,
+                  payload: item as TypesPullReqActivity,
+                  pullreq_id: item?.pullreq_id,
+                  repo_id: item?.repo_id,
+                  resolved: item?.resolved,
+                  resolver: item?.resolver,
+                  sub_order: item?.sub_order,
+                  text: item?.text,
+                  type: item?.type,
+                  updated: item?.updated
+                }
+              })}
               pullReqMetadata={pullReqMetadata ? pullReqMetadata : undefined}
               activityFilter={activityFilter}
               dateOrderSort={dateOrderSort}
@@ -197,7 +234,7 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
               handleDelete={noop}
               addReviewerError={addReviewerError.message}
               removeReviewerError={removeReviewerError.message}
-              reviewers={undefined}
+              reviewers={reviewers}
               searchQuery={searchReviewers}
               setSearchQuery={noop}
               labelsList={labelsList?.map(label => {
@@ -229,4 +266,4 @@ const PullRequestConversationWrapper: FC<PropsWithChildren> = () => {
   )
 }
 
-export default PullRequestConversationWrapper
+export default PullRequestConversation

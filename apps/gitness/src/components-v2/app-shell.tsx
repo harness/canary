@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom'
 
+import { cn } from '@harnessio/canary'
 import {
   ManageNavigation,
   MenuGroupType,
@@ -209,12 +210,12 @@ export const AppShell = () => {
 }
 
 export const AppShellMFE = () => {
-  return <BreadcrumbsAndOutlet />
+  return <BreadcrumbsAndOutlet className="text-foreground-2 min-h-screen" />
 }
 
-function BreadcrumbsAndOutlet() {
+function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   return (
-    <div className="flex flex-col">
+    <div className={cn('flex flex-col', className)}>
       <div className="layer-high bg-background-1 sticky top-0">
         <Breadcrumbs />
       </div>

@@ -83,34 +83,33 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
                 }) + `?uid=${check?.check?.identifier}`
               }
             ></Link> */}
-                    {check?.check?.status !== ExecutionState.PENDING && (
-                      <Link
-                        to={
-                          toPRCheck?.({
-                            pipelineId: check?.check?.identifier || '',
-                            executionId: (
-                              check?.check?.payload?.data as ExecutionPayloadType
-                            ).execution_number?.toString()
-                          }) || ''
-                        }
-                      >
-                        <Text size={1} color="tertiaryBackground">
-                          Details
-                        </Text>
-                      </Link>
-                    )}
-                  </div>
-                  <div className="col-span-1 flex justify-end">
-                    {check?.check?.status === ExecutionState.PENDING ? (
-                      <Badge variant="outline" size="sm">
-                        <Text size={1} color="tertiaryBackground">
-                          Required
-                        </Text>
-                      </Badge>
-                    ) : (
-                      <div className="min-w-[70px]"></div>
-                    )}
-                  </div>
+                  {check?.check?.status !== ExecutionState.PENDING && (
+                    <Link
+                      to={
+                        toPRCheck?.({
+                          pipelineId: check?.check?.identifier || '',
+                          executionId: (
+                            check?.check?.payload?.data as ExecutionPayloadType
+                          ).execution_number?.toString()
+                        }) || ''
+                      }
+                    >
+                      <Text size={1} color="tertiaryBackground">
+                        Details
+                      </Text>
+                    </Link>
+                  )}
+                </div>
+                <div className="col-span-1 flex justify-end">
+                  {check?.check?.status === ExecutionState.PENDING ? (
+                    <Badge variant="outline" size="sm">
+                      <Text size={1} color="tertiaryBackground">
+                        Required
+                      </Text>
+                    </Badge>
+                  ) : (
+                    <div className="min-w-[70px]"></div>
+                  )}
                 </div>
               </div>
             </div>

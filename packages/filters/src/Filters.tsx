@@ -208,15 +208,13 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const updatedFiltersMap = { ...filtersMap }
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
-      if (isSticky) {
+
         updatedFiltersMap[key as FilterKeys] = {
           value: undefined,
           query: undefined,
-          state: FilterStatus.VISIBLE
+          state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
         }
-      } else {
-        delete updatedFiltersMap[key as FilterKeys]
-      }
+      
     })
 
     setFiltersMap(updatedFiltersMap)
@@ -291,9 +289,8 @@ const FiltersWrapper = forwardRef(function FiltersWrapper(
 export default FiltersWrapper
 
 export const createFilters = <T extends unknown>() => {
-  // @ts-ignore
-  const Filters = forwardRef<HTMLDivElement, FiltersWrapperProps>((props, ref: FilterRefType<T>) => {
-    return <FiltersWrapper ref={ref as any} {...props} />
+  const Filters = forwardRef<FilterRefType<T>, FiltersWrapperProps>((props, ref) => {
+    return <FiltersWrapper ref={ref} {...props} />
   })
 
   const FiltersWithStatics = Filters as typeof Filters & {

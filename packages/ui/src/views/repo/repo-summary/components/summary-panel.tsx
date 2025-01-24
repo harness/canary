@@ -74,7 +74,7 @@ const SummaryPanel: FC<SummaryPanelProps> = ({
           disableHover
           borderRadius="full"
           theme={!is_public ? 'muted' : 'success'}
-          className="w-[25%] items-center justify-center"
+          className="w-1/4 items-center justify-center"
         >
           {!is_public ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
         </Badge>

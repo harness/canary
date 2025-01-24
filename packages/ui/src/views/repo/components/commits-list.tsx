@@ -13,9 +13,10 @@ interface RoutingProps {
 }
 interface CommitProps extends Partial<RoutingProps> {
   data?: TypesCommit[]
+  className?: string
 }
 
-export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) => {
+export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, className }) => {
   const navigate = useNavigate()
   const entries = useMemo(() => {
     const commitsGroupedByDate = !data
@@ -32,7 +33,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode }) 
   const totalNodes = entries.length
 
   return (
-    <div>
+    <div className={className}>
       {entries.map(([date, commitData], node_idx) => (
         <NodeGroup.Root className="grid-cols-[4px_1fr] gap-x-[22px] gap-y-3.5 pb-6 last:pb-0" key={date}>
           <NodeGroup.Icon simpleNodeIcon />

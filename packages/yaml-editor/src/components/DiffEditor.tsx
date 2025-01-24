@@ -57,8 +57,6 @@ export function CodeDiffEditor<T>({
     return { ...defaultOptions, ...(options ? options : {}) }
   }, [options])
 
-  console.log(mergedOptions)
-
   return (
     <>
       <DiffEditor

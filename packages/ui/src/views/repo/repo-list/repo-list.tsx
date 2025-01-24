@@ -30,7 +30,7 @@ const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
 
 const Title = ({ title, isPrivate, t }: { title: string; isPrivate: boolean; t: TFunction }) => (
   <div className="inline-flex items-center gap-2.5">
-    <span className="font-medium truncate max-w-full">{title}</span>
+    <span className="max-w-full truncate font-medium">{title}</span>
     <Badge className="leading-none" size="sm" disableHover borderRadius="full" theme={isPrivate ? 'muted' : 'success'}>
       {isPrivate ? t('views:repos.private', 'Private') : t('views:repos.public', 'Public')}
     </Badge>
@@ -100,12 +100,14 @@ export function RepoList({
             <StackedList.Field
               primary
               description={
-                repo.importing ?
-                    t('views:repos.importing', 'Importing…') :
-                    <span className="truncate max-w-full">{repo.description}</span>
-            }
+                repo.importing ? (
+                  t('views:repos.importing', 'Importing…')
+                ) : (
+                  <span className="max-w-full truncate">{repo.description}</span>
+                )
+              }
               title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-              className="max-w-[80%] flex gap-1.5 text-wrap"
+              className="flex max-w-[80%] gap-1.5 text-wrap"
             />
             {!repo.importing && (
               <StackedList.Field

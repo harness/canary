@@ -140,15 +140,15 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         // For Markdown 'preview'
         if (getIsMarkdown(language)) {
           return (
-              <div className="pb-11">
-                  <MarkdownViewer source={fileContent} withBorderWrapper />
-              </div>
+            <div className="pb-11">
+              <MarkdownViewer source={fileContent} withBorderWrapper />
+            </div>
           )
         }
         // If a non-markdown file somehow has 'preview', we could fallback to 'code'
         return (
           <CodeEditor
-              height="100%"
+            height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
             onCodeRevisionChange={() => undefined}
@@ -162,7 +162,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
       case 'code':
         return (
           <CodeEditor
-              height="100%"
+            height="100%"
             language={language}
             codeRevision={{ code: fileContent }}
             onCodeRevisionChange={() => undefined}
@@ -181,8 +181,9 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
           return <SkeletonList />
         }
         return (
-          <div className="rounded-b-md border-x border-b bg-background-1 p-6">
+          <div className="pb-11">
             <CommitsList
+              className="rounded-b-md border-x border-b bg-background-1 p-6"
               toCommitDetails={({ sha }: { sha: string }) =>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }
@@ -197,7 +198,6 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
               }))}
             />
             <PaginationComponent
-              className="pl-[26px]"
               nextPage={xNextPage}
               previousPage={xPrevPage}
               currentPage={page}

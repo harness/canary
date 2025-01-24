@@ -866,7 +866,7 @@
         }
       },
       "$type": "color",
-      "$value": "{colors.base-chrome.50}",
+      "$value": "{colors.base-chrome.400}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "intense": {

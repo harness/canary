@@ -1,4 +1,6 @@
 import { useMemo } from 'react'
+
+// @ts-ignore
 import { useHistory, useLocation as useLocationV5 } from 'react-router-dom'
 
 // remove ts-ignore once the package is created.

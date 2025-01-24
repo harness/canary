@@ -96,19 +96,6 @@ export const CreatePullRequest = () => {
   const [sourceQuery, setSourceQuery] = useState('')
   const [targetQuery, setTargetQuery] = useState('')
   const [searchReviewers, setSearchReviewers] = useState('')
-  const [searchParams, setSearchParams] = useSearchParams()
-  const [branchTagQuery, setBranchTagQuery] = useState(searchParams.get('branch') || '')
-  const [query, setQuery] = useState<string | null>(searchParams.get('query'))
-  const [queryPage, setQueryPage] = useState(toInteger(searchParams.get('page')) || 1)
-
-  useEffect(() => {
-    setSearchParams({
-      branch: branchTagQuery,
-      reviewer: searchReviewers,
-      query: query || '',
-      page: queryPage.toString()
-    })
-  }, [branchTagQuery, searchReviewers, query, queryPage, setSearchParams])
 
   const { data: { body: rawDiff } = {}, isFetching: loadingRawDiff } = useRawDiffQuery(
     {

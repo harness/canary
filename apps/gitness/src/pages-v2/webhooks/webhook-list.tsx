@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useQueryState } from 'nuqs'
 
 import {
   DeleteRepoWebhookErrorResponse,

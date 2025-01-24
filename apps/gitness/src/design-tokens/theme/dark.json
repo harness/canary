@@ -71,7 +71,7 @@
     },
     "ring": {
       "$type": "color",
-      "$value": "{colors.base-chrome.600}",
+      "$value": "{colors.accent.200}",
       "$description": "Focus state indicator color.\nCommon uses: focus rings, keyboard navigation, selection indicators."
     }
   },

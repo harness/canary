@@ -859,12 +859,14 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | nul
         <AppShellMFE />
       </>
     ),
-    handle: { routeName: 'toHome' },
+    handle: { routeName: RouteConstants.toHome },
     children: [
       {
         path: '',
         handle: {
-          breadcrumb: () => <span>{mfeProjectId ?? ''}</span>
+          ...(mfeProjectId && {
+            breadcrumb: () => <Text>{mfeProjectId}</Text>
+          })
         },
         children: repoRoutes
       }

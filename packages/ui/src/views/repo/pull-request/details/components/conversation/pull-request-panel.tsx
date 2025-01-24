@@ -312,8 +312,7 @@ const PullRequestPanel = ({
                       }
                       disabled={
                         (!checkboxBypass && ruleViolation) ||
-                        !mergeable ||
-                        ['pending', 'running', 'failed'].includes(checksInfo.status)
+                        (!mergeable && ['pending', 'running', 'failed'].includes(checksInfo.status))
                       }
                       selectedValue={mergeButtonValue}
                       handleOptionChange={value => setMergeButtonValue(value)}
@@ -326,7 +325,7 @@ const PullRequestPanel = ({
                         actions[parseInt(mergeButtonValue)]?.action?.()
                       }}
                     >
-                      {pullReqMetadata?.is_draft ? 'Ready for review' : actions[parseInt(mergeButtonValue)].title}
+                      {actions[parseInt(mergeButtonValue)].title}
                     </ButtonWithOptions>
                   ) : (
                     <Button

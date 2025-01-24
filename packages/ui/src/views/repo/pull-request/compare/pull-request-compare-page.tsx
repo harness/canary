@@ -197,6 +197,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           <Layout.Horizontal className="items-center" gap="gap-x-2.5">
             <Icon name="compare" size={14} className="text-icons-1" />
             <BranchSelector
+              isBranchOnly={true}
               useTranslationStore={useTranslationStore}
               useRepoBranchesStore={useRepoBranchesStore}
               branchPrefix="base"
@@ -211,6 +212,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
 
             <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
             <BranchSelector
+              isBranchOnly={true}
               useTranslationStore={useTranslationStore}
               useRepoBranchesStore={useRepoBranchesStore}
               branchPrefix="compare"

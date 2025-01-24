@@ -9,10 +9,12 @@ export const timeAgoFromISOTime = (timestamp: string, maxDiff: number = 2): stri
   const now = new Date()
 
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-  const diffInDays = diffInSeconds / (3600 * 24)
+  // Always treat time differences as past events
+  const absDiffInSeconds = Math.abs(diffInSeconds)
+  const diffInDays = absDiffInSeconds / (3600 * 24)
 
   if (diffInDays <= maxDiff) {
-    return formatRelativeTime(diffInSeconds)
+    return formatRelativeTime(absDiffInSeconds)
   } else {
     return date.toLocaleDateString('en', { dateStyle: 'medium' })
   }

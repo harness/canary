@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { parse } from 'path'
-
 import {
   Accordion,
   Badge,

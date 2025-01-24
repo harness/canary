@@ -6,7 +6,6 @@ import {
   Button,
   CopyButton,
   DropdownMenu,
-  Icon,
   Layout,
   ListActions,
   Spacer,

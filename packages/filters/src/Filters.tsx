@@ -1,20 +1,21 @@
 import React, {
-  ReactNode,
-  useImperativeHandle,
   createContext,
+  forwardRef,
+  ReactNode,
   useContext,
   useEffect,
+  useImperativeHandle,
   useRef,
-  useState,
-  forwardRef
+  useState
 } from 'react'
-import { FilterType, FilterStatus, FilterConfig, InitializeFiltersConfigType, FilterRefType } from './types'
-import { createQueryString, mergeURLSearchParams } from './utils'
-import useRouter from './useRouter'
+
 import { debug, warn } from './debug'
-import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
 import Filter, { FilterProps } from './Filter'
 import FiltersContent, { FiltersContentProps } from './FiltersContent'
+import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
+import { FilterConfig, FilterRefType, FilterStatus, FilterType, InitializeFiltersConfigType } from './types'
+import useRouter from './useRouter'
+import { createQueryString, mergeURLSearchParams } from './utils'
 
 interface FiltersContextType<T extends Record<string, unknown>> {
   visibleFilters: (keyof T)[]
@@ -23,7 +24,7 @@ interface FiltersContextType<T extends Record<string, unknown>> {
   addFilter: (filterKey: keyof T) => void
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
-  addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType>) => void
+  addInitialFilters: (filtersConfig: Record<keyof T, InitializeFiltersConfigType<T>>) => void
 }
 
 const FiltersContext = createContext<FiltersContextType<Record<string, unknown>> | null>(null)
@@ -91,7 +92,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     updateURL(new URLSearchParams(query))
   }
 
-  const initializeFilters = (initialFiltersConfig: Record<FilterKeys, InitializeFiltersConfigType>) => {
+  const initializeFilters = (initialFiltersConfig: Record<FilterKeys, InitializeFiltersConfigType<T>>) => {
     debug('Adding initial filters: %O', filtersMap)
 
     const map = {} as Record<FilterKeys, FilterType>
@@ -100,12 +101,13 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     for (const key in initialFiltersConfig) {
       const isSticky = allFiltersSticky ? true : initialFiltersConfig[key].isSticky
       map[key] = {
-        value: undefined,
+        value: initialFiltersConfig[key].defaultValue,
         query: undefined,
         state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
       }
 
       config[key] = {
+        defaultValue: initialFiltersConfig[key].defaultValue,
         parser: initialFiltersConfig[key].parser,
         isSticky: isSticky
       }
@@ -208,13 +210,13 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const updatedFiltersMap = { ...filtersMap }
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
+      const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
 
-        updatedFiltersMap[key as FilterKeys] = {
-          value: undefined,
-          query: undefined,
-          state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
-        }
-      
+      updatedFiltersMap[key as FilterKeys] = {
+        value: defaultValue,
+        query: undefined,
+        state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+      }
     })
 
     setFiltersMap(updatedFiltersMap)

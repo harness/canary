@@ -72,13 +72,14 @@ git push -u origin main
             <ButtonGroup>
               <Button>Generate Clone Credentials</Button>
             </ButtonGroup>
+            <p className="mt-2">
+              You can also manage your git credential{' '}
+              <StyledLink to="/" relative="path">
+                here
+              </StyledLink>
+            </p>
           </ControlGroup>
-          <p>
-            You can also manage your git credential{' '}
-            <StyledLink to="/" relative="path">
-              here
-            </StyledLink>
-          </p>
+
           <FormSeparator />
           <Text size={4} weight="medium">
             Then push some content into it
@@ -87,7 +88,16 @@ git push -u origin main
           <Text size={4} weight="medium">
             Or you can push an existing repository
           </Text>
-          <MarkdownViewer source={getExistingRepoMarkdown()} />
+          <ControlGroup>
+            <MarkdownViewer source={getExistingRepoMarkdown()} />
+            <p className="mt-2">
+              You might need to{' '}
+              <StyledLink to="/" relative="path">
+                create an API token
+              </StyledLink>{' '}
+              In order to pull from or push into this repository.
+            </p>
+          </ControlGroup>
         </Fieldset>
       </SandboxLayout.Content>
     </SandboxLayout.Main>

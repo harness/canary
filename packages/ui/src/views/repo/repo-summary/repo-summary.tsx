@@ -28,6 +28,7 @@ import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'
+import { RepoEmptyView } from './repo-empty-view'
 
 interface RoutingProps {
   toRepoFiles: () => string
@@ -119,12 +120,11 @@ export function RepoSummaryView({
 
   if (!repoEntryPathToFileTypeMap.size) {
     return (
-      <NoData
-        iconName="no-data-folder"
-        title="No files yet"
-        description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
-        primaryButton={{ label: 'Create file' }}
-        secondaryButton={{ label: 'Import file' }}
+      <RepoEmptyView
+        sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+        httpUrl={repository?.git_url ?? 'could not fetch url'}
+        repoName={repoId}
+        projName={spaceId}
       />
     )
   }

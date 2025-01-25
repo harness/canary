@@ -13,6 +13,7 @@ export * from '@views/repo/repo-create'
 
 // repo summary
 export * from '@views/repo/repo-summary/repo-summary'
+export * from '@views/repo/repo-summary/repo-empty-view'
 
 // repo types
 export * from '@views/repo/repo.types'

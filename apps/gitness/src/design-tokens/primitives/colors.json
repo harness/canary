@@ -308,43 +308,43 @@
     },
     "orange": {
       "50": {
-        "$value": "#fff8e2"
+        "$value": "#fff8e1"
       },
       "100": {
-        "$value": "#ffdec2"
+        "$value": "#ffddbf"
       },
       "150": {
-        "$value": "#ffc8ac"
+        "$value": "#ffc6a8"
       },
       "200": {
-        "$value": "#ffb997"
+        "$value": "#ffb792"
       },
       "300": {
-        "$value": "#f9a279"
+        "$value": "#fe9f72"
       },
       "400": {
-        "$value": "#ec8d60"
+        "$value": "#f28a56"
       },
       "500": {
-        "$value": "#de7c4b"
+        "$value": "#e4773f"
       },
       "600": {
-        "$value": "#cd6c3b"
+        "$value": "#d3682e"
       },
       "700": {
-        "$value": "#aa5528"
+        "$value": "#b05019"
       },
       "800": {
-        "$value": "#7e3b18"
+        "$value": "#83380a"
       },
       "850": {
-        "$value": "#5f321c"
+        "$value": "#613119"
       },
       "900": {
-        "$value": "#311a0f"
+        "$value": "#32190e"
       },
       "950": {
-        "$value": "#291308"
+        "$value": "#211712"
       }
     },
     "brown": {
@@ -472,43 +472,43 @@
     },
     "green": {
       "50": {
-        "$value": "#effdf2"
+        "$value": "#e8ffee"
       },
       "100": {
-        "$value": "#bff3d2"
+        "$value": "#adf9cb"
       },
       "150": {
-        "$value": "#8be4b4"
+        "$value": "#78e8af"
       },
       "200": {
-        "$value": "#6adba5"
+        "$value": "#4cdf9f"
       },
       "300": {
-        "$value": "#3dc38a"
+        "$value": "#00c784"
       },
       "400": {
-        "$value": "#0bab73"
+        "$value": "#00af6d"
       },
       "500": {
-        "$value": "#009c65"
+        "$value": "#009f60"
       },
       "600": {
-        "$value": "#008b58"
+        "$value": "#008d54"
       },
       "700": {
-        "$value": "#057346"
+        "$value": "#007444"
       },
       "800": {
-        "$value": "#07532f"
+        "$value": "#03532e"
       },
       "850": {
-        "$value": "#144226"
+        "$value": "#194128"
       },
       "900": {
-        "$value": "#152318"
+        "$value": "#112416"
       },
       "950": {
-        "$value": "#0f1d12"
+        "$value": "#141c15"
       }
     },
     "purple": {

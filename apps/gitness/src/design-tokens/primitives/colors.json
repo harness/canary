@@ -109,34 +109,34 @@
         "$value": "#c7e3ff"
       },
       "150": {
-        "$value": "#9ecbff"
+        "$value": "#9dcbff"
       },
       "200": {
         "$value": "#8dc1ff"
       },
       "300": {
-        "$value": "#58a2ff"
+        "$value": "#57a2ff"
       },
       "400": {
-        "$value": "#217aea"
+        "$value": "#027cfe"
       },
       "500": {
-        "$value": "#1569d3"
+        "$value": "#006ef2"
       },
       "600": {
-        "$value": "#105bb9"
+        "$value": "#0061d8"
       },
       "700": {
-        "$value": "#1751a0"
+        "$value": "#1150a5"
       },
       "800": {
-        "$value": "#093675"
+        "$value": "#063677"
       },
       "850": {
-        "$value": "#102d5b"
+        "$value": "#122e5a"
       },
       "900": {
-        "$value": "#0c1c39"
+        "$value": "#0d1c37"
       },
       "950": {
         "$value": "#0e1522"
@@ -197,7 +197,7 @@
         "$value": "#fb8bd5"
       },
       "300": {
-        "$value": "#e561af"
+        "$value": "#ff79c7"
       },
       "400": {
         "$value": "#cf408f"
@@ -402,7 +402,7 @@
         "$value": "#49dcc0"
       },
       "300": {
-        "$value": "#00c4a5"
+        "$value": "#00ccad"
       },
       "400": {
         "$value": "#00ac8b"
@@ -443,7 +443,7 @@
         "$value": "#a3d277"
       },
       "300": {
-        "$value": "#88b955"
+        "$value": "#92c560"
       },
       "400": {
         "$value": "#71a23a"
@@ -484,7 +484,7 @@
         "$value": "#4cdf9f"
       },
       "300": {
-        "$value": "#00c784"
+        "$value": "#01cf8c"
       },
       "400": {
         "$value": "#00af6d"
@@ -598,16 +598,16 @@
         "$value": "#f3f4ff"
       },
       "100": {
-        "$value": "#dadcff"
+        "$value": "#d8daff"
       },
       "150": {
-        "$value": "#b0c5ff"
+        "$value": "#b8c2ff"
       },
       "200": {
         "$value": "#acb7ff"
       },
       "300": {
-        "$value": "#8197ff"
+        "$value": "#859bff"
       },
       "400": {
         "$value": "#5470eb"

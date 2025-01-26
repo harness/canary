@@ -68,3 +68,7 @@ export function mergeURLSearchParams(target: URLSearchParams, source: URLSearchP
 
   return mergedParams
 }
+
+export function isNullable(parsedValue: string | null | undefined) {
+  return parsedValue === '' || parsedValue === undefined || parsedValue === null
+}

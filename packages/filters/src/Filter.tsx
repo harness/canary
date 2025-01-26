@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { useFiltersContext } from './Filters'
 import { defaultStringParser } from './parsers'
 
@@ -12,7 +13,7 @@ export interface FilterProps<T, K extends keyof T> {
   children: (props: {
     onChange: (value: T[K]) => void
     value?: Parser<T[K]> extends undefined ? string : T[K]
-    removeFilter: (filterKey: K) => void
+    removeFilter: (filterKey?: K) => void
   }) => React.ReactNode
   parser?: Parser<T[K]>
   sticky?: boolean
@@ -33,6 +34,12 @@ const Filter = <T, K extends keyof T>({
     updateFilter(filterKey as string, serializedValue, value)
   }
 
+  // If no filter key is provided,
+  // filterKey provided to component will be used
+  const _removeFilter = (fkey?: K) => {
+    removeFilter(fkey ?? filterKey)
+  }
+
   // Retrieves the raw and parsed filter value
   const rawValue = getFilterValue(filterKey as string)
   const parsedValue = rawValue as T
@@ -40,7 +47,11 @@ const Filter = <T, K extends keyof T>({
   // Render the children with the injected props
   return (
     <div id="filter" className={className}>
-      {children({ onChange: handleChange, value: parsedValue as T[K], removeFilter })}
+      {children({
+        onChange: handleChange,
+        value: parsedValue as T[K],
+        removeFilter: _removeFilter
+      })}
     </div>
   )
 }

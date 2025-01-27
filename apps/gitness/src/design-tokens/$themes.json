@@ -318,7 +318,6 @@
     },
     "$figmaVariableReferences": {
       "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
-      "background.card": "ca3bf672f182c26dc70a531309ebec3680559452",
       "background.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
       "background.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
       "background.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
@@ -464,7 +463,8 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.bg": "73c54b372ef0757e3b5f064898369cb18e6b0c79"
+      "feedback.warning.subtle.default.bg": "73c54b372ef0757e3b5f064898369cb18e6b0c79",
+      "background.surface": "ca3bf672f182c26dc70a531309ebec3680559452"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -841,7 +841,6 @@
     "$figmaModeId": "622:0",
     "$figmaVariableReferences": {
       "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
-      "background.card": "ca3bf672f182c26dc70a531309ebec3680559452",
       "background.highlight": "893a56e69450efa26d7ed717699bd2490af05c89",
       "background.overlay": "26d6b94239b824336d86c2be2923bed52afb3f41",
       "background.nav": "8187c47a0ed54f11bd210fa315c8d2de92ef92b4",
@@ -987,7 +986,8 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.background": "68226d79fda8d25e56aed5528ac71de1a59b37f0"
+      "feedback.warning.subtle.default.background": "68226d79fda8d25e56aed5528ac71de1a59b37f0",
+      "background.surface": "ca3bf672f182c26dc70a531309ebec3680559452"
     }
   }
 ]

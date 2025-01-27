@@ -5,7 +5,7 @@
       "$value": "{colors.base-gray.white}",
       "$description": "Primary background color for the application.\nCommon uses: app background, main content area, full-page layouts."
     },
-    "card": {
+    "surface": {
       "$type": "color",
       "$value": "{colors.base-gray.50}",
       "$description": "Secondary surface color for contained content.\nCommon uses: cards, panels, sidebars, form containers."

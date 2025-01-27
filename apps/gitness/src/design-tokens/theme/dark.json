@@ -5,7 +5,7 @@
       "$value": "{colors.base-chrome.black}",
       "$description": "Primary background color for the application.\nCommon uses: app background, main content area, full-page layouts."
     },
-    "card": {
+    "surface": {
       "$type": "color",
       "$value": "{colors.base-chrome.900}",
       "$description": "Secondary surface color for contained content.\nCommon uses: cards, panels, sidebars, form containers."

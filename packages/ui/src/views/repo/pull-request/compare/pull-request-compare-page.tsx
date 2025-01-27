@@ -283,7 +283,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               ) : (
                 t(
                   'views:pullRequests.compareChangesChooseDifferent',
-                  'Choose different branches or forks above to discuss and review changes.'
+                  'Choose different branches above to discuss and review changes.'
                 )
               )}
             </p>

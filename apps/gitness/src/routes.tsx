@@ -37,6 +37,7 @@ import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
+import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import { RepoLabelsList } from './pages-v2/repo/repo-labels-container'
 import RepoLayout from './pages-v2/repo/repo-layout'
@@ -89,6 +90,13 @@ export const repoRoutes: CustomRouteObject[] = [
         element: <ImportRepo />,
         handle: {
           routeName: RouteConstants.toImportRepo
+        }
+      },
+      {
+        path: 'import-multiple',
+        element: <ImportMultipleRepos />,
+        handle: {
+          // routeName: RouteConstants.toImportMultipleRepos
         }
       },
       {

@@ -4,14 +4,14 @@ import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
-const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
+const tabsListVariants = cva('text-foreground-4 inline-flex items-center', {
   variants: {
     variant: {
-      default: 'h-9 justify-center rounded-lg bg-muted p-1',
+      default: 'bg-muted h-9 justify-center rounded-lg p-1',
       underline: 'h-11 justify-center gap-4',
-      navigation: 'h-[44px] w-full justify-start gap-6 border-b border-borders-5 px-6',
+      navigation: 'border-borders-5 h-[44px] w-full justify-start gap-6 border-b px-6',
       tabnav:
-        'relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full before:bg-borders-1'
+        'before:bg-borders-1 relative flex w-full before:absolute before:bottom-0 before:left-0 before:h-px before:w-full'
     },
     fontSize: {
       xs: 'text-12',
@@ -25,17 +25,17 @@ const tabsListVariants = cva('inline-flex items-center text-foreground-4', {
 })
 
 const tabsTriggerVariants = cva(
-  'group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-foreground-1',
+  'data-[state=active]:text-foreground-1 group relative inline-flex items-center justify-center whitespace-nowrap px-3 py-1 font-medium transition-all focus-visible:duration-0 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        default: 'rounded-md data-[state=active]:bg-background data-[state=active]:shadow',
+        default: 'data-[state=active]:bg-background rounded-md data-[state=active]:shadow',
         underline:
-          'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
+          'data-[state=active]:border-primary m-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal',
         navigation:
-          'm-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
+          'text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-9 m-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 font-normal duration-150 ease-in-out',
         tabnav:
-          'h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1'
+          'text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1 h-[36px] rounded-t-md border-x border-t border-transparent px-3.5 font-normal'
       }
     },
     defaultVariants: {
@@ -45,7 +45,7 @@ const tabsTriggerVariants = cva(
 )
 
 const tabsContentVariants = cva(
-  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+  'ring-offset-background focus-visible:ring-ring focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
   {
     variants: {
       variant: {

@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
 
@@ -41,7 +41,7 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       saveDescription={noop}
       handleCreateToken={noop}
       navigateToFile={noop}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
       useRepoBranchesStore={useRepoBranchesStore}
       gitRef=""
       updateRepoError=""

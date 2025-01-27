@@ -348,7 +348,12 @@
     },
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
-    "members": ""
+    "members": "",
+    "tabs": {
+      "general": "General",
+      "members": "Members",
+      "labels": "Labels"
+    }
   },
   "roles": {
     "owner": "Owner",

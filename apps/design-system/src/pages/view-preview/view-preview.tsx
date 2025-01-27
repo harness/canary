@@ -31,7 +31,7 @@ import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhoo
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { NotFoundPage } from '@harnessio/ui/views'
 
@@ -188,7 +188,7 @@ export const viewPreviews: Record<string, ReactNode> = {
   'rule-not-found': (
     <RepoViewWrapper>
       <RepoSettingsViewWrapper>
-        <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
+        <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   ),

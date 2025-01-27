@@ -3,7 +3,7 @@ import { FC, useCallback } from 'react'
 import { commitDetailsStore } from '@subjects/views/commit-details/commit-details-store'
 import { repoFilesStore } from '@subjects/views/repo-files/components/repo-files-store'
 import { renderEntries } from '@utils/fileViewUtils'
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { FileExplorer } from '@harnessio/ui/components'
 import { CommitDiff, CommitSidebar, ICommitDetailsStore } from '@harnessio/ui/views'
@@ -14,7 +14,7 @@ export const CommitDetailsDiffViewWrapper: FC = () => {
   return (
     <>
       <CommitSidebar
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         navigateToFile={() => {}}
         filesList={repoFilesStore.filesList}
       >
@@ -22,7 +22,7 @@ export const CommitDetailsDiffViewWrapper: FC = () => {
           {renderEntries(repoFilesStore.filesTreeData, '')}
         </FileExplorer.Root>
       </CommitSidebar>
-      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationsStore} />
+      <CommitDiff useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
     </>
   )
 }

@@ -1,3 +1,5 @@
+import { TranslationStore } from '@/views'
+
 export interface MemberData {
   display_name: string
   role: string
@@ -30,4 +32,8 @@ export interface IMemberListStore {
   totalPages: number
   page: number
   setPage: (page: number) => void
+}
+
+export interface ProjectSettingsTabNavProps {
+  useTranslationStore: () => TranslationStore
 }

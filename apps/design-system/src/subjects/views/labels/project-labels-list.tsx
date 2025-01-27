@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateLabelDialog, ProjectLabelsListView } from '@harnessio/ui/views'
@@ -15,7 +15,7 @@ export const ProjectLabelsList = () => {
     <>
       <ProjectLabelsListView
         useLabelsStore={RepoLabelsListStore.useLabelsStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         handleDeleteLabel={() => setOpenAlertDeleteDialog(true)}
         handleEditLabel={() => setOpenCreateLabelDialog(true)}
         openCreateLabelDialog={() => setOpenCreateLabelDialog(true)}
@@ -27,7 +27,7 @@ export const ProjectLabelsList = () => {
         open={openCreateLabelDialog}
         onClose={() => setOpenCreateLabelDialog(false)}
         onSubmit={noop}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         isCreatingLabel={false}
         error={''}
         useLabelsStore={RepoLabelsListStore.useLabelsStore}
@@ -39,7 +39,7 @@ export const ProjectLabelsList = () => {
         type="label"
         deleteFn={noop}
         isLoading={false}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

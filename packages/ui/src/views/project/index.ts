@@ -11,5 +11,5 @@ export * from '@views/project/project-labels/components'
 
 // project types
 export * from '@views/project/project.types'
-export * from './project-settings-page'
+export * from './project-settings-tab-nav'
 export * from './project-labels/types'

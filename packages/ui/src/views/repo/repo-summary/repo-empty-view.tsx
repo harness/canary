@@ -1,5 +1,3 @@
-// import { useNavigate } from 'react-router-dom'
-
 import {
   Button,
   ButtonGroup,
@@ -33,8 +31,6 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   gitRef,
   handleCreateToken
 }) => {
-  //   const navigate = useNavigate()
-
   const getInitialCommitMarkdown = () => {
     return `
 \`\`\`shell
@@ -58,10 +54,6 @@ git push -u origin main
 `
   }
 
-  //   const handleCreateNewFile = () => {
-  //     console.log('Create new file')
-  //     navigate(`${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`)
-  //   }
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[850px]">

@@ -49,6 +49,10 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
 
   const updateURL = (params: URLSearchParams) => {
+    if (params.size === 0) {
+      return
+    }
+
     // merge params into search params and update the URL.
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
     searchParams.forEach((value, key) => {
@@ -100,13 +104,13 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const config = {} as Record<FilterKeys, FilterConfig>
 
     for (const key in initialFiltersConfig) {
-      const { defaultValue, parser, isSticky: _isSticky } = initialFiltersConfig[key]
-      const isSticky = allFiltersSticky ? true : _isSticky
+      const { defaultValue, parser, isSticky } = initialFiltersConfig[key]
+      const isStickyFilter = allFiltersSticky ? true : isSticky
 
       // If default values is set, check if it is a valid non-null value and apply filter_applied status
       // If not, set the filter state to visible
       const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
-      let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+      let filterState = isStickyFilter ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 
       if (!isNullable(serializedDefaultValue)) {
         filterState = FilterStatus.FILTER_APPLIED
@@ -119,9 +123,9 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       }
 
       config[key] = {
-        defaultValue: initialFiltersConfig[key].defaultValue,
+        defaultValue: serializedDefaultValue,
         parser: initialFiltersConfig[key].parser,
-        isSticky: isSticky
+        isSticky: isStickyFilter
       }
     }
 
@@ -229,9 +233,8 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
-      const parser = filtersConfig[key as FilterKeys]?.parser
 
-      const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
+      const serializedDefaultValue = defaultValue
       let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 
       if (!isNullable(serializedDefaultValue)) {

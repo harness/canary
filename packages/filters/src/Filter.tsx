@@ -36,7 +36,7 @@ const Filter = <T, K extends keyof T>({
 
   // If no filter key is provided,
   // filterKey provided to component will be used
-  const _removeFilter = (fkey?: K) => {
+  const wrappedRemoveFilter = (fkey?: K) => {
     removeFilter(fkey ?? filterKey)
   }
 
@@ -50,7 +50,7 @@ const Filter = <T, K extends keyof T>({
       {children({
         onChange: handleChange,
         value: parsedValue as T[K],
-        removeFilter: _removeFilter
+        removeFilter: wrappedRemoveFilter
       })}
     </div>
   )

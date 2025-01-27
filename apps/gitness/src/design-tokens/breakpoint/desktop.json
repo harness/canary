@@ -380,6 +380,10 @@
       "$type": "lineHeights",
       "$value": "round({font-size.5}* {leading.tight}/2) * 2"
     },
+    "100%": {
+      "$type": "lineHeights",
+      "$value": "100%"
+    },
     "-3": {
       "$type": "lineHeights",
       "$value": "round({font-size.-3}* {leading.snug}/2) * 2"
@@ -445,6 +449,28 @@
     "10": {
       "$type": "sizing",
       "$value": "round({step.base}* pow({multiplier.desktop}, 5.44) / 2) * 2"
+    }
+  },
+  "Components setup": {
+    "base": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font-family.default}",
+        "fontWeight": "Regular",
+        "fontSize": "{font-size.-1}",
+        "lineHeight": "{line-height.100%}",
+        "letterSpacing": "{tracking.normal}"
+      }
+    },
+    "emphasized": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font-family.default}",
+        "fontWeight": "Medium",
+        "fontSize": "{font-size.-1}",
+        "lineHeight": "{line-height.100%}",
+        "letterSpacing": "{tracking.normal}"
+      }
     }
   }
 }

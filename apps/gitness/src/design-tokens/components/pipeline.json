@@ -1,0 +1,15 @@
+{
+  "card": {
+    "$type": "composition",
+    "$value": {
+      "spacing": "{spacing.4}",
+      "verticalPadding": "{spacing.4}",
+      "horizontalPadding": "{spacing.4}",
+      "fill": "{background.card}",
+      "borderColor": "{border.base}",
+      "borderRadius": "{radii.sm}",
+      "maxWidth": "140",
+      "height": "86"
+    }
+  }
+}

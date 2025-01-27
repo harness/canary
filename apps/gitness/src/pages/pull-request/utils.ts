@@ -473,17 +473,5 @@ export enum ViewStyle {
   LINE_BY_LINE = 'line-by-line'
 }
 
-export function generateAlphaNumericHash(length: number) {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-  const charactersLength = characters.length
-
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-
-  return result
-}
-
 export const getErrorMessage = (error: unknown): string | undefined =>
   error ? (get(error, 'data.error', get(error, 'data.message', get(error, 'message', error))) as string) : undefined

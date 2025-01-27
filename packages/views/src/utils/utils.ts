@@ -115,16 +115,3 @@ export const timeAgo = (timestamp?: number | null): string => {
   const diffInYears = Math.floor(diffInMonths / 12)
   return rtf.format(-diffInYears, 'year')
 }
-
-//generate random password
-export function generateAlphaNumericHash(length: number) {
-  let result = ''
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
-  const charactersLength = characters.length
-
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength))
-  }
-
-  return result
-}

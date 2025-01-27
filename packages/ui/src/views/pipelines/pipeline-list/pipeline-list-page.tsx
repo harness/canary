@@ -47,33 +47,26 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
     )
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        <>
-          <Spacer size={10} />
-          <div className="flex items-end">
-            <Text className="leading-none" size={5} weight={'medium'}>
-              Pipelines
-            </Text>
-          </div>
-          <Spacer size={6} />
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput || ''}
-                handleChange={handleInputChange}
-                placeholder={'Search'}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              <Button variant="default" onClick={handleCreatePipeline}>
-                Create pipeline
-              </Button>
-            </ListActions.Right>
-          </ListActions.Root>
-        </>
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pipelines</h1>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput}
+              handleChange={handleInputChange}
+              placeholder={'Search'}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            <Button variant="default" onClick={handleCreatePipeline}>
+              Create pipeline
+            </Button>
+          </ListActions.Right>
+        </ListActions.Root>
         <Spacer size={5} />
         <PipelineList
           pipelines={pipelines}

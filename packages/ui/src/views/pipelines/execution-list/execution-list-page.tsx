@@ -47,40 +47,33 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
     )
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        <>
-          <Spacer size={10} />
-          <div className="flex items-end">
-            <Text className="leading-none" size={5} weight={'medium'}>
-              Executions
-            </Text>
-          </div>
-          <Spacer size={6} />
-          <ListActions.Root>
-            <ListActions.Left>
-              <SearchBox.Root
-                width="full"
-                className="max-w-96"
-                value={searchInput || ''}
-                handleChange={handleInputChange}
-                placeholder={'Search'}
-              />
-            </ListActions.Left>
-            <ListActions.Right>
-              {/* TODO: two buttons - xd review required */}
-              <div className="flex gap-3">
-                <Button variant="default" asChild>
-                  <Link to={`create`}>Run</Link>
-                </Button>
-                <Button variant="default" asChild>
-                  <Link to={`edit`}>Edit</Link>
-                </Button>
-              </div>
-            </ListActions.Right>
-          </ListActions.Root>
-        </>
-        <Spacer size={5} />
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Executions</h1>
+        <Spacer size={6} />
+        <ListActions.Root>
+          <ListActions.Left>
+            <SearchBox.Root
+              width="full"
+              className="max-w-96"
+              value={searchInput}
+              handleChange={handleInputChange}
+              placeholder={'Search'}
+            />
+          </ListActions.Left>
+          <ListActions.Right>
+            {/* TODO: two buttons - xd review required */}
+            <div className="flex gap-3">
+              <Button variant="outline" asChild>
+                <Link to={`edit`}>Edit</Link>
+              </Button>
+              <Button variant="default" asChild>
+                <Link to={`create`}>Run</Link>
+              </Button>
+            </div>
+          </ListActions.Right>
+        </ListActions.Root>
+        <Spacer size={4} />
         <ExecutionList
           executions={executions}
           LinkComponent={LinkComponent}

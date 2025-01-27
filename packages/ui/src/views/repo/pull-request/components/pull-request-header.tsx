@@ -64,15 +64,15 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     }
   }, [description, val, updateTitle])
   return (
-    <div className="flex flex-col gap-y-4">
-      <div className="flex items-center">
-        <h1 className="flex items-center gap-x-2.5 text-24 font-medium text-foreground-1">
-          {!edit && original}
+    <div className="flex flex-col gap-y-4 w-full">
+      <div className="flex items-center w-full">
+        <div className="flex items-center gap-x-2.5 w-full max-w-full h-[44px] text-24 font-medium text-foreground-1">
+          {!edit && <div className="flex items-center h-full truncate max-w-[95%]">{original}</div>}
           {!edit && <span className="font-normal text-foreground-4">#{number}</span>}
           {edit ? (
-            <Layout.Horizontal>
+            <Layout.Horizontal className="w-full">
               <input
-                className="rounded-md border  bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="rounded-md border w-fit max-w-full bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 // wrapperClassName={css.input}
                 value={val}
                 onFocus={event => event.target.select()}
@@ -121,7 +121,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
             </Button>
           )}
           {err && <Text className="text-destructive">{err}</Text>}
-        </h1>
+        </div>
       </div>
 
       <div className="flex items-center gap-x-3">

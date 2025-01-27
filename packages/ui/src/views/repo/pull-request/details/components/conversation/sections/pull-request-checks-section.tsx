@@ -93,7 +93,6 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
                           ).execution_number?.toString()
                         }) || ''
                       }
-                      replace
                     >
                       <Text size={1} color="tertiaryBackground">
                         Details

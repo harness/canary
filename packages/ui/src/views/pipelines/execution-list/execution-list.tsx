@@ -1,4 +1,4 @@
-import { Icon, NoData, SkeletonList, StackedList, Text } from '@/components'
+import { Icon, NoData, SkeletonList, StackedList } from '@/components'
 import { PipelineExecutionStatus } from '@/views'
 import { timeAgo, timeDistance } from '@utils/utils'
 
@@ -7,33 +7,35 @@ import { IExecutionListProps, IExecutionType } from './types'
 
 const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: string }) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-1.5">
       {status && <ExecutionStatusIcon status={status} />}
-      <Text truncate>{title}</Text>
+      <span className="truncate text-16 font-medium leading-snug">{title}</span>
     </div>
   )
 }
 
-const Description = ({ sha, description, version }: { sha: string; description: IExecutionType; version: string }) => {
+const Description = ({
+  sha,
+  description,
+  version
+}: {
+  sha?: string
+  description?: IExecutionType
+  version?: string
+}) => {
   return (
-    <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px]">
-      {description && (
-        <div className="w-full overflow-hidden break-words">
-          <Text size={1} color="tertiaryBackground">
-            {description || ''}
-          </Text>
-        </div>
-      )}
-      {sha && (
-        <div className="flex items-center gap-1 rounded-md bg-tertiary-background/10 px-1.5">
-          <Icon size={11} name={'tube-sign'} />
-          {sha?.slice(0, 7)}
-        </div>
-      )}
+    <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-14 leading-tight">
+      {description && <span className="w-full overflow-hidden break-words text-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <Icon size={11} name={'signpost'} />
           {version}
+        </div>
+      )}
+      {sha && (
+        <div className="flex h-4 items-center gap-1 rounded bg-background-8 px-1.5 text-12 text-foreground-8">
+          <Icon className="text-icons-9" size={12} name={'tube-sign'} />
+          {sha?.slice(0, 7)}
         </div>
       )}
     </div>
@@ -94,15 +96,12 @@ export const ExecutionList = ({
     <StackedList.Root>
       {executions.map((execution, idx) => (
         <LinkComponent key={execution.id} to={execution.id}>
-          <StackedList.Item key={execution.name} isLast={executions.length - 1 === idx}>
+          <StackedList.Item className="py-3" key={execution.name} isLast={executions.length - 1 === idx}>
             <StackedList.Field
+              className="gap-y-1.5"
               title={<Title status={execution.status} title={execution.name || ''} />}
               description={
-                <Description
-                  sha={execution.sha || ''}
-                  description={execution.description || ''}
-                  version={execution.version || ''}
-                />
+                <Description sha={execution.sha} description={execution.description} version={execution.version} />
               }
             />
             <StackedList.Field

@@ -339,11 +339,11 @@ const PullRequestAccordion: React.FC<{
             <Accordion.Content>
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical className="items-center py-5">
+                  <Layout.Vertical gap="space-y-0" className="items-center py-5">
                     <Button
-                      className="text-tertiary-background"
-                      variant="secondary"
-                      size="md"
+                      className="text-foreground-accent"
+                      variant="link_accent"
+                      size="sm"
                       aria-label="show diff"
                       onClick={() => setShowHiddenDiff(true)}
                     >

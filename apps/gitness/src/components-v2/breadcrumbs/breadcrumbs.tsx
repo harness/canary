@@ -6,19 +6,18 @@ import { CustomHandle } from '../../framework/routing/types'
 
 function Breadcrumbs() {
   const matches = useMatches()
+  const matchesWithBreadcrumb = matches.filter(match => (match.handle as CustomHandle)?.breadcrumb)
 
   return (
     <Topbar.Root>
       <Topbar.Left>
         <Breadcrumb.Root className="select-none">
           <Breadcrumb.List>
-            {matches.map((match, index) => {
+            {matchesWithBreadcrumb.map((match, index) => {
               const { breadcrumb, asLink = true } = (match.handle || {}) as CustomHandle
-              if (!breadcrumb) return null
-
-              const isFirst = index === 1
-              const isLast = index === matches.length - 1
-              const breadcrumbContent = breadcrumb(match.params)
+              const isFirst = index === 0
+              const isLast = index === matchesWithBreadcrumb.length - 1
+              const breadcrumbContent = breadcrumb!(match.params)
 
               return (
                 <Breadcrumb.Item key={match.pathname}>

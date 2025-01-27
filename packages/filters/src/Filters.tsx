@@ -229,18 +229,30 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     Object.keys(updatedFiltersMap).forEach(key => {
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
+      const parser = filtersConfig[key as FilterKeys]?.parser
+
+      const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
+      let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+
+      if (!isNullable(serializedDefaultValue)) {
+        filterState = FilterStatus.FILTER_APPLIED
+      }
 
       updatedFiltersMap[key as FilterKeys] = {
         value: defaultValue,
-        query: undefined,
-        state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+        query: serializedDefaultValue,
+        state: filterState
       }
     })
 
+    const newFiltersOrder = Object.keys(updatedFiltersMap).filter(
+      filter => updatedFiltersMap[filter as FilterKeys].state !== FilterStatus.HIDDEN
+    ) as FilterKeys[]
+
     setFiltersMap(updatedFiltersMap)
-    const stickyFilters = Object.keys(updatedFiltersMap).filter(filter => filtersConfig[filter as FilterKeys].isSticky)
-    setFiltersOrder(stickyFilters as FilterKeys[])
-    const query = createQueryString(stickyFilters, updatedFiltersMap)
+    setFiltersOrder(newFiltersOrder)
+
+    const query = createQueryString(newFiltersOrder, updatedFiltersMap)
     debug('Updating URL with query: %s', query)
     updateURL(new URLSearchParams(query))
   }

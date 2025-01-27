@@ -90,7 +90,7 @@ git push -u origin main
           </Text>
           <ControlGroup>
             <MarkdownViewer source={getExistingRepoMarkdown()} />
-            <p className="mt-2">
+            <p>
               You might need to{' '}
               <StyledLink to="/" relative="path">
                 create an API token

@@ -50,7 +50,6 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
   )
 
   // Handle location change detected from parent route
-
   useEffect(() => {
     if (canNavigate) {
       const pathToNavigate = parentLocationPath.replace(renderUrl, '')

@@ -244,7 +244,14 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10, query: sourceQuery || targetQuery || '', include_pullreqs: true }
+    queryParams: {
+      page: 0,
+      sort: 'date',
+      order: 'desc',
+      limit: 10,
+      query: sourceQuery || targetQuery || '',
+      include_pullreqs: true
+    }
   })
 
   useEffect(() => {

@@ -17,9 +17,10 @@ import { MFEContext } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
+import { extractRedirectRouteObjects } from './framework/routing/utils'
 import { useLoadMFEStyles } from './hooks/useLoadMFEStyles'
 import i18n from './i18n/i18n'
-import { extractRedirectRouteObjects, mfeRoutes, repoRoutes } from './routes'
+import { mfeRoutes, repoRoutes } from './routes'
 
 export interface MFERouteRendererProps {
   renderUrl: string

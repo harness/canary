@@ -13,10 +13,10 @@ const Title = ({ status, title }: { status?: PipelineExecutionStatus; title: str
   )
 }
 
-const Description = ({ sha, description, version }: { sha: string; description: string; version: string }) => {
+const Description = ({ sha, description, version }: { sha?: string; description?: string; version?: string }) => {
   return (
     <div className="inline-flex max-w-full items-center gap-2 overflow-hidden pl-[24px] text-14 leading-tight">
-      {description && <span className="w-full overflow-hidden break-words text-foreground-3">{description || ''}</span>}
+      {description && <span className="w-full overflow-hidden break-words text-foreground-3">{description}</span>}
       {version && (
         <div className="flex items-center gap-1">
           <Icon size={11} name={'signpost'} />
@@ -93,11 +93,7 @@ export const PipelineList = ({
               className="gap-y-1.5"
               title={<Title status={pipeline.status} title={pipeline.name || ''} />}
               description={
-                <Description
-                  sha={pipeline.sha || ''}
-                  description={pipeline.description || ''}
-                  version={pipeline.version || ''}
-                />
+                <Description sha={pipeline.sha} description={pipeline.description} version={pipeline.version} />
               }
             />
             <StackedList.Field title={<Meter data={pipeline.meter} />} label secondary right />

@@ -49,14 +49,14 @@ const ExecutionListPage: FC<IExecutionListPageProps> = ({
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        <span className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Executions</span>
+        <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Executions</h1>
         <Spacer size={6} />
         <ListActions.Root>
           <ListActions.Left>
             <SearchBox.Root
               width="full"
               className="max-w-96"
-              value={searchInput || ''}
+              value={searchInput}
               handleChange={handleInputChange}
               placeholder={'Search'}
             />

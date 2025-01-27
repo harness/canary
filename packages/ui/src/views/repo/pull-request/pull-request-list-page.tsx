@@ -140,7 +140,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
         {showTopBar ? (
           <>
             <Spacer size={2} />
-            <p className="text-24 text-foreground-1 font-medium leading-snug tracking-tight">Pull Requests</p>
+            <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
             <Spacer size={6} />
             <ListActions.Root>
               <ListActions.Left>

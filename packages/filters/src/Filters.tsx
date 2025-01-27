@@ -30,13 +30,14 @@ interface FiltersContextType<T extends Record<string, unknown>> {
 
 const FiltersContext = createContext<FiltersContextType<Record<string, unknown>> | null>(null)
 
-interface FiltersProps {
+interface FiltersProps<T extends Record<string, unknown>> {
   children: ReactNode
   allFiltersSticky?: boolean
+  onChange?: (filters: T) => void
 }
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
-  { children, allFiltersSticky }: FiltersProps,
+  { children, allFiltersSticky, onChange }: FiltersProps<T>,
   ref: React.Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
@@ -49,10 +50,6 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   const initialFiltersRef = useRef<Record<FilterKeys, FilterType> | undefined>(undefined)
 
   const updateURL = (params: URLSearchParams) => {
-    if (params.size === 0) {
-      return
-    }
-
     // merge params into search params and update the URL.
     const paramsOtherthanFilters: URLSearchParams = new URLSearchParams()
     searchParams.forEach((value, key) => {
@@ -64,12 +61,24 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     routerUpdateURL(mergedParams)
   }
 
+  const setFiltersMapTrigger = (filtersMap: Record<FilterKeys, FilterType>) => {
+    setFiltersMap(filtersMap)
+    onChange?.(getValues(filtersMap))
+  }
+
   const addFilter = (filterKey: FilterKeys) => {
     debug('Adding filter with key: %s', filterKey)
     setFiltersMap(prev => ({
       ...prev,
       [filterKey]: createNewFilter()
     }))
+
+    onChange?.(
+      getValues({
+        ...filtersMap,
+        [filterKey]: createNewFilter()
+      })
+    )
     setFiltersOrder(prev => [...prev, filterKey])
   }
 
@@ -78,7 +87,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const updatedFiltersMap = { ...filtersMap }
     delete updatedFiltersMap[filterKey]
     const updatedFiltersOrder = filtersOrder.filter(key => key !== filterKey)
-    setFiltersMap(updatedFiltersMap)
+    setFiltersMapTrigger(updatedFiltersMap)
     setFiltersOrder(updatedFiltersOrder)
 
     const query = createQueryString(updatedFiltersOrder, updatedFiltersMap)
@@ -89,7 +98,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   const updateFilter = (filterKey: FilterKeys, parsedValue: any, value: any) => {
     debug('Updating filter: %s with value: %O', filterKey, value)
     const updatedFiltersMap = { ...filtersMap, [filterKey]: getUpdatedFilter(parsedValue, value) }
-    setFiltersMap(updatedFiltersMap)
+    setFiltersMapTrigger(updatedFiltersMap)
 
     // when updating URL, include params other than filters params.
     const query = createQueryString(filtersOrder, updatedFiltersMap)
@@ -147,7 +156,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     })
 
     // setting updated filters map to state and ref
-    setFiltersMap(map)
+    setFiltersMapTrigger(map)
     setFiltersConfig(config)
 
     debug('Initial filters added: %O', map)
@@ -198,7 +207,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }
 
     // check typecasting
-    setFiltersMap(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
+    setFiltersMapTrigger(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
     setFiltersOrder(Object.keys(searchParamsFiltersMap) as FilterKeys[])
   }, [searchParams])
 
@@ -217,13 +226,14 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }
   }
 
-  const getValues = () => {
-    const filters = Object.keys(filtersMap).length === 0 ? initialFiltersRef.current : filtersMap
+  const getValues = (updatedFiltersMap: Record<FilterKeys, FilterType>) => {
+    const newFiltersMap = updatedFiltersMap || filtersMap
+    const filters = Object.keys(newFiltersMap).length === 0 ? initialFiltersRef.current : newFiltersMap
 
-    return Object.keys(filters || {}).map(key => {
-      const filter = filters?.[key as FilterKeys]
-      return { key, value: filter?.value }
-    })
+    return Object.entries(filters || {}).reduce((acc: T, [filterKey, value]) => {
+      acc[filterKey as keyof T] = value.value
+      return acc
+    }, {} as T)
   }
 
   const resetFilters = () => {
@@ -252,7 +262,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       filter => updatedFiltersMap[filter as FilterKeys].state !== FilterStatus.HIDDEN
     ) as FilterKeys[]
 
-    setFiltersMap(updatedFiltersMap)
+    setFiltersMapTrigger(updatedFiltersMap)
     setFiltersOrder(newFiltersOrder)
 
     const query = createQueryString(newFiltersOrder, updatedFiltersMap)

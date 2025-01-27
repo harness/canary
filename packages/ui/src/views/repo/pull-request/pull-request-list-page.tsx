@@ -68,7 +68,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
 
   const handleCloseClick = () => {
-    filterHandlers.setActiveFilters([{ type: 'type', condition: 'is', selectedValues: ['disabled'] }])
+    filterHandlers.handleResetFilters()
   }
 
   const handleOpenClick = () => {

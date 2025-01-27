@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 import { viewPreviews } from '@/pages/view-preview/view-preview'
 import { componentPages } from '@subjects/components/componentPages'
+import clsx from 'clsx'
 
 import { Icon, NavbarSkeleton, ScrollArea } from '@harnessio/ui/components'
 
@@ -33,14 +34,25 @@ const DocsNavbar: FC<DocsNavbarProps> = ({ className }) => {
               </Link>
             ))}
           </NavbarSkeleton.Group>
-          <NavbarSkeleton.Group title="View previews" topBorder>
-            {Object.keys(viewPreviews).map(path => (
-              <Link key={path} to={`/view-preview/${path}`} target="_blank" className={css.viewLink}>
-                <NavbarSkeleton.Item text={path} />
-                <Icon name="supply-chain" size={12} />
-              </Link>
-            ))}
-          </NavbarSkeleton.Group>
+
+          {Object.entries(viewPreviews).map(([groupKey, group]) => (
+            <NavbarSkeleton.Group key={groupKey} title={group.label} topBorder>
+              <div className="flex flex-col gap-1 px-3">
+                {Object.entries(group.items).map(([path, { label }]) => (
+                  <Link
+                    key={path}
+                    to={`/view-preview/${path}`}
+                    className={clsx(
+                      'text-foreground-2 hover:text-foreground-1 py-1.5 text-sm',
+                      location.pathname.includes(`/view-preview/${path}`) && 'text-foreground-1'
+                    )}
+                  >
+                    {label}
+                  </Link>
+                ))}
+              </div>
+            </NavbarSkeleton.Group>
+          ))}
         </ScrollArea>
       </NavbarSkeleton.Content>
       <NavbarSkeleton.Footer>

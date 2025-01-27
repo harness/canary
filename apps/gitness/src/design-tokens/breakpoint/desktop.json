@@ -452,24 +452,26 @@
     }
   },
   "Components setup": {
-    "base": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "Regular",
-        "fontSize": "{font-size.-1}",
-        "lineHeight": "{line-height.100%}",
-        "letterSpacing": "{tracking.normal}"
-      }
-    },
-    "emphasized": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "Medium",
-        "fontSize": "{font-size.-1}",
-        "lineHeight": "{line-height.100%}",
-        "letterSpacing": "{tracking.normal}"
+    "components": {
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "Regular",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.100%}",
+          "letterSpacing": "{tracking.normal}"
+        }
+      },
+      "emphasized": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "Medium",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.100%}",
+          "letterSpacing": "{tracking.normal}"
+        }
       }
     }
   }

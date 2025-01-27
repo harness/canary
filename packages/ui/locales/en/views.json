@@ -92,6 +92,7 @@
     "emptyRepo": "This repository is empty.",
     "repositories": "Repositories",
     "import-repository": "Import repository",
+    "import-repositories": "Import repositories",
     "create-repository": "Create repository",
     "private": "Private",
     "public": "Public",

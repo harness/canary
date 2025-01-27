@@ -452,7 +452,7 @@
     }
   },
   "Components setup": {
-    "components": {
+    "components-leadingnone": {
       "base": {
         "$type": "typography",
         "$value": {
@@ -472,6 +472,30 @@
           "lineHeight": "{line-height.100%}",
           "letterSpacing": "{tracking.normal}"
         }
+      }
+    },
+    "labels": {
+      "base": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "Regular",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-2}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "for labels with icon on the left"
+      },
+      "emphasized": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "Medium",
+          "fontSize": "{font-size.-1}",
+          "lineHeight": "{line-height.-2}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "for labels with icon on the left"
       }
     }
   }

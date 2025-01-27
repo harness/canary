@@ -20,6 +20,8 @@ import { SandboxLayout } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+import { ProviderOptionsEnum } from './types'
+
 const formSchema = z
   .object({
     hostUrl: z.string().optional(),
@@ -47,18 +49,6 @@ interface RepoImportMultiplePageProps {
   isLoading: boolean
   apiErrorsValue?: string
 }
-
-const providerOptions = [
-  `Github`,
-  `Github Enterprise`,
-  `Gitlab`,
-  `Gitlab Self-Hosted`,
-  `Bitbucket`,
-  `Bitbucket Server`,
-  `Gitea`,
-  `Gogs`,
-  `Azure DevOps`
-]
 
 export function RepoImportMultiplePage({
   onFormSubmit,
@@ -118,13 +108,15 @@ export function RepoImportMultiplePage({
                 label="Git provider"
               >
                 <SelectContent>
-                  {providerOptions &&
-                    providerOptions?.map(option => {
+                  {ProviderOptionsEnum &&
+                    Object.values(ProviderOptionsEnum)?.map(option => {
                       return (
                         <SelectItem
                           key={option}
                           value={option}
-                          disabled={option !== 'Github' && option !== `Github Enterprise`}
+                          disabled={
+                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
+                          }
                         >
                           {option}
                         </SelectItem>
@@ -134,7 +126,7 @@ export function RepoImportMultiplePage({
               </Select>
             </ControlGroup>
           </Fieldset>
-          {watch('provider') === 'Github Enterprise' && (
+          {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
             <Fieldset>
               <Input
                 id="host"

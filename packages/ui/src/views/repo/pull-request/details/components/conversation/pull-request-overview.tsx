@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout, Text } from '@components/index'
+import { Avatar, AvatarFallback, Icon, Layout } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -50,7 +50,6 @@ interface PullRequestOverviewProps extends RoutingProps {
   repoId: string
   diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
   onCopyClick: (commentId?: number) => void
-  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   suggestionsBatch: CommitSuggestion[]
   onCommitSuggestion: (suggestion: CommitSuggestion) => void
   addSuggestionToBatch: (suggestion: CommitSuggestion) => void
@@ -82,7 +81,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   useTranslationStore,
   onCopyClick,
   handleUpload,
-  onCommentSaveAndStatusChange,
   suggestionsBatch,
   onCommitSuggestion,
   addSuggestionToBatch,
@@ -93,7 +91,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   toCommitDetails
 }) => {
   const { t } = useTranslationStore()
-
   const {
     // mode,
     // setMode,
@@ -254,7 +251,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       currentUser={currentUser?.display_name}
                       replyBoxClassName="p-4"
                       toggleConversationStatus={toggleConversationStatus}
-                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                       isResolved={!!payload?.resolved}
                       icon={<Icon name="pr-review" size={12} />}
                       isLast={(data && data?.length - 1 === index) ?? false}
@@ -264,13 +260,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         {
                           avatar: (
                             <Avatar className="size-6 rounded-full p-0">
-                              {/* <AvatarImage src={AvatarUrl} /> */}
-
                               <AvatarFallback>
-                                <Text size={1} color="tertiaryBackground">
+                                <span className="text-12 text-foreground-3">
                                   {/* TODO: fix fallback string */}
                                   {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                                </Text>
+                                </span>
                               </AvatarFallback>
                             </Avatar>
                           ),
@@ -279,13 +273,9 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                           description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                         }
                       ]}
+                      contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
                       content={
-                        <div className="flex flex-col pt-2">
-                          <div className="flex w-full items-center justify-between px-4 pb-2">
-                            <Text size={3} color="primary">
-                              {(payload?.code_comment as PayloadCodeComment)?.path}
-                            </Text>
-                          </div>
+                        <div className="flex flex-col">
                           {startingLine ? (
                             <div className="bg-[--diff-hunk-lineNumber--]">
                               <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
@@ -334,13 +324,10 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     contentClassName="border-transparent"
                                     replyBoxClassName="p-4"
                                     toggleConversationStatus={toggleConversationStatus}
-                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                     icon={
                                       <Avatar className="size-6 rounded-full p-0">
-                                        {/* <AvatarImage src={AvatarUrl} /> */}
-
                                         <AvatarFallback>
-                                          <Text size={1} color="tertiaryBackground">
+                                          <span className="text-12 text-foreground-3">
                                             {/* TODO: fix fallback string */}
                                             {getInitials(
                                               (
@@ -348,7 +335,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                                   ?.author as PayloadAuthor
                                               )?.display_name || ''
                                             )}
-                                          </Text>
+                                          </span>
                                         </AvatarFallback>
                                       </Avatar>
                                     }
@@ -360,16 +347,12 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                         )?.display_name,
                                         // TODO: fix comment to tell between comment or code comment?
                                         description: (
-                                          <Layout.Horizontal>
-                                            <span className="text-foreground-3">
-                                              {timeAgo((commentItem as unknown as PayloadCreated)?.created)}
-                                            </span>
+                                          <Layout.Horizontal className="text-foreground-4">
+                                            <span>{timeAgo((commentItem as unknown as PayloadCreated)?.created)}</span>
                                             {commentItem?.deleted ? (
                                               <>
-                                                <span className="text-foreground-3">&nbsp;|&nbsp;</span>
-                                                <span className="text-foreground-3">
-                                                  {t('views:pullRequests.deleted')}{' '}
-                                                </span>
+                                                <span>&nbsp;|&nbsp;</span>
+                                                <span>{t('views:pullRequests.deleted')}</span>
                                               </>
                                             ) : null}
                                           </Layout.Horizontal>
@@ -385,7 +368,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                         <PullRequestCommentBox
                                           isEditMode
                                           handleUpload={handleUpload}
-                                          isResolved={!!payload?.resolved}
                                           onSaveComment={() => {
                                             if (commentItem?.id) {
                                               handleUpdateComment?.(commentItem?.id, editComments[componentId])
@@ -400,8 +382,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                           setComment={text =>
                                             setEditComments(prev => ({ ...prev, [componentId]: text }))
                                           }
-                                          onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-                                          parentCommentId={payload?.id}
                                         />
                                       ) : (
                                         <PRCommentView
@@ -442,18 +422,15 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     replyBoxClassName="p-4"
                     isResolved={!!payload?.resolved}
                     toggleConversationStatus={toggleConversationStatus}
-                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                     header={[
                       {
                         avatar: (
                           <Avatar className="size-6 rounded-full p-0">
-                            {/* <AvatarImage src={AvatarUrl} /> */}
-
                             <AvatarFallback>
-                              <Text size={1} color="tertiaryBackground">
+                              <span className="text-12 text-foreground-3">
                                 {/* TODO: fix fallback string */}
                                 {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                              </Text>
+                              </span>
                             </AvatarFallback>
                           </Avatar>
                         ),
@@ -485,7 +462,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 onQuoteReply={handleQuoteReply}
                                 parentCommentId={payload?.id}
                                 toggleConversationStatus={toggleConversationStatus}
-                                onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                 titleClassName="!flex max-w-full"
                                 currentUser={currentUser?.display_name}
                                 isLast={commentItems.length - 1 === idx}
@@ -502,10 +478,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
-                                    {/* <AvatarImage src={AvatarUrl} /> */}
-
                                     <AvatarFallback>
-                                      <Text size={1} color="tertiaryBackground">
+                                      <span className="text-12 text-foreground-3">
                                         {/* TODO: fix fallback string */}
                                         {getInitials(
                                           (
@@ -513,7 +487,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                               ?.author as PayloadAuthor
                                           ).display_name || ''
                                         )}
-                                      </Text>
+                                      </span>
                                     </AvatarFallback>
                                   </Avatar>
                                 }
@@ -549,7 +523,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     <PullRequestCommentBox
                                       handleUpload={handleUpload}
                                       isEditMode
-                                      isResolved={!!payload?.resolved}
                                       onSaveComment={() => {
                                         if (commentItem?.id) {
                                           handleUpdateComment?.(commentItem?.id, editComments[componentId])
@@ -562,8 +535,6 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                       }}
                                       comment={editComments[componentId]}
                                       setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
-                                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-                                      parentCommentId={payload?.id}
                                     />
                                   ) : (
                                     <PRCommentView

@@ -63,24 +63,19 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({
         {
           avatar: (
             <Avatar size="6">
-              {/* <AvatarImage src={AvatarUrl} /> */}
               <AvatarFallback>
-                <Text size={0} color="tertiaryBackground">
-                  {getInitials(author || '')}
-                </Text>
+                <span className="text-12 text-foreground-3">{getInitials(author || '')}</span>
               </AvatarFallback>
             </Avatar>
           ),
           name: author,
-          // TODO: make pr num clickable?
+          // TODO: pr number must be a link
           description: (
-            <Text size={2} className="gap-x-2" color="tertiaryBackground">
-              {`created pull request`}
-              <Text size={2} className="pl-1">
-                {`${prNum} `}
-              </Text>
+            <span className="flex gap-x-1">
+              created pull request
+              <span className="text-foreground-8">{prNum}</span>
               {formattedTime}
-            </Text>
+            </span>
           )
         }
       ]}
@@ -93,21 +88,17 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({
               <PullRequestCommentBox
                 isEditMode
                 handleUpload={handleUpload}
-                isResolved={undefined}
                 onSaveComment={() => {
                   if (title && description) {
                     handleUpdateDescription(title, comment || '')
                     setEdit(false)
                   }
                 }}
-                currentUser={undefined}
                 onCancelClick={() => {
                   setEdit(false)
                 }}
                 comment={comment}
                 setComment={setComment}
-                onCommentSaveAndStatusChange={undefined}
-                parentCommentId={undefined}
               />
             ) : (
               <Text size={2} color="primary">

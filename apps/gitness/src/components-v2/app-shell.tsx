@@ -216,7 +216,7 @@ export const AppShellMFE = () => {
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
   return (
     <div className={cn('flex flex-col', className)}>
-      <div className="layer-high bg-background-1 sticky top-0">
+      <div className="layer-high sticky top-0 bg-background-1">
         <Breadcrumbs />
       </div>
       <Outlet />

@@ -526,7 +526,6 @@ export default function PullRequestConversationPage() {
     onCommitSuggestionsBatch,
     suggestionsBatch,
     suggestionToCommit,
-    onCommentSaveAndStatusChange,
     toggleConversationStatus,
     handleUpload
   } = usePRCommonInteractions({
@@ -662,7 +661,6 @@ export default function PullRequestConversationPage() {
               handleSaveComment={handleSaveComment}
               currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
               onCopyClick={onCopyClick}
-              onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
               toggleConversationStatus={toggleConversationStatus}
               onCommitSuggestion={onCommitSuggestion}
               addSuggestionToBatch={addSuggestionToBatch}

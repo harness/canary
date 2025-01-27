@@ -10,6 +10,8 @@ import rehypeVideo from 'rehype-video'
 
 import './style.css'
 
+import { cn } from '@utils/cn'
+
 import { CodeSuggestionBlock, SuggestionBlock } from './CodeSuggestionBlock'
 
 // TODO: add ai stuff at a later point for code suggestions
@@ -36,6 +38,7 @@ interface MarkdownViewerProps {
   suggestionBlock?: SuggestionBlock
   suggestionCheckSum?: string
   isSuggestion?: boolean
+  markdownClassName?: string
 }
 
 export function MarkdownViewer({
@@ -44,7 +47,8 @@ export function MarkdownViewer({
   withBorderWrapper = false,
   suggestionBlock,
   suggestionCheckSum,
-  isSuggestion
+  isSuggestion,
+  markdownClassName
 }: MarkdownViewerProps) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
@@ -151,10 +155,10 @@ export function MarkdownViewer({
 
   return (
     <Wrapper>
-      <div className="m-auto max-w-[836px]" ref={ref} style={styles}>
+      <div ref={ref} style={styles}>
         <MarkdownPreview
           source={source}
-          className="prose prose-invert"
+          className={cn('prose prose-invert', markdownClassName)}
           rehypeRewrite={rehypeRewrite}
           rehypePlugins={[
             rehypeSanitize,

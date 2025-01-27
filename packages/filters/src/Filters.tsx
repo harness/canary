@@ -15,12 +15,13 @@ import FiltersContent, { FiltersContentProps } from './FiltersContent'
 import FiltersDropdown, { FiltersDropdownProps } from './FiltersDropdown'
 import { FilterConfig, FilterRefType, FilterStatus, FilterType, InitializeFiltersConfigType } from './types'
 import useRouter from './useRouter'
-import { createQueryString, mergeURLSearchParams } from './utils'
+import { createQueryString, isNullable, mergeURLSearchParams } from './utils'
 
 interface FiltersContextType<T extends Record<string, unknown>> {
   visibleFilters: (keyof T)[]
   availableFilters: (keyof T)[]
   removeFilter: (filterKey: keyof T) => void
+  resetFilters: () => void
   addFilter: (filterKey: keyof T) => void
   getFilterValue: (filterKey: keyof T) => any
   updateFilter: (filterKey: keyof T, parsedValue: any, value: any) => void
@@ -29,13 +30,14 @@ interface FiltersContextType<T extends Record<string, unknown>> {
 
 const FiltersContext = createContext<FiltersContextType<Record<string, unknown>> | null>(null)
 
-interface FiltersProps {
+interface FiltersProps<T extends Record<string, unknown>> {
   children: ReactNode
   allFiltersSticky?: boolean
+  onChange?: (filters: T) => void
 }
 
 const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
-  { children, allFiltersSticky }: FiltersProps,
+  { children, allFiltersSticky, onChange }: FiltersProps<T>,
   ref: React.Ref<FilterRefType<T>>
 ) {
   type FilterKeys = keyof T
@@ -59,12 +61,24 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     routerUpdateURL(mergedParams)
   }
 
+  const setFiltersMapTrigger = (filtersMap: Record<FilterKeys, FilterType>) => {
+    setFiltersMap(filtersMap)
+    onChange?.(getValues(filtersMap))
+  }
+
   const addFilter = (filterKey: FilterKeys) => {
     debug('Adding filter with key: %s', filterKey)
     setFiltersMap(prev => ({
       ...prev,
       [filterKey]: createNewFilter()
     }))
+
+    onChange?.(
+      getValues({
+        ...filtersMap,
+        [filterKey]: createNewFilter()
+      })
+    )
     setFiltersOrder(prev => [...prev, filterKey])
   }
 
@@ -73,7 +87,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const updatedFiltersMap = { ...filtersMap }
     delete updatedFiltersMap[filterKey]
     const updatedFiltersOrder = filtersOrder.filter(key => key !== filterKey)
-    setFiltersMap(updatedFiltersMap)
+    setFiltersMapTrigger(updatedFiltersMap)
     setFiltersOrder(updatedFiltersOrder)
 
     const query = createQueryString(updatedFiltersOrder, updatedFiltersMap)
@@ -84,7 +98,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   const updateFilter = (filterKey: FilterKeys, parsedValue: any, value: any) => {
     debug('Updating filter: %s with value: %O', filterKey, value)
     const updatedFiltersMap = { ...filtersMap, [filterKey]: getUpdatedFilter(parsedValue, value) }
-    setFiltersMap(updatedFiltersMap)
+    setFiltersMapTrigger(updatedFiltersMap)
 
     // when updating URL, include params other than filters params.
     const query = createQueryString(filtersOrder, updatedFiltersMap)
@@ -99,17 +113,28 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     const config = {} as Record<FilterKeys, FilterConfig>
 
     for (const key in initialFiltersConfig) {
-      const isSticky = allFiltersSticky ? true : initialFiltersConfig[key].isSticky
+      const { defaultValue, parser, isSticky } = initialFiltersConfig[key]
+      const isStickyFilter = allFiltersSticky ? true : isSticky
+
+      // If default values is set, check if it is a valid non-null value and apply filter_applied status
+      // If not, set the filter state to visible
+      const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
+      let filterState = isStickyFilter ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+
+      if (!isNullable(serializedDefaultValue)) {
+        filterState = FilterStatus.FILTER_APPLIED
+      }
+
       map[key] = {
-        value: initialFiltersConfig[key].defaultValue,
-        query: undefined,
-        state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+        value: defaultValue,
+        query: serializedDefaultValue,
+        state: filterState
       }
 
       config[key] = {
-        defaultValue: initialFiltersConfig[key].defaultValue,
+        defaultValue: serializedDefaultValue,
         parser: initialFiltersConfig[key].parser,
-        isSticky: isSticky
+        isSticky: isStickyFilter
       }
     }
 
@@ -131,7 +156,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     })
 
     // setting updated filters map to state and ref
-    setFiltersMap(map)
+    setFiltersMapTrigger(map)
     setFiltersConfig(config)
 
     debug('Initial filters added: %O', map)
@@ -139,9 +164,15 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
     // setting the order of filters based on the filtersMap
     // adding all the filters which are not hidden
-    setFiltersOrder(
-      Object.keys(map).filter(filter => map[filter as FilterKeys].state !== FilterStatus.HIDDEN) as FilterKeys[]
-    )
+    const newFiltersOrder = Object.keys(map).filter(
+      filter => map[filter as FilterKeys].state !== FilterStatus.HIDDEN
+    ) as FilterKeys[]
+    setFiltersOrder(newFiltersOrder)
+
+    const query = createQueryString(newFiltersOrder, map)
+    debug('Updating URL with query: %s', query)
+    updateURL(new URLSearchParams(query))
+
     // remove setVisibleFilters
     initialFiltersRef.current = map
   }
@@ -176,7 +207,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }
 
     // check typecasting
-    setFiltersMap(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
+    setFiltersMapTrigger(searchParamsFiltersMap as Record<FilterKeys, FilterType>)
     setFiltersOrder(Object.keys(searchParamsFiltersMap) as FilterKeys[])
   }, [searchParams])
 
@@ -187,7 +218,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
   })
 
   const getUpdatedFilter = (parsedValue: any, value: any): FilterType => {
-    const isValueNullable = parsedValue === '' || parsedValue === undefined || parsedValue === null
+    const isValueNullable = isNullable(parsedValue)
     return {
       value: value,
       query: isValueNullable ? undefined : parsedValue,
@@ -195,13 +226,14 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
     }
   }
 
-  const getValues = () => {
-    const filters = Object.keys(filtersMap).length === 0 ? initialFiltersRef.current : filtersMap
+  const getValues = (updatedFiltersMap: Record<FilterKeys, FilterType>) => {
+    const newFiltersMap = updatedFiltersMap || filtersMap
+    const filters = Object.keys(newFiltersMap).length === 0 ? initialFiltersRef.current : newFiltersMap
 
-    return Object.keys(filters || {}).map(key => {
-      const filter = filters?.[key as FilterKeys]
-      return { key, value: filter?.value }
-    })
+    return Object.entries(filters || {}).reduce((acc: T, [filterKey, value]) => {
+      acc[filterKey as keyof T] = value.value
+      return acc
+    }, {} as T)
   }
 
   const resetFilters = () => {
@@ -212,17 +244,28 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
       const isSticky = filtersConfig[key as FilterKeys]?.isSticky
       const defaultValue = filtersConfig[key as FilterKeys]?.defaultValue
 
+      const serializedDefaultValue = defaultValue
+      let filterState = isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+
+      if (!isNullable(serializedDefaultValue)) {
+        filterState = FilterStatus.FILTER_APPLIED
+      }
+
       updatedFiltersMap[key as FilterKeys] = {
         value: defaultValue,
-        query: undefined,
-        state: isSticky ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
+        query: serializedDefaultValue,
+        state: filterState
       }
     })
 
-    setFiltersMap(updatedFiltersMap)
-    const stickyFilters = Object.keys(updatedFiltersMap).filter(filter => filtersConfig[filter as FilterKeys].isSticky)
-    setFiltersOrder(stickyFilters as FilterKeys[])
-    const query = createQueryString(stickyFilters, updatedFiltersMap)
+    const newFiltersOrder = Object.keys(updatedFiltersMap).filter(
+      filter => updatedFiltersMap[filter as FilterKeys].state !== FilterStatus.HIDDEN
+    ) as FilterKeys[]
+
+    setFiltersMapTrigger(updatedFiltersMap)
+    setFiltersOrder(newFiltersOrder)
+
+    const query = createQueryString(newFiltersOrder, updatedFiltersMap)
     debug('Updating URL with query: %s', query)
     updateURL(new URLSearchParams(query))
   }
@@ -247,6 +290,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
         {
           visibleFilters: filtersOrder as string[],
           availableFilters,
+          resetFilters,
           removeFilter,
           getFilterValue,
           addFilter,

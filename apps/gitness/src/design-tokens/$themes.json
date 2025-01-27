@@ -506,7 +506,9 @@
       "typography.caption.data": "S:90f7b282b4cc6d944f8422b10c730c194f9c6bd5,",
       "typography.code.base": "S:0ec5c86536762ad84288fd64bf915d386b283d1f,",
       "Components setup.base": "S:f9ac193655dc742d6d488d2858d827543d41f308,",
-      "Components setup.emphasized": "S:e478bd14d275b99c4dc9c4413ce2541aedc141ab,"
+      "Components setup.emphasized": "S:e478bd14d275b99c4dc9c4413ce2541aedc141ab,",
+      "Components setup.components.base": "S:a50eb11aab1b3bb9dd922b2aa66d2d8e4f3b7b6f,",
+      "Components setup.components.emphasized": "S:30a63da2312281c2920e413268243a26858e7d7a,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled"

@@ -57,7 +57,7 @@ export const RepoSidebar = () => {
     queryParams: {
       include_commit: false,
       sort: 'date',
-      order: orderSortDate.ASC,
+      order: orderSortDate.DESC,
       limit: 50,
       query: searchQuery
     }

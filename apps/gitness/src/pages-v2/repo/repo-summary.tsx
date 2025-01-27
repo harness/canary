@@ -73,7 +73,7 @@ export default function RepoSummaryPage() {
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.ASC, limit: 50, query: branchTagQuery }
+    queryParams: { include_commit: false, sort: 'date', order: orderSortDate.DESC, limit: 50, query: branchTagQuery }
   })
 
   const { data: { body: branchDivergence = [] } = {}, mutate: calculateDivergence } =

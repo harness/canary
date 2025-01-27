@@ -6,6 +6,7 @@ import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/view
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
+import { DocumentTitleProvider } from './framework/context/DocumentTitleProvider'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
@@ -51,23 +52,6 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
-export const extractRedirectRouteObjects = (routes: CustomRouteObject[]): CustomRouteObject[] => {
-  const navigateObjects: CustomRouteObject[] = []
-  const traverseRoutes = (routes: CustomRouteObject[], currentPath: string = '') => {
-    for (const route of routes) {
-      const newPath = currentPath ? `${currentPath}${route.path ? `/${route.path}` : ''}` : (route.path ?? '')
-      if ((route.element as JSX.Element)?.type === Navigate) {
-        navigateObjects.push({ ...route, path: newPath })
-      }
-      if (route.children) {
-        traverseRoutes(route.children, newPath)
-      }
-    }
-  }
-  traverseRoutes(routes)
-  return navigateObjects
-}
-
 export const repoRoutes: CustomRouteObject[] = [
   {
     path: 'repos',
@@ -76,7 +60,13 @@ export const repoRoutes: CustomRouteObject[] = [
       routeName: RouteConstants.toRepositories
     },
     children: [
-      { index: true, element: <ReposListPage /> },
+      {
+        index: true,
+        element: <ReposListPage />,
+        handle: {
+          documentTitle: () => 'Repositories'
+        }
+      },
       {
         path: 'create',
         element: <CreateRepo />,
@@ -107,7 +97,8 @@ export const repoRoutes: CustomRouteObject[] = [
             element: <RepoSummaryPage />,
             handle: {
               breadcrumb: () => <Text>Summary</Text>,
-              routeName: RouteConstants.toRepoSummary
+              routeName: RouteConstants.toRepoSummary,
+              documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Summary`
             }
           },
           {
@@ -119,7 +110,10 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoCommitsPage />
+                element: <RepoCommitsPage />,
+                handle: {
+                  documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Commits`
+                }
               },
               {
                 path: ':commitSHA',
@@ -150,7 +144,8 @@ export const repoRoutes: CustomRouteObject[] = [
             element: <RepoBranchesListPage />,
             handle: {
               breadcrumb: () => <Text>Branches</Text>,
-              routeName: RouteConstants.toRepoBranches
+              routeName: RouteConstants.toRepoBranches,
+              documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Branches`
             }
           },
           {
@@ -167,7 +162,10 @@ export const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoCode />
+                element: <RepoCode />,
+                handle: {
+                  documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Files`
+                }
               },
               {
                 path: '*',
@@ -182,7 +180,13 @@ export const repoRoutes: CustomRouteObject[] = [
               routeName: RouteConstants.toPullRequests
             },
             children: [
-              { index: true, element: <PullRequestListPage /> },
+              {
+                index: true,
+                element: <PullRequestListPage />,
+                handle: {
+                  documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Pull Requests`
+                }
+              },
               {
                 path: 'compare',
                 handle: {
@@ -260,7 +264,13 @@ export const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <Text>Pipelines</Text>
             },
             children: [
-              { index: true, element: <RepoPipelineListPage /> },
+              {
+                index: true,
+                element: <RepoPipelineListPage />,
+                handle: {
+                  documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Pipelines`
+                }
+              },
               {
                 path: ':pipelineId',
                 handle: {
@@ -319,7 +329,8 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <RepoSettingsGeneralPageContainer />,
                 handle: {
                   breadcrumb: () => <Text>General</Text>,
-                  routeName: RouteConstants.toRepoGeneralSettings
+                  routeName: RouteConstants.toRepoGeneralSettings,
+                  documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId} | Settings`
                 }
               },
               {
@@ -438,7 +449,9 @@ export const routes: CustomRouteObject[] = [
     path: '/',
     element: (
       <AppProvider>
-        <AppShell />
+        <DocumentTitleProvider>
+          <AppShell />
+        </DocumentTitleProvider>
       </AppProvider>
     ),
     handle: { routeName: 'toHome' },

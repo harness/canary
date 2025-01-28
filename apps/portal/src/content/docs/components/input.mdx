@@ -1,0 +1,139 @@
+---
+title: Input
+description: Input component
+---
+
+The `Input` component is used to handle user input, along with providing options for styling via Variants, Themes, and Sizes.
+Also provides options for adding icons, captions, and error text for the field.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap flex-col gap-4 items-baseline">
+    <div className="font-bold w-full"> Variants: </div>
+    <Input variant={"extended"} value={"input with extended variant"} />
+    <Input />
+    <div className="font-bold w-full"> Sizes: </div>
+    <Input value={"input with default size"} />
+    <Input size={"md"} value={"input with md size"} />
+    <div className="font-bold w-full"> Themes: </div>
+    <Input theme={"danger"} value={"input with danger theme"} label={"label"} optional />
+    <Input caption={"dummy caption"} error={"dummy error text"} />
+    <Input value={"input with icon"} inputIconName={"plus"} />
+    <Input value={"input with right element"} rightElement={<Button className="ml-[12px]">Update</Button>} />
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Input } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Input
+    variant={"extended"}
+    size={"md"}
+    value={"input with value"}
+    theme={"danger"}
+    caption={"dummy caption"}
+    inputIconName={"plus"}
+    rightElement={<Button>Right element</Button>}
+  />
+)
+```
+
+## Anatomy
+
+Coming soon.
+
+```typescript jsx
+ <Input />
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "Variant of the input",
+      required: "false",
+      defaultValue: "default",
+      value: "default | extended",
+    },
+    {
+      name: "size",
+      description: "height of the input-field",
+      required: "false",
+      defaultValue: "sm",
+      value: "sm | md",
+    },
+    {
+      name: "theme",
+      description: "different themes for the input",
+      required: "false",
+      defaultValue: "default",
+      value: "default | danger",
+    },
+    {
+      name: "label",
+      description: "label for the input-field",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "caption to be displayed under the field",
+      required: "false",
+      defaultValue: "",
+      value: "ReactNode",
+    },
+    {
+      name: "error",
+      description: "error for the field to be displayed above caption",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "optional tag beside label",
+      required: "false",
+      defaultValue: "",
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "wrapperClassName",
+      description: "",
+      required: "false",
+      defaultValue: "",
+      value: "string",
+    },
+    {
+      name: "inputIconName",
+      description: "icon to be displayed inside the input-field",
+      required: "false",
+      defaultValue: "",
+      value: "IconProps['name']",
+    },
+    {
+      name: "rightElement",
+      description:
+        "element to be displayed on the right side of the input-field",
+      required: "false",
+      defaultValue: "",
+      value: "ReactNode",
+    },
+  ]}
+/>

@@ -14,6 +14,7 @@ interface PropDescription {
   required?: boolean;
   defaultValue?: string;
   description?: string;
+  value?: string;
 }
 
 export interface PropsTableProps {
@@ -27,14 +28,16 @@ const PropsTable: FC<PropsTableProps> = ({ props }) => (
         <TableHead>Prop</TableHead>
         <TableHead>Required</TableHead>
         <TableHead>Default</TableHead>
+        <TableHead>Value</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      {props.map(({ name, required, defaultValue, description }) => (
+      {props.map(({ name, required, defaultValue, description, value }) => (
         <TableRow key={name}>
           <TableCell title={description}>{name}</TableCell>
           <TableCell>{required ? "true" : "false"}</TableCell>
           <TableCell>{defaultValue}</TableCell>
+          <TableCell>{value}</TableCell>
         </TableRow>
       ))}
     </TableBody>

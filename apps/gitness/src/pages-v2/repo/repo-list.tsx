@@ -2,7 +2,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { Button } from '@harnessio/canary'
-import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
+import {
+  ListReposOkResponse,
+  RepoRepositoryOutput,
+  useDeleteRepositoryMutation,
+  useListReposQuery
+} from '@harnessio/code-service-client'
 import { StyledLink, toast, Toaster } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -24,7 +29,7 @@ export default function ReposListPage() {
 
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
-  const [startImport, setStartImport] = useState(false)
+  const [importingRepo, setImportingRepo] = useState<RepoRepositoryOutput[] | null>(null)
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -48,6 +53,30 @@ export default function ReposListPage() {
     }
   )
 
+  const deleteRepository = async (spaceId: string, repoId: string) => {
+    try {
+      const response = await fetch(`/api/v1/repos/${spaceId}/${repoId}/+/`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      if (!response.ok) {
+        throw new Error(`Failed to delete repository. Status: ${response.status}`)
+      }
+      setImportingRepo(null)
+      if (dismissFirstToastRef.current) {
+        dismissFirstToastRef.current()
+        dismissFirstToastRef.current = null
+      }
+
+      refetch() // Refetch repositories after deletion
+    } catch (error) {
+      console.error('Error deleting repository:', error)
+    }
+  }
+  // const { mutate: deleteRepo } = useDeleteRepositoryMutation({})
+
   useEffect(() => {
     const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
@@ -59,42 +88,54 @@ export default function ReposListPage() {
   }, [repoData, headers, setRepositories])
 
   const isRepoStillImporting: boolean = useMemo(() => {
-    return repoData?.some(repository => repository.importing) ?? false
+    if (repoData) {
+      // Filter repositories that are importing
+      const importingRepos = repoData.filter(repository => repository.importing)
+      // Update state with importing repositories
+      if (importingRepos.length > 0) setImportingRepo(importingRepos)
+      // Return true if any repository is importing
+      console.log(importingRepos)
+      return importingRepos.length > 0
+    }
+    // setImportingRepo(null)
+    return false
   }, [repoData])
 
   const onEvent = useCallback(
     (_eventRepos: ListReposOkResponse) => {
       if (repoData?.some(repository => repository.importing)) {
         refetch()
-        setStartImport(true)
       }
     },
     [repoData, refetch]
   )
 
   useEffect(() => {
-    const { id, update, dismiss } = toast({
-      title: 'Import in progress',
-      description: 'Your repository is being imported',
-      // duration: ,
-      action: <Button onClick={() => {}}>Cancel</Button>
-    })
-
-    if (!isRepoStillImporting) {
-      console.log('here')
-      dismiss()
+    if (isRepoStillImporting) {
+      const { dismiss } = toast({
+        title: `Import for ${importingRepo?.[0].identifier} in progress`,
+        description: 'Your repository is being imported',
+        duration: isRepoStillImporting ? Infinity : -Infinity,
+        action: (
+          <Button onClick={() => deleteRepository(spaceId ?? '', importingRepo?.[0].identifier ?? '')}>Cancel</Button>
+        )
+      })
+      dismissFirstToastRef.current = dismiss
     }
-
-    if (!isRepoStillImporting && startImport) {
-      dismiss()
+    if (!isRepoStillImporting && importingRepo != null) {
+      console.log(!isRepoStillImporting, importingRepo)
+      if (dismissFirstToastRef.current) {
+        dismissFirstToastRef.current()
+        dismissFirstToastRef.current = null
+      }
       toast({
         // id: id,
         title: 'Import complete',
         description: 'Repository imported successfully',
         duration: Infinity,
-        action: <StyledLink to="/">Go to repo</StyledLink>
+        action: <StyledLink to={`${importingRepo?.[0].identifier}/summary`}>Go to repo</StyledLink>
       })
-      setStartImport(false)
+      // setStartImport(false)
     }
   }, [isRepoStillImporting])
 

@@ -71,18 +71,33 @@ importers:
 
   apps/design-system:
     dependencies:
+      '@harnessio/canary':
+        specifier: workspace:*
+        version: link:../../packages/canary
+      '@harnessio/forms':
+        specifier: workspace:*
+        version: link:../../packages/forms
       '@harnessio/pipeline-graph':
         specifier: workspace:*
         version: link:../../packages/pipeline-graph
       '@harnessio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@harnessio/views':
+        specifier: workspace:*
+        version: link:../../packages/views
       '@harnessio/yaml-editor':
         specifier: workspace:*
         version: link:../../packages/yaml-editor
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       monaco-editor:
         specifier: 0.50.0
         version: 0.50.0
@@ -98,6 +113,9 @@ importers:
       react-router-dom:
         specifier: ^6.26.0
         version: 6.28.2(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      vite-plugin-monaco-editor:
+        specifier: ^1.1.0
+        version: 1.1.0(monaco-editor@0.50.0)
     devDependencies:
       '@types/react':
         specifier: ^17.0.3
@@ -758,6 +776,12 @@ importers:
       '@git-diff-view/shiki':
         specifier: ^0.0.21
         version: 0.0.21
+      '@harnessio/pipeline-graph':
+        specifier: workspace:*
+        version: link:../pipeline-graph
+      '@harnessio/yaml-editor':
+        specifier: workspace:*
+        version: link:../yaml-editor
       '@hookform/resolvers':
         specifier: ^3.6.0
         version: 3.10.0(react-hook-form@7.54.2(react@17.0.2))
@@ -893,6 +917,9 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
+      monaco-editor:
+        specifier: 0.50.0
+        version: 0.50.0
       overlayscrollbars:
         specifier: ^2.10.0
         version: 2.10.1
@@ -935,6 +962,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.17)
+      yaml:
+        specifier: ^2.7.0
+        version: 2.7.0
       zod:
         specifier: ^3.23.8
         version: 3.24.1

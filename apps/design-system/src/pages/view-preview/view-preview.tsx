@@ -8,6 +8,7 @@ import { RepoSettingsViewWrapper } from '@/pages/view-preview/repo-settings-view
 import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
+import PipelineStudioWrapper from '@subjects/views/pipeline-edit/pipeline-edit'
 import PipelineGraphWrapper from '@subjects/views/pipeline-graph/pipeline-graph'
 import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline-graph-minimal'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
@@ -150,6 +151,7 @@ export const viewPreviews: Record<string, ReactNode> = {
       <PipelineListWrapper />
     </RepoViewWrapper>
   ),
+  'pipeline-studio': <PipelineStudioWrapper />,
   'pipeline-graph': (
     <RepoViewWrapper>
       <PipelineGraphWrapper />

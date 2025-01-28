@@ -39,6 +39,9 @@ export * from './profile-settings'
 // pipelines
 export * from './pipelines'
 
+// pipeline-edit
+export * from './pipeline-edit'
+
 // user-management
 export * from './user-management'
 

@@ -6,7 +6,7 @@ export interface StepNodeProps {
   name?: string
   icon?: React.ReactNode
   selected?: boolean
-  onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 export function StepNode(props: StepNodeProps) {
@@ -19,15 +19,17 @@ export function StepNode(props: StepNodeProps) {
         'border-borders-3': selected
       })}
     >
-      <Button
-        className="absolute right-2 top-2"
-        variant="ghost"
-        size="sm_icon"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={onEllipsisClick}
-      >
-        <Icon name="ellipsis" size={15} />
-      </Button>
+      {onEllipsisClick && (
+        <Button
+          className="absolute right-2 top-2"
+          variant="ghost"
+          size="sm_icon"
+          onMouseDown={e => e.stopPropagation()}
+          onClick={onEllipsisClick}
+        >
+          <Icon name="ellipsis" size={15} />
+        </Button>
+      )}
 
       <div>{icon}</div>
       <Text title={name} className="m-2 line-clamp-2 cursor-default text-primary">

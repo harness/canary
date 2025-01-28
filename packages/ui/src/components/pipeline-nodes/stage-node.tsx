@@ -5,7 +5,7 @@ export interface StageNodeProps {
   children?: React.ReactElement
   collapsed?: boolean
   isEmpty?: boolean
-  onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
@@ -22,15 +22,17 @@ export function StageNode(props: StageNodeProps) {
         </div>
       </div>
 
-      <Button
-        className="absolute right-2 top-2 z-10"
-        variant="ghost"
-        size="sm_icon"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={onEllipsisClick}
-      >
-        <Icon name="ellipsis" size={15} />
-      </Button>
+      {onEllipsisClick && (
+        <Button
+          className="absolute right-2 top-2 z-10"
+          variant="ghost"
+          size="sm_icon"
+          onMouseDown={e => e.stopPropagation()}
+          onClick={onEllipsisClick}
+        >
+          <Icon name="ellipsis" size={15} />
+        </Button>
+      )}
 
       {!collapsed && isEmpty && (
         <Button

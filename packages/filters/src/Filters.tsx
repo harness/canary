@@ -31,7 +31,7 @@ interface FiltersContextType<T extends Record<string, unknown>> {
 const FiltersContext = createContext<FiltersContextType<Record<string, unknown>> | null>(null)
 
 interface FiltersProps<T extends Record<string, unknown>> {
-  children: ReactNode
+  children?: ReactNode
   allFiltersSticky?: boolean
   onChange?: (filters: T) => void
 }
@@ -317,13 +317,13 @@ export const useFiltersContext = <T extends Record<string, unknown>>() => {
 export { Filters }
 
 type FiltersView = 'dropdown' | 'row'
-interface FiltersWrapperProps extends FiltersProps {
+interface FiltersWrapperProps<T extends Record<string, unknown>> extends FiltersProps<T> {
   view?: FiltersView
 }
 
-const FiltersWrapper = forwardRef(function FiltersWrapper(
-  { view = 'row', ...props }: FiltersWrapperProps,
-  ref: React.Ref<FilterRefType<any>>
+const FiltersWrapper = forwardRef(function FiltersWrapper<T extends Record<string, unknown>>(
+  { view = 'row', ...props },
+  ref: React.Ref<FilterRefType<T>>
 ) {
   if (view === 'row') {
     return <Filters {...props} ref={ref} allFiltersSticky />
@@ -334,8 +334,9 @@ const FiltersWrapper = forwardRef(function FiltersWrapper(
 
 export default FiltersWrapper
 
-export const createFilters = <T extends unknown>() => {
-  const Filters = forwardRef<FilterRefType<T>, FiltersWrapperProps>((props, ref) => {
+export const createFilters = <T extends Record<string, unknown>>() => {
+  // eslint-disable-next-line react/display-name
+  const Filters = forwardRef<FilterRefType<T>, FiltersWrapperProps<T>>((props, ref) => {
     return <FiltersWrapper ref={ref} {...props} />
   })
 
@@ -345,15 +346,18 @@ export const createFilters = <T extends unknown>() => {
     Component: <K extends keyof T>(props: FilterProps<T, K>) => JSX.Element
   }
 
+  // eslint-disable-next-line react/display-name
   FiltersWithStatics.Dropdown = <K extends keyof T>(props: FiltersDropdownProps<T, K>) => {
     // @ts-ignore
     return <FiltersDropdown {...props} />
   }
 
+  // eslint-disable-next-line react/display-name
   FiltersWithStatics.Content = (props: FiltersContentProps) => {
     return <FiltersContent {...props} />
   }
 
+  // eslint-disable-next-line react/display-name
   FiltersWithStatics.Component = <K extends keyof T>(props: FilterProps<T, K>) => {
     return <Filter {...props} />
   }

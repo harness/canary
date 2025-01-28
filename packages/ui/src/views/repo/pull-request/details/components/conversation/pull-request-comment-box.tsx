@@ -164,7 +164,7 @@ const PullRequestCommentBox = ({
         })}
       >
         <Tabs variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="relative left-1/2 w-[calc(100%+32px)] -translate-x-1/2 px-4">
+          <TabsList className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
             <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
               Write
             </TabsTrigger>

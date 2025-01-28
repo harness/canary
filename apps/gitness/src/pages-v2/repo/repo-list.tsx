@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
+import { Button } from '@harnessio/canary'
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
+import { StyledLink, toast, Toaster } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -18,8 +20,11 @@ import { transformRepoList } from './transform-utils/repo-list-transform'
 export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
+  const dismissFirstToastRef = useRef<(() => void) | null>(null)
+
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
+  const [startImport, setStartImport] = useState(false)
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -61,10 +66,38 @@ export default function ReposListPage() {
     (_eventRepos: ListReposOkResponse) => {
       if (repoData?.some(repository => repository.importing)) {
         refetch()
+        setStartImport(true)
       }
     },
     [repoData, refetch]
   )
+
+  useEffect(() => {
+    if (isRepoStillImporting) {
+      const { dismiss } = toast({
+        title: 'Import in progress',
+        description: 'Your repository is being imported',
+        duration: isRepoStillImporting ? Infinity : -Infinity,
+        action: <Button onClick={() => {}}>Cancel</Button>
+      })
+      dismissFirstToastRef.current = dismiss
+    }
+
+    if (!isRepoStillImporting && startImport) {
+      if (dismissFirstToastRef.current) {
+        dismissFirstToastRef.current()
+        dismissFirstToastRef.current = null
+      }
+      toast({
+        // id: id,
+        title: 'Import complete',
+        description: 'Repository imported successfully',
+        duration: Infinity,
+        action: <StyledLink to="/">Go to repo</StyledLink>
+      })
+      setStartImport(false)
+    }
+  }, [isRepoStillImporting])
 
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
@@ -89,6 +122,7 @@ export default function ReposListPage() {
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}
       />
+      <Toaster />
     </>
   )
 }

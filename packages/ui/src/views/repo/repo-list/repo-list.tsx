@@ -1,6 +1,7 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
+import { Badge, Icon, NoData, SkeletonList, StackedList, toast, Toaster } from '@/components'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
@@ -49,6 +50,18 @@ export function RepoList({
 }: PageProps) {
   const { t } = useTranslationStore()
 
+  const [notifiedRepos, setNotifiedRepos] = useState<Set<string>>(new Set())
+
+  // const handleToast = (repoName: string) => {
+  //   if (!notifiedRepos.has(repoName)) {
+  //     toast({
+  //       title: t('views:repos.importing', 'Importing…'),
+  //       description: repoName
+  //     })
+  //     setNotifiedRepos(prev => new Set(prev).add(repoName))
+  //   }
+  // }
+
   if (isLoading) {
     return <SkeletonList />
   }
@@ -87,40 +100,43 @@ export function RepoList({
   }
 
   return (
-    <StackedList.Root>
-      {repos.map((repo, repo_idx) => (
-        <Link
-          key={repo.name}
-          to={toRepository?.(repo) || ''}
-          className={cn({
-            'pointer-events-none': repo.importing
-          })}
-        >
-          <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
-            <StackedList.Field
-              primary
-              description={
-                repo.importing ? (
-                  t('views:repos.importing', 'Importing…')
-                ) : (
-                  <span className="max-w-full truncate">{repo.description}</span>
-                )
-              }
-              title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
-              className="flex max-w-[80%] gap-1.5 text-wrap"
-            />
-            {!repo.importing && (
-              <StackedList.Field
-                title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
-                description={<Stats stars={repo.stars} pulls={repo.pulls} />}
-                right
-                label
-                secondary
-              />
-            )}
-          </StackedList.Item>
-        </Link>
-      ))}
-    </StackedList.Root>
+    <>
+      <StackedList.Root>
+        {repos.map((repo, repo_idx) => {
+          // if (repo.importing) {
+          //   handleToast(repo.name)
+          // }
+
+          return (
+            <Link
+              key={repo.name}
+              to={toRepository?.(repo) || ''}
+              className={cn({
+                'pointer-events-none': repo.importing
+              })}
+            >
+              <StackedList.Item key={repo.name} className="pb-2.5 pt-3" isLast={repos.length - 1 === repo_idx}>
+                <StackedList.Field
+                  primary
+                  description={<span className="max-w-full truncate">{repo.description}</span>}
+                  title={<Title title={repo.name} isPrivate={repo.private} t={t} />}
+                  className="flex max-w-[80%] gap-1.5 text-wrap"
+                />
+                {!repo.importing && (
+                  <StackedList.Field
+                    title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
+                    description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                    right
+                    label
+                    secondary
+                  />
+                )}
+              </StackedList.Item>
+            </Link>
+          )
+        })}
+      </StackedList.Root>
+      {/* <Toaster /> */}
+    </>
   )
 }

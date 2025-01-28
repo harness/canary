@@ -1,5 +1,6 @@
+import { PipelineNodes } from '@components/pipeline-nodes'
+
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
-import { PipelineNodes } from '@harnessio/ui/components'
 
 import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
 import { StageGroupNodeContextMenu } from '../context-menu/stage-group-node-context-menu'

@@ -7,13 +7,13 @@ const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof AvatarPrimitive.Root> & { size?: string }
 >(({ className, size = '10', ...props }, ref) => {
-  const wSize = `w-${size}`
-  const hSize = `h-${size}`
+  const sizePx = `${size}px`
 
   return (
     <AvatarPrimitive.Root
       ref={ref}
-      className={cn('relative flex shrink-0 overflow-hidden rounded-full', wSize, hSize, className)}
+      className={cn('relative flex shrink-0 overflow-hidden rounded-full', className)}
+      style={{ width: sizePx, height: sizePx }}
       {...props}
     />
   )

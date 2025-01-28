@@ -92,7 +92,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
-  desc: string
+  desc?: string
   setDesc: (desc: string) => void
 }
 

@@ -9,12 +9,16 @@ const useDocumentTitle = () => {
   const matches = useMatches()
 
   useEffect(() => {
-    const currentMatch = matches.at(-1) // Get the last match
-    if (currentMatch) {
-      const { documentTitle } = (currentMatch?.handle || {}) as CustomHandle
-      document.title = documentTitle?.(currentMatch.params) ?? t('views:app.harnessOpenSource', 'Harness Open Source')
-    }
-  }, [matches])
+    const fullPageTitle = matches
+      .map(match => {
+        const handle = (match.handle || {}) as CustomHandle
+        return handle?.documentTitle?.(match.params)
+      })
+      .filter(Boolean)
+      .join(' | ')
+
+    document.title = fullPageTitle || t('views:app.harnessOpenSource', 'Harness Open Source')
+  }, [matches, t])
 }
 
 export default useDocumentTitle

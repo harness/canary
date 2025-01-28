@@ -154,6 +154,8 @@ import Settings2 from '../icons/setting-2.svg'
 import Shield from '../icons/shield-icon.svg'
 import ShieldLock from '../icons/shield-lock.svg'
 import SidebarIcon from '../icons/sidebar-icon.svg'
+import SidebarLeft from '../icons/sidebar-left.svg'
+import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
 import Sparks from '../icons/sparks.svg'
@@ -295,6 +297,8 @@ const IconNameMap = {
   key: Key,
   'file-icon': FileIcon,
   'sidebar-icon': SidebarIcon,
+  'sidebar-left': SidebarLeft,
+  'sidebar-right': SidebarRight,
   variable: Variable,
   'clock-icon': ClockIcon,
   eye: Eye,

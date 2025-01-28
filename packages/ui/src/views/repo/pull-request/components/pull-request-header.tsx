@@ -64,15 +64,15 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     }
   }, [description, val, updateTitle])
   return (
-    <div className="flex flex-col gap-y-4 w-full">
-      <div className="flex items-center w-full">
-        <div className="flex items-center gap-x-2.5 w-full max-w-full h-[44px] text-24 font-medium text-foreground-1">
-          {!edit && <div className="flex items-center h-full truncate max-w-[95%]">{original}</div>}
+    <div className="flex w-full flex-col gap-y-4">
+      <div className="flex w-full items-center">
+        <div className="flex h-[44px] w-full max-w-full items-center gap-x-2.5 text-24 font-medium text-foreground-1">
+          {!edit && <div className="flex h-full max-w-[95%] items-center truncate">{original}</div>}
           {!edit && <span className="font-normal text-foreground-4">#{number}</span>}
           {edit ? (
             <Layout.Horizontal className="w-full">
               <input
-                className="rounded-md border w-fit max-w-full bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                className="w-fit max-w-full rounded-md border bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 // wrapperClassName={css.input}
                 value={val}
                 onFocus={event => event.target.select()}

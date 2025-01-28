@@ -23,7 +23,7 @@ const PipelineStudioWrapper = () => {
     let newYaml = yamlRevision.yaml
 
     switch (yamlEntityTypeToAdd) {
-      case YamlEntityType.SerialGroup:
+      case YamlEntityType.SerialStageGroup:
         // NOTE: if we are adding in the array we have to provide path to children array
         newYaml = injectItemInArray(yamlRevision.yaml, {
           path: position === 'in' && nodeData.yamlChildrenPath ? nodeData.yamlChildrenPath : nodeData.yamlPath,
@@ -32,7 +32,7 @@ const PipelineStudioWrapper = () => {
         })
         break
 
-      case YamlEntityType.ParallelGroup:
+      case YamlEntityType.ParallelStageGroup:
         // NOTE: if we are adding in the array we have to provide path to children array
         newYaml = injectItemInArray(yamlRevision.yaml, {
           path: position === 'in' && nodeData.yamlChildrenPath ? nodeData.yamlChildrenPath : nodeData.yamlPath,

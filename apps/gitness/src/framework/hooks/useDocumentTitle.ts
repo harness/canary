@@ -12,7 +12,7 @@ const useDocumentTitle = () => {
     const fullPageTitle = matches
       .map(match => {
         const handle = (match.handle || {}) as CustomHandle
-        return handle?.documentTitle?.(match.params)
+        return handle?.pageTitle?.(match.params)
       })
       .filter(Boolean)
       .join(' | ')

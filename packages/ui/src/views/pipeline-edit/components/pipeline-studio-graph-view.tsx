@@ -42,7 +42,7 @@ export interface PipelineStudioGraphViewProps {
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
 }
 
-export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps<any>): React.ReactElement => {
+export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): React.ReactElement => {
   const { yamlRevision, contentNodeFactory } = props
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])

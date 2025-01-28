@@ -2,15 +2,20 @@ import { useState } from 'react'
 
 import { TFunction } from 'i18next'
 
+import FilterSelect, { FilterSelectLabel } from './filter-select'
 import ManageViews from './manage-views'
 import FilterTrigger from './triggers/filter-trigger'
 import ViewTrigger from './triggers/view-trigger'
 import { FilterHandlers, FilterOption, SortOption, ViewLayoutOption, ViewManagement } from './types'
 
-interface FiltersProps {
+interface FiltersProps<T extends object> {
   showFilter?: boolean
   showSort?: boolean
-  filterOptions: FilterOption[]
+  selectedFiltersCnt: number
+  resetFilters: () => void
+  addFilter: (filterKey: keyof T) => void
+  setOpenedFilter: (filter: keyof T) => void
+  filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
   filterHandlers: Pick<
     FilterHandlers,
@@ -69,42 +74,43 @@ interface FiltersProps {
  * />
  * ```
  */
-const Filters = ({
+const Filters = <T extends object>({
   showFilter = true,
   showSort = true,
   filterOptions,
+  selectedFiltersCnt,
+  addFilter,
+  resetFilters,
+  setOpenedFilter,
   sortOptions,
-  filterHandlers: {
-    activeFilters,
-    activeSorts,
-    handleFilterChange,
-    handleResetFilters,
-    searchQueries,
-    handleSearchChange,
-    handleSortChange,
-    handleResetSorts
-  },
+  filterHandlers: { activeSorts, searchQueries, handleSearchChange, handleSortChange, handleResetSorts },
   viewManagement,
   layoutOptions,
   currentLayout,
   onLayoutChange,
   t
-}: FiltersProps) => {
+}: FiltersProps<T>) => {
   const [isManageDialogOpen, setIsManageDialogOpen] = useState(false)
 
   return (
     <>
       <div className="flex items-center gap-x-5">
         {showFilter && (
-          <FilterTrigger
-            type="filter"
-            activeFilters={activeFilters}
-            onChange={handleFilterChange}
-            onReset={handleResetFilters}
-            searchQueries={searchQueries}
-            onSearchChange={handleSearchChange}
+          <FilterSelect<T>
             options={filterOptions}
-            t={t}
+            onChange={option => {
+              addFilter(option.value)
+              setOpenedFilter(option.value)
+            }}
+            onReset={resetFilters}
+            inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+            buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+            displayLabel={
+              <FilterSelectLabel
+                selectedFilters={selectedFiltersCnt}
+                displayLabel={t('component:filter.defaultLabel', 'Filter')}
+              />
+            }
           />
         )}
 

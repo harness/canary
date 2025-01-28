@@ -7,6 +7,10 @@ import {
 } from '@components/filters'
 import { TFunction } from 'i18next'
 
+import { stringArrayParser } from '@harnessio/filters'
+
+import { RepoListFilters } from '../repo-list/types'
+
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.is', 'is'), value: 'is' },
   { label: t('component:filter.isNot', 'is not'), value: 'is_not' },
@@ -45,35 +49,32 @@ export const getNumberConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.isNotEmpty', 'is not empty'), value: 'is_not_empty' }
 ]
 
-export const getFilterOptions = (t: TFunction): FilterOption[] => [
+export const getFilterOptions = (t: TFunction): FilterOption<RepoListFilters>[] => [
   {
     label: t('component:filter.type', 'Type'),
     value: 'type',
     type: 'checkbox',
-    conditions: getBasicConditions(t),
     options: [
       { label: t('component:filter.public', 'Public'), value: 'public' },
       { label: t('component:filter.private', 'Private'), value: 'private' },
       { label: t('component:filter.fork', 'Fork'), value: 'fork' }
-    ]
+    ],
+    parser: stringArrayParser
   },
   {
     label: t('component:filter.createdTime', 'Created Time'),
     value: 'created_time',
-    type: 'calendar',
-    conditions: getRangeConditions(t)
+    type: 'calendar'
   },
   {
     label: t('component:filter.name', 'Name'),
     value: 'name',
-    type: 'text',
-    conditions: getTextConditions(t)
+    type: 'text'
   },
   {
     label: t('component:filter.stars', 'Stars'),
     value: 'stars',
-    type: 'number',
-    conditions: getNumberConditions(t)
+    type: 'number'
   }
 ]
 

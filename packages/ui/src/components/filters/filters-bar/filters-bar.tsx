@@ -1,15 +1,25 @@
+import { ReactElement } from 'react'
+
 import { Icon } from '@/components'
 import { TFunction } from 'i18next'
 
-import FilterTrigger from '../triggers/filter-trigger'
+import FilterSelect, { FilterSelectAddIconLabel } from '../filter-select'
+import FiltersField from '../filters-field'
 import { FilterHandlers, FilterOption, SortDirection, SortOption, ViewManagement } from '../types'
-import Filters from './actions/filters'
 import Sorts from './actions/sorts'
 import Views from './actions/views'
 
-interface FiltersBarProps {
-  filterOptions: FilterOption[]
+interface FiltersBarProps<T extends object> {
+  openedFilter: keyof T | undefined
+  setOpenedFilter: (filter: keyof T) => void
+  addFilter: (filter: keyof T) => void
+  resetFilters: () => void
+  filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
+  selectedFiltersCnt: number
+  renderSelectedFilters: (
+    filterFieldRenderer: (filterFieldConfig: FilterFieldRendererProps<T>) => ReactElement
+  ) => ReactElement
   sortDirections: SortDirection[]
   t: TFunction
   filterHandlers: Pick<
@@ -48,6 +58,13 @@ interface FiltersBarProps {
   >
 }
 
+interface FilterFieldRendererProps<T extends object> {
+  filterOption: FilterOption<T>
+  removeFilter: () => void
+  onChange: (value: T[keyof T]) => void
+  value: T[keyof T]
+}
+
 /**
  * FiltersBar component displays active filters and sorts with the ability to manage them.
  * Shows up only when there are active filters or sorts.
@@ -65,39 +82,49 @@ interface FiltersBarProps {
  * />
  * ```
  */
-const FiltersBar = ({
+
+const FiltersBar = <T extends object>({
   filterOptions,
   sortOptions,
+  addFilter,
+  resetFilters,
+  selectedFiltersCnt,
   sortDirections,
+  openedFilter,
+  setOpenedFilter,
   t,
+  renderSelectedFilters,
   filterHandlers,
   viewManagement
-}: FiltersBarProps) => {
+}: FiltersBarProps<T>) => {
   const {
     activeFilters,
     activeSorts,
-    handleUpdateFilter,
-    handleRemoveFilter,
-    handleFilterChange,
-    handleUpdateCondition,
     handleUpdateSort,
     handleRemoveSort,
     handleSortChange,
     handleResetSorts,
     handleReorderSorts,
-    handleResetAll,
     searchQueries,
     handleSearchChange,
     filterToOpen,
     clearFilterToOpen
   } = filterHandlers
 
-  const hasActiveFilters = !!activeFilters.length || !!activeSorts.length
-
-  if (!hasActiveFilters) return null
+  const filtersFieldRenderer = ({ filterOption, removeFilter, onChange, value }: FilterFieldRendererProps<T>) => {
+    return (
+      <FiltersField
+        shouldOpenFilter={filterOption.value === openedFilter}
+        filterOption={filterOption}
+        removeFilter={removeFilter}
+        onChange={onChange}
+        value={value}
+      />
+    )
+  }
 
   return (
-    <div className="flex items-center gap-x-2">
+    <div className="mt-2 flex items-center gap-x-2">
       {!!activeSorts.length && (
         <Sorts
           activeSorts={activeSorts}
@@ -115,46 +142,28 @@ const FiltersBar = ({
         />
       )}
 
-      {activeFilters.length > 0 && activeSorts.length > 0 && <div className="h-7 w-px bg-borders-1" />}
+      {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
+      {renderSelectedFilters(filtersFieldRenderer)}
 
-      {activeFilters.map(filter => (
-        <Filters
-          key={filter.type}
-          filter={filter}
-          filterOptions={filterOptions}
-          handleUpdateFilter={handleUpdateFilter}
-          handleRemoveFilter={handleRemoveFilter}
-          handleUpdateCondition={handleUpdateCondition}
-          handleSearchChange={handleSearchChange}
-          searchQueries={searchQueries}
-          filterToOpen={filterToOpen}
-          onOpen={clearFilterToOpen}
-        />
-      ))}
-
-      {hasActiveFilters && (
+      {selectedFiltersCnt > 0 && (
         <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
           <div className="flex items-center gap-x-4">
-            <FilterTrigger
-              type="filter"
-              customLabel={
-                <div className="flex items-center gap-x-1.5 text-foreground-4 transition-colors duration-200 hover:text-foreground-1">
-                  <Icon name="plus" size={10} />
-                  <span>{t('component:filter.add-filter', 'Add filter')}</span>
-                </div>
-              }
-              hideCount
-              dropdownAlign="start"
-              activeFilters={activeFilters}
-              onChange={handleFilterChange}
-              searchQueries={searchQueries}
-              onSearchChange={handleSearchChange}
+            <FilterSelect
               options={filterOptions}
-              t={t}
+              dropdownAlign="start"
+              onChange={option => {
+                addFilter(option.value)
+                setOpenedFilter(option.value)
+              }}
+              inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+              buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+              displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
             />
             <button
-              className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
-              onClick={handleResetAll}
+              className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
+              onClick={() => {
+                resetFilters()
+              }}
             >
               <Icon className="rotate-45" name="plus" size={12} />
               {t('component:filter.reset', 'Reset')}

@@ -60,37 +60,45 @@ export const getSortTriggerLabel = (activeSorts: SortValue[], sortOptions: SortO
  *   - Single date: "MMM d" or "MMM d, yyyy"
  *   - Date range: "MMM d - MMM d" or "MMM d, yyyy - MMM d, yyyy"
  */
-export const getFilterDisplayValue = (filterOption: FilterOption, filter: FilterValue): string => {
+export const getFilterDisplayValue = <T extends object = object>(
+  filterOption: FilterOption<T>,
+  filter: FilterValue
+): string => {
   switch (filterOption.type) {
     case 'checkbox':
-      return filter.selectedValues
-        .map(
-          value =>
-            (filterOption as CheckboxFilterOption).options.find(
-              (opt: { label: string; value: string }) => opt.value === value
-            )?.label
-        )
-        .join(', ')
+      return Array.isArray(filter.selectedValues)
+        ? filter.selectedValues
+            .map(
+              value =>
+                (filterOption as CheckboxFilterOption).options.find(
+                  (opt: { label: string; value: string }) => opt.value === value
+                )?.label
+            )
+            .join(', ')
+        : ''
     case 'calendar': {
-      if (filter.selectedValues.length === 0) return ''
+      const selectedValues = filter.selectedValues
+      if (!selectedValues) return ''
 
-      const formatDate = (dateString: string) => {
-        const date = new Date(dateString)
-        const currentYear = new Date().getFullYear()
-        return date.getFullYear() === currentYear ? format(date, 'MMM d') : format(date, 'MMM d, yyyy')
-      }
+      if (typeof selectedValues === 'string') {
+        const formatDate = (dateString: string) => {
+          const date = new Date(dateString)
+          const currentYear = new Date().getFullYear()
+          return date.getFullYear() === currentYear ? format(date, 'MMM d') : format(date, 'MMM d, yyyy')
+        }
 
-      if (filter.selectedValues.length === 1) {
-        return formatDate(filter.selectedValues[0])
+        if (selectedValues) {
+          return formatDate(selectedValues)
+        }
       }
-      return `${formatDate(filter.selectedValues[0])} - ${formatDate(filter.selectedValues[1])}`
+      return ''
     }
-    case 'text': {
-      return filter.selectedValues.join(', ')
-    }
-    case 'number': {
-      return filter.selectedValues.join(', ')
-    }
+    case 'text':
+    case 'number':
+      if (typeof filter.selectedValues === 'string') {
+        return filter.selectedValues
+      }
+      return ''
     default:
       return ''
   }

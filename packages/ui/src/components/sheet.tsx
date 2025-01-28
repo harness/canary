@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { usePortal } from '@/context'
 import * as SheetPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
@@ -85,25 +86,28 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
       ...props
     },
     ref
-  ) => (
-    <SheetPortal>
-      <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick} />
-      <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
-        {children}
-        {!hideCloseButton && (
-          <SheetPrimitive.Close
-            asChild
-            className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
-          >
-            <Button className="text-icons-4 hover:text-icons-2" variant="custom" size="icon" onClick={handleClose}>
-              <Icon name="close" size={16} />
-              <span className="sr-only">Close</span>
-            </Button>
-          </SheetPrimitive.Close>
-        )}
-      </SheetPrimitive.Content>
-    </SheetPortal>
-  )
+  ) => {
+    const { portalContainer } = usePortal()
+    return (
+      <SheetPortal container={portalContainer}>
+        <SheetOverlay modal={modal} className={overlayClassName} handleClose={handleClose || props.onClick} />
+        <SheetPrimitive.Content ref={ref} className={cn(sheetVariants({ side }), className)} {...props}>
+          {children}
+          {!hideCloseButton && (
+            <SheetPrimitive.Close
+              asChild
+              className="absolute right-[0.1875rem] top-2 flex items-center justify-center transition-colors disabled:pointer-events-none"
+            >
+              <Button className="text-icons-4 hover:text-icons-2" variant="custom" size="icon" onClick={handleClose}>
+                <Icon name="close" size={16} />
+                <span className="sr-only">Close</span>
+              </Button>
+            </SheetPrimitive.Close>
+          )}
+        </SheetPrimitive.Content>
+      </SheetPortal>
+    )
+  }
 )
 SheetContent.displayName = SheetPrimitive.Content.displayName
 

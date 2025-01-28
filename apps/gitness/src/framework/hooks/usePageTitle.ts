@@ -4,7 +4,7 @@ import { useMatches } from 'react-router-dom'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { CustomHandle } from '../routing/types'
 
-const useDocumentTitle = () => {
+const usePageTitle = () => {
   const { t } = useTranslationStore()
   const matches = useMatches()
 
@@ -25,4 +25,4 @@ const useDocumentTitle = () => {
   }, [matches, t])
 }
 
-export default useDocumentTitle
+export default usePageTitle

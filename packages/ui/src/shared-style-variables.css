@@ -287,7 +287,7 @@
     --canary-popover: 0 0% 100%;
     --canary-popover-foreground: 240 10% 3.9%;
     --canary-primary: 240 5.9% 10%;
-    --canary-primary-background: 240 5.9% 10%;
+    --canary-primary-background: 0 0% 100%;
     --canary-primary-foreground: 0 0% 98%;
     --canary-primary-muted: var(--canary-grey-70);
     --canary-primary-accent: 216 100% 60%;

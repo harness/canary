@@ -236,192 +236,25 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                     ? parseStartingLineIfOne(codeDiffSnapshot ?? '')
                     : null
 
-                return (
-                  payload?.id && (
-                    <PullRequestTimelineItem
-                      handleUpload={handleUpload}
-                      data={payload?.text as string}
-                      isNotCodeComment
-                      id={parentIdAttr}
-                      hideReplyHere={hideReplyHeres[payload?.id]}
-                      setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
-                      quoteReplyText={quoteReplies[payload.id]?.text || ''}
-                      onQuoteReply={handleQuoteReply}
-                      key={payload?.id}
-                      currentUser={currentUser?.display_name}
-                      replyBoxClassName="p-4"
-                      toggleConversationStatus={toggleConversationStatus}
-                      isResolved={!!payload?.resolved}
-                      icon={<Icon name="pr-review" size={12} />}
-                      isLast={(data && data?.length - 1 === index) ?? false}
-                      handleSaveComment={handleSaveComment}
-                      parentCommentId={payload?.id}
-                      header={[
-                        {
-                          avatar: (
-                            <Avatar className="size-6 rounded-full p-0">
-                              <AvatarFallback>
-                                <span className="text-12 text-foreground-3">
-                                  {/* TODO: fix fallback string */}
-                                  {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                                </span>
-                              </AvatarFallback>
-                            </Avatar>
-                          ),
-                          name: (payload?.author as PayloadAuthor)?.display_name,
-                          // TODO: fix comment to tell between comment or code comment?
-                          description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
-                        }
-                      ]}
-                      contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
-                      content={
-                        <div className="flex flex-col">
-                          {startingLine ? (
-                            <div className="bg-[--diff-hunk-lineNumber--]">
-                              <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
-                            </div>
-                          ) : null}
-
-                          <PullRequestDiffViewer
-                            handleUpload={handleUpload}
-                            data={removeLastPlus(codeDiffSnapshot)}
-                            fileName={payload?.code_comment?.path ?? ''}
-                            lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
-                            fontsize={fontsize}
-                            highlight={highlight}
-                            mode={DiffModeEnum.Unified}
-                            wrap={wrap}
-                            addWidget={false}
-                            useTranslationStore={useTranslationStore}
-                          />
-                          <div className="px-4 py-2">
-                            {commentItems?.map((commentItem, idx) => {
-                              const componentId = `activity-code-${commentItem?.id}`
-                              const commentIdAttr = `comment-${payload?.id}`
-
-                              return (
-                                payload?.id && (
-                                  <PullRequestTimelineItem
-                                    handleUpload={handleUpload}
-                                    id={commentIdAttr}
-                                    data={commentItem.payload?.payload?.text as string}
-                                    isNotCodeComment
-                                    hideReplySection
-                                    setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
-                                    quoteReplyText={quoteReplies[payload.id]?.text || ''}
-                                    onQuoteReply={handleQuoteReply}
-                                    parentCommentId={payload?.id}
-                                    titleClassName="!flex max-w-full"
-                                    isComment
-                                    onCopyClick={onCopyClick}
-                                    commentId={commentItem.id}
-                                    isLast={commentItems.length - 1 === idx}
-                                    isDeleted={!!commentItem?.deleted}
-                                    handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
-                                    onEditClick={() =>
-                                      toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
-                                    }
-                                    contentClassName="border-transparent"
-                                    replyBoxClassName="p-4"
-                                    toggleConversationStatus={toggleConversationStatus}
-                                    icon={
-                                      <Avatar className="size-6 rounded-full p-0">
-                                        <AvatarFallback>
-                                          <span className="text-12 text-foreground-3">
-                                            {/* TODO: fix fallback string */}
-                                            {getInitials(
-                                              (
-                                                (commentItem as unknown as TypesPullReqActivity)?.payload
-                                                  ?.author as PayloadAuthor
-                                              )?.display_name || ''
-                                            )}
-                                          </span>
-                                        </AvatarFallback>
-                                      </Avatar>
-                                    }
-                                    header={[
-                                      {
-                                        name: (
-                                          (commentItem as unknown as TypesPullReqActivity)?.payload
-                                            ?.author as PayloadAuthor
-                                        )?.display_name,
-                                        // TODO: fix comment to tell between comment or code comment?
-                                        description: (
-                                          <Layout.Horizontal className="text-foreground-4">
-                                            <span>{timeAgo((commentItem as unknown as PayloadCreated)?.created)}</span>
-                                            {commentItem?.deleted ? (
-                                              <>
-                                                <span>&nbsp;|&nbsp;</span>
-                                                <span>{t('views:pullRequests.deleted')}</span>
-                                              </>
-                                            ) : null}
-                                          </Layout.Horizontal>
-                                        )
-                                      }
-                                    ]}
-                                    content={
-                                      commentItem?.deleted ? (
-                                        <div className="rounded-md border bg-primary-background p-1">
-                                          {t('views:pullRequests.deletedComment')}
-                                        </div>
-                                      ) : editModes[componentId] ? (
-                                        <PullRequestCommentBox
-                                          isEditMode
-                                          handleUpload={handleUpload}
-                                          onSaveComment={() => {
-                                            if (commentItem?.id) {
-                                              handleUpdateComment?.(commentItem?.id, editComments[componentId])
-                                              toggleEditMode(componentId, '')
-                                            }
-                                          }}
-                                          currentUser={currentUser?.display_name}
-                                          onCancelClick={() => {
-                                            toggleEditMode(componentId, '')
-                                          }}
-                                          comment={editComments[componentId]}
-                                          setComment={text =>
-                                            setEditComments(prev => ({ ...prev, [componentId]: text }))
-                                          }
-                                        />
-                                      ) : (
-                                        <PRCommentView
-                                          commentItem={commentItem}
-                                          filenameToLanguage={filenameToLanguage}
-                                          suggestionsBatch={suggestionsBatch}
-                                          onCommitSuggestion={onCommitSuggestion}
-                                          addSuggestionToBatch={addSuggestionToBatch}
-                                          removeSuggestionFromBatch={removeSuggestionFromBatch}
-                                        />
-                                      )
-                                    }
-                                    key={`${commentItem.id}-${commentItem.author}`}
-                                  />
-                                )
-                              )
-                            })}
-                          </div>
-                        </div>
-                      }
-                    />
-                  )
-                )
-              }
-              return (
-                payload?.id && (
+                return payload?.id ? (
                   <PullRequestTimelineItem
                     handleUpload={handleUpload}
                     data={payload?.text as string}
+                    isNotCodeComment
                     id={parentIdAttr}
                     hideReplyHere={hideReplyHeres[payload?.id]}
                     setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
                     quoteReplyText={quoteReplies[payload.id]?.text || ''}
                     onQuoteReply={handleQuoteReply}
                     key={payload?.id}
-                    titleClassName="!flex max-w-full"
                     currentUser={currentUser?.display_name}
                     replyBoxClassName="p-4"
-                    isResolved={!!payload?.resolved}
                     toggleConversationStatus={toggleConversationStatus}
+                    isResolved={!!payload?.resolved}
+                    icon={<Icon name="pr-review" size={12} />}
+                    isLast={(data && data?.length - 1 === index) ?? false}
+                    handleSaveComment={handleSaveComment}
+                    parentCommentId={payload?.id}
                     header={[
                       {
                         avatar: (
@@ -436,46 +269,59 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         ),
                         name: (payload?.author as PayloadAuthor)?.display_name,
                         // TODO: fix comment to tell between comment or code comment?
-                        description: (
-                          <div className="flex space-x-4">
-                            <div className="pr-2">{payload?.created && `commented ${timeAgo(payload?.created)}`} </div>
-                          </div>
-                        )
+                        description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                       }
                     ]}
+                    contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
                     content={
-                      <div className="px-4 pt-4">
-                        {commentItems?.map((commentItem, idx) => {
-                          const componentId = `activity-comment-${commentItem?.id}`
-                          // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
-                          const commentIdAttr = `comment-${payload?.id}`
+                      <div className="flex flex-col">
+                        {startingLine ? (
+                          <div className="bg-[--diff-hunk-lineNumber--]">
+                            <div className="ml-16 w-full px-8 py-1">{startingLine}</div>
+                          </div>
+                        ) : null}
 
-                          return (
-                            payload?.id && (
+                        <PullRequestDiffViewer
+                          handleUpload={handleUpload}
+                          data={removeLastPlus(codeDiffSnapshot)}
+                          fileName={payload?.code_comment?.path ?? ''}
+                          lang={(payload?.code_comment?.path && payload?.code_comment?.path.split('.').pop()) || ''}
+                          fontsize={fontsize}
+                          highlight={highlight}
+                          mode={DiffModeEnum.Unified}
+                          wrap={wrap}
+                          addWidget={false}
+                          useTranslationStore={useTranslationStore}
+                        />
+                        <div className="px-4 py-2">
+                          {commentItems?.map((commentItem, idx) => {
+                            const componentId = `activity-code-${commentItem?.id}`
+                            const commentIdAttr = `comment-${payload?.id}`
+
+                            return payload?.id ? (
                               <PullRequestTimelineItem
                                 handleUpload={handleUpload}
                                 id={commentIdAttr}
                                 data={commentItem.payload?.payload?.text as string}
+                                isNotCodeComment
                                 hideReplySection
                                 setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
                                 quoteReplyText={quoteReplies[payload.id]?.text || ''}
                                 onQuoteReply={handleQuoteReply}
                                 parentCommentId={payload?.id}
-                                toggleConversationStatus={toggleConversationStatus}
                                 titleClassName="!flex max-w-full"
-                                currentUser={currentUser?.display_name}
-                                isLast={commentItems.length - 1 === idx}
                                 isComment
                                 onCopyClick={onCopyClick}
                                 commentId={commentItem.id}
+                                isLast={commentItems.length - 1 === idx}
                                 isDeleted={!!commentItem?.deleted}
                                 handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
                                 onEditClick={() =>
                                   toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')
                                 }
-                                contentClassName="border-transparent pb-0"
+                                contentClassName="border-transparent"
                                 replyBoxClassName="p-4"
-                                key={`${commentItem.id}-${commentItem.author}-pr-comment`}
+                                toggleConversationStatus={toggleConversationStatus}
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
                                     <AvatarFallback>
@@ -485,7 +331,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                           (
                                             (commentItem as unknown as TypesPullReqActivity)?.payload
                                               ?.author as PayloadAuthor
-                                          ).display_name || ''
+                                          )?.display_name || ''
                                         )}
                                       </span>
                                     </AvatarFallback>
@@ -498,16 +344,12 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     )?.display_name,
                                     // TODO: fix comment to tell between comment or code comment?
                                     description: (
-                                      <Layout.Horizontal>
-                                        <span className="text-foreground-3">
-                                          {timeAgo((commentItem as unknown as PayloadCreated)?.created)}
-                                        </span>
+                                      <Layout.Horizontal className="text-foreground-4">
+                                        <span>{timeAgo((commentItem as unknown as PayloadCreated)?.created)}</span>
                                         {commentItem?.deleted ? (
                                           <>
-                                            <span className="text-foreground-3">&nbsp;|&nbsp;</span>
-                                            <span className="text-foreground-3">
-                                              {t('views:pullRequests.deleted')}{' '}
-                                            </span>
+                                            <span>&nbsp;|&nbsp;</span>
+                                            <span>{t('views:pullRequests.deleted')}</span>
                                           </>
                                         ) : null}
                                       </Layout.Horizontal>
@@ -521,8 +363,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     </div>
                                   ) : editModes[componentId] ? (
                                     <PullRequestCommentBox
-                                      handleUpload={handleUpload}
                                       isEditMode
+                                      handleUpload={handleUpload}
                                       onSaveComment={() => {
                                         if (commentItem?.id) {
                                           handleUpdateComment?.(commentItem?.id, editComments[componentId])
@@ -547,20 +389,163 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                     />
                                   )
                                 }
+                                key={`${commentItem.id}-${commentItem.author}`}
                               />
-                            )
-                          )
-                        })}
+                            ) : null
+                          })}
+                        </div>
                       </div>
-                      //
                     }
-                    icon={<Icon name="pr-comment" size={12} />}
-                    isLast={activityBlocks.length - 1 === index}
-                    handleSaveComment={handleSaveComment}
-                    parentCommentId={payload?.id}
                   />
-                )
-              )
+                ) : null
+              }
+              return payload?.id ? (
+                <PullRequestTimelineItem
+                  handleUpload={handleUpload}
+                  data={payload?.text as string}
+                  id={parentIdAttr}
+                  hideReplyHere={hideReplyHeres[payload?.id]}
+                  setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                  quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                  onQuoteReply={handleQuoteReply}
+                  key={payload?.id}
+                  titleClassName="!flex max-w-full"
+                  currentUser={currentUser?.display_name}
+                  replyBoxClassName="p-4"
+                  isResolved={!!payload?.resolved}
+                  toggleConversationStatus={toggleConversationStatus}
+                  header={[
+                    {
+                      avatar: (
+                        <Avatar className="size-6 rounded-full p-0">
+                          <AvatarFallback>
+                            <span className="text-12 text-foreground-3">
+                              {/* TODO: fix fallback string */}
+                              {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                            </span>
+                          </AvatarFallback>
+                        </Avatar>
+                      ),
+                      name: (payload?.author as PayloadAuthor)?.display_name,
+                      // TODO: fix comment to tell between comment or code comment?
+                      description: (
+                        <div className="flex space-x-4">
+                          <div className="pr-2">{payload?.created && `commented ${timeAgo(payload?.created)}`} </div>
+                        </div>
+                      )
+                    }
+                  ]}
+                  content={
+                    <div className="px-4 pt-4">
+                      {commentItems?.map((commentItem, idx) => {
+                        const componentId = `activity-comment-${commentItem?.id}`
+                        // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
+                        const commentIdAttr = `comment-${payload?.id}`
+
+                        return payload?.id ? (
+                          <PullRequestTimelineItem
+                            handleUpload={handleUpload}
+                            id={commentIdAttr}
+                            data={commentItem.payload?.payload?.text as string}
+                            hideReplySection
+                            setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+                            quoteReplyText={quoteReplies[payload.id]?.text || ''}
+                            onQuoteReply={handleQuoteReply}
+                            parentCommentId={payload?.id}
+                            toggleConversationStatus={toggleConversationStatus}
+                            titleClassName="!flex max-w-full"
+                            currentUser={currentUser?.display_name}
+                            isLast={commentItems.length - 1 === idx}
+                            isComment
+                            onCopyClick={onCopyClick}
+                            commentId={commentItem.id}
+                            isDeleted={!!commentItem?.deleted}
+                            handleDeleteComment={() => handleDeleteComment(commentItem?.id)}
+                            onEditClick={() => toggleEditMode(componentId, commentItem?.payload?.payload?.text || '')}
+                            contentClassName="border-transparent pb-0"
+                            replyBoxClassName="p-4"
+                            key={`${commentItem.id}-${commentItem.author}-pr-comment`}
+                            icon={
+                              <Avatar className="size-6 rounded-full p-0">
+                                <AvatarFallback>
+                                  <span className="text-12 text-foreground-3">
+                                    {/* TODO: fix fallback string */}
+                                    {getInitials(
+                                      (
+                                        (commentItem as unknown as TypesPullReqActivity)?.payload
+                                          ?.author as PayloadAuthor
+                                      ).display_name || ''
+                                    )}
+                                  </span>
+                                </AvatarFallback>
+                              </Avatar>
+                            }
+                            header={[
+                              {
+                                name: (
+                                  (commentItem as unknown as TypesPullReqActivity)?.payload?.author as PayloadAuthor
+                                )?.display_name,
+                                // TODO: fix comment to tell between comment or code comment?
+                                description: (
+                                  <Layout.Horizontal>
+                                    <span className="text-foreground-3">
+                                      {timeAgo((commentItem as unknown as PayloadCreated)?.created)}
+                                    </span>
+                                    {commentItem?.deleted ? (
+                                      <>
+                                        <span className="text-foreground-3">&nbsp;|&nbsp;</span>
+                                        <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                      </>
+                                    ) : null}
+                                  </Layout.Horizontal>
+                                )
+                              }
+                            ]}
+                            content={
+                              commentItem?.deleted ? (
+                                <div className="rounded-md border bg-primary-background p-1">
+                                  {t('views:pullRequests.deletedComment')}
+                                </div>
+                              ) : editModes[componentId] ? (
+                                <PullRequestCommentBox
+                                  handleUpload={handleUpload}
+                                  isEditMode
+                                  onSaveComment={() => {
+                                    if (commentItem?.id) {
+                                      handleUpdateComment?.(commentItem?.id, editComments[componentId])
+                                      toggleEditMode(componentId, '')
+                                    }
+                                  }}
+                                  currentUser={currentUser?.display_name}
+                                  onCancelClick={() => {
+                                    toggleEditMode(componentId, '')
+                                  }}
+                                  comment={editComments[componentId]}
+                                  setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                                />
+                              ) : (
+                                <PRCommentView
+                                  commentItem={commentItem}
+                                  filenameToLanguage={filenameToLanguage}
+                                  suggestionsBatch={suggestionsBatch}
+                                  onCommitSuggestion={onCommitSuggestion}
+                                  addSuggestionToBatch={addSuggestionToBatch}
+                                  removeSuggestionFromBatch={removeSuggestionFromBatch}
+                                />
+                              )
+                            }
+                          />
+                        ) : null
+                      })}
+                    </div>
+                    //
+                  }
+                  icon={<Icon name="pr-comment" size={12} />}
+                  isLast={activityBlocks.length - 1 === index}
+                  handleSaveComment={handleSaveComment}
+                  parentCommentId={payload?.id}
+                />
+              ) : null
             }
           })}
         </div>

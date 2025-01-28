@@ -48,7 +48,7 @@ interface FilterCondition {
 
 interface FilterValue<T extends object = any> {
   type: keyof T
-  condition: string
+  condition?: string
   selectedValues: T[keyof T] | undefined
 }
 

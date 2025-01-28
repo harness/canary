@@ -1,35 +1,25 @@
-import { useMemo } from 'react'
+import { ReactElement } from 'react'
 
 import { Icon } from '@/components'
 import { TFunction } from 'i18next'
 
-import { createFilters } from '@harnessio/filters'
-
-import FilterBoxWrapper from '../filter-box-wrapper'
 import FilterSelect, { FilterSelectAddIconLabel } from '../filter-select'
-import {
-  CheckboxFilterOption,
-  FilterHandlers,
-  FilterOption,
-  FilterValue,
-  SortDirection,
-  SortOption,
-  ViewManagement
-} from '../types'
-import { getFilterDisplayValue } from '../utils'
+import FiltersField from '../filters-field'
+import { FilterHandlers, FilterOption, SortDirection, SortOption, ViewManagement } from '../types'
 import Sorts from './actions/sorts'
-import Calendar from './actions/variants/calendar'
-import Checkbox from './actions/variants/checkbox'
-import Number from './actions/variants/number'
-import Text from './actions/variants/text'
 import Views from './actions/views'
 
 interface FiltersBarProps<T extends object> {
   openedFilter: keyof T | undefined
   setOpenedFilter: (filter: keyof T) => void
+  addFilter: (filter: keyof T) => void
+  resetFilters: () => void
   filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
   selectedFiltersCnt: number
+  renderSelectedFilters: (
+    filterFieldRenderer: (filterFieldConfig: FilterFieldRendererProps<T>) => ReactElement
+  ) => ReactElement
   sortDirections: SortDirection[]
   t: TFunction
   filterHandlers: Pick<
@@ -68,6 +58,13 @@ interface FiltersBarProps<T extends object> {
   >
 }
 
+interface FilterFieldRendererProps<T extends object> {
+  filterOption: FilterOption<T>
+  removeFilter: () => void
+  onChange: (value: T[keyof T]) => void
+  value: T[keyof T]
+}
+
 /**
  * FiltersBar component displays active filters and sorts with the ability to manage them.
  * Shows up only when there are active filters or sorts.
@@ -86,45 +83,17 @@ interface FiltersBarProps<T extends object> {
  * ```
  */
 
-const renderFilterValues = <T extends object>(
-  filter: FilterValue,
-  filterOption: FilterOption<T>,
-  onUpdateFilter: (type: keyof T, selectedValues: T[keyof T]) => void,
-  filteredOptions?: CheckboxFilterOption['options']
-) => {
-  if (!onUpdateFilter) return null
-
-  switch (filterOption.type) {
-    case 'checkbox':
-      return (
-        <Checkbox<T>
-          filter={filter}
-          filterOption={{
-            ...filterOption,
-            options: filteredOptions || (filterOption as CheckboxFilterOption).options
-          }}
-          onUpdateFilter={onUpdateFilter}
-        />
-      )
-    case 'calendar':
-      return <Calendar<T> filter={filter} onUpdateFilter={onUpdateFilter} />
-    case 'text':
-      return <Text<T> filter={filter} onUpdateFilter={onUpdateFilter} />
-    case 'number':
-      return <Number<T> filter={filter} onUpdateFilter={onUpdateFilter} />
-    default:
-      return null
-  }
-}
-
 const FiltersBar = <T extends object>({
   filterOptions,
   sortOptions,
-  sortDirections,
+  addFilter,
+  resetFilters,
   selectedFiltersCnt,
+  sortDirections,
   openedFilter,
   setOpenedFilter,
   t,
+  renderSelectedFilters,
   filterHandlers,
   viewManagement
 }: FiltersBarProps<T>) => {
@@ -142,7 +111,17 @@ const FiltersBar = <T extends object>({
     clearFilterToOpen
   } = filterHandlers
 
-  const FilterV2 = useMemo(() => createFilters<T>(), [])
+  const filtersFieldRenderer = ({ filterOption, removeFilter, onChange, value }: FilterFieldRendererProps<T>) => {
+    return (
+      <FiltersField
+        shouldOpenFilter={filterOption.value === openedFilter}
+        filterOption={filterOption}
+        removeFilter={removeFilter}
+        onChange={onChange}
+        value={value}
+      />
+    )
+  }
 
   return (
     <div className="mt-2 flex items-center gap-x-2">
@@ -164,94 +143,48 @@ const FiltersBar = <T extends object>({
       )}
 
       {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
-      <FilterV2.Content className={'flex w-full items-center gap-x-2'}>
-        {filterOptions.map(filterOption => {
-          return (
-            <FilterV2.Component
-              key={filterOption.value as string}
-              filterKey={filterOption.value}
-              parser={'parser' in filterOption ? filterOption.parser : undefined}
-            >
-              {({ onChange, removeFilter, value }) => {
-                const activeFilterOption = {
-                  type: filterOption.value,
-                  selectedValues: value || [],
-                  condition: ''
-                }
+      {renderSelectedFilters(filtersFieldRenderer)}
 
-                const onFilterValueChange = (_type: keyof T, selectedValues: T[keyof T]) => {
-                  onChange(selectedValues)
-                }
-
-                return (
-                  <FilterBoxWrapper<T>
-                    filterKey={filterOption.value}
-                    handleRemoveFilter={type => removeFilter(type)}
-                    shouldOpen={openedFilter === filterOption.value}
-                    filterLabel={filterOption.label}
-                    valueLabel={getFilterDisplayValue<T>(filterOption, activeFilterOption)}
-                  >
-                    {renderFilterValues(activeFilterOption, filterOption, onFilterValueChange)}
-                  </FilterBoxWrapper>
-                )
+      {selectedFiltersCnt > 0 && (
+        <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
+          <div className="flex items-center gap-x-4">
+            <FilterSelect
+              options={filterOptions}
+              dropdownAlign="start"
+              onChange={option => {
+                addFilter(option.value)
+                setOpenedFilter(option.value)
               }}
-            </FilterV2.Component>
-          )
-        })}
+              inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+              buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+              displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
+            />
+            <button
+              className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
+              onClick={() => {
+                resetFilters()
+              }}
+            >
+              <Icon className="rotate-45" name="plus" size={12} />
+              {t('component:filter.reset', 'Reset')}
+            </button>
+          </div>
 
-        <FilterV2.Dropdown className={'flex w-full'}>
-          {(addFilter, availableFilters, resetFilters) => {
-            const selectedFiltersCnt = filterOptions.length - availableFilters.length
-
-            if (selectedFiltersCnt === 0) {
-              return
-            }
-
-            return (
-              <div className="ml-2.5 flex w-full items-center justify-between gap-x-4">
-                <div className="flex items-center gap-x-4">
-                  <FilterSelect
-                    options={filterOptions}
-                    dropdownAlign="start"
-                    onChange={option => {
-                      addFilter(option.value)
-                      setOpenedFilter(option.value)
-                    }}
-                    inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                    buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                    displayLabel={
-                      <FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />
-                    }
-                  />
-                  <button
-                    className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
-                    onClick={() => {
-                      resetFilters()
-                    }}
-                  >
-                    <Icon className="rotate-45" name="plus" size={12} />
-                    {t('component:filter.reset', 'Reset')}
-                  </button>
-                </div>
-
-                {viewManagement && (
-                  <Views
-                    currentView={viewManagement.currentView}
-                    savedViews={viewManagement.savedViews}
-                    viewManagement={{
-                      ...viewManagement,
-                      activeFilters,
-                      activeSorts,
-                      saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
-                    }}
-                    hasChanges={!!viewManagement.hasActiveViewChanges(activeFilters, activeSorts)}
-                  />
-                )}
-              </div>
-            )
-          }}
-        </FilterV2.Dropdown>
-      </FilterV2.Content>
+          {viewManagement && (
+            <Views
+              currentView={viewManagement.currentView}
+              savedViews={viewManagement.savedViews}
+              viewManagement={{
+                ...viewManagement,
+                activeFilters,
+                activeSorts,
+                saveView: (name: string) => viewManagement.saveView(name, activeFilters, activeSorts)
+              }}
+              hasChanges={!!viewManagement.hasActiveViewChanges(activeFilters, activeSorts)}
+            />
+          )}
+        </div>
+      )}
     </div>
   )
 }

@@ -11,11 +11,11 @@ export interface RepoStore {
   setRepositories: (data: RepositoryType[], totalPages: number) => void
 }
 
-export interface RepoListFilters {
+export type RepoListFilters = {
   name: string
   type: string[]
   stars: string
-  created_time: string
+  created_time: string[]
 }
 
 export type filterRef = FilterRefType<RepoListFilters>

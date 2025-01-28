@@ -14,13 +14,13 @@ interface UseRouterReturnType {
   updateURL: (params: URLSearchParams, replace?: boolean) => void
 }
 
-const isReactRouterV6 = typeof useNavigate === 'function'
+const isReactRouterV6 = true
 
 export default function useRouter(): UseRouterReturnType {
-  const navigate = isReactRouterV6 ? useNavigate() : null // v6
-  const locationV6 = isReactRouterV6 ? useLocationV6() : null // v6
-  const history = !isReactRouterV6 ? useHistory() : null // v5
-  const locationV5 = !isReactRouterV6 ? useLocationV5() : null // v5
+  const navigate = useNavigate() // v6
+  const locationV6 = useLocationV6() // v6
+  const history = {} // v5
+  const locationV5 = {} // v5
 
   const searchParams = useMemo(
     () => new URLSearchParams(isReactRouterV6 ? locationV6?.search : locationV5?.search),

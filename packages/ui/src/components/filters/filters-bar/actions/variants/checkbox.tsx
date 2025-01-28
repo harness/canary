@@ -33,7 +33,7 @@ const Checkbox = <T extends object>({ filter, filterOption, onUpdateFilter }: Ch
                     <button
                       className="text-icons-1 transition-colors duration-200 hover:text-foreground-1"
                       onClick={() => {
-                        const newValues = filter.selectedValues.filter(v => v !== value)
+                        const newValues = selectedValues.filter(v => v !== value)
                         onUpdateFilter(filter.type, newValues as unknown as T[keyof T])
                       }}
                     >

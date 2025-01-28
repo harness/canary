@@ -1,8 +1,6 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 import { TFunction } from 'i18next'
-
-import { createFilters } from '@harnessio/filters'
 
 import FilterSelect, { FilterSelectLabel } from './filter-select'
 import ManageViews from './manage-views'
@@ -13,7 +11,9 @@ import { FilterHandlers, FilterOption, SortOption, ViewLayoutOption, ViewManagem
 interface FiltersProps<T extends object> {
   showFilter?: boolean
   showSort?: boolean
-  selectedFilters?: number
+  selectedFiltersCnt: number
+  resetFilters: () => void
+  addFilter: (filterKey: keyof T) => void
   setOpenedFilter: (filter: keyof T) => void
   filterOptions: FilterOption<T>[]
   sortOptions: SortOption[]
@@ -78,6 +78,9 @@ const Filters = <T extends object>({
   showFilter = true,
   showSort = true,
   filterOptions,
+  selectedFiltersCnt,
+  addFilter,
+  resetFilters,
   setOpenedFilter,
   sortOptions,
   filterHandlers: { activeSorts, searchQueries, handleSearchChange, handleSortChange, handleResetSorts },
@@ -88,32 +91,27 @@ const Filters = <T extends object>({
   t
 }: FiltersProps<T>) => {
   const [isManageDialogOpen, setIsManageDialogOpen] = useState(false)
-  const FilterV2 = useMemo(() => createFilters<T>(), [])
 
   return (
     <>
       <div className="flex items-center gap-x-5">
         {showFilter && (
-          <FilterV2.Dropdown className={'flex w-full'}>
-            {(addFilter, availableFilters, resetFilters) => (
-              <FilterSelect<T>
-                options={filterOptions}
-                onChange={option => {
-                  addFilter(option.value)
-                  setOpenedFilter(option.value)
-                }}
-                onReset={resetFilters}
-                inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
-                buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
-                displayLabel={
-                  <FilterSelectLabel
-                    selectedFilters={filterOptions.length - availableFilters.length}
-                    displayLabel={t('component:filter.defaultLabel', 'Filter')}
-                  />
-                }
+          <FilterSelect<T>
+            options={filterOptions}
+            onChange={option => {
+              addFilter(option.value)
+              setOpenedFilter(option.value)
+            }}
+            onReset={resetFilters}
+            inputPlaceholder={t('component:filter.inputPlaceholder', 'Filter by...')}
+            buttonLabel={t('component:filter.buttonLabel', 'Reset filters')}
+            displayLabel={
+              <FilterSelectLabel
+                selectedFilters={selectedFiltersCnt}
+                displayLabel={t('component:filter.defaultLabel', 'Filter')}
               />
-            )}
-          </FilterV2.Dropdown>
+            }
+          />
         )}
 
         {showSort && (

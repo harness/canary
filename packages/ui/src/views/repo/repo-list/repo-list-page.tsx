@@ -18,7 +18,7 @@ import { filterRef, RepoListFilters, RepoListProps } from './types'
 
 const DEFAULT_ERROR_MESSAGE = ['An error occurred while loading the data. ', 'Please try again and reload the page.']
 
-export const RepoFilter = createFilters<RepoListFilters>()
+const RepoFilter = createFilters<RepoListFilters>()
 
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
@@ -66,16 +66,16 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
     setSearchQuery(searchQuery || null)
   }, 300)
 
-  const onFilterValueChange = useCallback(
-    (filterValues: { key: keyof RepoListFilters; value: RepoListFilters[keyof RepoListFilters] }[]) => {
-      setFilterValues(
-        filterValues
-          .map(({ key, value }) => ({ type: key, selectedValues: value }))
-          .filter(({ selectedValues }) => !!selectedValues)
-      )
-    },
-    []
-  )
+  const onFilterValueChange = useCallback((filterValues: RepoListFilters) => {
+    setFilterValues(
+      Object.keys(filterValues)
+        .map(key => ({
+          type: key as keyof RepoListFilters,
+          selectedValues: filterValues[key as keyof RepoListFilters]
+        }))
+        .filter(({ selectedValues }) => !!selectedValues)
+    )
+  }, [])
 
   const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value)
@@ -147,17 +147,24 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   />
                 </ListActions.Left>
                 <ListActions.Right>
-                  <Filters<RepoListFilters>
-                    setOpenedFilter={setOpenedFilter}
-                    filterOptions={FILTER_OPTIONS}
-                    sortOptions={SORT_OPTIONS}
-                    filterHandlers={filterHandlers}
-                    viewManagement={viewManagement}
-                    layoutOptions={LAYOUT_OPTIONS}
-                    currentLayout={currentLayout}
-                    onLayoutChange={setCurrentLayout}
-                    t={t}
-                  />
+                  <RepoFilter.Dropdown>
+                    {(addFilter, _availableFilters, resetFilters) => (
+                      <Filters<RepoListFilters>
+                        setOpenedFilter={setOpenedFilter}
+                        filterOptions={FILTER_OPTIONS}
+                        addFilter={addFilter}
+                        selectedFiltersCnt={selectedFiltersCnt}
+                        resetFilters={resetFilters}
+                        sortOptions={SORT_OPTIONS}
+                        filterHandlers={filterHandlers}
+                        viewManagement={viewManagement}
+                        layoutOptions={LAYOUT_OPTIONS}
+                        currentLayout={currentLayout}
+                        onLayoutChange={setCurrentLayout}
+                        t={t}
+                      />
+                    )}
+                  </RepoFilter.Dropdown>
                   <ButtonGroup>
                     <Button variant="default" asChild>
                       <Link to={`create`}>{t('views:repos.create-repository')}</Link>
@@ -169,17 +176,38 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 </ListActions.Right>
               </ListActions.Root>
               {(selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
-              <FiltersBar<RepoListFilters>
-                openedFilter={openedFilter}
-                setOpenedFilter={setOpenedFilter}
-                selectedFiltersCnt={selectedFiltersCnt}
-                filterOptions={FILTER_OPTIONS}
-                sortOptions={SORT_OPTIONS}
-                sortDirections={SORT_DIRECTIONS}
-                filterHandlers={filterHandlers}
-                viewManagement={viewManagement}
-                t={t}
-              />
+              <RepoFilter.Dropdown>
+                {(addFilter, _availableFilters, resetFilters) => (
+                  <FiltersBar<RepoListFilters>
+                    renderSelectedFilters={filterFieldRenderer => (
+                      <RepoFilter.Content className={'flex items-center gap-x-2'}>
+                        {FILTER_OPTIONS.map(filterOption => (
+                          <RepoFilter.Component
+                            key={filterOption.value as string}
+                            filterKey={filterOption.value}
+                            parser={'parser' in filterOption ? filterOption.parser : undefined}
+                          >
+                            {({ onChange, removeFilter, value }) =>
+                              filterFieldRenderer({ filterOption, onChange, removeFilter, value: value ?? '' })
+                            }
+                          </RepoFilter.Component>
+                        ))}
+                      </RepoFilter.Content>
+                    )}
+                    addFilter={addFilter}
+                    resetFilters={resetFilters}
+                    openedFilter={openedFilter}
+                    setOpenedFilter={setOpenedFilter}
+                    selectedFiltersCnt={selectedFiltersCnt}
+                    filterOptions={FILTER_OPTIONS}
+                    sortOptions={SORT_OPTIONS}
+                    sortDirections={SORT_DIRECTIONS}
+                    filterHandlers={filterHandlers}
+                    viewManagement={viewManagement}
+                    t={t}
+                  />
+                )}
+              </RepoFilter.Dropdown>
             </>
           ) : null}
           <Spacer size={5} />

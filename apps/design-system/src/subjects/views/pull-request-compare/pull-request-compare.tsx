@@ -25,6 +25,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
 
   return (
     <PullRequestComparePage
+      desc=""
+      setDesc={noop}
       handleDeleteReviewer={noop}
       handleAddReviewer={noop}
       onFormSubmit={noop}

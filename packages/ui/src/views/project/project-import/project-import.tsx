@@ -232,7 +232,6 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           <Fieldset>
             <ControlGroup>
               <ButtonGroup>
-                {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
                   {!isLoading ? 'Import project' : 'Importing project...'}
                 </Button>

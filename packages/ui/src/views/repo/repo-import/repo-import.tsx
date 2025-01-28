@@ -54,18 +54,6 @@ interface RepoImportPageProps {
   apiErrorsValue?: string
 }
 
-// const providerOptions = [
-//   `Github`,
-//   `Github Enterprise`,
-//   `Gitlab`,
-//   `Gitlab Self-Hosted`,
-//   `Bitbucket`,
-//   `Bitbucket Server`,
-//   `Gitea`,
-//   `Gogs`,
-//   `Azure DevOps`
-// ]
-
 export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
   const {
     register,

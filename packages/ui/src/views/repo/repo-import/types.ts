@@ -1,15 +1,3 @@
-// export const providerOptions = [
-//   `Github`,
-//   `Github Enterprise`,
-//   `Gitlab`,
-//   `Gitlab Self-Hosted`,
-//   `Bitbucket`,
-//   `Bitbucket Server`,
-//   `Gitea`,
-//   `Gogs`,
-//   `Azure DevOps`
-// ]
-
 export enum ProviderOptionsEnum {
   GITHUB = 'Github',
   GITHUB_ENTERPRISE = 'Github Enterprise',

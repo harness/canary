@@ -97,7 +97,7 @@ export const repoRoutes: CustomRouteObject[] = [
         path: 'import-multiple',
         element: <ImportMultipleRepos />,
         handle: {
-          // routeName: RouteConstants.toImportMultipleRepos
+          routeName: RouteConstants.toImportMultipleRepos
         }
       },
       {

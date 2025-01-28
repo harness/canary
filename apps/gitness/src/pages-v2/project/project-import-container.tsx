@@ -5,8 +5,6 @@ import { ImportProjectFormFields, ImportProjectPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 
-// import { PathParams } from '../../RouteDefinitions'
-
 export const ImportProjectContainer = () => {
   const routes = useRoutes()
   const navigate = useNavigate()
@@ -48,7 +46,6 @@ export const ImportProjectContainer = () => {
   }
 
   return (
-    // @TODO: Add loading states and error handling when API is available
     <>
       <ImportProjectPage
         onFormSubmit={onSubmit}

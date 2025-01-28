@@ -39,7 +39,7 @@ export default function ReposListPage() {
       space_ref: `${spaceURL}/+`
     },
     {
-      retry: true
+      retry: 5
     }
   )
 

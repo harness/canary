@@ -552,7 +552,7 @@ export default function PullRequestConversationPage() {
         suggestions={suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
         prId={prId}
       />
-      <SandboxLayout.Columns columnWidths="1fr 220px">
+      <SandboxLayout.Columns columnWidths="1fr 288px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}

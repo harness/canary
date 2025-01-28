@@ -453,7 +453,6 @@ export interface ReviewerItemProps {
     reviewedSHA?: string,
     sourceSHA?: string
   ) => EnumPullReqReviewDecision | PullReqReviewDecision.outdated
-  handleDelete: (id: number) => void
 }
 
 export interface TypesCodeOwnerEvaluation {

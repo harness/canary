@@ -18,9 +18,8 @@ export interface Suggestion {
 interface CodeSuggestionBlockProps {
   code: string
   suggestionBlock?: SuggestionBlock
-  suggestionCheckSum?: string
 }
-export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum }: CodeSuggestionBlockProps) {
+export function CodeSuggestionBlock({ code, suggestionBlock }: CodeSuggestionBlockProps) {
   const language = useMemo(() => suggestionBlock?.lang || 'plaintext', [suggestionBlock?.lang])
 
   const highlightedHtmlOld = useMemo(() => {
@@ -36,26 +35,13 @@ export function CodeSuggestionBlock({ code, suggestionBlock, suggestionCheckSum 
   }, [code, language])
 
   return (
-    <div>
-      <span>
-        {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
-          ? 'Suggestion applied'
-          : 'Suggested change'}
-      </span>
-      <div className="pt-1">
-        <pre className="!bg-background-danger">
-          <code
-            className={`${language} code-highlight`}
-            dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}
-          ></code>
-        </pre>
-        <pre className="!bg-background-success">
-          <code
-            className={`${language} code-highlight`}
-            dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}
-          ></code>
-        </pre>
-      </div>
+    <div className="pt-1">
+      <pre className="!bg-background-danger">
+        <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlOld }}></code>
+      </pre>
+      <pre className="!bg-background-success">
+        <code className={`${language} code-highlight`} dangerouslySetInnerHTML={{ __html: highlightedHtmlNew }}></code>
+      </pre>
     </div>
   )
 }

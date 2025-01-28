@@ -3,8 +3,7 @@ import { TranslationStore } from '@/views'
 import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../pull-request.types'
 import { LabelsHeader } from './pull-request-labels-header'
 import { LabelsList } from './pull-request-labels-list'
-import { ReviewersHeader } from './pull-request-reviewers-header'
-import { ReviewersList } from './pull-request-reviewers-list'
+import { ReviewersHeader, ReviewersList } from './reviewers'
 
 interface PullRequestSideBarProps {
   reviewers?: PRReviewer[]
@@ -66,6 +65,7 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
           usersList={usersList}
           reviewers={reviewers}
           addReviewers={addReviewers}
+          handleDelete={handleDelete}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
           useTranslationStore={useTranslationStore}
@@ -79,11 +79,12 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
           removeReviewerError={removeReviewerError}
         />
       </div>
-      <div className="flex flex-col gap-3 pt-5">
+      <div className="mt-8 flex flex-col gap-3">
         <LabelsHeader
           labelsList={labelsList}
           selectedLabels={PRLabels}
           addLabel={addLabel}
+          removeLabel={removeLabel}
           searchQuery={searchLabelQuery}
           setSearchQuery={setSearchLabelQuery}
           useTranslationStore={useTranslationStore}

@@ -23,8 +23,10 @@ interface TimelineItemProps {
   isComment?: boolean
   hideIconBorder?: boolean
   hideReplySection?: boolean
+  contentWrapperClassName?: string
   contentClassName?: string
   replyBoxClassName?: string
+  wrapperClassName?: string
   titleClassName?: string
   handleSaveComment?: (comment: string, parentId?: number) => void
   onEditClick?: () => void
@@ -150,11 +152,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   isLast,
   hideIconBorder,
   hideReplySection = false,
+  contentWrapperClassName,
   contentClassName,
   replyBoxClassName,
   handleSaveComment,
   commentId,
   parentCommentId,
+  wrapperClassName,
   titleClassName,
   isComment,
   onEditClick,
@@ -213,7 +217,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
 
   return (
     <div id={id}>
-      <NodeGroup.Root>
+      <NodeGroup.Root className={cn('pb-7 font-sans', wrapperClassName)}>
         {icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
         <NodeGroup.Title className={titleClassName}>
           {/* Ensure that header has at least one item */}
@@ -247,7 +251,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
           )}
         </NodeGroup.Title>
         {content && (
-          <NodeGroup.Content>
+          <NodeGroup.Content className={contentWrapperClassName}>
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
               {contentHeader && (
                 <div

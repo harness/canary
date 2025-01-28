@@ -1,7 +1,5 @@
 // SuggestionCommentContent.tsx
 
-import React from 'react'
-
 import { Button, MarkdownViewer } from '@components/index'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 import { get } from 'lodash-es'
@@ -53,37 +51,40 @@ const PRCommentView: React.FC<PRCommentViewProps> = ({
 
       {/* Only show the suggestion buttons if the suggestion is not yet applied */}
       {isSuggestion && !isApplied && (
-        <div className="flex gap-3">
+        <div className="flex justify-end gap-x-2.5">
+          <Button
+            className="gap-x-2"
+            variant="outline"
+            onClick={() => {
+              onCommitSuggestion?.({
+                check_sum: checkSums?.[0] || '',
+                comment_id: commentItem.id
+              })
+            }}
+          >
+            Commit suggestion
+            {!!suggestionsBatch?.length && (
+              <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 leading-normal text-tag-foreground-blue-1">
+                {suggestionsBatch.length}
+              </span>
+            )}
+          </Button>
           {isInBatch ? (
-            <Button variant="outline" theme="warning" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
+            <Button variant="destructive" onClick={() => removeSuggestionFromBatch?.(commentItem.id)}>
               Remove suggestion from batch
             </Button>
           ) : (
-            <>
-              <Button
-                variant="outline"
-                onClick={() =>
-                  addSuggestionToBatch?.({
-                    check_sum: checkSums?.[0] || '',
-                    comment_id: commentItem.id
-                  })
-                }
-              >
-                Add suggestion to batch
-              </Button>
-
-              <Button
-                variant="outline"
-                onClick={() => {
-                  onCommitSuggestion?.({
-                    check_sum: checkSums?.[0] || '',
-                    comment_id: commentItem.id
-                  })
-                }}
-              >
-                Commit suggestion
-              </Button>
-            </>
+            <Button
+              variant="outline"
+              onClick={() =>
+                addSuggestionToBatch?.({
+                  check_sum: checkSums?.[0] || '',
+                  comment_id: commentItem.id
+                })
+              }
+            >
+              Add suggestion to batch
+            </Button>
           )}
         </div>
       )}

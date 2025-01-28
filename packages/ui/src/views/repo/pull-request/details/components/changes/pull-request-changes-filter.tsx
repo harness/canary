@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, Checkbox, DropdownMenu, Icon, ListActions, RadioGroup, Text } from '@/components'
+import { Badge, Button, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { cn } from '@utils/cn'
 
 import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq } from '../../../pull-request.types'
 import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
@@ -210,33 +209,42 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
   return (
-    <ListActions.Root>
-      <ListActions.Left>
+    <div className="flex items-center justify-between gap-x-5">
+      <div className="flex grow items-center gap-x-5">
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="flex cursor-pointer items-center gap-1.5 text-tertiary-background duration-100 ease-in-out hover:text-primary">
-            <span className="size-[4px] rounded-full bg-primary"></span>
-            <Text
-              size={2}
-              className={cn('text-primary/80', {
-                ['font-bold']: selectedCommits?.length
-              })}
-            >
+          <DropdownMenu.Trigger className="flex cursor-pointer items-center gap-x-1.5 text-14">
+            <span className="text-foreground-1">
               {selectedCommits[0].value === 'ALL' ? defaultCommitFilter.name : `${selectedCommits?.length} Commits`}
-            </Text>
-            <Icon name="chevron-down" size={12} className="chevron-down" />
+            </span>
+            <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content align="end">
+          <DropdownMenu.Content className="w-96" align="start">
             <DropdownMenu.Group>{commitDropdownItems}</DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-        <ListActions.Dropdown
-          selectedValue={
-            diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')
-          }
-          onChange={handleDiffModeChange}
-          title={diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
-          items={DiffModeOptions}
-        />
+
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger className="flex cursor-pointer items-center gap-x-1.5 text-14">
+            <span className="text-foreground-1">
+              {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
+            </span>
+            <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content align="start">
+            <DropdownMenu.Group>
+              {DiffModeOptions.map(item => (
+                <DropdownMenu.CheckboxItem
+                  key={item.value}
+                  checked={diffMode === (item.value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)}
+                  onSelect={() => handleDiffModeChange(item.value)}
+                >
+                  {item.name}
+                </DropdownMenu.CheckboxItem>
+              ))}
+            </DropdownMenu.Group>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
+
         <DropdownMenu.Root>
           <p className="text-14 leading-tight text-foreground-4">
             Showing{' '}
@@ -248,7 +256,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             with {pullRequestMetadata?.stats?.additions || 0} additions and {pullRequestMetadata?.stats?.deletions || 0}{' '}
             deletions
           </p>
-          <DropdownMenu.Content align="end">
+          <DropdownMenu.Content align="start">
             <DropdownMenu.Group>
               {diffData?.map(diff => (
                 <DropdownMenu.Item
@@ -274,9 +282,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
-      </ListActions.Left>
+      </div>
 
-      <ListActions.Right>
+      <div className="flex items-center gap-x-2.5">
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
             <FileViewGauge.Content>
@@ -287,8 +295,11 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         )}
 
         {commitSuggestionsBatchCount > 0 ? (
-          <Button variant={'outline'} onClick={() => onCommitSuggestionsBatch()}>
-            {`Commit suggestion (${commitSuggestionsBatchCount})`}
+          <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestionsBatch()}>
+            Commit suggestion
+            <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+              {commitSuggestionsBatchCount}
+            </span>
           </Button>
         ) : (
           <></>
@@ -311,7 +322,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             disabled={isActiveUserPROwner}
             title={isActiveUserPROwner ? 'Self-approval of pull requests is not permitted.' : undefined}
             variant="split"
-            size="xs_split"
+            size="md_split"
             theme={getApprovalStateTheme(approveState) as ButtonEnum}
             dropdown={
               <DropdownMenu.Root>
@@ -327,7 +338,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             {approveState === PullReqReviewDecision.approve ? approvalItems[0].title : getApprovalState(approveState)}
           </Button>
         )}
-      </ListActions.Right>
-    </ListActions.Root>
+      </div>
+    </div>
   )
 }

@@ -52,8 +52,8 @@ function Title({ children, className }: { children: ReactNode; className?: strin
   )
 }
 
-function Content({ children }: { children: ReactNode }) {
-  return <div className="col-start-2 row-start-2">{children}</div>
+function Content({ children, className }: { children: ReactNode; className?: string }) {
+  return <div className={cn('col-start-2 row-start-2', className)}>{children}</div>
 }
 
 function Connector({ first, last, className }: { first?: boolean; last?: boolean; className?: string }) {

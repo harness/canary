@@ -1,6 +1,4 @@
-import { Text } from '@components/index'
-
-import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../pull-request.types'
+import { EnumPullReqReviewDecision, PullReqReviewDecision } from '../../pull-request.types'
 import { ReviewerItem } from './pull-request-reviewers-item'
 
 interface ReviewersListProps {
@@ -24,7 +22,6 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
   reviewers,
   pullRequestMetadata,
   processReviewDecision,
-  handleDelete,
   addReviewerError,
   removeReviewerError
 }) => (
@@ -43,13 +40,10 @@ const ReviewersList: React.FC<ReviewersListProps> = ({
           sha={sha}
           sourceSHA={pullRequestMetadata?.source_sha}
           processReviewDecision={processReviewDecision}
-          handleDelete={handleDelete}
         />
       ))
     ) : (
-      <Text size={2} weight="medium" color="foreground-5">
-        No reviewers
-      </Text>
+      <span className="text-14 font-medium text-foreground-5">No reviewers</span>
     )}
   </div>
 )

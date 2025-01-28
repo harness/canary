@@ -274,10 +274,13 @@ const PullRequestPanel = ({
             right
             title={
               !pullReqMetadata?.merged && (
-                <Layout.Horizontal className="items-center justify-center">
+                <Layout.Horizontal className="items-center justify-center space-x-2.5">
                   {commitSuggestionsBatchCount > 0 ? (
-                    <Button variant={'outline'} onClick={() => onCommitSuggestions()}>
-                      {`Commit suggestion (${commitSuggestionsBatchCount})`}
+                    <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
+                      Commit suggestion
+                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+                        {commitSuggestionsBatchCount}
+                      </span>
                     </Button>
                   ) : (
                     <></>
@@ -310,7 +313,8 @@ const PullRequestPanel = ({
                       }
                       disabled={
                         (!checkboxBypass && ruleViolation) ||
-                        (!mergeable && ['pending', 'running', 'failed'].includes(checksInfo.status))
+                        !mergeable ||
+                        ['pending', 'running', 'failed'].includes(checksInfo.status)
                       }
                       selectedValue={mergeButtonValue}
                       handleOptionChange={value => setMergeButtonValue(value)}

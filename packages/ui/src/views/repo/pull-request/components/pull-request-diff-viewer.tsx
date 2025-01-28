@@ -304,7 +304,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border px-[4px] py-[8px]">
+        <div className="flex w-full flex-col border-l border-borders-1 bg-background-1 p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -340,7 +340,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="rounded border bg-background">
+        <div className="border-l border-borders-1 bg-background-1">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -349,12 +349,13 @@ const PullRequestDiffViewer = ({
             const parentInitials = getInitials(parent.author ?? '', 2)
             return (
               <PullRequestTimelineItem
+                wrapperClassName="pb-3"
                 key={parent.id}
                 id={parentIdAttr}
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentClassName="w-[calc(100%-38px)]"
+                contentWrapperClassName="col-start-1 row-start-1 col-end-3 row-end-3 px-4 pt-4 pb-1"
                 header={[]}
                 currentUser={currentUser}
                 isComment
@@ -375,9 +376,9 @@ const PullRequestDiffViewer = ({
                   )
                 }
                 content={
-                  <div className="flex-col px-4 pt-4">
+                  <div className="px-4 pt-4">
                     <PullRequestTimelineItem
-                      titleClassName="!flex max-w-full"
+                      titleClassName="max-w-full"
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}

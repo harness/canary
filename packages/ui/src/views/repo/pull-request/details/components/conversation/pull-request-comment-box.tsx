@@ -154,8 +154,8 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3">
-      {!inReplyMode && avatar}
+    <div className="flex items-start gap-x-3 font-sans">
+      {!inReplyMode && !isEditMode && avatar}
 
       <div
         className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
@@ -183,7 +183,7 @@ const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 p-3 pb-10"
+                className="min-h-24 p-3 pb-10 text-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -219,7 +219,7 @@ const PullRequestCommentBox = ({
               {comment ? (
                 <MarkdownViewer markdownClassName="!bg-background-2" source={comment} />
               ) : (
-                <span>Nothing to preview</span>
+                <span className="text-foreground-8">Nothing to preview</span>
               )}
             </div>
           </TabsContent>

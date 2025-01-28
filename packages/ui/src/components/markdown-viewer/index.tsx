@@ -156,9 +156,25 @@ export function MarkdownViewer({
   return (
     <Wrapper>
       <div ref={ref} style={styles}>
+        {isSuggestion && (
+          <div className="rounded-t-md border-x border-t border-borders-1 bg-background-2 px-4 py-3">
+            <span className="text-14 text-foreground-1">
+              {suggestionBlock?.appliedCheckSum && suggestionBlock?.appliedCheckSum === suggestionCheckSum
+                ? 'Suggestion applied'
+                : 'Suggested change'}
+            </span>
+          </div>
+        )}
+
         <MarkdownPreview
           source={source}
-          className={cn('prose prose-invert', markdownClassName)}
+          className={cn(
+            'prose prose-invert',
+            {
+              '[&>div>pre]:rounded-t-none': isSuggestion
+            },
+            markdownClassName
+          )}
           rehypeRewrite={rehypeRewrite}
           rehypePlugins={[
             rehypeSanitize,
@@ -172,7 +188,7 @@ export function MarkdownViewer({
               return (
                 <div className="relative">
                   <CopyButton
-                    className="absolute right-3 top-3 z-[1] size-6 bg-background-3"
+                    className="absolute right-3 top-3 z-10 size-6 bg-background-3"
                     buttonVariant="outline"
                     name={code}
                     iconSize={13}
@@ -191,13 +207,7 @@ export function MarkdownViewer({
                 typeof _className === 'string' &&
                 'language-suggestion' === _className.split(' ')[0].toLocaleLowerCase()
               ) {
-                return (
-                  <CodeSuggestionBlock
-                    code={code}
-                    suggestionBlock={suggestionBlock}
-                    suggestionCheckSum={suggestionCheckSum}
-                  />
-                )
+                return <CodeSuggestionBlock code={code} suggestionBlock={suggestionBlock} />
               }
 
               return <code className={String(_className)}>{children}</code>

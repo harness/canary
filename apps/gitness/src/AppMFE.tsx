@@ -30,7 +30,7 @@ export interface MFERouteRendererProps {
 
 const filteredRoutes = extractRedirectRouteObjects(repoRoutes)
 const isRouteMatchingRedirectRoutes = (pathToValidate: string) => {
-  return filteredRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
+  return filteredRoutes.some(route => matchPath(`/${route.path}` as string, pathToValidate))
 }
 
 function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {
@@ -51,7 +51,6 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
   )
 
   // Handle location change detected from parent route
-
   useEffect(() => {
     if (canNavigate) {
       const pathToNavigate = parentLocationPath.replace(renderUrl, '')

@@ -40,7 +40,7 @@ interface PullRequestFormProps {
   register: UseFormRegister<FormFields>
   useTranslationStore: () => TranslationStore
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
-  desc: string
+  desc?: string
   setDesc: (desc: string) => void
 }
 

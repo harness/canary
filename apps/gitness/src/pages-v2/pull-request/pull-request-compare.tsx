@@ -344,7 +344,7 @@ export const CreatePullRequest = () => {
       setPrBranchCombinationExists({
         number: pullReqData.number,
         title: pullReqData.title,
-        description: pullReqData?.description || 'No description available'
+        description: pullReqData?.description || ''
       })
     } else {
       setPrBranchCombinationExists(null)

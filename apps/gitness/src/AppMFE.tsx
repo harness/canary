@@ -61,7 +61,7 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
     if (canNavigate) {
       onRouteChange?.(`${renderUrl}${location.pathname}`)
     }
-  }, [location])
+  }, [location.pathname])
 
   return null
 }

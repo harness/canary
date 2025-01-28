@@ -5,11 +5,12 @@ export interface FilterType<T = any> {
 }
 
 export interface FilterConfig<T = any> {
+  defaultValue?: T[keyof T]
   parser?: Parser<T>
   isSticky?: boolean
 }
 
-export type InitializeFiltersConfigType = { state: FilterStatus } & FilterConfig
+export type InitializeFiltersConfigType<T = any> = { state: FilterStatus, defaultValue?: T[keyof T] } & FilterConfig
 export interface FilterTypeWithComponent<T = any> extends FilterType<T> {
   component: React.ReactElement
 }
@@ -30,6 +31,4 @@ export enum FilterStatus {
 export interface FilterRefType<T> {
   getValues: () => T
   reset: () => void
-  visibleFilters: (keyof T)[]
-  removeFilter: (filter: keyof T) => void
 }

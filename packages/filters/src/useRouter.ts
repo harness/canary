@@ -1,5 +1,7 @@
 import { useMemo } from 'react'
-// import { useHistory, useLocation as useLocationV5 } from 'react-router-dom'
+
+// @ts-ignore
+import { useHistory, useLocation as useLocationV5 } from 'react-router-dom'
 
 // remove ts-ignore once the package is created.
 // @ts-ignore
@@ -17,8 +19,8 @@ const isReactRouterV6 = typeof useNavigate === 'function'
 export default function useRouter(): UseRouterReturnType {
   const navigate = isReactRouterV6 ? useNavigate() : null // v6
   const locationV6 = isReactRouterV6 ? useLocationV6() : null // v6
-  const history = null // v5
-  const locationV5 = null // v5
+  const history = !isReactRouterV6 ? useHistory() : null // v5
+  const locationV5 = !isReactRouterV6 ? useLocationV5() : null // v5
 
   const searchParams = useMemo(
     () => new URLSearchParams(isReactRouterV6 ? locationV6?.search : locationV5?.search),

@@ -27,9 +27,9 @@ export interface MFERouteRendererProps {
   onRouteChange: (updatedLocationPathname: string) => void
 }
 
-const filteredRoutes = extractRedirectRouteObjects(repoRoutes)
+const filteredRedirectRoutes = extractRedirectRouteObjects(repoRoutes)
 const isRouteNotMatchingRedirectRoutes = (pathToValidate: string) => {
-  return filteredRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
+  return filteredRedirectRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
 }
 
 function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFERouteRendererProps) {

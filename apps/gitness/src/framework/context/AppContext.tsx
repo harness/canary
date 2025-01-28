@@ -27,15 +27,22 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
 
   useEffect(() => {
-    Promise.all([
+    Promise.allSettled([
       membershipSpaces({
         queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
       }),
       getUser({})
     ])
-      .then(([membershipResponse, userResponse]) => {
-        setSpaces(membershipResponse.body.filter(item => item?.space).map(item => item.space as TypesSpace))
-        setCurrentUser(userResponse.body)
+      .then(results => {
+        const [membershipResult, userResult] = results
+
+        if (membershipResult.status === 'fulfilled') {
+          setSpaces(membershipResult.value.body.filter(item => item?.space).map(item => item.space as TypesSpace))
+        }
+
+        if (userResult.status === 'fulfilled') {
+          setCurrentUser(userResult.value.body)
+        }
       })
       .catch(() => {
         // Optionally handle error or show toast

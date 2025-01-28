@@ -73,21 +73,20 @@ export default function ReposListPage() {
   )
 
   useEffect(() => {
-    if (isRepoStillImporting) {
-      const { dismiss } = toast({
-        title: 'Import in progress',
-        description: 'Your repository is being imported',
-        duration: isRepoStillImporting ? Infinity : -Infinity,
-        action: <Button onClick={() => {}}>Cancel</Button>
-      })
-      dismissFirstToastRef.current = dismiss
+    const { id, update, dismiss } = toast({
+      title: 'Import in progress',
+      description: 'Your repository is being imported',
+      // duration: ,
+      action: <Button onClick={() => {}}>Cancel</Button>
+    })
+
+    if (!isRepoStillImporting) {
+      console.log('here')
+      dismiss()
     }
 
     if (!isRepoStillImporting && startImport) {
-      if (dismissFirstToastRef.current) {
-        dismissFirstToastRef.current()
-        dismissFirstToastRef.current = null
-      }
+      dismiss()
       toast({
         // id: id,
         title: 'Import complete',

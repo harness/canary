@@ -61,7 +61,7 @@ const PipelineStudioWrapper = () => {
   }
 
   return (
-    <div className="flex size-full flex-col">
+    <div className="flex h-screen flex-col">
       <ButtonGroup className="m-2 flex gap-2">
         <Button onClick={() => setView('graph')} variant={'secondary'}>
           Visual

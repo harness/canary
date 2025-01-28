@@ -71,21 +71,12 @@ importers:
 
   apps/design-system:
     dependencies:
-      '@harnessio/canary':
-        specifier: workspace:*
-        version: link:../../packages/canary
-      '@harnessio/forms':
-        specifier: workspace:*
-        version: link:../../packages/forms
       '@harnessio/pipeline-graph':
         specifier: workspace:*
         version: link:../../packages/pipeline-graph
       '@harnessio/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      '@harnessio/views':
-        specifier: workspace:*
-        version: link:../../packages/views
       '@harnessio/yaml-editor':
         specifier: workspace:*
         version: link:../../packages/yaml-editor

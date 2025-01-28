@@ -28,7 +28,7 @@ export interface MFERouteRendererProps {
 }
 
 const filteredRoutes = extractRedirectRouteObjects(repoRoutes)
-const isNotRedirectPath = (pathToValidate: string) => {
+const isRouteNotMatchingRedirectRoutes = (pathToValidate: string) => {
   return filteredRoutes.every(route => !matchPath(`/${route.path}` as string, pathToValidate))
 }
 
@@ -36,6 +36,7 @@ function MFERouteRenderer({ renderUrl, parentLocationPath, onRouteChange }: MFER
   const navigate = useNavigate()
   const location = useLocation()
   const parentPath = parentLocationPath.replace(renderUrl, '')
+  const isNotRedirectPath = isRouteNotMatchingRedirectRoutes(location.pathname)
 
   /**
    * renderUrl ==> base URL of parent application

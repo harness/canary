@@ -335,8 +335,7 @@ const FiltersWrapper = forwardRef(function FiltersWrapper<T extends Record<strin
 export default FiltersWrapper
 
 export const createFilters = <T extends Record<string, unknown>>() => {
-  // eslint-disable-next-line react/display-name
-  const Filters = forwardRef<FilterRefType<T>, FiltersWrapperProps<T>>((props, ref) => {
+  const Filters = forwardRef<FilterRefType<T>, FiltersWrapperProps<T>>(function filtersCore(props, ref) {
     return <FiltersWrapper ref={ref} {...props} />
   })
 
@@ -346,19 +345,16 @@ export const createFilters = <T extends Record<string, unknown>>() => {
     Component: <K extends keyof T>(props: FilterProps<T, K>) => JSX.Element
   }
 
-  // eslint-disable-next-line react/display-name
-  FiltersWithStatics.Dropdown = <K extends keyof T>(props: FiltersDropdownProps<T, K>) => {
+  FiltersWithStatics.Dropdown = function filtersDropdown<K extends keyof T>(props: FiltersDropdownProps<T, K>) {
     // @ts-ignore
     return <FiltersDropdown {...props} />
   }
 
-  // eslint-disable-next-line react/display-name
-  FiltersWithStatics.Content = (props: FiltersContentProps) => {
+  FiltersWithStatics.Content = function filtersContent(props: FiltersContentProps) {
     return <FiltersContent {...props} />
   }
 
-  // eslint-disable-next-line react/display-name
-  FiltersWithStatics.Component = <K extends keyof T>(props: FilterProps<T, K>) => {
+  FiltersWithStatics.Component = function filtersComponent<K extends keyof T>(props: FilterProps<T, K>) {
     return <Filter {...props} />
   }
 

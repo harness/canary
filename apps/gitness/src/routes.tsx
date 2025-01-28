@@ -64,7 +64,7 @@ export const repoRoutes: CustomRouteObject[] = [
         index: true,
         element: <ReposListPage />,
         handle: {
-          documentTitle: () => 'Repositories'
+          pageTitle: 'Repositories'
         }
       },
       {
@@ -86,7 +86,7 @@ export const repoRoutes: CustomRouteObject[] = [
         element: <RepoLayout />,
         handle: {
           breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>,
-          documentTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId}`
+          pageTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId}`
         },
         children: [
           {
@@ -99,7 +99,7 @@ export const repoRoutes: CustomRouteObject[] = [
             handle: {
               breadcrumb: () => <Text>Summary</Text>,
               routeName: RouteConstants.toRepoSummary,
-              documentTitle: () => 'Summary'
+              pageTitle: 'Summary'
             }
           },
           {
@@ -113,7 +113,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoCommitsPage />,
                 handle: {
-                  documentTitle: () => 'Commits'
+                  pageTitle: 'Commits'
                 }
               },
               {
@@ -146,7 +146,7 @@ export const repoRoutes: CustomRouteObject[] = [
             handle: {
               breadcrumb: () => <Text>Branches</Text>,
               routeName: RouteConstants.toRepoBranches,
-              documentTitle: () => 'Branches'
+              pageTitle: 'Branches'
             }
           },
           {
@@ -165,7 +165,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoCode />,
                 handle: {
-                  documentTitle: () => 'Files'
+                  pageTitle: 'Files'
                 }
               },
               {
@@ -185,7 +185,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <PullRequestListPage />,
                 handle: {
-                  documentTitle: () => 'Pull Requests'
+                  pageTitle: 'Pull Requests'
                 }
               },
               {
@@ -269,7 +269,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoPipelineListPage />,
                 handle: {
-                  documentTitle: () => 'Pipelines'
+                  pageTitle: 'Pipelines'
                 }
               },
               {
@@ -331,7 +331,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 handle: {
                   breadcrumb: () => <Text>General</Text>,
                   routeName: RouteConstants.toRepoGeneralSettings,
-                  documentTitle: () => 'Settings'
+                  pageTitle: 'Settings'
                 }
               },
               {

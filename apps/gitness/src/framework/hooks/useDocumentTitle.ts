@@ -10,11 +10,15 @@ const useDocumentTitle = () => {
 
   useEffect(() => {
     const fullPageTitle = matches
-      .map(match => {
-        const handle = (match.handle || {}) as CustomHandle
-        return handle?.pageTitle?.(match.params)
-      })
-      .filter(Boolean)
+      .reduce<string[]>((titles, match) => {
+        const { pageTitle } = (match.handle || {}) as CustomHandle
+        if (typeof pageTitle === 'string') {
+          titles.push(pageTitle)
+        } else if (typeof pageTitle === 'function') {
+          titles.push(pageTitle(match.params))
+        }
+        return titles
+      }, [])
       .join(' | ')
 
     document.title = fullPageTitle || t('views:app.harnessOpenSource', 'Harness Open Source')

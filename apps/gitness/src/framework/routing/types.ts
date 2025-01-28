@@ -103,7 +103,7 @@ export interface CustomHandle {
   /**
    * Updates the document title based on route parameters.
    */
-  pageTitle?: (params: Params<string>) => string
+  pageTitle?: string | ((params: Params<string>) => string)
 }
 
 // Intersection of RouteObject with the custom handle

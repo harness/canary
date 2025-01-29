@@ -15,9 +15,10 @@ import {
   SelectContent,
   SelectItem,
   Spacer,
-  Text
+  Text,
+  Textarea
 } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -52,9 +53,18 @@ interface RepoImportPageProps {
   onFormCancel: () => void
   isLoading: boolean
   apiErrorsValue?: string
+  useTranslationStore: () => TranslationStore
 }
 
-export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
+export function RepoImportPage({
+  onFormSubmit,
+  onFormCancel,
+  isLoading,
+  apiErrorsValue,
+  useTranslationStore
+}: RepoImportPageProps) {
+  const { t } = useTranslationStore()
+
   const {
     register,
     handleSubmit,
@@ -100,10 +110,10 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
-          Import a repository
+          {t('views:repos.importRepo', 'Import a repository')}
         </Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
           {/* provider */}
           <Fieldset>
             <ControlGroup>
@@ -239,13 +249,13 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
           {/* description */}
           <Fieldset className="mt-4">
             <ControlGroup>
-              <Input
+              <Textarea
                 id="description"
                 label="Description"
                 {...register('description')}
                 placeholder="Enter a description"
-                size="md"
                 error={errors.description?.message?.toString()}
+                optional
               />
             </ControlGroup>
           </Fieldset>
@@ -253,7 +263,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
           {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
 
           {/* SUBMIT BUTTONS */}
-          <Fieldset>
+          <Fieldset className="mt-6">
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}

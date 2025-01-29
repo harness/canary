@@ -22,7 +22,7 @@ import {
   Text,
   Textarea
 } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -45,6 +45,7 @@ interface RepoCreatePageProps {
   isSuccess: boolean
   gitIgnoreOptions?: string[]
   licenseOptions?: { value?: string; label?: string }[]
+  useTranslationStore: () => TranslationStore
 }
 
 export function RepoCreatePage({
@@ -53,8 +54,11 @@ export function RepoCreatePage({
   isLoading,
   isSuccess,
   gitIgnoreOptions,
-  licenseOptions
+  licenseOptions,
+  useTranslationStore
 }: RepoCreatePageProps) {
+  const { t } = useTranslationStore()
+
   const {
     register,
     handleSubmit,
@@ -111,18 +115,20 @@ export function RepoCreatePage({
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
-          Create a new repository
+          {t('views:repos.createNewRepo', 'Create a new repository')}
         </Text>
         <Spacer size={2.5} />
         <Text className="max-w-[476px] text-foreground-2" size={2} as="p">
-          A repository contains all project files, including the revision history. Already have a project repository
-          elsewhere?{' '}
+          {t(
+            'views:repos.repoContains',
+            'A repository contains all project files, including the revision history. Already have a project repository elsewhere?'
+          )}{' '}
           <StyledLink to="../import" relative="path">
-            Import a repository.
+            {t('views:repos.importRepo', 'Import a repository')}.
           </StyledLink>
         </Text>
         <Spacer size={10} />
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper className="gap-y-7" onSubmit={handleSubmit(onSubmit)}>
           {/* NAME */}
           <Fieldset>
             <Input
@@ -138,7 +144,7 @@ export function RepoCreatePage({
             <Textarea
               id="description"
               {...register('description')}
-              placeholder="Enter a description of this repository..."
+              placeholder="Enter a description of this repository"
               label="Description"
               error={errors.description?.message?.toString()}
               optional

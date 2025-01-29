@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-transparent px-2.5 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:text-foreground-4',
+  'bg-transparent px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:text-foreground-4',
   {
     variants: {
       variant: {

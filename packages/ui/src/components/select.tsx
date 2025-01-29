@@ -1,9 +1,8 @@
 import { Children, ComponentPropsWithoutRef, ElementRef, FC, forwardRef, PropsWithChildren, ReactNode } from 'react'
 
-import { Caption, Label, Message, MessageTheme, SearchBox } from '@/components'
+import { Caption, Icon, Label, Message, MessageTheme, SearchBox } from '@/components'
 import { usePortal } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
-import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
@@ -43,7 +42,11 @@ const Select: FC<SelectProps> = ({
         {label}
       </Label>
     )}
-    <SelectTrigger id={name} disabled={disabled}>
+    <SelectTrigger
+      className={cn(props.value ? 'text-foreground-1' : 'text-foreground-2')}
+      id={name}
+      disabled={disabled}
+    >
       <SelectValue placeholder={placeholder} asChild={!!selectValueChildren}>
         {selectValueChildren}
       </SelectValue>
@@ -73,14 +76,14 @@ const SelectTrigger = forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      'border-borders-2 ring-offset-background placeholder:text-foreground-2 flex h-9 w-full items-center justify-between whitespace-nowrap rounded-md border bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
+      'border-borders-2 ring-offset-background flex h-9 w-full items-center justify-between whitespace-nowrap rounded border bg-transparent px-3 py-2 text-sm shadow-sm focus-visible:outline-none focus-visible:rounded disabled:cursor-not-allowed disabled:border-borders-1 [&>span]:line-clamp-1',
       className
     )}
     {...props}
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronDownIcon className={cn('h-4 w-4', iconClassName)} />
+      <Icon name="chevron-down" size={12} className={iconClassName} />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -122,7 +125,7 @@ const SelectContent = forwardRef<
       <SelectPrimitive.Content
         ref={ref}
         className={cn(
-          'bg-background-2 text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded-md box-border shadow-md',
+          'bg-background-2 text-popover-foreground relative z-50 max-h-96 min-w-[8rem] max-w-[var(--radix-popper-anchor-width)] overflow-hidden rounded box-border shadow-md',
           position === 'popper' &&
             'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
           className
@@ -132,7 +135,7 @@ const SelectContent = forwardRef<
       >
         <SelectPrimitive.Viewport
           className={cn(
-            '!p-1 rounded-md border',
+            'p-1 rounded-md border',
             position === 'popper' &&
               'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
           )}
@@ -190,11 +193,6 @@ const SelectItem = forwardRef<
     )}
     {...props}
   >
-    <span className="absolute right-2 flex size-3.5 items-center justify-center outline-none">
-      <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="size-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
     <SelectPrimitive.ItemText asChild={!!isItemTextAsChild}>{children}</SelectPrimitive.ItemText>
   </SelectPrimitive.Item>
 ))

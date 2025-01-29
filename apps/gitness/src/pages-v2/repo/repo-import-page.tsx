@@ -5,6 +5,7 @@ import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@har
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 
 export const ImportRepo = () => {
@@ -52,6 +53,7 @@ export const ImportRepo = () => {
         onFormCancel={onCancel}
         isLoading={isLoading}
         apiErrorsValue={error?.message?.toString()}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

@@ -150,21 +150,19 @@ export default function AppMFE({
         ) : (
           <PortalProvider portalContainer={portalContainer}>
             <MFEContext.Provider value={{ scope, renderUrl }}>
-              <AppProvider>
-                <I18nextProvider i18n={i18n}>
-                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                    <QueryClientProvider client={queryClient}>
-                      <TooltipProvider>
-                        <ExitConfirmProvider>
-                          <NavigationProvider routes={routesToRender}>
-                            <RouterProvider router={router} />
-                          </NavigationProvider>
-                        </ExitConfirmProvider>
-                      </TooltipProvider>
-                    </QueryClientProvider>
-                  </ThemeProvider>
-                </I18nextProvider>
-              </AppProvider>
+              <I18nextProvider i18n={i18n}>
+                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                  <QueryClientProvider client={queryClient}>
+                    <TooltipProvider>
+                      <ExitConfirmProvider>
+                        <NavigationProvider routes={routesToRender}>
+                          <RouterProvider router={router} />
+                        </NavigationProvider>
+                      </ExitConfirmProvider>
+                    </TooltipProvider>
+                  </QueryClientProvider>
+                </ThemeProvider>
+              </I18nextProvider>
             </MFEContext.Provider>
           </PortalProvider>
         )}

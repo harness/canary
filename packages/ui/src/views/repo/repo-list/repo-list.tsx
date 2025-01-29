@@ -15,7 +15,7 @@ export interface PageProps extends Partial<RoutingProps> {
   isLoading: boolean
 }
 
-const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
+const Stats = ({ pulls }: { pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
       <Icon size={16} name="pull" className="text-icons-7" />
@@ -108,7 +108,7 @@ export function RepoList({
             {!repo.importing && (
               <StackedList.Field
                 title={t('views:repos.updated', 'Updated') + ' ' + repo.timestamp}
-                description={<Stats stars={repo.stars} pulls={repo.pulls} />}
+                description={<Stats pulls={repo.pulls} />}
                 right
                 label
                 secondary

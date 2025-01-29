@@ -6,7 +6,7 @@ interface LabelsHeaderProps {
   labelsList?: { key?: string; id?: number; color?: string }[]
   selectedLabels?: { key?: string; id?: number; color?: string }[]
   addLabel?: (id?: number) => void
-  removeLabel?: (id?: number) => void
+  removeLabel?: (id: number) => void
   searchQuery?: string
   setSearchQuery?: (query: string) => void
   useTranslationStore: () => TranslationStore
@@ -67,7 +67,7 @@ const LabelsHeader = ({
                     key={id}
                     onClick={() => {
                       if (isSelected) {
-                        removeLabel?.(id)
+                        removeLabel?.(id as number)
                       } else {
                         addLabel?.(id)
                       }

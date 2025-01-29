@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
+import { ImporterProviderType, ImportSpaceRequestBody } from '@harnessio/code-service-client'
 import { ImportMultipleReposFormFields, ProviderOptionsEnum, RepoImportMultiplePage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -26,7 +26,7 @@ export const ImportMultipleRepos = () => {
         password: data.password,
         type:
           data.provider === ProviderOptionsEnum.GITHUB || data.provider === ProviderOptionsEnum.GITHUB_ENTERPRISE
-            ? 'github'
+            ? (ProviderOptionsEnum.GITHUB.toLocaleLowerCase() as ImporterProviderType)
             : undefined
       },
       provider_space: data.organization

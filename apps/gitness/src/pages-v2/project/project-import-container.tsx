@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { ImportSpaceRequestBody, useImportSpaceMutation } from '@harnessio/code-service-client'
-import { ImportProjectFormFields, ImportProjectPage } from '@harnessio/ui/views'
+import { ImporterProviderType, ImportSpaceRequestBody, useImportSpaceMutation } from '@harnessio/code-service-client'
+import { ImportProjectFormFields, ImportProjectPage, ProviderOptionsEnum } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 
@@ -30,7 +30,10 @@ export const ImportProjectContainer = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: data.provider === 'Github' || data.provider === 'Github Enterprise' ? 'github' : undefined
+        type:
+          data.provider === ProviderOptionsEnum.GITHUB || data.provider === ProviderOptionsEnum.GITHUB_ENTERPRISE
+            ? (ProviderOptionsEnum.GITHUB.toLocaleLowerCase() as ImporterProviderType)
+            : undefined
       },
       provider_space: data.organization
     }

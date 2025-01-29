@@ -4,8 +4,10 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import {
   DeleteRepoWebhookErrorResponse,
+  ListRepoWebhooksOkResponse,
   useDeleteRepoWebhookMutation,
-  useListRepoWebhooksQuery
+  useListRepoWebhooksQuery,
+  useUpdateRepoWebhookMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
@@ -19,7 +21,7 @@ import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setWebhooks, page, setPage, setError } = useWebhookStore()
+  const { webhooks, setWebhooks, page, setPage, setError, setTotalPages } = useWebhookStore()
   const [query, setQuery] = useQueryState('query')
 
   const queryClient = useQueryClient()
@@ -71,6 +73,12 @@ export default function WebhookListPage() {
     }
   )
 
+  const {
+    mutate: updateWebHook
+    // isLoading: updatingWebHook,
+    // error: updateWebhookError
+  } = useUpdateRepoWebhookMutation({ repo_ref: repoRef })
+
   /**
    * Set id of webhook to delete it
    */
@@ -90,7 +98,8 @@ export default function WebhookListPage() {
 
   useEffect(() => {
     if (webhookData) {
-      setWebhooks(webhookData, headers)
+      setWebhooks(webhookData)
+      setTotalPages(headers)
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -102,6 +111,14 @@ export default function WebhookListPage() {
     }
   }, [isError, setError, error])
 
+  const handleEnableWebhook = (id: number, enabled: boolean) => {
+    updateWebHook({ webhook_identifier: id, body: { enabled } })
+
+    const updatedWebhooks = webhooks?.map(webhook => (webhook.id === id ? { ...webhook, enabled } : webhook))
+
+    setWebhooks(updatedWebhooks as ListRepoWebhooksOkResponse)
+  }
+
   return (
     <>
       <RepoWebhookListPage
@@ -111,6 +128,7 @@ export default function WebhookListPage() {
         searchQuery={query}
         setSearchQuery={setQuery}
         webhookLoading={isFetching}
+        handleEnableWebhook={handleEnableWebhook}
       />
       <DeleteAlertDialog
         open={deleteWebhookId !== null}

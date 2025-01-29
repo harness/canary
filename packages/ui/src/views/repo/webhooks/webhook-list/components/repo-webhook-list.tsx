@@ -18,18 +18,24 @@ import {
 import { TranslationStore, WebhookType } from '@/views'
 import { TableCell } from 'dist/components'
 
-const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
+const Title = ({
+  title,
+  isEnabled,
+  handleEnableWebhook,
+  id
+}: {
+  id: number
+  title: string
+  isEnabled: boolean
+  handleEnableWebhook: (id: number, enabled: boolean) => void
+}) => (
   <div className="inline-flex items-center gap-2.5">
     <Switch
       checked={isEnabled}
-      onCheckedChange={() => {
-        console.log('swictehd')
-      }}
+      onClick={e => e.stopPropagation()}
+      onCheckedChange={() => handleEnableWebhook(id, !isEnabled)}
     />
     <span className="font-medium">{title}</span>
-    {/* <Badge size="sm" disableHover borderRadius="full" theme={isEnabled ? 'success' : 'muted'}>
-      {isEnabled ? 'Enabled' : 'Disabled'}
-    </Badge> */}
   </div>
 )
 
@@ -43,6 +49,7 @@ export interface RepoWebhookListProps {
   page: number
   setPage: (val: number) => void
   openDeleteWebhookDialog: (id: number) => void
+  handleEnableWebhook: (id: number, enabled: boolean) => void
 }
 
 export function RepoWebhookList({
@@ -54,8 +61,10 @@ export function RepoWebhookList({
   totalPages,
   page,
   setPage,
-  openDeleteWebhookDialog
+  openDeleteWebhookDialog,
+  handleEnableWebhook
 }: RepoWebhookListProps) {
+  console.log(webhooks)
   const { t } = useTranslationStore()
   const navigate = useNavigate()
 
@@ -125,46 +134,75 @@ export function RepoWebhookList({
           </TableRow>
         </TableHeader>
         <TableBody>
-          <TableRow>
-            <TableCell>
-              {webhooks.map((webhook, webhook_idx) => (
-                // <Link key={webhook.id} to={`${webhook.id}`}>
-                <StackedList.Item
-                  key={webhook.id}
-                  className="cursor-pointer py-3 pr-1.5"
-                  isLast={webhooks.length - 1 === webhook_idx}
-                >
+          {webhooks.map(webhook => (
+            <TableRow onClick={() => navigate(`${webhook.id}`)} key={webhook.id}>
+              <TableCell>
+                <StackedList.Item key={webhook.id} className="cursor-pointer py-3 pr-1.5 !p-0 max-w-full" isLast>
                   <StackedList.Field
                     primary
-                    description={<span className="leading-none">{webhook.description}</span>}
-                    title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
-                    className="gap-1.5"
-                  />
-                  {/* <StackedList.Field
+                    description={
+                      <Text className="ml-10 w-[350px] max-w-[400px]" truncate color="secondary">
+                        {webhook?.triggers?.length
+                          ? webhook.triggers
+                              .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))
+                              .join(', ')
+                          : 'All Events'}
+                      </Text>
+                    }
                     title={
-                      <MoreActionsTooltip
-                        actions={[
-                          {
-                            title: t('views:webhookData.edit', 'Edit webhook'),
-                            to: `${webhook.id}`
-                          },
-                          {
-                            isDanger: true,
-                            title: t('views:webhookData.delete', 'Delete webhook'),
-                            onClick: () => openDeleteWebhookDialog(webhook.id)
-                          }
-                        ]}
+                      <Title
+                        title={webhook.display_name}
+                        isEnabled={webhook.enabled}
+                        id={webhook.id}
+                        handleEnableWebhook={handleEnableWebhook}
                       />
                     }
-                    right
-                    label
-                    secondary
-                  /> */}
+                    className="gap-1.5 max-w-full"
+                  />
                 </StackedList.Item>
-                // </Link>
-              ))}
-            </TableCell>
-          </TableRow>
+                {/* </Link> */}
+              </TableCell>
+              <TableCell className="content-center">
+                <Badge
+                  size="md"
+                  disableHover
+                  borderRadius="full"
+                  theme={
+                    webhook.latest_execution_result === 'success'
+                      ? 'success'
+                      : webhook.latest_execution_result === 'fatal_error' ||
+                          webhook.latest_execution_result === 'retriable_error'
+                        ? 'destructive'
+                        : 'muted'
+                  }
+                >
+                  {webhook.latest_execution_result === 'success'
+                    ? 'Success'
+                    : webhook.latest_execution_result === 'fatal_error' ||
+                        webhook.latest_execution_result === 'retriable_error'
+                      ? 'Failed'
+                      : 'Invalid'}
+                </Badge>
+              </TableCell>
+              {/* </Link> */}
+
+              <TableCell className="text-right content-center">
+                <MoreActionsTooltip
+                  actions={[
+                    {
+                      title: t('views:webhookData.edit', 'Edit webhook'),
+                      onClick: () => navigate(`${webhook.id}`)
+                    },
+                    {
+                      isDanger: true,
+                      title: t('views:webhookData.delete', 'Delete webhook'),
+                      onClick: () => openDeleteWebhookDialog(webhook.id)
+                    }
+                  ]}
+                />
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
       </Table>
       <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />

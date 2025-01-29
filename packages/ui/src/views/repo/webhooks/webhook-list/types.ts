@@ -3,11 +3,13 @@ import { CreateWebhookFormFields } from '@views/repo/webhooks/webhook-create/typ
 
 export interface WebhookType {
   id: number
-  name: string
+  display_name: string
   enabled: boolean
   createdAt: string
   description: string
   updated: number
+  latest_execution_result: EnumWebhookExecutionResult | null
+  triggers: EnumWebhookTrigger[] | null
 }
 
 export interface WebhookStore {
@@ -22,7 +24,8 @@ export interface WebhookStore {
   setWebhookLoading: (webhookLoading: boolean) => void
   page: number
   setPage: (page: number) => void
-  setWebhooks: (data: ListRepoWebhooksOkResponse, headers: Headers | undefined) => void
+  setWebhooks: (data: ListRepoWebhooksOkResponse) => void
+  setTotalPages: (headers: Headers | undefined) => void
 }
 export declare type ListRepoWebhooksOkResponse = OpenapiWebhookType[]
 
@@ -75,4 +78,5 @@ export interface RepoWebhookListPageProps {
   searchQuery?: string | null
   setSearchQuery: (query: string | null) => void
   webhookLoading: boolean
+  handleEnableWebhook: (id: number, enabled: boolean) => void
 }

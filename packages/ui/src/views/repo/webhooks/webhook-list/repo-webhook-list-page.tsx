@@ -1,4 +1,4 @@
-import { FC, useMemo } from 'react'
+import { FC, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'
@@ -14,7 +14,8 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   openDeleteWebhookDialog,
   searchQuery,
   setSearchQuery,
-  webhookLoading
+  webhookLoading,
+  handleEnableWebhook
 }) => {
   const { t } = useTranslationStore()
   const { webhooks, totalPages, page, setPage, error } = useWebhookStore()
@@ -39,7 +40,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Content className="px-0">
+    <SandboxLayout.Content className="px-0" maxWidth="2xl">
       <h1 className="text-2xl font-medium text-foreground-1">Webhooks</h1>
       <Spacer size={6} />
 
@@ -82,6 +83,7 @@ const RepoWebhookListPage: FC<RepoWebhookListPageProps> = ({
               page={page}
               setPage={setPage}
               openDeleteWebhookDialog={openDeleteWebhookDialog}
+              handleEnableWebhook={handleEnableWebhook}
             />
           )}
         </>

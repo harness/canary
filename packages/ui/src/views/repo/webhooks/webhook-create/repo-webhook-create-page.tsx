@@ -43,7 +43,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
     setValue,
     watch,
     reset,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<CreateWebhookFormFields>({
     resolver: zodResolver(createWebhookFormSchema),
     mode: 'onChange',
@@ -130,7 +130,7 @@ export const RepoWebhooksCreatePage: FC<RepoWebhooksCreatePageProps> = ({
 
         <Fieldset className="mt-7">
           <ButtonGroup>
-            <Button type="submit" disabled={!isValid || isLoading}>
+            <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? preSetWebhookData
                   ? t('views:repos.updatingWebhook', 'Updating webhook...')

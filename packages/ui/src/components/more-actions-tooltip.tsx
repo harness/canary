@@ -55,7 +55,13 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
                 </DropdownMenu.Item>
               </Link>
             ) : (
-              <DropdownMenu.Item key={`${action.title}-${idx}`} onClick={() => action?.onClick?.()}>
+              <DropdownMenu.Item
+                key={`${action.title}-${idx}`}
+                onClick={e => {
+                  e.stopPropagation()
+                  action?.onClick?.()
+                }}
+              >
                 <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
                   {action.title}
                 </span>

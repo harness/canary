@@ -402,6 +402,32 @@
   /* Standalone app uses .light-std-std and .dark-std-std as defaults for light and dark themes */
   .light,
   .light-std-std {
+    --canary-background: 0 0% 100%;
+    --canary-foreground: 240 10% 3.9%;
+    --canary-card: 0 0% 100%;
+    --canary-card-foreground: 240 10% 3.9%;
+    --canary-popover-foreground: 240 10% 3.9%;
+    --canary-primary: 240 5.9% 10%;
+    --canary-primary-background: 0 0% 100%;
+    --canary-primary-foreground: 0 0% 98%;
+    --canary-primary-accent: 216 100% 60%;
+    --canary-secondary: 240 4.8% 95.9%;
+    --canary-secondary-foreground: 240 5.9% 10%;
+    --canary-secondary-background: 0 0% 100%;
+    --canary-tertiary: 240 4.8% 95.9%;
+    --canary-tertiary-foreground: 240 5.9% 10%;
+    --canary-tertiary-background: 240 6% 60%;
+    --canary-muted: 240 4.8% 95.9%;
+    --canary-muted-foreground: 240 3.8% 46.1%;
+    --canary-accent: 240 4.8% 95.9%;
+    --canary-accent-foreground: 240 5.9% 10%;
+    --canary-destructive: 0 84.2% 60.2%;
+    --canary-destructive-foreground: 0 0% 98%;
+    --canary-border: 240 5.9% 90%;
+    --canary-border-background: 240 5.9% 90%;
+    --canary-input: 240 5.9% 90%;
+    --canary-input-background: 240 5.9% 90%;
+    --canary-ring: 240 5.9% 10%;
     --canary-popover: var(--canary-base-gray-white);
     --canary-primary-muted: var(--canary-base-gray-850);
     --canary-secondary-muted: var(--canary-base-gray-700);
@@ -415,6 +441,23 @@
     --canary-ai-button-stop-2: var(--canary-pink-200);
     --canary-ai-button-stop-3: var(--canary-purple-400);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
+    --diff-grey: hsl(0 0% 20%);
+    --diff-add-content--: hsl(156 100% 95%);
+    --diff-del-content--: hsl(356 100% 95%);
+    --diff-add-lineNumber--: hsl(153 100% 90%);
+    --diff-del-lineNumber--: hsl(358 100% 90%);
+    --diff-plain-content--: var(--canary-background);
+    --diff-expand-content--: var(--canary-background);
+    --diff-plain-lineNumber--: var(--canary-background);
+    --diff-plain-lineNumber-color--: hsl(0 0% 0%);
+    --diff-hunk-content--: hsl(218 26% 95%);
+    --diff-hunk-lineNumber--: hsl(218 26% 95%);
+    --diff-add-content-highlight--: hsl(152 37% 90%);
+    --diff-del-content-highlight--: hsl(0 38% 90%);
+    --diff-add-widget--: hsl(216 80% 95%);
+    --diff-add-widget-color--: hsl(0 0% 0%);
+    --diff-empty-content--: var(--canary-background);
+    --diff-hunk-content-color--: hsl(0 0% 0%);
 
     /* New colors design variables */
     /* Text */

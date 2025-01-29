@@ -122,7 +122,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   const handleNewBranchNameChange = (_e: ChangeEvent<HTMLInputElement>) => {
     setAllStates({ violation: false, bypassable: false, bypassed: false })
   }
-
   return (
     <Dialog.Root open={isOpen} onOpenChange={onClose}>
       <Dialog.Content className="max-w-[576px]">
@@ -246,9 +245,17 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
                 Cancel
               </Button>
-              <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
-                {isSubmitting ? 'Committing...' : 'Commit changes'}
-              </Button>
+              {!bypassable ? (
+                <Button type="button" onClick={handleSubmit(onSubmit)} disabled={isDisabledSubmission}>
+                  {isSubmitting ? 'Committing...' : 'Commit changes'}
+                </Button>
+              ) : (
+                <Button variant="destructive" type="submit">
+                  {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
+                    ? 'Bypass rules and commit via new branch'
+                    : 'Bypass rules and commit directly'}
+                </Button>
+              )}
             </>
           </ButtonGroup>
         </Dialog.Footer>

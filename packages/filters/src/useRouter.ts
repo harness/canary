@@ -1,14 +1,10 @@
 import { useMemo } from 'react'
 // @ts-ignore
-
-// remove ts-ignore once the package is created.
-// @ts-ignore
 import {
   createSearchParams,
   // @ts-ignore
   useHistory,
-  useLocation as useLocationV5,
-  useLocation as useLocationV6,
+  useLocation,
   useNavigate
 } from 'react-router-dom'
 
@@ -23,14 +19,10 @@ const isReactRouterV6 = typeof useNavigate === 'function'
 
 export default function useRouter(): UseRouterReturnType {
   const navigate = isReactRouterV6 ? useNavigate() : null // v6
-  const locationV6 = isReactRouterV6 ? useLocationV6() : null // v6
+  const location = useLocation() // Works for both v5 and v6
   const history = !isReactRouterV6 ? useHistory() : null // v5
-  const locationV5 = !isReactRouterV6 ? useLocationV5() : null // v5
 
-  const searchParams = useMemo(
-    () => new URLSearchParams(isReactRouterV6 ? locationV6?.search : locationV5?.search),
-    [locationV6?.search, locationV5?.search]
-  )
+  const searchParams = useMemo(() => new URLSearchParams(location.search), [location.search])
 
   const push = (path: string, searchParamsObject?: Record<string, string>) => {
     const search = searchParamsObject
@@ -66,7 +58,7 @@ export default function useRouter(): UseRouterReturnType {
 
   const updateURL = (params: URLSearchParams, replace = false) => {
     const updatedSearch = `?${params.toString()}`
-    const path = isReactRouterV6 ? locationV6?.pathname : locationV5?.pathname
+    const path = location.pathname
 
     if (replace) {
       if (isReactRouterV6 && navigate) {

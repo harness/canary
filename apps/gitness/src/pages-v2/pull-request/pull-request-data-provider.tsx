@@ -37,8 +37,6 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
     prPanelData,
     setResolvedCommentArr,
     setPullReqMetadata,
-    setPullReqStats,
-    pullReqStats,
     setRepoMetadata,
     setPullReqCommits,
     pullReqCommits
@@ -109,18 +107,11 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
       }
 
       setPullReqMetadata(pullReqData)
-
-      if (!isEqual(pullReqStats, pullReqData.stats)) {
-        setPullReqStats(pullReqData.stats)
-        refetchActivities()
-      }
     }
   }, [
     pullReqData,
     pullReqMetadata,
     setPullReqMetadata,
-    setPullReqStats,
-    pullReqStats,
     refetchActivities,
     refetchCommits
   ])
@@ -128,7 +119,6 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
   useEffect(() => {
     const hasChanges =
       !isEqual(store.pullReqMetadata, pullReqData) ||
-      !isEqual(store.pullReqStats, pullReqData?.stats) ||
       !isEqual(store.pullReqCommits, commits) ||
       !isEqual(store.pullReqActivities, activities)
 
@@ -138,7 +128,6 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
         repoMetadata,
         setPullReqMetadata,
         pullReqMetadata: pullReqData ? pullReqData : undefined,
-        pullReqStats: pullReqData?.stats,
         pullReqCommits: commits,
         pullReqActivities: activities,
         loading: pullReqLoading || activitiesLoading,

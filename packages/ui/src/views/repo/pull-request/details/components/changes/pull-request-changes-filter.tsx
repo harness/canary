@@ -6,8 +6,12 @@ import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
 
-import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq } from '../../../pull-request.types'
-import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
+import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq, TypesPullReqStats } from '../../../pull-request.types'
+import {
+  ApprovalItem,
+  ButtonEnum,
+  ReviewerListPullReqOkResponse
+} from '../../pull-request-details-types'
 import {
   approvalItems,
   determineOverallDecision,
@@ -38,7 +42,6 @@ export interface PullRequestChangesFilterProps {
   selectedCommits: CommitFilterItemProps[]
   setSelectedCommits: React.Dispatch<React.SetStateAction<CommitFilterItemProps[]>>
   viewedFiles: number
-  totalFiles: number
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
   diffData?: {
@@ -46,6 +49,7 @@ export interface PullRequestChangesFilterProps {
     addedLines: number
     deletedLines: number
   }[]
+  pullReqStats?: TypesPullReqStats
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -62,10 +66,10 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   selectedCommits,
   setSelectedCommits,
   viewedFiles,
-  totalFiles,
   commitSuggestionsBatchCount,
   onCommitSuggestionsBatch,
-  diffData
+  diffData,
+  pullReqStats
 }) => {
   const { t } = useTranslationStore()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -226,7 +230,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <Icon name="chevron-down" size={12} className="chevron-down" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content align="end">
-            <DropdownMenu.Group>{commitDropdownItems}</DropdownMenu.Group>
+            <div className="max-h-[360px] overflow-y-auto px-1">
+              <DropdownMenu.Group>{commitDropdownItems}</DropdownMenu.Group>
+            </div>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
         <ListActions.Dropdown
@@ -242,14 +248,13 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             Showing{' '}
             <DropdownMenu.Trigger asChild>
               <span className="cursor-pointer text-foreground-accent ease-in-out">
-                {pullRequestMetadata?.stats?.files_changed || 0} changed files
+                {pullReqStats?.files_changed} changed files
               </span>
             </DropdownMenu.Trigger>{' '}
-            with {pullRequestMetadata?.stats?.additions || 0} additions and {pullRequestMetadata?.stats?.deletions || 0}{' '}
-            deletions
+            with {pullReqStats?.additions || 0} additions and {pullReqStats?.deletions || 0} deletions
           </p>
           <DropdownMenu.Content align="end">
-            <DropdownMenu.Group>
+            <div className="max-h-[360px] overflow-y-auto px-1">
               {diffData?.map(diff => (
                 <DropdownMenu.Item
                   key={diff.filePath}
@@ -271,7 +276,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   </div>
                 </DropdownMenu.Item>
               ))}
-            </DropdownMenu.Group>
+            </div>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </ListActions.Left>
@@ -280,9 +285,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         {selectedCommits[0].value === 'ALL' && (
           <FileViewGauge.Root>
             <FileViewGauge.Content>
-              {viewedFiles}/{totalFiles} file{totalFiles === 1 ? '' : 's'} viewed
+              {viewedFiles}/{pullReqStats?.files_changed} file{pullReqStats?.files_changed === 1 ? '' : 's'} viewed
             </FileViewGauge.Content>
-            <FileViewGauge.Bar total={totalFiles} filled={viewedFiles} />
+            <FileViewGauge.Bar total={pullReqStats?.files_changed || 0} filled={viewedFiles} />
           </FileViewGauge.Root>
         )}
 

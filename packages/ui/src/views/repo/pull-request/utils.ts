@@ -60,6 +60,8 @@ export function parseStartingLineIfOne(diffString: string) {
 export const CRLF = '\n'
 
 export const PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT = 1000
+export const PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE = 10
+export const IN_VIEWPORT_DETECTION_MARGIN = 256000
 
 // helper to transform lines to quote format: each line => '> line' + blank line at end
 export function quoteTransform(raw: string): string {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { Accordion, Badge, Button, Checkbox, CopyButton, Icon, Layout, StackedList, Text } from '@/components'
 import {
@@ -9,13 +9,20 @@ import {
   DiffViewerState,
   FileViewedState,
   getFileViewedState,
+  InViewDiffBlockRenderer,
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
-import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '@views/repo/pull-request/utils'
+import {
+  IN_VIEWPORT_DETECTION_MARGIN,
+  parseStartingLineIfOne,
+  PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE,
+  PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT
+} from '@views/repo/pull-request/utils'
+import { chunk } from 'lodash-es'
 
 interface HeaderProps {
   text: string
@@ -73,6 +80,16 @@ interface DataProps {
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
 }
+
+// If a diff container has a Markdown Editor active, retain it event it's off-screen to make
+// sure editor content is not cleared out during off-screen optimization
+const shouldRetainDiffChildren = (dom: HTMLElement | null) => !!dom?.querySelector('[data-comment-editor-shown="true"]')
+
+const outterBlockName = (blockIndex: number) => `outter-${blockIndex}`
+const innerBlockName = (filePath: string) => `inner-${filePath}`
+
+// If there are more than 200 diffs, we decrease the detection margin to make sure browser do not crash. As a result, Cmd-F won't work well on diffs that got hidden/out of viewport.
+const calculateDetectionMargin = (diffsLength: number) => (diffsLength >= 200 ? 5000 : IN_VIEWPORT_DETECTION_MARGIN)
 
 const LineTitle: React.FC<LineTitleProps> = ({
   header,
@@ -403,7 +420,7 @@ const PullRequestAccordion: React.FC<{
   )
 }
 
-export function PullRequestChanges({
+function PullRequestChangesInternal({
   data,
   diffMode,
   useTranslationStore,
@@ -431,6 +448,9 @@ export function PullRequestChanges({
   setScrolledToComment
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
+  const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
+  const rootref = useRef<HTMLDivElement>(null)
+  const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (data.length > 0) {
@@ -486,52 +506,77 @@ export function PullRequestChanges({
   )
 
   return (
-    <div className="flex flex-col gap-4">
-      {data.map((item, index) => {
-        // Filter activityBlocks that are relevant for this file
-        const fileComments =
-          comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-            thread.some(
-              (comment: CommentItem<TypesPullReqActivity>) => comment.payload?.payload?.code_comment?.path === item.text
-            )
-          ) || []
-
+    <div className="flex flex-col gap-4" ref={rootref}>
+      {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
-          <PullRequestAccordion
-            handleUpload={handleUpload}
-            key={`${item.title}-${index}`}
-            header={item}
-            diffMode={diffMode}
-            useTranslationStore={useTranslationStore}
-            currentUser={currentUser}
-            comments={fileComments}
-            handleSaveComment={handleSaveComment}
-            deleteComment={deleteComment}
-            updateComment={updateComment}
-            defaultCommitFilter={defaultCommitFilter}
-            selectedCommits={selectedCommits}
-            markViewed={markViewed}
-            unmarkViewed={unmarkViewed}
-            commentId={commentId}
-            autoExpand={openItems.includes(item.text)}
-            onCopyClick={onCopyClick}
-            onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
-            onCommitSuggestion={onCommitSuggestion}
-            addSuggestionToBatch={addSuggestionToBatch}
-            suggestionsBatch={suggestionsBatch}
-            removeSuggestionFromBatch={removeSuggestionFromBatch}
-            filenameToLanguage={filenameToLanguage}
-            toggleConversationStatus={toggleConversationStatus}
-            onGetFullDiff={onGetFullDiff}
-            scrolledToComment={scrolledToComment}
-            setScrolledToComment={setScrolledToComment}
-            openItems={openItems}
-            isOpen={isOpen(item.text)}
-            onToggle={() => toggleOpen(item.text)}
-            setCollapsed={val => setCollapsed(item.text, val)}
-          />
+          <InViewDiffBlockRenderer
+            key={blockIndex}
+            blockName={outterBlockName(blockIndex)}
+            root={rootref as RefObject<Element>}
+            shouldRetainChildren={shouldRetainDiffChildren}
+            detectionMargin={calculateDetectionMargin(data?.length)}
+          >
+            {diffsBlock.map((item, index) => {
+              // Filter activityBlocks that are relevant for this file
+              const fileComments =
+                comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
+                  thread.some(
+                    (comment: CommentItem<TypesPullReqActivity>) =>
+                      comment.payload?.payload?.code_comment?.path === item.text
+                  )
+                ) || []
+
+              return (
+                <div className="pt-4">
+                  <InViewDiffBlockRenderer
+                    key={item.filePath}
+                    blockName={innerBlockName(item.filePath)}
+                    root={diffsContainerRef}
+                    shouldRetainChildren={shouldRetainDiffChildren}
+                    detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
+                  >
+                    <PullRequestAccordion
+                      handleUpload={handleUpload}
+                      key={`${item.title}-${index}`}
+                      header={item}
+                      diffMode={diffMode}
+                      useTranslationStore={useTranslationStore}
+                      currentUser={currentUser}
+                      comments={fileComments}
+                      handleSaveComment={handleSaveComment}
+                      deleteComment={deleteComment}
+                      updateComment={updateComment}
+                      defaultCommitFilter={defaultCommitFilter}
+                      selectedCommits={selectedCommits}
+                      markViewed={markViewed}
+                      unmarkViewed={unmarkViewed}
+                      commentId={commentId}
+                      autoExpand={openItems.includes(item.text)}
+                      onCopyClick={onCopyClick}
+                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
+                      onCommitSuggestion={onCommitSuggestion}
+                      addSuggestionToBatch={addSuggestionToBatch}
+                      suggestionsBatch={suggestionsBatch}
+                      removeSuggestionFromBatch={removeSuggestionFromBatch}
+                      filenameToLanguage={filenameToLanguage}
+                      toggleConversationStatus={toggleConversationStatus}
+                      onGetFullDiff={onGetFullDiff}
+                      scrolledToComment={scrolledToComment}
+                      setScrolledToComment={setScrolledToComment}
+                      openItems={openItems}
+                      isOpen={isOpen(item.text)}
+                      onToggle={() => toggleOpen(item.text)}
+                      setCollapsed={val => setCollapsed(item.text, val)}
+                    />
+                  </InViewDiffBlockRenderer>
+                </div>
+              )
+            })}
+          </InViewDiffBlockRenderer>
         )
       })}
     </div>
   )
 }
+
+export const PullRequestChanges = memo(PullRequestChangesInternal)

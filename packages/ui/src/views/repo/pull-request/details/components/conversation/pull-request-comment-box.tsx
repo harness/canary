@@ -154,7 +154,7 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3">
+    <div className="flex items-start gap-x-3" data-comment-editor-shown="true">
       {!inReplyMode && avatar}
 
       <div

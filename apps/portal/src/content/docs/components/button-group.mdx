@@ -1,0 +1,98 @@
+---
+title: ButtonGroup
+description: ButtonGroup component
+---
+
+The `ButtonGroup` component allows you to group multiple buttons together, either horizontally or vertically. It is useful for organizing related actions.
+
+import { DocsPage } from "@/components/docs-page";
+import { ButtonGroup } from "@harnessio/ui/components";
+import { Button } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex flex-wrap gap-2 items-baseline flex-col">
+    <div>
+      <div className="text-lg font-semibold text-white mb-2">Horizontal Button Group</div>
+      <ButtonGroup>
+        <Button>Button 1</Button>
+        <Button>Button 2</Button>
+        <Button>Button 3</Button>
+      </ButtonGroup>
+    </div>
+    <div>
+      <div className="text-lg font-semibold text-white mb-2">Vertical Button Group with center alignment</div>
+      <ButtonGroup direction="vertical" verticalAlign="center">
+        <Button>Button A</Button>
+        <Button>Button B</Button>
+        <Button>Button C</Button>
+      </ButtonGroup>
+    </div>
+    <div>
+      <div className="text-lg font-semibold text-white mb-2">Button Group with Custom Spacing</div>
+      <ButtonGroup spacing="2">
+        <Button>Button X</Button>
+        <Button>Button Y</Button>
+        <Button>Button Z</Button>
+      </ButtonGroup>
+    </div>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ButtonGroup } from '@harnessio/ui/components'
+import { Button } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <ButtonGroup>
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+  </ButtonGroup>
+)
+```
+
+## Props
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Can contain multiple `Button` components.",
+      required: true,
+      defaultValue: "",
+      value: "ReactNode",
+    },
+    {
+      name: "direction",
+      description: "The direction of the button group.",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "horizontal",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the button group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "spacing",
+      description: "Spacing between the buttons.",
+      required: false,
+      value: "string",
+      defaultValue: "4",
+    },
+    {
+      name: "verticalAlign",
+      description:
+        "Vertical alignment of the buttons when the direction is set to vertical.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

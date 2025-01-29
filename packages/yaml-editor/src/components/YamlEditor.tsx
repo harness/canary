@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 
 import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
@@ -22,7 +22,11 @@ export interface YamlRevision {
 }
 
 const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true
+  selectOnLineNumbers: true,
+  minimap: {
+    enabled: true
+  },
+  folding: true
 }
 
 export interface YamlEditorProps<T> {
@@ -37,6 +41,8 @@ export interface YamlEditorProps<T> {
     className: string
     revealInCenter?: boolean
   }
+  minimap?: boolean
+  folding?: boolean
 }
 
 export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
@@ -47,11 +53,15 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
     themeConfig,
     onYamlRevisionChange,
     selection,
-    theme: themeFromProps
+    theme: themeFromProps,
+    minimap = false,
+    folding = true
   } = props
   const monaco = useMonaco()
   const [instanceId] = useState('yaml')
   const { editor, setEditor } = useYamlEditorContext()
+
+  const rootDivRef = useRef<HTMLDivElement | null>(null)
 
   const monacoRef = useRef<typeof monaco>()
   const currentRevisionRef = useRef<YamlRevision>({ yaml: '', revisionId: 0 })
@@ -65,6 +75,13 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
     editor.setValue(yamlRevision.yaml)
 
     setEditor(editor)
+
+    // NOTE: to prevent initial flickering (left line) we use opacity to show editor with delay
+    setTimeout(() => {
+      if (rootDivRef.current?.style) {
+        rootDivRef.current.style.opacity = '1'
+      }
+    }, 50)
   }
 
   useEffect(() => {
@@ -97,8 +114,17 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
 
   useDecoration({ editorRef, selection })
 
+  const mergedOptions = useMemo(
+    () => ({
+      ...options,
+      folding,
+      minimap: { ...options.minimap, enabled: minimap }
+    }),
+    [folding, minimap]
+  )
+
   return (
-    <>
+    <div style={{ width: '100%', height: '100%', opacity: 0 }} ref={rootDivRef}>
       <Editor
         onChange={(value, data) => {
           currentRevisionRef.current = { yaml: value ?? '', revisionId: data.versionId }
@@ -106,10 +132,10 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
         }}
         language="yaml"
         theme={theme}
-        options={options}
+        options={mergedOptions}
         path={schemaIdToUrl(instanceId)}
         onMount={handleEditorDidMount}
       />
-    </>
+    </div>
   )
 }

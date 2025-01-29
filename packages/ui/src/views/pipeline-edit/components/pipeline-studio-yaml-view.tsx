@@ -19,10 +19,14 @@ MonacoGlobals.set({
 export interface PipelineStudioYamlViewProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  yamlEditorConfig?: {
+    folding?: boolean
+    minimap?: boolean
+  }
 }
 
 const PipelineStudioYamlView = (props: PipelineStudioYamlViewProps): JSX.Element => {
-  const { yamlRevision, onYamlRevisionChange } = props
+  const { yamlRevision, onYamlRevisionChange, yamlEditorConfig = {} } = props
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
   const forceRerender = () => {
@@ -125,6 +129,7 @@ const PipelineStudioYamlView = (props: PipelineStudioYamlViewProps): JSX.Element
           schemaConfig={schemaConfig}
           // inlineActions={inlineActions} // TODO
           // selection={selection} // TODO
+          {...yamlEditorConfig}
         />
       </div>
     )

@@ -1,11 +1,11 @@
 import React from 'react'
-import ReactDOM from 'react-dom/client'
+import { render } from 'react-dom'
 
 import Examples from './examples'
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
-root.render(
+render(
   <React.StrictMode>
     <Examples />
-  </React.StrictMode>
+  </React.StrictMode>,
+  document.getElementById('root')
 )

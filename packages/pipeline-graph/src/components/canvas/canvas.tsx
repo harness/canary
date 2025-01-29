@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import { useCanvasContext } from '../../context/canvas-provider'
 import { calculateTransform, MousePoint } from './canvas-utils'
@@ -9,6 +9,8 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
   const { setCanvasTransform, canvasTransformRef, config } = useCanvasContext()
 
   const mainRef = useRef<HTMLDivElement | null>(null)
+
+  const [isMove, setIsMove] = useState(false)
 
   // handle zoom-to-pinch (wheel)
   useEffect(() => {
@@ -107,12 +109,14 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
     setCanvasTransform(newTransform)
     canvasTransformRef.current = newTransform
     latestPointRef.current = event
+    if (!isMove) setIsMove(true)
   }
 
   const mouseUpHandler = (event: MouseEvent) => {
     mainRef.current?.removeEventListener('mousemove', mouseMoveHandler)
     document.removeEventListener('mouseup', mouseUpHandler)
     latestPointRef.current = null
+    setIsMove(false)
   }
 
   const mouseDownHandler = (event: MouseEvent | any) => {
@@ -133,7 +137,11 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
   }, [mainRef])
 
   return (
-    <div ref={mainRef} className="PipelineGraph-Canvas" onMouseDown={mouseDownHandler}>
+    <div
+      ref={mainRef}
+      className={`PipelineGraph-Canvas ${isMove ? 'PipelineGraph-CanvasMove' : ''}`}
+      onMouseDown={mouseDownHandler}
+    >
       {children}
     </div>
   )

@@ -1,7 +1,7 @@
 import { NodeContent } from '@harnessio/pipeline-graph'
 
 import { ContentNodeType } from './components/graph-implementation/types/content-node-type'
-import PipelineStudioInternal from './components/pipeline-studio-internal'
+import PipelineStudioInternal, { PipelineStudioInternalProps } from './components/pipeline-studio-internal'
 
 export class ContentNodeFactory {
   private entityBank: Map<ContentNodeType, any>
@@ -33,6 +33,7 @@ export interface PipelineStudioProps {
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  yamlEditorConfig?: PipelineStudioInternalProps['yamlEditorConfig']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

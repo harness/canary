@@ -1,14 +1,35 @@
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Badge, MoreActionsTooltip, NoData, PaginationComponent, Spacer, StackedList, Text } from '@/components'
+import {
+  Badge,
+  MoreActionsTooltip,
+  NoData,
+  PaginationComponent,
+  Spacer,
+  StackedList,
+  Switch,
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+  Text
+} from '@/components'
 import { TranslationStore, WebhookType } from '@/views'
+import { TableCell } from 'dist/components'
 
 const Title = ({ title, isEnabled }: { title: string; isEnabled: boolean }) => (
   <div className="inline-flex items-center gap-2.5">
+    <Switch
+      checked={isEnabled}
+      onCheckedChange={() => {
+        console.log('swictehd')
+      }}
+    />
     <span className="font-medium">{title}</span>
-    <Badge size="sm" disableHover borderRadius="full" theme={isEnabled ? 'success' : 'muted'}>
+    {/* <Badge size="sm" disableHover borderRadius="full" theme={isEnabled ? 'success' : 'muted'}>
       {isEnabled ? 'Enabled' : 'Disabled'}
-    </Badge>
+    </Badge> */}
   </div>
 )
 
@@ -95,44 +116,57 @@ export function RepoWebhookList({
 
   return (
     <>
-      <StackedList.Root>
-        {webhooks.map((webhook, webhook_idx) => (
-          <Link key={webhook.id} to={`${webhook.id}`}>
-            <StackedList.Item
-              key={webhook.createdAt}
-              className="cursor-pointer py-3 pr-1.5"
-              isLast={webhooks.length - 1 === webhook_idx}
-            >
-              <StackedList.Field
-                primary
-                description={<span className="leading-none">{webhook.description}</span>}
-                title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
-                className="gap-1.5"
-              />
-              <StackedList.Field
-                title={
-                  <MoreActionsTooltip
-                    actions={[
-                      {
-                        title: t('views:webhookData.edit', 'Edit webhook'),
-                        to: `${webhook.id}`
-                      },
-                      {
-                        isDanger: true,
-                        title: t('views:webhookData.delete', 'Delete webhook'),
-                        onClick: () => openDeleteWebhookDialog(webhook.id)
-                      }
-                    ]}
+      <Table variant="asStackedList">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Name</TableHead>
+            <TableHead>Execution</TableHead>
+            <TableHead></TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>
+              {webhooks.map((webhook, webhook_idx) => (
+                // <Link key={webhook.id} to={`${webhook.id}`}>
+                <StackedList.Item
+                  key={webhook.id}
+                  className="cursor-pointer py-3 pr-1.5"
+                  isLast={webhooks.length - 1 === webhook_idx}
+                >
+                  <StackedList.Field
+                    primary
+                    description={<span className="leading-none">{webhook.description}</span>}
+                    title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
+                    className="gap-1.5"
                   />
-                }
-                right
-                label
-                secondary
-              />
-            </StackedList.Item>
-          </Link>
-        ))}
-      </StackedList.Root>
+                  {/* <StackedList.Field
+                    title={
+                      <MoreActionsTooltip
+                        actions={[
+                          {
+                            title: t('views:webhookData.edit', 'Edit webhook'),
+                            to: `${webhook.id}`
+                          },
+                          {
+                            isDanger: true,
+                            title: t('views:webhookData.delete', 'Delete webhook'),
+                            onClick: () => openDeleteWebhookDialog(webhook.id)
+                          }
+                        ]}
+                      />
+                    }
+                    right
+                    label
+                    secondary
+                  /> */}
+                </StackedList.Item>
+                // </Link>
+              ))}
+            </TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
       <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
     </>
   )

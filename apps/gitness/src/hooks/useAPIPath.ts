@@ -1,9 +1,10 @@
-import { useIsMFE } from '../framework/hooks/useIsMFE'
+import { useMFEContext } from '../framework/hooks/useMFEContext'
 
 export function useAPIPath(path: string) {
-  const isMFE = useIsMFE()
+  const mfeContext = useMFEContext()
+  const isMFE = mfeContext.renderUrl !== ''
   if (isMFE) {
-    return `/code${path}`
+    return `${window.apiUrl || ''}/code${path}${path.includes('?') ? '&' : '?'}routingId=${mfeContext.scope.accountId}`
   }
   return path
 }

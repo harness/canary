@@ -846,7 +846,8 @@ export const routes: CustomRouteObject[] = [
             path: 'general',
             element: <SettingsProfileGeneralPage />,
             handle: {
-              breadcrumb: () => <Text>General</Text>
+              breadcrumb: () => <Text>General</Text>,
+              routeName: RouteConstants.toProfileGeneral
             }
           },
           {

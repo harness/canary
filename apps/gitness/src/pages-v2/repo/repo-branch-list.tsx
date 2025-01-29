@@ -64,8 +64,6 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  console.log('searchBranches', searchBranches)
-
   const {
     isLoading: isLoadingDivergence,
     data: { body: _branchDivergence = [] } = {},

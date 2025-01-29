@@ -91,6 +91,9 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
+  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  desc?: string
+  setDesc: (desc: string) => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -123,7 +126,10 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   handleAddReviewer,
   handleDeleteReviewer,
   toCommitDetails,
-  toCode
+  toCode,
+  handleUpload,
+  desc,
+  setDesc
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -283,7 +289,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               ) : (
                 t(
                   'views:pullRequests.compareChangesChooseDifferent',
-                  'Choose different branches or forks above to discuss and review changes.'
+                  'Choose different branches above to discuss and review changes.'
                 )
               )}
             </p>
@@ -355,6 +361,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       <div className="w-full">
                         <Spacer size={1} />
                         <PullRequestCompareForm
+                          desc={desc}
+                          setDesc={setDesc}
+                          handleUpload={handleUpload}
                           register={register}
                           ref={formRef}
                           apiError={apiError}

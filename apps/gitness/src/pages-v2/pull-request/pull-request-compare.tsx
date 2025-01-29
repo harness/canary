@@ -43,12 +43,14 @@ import { normalizeGitRef } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '../repo/stores/repo-branches-store'
 import { useRepoCommitsStore } from '../repo/stores/repo-commits-store'
 import { transformBranchList } from '../repo/transform-utils/branch-transform'
+import { getErrorMessage } from './pull-request-utils'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const CreatePullRequest = () => {
   const routes = useRoutes()
+  const [desc, setDesc] = useState('')
   const createPullRequestMutation = useCreatePullReqMutation({})
   const { repoId, spaceId, diffRefs } = useParams<PathParams>()
   const [isBranchSelected, setIsBranchSelected] = useState<boolean>(diffRefs ? true : false) // State to track branch selection
@@ -91,6 +93,57 @@ export const CreatePullRequest = () => {
           `${normalizeGitRef(targetRef)}...${normalizeGitRef(sourceRef)}`,
     [commitRange, targetRef, sourceRef]
   )
+
+  const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
+    const reader = new FileReader()
+    // Set up a function to be called when the load event is triggered
+    reader.onload = async function () {
+      if (blob.type.startsWith('image/') || blob.type.startsWith('video/')) {
+        const markdown = await uploadImage(reader.result)
+        if (blob.type.startsWith('image/')) {
+          setDesc(`![image](${markdown})`) // Set the markdown content
+        } else {
+          setMarkdownContent(markdown) // Set the markdown content
+        }
+      }
+    }
+    reader.readAsArrayBuffer(blob) // This will trigger the onload function when the reading is complete
+  }
+  const uploadImage = async (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    fileBlob: any
+  ) => {
+    try {
+      const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'content-type': 'application/octet-stream'
+        },
+        body: fileBlob,
+        redirect: 'follow'
+      })
+      // const response = await repoArtifactUpload({
+      //   method: 'POST',
+      //   headers: { 'content-type': 'application/octet-stream' },
+      //   body: fileBlob,
+      //   redirect: 'follow',
+      //   repo_ref: repoRef
+      // })
+
+      const result = await response.json()
+      if (!response.ok && result) {
+        // TODO: fix error state
+        console.warn(getErrorMessage(result))
+        return ''
+      }
+      const filePath = result.file_path
+      return `${window.location.origin}/api/v1/repos/${repoRef}/uploads/${filePath}`
+    } catch (exception) {
+      console.warn(getErrorMessage(exception))
+      return ''
+    }
+  }
   const path = useMemo(() => `/api/v1/repos/${repoRef}/+/${diffApiPath}`, [repoRef, diffApiPath])
 
   const [sourceQuery, setSourceQuery] = useState('')
@@ -244,7 +297,14 @@ export const CreatePullRequest = () => {
   }
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
-    queryParams: { page: 0, limit: 10, query: sourceQuery || targetQuery || '', include_pullreqs: true }
+    queryParams: {
+      page: 0,
+      sort: 'date',
+      order: 'desc',
+      limit: 10,
+      query: sourceQuery || targetQuery || '',
+      include_pullreqs: true
+    }
   })
 
   useEffect(() => {
@@ -280,16 +340,16 @@ export const CreatePullRequest = () => {
   })
 
   useEffect(() => {
-    if (pullReqData?.number && pullReqData.title && pullReqData.description) {
+    if (pullReqData?.number && pullReqData.title) {
       setPrBranchCombinationExists({
         number: pullReqData.number,
         title: pullReqData.title,
-        description: pullReqData.description
+        description: pullReqData?.description || ''
       })
     } else {
       setPrBranchCombinationExists(null)
     }
-  }, [pullReqData])
+  }, [pullReqData, targetRef, sourceRef])
   const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
@@ -428,6 +488,9 @@ export const CreatePullRequest = () => {
   const renderContent = () => {
     return (
       <PullRequestComparePage
+        desc={desc}
+        setDesc={setDesc}
+        handleUpload={handleUpload}
         toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
         toCommitDetails={({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })}
         currentUser={currentUser?.display_name}

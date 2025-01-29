@@ -47,8 +47,8 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   merged
 }) => {
   return (
-    <div className="flex items-center gap-2 max-w-full">
-      <div className="flex flex-wrap items-center justify-start gap-1.5 max-w-full">
+    <div className="flex max-w-full items-center gap-2">
+      <div className="flex max-w-full flex-wrap items-center justify-start gap-1.5">
         <Icon
           size={14}
           className={cn({

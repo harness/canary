@@ -8,7 +8,7 @@ import {
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
-import { Avatar, AvatarFallback, Layout, Text } from '@components/index'
+import { Avatar, AvatarFallback, Layout } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
@@ -49,7 +49,6 @@ interface PullRequestDiffviewerProps {
   useTranslationStore: () => TranslationStore
   commentId?: string
   onCopyClick?: (commentId?: number) => void
-  onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
   suggestionsBatch?: CommitSuggestion[]
   onCommitSuggestion?: (suggestion: CommitSuggestion) => void
   addSuggestionToBatch?: (suggestion: CommitSuggestion) => void
@@ -79,7 +78,6 @@ const PullRequestDiffViewer = ({
   useTranslationStore,
   commentId,
   onCopyClick,
-  onCommentSaveAndStatusChange,
   suggestionsBatch,
   onCommitSuggestion,
   addSuggestionToBatch,
@@ -342,7 +340,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="w- rounded border bg-background">
+        <div className="rounded border bg-background">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -356,20 +354,28 @@ const PullRequestDiffViewer = ({
                 parentCommentId={parent.id}
                 handleSaveComment={handleSaveComment}
                 isLast={true}
-                contentClassName="px-4 py-2 w-[calc(100%-38px)]"
+                contentClassName="w-[calc(100%-38px)]"
                 header={[]}
                 currentUser={currentUser}
                 isComment
-                replyBoxClassName="py-4"
+                replyBoxClassName="p-4"
                 hideReplyHere={hideReplyHeres[parent?.id]}
                 setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                 isResolved={!!parent.payload?.resolved}
                 toggleConversationStatus={toggleConversationStatus}
-                onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                 onQuoteReply={handleQuoteReply}
                 quoteReplyText={quoteReplies[parent.id]?.text || ''}
+                contentHeader={
+                  !!parent.payload?.resolved && (
+                    <div className="flex items-center gap-x-1">
+                      {/* TODO: need to identify the author who resolved the conversation */}
+                      <span className="font-medium text-foreground-8">{parent.author}</span>
+                      <span className="text-foreground-4">marked this conversation as resolved</span>
+                    </div>
+                  )
+                }
                 content={
-                  <div className="flex-col">
+                  <div className="flex-col px-4 pt-4">
                     <PullRequestTimelineItem
                       titleClassName="!flex max-w-full"
                       parentCommentId={parent.id}
@@ -389,9 +395,7 @@ const PullRequestDiffViewer = ({
                       icon={
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <Text size={1} color="tertiaryBackground">
-                              {parentInitials}
-                            </Text>
+                            <span className="text-12 text-foreground-3">{parentInitials}</span>
                           </AvatarFallback>
                         </Avatar>
                       }
@@ -399,12 +403,12 @@ const PullRequestDiffViewer = ({
                         {
                           name: parent.author,
                           description: (
-                            <Layout.Horizontal>
-                              <span className="text-foreground-3">{timeAgo(parent?.created as number)}</span>
+                            <Layout.Horizontal className="text-foreground-4">
+                              <span>{timeAgo(parent?.created as number)}</span>
                               {parent?.deleted ? (
                                 <>
-                                  <span className="text-foreground-3">&nbsp;|&nbsp;</span>
-                                  <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                  <span>&nbsp;|&nbsp;</span>
+                                  <span>{t('views:pullRequests.deleted')} </span>
                                 </>
                               ) : null}
                             </Layout.Horizontal>
@@ -474,9 +478,7 @@ const PullRequestDiffViewer = ({
                               icon={
                                 <Avatar className="size-6 rounded-full p-0">
                                   <AvatarFallback>
-                                    <Text size={1} color="tertiaryBackground">
-                                      {replyInitials}
-                                    </Text>
+                                    <span className="text-12 text-foreground-3">{replyInitials}</span>
                                   </AvatarFallback>
                                 </Avatar>
                               }
@@ -484,12 +486,12 @@ const PullRequestDiffViewer = ({
                                 {
                                   name: reply.author,
                                   description: (
-                                    <Layout.Horizontal>
-                                      <span className="text-foreground-3">{timeAgo(reply?.created as number)}</span>
+                                    <Layout.Horizontal className="text-foreground-4">
+                                      <span>{timeAgo(reply?.created as number)}</span>
                                       {reply?.deleted ? (
                                         <>
-                                          <span className="text-foreground-3">&nbsp;|&nbsp;</span>
-                                          <span className="text-foreground-3">{t('views:pullRequests.deleted')} </span>
+                                          <span>&nbsp;|&nbsp;</span>
+                                          <span>{t('views:pullRequests.deleted')} </span>
                                         </>
                                       ) : null}
                                     </Layout.Horizontal>
@@ -505,7 +507,6 @@ const PullRequestDiffViewer = ({
                                   <PullRequestCommentBox
                                     handleUpload={handleUpload}
                                     isEditMode
-                                    isResolved={!!parent?.payload?.resolved}
                                     onSaveComment={() => {
                                       if (reply?.id) {
                                         updateComment?.(reply?.id, editComments[replyComponentId])
@@ -520,7 +521,6 @@ const PullRequestDiffViewer = ({
                                     setComment={text =>
                                       setEditComments(prev => ({ ...prev, [replyComponentId]: text }))
                                     }
-                                    onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                                   />
                                 ) : (
                                   <PRCommentView

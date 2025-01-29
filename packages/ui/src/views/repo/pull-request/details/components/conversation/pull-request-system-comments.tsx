@@ -66,13 +66,11 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
             {
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
-                  {/* <AvatarImage src={AvatarUrl} /> */}
-
                   <AvatarFallback>
-                    <Text size={1} color="tertiaryBackground">
+                    <span className="text-12 text-foreground-3">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </Text>
+                    </span>
                   </AvatarFallback>
                 </Avatar>
               ),
@@ -101,9 +99,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
       const authorAvatar = (
         <Avatar className="size-6 rounded-full p-0">
           <AvatarFallback>
-            <Text size={1} color="tertiaryBackground">
-              {getInitials(author?.display_name || '')}
-            </Text>
+            <span className="text-12 text-foreground-3">{getInitials(author?.display_name || '')}</span>
           </AvatarFallback>
         </Avatar>
       )
@@ -145,13 +141,11 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
             {
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
-                  {/* <AvatarImage src={AvatarUrl} /> */}
-
                   <AvatarFallback>
-                    <Text size={1} color="tertiaryBackground">
+                    <span className="text-12 text-foreground-3">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </Text>
+                    </span>
                   </AvatarFallback>
                 </Avatar>
               ),
@@ -192,13 +186,11 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
             {
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
-                  {/* <AvatarImage src={AvatarUrl} /> */}
-
                   <AvatarFallback>
-                    <Text size={1} color="tertiaryBackground">
+                    <span className="text-12 text-foreground-3">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </Text>
+                    </span>
                   </AvatarFallback>
                 </Avatar>
               ),

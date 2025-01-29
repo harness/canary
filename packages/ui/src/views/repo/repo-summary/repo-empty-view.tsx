@@ -46,7 +46,7 @@ git push -u origin main
   }
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="max-w-[850px] mx-auto">
+      <SandboxLayout.Content className="mx-auto max-w-[850px]">
         <Text size={5} weight={'medium'}>
           Repository
         </Text>
@@ -57,7 +57,7 @@ git push -u origin main
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
           primaryButton={{ label: 'New file' }}
-          className="py-0 pb-0 min-h-[40vh]"
+          className="min-h-[40vh] py-0"
         />
         <Spacer size={6} />
 

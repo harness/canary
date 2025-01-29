@@ -1,11 +1,11 @@
-<svg viewBox="0 0 16 16"  xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_17619_89259)">
-<path d="M5.5 2.99219L0.5 7.99219L5.5 12.9922" stroke="#AEAEB7" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M10.5 12.9922L15.5 7.99219L10.5 2.99219" stroke="#AEAEB7" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_23746_174257)">
+<path d="M5.5 2.99219L0.5 7.99219L5.5 12.9922" stroke="currentColor" style="stroke:currentColor;stroke:color(display-p3 0.6820 0.6820 0.7180);stroke-opacity:1;" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.5 12.9922L15.5 7.99219L10.5 2.99219" stroke="currentColor" style="stroke:currentColor;stroke:color(display-p3 0.6820 0.6820 0.7180);stroke-opacity:1;" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
-<clipPath id="clip0_17619_89259">
-<rect width="16" height="16" fill="currentColor"/>
+<clipPath id="clip0_23746_174257">
+<rect width="16" height="16" fill="currentColor" style="fill:currentColor;fill-opacity:1;"/>
 </clipPath>
 </defs>
 </svg>

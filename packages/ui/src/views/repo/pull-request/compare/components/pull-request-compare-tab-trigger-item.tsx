@@ -3,8 +3,6 @@ import { FC } from 'react'
 import { Badge } from '@components/badge'
 import { Icon, IconProps } from '@components/icon'
 import { TabsTrigger } from '@components/tabs'
-import { Text } from '@components/text'
-import { Layout } from '@views/layouts/layout'
 
 interface TabTriggerItemProps {
   value: string
@@ -15,18 +13,16 @@ interface TabTriggerItemProps {
 
 const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCount }) => {
   return (
-    <TabsTrigger value={value} className="data-[state=active]:bg-background-1">
-      <Layout.Horizontal className="items-center" gap="gap-x-1.5">
-        <div>
-          <Icon size={16} name={icon as IconProps['name']} />
-        </div>
-        <Text size={2}>{label}</Text>
-        {badgeCount !== undefined && (
-          <Badge variant="outline" size="xs">
-            {badgeCount}
-          </Badge>
-        )}
-      </Layout.Horizontal>
+    <TabsTrigger value={value} className="gap-x-1.5">
+      <div className="flex items-center gap-x-1">
+        <Icon size={14} name={icon as IconProps['name']} />
+        <span>{label}</span>
+      </div>
+      {badgeCount !== undefined && (
+        <Badge variant="outline" size="xs" borderRadius="base">
+          {badgeCount}
+        </Badge>
+      )}
     </TabsTrigger>
   )
 }

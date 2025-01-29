@@ -208,7 +208,6 @@ const PullRequestAccordion: React.FC<{
   commentId,
   autoExpand,
   onCopyClick,
-  onCommentSaveAndStatusChange,
   suggestionsBatch,
   onCommitSuggestion,
   addSuggestionToBatch,
@@ -384,7 +383,6 @@ const PullRequestAccordion: React.FC<{
                       useTranslationStore={useTranslationStore}
                       commentId={commentId}
                       onCopyClick={onCopyClick}
-                      onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
                       onCommitSuggestion={onCommitSuggestion}
                       addSuggestionToBatch={addSuggestionToBatch}
                       suggestionsBatch={suggestionsBatch}

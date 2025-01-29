@@ -1,4 +1,4 @@
-import { Params } from 'react-router-dom'
+import { Navigate, Params } from 'react-router-dom'
 
 import '../context/NavigationContext'
 
@@ -76,4 +76,21 @@ export const getRouteMapping = ({
 }): RouteFunctionMap => {
   const routeEntries = generateRouteEntries({ routes, parentPath, parentName })
   return generateRouteNameToPathFunctions(routeEntries)
+}
+
+export const extractRedirectRouteObjects = (routes: CustomRouteObject[]): CustomRouteObject[] => {
+  const navigateObjects: CustomRouteObject[] = []
+  const traverseRoutes = (routes: CustomRouteObject[], currentPath: string = '') => {
+    for (const route of routes) {
+      const newPath = currentPath ? `${currentPath}${route.path ? `/${route.path}` : ''}` : (route.path ?? '')
+      if ((route.element as JSX.Element)?.type === Navigate) {
+        navigateObjects.push({ ...route, path: newPath })
+      }
+      if (route.children) {
+        traverseRoutes(route.children, newPath)
+      }
+    }
+  }
+  traverseRoutes(routes)
+  return navigateObjects
 }

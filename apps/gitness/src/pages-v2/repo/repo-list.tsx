@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import { Button } from '@harnessio/canary'
 import {
@@ -8,7 +8,7 @@ import {
   useDeleteRepositoryMutation,
   useListReposQuery
 } from '@harnessio/code-service-client'
-import { StyledLink, toast, Toaster } from '@harnessio/ui/components'
+import { StyledLink, toast, ToastAction, Toaster } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -26,6 +26,7 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const dismissFirstToastRef = useRef<(() => void) | null>(null)
+  const navigate = useNavigate()
 
   const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
@@ -113,11 +114,16 @@ export default function ReposListPage() {
   useEffect(() => {
     if (isRepoStillImporting) {
       const { dismiss } = toast({
-        title: `Import for ${importingRepo?.[0].identifier} in progress`,
-        description: 'Your repository is being imported',
+        title: `Import in progress`,
+        description: `${importingRepo?.[0].identifier}`,
         duration: isRepoStillImporting ? Infinity : -Infinity,
         action: (
-          <Button onClick={() => deleteRepository(spaceId ?? '', importingRepo?.[0].identifier ?? '')}>Cancel</Button>
+          <ToastAction
+            onClick={() => deleteRepository(spaceId ?? '', importingRepo?.[0].identifier ?? '')}
+            altText="none"
+          >
+            Cancel
+          </ToastAction>
         )
       })
       dismissFirstToastRef.current = dismiss
@@ -131,9 +137,14 @@ export default function ReposListPage() {
       toast({
         // id: id,
         title: 'Import complete',
-        description: 'Repository imported successfully',
+        // variant: 'success',
+        description: `${importingRepo?.[0].identifier}`,
         duration: Infinity,
-        action: <StyledLink to={`${importingRepo?.[0].identifier}/summary`}>Go to repo</StyledLink>
+        action: (
+          <ToastAction onClick={() => navigate(`${importingRepo?.[0].identifier}/summary`)} altText="none">
+            Go to repo
+          </ToastAction>
+        )
       })
       // setStartImport(false)
     }

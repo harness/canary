@@ -122,7 +122,7 @@ export default function PipelineEdit() {
   )
 
   return (
-    <div className="flex flex-col" style={{ height: 'calc(100vh - 54px)' }}>
+    <div className="flex flex-col" style={{ height: 'calc(100vh - 97px)' }}>
       <div>
         <PipelineStudioHeaderActions />
         <PipelineStudioToolbar view={view} setView={view => setView(view as PipelineStudioView)} />

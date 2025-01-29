@@ -357,5 +357,15 @@ export default {
       })
     }
   ],
-  safelist: ['prose', 'prose-invert', 'prose-headings', 'prose-p', 'prose-a', 'prose-img', 'prose-code']
+  safelist: [
+    'prose',
+    'prose-invert',
+    'prose-headings',
+    'prose-p',
+    'prose-a',
+    'prose-img',
+    'prose-code',
+    // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
+    'stroke-borders-2'
+  ]
 } satisfies TailwindConfig

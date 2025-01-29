@@ -44,18 +44,22 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         flexShrink: 0
       }}
     >
-      <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      {!node.config?.hideLeftPort && (
+        <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      )}
+      {!node.config?.hideRightPort && (
+        <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+      )}
 
       <div
         className="serial-node-header"
         style={{
           position: 'absolute',
-          top: '0px',
-          left: '0px',
+          top: '10px',
+          left: '10px',
           right: '0px',
           height: '0px',
-          padding: '10px',
+          padding: '0px',
           zIndex: '100'
         }}
       >

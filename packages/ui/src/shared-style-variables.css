@@ -853,9 +853,35 @@
   }
 
   .dark-std-high {
+    --canary-background: var(--canary-base-chrome-black);
+    --canary-foreground: var(--canary-base-chrome-white);
+    --canary-card: var(--canary-base-chrome-950);
+    --canary-card-foreground: var(--canary-base-chrome-white);
+    --canary-popover-foreground: var(--canary-base-chrome-white);
+    --canary-primary: var(--canary-base-chrome-white);
+    --canary-primary-background: var(--canary-base-chrome-black);
+    --canary-primary-foreground: var(--canary-base-chrome-950);
+    --canary-primary-muted: var(--canary-base-chrome-500);
+    --canary-primary-accent: var(--canary-accent-600);
+    --canary-secondary: var(--canary-base-chrome-850);
+    --canary-secondary-foreground: var(--canary-base-chrome-white);
+    --canary-secondary-background: var(--canary-base-chrome-950);
+    --canary-secondary-muted: var(--canary-base-chrome-800);
+    --canary-tertiary: var(--canary-base-chrome-850);
+    --canary-tertiary-foreground: var(--canary-base-chrome-white);
+    --canary-tertiary-background: var(--canary-base-chrome-500);
+    --canary-muted: var(--canary-base-chrome-850);
+    --canary-muted-foreground: var(--canary-base-chrome-500);
+    --canary-accent: var(--canary-base-chrome-850);
+    --canary-accent-foreground: var(--canary-base-chrome-white);
+    --canary-destructive: var(--canary-red-200);
+    --canary-destructive-foreground: var(--canary-base-chrome-black);
+    --canary-border: var(--canary-base-chrome-850);
+    --canary-border-background: var(--canary-base-chrome-850);
+    --canary-input: var(--canary-base-chrome-850);
+    --canary-input-background: var(--canary-base-chrome-950);
+    --canary-ring: var(--canary-accent-300);
     --canary-popover: var(--canary-base-chrome-900);
-    --canary-primary-muted: var(--canary-base-chrome-200);
-    --canary-secondary-muted: var(--canary-base-chrome-500);
     --canary-radius: 0.5rem;
     --canary-success: var(--canary-green-200);
     --canary-error: var(--canary-red-200);

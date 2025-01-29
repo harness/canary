@@ -1,4 +1,4 @@
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import {
   Badge,
@@ -10,13 +10,13 @@ import {
   Switch,
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
   Text
 } from '@/components'
 import { TranslationStore, WebhookType } from '@/views'
-import { TableCell } from 'dist/components'
 
 const Title = ({
   title,
@@ -64,7 +64,6 @@ export function RepoWebhookList({
   openDeleteWebhookDialog,
   handleEnableWebhook
 }: RepoWebhookListProps) {
-  console.log(webhooks)
   const { t } = useTranslationStore()
   const navigate = useNavigate()
 
@@ -160,7 +159,6 @@ export function RepoWebhookList({
                     className="gap-1.5 max-w-full"
                   />
                 </StackedList.Item>
-                {/* </Link> */}
               </TableCell>
               <TableCell className="content-center">
                 <Badge
@@ -184,7 +182,6 @@ export function RepoWebhookList({
                       : 'Invalid'}
                 </Badge>
               </TableCell>
-              {/* </Link> */}
 
               <TableCell className="text-right content-center">
                 <MoreActionsTooltip

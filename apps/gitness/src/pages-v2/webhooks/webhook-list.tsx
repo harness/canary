@@ -73,11 +73,7 @@ export default function WebhookListPage() {
     }
   )
 
-  const {
-    mutate: updateWebHook
-    // isLoading: updatingWebHook,
-    // error: updateWebhookError
-  } = useUpdateRepoWebhookMutation({ repo_ref: repoRef })
+  const { mutate: updateWebHook } = useUpdateRepoWebhookMutation({ repo_ref: repoRef })
 
   /**
    * Set id of webhook to delete it

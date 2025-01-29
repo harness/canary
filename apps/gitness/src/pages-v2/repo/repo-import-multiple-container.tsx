@@ -1,7 +1,8 @@
+import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
-import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/ui/views'
+import { ImportMultipleReposFormFields, ProviderOptionsEnum, RepoImportMultiplePage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -12,6 +13,7 @@ export const ImportMultipleRepos = () => {
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
+  const [apiError, setApiError] = useState<string>('')
 
   const onSubmit = async (data: ImportMultipleReposFormFields) => {
     const body: ImportSpaceRequestBody = {
@@ -22,8 +24,10 @@ export const ImportMultipleRepos = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: 'github',
-        username: ''
+        type:
+          data.provider === ProviderOptionsEnum.GITHUB || data.provider === ProviderOptionsEnum.GITHUB_ENTERPRISE
+            ? 'github'
+            : undefined
       },
       provider_space: data.organization
     }
@@ -39,13 +43,20 @@ export const ImportMultipleRepos = () => {
 
       if (!response.ok) {
         const errorData = await response.json()
-        console.error('Error importing space:', errorData)
-        throw new Error(errorData.message || 'Failed to import space')
-      }
 
+        // temporary solution to handle unauthorized requests
+
+        if (response.status === 401) {
+          navigate('/login')
+        }
+
+        setApiError(errorData.message || 'Failed to import space')
+
+        return
+      }
       navigate(routes.toRepositories({ spaceId }))
     } catch (error) {
-      console.error('Error during API call:', error)
+      setApiError((error as Error).message || 'An unexpected error occurred')
     }
   }
 
@@ -56,7 +67,12 @@ export const ImportMultipleRepos = () => {
   return (
     // @TODO: Add loading states and error handling when API is available
     <>
-      <RepoImportMultiplePage onFormSubmit={onSubmit} onFormCancel={onCancel} isLoading={false} apiErrorsValue={''} />
+      <RepoImportMultiplePage
+        onFormSubmit={onSubmit}
+        onFormCancel={onCancel}
+        isLoading={false}
+        apiErrorsValue={apiError}
+      />
     </>
   )
 }

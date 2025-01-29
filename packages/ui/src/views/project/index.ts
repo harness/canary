@@ -15,4 +15,4 @@ export * from './project-settings-page'
 export * from './project-labels/types'
 
 // project import
-export * from '@views/project/project-import/project-import'
+export * from '@views/project/project-import'

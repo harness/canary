@@ -16,7 +16,7 @@ export const ImportProjectContainer = () => {
   } = useImportSpaceMutation(
     {},
     {
-      onSuccess: (data, _variabels) => {
+      onSuccess: data => {
         navigate(routes.toRepositories({ spaceId: data.body?.identifier }))
       }
     }
@@ -30,8 +30,7 @@ export const ImportProjectContainer = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: 'github',
-        username: ''
+        type: data.provider === 'Github' || data.provider === 'Github Enterprise' ? 'github' : undefined
       },
       provider_space: data.organization
     }
@@ -42,17 +41,15 @@ export const ImportProjectContainer = () => {
   }
 
   const onCancel = () => {
-    navigate('/')
+    navigate(-1)
   }
 
   return (
-    <>
-      <ImportProjectPage
-        onFormSubmit={onSubmit}
-        onFormCancel={onCancel}
-        isLoading={isLoading}
-        apiErrorsValue={error?.message?.toString()}
-      />
-    </>
+    <ImportProjectPage
+      onFormSubmit={onSubmit}
+      onFormCancel={onCancel}
+      isLoading={isLoading}
+      apiErrorsValue={error?.message?.toString()}
+    />
   )
 }

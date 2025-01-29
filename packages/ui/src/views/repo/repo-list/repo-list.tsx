@@ -18,10 +18,6 @@ export interface PageProps extends Partial<RoutingProps> {
 const Stats = ({ stars, pulls }: { stars?: number; pulls: number }) => (
   <div className="flex select-none items-center justify-end gap-3 font-medium">
     <span className="flex items-center gap-1">
-      <Icon size={16} name="star" className="text-icons-7" />
-      <span className="text-xs font-normal text-primary">{stars || 0}</span>
-    </span>
-    <span className="flex items-center gap-1">
       <Icon size={16} name="pull" className="text-icons-7" />
       <span className="text-xs font-normal text-primary">{pulls || 0}</span>
     </span>

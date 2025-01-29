@@ -13,6 +13,7 @@
     "./tailwind.config": "./tailwind.config.js",
     "./styles.css": "./dist/styles.css",
     "./shared-style-variables.css": "./src/shared-style-variables.css",
+    "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js"
   },
   "scripts": {

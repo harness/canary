@@ -1,4 +1,5 @@
 .prose {
+  .dark &,
   .dark-std-std & {
     &.wmde-markdown,
     &.wmde-markdown-var {
@@ -64,6 +65,7 @@
     }
   }
 
+  .light &,
   .light-std-std & {
     &.wmde-markdown,
     &.wmde-markdown-var {

@@ -143,28 +143,30 @@ export default function AppMFE({
   return (
     <div ref={portalRef}>
       <ShadowRootWrapper>
-        {!isStylesLoaded ? (
-          // Replace it with spinner once it is available
-          <ShadowRootLoader theme={theme} />
-        ) : (
-          <PortalProvider portalContainer={portalContainer}>
-            <MFEContext.Provider value={{ scope, renderUrl }}>
-              <I18nextProvider i18n={i18n}>
-                <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
-                  <QueryClientProvider client={queryClient}>
-                    <TooltipProvider>
-                      <ExitConfirmProvider>
-                        <NavigationProvider routes={routesToRender}>
-                          <RouterProvider router={router} />
-                        </NavigationProvider>
-                      </ExitConfirmProvider>
-                    </TooltipProvider>
-                  </QueryClientProvider>
-                </ThemeProvider>
-              </I18nextProvider>
-            </MFEContext.Provider>
-          </PortalProvider>
-        )}
+        <div className={theme.toLowerCase()}>
+          {!isStylesLoaded ? (
+            // Replace it with spinner once it is available
+            <ShadowRootLoader theme={theme} />
+          ) : (
+            <PortalProvider portalContainer={portalContainer}>
+              <MFEContext.Provider value={{ scope, renderUrl }}>
+                <I18nextProvider i18n={i18n}>
+                  <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
+                    <QueryClientProvider client={queryClient}>
+                      <TooltipProvider>
+                        <ExitConfirmProvider>
+                          <NavigationProvider routes={routesToRender}>
+                            <RouterProvider router={router} />
+                          </NavigationProvider>
+                        </ExitConfirmProvider>
+                      </TooltipProvider>
+                    </QueryClientProvider>
+                  </ThemeProvider>
+                </I18nextProvider>
+              </MFEContext.Provider>
+            </PortalProvider>
+          )}
+        </div>
       </ShadowRootWrapper>
     </div>
   )

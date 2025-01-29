@@ -1,3 +1,5 @@
+// import { useNavigate } from 'react-router-dom'
+
 import {
   Button,
   ButtonGroup,
@@ -19,9 +21,20 @@ interface RepoEmptyViewProps {
   projName: string
   httpUrl: string
   sshUrl: string
+  gitRef: string
+  handleCreateToken: () => void
 }
 
-export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({ repoName, projName, httpUrl, sshUrl }) => {
+export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
+  repoName,
+  projName,
+  httpUrl,
+  sshUrl,
+  gitRef,
+  handleCreateToken
+}) => {
+  //   const navigate = useNavigate()
+
   const getInitialCommitMarkdown = () => {
     return `
 \`\`\`shell
@@ -44,6 +57,11 @@ git push -u origin main
 \`\`\`
 `
   }
+
+  //   const handleCreateNewFile = () => {
+  //     console.log('Create new file')
+  //     navigate(`${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`)
+  //   }
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content className="mx-auto max-w-[850px]">
@@ -70,11 +88,11 @@ git push -u origin main
           <Input label="SSH" value={sshUrl} readOnly rightElement={<CopyButton name={sshUrl} />} />
           <ControlGroup>
             <ButtonGroup>
-              <Button>Generate Clone Credentials</Button>
+              <Button onClick={handleCreateToken}>Generate Clone Credentials</Button>
             </ButtonGroup>
             <p className="mt-2">
               You can also manage your git credential{' '}
-              <StyledLink to="/" relative="path">
+              <StyledLink to="/profile-settings/keys" relative="path">
                 here
               </StyledLink>
             </p>
@@ -92,7 +110,7 @@ git push -u origin main
             <MarkdownViewer source={getExistingRepoMarkdown()} />
             <p>
               You might need to{' '}
-              <StyledLink to="/" relative="path">
+              <StyledLink to="/profile-settings/keys" relative="path">
                 create an API token
               </StyledLink>{' '}
               In order to pull from or push into this repository.

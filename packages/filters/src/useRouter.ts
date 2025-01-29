@@ -1,11 +1,16 @@
 import { useMemo } from 'react'
-
 // @ts-ignore
-import { useHistory, useLocation as useLocationV5 } from 'react-router-dom'
 
 // remove ts-ignore once the package is created.
 // @ts-ignore
-import { useNavigate, useLocation as useLocationV6, createSearchParams } from 'react-router-dom'
+import {
+  createSearchParams,
+  // @ts-ignore
+  useHistory,
+  useLocation as useLocationV5,
+  useLocation as useLocationV6,
+  useNavigate
+} from 'react-router-dom'
 
 interface UseRouterReturnType {
   searchParams: URLSearchParams

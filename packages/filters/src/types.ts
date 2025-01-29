@@ -10,7 +10,7 @@ export interface FilterConfig<T = any> {
   isSticky?: boolean
 }
 
-export type InitializeFiltersConfigType<T = any> = { state: FilterStatus, defaultValue?: T[keyof T] } & FilterConfig
+export type InitializeFiltersConfigType<T = any> = { state: FilterStatus; defaultValue?: T[keyof T] } & FilterConfig
 export interface FilterTypeWithComponent<T = any> extends FilterType<T> {
   component: React.ReactElement
 }

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact, isEqual } from 'lodash-es'
+import { compact } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
@@ -36,7 +36,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
+import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'

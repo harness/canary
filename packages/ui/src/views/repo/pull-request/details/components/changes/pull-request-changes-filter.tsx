@@ -6,12 +6,13 @@ import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
 
-import { EnumPullReqReviewDecision, PullReqReviewDecision, TypesPullReq, TypesPullReqStats } from '../../../pull-request.types'
 import {
-  ApprovalItem,
-  ButtonEnum,
-  ReviewerListPullReqOkResponse
-} from '../../pull-request-details-types'
+  EnumPullReqReviewDecision,
+  PullReqReviewDecision,
+  TypesPullReq,
+  TypesPullReqStats
+} from '../../../pull-request.types'
+import { ApprovalItem, ButtonEnum, ReviewerListPullReqOkResponse } from '../../pull-request-details-types'
 import {
   approvalItems,
   determineOverallDecision,

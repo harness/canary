@@ -1,0 +1,120 @@
+---
+title: Alert
+description: Alert component
+---
+
+The `Alert` component provides a flexible UI element for displaying alert messages. It is composed of several subcomponents such as `AlertContainer`, `AlertTitle`, and `AlertDescription` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+  <Alert.Container className="bg-red-100 border-red-400 text-red-700 px-4 py-3">
+    <Alert.Title className="font-bold">Error Alert</Alert.Title>
+    <Alert.Description className="text-red-800">This is an error alert description.</Alert.Description>
+  </Alert.Container>
+  <Alert.Container className="bg-yellow-100 border-yellow-400 text-yellow-700 px-4 py-3">
+    <Alert.Title className="font-bold">Warning Alert</Alert.Title>
+    <Alert.Description className="text-yellow-800">This is a warning alert description.</Alert.Description>
+  </Alert.Container>
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Alert } from '@harnessio/ui/components'
+
+return (
+  <Alert.Container>
+    <Alert.Title>Alert Title</Alert.Title>
+    <Alert.Description>This is the alert description.</Alert.Description>
+  </Alert.Container>
+)
+```
+
+## Anatomy
+
+All parts of the Alert component can be imported and composed as required.
+
+```typescript jsx
+<Alert.Container>
+  <Alert.Title>Alert Title</Alert.Title>
+  <Alert.Description>This is the alert description.</Alert.Description>
+</Alert.Container>
+```
+
+## API Reference
+
+### Container
+
+The `Container` component serves as the main container for all alert elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Alert.Title` and `Alert.Description` as children",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Title
+
+The `Title` component displays the title of the alert.
+
+```typescript jsx
+<Alert.Title>Alert Title</Alert.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert title",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Description
+
+The `Description` component displays the description of the alert.
+
+```typescript jsx
+<Alert.Description>This is the alert description.</Alert.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the alert description",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

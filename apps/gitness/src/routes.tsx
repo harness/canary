@@ -72,7 +72,8 @@ export const repoRoutes: CustomRouteObject[] = [
         path: 'create',
         element: <CreateRepo />,
         handle: {
-          routeName: RouteConstants.toCreateRepo
+          routeName: RouteConstants.toCreateRepo,
+          pageTitle: 'Create a Repository'
         }
       },
       {
@@ -94,7 +95,7 @@ export const repoRoutes: CustomRouteObject[] = [
         element: <RepoLayout />,
         handle: {
           breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>,
-          pageTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId}`
+          pageTitle: ({ repoId }: { repoId: string }) => repoId
         },
         children: [
           {
@@ -465,7 +466,10 @@ export const routes: CustomRouteObject[] = [
     children: [
       {
         index: true,
-        element: <LandingPage />
+        element: <LandingPage />,
+        handle: {
+          pageTitle: 'Home'
+        }
       },
       {
         path: 'create',
@@ -491,7 +495,8 @@ export const routes: CustomRouteObject[] = [
         ),
         handle: {
           breadcrumb: () => <Text>Repositories</Text>,
-          routeName: RouteConstants.toRepositories
+          routeName: RouteConstants.toRepositories,
+          pageTitle: 'Repositories'
         }
       },
       {
@@ -503,7 +508,8 @@ export const routes: CustomRouteObject[] = [
         ),
         handle: {
           breadcrumb: () => <Text>Pipelines</Text>,
-          routeName: RouteConstants.toPipelines
+          routeName: RouteConstants.toPipelines,
+          pageTitle: 'Pipelines'
         }
       },
       {
@@ -515,7 +521,8 @@ export const routes: CustomRouteObject[] = [
         ),
         handle: {
           breadcrumb: () => <Text>Executions</Text>,
-          routeName: RouteConstants.toExecutions
+          routeName: RouteConstants.toExecutions,
+          pageTitle: 'Executions'
         }
       },
       {

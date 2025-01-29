@@ -80,14 +80,16 @@ export const repoRoutes: CustomRouteObject[] = [
         path: 'import',
         element: <ImportRepo />,
         handle: {
-          routeName: RouteConstants.toImportRepo
+          routeName: RouteConstants.toImportRepo,
+          pageTitle: 'Import a Repository'
         }
       },
       {
         path: 'import-multiple',
         element: <ImportMultipleRepos />,
         handle: {
-          routeName: RouteConstants.toImportMultipleRepos
+          routeName: RouteConstants.toImportMultipleRepos,
+          pageTitle: 'Import Repositories'
         }
       },
       {
@@ -218,7 +220,8 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <PullRequestLayout />,
                 handle: {
                   breadcrumb: ({ pullRequestId }: { pullRequestId: string }) => <Text>{pullRequestId}</Text>,
-                  routeName: RouteConstants.toPullRequest
+                  routeName: RouteConstants.toPullRequest,
+                  pageTitle: ({ pullRequestId }: { pullRequestId: string }) => `PR #${pullRequestId}`
                 },
                 children: [
                   {
@@ -233,7 +236,8 @@ export const repoRoutes: CustomRouteObject[] = [
                       </PullRequestDataProvider>
                     ),
                     handle: {
-                      routeName: RouteConstants.toPullRequestConversation
+                      routeName: RouteConstants.toPullRequestConversation,
+                      pageTitle: 'Conversation'
                     }
                   },
                   {
@@ -241,7 +245,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     element: <PullRequestCommitPage />,
                     handle: {
                       breadcrumb: () => <Text>Commits</Text>,
-                      routeName: RouteConstants.toPullRequestCommits
+                      routeName: RouteConstants.toPullRequestCommits,
+                      pageTitle: 'Commits'
                     }
                   },
                   {
@@ -253,7 +258,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       breadcrumb: () => <Text>Changes</Text>,
-                      routeName: RouteConstants.toPullRequestChanges
+                      routeName: RouteConstants.toPullRequestChanges,
+                      pageTitle: 'Changes'
                     }
                   },
                   {
@@ -261,7 +267,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     element: <EmptyPage pathName="PR Checks" />,
                     handle: {
                       breadcrumb: () => <Text>Checks</Text>,
-                      routeName: RouteConstants.toPullRequestChecks
+                      routeName: RouteConstants.toPullRequestChecks,
+                      pageTitle: 'Checks'
                     }
                   }
                 ]
@@ -291,7 +298,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: <RepoExecutionListPage />,
                     handle: {
-                      breadcrumb: () => <Text>Executions</Text>
+                      breadcrumb: () => <Text>Executions</Text>,
+                      pageTitle: 'Executions'
                     }
                   },
                   {
@@ -308,7 +316,7 @@ export const repoRoutes: CustomRouteObject[] = [
                       routeName: RouteConstants.toExecutions
                     },
                     children: [
-                      { index: true, element: <RepoExecutionListPage /> },
+                      { index: true, element: <RepoExecutionListPage />, handle: { pageTitle: 'Executions' } },
                       {
                         path: ':executionId',
                         element: <>Execution Details Page</>,
@@ -327,7 +335,8 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'settings',
             element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
             handle: {
-              breadcrumb: () => <Text>Settings</Text>
+              breadcrumb: () => <Text>Settings</Text>,
+              pageTitle: 'Settings'
             },
             children: [
               {
@@ -340,7 +349,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 handle: {
                   breadcrumb: () => <Text>General</Text>,
                   routeName: RouteConstants.toRepoGeneralSettings,
-                  pageTitle: 'Settings'
+                  pageTitle: 'General Settings'
                 }
               },
               {
@@ -352,7 +361,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 children: [
                   {
                     index: true,
-                    element: <RepoSettingsGeneralPageContainer />
+                    element: <RepoSettingsGeneralPageContainer />,
+                    handle: {
+                      pageTitle: 'Branch Rules'
+                    }
                   },
                   {
                     path: 'create',
@@ -380,7 +392,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 children: [
                   {
                     index: true,
-                    element: <WebhookListPage />
+                    element: <WebhookListPage />,
+                    handle: {
+                      pageTitle: 'Webhooks'
+                    }
                   },
                   {
                     path: 'create',
@@ -400,7 +415,11 @@ export const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: 'labels',
-                element: <RepoLabelsList />
+                element: <RepoLabelsList />,
+                handle: {
+                  breadcrumb: () => <Text>Labels</Text>,
+                  pageTitle: 'Labels'
+                }
               }
             ]
           }
@@ -412,7 +431,8 @@ export const repoRoutes: CustomRouteObject[] = [
     path: 'settings',
     element: <ProjectSettingsLayout />,
     handle: {
-      breadcrumb: () => <Text>Settings</Text>
+      breadcrumb: () => <Text>Settings</Text>,
+      pageTitle: 'Settings'
     },
     children: [
       {
@@ -424,7 +444,8 @@ export const repoRoutes: CustomRouteObject[] = [
         element: <ProjectGeneralSettingsPageContainer />,
         handle: {
           breadcrumb: () => <Text>General</Text>,
-          routeName: RouteConstants.toProjectGeneral
+          routeName: RouteConstants.toProjectGeneral,
+          pageTitle: 'General Settings'
         }
       },
       {
@@ -432,14 +453,16 @@ export const repoRoutes: CustomRouteObject[] = [
         element: <ProjectMemberListPage />,
         handle: {
           breadcrumb: () => <Text>Members</Text>,
-          routeName: RouteConstants.toProjectMembers
+          routeName: RouteConstants.toProjectMembers,
+          pageTitle: 'Project Members'
         }
       },
       {
         path: 'labels',
         element: <ProjectLabelsList />,
         handle: {
-          breadcrumb: () => <Text>Labels</Text>
+          breadcrumb: () => <Text>Labels</Text>,
+          pageTitle: 'Project Labels'
         }
       }
     ]
@@ -448,7 +471,8 @@ export const repoRoutes: CustomRouteObject[] = [
     path: 'pipelines',
     element: <ProjectPipelineListPage />,
     handle: {
-      breadcrumb: () => <Text>Pipelines</Text>
+      breadcrumb: () => <Text>Pipelines</Text>,
+      pageTitle: 'Pipelines'
     },
     children: []
   }
@@ -534,238 +558,272 @@ export const routes: CustomRouteObject[] = [
         ),
         handle: {
           breadcrumb: () => <Text>Databases</Text>,
-          routeName: RouteConstants.toDatabases
+          routeName: RouteConstants.toDatabases,
+          pageTitle: 'Databases'
         }
       },
       {
         path: 'theme',
         element: <ProfileSettingsThemePage />,
         handle: {
-          routeName: RouteConstants.toTheme
+          routeName: RouteConstants.toTheme,
+          pageTitle: 'Theme'
         }
       },
       {
         path: 'chaos',
         element: <EmptyPage pathName="Chaos Engineering" />,
         handle: {
-          routeName: RouteConstants.toChaos
+          routeName: RouteConstants.toChaos,
+          pageTitle: 'Chaos Engineering'
         }
       },
       {
         path: 'artifacts',
         element: <EmptyPage pathName="Artifacts" />,
         handle: {
-          routeName: RouteConstants.toArtifacts
+          routeName: RouteConstants.toArtifacts,
+          pageTitle: 'Artifacts'
         }
       },
       {
         path: 'secrets',
         element: <EmptyPage pathName="Secrets" />,
         handle: {
-          routeName: RouteConstants.toSecrets
+          routeName: RouteConstants.toSecrets,
+          pageTitle: 'Secrets'
         }
       },
       {
         path: 'connectors',
         element: <EmptyPage pathName="Connectors" />,
         handle: {
-          routeName: RouteConstants.toConnectors
+          routeName: RouteConstants.toConnectors,
+          pageTitle: 'Connectors'
         }
       },
       {
         path: 'continuous-delivery-gitops',
         element: <EmptyPage pathName="Continuous Delivery GitOps" />,
         handle: {
-          routeName: RouteConstants.toGitOps
+          routeName: RouteConstants.toGitOps,
+          pageTitle: 'Continuous Delivery GitOps'
         }
       },
       {
         path: 'continuous-integration',
         element: <EmptyPage pathName="Continuous Integration" />,
         handle: {
-          routeName: RouteConstants.toCI
+          routeName: RouteConstants.toCI,
+          pageTitle: 'Continuous Integration'
         }
       },
       {
         path: 'feature-flags',
         element: <EmptyPage pathName="Feature Flags" />,
         handle: {
-          routeName: RouteConstants.toFeatureFlags
+          routeName: RouteConstants.toFeatureFlags,
+          pageTitle: 'Feature Flags'
         }
       },
       {
         path: 'notifications',
         element: <EmptyPage pathName="Notifications" />,
         handle: {
-          routeName: RouteConstants.toNotifications
+          routeName: RouteConstants.toNotifications,
+          pageTitle: 'Notifications'
         }
       },
       {
         path: 'environments',
         element: <EmptyPage pathName="Environments" />,
         handle: {
-          routeName: RouteConstants.toEnvironments
+          routeName: RouteConstants.toEnvironments,
+          pageTitle: 'Environments'
         }
       },
       {
         path: 'delegates',
         element: <EmptyPage pathName="File Store" />,
         handle: {
-          routeName: RouteConstants.toFileStore
+          routeName: RouteConstants.toFileStore,
+          pageTitle: 'File Store'
         }
       },
       {
         path: 'file-store',
         element: <EmptyPage pathName="Delegates" />,
         handle: {
-          routeName: RouteConstants.toDelegates
+          routeName: RouteConstants.toDelegates,
+          pageTitle: 'Delegates'
         }
       },
       {
         path: 'templates',
         element: <EmptyPage pathName="Templates" />,
         handle: {
-          routeName: RouteConstants.toTemplates
+          routeName: RouteConstants.toTemplates,
+          pageTitle: 'Templates'
         }
       },
       {
         path: 'variables',
         element: <EmptyPage pathName="Variables" />,
         handle: {
-          routeName: RouteConstants.toVariables
+          routeName: RouteConstants.toVariables,
+          pageTitle: 'Variables'
         }
       },
       {
         path: 'slo-downtime',
         element: <EmptyPage pathName="SLO Downtime" />,
         handle: {
-          routeName: RouteConstants.toSloDowntime
+          routeName: RouteConstants.toSloDowntime,
+          pageTitle: 'SLO Downtime'
         }
       },
       {
         path: 'discovery',
         element: <EmptyPage pathName="Discovery" />,
         handle: {
-          routeName: RouteConstants.toDiscovery
+          routeName: RouteConstants.toDiscovery,
+          pageTitle: 'Discovery'
         }
       },
       {
         path: 'monitored-services',
         element: <EmptyPage pathName="Monitored Services" />,
         handle: {
-          routeName: RouteConstants.toMonitoredServices
+          routeName: RouteConstants.toMonitoredServices,
+          pageTitle: 'Monitored Services'
         }
       },
       {
         path: 'overrides',
         element: <EmptyPage pathName="Overrides" />,
         handle: {
-          routeName: RouteConstants.toOverrides
+          routeName: RouteConstants.toOverrides,
+          pageTitle: 'Overrides'
         }
       },
       {
         path: 'certificates',
         element: <EmptyPage pathName="Certificates" />,
         handle: {
-          routeName: RouteConstants.toCertificates
+          routeName: RouteConstants.toCertificates,
+          pageTitle: 'Certificates'
         }
       },
       {
         path: 'policies',
         element: <EmptyPage pathName="Policies" />,
         handle: {
-          routeName: RouteConstants.toPolicies
+          routeName: RouteConstants.toPolicies,
+          pageTitle: 'Policies'
         }
       },
       {
         path: 'freeze-windows',
         element: <EmptyPage pathName="Freeze Windows" />,
         handle: {
-          routeName: RouteConstants.toFreezeWindows
+          routeName: RouteConstants.toFreezeWindows,
+          pageTitle: 'Freeze Windows'
         }
       },
       {
         path: 'external-tickets',
         element: <EmptyPage pathName="External Tickets" />,
         handle: {
-          routeName: RouteConstants.toExternalTickets
+          routeName: RouteConstants.toExternalTickets,
+          pageTitle: 'External Tickets'
         }
       },
       {
         path: 'infrastructure-as-code',
         element: <EmptyPage pathName="Infrastructure as Code" />,
         handle: {
-          routeName: RouteConstants.toInfrastructureAsCode
+          routeName: RouteConstants.toInfrastructureAsCode,
+          pageTitle: 'Infrastructure as Code'
         }
       },
       {
         path: 'service-reliability',
         element: <EmptyPage pathName="Service Reliability" />,
         handle: {
-          routeName: RouteConstants.toServiceReliability
+          routeName: RouteConstants.toServiceReliability,
+          pageTitle: 'Service Reliability'
         }
       },
       {
         path: 'developer/portal',
         element: <EmptyPage pathName="Internal Developer Portal" />,
         handle: {
-          routeName: RouteConstants.toDevPortal
+          routeName: RouteConstants.toDevPortal,
+          pageTitle: 'Internal Developer Portal'
         }
       },
       {
         path: 'developer/environments',
         element: <EmptyPage pathName="Environments" />,
         handle: {
-          routeName: RouteConstants.toDevEnvironments
+          routeName: RouteConstants.toDevEnvironments,
+          pageTitle: 'Environments'
         }
       },
       {
         path: 'developer/insights',
         element: <EmptyPage pathName="Software Engineering Insights" />,
         handle: {
-          routeName: RouteConstants.toDevInsights
+          routeName: RouteConstants.toDevInsights,
+          pageTitle: 'Software Engineering Insights'
         }
       },
       {
         path: 'code-repository',
         element: <EmptyPage pathName="Code Repository" />,
         handle: {
-          routeName: RouteConstants.toCode
+          routeName: RouteConstants.toCode,
+          pageTitle: 'Code Repository'
         }
       },
       {
         path: 'supply-chain',
         element: <EmptyPage pathName="Software Supply Chain Assurance" />,
         handle: {
-          routeName: RouteConstants.toSupplyChain
+          routeName: RouteConstants.toSupplyChain,
+          pageTitle: 'Software Supply Chain Assurance'
         }
       },
       {
         path: 'security-tests',
         element: <EmptyPage pathName="Security Testing Orchestration" />,
         handle: {
-          routeName: RouteConstants.toSecurityTests
+          routeName: RouteConstants.toSecurityTests,
+          pageTitle: 'Security Testing Orchestration'
         }
       },
       {
         path: 'cloud-costs',
         element: <EmptyPage pathName="Cloud Cost Management" />,
         handle: {
-          routeName: RouteConstants.toCloudCosts
+          routeName: RouteConstants.toCloudCosts,
+          pageTitle: 'Cloud Cost Management'
         }
       },
       {
         path: 'incidents',
         element: <EmptyPage pathName="Incidents" />,
         handle: {
-          routeName: RouteConstants.toIncidents
+          routeName: RouteConstants.toIncidents,
+          pageTitle: 'Incidents'
         }
       },
       {
         path: 'dashboards',
         element: <EmptyPage pathName="Dashboards" />,
         handle: {
-          routeName: RouteConstants.toDashboards
+          routeName: RouteConstants.toDashboards,
+          pageTitle: 'Dashboards'
         }
       },
       {
@@ -792,7 +850,8 @@ export const routes: CustomRouteObject[] = [
             element: <UserManagementPageContainer />,
             handle: {
               breadcrumb: () => <Text>Users</Text>,
-              routeName: RouteConstants.toAdminUsers
+              routeName: RouteConstants.toAdminUsers,
+              pageTitle: 'Users'
             }
           },
           {
@@ -800,7 +859,8 @@ export const routes: CustomRouteObject[] = [
             element: <EmptyPage pathName="User Groups" />,
             handle: {
               breadcrumb: () => <Text>User Groups</Text>,
-              routeName: RouteConstants.toUserGroups
+              routeName: RouteConstants.toUserGroups,
+              pageTitle: 'User Groups'
             }
           },
           {
@@ -839,7 +899,8 @@ export const routes: CustomRouteObject[] = [
               <Breadcrumb.Separator className="mx-2.5" />
               <Text>Settings</Text>
             </>
-          )
+          ),
+          pageTitle: 'Profile Settings'
         },
         children: [
           {
@@ -854,7 +915,8 @@ export const routes: CustomRouteObject[] = [
             element: <SettingsProfileGeneralPage />,
             handle: {
               breadcrumb: () => <Text>General</Text>,
-              routeName: RouteConstants.toProfileGeneral
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: 'General'
             }
           },
           {
@@ -862,7 +924,8 @@ export const routes: CustomRouteObject[] = [
             element: <SettingsProfileKeysPage />,
             handle: {
               breadcrumb: () => <Text>Keys</Text>,
-              routeName: RouteConstants.toProfileKeys
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: 'Keys'
             }
           }
         ]

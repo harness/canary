@@ -1,5 +1,6 @@
 import { FC, memo, ReactNode, RefObject, useCallback, useEffect, useMemo, useRef } from 'react'
-import {useInView} from 'react-intersection-observer'
+import { useInView } from 'react-intersection-observer'
+
 import { useIsMounted } from '@hooks/use-is-mounted'
 import { useResizeObserver } from '@hooks/use-resize-observer'
 

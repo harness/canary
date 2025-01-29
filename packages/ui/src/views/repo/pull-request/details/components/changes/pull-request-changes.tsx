@@ -477,7 +477,7 @@ function PullRequestChangesInternal({
       })
       setOpenItems(itemsToOpen)
     }
-  }, [data, commentId, setOpenItems])
+  }, [data, commentId, comments, setOpenItems])
 
   const isOpen = useCallback(
     (fileText: string) => {
@@ -527,7 +527,7 @@ function PullRequestChangesInternal({
                 ) || []
 
               return (
-                <div className="pt-4">
+                <div className="pt-4" key={item.filePath}>
                   <InViewDiffBlockRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}

@@ -69,6 +69,7 @@ export * from './button-with-options'
 export * from './tooltip'
 export * from './navigation-menu'
 export * from './pipeline-nodes'
+export * from './sidebar/sidebar'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

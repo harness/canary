@@ -13,3 +13,6 @@ export * from '@views/project/project-labels/components'
 export * from '@views/project/project.types'
 export * from './project-settings-page'
 export * from './project-labels/types'
+
+// project import
+export * from '@views/project/project-import'

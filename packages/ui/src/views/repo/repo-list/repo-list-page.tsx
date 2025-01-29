@@ -152,11 +152,21 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
                   handleButtonClick={() => navigate(toCreateRepo?.() || '')}
-                  handleOptionChange={() => navigate(toImportRepo?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'import') {
+                      navigate(toImportRepo?.() || '')
+                    } else if (option === 'import-multiple') {
+                      navigate('import-multiple')
+                    }
+                  }}
                   options={[
                     {
                       value: 'import',
                       label: t('views:repos.import-repository', 'Import repository')
+                    },
+                    {
+                      value: 'import-multiple',
+                      label: t('views:repos.import-repositories', 'Import repositories')
                     }
                   ]}
                 >

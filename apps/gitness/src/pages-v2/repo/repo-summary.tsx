@@ -352,6 +352,7 @@ export default function RepoSummaryPage() {
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
+        toProfileKeys={() => routes.toProfileKeys()}
       />
       {createdTokenData && (
         <CloneCredentialDialog

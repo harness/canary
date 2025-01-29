@@ -7,6 +7,7 @@ export enum RouteConstants {
   toSignIn = 'toSignIn',
   toCreateRepo = 'toCreateRepo',
   toImportRepo = 'toImportRepo',
+  toImportMultipleRepos = 'toImportMultipleRepos',
   toRepositories = 'toRepositories',
   toRepoSummary = 'toRepoSummary',
   toRepoCommits = 'toRepoCommits',
@@ -69,7 +70,8 @@ export enum RouteConstants {
   toGitOps = 'toGitOps',
   toCI = 'toCI',
   toCode = 'toCode',
-  toProfileKeys = 'toProfileKeys'
+  toProfileKeys = 'toProfileKeys',
+  toProfileGeneral = 'toProfileGeneral'
 }
 
 export interface RouteEntry {
@@ -88,7 +90,7 @@ export interface CustomHandle {
   /**
    * Defines the breadcrumb text or label using route parameters.
    */
-  breadcrumb?: (params: Params<string>) => string
+  breadcrumb?: (params: Params<string>) => string | JSX.Element
 
   /**
    * Renders the breadcrumb as a custom React component instead of a link.
@@ -99,6 +101,11 @@ export interface CustomHandle {
    * Associated route name for the breadcrumb.
    */
   routeName?: string
+
+  /**
+   * Updates the document title based on route parameters.
+   */
+  pageTitle?: string | ((params: Params<string>) => string)
 }
 
 // Intersection of RouteObject with the custom handle

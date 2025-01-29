@@ -12,6 +12,7 @@ export interface ViewSettingsProps {
 }
 
 enum Themes {
+  DARK_STANDARD_LOW = 'dark-std-low',
   DARK = 'dark-std-std',
   LIGHT = 'light-std-std'
 }

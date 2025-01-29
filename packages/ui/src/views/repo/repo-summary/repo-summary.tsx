@@ -33,6 +33,7 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toProfileKeys: () => string
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -103,7 +104,8 @@ export function RepoSummaryView({
   setSearchQuery,
   handleCreateToken,
   toRepoFiles,
-  toCommitDetails
+  toCommitDetails,
+  toProfileKeys
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -125,6 +127,9 @@ export function RepoSummaryView({
         httpUrl={repository?.git_url ?? 'could not fetch url'}
         repoName={repoId}
         projName={spaceId}
+        gitRef={gitRef || selectedBranchTag?.name || ''}
+        handleCreateToken={handleCreateToken}
+        toProfileKeys={toProfileKeys}
       />
     )
   }

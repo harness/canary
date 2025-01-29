@@ -164,7 +164,7 @@ const PullRequestCommentBox = ({
         })}
       >
         <Tabs variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="relative left-1/2 w-[calc(100%+32px)] -translate-x-1/2 px-4">
+          <TabsList className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
             <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
               Write
             </TabsTrigger>
@@ -199,7 +199,7 @@ const PullRequestCommentBox = ({
                 <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
               )}
 
-              <div className="absolute -ml-0.5 bottom-px flex left-1/2 w-[calc(100%-16px)] -translate-x-1/2 bg-background-2 items-center pb-2 pt-1">
+              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -240,7 +240,7 @@ const PullRequestCommentBox = ({
             </div>
           )}
 
-          <div className="flex gap-x-3 ml-auto">
+          <div className="ml-auto flex gap-x-3">
             {(inReplyMode || isEditMode) && (
               <Button variant="outline" onClick={onCancelClick}>
                 Cancel

@@ -30,6 +30,7 @@ export const RepoWebhooksList = () => {
         setSearchQuery={noop}
         searchQuery={null}
         webhookLoading={false}
+        handleEnableWebhook={noop}
       />
       <DeleteAlertDialog
         open={deleteWebhookId !== null}

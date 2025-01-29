@@ -12,18 +12,22 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
       {
         id: 6,
         enabled: true,
-        name: 'Test',
+        display_name: 'Test',
         description: 'test desc',
         updated: 1734697494706,
-        createdAt: '32 minutes ago'
+        createdAt: '32 minutes ago',
+        latest_execution_result: 'success',
+        triggers: ['branch_created']
       },
       {
         id: 7,
         enabled: false,
-        name: 'Test 2',
+        display_name: 'Test 2',
         description: 'test desc',
         updated: 1734697494702,
-        createdAt: '30 minutes ago'
+        createdAt: '30 minutes ago',
+        latest_execution_result: 'fatal_error',
+        triggers: []
       }
     ],
     error: undefined,
@@ -33,7 +37,8 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setWebhookLoading: (_: boolean) => {},
     page: 1,
     setPage: (_: number) => {},
-    setWebhooks: (_data: ListRepoWebhooksOkResponse, _headers: Headers | undefined) => {},
+    setTotalPages: (_: Headers | undefined) => {},
+    setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
     preSetWebhookData: null,
     setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {}
   })

@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from 'react'
+import { FC, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import { Button, ListActions, SearchBox, SkeletonList, Spacer } from '@/components'

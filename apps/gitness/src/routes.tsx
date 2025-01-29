@@ -53,11 +53,33 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
+enum Page {
+  Repositories = 'Repositories',
+  Summary = 'Summary',
+  Commits = 'Commits',
+  Pull_Requests = 'Pull Requests',
+  Branches = 'Branches',
+  Files = 'Files',
+  Conversation = 'Conversation',
+  Changes = 'Changes',
+  Checks = 'Checks',
+  Pipelines = 'Pipelines',
+  Executions = 'Executions',
+  Settings = 'Settings',
+  Branch_Rules = 'Branch Rules',
+  Labels = 'Labels',
+  Members = 'Members',
+  General = 'General',
+  Keys = 'Keys',
+  Home = 'Home',
+  Theme = 'Theme'
+}
+
 export const repoRoutes: CustomRouteObject[] = [
   {
     path: 'repos',
     handle: {
-      breadcrumb: () => <Text>Repositories</Text>,
+      breadcrumb: () => <Text>{Page.Repositories}</Text>,
       routeName: RouteConstants.toRepositories
     },
     children: [
@@ -65,7 +87,7 @@ export const repoRoutes: CustomRouteObject[] = [
         index: true,
         element: <ReposListPage />,
         handle: {
-          pageTitle: 'Repositories'
+          pageTitle: Page.Repositories
         }
       },
       {
@@ -108,15 +130,15 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'summary',
             element: <RepoSummaryPage />,
             handle: {
-              breadcrumb: () => <Text>Summary</Text>,
+              breadcrumb: () => <Text>{Page.Summary}</Text>,
               routeName: RouteConstants.toRepoSummary,
-              pageTitle: 'Summary'
+              pageTitle: Page.Summary
             }
           },
           {
             path: 'commits',
             handle: {
-              breadcrumb: () => <Text>Commits</Text>,
+              breadcrumb: () => <Text>{Page.Commits}</Text>,
               routeName: RouteConstants.toRepoCommits
             },
             children: [
@@ -124,7 +146,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoCommitsPage />,
                 handle: {
-                  pageTitle: 'Commits'
+                  pageTitle: Page.Commits
                 }
               },
               {
@@ -155,9 +177,9 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'branches',
             element: <RepoBranchesListPage />,
             handle: {
-              breadcrumb: () => <Text>Branches</Text>,
+              breadcrumb: () => <Text>{Page.Branches}</Text>,
               routeName: RouteConstants.toRepoBranches,
-              pageTitle: 'Branches'
+              pageTitle: Page.Branches
             }
           },
           {
@@ -168,7 +190,7 @@ export const repoRoutes: CustomRouteObject[] = [
               </ExplorerPathsProvider>
             ),
             handle: {
-              breadcrumb: () => <Text>Files</Text>,
+              breadcrumb: () => <Text>{Page.Files}</Text>,
               routeName: RouteConstants.toRepoFiles
             },
             children: [
@@ -176,7 +198,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <RepoCode />,
                 handle: {
-                  pageTitle: 'Files'
+                  pageTitle: Page.Files
                 }
               },
               {
@@ -188,7 +210,7 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pulls',
             handle: {
-              breadcrumb: () => <Text>Pull Requests</Text>,
+              breadcrumb: () => <Text>{Page.Pull_Requests}</Text>,
               routeName: RouteConstants.toPullRequests
             },
             children: [
@@ -196,7 +218,7 @@ export const repoRoutes: CustomRouteObject[] = [
                 index: true,
                 element: <PullRequestListPage />,
                 handle: {
-                  pageTitle: 'Pull Requests'
+                  pageTitle: Page.Pull_Requests
                 }
               },
               {
@@ -237,16 +259,16 @@ export const repoRoutes: CustomRouteObject[] = [
                     ),
                     handle: {
                       routeName: RouteConstants.toPullRequestConversation,
-                      pageTitle: 'Conversation'
+                      pageTitle: Page.Conversation
                     }
                   },
                   {
                     path: 'commits',
                     element: <PullRequestCommitPage />,
                     handle: {
-                      breadcrumb: () => <Text>Commits</Text>,
+                      breadcrumb: () => <Text>{Page.Commits}</Text>,
                       routeName: RouteConstants.toPullRequestCommits,
-                      pageTitle: 'Commits'
+                      pageTitle: Page.Commits
                     }
                   },
                   {
@@ -257,18 +279,18 @@ export const repoRoutes: CustomRouteObject[] = [
                       </PullRequestDataProvider>
                     ),
                     handle: {
-                      breadcrumb: () => <Text>Changes</Text>,
+                      breadcrumb: () => <Text>{Page.Changes}</Text>,
                       routeName: RouteConstants.toPullRequestChanges,
-                      pageTitle: 'Changes'
+                      pageTitle: Page.Changes
                     }
                   },
                   {
                     path: 'checks',
                     element: <EmptyPage pathName="PR Checks" />,
                     handle: {
-                      breadcrumb: () => <Text>Checks</Text>,
+                      breadcrumb: () => <Text>{Page.Checks}</Text>,
                       routeName: RouteConstants.toPullRequestChecks,
-                      pageTitle: 'Checks'
+                      pageTitle: Page.Checks
                     }
                   }
                 ]
@@ -278,14 +300,14 @@ export const repoRoutes: CustomRouteObject[] = [
           {
             path: 'pipelines',
             handle: {
-              breadcrumb: () => <Text>Pipelines</Text>
+              breadcrumb: () => <Text>{Page.Pipelines}</Text>
             },
             children: [
               {
                 index: true,
                 element: <RepoPipelineListPage />,
                 handle: {
-                  pageTitle: 'Pipelines'
+                  pageTitle: Page.Pipelines
                 }
               },
               {
@@ -298,8 +320,8 @@ export const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: <RepoExecutionListPage />,
                     handle: {
-                      breadcrumb: () => <Text>Executions</Text>,
-                      pageTitle: 'Executions'
+                      breadcrumb: () => <Text>{Page.Executions}</Text>,
+                      pageTitle: Page.Executions
                     }
                   },
                   {
@@ -316,7 +338,7 @@ export const repoRoutes: CustomRouteObject[] = [
                       routeName: RouteConstants.toExecutions
                     },
                     children: [
-                      { index: true, element: <RepoExecutionListPage />, handle: { pageTitle: 'Executions' } },
+                      { index: true, element: <RepoExecutionListPage />, handle: { pageTitle: Page.Executions } },
                       {
                         path: ':executionId',
                         element: <>Execution Details Page</>,
@@ -335,8 +357,8 @@ export const repoRoutes: CustomRouteObject[] = [
             path: 'settings',
             element: <RepoSettingsLayout useTranslationStore={useTranslationStore} />,
             handle: {
-              breadcrumb: () => <Text>Settings</Text>,
-              pageTitle: 'Settings'
+              breadcrumb: () => <Text>{Page.Settings}</Text>,
+              pageTitle: Page.Settings
             },
             children: [
               {
@@ -347,15 +369,15 @@ export const repoRoutes: CustomRouteObject[] = [
                 path: 'general',
                 element: <RepoSettingsGeneralPageContainer />,
                 handle: {
-                  breadcrumb: () => <Text>General</Text>,
+                  breadcrumb: () => <Text>{Page.General}</Text>,
                   routeName: RouteConstants.toRepoGeneralSettings,
-                  pageTitle: 'General Settings'
+                  pageTitle: Page.General
                 }
               },
               {
                 path: 'rules',
                 handle: {
-                  breadcrumb: () => <Text>Rules</Text>,
+                  breadcrumb: () => <Text>{Page.Branch_Rules}</Text>,
                   routeName: RouteConstants.toRepoBranchRules
                 },
                 children: [
@@ -363,7 +385,7 @@ export const repoRoutes: CustomRouteObject[] = [
                     index: true,
                     element: <RepoSettingsGeneralPageContainer />,
                     handle: {
-                      pageTitle: 'Branch Rules'
+                      pageTitle: Page.Branch_Rules
                     }
                   },
                   {
@@ -417,8 +439,8 @@ export const repoRoutes: CustomRouteObject[] = [
                 path: 'labels',
                 element: <RepoLabelsList />,
                 handle: {
-                  breadcrumb: () => <Text>Labels</Text>,
-                  pageTitle: 'Labels'
+                  breadcrumb: () => <Text>{Page.Labels}</Text>,
+                  pageTitle: Page.Labels
                 }
               }
             ]
@@ -431,8 +453,8 @@ export const repoRoutes: CustomRouteObject[] = [
     path: 'settings',
     element: <ProjectSettingsLayout />,
     handle: {
-      breadcrumb: () => <Text>Settings</Text>,
-      pageTitle: 'Settings'
+      breadcrumb: () => <Text>{Page.Settings}</Text>,
+      pageTitle: Page.Settings
     },
     children: [
       {
@@ -443,26 +465,26 @@ export const repoRoutes: CustomRouteObject[] = [
         path: 'general',
         element: <ProjectGeneralSettingsPageContainer />,
         handle: {
-          breadcrumb: () => <Text>General</Text>,
+          breadcrumb: () => <Text>{Page.General}</Text>,
           routeName: RouteConstants.toProjectGeneral,
-          pageTitle: 'General Settings'
+          pageTitle: Page.General
         }
       },
       {
         path: 'members',
         element: <ProjectMemberListPage />,
         handle: {
-          breadcrumb: () => <Text>Members</Text>,
+          breadcrumb: () => <Text>{Page.Members}</Text>,
           routeName: RouteConstants.toProjectMembers,
-          pageTitle: 'Project Members'
+          pageTitle: Page.Members
         }
       },
       {
         path: 'labels',
         element: <ProjectLabelsList />,
         handle: {
-          breadcrumb: () => <Text>Labels</Text>,
-          pageTitle: 'Project Labels'
+          breadcrumb: () => <Text>{Page.Labels}</Text>,
+          pageTitle: Page.Labels
         }
       }
     ]
@@ -471,8 +493,8 @@ export const repoRoutes: CustomRouteObject[] = [
     path: 'pipelines',
     element: <ProjectPipelineListPage />,
     handle: {
-      breadcrumb: () => <Text>Pipelines</Text>,
-      pageTitle: 'Pipelines'
+      breadcrumb: () => <Text>{Page.Pipelines}</Text>,
+      pageTitle: Page.Pipelines
     },
     children: []
   }
@@ -492,7 +514,7 @@ export const routes: CustomRouteObject[] = [
         index: true,
         element: <LandingPage />,
         handle: {
-          pageTitle: 'Home'
+          pageTitle: Page.Home
         }
       },
       {
@@ -518,9 +540,9 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Repositories</Text>,
+          breadcrumb: () => <Text>{Page.Repositories}</Text>,
           routeName: RouteConstants.toRepositories,
-          pageTitle: 'Repositories'
+          pageTitle: Page.Repositories
         }
       },
       {
@@ -531,9 +553,9 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Pipelines</Text>,
+          breadcrumb: () => <Text>{Page.Pipelines}</Text>,
           routeName: RouteConstants.toPipelines,
-          pageTitle: 'Pipelines'
+          pageTitle: Page.Pipelines
         }
       },
       {
@@ -544,9 +566,9 @@ export const routes: CustomRouteObject[] = [
           </SandboxLayout.Main>
         ),
         handle: {
-          breadcrumb: () => <Text>Executions</Text>,
+          breadcrumb: () => <Text>{Page.Executions}</Text>,
           routeName: RouteConstants.toExecutions,
-          pageTitle: 'Executions'
+          pageTitle: Page.Executions
         }
       },
       {
@@ -567,7 +589,7 @@ export const routes: CustomRouteObject[] = [
         element: <ProfileSettingsThemePage />,
         handle: {
           routeName: RouteConstants.toTheme,
-          pageTitle: 'Theme'
+          pageTitle: Page.Theme
         }
       },
       {
@@ -897,35 +919,35 @@ export const routes: CustomRouteObject[] = [
             <>
               <Text>User</Text>
               <Breadcrumb.Separator className="mx-2.5" />
-              <Text>Settings</Text>
+              <Text>{Page.Settings}</Text>
             </>
           ),
-          pageTitle: 'Profile Settings'
+          pageTitle: Page.Settings
         },
         children: [
           {
             index: true,
             element: <SettingsProfileGeneralPage />,
             handle: {
-              breadcrumb: () => <Text>General</Text>
+              breadcrumb: () => <Text>{Page.General}</Text>
             }
           },
           {
             path: 'general',
             element: <SettingsProfileGeneralPage />,
             handle: {
-              breadcrumb: () => <Text>General</Text>,
+              breadcrumb: () => <Text>{Page.General}</Text>,
               routeName: RouteConstants.toProfileGeneral,
-              pageTitle: 'General'
+              pageTitle: Page.General
             }
           },
           {
             path: 'keys',
             element: <SettingsProfileKeysPage />,
             handle: {
-              breadcrumb: () => <Text>Keys</Text>,
+              breadcrumb: () => <Text>{Page.Keys}</Text>,
               routeName: RouteConstants.toProfileKeys,
-              pageTitle: 'Keys'
+              pageTitle: Page.Keys
             }
           }
         ]

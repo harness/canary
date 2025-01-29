@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 
 import {
@@ -25,15 +24,12 @@ import { ProviderOptionsEnum } from './types'
 
 const formSchema = z
   .object({
-    identifier: z.string(),
     hostUrl: z.string().optional(),
-    description: z.string(),
     pipelines: z.boolean().optional(),
-    authorization: z.boolean().optional(),
+    repositories: z.boolean().optional(),
     provider: z.string().min(1, { message: 'Please select a provider' }),
     password: z.string().optional(),
-    organization: z.string().min(1, { message: 'Please enter an organization' }),
-    repository: z.string().min(1, { message: 'Please enter a repository' })
+    organization: z.string().min(1, { message: 'Please enter an organization' })
   })
   .superRefine((data, ctx) => {
     if (data.provider === 'Github Enterprise' && !data.hostUrl) {
@@ -45,49 +41,46 @@ const formSchema = z
     }
   })
 
-export type ImportRepoFormFields = z.infer<typeof formSchema>
+export type ImportMultipleReposFormFields = z.infer<typeof formSchema>
 
-interface RepoImportPageProps {
-  onFormSubmit: (data: ImportRepoFormFields) => void
+interface RepoImportMultiplePageProps {
+  onFormSubmit: (data: ImportMultipleReposFormFields) => void
   onFormCancel: () => void
   isLoading: boolean
   apiErrorsValue?: string
 }
 
-export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiErrorsValue }: RepoImportPageProps) {
+export function RepoImportMultiplePage({
+  onFormSubmit,
+  onFormCancel,
+  isLoading,
+  apiErrorsValue
+}: RepoImportMultiplePageProps) {
   const {
     register,
     handleSubmit,
     setValue,
     watch,
     formState: { errors }
-  } = useForm<ImportRepoFormFields>({
+  } = useForm<ImportMultipleReposFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
-      identifier: '',
-      description: '',
       pipelines: false,
-      authorization: false,
+      repositories: true,
       provider: 'Github',
       password: '',
-      organization: '',
-      repository: ''
+      organization: ''
     }
   })
 
   const providerValue = watch('provider')
-  const repositoryValue = watch('repository')
 
-  useEffect(() => {
-    setValue('identifier', repositoryValue)
-  }, [repositoryValue, setValue])
-
-  const handleSelectChange = (fieldName: keyof ImportRepoFormFields, value: string) => {
+  const handleSelectChange = (fieldName: keyof ImportMultipleReposFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  const onSubmit: SubmitHandler<ImportRepoFormFields> = data => {
+  const onSubmit: SubmitHandler<ImportMultipleReposFormFields> = data => {
     onFormSubmit(data)
   }
 
@@ -100,7 +93,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
-          Import a repository
+          Import Repositories
         </Text>
         <Spacer size={10} />
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
@@ -112,7 +105,7 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
                 value={providerValue}
                 onValueChange={value => handleSelectChange('provider', value)}
                 placeholder="Select"
-                label="Provider"
+                label="Git provider"
               >
                 <SelectContent>
                   {ProviderOptionsEnum &&
@@ -133,9 +126,8 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
               </Select>
             </ControlGroup>
           </Fieldset>
-
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
-            <Fieldset className="mt-4">
+            <Fieldset>
               <Input
                 id="host"
                 label="Host URL"
@@ -147,8 +139,25 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             </Fieldset>
           )}
 
+          {/* token */}
+          <Fieldset>
+            <ControlGroup>
+              <Input
+                type="password"
+                id="password"
+                label="Token"
+                {...register('password')}
+                placeholder="Enter your access token"
+                size="md"
+                error={errors.password?.message?.toString()}
+              />
+            </ControlGroup>
+          </Fieldset>
+
+          <FormSeparator />
+
           {/* organization */}
-          <Fieldset className="mt-4">
+          <Fieldset>
             <Input
               id="organization"
               label="Organization"
@@ -159,32 +168,13 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             />
           </Fieldset>
 
-          {/* repository */}
-          <Fieldset className="mt-4">
-            <Input
-              id="repository"
-              label="Repository"
-              {...register('repository')}
-              placeholder="Enter the repository name"
-              size="md"
-              error={errors.repository?.message?.toString()}
-            />
-          </Fieldset>
-
           {/* authorization - pipelines */}
-          <Fieldset className="mt-4">
+          <Fieldset>
             <ControlGroup className="flex flex-row gap-5">
               <Option
-                control={
-                  <Checkbox
-                    {...register('authorization')}
-                    id="authorization"
-                    checked={watch('authorization')}
-                    onCheckedChange={(checked: boolean) => setValue('authorization', checked)}
-                  />
-                }
+                control={<Checkbox {...register('repositories')} id="authorization" checked={true} disabled />}
                 id="authorization"
-                label="Requires Authorization"
+                label="Repositories"
                 className="mt-0 flex min-h-8 items-center"
               />
               <Option
@@ -203,62 +193,14 @@ export function RepoImportPage({ onFormSubmit, onFormCancel, isLoading, apiError
             </ControlGroup>
           </Fieldset>
 
-          {/* token */}
-          {watch('authorization') && (
-            <Fieldset>
-              <ControlGroup>
-                <Input
-                  type="password"
-                  id="password"
-                  label="Token"
-                  {...register('password')}
-                  placeholder="Enter your access token"
-                  size="md"
-                  error={errors.password?.message?.toString()}
-                />
-              </ControlGroup>
-            </Fieldset>
-          )}
-
-          <FormSeparator />
-
-          {/* repo identifier */}
-          <Fieldset className="mt-4">
-            <ControlGroup>
-              <Input
-                id="identifier"
-                label="Name"
-                {...register('identifier')}
-                placeholder="Enter repository name"
-                size="md"
-                error={errors.identifier?.message?.toString()}
-              />
-            </ControlGroup>
-          </Fieldset>
-
-          {/* description */}
-          <Fieldset className="mt-4">
-            <ControlGroup>
-              <Input
-                id="description"
-                label="Description"
-                {...register('description')}
-                placeholder="Enter a description"
-                size="md"
-                error={errors.description?.message?.toString()}
-              />
-            </ControlGroup>
-          </Fieldset>
-
           {!!apiErrorsValue && <span className="text-xs text-destructive">{apiErrorsValue}</span>}
-
           {/* SUBMIT BUTTONS */}
           <Fieldset>
             <ControlGroup>
               <ButtonGroup>
                 {/* TODO: Improve loading state to avoid flickering */}
                 <Button type="submit" disabled={isLoading}>
-                  {!isLoading ? 'Import repository' : 'Importing repository...'}
+                  {!isLoading ? 'Import repositories' : 'Importing repositories...'}
                 </Button>
                 <Button type="button" variant="outline" onClick={handleCancel}>
                   Cancel

@@ -5,6 +5,7 @@ import { noop } from 'lodash-es'
 import { getUser, membershipSpaces, TypesSpace, TypesUser } from '@harnessio/code-service-client'
 
 import useLocalStorage from '../hooks/useLocalStorage'
+import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
   spaces: TypesSpace[]
@@ -23,6 +24,7 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
 

@@ -92,6 +92,7 @@
     "emptyRepo": "Ce référentiel est vide.",
     "repositories": "Dépôts",
     "import-repository": "Importer un dépôt",
+    "import-repositories": "Import repositories",
     "create-repository": "Créer un dépôt",
     "private": "Privé",
     "public": "Public",

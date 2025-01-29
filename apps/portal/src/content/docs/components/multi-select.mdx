@@ -1,0 +1,127 @@
+---
+title: MultiSelect
+description: MultiSelect component
+---
+
+The `MultiSelect` component allows users to select multiple options from a dropdown list. It is useful for scenarios where multiple selections are needed.
+
+import { DocsPage } from "@/components/docs-page";
+import { MultiSelect } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample client:only code={`<div className="flex w-full flex-col flex-wrap gap-4 items-baseline">
+    <div> MultiSelect with custom select items </div>
+    <div className="relative w-full">
+      <MultiSelect
+        label="Select options label"
+        selectedItems={[{ label: 'Option 2', id: 'option2' }]}
+        t={(val) => val}
+        options={[
+          { label: 'Option 1', id: 'option1' },
+          { label: 'Option 2', id: 'option2' },
+          { label: 'Option 3', id: 'option3' }
+        ]}
+        handleChange={(selected) => console.log(selected)}
+        placeholder="select an option"
+        error="Please select at least one option"
+        customOptionElem={(data) => <i><b>{data.label}</b></i>}
+      />
+    </div>
+    <div className="mt-[36px]"> MultiSelect with search-box </div>
+    <MultiSelect
+      selectedItems={[{ label: 'Option B', id: 'optionB' }, { label: 'Option C', id: 'optionC' }]}
+      t={(val) => val}
+      options={[
+        { label: 'Option A', id: 'optionA' },
+        { label: 'Option B', id: 'optionB' },
+        { label: 'Option C', id: 'optionC' }
+      ]}
+      handleChangeSearchValue={(searchValue) => console.log(searchValue)}
+      searchValue={"search value"}
+      handleChange={(selected) => console.log(selected)}
+    />
+
+  </div>`} />
+
+## Usage
+
+```typescript jsx
+import { MultiSelect } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <MultiSelect
+    label="Select options"
+    searchValue="search value"
+    placeholder="Select options"
+    error="Please select at least one option"
+    selectedItems={[{ label: 'Option 2', id: 'option2' }]}
+    options={[
+      { label: 'Option 1', value: 'option1' },
+      { label: 'Option 2', value: 'option2' },
+      { label: 'Option 3', value: 'option3' }
+    ]}
+    handleChange={(selected) => console.log(selected)}
+    handleChangeSearchValue={(searchValue) => console.log(searchValue)}
+    customOptionElem={(data) => <b>{data.label}</b>}
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "selectedItems",
+      description: "Array of selected items.",
+      required: true,
+    },
+    {
+      name: "t",
+      description: "Translation function.",
+      required: true,
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input field.",
+      required: true,
+    },
+    {
+      name: "handleChange",
+      description: "Callback function called when selection changes.",
+      required: true,
+    },
+    {
+      name: "options",
+      description: "Array of options to display in the dropdown.",
+      required: true,
+    },
+    {
+      name: "searchValue",
+      description: "Current search value.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "handleChangeSearchValue",
+      description: "Callback function called when the search value changes.",
+      required: false,
+    },
+    {
+      name: "customOptionElem",
+      description: "Custom render function for options.",
+      required: false,
+    },
+    {
+      name: "error",
+      description: "Error message to display.",
+      required: false,
+    },
+    {
+      name: "label",
+      description: "Label for the input field.",
+      required: false,
+    },
+  ]}
+/>

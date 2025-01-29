@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
+import { useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -27,18 +27,10 @@ export default function PullRequestListPage() {
     { retry: false }
   )
 
-  useFindRepositoryQuery(
-    { repo_ref: repoRef },
-    {
-      onSuccess: data => {
-        setOpenClosePullRequests(data.body)
-      }
-    }
-  )
-
   useEffect(() => {
     if (pullRequestData) {
       setPullRequests(pullRequestData, headers)
+      setOpenClosePullRequests(pullRequestData)
     }
   }, [pullRequestData, headers, setPullRequests])
 

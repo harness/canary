@@ -66,7 +66,6 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
 
   const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
-
   const handleCloseClick = () => {
     filterHandlers.handleResetFilters()
   }
@@ -122,8 +121,12 @@ const PullRequestList: FC<PullRequestPageProps> = ({
         </div>
       )
     }
+
     return (
       <PullRequestListContent
+        useTranslationStore={useTranslationStore}
+        repoId={repoId}
+        spaceId={spaceId}
         handleResetQuery={noop}
         pullRequests={sortedPullReqs}
         closedPRs={closedPullReqs}

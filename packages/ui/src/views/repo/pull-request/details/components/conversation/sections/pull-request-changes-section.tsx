@@ -1,4 +1,4 @@
-import { Accordion, Avatar, AvatarFallback, Badge, Icon, StackedList } from '@/components'
+import { Accordion, Avatar, AvatarFallback, Badge, Icon, Layout, StackedList } from '@/components'
 import {
   easyPluralize,
   TypesCodeOwnerEvaluation,
@@ -130,7 +130,7 @@ const PullRequestChangesSection = ({
   function renderCodeOwnerStatus() {
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-warning" />
           <span className="text-14 text-foreground-1">Waiting on code owner reviews of latest changes</span>
         </div>
@@ -139,7 +139,7 @@ const PullRequestChangesSection = ({
 
     if (codeOwnerPendingEntries && codeOwnerPendingEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-warning" />
           <span className="text-14 text-foreground-1">Changes are pending approval from code owners</span>
         </div>
@@ -153,7 +153,7 @@ const PullRequestChangesSection = ({
       codeOwnerPendingEntries?.length > 0
     ) {
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-tertiary-background" />
           <span className="text-14 text-foreground-1">Some changes were approved by code owners</span>
         </div>
@@ -161,7 +161,7 @@ const PullRequestChangesSection = ({
     }
     if (latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="success" className="text-success" />
           <span className="text-14 text-foreground-1">Latest changes were approved by code owners</span>
         </div>
@@ -169,7 +169,7 @@ const PullRequestChangesSection = ({
     }
     if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="success" className="text-success" />
           <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
         </div>
@@ -183,7 +183,7 @@ const PullRequestChangesSection = ({
         latestCodeOwnerApprovalArr.length < minReqLatestApproval
       ) {
         return (
-          <div className="flex items-center">
+          <div className="flex items-center gap-x-2">
             <Icon name="pending-clock" className="text-warning" />
             <span className="text-14 text-foreground-1">
               Latest changes are pending approval from required reviewers
@@ -192,7 +192,7 @@ const PullRequestChangesSection = ({
         )
       }
       return (
-        <div className="flex items-center">
+        <div className="flex items-center gap-x-2">
           <Icon name="circle" className="text-warning" />
           <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
         </div>
@@ -200,7 +200,7 @@ const PullRequestChangesSection = ({
     }
 
     return (
-      <div className="flex items-center">
+      <div className="flex items-center gap-x-2">
         <Icon name="circle" className="text-tertiary-background" />
         <span className="text-14 text-foreground-1">No codeowner reviews</span>
       </div>
@@ -229,7 +229,7 @@ const PullRequestChangesSection = ({
       </Accordion.Trigger>
 
       <Accordion.Content>
-        <>
+        <Layout.Vertical gap={'gap-y-2'}>
           {((minApproval ?? 0) > (minReqLatestApproval ?? 0) ||
             (!isEmpty(approvedEvaluations) && minReqLatestApproval === 0 && minApproval && minApproval > 0) ||
             ((minApproval ?? 0) > 0 && minReqLatestApproval === undefined)) && (
@@ -245,7 +245,7 @@ const PullRequestChangesSection = ({
                 <div className="flex items-center gap-x-2">
                   <Icon name="circle" className="fill-transparent text-icons-7" />
                   <span className="text-14 text-foreground-1">
-                    {`${(approvedEvaluations && approvedEvaluations.length) || ''}/${minApproval} approvals completed`}
+                    {`${(approvedEvaluations && approvedEvaluations.length) || '0'}/${minApproval} approvals completed`}
                   </span>
                 </div>
               )}
@@ -357,7 +357,7 @@ const PullRequestChangesSection = ({
               </StackedList.Root>
             </div>
           )}
-        </>
+        </Layout.Vertical>
       </Accordion.Content>
     </Accordion.Item>
   )

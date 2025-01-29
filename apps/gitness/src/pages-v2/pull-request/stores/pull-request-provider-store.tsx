@@ -51,6 +51,12 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
   },
 
   showEditDescription: false,
+  diffStats: {
+    additions: 0,
+    commits: 0,
+    deletions: 0,
+    files_changed: 0
+  },
   setShowEditDescription: show =>
     set(
       produce(draft => {
@@ -259,6 +265,12 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
     set(
       produce(draft => {
         Object.assign(draft, newState)
+      })
+    ),
+  setDiffStats: diffStats =>
+    set(
+      produce(draft => {
+        draft.diffStats = diffStats
       })
     )
 }))

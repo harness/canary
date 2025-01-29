@@ -984,6 +984,9 @@ importers:
       react-i18next:
         specifier: ^15.1.1
         version: 15.4.0(i18next@24.2.1(typescript@5.6.3))(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+      react-intersection-observer:
+        specifier: ^9.15.1
+        version: 9.15.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       react-resizable-panels:
         specifier: ^2.0.19
         version: 2.1.7(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
@@ -9177,6 +9180,15 @@ packages:
       react-dom:
         optional: true
       react-native:
+        optional: true
+
+  react-intersection-observer@9.15.1:
+    resolution: {integrity: sha512-vGrqYEVWXfH+AGu241uzfUpNK4HAdhCkSAyFdkMb9VWWXs6mxzBLpWCxEy9YcnDNY2g9eO6z7qUtTBdA9hc8pA==}
+    peerDependencies:
+      react: 17.0.2
+      react-dom: 17.0.2
+    peerDependenciesMeta:
+      react-dom:
         optional: true
 
   react-is@16.13.1:
@@ -20770,6 +20782,12 @@ snapshots:
       '@babel/runtime': 7.26.7
       html-parse-stringify: 3.0.1
       i18next: 24.2.1(typescript@5.7.3)
+      react: 17.0.2
+    optionalDependencies:
+      react-dom: 17.0.2(react@17.0.2)
+
+  react-intersection-observer@9.15.1(react-dom@17.0.2(react@17.0.2))(react@17.0.2):
+    dependencies:
       react: 17.0.2
     optionalDependencies:
       react-dom: 17.0.2(react@17.0.2)

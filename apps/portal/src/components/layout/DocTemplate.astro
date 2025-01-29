@@ -1,0 +1,57 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+import SiteTitle from "@astrojs/starlight/components/SiteTitle.astro";
+import type { Props } from "@astrojs/starlight/props";
+import HeaderActions from "./HeaderActions.astro";
+import Sidebar from "@astrojs/starlight/components/Sidebar.astro";
+import PageSidebar from "@astrojs/starlight/components/PageSidebar.astro";
+---
+
+<div
+  class="grid min-h-screen grid-rows-[64px_auto_1fr] grid-cols-[auto_220px_minmax(720px,1028px)_220px_auto] items-start bg-foreground"
+>
+  <!-- Header: Site Title -->
+  <div
+    class="flex col-start-2 row-start-1 h-full w-full border-l border-borders-4 sticky top-0 z-10 bg-foreground place-items-center px-5"
+  >
+    <SiteTitle {...Astro.props} />
+  </div>
+
+  <!-- Header: Search and Theme Selector -->
+  <div
+    class="flex col-start-3 col-span-2 row-start-1 h-full w-full border-l border-borders-4 items-center justify-between px-6 sticky top-0 z-10 bg-foreground"
+  >
+    <Search {...Astro.props} />
+    <HeaderActions {...Astro.props} />
+  </div>
+
+  <!-- Divider below header -->
+  <div
+    class="border-b border-borders-4 h-[1px] row-start-2 col-span-full sticky top-[64px] z-10 bg-foreground"
+  >
+  </div>
+
+  <!-- Sidebar Navigation -->
+  <nav
+    class="flex col-start-2 row-start-3 w-full border-l border-borders-4 sticky top-[65px] h-[calc(100vh-65px)] overflow-y-auto"
+  >
+    <Sidebar {...Astro.props} />
+  </nav>
+
+  <!-- Main Content -->
+  <div
+    class="flex col-start-3 row-start-3 h-full w-full border-l border-borders-4 justify-center px-12"
+  >
+    <slot />
+  </div>
+
+  <!-- Additional Sidebar -->
+  <div
+    class="flex col-start-4 row-start-3 h-[calc(100vh-65px)] w-full sticky top-[65px]"
+  >
+    <PageSidebar {...Astro.props} />
+  </div>
+
+  <!-- Spacer Column -->
+  <div class="flex col-start-5 row-start-3 h-full w-full"></div>
+</div>

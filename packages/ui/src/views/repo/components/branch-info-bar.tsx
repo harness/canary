@@ -1,12 +1,12 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Badge, Button, DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, Icon, StyledLink } from '@/components'
+import { Badge, Button, DropdownMenu, Icon, StyledLink } from '@/components'
+import { IBranchSelectorStore } from '@/views'
 
 interface BranchInfoBarProps {
   defaultBranchName?: string
-  spaceId: string
-  repoId: string
+  useRepoBranchesStore: () => IBranchSelectorStore
   currentBranchDivergence: {
     ahead: number
     behind: number
@@ -15,11 +15,11 @@ interface BranchInfoBarProps {
 
 export const BranchInfoBar: FC<BranchInfoBarProps> = ({
   defaultBranchName = 'main',
-  spaceId,
-  repoId,
+  useRepoBranchesStore,
   currentBranchDivergence
 }) => {
   const { behind, ahead } = currentBranchDivergence
+  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
   const hasBehind = !!behind
   const hasAhead = !!ahead
 
@@ -30,14 +30,14 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           This branch is{' '}
           {hasAhead && (
             <>
-              <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
+              <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
                 <span className="text-foreground-accent">{ahead} commits ahead of</span>
               </StyledLink>
               {hasBehind && ', '}
             </>
           )}
           {hasBehind && (
-            <StyledLink to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>
+            <StyledLink to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>
               <span className="text-foreground-accent">{behind} commits behind</span>
             </StyledLink>
           )}
@@ -47,18 +47,22 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           <span className="text-foreground-8">{defaultBranchName}</span>
         </Badge>
       </div>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger asChild>
           <Button
-            className="gap-x-2 px-2.5 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1"
+            className="group/contribute gap-x-2 px-2.5 data-[state=open]:border-borders-9 data-[state=open]:text-foreground-8 [&_svg]:data-[state=open]:text-icons-9"
             variant="outline"
           >
             <Icon name="merged" size={14} />
             <span>Contribute</span>
-            <Icon className="chevron-down text-icons-7" name="chevron-down" size={12} />
+            <Icon
+              className="chevron-down text-icons-7 group-data-[state=open]/contribute:text-icons-2"
+              name="chevron-down"
+              size={12}
+            />
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-60 p-4" align="end">
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content className="w-60 p-4" align="end">
           <div className="flex gap-x-2">
             <div className="flex size-6 shrink-0 items-center justify-center rounded-full border border-borders-4">
               <Icon name="merged" size={12} />
@@ -77,15 +81,23 @@ export const BranchInfoBar: FC<BranchInfoBarProps> = ({
           </div>
           <div className="mt-4 flex flex-col gap-y-2.5">
             <Button className="w-full" variant="outline" asChild>
-              <Link to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>Compare</Link>
+              <Link
+                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+              >
+                Compare
+              </Link>
             </Button>
 
             <Button className="w-full" asChild>
-              <Link to={`/${spaceId}/repos/${repoId}/pull-requests/compare/`}>Open pull request</Link>
+              <Link
+                to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/${defaultBranchName}...${selectedBranchTag?.name}`}
+              >
+                Open pull request
+              </Link>
             </Button>
           </div>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
     </div>
   )
 }

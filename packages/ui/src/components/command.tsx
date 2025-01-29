@@ -1,12 +1,12 @@
 import * as React from 'react'
 
-import { Dialog, DialogContent, ScrollArea } from '@/components'
+import { Dialog, ScrollArea } from '@/components'
 import { type DialogProps } from '@radix-ui/react-dialog'
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 import { Command as CommandPrimitive } from 'cmdk'
 
-const Command = React.forwardRef<
+const CommandRoot = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive>
 >(({ className, ...props }, ref) => (
@@ -16,17 +16,17 @@ const Command = React.forwardRef<
     {...props}
   />
 ))
-Command.displayName = CommandPrimitive.displayName
+CommandRoot.displayName = CommandPrimitive.displayName
 
 const CommandDialog = ({ children, ...props }: DialogProps) => {
   return (
-    <Dialog {...props}>
-      <DialogContent className="overflow-hidden p-0">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
+    <Dialog.Root {...props}>
+      <Dialog.Content className="overflow-hidden p-0">
+        <CommandRoot className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:size-5">
           {children}
-        </Command>
-      </DialogContent>
-    </Dialog>
+        </CommandRoot>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 
@@ -40,7 +40,7 @@ const CommandInput = React.forwardRef<
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50',
+        'placeholder:text-muted-foreground flex h-10 w-full rounded-md bg-transparent py-3 text-sm outline-none disabled:cursor-not-allowed focus-visible:outline-none disabled:opacity-50',
         className
       )}
       {...props}
@@ -115,14 +115,16 @@ const CommandShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanE
 }
 CommandShortcut.displayName = 'CommandShortcut'
 
-export {
-  Command,
-  CommandDialog,
-  CommandInput,
-  CommandList,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandShortcut,
-  CommandSeparator
+const Command = {
+  Root: CommandRoot,
+  Dialog: CommandDialog,
+  Input: CommandInput,
+  List: CommandList,
+  Empty: CommandEmpty,
+  Group: CommandGroup,
+  Item: CommandItem,
+  Shortcut: CommandShortcut,
+  Separator: CommandSeparator
 }
+
+export { Command }

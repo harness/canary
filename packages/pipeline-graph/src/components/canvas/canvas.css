@@ -1,0 +1,12 @@
+.PipelineGraph-Canvas {
+  display: block;
+  overflow: hidden;
+  touch-action: none;
+  height: 100%;
+}
+
+.PipelineGraph-Canvas > div {
+  transform: translate(var(--x), var(--y)) scale(var(--scale));
+  transform-origin: top left;
+  will-change: transform;
+}

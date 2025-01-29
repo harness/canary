@@ -1,16 +1,25 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
-import { RepoLayout } from '@harnessio/ui/views'
+import { useTranslationsStore } from '@utils/viewUtils'
 
-import { useTranslationsStore } from '../../utils.ts'
-import RootViewWrapper from './root-view-wrapper.tsx'
+import { RepoSubheader } from '@harnessio/ui/components'
 
-const RepoViewWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => (
+import RootViewWrapper from './root-view-wrapper'
+
+const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => (
   <RootViewWrapper asChild>
-    <Route path="*" element={<RepoLayout useTranslationStore={useTranslationsStore} />}>
-      <Route path="*" element={children} />
-    </Route>
+    <Route
+      path="*"
+      element={
+        <>
+          <div className="layer-high bg-background-1 sticky top-[55px]">
+            <RepoSubheader useTranslationStore={useTranslationsStore} />
+          </div>
+          {children}
+        </>
+      }
+    />
   </RootViewWrapper>
 )
 

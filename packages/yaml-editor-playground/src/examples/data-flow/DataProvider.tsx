@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import React, { createContext, useState } from 'react'
 
 import { stageApproval } from '../../configurations/pipeline/stage-approval'
 
@@ -17,7 +17,7 @@ const DataContext = createContext<DataContextProps>({
   setYamlRevision: (_yamlRevision: YamlRevision) => undefined
 })
 
-const DataProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
+const DataProvider: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const [yamlRevision, setYamlRevision] = useState<YamlRevision>({ yaml: stageApproval })
 
   return <DataContext.Provider value={{ yamlRevision, setYamlRevision }}>{children}</DataContext.Provider>

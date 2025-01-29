@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Spacer, Text } from '@/components'
+import { Button, Card, Input, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -22,7 +22,7 @@ export interface SignInData {
 }
 
 const signInSchema = z.object({
-  email: z.string().email({ message: 'Invalid email address' }),
+  email: z.string(),
   password: z.string().min(1, { message: 'The field can’t be blank' })
 })
 
@@ -76,27 +76,25 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <CardHeader className="items-center">
+      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
+        <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <CardTitle className="mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center" as="h1">
             Sign in to Harness
-          </CardTitle>
+          </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Welcome back! Please enter your details.
           </Text>
-        </CardHeader>
-        <CardContent className="mt-10">
+        </Card.Header>
+        <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(onSubmit)}>
             <Input
               id="email"
-              type="email"
-              label="Email"
+              label="Username/Email"
               placeholder="Your email"
               size="md"
               {...register('email', { onChange: handleInputChange })}
               error={errors.email?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
             <Input
@@ -131,8 +129,8 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
               Sign up
             </Link>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Agreements />
     </Floating1ColumnLayout>
   )

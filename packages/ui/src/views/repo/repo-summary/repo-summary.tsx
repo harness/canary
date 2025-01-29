@@ -1,14 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Button,
   ButtonGroup,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
   Icon,
   ListActions,
   MarkdownViewer,
@@ -30,10 +26,16 @@ import {
 import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
-// import { RecentPushInfoBar } from './components/recent-push-info-bar'
+import { CloneRepoDialog } from './components/clone-repo-dialog'
 import SummaryPanel from './components/summary-panel'
+import { RepoEmptyView } from './repo-empty-view'
 
-export interface RepoSummaryViewProps {
+interface RoutingProps {
+  toRepoFiles: () => string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+
+export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   loading: boolean
   filesList: string[]
   navigateToFile: (path: string) => void
@@ -44,6 +46,7 @@ export interface RepoSummaryViewProps {
         description?: string
         created?: number
         default_branch?: string
+        is_public?: boolean
       }
     | undefined
   handleCreateToken: () => void
@@ -73,6 +76,8 @@ export interface RepoSummaryViewProps {
   isEditDialogOpen: boolean
   setEditDialogOpen: (value: boolean) => void
   currentBranchDivergence: CommitDivergenceType
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export function RepoSummaryView({
@@ -93,33 +98,43 @@ export function RepoSummaryView({
   isEditDialogOpen,
   setEditDialogOpen,
   useTranslationStore,
-  currentBranchDivergence
+  currentBranchDivergence,
+  searchQuery,
+  setSearchQuery,
+  handleCreateToken,
+  toRepoFiles,
+  toCommitDetails
 }: RepoSummaryViewProps) {
-  const navigate = useNavigate()
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
-  if (loading) return <SkeletonList />
+  if (loading) {
+    return (
+      <SandboxLayout.Main fullWidth>
+        <SandboxLayout.Content>
+          <SkeletonList />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    )
+  }
 
   if (!repoEntryPathToFileTypeMap.size) {
     return (
-      <NoData
-        insideTabView
-        iconName="no-data-folder"
-        title="No files yet"
-        description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
-        primaryButton={{ label: 'Create file' }}
-        secondaryButton={{ label: 'Import file' }}
+      <RepoEmptyView
+        sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+        httpUrl={repository?.git_url ?? 'could not fetch url'}
+        repoName={repoId}
+        projName={spaceId}
       />
     )
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel hasHeader hasSubHeader fullWidth>
-      <SandboxLayout.Columns columnWidths="1fr 255px">
-        <SandboxLayout.Column>
+    <SandboxLayout.Main>
+      <SandboxLayout.Columns columnWidths="1fr 256px">
+        <SandboxLayout.Column className="max-w-[1000px]">
           <SandboxLayout.Content className="pl-6">
-            {/* 
+            {/*
               TODO: Implement proper recent push detection logic:
               1. Backend needs to:
                 - Track and store information about recent pushes
@@ -145,20 +160,10 @@ export function RepoSummaryView({
                   * No PR has been created from this branch yet
                 - Format timestamps using timeAgoFromISOTime
                 - Remove mock data below
-         
+
                 Example:
                 {selectedBranchTag.name !== repository?.default_branch && (
                   <>
-                    <RecentPushInfoBar
-                      recentPushes={[
-                        {
-                          branchName: 'new-branch',
-                          timeAgo: timeAgoFromISOTime(new Date(Date.now() - 1000 * 60 * 5).toISOString())
-                        }
-                      ]}
-                      spaceId={spaceId}
-                      repoId={repoId}
-                    />
                     <Spacer size={6} />
                   </>
                 )}
@@ -170,6 +175,8 @@ export function RepoSummaryView({
                     onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
+                    searchQuery={searchQuery}
+                    setSearchQuery={setSearchQuery}
                   />
                   <SearchFiles
                     navigateToFile={navigateToFile}
@@ -180,23 +187,21 @@ export function RepoSummaryView({
               </ListActions.Left>
               <ListActions.Right>
                 <ButtonGroup>
-                  <Button variant="secondary" asChild>
-                    <Link to={`/${spaceId}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}>
-                      {t('views:repos.addFile', 'Add File')}
+                  <Button variant="outline">
+                    <Link
+                      className="relative grid grid-cols-[auto_1fr] items-center gap-2.5"
+                      to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/new/${gitRef || selectedBranchTag?.name || ''}/~/`}
+                    >
+                      <Icon name="plus" size={12} />
+                      <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
                     </Link>
                   </Button>
-                  <Button>
-                    <Icon name="clone" />
-                    &nbsp; {t('views:repos.clone', 'Clone')}
-                  </Button>
-                  {/*
-                    TODO: require moving and preparing a component from views
-                    <CloneRepoDialog
-                      sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
-                      httpsUrl={repository?.git_url ?? 'could not fetch url'}
-                      handleCreateToken={handleCreateToken}
-                    />
-                   */}
+                  <CloneRepoDialog
+                    sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+                    httpsUrl={repository?.git_url ?? 'could not fetch url'}
+                    handleCreateToken={handleCreateToken}
+                    useTranslationStore={useTranslationStore}
+                  />
                 </ButtonGroup>
               </ListActions.Right>
             </ListActions.Root>
@@ -205,8 +210,7 @@ export function RepoSummaryView({
                 <Spacer size={4} />
                 <BranchInfoBar
                   defaultBranchName={repository?.default_branch}
-                  spaceId={spaceId}
-                  repoId={repoId}
+                  useRepoBranchesStore={useRepoBranchesStore}
                   currentBranchDivergence={{
                     ahead: currentBranchDivergence?.ahead || 0,
                     behind: currentBranchDivergence?.behind || 0
@@ -216,6 +220,7 @@ export function RepoSummaryView({
             )}
             <Spacer size={5} />
             <Summary
+              toCommitDetails={toCommitDetails}
               latestFile={{
                 user: { name: latestCommitInfo?.userName || '' },
                 lastCommitMessage: latestCommitInfo?.message || '',
@@ -224,20 +229,33 @@ export function RepoSummaryView({
               }}
               files={files}
               useTranslationStore={useTranslationStore}
+              hideHeader
             />
             <Spacer size={5} />
-            <StackedList.Root>
-              <StackedList.Item isHeader disableHover>
+            <StackedList.Root onlyTopRounded borderBackground>
+              <StackedList.Item className="py-2" isHeader disableHover>
                 <StackedList.Field
                   title={<Text color="tertiaryBackground">{t('views:repos.readme', 'README.md')}</Text>}
                 />
-                {/* TODO: add component and file editing logic */}
-                <StackedList.Field right />
-              </StackedList.Item>
-              <StackedList.Item disableHover>
-                <MarkdownViewer source={decodedReadmeContent || ''} />
+                <StackedList.Field
+                  right
+                  title={
+                    <Button
+                      className="flex border border-borders-1 hover:bg-background-3"
+                      variant="ghost"
+                      size="icon"
+                      asChild
+                    >
+                      <Link to={`${toRepoFiles?.()}/edit/${gitRef || selectedBranchTag?.name}/~/README.md`}>
+                        <Icon name="edit-pen" size={16} className="text-icons-3" />
+                        <span className="sr-only">{t('views:repos.editReadme', 'Edit README.md')}</span>
+                      </Link>
+                    </Button>
+                  }
+                />
               </StackedList.Item>
             </StackedList.Root>
+            <MarkdownViewer source={decodedReadmeContent || ''} withBorderWrapper />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
         <SandboxLayout.Column>
@@ -276,6 +294,8 @@ export function RepoSummaryView({
               updateRepoError={updateRepoError}
               isEditDialogOpen={isEditDialogOpen}
               setEditDialogOpen={setEditDialogOpen}
+              is_public={repository?.is_public}
+              useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

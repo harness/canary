@@ -1,7 +1,6 @@
 import { NavLink } from 'react-router-dom'
 
-import { Icon, ScrollArea, Sheet, SheetContent, SheetTitle, Spacer } from '@/components'
-import NavbarSkeleton from '@/components/navbar/navbar-skeleton'
+import { Icon, NavbarSkeleton, ScrollArea, Sheet, Spacer } from '@/components'
 import { MenuGroupType } from '@components/navbar/types'
 
 interface SystemAdminMenuProps {
@@ -12,14 +11,14 @@ interface SystemAdminMenuProps {
 
 export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: SystemAdminMenuProps) => {
   return (
-    <Sheet modal={false} open={showSettingMenu}>
-      <SheetContent
+    <Sheet.Root modal={false} open={showSettingMenu}>
+      <Sheet.Content
         className="inset-y-0 left-[220px] z-40 h-screen w-[364px] bg-transparent p-0"
         side="left"
         onClick={handleSettingsMenu}
         modal={false}
       >
-        <SheetTitle className="sr-only">System Administration menu</SheetTitle>
+        <Sheet.Title className="sr-only">System Administration menu</Sheet.Title>
         <NavbarSkeleton.Root className="w-[364px]" isSubMenu>
           <NavbarSkeleton.Content className="overflow-hidden">
             <ScrollArea>
@@ -37,7 +36,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
                         {({ isActive }) => (
                           <NavbarSkeleton.Item
                             text={item.title || ''}
-                            icon={<Icon name={item.iconName} size={12} />}
+                            icon={item.iconName && <Icon name={item.iconName} size={12} />}
                             active={isActive}
                           />
                         )}
@@ -50,7 +49,7 @@ export const SettingsMenu = ({ showSettingMenu, handleSettingsMenu, items }: Sys
             </ScrollArea>
           </NavbarSkeleton.Content>
         </NavbarSkeleton.Root>
-      </SheetContent>
-    </Sheet>
+      </Sheet.Content>
+    </Sheet.Root>
   )
 }

@@ -1,10 +1,11 @@
-import { createContext, ReactNode, useContext } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 import { noop } from 'lodash-es'
 
-import { TypesSpace, TypesUser } from '@harnessio/code-service-client'
+import { getUser, membershipSpaces, TypesSpace, TypesUser } from '@harnessio/code-service-client'
 
 import useLocalStorage from '../hooks/useLocalStorage'
+import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
   spaces: TypesSpace[]
@@ -23,8 +24,32 @@ const AppContext = createContext<AppContextType>({
 })
 
 export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [spaces, setSpaces] = useLocalStorage<TypesSpace[]>('spaces', [])
+  usePageTitle()
+  const [spaces, setSpaces] = useState<TypesSpace[]>([])
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
+
+  useEffect(() => {
+    Promise.allSettled([
+      membershipSpaces({
+        queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
+      }),
+      getUser({})
+    ])
+      .then(results => {
+        const [membershipResult, userResult] = results
+
+        if (membershipResult.status === 'fulfilled') {
+          setSpaces(membershipResult.value.body.filter(item => item?.space).map(item => item.space as TypesSpace))
+        }
+
+        if (userResult.status === 'fulfilled') {
+          setCurrentUser(userResult.value.body)
+        }
+      })
+      .catch(() => {
+        // Optionally handle error or show toast
+      })
+  }, [])
 
   const addSpaces = (newSpaces: TypesSpace[]): void => {
     setSpaces([...spaces, ...newSpaces])

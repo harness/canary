@@ -21,10 +21,11 @@ const badgeVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80',
+        default: 'border-transparent bg-primary text-primary-foreground hover:bg-primary/80',
         secondary: 'border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80',
         tertiary: 'border-transparent bg-background-8 text-foreground-8',
-        destructive: 'border-transparent bg-destructive text-destructive-foreground shadow hover:bg-destructive/80',
+        quaternary: 'border-borders-1 bg-background-2 text-foreground-5',
+        destructive: 'border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80',
         outline: 'text-foreground'
       },
       size: {
@@ -32,8 +33,8 @@ const badgeVariants = cva(
         xl: 'h-[18px] px-2 text-12',
         lg: 'px-3 py-1 text-xs font-normal',
         md: 'h-6 px-2.5',
-        sm: 'h-5 px-1 text-12',
-        xs: 'px-1.5 py-0 text-11 font-light'
+        sm: 'h-5 px-1.5 text-12',
+        xs: 'h-[18px] px-1.5 text-11 font-light'
       },
       borderRadius: {
         default: 'rounded-md',
@@ -43,16 +44,16 @@ const badgeVariants = cva(
       hover: {
         [BadgesHoverStates.ENABLED]: '',
         // variant
-        [BadgesHoverStates.DISABLED_DEFAULT]: 'hover:!bg-primary hover:shadow-none',
-        [BadgesHoverStates.DISABLED_SECONDARY]: 'hover:!bg-secondary hover:shadow-none',
-        [BadgesHoverStates.DISABLED_DESTRUCTIVE]: 'hover:!bg-destructive hover:shadow-none',
+        [BadgesHoverStates.DISABLED_DEFAULT]: 'hover:!bg-primary',
+        [BadgesHoverStates.DISABLED_SECONDARY]: 'hover:!bg-secondary',
+        [BadgesHoverStates.DISABLED_DESTRUCTIVE]: 'hover:!bg-destructive',
         [BadgesHoverStates.DISABLED_OUTLINE]: '',
         // theme
-        [BadgesHoverStates.DISABLED_DESTRUCTIVE_THEME]: 'hover:!bg-tag-background-red-1 hover:shadow-none',
-        [BadgesHoverStates.DISABLED_WARNING_THEME]: 'hover:!bg-tag-background-amber-1 hover:shadow-none',
-        [BadgesHoverStates.DISABLED_SUCCESS_THEME]: 'hover:!bg-tag-background-mint-1 hover:shadow-none',
-        [BadgesHoverStates.DISABLED_EMPHASIS_THEME]: 'hover:!bg-tag-background-purple-1 hover:shadow-none',
-        [BadgesHoverStates.DISABLED_MUTED_THEME]: 'hover:!bg-tag-background-gray-1 hover:shadow-none'
+        [BadgesHoverStates.DISABLED_DESTRUCTIVE_THEME]: 'hover:!bg-tag-background-red-1',
+        [BadgesHoverStates.DISABLED_WARNING_THEME]: 'hover:!bg-tag-background-amber-1',
+        [BadgesHoverStates.DISABLED_SUCCESS_THEME]: 'hover:!bg-tag-background-mint-1',
+        [BadgesHoverStates.DISABLED_EMPHASIS_THEME]: 'hover:!bg-tag-background-purple-1',
+        [BadgesHoverStates.DISABLED_MUTED_THEME]: 'hover:!bg-tag-background-gray-1'
       },
       theme: {
         default: '',

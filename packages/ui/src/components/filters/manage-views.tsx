@@ -2,16 +2,7 @@
 
 import { ChangeEvent, FC, memo, useCallback, useEffect, useMemo, useState } from 'react'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  Icon,
-  Input
-} from '@/components'
+import { AlertDialog, Button, Icon, Input } from '@/components'
 import { DndContext } from '@dnd-kit/core'
 import { SortableContext, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -117,7 +108,16 @@ interface ManageViewsProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   views: SavedView[]
-  viewManagement: ViewManagement
+  viewManagement: Pick<
+    ViewManagement,
+    | 'setCurrentView'
+    | 'updateViewsOrder'
+    | 'prepareViewsForSave'
+    | 'getExistingNames'
+    | 'hasViewListChanges'
+    | 'hasViewErrors'
+    | 'validateViewNameChange'
+  >
 }
 
 /**
@@ -143,7 +143,7 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
    * Memoized set of existing view names for validation
    * Updates when local views change
    */
-  const existingNames = useMemo(() => viewManagement.getExistingNames(localViews), [localViews])
+  const existingNames = useMemo(() => viewManagement.getExistingNames(localViews), [localViews, viewManagement])
 
   /**
    * Handles local view rename operations
@@ -175,11 +175,11 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
     !viewManagement.hasViewListChanges(localViews, views) || viewManagement.hasViewErrors(localViews)
 
   return (
-    <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="max-w-[410px]">
-        <AlertDialogHeader>
-          <AlertDialogTitle>Manage saved filters</AlertDialogTitle>
-        </AlertDialogHeader>
+    <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
+      <AlertDialog.Content className="max-w-[410px]">
+        <AlertDialog.Header>
+          <AlertDialog.Title>Manage saved filters</AlertDialog.Title>
+        </AlertDialog.Header>
 
         <div className="-mx-3.5 max-h-[320px] space-y-0.5 overflow-y-auto">
           <DndContext onDragEnd={handleDragEnd}>
@@ -202,7 +202,7 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
           </DndContext>
         </div>
 
-        <AlertDialogFooter>
+        <AlertDialog.Footer>
           <Button
             variant="outline"
             onClick={() => {
@@ -228,9 +228,9 @@ const ManageViews: FC<ManageViewsProps> = memo(({ open, onOpenChange, views, vie
           >
             Save
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 })
 

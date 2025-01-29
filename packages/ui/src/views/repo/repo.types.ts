@@ -1,3 +1,5 @@
+import { PullRequestType } from '@/views'
+
 import { BranchSelectorTab } from './components/branch-selector/types'
 
 export interface BranchSelectorListItem {
@@ -46,6 +48,7 @@ export interface RepoFile {
   user?: User
   sha?: string
   path: string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export interface RepositoryType {
@@ -76,36 +79,92 @@ export interface BranchData {
     ahead: number
     default: boolean
   }
+  pullRequests?: PullRequestType[]
+  checks?: {
+    done?: number
+    total?: number
+    status: {
+      failure: number
+      error: number
+      pending: number
+      running: number
+      success: number
+    }
+  }
 }
 
-export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha'>
+export type LatestFileTypes = Pick<RepoFile, 'user' | 'lastCommitMessage' | 'timestamp' | 'sha' | 'toCommitDetails'>
 
 export type CommitDivergenceType = {
   ahead?: number
   behind?: number
 }
+
 export interface IBranchSelectorStore {
-  // state
+  // states
   selectedBranchTag: BranchSelectorListItem
-  selectedBranchType: BranchSelectorTab
+  selectedRefType: BranchSelectorTab
   branchList: BranchData[]
   tagList: BranchSelectorListItem[]
   spaceId: string
   repoId: string
   defaultBranch: string
-  branchDivergence: CommitDivergenceType[]
   xNextPage: number
   xPrevPage: number
   page: number
 
-  // actions
+  //actions
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
-  setSelectedBranchType: (selectedBranchType: BranchSelectorTab) => void
+  setSelectedRefType: (selectedRefType: BranchSelectorTab) => void
+  setTagList: (tagList: BranchSelectorListItem[]) => void
+  setSpaceIdAndRepoId: (spaceId: string, repoId: string) => void
+  setBranchList: (branches: BranchData[]) => void
+  setDefaultBranch: (branch: string) => void
   setPage: (page: number) => void
+  setPaginationFromHeaders: (xNextPage: number, xPrevPage: number) => void
 }
 
 export enum CodeModes {
   EDIT = 'edit',
   NEW = 'new',
   VIEW = 'view'
+}
+
+export interface TypesChangeStats {
+  changes?: number
+  deletions?: number
+  insertions?: number
+}
+
+export interface TypesSignature {
+  identity?: TypesIdentity
+  when?: string
+}
+
+export interface TypesIdentity {
+  email?: string
+  name?: string
+}
+
+export interface TypesCommit {
+  author?: TypesSignature
+  committer?: TypesSignature
+  message?: string
+  parent_shas?: string[]
+  sha?: string
+  stats?: TypesCommitStats
+  title?: string
+}
+export interface TypesCommitStats {
+  files?: TypesCommitFileStats[]
+  total?: TypesChangeStats
+}
+
+export interface TypesCommitFileStats {
+  changes?: number
+  deletions?: number
+  insertions?: number
+  old_path?: string
+  path?: string
+  status?: string
 }

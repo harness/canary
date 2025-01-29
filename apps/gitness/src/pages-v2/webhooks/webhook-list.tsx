@@ -1,74 +1,100 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useQueryClient } from '@tanstack/react-query'
 
-import { useListRepoWebhooksQuery } from '@harnessio/code-service-client'
+import {
+  DeleteRepoWebhookErrorResponse,
+  useDeleteRepoWebhookMutation,
+  useListRepoWebhooksQuery
+} from '@harnessio/code-service-client'
+import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
-import { useDebouncedQueryState } from '../../hooks/useDebouncedQueryState'
+import { useQueryState } from '../../framework/hooks/useQueryState'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { getErrorMessage } from '../../utils/error-utils'
 import { useWebhookStore } from './stores/webhook-store'
 
 export default function WebhookListPage() {
   const repoRef = useGetRepoRef() ?? ''
-  const { setWebhooks, page, setPage, setWebhookLoading, setError } = useWebhookStore()
+  const { setWebhooks, page, setPage, setError } = useWebhookStore()
+  const [query, setQuery] = useQueryState('query')
 
-  /* Query and Pagination */
-  const [query] = useDebouncedQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const queryClient = useQueryClient()
 
+  const [apiError, setApiError] = useState<{ type: string; message: string } | null>(null)
+  const [deleteWebhookId, setDeleteWebhookId] = useState<number | null>(null)
+
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
+
+  /**
+   * Fetching webhooks
+   */
   const {
     data: { body: webhookData, headers } = {},
     isFetching,
     isError,
-    error
+    error,
+    refetch
   } = useListRepoWebhooksQuery(
     {
-      queryParams: { page, query },
+      queryParams: {
+        page: queryPage,
+        query: query ?? ''
+      },
       repo_ref: repoRef
     },
     { retry: false }
   )
-  //TODO: add delete in another pr
-  //   const queryClient = useQueryClient()
-  //   const [isDeleteWebhookDialogOpen, setIsDeleteWebhookDialogOpen] = useState(false)
-  //   const closeDeleteWebhookDialog = () => setIsDeleteWebhookDialogOpen(false)
-  //   const [deleteWebhookId, setDeleteWebhookId] = useState<string | null>(null)
 
-  //   const openDeleteWebhookDialog = (id: number) => {
-  //     setIsDeleteWebhookDialogOpen(true)
-  //     setDeleteWebhookId(id.toString())
-  //   }
+  /**
+   * Deleting webhook
+   */
+  const { mutate: deleteWebhook, isLoading: deleteIsLoading } = useDeleteRepoWebhookMutation(
+    {
+      repo_ref: repoRef,
+      webhook_identifier: 0
+    },
+    {
+      onSuccess: () => {
+        setApiError(null)
+        queryClient.invalidateQueries({ queryKey: ['listRepoWebhooks', repoRef] })
+        closeDeleteWebhookDialog()
+        refetch()
+      },
+      onError: (error: DeleteRepoWebhookErrorResponse) => {
+        const message = error.message || 'Error deleting webhook'
+        setApiError({ type: '', message })
+      }
+    }
+  )
 
-  //   const { mutate: deleteWebhook } = useDeleteRepoWebhookMutation(
-  //     { repo_ref: repoRef, webhook_identifier: 0 },
-  //     {
-  //       onSuccess: () => {
-  //         queryClient.invalidateQueries({ queryKey: ['listWebhooks', repoRef] })
-  //         closeDeleteWebhookDialog()
-  //       }
-  //     }
-  //   )
+  /**
+   * Set id of webhook to delete it
+   */
+  const openDeleteWebhookDialog = useCallback((id: number) => {
+    setDeleteWebhookId(id)
+  }, [])
 
-  //   const handleDeleteWebhook = (id: string) => {
-  //     const webhook_identifier = parseInt(id)
+  const closeDeleteWebhookDialog = () => {
+    setDeleteWebhookId(null)
+  }
 
-  //     deleteWebhook({ repo_ref: repoRef, webhook_identifier: webhook_identifier })
-  //   }
+  const handleDeleteWebhook = () => {
+    if (deleteWebhookId === null) return
+
+    deleteWebhook({ repo_ref: repoRef, webhook_identifier: deleteWebhookId })
+  }
 
   useEffect(() => {
     if (webhookData) {
       setWebhooks(webhookData, headers)
-      setWebhookLoading(false)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [webhookData, headers, setWebhooks])
-  useEffect(() => {
-    if (isFetching) {
-      setWebhookLoading(isFetching)
-    }
-  }, [isFetching, setWebhookLoading])
 
   useEffect(() => {
     if (isError && error !== undefined) {
@@ -76,9 +102,25 @@ export default function WebhookListPage() {
     }
   }, [isError, setError, error])
 
-  useEffect(() => {
-    setQueryPage(page)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, queryPage, setPage])
-  return <RepoWebhookListPage useWebhookStore={useWebhookStore} useTranslationStore={useTranslationStore} />
+  return (
+    <>
+      <RepoWebhookListPage
+        useWebhookStore={useWebhookStore}
+        useTranslationStore={useTranslationStore}
+        openDeleteWebhookDialog={openDeleteWebhookDialog}
+        searchQuery={query}
+        setSearchQuery={setQuery}
+        webhookLoading={isFetching}
+      />
+      <DeleteAlertDialog
+        open={deleteWebhookId !== null}
+        onClose={closeDeleteWebhookDialog}
+        deleteFn={handleDeleteWebhook}
+        type="webhook"
+        isLoading={deleteIsLoading}
+        error={apiError}
+        useTranslationStore={useTranslationStore}
+      />
+    </>
+  )
 }

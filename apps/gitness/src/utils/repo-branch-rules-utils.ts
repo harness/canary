@@ -2,10 +2,16 @@ import {
   EnumRuleState,
   OpenapiRule,
   OpenapiRuleDefinition,
-  RuleAddRequestBody,
-  RuleGetOkResponse
+  RepoRuleAddRequestBody,
+  RepoRuleGetOkResponse
 } from '@harnessio/code-service-client'
-import { BranchRuleId, MergeStrategy, PatternsButtonType, RepoBranchSettingsFormFields, Rule } from '@harnessio/views'
+import {
+  BranchRuleId,
+  MergeStrategy,
+  PatternsButtonType,
+  RepoBranchSettingsFormFields,
+  Rule
+} from '@harnessio/ui/views'
 
 const ruleIds = [
   BranchRuleId.REQUIRE_LATEST_COMMIT,
@@ -17,12 +23,13 @@ const ruleIds = [
   BranchRuleId.BLOCK_BRANCH_CREATION,
   BranchRuleId.BLOCK_BRANCH_DELETION,
   BranchRuleId.REQUIRE_PULL_REQUEST,
-  BranchRuleId.REQUIRE_CODE_REVIEW
+  BranchRuleId.REQUIRE_CODE_REVIEW,
+  BranchRuleId.REQUIRE_CODE_OWNERS
 ]
 
 // Util to transform API response into expected-form format for branch-rules-edit
 
-const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
+const extractBranchRules = (data: RepoRuleGetOkResponse): Rule[] => {
   const rules = []
 
   for (const rule of ruleIds) {
@@ -66,6 +73,9 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
         checked = (definition?.pullreq?.approvals?.require_minimum_count ?? 0) > 0
         input = definition?.pullreq?.approvals?.require_minimum_count?.toString() || ''
         break
+      case BranchRuleId.REQUIRE_CODE_OWNERS:
+        checked = definition?.pullreq?.approvals?.require_code_owners || false
+        break
       default:
         continue
     }
@@ -82,7 +92,7 @@ const extractBranchRules = (data: RuleGetOkResponse): Rule[] => {
   return rules
 }
 
-export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSettingsFormFields => {
+export const transformDataFromApi = (data: RepoRuleGetOkResponse): RepoBranchSettingsFormFields => {
   const includedPatterns = data?.pattern?.include || []
   const excludedPatterns = data?.pattern?.exclude || []
   const formatPatterns = [
@@ -92,6 +102,21 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
 
   const rules = extractBranchRules(data)
 
+  const bypass = data?.definition?.bypass?.user_ids
+    ? data?.definition?.bypass?.user_ids.reduce<RepoBranchSettingsFormFields['bypass']>((acc, userId) => {
+        const user = data?.users?.[userId]
+
+        if (user) {
+          acc.push({
+            id: userId,
+            display_name: user?.display_name || ''
+          })
+        }
+
+        return acc
+      }, [])
+    : []
+
   return {
     identifier: data.identifier || '',
     description: data.description || '',
@@ -99,7 +124,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
     patterns: formatPatterns,
     rules: rules,
     state: data.state === 'active',
-    bypass: data?.definition?.bypass?.user_ids || [],
+    bypass,
     default: data?.pattern?.default,
     repo_owners: data?.definition?.bypass?.repo_owners
   }
@@ -107,7 +132,7 @@ export const transformDataFromApi = (data: RuleGetOkResponse): RepoBranchSetting
 
 // Util to transform form format to expected-API format for branch-rules-edit
 
-export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RuleAddRequestBody => {
+export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): RepoRuleAddRequestBody => {
   const rulesMap = formOutput.rules.reduce<Record<string, Rule>>((acc, rule) => {
     acc[rule.id] = rule
     return acc
@@ -125,11 +150,11 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     { include: [], exclude: [] }
   )
 
-  const transformed: RuleAddRequestBody = {
+  return {
     identifier: formOutput.identifier,
     type: 'branch',
     description: formOutput.description,
-    state: (formOutput.state === true ? 'active' : 'disabled') as EnumRuleState,
+    state: (formOutput.state ? 'active' : 'disabled') as EnumRuleState,
     pattern: {
       default: formOutput.default || false,
       include,
@@ -137,7 +162,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
     },
     definition: {
       bypass: {
-        user_ids: formOutput.bypass,
+        user_ids: formOutput.bypass.map(it => it.id),
         repo_owners: formOutput.repo_owners || false
       },
       lifecycle: {
@@ -147,7 +172,7 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       },
       pullreq: {
         approvals: {
-          require_code_owners: true,
+          require_code_owners: rulesMap[BranchRuleId.REQUIRE_CODE_OWNERS]?.checked || false,
           require_latest_commit: rulesMap[BranchRuleId.REQUIRE_LATEST_COMMIT]?.checked || false,
           require_no_change_request: rulesMap[BranchRuleId.REQUIRE_NO_CHANGE_REQUEST]?.checked || false,
           require_minimum_count: rulesMap[BranchRuleId.REQUIRE_CODE_REVIEW].checked
@@ -167,8 +192,6 @@ export const transformFormOutput = (formOutput: RepoBranchSettingsFormFields): R
       }
     }
   }
-
-  return transformed
 }
 
 export const getTotalRulesApplied = (obj: OpenapiRule) => {

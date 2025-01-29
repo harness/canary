@@ -1,9 +1,17 @@
-import { ChangeEvent, FC, ReactNode, useCallback, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { FC, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
-import { Filters, FiltersBar } from '@components/filters'
-import { debounce } from 'lodash-es'
+import {
+  ButtonWithOptions,
+  Filters,
+  FiltersBar,
+  ListActions,
+  NoData,
+  PaginationComponent,
+  SearchBox,
+  Spacer
+} from '@/components'
+import { useDebounceSearch } from '@/hooks'
 
 import { SandboxLayout } from '../../index'
 import { getFilterOptions, getLayoutOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
@@ -14,8 +22,6 @@ import { sortRepositories } from '../utils/sorting/repos'
 import { RepoList } from './repo-list'
 import { RepoListProps } from './types'
 
-const LinkComponent = ({ to, children }: { to: string; children: ReactNode }) => <Link to={to}>{children}</Link>
-
 const SandboxRepoListPage: FC<RepoListProps> = ({
   useRepoStore,
   useTranslationStore,
@@ -23,16 +29,27 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   isError,
   errorMessage,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  toCreateRepo,
+  toImportRepo,
+  ...routingProps
 }) => {
   const { t } = useTranslationStore()
+  const navigate = useNavigate()
 
   const FILTER_OPTIONS = getFilterOptions(t)
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)
   const LAYOUT_OPTIONS = getLayoutOptions(t)
 
-  const [searchInput, setSearchInput] = useState(searchQuery)
+  const {
+    search: searchInput,
+    handleSearchChange: handleInputChange,
+    handleResetSearch
+  } = useDebounceSearch({
+    handleChangeSearchValue: (val: string) => setSearchQuery(val.length ? val : null),
+    searchValue: searchQuery || ''
+  })
 
   // State for storing saved filters and sorts
   // null means no saved state exists
@@ -54,50 +71,54 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const sortedRepos = sortRepositories(filteredRepos, filterHandlers.activeSorts)
   const reposWithFormattedDates = formatRepositories(sortedRepos)
 
-  const debouncedSetSearchQuery = debounce(searchQuery => {
-    setSearchQuery(searchQuery || null)
-  }, 300)
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
+  }, [page, filterHandlers.activeFilters, searchQuery])
 
-  const handleInputChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearchInput(e.target.value)
-    debouncedSetSearchQuery(e.target.value)
-  }, [])
-
-  if (isError)
+  if (isError) {
     return (
-      <>
-        <SandboxLayout.Main hasHeader hasLeftPanel>
-          <SandboxLayout.Content>
-            <Spacer size={2} />
-            <Text size={1} className="text-destructive">
-              {errorMessage || 'Something went wrong'}
-            </Text>
-          </SandboxLayout.Content>
-        </SandboxLayout.Main>
-      </>
+      <NoData
+        textWrapperClassName="max-w-[350px]"
+        iconName="no-data-error"
+        title={t('views:noData.errorApiTitle', 'Failed to load repositories', {
+          type: 'repositories'
+        })}
+        description={[
+          errorMessage ||
+            t(
+              'views:noData.errorApiDescription',
+              'An error occurred while loading the data. Please try again and reload the page.'
+            )
+        ]}
+        primaryButton={{
+          label: t('views:notFound.button', 'Reload page'),
+          onClick: () => {
+            navigate(0) // Reload the page
+          }
+        }}
+      />
     )
+  }
 
-  const noData = !(reposWithFormattedDates && reposWithFormattedDates.length > 0)
-  const showTopBar = !noData || filterHandlers.activeFilters.length > 0 || searchQuery?.length
+  const noData = !(reposWithFormattedDates && !!reposWithFormattedDates.length)
+  const showTopBar = !noData || !!filterHandlers.activeFilters.length || !!searchQuery?.length || page !== 1
+
+  const handleResetFiltersQueryAndPages = () => {
+    filterHandlers.handleResetFilters()
+    handleResetSearch()
+    setPage(1)
+  }
 
   return (
-    <SandboxLayout.Main hasHeader hasLeftPanel>
+    <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        {/* 
-          TODO: Replace the Text component with a Title component in the future.
-          Consider using a Title component that supports a prefix prop for displaying the selected saved filter name.
-          Example:
-          <Title prefix={filterHandlers.currentView?.name}>
-            {t('views:repos.repositories')}
-          </Title>
-        */}
-        {showTopBar ? (
+        {showTopBar && (
           <>
-            <Spacer size={10} />
+            <Spacer size={8} />
             <div className="flex items-end">
-              <Text className="leading-none" size={5} weight={'medium'}>
-                {t('views:repos.repositories')}
-              </Text>
+              <h1 className="text-2xl font-medium text-foreground-1">
+                {t('views:repos.repositories', 'Repositories')}
+              </h1>
               {viewManagement.currentView && (
                 <>
                   <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
@@ -113,7 +134,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   className="max-w-96"
                   value={searchInput || ''}
                   handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
               </ListActions.Left>
               <ListActions.Right>
@@ -127,12 +148,32 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                   onLayoutChange={setCurrentLayout}
                   t={t}
                 />
-                <Button variant="default" asChild>
-                  <Link to={`create`}>{t('views:repos.create-repository')}</Link>
-                </Button>
+                <ButtonWithOptions<string>
+                  id="repository"
+                  dropdownContentClassName="mt-0 min-w-[170px]"
+                  handleButtonClick={() => navigate(toCreateRepo?.() || '')}
+                  handleOptionChange={option => {
+                    if (option === 'import') {
+                      navigate(toImportRepo?.() || '')
+                    } else if (option === 'import-multiple') {
+                      navigate('import-multiple')
+                    }
+                  }}
+                  options={[
+                    {
+                      value: 'import',
+                      label: t('views:repos.import-repository', 'Import repository')
+                    },
+                    {
+                      value: 'import-multiple',
+                      label: t('views:repos.import-repositories', 'Import repositories')
+                    }
+                  ]}
+                >
+                  {t('views:repos.create-repository', 'Create repository')}
+                </ButtonWithOptions>
               </ListActions.Right>
             </ListActions.Root>
-            {(filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0) && <Spacer size={2} />}
             <FiltersBar
               filterOptions={FILTER_OPTIONS}
               sortOptions={SORT_OPTIONS}
@@ -142,23 +183,21 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
               t={t}
             />
           </>
-        ) : null}
+        )}
         <Spacer size={5} />
         <RepoList
           repos={reposWithFormattedDates}
-          LinkComponent={LinkComponent}
-          handleResetFilters={filterHandlers.handleResetFilters}
-          hasActiveFilters={filterHandlers.activeFilters.length > 0}
-          query={searchQuery ?? ''}
-          handleResetQuery={() => {
-            setSearchInput('')
-            setSearchQuery(null)
-          }}
+          handleResetFiltersQueryAndPages={handleResetFiltersQueryAndPages}
+          isDirtyList={isDirtyList}
           useTranslationStore={useTranslationStore}
           isLoading={isLoading}
+          toCreateRepo={toCreateRepo}
+          toImportRepo={toImportRepo}
+          {...routingProps}
         />
-        <Spacer size={8} />
-        <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        {!!reposWithFormattedDates.length && (
+          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+        )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

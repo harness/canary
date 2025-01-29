@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button, Card, CardContent, CardHeader, CardTitle, Input, Text } from '@/components'
+import { Button, Card, Input, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -80,17 +80,17 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
       highlightTheme={hasError ? 'error' : 'blue'}
       verticalCenter
     >
-      <Card className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
-        <CardHeader className="items-center">
+      <Card.Root className="relative z-10 mb-8 max-w-full" variant="plain" width="xl">
+        <Card.Header className="items-center">
           <AnimatedHarnessLogo theme={hasError ? 'error' : 'blue'} />
-          <CardTitle className="mt-3 text-center" as="h1">
+          <Card.Title className="mt-3 text-center" as="h1">
             Create new password
-          </CardTitle>
+          </Card.Title>
           <Text className="mt-0.5 leading-snug" size={2} color="foreground-4" align="center" as="p">
             Your new password must be different from your previously used password.
           </Text>
-        </CardHeader>
-        <CardContent className="mt-10">
+        </Card.Header>
+        <Card.Content className="mt-10">
           <form onSubmit={handleSubmit(onFormSubmit)}>
             <Input
               id="password"
@@ -123,8 +123,8 @@ export function NewPasswordPage({ isLoading, handleFormSubmit, error }: NewPassw
               {isLoading ? 'Saving...' : 'Save'}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
       <Agreements />
     </Floating1ColumnLayout>
   )

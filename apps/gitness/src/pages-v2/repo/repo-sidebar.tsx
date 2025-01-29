@@ -1,9 +1,10 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Outlet, useNavigate, useParams } from 'react-router-dom'
 
 import {
   getContent,
   useFindRepositoryQuery,
+  useGetBranchQuery,
   useGetContentQuery,
   useListBranchesQuery,
   useListPathsQuery,
@@ -12,6 +13,7 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
 
 import Explorer from '../../components/FileExplorer'
+import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath.ts'
 import useCodePathDetails from '../../hooks/useCodePathDetails.ts'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
@@ -19,11 +21,13 @@ import { PathParams } from '../../RouteDefinitions.ts'
 import { orderSortDate } from '../../types.ts'
 import { FILE_SEPERATOR, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils.ts'
 import { useRepoBranchesStore } from '././stores/repo-branches-store.ts'
+import { transformBranchList } from './transform-utils/branch-transform.ts'
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export const RepoSidebar = () => {
+  const routes = useRoutes()
   const {
     branchList,
     tagList,
@@ -32,7 +36,7 @@ export const RepoSidebar = () => {
     selectedBranchTag,
     setDefaultBranch,
     setSelectedBranchTag,
-    setSelectedBranchType,
+    setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
@@ -40,10 +44,7 @@ export const RepoSidebar = () => {
   const { spaceId, repoId } = useParams<PathParams>()
   const { fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
   const navigate = useNavigate()
-
-  useEffect(() => {
-    setSelectedBranchTag({ name: gitRefName || '', sha: '' })
-  }, [fullGitRef])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -57,21 +58,37 @@ export const RepoSidebar = () => {
       include_commit: false,
       sort: 'date',
       order: orderSortDate.DESC,
-      limit: 50
+      limit: 50,
+      query: searchQuery
     }
   })
+
+  const { data: { body: selectedGitRefBranch } = {} } = useGetBranchQuery(
+    {
+      repo_ref: repoRef,
+      branch_name: fullGitRef,
+      queryParams: {}
+    },
+    {
+      enabled: !!fullGitRef
+    }
+  )
+
+  useEffect(() => {
+    if (selectedGitRefBranch) {
+      setSelectedBranchTag({
+        name: selectedGitRefBranch.name ?? '',
+        sha: selectedGitRefBranch.sha ?? ''
+      })
+    }
+  }, [selectedGitRefBranch, fullGitRef])
+
   useEffect(() => {
     if (branches) {
-      setBranchList(
-        branches.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          is_default: item?.name === repository?.default_branch
-        }))
-      )
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
     if (repository?.default_branch) {
-      setDefaultBranch(repository)
+      setDefaultBranch(repository?.default_branch)
     }
   }, [branches, repository?.default_branch])
 
@@ -103,14 +120,15 @@ export const RepoSidebar = () => {
     }
     if (!fullGitRef) {
       const defaultBranch = branchList.find(branch => branch.default)
-      if (defaultBranch) {
-        setSelectedBranchTag(defaultBranch)
-      }
+      setSelectedBranchTag({
+        name: defaultBranch?.name || repository?.default_branch || '',
+        sha: defaultBranch?.sha || '',
+        default: true
+      })
     } else {
-      const selectedGitRefBranch = branchList.find(branch => branch.name === fullGitRef)
       const selectedGitRefTag = tagList.find(tag => tag.name === gitRefName)
       if (selectedGitRefBranch) {
-        setSelectedBranchTag(selectedGitRefBranch)
+        setSelectedBranchTag({ name: selectedGitRefBranch.name ?? '', sha: selectedGitRefBranch.sha ?? '' })
       } else if (selectedGitRefTag) {
         setSelectedBranchTag(selectedGitRefTag)
       }
@@ -139,15 +157,15 @@ export const RepoSidebar = () => {
         const branch = branchList.find(branch => branch.name === branchTagName.name)
         if (branch) {
           setSelectedBranchTag(branch)
-          setSelectedBranchType(type)
-          navigate(`${branch.name}`)
+          setSelectedRefType(type)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${branch.name}`)
         }
       } else if (type === BranchSelectorTab.TAGS) {
         const tag = tagList.find(tag => tag.name === branchTagName.name)
         if (tag) {
           setSelectedBranchTag(tag)
-          setSelectedBranchType(type)
-          navigate(`${REFS_TAGS_PREFIX + tag.name}`)
+          setSelectedRefType(type)
+          navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${REFS_TAGS_PREFIX + tag.name}`)
         }
       }
     },
@@ -165,44 +183,56 @@ export const RepoSidebar = () => {
         }
       }).then(response => {
         if (response.body.type === 'dir') {
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${fullResourcePath}`
+          )
         } else {
           const parentDirPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
-          navigate(`new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`)
+          navigate(
+            `${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/${parentDirPath}`
+          )
         }
       })
     } else {
-      navigate(`new/${fullGitRef || selectedBranchTag.name}/~/`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/new/${fullGitRef || selectedBranchTag.name}/~/`)
     }
   }, [fullResourcePath, fullGitRef, navigate, repoId, repoRef, selectedBranchTag.name])
 
   const navigateToFile = useCallback(
     (filePath: string) => {
-      navigate(`${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
+      navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranchTag.name}/~/${filePath}`)
     },
     [fullGitRef, selectedBranchTag.name, navigate, repoId]
   )
 
   // TODO: repoId and spaceId must be defined
-  if (!repoId || !spaceId) return <></>
+  if (!repoId) return <></>
 
   return (
     <>
-      <RepoSidebarView
-        hasHeader
-        hasSubHeader
-        selectBranchOrTag={selectBranchOrTag}
-        useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationStore}
-        navigateToNewFile={navigateToNewFile}
-        navigateToFile={navigateToFile}
-        filesList={filesList}
-      >
-        {!!repoDetails?.body?.content?.entries?.length && (
-          <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+      <div className="grid grid-cols-[auto_1fr]">
+        {!repository?.is_empty && (
+          <RepoSidebarView
+            selectBranchOrTag={selectBranchOrTag}
+            useRepoBranchesStore={useRepoBranchesStore}
+            useTranslationStore={useTranslationStore}
+            navigateToNewFile={navigateToNewFile}
+            navigateToFile={navigateToFile}
+            filesList={filesList}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+          >
+            {!!repoDetails?.body?.content?.entries?.length && (
+              <Explorer repoDetails={repoDetails?.body} selectedBranch={selectedBranchTag.name} />
+            )}
+          </RepoSidebarView>
         )}
-      </RepoSidebarView>
-      <Outlet />
+        {/* 100vh = screen height - (55px Breadcrumbs Height + 45px SubHeader Height = 100px) */}
+        {/* Total height of both the divs should be 100vh */}
+        <div className="h-[calc(100vh-100px)]">
+          <Outlet />
+        </div>
+      </div>
     </>
   )
 }

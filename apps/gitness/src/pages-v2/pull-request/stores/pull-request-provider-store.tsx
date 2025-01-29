@@ -198,7 +198,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
     ruleViolationArr: undefined
   },
   updateCommentStatus: async (
-    repoId: string,
+    repoRef: string,
     pullReqNumber: number,
     commentId: number,
     status: string,
@@ -207,7 +207,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
     const payload = { status: status.toLowerCase() as CodeCommentState }
     try {
       const data = await apiCommentStatusPullReq({
-        repo_ref: repoId,
+        repo_ref: repoRef,
         pullreq_number: pullReqNumber,
         pullreq_comment_id: commentId,
         body: payload

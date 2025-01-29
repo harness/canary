@@ -1,27 +1,24 @@
 import { ComponentProps, ComponentPropsWithoutRef, forwardRef, ReactNode } from 'react'
 
-import { ChevronRightIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
+import { DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { Slot } from '@radix-ui/react-slot'
 import { cn } from '@utils/cn'
 
-type BreadcrumbProps = ComponentPropsWithoutRef<'nav'> & {
+type BreadcrumbRootProps = ComponentPropsWithoutRef<'nav'> & {
   separator?: ReactNode
 }
 
-const Breadcrumb = forwardRef<HTMLElement, BreadcrumbProps>(({ ...props }, ref) => {
+const BreadcrumbRoot = forwardRef<HTMLElement, BreadcrumbRootProps>(({ ...props }, ref) => {
   return <nav ref={ref} aria-label="breadcrumb" {...props} />
 })
-Breadcrumb.displayName = 'Breadcrumb'
+BreadcrumbRoot.displayName = 'BreadcrumbRoot'
 
 type BreadcrumbListProps = ComponentPropsWithoutRef<'ol'>
 
 const BreadcrumbList = forwardRef<HTMLOListElement, BreadcrumbListProps>(({ className, ...props }, ref) => (
   <ol
     ref={ref}
-    className={cn(
-      'text-muted-foreground flex flex-wrap items-center gap-1.5 break-words text-sm sm:gap-2.5',
-      className
-    )}
+    className={cn('text-muted-foreground flex flex-wrap items-center gap-1.5 break-words text-sm', className)}
     {...props}
   />
 ))
@@ -62,9 +59,9 @@ BreadcrumbPage.displayName = 'BreadcrumbPage'
 type BreadcrumbSeparatorProps = ComponentProps<'li'>
 
 const BreadcrumbSeparator = ({ children, className, ...props }: BreadcrumbSeparatorProps) => (
-  <li role="presentation" aria-hidden="true" className={cn('[&>svg]:size-3.5', className)} {...props}>
-    {children ?? <ChevronRightIcon />}
-  </li>
+  <span role="presentation" aria-hidden="true" className={cn('[&>svg]:size-3.5', className)} {...props}>
+    {children ?? '/'}
+  </span>
 )
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator'
 
@@ -83,19 +80,23 @@ const BreadcrumbEllipsis = ({ className, ...props }: BreadcrumbEllipsisProps) =>
 )
 BreadcrumbEllipsis.displayName = 'BreadcrumbEllipsis'
 
+const Breadcrumb = {
+  Root: BreadcrumbRoot,
+  List: BreadcrumbList,
+  Item: BreadcrumbItem,
+  Link: BreadcrumbLink,
+  Page: BreadcrumbPage,
+  Separator: BreadcrumbSeparator,
+  Ellipsis: BreadcrumbEllipsis
+}
+
 export {
   Breadcrumb,
-  BreadcrumbProps,
-  BreadcrumbList,
+  BreadcrumbRootProps,
   BreadcrumbListProps,
-  BreadcrumbItem,
   BreadcrumbItemProps,
-  BreadcrumbLink,
   BreadcrumbLinkProps,
-  BreadcrumbPage,
   BreadcrumbPageProps,
-  BreadcrumbSeparator,
   BreadcrumbSeparatorProps,
-  BreadcrumbEllipsis,
   BreadcrumbEllipsisProps
 }

@@ -1,6 +1,6 @@
 import { FC, useMemo, useState } from 'react'
 
-import { DropdownMenuContent, DropdownMenuItem, Icon, SearchBox } from '@/components'
+import { DropdownMenu, Icon, SearchBox } from '@/components'
 import { cn } from '@utils/cn'
 import { CommitSelectorListItem } from '@views/repo/pull-request'
 
@@ -30,7 +30,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
   }, [commitList, searchQuery])
 
   return (
-    <DropdownMenuContent className="p-0" align="start">
+    <DropdownMenu.Content className="p-0" align="start">
       <div className="px-3 pt-2">
         <SearchBox.Root
           className="w-full"
@@ -55,7 +55,7 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
               : false
 
             return (
-              <DropdownMenuItem
+              <DropdownMenu.Item
                 className={cn('hover:bg-background-4 cursor-pointer py-2 leading-none', {
                   'bg-background-4': isSelected,
                   'pl-7': !isSelected
@@ -75,11 +75,11 @@ export const CommitSelectorDropdown: FC<CommitSelectorDropdownProps> = ({
                     {item.title && idx === 0 ? `${item.title} (${commitList.length - 1})` : item.title}
                   </span>
                 </div>
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           })}
         </div>
       </div>
-    </DropdownMenuContent>
+    </DropdownMenu.Content>
   )
 }

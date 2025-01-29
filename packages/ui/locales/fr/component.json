@@ -1,4 +1,11 @@
 {
+  "deleteDialog": {
+    "title": "Êtes-vous sûr ?",
+    "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
+    "description": "This will permanently remove all data. This action cannot be undone.",
+    "inputLabel": "To confirm, type",
+    "cancel": "Annuler"
+  },
   "filter": {
     "add-filter": "Ajouter un filtre",
     "reset": "Réinitialiser",
@@ -38,15 +45,14 @@
   },
   "navbar": {
     "settings": "Paramètres",
-    "account": "Compte",
-    "theme": "Thème",
-    "customNav": "Personnaliser la navigation",
-    "administration": "Administration",
-    "logout": "Se déconnecter",
     "pin": "Épingler",
     "remove": "Supprimer",
     "reorder": "Réorganiser",
     "unpin": "Désépingler",
+    "profile": "Profile",
+    "theme": "Thème",
+    "customNav": "Personnaliser la navigation",
+    "logout": "Se déconnecter",
     "devops": "Devops",
     "repositories": "Dépôts",
     "pipelines": "Pipelines",
@@ -94,7 +100,9 @@
     "security-and-governance": "Sécurité et gouvernance",
     "policies": "Politiques",
     "freeze-windows": "Fenêtres de gel",
-    "external-tickets": "Tickets externes"
+    "external-tickets": "Tickets externes",
+    "administration": "Administration",
+    "account": "Compte"
   },
   "pagination": {
     "previous": "Précédent",
@@ -108,5 +116,12 @@
     "table": "Table",
     "list": "List"
   },
-  "No search results": ""
+  "projectSettings": {
+    "members": "membres",
+    "newMember": "Nouveau membre"
+  },
+  "noData": {
+    "members": "Aucun membre pour l'instant.",
+    "inviteMembers": "Ajoutez les premiers membres de votre équipe en les invitant à rejoindre ce projet."
+  }
 }

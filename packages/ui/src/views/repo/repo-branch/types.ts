@@ -1,11 +1,13 @@
+import { Dispatch, SetStateAction } from 'react'
+
 import { TranslationStore } from '@/views'
 import { z } from 'zod'
 
+import { PullRequestType } from '../pull-request/pull-request.types'
 import { IBranchSelectorStore } from '../repo.types'
 import { createBranchFormSchema } from './components/create-branch-dialog'
 
 export type CreateBranchFormFields = z.infer<typeof createBranchFormSchema>
-
 export interface BranchProps {
   id: number
   name: string
@@ -18,32 +20,40 @@ export interface BranchProps {
   checks?: {
     done?: number
     total?: number
-    status?: number
+    status?: {
+      pending: number
+      running: number
+      success: number
+      failure: number
+      error: number
+    }
   }
   behindAhead: {
     behind?: number
     ahead?: number
     default?: boolean
   }
+  pullRequests?: PullRequestType[]
 }
 
-export interface BranchListPageProps {
+interface RoutingProps {
+  toBranchRules: () => string
+  toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
+  toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
+}
+
+export interface BranchListPageProps extends Partial<RoutingProps> {
+  isLoading: boolean
   branches: BranchProps[]
-  spaceId?: string
-  repoId?: string
   defaultBranch?: string
   useTranslationStore: () => TranslationStore
+  setCreateBranchDialogOpen: (isOpen: boolean) => void
+  handleResetFiltersAndPages: () => void
+  onDeleteBranch: (branchName: string) => void
+  isDirtyList: boolean
 }
 
-export interface MoreActionsTooltipProps {
-  spaceId?: string
-  repoId?: string
-  defaultBranch?: string
-  branchInfo: BranchProps
-  useTranslationStore: () => TranslationStore
-}
-
-export interface RepoBranchListViewProps {
+export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
   useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
@@ -54,6 +64,9 @@ export interface RepoBranchListViewProps {
   createBranchError?: string
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
+  onDeleteBranch: (branchName: string) => void
+  searchBranches: Branch[]
+  setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
 }
 
 interface Branch {
@@ -65,9 +78,10 @@ export interface CreateBranchDialogProps {
   onClose: () => void
   onSubmit: (formValues: CreateBranchFormFields) => void
   isLoadingBranches: boolean
-  branches?: Array<Branch>
+  branches?: Branch[]
   error?: string
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
   defaultBranch?: string
+  handleChangeSearchValue: Dispatch<SetStateAction<string>>
 }

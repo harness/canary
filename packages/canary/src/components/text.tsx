@@ -123,6 +123,8 @@ const Text = ({
 }: TextProps) => {
   const Comp = asChild ? Slot : as ? as.toString() : 'span'
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <Comp className={cn(textVariants({ align, size, weight, color, trim, truncate, wrap }), className)} {...props}>
       {children}
     </Comp>

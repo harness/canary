@@ -1,92 +1,98 @@
-import { Icon } from '@components/icon'
-import {
-  Button,
-  ButtonGroup,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@components/index'
-import { Text } from '@components/text'
-import { CompareFormFields } from '@views/layouts/PullRequestCompareLayout'
+import { FC, MouseEvent, RefObject, useCallback, useState } from 'react'
+
+import { Button, ButtonWithOptions, Icon } from '@/components'
+import { CompareFormFields, TranslationStore } from '@/views'
 
 interface PullRequestCompareButtonProps {
   isSubmitted: boolean
   isValid: boolean
   isLoading: boolean
-  formRef: React.RefObject<HTMLFormElement>
+  formRef: RefObject<HTMLFormElement>
   onFormSubmit: (data: CompareFormFields) => void
   onFormDraftSubmit: (data: CompareFormFields) => void
+  useTranslationStore: () => TranslationStore
 }
 
-const PullRequestCompareButton: React.FC<PullRequestCompareButtonProps> = ({
+enum PR_TYPE {
+  CREATE = 'Create',
+  DRAFT = 'Draft'
+}
+
+const PullRequestCompareButton: FC<PullRequestCompareButtonProps> = ({
   isSubmitted,
   isLoading,
   formRef,
   onFormDraftSubmit,
-  onFormSubmit
+  onFormSubmit,
+  useTranslationStore
 }) => {
-  const handleDraftClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (formRef.current) {
-      const formData = new FormData(formRef.current)
-      const data = {
-        title: formData.get('title'),
-        description: formData.get('description')
+  const [prType, setPrType] = useState<PR_TYPE>(PR_TYPE.CREATE)
+  const { t } = useTranslationStore()
+
+  const handleButtonClick = useCallback(
+    (e: MouseEvent) => {
+      e.preventDefault()
+      if (formRef.current) {
+        const formData = new FormData(formRef.current)
+        const data = {
+          title: formData.get('title'),
+          description: formData.get('description')
+        }
+        switch (prType) {
+          case PR_TYPE.DRAFT:
+            onFormDraftSubmit(data as CompareFormFields)
+            break
+          case PR_TYPE.CREATE:
+            onFormSubmit(data as CompareFormFields)
+            break
+        }
       }
-      onFormDraftSubmit(data as CompareFormFields) // Call the draft submit function
-    }
+    },
+    [formRef, onFormDraftSubmit, onFormSubmit, prType]
+  )
+
+  const handlePrTypeChange = (value: PR_TYPE) => {
+    setPrType(value)
   }
-  const handleCreateClick = (e: React.MouseEvent) => {
-    e.preventDefault()
-    if (formRef.current) {
-      const formData = new FormData(formRef.current)
-      const data = {
-        title: formData.get('title'),
-        description: formData.get('description')
-      }
-      onFormSubmit(data as CompareFormFields) // Call the draft submit function
-    }
-  }
+
   return (
     <>
       {!isSubmitted ? (
-        <>
-          <ButtonGroup>
-            <Button
-              theme={'primary'}
-              variant="split"
-              size="xs_split"
-              onClick={handleCreateClick}
-              dropdown={
-                <DropdownMenu>
-                  <DropdownMenuTrigger insideSplitButton>
-                    <Icon name="chevron-down" size={11} className="chevron-down" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="mt-1">
-                    <DropdownMenuGroup>
-                      <DropdownMenuItem onClick={handleDraftClick} disabled={isLoading}>
-                        <div className="flex flex-col">
-                          <Text color="primary">Create draft pull request</Text>
-                          <Text color="tertiaryBackground">Does not request code reviews and cannot be merged</Text>
-                        </div>
-                      </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              }
-              type="button" // Change to button type
-              disabled={isLoading}
-            >
-              {!isLoading ? 'Create pull request' : 'Creating pull request...'}
-            </Button>
-          </ButtonGroup>
-        </>
+        <ButtonWithOptions<PR_TYPE>
+          id="pr-type"
+          handleButtonClick={handleButtonClick}
+          loading={isLoading}
+          size="md"
+          selectedValue={prType}
+          handleOptionChange={handlePrTypeChange}
+          options={[
+            {
+              value: PR_TYPE.CREATE,
+              label: t(`views:pullRequests.compareChangesCreateTitle`, 'Create pull request'),
+              description: t(
+                `views:pullRequests.compareChangesCreateDescription`,
+                'Open pull request that is ready for review.'
+              )
+            },
+            {
+              value: PR_TYPE.DRAFT,
+              label: t(`views:pullRequests.compareChangesDraftTitle`, 'Create draft pull request'),
+              description: t(
+                `views:pullRequests.compareChangesDraftDescription`,
+                'Does not request code reviews and cannot be merged.'
+              )
+            }
+          ]}
+        >
+          {t(
+            `views:pullRequests.compareChanges${prType}Button${isLoading ? 'Loading' : ''}`,
+            `${prType}${isLoading ? 'ing' : ''} pull request${isLoading ? '...' : ''}`
+          )}
+        </ButtonWithOptions>
       ) : (
         <Button variant="ghost" type="button" size="sm" theme="success" className="pointer-events-none">
-          Pull request created&nbsp;&nbsp;
-          <Icon name="tick" size={14} />
+          {t(`views:pullRequests.compareChangesCreatedButton`)}&nbsp;&nbsp;
+          <Icon name="tick" size={12} />
         </Button>
       )}
     </>

@@ -102,6 +102,7 @@ export default {
           7: 'hsl(var(--canary-foreground-07))',
           8: 'hsl(var(--canary-foreground-08))',
           9: 'hsl(var(--canary-foreground-09))',
+          10: 'hsl(var(--canary-foreground-10))',
           danger: 'hsl(var(--canary-foreground-danger))',
           alert: 'hsl(var(--canary-foreground-alert))',
           success: 'hsl(var(--canary-foreground-success))',
@@ -122,6 +123,7 @@ export default {
           10: 'hsl(var(--canary-background-10))',
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
+          13: 'hsl(var(--canary-background-13))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
@@ -139,6 +141,26 @@ export default {
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
           accent: 'hsl(var(--canary-border-accent))'
+        },
+        button: {
+          foreground: {
+            'disabled-1': 'hsl(var(--canary-button-foreground-disabled-01))',
+            'danger-1': 'hsl(var(--canary-button-foreground-danger-01))',
+            'success-1': 'hsl(var(--canary-button-foreground-success-01))'
+          },
+          background: {
+            'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
+            'danger-1': 'hsla(var(--canary-button-background-danger-01))',
+            'danger-3': 'hsla(var(--canary-button-background-danger-03))',
+            'success-1': 'hsla(var(--canary-button-background-success-01))',
+            'success-2': 'hsla(var(--canary-button-background-success-02))'
+          },
+          border: {
+            'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
+            'danger-1': 'hsla(var(--canary-button-border-danger-01))',
+            'danger-3': 'hsla(var(--canary-button-border-danger-03))',
+            'success-1': 'hsla(var(--canary-button-border-success-01))'
+          }
         },
         tag: {
           border: {
@@ -185,6 +207,16 @@ export default {
             },
             red: {
               1: 'hsl(var(--canary-tag-foreground-red-01))'
+            },
+            code: {
+              1: 'hsl(var(--canary-code-foreground-01))',
+              2: 'hsl(var(--canary-code-foreground-02))',
+              3: 'hsl(var(--canary-code-foreground-03))',
+              4: 'hsl(var(--canary-code-foreground-04))',
+              5: 'hsl(var(--canary-code-foreground-05))',
+              6: 'hsl(var(--canary-code-foreground-06))',
+              7: 'hsl(var(--canary-code-foreground-07))',
+              8: 'hsl(var(--canary-code-foreground-08))'
             }
           },
           background: {
@@ -215,6 +247,16 @@ export default {
             red: {
               1: 'hsla(var(--canary-tag-background-red-01))',
               2: 'hsla(var(--canary-tag-background-red-02))'
+            },
+            code: {
+              1: 'hsla(var(--canary-code-background-01))',
+              2: 'hsla(var(--canary-code-background-02))',
+              3: 'hsla(var(--canary-code-background-03))',
+              4: 'hsla(var(--canary-code-background-04))',
+              5: 'hsla(var(--canary-code-background-05))',
+              6: 'hsla(var(--canary-code-background-06))',
+              7: 'hsla(var(--canary-code-background-07))',
+              8: 'hsla(var(--canary-code-background-08))'
             }
           }
         },
@@ -240,10 +282,12 @@ export default {
         tight: '-0.02em'
       },
       boxShadow: {
-        1: '0px 8px 16px hsl(var(--canary-harness-grey-400) / 0.10)',
-        2: '0px 8px 8px hsl(var(--canary-harness-grey-400) / 0.10)',
-        'pagination-1': '0px 2px 4px hsl(var(--canary-harness-grey-400) / 0.10)',
-        'as-border': 'inset 0 0 0 1px'
+        1: '0px 8px 16px hsl(var(--canary-box-shadow-1))',
+        2: '0px 8px 8px hsl(var(--canary-box-shadow-2))',
+        'pagination-1': '0px 2px 4px hsl(var(--canary-box-shadow-pagination))',
+        'as-border': 'inset 0 0 0 1px',
+        'commit-list-bullet':
+          '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
       },
       borderRadius: {
         10: '0.625rem'
@@ -270,15 +314,25 @@ export default {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--canary-tw-gradient-stops))',
         'ai-button':
-          'linear-gradient(to right, hsl(var(--canary-ai-button-stop-1)), hsl(var(--canary-ai-button-stop-2)), hsl(var(--canary-ai-button-stop-3)), hsl(var(--canary-ai-button-stop-4)))'
+          'linear-gradient(to right, hsl(var(--canary-ai-button-stop-1)), hsl(var(--canary-ai-button-stop-2)), hsl(var(--canary-ai-button-stop-3)), hsl(var(--canary-ai-button-stop-4)))',
+        'navbar-gradient-1':
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-1-1)) 0%, hsla(var(--canary-nav-gradient-1-2)) 100%)',
+        'navbar-gradient-2':
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-2-1)) 0%, hsla(var(--canary-nav-gradient-2-2)) 44.95%, hsla(var(--canary-nav-gradient-2-3)) 100%)',
+        'navbar-gradient-3':
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-3-1)) 0%, hsla(var(--canary-nav-gradient-3-2)) 100%)',
+        'navbar-gradient-4':
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-4-1)) 0%, hsla(var(--canary-nav-gradient-4-2)) 100%)',
+        'navbar-item-gradient':
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)'
       },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
-          to: { height: 'var(--canary-radix-accordion-content-height)' }
+          to: { height: 'var(--radix-accordion-content-height)' }
         },
         'accordion-up': {
-          from: { height: 'var(--canary-radix-accordion-content-height)' },
+          from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
         }
       },

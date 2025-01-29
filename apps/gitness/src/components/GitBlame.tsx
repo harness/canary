@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import { useGetBlameQuery } from '@harnessio/code-service-client'
 import { getInitials } from '@harnessio/views'
-import { BlameEditor, ThemeDefinition } from '@harnessio/yaml-editor'
+import { BlameEditor, BlameEditorProps, ThemeDefinition } from '@harnessio/yaml-editor'
 import { BlameItem } from '@harnessio/yaml-editor/dist/types/blame'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
@@ -14,9 +14,10 @@ interface GitBlameProps {
   themeConfig: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   codeContent: string
   language: string
+  height?: BlameEditorProps['height']
 }
 
-export default function GitBlame({ themeConfig, codeContent, language }: GitBlameProps) {
+export default function GitBlame({ themeConfig, codeContent, language, height }: GitBlameProps) {
   const repoRef = useGetRepoRef()
   const { fullGitRef, fullResourcePath } = useCodePathDetails()
   const [blameBlocks, setBlameBlocks] = useState<BlameItem[]>([])
@@ -67,6 +68,7 @@ export default function GitBlame({ themeConfig, codeContent, language }: GitBlam
       themeConfig={themeConfig}
       lineNumbersPosition="center"
       blameData={blameBlocks}
+      height={height ? height : undefined}
     />
   ) : (
     <></>

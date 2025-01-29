@@ -1,9 +1,10 @@
-import { FormHTMLAttributes, PropsWithChildren } from 'react'
+import { FormHTMLAttributes } from 'react'
 
 import { cn } from '@utils/cn'
 
-interface FormWrapperProps extends PropsWithChildren, FormHTMLAttributes<HTMLFormElement> {
+interface FormWrapperProps extends FormHTMLAttributes<HTMLFormElement> {
   className?: string
+  children?: React.ReactNode
 }
 
 /**
@@ -18,7 +19,7 @@ interface FormWrapperProps extends PropsWithChildren, FormHTMLAttributes<HTMLFor
  */
 export function FormWrapper({ className, children, ...props }: FormWrapperProps) {
   return (
-    <form className={cn('flex flex-col gap-y-7', className)} {...props}>
+    <form className={cn('flex flex-col gap-y-8', className)} {...props}>
       {children}
     </form>
   )

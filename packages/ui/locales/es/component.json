@@ -1,4 +1,11 @@
 {
+  "deleteDialog": {
+    "title": "Are you sure?",
+    "descriptionWithType": "This will permanently delete your {{type}} and remove all data. This action cannot be undone.",
+    "description": "This will permanently remove all data. This action cannot be undone.",
+    "inputLabel": "To confirm, type",
+    "cancel": "Cancel"
+  },
   "filter": {
     "add-filter": "Add filter",
     "reset": "Reset",
@@ -38,15 +45,14 @@
   },
   "navbar": {
     "settings": "",
-    "account": "Account",
-    "theme": "Theme",
-    "customNav": "Customize navigation",
-    "administration": "Administration",
-    "logout": "Log out",
     "pin": "",
     "remove": "",
     "reorder": "",
     "unpin": "",
+    "profile": "Profile",
+    "theme": "Theme",
+    "customNav": "Customize navigation",
+    "logout": "Log out",
     "devops": "",
     "repositories": "",
     "pipelines": "",
@@ -94,7 +100,9 @@
     "security-and-governance": "",
     "policies": "",
     "freeze-windows": "",
-    "external-tickets": ""
+    "external-tickets": "",
+    "administration": "Administration",
+    "account": "Account"
   },
   "pagination": {
     "previous": "Previous",
@@ -107,6 +115,5 @@
   "layout": {
     "table": "Table",
     "list": "List"
-  },
-  "No search results": ""
+  }
 }

@@ -162,7 +162,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                 `--- a/src/${get(payload, 'code_comment.path')}`,
                 `+++ b/dest/${get(payload, 'code_comment.path')}`,
                 `${get(payload, 'payload.title', '')} ttttt`,
-                ...get(payload, 'payload.lines', [])
+                ...(get(payload, 'payload.lines', []) as string[])
               ].join('\n')
 
               if (payload?.type === ('code-comment' as EnumPullReqActivityType)) {

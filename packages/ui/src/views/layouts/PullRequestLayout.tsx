@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from 'react-router-dom'
 
-import { Badge, Icon, Spacer } from '@components/index'
+import { Badge, Icon, Spacer, Tabs, TabsList, TabsTrigger } from '@components/index'
 import { TranslationStore } from '@views/repo'
 import { PullRequestHeader } from '@views/repo/pull-request/components/pull-request-header'
 import { IPullRequestStore } from '@views/repo/pull-request/pull-request.types'
@@ -12,29 +12,32 @@ interface PullRequestLayoutProps {
   spaceId?: string
   repoId?: string
   useTranslationStore: () => TranslationStore
+  updateTitle: (title: string, description: string) => Promise<void>
+}
+
+enum PullRequestTabsKeys {
+  CONVERSATION = 'conversation',
+  COMMITS = 'commits',
+  CHANGES = 'changes'
 }
 
 const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
   usePullRequestStore,
   useTranslationStore,
   spaceId,
-  repoId
+  repoId,
+  updateTitle
 }) => {
   const { pullRequest } = usePullRequestStore()
   const { t } = useTranslationStore()
 
-  const baseClasses =
-    'inline-flex items-center justify-center px-3 py-1 px-4 items-center gap-2 bg-background hover:text-primary h-[36px] rounded-tl-md rounded-tr-md m-0'
-  const getLinkClasses = (isActive: boolean) => {
-    return `${baseClasses} ${isActive ? 'text-primary [&svg]:text-primary tabnav-active' : 'tabnav-inactive'}`
-  }
   return (
-    <>
-      <SandboxLayout.Main fullWidth hasHeader hasLeftPanel>
-        <SandboxLayout.Content className="px-6" maxWidth="4xl">
-          <Spacer size={8} />
-          {pullRequest && (
+    <SandboxLayout.Main fullWidth>
+      <SandboxLayout.Content className="max-w-[1500px] px-6">
+        {pullRequest && (
+          <>
             <PullRequestHeader
+              updateTitle={updateTitle}
               data={{
                 title: pullRequest?.title,
                 number: pullRequest?.number,
@@ -46,44 +49,70 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
                 created: pullRequest?.created,
                 is_draft: pullRequest?.is_draft,
                 state: pullRequest?.state,
+                description: pullRequest?.description,
                 spaceId,
                 repoId
               }}
             />
-          )}
-          <div className="relative grid w-full grid-flow-col grid-cols-[auto_1fr] items-end">
-            <div className="inline-flex h-[36px] w-full items-center justify-start gap-0 text-muted-foreground">
-              <NavLink to={`conversation`} className={({ isActive }) => getLinkClasses(isActive)}>
-                <Icon size={16} name="comments" />
-                {t('views:pullRequests.conversation')}
-                <Badge variant="outline" size="xs">
-                  {pullRequest?.stats?.conversations || 0}
-                </Badge>
-              </NavLink>
-              <NavLink to={`commits`} className={({ isActive }) => getLinkClasses(isActive)}>
-                <Icon size={16} name="tube-sign" />
-                {t('views:repos.commits')}
-                <Badge variant="outline" size="xs">
-                  {pullRequest?.stats?.commits}
-                </Badge>
-              </NavLink>
-              <NavLink to={`changes`} className={({ isActive }) => getLinkClasses(isActive)}>
-                <Icon size={14} name="changes" />
-                {t('views:pullRequests.changes')}
-                <Badge variant="outline" size="xs">
-                  {pullRequest?.stats?.files_changed}
-                </Badge>
-              </NavLink>
-            </div>
-            <div className="h-[36px] border-b border-border-background" />
-            <div className="absolute right-full h-[36px] w-0 border-b border-border-background" />
-            <div className="absolute left-full h-[36px] w-0 border-b border-border-background" />
-          </div>
-          <Spacer size={8} />
-          <Outlet />
-        </SandboxLayout.Content>
-      </SandboxLayout.Main>
-    </>
+            <Spacer size={10} />
+          </>
+        )}
+        <Tabs variant="tabnav">
+          <TabsList className="left-1/2 w-[calc(100%+48px)] -translate-x-1/2 px-6">
+            <NavLink to={PullRequestTabsKeys.CONVERSATION}>
+              {({ isActive }) => (
+                <TabsTrigger
+                  className="gap-x-1.5"
+                  value={PullRequestTabsKeys.CONVERSATION}
+                  data-state={isActive ? 'active' : 'inactive'}
+                >
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="comments" />
+                    {t('views:pullRequests.conversation')}
+                  </div>
+                </TabsTrigger>
+              )}
+            </NavLink>
+            <NavLink to={PullRequestTabsKeys.COMMITS}>
+              {({ isActive }) => (
+                <TabsTrigger
+                  className="gap-x-1.5"
+                  value={PullRequestTabsKeys.COMMITS}
+                  data-state={isActive ? 'active' : 'inactive'}
+                >
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="tube-sign" />
+                    {t('views:repos.commits')}
+                  </div>
+                  <Badge variant="outline" size="xs" borderRadius="base">
+                    {pullRequest?.stats?.commits}
+                  </Badge>
+                </TabsTrigger>
+              )}
+            </NavLink>
+            <NavLink to={PullRequestTabsKeys.CHANGES}>
+              {({ isActive }) => (
+                <TabsTrigger
+                  className="gap-x-1.5"
+                  value={PullRequestTabsKeys.CHANGES}
+                  data-state={isActive ? 'active' : 'inactive'}
+                >
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="changes" />
+                    {t('views:pullRequests.changes')}
+                  </div>
+                  <Badge variant="outline" size="xs" borderRadius="base">
+                    {pullRequest?.stats?.files_changed}
+                  </Badge>
+                </TabsTrigger>
+              )}
+            </NavLink>
+          </TabsList>
+        </Tabs>
+        <Spacer size={7} />
+        <Outlet />
+      </SandboxLayout.Content>
+    </SandboxLayout.Main>
   )
 }
 

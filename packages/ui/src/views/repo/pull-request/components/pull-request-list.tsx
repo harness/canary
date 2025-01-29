@@ -73,7 +73,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
             {pullRequest.number && (
               <>
                 <StackedList.Field
-                  className="gap-1.5"
+                  className="max-w-full gap-1.5"
                   title={
                     pullRequest.name && (
                       <PullRequestItemTitle
@@ -82,13 +82,14 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                         success={!!pullRequest.merged}
                         title={pullRequest.name}
                         labels={pullRequest.labels || []}
-                        comments={5}
+                        comments={pullRequest?.comments}
                         merged={pullRequest.merged}
                       />
                     )
                   }
                   description={
-                    pullRequest.author && (
+                    pullRequest.author &&
+                    typeof pullRequest.author === 'string' && (
                       <PullRequestItemDescription
                         number={pullRequest.number}
                         author={pullRequest.author}

@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom'
 import { useOnRegisterMutation } from '@harnessio/code-service-client'
 import { SignUpData, SignUpPage } from '@harnessio/ui/views'
 
+import { useRoutes } from '../framework/context/NavigationContext'
+
 export const SignUp: React.FC = () => {
+  const routes = useRoutes()
   const navigate = useNavigate()
 
   const {
@@ -16,7 +19,7 @@ export const SignUp: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/') // Redirect to Home page
+      navigate(routes.toHome()) // Redirect to Home page
     }
   }, [isSuccess])
 

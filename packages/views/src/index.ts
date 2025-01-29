@@ -115,7 +115,6 @@ export * as FormFieldSet from './components/form-field-set'
 // SANDBOX LAYOUTS
 export * as SandboxLayout from './layouts/SandboxLayout'
 export * from './layouts/SandboxPullRequestCompareLayout'
-export * from './layouts/SandboxRoot'
 export * from './layouts/SandboxSettings'
 // eslint-disable-next-line import/export
 export * from './configs/canary-outlets'

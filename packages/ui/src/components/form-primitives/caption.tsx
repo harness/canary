@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import { Text } from '@/components'
 import { cn } from '@utils/cn'
 
-interface CaptionProps extends PropsWithChildren {
+interface CaptionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   className?: string
 }
 

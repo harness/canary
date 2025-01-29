@@ -1,4 +1,4 @@
-import { DropdownMenuCheckboxItem, Icon, Input } from '@/components'
+import { DropdownMenu, Icon, Input } from '@/components'
 
 import { CheckboxFilterOption, FilterHandlers, FilterValue } from '../../../types'
 import { getFilteredOptions } from '../../../utils'
@@ -70,7 +70,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
       {!!filteredOptions.length && (
         <div className="px-2 py-1">
           {filteredOptions.map(option => (
-            <DropdownMenuCheckboxItem
+            <DropdownMenu.CheckboxItem
               className="pl-[34px]"
               checked={filter.selectedValues.includes(option.value)}
               onSelect={event => {
@@ -84,7 +84,7 @@ const Checkbox = ({ filter, filterOption, onUpdateFilter, searchQueries, handleS
               key={option.value}
             >
               {option.label}
-            </DropdownMenuCheckboxItem>
+            </DropdownMenu.CheckboxItem>
           ))}
         </div>
       )}

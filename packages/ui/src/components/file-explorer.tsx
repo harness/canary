@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger, Icon, Text } from '@/components'
+import { Accordion, Icon, Text } from '@/components'
 import { cn } from '@utils/cn'
 
 interface FolderItemProps {
@@ -15,8 +15,8 @@ interface FolderItemProps {
 
 function FolderItem({ children, value = '', isActive, content, chevronClassName, link }: FolderItemProps) {
   return (
-    <AccordionItem value={value} className="border-none">
-      <AccordionTrigger
+    <Accordion.Item value={value} className="border-none">
+      <Accordion.Trigger
         className={cn(
           `relative w-full p-0 pr-1.5
           before:absolute before:z-[-1] before:top-0 before:-left-1.5 before:right-0 before:h-full before:rounded`,
@@ -27,12 +27,12 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
         leftChevron
         rotateChevron
         chevronClassName={
-          chevronClassName || 'text-icons-7 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
+          chevronClassName || 'text-icons-9 group-hover:text-icons-2 group-data-[state=open]:text-icons-2'
         }
       >
         <div
           className={cn(
-            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-3
+            `flex w-full justify-start overflow-hidden transition-colors duration-200 text-foreground-2
             group-hover:text-foreground-1
             group-data-[state=open]:text-foreground-1`,
             {
@@ -43,7 +43,7 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
           <div className="flex w-full items-center gap-1.5 py-1.5">
             <Icon
               className={cn(
-                'min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
+                'min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2 group-data-[state=open]:text-icons-2',
                 { 'text-icons-2': isActive }
               )}
               name="folder"
@@ -56,9 +56,11 @@ function FolderItem({ children, value = '', isActive, content, chevronClassName,
             </Link>
           </div>
         </div>
-      </AccordionTrigger>
-      {!!content && <AccordionContent className="flex w-full items-center gap-2 pb-0 pl-4">{content}</AccordionContent>}
-    </AccordionItem>
+      </Accordion.Trigger>
+      {!!content && (
+        <Accordion.Content className="flex w-full items-center gap-2 pb-0 pl-4">{content}</Accordion.Content>
+      )}
+    </Accordion.Item>
   )
 }
 
@@ -72,7 +74,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
   const comp = (
     <div
       className={cn(
-        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-3
+        `relative group flex items-center justify-start gap-1.5 py-1.5 pr-1.5 pl-4 text-foreground-2
         hover:text-foreground-1
         before:absolute before:z-[-1] before:top-0 before:left-2.5 before:right-0 before:h-full before:rounded`,
         {
@@ -81,7 +83,7 @@ function FileItem({ children, isActive, link }: FileItemProps) {
       )}
     >
       <Icon
-        className={cn('min-w-4 text-icons-7 duration-100 ease-in-out group-hover:text-icons-2', {
+        className={cn('min-w-4 text-icons-9 duration-100 ease-in-out group-hover:text-icons-2', {
           'text-icons-2': isActive
         })}
         name="file"
@@ -104,9 +106,9 @@ interface RootProps {
 
 function Root({ children, onValueChange, value }: RootProps) {
   return (
-    <Accordion type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
+    <Accordion.Root type="multiple" className="w-full" onValueChange={onValueChange} value={value}>
       {children}
-    </Accordion>
+    </Accordion.Root>
   )
 }
 

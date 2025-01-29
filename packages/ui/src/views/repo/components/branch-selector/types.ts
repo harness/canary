@@ -27,6 +27,8 @@ export interface BranchSelectorDropdownProps {
   spaceId: string
   useTranslationStore: () => TranslationStore
   isBranchOnly?: boolean
+  searchQuery: string
+  setSearchQuery: (query: string) => void
 }
 
 export interface BranchSelectorProps extends BranchSelectorDropdownProps {

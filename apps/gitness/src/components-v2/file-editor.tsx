@@ -7,12 +7,13 @@ import { PathActionBar } from '@harnessio/ui/views'
 import { CodeDiffEditor, CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useExitConfirm } from '../framework/hooks/useExitConfirm'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
-import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
 import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, GitCommitAction, PLAIN_TEXT } from '../utils/git-utils'
 import { splitPathWithParents } from '../utils/path-utils'
@@ -23,11 +24,12 @@ export interface FileEditorProps {
 }
 
 export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) => {
+  const routes = useRoutes()
   const navigate = useNavigate()
   const { codeMode, fullGitRef, gitRefName, fullResourcePath } = useCodePathDetails()
-  const { spaceId, repoId } = useParams<PathParams>()
+  const { repoId, spaceId } = useParams<PathParams>()
   const { show } = useExitConfirm()
-  const repoPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef}`
+  const repoPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}`
 
   const [fileName, setFileName] = useState('')
   const [language, setLanguage] = useState('')
@@ -127,9 +129,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
    * Navigate to file view route
    */
   const onExitConfirm = useCallback(() => {
-    const navigateTo = `/${spaceId}/repos/${repoId}/code/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
+    const navigateTo = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/${fullResourcePath ? `~/${fullResourcePath}` : ''}`
     navigate(navigateTo)
-  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId])
+  }, [fullGitRef, fullResourcePath, navigate, repoId, spaceId, routes])
 
   /**
    * Cancel edit handler
@@ -167,9 +169,9 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         sha={repoDetails?.sha}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code/${fullGitRef}/~/${fileResourcePath}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef}/~/${fileResourcePath}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${defaultBranch}...${newBranchName}`)
+            navigate(routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${defaultBranch}...${newBranchName}` }))
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name}
@@ -192,6 +194,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
 
       {view === 'edit' ? (
         <CodeEditor
+          height="100%"
           language={language}
           codeRevision={contentRevision}
           onCodeRevisionChange={valueRevision => setContentRevision(valueRevision ?? { code: '' })}
@@ -203,6 +206,7 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
         />
       ) : (
         <CodeDiffEditor
+          height="100%"
           language={language}
           original={originalFileContent}
           modified={contentRevision.code}

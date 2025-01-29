@@ -218,6 +218,8 @@ const PullRequestDiffViewer = ({
   return (
     <>
       {diffFileInstance && !renderCustomContent && (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <DiffView<string>
           ref={ref}
           className="bg-tr w-full text-tertiary-background"
@@ -271,7 +273,7 @@ const PullRequestDiffViewer = ({
           extendData={extend}
           renderExtendLine={({ data }) => (
             <div className="bg-background/50 px-6 py-[6px]">
-              <Card className="rounded-md bg-transparent">
+              <Card.Root className="rounded-md bg-transparent">
                 <div className="flex flex-col p-4">
                   <div className="flex items-center space-x-2">
                     <Text color="primary">adam </Text>
@@ -284,10 +286,10 @@ const PullRequestDiffViewer = ({
                   </Text>
                 </div>
                 <div className="flex items-center gap-3 border-t p-4">
-                  <div className='size-6 rounded-full bg-tertiary-background bg-[url("../images/user-avatar.svg")] bg-cover'></div>
+                  <div className="size-6 rounded-full bg-tertiary-background bg-cover"></div>
                   <Input placeholder={'Reply here'} />
                 </div>
-              </Card>
+              </Card.Root>
             </div>
           )}
           // data={data}

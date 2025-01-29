@@ -97,6 +97,8 @@ interface HeadingProps extends React.ComponentProps<'h1'> {
 const Heading = ({ className, children, as, asChild, align, size, trim, truncate, wrap, ...props }: HeadingProps) => {
   const Comp = asChild ? Slot : as ? as.toString() : 'span'
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <Comp className={cn(headingVariants({ align, size, trim, truncate, wrap }), className)} {...props}>
       {children}
     </Comp>

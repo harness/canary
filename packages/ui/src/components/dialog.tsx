@@ -1,22 +1,21 @@
-import * as React from 'react'
+import { Children, ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes, isValidElement } from 'react'
 
 import { Button, Icon } from '@/components'
+import { usePortal } from '@/context'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import { cn } from '@utils/cn'
 
-const Dialog = DialogPrimitive.Root
+const DialogRoot = DialogPrimitive.Root
 
 const DialogTrigger = DialogPrimitive.Trigger
 
 const DialogPortal = DialogPrimitive.Portal
 
-const DialogClose = DialogPrimitive.Close
-
-interface DialogOverlayProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
+interface DialogOverlayProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay> {
   onClick?: () => void
 }
 
-const DialogOverlay = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
+const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, DialogOverlayProps>(
   ({ className, onClick, ...props }, ref) => (
     <DialogPrimitive.Overlay
       ref={ref}
@@ -28,17 +27,18 @@ const DialogOverlay = React.forwardRef<React.ElementRef<typeof DialogPrimitive.O
 )
 DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 
-interface DialogContentProps extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
+interface DialogContentProps extends ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   onOverlayClick?: () => void
 }
 
-const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
+const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, DialogContentProps>(
   ({ className, children, onOverlayClick, ...props }, ref) => {
+    const { portalContainer } = usePortal()
     const mainContent: React.ReactNode[] = []
     let footer: React.ReactNode = null
 
-    React.Children.forEach(children, child => {
-      if (React.isValidElement(child) && child.type === DialogFooter) {
+    Children.forEach(children, child => {
+      if (isValidElement(child) && child.type === DialogFooter) {
         footer = child
       } else {
         mainContent.push(child)
@@ -46,12 +46,12 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
     })
 
     return (
-      <DialogPortal>
+      <DialogPortal container={portalContainer}>
         <DialogOverlay onClick={onOverlayClick} />
         <DialogPrimitive.Content
           ref={ref}
           className={cn(
-            'bg-background-1 shadow-1 fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-10 border duration-200',
+            'bg-background-1 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] shadow-1 fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] flex-col overflow-hidden rounded-10 border duration-200',
             className
           )}
           {...props}
@@ -64,7 +64,7 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
             {mainContent}
           </div>
           {footer}
-          <DialogPrimitive.Close className="absolute right-4 top-[18px] disabled:pointer-events-none" asChild>
+          <DialogPrimitive.Close className="absolute right-3 top-[18px] disabled:pointer-events-none" asChild>
             <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
               <Icon name="close" size={16} />
               <span className="sr-only">Close</span>
@@ -77,12 +77,12 @@ const DialogContent = React.forwardRef<React.ElementRef<typeof DialogPrimitive.C
 )
 DialogContent.displayName = DialogPrimitive.Content.displayName
 
-const DialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div className={cn('flex flex-col space-y-2 text-center sm:text-left', className)} {...props} />
 )
 DialogHeader.displayName = 'DialogHeader'
 
-const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+const DialogFooter = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
       'bg-background-2 border-borders-1 relative mt-auto flex h-fit flex-col-reverse gap-x-4 border-t px-5 py-4 sm:flex-row sm:justify-end',
@@ -94,9 +94,9 @@ const DialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivEleme
 )
 DialogFooter.displayName = 'DialogFooter'
 
-const DialogTitle = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
+const DialogTitle = forwardRef<
+  ElementRef<typeof DialogPrimitive.Title>,
+  ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Title
     ref={ref}
@@ -106,23 +106,22 @@ const DialogTitle = React.forwardRef<
 ))
 DialogTitle.displayName = DialogPrimitive.Title.displayName
 
-const DialogDescription = React.forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
+const DialogDescription = forwardRef<
+  ElementRef<typeof DialogPrimitive.Description>,
+  ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
 >(({ className, ...props }, ref) => (
   <DialogPrimitive.Description ref={ref} className={cn('text-foreground-2 text-sm', className)} {...props} />
 ))
 DialogDescription.displayName = DialogPrimitive.Description.displayName
 
-export {
-  Dialog,
-  DialogPortal,
-  DialogOverlay,
-  DialogTrigger,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription
+const Dialog = {
+  Root: DialogRoot,
+  Trigger: DialogTrigger,
+  Content: DialogContent,
+  Header: DialogHeader,
+  Footer: DialogFooter,
+  Title: DialogTitle,
+  Description: DialogDescription
 }
+
+export { Dialog }

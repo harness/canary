@@ -4,6 +4,7 @@ import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
 import {
   BranchInfoBar,
   CodeModes,
+  CommitDivergenceType,
   FileLastChangeBar,
   IBranchSelectorStore,
   LatestFileTypes,
@@ -19,6 +20,7 @@ interface RepoFilesProps {
   loading: boolean
   files: RepoFile[]
   isDir: boolean
+  isRepoEmpty?: boolean
   isShowSummary: boolean
   latestFile: LatestFileTypes
   children: ReactNode
@@ -28,6 +30,9 @@ interface RepoFilesProps {
   codeMode: CodeModes
   useRepoBranchesStore: () => IBranchSelectorStore
   defaultBranchName?: string
+  currentBranchDivergence: CommitDivergenceType
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+  isLoadingRepoDetails: boolean
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -43,49 +48,72 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   pathUploadFiles,
   codeMode,
   useRepoBranchesStore,
-  defaultBranchName
+  defaultBranchName,
+  currentBranchDivergence,
+  isRepoEmpty,
+  toCommitDetails,
+  isLoadingRepoDetails
 }) => {
-  const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag } = useRepoBranchesStore()
+  const { t } = useTranslationStore()
+
   const isView = useMemo(() => codeMode === CodeModes.VIEW, [codeMode])
 
   const content = useMemo(() => {
+    if (loading) return <SkeletonList />
+
     if (!isView) return children
 
-    if (!isDir)
+    if (isRepoEmpty) {
+      return <p>{t('views:repos.emptyRepo')}</p>
+    }
+
+    if (!isDir) {
       return (
         <>
-          <FileLastChangeBar useTranslationStore={useTranslationStore} {...latestFile} />
+          {!isLoadingRepoDetails && (
+            <>
+              <FileLastChangeBar
+                toCommitDetails={toCommitDetails}
+                useTranslationStore={useTranslationStore}
+                {...latestFile}
+              />
+              <Spacer size={4} />
+            </>
+          )}
           {children}
         </>
       )
-
-    if (loading) return <SkeletonList />
+    }
 
     if (isShowSummary && files.length)
       return (
         <>
           {selectedBranchTag.name !== defaultBranchName && (
             <>
-              <Spacer size={4} />
               <BranchInfoBar
                 defaultBranchName={defaultBranchName}
-                spaceId={spaceId}
-                repoId={repoId}
+                useRepoBranchesStore={useRepoBranchesStore}
                 currentBranchDivergence={{
-                  ahead: 10,
-                  behind: 20
+                  ahead: currentBranchDivergence.ahead || 0,
+                  behind: currentBranchDivergence.behind || 0
                 }}
               />
+              <Spacer size={4} />
             </>
           )}
-          <Spacer size={4} />
-          <Summary latestFile={latestFile} files={files} useTranslationStore={useTranslationStore} />
+          <Summary
+            toCommitDetails={toCommitDetails}
+            latestFile={latestFile}
+            files={files}
+            useTranslationStore={useTranslationStore}
+          />
         </>
       )
 
     return (
       <NoData
-        insideTabView
+        withBorder
         iconName="no-data-folder"
         title="No files yet"
         description={['There are no files in this repository yet.', 'Create new or import an existing file.']}
@@ -102,16 +130,21 @@ export const RepoFiles: FC<RepoFilesProps> = ({
     loading,
     isShowSummary,
     files,
-    selectedBranchTag,
+    selectedBranchTag.name,
     defaultBranchName,
-    spaceId,
-    repoId
+    useRepoBranchesStore,
+    currentBranchDivergence.ahead,
+    currentBranchDivergence.behind,
+    isLoadingRepoDetails,
+    isRepoEmpty,
+    t,
+    toCommitDetails
   ])
 
   return (
-    <SandboxLayout.Main leftSubPanelWidth={248} fullWidth hasLeftPanel hasLeftSubPanel hasHeader hasSubHeader>
-      <SandboxLayout.Content className="relative z-0">
-        {isView && (
+    <SandboxLayout.Main className="max-w-[1400px]">
+      <SandboxLayout.Content className="flex h-full flex-col pt-4">
+        {isView && !isRepoEmpty && (
           <PathActionBar
             codeMode={codeMode}
             pathParts={pathParts}

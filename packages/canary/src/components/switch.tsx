@@ -24,4 +24,7 @@ const Switch = React.forwardRef<
 ))
 Switch.displayName = SwitchPrimitives.Root.displayName
 
+/**
+ * @deprecated
+ */
 export { Switch }

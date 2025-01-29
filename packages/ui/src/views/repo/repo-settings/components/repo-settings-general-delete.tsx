@@ -1,23 +1,31 @@
-import React from 'react'
+import { FC } from 'react'
 
 import { Button, ButtonGroup, Spacer, Text } from '@/components'
+import { ErrorTypes, TranslationStore } from '@/views'
 
-import { ErrorTypes } from '../types'
-
-export const RepoSettingsGeneralDelete: React.FC<{
+export const RepoSettingsGeneralDelete: FC<{
   isLoading?: boolean
   apiError: { type: ErrorTypes; message: string } | null
   openRepoAlertDeleteDialog: () => void
-}> = ({ openRepoAlertDeleteDialog, apiError }) => {
+  useTranslationStore: () => TranslationStore
+}> = ({ openRepoAlertDeleteDialog, apiError, useTranslationStore }) => {
+  const { t } = useTranslationStore()
   return (
-    <>
-      <Text size={4} weight="medium">
-        Delete Repository
+    <div>
+      <Text size={13} weight="medium" className="mb-2.5" as="div">
+        {t('views:repos.deleteRepo', 'Delete Repository')}
       </Text>
-      <Text size={2} as="p" className="max-w-full text-primary/80">
-        This will permanently delete this repository, and everything contained in it.{' '}
-      </Text>
-
+      <span>
+        {t(
+          'views:repos.deleteRepoDescription',
+          'This will permanently delete this repository, and everything contained in it.'
+        )}
+      </span>
+      <ButtonGroup className="mt-7">
+        <Button type="button" variant="destructive" onClick={openRepoAlertDeleteDialog}>
+          {t('views:repos.deleteRepoButton', 'Delete repository')}
+        </Button>
+      </ButtonGroup>
       {apiError && apiError.type === ErrorTypes.DELETE_REPO && (
         <>
           <Spacer size={2} />
@@ -26,14 +34,6 @@ export const RepoSettingsGeneralDelete: React.FC<{
           </Text>
         </>
       )}
-
-      <ButtonGroup>
-        <>
-          <Button type="submit" size="sm" theme="error" onClick={openRepoAlertDeleteDialog}>
-            Delete repository
-          </Button>
-        </>
-      </ButtonGroup>
-    </>
+    </div>
   )
 }

@@ -1,17 +1,6 @@
 import { ChangeEvent, ReactNode, useCallback, useMemo, useState } from 'react'
 
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandItem,
-  CommandList,
-  Popover,
-  PopoverAnchor,
-  PopoverContent,
-  SearchBox,
-  Text
-} from '@/components'
+import { Command, Popover, PopoverAnchor, PopoverContent, SearchBox, Text } from '@/components'
 import { TranslationStore } from '@/views'
 import { debounce } from 'lodash-es'
 
@@ -119,13 +108,13 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
           event.preventDefault()
         }}
       >
-        <Command>
-          <CommandList heightClassName="max-h-60">
-            <CommandEmpty>{t('component:searchFile.noFile', 'No file found.')}</CommandEmpty>
+        <Command.Root>
+          <Command.List heightClassName="max-h-60">
+            <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
             {!!filteredFiles.length && (
-              <CommandGroup>
+              <Command.Group>
                 {filteredFiles?.map(({ file, element }) => (
-                  <CommandItem
+                  <Command.Item
                     key={file}
                     className="break-words"
                     value={file}
@@ -135,12 +124,12 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
                     }}
                   >
                     {element}
-                  </CommandItem>
+                  </Command.Item>
                 ))}
-              </CommandGroup>
+              </Command.Group>
             )}
-          </CommandList>
-        </Command>
+          </Command.List>
+        </Command.Root>
       </PopoverContent>
     </Popover>
   )

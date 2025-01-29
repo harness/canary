@@ -1,12 +1,13 @@
 import * as React from 'react'
 
+import { usePortal } from '@/context'
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu'
-import { ChevronRightIcon, DotFilledIcon } from '@radix-ui/react-icons'
+import { ChevronRightIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 
 import { Icon } from './icon'
 
-const DropdownMenu = DropdownMenuPrimitive.Root
+const DropdownMenuRoot = DropdownMenuPrimitive.Root
 
 const DropdownMenuTrigger = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Trigger>,
@@ -17,7 +18,7 @@ const DropdownMenuTrigger = React.forwardRef<
   <DropdownMenuPrimitive.Trigger
     ref={ref}
     className={cn(
-      'group outline-none [&>svg.chevron-down]:duration-100 [&>svg.chevron-down]:ease-in-out [&>svg.chevron-down]:data-[state=open]:rotate-180',
+      'group outline-none [&>svg.chevron-down]:duration-100 [&>svg.chevron-down]:ease-in-out [&>svg.chevron-down]:data-[state=open]:rotate-180 transition-colors',
       { 'flex cursor-pointer items-center border-l border-inherit px-2.5 py-0.5 outline-none': insideSplitButton },
       className
     )}
@@ -76,19 +77,22 @@ DropdownMenuSubContent.displayName = DropdownMenuPrimitive.SubContent.displayNam
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
-    <DropdownMenuPrimitive.Content
-      ref={ref}
-      sideOffset={sideOffset}
-      className={cn(
-        'bg-background-2 text-foreground-8 shadow-1 z-50 min-w-[8rem] overflow-hidden !rounded border border-borders-1 p-1',
-        className
-      )}
-      {...props}
-    />
-  </DropdownMenuPrimitive.Portal>
-))
+>(({ className, sideOffset = 4, ...props }, ref) => {
+  const { portalContainer } = usePortal()
+  return (
+    <DropdownMenuPrimitive.Portal container={portalContainer}>
+      <DropdownMenuPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        className={cn(
+          'bg-background-2 text-foreground-8 shadow-1 z-50 min-w-[8rem] overflow-hidden !rounded border border-borders-1 p-1',
+          className
+        )}
+        {...props}
+      />
+    </DropdownMenuPrimitive.Portal>
+  )
+})
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName
 
 const DropdownMenuItem = React.forwardRef<
@@ -148,9 +152,9 @@ const DropdownMenuRadioItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
+    <span className="absolute left-2 flex size-4 items-center justify-center rounded-full border border-icons-1">
       <DropdownMenuPrimitive.ItemIndicator>
-        <DotFilledIcon className="size-4 fill-current" />
+        <span className="block size-2 rounded-full bg-icons-2" />
       </DropdownMenuPrimitive.ItemIndicator>
     </span>
     {children}
@@ -185,20 +189,22 @@ const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTML
 }
 DropdownMenuShortcut.displayName = 'DropdownMenuShortcut'
 
-export {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuCheckboxItem,
-  DropdownMenuRadioItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuGroup,
-  DropdownMenuPortal,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuRadioGroup
+const DropdownMenu = {
+  Root: DropdownMenuRoot,
+  Trigger: DropdownMenuTrigger,
+  Content: DropdownMenuContent,
+  Item: DropdownMenuItem,
+  CheckboxItem: DropdownMenuCheckboxItem,
+  RadioItem: DropdownMenuRadioItem,
+  Label: DropdownMenuLabel,
+  Separator: DropdownMenuSeparator,
+  Shortcut: DropdownMenuShortcut,
+  Group: DropdownMenuGroup,
+  Portal: DropdownMenuPortal,
+  Sub: DropdownMenuSub,
+  SubContent: DropdownMenuSubContent,
+  SubTrigger: DropdownMenuSubTrigger,
+  RadioGroup: DropdownMenuRadioGroup
 }
+
+export { DropdownMenu }

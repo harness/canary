@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, Icon } from '@/components'
+import { DropdownMenu, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
 import type {
@@ -88,8 +88,8 @@ const Filters = ({
   if (!filterOption) return null
 
   return (
-    <DropdownMenu key={filter.type} open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8">
+    <DropdownMenu.Root key={filter.type} open={isOpen} onOpenChange={setIsOpen}>
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8">
         <div className="flex items-center gap-x-1.5 text-13">
           <span className="text-foreground-1">
             {filterOption.label}
@@ -98,9 +98,9 @@ const Filters = ({
           <span className="text-foreground-4">{getFilterDisplayValue(filterOption, filter)}</span>
         </div>
         <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
 
-      <DropdownMenuContent
+      <DropdownMenu.Content
         className={cn('w-[276px] p-0', {
           'w-max': filterOption.type === 'calendar'
         })}
@@ -111,34 +111,34 @@ const Filters = ({
             <div className="flex items-center gap-x-2">
               <span className="text-14 text-foreground-4">{filterOption.label}</span>
 
-              <DropdownMenu>
-                <DropdownMenuTrigger className="flex h-[18px] items-center gap-x-1 rounded bg-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger className="flex h-[18px] items-center gap-x-1 rounded bg-background-3 pl-1.5 pr-1 text-14 text-foreground-2">
                   {filterOption.conditions?.find(c => c.value === filter.condition)?.label}
                   <Icon className="chevron-down text-icons-1" name="chevron-down" size={10} />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start">
+                </DropdownMenu.Trigger>
+                <DropdownMenu.Content align="start">
                   {filterOption.conditions?.map(condition => (
-                    <DropdownMenuItem
+                    <DropdownMenu.Item
                       onSelect={() => handleUpdateCondition?.(filter.type, condition.value)}
                       key={condition.value}
                     >
                       {condition.label}
-                    </DropdownMenuItem>
+                    </DropdownMenu.Item>
                   ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                </DropdownMenu.Content>
+              </DropdownMenu.Root>
             </div>
 
-            <DropdownMenu>
-              <DropdownMenuTrigger className="group flex h-[18px] items-center px-1">
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
                 <Icon
                   className="text-icons-1 transition-colors duration-200 group-hover:text-foreground-1"
                   name="more-dots-fill"
                   size={12}
                 />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="start">
-                <DropdownMenuItem
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content align="start">
+                <DropdownMenu.Item
                   className="text-foreground-4 duration-200 hover:text-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter?.(filter.type)}
                 >
@@ -146,9 +146,9 @@ const Filters = ({
                     <Icon name="trash" size={12} />
                     Delete filter
                   </button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+                </DropdownMenu.Item>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
           </div>
         </div>
 
@@ -162,8 +162,8 @@ const Filters = ({
             </div>
           )}
         </div>
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }
 

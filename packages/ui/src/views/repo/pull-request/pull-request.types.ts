@@ -1,7 +1,9 @@
-import { z } from 'zod'
-
 import { TranslationStore } from '../repo-list/types'
-import { CommitSelectorListItem } from './compare/components/types'
+
+export interface CommitSelectorListItem {
+  title: string
+  sha: string
+}
 
 export interface CommitSelectorDropdownProps {
   selectedCommit?: CommitSelectorListItem
@@ -39,6 +41,7 @@ export interface PullRequestType {
     color: string
   }[]
 }
+
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
 
 export interface PullRequestListStore {
@@ -49,6 +52,7 @@ export interface PullRequestListStore {
   openPullReqs: number
   closedPullReqs: number
 }
+
 export interface RepoRepositoryOutput {
   created?: number
   created_by?: number
@@ -78,51 +82,11 @@ export interface RepoRepositoryOutput {
 
 export type EnumRepoState = number
 
-export const formSchema = z.object({
-  title: z.string().min(1, { message: 'Please provide a pull request title' }),
-  description: z.string().min(1, { message: 'Please provide a description' })
-})
-export type FormFields = z.infer<typeof formSchema> // Automatically generate a type from the schema
 export interface TypesDiffStats {
   additions?: number | null
   commits?: number | null
   deletions?: number | null
   files_changed?: number | null
-}
-export interface TypesCommit {
-  author?: TypesSignature
-  committer?: TypesSignature
-  message?: string
-  parent_shas?: string[]
-  sha?: string
-  stats?: TypesCommitStats
-  title?: string
-}
-export interface TypesCommitStats {
-  files?: TypesCommitFileStats[]
-  total?: TypesChangeStats
-}
-
-export interface TypesChangeStats {
-  changes?: number
-  deletions?: number
-  insertions?: number
-}
-export interface TypesCommitFileStats {
-  changes?: number
-  deletions?: number
-  insertions?: number
-  old_path?: string
-  path?: string
-  status?: string
-}
-export interface TypesSignature {
-  identity?: TypesIdentity
-  when?: string
-}
-export interface TypesIdentity {
-  email?: string
-  name?: string
 }
 
 export interface IPullRequestStore {
@@ -171,6 +135,16 @@ export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
 export type EnumPullReqState = 'closed' | 'merged' | 'open'
 
+export declare type EnumPullReqReviewDecision = 'approved' | 'changereq' | 'pending' | 'reviewed'
+
+export enum PullReqReviewDecision {
+  approved = 'approved',
+  changeReq = 'changereq',
+  pending = 'pending',
+  outdated = 'outdated',
+  approve = 'approve'
+}
+
 export interface TypesPullReqStats {
   additions?: number | null
   commits?: number | null
@@ -179,6 +153,19 @@ export interface TypesPullReqStats {
   files_changed?: number | null
   unresolved_count?: number
 }
+
+export interface PRReviewer {
+  reviewer: { display_name: string; id: number }
+  review_decision?: EnumPullReqReviewDecision
+  sha?: string
+}
+
+export interface PRReviewUsers {
+  display_name?: string
+  id?: number
+  uid?: string
+}
+
 export interface TypesLabelPullReqAssignmentInfo {
   color?: EnumLabelColor
   id?: number
@@ -189,6 +176,7 @@ export interface TypesLabelPullReqAssignmentInfo {
   value_count?: number
   value_id?: number | null
 }
+
 export type EnumLabelColor =
   | 'blue'
   | 'brown'
@@ -203,3 +191,20 @@ export type EnumLabelColor =
   | 'red'
   | 'violet'
   | 'yellow'
+
+export interface CreateCommentPullReqRequest {
+  line_end?: number
+  line_end_new?: boolean
+  line_start?: number
+  line_start_new?: boolean
+  parent_id?: number
+  path?: string
+  source_commit_sha?: string
+  target_commit_sha?: string
+  text?: string
+}
+
+export interface CommitSuggestion {
+  check_sum: string
+  comment_id: number
+}

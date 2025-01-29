@@ -9,7 +9,10 @@ import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
+import AttachmentImage from '../icons/attachment-image.svg'
+import Attachment from '../icons/attachment.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
+import Bold from '../icons/bold.svg'
 import BookmarkAdd from '../icons/bookmark-add.svg'
 import BookmarkIcon from '../icons/bookmark-icon.svg'
 import BoxCloning from '../icons/box-cloning.svg'
@@ -23,6 +26,7 @@ import Changes from '../icons/changes.svg'
 import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
 import Checkbox from '../icons/checkbox.svg'
+import Checklist from '../icons/checklist.svg'
 import Checks from '../icons/checks.svg'
 import ChevronDown from '../icons/chevron-down.svg'
 import ChevronFillDown from '../icons/chevron-fill-down.svg'
@@ -31,6 +35,7 @@ import ChevronUp from '../icons/chevron-up.svg'
 import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../icons/circle-arrows-updown.svg'
+import CirclePlus from '../icons/circle-plus.svg'
 import Circle from '../icons/circle.svg'
 import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
@@ -38,10 +43,16 @@ import Clone from '../icons/clone.svg'
 import Close from '../icons/close.svg'
 import CloudCostsGradient from '../icons/cloud-costs-gradient.svg'
 import CloudCosts from '../icons/cloud-costs-icon.svg'
+import CodeBrackets from '../icons/code-brackets.svg'
+import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
+import CollapseComment from '../icons/collapse-comment.svg'
+import CollapseDiff from '../icons/collapse-diff.svg'
 import Comments from '../icons/comments.svg'
+import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
 import Dashboards from '../icons/dashboards-icon.svg'
 import DatabaseGradient from '../icons/database-gradient.svg'
@@ -58,6 +69,8 @@ import Edit from '../icons/edit-icon.svg'
 import Environment from '../icons/environment-icon.svg'
 import ExecutionGradient from '../icons/execution-gradient.svg'
 import Execution from '../icons/execution-icon.svg'
+import ExpandComment from '../icons/expand-comment.svg'
+import ExpandDiff from '../icons/expand-diff.svg'
 import Eye from '../icons/eye-icon.svg'
 import Fail from '../icons/fail.svg'
 import FileIcon from '../icons/file-icon.svg'
@@ -71,19 +84,32 @@ import GitBranch from '../icons/git-branch.svg'
 import GithubActions from '../icons/github-actions.svg'
 import GitnessLogo from '../icons/gitness-logo.svg'
 import GreenCircle from '../icons/green-circle.svg'
-import GreenTick from '../icons/green-tick-nobg.svg'
 import GridDots from '../icons/grid-dots.svg'
 import HarnessLogoText from '../icons/harness-logo-text.svg'
 import HarnessPlugin from '../icons/harness-plugin.svg'
 import Harness from '../icons/harness.svg'
+import Header from '../icons/header.svg'
 import Hierarchy from '../icons/hierarchy-icon.svg'
 import IncidentsGradient from '../icons/incidents-gradient.svg'
 import Incidents from '../icons/incidents-icon.svg'
 import InfoCircle from '../icons/info-circle.svg'
 import InfrastructureGradient from '../icons/infrastructure-gradient.svg'
 import Infrastructure from '../icons/infrastructure-icon.svg'
+import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
 import Lightning from '../icons/lightning.svg'
+import List from '../icons/list.svg'
+import NoDataBranches from '../icons/lists-data-icons/no-data-branches.svg'
+import NoDataCog from '../icons/lists-data-icons/no-data-cog.svg'
+import NoDataCommits from '../icons/lists-data-icons/no-data-commits.svg'
+import NoDataError from '../icons/lists-data-icons/no-data-error.svg'
+import NoDataFolder from '../icons/lists-data-icons/no-data-folder.svg'
+import NoDataMembers from '../icons/lists-data-icons/no-data-members.svg'
+import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
+import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
+import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
+import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
+import Lock from '../icons/lock.svg'
 import LogOut from '../icons/log-out-icon.svg'
 import HarnessLogoGradientEllipse from '../icons/logo-gradient-ellipse.svg'
 import HarnessLogoGradient from '../icons/logo-gradient.svg'
@@ -92,14 +118,7 @@ import Merged from '../icons/merged.svg'
 import Minus from '../icons/minus-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
-import NoDataBranches from '../icons/no-data-branches.svg'
-import NoDataCog from '../icons/no-data-cog.svg'
-import NoDataFolder from '../icons/no-data-folder.svg'
-import NoDataMembers from '../icons/no-data-members.svg'
-import NoDataMerge from '../icons/no-data-merge.svg'
-import NoDataWebhooks from '../icons/no-data-webhooks.svg'
-import NoRepository from '../icons/no-repository.svg'
-import NoSearchMagnifyingGlass from '../icons/no-search-magnifying-glass.svg'
+import NoDataPR from '../icons/no-data-pr.svg'
 import NodeLogo from '../icons/node-logo.svg'
 import Notification from '../icons/notification-icon.svg'
 import OpenPR from '../icons/open-pr.svg'
@@ -135,6 +154,8 @@ import Settings2 from '../icons/setting-2.svg'
 import Shield from '../icons/shield-icon.svg'
 import ShieldLock from '../icons/shield-lock.svg'
 import SidebarIcon from '../icons/sidebar-icon.svg'
+import SidebarLeft from '../icons/sidebar-left.svg'
+import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
 import Sparks from '../icons/sparks.svg'
@@ -143,10 +164,12 @@ import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
 import SubMenuEllipse from '../icons/sub-menu-ellipse.svg'
 import Success from '../icons/success.svg'
+import Suggestion from '../icons/suggestion.svg'
 import SupplyChainGradient from '../icons/supply-chain-gradient.svg'
 import SupplyChain from '../icons/supply-chain-icon.svg'
 import Tag from '../icons/tag.svg'
 import Tasks from '../icons/tasks.svg'
+import TickCircle from '../icons/tick-circle.svg'
 import Tick from '../icons/tick-icon.svg'
 import Ticket from '../icons/ticket-icon.svg'
 import Trash from '../icons/trash.svg'
@@ -162,8 +185,6 @@ import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
 import Webhook from '../icons/webhook-icon.svg'
 import Wrench from '../icons/wrench-icon.svg'
 import XMark from '../icons/x-mark.svg'
-
-// import Fork from '../icons/fork.svg'
 
 const IconNameMap = {
   'chevron-down': ChevronDown,
@@ -204,6 +225,8 @@ const IconNameMap = {
   'no-data-branches': NoDataBranches,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
   'no-data-members': NoDataMembers,
+  'no-data-error': NoDataError,
+  'no-data-pr': NoDataPR,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,
@@ -258,7 +281,7 @@ const IconNameMap = {
   'run-test': RunTest,
   'ssh-key': SshKey,
   'green-dot': GreenCircle,
-  'green-tick': GreenTick,
+  'tick-circle': TickCircle,
   'cancel-grey': CancelGrey,
   'harness-logo-text': HarnessLogoText,
   account: Account,
@@ -274,6 +297,8 @@ const IconNameMap = {
   key: Key,
   'file-icon': FileIcon,
   'sidebar-icon': SidebarIcon,
+  'sidebar-left': SidebarLeft,
+  'sidebar-right': SidebarRight,
   variable: Variable,
   'clock-icon': ClockIcon,
   eye: Eye,
@@ -327,8 +352,26 @@ const IconNameMap = {
   'menu-dots': MenuDots,
   'bookmark-add': BookmarkAdd,
   upload: Upload,
-  minus: Minus
-  // fork: Fork
+  minus: Minus,
+  header: Header,
+  bold: Bold,
+  attachment: Attachment,
+  code: Code,
+  list: List,
+  checklist: Checklist,
+  italicize: Italicize,
+  'no-data-commits': NoDataCommits,
+  compare: Compare,
+  lock: Lock,
+  cross: Cross,
+  'collapse-diff': CollapseDiff,
+  'expand-diff': ExpandDiff,
+  'circle-plus': CirclePlus,
+  'code-brackets': CodeBrackets,
+  'attachment-image': AttachmentImage,
+  'collapse-comment': CollapseComment,
+  'expand-comment': ExpandComment,
+  suggestion: Suggestion
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

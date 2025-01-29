@@ -107,7 +107,7 @@ export function RepoCreatePage({
   }
 
   return (
-    <SandboxLayout.Main hasLeftPanel>
+    <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
@@ -132,7 +132,6 @@ export function RepoCreatePage({
               placeholder="Enter repository name"
               size="md"
               error={errors.name?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
             {/* DESCRIPTION */}
@@ -159,14 +158,12 @@ export function RepoCreatePage({
                 caption="Choose which files not to track from a list of templates."
               >
                 <SelectContent>
-                  {gitIgnoreOptions &&
-                    gitIgnoreOptions?.map(option => {
-                      return (
-                        <SelectItem key={option} value={option}>
-                          {option}
-                        </SelectItem>
-                      )
-                    })}
+                  {!!gitIgnoreOptions &&
+                    gitIgnoreOptions.map(option => (
+                      <SelectItem key={option} value={option}>
+                        {option}
+                      </SelectItem>
+                    ))}
                 </SelectContent>
               </Select>
             </ControlGroup>
@@ -217,7 +214,7 @@ export function RepoCreatePage({
                 />
               </RadioGroup>
               {errors.access && (
-                <Message className="mt-1" theme={MessageTheme.ERROR}>
+                <Message className="mt-0.5" theme={MessageTheme.ERROR}>
                   {errors.access.message?.toString()}
                 </Message>
               )}

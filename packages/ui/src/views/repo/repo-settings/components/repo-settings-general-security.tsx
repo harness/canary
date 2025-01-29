@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import {
@@ -8,11 +8,12 @@ import {
   Message,
   MessageTheme,
   Option,
-  SkeletonList,
+  SkeletonForm,
   Spacer,
   Text
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { TranslationStore } from '@views/repo/repo-list/types'
 import { z } from 'zod'
 
 import { ErrorTypes } from '../types'
@@ -29,15 +30,18 @@ interface RepoSettingsSecurityFormProps {
   handleUpdateSecuritySettings: (data: RepoSettingsSecurityFormFields) => void
   isUpdatingSecuritySettings: boolean
   isLoadingSecuritySettings: boolean
+  useTranslationStore: () => TranslationStore
 }
 
-export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> = ({
+export const RepoSettingsSecurityForm: FC<RepoSettingsSecurityFormProps> = ({
   securityScanning,
   handleUpdateSecuritySettings,
   apiError,
   isUpdatingSecuritySettings,
-  isLoadingSecuritySettings
+  isLoadingSecuritySettings,
+  useTranslationStore
 }) => {
+  const { t } = useTranslationStore()
   const {
     handleSubmit,
     setValue,
@@ -60,24 +64,24 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
 
   useEffect(() => {
     setValue('secretScanning', securityScanning)
-  }, [securityScanning])
-
-  if (isLoadingSecuritySettings) {
-    return <SkeletonList />
-  }
+  }, [securityScanning, setValue])
 
   const isDisabled =
     (apiError && (apiError.type === 'fetchSecurity' || apiError.type === 'updateSecurity')) ||
     isUpdatingSecuritySettings
 
-  const tooltipMessage = isDisabled ? 'Cannot change settings while loading or updating.' : ''
+  const tooltipMessage = isDisabled
+    ? t('views:repos.settingsToolTip', 'Cannot change settings while loading or updating.')
+    : ''
 
   return (
-    <>
-      <Text size={4} weight="medium">
-        Security
+    <Fieldset className="gap-y-6">
+      <Text size={13} weight="medium">
+        {t('views:repos.security', 'Security')}
       </Text>
-      <Fieldset className="mb-0">
+      {isLoadingSecuritySettings ? (
+        <SkeletonForm linesCount={2} />
+      ) : (
         <ControlGroup>
           <Option
             className="mt-0"
@@ -91,23 +95,26 @@ export const RepoSettingsSecurityForm: React.FC<RepoSettingsSecurityFormProps> =
               />
             }
             id="secret-scanning"
-            label="Secret scanning"
-            description="Block commits containing secrets like passwords, API keys and tokens."
+            label={t('views:repos.secretScanning', 'Secret scanning')}
+            description={t(
+              'views:repos.secretScanningDescription',
+              'Block commits containing secrets like passwords, API keys and tokens.'
+            )}
           />
           {errors.secretScanning && (
             <Message theme={MessageTheme.ERROR}>{errors.secretScanning.message?.toString()}</Message>
           )}
         </ControlGroup>
+      )}
 
-        {apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
-          <>
-            <Spacer size={2} />
-            <Text size={1} className="text-destructive">
-              {apiError.message}
-            </Text>
-          </>
-        )}
-      </Fieldset>
-    </>
+      {!!apiError && (apiError.type === ErrorTypes.FETCH_SECURITY || apiError.type === ErrorTypes.UPDATE_SECURITY) && (
+        <>
+          <Spacer size={2} />
+          <Text size={1} className="text-destructive">
+            {apiError.message}
+          </Text>
+        </>
+      )}
+    </Fieldset>
   )
 }

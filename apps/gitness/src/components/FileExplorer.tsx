@@ -7,13 +7,14 @@ import { getContent, OpenapiContentInfo, OpenapiGetContentOutput } from '@harnes
 import { FileExplorer } from '@harnessio/ui/components'
 
 import { useOpenFolderPaths } from '../framework/context/ExplorerPathsContext'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../hooks/useCodePathDetails'
 import { PathParams } from '../RouteDefinitions'
 import { normalizeGitRef } from '../utils/git-utils'
 
 interface ExplorerProps {
-  selectedBranch: string
+  selectedBranch?: string
   repoDetails: OpenapiGetContentOutput
 }
 
@@ -39,6 +40,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
   const isFileEditMode = location.pathname.includes('edit')
   const queryClient = useQueryClient()
   const { openFolderPaths, setOpenFolderPaths } = useOpenFolderPaths()
+  const routes = useRoutes()
 
   const handleOpenFoldersChange = (newOpenFolderPaths: string[]) => {
     const newlyOpenedFolders = newOpenFolderPaths.filter(path => !openFolderPaths.includes(path))
@@ -87,7 +89,7 @@ export default function Explorer({ selectedBranch, repoDetails }: ExplorerProps)
     const sortedEntries = sortEntriesByType(entries)
     return sortedEntries.map((item, idx) => {
       const itemPath = parentPath ? `${parentPath}/${item.name}` : item.name
-      const fullPath = `/${spaceId}/repos/${repoId}/code/${fullGitRef || selectedBranch}/~/${itemPath}`
+      const fullPath = `${routes.toRepoFiles({ spaceId, repoId })}/${fullGitRef || selectedBranch}/~/${itemPath}`
 
       if (item.type === 'file') {
         return (

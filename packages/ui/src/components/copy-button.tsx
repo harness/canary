@@ -1,17 +1,45 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { Button, ButtonProps, Icon } from '@/components'
+import { cva, type VariantProps } from 'class-variance-authority'
 import copy from 'clipboard-copy'
 
-export interface CopyButtonProps {
+export interface CopyButtonProps extends VariantProps<typeof copyIconVariants> {
   name: string
   className?: string
   buttonVariant?: ButtonProps['variant']
   iconSize?: number
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
 }
 
-export const CopyButton: FC<CopyButtonProps> = ({ name, className, buttonVariant = 'custom', iconSize = 16 }) => {
+const copyIconVariants = cva('transition-colors duration-200', {
+  variants: {
+    color: {
+      gray: 'text-icons-1 hover:text-icons-2',
+      white: 'text-icons-3 hover:text-icons-2',
+      success: 'text-icons-success'
+    }
+  },
+  defaultVariants: {
+    color: 'white'
+  }
+})
+
+export const CopyButton: FC<CopyButtonProps> = ({
+  name,
+  className,
+  buttonVariant = 'custom',
+  iconSize = 16,
+  onClick,
+  color
+}) => {
   const [copied, setCopied] = useState(false)
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
+    setCopied(true)
+    onClick?.(e)
+  }
 
   useEffect(() => {
     let timeoutId: number
@@ -26,12 +54,12 @@ export const CopyButton: FC<CopyButtonProps> = ({ name, className, buttonVariant
     }
   }, [copied, name])
 
-  const iconCopyStyle = copied ? 'text-icons-success' : 'text-icons-3'
+  const iconCopyStyle = copied ? 'success' : color
   const changeIcon = copied ? 'tick' : 'clone'
 
   return (
-    <Button className={className} variant={buttonVariant} size="icon" aria-label="Copy" onClick={() => setCopied(true)}>
-      <Icon name={changeIcon} size={iconSize} className={iconCopyStyle} />
+    <Button className={className} variant={buttonVariant} size="icon" aria-label="Copy" onClick={handleClick}>
+      <Icon className={copyIconVariants({ color: iconCopyStyle })} name={changeIcon} size={iconSize} />
     </Button>
   )
 }

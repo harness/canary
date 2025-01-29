@@ -45,7 +45,7 @@
     "react/react-in-jsx-scope": "off",
 
     "jsx-a11y/click-events-have-key-events": "warn",
-    "jsx-a11y/no-autofocus": "warn",
+    "jsx-a11y/no-autofocus": "off",
 
     "@typescript-eslint/no-unused-vars": [
       "error",
@@ -58,7 +58,7 @@
 
     "@typescript-eslint/no-explicit-any": "warn",
 
-    "tailwindcss/no-custom-classname": "warn"
+    "tailwindcss/no-custom-classname": "off"
   },
   "ignorePatterns": ["**/dist/**"]
 }

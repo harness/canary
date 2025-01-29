@@ -1,8 +1,9 @@
 import { useMemo, useRef, useState } from 'react'
 
-import { DiffEditor, loader, MonacoDiffEditor, useMonaco } from '@monaco-editor/react'
+import { DiffEditor, EditorProps, loader, MonacoDiffEditor, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 
+import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
 import { useTheme } from '../hooks/useTheme'
 import { ThemeDefinition } from '../types/themes'
 
@@ -14,18 +15,14 @@ export interface CodeRevision {
 }
 
 const defaultOptions: monaco.editor.IStandaloneDiffEditorConstructionOptions = {
-  selectOnLineNumbers: true,
+  ...MonacoCommonDefaultOptions,
   minimap: { enabled: false },
   codeLens: false,
-  scrollBeyondLastLine: false,
   smartSelect: {
     selectLeadingAndTrailingWhitespace: true
   },
   originalEditable: false,
-  overviewRulerBorder: false,
-  padding: {
-    top: 10
-  }
+  overviewRulerBorder: false
 }
 
 export interface DiffEditorProps<_> {
@@ -37,10 +34,18 @@ export interface DiffEditorProps<_> {
   options?: {
     readOnly?: boolean
   }
+  height?: EditorProps['height']
 }
 
-export function CodeDiffEditor<T>(props: DiffEditorProps<T>): JSX.Element {
-  const { original, modified, language, themeConfig, options, theme: themeFromProps } = props
+export function CodeDiffEditor<T>({
+  original,
+  modified,
+  language,
+  themeConfig,
+  options,
+  theme: themeFromProps,
+  height = '75vh'
+}: DiffEditorProps<T>): JSX.Element {
   const monaco = useMonaco()
   const [editor, setEditor] = useState<MonacoDiffEditor | undefined>()
 
@@ -55,12 +60,12 @@ export function CodeDiffEditor<T>(props: DiffEditorProps<T>): JSX.Element {
   return (
     <>
       <DiffEditor
-        className="border-border-background border-x border-b"
+        className="overflow-hidden rounded-b-md border-x border-b"
         language={language}
         theme={theme}
         original={original}
         modified={modified}
-        height="75vh"
+        height={height}
         options={mergedOptions}
         onMount={setEditor}
       />

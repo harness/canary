@@ -1,0 +1,229 @@
+---
+title: Sheet
+description: Sheet component documentation
+---
+
+The Sheet component provides a flexible UI element for displaying overlaid content, often used for dialogs or side panels. It is composed of several subcomponents such as SheetHeader, SheetFooter, SheetTitle, and SheetDescription to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Sheet.Root>
+  <Sheet.Trigger asChild>
+    <Button>Open Sheet</Button>
+  </Sheet.Trigger>
+  <Sheet.Content>
+    <Sheet.Header>
+      <Sheet.Title>Sheet Title</Sheet.Title>
+      <Sheet.Description>This is the sheet description.</Sheet.Description>
+    </Sheet.Header>
+    <p>Sheet content goes here.</p>
+    <Sheet.Footer>
+      <Button>Footer Action</Button>
+    </Sheet.Footer>
+  </Sheet.Content>
+</Sheet.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Sheet } from '@harnessio/ui/components'
+
+return (
+  <Sheet.Root>
+    <Sheet.Trigger asChild>
+      <Button>Open Sheet</Button>
+    </Sheet.Trigger>
+    <Sheet.Content>
+      <Sheet.Header>
+        <Sheet.Title>Sheet Title</Sheet.Title>
+        <Sheet.Description>This is the sheet description.</Sheet.Description>
+      </Sheet.Header>
+      <p>Sheet content goes here.</p>
+      <Sheet.Footer>
+        <Button>Footer Action</Button>
+      </Sheet.Footer>
+    </Sheet.Content>
+  </Sheet.Root>
+)
+```
+
+## Anatomy
+
+All parts of the Sheet component can be imported and composed as required.
+
+```typescript jsx
+<Sheet.Root>
+  <Sheet.Trigger>
+    <Button>Open Sheet</Button>
+  </Sheet.Trigger>
+  <Sheet.Content>
+    <Sheet.Header>
+      <Sheet.Title>Sheet Title</Sheet.Title>
+      <Sheet.Description>This is the sheet description.</Sheet.Description>
+    </Sheet.Header>
+
+    <p>Sheet content goes here.</p>
+
+    <Sheet.Footer>
+      <Button>Footer Action</Button>
+    </Sheet.Footer>
+  </Sheet.Content>
+</Sheet.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all sheet elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Sheet.Trigger` and `Sheet.Content` as children",
+      required: true,
+    },
+    { name: "className", required: false },
+  ]}
+/>
+
+### Trigger
+
+The `Trigger` component is used to open the sheet.
+
+```typescript jsx
+<Sheet.Trigger>
+  <Button>Open Sheet</Button>
+</Sheet.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Content to display", required: true },
+    { name: "className", required: false },
+  ]}
+/>
+
+### Content
+
+The `Content` component defines the main content area of the sheet.
+
+```typescript jsx
+<Sheet.Content>
+  <Sheet.Header>
+    <Sheet.Title>Sheet Title</Sheet.Title>
+    <Sheet.Description>This is the sheet description.</Sheet.Description>
+  </Sheet.Header>
+  <Sheet.Content>
+    <p>Sheet content goes here.</p>
+  </Sheet.Content>
+  <Sheet.Footer>
+    <Button>Footer Action</Button>
+  </Sheet.Footer>
+</Sheet.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Content to display", required: true },
+    { name: "className", required: false },
+    {
+      name: "side",
+      description: "Side from which the sheet appears",
+      defaultValue: "'right'",
+      required: false,
+    },
+    {
+      name: "hideCloseButton",
+      description: "Hide the close button",
+      defaultValue: "false",
+      required: false,
+    },
+    {
+      name: "modal",
+      description: "Enable modal behavior",
+      defaultValue: "true",
+      required: false,
+    },
+    {
+      name: "handleClose",
+      description: "Function to handle close action",
+      required: false,
+    },
+    {
+      name: "overlayClassName",
+      description: "Additional class names for overlay",
+      required: false,
+    },
+  ]}
+/>
+
+### Header
+
+The `Header` component is used to define the header section of the sheet.
+
+```typescript jsx
+<Sheet.Header>
+  <Sheet.Title>Sheet Title</Sheet.Title>
+  <Sheet.Description>This is the sheet description.</Sheet.Description>
+</Sheet.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Content to display", required: true },
+    { name: "className", required: false },
+  ]}
+/>
+
+### Footer
+
+The `Footer` component is used to define the footer section of the sheet.
+
+```typescript jsx
+<Sheet.Footer>
+  <Button>Footer Action</Button>
+</Sheet.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Footer content", required: true },
+    { name: "className", required: false },
+  ]}
+/>
+
+### Title
+
+The `Title` component displays the title of the sheet.
+
+```typescript jsx
+<Sheet.Title>Sheet Title</Sheet.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Title content", required: true },
+    { name: "className", required: false },
+  ]}
+/>
+
+### Description
+
+The `Description` component displays the description of the sheet.
+
+```typescript jsx
+<Sheet.Description>This is the sheet description.</Sheet.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    { name: "children", description: "Description content", required: true },
+    { name: "className" },
+  ]}
+/>

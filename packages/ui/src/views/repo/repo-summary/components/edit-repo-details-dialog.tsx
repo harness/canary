@@ -1,16 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  ButtonGroup,
-  Icon,
-  Textarea
-} from '@/components'
+import { AlertDialog, Button, ButtonGroup, Icon, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean
@@ -36,10 +26,10 @@ export const EditRepoDetails = ({
     setNewDesc(description)
   }, [description])
   return (
-    <AlertDialog open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialogContent className="h-80 max-h-[70vh] w-[460px] !rounded" onOverlayClick={handleClose}>
-        <AlertDialogHeader>
-          <AlertDialogTitle className="mb-4">
+    <AlertDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
+      <AlertDialog.Content className="h-80 max-h-[70vh] w-[460px] !rounded" onOverlayClick={handleClose}>
+        <AlertDialog.Header>
+          <AlertDialog.Title className="mb-4">
             Repository Description
             <Button
               className="absolute right-1 top-1 text-icons-4 hover:text-icons-2"
@@ -50,8 +40,8 @@ export const EditRepoDetails = ({
               <Icon name="close" size={16} />
               <span className="sr-only">Close</span>
             </Button>
-          </AlertDialogTitle>
-        </AlertDialogHeader>
+          </AlertDialog.Title>
+        </AlertDialog.Header>
         <Textarea
           label="Description"
           className="h-24 text-primary"
@@ -63,7 +53,7 @@ export const EditRepoDetails = ({
           placeholder="Enter repository description here"
           error={updateRepoError?.length ? updateRepoError : undefined}
         />
-        <AlertDialogFooter>
+        <AlertDialog.Footer>
           <ButtonGroup>
             <Button variant="outline" onClick={handleClose}>
               Cancel
@@ -72,8 +62,8 @@ export const EditRepoDetails = ({
               Save
             </Button>
           </ButtonGroup>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </AlertDialog.Footer>
+      </AlertDialog.Content>
+    </AlertDialog.Root>
   )
 }

@@ -20,7 +20,7 @@ type UseCarouselParameters = Parameters<typeof useEmblaCarousel>
 type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
 
-type CarouselProps = {
+type CarouselRootProps = {
   opts?: CarouselOptions
   plugins?: CarouselPlugin
   orientation?: 'horizontal' | 'vertical'
@@ -35,7 +35,7 @@ type CarouselContextProps = {
   scrollNext: () => void
   canScrollPrev: boolean
   canScrollNext: boolean
-} & CarouselProps
+} & CarouselRootProps
 
 const CarouselContext = createContext<CarouselContextProps | null>(null)
 
@@ -43,13 +43,13 @@ function useCarousel() {
   const context = useContext(CarouselContext)
 
   if (!context) {
-    throw new Error('useCarousel must be used within a <Carousel />')
+    throw new Error('useCarousel must be used within a <Carousel.Root />')
   }
 
   return context
 }
 
-const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & CarouselProps>(
+const CarouselRoot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & CarouselRootProps>(
   ({ orientation = 'horizontal', opts, setApi, plugins, className, children, initialSlide, ...props }, ref) => {
     const [carouselRef, api] = useEmblaCarousel(
       {
@@ -160,7 +160,7 @@ const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & Car
     )
   }
 )
-Carousel.displayName = 'Carousel'
+CarouselRoot.displayName = 'CarouselRoot'
 
 interface CarouselContentProps extends HTMLAttributes<HTMLDivElement> {
   carouselBlockClassName?: string
@@ -254,4 +254,12 @@ const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>
 )
 CarouselNext.displayName = 'CarouselNext'
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext }
+const Carousel = {
+  Root: CarouselRoot,
+  Content: CarouselContent,
+  Item: CarouselItem,
+  Previous: CarouselPrevious,
+  Next: CarouselNext
+}
+
+export { type CarouselApi, Carousel }

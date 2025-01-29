@@ -1,5 +1,6 @@
-import { Progress, Text } from '@/components'
+import { Progress } from '@/components'
 import { cn } from '@/utils/cn'
+import { TranslationStore } from '@/views'
 
 interface GaugeProps {
   behindAhead: {
@@ -7,9 +8,11 @@ interface GaugeProps {
     ahead?: number
   }
   className?: string
+  useTranslationStore: () => TranslationStore
 }
 
-export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
+export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }: GaugeProps) => {
+  const { t } = useTranslationStore()
   const total = (behindAhead.behind ?? 0) + (behindAhead.ahead ?? 0)
   const getPercentage = (value: number) => (total > 0 ? (value / total) * 100 : 0)
   const behindPercentage = getPercentage(behindAhead.behind ?? 0)
@@ -23,15 +26,23 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
   const adjustedAheadPercentage = adjustPercentage(aheadPercentage)
 
   return (
-    <div className={cn('mt-0.5 flex w-full flex-col gap-1', className)}>
-      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-items-end gap-x-2">
-        <Text as="p" size={1} truncate color="tertiaryBackground" className="leading-none">
+    <div className={cn('mt-0.5 flex w-full flex-col gap-[3px]', className)}>
+      <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
+        <span className="truncate text-right text-13 leading-none text-foreground-3">
           {behindAhead.behind ?? 0}
-        </Text>
-        <div className="h-full border-r-2 border-tertiary-background/30" />
-        <Text as="p" size={1} truncate color="tertiaryBackground" className="place-self-start leading-none">
+          <span className="sr-only">
+            {t('views:repos.commits', 'commits')}
+            {t('views:repos.behind', 'behind')}
+          </span>
+        </span>
+        <div className="h-3 w-px bg-borders-2" aria-hidden />
+        <span className="truncate text-13 leading-none text-foreground-3">
           {behindAhead.ahead ?? 0}
-        </Text>
+          <span className="sr-only">
+            {t('views:repos.commits', 'commits')}
+            {t('views:repos.ahead', 'ahead')}
+          </span>
+        </span>
       </div>
       {/* Both behind and ahead are 0, don't show the progress bar */}
       {behindAhead?.behind === 0 && behindAhead?.ahead == 0 ? null : (
@@ -39,15 +50,17 @@ export const DivergenceGauge = ({ behindAhead, className }: GaugeProps) => {
           <Progress
             variant="divergence"
             value={adjustedBehindPercentage}
+            size="sm"
             rotated="180deg"
             indicatorRounded="right-sm"
-            indicatorColor="tertiary-background-20"
+            indicatorColor="dark-gray"
           />
           <Progress
             variant="divergence"
             value={adjustedAheadPercentage}
+            size="sm"
             indicatorRounded="right-sm"
-            indicatorColor="tertiary-background-40"
+            indicatorColor="light-gray"
           />
         </div>
       )}

@@ -1,15 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Button,
-  ButtonGroup,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  Text
-} from '@/components'
+import { Button, ButtonGroup, DropdownMenu, Icon, Text } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 interface TypesSpace {
@@ -34,8 +25,8 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
   const { t } = useTranslationStore()
 
   return (
-    <SandboxLayout.Main hasLeftPanel>
-      <div className="flex size-full flex-col place-content-center place-items-center items-center justify-center gap-4">
+    <SandboxLayout.Main>
+      <div className="flex size-full flex-col place-content-center place-items-center gap-4">
         <div className="flex flex-col place-content-center place-items-center gap-2.5">
           <Text size={5} weight="medium">
             {t('views:landingPage.selectProject', 'Select a project to get started')}
@@ -49,29 +40,29 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
             </Text>
           </div>
           <ButtonGroup>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
+            <DropdownMenu.Root>
+              <DropdownMenu.Trigger asChild>
                 <Button variant="default" size={'lg'}>
                   <Text color="tertiary" className="mr-5">
                     {t('views:landingPage.projectSelector', 'Select Project')}
                   </Text>
                   <Icon name="chevron-down" size={15} className="chevron-down" />
                 </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
+              </DropdownMenu.Trigger>
+              <DropdownMenu.Content style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}>
                 {spaces?.length ? (
                   spaces.map(space => (
-                    <DropdownMenuItem key={space.id} onClick={() => navigate(`${space.path}/repos`)}>
+                    <DropdownMenu.Item key={space.id} onClick={() => navigate(`${space.path}/repos`)}>
                       {space.identifier}
-                    </DropdownMenuItem>
+                    </DropdownMenu.Item>
                   ))
                 ) : (
-                  <DropdownMenuItem disabled>
+                  <DropdownMenu.Item disabled>
                     {t('views:landingPage.noProjects', 'No projects available')}
-                  </DropdownMenuItem>
+                  </DropdownMenu.Item>
                 )}
-              </DropdownMenuContent>
-            </DropdownMenu>
+              </DropdownMenu.Content>
+            </DropdownMenu.Root>
             <Button
               variant="outline"
               size="lg"

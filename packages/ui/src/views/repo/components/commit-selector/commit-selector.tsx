@@ -1,9 +1,8 @@
 import { FC, useMemo } from 'react'
 
-import { Button, DropdownMenu, DropdownMenuTrigger, Icon, Text } from '@/components'
-import { TranslationStore } from '@/views'
+import { Button, DropdownMenu, Icon, Text } from '@/components'
+import { CommitSelectorListItem, TranslationStore } from '@/views'
 
-import { CommitSelectorListItem } from '../../pull-request/compare/components/types'
 import { CommitSelectorDropdown } from './commit-selector-dropdown'
 import { ICommitSelectorStore } from './types'
 
@@ -47,11 +46,11 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
       return selectedCommit.title || ''
     }
     return t('views:repos.allCommits', 'All commits')
-  }, [selectedCommit, t, onSelectCommit])
+  }, [selectedCommit, t])
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <Button
           className={
             'flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-8 [&_svg]:data-[state=open]:text-foreground-1'
@@ -64,7 +63,7 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
           </Text>
           <Icon className="chevron-down text-icons-2" name="chevron-down" size={10} />
         </Button>
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
       <CommitSelectorDropdown
         commitList={finalList}
         onSelectCommit={onSelectCommit}
@@ -75,6 +74,6 @@ export const CommitSelector: FC<CommitSelectorProps> = ({
         setSearchQuery={setSearchQuery}
         searchQuery={searchQuery}
       />
-    </DropdownMenu>
+    </DropdownMenu.Root>
   )
 }

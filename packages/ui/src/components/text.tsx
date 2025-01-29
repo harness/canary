@@ -24,7 +24,8 @@ const textVariants = cva('text-base', {
       9: 'text-6xl',
       10: 'text-7xl',
       11: 'text-8xl',
-      12: 'text-9xl'
+      12: 'text-9xl',
+      13: 'text-lg'
     },
     trim: {
       normal: '',
@@ -64,7 +65,7 @@ interface TextProps extends React.ComponentProps<'span'> {
    * Shorthand for changing the default rendered element
    * into a semantically appropriate alternative.
    */
-  as?: 'span' | 'div' | 'label' | 'p'
+  as?: 'span' | 'div' | 'label' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
   /**
    * Change the default rendered element for the one
@@ -80,7 +81,7 @@ interface TextProps extends React.ComponentProps<'span'> {
   /**
    * Sets the text size.
    */
-  size?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
+  size?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13
 
   /**
    * Trims the leading whitespace from the start or end
@@ -123,7 +124,7 @@ const Text = ({
   wrap,
   ...props
 }: TextProps) => {
-  const Comp = asChild ? Slot : as ? as.toString() : 'span'
+  const Comp = asChild ? Slot : ((as ? as.toString() : 'span') as any)
   return (
     <Comp className={cn(textVariants({ align, size, weight, color, trim, truncate, wrap }), className)} {...props}>
       {children}

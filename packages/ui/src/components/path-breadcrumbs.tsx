@@ -1,17 +1,8 @@
-import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
+import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-  Icon,
-  Input
-} from '@/components'
-import { debounce } from 'lodash-es'
+import { Breadcrumb, Icon, Input } from '@/components'
+import { useDebounceSearch } from '@/hooks'
 
 interface InputPathBreadcrumbItemProps {
   path: string
@@ -28,27 +19,10 @@ const InputPathBreadcrumbItem = ({
   isNew = false,
   handleOnBlur
 }: InputPathBreadcrumbItemProps) => {
-  const [fileName, setFileName] = useState('')
-
-  const debouncedChangeFileNameRef = useRef(debounce((value: string) => changeFileName(value), 300))
-
-  useEffect(() => {
-    const debouncedChangeFileName = debouncedChangeFileNameRef.current
-
-    return () => {
-      debouncedChangeFileName.cancel()
-    }
-  }, [])
-
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    setFileName(value)
-    debouncedChangeFileNameRef.current(value)
-  }
-
-  useEffect(() => {
-    setFileName(path)
-  }, [path])
+  const { search: fileName, handleSearchChange: handleInputChange } = useDebounceSearch({
+    handleChangeSearchValue: changeFileName,
+    searchValue: path
+  })
 
   return (
     <div className="flex items-center gap-1.5 text-foreground-4">
@@ -59,8 +33,7 @@ const InputPathBreadcrumbItem = ({
         placeholder="Add a file name"
         onChange={handleInputChange}
         onBlur={handleOnBlur}
-        // eslint-disable-next-line jsx-a11y/no-autofocus
-        autoFocus={isNew}
+        autoFocus={!!isNew}
       />
       <span>in</span>
       <span className="flex h-6 items-center gap-1 rounded bg-background-8 px-2.5 text-foreground-8">
@@ -113,38 +86,38 @@ export const PathBreadcrumbs = ({ items, isEdit, isNew, ...props }: PathBreadcru
   }
 
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
         {items.map(({ parentPath, path }, idx) => {
           const isLast = length === idx + 1
 
           if (isLast) {
             return (
-              <BreadcrumbItem key={idx}>
-                {isEdit ? renderInput() : <BreadcrumbPage>{path}</BreadcrumbPage>}
-              </BreadcrumbItem>
+              <Breadcrumb.Item key={idx}>
+                {isEdit ? renderInput() : <Breadcrumb.Page>{path}</Breadcrumb.Page>}
+              </Breadcrumb.Item>
             )
           }
 
           return (
             <Fragment key={idx}>
-              <BreadcrumbItem>
-                <BreadcrumbLink asChild>
+              <Breadcrumb.Item>
+                <Breadcrumb.Link asChild>
                   <Link to={parentPath}>{path}</Link>
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator>/</BreadcrumbSeparator>
+                </Breadcrumb.Link>
+              </Breadcrumb.Item>
+              <Breadcrumb.Separator />
             </Fragment>
           )
         })}
 
         {isNew && (
           <>
-            {!!items.length && <BreadcrumbSeparator>/</BreadcrumbSeparator>}
-            <BreadcrumbItem>{renderInput()}</BreadcrumbItem>
+            {!!items.length && <Breadcrumb.Separator />}
+            <Breadcrumb.Item>{renderInput()}</Breadcrumb.Item>
           </>
         )}
-      </BreadcrumbList>
-    </Breadcrumb>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
   )
 }

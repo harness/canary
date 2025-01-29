@@ -4,18 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Button, ButtonGroup } from '@harnessio/canary'
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  Icon,
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-  Spacer,
-  Text
-} from '@harnessio/ui/components'
+import { Card, Icon, InputOTP, InputOTPGroup, InputOTPSlot, Spacer, Text } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
@@ -43,9 +32,9 @@ export function OTPPage({ handleResend, isLoading, handleFormSubmit }: PageProps
 
   return (
     <Floating1ColumnLayout maxWidth="md" verticalCenter>
-      <Card variant="plain" width="full">
-        <CardHeader>
-          <CardTitle className="flex flex-col place-items-center">
+      <Card.Root variant="plain" width="full">
+        <Card.Header>
+          <Card.Title className="flex flex-col place-items-center">
             <Icon name="gitness-logo" size={104} />
             <Text size={6} weight="medium" color="primary">
               Verify your email
@@ -54,10 +43,10 @@ export function OTPPage({ handleResend, isLoading, handleFormSubmit }: PageProps
             <Text size={2} color="tertiaryBackground" align="center">
               Please enter the verfication code we sent to jane@smith.com
             </Text>
-          </CardTitle>
-        </CardHeader>
+          </Card.Title>
+        </Card.Header>
         <Spacer size={1} />
-        <CardContent>
+        <Card.Content>
           <form onSubmit={handleSubmit(onSubmit)}>
             <InputOTP maxLength={4}>
               <InputOTPGroup id="otp" className="mx-auto flex" {...register('otp')}>
@@ -81,8 +70,8 @@ export function OTPPage({ handleResend, isLoading, handleFormSubmit }: PageProps
               Resend
             </a>
           </Text>
-        </CardContent>
-      </Card>
+        </Card.Content>
+      </Card.Root>
     </Floating1ColumnLayout>
   )
 }

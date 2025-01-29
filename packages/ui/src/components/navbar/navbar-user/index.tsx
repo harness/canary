@@ -1,25 +1,24 @@
-import { Fragment, useMemo } from 'react'
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  ColorType,
+  ContrastType,
   DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  FullTheme,
+  getModeColorContrastFromFullTheme,
   Icon,
+  IThemeStore,
+  ModeType,
   Text
 } from '@/components'
 import { TypesUser } from '@/types'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-import { TFunction } from 'i18next'
-
-import { getUserMenuItems } from '../data'
-import { UserMenuKeys } from '../types'
+import { TranslationStore } from '@views/repo'
 
 interface UserBlockProps {
   username: string
@@ -60,84 +59,120 @@ interface NavbarUserProps {
   currentUser: TypesUser | undefined
   handleCustomNav: () => void
   handleLogOut: () => void
-  t: TFunction
+  useThemeStore: () => IThemeStore
+  useTranslationStore: () => TranslationStore
 }
 
-export const NavbarUser = ({ currentUser, handleCustomNav, handleLogOut, t }: NavbarUserProps) => {
+export const NavbarUser = ({
+  currentUser,
+  handleCustomNav,
+  handleLogOut,
+  useThemeStore,
+  useTranslationStore
+}: NavbarUserProps) => {
   const username = currentUser?.display_name || currentUser?.uid || ''
-  const userMenuItems = getUserMenuItems(t)
-
-  const menuItems = useMemo(() => {
-    return userMenuItems.map(({ key, iconName, title, to, isSeparated }) => {
-      const className = 'relative grid grid-cols-[auto_1fr] items-center gap-2.5'
-
-      const handleClick = () => {
-        switch (key) {
-          case UserMenuKeys.CUSTOM_NAV:
-            return handleCustomNav()
-          case UserMenuKeys.LOG_OUT:
-            return handleLogOut()
-          default:
-            return
-        }
-      }
-
-      const elementChild = (
-        <>
-          <Icon className={cn('text-icons-4 ml-[3px] transition-colors')} size={12} name={iconName} />
-          <Text size={2} truncate>
-            {title}
-          </Text>
-        </>
-      )
-
-      const element = to ? (
-        <Link className={className} to={to}>
-          {elementChild}
-        </Link>
-      ) : (
-        <button className={cn(className, 'w-full text-left')} onClick={handleClick}>
-          {elementChild}
-        </button>
-      )
-
-      return {
-        key,
-        element,
-        isSeparated
-      }
-    })
-  }, [handleCustomNav, handleLogOut, userMenuItems])
+  const { theme, setTheme } = useThemeStore()
+  const { t, i18n, changeLanguage } = useTranslationStore()
+  const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root>
+      <DropdownMenu.Trigger asChild>
         <div>
           <UserBlock username={username} email={currentUser?.email} url={currentUser?.url} isButton />
         </div>
-      </DropdownMenuTrigger>
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content
+        className="ml-3 w-[230px] !rounded-lg bg-background-1"
+        align="start"
+        sideOffset={-40}
+        alignOffset={187}
+      >
+        <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item asChild>
+          <Link to="/profile-settings">
+            <Icon size={12} name="user" className="mr-2" />
+            <Text>{t('component:navbar.profile', 'Profile')}</Text>
+          </Link>
+        </DropdownMenu.Item>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>
+            <Icon size={12} name="paint" className="mr-2" />
+            <Text>{t('component:navbar.theme', 'Theme')}</Text>
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.SubContent>
+              <DropdownMenu.Item disabled>Color Scheme</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
+                value={mode}
+                onValueChange={value => {
+                  setTheme(`${value}-${color}-${contrast}` as FullTheme)
+                }}
+              >
+                <DropdownMenu.RadioItem value={ModeType.System}>System</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ModeType.Light}>Light</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ModeType.Dark}>Dark</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+              <DropdownMenu.Item disabled>Color Correction</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
+                value={color}
+                onValueChange={value => {
+                  setTheme(`${mode}-${value}-${contrast}` as FullTheme)
+                }}
+              >
+                <DropdownMenu.RadioItem value={ColorType.Standard}>None</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ColorType.ProtanopiaAndDeuteranopia}>Red-Green</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ColorType.Tritanopia}>Blue-Yellow</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+              <DropdownMenu.Item disabled>Contrast</DropdownMenu.Item>
+              <DropdownMenu.Separator />
+              <DropdownMenu.RadioGroup
+                value={contrast}
+                onValueChange={value => {
+                  setTheme(`${mode}-${color}-${value}` as FullTheme)
+                }}
+              >
+                <DropdownMenu.RadioItem value={ContrastType.Standard}>Standard</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ContrastType.Low}>Low</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value={ContrastType.High}>High</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
+        <DropdownMenu.Sub>
+          <DropdownMenu.SubTrigger>
+            <Icon size={12} name="environment" className="mr-2" />
+            <Text>Language</Text>
+          </DropdownMenu.SubTrigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.SubContent>
+              <DropdownMenu.RadioGroup
+                value={i18n.language}
+                onValueChange={value => {
+                  changeLanguage(value)
+                }}
+              >
+                <DropdownMenu.RadioItem value="en">English</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value="fr">French</DropdownMenu.RadioItem>
+                <DropdownMenu.RadioItem value="system">System</DropdownMenu.RadioItem>
+              </DropdownMenu.RadioGroup>
+            </DropdownMenu.SubContent>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Sub>
+        <DropdownMenu.Item onClick={handleCustomNav}>
+          <Icon size={12} name="navigation" className="mr-2" />
+          <Text>{t('component:navbar.customNav', 'Customize navigation')}</Text>
+        </DropdownMenu.Item>
 
-      {menuItems && (
-        <DropdownMenuContent
-          className="ml-3 w-[230px] !rounded-lg bg-background-1"
-          align="start"
-          sideOffset={-40}
-          alignOffset={187}
-        >
-          <UserBlock className="p-2" username={username} email={currentUser?.email} url={currentUser?.url} />
-          <DropdownMenuSeparator />
-          {menuItems.map(itm => {
-            return (
-              <Fragment key={itm.key}>
-                {!!itm?.isSeparated && <DropdownMenuSeparator />}
-                <DropdownMenuItem className="[&_svg]:data-[highlighted]:text-icons-2" asChild>
-                  {itm.element}
-                </DropdownMenuItem>
-              </Fragment>
-            )
-          })}
-        </DropdownMenuContent>
-      )}
-    </DropdownMenu>
+        <DropdownMenu.Separator />
+        <DropdownMenu.Item onClick={handleLogOut}>
+          <Icon size={12} name="logOut" className="mr-2" />
+          <Text>{t('component:navbar.logout', 'Log out')}</Text>
+        </DropdownMenu.Item>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

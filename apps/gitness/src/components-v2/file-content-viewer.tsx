@@ -1,20 +1,40 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { OpenapiGetContentOutput } from '@harnessio/code-service-client'
-import { FileViewerControlBar, MarkdownViewer, ViewTypeValue } from '@harnessio/ui/components'
+import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
+import {
+  FileViewerControlBar,
+  MarkdownViewer,
+  PaginationComponent,
+  SkeletonList,
+  ViewTypeValue
+} from '@harnessio/ui/components'
+import { BranchSelectorTab, CommitsList } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import GitCommitDialog from '../components-v2/git-commit-dialog'
 import GitBlame from '../components/GitBlame'
+import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useDownloadRawFile } from '../framework/hooks/useDownloadRawFile'
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
+import { useIsMFE } from '../framework/hooks/useIsMFE'
+import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 import useCodePathDetails from '../hooks/useCodePathDetails'
+import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { themes } from '../pages-v2/pipeline/pipeline-edit/theme/monaco-theme'
 import { useRepoBranchesStore } from '../pages-v2/repo/stores/repo-branches-store'
-import { themes } from '../pages/pipeline-edit/theme/monaco-theme'
 import { PathParams } from '../RouteDefinitions'
-import { decodeGitContent, FILE_SEPERATOR, filenameToLanguage, formatBytes, GitCommitAction } from '../utils/git-utils'
+import { PageResponseHeader } from '../types'
+import {
+  decodeGitContent,
+  FILE_SEPERATOR,
+  filenameToLanguage,
+  formatBytes,
+  GitCommitAction,
+  normalizeGitRef,
+  REFS_TAGS_PREFIX
+} from '../utils/git-utils'
 
 const getIsMarkdown = (language?: string) => language === 'markdown'
 
@@ -30,7 +50,9 @@ interface FileContentViewerProps {
  * TODO: This code was migrated from V2 and needs to be refactored.
  */
 export default function FileContentViewer({ repoContent }: FileContentViewerProps) {
+  const routes = useRoutes()
   const { spaceId, repoId } = useParams<PathParams>()
+  const isMFE = useIsMFE()
   const fileName = repoContent?.name || ''
   const language = filenameToLanguage(fileName) || ''
   const fileContent = decodeGitContent(repoContent?.content?.data)
@@ -39,11 +61,29 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
   const parentPath = fullResourcePath?.split(FILE_SEPERATOR).slice(0, -1).join(FILE_SEPERATOR)
   const downloadFile = useDownloadRawFile()
   const navigate = useNavigate()
-  const rawURL = `/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
+  const rawURL = `${isMFE ? '/code' : ''}/api/v1/repos/${repoRef}/raw/${fullResourcePath}?git_ref=${fullGitRef}`
   const [view, setView] = useState<ViewTypeValue>(getDefaultView(language))
   const [isDeleteFileDialogOpen, setIsDeleteFileDialogOpen] = useState(false)
-  const { selectedBranchTag } = useRepoBranchesStore()
+  const { selectedBranchTag, selectedRefType } = useRepoBranchesStore()
+  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { theme } = useThemeStore()
+  const { t } = useTranslationStore()
+  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
+    repo_ref: repoRef,
+    queryParams: {
+      page,
+      git_ref: normalizeGitRef(
+        selectedRefType === BranchSelectorTab.TAGS
+          ? REFS_TAGS_PREFIX + selectedBranchTag?.name
+          : selectedBranchTag?.name
+      ),
+      path: fullResourcePath
+    }
+  })
+
+  const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
+  const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+
   // TODO: temporary solution for matching themes
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
 
@@ -90,7 +130,84 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
    * Navigate to Edit file route
    */
   const handleEditFile = () => {
-    navigate(`edit/${fullGitRef}/~/${fullResourcePath}`)
+    navigate(`${routes.toRepoFiles({ spaceId, repoId })}/edit/${fullGitRef}/~/${fullResourcePath}`)
+  }
+
+  const renderFileView = () => {
+    switch (view) {
+      case 'preview':
+        // For Markdown 'preview'
+        if (getIsMarkdown(language)) {
+          return (
+            <div className="pb-11">
+              <MarkdownViewer source={fileContent} withBorderWrapper />
+            </div>
+          )
+        }
+        // If a non-markdown file somehow has 'preview', we could fallback to 'code'
+        return (
+          <CodeEditor
+            height="100%"
+            language={language}
+            codeRevision={{ code: fileContent }}
+            onCodeRevisionChange={() => undefined}
+            themeConfig={themeConfig}
+            options={{
+              readOnly: true
+            }}
+          />
+        )
+
+      case 'code':
+        return (
+          <CodeEditor
+            height="100%"
+            language={language}
+            codeRevision={{ code: fileContent }}
+            onCodeRevisionChange={() => undefined}
+            themeConfig={themeConfig}
+            options={{
+              readOnly: true
+            }}
+          />
+        )
+
+      case 'blame':
+        return <GitBlame height="100%" themeConfig={themeConfig} codeContent={fileContent} language={language} />
+
+      case 'history':
+        if (isFetchingCommits) {
+          return <SkeletonList />
+        }
+        return (
+          <div className="pb-11">
+            <CommitsList
+              className="rounded-b-md border-x border-b bg-background-1 p-6"
+              toCommitDetails={({ sha }: { sha: string }) =>
+                routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
+              }
+              toCode={({ sha }: { sha: string }) => routes.toRepoFiles({ spaceId, repoId, commitSHA: sha })}
+              data={commitData?.commits?.map((item: TypesCommit) => ({
+                sha: item.sha,
+                parent_shas: item.parent_shas,
+                title: item.title,
+                message: item.message,
+                author: item.author,
+                committer: item.committer
+              }))}
+            />
+            <PaginationComponent
+              nextPage={xNextPage}
+              previousPage={xPrevPage}
+              currentPage={page}
+              goToPage={setPage}
+              t={t}
+            />
+          </div>
+        )
+      default:
+        return null
+    }
   }
 
   return (
@@ -103,9 +220,11 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         resourcePath={fullResourcePath || ''}
         onSuccess={(_commitInfo, isNewBranch, newBranchName) => {
           if (!isNewBranch) {
-            navigate(`/${spaceId}/repos/${repoId}/code${parentPath ? `/~/${parentPath}` : ''}`)
+            navigate(`${routes.toRepoFiles({ spaceId, repoId })}${parentPath ? `/~/${parentPath}` : ''}`)
           } else {
-            navigate(`/${spaceId}/repos/${repoId}/pull-requests/compare/${selectedBranchTag.name}...${newBranchName}`)
+            navigate(
+              routes.toPullRequestCompare({ spaceId, repoId, diffRefs: `${selectedBranchTag.name}...${newBranchName}` })
+            )
           }
         }}
         currentBranch={fullGitRef || selectedBranchTag?.name || ''}
@@ -122,22 +241,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         handleEditFile={handleEditFile}
         handleOpenDeleteDialog={() => handleToggleDeleteDialog(true)}
       />
-
-      {language === 'markdown' && view === 'preview' ? (
-        <MarkdownViewer source={fileContent} withBorderWrapper />
-      ) : view === 'code' ? (
-        <CodeEditor
-          language={language}
-          codeRevision={{ code: fileContent }}
-          onCodeRevisionChange={() => undefined}
-          themeConfig={themeConfig}
-          options={{
-            readOnly: true
-          }}
-        />
-      ) : (
-        <GitBlame themeConfig={themeConfig} codeContent={fileContent} language={language} />
-      )}
+      {renderFileView()}
     </>
   )
 }

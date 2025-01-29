@@ -1,20 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-  Icon,
-  Input
-} from '@/components'
+import { AlertDialog, Button, DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterValue, SavedView, SortValue, ViewManagement } from '../../types'
 
@@ -25,7 +11,7 @@ import { FilterValue, SavedView, SortValue, ViewManagement } from '../../types'
 interface ViewsProps {
   currentView: SavedView | null
   savedViews: SavedView[]
-  viewManagement: ViewManagement & {
+  viewManagement: Pick<ViewManagement, 'checkNameExists' | 'saveView' | 'updateView' | 'deleteView' | 'renameView'> & {
     activeFilters: FilterValue[]
     activeSorts: SortValue[]
   }
@@ -154,8 +140,8 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
           <span>Save view</span>
         </Button>
       ) : (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild>
             <Button
               className="flex items-center gap-x-1.5 px-0 text-14 text-foreground-4 transition-colors duration-200 hover:text-foreground-1"
               variant="custom"
@@ -163,41 +149,41 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
               <Icon name="bookmark-icon" size={12} />
               <span>Manage view</span>
             </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-48" align="end">
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Content className="w-48" align="end">
             {hasChanges && (
               <>
-                <DropdownMenuItem onSelect={handleUpdateCurrentView}>Update current view</DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setIsNewViewDialogOpen(true)}>Save as new view</DropdownMenuItem>
+                <DropdownMenu.Item onSelect={handleUpdateCurrentView}>Update current view</DropdownMenu.Item>
+                <DropdownMenu.Item onSelect={() => setIsNewViewDialogOpen(true)}>Save as new view</DropdownMenu.Item>
               </>
             )}
-            <DropdownMenuItem
+            <DropdownMenu.Item
               onSelect={() => {
                 setNewViewName(currentView.name)
                 setIsRenameDialogOpen(true)
               }}
             >
               Rename
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               className="text-foreground-danger"
               onSelect={() => viewManagement.deleteView(currentView.id)}
             >
               Delete view
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )}
 
-      <AlertDialog open={isNewViewDialogOpen} onOpenChange={setIsNewViewDialogOpen}>
-        <AlertDialogContent className="max-w-[460px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>New view</AlertDialogTitle>
-          </AlertDialogHeader>
-          <AlertDialogDescription variant="secondary">
+      <AlertDialog.Root open={isNewViewDialogOpen} onOpenChange={setIsNewViewDialogOpen}>
+        <AlertDialog.Content className="max-w-[460px]">
+          <AlertDialog.Header>
+            <AlertDialog.Title>New view</AlertDialog.Title>
+          </AlertDialog.Header>
+          <AlertDialog.Description variant="secondary">
             You can save current configuration of the view. Manage and switch them through the{' '}
             <strong className="text-foreground-1">View</strong> dropdown.
-          </AlertDialogDescription>
+          </AlertDialog.Description>
 
           <div className="pb-4 pt-3">
             <Input
@@ -211,7 +197,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
               }}
             />
           </div>
-          <AlertDialogFooter>
+          <AlertDialog.Footer>
             <Button
               variant="outline"
               onClick={() => {
@@ -225,15 +211,15 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
             <Button onClick={handleSaveNewView} disabled={!canSaveNew}>
               Save
             </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
 
-      <AlertDialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
-        <AlertDialogContent className="max-w-[460px]">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Rename view</AlertDialogTitle>
-          </AlertDialogHeader>
+      <AlertDialog.Root open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
+        <AlertDialog.Content className="max-w-[460px]">
+          <AlertDialog.Header>
+            <AlertDialog.Title>Rename view</AlertDialog.Title>
+          </AlertDialog.Header>
 
           <div className="py-4">
             <Input
@@ -248,7 +234,7 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
             />
           </div>
 
-          <AlertDialogFooter>
+          <AlertDialog.Footer>
             <Button
               variant="outline"
               onClick={() => {
@@ -262,9 +248,9 @@ const Views: FC<ViewsProps> = ({ currentView, viewManagement, hasChanges }) => {
             <Button onClick={handleRename} disabled={!canRename}>
               Save
             </Button>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+          </AlertDialog.Footer>
+        </AlertDialog.Content>
+      </AlertDialog.Root>
     </>
   )
 }

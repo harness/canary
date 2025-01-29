@@ -1,25 +1,10 @@
-import { FC, useMemo, useState } from 'react'
+import { ChangeEvent, FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Badge,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  Icon,
-  SearchBox,
-  Tabs,
-  TabsList,
-  TabsTrigger
-} from '@/components'
+import { Badge, DropdownMenu, Icon, SearchBox, Tabs, TabsList, TabsTrigger } from '@/components'
 import { BranchSelectorDropdownProps, BranchSelectorTab, getBranchSelectorLabels } from '@/views'
 import { cn } from '@utils/cn'
 import { BranchSelectorListItem } from '@views/repo/repo.types'
-
-const filterItems = (items: BranchSelectorListItem[], query: string) => {
-  if (!query.trim()) return items
-
-  return items.filter(item => item.name.toLowerCase().includes(query.toLowerCase().trim()))
-}
 
 export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   selectedBranch,
@@ -29,58 +14,62 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   repoId,
   spaceId,
   useTranslationStore,
-  isBranchOnly = false
+  isBranchOnly = false,
+  searchQuery,
+  setSearchQuery
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
-  const [searchQuery, setSearchQuery] = useState('')
   const { t } = useTranslationStore()
   const BRANCH_SELECTOR_LABELS = getBranchSelectorLabels(t)
 
   const filteredItems = useMemo(() => {
-    const sourceItems = activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
+    return activeTab === BranchSelectorTab.BRANCHES ? branchList : tagList
+  }, [activeTab, branchList, tagList])
 
-    return filterItems(sourceItems, searchQuery)
-  }, [activeTab, branchList, tagList, searchQuery])
-
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(event.target.value)
   }
 
   const viewAllUrl =
     activeTab === BranchSelectorTab.BRANCHES
-      ? `/${spaceId}/repos/${repoId}/branches`
-      : `/${spaceId}/repos/${repoId}/tags`
+      ? `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/branches`
+      : `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/tags`
 
   return (
-    <DropdownMenuContent className="w-[298px] p-0" align="start">
+    <DropdownMenu.Content
+      className="w-[298px] p-0"
+      align="start"
+      onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
+    >
       <div className="px-3 pt-2">
         {isBranchOnly ? (
           <span className="text-14 font-medium leading-none">Switch branches</span>
         ) : (
           <span className="text-14 font-medium leading-none">Switch branches/tags</span>
         )}
-
-        <SearchBox.Root
-          className="mt-2 w-full"
-          placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
-          value={searchQuery}
-          handleChange={handleSearchChange}
-          showOnFocus
-        />
+        <div role="presentation" onKeyDown={e => e.stopPropagation()}>
+          <SearchBox.Root
+            className="mt-2 w-full"
+            placeholder={BRANCH_SELECTOR_LABELS[activeTab].searchPlaceholder}
+            value={searchQuery}
+            handleChange={handleSearchChange}
+            showOnFocus
+          />
+        </div>
       </div>
 
       {!isBranchOnly && (
         <Tabs
           className="mt-2"
-          variant="branch"
+          variant="tabnav"
           value={activeTab}
           onValueChange={value => {
             setActiveTab(value as BranchSelectorTab)
             setSearchQuery('')
           }}
         >
-          <TabsList>
-            <DropdownMenuItem
+          <TabsList className="px-3">
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -94,8 +83,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 {t('views:repos.branches', 'Branches')}
               </TabsTrigger>
-            </DropdownMenuItem>
-            <DropdownMenuItem
+            </DropdownMenu.Item>
+            <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
                 e.preventDefault()
@@ -109,7 +98,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
               >
                 {t('views:repos.tags', 'Tags')}
               </TabsTrigger>
-            </DropdownMenuItem>
+            </DropdownMenu.Item>
           </TabsList>
         </Tabs>
       )}
@@ -117,7 +106,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
       <div className="mt-1">
         {filteredItems.length === 0 && (
           <div className="px-5 py-4 text-center">
-            <span className="text-14 leading-tight text-foreground-2">Nothing to show</span>
+            <span className="text-14 leading-tight text-foreground-2">
+              {t('views:noData.noResults', 'No search results')}
+            </span>
           </div>
         )}
 
@@ -129,7 +120,7 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
             const isDefault = activeTab === BranchSelectorTab.BRANCHES && (item as BranchSelectorListItem).default
 
             return (
-              <DropdownMenuItem
+              <DropdownMenu.Item
                 className={cn('hover:bg-background-4 cursor-pointer py-1', {
                   'justify-between gap-x-2': isDefault,
                   'bg-background-4': isSelected,
@@ -172,23 +163,26 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
                     {t('views:repos.default', 'Default')}
                   </Badge>
                 )}
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             )
           })}
         </div>
 
-        <DropdownMenuItem className="p-0" asChild>
-          <div className="mt-1 border-t border-borders-1 px-3 py-2">
-            <Link to={viewAllUrl}>
+        <DropdownMenu.Item className="p-0" asChild>
+          <Link to={viewAllUrl}>
+            <div className="w-full border-t border-borders-1 px-3 py-2">
               <span className="text-14 font-medium leading-none transition-colors duration-200 hover:text-foreground-1">
-                {t('views:repos.viewAll', 'View all {{type}}', {
-                  type: activeTab === BranchSelectorTab.BRANCHES ? t('views:repos.branches') : t('views:repos.tags')
+                {t('views:repos.viewAll', `View all ${activeTab}`, {
+                  type:
+                    activeTab === BranchSelectorTab.BRANCHES
+                      ? t('views:repos.branchesLowercase', 'branches')
+                      : t('views:repos.tagsLowercase', 'tags')
                 })}
               </span>
-            </Link>
-          </div>
-        </DropdownMenuItem>
+            </div>
+          </Link>
+        </DropdownMenu.Item>
       </div>
-    </DropdownMenuContent>
+    </DropdownMenu.Content>
   )
 }

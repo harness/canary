@@ -19,5 +19,7 @@ export const useTranslationStore = create<TranslationStore>(_set => ({
       localStorage.setItem('i18nextLng', lng)
       localStorage.removeItem('i18nextLngSystem')
     }
+    // temporary solution to reload the page to apply the new language
+    window.location.reload()
   }
 }))

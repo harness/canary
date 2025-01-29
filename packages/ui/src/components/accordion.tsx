@@ -5,13 +5,13 @@ import { cn } from '@utils/cn'
 
 import { Icon } from './icon'
 
-type AccordionProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
+type AccordionRootProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
   onValueChange?: (value: string | string[]) => void
 }
-const Accordion = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Root>, AccordionProps>(
+const AccordionRoot = React.forwardRef<React.ElementRef<typeof AccordionPrimitive.Root>, AccordionRootProps>(
   ({ onValueChange, ...props }, ref) => <AccordionPrimitive.Root ref={ref} {...props} onValueChange={onValueChange} />
 )
-Accordion.displayName = 'Accordion'
+AccordionRoot.displayName = 'AccordionRoot'
 
 type AccordionItemProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> & {
   isLast?: boolean
@@ -93,13 +93,11 @@ const AccordionContent = React.forwardRef<React.ElementRef<typeof AccordionPrimi
 )
 AccordionContent.displayName = AccordionPrimitive.Content.displayName
 
-export {
-  Accordion,
-  AccordionProps,
-  AccordionItem,
-  AccordionItemProps,
-  AccordionTrigger,
-  AccordionTriggerProps,
-  AccordionContent,
-  AccordionContentProps
+const Accordion = {
+  Root: AccordionRoot,
+  Item: AccordionItem,
+  Trigger: AccordionTrigger,
+  Content: AccordionContent
 }
+
+export { Accordion, AccordionRootProps, AccordionItemProps, AccordionTriggerProps, AccordionContentProps }

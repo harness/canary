@@ -1,18 +1,6 @@
 import { FC, useState } from 'react'
 
-import {
-  Button,
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  Icon,
-  Spacer
-} from '@/components'
+import { Button, Carousel, Dialog, Icon, Spacer } from '@/components'
 import { INITIAL_ZOOM_LEVEL, ZOOM_INC_DEC_LEVEL } from '@/utils/utils'
 
 export interface ImageCarouselProps {
@@ -27,35 +15,35 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
   const [zoomLevel, setZoomLevel] = useState(INITIAL_ZOOM_LEVEL)
 
   return (
-    <Dialog
+    <Dialog.Root
       open={isOpen}
       onOpenChange={() => {
         setIsOpen(false)
         setZoomLevel(1)
       }}
     >
-      <DialogContent className="h-[600px] max-w-[800px] grid-rows-[1fr_auto]">
-        <DialogHeader>
-          <DialogTitle>{title ? title : <Spacer size={7} />}</DialogTitle>
-        </DialogHeader>
-        <Carousel className="flex-1 overflow-hidden" initialSlide={initialSlide}>
-          <CarouselContent className="h-full" carouselBlockClassName="h-full">
+      <Dialog.Content className="h-[600px] max-w-[800px] grid-rows-[1fr_auto]">
+        <Dialog.Header>
+          <Dialog.Title>{title ? title : <Spacer size={7} />}</Dialog.Title>
+        </Dialog.Header>
+        <Carousel.Root className="flex-1 overflow-hidden" initialSlide={initialSlide}>
+          <Carousel.Content className="h-full" carouselBlockClassName="h-full">
             {imgEvent &&
               imgEvent.map((image, idx) => {
                 return (
-                  <CarouselItem key={idx} className="flex items-center justify-center">
+                  <Carousel.Item key={idx} className="flex items-center justify-center">
                     <img
                       className="max-h-full"
                       alt="slide"
                       style={{ transform: `scale(${zoomLevel || 1})` }}
                       src={image}
                     />
-                  </CarouselItem>
+                  </Carousel.Item>
                 )
               })}
-          </CarouselContent>
-        </Carousel>
-        <DialogFooter className="!justify-center">
+          </Carousel.Content>
+        </Carousel.Root>
+        <Dialog.Footer className="!justify-center">
           <Button
             variant="outline"
             size="icon"
@@ -82,8 +70,8 @@ export const ImageCarousel: FC<ImageCarouselProps> = ({ isOpen, setIsOpen, imgEv
           >
             <Icon name="plus" size={16} />
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

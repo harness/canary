@@ -7,10 +7,6 @@ import {
   CommitToGitRefOption,
   ControlGroup,
   Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
   GitCommitFormType,
   Icon,
   Input,
@@ -91,7 +87,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors, isValid }
+    formState: { errors }
   } = useForm<FormFields>({
     resolver: zodResolver(gitCommitSchema),
     mode: 'onChange',
@@ -104,8 +100,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
     }
   })
 
-  const isDisabledSubmission = disableCTA || isSubmitting || !isValid
-
+  const isDisabledSubmission = disableCTA || isSubmitting
   const onSubmit: SubmitHandler<FormFields> = data => {
     if (isDisabledSubmission) return
 
@@ -129,11 +124,11 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[576px]">
-        <DialogHeader>
-          <DialogTitle>Commit Changes</DialogTitle>
-        </DialogHeader>
+    <Dialog.Root open={isOpen} onOpenChange={onClose}>
+      <Dialog.Content className="max-w-[576px]">
+        <Dialog.Header>
+          <Dialog.Title>Commit Changes</Dialog.Title>
+        </Dialog.Header>
 
         <form className="flex flex-col gap-y-7 pb-4" onSubmit={handleSubmit(onSubmit)}>
           {isFileNameRequired && (
@@ -144,7 +139,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               placeholder="Add a file name"
               size="md"
               error={errors.fileName?.message?.toString()}
-              // eslint-disable-next-line jsx-a11y/no-autofocus
               autoFocus
             />
           )}
@@ -214,7 +208,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               />
             </RadioGroup>
             {violation && (
-              <Message className="ml-8 mt-1" theme={MessageTheme.ERROR}>
+              <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
                   ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
                     ? 'Some rules will be bypassed to commit directly'
@@ -225,7 +219,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Message>
             )}
             {errors.commitToGitRef && (
-              <Message className="ml-8 mt-1" theme={MessageTheme.ERROR}>
+              <Message className="ml-8 mt-0.5" theme={MessageTheme.ERROR}>
                 {errors.commitToGitRef?.message?.toString()}
               </Message>
             )}
@@ -238,7 +232,6 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   })}
                   placeholder="New Branch Name"
                   error={errors.newBranchName?.message?.toString()}
-                  // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                   inputIconName="branch"
                 />
@@ -247,7 +240,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
           </ControlGroup>
         </form>
 
-        <DialogFooter>
+        <Dialog.Footer>
           <ButtonGroup>
             <>
               <Button variant="outline" onClick={onClose} disabled={isSubmitting}>
@@ -258,8 +251,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
               </Button>
             </>
           </ButtonGroup>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

@@ -1,6 +1,7 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 
-import { Button, FileAdditionsTrigger, PathBreadcrumbs, PathParts } from '@/components'
+import { Button, Icon, PathBreadcrumbs, PathParts } from '@/components'
 import { CodeModes, TranslationStore } from '@/views'
 
 export interface PathActionBarProps {
@@ -30,6 +31,7 @@ export const PathActionBar: FC<PathActionBarProps> = ({
   handleOpenCommitDialog,
   handleCancelFileEdit
 }) => {
+  const { t } = useTranslationStore()
   return (
     <div className="mb-4 flex h-8 items-center justify-between gap-8">
       <PathBreadcrumbs
@@ -42,11 +44,12 @@ export const PathActionBar: FC<PathActionBarProps> = ({
         fileName={fileName}
       />
       {codeMode === CodeModes.VIEW && pathNewFile && pathUploadFiles && (
-        <FileAdditionsTrigger
-          useTranslationStore={useTranslationStore}
-          pathNewFile={pathNewFile}
-          pathUploadFiles={pathUploadFiles}
-        />
+        <Button variant="outline">
+          <Link className="relative grid grid-cols-[auto_1fr] items-center gap-2.5" to={pathNewFile}>
+            <Icon name="plus" size={12} />
+            <span className="truncate">{t('views:repos.create-new-file-no-plus', 'Create new file')}</span>
+          </Link>
+        </Button>
       )}
       {codeMode !== CodeModes.VIEW && (
         <div className="flex gap-3">

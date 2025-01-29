@@ -1,24 +1,28 @@
 import { useCallback, useEffect, useMemo } from 'react'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useParams } from 'react-router-dom'
 
 import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
-import { SandboxRepoListPage } from '@harnessio/ui/views'
+import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
-import Breadcrumbs from '../../components/breadcrumbs/breadcrumbs'
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { SSEEvent } from '../../types'
+import { PathParams } from '../../RouteDefinitions'
+import { PageResponseHeader, SSEEvent } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
+import { transformRepoList } from './transform-utils/repo-list-transform'
 
 export default function ReposListPage() {
-  const space = useGetSpaceURLParam() ?? ''
+  const routes = useRoutes()
+  const { spaceId } = useParams<PathParams>()
+  const spaceURL = useGetSpaceURLParam() ?? ''
   const { setRepositories, page, setPage } = useRepoStore()
 
-  /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
-  const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     data: { body: repoData, headers } = {},
@@ -28,25 +32,26 @@ export default function ReposListPage() {
     error
   } = useListReposQuery(
     {
-      queryParams: { page, query: query ?? '' },
-      space_ref: `${space}/+`
+      queryParams: {
+        page: queryPage,
+        query: query ?? ''
+      },
+      space_ref: `${spaceURL}/+`
     },
     {
-      retry: false
+      retry: 5
     }
   )
 
   useEffect(() => {
+    const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
-      setRepositories(repoData, headers)
+      const transformedRepos = transformRepoList(repoData)
+      setRepositories(transformedRepos, totalPages)
     } else {
-      setRepositories([], headers)
+      setRepositories([], totalPages)
     }
   }, [repoData, headers, setRepositories])
-
-  useEffect(() => {
-    setQueryPage(page)
-  }, [queryPage, page, setPage])
 
   const isRepoStillImporting: boolean = useMemo(() => {
     return repoData?.some(repository => repository.importing) ?? false
@@ -58,13 +63,13 @@ export default function ReposListPage() {
         refetch()
       }
     },
-    [repoData]
+    [repoData, refetch]
   )
 
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
   useSpaceSSE({
-    space,
+    space: spaceURL,
     events,
     onEvent,
     shouldRun: isRepoStillImporting
@@ -72,9 +77,6 @@ export default function ReposListPage() {
 
   return (
     <>
-      <div className="breadcrumbs">
-        <Breadcrumbs />
-      </div>
       <SandboxRepoListPage
         useRepoStore={useRepoStore}
         useTranslationStore={useTranslationStore}
@@ -83,6 +85,9 @@ export default function ReposListPage() {
         errorMessage={error?.message}
         searchQuery={query}
         setSearchQuery={setQuery}
+        toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
+        toCreateRepo={() => routes.toCreateRepo({ spaceId })}
+        toImportRepo={() => routes.toImportRepo({ spaceId })}
       />
     </>
   )

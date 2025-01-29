@@ -68,7 +68,10 @@ git push -u origin main
           iconName="no-repository"
           title="This repository is empty"
           description={['We recommend every repository include a', 'README, LICENSE, and .gitignore.']}
-          primaryButton={{ label: 'New file' }}
+          primaryButton={{
+            label: 'New file',
+            to: `${projName ? `/${projName}` : ''}/repos/${repoName}/code/new/${gitRef}/~/`
+          }}
           className="min-h-[40vh] py-0"
         />
         <Spacer size={6} />

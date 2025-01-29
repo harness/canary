@@ -70,7 +70,8 @@ export enum RouteConstants {
   toGitOps = 'toGitOps',
   toCI = 'toCI',
   toCode = 'toCode',
-  toProfileKeys = 'toProfileKeys'
+  toProfileKeys = 'toProfileKeys',
+  toProfileGeneral = 'toProfileGeneral'
 }
 
 export interface RouteEntry {

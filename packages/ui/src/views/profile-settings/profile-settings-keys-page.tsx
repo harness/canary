@@ -3,7 +3,6 @@ import { SandboxLayout, TranslationStore } from '@/views'
 
 import { ProfileKeysList } from './components/profile-settings-keys-list'
 import { ProfileTokensList } from './components/profile-settings-tokens-list'
-// import { parseAsInteger, useQueryState } from 'nuqs'
 import { AlertDeleteParams, IProfileSettingsStore } from './types'
 
 interface SettingsAccountKeysPageProps {

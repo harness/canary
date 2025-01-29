@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
-import { useQueryState } from 'nuqs'
 
 import {
   commentStatusPullReq,
@@ -48,6 +47,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
   capitalizeFirstLetter,
@@ -101,7 +101,7 @@ export default function PullRequestConversationPage() {
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
   })
   const [comment, setComment] = useState<string>('')
-  const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
 
   const repoRef = useGetRepoRef()
@@ -526,7 +526,6 @@ export default function PullRequestConversationPage() {
     onCommitSuggestionsBatch,
     suggestionsBatch,
     suggestionToCommit,
-    onCommentSaveAndStatusChange,
     toggleConversationStatus,
     handleUpload
   } = usePRCommonInteractions({
@@ -662,7 +661,6 @@ export default function PullRequestConversationPage() {
               handleSaveComment={handleSaveComment}
               currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
               onCopyClick={onCopyClick}
-              onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}
               toggleConversationStatus={toggleConversationStatus}
               onCommitSuggestion={onCommitSuggestion}
               addSuggestionToBatch={addSuggestionToBatch}

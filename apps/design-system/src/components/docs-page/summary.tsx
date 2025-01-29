@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react'
 
 import { Text } from '@harnessio/ui/components'
 
-export interface SummaryProps extends PropsWithChildren {
+export interface SummaryProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   title: string
 }
 

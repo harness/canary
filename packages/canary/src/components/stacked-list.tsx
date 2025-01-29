@@ -81,6 +81,8 @@ const ListItem = ({
 }: ListItemProps) => {
   const Comp = asChild ? Slot : 'div'
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <Comp
       className={cn(
         listItemVariants({}),

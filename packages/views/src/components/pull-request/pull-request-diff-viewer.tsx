@@ -218,6 +218,8 @@ const PullRequestDiffViewer = ({
   return (
     <>
       {diffFileInstance && !renderCustomContent && (
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
         <DiffView<string>
           ref={ref}
           className="bg-tr w-full text-tertiary-background"

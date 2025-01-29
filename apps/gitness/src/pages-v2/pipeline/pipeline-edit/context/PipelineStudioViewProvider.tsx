@@ -32,7 +32,7 @@ const PipelineStudioViewContext = createContext<PipelineStudioViewContextProps>(
   setHighlightInYamlPath: (_path: string | undefined) => undefined
 })
 
-const PipelineStudioViewProvider = ({ children }: React.PropsWithChildren) => {
+const PipelineStudioViewProvider = ({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>) => {
   const [view, setView] = useState(PipelineStudioView.Yaml)
   const isYamlView = view === PipelineStudioView.Yaml
   const [panelVisible, setPanelVisible] = useState(isYamlView)

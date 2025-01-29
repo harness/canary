@@ -13,7 +13,7 @@ const Layout = () => {
   )
 }
 
-export const ProjectSettingsWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => {
+export const ProjectSettingsWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     <>
       <RootViewWrapper asChild>

@@ -1,4 +1,4 @@
-function InputWrapper({ children }: React.PropsWithChildren): JSX.Element {
+function InputWrapper({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>): JSX.Element {
   return <>{children}</>
 }
 

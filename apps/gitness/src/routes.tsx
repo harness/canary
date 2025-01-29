@@ -1,4 +1,3 @@
-import { ReactElement } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import { Breadcrumb, Text } from '@harnessio/ui/components'
@@ -20,6 +19,7 @@ import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-set
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
+import { ImportProjectContainer } from './pages-v2/project/project-import-container'
 import { ProjectLabelsList } from './pages-v2/project/project-labels-list-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
@@ -38,6 +38,7 @@ import { CommitDiffContainer } from './pages-v2/repo/repo-commit-details-diff'
 import RepoCommitsPage from './pages-v2/repo/repo-commits'
 import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
+import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
 import { RepoLabelsList } from './pages-v2/repo/repo-labels-container'
 import RepoLayout from './pages-v2/repo/repo-layout'
@@ -52,7 +53,7 @@ import { UserManagementPageContainer } from './pages-v2/user-management/user-man
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
-const repoRoutes: CustomRouteObject[] = [
+export const repoRoutes: CustomRouteObject[] = [
   {
     path: 'repos',
     handle: {
@@ -60,7 +61,13 @@ const repoRoutes: CustomRouteObject[] = [
       routeName: RouteConstants.toRepositories
     },
     children: [
-      { index: true, element: <ReposListPage /> },
+      {
+        index: true,
+        element: <ReposListPage />,
+        handle: {
+          pageTitle: 'Repositories'
+        }
+      },
       {
         path: 'create',
         element: <CreateRepo />,
@@ -76,10 +83,18 @@ const repoRoutes: CustomRouteObject[] = [
         }
       },
       {
+        path: 'import-multiple',
+        element: <ImportMultipleRepos />,
+        handle: {
+          routeName: RouteConstants.toImportMultipleRepos
+        }
+      },
+      {
         path: ':repoId',
         element: <RepoLayout />,
         handle: {
-          breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>
+          breadcrumb: ({ repoId }: { repoId: string }) => <Text>{repoId}</Text>,
+          pageTitle: ({ repoId }: { repoId: string }) => `Repository | ${repoId}`
         },
         children: [
           {
@@ -91,7 +106,8 @@ const repoRoutes: CustomRouteObject[] = [
             element: <RepoSummaryPage />,
             handle: {
               breadcrumb: () => <Text>Summary</Text>,
-              routeName: RouteConstants.toRepoSummary
+              routeName: RouteConstants.toRepoSummary,
+              pageTitle: 'Summary'
             }
           },
           {
@@ -103,7 +119,10 @@ const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoCommitsPage />
+                element: <RepoCommitsPage />,
+                handle: {
+                  pageTitle: 'Commits'
+                }
               },
               {
                 path: ':commitSHA',
@@ -134,7 +153,8 @@ const repoRoutes: CustomRouteObject[] = [
             element: <RepoBranchesListPage />,
             handle: {
               breadcrumb: () => <Text>Branches</Text>,
-              routeName: RouteConstants.toRepoBranches
+              routeName: RouteConstants.toRepoBranches,
+              pageTitle: 'Branches'
             }
           },
           {
@@ -151,7 +171,10 @@ const repoRoutes: CustomRouteObject[] = [
             children: [
               {
                 index: true,
-                element: <RepoCode />
+                element: <RepoCode />,
+                handle: {
+                  pageTitle: 'Files'
+                }
               },
               {
                 path: '*',
@@ -166,7 +189,13 @@ const repoRoutes: CustomRouteObject[] = [
               routeName: RouteConstants.toPullRequests
             },
             children: [
-              { index: true, element: <PullRequestListPage /> },
+              {
+                index: true,
+                element: <PullRequestListPage />,
+                handle: {
+                  pageTitle: 'Pull Requests'
+                }
+              },
               {
                 path: 'compare',
                 handle: {
@@ -244,7 +273,13 @@ const repoRoutes: CustomRouteObject[] = [
               breadcrumb: () => <Text>Pipelines</Text>
             },
             children: [
-              { index: true, element: <RepoPipelineListPage /> },
+              {
+                index: true,
+                element: <RepoPipelineListPage />,
+                handle: {
+                  pageTitle: 'Pipelines'
+                }
+              },
               {
                 path: ':pipelineId',
                 handle: {
@@ -303,7 +338,8 @@ const repoRoutes: CustomRouteObject[] = [
                 element: <RepoSettingsGeneralPageContainer />,
                 handle: {
                   breadcrumb: () => <Text>General</Text>,
-                  routeName: RouteConstants.toRepoGeneralSettings
+                  routeName: RouteConstants.toRepoGeneralSettings,
+                  pageTitle: 'Settings'
                 }
               },
               {
@@ -438,6 +474,13 @@ export const routes: CustomRouteObject[] = [
           breadcrumb: () => <Text>Create project</Text>
         },
         children: []
+      },
+      {
+        path: 'import',
+        element: <ImportProjectContainer />,
+        handle: {
+          breadcrumb: () => <Text>Import project</Text>
+        }
       },
       {
         path: 'repos',
@@ -834,7 +877,7 @@ export const routes: CustomRouteObject[] = [
   }
 ]
 
-export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | null = null): CustomRouteObject[] => [
+export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: JSX.Element | null = null): CustomRouteObject[] => [
   {
     path: '/',
     element: (
@@ -843,23 +886,14 @@ export const mfeRoutes = (mfeProjectId = '', mfeRouteRenderer: ReactElement | nu
         <AppShellMFE />
       </>
     ),
-    handle: { routeName: 'toHome' },
+    handle: { routeName: RouteConstants.toHome },
     children: [
-      {
-        index: true,
-        element: <LandingPage />
-      },
-      {
-        path: 'repos',
-        handle: {
-          breadcrumb: () => <Text>Repositories</Text>
-        },
-        children: [{ index: true, element: <ReposListPage /> }]
-      },
       {
         path: '',
         handle: {
-          breadcrumb: () => <span>{mfeProjectId ?? ''}</span>
+          ...(mfeProjectId && {
+            breadcrumb: () => <Text>{mfeProjectId}</Text>
+          })
         },
         children: repoRoutes
       }

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import {
   useAdminCreateUserMutation,
@@ -21,6 +20,7 @@ import {
   UsersProps
 } from '@harnessio/ui/views'
 
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 import { useAdminListUsersStore } from './stores/admin-list-store'

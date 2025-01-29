@@ -47,8 +47,8 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   merged
 }) => {
   return (
-    <div className="flex items-center gap-2">
-      <div className="flex flex-wrap items-center justify-start gap-1.5">
+    <div className="flex max-w-full items-center gap-2">
+      <div className="flex max-w-full flex-wrap items-center justify-start gap-1.5">
         <Icon
           size={14}
           className={cn({
@@ -60,7 +60,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
           name={getPrState(isDraft, merged, state).icon}
         />
 
-        <p className="ml-0.5 mr-1 truncate text-16 font-medium leading-snug">{title}</p>
+        <p className="ml-0.5 mr-1 max-w-[95%] truncate text-16 font-medium leading-snug ">{title}</p>
         {labels?.map((l, l_idx) => {
           const { border, text, bg } = colorMapping[l.color]
             ? colorMapping[l.color]

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
-
 import {
   useDefineRepoLabelMutation,
   useDeleteRepoLabelMutation,
@@ -16,6 +14,7 @@ import { CreateLabelDialog, CreateLabelFormFields, ILabelType, RepoLabelsListVie
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../project/stores/labels-store'
 

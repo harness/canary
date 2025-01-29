@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import { Badge, MoreActionsTooltip, NoData, PaginationComponent, Spacer, StackedList, Text } from '@/components'
 import { TranslationStore, WebhookType } from '@/views'
@@ -97,38 +97,40 @@ export function RepoWebhookList({
     <>
       <StackedList.Root>
         {webhooks.map((webhook, webhook_idx) => (
-          <StackedList.Item
-            key={webhook.createdAt}
-            className="!cursor-default py-3 pr-1.5"
-            isLast={webhooks.length - 1 === webhook_idx}
-          >
-            <StackedList.Field
-              primary
-              description={<span className="leading-none">{webhook.description}</span>}
-              title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
-              className="gap-1.5"
-            />
-            <StackedList.Field
-              title={
-                <MoreActionsTooltip
-                  actions={[
-                    {
-                      title: t('views:webhookData.edit', 'Edit webhook'),
-                      to: `${webhook.id}`
-                    },
-                    {
-                      isDanger: true,
-                      title: t('views:webhookData.delete', 'Delete webhook'),
-                      onClick: () => openDeleteWebhookDialog(webhook.id)
-                    }
-                  ]}
-                />
-              }
-              right
-              label
-              secondary
-            />
-          </StackedList.Item>
+          <Link key={webhook.id} to={`${webhook.id}`}>
+            <StackedList.Item
+              key={webhook.createdAt}
+              className="cursor-pointer py-3 pr-1.5"
+              isLast={webhooks.length - 1 === webhook_idx}
+            >
+              <StackedList.Field
+                primary
+                description={<span className="leading-none">{webhook.description}</span>}
+                title={<Title title={webhook.name} isEnabled={webhook.enabled} />}
+                className="gap-1.5"
+              />
+              <StackedList.Field
+                title={
+                  <MoreActionsTooltip
+                    actions={[
+                      {
+                        title: t('views:webhookData.edit', 'Edit webhook'),
+                        to: `${webhook.id}`
+                      },
+                      {
+                        isDanger: true,
+                        title: t('views:webhookData.delete', 'Delete webhook'),
+                        onClick: () => openDeleteWebhookDialog(webhook.id)
+                      }
+                    ]}
+                  />
+                }
+                right
+                label
+                secondary
+              />
+            </StackedList.Item>
+          </Link>
         ))}
       </StackedList.Root>
       <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />

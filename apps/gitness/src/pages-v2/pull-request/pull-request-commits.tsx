@@ -1,13 +1,12 @@
 import { useEffect } from 'react'
 import { useLocation, useParams } from 'react-router-dom'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
-
 import { useListPullReqCommitsQuery } from '@harnessio/code-service-client'
 import { PullRequestCommitsView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestCommitsStore } from './stores/pull-request-commit-store'
@@ -25,7 +24,7 @@ export function PullRequestCommitPage() {
   const { page, setPage, setCommitList, setIsFetchingCommits, setPaginationFromHeaders } = usePullRequestCommitsStore()
 
   const { isFetching, data: { body: commits, headers } = {} } = useListPullReqCommitsQuery({
-    queryParams: { page },
+    queryParams: { page: queryPage },
     repo_ref: repoRef,
     pullreq_number: prId
   })

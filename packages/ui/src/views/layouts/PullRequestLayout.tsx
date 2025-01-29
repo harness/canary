@@ -33,7 +33,7 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
 
   return (
     <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-6" maxWidth="4xl">
+      <SandboxLayout.Content className="max-w-[1500px] px-6">
         {pullRequest && (
           <>
             <PullRequestHeader
@@ -62,28 +62,29 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
             <NavLink to={PullRequestTabsKeys.CONVERSATION}>
               {({ isActive }) => (
                 <TabsTrigger
-                  className="gap-x-1"
+                  className="gap-x-1.5"
                   value={PullRequestTabsKeys.CONVERSATION}
                   data-state={isActive ? 'active' : 'inactive'}
                 >
-                  <Icon size={14} name="comments" />
-                  {t('views:pullRequests.conversation')}
-                  <Badge variant="outline" size="xs">
-                    {pullRequest?.stats?.conversations || 0}
-                  </Badge>
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="comments" />
+                    {t('views:pullRequests.conversation')}
+                  </div>
                 </TabsTrigger>
               )}
             </NavLink>
             <NavLink to={PullRequestTabsKeys.COMMITS}>
               {({ isActive }) => (
                 <TabsTrigger
-                  className="gap-x-1"
+                  className="gap-x-1.5"
                   value={PullRequestTabsKeys.COMMITS}
                   data-state={isActive ? 'active' : 'inactive'}
                 >
-                  <Icon size={14} name="tube-sign" />
-                  {t('views:repos.commits')}
-                  <Badge variant="outline" size="xs">
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="tube-sign" />
+                    {t('views:repos.commits')}
+                  </div>
+                  <Badge variant="outline" size="xs" borderRadius="base">
                     {pullRequest?.stats?.commits}
                   </Badge>
                 </TabsTrigger>
@@ -92,13 +93,15 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
             <NavLink to={PullRequestTabsKeys.CHANGES}>
               {({ isActive }) => (
                 <TabsTrigger
-                  className="gap-x-1"
+                  className="gap-x-1.5"
                   value={PullRequestTabsKeys.CHANGES}
                   data-state={isActive ? 'active' : 'inactive'}
                 >
-                  <Icon size={14} name="changes" />
-                  {t('views:pullRequests.changes')}
-                  <Badge variant="outline" size="xs">
+                  <div className="flex items-center gap-x-1">
+                    <Icon size={14} name="changes" />
+                    {t('views:pullRequests.changes')}
+                  </div>
+                  <Badge variant="outline" size="xs" borderRadius="base">
                     {pullRequest?.stats?.files_changed}
                   </Badge>
                 </TabsTrigger>

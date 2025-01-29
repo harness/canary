@@ -124,7 +124,7 @@ const Text = ({
   wrap,
   ...props
 }: TextProps) => {
-  const Comp = asChild ? Slot : as ? as.toString() : 'span'
+  const Comp = asChild ? Slot : ((as ? as.toString() : 'span') as any)
   return (
     <Comp className={cn(textVariants({ align, size, weight, color, trim, truncate, wrap }), className)} {...props}>
       {children}

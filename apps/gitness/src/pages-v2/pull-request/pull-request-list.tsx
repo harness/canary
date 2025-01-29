@@ -1,12 +1,11 @@
 import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
-
 import { useFindRepositoryQuery, useListPullReqQuery } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePullRequestListStore } from './stores/pull-request-list-store'

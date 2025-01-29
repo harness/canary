@@ -149,7 +149,7 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
 
   if (loading || listBranchesLoading) {
     // TODO
-    return 'Loading...'
+    return <span>Loading...</span>
   }
 
   return (

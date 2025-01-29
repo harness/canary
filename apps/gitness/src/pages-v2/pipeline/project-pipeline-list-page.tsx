@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { useListSpacePipelinesQuery } from '@harnessio/code-service-client'
 import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
@@ -10,6 +9,7 @@ import { IPipeline, PipelineListPage } from '@harnessio/ui/views'
 import { LinkComponent } from '../../components/LinkComponent'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { usePipelineListStore } from './stores/project-pipeline-list-store'
@@ -22,7 +22,7 @@ export default function ProjectPipelineListPage() {
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const { data, isLoading, isError } = useListSpacePipelinesQuery({
-    queryParams: { page, query: query ?? '' },
+    queryParams: { page: queryPage, query: query ?? '' },
     space_ref: spaceURL || ''
   })
 

@@ -154,19 +154,23 @@ export const WebhookEventSettingsFieldset: React.FC<WebhookFormFieldProps & { ev
     }
   }
 
-  return eventList.map(event => (
-    <FormFieldSet.ControlGroup key={event.id} className="min-h-8 justify-center">
-      <FormFieldSet.Option
-        control={
-          <Checkbox
-            checked={currentArray?.includes(event.id as WebhookTriggerEnum)}
-            onCheckedChange={() => handleCheckboxChange(event.id as WebhookTriggerEnum)}
+  return (
+    <>
+      {eventList.map(event => (
+        <FormFieldSet.ControlGroup key={event.id} className="min-h-8 justify-center">
+          <FormFieldSet.Option
+            control={
+              <Checkbox
+                checked={currentArray?.includes(event.id as WebhookTriggerEnum)}
+                onCheckedChange={() => handleCheckboxChange(event.id as WebhookTriggerEnum)}
+                id={`${event.id}`}
+              />
+            }
             id={`${event.id}`}
+            label={event.event}
           />
-        }
-        id={`${event.id}`}
-        label={event.event}
-      />
-    </FormFieldSet.ControlGroup>
-  ))
+        </FormFieldSet.ControlGroup>
+      ))}
+    </>
+  )
 }

@@ -18,7 +18,9 @@ export const YamlEditorContext = createContext<YamlEditorContextInterface>({
   updateCursorPosition: (_position: { column: number; lineNumber: number }) => undefined
 })
 
-export function YamlEditorContextProvider({ children }: React.PropsWithChildren): React.ReactElement {
+export function YamlEditorContextProvider({
+  children
+}: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>): React.ReactElement {
   const [markers, setMarkers] = useState<editor.IMarker[]>([])
   const [monacoEditor, setMonacoEditor] = useState<editor.IStandaloneCodeEditor | null>(null)
 

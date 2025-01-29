@@ -6,7 +6,7 @@ import { PullRequestCommitsView } from '@harnessio/ui/views'
 
 import { repoCommitStore } from '../pull-request-compare/repo-commit-store'
 
-const PullRequestCommits: FC<PropsWithChildren> = () => {
+const PullRequestCommits: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = () => {
   const useRepoCommitsListStore = useCallback(
     () => ({
       ...repoCommitStore,

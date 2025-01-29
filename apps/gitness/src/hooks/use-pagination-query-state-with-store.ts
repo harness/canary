@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { parseAsInteger, useQueryState } from '../framework/hooks/useQueryState'
 
 export interface UsePaginationQueryStateWithStoreProps {
   page: number

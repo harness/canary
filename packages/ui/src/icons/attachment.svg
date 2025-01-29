@@ -1,10 +1,10 @@
-<svg  viewBox="0 0 16 16"  xmlns="http://www.w3.org/2000/svg">
-<g clip-path="url(#clip0_17619_89256)">
-<path d="M8.85683 5.35812L5.85183 8.36312C5.16883 9.04612 5.16883 10.1541 5.85183 10.8381C6.53483 11.5211 7.64283 11.5211 8.32683 10.8381L12.3928 6.77212C13.7598 5.40512 13.7598 3.18912 12.3928 1.82212C11.0258 0.455125 8.80983 0.455125 7.44283 1.82212L3.02383 6.24212C0.973828 8.29212 0.973828 11.6161 3.02383 13.6671C5.07383 15.7171 8.39783 15.7171 10.4488 13.6671L14.5138 9.60113" stroke="#AEAEB7" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_23746_174254)">
+<path d="M8.85683 5.35812L5.85183 8.36312C5.16883 9.04612 5.16883 10.1541 5.85183 10.8381C6.53483 11.5211 7.64283 11.5211 8.32683 10.8381L12.3928 6.77212C13.7598 5.40512 13.7598 3.18912 12.3928 1.82212C11.0258 0.455125 8.80983 0.455125 7.44283 1.82212L3.02383 6.24212C0.973828 8.29212 0.973828 11.6161 3.02383 13.6671C5.07383 15.7171 8.39783 15.7171 10.4488 13.6671L14.5138 9.60113" stroke="currentColor" style="stroke:currentColor;stroke:color(display-p3 0.6820 0.6820 0.7180);stroke-opacity:1;" stroke-width="1.14286" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
-<clipPath id="clip0_17619_89256">
-<rect width="16" height="16" />
+<clipPath id="clip0_23746_174254">
+<rect width="16" height="16" fill="currentColor" style="fill:currentColor;fill-opacity:1;"/>
 </clipPath>
 </defs>
 </svg>

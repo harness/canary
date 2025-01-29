@@ -33,7 +33,7 @@ import {
   pullReqChecksDecisionSucceeded
 } from './pull-request-panelData'
 
-interface PullRequestConversationProps extends PropsWithChildren {
+interface PullRequestConversationProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   state: string
 }
 
@@ -201,7 +201,6 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
               handleSaveComment={noop}
               currentUser={{ display_name: currentUserData?.display_name, uid: currentUserData?.uid }}
               onCopyClick={noop}
-              onCommentSaveAndStatusChange={noop}
               toggleConversationStatus={noop}
               onCommitSuggestion={noop}
               addSuggestionToBatch={noop}

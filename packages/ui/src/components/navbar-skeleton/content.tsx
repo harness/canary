@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react'
 
 import { cn } from '@utils/cn'
 
-export interface ContentProps extends PropsWithChildren {
+export interface ContentProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   className?: string
 }
 

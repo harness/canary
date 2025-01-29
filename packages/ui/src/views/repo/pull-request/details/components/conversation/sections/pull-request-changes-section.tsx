@@ -73,7 +73,7 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
                 return (
                   <Avatar key={owner?.id} className="size-6 rounded-full">
                     <AvatarFallback>
-                      <span className="text-12 text-foreground-4">
+                      <span className="text-12 text-foreground-3">
                         {owner?.display_name && getInitials(owner?.display_name)}
                       </span>
                     </AvatarFallback>

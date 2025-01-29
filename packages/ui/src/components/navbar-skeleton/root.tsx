@@ -5,7 +5,7 @@ import { isSafari } from '@utils/isSafari'
 
 import noiseBg from './noise.png'
 
-export interface RootProps extends PropsWithChildren {
+export interface RootProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   className?: string
   isSubMenu?: boolean
 }

@@ -21,7 +21,7 @@ function Root({ avatarLink, productLink }: ProjectProps) {
   }
 
   return (
-    <div className="flex w-full flex-col items-start justify-items-start px-5 pb-5">
+    <div className="flex w-full flex-col place-items-start px-5 pb-5">
       <div className="flex h-[55px] items-center gap-1.5">
         {avatarLink}
         {productLink}

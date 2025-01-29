@@ -2,7 +2,6 @@ import { I18nextProvider } from 'react-i18next'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
 import { QueryClientProvider } from '@tanstack/react-query'
-import { NuqsAdapter } from 'nuqs/adapters/react-router'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
 import { TooltipProvider } from '@harnessio/ui/components'
@@ -38,11 +37,9 @@ export default function AppV1() {
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
             <ExitConfirmProvider>
-              <NuqsAdapter>
-                <NavigationProvider routes={routes}>
-                  <RouterProvider router={router} />
-                </NavigationProvider>
-              </NuqsAdapter>
+              <NavigationProvider routes={routes}>
+                <RouterProvider router={router} />
+              </NavigationProvider>
             </ExitConfirmProvider>
           </TooltipProvider>
         </QueryClientProvider>

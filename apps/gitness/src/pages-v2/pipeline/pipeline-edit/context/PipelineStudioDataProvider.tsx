@@ -73,7 +73,7 @@ const PipelineStudioDataContext = createContext<PipelineStudioDataContextProps>(
   setCurrentBranch: (_branch: string) => undefined
 })
 
-const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren) => {
+const PipelineStudioDataProvider = ({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>) => {
   // TODO: PipelineParams is used temporary
   const { pipelineId = '', repoId, spaceId } = useParams<PipelineParams>()
   const repoRef = useMemo(() => `${spaceId}/${repoId}/+`, [spaceId, repoId])

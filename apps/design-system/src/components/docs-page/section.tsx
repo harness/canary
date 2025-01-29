@@ -4,7 +4,7 @@ import { Text } from '@harnessio/ui/components'
 
 import css from './section.module.css'
 
-export interface SectionProps extends PropsWithChildren {
+export interface SectionProps extends PropsWithChildren<React.HTMLAttributes<HTMLElement>> {
   title: string
   description?: ReactNode
 }

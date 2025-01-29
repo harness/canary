@@ -8,7 +8,7 @@ import { PullRequestLayout } from '@harnessio/ui/views'
 
 import RootViewWrapper from './root-view-wrapper'
 
-const PullRequestLayoutWrapper: FC<PropsWithChildren<unknown>> = ({ children }) => {
+const PullRequestLayoutWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const usePullRequestStore = useCallback(
     () => ({
       ...pullRequestStore

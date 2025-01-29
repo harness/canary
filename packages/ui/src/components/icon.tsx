@@ -9,6 +9,7 @@ import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
+import AttachmentImage from '../icons/attachment-image.svg'
 import Attachment from '../icons/attachment.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
 import Bold from '../icons/bold.svg'
@@ -45,6 +46,7 @@ import CloudCosts from '../icons/cloud-costs-icon.svg'
 import CodeBrackets from '../icons/code-brackets.svg'
 import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
+import CollapseComment from '../icons/collapse-comment.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
@@ -67,6 +69,7 @@ import Edit from '../icons/edit-icon.svg'
 import Environment from '../icons/environment-icon.svg'
 import ExecutionGradient from '../icons/execution-gradient.svg'
 import Execution from '../icons/execution-icon.svg'
+import ExpandComment from '../icons/expand-comment.svg'
 import ExpandDiff from '../icons/expand-diff.svg'
 import Eye from '../icons/eye-icon.svg'
 import Fail from '../icons/fail.svg'
@@ -151,6 +154,8 @@ import Settings2 from '../icons/setting-2.svg'
 import Shield from '../icons/shield-icon.svg'
 import ShieldLock from '../icons/shield-lock.svg'
 import SidebarIcon from '../icons/sidebar-icon.svg'
+import SidebarLeft from '../icons/sidebar-left.svg'
+import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
 import Sparks from '../icons/sparks.svg'
@@ -159,6 +164,7 @@ import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
 import SubMenuEllipse from '../icons/sub-menu-ellipse.svg'
 import Success from '../icons/success.svg'
+import Suggestion from '../icons/suggestion.svg'
 import SupplyChainGradient from '../icons/supply-chain-gradient.svg'
 import SupplyChain from '../icons/supply-chain-icon.svg'
 import Tag from '../icons/tag.svg'
@@ -291,6 +297,8 @@ const IconNameMap = {
   key: Key,
   'file-icon': FileIcon,
   'sidebar-icon': SidebarIcon,
+  'sidebar-left': SidebarLeft,
+  'sidebar-right': SidebarRight,
   variable: Variable,
   'clock-icon': ClockIcon,
   eye: Eye,
@@ -359,7 +367,11 @@ const IconNameMap = {
   'collapse-diff': CollapseDiff,
   'expand-diff': ExpandDiff,
   'circle-plus': CirclePlus,
-  'code-brackets': CodeBrackets
+  'code-brackets': CodeBrackets,
+  'attachment-image': AttachmentImage,
+  'collapse-comment': CollapseComment,
+  'expand-comment': ExpandComment,
+  suggestion: Suggestion
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

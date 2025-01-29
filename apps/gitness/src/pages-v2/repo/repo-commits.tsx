@@ -1,7 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { useParams, useSearchParams } from 'react-router-dom'
 
 import {
   useFindRepositoryQuery,
@@ -25,7 +23,8 @@ export default function RepoCommitsPage() {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState('')
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1).withOptions({ history: 'push' }))
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
   const {
     branchList,
@@ -71,10 +70,14 @@ export default function RepoCommitsPage() {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId])
 
+  useEffect(() => {
+    setSearchParams({ page: String(queryPage), query: branchTagQuery })
+  }, [queryPage, branchTagQuery, setSearchParams])
+
   const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
     queryParams: {
-      page,
+      page: queryPage,
       git_ref: normalizeGitRef(
         selectedRefType === BranchSelectorTab.TAGS
           ? REFS_TAGS_PREFIX + selectedBranchTag?.name
@@ -85,6 +88,8 @@ export default function RepoCommitsPage() {
   })
   const xNextPage = parseInt(headers?.get(PageResponseHeader.xNextPage) || '')
   const xPrevPage = parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+
+  const [_page, setPage] = useState(queryPage)
 
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
@@ -120,7 +125,7 @@ export default function RepoCommitsPage() {
       toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
       commitsList={commitData?.commits}
       isFetchingCommits={isFetchingCommits}
-      page={page}
+      page={queryPage}
       setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}

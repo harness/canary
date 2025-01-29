@@ -68,7 +68,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
 
   const handleCloseClick = () => {
-    filterHandlers.setActiveFilters([{ type: 'type', condition: 'is', selectedValues: ['disabled'] }])
+    filterHandlers.handleResetFilters()
   }
 
   const handleOpenClick = () => {
@@ -135,7 +135,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
         {showTopBar ? (
           <>
@@ -149,7 +149,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                   className="max-w-96"
                   value={searchInput || ''}
                   handleChange={handleInputChange}
-                  placeholder={t('views:repos.search')}
+                  placeholder={t('views:repos.search', 'Search')}
                 />
               </ListActions.Left>
               <ListActions.Right>

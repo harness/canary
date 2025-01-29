@@ -97,6 +97,8 @@ export const PaginationComponent: React.FC<PaginationComponentProps> = ({
   }
 
   return (
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     <ListPagination.Root>
       <Pagination>
         {totalPages ? (

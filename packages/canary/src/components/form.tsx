@@ -74,7 +74,7 @@ const FormItemContext = React.createContext<FormItemContextValue>({} as FormItem
 
 const FormItem = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
-    const id = React.useId()
+    const id = React.useMemo(() => Math.random().toString(36).substr(2, 9), [])
 
     return (
       <FormItemContext.Provider value={{ id }}>

@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { noop } from 'lodash-es'
-import { parseAsInteger, useQueryState } from 'nuqs'
 
 import { ListExecutionsOkResponse, TypesExecution, useListExecutionsQuery } from '@harnessio/code-service-client'
 import { Icon } from '@harnessio/ui/components'
@@ -10,6 +9,7 @@ import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { PageResponseHeader } from '../../types'
@@ -103,16 +103,16 @@ const Branch = ({ children }: { children: React.ReactNode }): React.ReactElement
   )
 }
 
-export const Description = (props: { execution: TypesExecution }): string | React.ReactElement => {
+export const Description = (props: { execution: TypesExecution }): React.ReactElement | null => {
   const {
     execution: { author_name, event, source, target }
   } = props
   if (!author_name || !event) {
-    return ''
+    return null
   }
   switch (event) {
     case 'manual':
-      return `${author_name} triggered manually`
+      return <span>{`${author_name} triggered manually`}</span>
     case 'pull_request':
       return (
         <div className="flex items-center gap-1">
@@ -127,6 +127,6 @@ export const Description = (props: { execution: TypesExecution }): string | Reac
         </div>
       )
     default:
-      return ''
+      return null
   }
 }

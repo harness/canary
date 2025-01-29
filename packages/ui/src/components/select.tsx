@@ -1,12 +1,15 @@
 import { Children, ComponentPropsWithoutRef, ElementRef, FC, forwardRef, PropsWithChildren, ReactNode } from 'react'
 
 import { Caption, Label, Message, MessageTheme, SearchBox } from '@/components'
+import { usePortal } from '@/context'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { CheckIcon, ChevronDownIcon } from '@radix-ui/react-icons'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectProps extends PropsWithChildren, SelectPrimitive.SelectProps {
+interface SelectProps
+  extends Omit<Omit<PropsWithChildren<React.HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
+    SelectPrimitive.SelectProps {
   label?: string
   error?: string
   caption?: ReactNode
@@ -112,8 +115,10 @@ const SelectContent = forwardRef<
     searchValue: searchProps?.searchValue
   })
 
+  const { portalContainer } = usePortal()
+
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal container={portalContainer}>
       <SelectPrimitive.Content
         ref={ref}
         className={cn(

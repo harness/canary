@@ -5,7 +5,6 @@ import { DiffModeEnum } from '@git-diff-view/react'
 import copy from 'clipboard-copy'
 import * as Diff2Html from 'diff2html'
 import { atom, useAtom } from 'jotai'
-import { useQueryState } from 'nuqs'
 
 import {
   commentCreatePullReq,
@@ -31,6 +30,7 @@ import {
 import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dialog'
 import { useAppContext } from '../../framework/context/AppContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
 import { PullReqReviewDecision } from '../../pages/pull-request/types/types'
@@ -71,7 +71,7 @@ export default function PullRequestChanges() {
   const sourceRef = useMemo(() => pullReqMetadata?.source_sha, [pullReqMetadata?.source_sha])
   const { pullRequestId } = useParams<PathParams>()
   const prId = (pullRequestId && Number(pullRequestId)) || -1
-  const [commentId] = useQueryState('commentId', { defaultValue: '' })
+  const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
 
   const {

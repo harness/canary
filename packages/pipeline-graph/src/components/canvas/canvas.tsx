@@ -5,7 +5,7 @@ import { calculateTransform, MousePoint } from './canvas-utils'
 
 import './canvas.css'
 
-export function Canvas({ children }: React.PropsWithChildren) {
+export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>) {
   const { setCanvasTransform, canvasTransformRef, config } = useCanvasContext()
 
   const mainRef = useRef<HTMLDivElement | null>(null)

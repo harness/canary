@@ -1644,7 +1644,7 @@ export const repoFilesStore: RepoFilesStoreType = {
     '  },\n' +
     '  "license": "Apache-2.0",\n' +
     '  "resolutions": {\n' +
-    '    "@types/react": "18.3.3"\n' +
+    '    "@types/react": "^17.0.3"\n' +
     '  },\n' +
     '  "packageManager": "pnpm@9.5.0+sha512.140036830124618d624a2187b50d04289d5a087f326c9edfc0ccd733d76c4f52c3a313d4fc148794a2a9d81553016004e6742e8cf850670268a7387fc220c903",\n' +
     '  "devDependencies": {\n' +

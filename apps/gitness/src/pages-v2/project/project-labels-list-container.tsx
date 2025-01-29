@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { parseAsInteger, useQueryState } from 'nuqs'
-
 import {
   useDefineSpaceLabelMutation,
   useDeleteSpaceLabelMutation,
@@ -12,6 +10,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { CreateLabelDialog, CreateLabelFormFields, ILabelType, ProjectLabelsListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { useLabelsStore } from './stores/labels-store'
 

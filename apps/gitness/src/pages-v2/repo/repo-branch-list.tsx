@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useQueryClient } from '@tanstack/react-query'
-import { useQueryState } from 'nuqs'
 
 import {
   useCalculateCommitDivergenceMutation,
@@ -16,6 +15,7 @@ import { CreateBranchFormFields, RepoBranchListView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -63,8 +63,6 @@ export function RepoBranchesListPage() {
     },
     repo_ref: repoRef
   })
-
-  console.log('searchBranches', searchBranches)
 
   const {
     isLoading: isLoadingDivergence,

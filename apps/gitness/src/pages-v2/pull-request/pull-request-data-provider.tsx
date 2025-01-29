@@ -22,7 +22,7 @@ import { SSEEvent } from '../../types'
 import { normalizeGitRef } from '../../utils/git-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
 
-const PullRequestDataProvider: React.FC<PropsWithChildren<unknown>> = ({ children }) => {
+const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   const spaceURL = useGetSpaceURLParam() ?? ''
   const repoRef = useGetRepoRef()
   const { pullRequestId, spaceId, repoId } = useParams<PathParams>()

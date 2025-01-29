@@ -39,7 +39,7 @@ const LineTitle: FC<LineTitleProps> = ({ header, useTranslationStore }) => {
   return (
     <div className="flex items-center justify-between gap-3">
       <div className="inline-flex items-center gap-2">
-        <span className="text-14 font-medium">{text}</span>
+        <span className="text-16 font-medium">{text}</span>
         <CopyButton name={text} color="gray" />
         {!!numAdditions && (
           <Badge variant="outline" size="sm" theme="success">
@@ -87,17 +87,17 @@ const CommitsAccordion: FC<{
       <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
+            <Accordion.Trigger leftChevron className="px-4 py-[9px] text-left">
               <StackedList.Field title={<LineTitle useTranslationStore={useTranslationStore} header={header} />} />
             </Accordion.Trigger>
-            <Accordion.Content>
+            <Accordion.Content className="pb-0">
               <div className="border-t bg-transparent">
                 {(fileDeleted || isDiffTooLarge || fileUnchanged || header?.isBinary) && !showHiddenDiff ? (
-                  <Layout.Vertical className="flex w-full items-center py-5">
+                  <Layout.Vertical gap="space-y-0" className="flex w-full items-center py-5">
                     <Button
-                      className="text-tertiary-background"
-                      variant="secondary"
-                      size="md"
+                      className="text-foreground-accent"
+                      variant="link_accent"
+                      size="sm"
                       aria-label="show diff"
                       onClick={() => setShowHiddenDiff(true)}
                     >

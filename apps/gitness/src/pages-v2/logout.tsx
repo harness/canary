@@ -20,5 +20,5 @@ export const Logout: React.FC = () => {
     logout({})
   }, [logout])
 
-  return 'Redirecting...'
+  return <div>Redirecting...</div>
 }

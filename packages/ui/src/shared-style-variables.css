@@ -644,8 +644,8 @@
    */
   }
   .dark,
-  .dark-std-std,
-  .dark-std-high {
+  .dark-std-low,
+  .dark-std-std {
     --canary-background: var(--canary-grey-6);
     --canary-foreground: var(--canary-grey-94);
     --canary-card: var(--canary-grey-10);
@@ -852,7 +852,7 @@
     );
   }
 
-  .dark-std-high {
+  .dark-std-std {
     --canary-background: var(--canary-base-chrome-black);
     --canary-foreground: var(--canary-base-chrome-white);
     --canary-card: var(--canary-base-chrome-950);

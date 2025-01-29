@@ -12,9 +12,9 @@ export interface ViewSettingsProps {
 }
 
 enum Themes {
+  DARK_STANDARD_LOW = 'dark-std-low',
   DARK = 'dark-std-std',
-  LIGHT = 'light-std-std',
-  DARK_STANDARD_HIGH = 'dark-std-high'
+  LIGHT = 'light-std-std'
 }
 
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {

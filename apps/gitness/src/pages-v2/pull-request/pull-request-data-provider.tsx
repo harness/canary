@@ -108,13 +108,7 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
 
       setPullReqMetadata(pullReqData)
     }
-  }, [
-    pullReqData,
-    pullReqMetadata,
-    setPullReqMetadata,
-    refetchActivities,
-    refetchCommits
-  ])
+  }, [pullReqData, pullReqMetadata, setPullReqMetadata, refetchActivities, refetchCommits])
 
   useEffect(() => {
     const hasChanges =

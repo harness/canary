@@ -2,7 +2,7 @@ import { produce } from 'immer'
 import { create } from 'zustand'
 
 import { commentStatusPullReq as apiCommentStatusPullReq, mergePullReqOp } from '@harnessio/code-service-client'
-import { CodeCommentState, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
+import { CodeCommentState, DiffStatistics, PullRequestDataState, PullRequestState } from '@harnessio/ui/views'
 
 export const codeOwnersNotFoundMessage = 'CODEOWNERS file not found'
 export const codeOwnersNotFoundMessage2 = `path "CODEOWNERS" not found`
@@ -267,7 +267,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
         Object.assign(draft, newState)
       })
     ),
-  setDiffStats: diffStats =>
+  setDiffStats: (diffStats: DiffStatistics) =>
     set(
       produce(draft => {
         draft.diffStats = diffStats

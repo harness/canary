@@ -140,7 +140,7 @@ export function RepoWebhookList({
                   <StackedList.Field
                     primary
                     description={
-                      <Text className="ml-10 w-[350px] max-w-[400px]" truncate color="secondary">
+                      <Text className="ml-10 max-w-[500px]" truncate color="secondary">
                         {webhook?.triggers?.length
                           ? webhook.triggers
                               .map(trigger => trigger.replace(/_/g, ' ').replace(/\b\w/g, match => match.toUpperCase()))

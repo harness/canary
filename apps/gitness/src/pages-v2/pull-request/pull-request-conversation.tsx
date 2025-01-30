@@ -566,7 +566,7 @@ export default function PullRequestConversationPage() {
             {/* TODO: fix handleaction for comment section in panel */}
             {rebaseErrorMessage ? (
               <Alert.Container variant="destructive" className="mb-5">
-                <Alert.Title>Couldn't rebase branch</Alert.Title>
+                <Alert.Title>Cannot rebase branch</Alert.Title>
                 <Alert.Description>
                   <p>{rebaseErrorMessage}</p>
                 </Alert.Description>

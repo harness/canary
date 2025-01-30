@@ -974,7 +974,7 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'language-select',
-    element: <LanguageDialog />
+    element: <LanguageDialog onSave={lang => console.log(lang)} />
   }
 ]
 

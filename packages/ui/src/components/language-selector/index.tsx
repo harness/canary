@@ -33,7 +33,11 @@ const languages: LanguageInterface[] = [
   { code: 'LA', name: Language.LatinAmerican }
 ]
 
-const LanguageDialog = () => {
+interface LanguageDialogProps {
+  onSave: (language: LanguageInterface) => void
+}
+
+const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null)
 
   return (
@@ -55,7 +59,10 @@ const LanguageDialog = () => {
               <div
                 key={lang.code}
                 className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700 ${selectedLanguage === lang.code ? 'bg-gray-600' : 'bg-gray-800'}`}
-                onClick={() => setSelectedLanguage(lang.code)}
+                onClick={() => {
+                  setSelectedLanguage(lang.code)
+                  onSave(lang)
+                }}
               >
                 <span>{lang.name}</span>
                 {selectedLanguage === lang.code && <CheckIcon />}

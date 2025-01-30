@@ -4,6 +4,15 @@ export function useAPIPath(path: string) {
   const mfeContext = useMFEContext()
   const isMFE = mfeContext.renderUrl !== ''
   if (isMFE) {
+    return `/code${path}`
+  }
+  return path
+}
+
+export function useExtendedAPIPath(path: string) {
+  const mfeContext = useMFEContext()
+  const isMFE = mfeContext.renderUrl !== ''
+  if (isMFE) {
     return `${window.apiUrl || ''}/code${path}${path.includes('?') ? '&' : '?'}routingId=${mfeContext.scope.accountId}`
   }
   return path

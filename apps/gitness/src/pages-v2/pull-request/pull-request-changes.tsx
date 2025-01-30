@@ -261,7 +261,7 @@ export default function PullRequestChanges() {
 
       // slice out ~50 items for chunk - transform & push them into 'accumulated' and schedule remaining chunks in next tick
       // for diffs with more than 200 files this is taking longer to parse and blocks main thread
-      function processNextChunk() {
+      const processNextChunk = () => {
         const CHUNK_SIZE = 50
         const endIndex = Math.min(currentIndex + CHUNK_SIZE, parsed.length)
 

@@ -5,8 +5,8 @@ import { cn } from '@/utils/cn'
 import * as Dialog from '@radix-ui/react-dialog'
 
 export enum ThemeMode {
-  Dark = 'dark',
-  Light = 'light'
+  Dark = 'Dark',
+  Light = 'Light'
 }
 
 export enum ContrastMode {
@@ -16,10 +16,10 @@ export enum ContrastMode {
 }
 
 export enum ColorAdjustment {
-  Default = 'default',
-  Protanopia = 'protanopia',
-  Deuteranopia = 'deuteranopia',
-  Tritanopia = 'tritanopia'
+  Default = 'Default',
+  Protanopia = 'Protanopia',
+  Deuteranopia = 'Deuteranopia',
+  Tritanopia = 'Tritanopia'
 }
 
 export enum AccentColor {
@@ -61,7 +61,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-black p-6 shadow-lg">
+        <Dialog.Content className="fixed left-1/2 top-1/2 w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-lg bg-black p-6 shadow-lg">
           <Dialog.Title className="text-lg font-semibold text-white">Appearance Settings</Dialog.Title>
           <Dialog.Close asChild>
             <Button variant="ghost" size="icon" className="absolute right-3 top-3">
@@ -87,7 +87,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   <div
                     className={cn('h-16 w-24 rounded border p-2', theme === mode ? 'border-white' : 'border-gray-600')}
                   />
-                  <span className="text-gray-300">{mode.charAt(0).toUpperCase() + mode.slice(1)}</span>
+                  <span className="text-gray-300">{mode}</span>
                 </label>
               ))}
             </div>
@@ -99,7 +99,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Contrast</h3>
             <h4 className="text-xs text-gray-100">High contrast improves readability, Dimmer mode reduces glare.</h4>
-            <div className="mt-2 flex flex-col gap-2">
+            <div className="mt-2 flex gap-2">
               {Object.values(ContrastMode).map(c => (
                 <label key={c} className="flex cursor-pointer items-center gap-2">
                   <input
@@ -113,7 +113,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
                     {contrast === c && <div className="h-2 w-2 rounded-full bg-white" />}
                   </div>
-                  <span className="text-gray-300">{c.replace('-', ' ')}</span>
+                  <span className="text-gray-300">{c}</span>
                 </label>
               ))}
             </div>
@@ -125,7 +125,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Color Adjustment</h3>
             <h4 className="text-xs text-gray-100">Adjust colors for different types of color blindness.</h4>
-            <div className="mt-2 flex flex-col gap-2">
+            <div className="mt-2 flex gap-2">
               {Object.values(ColorAdjustment).map(ca => (
                 <label key={ca} className="flex cursor-pointer items-center gap-2">
                   <input
@@ -139,7 +139,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
                     {colorAdjustment === ca && <div className="h-2 w-2 rounded-full bg-white" />}
                   </div>
-                  <span className="text-gray-300">{ca.charAt(0).toUpperCase() + ca.slice(1)}</span>
+                  <span className="text-gray-300">{ca}</span>
                 </label>
               ))}
             </div>

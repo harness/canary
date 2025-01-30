@@ -10,9 +10,9 @@ export enum ThemeMode {
 }
 
 export enum ContrastMode {
-  Default = 'default',
-  HighContrast = 'high-contrast',
-  Dimmer = 'dimmer'
+  Default = 'Default',
+  HighContrast = 'High Contrast',
+  Dimmer = 'Dimmer'
 }
 
 export enum ColorAdjustment {
@@ -34,7 +34,21 @@ export enum AccentColor {
   Green = 'green'
 }
 
-const ThemeDialog = () => {
+interface ThemeDialogProps {
+  onSave: ({
+    theme,
+    contrast,
+    colorAdjustment,
+    accentColor
+  }: {
+    theme: ThemeMode
+    contrast: ContrastMode
+    colorAdjustment: ColorAdjustment
+    accentColor: AccentColor
+  }) => void
+}
+
+const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
   const [theme, setTheme] = useState<ThemeMode>(ThemeMode.Dark)
   const [contrast, setContrast] = useState<ContrastMode>(ContrastMode.Default)
   const [colorAdjustment, setColorAdjustment] = useState<ColorAdjustment>(ColorAdjustment.Default)
@@ -58,6 +72,7 @@ const ThemeDialog = () => {
           {/* Mode */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Mode</h3>
+            <h4 className="text-xs text-gray-100">Select or customize your UI theme.</h4>
             <div className="mt-2 flex gap-4">
               {Object.values(ThemeMode).map(mode => (
                 <label key={mode} className="flex cursor-pointer items-center gap-2">
@@ -83,6 +98,7 @@ const ThemeDialog = () => {
           {/* Contrast */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Contrast</h3>
+            <h4 className="text-xs text-gray-100">High contrast improves readability, Dimmer mode reduces glare.</h4>
             <div className="mt-2 flex flex-col gap-2">
               {Object.values(ContrastMode).map(c => (
                 <label key={c} className="flex cursor-pointer items-center gap-2">
@@ -108,6 +124,7 @@ const ThemeDialog = () => {
           {/* Color Adjustment */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Color Adjustment</h3>
+            <h4 className="text-xs text-gray-100">Adjust colors for different types of color blindness.</h4>
             <div className="mt-2 flex flex-col gap-2">
               {Object.values(ColorAdjustment).map(ca => (
                 <label key={ca} className="flex cursor-pointer items-center gap-2">
@@ -133,6 +150,7 @@ const ThemeDialog = () => {
           {/* Accent Color */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Accent Color</h3>
+            <h4 className="text-xs text-gray-100">Select your application accent color.</h4>
             <div className="mt-2 flex gap-2">
               {Object.values(AccentColor).map(color => (
                 <button
@@ -154,7 +172,7 @@ const ThemeDialog = () => {
               <Button variant="secondary">Cancel</Button>
             </Dialog.Close>
             <Dialog.Close asChild>
-              <Button onClick={() => console.log({ theme, contrast, colorAdjustment, accentColor })}>
+              <Button onClick={() => onSave({ theme, contrast, colorAdjustment, accentColor })}>
                 Save preferences
               </Button>
             </Dialog.Close>

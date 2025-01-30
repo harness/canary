@@ -12,8 +12,12 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --prod --frozen-l
 FROM base AS build
 # install deps
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
-# build all the packages and apps except portal and design-system
-RUN pnpm --filter \!portal --filter \!design-system run build
+# build all the packages and apps except gitness
+RUN pnpm --filter \!gitness run build
+# build the microfrontend
+WORKDIR /canary/apps/gitness
+RUN rm -rf dist
+RUN pnpm run build:webpack
 
 FROM node:20-slim AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist

@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, Text } from '@harnessio/ui/components'
+import { Breadcrumb, Text, ThemeSelectorDialog } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
@@ -967,6 +967,10 @@ export const routes: CustomRouteObject[] = [
     path: 'logout',
     element: <Logout />,
     handle: { routeName: RouteConstants.toLogout }
+  },
+  {
+    path: 'theme-select',
+    element: <ThemeSelectorDialog />
   }
 ]
 

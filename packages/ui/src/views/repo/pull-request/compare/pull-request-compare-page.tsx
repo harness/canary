@@ -108,7 +108,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   selectBranch,
   targetBranch,
   sourceBranch,
-  diffData,
+  diffData: diffDataProp,
   diffStats,
   setIsBranchSelected,
   isBranchSelected,
@@ -153,6 +153,15 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
       description: ''
     }
   })
+  const [diffData, setDiffData] = useState<HeaderProps[]>(diffDataProp)
+  const changedFilesCount = diffStats.files_changed || 0
+  useEffect(() => {
+    if (changedFilesCount === 0) {
+      setDiffData([])
+    } else {
+      setDiffData(diffDataProp)
+    }
+  }, [changedFilesCount])
 
   useEffect(() => {
     if (commitData && commitData.length > 0) {

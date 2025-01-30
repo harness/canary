@@ -1,0 +1,83 @@
+---
+title: Drawer
+description: Drawer component with stacking
+---
+
+The Drawer component works similar to a Sheet component, but allows animated stacking as well.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Drawer direction='right'>
+    <DrawerTrigger>Add Step</DrawerTrigger>
+    <DrawerContent>
+      <DrawerHeader>
+        <DrawerTitle>Run Step</DrawerTitle>
+        <DrawerDescription>
+          <Spacer size={2} />
+          <Fieldset>
+            <Input
+              id="name"
+              label="Step name"
+              placeholder="Enter step name"
+            />
+            <Drawer direction='right' nested>
+              <DrawerTrigger><Button>Add Connector</Button></DrawerTrigger>
+              <DrawerContent>
+                <DrawerHeader>
+                  <DrawerTitle>Create Connector</DrawerTitle>
+                  <DrawerDescription>
+                    <Spacer size={2} />
+                    <Fieldset>
+                      <Input
+                        id="name"
+                        label="Connector name"
+                        placeholder="Enter connector name"
+                      />
+                      <Drawer direction='right' nested>
+                        <DrawerTrigger><Button>Add Secret</Button></DrawerTrigger>
+                        <DrawerContent>
+                          <DrawerHeader>
+                            <DrawerTitle>Create Secret</DrawerTitle>
+                            <DrawerDescription>Shhh. This is a secret.</DrawerDescription>
+                          </DrawerHeader>
+                        </DrawerContent>
+                      </Drawer>
+                    </Fieldset>
+                  </DrawerDescription>
+                </DrawerHeader>
+              </DrawerContent>
+            </Drawer>  
+          </Fieldset>
+        </DrawerDescription>
+      </DrawerHeader>
+    </DrawerContent>
+  </Drawer>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Drawer } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <Drawer>
+    <DrawerTrigger>Open</DrawerTrigger>
+    <DrawerContent>
+        <DrawerHeader>
+        <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+        <DrawerDescription>This action cannot be undone.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
+        <Button>Submit</Button>
+        <DrawerClose>
+            <Button variant="outline">Cancel</Button>
+        </DrawerClose>
+        </DrawerFooter>
+    </DrawerContent>
+    </Drawer>
+)
+```

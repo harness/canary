@@ -84,9 +84,9 @@ export function CreateBranchDialog({
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
-      <Dialog.Content className="max-w-xl border-border bg-background-1" aria-describedby={undefined}>
+      <Dialog.Content className="border-border bg-background-1 max-w-[460px]" aria-describedby={undefined}>
         <Dialog.Header>
-          <Dialog.Title>{t('views:repos.createBranch', 'Create Branch')}</Dialog.Title>
+          <Dialog.Title>{t('views:repos.createBranchTitle', 'Create a branch')}</Dialog.Title>
         </Dialog.Header>
         <FormWrapper onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
@@ -109,7 +109,7 @@ export function CreateBranchDialog({
                 value={targetValue || defaultBranch}
                 onValueChange={value => handleSelectChange('target', value)}
                 placeholder={t('views:forms.select', 'Select')}
-                label={t('views:forms.baseBranch', 'Base Branch')}
+                label={t('views:forms.baseBranch', 'Base branch')}
                 error={
                   errors.target?.message
                     ? t('views:forms.selectBranchError', errors.target?.message?.toString())
@@ -154,7 +154,7 @@ export function CreateBranchDialog({
               {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingBranch || !isValid}>
-              {t('views:repos.createBranch', 'Create Branch')}
+              {t('views:repos.createBranchButton', 'Create branch')}
             </Button>
           </Dialog.Footer>
         </FormWrapper>

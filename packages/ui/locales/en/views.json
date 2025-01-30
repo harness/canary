@@ -87,7 +87,8 @@
     "newPullReq": "New pull request",
     "viewRules": "View Rules",
     "deleteBranch": "Delete Branch",
-    "createBranch": "Create branch",
+    "createBranchTitle": "Create a branch",
+    "createBranchButton": "Create branch",
     "newBranch": "New branch",
     "emptyRepo": "This repository is empty.",
     "repositories": "Repositories",
@@ -338,7 +339,7 @@
     "enterBranchName": "Enter branch name",
     "createBranchError": "Branch name is required",
     "select": "Select",
-    "baseBranch": "Base Branch",
+    "baseBranch": "Base branch",
     "selectBranchError": "Base branch is required",
     "selectRoleError": "Role is required"
   },

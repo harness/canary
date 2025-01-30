@@ -98,7 +98,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
           <TableHead className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
-              <div className="h-3 w-px bg-borders-2" aria-hidden />
+              <div className="bg-borders-2 h-3 w-px" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
           </TableHead>
@@ -120,9 +120,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* branch name */}
                 <TableCell className="content-center">
                   <div className="flex h-6 items-center">
-                    <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-background-8 px-2.5 text-14 text-foreground-8">
+                    <div className="bg-background-8 text-14 text-foreground-8 inline-flex h-6 max-w-80 items-center truncate rounded px-2.5">
                       {defaultBranch === branch?.name && (
-                        <Icon name="lock" size={14} className="-mt-px mr-1 inline-block text-icons-9" />
+                        <Icon name="lock" size={14} className="text-icons-9 -mt-px mr-1 inline-block" />
                       )}
                       {branch?.name}
                     </div>
@@ -134,22 +134,22 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center gap-2">
                     <Avatar className="size-[1.125rem]">
                       {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
-                      <AvatarFallback className="text-center text-10">
+                      <AvatarFallback className="text-10 text-center">
                         {getInitials(branch?.user?.name ?? '', 2)}
                       </AvatarFallback>
                     </Avatar>
-                    <span className="truncate text-foreground-1">{branch?.timestamp}</span>
+                    <span className="text-foreground-1 truncate">{branch?.timestamp}</span>
                   </div>
                 </TableCell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
                 <TableCell className="content-center">
                   {branch?.checks && (
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center">
                       {checkState === 'running' ? (
-                        <span className="size-2 rounded-full bg-icons-alert" />
+                        <span className="bg-icons-alert mr-1.5 size-2 rounded-full" />
                       ) : (
                         <Icon
-                          className={cn('text-icons-1', {
+                          className={cn('mr-1.5', {
                             'text-icons-success': checkState === 'success',
                             'text-icons-danger': checkState === 'failure'
                           })}
@@ -162,9 +162,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                           size={12}
                         />
                       )}
-                      <span className="truncate text-foreground-3">{branch?.checks?.done}</span>
+                      <span className="text-foreground-3 truncate">{branch?.checks?.done}</span>
                       <span className="mx-px">/</span>
-                      <span className="truncate text-foreground-3">{branch?.checks?.total}</span>
+                      <span className="text-foreground-3 truncate">{branch?.checks?.total}</span>
                     </div>
                   )}
                 </TableCell>
@@ -173,7 +173,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
                       <Badge
-                        className="m-auto rounded-full bg-background-2 px-2 text-center font-medium text-foreground-3"
+                        className="bg-background-2 text-foreground-3 m-auto rounded-full px-2 text-center font-medium"
                         variant="outline"
                         size="sm"
                       >
@@ -192,7 +192,7 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <TableCell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
-                      className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
+                      className="bg-background-8 text-foreground-8 hover:bg-background-9 hover:text-foreground-1 flex w-fit items-center gap-1 px-2.5 text-sm"
                       variant="custom"
                       size="xs"
                       asChild

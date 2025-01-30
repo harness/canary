@@ -19,7 +19,7 @@ const DialogOverlay = forwardRef<ElementRef<typeof DialogPrimitive.Overlay>, Dia
   ({ className, onClick, ...props }, ref) => (
     <DialogPrimitive.Overlay
       ref={ref}
-      className={cn('fixed inset-0 z-50 bg-background-7/50', className)}
+      className={cn('fixed inset-0 z-50 bg-background-7/80', className)}
       {...props}
       onClick={onClick}
     />

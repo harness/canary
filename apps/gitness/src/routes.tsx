@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb, LanguageDialog, Text, ThemeDialog } from '@harnessio/ui/components'
+import { Breadcrumb, Language, LanguageDialog, LanguageInterface, Text, ThemeDialog } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
@@ -974,7 +974,15 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'language-select',
-    element: <LanguageDialog onSave={lang => console.log(lang)} />
+    element: (
+      <LanguageDialog
+        defaultLanguage={{ code: 'FR', name: Language.French }}
+        onSave={(lang: LanguageInterface) => console.log(lang)}
+        onChange={(lang: LanguageInterface) => console.log(lang)}
+      >
+        Change Language
+      </LanguageDialog>
+    )
   }
 ]
 

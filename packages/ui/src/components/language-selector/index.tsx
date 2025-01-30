@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button, ButtonGroup, Dialog } from '@/components'
 import { CheckIcon } from '@radix-ui/react-icons'
 
-enum Language {
+export enum Language {
   English = 'English',
   Bulgarian = 'Bulgarian',
   Croatian = 'Croatian',
@@ -15,7 +15,7 @@ enum Language {
   LatinAmerican = 'Latin American'
 }
 
-interface LanguageInterface {
+export interface LanguageInterface {
   code: string
   name: Language
 }
@@ -33,16 +33,49 @@ const languages: LanguageInterface[] = [
 ]
 
 interface LanguageDialogProps {
+  defaultLanguage?: LanguageInterface
+  language?: LanguageInterface
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onChange: (language: LanguageInterface) => void
   onSave: (language: LanguageInterface) => void
+  onCancel: () => void
+  children: React.ReactNode
 }
 
-const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
+const LanguageDialog: React.FC<LanguageDialogProps> = ({
+  defaultLanguage,
+  language,
+  open,
+  onOpenChange,
+  onChange,
+  onSave,
+  onCancel,
+  children
+}) => {
   const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null)
 
+  useEffect(() => {
+    if (language) {
+      setSelectedLanguage(language.code)
+    } else if (defaultLanguage) {
+      setSelectedLanguage(defaultLanguage.code)
+    }
+  }, [defaultLanguage, language])
+
+  const handleSave = () => {
+    if (selectedLanguage) {
+      const languageToSave = languages.find(lang => lang.code === selectedLanguage)
+      if (languageToSave) {
+        onSave(languageToSave)
+      }
+    }
+  }
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>
-        <Button variant="outline">Change Language</Button>
+        <Button variant="outline">{children}</Button>
       </Dialog.Trigger>
       <Dialog.Content className="w-[400px]">
         <Dialog.Title>Language</Dialog.Title>
@@ -53,7 +86,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
               className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700 ${selectedLanguage === lang.code ? 'bg-gray-600' : 'bg-gray-800'}`}
               onClick={() => {
                 setSelectedLanguage(lang.code)
-                onSave(lang)
+                onChange(lang)
               }}
             >
               <span>
@@ -68,8 +101,12 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button variant="ghost">Cancel</Button>
-              <Button variant="default">Save</Button>
+              <Button variant="ghost" onClick={onCancel}>
+                Cancel
+              </Button>
+              <Button variant="default" onClick={handleSave}>
+                Save
+              </Button>
             </>
           </ButtonGroup>
         </Dialog.Footer>

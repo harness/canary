@@ -1,5 +1,6 @@
 import * as React from 'react'
 
+import { usePortal } from '@/context'
 import { cn } from '@utils/cn'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
@@ -32,18 +33,21 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DrawerPrimitive.Content
-      ref={ref}
-      className={cn('bg-background fixed inset-y-0 right-0 z-50 rounded-l-[10px] w-1/4 border', className)}
-      {...props}
-    >
-      {children}
-    </DrawerPrimitive.Content>
-  </DrawerPortal>
-))
+>(({ className, children, ...props }, ref) => {
+  const { portalContainer } = usePortal()
+  return (
+    <DrawerPortal container={portalContainer}>
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn('bg-background fixed inset-y-0 right-0 z-50 rounded-l-[10px] w-1/4 border', className)}
+        {...props}
+      >
+        {children}
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  )
+})
 DrawerContent.displayName = 'DrawerContent'
 
 const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (

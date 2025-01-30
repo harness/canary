@@ -3,12 +3,19 @@ import { useState } from 'react'
 import { Button, ButtonGroup, Dialog, Separator } from '@/components'
 import { cn } from '@/utils/cn'
 
-export enum ThemeMode {
+export interface ThemeInterface {
+  mode: Mode
+  contrast: Contrast
+  colorAdjustment: ColorAdjustment
+  accentColor: AccentColor
+}
+
+export enum Mode {
   Dark = 'Dark',
   Light = 'Light'
 }
 
-export enum ContrastMode {
+export enum Contrast {
   Default = 'Default',
   HighContrast = 'High Contrast',
   Dimmer = 'Dimmer'
@@ -34,22 +41,12 @@ export enum AccentColor {
 }
 
 interface ThemeDialogProps {
-  onSave: ({
-    theme,
-    contrast,
-    colorAdjustment,
-    accentColor
-  }: {
-    theme: ThemeMode
-    contrast: ContrastMode
-    colorAdjustment: ColorAdjustment
-    accentColor: AccentColor
-  }) => void
+  onSave: (theme: ThemeInterface) => void
 }
 
 const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
-  const [theme, setTheme] = useState<ThemeMode>(ThemeMode.Dark)
-  const [contrast, setContrast] = useState<ContrastMode>(ContrastMode.Default)
+  const [mode, setMode] = useState<Mode>(Mode.Dark)
+  const [contrast, setContrast] = useState<Contrast>(Contrast.Default)
   const [colorAdjustment, setColorAdjustment] = useState<ColorAdjustment>(ColorAdjustment.Default)
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
 
@@ -65,19 +62,17 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Mode</h3>
           <h4 className="text-xs text-gray-100">Select or customize your UI theme.</h4>
           <div className="mt-2 flex gap-4">
-            {Object.values(ThemeMode).map(mode => (
-              <label key={mode} className="flex cursor-pointer items-center gap-2">
+            {Object.values(Mode).map(m => (
+              <label key={m} className="flex cursor-pointer items-center gap-2">
                 <input
                   type="radio"
                   name="theme"
                   value={mode}
-                  checked={theme === mode}
-                  onChange={() => setTheme(mode)}
+                  checked={mode === m}
+                  onChange={() => setMode(m)}
                   className="hidden"
                 />
-                <div
-                  className={cn('h-16 w-24 rounded border p-2', theme === mode ? 'border-white' : 'border-gray-600')}
-                />
+                <div className={cn('h-16 w-24 rounded border p-2', mode === m ? 'border-white' : 'border-gray-600')} />
                 <span className="text-gray-300">{mode}</span>
               </label>
             ))}
@@ -91,7 +86,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Contrast</h3>
           <h4 className="text-xs text-gray-100">High contrast improves readability, Dimmer mode reduces glare.</h4>
           <div className="mt-2 flex gap-2">
-            {Object.values(ContrastMode).map(c => (
+            {Object.values(Contrast).map(c => (
               <label key={c} className="flex cursor-pointer items-center gap-2">
                 <input
                   type="radio"
@@ -162,9 +157,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <ButtonGroup>
             <>
               <Button variant="secondary">Cancel</Button>
-              <Button onClick={() => onSave({ theme, contrast, colorAdjustment, accentColor })}>
-                Save preferences
-              </Button>
+              <Button onClick={() => onSave({ mode, contrast, colorAdjustment, accentColor })}>Save preferences</Button>
             </>
           </ButtonGroup>
         </Dialog.Footer>

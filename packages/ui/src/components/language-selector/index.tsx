@@ -47,7 +47,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 bg-black/50" />
-        <Dialog.Content className="fixed top-1/2 left-1/2 w-[320px] -translate-x-1/2 -translate-y-1/2 bg-black text-white rounded-xl p-4 shadow-lg">
+        <Dialog.Content className="fixed top-1/2 left-1/2 w-[400px] -translate-x-1/2 -translate-y-1/2 bg-black text-white rounded-xl p-4 shadow-lg">
           <Dialog.Title className="text-lg font-semibold">Language</Dialog.Title>
           <Dialog.Close asChild>
             <Button variant="ghost" size="icon" className="absolute right-3 top-3">
@@ -64,7 +64,9 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({ onSave }) => {
                   onSave(lang)
                 }}
               >
-                <span>{lang.name}</span>
+                <span>
+                  {lang.code} - {lang.name}
+                </span>
                 {selectedLanguage === lang.code && <CheckIcon />}
               </div>
             ))}

@@ -446,7 +446,6 @@ export default function PullRequestConversationPage() {
         setRuleViolationArr(undefined)
       },
       error => {
-        console.error('Error:', error.message)
         setRebaseErrorMessage(error.message)
       }
     )

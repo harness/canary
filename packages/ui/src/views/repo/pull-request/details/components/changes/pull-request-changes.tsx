@@ -9,7 +9,7 @@ import {
   DiffViewerState,
   FileViewedState,
   getFileViewedState,
-  InViewDiffBlockRenderer,
+  InViewDiffRenderer,
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
@@ -503,7 +503,7 @@ function PullRequestChangesInternal({
     <div className="flex flex-col gap-4" ref={rootref}>
       {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
-          <InViewDiffBlockRenderer
+          <InViewDiffRenderer
             key={blockIndex}
             blockName={outterBlockName(blockIndex)}
             root={rootref as RefObject<Element>}
@@ -522,7 +522,7 @@ function PullRequestChangesInternal({
 
               return (
                 <div className="pt-4" key={item.filePath}>
-                  <InViewDiffBlockRenderer
+                  <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item.filePath)}
                     root={diffsContainerRef}
@@ -562,11 +562,11 @@ function PullRequestChangesInternal({
                       onToggle={() => toggleOpen(item.text)}
                       setCollapsed={val => setCollapsed(item.text, val)}
                     />
-                  </InViewDiffBlockRenderer>
+                  </InViewDiffRenderer>
                 </div>
               )
             })}
-          </InViewDiffBlockRenderer>
+          </InViewDiffRenderer>
         )
       })}
     </div>

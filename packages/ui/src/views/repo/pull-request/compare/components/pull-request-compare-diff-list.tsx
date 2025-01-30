@@ -12,7 +12,7 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { DiffModeOptions, InViewDiffBlockRenderer, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, InViewDiffRenderer, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { chunk } from 'lodash-es'
 
@@ -245,7 +245,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       <div className="flex flex-col gap-4" ref={rootref}>
         {diffBlocks?.map((diffsBlock, blockIndex) => {
           return (
-            <InViewDiffBlockRenderer
+            <InViewDiffRenderer
               key={blockIndex}
               blockName={outterBlockName(blockIndex)}
               root={rootref as RefObject<Element>}
@@ -254,7 +254,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
             >
               {diffsBlock?.map((item, index) => (
                 <div className="pt-4" key={item.filePath}>
-                  <InViewDiffBlockRenderer
+                  <InViewDiffRenderer
                     key={item.filePath}
                     blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}
                     root={diffsContainerRef}
@@ -271,10 +271,10 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                       openItems={openItems}
                       onToggle={() => toggleOpen(item.text)}
                     />
-                  </InViewDiffBlockRenderer>
+                  </InViewDiffRenderer>
                 </div>
               ))}
-            </InViewDiffBlockRenderer>
+            </InViewDiffRenderer>
           )
         })}
       </div>

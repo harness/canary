@@ -514,19 +514,21 @@ export const CreatePullRequest = () => {
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
-          diffs?.map(item => ({
-            text: item.filePath,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')?.[1],
-            addedLines: item.addedLines,
-            removedLines: item.deletedLines,
-            isBinary: item.isBinary,
-            deleted: item.isDeleted,
-            unchangedPercentage: item.unchangedPercentage,
-            blocks: item.blocks,
-            filePath: item.filePath
-          })) || []
+          diffStats?.files_changed || 0
+            ? diffs?.map(item => ({
+                text: item.filePath,
+                data: item.raw,
+                title: item.filePath,
+                lang: item.filePath.split('.')?.[1],
+                addedLines: item.addedLines,
+                removedLines: item.deletedLines,
+                isBinary: item.isBinary,
+                deleted: item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage,
+                blocks: item.blocks,
+                filePath: item.filePath
+              })) || []
+            : []
         }
         diffStats={
           diffStats

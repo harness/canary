@@ -15,7 +15,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 # build all the packages and apps except portal and design-system
 RUN pnpm --filter \!portal --filter \!design-system run build
 
-FROM node:20-slim AS final
+FROM alpine:3.21 AS final
 COPY --from=build /canary/apps/gitness/dist /canary-dist
 WORKDIR /canary-dist
 

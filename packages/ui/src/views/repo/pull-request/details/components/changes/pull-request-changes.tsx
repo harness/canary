@@ -17,10 +17,14 @@ import { DiffModeEnum } from '@git-diff-view/react'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import {
+  calculateDetectionMargin,
   IN_VIEWPORT_DETECTION_MARGIN,
+  innerBlockName,
+  outterBlockName,
   parseStartingLineIfOne,
   PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE,
-  PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT
+  PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT,
+  shouldRetainDiffChildren
 } from '@views/repo/pull-request/utils'
 import { chunk } from 'lodash-es'
 
@@ -80,16 +84,6 @@ interface DataProps {
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
 }
-
-// If a diff container has a Markdown Editor active, retain it event it's off-screen to make
-// sure editor content is not cleared out during off-screen optimization
-const shouldRetainDiffChildren = (dom: HTMLElement | null) => !!dom?.querySelector('[data-comment-editor-shown="true"]')
-
-const outterBlockName = (blockIndex: number) => `outter-${blockIndex}`
-const innerBlockName = (filePath: string) => `inner-${filePath}`
-
-// If there are more than 200 diffs, we decrease the detection margin to make sure browser do not crash. As a result, Cmd-F won't work well on diffs that got hidden/out of viewport.
-const calculateDetectionMargin = (diffsLength: number) => (diffsLength >= 200 ? 5000 : IN_VIEWPORT_DETECTION_MARGIN)
 
 const LineTitle: React.FC<LineTitleProps> = ({
   header,

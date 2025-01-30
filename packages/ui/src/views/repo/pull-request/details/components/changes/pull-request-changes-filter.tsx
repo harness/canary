@@ -261,7 +261,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             with {pullReqStats?.additions || 0} additions and {pullReqStats?.deletions || 0} deletions
           </p>
           <DropdownMenu.Content align="start">
-            <DropdownMenu.Group>
+            <div className="max-h-[360px] overflow-y-auto px-1">
               {diffData?.map(diff => (
                 <DropdownMenu.Item
                   key={diff.filePath}
@@ -283,7 +283,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   </div>
                 </DropdownMenu.Item>
               ))}
-            </DropdownMenu.Group>
+            </div>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </div>

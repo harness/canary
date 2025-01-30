@@ -402,35 +402,36 @@
   /* Standalone app uses .light-std-std and .dark-std-std as defaults for light and dark themes */
   .light,
   .light-std-std {
-    --canary-background: 0 0% 100%;
-    --canary-foreground: 240 10% 3.9%;
-    --canary-card: 0 0% 100%;
-    --canary-card-foreground: 240 10% 3.9%;
-    --canary-popover-foreground: 240 10% 3.9%;
-    --canary-primary: 240 5.9% 10%;
-    --canary-primary-background: 0 0% 100%;
-    --canary-primary-foreground: 0 0% 98%;
-    --canary-primary-accent: 216 100% 60%;
-    --canary-secondary: 240 4.8% 95.9%;
-    --canary-secondary-foreground: 240 5.9% 10%;
-    --canary-secondary-background: 0 0% 100%;
-    --canary-tertiary: 240 4.8% 95.9%;
-    --canary-tertiary-foreground: 240 5.9% 10%;
-    --canary-tertiary-background: 240 6% 60%;
-    --canary-muted: 240 4.8% 95.9%;
-    --canary-muted-foreground: 240 3.8% 46.1%;
-    --canary-accent: 240 4.8% 95.9%;
-    --canary-accent-foreground: 240 5.9% 10%;
-    --canary-destructive: 0 84.2% 60.2%;
-    --canary-destructive-foreground: 0 0% 98%;
-    --canary-border: 240 5.9% 90%;
-    --canary-border-background: 240 5.9% 90%;
-    --canary-input: 240 5.9% 90%;
-    --canary-input-background: 240 5.9% 90%;
-    --canary-ring: 240 5.9% 10%;
+    --canary-background: var(--canary-base-gray-white);
+    --canary-foreground: var(--canary-base-gray-850);
+    --canary-card: var(--canary-base-gray-50);
+    --canary-card-foreground: var(--canary-base-gray-black);
     --canary-popover: var(--canary-base-gray-white);
+    --canary-popover-foreground: var(--canary-base-gray-black);
+    --canary-primary: var(--canary-base-gray-black);
+    --canary-primary-background: var(--canary-base-gray-white);
+    --canary-primary-foreground: var(--canary-base-gray-50);
     --canary-primary-muted: var(--canary-base-gray-850);
+    --canary-primary-accent: var(--canary-accent-500);
+    --canary-secondary: var(--canary-base-gray-150);
+    --canary-secondary-foreground: var(--canary-base-gray-black);
+    --canary-secondary-background: var(--canary-base-gray-white);
     --canary-secondary-muted: var(--canary-base-gray-700);
+    --canary-tertiary: var(--canary-base-gray-150);
+    --canary-tertiary-foreground: var(--canary-base-gray-black);
+    --canary-tertiary-background: var(--canary-base-gray-700);
+    --canary-muted: var(--canary-base-gray-150);
+    --canary-muted-foreground: var(--canary-base-gray-700);
+    --canary-accent: var(--canary-base-gray-150);
+    --canary-accent-foreground: var(--canary-base-gray-black);
+    --canary-destructive: var(--canary-red-600);
+    --canary-destructive-foreground: var(--canary-base-gray-white);
+    --canary-border: var(--canary-base-gray-200);
+    --canary-border-background: var(--canary-base-gray-200);
+    --canary-input: var(--canary-base-gray-200);
+    --canary-input-background: var(--canary-base-gray-50);
+    --canary-ring: var(--canary-accent-400);
+
     --canary-radius: 0.5rem;
     --canary-success: var(--canary-green-600);
     --canary-error: var(--canary-red-500);
@@ -441,23 +442,24 @@
     --canary-ai-button-stop-2: var(--canary-pink-200);
     --canary-ai-button-stop-3: var(--canary-purple-400);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
-    --diff-grey: hsl(0 0% 20%);
-    --diff-add-content--: hsl(156 100% 95%);
-    --diff-del-content--: hsl(356 100% 95%);
-    --diff-add-lineNumber--: hsl(153 100% 90%);
-    --diff-del-lineNumber--: hsl(358 100% 90%);
-    --diff-plain-content--: var(--canary-background);
-    --diff-expand-content--: var(--canary-background);
-    --diff-plain-lineNumber--: var(--canary-background);
-    --diff-plain-lineNumber-color--: hsl(0 0% 0%);
-    --diff-hunk-content--: hsl(218 26% 95%);
-    --diff-hunk-lineNumber--: hsl(218 26% 95%);
-    --diff-add-content-highlight--: hsl(152 37% 90%);
-    --diff-del-content-highlight--: hsl(0 38% 90%);
-    --diff-add-widget--: hsl(216 80% 95%);
-    --diff-add-widget-color--: hsl(0 0% 0%);
-    --diff-empty-content--: var(--canary-background);
-    --diff-hunk-content-color--: hsl(0 0% 0%);
+
+    --diff-grey: var(--canary-foreground-05);
+    --diff-add-content--: var(--canary-green-50);
+    --diff-del-content--: var(--canary-red-50);
+    --diff-add-lineNumber--: var(--canary-green-600);
+    --diff-del-lineNumber--: var(--canary-red-600);
+    --diff-plain-content--: var(--canary-background-01);
+    --diff-expand-content--: var(--canary-background-01);
+    --diff-plain-lineNumber--: var(--canary-background-01);
+    --diff-plain-lineNumber-color--: var(--canary-foreground-05);
+    --diff-hunk-content--: var(--canary-accent-50);
+    --diff-hunk-lineNumber--: var(--canary-accent-600);
+    --diff-add-content-highlight--: var(--canary-green-100);
+    --diff-del-content-highlight--: var(--canary-red-100);
+    --diff-add-widget--: var(--canary-background-03);
+    --diff-add-widget-color--: var(--canary-foreground-02);
+    --diff-empty-content--: var(--canary-background-01);
+    --diff-hunk-content-color--: var(--canary-foreground-02);
 
     /* New colors design variables */
     /* Text */
@@ -852,21 +854,22 @@
     );
   }
 
-  .dark-std-std {
+  .dark-std-high {
     --canary-background: var(--canary-base-chrome-black);
     --canary-foreground: var(--canary-base-chrome-white);
     --canary-card: var(--canary-base-chrome-950);
     --canary-card-foreground: var(--canary-base-chrome-white);
+    --canary-popover: var(--canary-base-chrome-900);
     --canary-popover-foreground: var(--canary-base-chrome-white);
     --canary-primary: var(--canary-base-chrome-white);
     --canary-primary-background: var(--canary-base-chrome-black);
     --canary-primary-foreground: var(--canary-base-chrome-950);
-    --canary-primary-muted: var(--canary-base-chrome-500);
+    --canary-primary-muted: var(--canary-base-chrome-200);
     --canary-primary-accent: var(--canary-accent-600);
     --canary-secondary: var(--canary-base-chrome-850);
     --canary-secondary-foreground: var(--canary-base-chrome-white);
     --canary-secondary-background: var(--canary-base-chrome-950);
-    --canary-secondary-muted: var(--canary-base-chrome-800);
+    --canary-secondary-muted: var(--canary-base-chrome-500);
     --canary-tertiary: var(--canary-base-chrome-850);
     --canary-tertiary-foreground: var(--canary-base-chrome-white);
     --canary-tertiary-background: var(--canary-base-chrome-500);
@@ -881,7 +884,7 @@
     --canary-input: var(--canary-base-chrome-850);
     --canary-input-background: var(--canary-base-chrome-950);
     --canary-ring: var(--canary-accent-300);
-    --canary-popover: var(--canary-base-chrome-900);
+
     --canary-radius: 0.5rem;
     --canary-success: var(--canary-green-200);
     --canary-error: var(--canary-red-200);
@@ -892,6 +895,24 @@
     --canary-ai-button-stop-2: var(--canary-pink-150);
     --canary-ai-button-stop-3: var(--canary-purple-300);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
+
+    --diff-grey: var(--canary-foreground-05);
+    --diff-add-content--: var(--canary-green-950);
+    --diff-del-content--: var(--canary-red-950);
+    --diff-add-lineNumber--: var(--canary-green-300);
+    --diff-del-lineNumber--: var(--canary-red-300);
+    --diff-plain-content--: var(--canary-background-01);
+    --diff-expand-content--: var(--canary-background-01);
+    --diff-plain-lineNumber--: var(--canary-background-01);
+    --diff-plain-lineNumber-color--: var(--canary-foreground-05);
+    --diff-hunk-content--: var(--canary-accent-950);
+    --diff-hunk-lineNumber--: var(--canary-accent-300);
+    --diff-add-content-highlight--: var(--canary-green-100);
+    --diff-del-content-highlight--: var(--canary-red-100);
+    --diff-add-widget--: var(--canary-background-03);
+    --diff-add-widget-color--: var(--canary-foreground-02);
+    --diff-empty-content--: var(--canary-background-01);
+    --diff-hunk-content-color--: var(--canary-foreground-02);
 
     /* New colors design variables */
     /* Text */

@@ -440,10 +440,14 @@ export default function PullRequestConversationPage() {
       head_branch: pullReqMetadata?.source_branch,
       head_commit_sha: pullReqMetadata?.source_sha
     }
-    rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
-      onPRStateChanged()
-      setRuleViolationArr(undefined)
-    })
+    rebaseBranch({ body: payload, repo_ref: repoRef })
+      .then(() => {
+        onPRStateChanged()
+        setRuleViolationArr(undefined)
+      })
+      .catch(error => {
+        alert(error.message)
+      })
   }
   const mockPullRequestActions = [
     ...(pullReqMetadata?.closed

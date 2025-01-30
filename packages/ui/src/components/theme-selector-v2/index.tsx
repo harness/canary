@@ -62,18 +62,24 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Mode</h3>
           <h4 className="text-xs text-gray-100">Select or customize your UI theme.</h4>
           <div className="mt-2 flex gap-4">
-            {Object.values(Mode).map(m => (
-              <label key={m} className="flex cursor-pointer items-center gap-2">
+            {Object.values(Mode).map(item => (
+              <label key={item} className="flex cursor-pointer items-center gap-2">
                 <input
                   type="radio"
                   name="theme"
                   value={mode}
-                  checked={mode === m}
-                  onChange={() => setMode(m)}
+                  checked={mode === item}
+                  onChange={() => setMode(item)}
                   className="hidden"
                 />
-                <div className={cn('h-16 w-24 rounded border p-2', mode === m ? 'border-white' : 'border-gray-600')} />
-                <span className="text-gray-300">{mode}</span>
+                <div
+                  className={cn(
+                    'h-16 w-24 rounded border p-2',
+                    mode === item ? 'border-white' : 'border-gray-600',
+                    item === Mode.Light ? 'bg-gray-300' : 'bg-black'
+                  )}
+                />
+                <span className="text-gray-300">{item}</span>
               </label>
             ))}
           </div>
@@ -86,20 +92,20 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Contrast</h3>
           <h4 className="text-xs text-gray-100">High contrast improves readability, Dimmer mode reduces glare.</h4>
           <div className="mt-2 flex gap-2">
-            {Object.values(Contrast).map(c => (
-              <label key={c} className="flex cursor-pointer items-center gap-2">
+            {Object.values(Contrast).map(item => (
+              <label key={item} className="flex cursor-pointer items-center gap-2">
                 <input
                   type="radio"
                   name="contrast"
-                  value={c}
-                  checked={contrast === c}
-                  onChange={() => setContrast(c)}
+                  value={item}
+                  checked={contrast === item}
+                  onChange={() => setContrast(item)}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
-                  {contrast === c && <div className="h-2 w-2 rounded-full bg-white" />}
+                  {contrast === item && <div className="h-2 w-2 rounded-full bg-white" />}
                 </div>
-                <span className="text-gray-300">{c}</span>
+                <span className="text-gray-300">{item}</span>
               </label>
             ))}
           </div>
@@ -112,20 +118,20 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Color Adjustment</h3>
           <h4 className="text-xs text-gray-100">Adjust colors for different types of color blindness.</h4>
           <div className="mt-2 flex gap-2">
-            {Object.values(ColorAdjustment).map(ca => (
-              <label key={ca} className="flex cursor-pointer items-center gap-2">
+            {Object.values(ColorAdjustment).map(item => (
+              <label key={item} className="flex cursor-pointer items-center gap-2">
                 <input
                   type="radio"
                   name="color-adjustment"
-                  value={ca}
-                  checked={colorAdjustment === ca}
-                  onChange={() => setColorAdjustment(ca)}
+                  value={item}
+                  checked={colorAdjustment === item}
+                  onChange={() => setColorAdjustment(item)}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
-                  {colorAdjustment === ca && <div className="h-2 w-2 rounded-full bg-white" />}
+                  {colorAdjustment === item && <div className="h-2 w-2 rounded-full bg-white" />}
                 </div>
-                <span className="text-gray-300">{ca}</span>
+                <span className="text-gray-300">{item}</span>
               </label>
             ))}
           </div>
@@ -138,15 +144,12 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
           <h3 className="text-sm font-medium text-gray-300">Accent Color</h3>
           <h4 className="text-xs text-gray-100">Select your application accent color.</h4>
           <div className="mt-2 flex gap-2">
-            {Object.values(AccentColor).map(color => (
+            {Object.values(AccentColor).map(item => (
               <button
-                key={color}
-                className={cn(
-                  'h-6 w-6 rounded-full border',
-                  accentColor === color ? 'border-white' : 'border-gray-600'
-                )}
-                style={{ backgroundColor: color }}
-                onClick={() => setAccentColor(color)}
+                key={item}
+                className={cn('h-6 w-6 rounded-full border', accentColor === item ? 'border-white' : 'border-gray-600')}
+                style={{ backgroundColor: item }}
+                onClick={() => setAccentColor(item)}
               />
             ))}
           </div>

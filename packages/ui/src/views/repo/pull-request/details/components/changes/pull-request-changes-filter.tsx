@@ -283,7 +283,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
                   </div>
                 </DropdownMenu.Item>
               ))}
-            </div>
+            </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </div>

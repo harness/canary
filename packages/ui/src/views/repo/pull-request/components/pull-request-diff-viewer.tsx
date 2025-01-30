@@ -104,8 +104,8 @@ const PullRequestDiffViewer = ({
   const cleanup = useCallback(() => {
     // Clean up diff instance
     if (diffFileInstance) {
-      diffFileInstance.destroy?.()
-      setDiffFileInstance(null)
+      diffFileInstance._destroy?.()
+      setDiffFileInstance(undefined)
     }
 
     // Clean up OverlayScrollbars instances
@@ -113,12 +113,7 @@ const PullRequestDiffViewer = ({
       instance.destroy()
     })
     overlayScrollbarsInstances.current = []
-
-    // Clean up highlighter
-    if (highlighter) {
-      highlighter.dispose?.()
-    }
-  }, [diffFileInstance, highlighter])
+  }, [diffFileInstance])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -126,17 +121,15 @@ const PullRequestDiffViewer = ({
   // Cleanup on unmount
   useEffect(() => {
     return cleanup
-  }, [cleanup])
-
-  // Clean up diff instance when it changes
+  }, [])
   useEffect(() => {
     return () => {
       if (diffFileInstance) {
-        diffFileInstance.destroy?.()
-        setDiffFileInstance(null)
+        diffFileInstance._destroy?.()
+        setDiffFileInstance(undefined)
       }
     }
-  }, [diffFileInstance])
+  }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
   const handleQuoteReply = useCallback((parentId: number, originalText: string) => {

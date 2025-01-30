@@ -9,12 +9,12 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<Drawer direction='right'>
-    <DrawerTrigger>Add Step</DrawerTrigger>
-    <DrawerContent>
-      <DrawerHeader>
-        <DrawerTitle>Run Step</DrawerTitle>
-        <DrawerDescription>
+  code={`<Drawer.Root direction='right'>
+    <Drawer.Trigger><Button>Open Drawer</Button></Drawer.Trigger>
+    <Drawer.Content>
+      <Drawer.Header>
+        <Drawer.Title>Run Step</Drawer.Title>
+        <Drawer.Description>
           <Spacer size={2} />
           <Fieldset>
             <Input
@@ -22,12 +22,12 @@ import { DocsPage } from "@/components/docs-page";
               label="Step name"
               placeholder="Enter step name"
             />
-            <Drawer direction='right' nested>
-              <DrawerTrigger><Button>Add Connector</Button></DrawerTrigger>
-              <DrawerContent>
-                <DrawerHeader>
-                  <DrawerTitle>Create Connector</DrawerTitle>
-                  <DrawerDescription>
+            <Drawer.Root direction='right' nested>
+              <Drawer.Trigger><Button>Add Connector</Button></Drawer.Trigger>
+              <Drawer.Content>
+                <Drawer.Header>
+                  <Drawer.Title>Create Connector</Drawer.Title>
+                  <Drawer.Description>
                     <Spacer size={2} />
                     <Fieldset>
                       <Input
@@ -35,25 +35,25 @@ import { DocsPage } from "@/components/docs-page";
                         label="Connector name"
                         placeholder="Enter connector name"
                       />
-                      <Drawer direction='right' nested>
-                        <DrawerTrigger><Button>Add Secret</Button></DrawerTrigger>
-                        <DrawerContent>
-                          <DrawerHeader>
-                            <DrawerTitle>Create Secret</DrawerTitle>
-                            <DrawerDescription>Shhh. This is a secret.</DrawerDescription>
-                          </DrawerHeader>
-                        </DrawerContent>
-                      </Drawer>
+                      <Drawer.Root direction='right' nested>
+                        <Drawer.Trigger><Button>Add Secret</Button></Drawer.Trigger>
+                        <Drawer.Content>
+                          <Drawer.Header>
+                            <Drawer.Title>Create Secret</Drawer.Title>
+                            <Drawer.Description>Shhh. This is a secret.</Drawer.Description>
+                          </Drawer.Header>
+                        </Drawer.Content>
+                      </Drawer.Root>
                     </Fieldset>
-                  </DrawerDescription>
-                </DrawerHeader>
-              </DrawerContent>
-            </Drawer>  
+                  </Drawer.Description>
+                </Drawer.Header>
+              </Drawer.Content>
+            </Drawer.Root>  
           </Fieldset>
-        </DrawerDescription>
-      </DrawerHeader>
-    </DrawerContent>
-  </Drawer>`}
+        </Drawer.Description>
+      </Drawer.Header>
+    </Drawer.Content>
+  </Drawer.Root>`}
 />
 
 ## Usage
@@ -64,20 +64,20 @@ import { Drawer } from '@harnessio/ui/components'
 //...
 
 return (
-  <Drawer>
-    <DrawerTrigger>Open</DrawerTrigger>
-    <DrawerContent>
-        <DrawerHeader>
-        <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-        <DrawerDescription>This action cannot be undone.</DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter>
-        <Button>Submit</Button>
-        <DrawerClose>
-            <Button variant="outline">Cancel</Button>
-        </DrawerClose>
-        </DrawerFooter>
-    </DrawerContent>
+  <Drawer.Root>
+    <Drawer.Trigger>Open</Drawer.Trigger>
+    <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Are you absolutely sure?</Drawer.Title>
+          <Drawer.Description>This action cannot be undone.</Drawer.Description>
+        </Drawer.Header>
+        <Drawer.Footer>
+          <Button>Submit</Button>
+          <Drawer.Close>
+              <Button variant="outline">Cancel</Button>
+          </Drawer.Close>
+        </Drawer.Footer>
+    </Drawer.Content>
   </Drawer>
 )
 ```

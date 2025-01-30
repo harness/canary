@@ -11,6 +11,7 @@ import {
 import { CommitSuggestion } from '@harnessio/ui/views'
 import { generateAlphaNumericHash } from '@harnessio/views'
 
+import { useAPIPath } from '../../../hooks/useAPIPath'
 import { getErrorMessage } from '../pull-request-utils'
 
 interface usePRCommonInteractionsProps {
@@ -31,6 +32,8 @@ export function usePRCommonInteractions({
   setActivities
 }: usePRCommonInteractionsProps) {
   let count = generateAlphaNumericHash(5)
+  const baseAPIPath = useAPIPath('/api/v1/repos')
+
   const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
     const reader = new FileReader()
     // Set up a function to be called when the load event is triggered
@@ -50,8 +53,9 @@ export function usePRCommonInteractions({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     fileBlob: any
   ) => {
+    const apiPath = `${baseAPIPath}/${repoRef}/uploads`
     try {
-      const response = await fetch(`${window.location.origin}${`/api/v1/repos/${repoRef}/uploads`}`, {
+      const response = await fetch(`${window.location.origin}${apiPath}`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -75,7 +79,7 @@ export function usePRCommonInteractions({
         return ''
       }
       const filePath = result.file_path
-      return `${window.location.origin}/api/v1/repos/${repoRef}/uploads/${filePath}`
+      return `${window.location.origin}${apiPath}/${filePath}`
     } catch (exception) {
       console.warn(getErrorMessage(exception))
       return ''

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button } from '@/components'
+import { Button, Separator } from '@/components'
 import { cn } from '@/utils/cn'
 import * as Dialog from '@radix-ui/react-dialog'
 
@@ -78,6 +78,8 @@ const ThemeDialog = () => {
             </div>
           </div>
 
+          <Separator className="my-4 h-px bg-gray-600" />
+
           {/* Contrast */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Contrast</h3>
@@ -101,6 +103,8 @@ const ThemeDialog = () => {
             </div>
           </div>
 
+          <Separator className="my-4 h-px bg-gray-600" />
+
           {/* Color Adjustment */}
           <div className="mt-4">
             <h3 className="text-sm font-medium text-gray-300">Color Adjustment</h3>
@@ -123,6 +127,8 @@ const ThemeDialog = () => {
               ))}
             </div>
           </div>
+
+          <Separator className="my-4 h-px bg-gray-600" />
 
           {/* Accent Color */}
           <div className="mt-4">

@@ -970,7 +970,7 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'theme-select',
-    element: <ThemeDialog />
+    element: <ThemeDialog onSave={theme => console.log(theme)} />
   }
 ]
 

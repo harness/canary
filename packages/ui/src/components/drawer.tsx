@@ -4,7 +4,7 @@ import { usePortal } from '@/context'
 import { cn } from '@utils/cn'
 import { Drawer as DrawerPrimitive } from 'vaul'
 
-const Drawer = ({
+const DrawerRoot = ({
   shouldScaleBackground = true,
   nested = false,
   ...props
@@ -14,7 +14,7 @@ const Drawer = ({
   ) : (
     <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
   )
-Drawer.displayName = 'Drawer'
+DrawerRoot.displayName = 'DrawerRoot'
 
 const DrawerTrigger = DrawerPrimitive.Trigger
 
@@ -80,15 +80,17 @@ const DrawerDescription = React.forwardRef<
 ))
 DrawerDescription.displayName = DrawerPrimitive.Description.displayName
 
-export {
-  Drawer,
-  DrawerPortal,
-  DrawerOverlay,
-  DrawerTrigger,
-  DrawerClose,
-  DrawerContent,
-  DrawerHeader,
-  DrawerFooter,
-  DrawerTitle,
-  DrawerDescription
+const Drawer = {
+  Root: DrawerRoot,
+  Portal: DrawerPortal,
+  Overlay: DrawerOverlay,
+  Trigger: DrawerTrigger,
+  Close: DrawerClose,
+  Content: DrawerContent,
+  Header: DrawerHeader,
+  Footer: DrawerFooter,
+  Title: DrawerTitle,
+  Description: DrawerDescription
 }
+
+export { Drawer }

@@ -473,23 +473,23 @@
     --canary-ai-button-stop-3: var(--canary-purple-400);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
 
-    --diff-grey: var(--canary-foreground-05);
-    --diff-add-content--: var(--canary-green-50);
-    --diff-del-content--: var(--canary-red-50);
-    --diff-add-lineNumber--: var(--canary-green-600);
-    --diff-del-lineNumber--: var(--canary-red-600);
-    --diff-plain-content--: var(--canary-background-01);
-    --diff-expand-content--: var(--canary-background-01);
-    --diff-plain-lineNumber--: var(--canary-background-01);
-    --diff-plain-lineNumber-color--: var(--canary-foreground-05);
-    --diff-hunk-content--: var(--canary-accent-50);
-    --diff-hunk-lineNumber--: var(--canary-accent-600);
-    --diff-add-content-highlight--: var(--canary-green-100);
-    --diff-del-content-highlight--: var(--canary-red-100);
-    --diff-add-widget--: var(--canary-background-03);
-    --diff-add-widget-color--: var(--canary-foreground-02);
-    --diff-empty-content--: var(--canary-background-01);
-    --diff-hunk-content-color--: var(--canary-foreground-02);
+    --diff-grey: hsl(25 5.5% 42.7%);
+    --diff-add-content--: hsl(130 85.7% 97.3%);
+    --diff-del-content--: hsl(10.9 100% 97.8%);
+    --diff-add-lineNumber--: hsl(145.9 82.6% 29.2%);
+    --diff-del-lineNumber--: hsl(4.3 67.5% 41%);
+    --diff-plain-content--: hsl(var(--canary-background-01));
+    --diff-expand-content--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber-color--: hsl(25 5.5% 42.7%);
+    --diff-hunk-content--: hsl(210 100% 96.5%);
+    --diff-hunk-lineNumber--: hsl(213.1 100% 42.4%);
+    --diff-add-content-highlight--: hsl(132 71.4% 89%);
+    --diff-del-content-highlight--: hsl(9.4 100% 93.7%);
+    --diff-add-widget--: hsl(240 20% 99%);
+    --diff-add-widget-color--: hsl(30 5.5% 21.6%);
+    --diff-empty-content--: hsl(var(--canary-background-01));
+    --diff-hunk-content-color--: hsl(30 5.5% 21.6%);
 
     /* New colors design variables */
     /* Text */
@@ -533,7 +533,7 @@
     --canary-border-01: var(--canary-base-gray-200);
     --canary-border-02: var(--canary-base-gray-200);
     --canary-border-03: var(--canary-base-gray-600);
-    --canary-border-04: var(--canary-base-gray-100);
+    --canary-border-04: var(--canary-base-gray-200);
     --canary-border-05: var(--canary-base-gray-200);
     --canary-border-06: var(--canary-base-gray-600);
     --canary-border-07: var(--canary-base-gray-white);
@@ -705,6 +705,7 @@
     --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
     --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
   }
+
   .dark,
   .dark-std-low,
   .dark-std-std {
@@ -985,23 +986,23 @@
     --canary-ai-button-stop-3: var(--canary-purple-300);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
 
-    --diff-grey: var(--canary-foreground-05);
-    --diff-add-content--: var(--canary-green-950);
-    --diff-del-content--: var(--canary-red-950);
-    --diff-add-lineNumber--: var(--canary-green-300);
-    --diff-del-lineNumber--: var(--canary-red-300);
-    --diff-plain-content--: var(--canary-background-01);
-    --diff-expand-content--: var(--canary-background-01);
-    --diff-plain-lineNumber--: var(--canary-background-01);
-    --diff-plain-lineNumber-color--: var(--canary-foreground-05);
-    --diff-hunk-content--: var(--canary-accent-950);
-    --diff-hunk-lineNumber--: var(--canary-accent-300);
-    --diff-add-content-highlight--: var(--canary-green-100);
-    --diff-del-content-highlight--: var(--canary-red-100);
-    --diff-add-widget--: var(--canary-background-03);
-    --diff-add-widget-color--: var(--canary-foreground-02);
-    --diff-empty-content--: var(--canary-background-01);
-    --diff-hunk-content-color--: var(--canary-foreground-02);
+    --diff-grey: hsl(240 7.8% 59.6%);
+    --diff-add-content--: hsl(135 23.5% 6.7%);
+    --diff-del-content--: hsl(8 33.3% 8.8%);
+    --diff-add-lineNumber--: hsl(139.8 56.5% 54.9%);
+    --diff-del-lineNumber--: hsl(6.4 100% 68.8%);
+    --diff-plain-content--: hsl(var(--canary-background-01));
+    --diff-expand-content--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber-color--: hsl(240 7.8% 59.6%);
+    --diff-hunk-content--: hsl(221.1 48.7% 7.6%);
+    --diff-hunk-lineNumber--: hsl(213.2 100% 67.1%);
+    --diff-add-content-highlight--: hsl(132 71.4% 89%);
+    --diff-del-content-highlight--: hsl(9.4 100% 93.7%);
+    --diff-add-widget--: hsl(240 8.1% 7.3%);
+    --diff-add-widget-color--: hsl(240 13% 82%);
+    --diff-empty-content--: hsl(var(--canary-background-01));
+    --diff-hunk-content-color--: hsl(240 13% 82%);
 
     /* New colors design variables */
     /* Text */
@@ -1046,7 +1047,7 @@
     --canary-border-02: var(--canary-base-chrome-850);
     --canary-border-03: var(--canary-base-chrome-500);
     --canary-border-04: var(--canary-base-chrome-900);
-    --canary-border-05: var(--canary-base-chrome-900);
+    --canary-border-05: var(--canary-base-chrome-850);
     --canary-border-06: var(--canary-base-chrome-400);
     --canary-border-07: var(--canary-base-chrome-white);
     --canary-border-08: var(--canary-base-chrome-850);

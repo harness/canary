@@ -16,6 +16,12 @@
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js"
   },
+  "files": [
+    "dist/**.*",
+    "tailwind.config.js",
+    "src/shared-style-variables.css",
+    "src/components/markdown-viewer/style.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && pnpm extract",
@@ -36,9 +42,6 @@
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
-  "files": [
-    "dist/**.*"
-  ],
   "sideEffects": false,
   "repository": {
     "type": "git",

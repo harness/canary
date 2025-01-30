@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react'
 
 import { listRepoLabelValues, listSpaceLabelValues, useListRepoLabelsQuery } from '@harnessio/code-service-client'
-import { LabelValuesType, LabelValueType } from '@harnessio/ui/views'
+import { ILabelType, LabelValuesType, LabelValueType } from '@harnessio/ui/views'
 
 import { useGetRepoId } from '../../../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../../../framework/hooks/useGetSpaceParam'
 import { useLabelsStore } from '../../../project/stores/labels-store'
 
-export type LabelValuesResponseResultType = { key: string; data: LabelValueType[] } | { key: string; error: unknown }
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LabelValuesResponseResultType = { key: string; data: LabelValueType[] } | { key: string; error: any }
+
+const isDataResponse = (value: LabelValuesResponseResultType): value is { key: string; data: LabelValueType[] } => {
+  return 'data' in value
+}
 
 export interface UseGetRepoLabelAndValuesDataProps {
   queryPage?: number
@@ -75,16 +80,16 @@ export const useGetRepoLabelAndValuesData = ({
     const fetchAllLabelValues = async () => {
       setIsLoadingValues(true)
 
-      const promises: Promise<LabelValuesResponseResultType>[] = syncStoreLabelsData.reduce((acc, item) => {
+      const promises = syncStoreLabelsData.reduce<Promise<LabelValuesResponseResultType>[]>((acc, item) => {
         if (item.value_count !== 0) {
           acc.push(
             item.scope === 0
               ? listRepoLabelValues({ repo_ref, key: item.key, signal }).then(
-                  data => ({ key: item.key, data: data.body }),
+                  data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
               : listSpaceLabelValues({ space_ref, key: item.key, signal }).then(
-                  data => ({ key: item.key, data: data.body }),
+                  data => ({ key: item.key, data: data.body as LabelValueType[] }),
                   error => ({ key: item.key, error })
                 )
           )
@@ -96,13 +101,15 @@ export const useGetRepoLabelAndValuesData = ({
       const results = await Promise.allSettled(promises)
 
       const values = results.reduce<LabelValuesType>((acc, result) => {
-        if (result.status === 'fulfilled') {
-          const data = result.value?.data
-          data
-            ? (acc[result.value.key] = data)
-            : console.error(`Error fetching values for label ${result.value.key}:`, result.value?.error?.message)
+        if (result.status !== 'fulfilled') {
+          console.error(`Error fetching values:`, result.reason)
+          return acc
+        }
+
+        if (isDataResponse(result.value)) {
+          acc[result.value.key] = result.value.data
         } else {
-          console.error(`Error fetching values for label ${result.value.key}:`, result.reason)
+          console.error(`Error fetching values for label ${result.value.key}:`, result.value?.error?.message)
         }
 
         return acc
@@ -125,7 +132,7 @@ export const useGetRepoLabelAndValuesData = ({
   useEffect(() => {
     if (!labels) return
 
-    setLabels(labels)
+    setLabels(labels as ILabelType[])
   }, [labels, setLabels])
 
   /**

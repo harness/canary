@@ -176,6 +176,8 @@
     "compareChangesDescription": "Branches and commit ranges can be reviewed within the same repository.",
     "clearFilters": "Clear filters",
     "noPullRequests": "There are no pull requests in this project yet.",
+    "noClosedPullRequests": "There are no closed pull requests in this project yet.",
+    "noOpenPullRequests": "There are no open pull requests in this project yet.",
     "createNewPullRequest": "Create a new pull request.",
     "noBranches": "No branches yet",
     "createBranchDescription": "Your branches will appear here once they're created.",

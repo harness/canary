@@ -8,7 +8,7 @@ import {
 
 import { ContentNodeTypes } from '../content-node-types'
 import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-node'
-import { StageNodeContentType } from '../nodes/stage-node'
+import { StageContentNodeDataType } from '../nodes/stage-node'
 import { StepNodeDataType } from '../nodes/step-node'
 import { YamlEntityType } from '../types/nodes'
 import { getIconBasedOnStep } from './step-icon-utils'
@@ -62,7 +62,7 @@ const processStages = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.SerialGroup,
           name
-        } satisfies StageNodeContentType,
+        } satisfies StageContentNodeDataType,
         children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
@@ -106,7 +106,7 @@ const processStages = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.Stage,
           name
-        } satisfies StageNodeContentType,
+        } satisfies StageContentNodeDataType,
         children: processSteps(stage.steps, childrenPath, options)
       } satisfies SerialContainerNodeType
     }
@@ -138,7 +138,7 @@ const processSteps = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.StepSerialGroup,
           name
-        } satisfies StageNodeContentType,
+        } satisfies StageContentNodeDataType,
 
         children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies SerialContainerNodeType

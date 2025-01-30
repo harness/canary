@@ -1,7 +1,8 @@
 import { FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { StackedList } from '@/components'
+import { NoData, StackedList } from '@/components'
+import { TranslationStore } from '@views/repo/repo-list/types'
 
 import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '../pull-request.types'
 import { PullRequestItemDescription } from './pull-request-item-description'
@@ -18,6 +19,9 @@ export interface PullRequestListProps {
   handleOpenClick?: () => void
   closedPRs?: number
   handleCloseClick?: () => void
+  repoId?: string
+  spaceId?: string
+  useTranslationStore: () => TranslationStore
 }
 
 export const PullRequestList: FC<PullRequestListProps> = ({
@@ -25,8 +29,12 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   openPRs,
   closedPRs,
   handleOpenClick,
-  handleCloseClick
+  handleCloseClick,
+  spaceId,
+  repoId,
+  useTranslationStore
 }) => {
+  const { t } = useTranslationStore()
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
   )
@@ -50,8 +58,86 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     handleCloseClick?.()
   }
 
-  if (!filteredData?.length) return null
+  if (
+    !filteredData.length &&
+    headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN &&
+    openPRs === 0 &&
+    closedPRs &&
+    closedPRs > 0
+  ) {
+    return (
+      <StackedList.Root>
+        <StackedList.Item disableHover>
+          <StackedList.Field
+            title={
+              <PullRequestListHeader
+                headerFilter={headerFilter}
+                onOpenClick={onOpenClick}
+                onCloseClick={onCloseClick}
+                openPRs={openPRs}
+                closedPRs={closedPRs}
+              />
+            }
+          />
+        </StackedList.Item>
+        <div className="flex min-h-[50vh] items-center justify-center">
+          <NoData
+            iconName="no-data-folder"
+            title="No open pull requests yet"
+            description={[
+              t('views:noData.noOpenPullRequests', 'There are no open pull requests in this project yet.'),
+              t('views:noData.createNewPullRequest', 'Create a new pull request.')
+            ]}
+            primaryButton={{
+              label: 'Create pull request',
+              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+            }}
+          />
+        </div>
+      </StackedList.Root>
+    )
+  }
+  if (
+    !filteredData.length &&
+    headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED &&
+    closedPRs === 0 &&
+    openPRs &&
+    openPRs > 0
+  ) {
+    return (
+      <StackedList.Root>
+        <StackedList.Item disableHover>
+          <StackedList.Field
+            title={
+              <PullRequestListHeader
+                headerFilter={headerFilter}
+                onOpenClick={onOpenClick}
+                onCloseClick={onCloseClick}
+                openPRs={openPRs}
+                closedPRs={closedPRs}
+              />
+            }
+          />
+        </StackedList.Item>
 
+        <div className="flex min-h-[50vh] items-center justify-center">
+          <NoData
+            iconName="no-data-folder"
+            title="No closed pull requests yet"
+            description={[
+              t('views:noData.noClosedPullRequests', 'There are no closed pull requests in this project yet.'),
+              t('views:noData.createNewPullRequest', 'Create a new pull request.')
+            ]}
+            primaryButton={{
+              label: 'Create pull request',
+              to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+            }}
+          />
+        </div>
+      </StackedList.Root>
+    )
+  }
+  if (!filteredData?.length) return null
   return (
     <StackedList.Root>
       <StackedList.Item disableHover>

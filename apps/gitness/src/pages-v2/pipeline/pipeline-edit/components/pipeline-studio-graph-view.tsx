@@ -25,6 +25,7 @@ import { AddNode, AddNodeDataType } from './graph-implementation/nodes/add-node'
 import { CommonNodeContextMenu } from './graph-implementation/nodes/common/CommonContextMenu'
 import { ParallelGroupContentNode } from './graph-implementation/nodes/parallel-group-node'
 import { SerialGroupContentNode } from './graph-implementation/nodes/serial-group-node'
+import { StageContentNode } from './graph-implementation/nodes/stage-node'
 import { YamlEntityType } from './graph-implementation/types/nodes'
 
 const nodes: NodeContent[] = [
@@ -61,7 +62,7 @@ const nodes: NodeContent[] = [
   {
     type: ContentNodeTypes.stage,
     containerType: ContainerNode.serial,
-    component: SerialGroupContentNode
+    component: StageContentNode
   } as NodeContent
 ]
 
@@ -128,7 +129,7 @@ export const PipelineStudioGraphView = (): React.ReactElement => {
     <div className="relative flex size-full" style={{ width: 'calc(100vw - 220px)' }}>
       <NodeContextProvider>
         <CanvasProvider>
-          <PipelineGraph data={data} nodes={nodes} />
+          <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
           <CanvasControls />
           <CommonNodeContextMenu />
         </CanvasProvider>

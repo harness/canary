@@ -3,13 +3,13 @@ import { SERIAL_GROUP_ADJUSTMENT } from '../components/nodes/serial-container'
 import { ContainerNode } from '../types/nodes'
 import { AnyNodeInternal, ParallelNodeInternalType, SerialNodeInternalType } from '../types/nodes-internal'
 
-export function getThreeDepth(node: AnyNodeInternal): number {
+export function getTreeDepth(node: AnyNodeInternal): number {
   if (node.containerType === ContainerNode.leaf) {
     return 1
   } else {
     let maxRet = 1
     node.children.forEach(item => {
-      maxRet = Math.max(getThreeDepth(item), maxRet)
+      maxRet = Math.max(getTreeDepth(item), maxRet)
     })
 
     return maxRet + 1

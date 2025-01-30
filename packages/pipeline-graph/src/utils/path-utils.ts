@@ -27,7 +27,7 @@ export function addPaths(
 }
 
 /** split path of item to 1. path to array and 2. element index */
-export function getPathPeaces(path: string) {
+export function getPathPieces(path: string) {
   const peaces = path.split('.')
 
   if (peaces.length === 1) {

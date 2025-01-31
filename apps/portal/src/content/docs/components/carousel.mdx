@@ -1,0 +1,265 @@
+---
+title: Carousel
+description: Carousel component documentation
+---
+
+The `Carousel` component provides a flexible UI element for displaying a carousel of items. It is composed of several subcomponents such as `CarouselContent`, `CarouselItem`, `CarouselPrevious`, and `CarouselNext` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+import { Carousel } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="flex items-center justify-center">
+    <Carousel.Root className="w-1/2">
+      <Carousel.Previous />
+      <Carousel.Content>
+        <Carousel.Item>
+          <div className="h-64 w-full bg-blue-800 text-white flex items-center justify-center">Slide 1</div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="h-64 w-full bg-green-800 text-white flex items-center justify-center">Slide 2</div>
+        </Carousel.Item>
+        <Carousel.Item>
+          <div className="h-64 w-full bg-red-800 text-white flex items-center justify-center">Slide 3</div>
+        </Carousel.Item>
+      </Carousel.Content>
+      <Carousel.Next />
+    </Carousel.Root>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Carousel } from '@harnessio/ui/components'
+
+return (
+  <Carousel.Root>
+    <Carousel.Previous />
+    <Carousel.Content>
+      <Carousel.Item>
+        <div className="h-64 w-full bg-blue-800 text-white flex items-center justify-center">Slide 1</div>
+      </Carousel.Item>
+      <Carousel.Item>
+        <div className="h-64 w-full bg-green-800 text-white flex items-center justify-center">Slide 2</div>
+      </Carousel.Item>
+      <Carousel.Item>
+        <div className="h-64 w-full bg-red-800 text-white flex items-center justify-center">Slide 3</div>
+      </Carousel.Item>
+    </Carousel.Content>
+    <Carousel.Next />
+  </Carousel.Root>
+)
+```
+
+## Anatomy
+
+All parts of the Carousel component can be imported and composed as required.
+
+```typescript jsx
+<Carousel.Root>
+  <Carousel.Previous />
+  <Carousel.Content>
+    <Carousel.Item>
+      <div className="h-64 w-full bg-blue-800 text-white flex items-center justify-center">Slide 1</div>
+    </Carousel.Item>
+    <Carousel.Item>
+      <div className="h-64 w-full bg-green-800 text-white flex items-center justify-center">Slide 2</div>
+    </Carousel.Item>
+    <Carousel.Item>
+      <div className="h-64 w-full bg-red-800 text-white flex items-center justify-center">Slide 3</div>
+    </Carousel.Item>
+  </Carousel.Content>
+  <Carousel.Next />
+</Carousel.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all carousel elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Carousel.Previous`, `Carousel.Content`, and `Carousel.Next` as children",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "opts",
+      description: "Options for the carousel",
+      required: false,
+      value: "CarouselOptions",
+    },
+    {
+      name: "plugins",
+      description: "Plugins for the carousel",
+      required: false,
+      value: "CarouselPlugin",
+    },
+    {
+      name: "orientation",
+      description: "Orientation of the carousel",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'horizontal'",
+    },
+    {
+      name: "setApi",
+      description: "Function to set the carousel API",
+      required: false,
+      value: "(api: CarouselApi) => void",
+    },
+    {
+      name: "initialSlide",
+      description: "Initial slide to display",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the carousel",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Content
+
+The `Content` component defines the main content area of the carousel.
+
+```typescript jsx
+<Carousel.Content>
+  <Carousel.Item>
+    <div className="h-64 w-full bg-blue-800 text-white flex items-center justify-center">Slide 1</div>
+  </Carousel.Item>
+  <Carousel.Item>
+    <div className="h-64 w-full bg-green-800 text-white flex items-center justify-center">Slide 2</div>
+  </Carousel.Item>
+  <Carousel.Item>
+    <div className="h-64 w-full bg-red-800 text-white flex items-center justify-center">Slide 3</div>
+  </Carousel.Item>
+</Carousel.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the content",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "carouselBlockClassName",
+      description: "Additional class names to apply to the carousel block",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Item
+
+The `Item` component defines an individual item within the carousel.
+
+```typescript jsx
+<Carousel.Item>
+  <div className="h-64 w-full bg-blue-800 text-white flex items-center justify-center">Slide 1</div>
+</Carousel.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Previous
+
+The `Previous` component is used to navigate to the previous slide.
+
+```typescript jsx
+<Carousel.Previous />
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names to apply to the button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Button variant",
+      required: false,
+      value: "string",
+      defaultValue: "'outline'",
+    },
+    {
+      name: "size",
+      description: "Button size",
+      required: false,
+      value: "string",
+      defaultValue: "'icon'",
+    },
+  ]}
+/>
+
+### Next
+
+The `Next` component is used to navigate to the next slide.
+
+```typescript jsx
+<Carousel.Next />
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names to apply to the button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Button variant",
+      required: false,
+      value: "string",
+      defaultValue: "'outline'",
+    },
+    {
+      name: "size",
+      description: "Button size",
+      required: false,
+      value: "string",
+      defaultValue: "'icon'",
+    },
+  ]}
+/>

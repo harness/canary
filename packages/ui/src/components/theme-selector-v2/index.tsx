@@ -87,8 +87,8 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
         <Dialog.Title>Appearance Settings</Dialog.Title>
         {/* Mode */}
         <div>
-          <div className="flex flex-col">
-            <Text className="text-lg font-medium">Mode</Text>
+          <div className="flex flex-col gap-1">
+            <Text className="text-md font-medium">Mode</Text>
             <Text className="text-xs text-foreground-3">Select or customize your UI theme.</Text>
           </div>
           <div className="mt-4 flex gap-4">
@@ -123,12 +123,12 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
           </div>
         </div>
 
-        <Separator className="h-px bg-gray-600" />
+        <Separator className="h-px bg-gray-800" />
 
         {/* Contrast */}
         <div>
-          <div className="flex flex-col">
-            <Text className="text-lg font-medium">Contrast</Text>
+          <div className="flex flex-col gap-1">
+            <Text className="text-md font-medium">Contrast</Text>
             <Text className="text-xs text-foreground-3">
               High contrast improves readability, Dimmer mode reduces glare.
             </Text>
@@ -156,12 +156,12 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
           </div>
         </div>
 
-        <Separator className="h-px bg-gray-600" />
+        <Separator className="h-px bg-gray-800" />
 
         {/* Color Adjustment */}
         <div>
-          <div className="flex flex-col">
-            <Text className="text-lg font-medium">Color Adjustment</Text>
+          <div className="flex flex-col gap-1">
+            <Text className="text-md font-medium">Color Adjustment</Text>
             <Text className="text-xs text-foreground-3">Adjust colors for different types of color blindness.</Text>
           </div>
           <div className="mt-4 flex gap-2">
@@ -187,12 +187,12 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
           </div>
         </div>
 
-        <Separator className="h-px bg-gray-600" />
+        <Separator className="h-px bg-gray-800" />
 
         {/* Accent Color */}
         <div>
-          <div className="flex flex-col">
-            <Text className="text-lg font-medium">Accent Color</Text>
+          <div className="flex flex-col gap-1">
+            <Text className="text-md font-medium">Accent Color</Text>
             <Text className="text-xs text-foreground-3">Select your application accent color.</Text>
           </div>
           <div className="mt-4 flex gap-2">

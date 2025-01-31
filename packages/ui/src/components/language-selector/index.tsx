@@ -75,7 +75,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
     }
   }, [defaultLanguage, language])
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     if (selectedLanguage) {
       const languageToSave = languages.find(lang => lang.code === selectedLanguage)
       if (languageToSave) {
@@ -89,23 +89,25 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content className="w-[400px]">
         <Dialog.Title>Language</Dialog.Title>
-        {languages.map(lang => (
-          <Button
-            variant="ghost"
-            key={lang.code}
-            className="flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700"
-            onClick={() => {
-              setSelectedLanguage(lang.code)
-              onChange(lang)
-            }}
-          >
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
-              <span>{lang.name}</span>
-            </div>
-            {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
-          </Button>
-        ))}
+        <div className="flex flex-col gap-3">
+          {languages.map(lang => (
+            <Button
+              variant="ghost"
+              key={lang.code}
+              className="flex justify-between items-center py-2 px-1 rounded-md cursor-pointer hover:bg-gray-700"
+              onClick={() => {
+                setSelectedLanguage(lang.code)
+                onChange(lang)
+              }}
+            >
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
+                <span>{lang.name}</span>
+              </div>
+              {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
+            </Button>
+          ))}
+        </div>
 
         {/* Buttons */}
         <Dialog.Footer>

@@ -1,7 +1,5 @@
 import { Navigate } from 'react-router-dom'
 
-import { use } from 'i18next'
-
 import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsLayout, SandboxLayout, WebhookSettingsLayout } from '@harnessio/ui/views'
 
@@ -429,20 +427,6 @@ export const repoRoutes: CustomRouteObject[] = [
                       breadcrumb: () => <Text>Create a webhook</Text>
                     }
                   }
-                  // {
-                  //   path: ':webhookId',
-                  //   element: <CreateWebhookContainer />,
-                  //   handle: {
-                  //     breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
-                  //   }
-                  // },
-                  // {
-                  //   path: ':webhookId/executions',
-                  //   element: <WebhookExecutionsContainer />,
-                  //   handle: {
-                  //     breadcrumb: () => <Text>Executions</Text>
-                  //   }
-                  // }
                 ]
               },
               {

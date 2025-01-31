@@ -29,14 +29,18 @@ export interface WebhookExecutionType {
 export interface WebhookStore {
   webhooks: WebhookType[] | null
   // onDelete: (id: number) => void
+  totalWebhookExecutionPages: number
+  webhookExecutionPage: number
   preSetWebhookData: CreateWebhookFormFields | null
   executions: WebhookExecutionType[] | null
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => void
+  setTotalWebhookExecutionPages: (headers: Headers) => void
   error: string | undefined
   setError: (error?: string) => void
   totalPages: number
   webhookLoading: boolean
   setWebhookLoading: (webhookLoading: boolean) => void
+  setWebhookExecutionPage: (page: number) => void
   setExecutions: (data: WebhookExecutionType[]) => void
   page: number
   setPage: (page: number) => void

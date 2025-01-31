@@ -106,7 +106,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
           <Button
             className="text-icons-1 hover:text-icons-2"
             variant="custom"
-            size="icon_xs"
+            size="xs_icon"
             aria-label="expand diff"
             onClick={e => {
               e.preventDefault()

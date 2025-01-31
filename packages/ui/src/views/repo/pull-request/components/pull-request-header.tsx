@@ -115,7 +115,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         ) : (
           <Button
             className="group border border-borders-2"
-            size="icon_xs"
+            size="xs_icon"
             variant="custom"
             aria-label="Edit"
             onClick={() => {

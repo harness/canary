@@ -80,7 +80,8 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
   bypassable,
   setAllStates,
   disableCTA,
-  isSubmitting
+  isSubmitting,
+  error
 }) => {
   const {
     register,
@@ -206,7 +207,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                 }
               />
             </RadioGroup>
-            {violation && (
+            {(violation || error) && (
               <Message className="ml-[26px] mt-0.5" theme={MessageTheme.ERROR}>
                 {bypassable
                   ? commitToGitRefValue === CommitToGitRefOption.DIRECTLY
@@ -250,7 +251,7 @@ export const GitCommitDialog: FC<GitCommitDialogProps> = ({
                   {isSubmitting ? 'Committing...' : 'Commit changes'}
                 </Button>
               ) : (
-                <Button variant="destructive" type="submit">
+                <Button onClick={handleSubmit(onSubmit)} variant="destructive" type="submit">
                   {commitToGitRefValue === CommitToGitRefOption.NEW_BRANCH
                     ? 'Bypass rules and commit via new branch'
                     : 'Bypass rules and commit directly'}

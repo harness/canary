@@ -106,15 +106,14 @@ export default function GitCommitDialog({
         onSuccess(response.body, commitToGitRef === CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)
       })
       .catch(_error => {
-        if (_error?.status === 422) {
+        if (_error?.violations?.length > 0) {
           setAllStates({
             violation: true,
             bypassed: true,
-            bypassable: _error?.data?.violations[0]?.bypassable
+            bypassable: _error?.violations[0]?.bypassable
           })
         } else {
           setError(_error as UsererrorError)
-          console.log(_error, 'error')
         }
       })
   }

@@ -56,13 +56,13 @@
     },
     "base-chrome": {
       "50": {
-        "$value": "#fafaf9"
+        "$value": "#fcfcfd"
       },
       "100": {
-        "$value": "#e9e9ed"
+        "$value": "#efeff6"
       },
       "150": {
-        "$value": "#d6d6df"
+        "$value": "#dedeed"
       },
       "200": {
         "$value": "#cbcbd7"

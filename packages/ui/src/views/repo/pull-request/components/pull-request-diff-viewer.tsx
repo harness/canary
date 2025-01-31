@@ -393,7 +393,7 @@ const PullRequestDiffViewer = ({
                 content={
                   <div className="px-4 pt-4">
                     <PullRequestTimelineItem
-                      titleClassName="max-w-full"
+                      titleClassName="w-full"
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
@@ -411,7 +411,7 @@ const PullRequestDiffViewer = ({
                       icon={
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">{parentInitials}</span>
+                            <span className="text-12 text-foreground-1">{parentInitials}</span>
                           </AvatarFallback>
                         </Avatar>
                       }
@@ -494,7 +494,7 @@ const PullRequestDiffViewer = ({
                               icon={
                                 <Avatar className="size-6 rounded-full p-0">
                                   <AvatarFallback>
-                                    <span className="text-12 text-foreground-3">{replyInitials}</span>
+                                    <span className="text-12 text-foreground-1">{replyInitials}</span>
                                   </AvatarFallback>
                                 </Avatar>
                               }

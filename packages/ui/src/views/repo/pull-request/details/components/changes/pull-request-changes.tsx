@@ -100,23 +100,13 @@ const LineTitle: React.FC<LineTitleProps> = ({
   const { t } = useTranslationStore()
   const { text, numAdditions, numDeletions, filePath, checksumAfter } = header
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="inline-flex items-center gap-2">
-        <Text weight="medium">{text}</Text>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={e => {
-            e.preventDefault()
-          }}
-        >
-          <CopyButton name={text} className="text-tertiary-background" />
-        </div>
-        <div role="button" tabIndex={0}>
+    <div className="flex items-center justify-between gap-x-3">
+      <div className="inline-flex items-center gap-x-4">
+        <div className="flex items-center gap-x-2">
           <Button
-            className="text-tertiary-background"
+            className="text-icons-1 hover:text-icons-2"
             variant="custom"
-            size="icon"
+            size="xs_icon"
             aria-label="expand diff"
             onClick={e => {
               e.preventDefault()
@@ -124,19 +114,24 @@ const LineTitle: React.FC<LineTitleProps> = ({
               toggleFullDiff()
             }}
           >
-            <Icon name={useFullDiff ? 'collapse-diff' : 'expand-diff'} size={16} />
+            <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
           </Button>
+          <span className="font-medium leading-tight text-foreground-1">{text}</span>
+          <CopyButton name={text} className="size-6" color="gray" />
         </div>
-        {numAdditions != null && numAdditions > 0 && (
-          <Badge variant="outline" size="sm" theme="success">
-            +{numAdditions}
-          </Badge>
-        )}
-        {numDeletions != null && numDeletions > 0 && (
-          <Badge variant="outline" size="sm" theme="destructive">
-            -{numDeletions}
-          </Badge>
-        )}
+
+        <div className="flex items-center gap-x-1">
+          {numAdditions != null && numAdditions > 0 && (
+            <Badge variant="outline" size="sm" theme="success" disableHover>
+              +{numAdditions}
+            </Badge>
+          )}
+          {numDeletions != null && numDeletions > 0 && (
+            <Badge variant="outline" size="sm" theme="destructive" disableHover>
+              -{numDeletions}
+            </Badge>
+          )}
+        </div>
       </div>
       <div className="inline-flex items-center gap-x-6">
         {showViewed ? (
@@ -325,10 +320,10 @@ const PullRequestAccordion: React.FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
+      <StackedList.Item className="overflow-hidden p-0" disableHover>
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
+            <Accordion.Trigger leftChevron className="bg-background-2 px-4 py-3.5 text-left">
               <StackedList.Field
                 title={
                   <LineTitle

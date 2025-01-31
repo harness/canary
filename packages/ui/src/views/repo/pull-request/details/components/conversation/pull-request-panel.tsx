@@ -205,13 +205,20 @@ const PullRequestPanel = ({
     [pullReqMetadata]
   )
 
+  const isShowMoreTooltip = useMemo(
+    () => pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft,
+    [pullReqMetadata]
+  )
+
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-            <Icon name="vertical-ellipsis" size={12} />
-          </Button>
+        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
+          <Icon
+            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
+            name="more-dots-fill"
+            size={12}
+          />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[200px]" align="end">
           <DropdownMenu.Group>
@@ -248,7 +255,12 @@ const PullRequestPanel = ({
   }
   return (
     <StackedList.Root>
-      <StackedList.Item className="items-center py-2.5" disableHover>
+      <StackedList.Item
+        className={cn('items-center py-2.5', {
+          'pr-2': isShowMoreTooltip
+        })}
+        disableHover
+      >
         <StackedList.Field
           className={cn({ 'w-full': !pullReqMetadata?.merged })}
           title={
@@ -330,17 +342,12 @@ const PullRequestPanel = ({
                       {actions[parseInt(mergeButtonValue)].title}
                     </ButtonWithOptions>
                   ) : (
-                    <Button
-                      size="md"
-                      theme="primary"
-                      disabled={!checkboxBypass && ruleViolation}
-                      onClick={actions[0].action}
-                    >
+                    <Button theme="primary" disabled={!checkboxBypass && ruleViolation} onClick={actions[0].action}>
                       Open for review
                     </Button>
                   )}
 
-                  {pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft && moreTooltip()}
+                  {isShowMoreTooltip && moreTooltip()}
                 </Layout.Horizontal>
               )
             }

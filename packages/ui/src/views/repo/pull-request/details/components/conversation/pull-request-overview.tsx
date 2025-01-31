@@ -260,7 +260,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         avatar: (
                           <Avatar className="size-6 rounded-full p-0">
                             <AvatarFallback>
-                              <span className="text-12 text-foreground-3">
+                              <span className="text-12 text-foreground-1">
                                 {/* TODO: fix fallback string */}
                                 {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                               </span>
@@ -272,7 +272,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                       }
                     ]}
-                    contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
+                    contentHeader={
+                      <span className="font-medium text-foreground-1">
+                        {(payload?.code_comment as PayloadCodeComment)?.path}
+                      </span>
+                    }
                     content={
                       <div className="flex flex-col">
                         {startingLine ? (
@@ -325,7 +329,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
                                     <AvatarFallback>
-                                      <span className="text-12 text-foreground-3">
+                                      <span className="text-12 text-foreground-1">
                                         {/* TODO: fix fallback string */}
                                         {getInitials(
                                           (
@@ -419,7 +423,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       avatar: (
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">
+                            <span className="text-12 text-foreground-1">
                               {/* TODO: fix fallback string */}
                               {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                             </span>
@@ -468,7 +472,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             icon={
                               <Avatar className="size-6 rounded-full p-0">
                                 <AvatarFallback>
-                                  <span className="text-12 text-foreground-3">
+                                  <span className="text-12 text-foreground-1">
                                     {/* TODO: fix fallback string */}
                                     {getInitials(
                                       (

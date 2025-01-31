@@ -90,8 +90,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       monaco-editor:
-        specifier: 0.50.0
-        version: 0.50.0
+        specifier: 0.40.0
+        version: 0.40.0
       react:
         specifier: 17.0.2
         version: 17.0.2
@@ -106,7 +106,7 @@ importers:
         version: 6.29.0(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       vite-plugin-monaco-editor:
         specifier: ^1.1.0
-        version: 1.1.0(monaco-editor@0.50.0)
+        version: 1.1.0(monaco-editor@0.40.0)
     devDependencies:
       '@types/react':
         specifier: ^17.0.3
@@ -202,11 +202,11 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       monaco-editor:
-        specifier: 0.50.0
-        version: 0.50.0
-      monaco-yaml:
-        specifier: ^4.0.4
-        version: 4.0.4(monaco-editor@0.50.0)
+        specifier: ^0.40.0
+        version: 0.40.0
+      monaco-editor-webpack-plugin:
+        specifier: ^7.1.0
+        version: 7.1.0(monaco-editor@0.40.0)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       pluralize:
         specifier: ^8.0.0
         version: 8.0.0
@@ -270,10 +270,10 @@ importers:
         version: 3.7.2(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))
       '@vitest/coverage-istanbul':
         specifier: ^2.1.8
-        version: 2.1.8(vitest@2.1.8(@types/node@22.12.0)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))
+        version: 2.1.8(vitest@2.1.8(@types/node@22.10.10)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))
       css-loader:
         specifier: ^7.1.2
-        version: 7.1.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 7.1.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       eslint:
         specifier: ^8.57.1
         version: 8.57.1
@@ -288,7 +288,7 @@ importers:
         version: 15.14.0
       html-webpack-plugin:
         specifier: ^5.6.0
-        version: 5.6.3(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 5.6.3(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       immer:
         specifier: ^10.1.1
         version: 10.1.1
@@ -297,19 +297,19 @@ importers:
         version: 4.1.5
       postcss-loader:
         specifier: ^8.1.1
-        version: 8.1.1(postcss@8.5.1)(typescript@5.7.3)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 8.1.1(postcss@8.5.1)(typescript@5.7.3)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       prettier:
         specifier: ^3.0.3
         version: 3.4.2
       raw-loader:
         specifier: ^4.0.2
-        version: 4.0.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 4.0.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       style-loader:
         specifier: ^4.0.0
-        version: 4.0.0(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 4.0.0(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       swc-loader:
         specifier: ^0.2.6
-        version: 0.2.6(@swc/core@1.10.12)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+        version: 0.2.6(@swc/core@1.10.9)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       tailwindcss:
         specifier: ^3.4.4
         version: 3.4.17
@@ -324,7 +324,7 @@ importers:
         version: 6.0.11(@types/node@22.12.0)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0)
       vite-plugin-monaco-editor:
         specifier: ^1.1.0
-        version: 1.1.0(monaco-editor@0.50.0)
+        version: 1.1.0(monaco-editor@0.40.0)
       vitest:
         specifier: ^2.1.2
         version: 2.1.8(@types/node@22.12.0)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0)
@@ -970,8 +970,8 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       monaco-editor:
-        specifier: 0.50.0
-        version: 0.50.0
+        specifier: 0.40.0
+        version: 0.40.0
       overlayscrollbars:
         specifier: ^2.10.0
         version: 2.10.1
@@ -1047,7 +1047,7 @@ importers:
         version: 3.7.2(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))
       '@vitest/coverage-istanbul':
         specifier: ^2.1.8
-        version: 2.1.8(vitest@2.1.8(@types/node@22.12.0)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))
+        version: 2.1.8(vitest@2.1.8(@types/node@22.10.10)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))
       '@vitest/ui':
         specifier: ^2.1.8
         version: 2.1.8(vitest@2.1.8)
@@ -1216,7 +1216,7 @@ importers:
         version: 3.10.0(react-hook-form@7.54.2(react@17.0.2))
       '@monaco-editor/react':
         specifier: 4.6.0
-        version: 4.6.0(monaco-editor@0.50.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        version: 4.6.0(monaco-editor@0.40.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       '@rollup/plugin-yaml':
         specifier: ^4.1.2
         version: 4.1.2(rollup@4.32.1)
@@ -1254,11 +1254,11 @@ importers:
         specifier: ^2.29.4
         version: 2.30.1
       monaco-editor:
-        specifier: 0.50.0
-        version: 0.50.0
+        specifier: 0.40.0
+        version: 0.40.0
       monaco-yaml:
         specifier: 5.2.1
-        version: 5.2.1(monaco-editor@0.50.0)
+        version: 5.2.1(monaco-editor@0.40.0)
       overlayscrollbars:
         specifier: ^2.10.0
         version: 2.10.1
@@ -1355,7 +1355,7 @@ importers:
         version: 4.5.0(@types/node@22.12.0)(rollup@4.32.1)(typescript@5.7.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0))
       vite-plugin-monaco-editor:
         specifier: ^1.1.0
-        version: 1.1.0(monaco-editor@0.50.0)
+        version: 1.1.0(monaco-editor@0.40.0)
 
   packages/yaml-editor:
     dependencies:
@@ -1366,8 +1366,8 @@ importers:
         specifier: ^0.40.0
         version: 0.40.0
       monaco-yaml:
-        specifier: 5.2.1
-        version: 5.2.1(monaco-editor@0.40.0)
+        specifier: ^4.0.4
+        version: 4.0.4(monaco-editor@0.40.0)
       react:
         specifier: 17.0.2
         version: 17.0.2
@@ -1488,13 +1488,13 @@ importers:
         version: link:../yaml-editor
       '@monaco-editor/react':
         specifier: 4.6.0
-        version: 4.6.0(monaco-editor@0.50.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
+        version: 4.6.0(monaco-editor@0.40.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)
       monaco-editor:
-        specifier: 0.50.0
-        version: 0.50.0
+        specifier: 0.40.0
+        version: 0.40.0
       monaco-yaml:
-        specifier: 5.2.1
-        version: 5.2.1(monaco-editor@0.50.0)
+        specifier: 4.0.4
+        version: 4.0.4(monaco-editor@0.40.0)
       react:
         specifier: 17.0.2
         version: 17.0.2
@@ -1570,7 +1570,7 @@ importers:
         version: 2.9.2(webpack@5.97.1(webpack-cli@5.1.4))
       monaco-editor-webpack-plugin:
         specifier: ^7.1.0
-        version: 7.1.0(monaco-editor@0.50.0)(webpack@5.97.1(webpack-cli@5.1.4))
+        version: 7.1.0(monaco-editor@0.40.0)(webpack@5.97.1(webpack-cli@5.1.4))
       sass-loader:
         specifier: ^14.2.1
         version: 14.2.1(sass@1.83.4)(webpack@5.97.1(webpack-cli@5.1.4))
@@ -8429,9 +8429,6 @@ packages:
   monaco-editor@0.40.0:
     resolution: {integrity: sha512-1wymccLEuFSMBvCk/jT1YDW/GuxMLYwnFwF9CDyYCxoTw2Pt379J3FUhwy9c43j51JdcxVPjwk0jm0EVDsBS2g==}
 
-  monaco-editor@0.50.0:
-    resolution: {integrity: sha512-8CclLCmrRRh+sul7C08BmPBP3P8wVWfBHomsTcndxg5NRCEPfu/mc2AGU8k37ajjDVXcXFc12ORAMUkmk+lkFA==}
-
   monaco-languageserver-types@0.3.4:
     resolution: {integrity: sha512-d58sP5yNhjs8uG1ESXs0hFnuX2YfdMhiGeWhdgTUZyG9aaWgyI4dDwrK1khf1mPF2u9Sljv42sfYqPFZnqYMYg==}
 
@@ -13188,22 +13185,10 @@ snapshots:
       monaco-editor: 0.40.0
       state-local: 1.0.7
 
-  '@monaco-editor/loader@1.4.0(monaco-editor@0.50.0)':
-    dependencies:
-      monaco-editor: 0.50.0
-      state-local: 1.0.7
-
   '@monaco-editor/react@4.6.0(monaco-editor@0.40.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
     dependencies:
       '@monaco-editor/loader': 1.4.0(monaco-editor@0.40.0)
       monaco-editor: 0.40.0
-      react: 17.0.2
-      react-dom: 17.0.2(react@17.0.2)
-
-  '@monaco-editor/react@4.6.0(monaco-editor@0.50.0)(react-dom@17.0.2(react@17.0.2))(react@17.0.2)':
-    dependencies:
-      '@monaco-editor/loader': 1.4.0(monaco-editor@0.50.0)
-      monaco-editor: 0.50.0
       react: 17.0.2
       react-dom: 17.0.2(react@17.0.2)
 
@@ -15209,7 +15194,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@vitest/coverage-istanbul@2.1.8(vitest@2.1.8(@types/node@22.12.0)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))':
+  '@vitest/coverage-istanbul@2.1.8(vitest@2.1.8(@types/node@22.10.10)(@vitest/ui@2.1.8)(jsdom@25.0.1)(sass@1.83.4)(terser@5.37.0))':
     dependencies:
       '@istanbuljs/schema': 0.1.3
       debug: 4.4.0
@@ -15479,19 +15464,19 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))':
+  '@webpack-cli/configtest@2.1.1(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))':
     dependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1)
 
-  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))':
+  '@webpack-cli/info@2.0.2(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))':
     dependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1)
 
-  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))':
+  '@webpack-cli/serve@2.0.5(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))':
     dependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1)
     optionalDependencies:
       webpack-dev-server: 5.2.0(webpack-cli@5.1.4)(webpack@5.97.1)
@@ -16585,7 +16570,20 @@ snapshots:
     dependencies:
       uncrypto: 0.1.3
 
-  css-loader@7.1.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  css-loader@7.1.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
+    dependencies:
+      icss-utils: 5.1.0(postcss@8.5.1)
+      postcss: 8.5.1
+      postcss-modules-extract-imports: 3.1.0(postcss@8.5.1)
+      postcss-modules-local-by-default: 4.2.0(postcss@8.5.1)
+      postcss-modules-scope: 3.2.1(postcss@8.5.1)
+      postcss-modules-values: 4.0.0(postcss@8.5.1)
+      postcss-value-parser: 4.2.0
+      semver: 7.6.3
+    optionalDependencies:
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
+
+  css-loader@7.1.2(webpack@5.97.1(webpack-cli@5.1.4)):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.1)
       postcss: 8.5.1
@@ -18310,7 +18308,7 @@ snapshots:
 
   html-void-elements@3.0.0: {}
 
-  html-webpack-plugin@5.6.3(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  html-webpack-plugin@5.6.3(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       '@types/html-minifier-terser': 6.1.0
       html-minifier-terser: 6.1.0
@@ -18318,7 +18316,7 @@ snapshots:
       pretty-error: 4.0.0
       tapable: 2.2.1
     optionalDependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
 
   html-webpack-plugin@5.6.3(webpack@5.97.1(webpack-cli@5.1.4)):
     dependencies:
@@ -20070,21 +20068,19 @@ snapshots:
 
   moment@2.30.1: {}
 
+  monaco-editor-webpack-plugin@7.1.0(monaco-editor@0.40.0)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
+    dependencies:
+      loader-utils: 2.0.4
+      monaco-editor: 0.40.0
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
+
   monaco-editor-webpack-plugin@7.1.0(monaco-editor@0.40.0)(webpack@5.97.1(webpack-cli@5.1.4)):
     dependencies:
       loader-utils: 2.0.4
       monaco-editor: 0.40.0
       webpack: 5.97.1(webpack-cli@5.1.4)
 
-  monaco-editor-webpack-plugin@7.1.0(monaco-editor@0.50.0)(webpack@5.97.1(webpack-cli@5.1.4)):
-    dependencies:
-      loader-utils: 2.0.4
-      monaco-editor: 0.50.0
-      webpack: 5.97.1(webpack-cli@5.1.4)
-
   monaco-editor@0.40.0: {}
-
-  monaco-editor@0.50.0: {}
 
   monaco-languageserver-types@0.3.4:
     dependencies:
@@ -20102,17 +20098,13 @@ snapshots:
     dependencies:
       monaco-editor: 0.40.0
 
-  monaco-worker-manager@2.0.1(monaco-editor@0.50.0):
-    dependencies:
-      monaco-editor: 0.50.0
-
-  monaco-yaml@4.0.4(monaco-editor@0.50.0):
+  monaco-yaml@4.0.4(monaco-editor@0.40.0):
     dependencies:
       '@types/json-schema': 7.0.15
       jsonc-parser: 3.3.1
-      monaco-editor: 0.50.0
+      monaco-editor: 0.40.0
       monaco-marker-data-provider: 1.2.4
-      monaco-worker-manager: 2.0.1(monaco-editor@0.50.0)
+      monaco-worker-manager: 2.0.1(monaco-editor@0.40.0)
       path-browserify: 1.0.1
       prettier: 2.8.8
       vscode-languageserver-textdocument: 1.0.12
@@ -20128,21 +20120,6 @@ snapshots:
       monaco-marker-data-provider: 1.2.4
       monaco-types: 0.1.0
       monaco-worker-manager: 2.0.1(monaco-editor@0.40.0)
-      path-browserify: 1.0.1
-      prettier: 2.8.8
-      vscode-languageserver-textdocument: 1.0.12
-      vscode-languageserver-types: 3.17.5
-      vscode-uri: 3.0.8
-      yaml: 2.7.0
-
-  monaco-yaml@5.2.1(monaco-editor@0.50.0):
-    dependencies:
-      jsonc-parser: 3.3.1
-      monaco-editor: 0.50.0
-      monaco-languageserver-types: 0.3.4
-      monaco-marker-data-provider: 1.2.4
-      monaco-types: 0.1.0
-      monaco-worker-manager: 2.0.1(monaco-editor@0.50.0)
       path-browserify: 1.0.1
       prettier: 2.8.8
       vscode-languageserver-textdocument: 1.0.12
@@ -20590,7 +20567,7 @@ snapshots:
     optionalDependencies:
       postcss: 8.5.1
 
-  postcss-loader@8.1.1(postcss@8.5.1)(typescript@5.7.3)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  postcss-loader@8.1.1(postcss@8.5.1)(typescript@5.7.3)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       cosmiconfig: 9.0.0(typescript@5.7.3)
       jiti: 1.21.7
@@ -20807,7 +20784,7 @@ snapshots:
       iconv-lite: 0.4.24
       unpipe: 1.0.0
 
-  raw-loader@4.0.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  raw-loader@4.0.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
@@ -21967,9 +21944,9 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  style-loader@4.0.0(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  style-loader@4.0.0(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
 
   style-loader@4.0.0(webpack@5.97.1(webpack-cli@5.1.4)):
     dependencies:
@@ -22015,7 +21992,7 @@ snapshots:
 
   svg-parser@2.0.4: {}
 
-  swc-loader@0.2.6(@swc/core@1.10.12)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  swc-loader@0.2.6(@swc/core@1.10.9)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       '@swc/core': 1.10.12
       '@swc/counter': 0.1.3
@@ -22102,7 +22079,7 @@ snapshots:
     dependencies:
       streamx: 2.22.0
 
-  terser-webpack-plugin@5.3.11(@swc/core@1.10.12)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  terser-webpack-plugin@5.3.11(@swc/core@1.10.9)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
@@ -22766,10 +22743,6 @@ snapshots:
     dependencies:
       monaco-editor: 0.40.0
 
-  vite-plugin-monaco-editor@1.1.0(monaco-editor@0.50.0):
-    dependencies:
-      monaco-editor: 0.50.0
-
   vite-plugin-svgr@4.3.0(rollup@4.32.1)(typescript@5.6.3)(vite@6.0.11(@types/node@22.12.0)(jiti@1.21.7)(sass@1.83.4)(terser@5.37.0)(yaml@2.7.0)):
     dependencies:
       '@rollup/pluginutils': 5.1.4(rollup@4.32.1)
@@ -23089,9 +23062,9 @@ snapshots:
   webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
-      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
-      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+      '@webpack-cli/configtest': 2.1.1(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
+      '@webpack-cli/info': 2.0.2(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
+      '@webpack-cli/serve': 2.0.5(webpack-cli@5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1))(webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.97.1))(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       colorette: 2.0.20
       commander: 10.0.1
       cross-spawn: 7.0.6
@@ -23100,12 +23073,12 @@ snapshots:
       import-local: 3.2.0
       interpret: 3.1.1
       rechoir: 0.8.0
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
       webpack-merge: 5.10.0
     optionalDependencies:
       webpack-dev-server: 5.2.0(webpack-cli@5.1.4)(webpack@5.97.1)
 
-  webpack-dev-middleware@7.4.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)):
+  webpack-dev-middleware@7.4.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)):
     dependencies:
       colorette: 2.0.20
       memfs: 4.17.0
@@ -23114,7 +23087,7 @@ snapshots:
       range-parser: 1.2.1
       schema-utils: 4.3.0
     optionalDependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
 
   webpack-dev-server@5.2.0(webpack-cli@5.1.4)(webpack@5.97.1):
     dependencies:
@@ -23143,10 +23116,10 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 7.4.2(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+      webpack-dev-middleware: 7.4.2(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       ws: 8.18.0
     optionalDependencies:
-      webpack: 5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4)
+      webpack: 5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-dev-server@5.2.0)(webpack@5.97.1)
     transitivePeerDependencies:
       - bufferutil
@@ -23184,7 +23157,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.11(@swc/core@1.10.12)(webpack@5.97.1(@swc/core@1.10.12)(webpack-cli@5.1.4))
+      terser-webpack-plugin: 5.3.11(@swc/core@1.10.9)(webpack@5.97.1(@swc/core@1.10.9)(webpack-cli@5.1.4))
       watchpack: 2.4.2
       webpack-sources: 3.2.3
     optionalDependencies:

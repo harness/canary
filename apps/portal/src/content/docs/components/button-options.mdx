@@ -10,78 +10,78 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<div className="space-y-4">
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">Default Button (Default Size)</div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Default Button (Default Size)</p>
       <ButtonWithOptions
         id="primary-button-default"
-        handleButtonClick={() => alert('Primary Button clicked')}
+        handleButtonClick={Function}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
+        handleOptionChange={Function}
         theme="default"
       >
         Primary Button
       </ButtonWithOptions>
     </div>
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">Primary Button (Medium Size)</div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Primary Button (Medium Size)</p>
       <ButtonWithOptions
         id="primary-button-md"
-        handleButtonClick={() => alert('Primary Button clicked')}
+        handleButtonClick={Function}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
+        handleOptionChange={Function}
         theme="primary"
         size="md"
       >
         Primary Button
       </ButtonWithOptions>
     </div>
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">primary Button (Loading)</div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">primary Button (Loading)</p>
       <ButtonWithOptions
         id="primary-button-loading"
-        handleButtonClick={() => alert('Primary Button clicked')}
+        handleButtonClick={Function}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
+        handleOptionChange={Function}
         theme="primary"
         loading={true}
       >
         Loading....
       </ButtonWithOptions>
     </div>
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">Error Button (Default Size)</div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Error Button (Default Size)</p>
       <ButtonWithOptions
         id="error-button-default"
-        handleButtonClick={() => alert('Error Button clicked')}
+        handleButtonClick={Function}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
+        handleOptionChange={Function}
         theme="error"
       >
         Error Button
       </ButtonWithOptions>
     </div>
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">Success Button (Default Size)</div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Success Button (Default Size)</p>
       <ButtonWithOptions
         id="success-button-default"
-        handleButtonClick={() => alert('Success Button clicked')}
+        handleButtonClick={Function}
         options={[
           { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
           { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
         ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
+        handleOptionChange={Function}
         theme="success"
       >
         Success Button
@@ -116,29 +116,7 @@ return (
 )
 ```
 
-## Anatomy
-
-All parts of the ButtonWithOptions component can be imported and composed as required.
-
-```typescript jsx
-<ButtonWithOptions
-  id="example-button-with-options"
-  handleButtonClick={() => alert('Button clicked')}
-  options={[
-    { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-    { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-  ]}
-  handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
->
-  Button Text
-</ButtonWithOptions>
-```
-
 ## API Reference
-
-### ButtonWithOptions
-
-The `ButtonWithOptions` component serves as the main container for the button and its dropdown options.
 
 <DocsPage.PropsTable
   props={[

@@ -23,13 +23,15 @@ export function SerialGroupContentNode(props: {
       collapsed={collapsed}
       name={data.name}
       isEmpty={node.children.length === 0}
-      onAddClick={e => {
+      onAddClick={(_position, e) => {
         handleAddIn(data, e.currentTarget)
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
         showContextMenu(data, e.currentTarget)
       }}
+      onAddInClick={() => undefined}
+      onHeaderClick={() => undefined}
     >
       {children}
     </PipelineNodes.SerialGroupNode>

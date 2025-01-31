@@ -1,12 +1,12 @@
 import { useMFEContext } from '../framework/hooks/useMFEContext'
 
-export function useAPIPath(path: string, addRoutingId: boolean = true) {
+export function useAPIPath() {
   const mfeContext = useMFEContext()
   const isMFE = mfeContext.renderUrl !== ''
-  if (isMFE) {
-    return !addRoutingId
-      ? `${window.apiUrl || ''}/code${path}`
-      : `${window.apiUrl || ''}/code${path}${path.includes('?') ? '&' : '?'}routingId=${mfeContext.scope.accountId}`
+  return function (path: string) {
+    if (isMFE) {
+      return `${window.apiUrl || ''}/code${path}${path.includes('?') ? '&' : '?'}routingId=${mfeContext.scope.accountId}`
+    }
+    return `${window.apiUrl || ''}${path}`
   }
-  return path
 }

@@ -11,7 +11,6 @@ import {
 import { CommitSuggestion } from '@harnessio/ui/views'
 import { generateAlphaNumericHash } from '@harnessio/views'
 
-import { useIsMFE } from '../../../framework/hooks/useIsMFE'
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { getErrorMessage } from '../pull-request-utils'
 
@@ -33,8 +32,8 @@ export function usePRCommonInteractions({
   setActivities
 }: usePRCommonInteractionsProps) {
   let count = generateAlphaNumericHash(5)
-  const apiPath = useAPIPath(`/api/v1/repos/${repoRef}/uploads`)
-  const isMFE = useIsMFE()
+  const apiPath = useAPIPath()
+  const uploadsURL = `/api/v1/repos/${repoRef}/uploads`
 
   const handleUpload = (blob: File, setMarkdownContent: (data: string) => void) => {
     const reader = new FileReader()
@@ -56,7 +55,7 @@ export function usePRCommonInteractions({
     fileBlob: any
   ) => {
     try {
-      const response = await fetch(apiPath, {
+      const response = await fetch(apiPath(uploadsURL), {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -80,7 +79,7 @@ export function usePRCommonInteractions({
         return ''
       }
       const filePath = result.file_path
-      return `${window.apiUrl || ''}${`${isMFE ? '/code' : ''}/api/v1/repos/${repoRef}/uploads`}/${filePath}`
+      return apiPath(`${uploadsURL}/${filePath}`)
     } catch (exception) {
       console.warn(getErrorMessage(exception))
       return ''

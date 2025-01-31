@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Button, ButtonGroup, Dialog, Separator } from '@/components'
 import { cn } from '@/utils/cn'
@@ -41,19 +41,49 @@ export enum AccentColor {
 }
 
 interface ThemeDialogProps {
-  onSave: (theme: ThemeInterface) => void
+  defaultTheme?: ThemeInterface
+  theme?: ThemeInterface
+  open: boolean
+  onOpenChange: (open: boolean) => void
+  onChange: (language: Partial<ThemeInterface>) => void
+  onSave: (language: ThemeInterface) => void
+  onCancel: () => void
+  children: React.ReactNode
 }
 
-const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
+const ThemeDialog: React.FC<ThemeDialogProps> = ({
+  defaultTheme,
+  theme,
+  open,
+  onOpenChange,
+  onChange,
+  onSave,
+  onCancel,
+  children
+}) => {
   const [mode, setMode] = useState<Mode>(Mode.Dark)
   const [contrast, setContrast] = useState<Contrast>(Contrast.Default)
   const [colorAdjustment, setColorAdjustment] = useState<ColorAdjustment>(ColorAdjustment.Default)
   const [accentColor, setAccentColor] = useState<AccentColor>(AccentColor.Blue)
 
+  useEffect(() => {
+    if (theme) {
+      setMode(theme.mode)
+      setContrast(theme.contrast)
+      setColorAdjustment(theme.colorAdjustment)
+      setAccentColor(theme.accentColor)
+    } else if (defaultTheme) {
+      setMode(defaultTheme.mode)
+      setContrast(defaultTheme.contrast)
+      setColorAdjustment(defaultTheme.colorAdjustment)
+      setAccentColor(defaultTheme.accentColor)
+    }
+  }, [defaultTheme, theme])
+
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Trigger asChild>
-        <Button variant="outline">Appearance Settings</Button>
+        <Button variant="outline">{children}</Button>
       </Dialog.Trigger>
       <Dialog.Content className="w-[450px]">
         <Dialog.Title>Appearance Settings</Dialog.Title>
@@ -69,7 +99,10 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   name="theme"
                   value={mode}
                   checked={mode === item}
-                  onChange={() => setMode(item)}
+                  onChange={() => {
+                    setMode(item)
+                    onChange({ mode: item })
+                  }}
                   className="hidden"
                 />
                 <div
@@ -99,7 +132,10 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   name="contrast"
                   value={item}
                   checked={contrast === item}
-                  onChange={() => setContrast(item)}
+                  onChange={() => {
+                    setContrast(item)
+                    onChange({ contrast: item })
+                  }}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
@@ -125,7 +161,10 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                   name="color-adjustment"
                   value={item}
                   checked={colorAdjustment === item}
-                  onChange={() => setColorAdjustment(item)}
+                  onChange={() => {
+                    setColorAdjustment(item)
+                    onChange({ colorAdjustment: item })
+                  }}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
@@ -149,7 +188,10 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
                 key={item}
                 className={cn('h-6 w-6 rounded-full border', accentColor === item ? 'border-white' : 'border-gray-600')}
                 style={{ backgroundColor: item }}
-                onClick={() => setAccentColor(item)}
+                onClick={() => {
+                  setAccentColor(item)
+                  onChange({ accentColor: item })
+                }}
               />
             ))}
           </div>
@@ -159,7 +201,9 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({ onSave }) => {
         <Dialog.Footer>
           <ButtonGroup>
             <>
-              <Button variant="secondary">Cancel</Button>
+              <Button variant="secondary" onClick={onCancel}>
+                Cancel
+              </Button>
               <Button onClick={() => onSave({ mode, contrast, colorAdjustment, accentColor })}>Save preferences</Button>
             </>
           </ButtonGroup>

@@ -1,10 +1,14 @@
 import { Navigate } from 'react-router-dom'
 
 import {
+  AccentColor,
   Breadcrumb,
+  ColorAdjustment,
+  Contrast,
   Language,
   LanguageDialog,
   LanguageInterface,
+  Mode,
   Text,
   ThemeDialog,
   ThemeInterface
@@ -978,7 +982,20 @@ export const routes: CustomRouteObject[] = [
   },
   {
     path: 'theme-select',
-    element: <ThemeDialog onSave={(theme: ThemeInterface) => console.log(theme)} />
+    element: (
+      <ThemeDialog
+        defaultTheme={{
+          mode: Mode.Light,
+          contrast: Contrast.HighContrast,
+          colorAdjustment: ColorAdjustment.Deuteranopia,
+          accentColor: AccentColor.Orange
+        }}
+        onSave={(theme: ThemeInterface) => console.log(theme)}
+        onChange={(change: Partial<LanguageInterface>) => console.log(change)}
+      >
+        Appearance Settings
+      </ThemeDialog>
+    )
   },
   {
     path: 'language-select',

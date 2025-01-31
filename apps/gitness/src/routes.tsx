@@ -1,19 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import {
-  AccentColor,
-  Breadcrumb,
-  Button,
-  ColorAdjustment,
-  Contrast,
-  LanguageCode,
-  LanguageDialog,
-  LanguageInterface,
-  Mode,
-  Text,
-  ThemeDialog,
-  ThemeInterface
-} from '@harnessio/ui/components'
+import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
@@ -980,35 +967,6 @@ export const routes: CustomRouteObject[] = [
     path: 'logout',
     element: <Logout />,
     handle: { routeName: RouteConstants.toLogout }
-  },
-  {
-    path: 'theme-select',
-    element: (
-      <ThemeDialog
-        defaultTheme={{
-          mode: Mode.Light,
-          contrast: Contrast.HighContrast,
-          colorAdjustment: ColorAdjustment.Deuteranopia,
-          accentColor: AccentColor.Orange
-        }}
-        onSave={(theme: ThemeInterface) => console.log(theme)}
-        onChange={(change: Partial<LanguageInterface>) => console.log(change)}
-      >
-        <Button>Appearance Settings</Button>
-      </ThemeDialog>
-    )
-  },
-  {
-    path: 'language-select',
-    element: (
-      <LanguageDialog
-        defaultLanguage={LanguageCode.DE}
-        onSave={(lang: LanguageInterface) => console.log(lang)}
-        onChange={(lang: LanguageInterface) => console.log(lang)}
-      >
-        <Button>Change Language</Button>
-      </LanguageDialog>
-    )
   }
 ]
 

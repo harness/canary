@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { Button, ButtonGroup, Dialog } from '@/components'
-import { CheckIcon } from '@radix-ui/react-icons'
+import { Button, ButtonGroup, Dialog, Icon } from '@/components'
 
 export enum Language {
   English = 'English',
@@ -104,7 +103,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
                 <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
                 <span>{lang.name}</span>
               </div>
-              {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
+              {selectedLanguage === lang.code && <Icon name="tick" size={16} />}
             </Button>
           ))}
         </div>

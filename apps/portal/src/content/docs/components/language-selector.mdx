@@ -1,0 +1,59 @@
+---
+title: Language Dialog
+description: LanguageDialog component for selecting and saving language preferences.
+---
+
+The `LanguageDialog` component allows users to select and save their language preferences.
+
+import { DocsPage } from "@/components/docs-page";
+import { LanguageDialog } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<LanguageDialog open={true} onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}} />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { useState } from 'react';
+import { LanguageDialog } from '@harnessio/ui/components';
+
+function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+  };
+
+  const handleChange = (language: LanguageInterface) => {
+    console.log(language);
+  };
+
+  const handleSave = (language: LanguageInterface) => {
+    console.log(language);
+  };
+
+  const handleCancel = () => {
+    console.log('Cancelled');
+    setIsOpen(false);
+  };
+
+  return (
+    <div>
+      <button onClick={() => setIsOpen(true)}>Open Language Dialog</button>
+      <LanguageDialog
+        open={isOpen}
+        onOpenChange={handleOpenChange}
+        onChange={handleChange}
+        onSave={handleSave}
+        onCancel={handleCancel}
+      >
+        <button>Open Language Dialog</button>
+      </LanguageDialog>
+    </div>
+  );
+}
+
+export default App;
+```

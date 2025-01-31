@@ -45,7 +45,7 @@ interface ThemeDialogProps {
   theme?: ThemeInterface
   open: boolean
   onOpenChange: (open: boolean) => void
-  onChange: (language: Partial<ThemeInterface>) => void
+  onChange: (language: ThemeInterface) => void
   onSave: (language: ThemeInterface) => void
   onCancel: () => void
   children: React.ReactNode
@@ -109,7 +109,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                     checked={mode === item}
                     onChange={() => {
                       setMode(item)
-                      onChange({ mode: item })
+                      onChange({ mode: item, contrast, colorAdjustment, accentColor })
                     }}
                     className="hidden"
                   />
@@ -143,7 +143,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                   checked={contrast === item}
                   onChange={() => {
                     setContrast(item)
-                    onChange({ contrast: item })
+                    onChange({ contrast: item, mode, colorAdjustment, accentColor })
                   }}
                   className="hidden"
                 />
@@ -174,7 +174,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                   checked={colorAdjustment === item}
                   onChange={() => {
                     setColorAdjustment(item)
-                    onChange({ colorAdjustment: item })
+                    onChange({ colorAdjustment: item, mode, contrast, accentColor })
                   }}
                   className="hidden"
                 />
@@ -203,7 +203,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                 style={{ backgroundColor: item }}
                 onClick={() => {
                   setAccentColor(item)
-                  onChange({ accentColor: item })
+                  onChange({ accentColor: item, mode, contrast, colorAdjustment })
                 }}
               />
             ))}

@@ -189,6 +189,8 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     [setOpenItems]
   )
 
+  const changedFilesCount = diffStats.files_changed || 0
+
   return (
     <>
       <ListActions.Root>
@@ -196,11 +198,11 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
           <DropdownMenu.Root>
             <p className="text-14 leading-tight text-foreground-4">
               Showing{' '}
-              <DropdownMenu.Trigger asChild>
+              <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
                 <span className="cursor-pointer text-foreground-accent ease-in-out">
-                  {diffStats.files_changed || 0} changed files
+                  {changedFilesCount} changed files
                 </span>
-              </DropdownMenu.Trigger>{' '}
+              </FilesChangedCount>{' '}
               with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
             </p>
             <DropdownMenu.Content align="end">
@@ -280,6 +282,16 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
       </div>
     </>
   )
+}
+
+function FilesChangedCount({
+  children,
+  showAsDropdown = false
+}: {
+  children: React.ReactNode
+  showAsDropdown: boolean
+}) {
+  return showAsDropdown ? <DropdownMenu.Trigger asChild>{children}</DropdownMenu.Trigger> : <>{children}</>
 }
 
 export default PullRequestCompareDiffList

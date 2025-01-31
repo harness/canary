@@ -44,6 +44,7 @@ interface TimelineItemProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   onQuoteReply?: (parentId: number, rawText: string) => void
   quoteReplyText?: string
+  hideEditDelete?: boolean
 }
 
 interface ItemHeaderProps {
@@ -59,6 +60,7 @@ interface ItemHeaderProps {
   isDeleted?: boolean
   isNotCodeComment?: boolean
   onQuoteReply?: () => void
+  hideEditDelete?: boolean
 }
 
 const ItemHeader: FC<ItemHeaderProps> = memo(
@@ -74,7 +76,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     handleDeleteComment,
     isDeleted = false,
     isNotCodeComment = false,
-    onQuoteReply
+    onQuoteReply,
+    hideEditDelete
   }) => {
     const renderMenu = () => {
       // We only show the menu if it's an actual comment and not deleted
@@ -88,10 +91,12 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-[180px] rounded-[10px] border bg-background-2 py-2 shadow-sm">
             <DropdownMenu.Group>
-              <DropdownMenu.Item onClick={onEditClick} className="cursor-pointer">
-                <DropdownMenu.Shortcut className="ml-0" />
-                Edit
-              </DropdownMenu.Item>
+              {!hideEditDelete ? (
+                <DropdownMenu.Item onClick={onEditClick} className="cursor-pointer">
+                  <DropdownMenu.Shortcut className="ml-0" />
+                  Edit
+                </DropdownMenu.Item>
+              ) : null}
               <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
@@ -105,19 +110,23 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
                 <DropdownMenu.Shortcut className="ml-0" />
                 Copy Link
               </DropdownMenu.Item>
-              <DropdownMenu.Separator />
-              <DropdownMenu.Item
-                className="cursor-pointer text-destructive"
-                onClick={ev => {
-                  ev.stopPropagation()
-                  handleDeleteComment?.()
-                }}
-              >
-                <DropdownMenu.Shortcut className="ml-0">
-                  <Icon name="trash" className="mr-2 text-destructive" />
-                </DropdownMenu.Shortcut>
-                Delete
-              </DropdownMenu.Item>
+              {!hideEditDelete ? (
+                <>
+                  <DropdownMenu.Separator />
+                  <DropdownMenu.Item
+                    className="cursor-pointer text-destructive"
+                    onClick={ev => {
+                      ev.stopPropagation()
+                      handleDeleteComment?.()
+                    }}
+                  >
+                    <DropdownMenu.Shortcut className="ml-0">
+                      <Icon name="trash" className="mr-2 text-destructive" />
+                    </DropdownMenu.Shortcut>
+                    Delete
+                  </DropdownMenu.Item>
+                </>
+              ) : null}
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
@@ -176,7 +185,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   data,
   handleUpload,
   onQuoteReply,
-  quoteReplyText
+  quoteReplyText,
+  hideEditDelete
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
@@ -236,6 +246,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   setHideReplyHere?.(true)
                   if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
                 }}
+                hideEditDelete={hideEditDelete}
               />
               {isResolved && !contentHeader && (
                 <Button

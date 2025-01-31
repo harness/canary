@@ -33,7 +33,7 @@ import {
   useUnassignLabelMutation,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { SkeletonList, Spacer } from '@harnessio/ui/components'
+import { Alert, SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
   PullRequestCommentBox,
   PullRequestFilters,
@@ -440,10 +440,15 @@ export default function PullRequestConversationPage() {
       head_branch: pullReqMetadata?.source_branch,
       head_commit_sha: pullReqMetadata?.source_sha
     }
-    rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
-      onPRStateChanged()
-      setRuleViolationArr(undefined)
-    })
+    rebaseBranch({ body: payload, repo_ref: repoRef }).then(
+      () => {
+        onPRStateChanged()
+        setRuleViolationArr(undefined)
+      },
+      error => {
+        setRebaseErrorMessage(error.message)
+      }
+    )
   }
   const mockPullRequestActions = [
     ...(pullReqMetadata?.closed
@@ -537,6 +542,8 @@ export default function PullRequestConversationPage() {
     setActivities // pass setActivities if you want ephemeral logic
   })
 
+  const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+
   if (prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
   }
@@ -556,6 +563,14 @@ export default function PullRequestConversationPage() {
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}
+            {rebaseErrorMessage ? (
+              <Alert.Container closable variant="destructive" className="mb-5">
+                <Alert.Title>Cannot rebase branch</Alert.Title>
+                <Alert.Description>
+                  <p>{rebaseErrorMessage}</p>
+                </Alert.Description>
+              </Alert.Container>
+            ) : null}
             <PullRequestPanel
               handleRebaseBranch={handleRebaseBranch}
               handlePrState={handlePrState}

@@ -128,8 +128,16 @@ export function BlameEditor({
     editor.setValue(code)
     setEditor(editor)
 
-    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
-    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({ noSuggestionDiagnostics: true })
+    monaco.languages.typescript?.typescriptDefaults?.setDiagnosticsOptions?.({
+      noSuggestionDiagnostics: true,
+      noSyntaxValidation: true,
+      noSemanticValidation: true
+    })
+    monaco.languages.typescript?.javascriptDefaults?.setDiagnosticsOptions?.({
+      noSuggestionDiagnostics: true,
+      noSyntaxValidation: true,
+      noSemanticValidation: true
+    })
 
     setupBlameEditor()
   }

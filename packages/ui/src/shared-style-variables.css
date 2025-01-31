@@ -80,7 +80,7 @@
   --canary-green-850: 136.2 39.8% 18.2%;
   --canary-green-900: 135.8 35.8% 10.4%;
   --canary-green-950: 135 23.5% 6.7%;
-  --canary-red-50: 10.9 100% 97.8%;
+  --canary-red-50: 11.2 80% 96.1%;
   --canary-red-100: 9.4 100% 93.7%;
   --canary-red-150: 9.2 100% 89.8%;
   --canary-red-200: 7.8 100% 74.3%;
@@ -466,23 +466,23 @@
     --canary-ai-button-stop-3: var(--canary-purple-400);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
 
-    --diff-grey: 25 5.5% 42.7%;
-    --diff-add-content--: 130 85.7% 97.3%;
-    --diff-del-content--: 10.9 100% 97.8%;
-    --diff-add-lineNumber--: 145.9 82.6% 29.2%;
-    --diff-del-lineNumber--: 4.3 67.5% 41%;
-    --diff-plain-content--: var(--canary-background-01);
-    --diff-expand-content--: var(--canary-background-01);
-    --diff-plain-lineNumber--: var(--canary-background-01);
-    --diff-plain-lineNumber-color--: 25 5.5% 42.7%;
-    --diff-hunk-content--: 210 100% 96.5%;
-    --diff-hunk-lineNumber--: 213.1 100% 42.4%;
-    --diff-add-content-highlight--: 132 71.4% 89%;
-    --diff-del-content-highlight--: 9.4 100% 93.7%;
-    --diff-add-widget--: 240 20% 99%;
-    --diff-add-widget-color--: 30 5.5% 21.6%;
-    --diff-empty-content--: var(--canary-background-01);
-    --diff-hunk-content-color--: 30 5.5% 21.6%;
+    --diff-grey: hsl(240, 20%, 99%);
+    --diff-add-content--: hsl(130, 85.7%, 97.3%);
+    --diff-del-content--: hsl(10.9, 100%, 97.8%);
+    --diff-add-lineNumber--: hsl(132, 71.4%, 89%);
+    --diff-del-lineNumber--: hsl(9.4, 100%, 93.7%);
+    --diff-plain-content--: hsl(var(--canary-background-01));
+    --diff-expand-content--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber-color--: hsl(240, 7%, 13.9%);
+    --diff-hunk-content--: hsl(240, 20%, 99%);
+    --diff-hunk-lineNumber--: hsl(30, 10%, 96.1%);
+    --diff-add-content-highlight--: hsl(132, 71.4%, 89%);
+    --diff-del-content-highlight--: hsl(9.4, 100%, 93.7%);
+    --diff-add-widget--: hsl(30, 5.9%, 93.3%);
+    --diff-add-widget-color--: hsl(240, 7%, 13.9%);
+    --diff-empty-content--: hsl(var(--canary-background-01));
+    --diff-hunk-content-color--: hsl(240, 7%, 13.9%);
 
     /* New colors design variables */
     /* Text */
@@ -949,23 +949,41 @@
     --canary-ai-button-stop-3: var(--canary-purple-300);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
 
-    --diff-grey: 240 7.8% 59.6%;
-    --diff-add-content--: 135 23.5% 6.7%;
-    --diff-del-content--: 8 33.3% 8.8%;
-    --diff-add-lineNumber--: 139.8 56.5% 54.9%;
-    --diff-del-lineNumber--: 6.4 100% 68.8%;
+    --diff-grey: hsl(240, 20%, 99%);
+    --diff-add-content--: hsl(130, 85.7%, 97.3%);
+    --diff-del-content--: hsl(10.9, 100%, 97.8%);
+    --diff-add-lineNumber--: hsl(132, 71.4%, 89%);
+    --diff-del-lineNumber--: hsl(9.4, 100%, 93.7%);
+    --diff-plain-content--: hsl(var(--canary-background-01));
+    --diff-expand-content--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber--: hsl(var(--canary-background-01));
+    --diff-plain-lineNumber-color--: hsl(240, 7%, 13.9%);
+    --diff-hunk-content--: hsl(240, 20%, 99%);
+    --diff-hunk-lineNumber--: hsl(30, 10%, 96.1%);
+    --diff-add-content-highlight--: hsl(132, 71.4%, 89%);
+    --diff-del-content-highlight--: hsl(9.4, 100%, 93.7%);
+    --diff-add-widget--: hsl(30, 5.9%, 93.3%);
+    --diff-add-widget-color--: hsl(240, 7%, 13.9%);
+    --diff-empty-content--: hsl(var(--canary-background-01));
+    --diff-hunk-content-color--: hsl(240, 7%, 13.9%);
+
+    --diff-grey: hsl(240, 8.1%, 7.3%);
+    --diff-add-content--: hsl(135, 23.5%, 6.7%);
+    --diff-del-content--: hsl(8, 33.3%, 8.8%);
+    --diff-add-lineNumber--: hsl(135.8, 35.8%, 10.4%);
+    --diff-del-lineNumber--: hsl(8.3, 46%, 12.4%);
     --diff-plain-content--: var(--canary-background-01);
     --diff-expand-content--: var(--canary-background-01);
     --diff-plain-lineNumber--: var(--canary-background-01);
-    --diff-plain-lineNumber-color--: 240 7.8% 59.6%;
-    --diff-hunk-content--: 221.1 48.7% 7.6%;
-    --diff-hunk-lineNumber--: 213.2 100% 67.1%;
-    --diff-add-content-highlight--: 132 71.4% 89%;
-    --diff-del-content-highlight--: 9.4 100% 93.7%;
-    --diff-add-widget--: 240 8.1% 7.3%;
-    --diff-add-widget-color--: 240 13% 82%;
+    --diff-plain-lineNumber-color--: hsl(240, 13%, 82%);
+    --diff-hunk-content--: hsl(240, 6.4%, 9.2%);
+    --diff-hunk-lineNumber--: hsl(240, 7%, 13.9%);
+    --diff-add-content-highlight--: hsl(135.8, 35.8%, 10.4%);
+    --diff-del-content-highlight--: hsl(8.3, 46%, 12.4%);
+    --diff-add-widget--: hsl(240, 6.4%, 9.2%);
+    --diff-add-widget-color--: hsl(240, 13%, 82%);
     --diff-empty-content--: var(--canary-background-01);
-    --diff-hunk-content-color--: 240 13% 82%;
+    --diff-hunk-content-color--: hsl(240, 13%, 82%);
 
     /* New colors design variables */
     /* Text */

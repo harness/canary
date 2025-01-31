@@ -464,7 +464,7 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.bg": "73c54b372ef0757e3b5f064898369cb18e6b0c79"
+      "feedback.warning.subtle.default.bg": "654d6d567f5e827ef45cc047b15a94aaaa1dd7b9"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -533,8 +533,8 @@
       "spacing.11": "83e49c49e37f703f7e1f51a6205ee03c15807535",
       "spacing.base": "4f103f2402183cd3c0ab851e2648114ab328778a",
       "breakpoint.viewport": "c0aa3fc7895e8b9f4b381b233a80214821447dfa",
-      "breakpoint.viewport-max": "6f84c3980c0c9cd12e8d561a7eb40f76b43ba781",
-      "breakpoint.viewport-min": "19ea71c0257d030a3529de69bcaf8610aac4f104",
+      "breakpoint.viewport-max": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
+      "breakpoint.viewport-min": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
       "font-size.0": "ffa80498b80dccd34824c9ec8d647995fd775d5b",
       "font-size.1": "86370dedc1db705b74f40b4fbaa4f8212a948215",
@@ -701,8 +701,8 @@
       "spacing.11": "83e49c49e37f703f7e1f51a6205ee03c15807535",
       "spacing.base": "4f103f2402183cd3c0ab851e2648114ab328778a",
       "breakpoint.viewport": "c0aa3fc7895e8b9f4b381b233a80214821447dfa",
-      "breakpoint.viewport-max": "6f84c3980c0c9cd12e8d561a7eb40f76b43ba781",
-      "breakpoint.viewport-min": "19ea71c0257d030a3529de69bcaf8610aac4f104",
+      "breakpoint.viewport-max": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
+      "breakpoint.viewport-min": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
       "font-size.0": "ffa80498b80dccd34824c9ec8d647995fd775d5b",
       "font-size.1": "86370dedc1db705b74f40b4fbaa4f8212a948215",
@@ -786,8 +786,8 @@
       "spacing.11": "83e49c49e37f703f7e1f51a6205ee03c15807535",
       "spacing.base": "4f103f2402183cd3c0ab851e2648114ab328778a",
       "breakpoint.viewport": "c0aa3fc7895e8b9f4b381b233a80214821447dfa",
-      "breakpoint.viewport-max": "6f84c3980c0c9cd12e8d561a7eb40f76b43ba781",
-      "breakpoint.viewport-min": "19ea71c0257d030a3529de69bcaf8610aac4f104",
+      "breakpoint.viewport-max": "8a8be6a3522300c276a7f78aed8779e0b6bd0fda",
+      "breakpoint.viewport-min": "6be5f8330bfa441a8ad6e3e543365c7864021a72",
       "breakpoint.container": "ed2c337e342e73dec8eef97c30c677b147362d8e",
       "font-size.0": "ffa80498b80dccd34824c9ec8d647995fd775d5b",
       "font-size.1": "86370dedc1db705b74f40b4fbaa4f8212a948215",
@@ -987,7 +987,7 @@
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow.base": "a676a4745c34a5058315eb8c3ac4e0e7e2846d83",
-      "feedback.warning.subtle.default.background": "68226d79fda8d25e56aed5528ac71de1a59b37f0"
+      "feedback.warning.subtle.default.background": "ef1fc002606f4cc0baa23081af92639913d0e827"
     }
   }
 ]

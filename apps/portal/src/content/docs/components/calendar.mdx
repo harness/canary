@@ -10,21 +10,22 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`() => {
-  const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
+    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
 
-  return (
-    <Calendar
-      mode="range"
-      selected={selectedDate}
-      onSelect={setSelectedDate}
-      showOutsideDays
-      fromDate={new Date(2023, 10, 12)}
-      toDate={new Date(2023, 11, 15)}
-      weekStartsOn={1}
-    />
-  );
+    return (
+      <Calendar
+        mode="range"
+        selected={selectedDate}
+        onSelect={setSelectedDate}
+        showOutsideDays
+        fromDate={new Date().setDate(new Date().getDate() - 10)}
+        toDate={new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn={1}
+      />
+    );
+
 };
-  `}
+`}
 />
 
 ## Usage
@@ -37,40 +38,22 @@ const CalendarExample = () => {
   const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
 
   return (
-    <Calendar
-      mode="single"
-      selected={selectedDate}
-      onSelect={setSelectedDate}
-      showOutsideDays={true}
-      className="custom-calendar"
-      classNames={{
-        day: 'custom-day',
-        selected: 'custom-selected',
-        today: 'custom-today',
-      }}
-      components={{
-        Day: ({ date, selected, ...props }) => (
-          <div {...props} className={selected ? 'custom-selected' : 'custom-day'}>
-            {date.getDate()}
-          </div>
-        ),
-      }}
-      disabled={{ from: new Date(2023, 0, 1), to: new Date(2023, 0, 10) }}
-      fromDate={new Date(2023, 0, 1)}
-      toDate={new Date(2023, 11, 31)}
-      locale={navigator.language}
-      weekStartsOn={1}
-    />
-  );
+      <Calendar
+        mode="range"
+        selected={selectedDate}
+        onSelect={setSelectedDate}
+        showOutsideDays
+        fromDate={new Date().setDate(new Date().getDate() - 10)}
+        toDate={new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn={1}
+      />
+    );
 };
 
 export default CalendarExample;
 ```
 
-
 ## API Reference
-
-
 
 <DocsPage.PropsTable
   props={[

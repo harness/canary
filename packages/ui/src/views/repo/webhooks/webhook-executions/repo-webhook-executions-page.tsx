@@ -3,6 +3,7 @@ import { FC, useMemo } from 'react'
 import {
   Badge,
   FormSeparator,
+  NoData,
   PaginationComponent,
   Table,
   TableBody,
@@ -14,7 +15,6 @@ import {
 } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
-import { NoData } from 'dist/components'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
 

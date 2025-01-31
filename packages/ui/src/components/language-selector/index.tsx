@@ -94,7 +94,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
             <Button
               variant="ghost"
               key={lang.code}
-              className="flex justify-between items-center py-2 px-1 rounded-md cursor-pointer hover:bg-gray-700"
+              className="flex justify-between items-center py-2 px-1 rounded-md cursor-pointer hover:bg-gray-400"
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)

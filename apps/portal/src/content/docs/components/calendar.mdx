@@ -12,18 +12,20 @@ import { DocsPage } from "@/components/docs-page";
   code={`() => {
   const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
 
-return (
-
-<Calendar
-  mode="range"
-  selected={selectedDate}
-  onSelect={setSelectedDate}
-  showOutsideDays={true}
-  fromDate={new Date(2023, 10, 12)}
-  toDate={new Date(2023, 11, 15)}
-  weekStartsOn={1}
+  return (
+    <Calendar
+      mode="range"
+      selected={selectedDate}
+      onSelect={setSelectedDate}
+      showOutsideDays
+      fromDate={new Date(2023, 10, 12)}
+      toDate={new Date(2023, 11, 15)}
+      weekStartsOn={1}
+    />
+  );
+};
+  `}
 />
-); }; `} />
 
 ## Usage
 

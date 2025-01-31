@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { buttonVariants, type ButtonProps } from '@/components'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
+import { ButtonProps, buttonVariants } from './button'
 import { Icon } from './icon'
 
 const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (

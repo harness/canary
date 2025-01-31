@@ -1,8 +1,9 @@
 import { FC } from 'react'
 
-import { Badge, Icon } from '@/components'
-import * as StackedList from '@/components/stacked-list'
+import { Icon, StackedList } from '@/components'
+import { PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
+import { LabelsList } from '@views/repo/pull-request/components/labels'
 
 import { getPrState } from '../utils'
 
@@ -22,7 +23,7 @@ interface PullRequestItemTitleProps {
   success: boolean
   title: string
   comments?: number
-  labels: { text: string; color: string }[]
+  labels: PRListLabelType[]
 }
 
 export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
@@ -49,20 +50,7 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
         />
 
         <p className="ml-0.5 mr-1 max-w-[95%] truncate text-16 font-medium leading-snug ">{title}</p>
-        {labels?.map((l, l_idx) => {
-          return (
-            <Badge
-              key={`${l_idx}-${l.text}`}
-              variant="outline"
-              size="sm"
-              borderRadius="full"
-              className="ml-2 outline outline-1"
-              style={{ outlineColor: l?.color as string, color: l?.color as string }}
-            >
-              <p className="max-w-[376px] truncate">{l.text}</p>
-            </Badge>
-          )
-        })}
+        {!!labels.length && <LabelsList labels={labels} />}
       </div>
       {!!comments && <StackedList.Field title={<Comments comments={comments} />} right label secondary />}
     </div>

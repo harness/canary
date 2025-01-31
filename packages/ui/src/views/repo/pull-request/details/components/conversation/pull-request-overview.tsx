@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout } from '@components/index'
+import { Avatar, AvatarFallback, Icon, Layout } from '@/components'
+import { PullRequestCommentBox, TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
-import { PullRequestCommentBox, TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-request.types'

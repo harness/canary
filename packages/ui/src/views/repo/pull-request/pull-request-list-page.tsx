@@ -75,7 +75,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   const showTopBar =
-    !noData || filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0 || searchQuery?.length
+    !noData || filterHandlers.activeFilters.length > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
 
   const renderListContent = () => {
     if (isLoading) {
@@ -140,7 +140,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   return (
     <SandboxLayout.Main className="max-w-[1040px]">
       <SandboxLayout.Content>
-        {showTopBar ? (
+        {showTopBar && (
           <>
             <Spacer size={2} />
             <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
@@ -176,7 +176,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
             />
             <Spacer size={5} />
           </>
-        ) : null}
+        )}
         {renderListContent()}
         <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
       </SandboxLayout.Content>

@@ -59,7 +59,6 @@ interface PullRequestDiffviewerProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
-  onReady?: () => void
 }
 
 const PullRequestDiffViewer = ({
@@ -88,8 +87,7 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   scrolledToComment,
-  setScrolledToComment,
-  onReady
+  setScrolledToComment
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -101,7 +99,7 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
-  const diffInstanceRef = useRef<HTMLElement | null>(null)
+  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
   const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
@@ -128,13 +126,9 @@ const PullRequestDiffViewer = ({
     }
   }, [])
 
-  const isDiffInstanceInView = () => {
-    return isInView
-  }
-
   const cleanup = useCallback(() => {
-    // Only clean up diff instance if it is not in view
-    if (!isDiffInstanceInView() && diffFileInstance) {
+    // clean up diff instance if it is not in view
+    if (!isInView && diffFileInstance) {
       diffFileInstance._destroy?.()
       setDiffFileInstance(undefined)
     }
@@ -321,12 +315,6 @@ const PullRequestDiffViewer = ({
       setDiffInstanceCb(fileName, lang, data, fullContent)
     }
   }, [data, fileName, lang, fullContent, setDiffInstanceCb])
-
-  useEffect(() => {
-    if (diffFileInstance && onReady) {
-      onReady()
-    }
-  }, [diffFileInstance, onReady])
 
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})

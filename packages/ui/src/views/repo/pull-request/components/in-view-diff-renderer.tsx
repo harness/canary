@@ -3,7 +3,11 @@ import { useInView } from 'react-intersection-observer'
 
 import { useIsMounted } from '@hooks/use-is-mounted'
 import { useResizeObserver } from '@hooks/use-resize-observer'
+import { cn } from '@utils/cn'
 
+const BLOCK_HEIGHT = '--block-height'
+const AUTO = 'auto'
+const RESET_MIN_HEIGHT_TIMEOUT = 2000
 interface InViewDiffRendererProps {
   root: RefObject<Element>
   blockName: string
@@ -85,14 +89,15 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
   )
 
   return (
-    <div data-block={blockName} data-rendered={showChildren} ref={setContainerRef}>
+    <div
+      data-block={blockName}
+      data-rendered={showChildren}
+      ref={setContainerRef}
+      className={cn('diffViewBlock', { hiddenDiff: !inView })}
+    >
       {showChildren ? children : null}
     </div>
   )
 }
-
-const BLOCK_HEIGHT = '--block-height'
-const AUTO = 'auto'
-const RESET_MIN_HEIGHT_TIMEOUT = 2000
 
 export const InViewDiffRenderer = memo(InViewDiffRendererInternal)

@@ -154,7 +154,7 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3 font-sans">
+    <div className="flex items-start gap-x-3 font-sans" data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
 
       <div

@@ -38,10 +38,7 @@ export interface PullRequestType {
   comments?: number
   state?: string
   updated: number
-  labels?: {
-    text: string
-    color: string
-  }[]
+  labels?: LabelAssignmentType[]
 }
 
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'

@@ -1,16 +1,18 @@
 import { FC } from 'react'
 
-import { Badge, Icon } from '@/components'
+import { Icon } from '@/components'
 import * as StackedList from '@/components/stacked-list'
+import { LabelAssignmentType } from '@/views'
 import { cn } from '@utils/cn'
 
 import { getPrState } from '../utils'
+import { LabelsList } from './pull-request-labels-list'
 
 const Comments = ({ comments }: { comments: number }) => {
   return (
     <div className="flex items-center gap-1">
       <Icon className="text-icons-7" size={16} name="comments" />
-      <span className="text-12 leading-none text-foreground-1">{comments}</span>
+      <span className="text-12 text-foreground-1 leading-none">{comments}</span>
     </div>
   )
 }
@@ -22,7 +24,7 @@ interface PullRequestItemTitleProps {
   success: boolean
   title: string
   comments?: number
-  labels: { text: string; color: string }[]
+  labels: LabelAssignmentType[]
 }
 
 export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
@@ -34,6 +36,8 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
   comments,
   merged
 }) => {
+  console.log(labels)
+
   return (
     <div className="flex max-w-full items-center gap-2">
       <div className="flex max-w-full flex-wrap items-center justify-start gap-1.5">
@@ -48,21 +52,8 @@ export const PullRequestItemTitle: FC<PullRequestItemTitleProps> = ({
           name={getPrState(isDraft, merged, state).icon}
         />
 
-        <p className="ml-0.5 mr-1 max-w-[95%] truncate text-16 font-medium leading-snug ">{title}</p>
-        {labels?.map((l, l_idx) => {
-          return (
-            <Badge
-              key={`${l_idx}-${l.text}`}
-              variant="outline"
-              size="sm"
-              borderRadius="full"
-              className="ml-2 outline outline-1"
-              style={{ outlineColor: l?.color as string, color: l?.color as string }}
-            >
-              <p className="max-w-[376px] truncate">{l.text}</p>
-            </Badge>
-          )
-        })}
+        <p className="text-16 ml-0.5 mr-1 max-w-[95%] truncate font-medium leading-snug ">{title}</p>
+        {labels.length > 0 && <LabelsList labels={labels} />}
       </div>
       {!!comments && <StackedList.Field title={<Comments comments={comments} />} right label secondary />}
     </div>

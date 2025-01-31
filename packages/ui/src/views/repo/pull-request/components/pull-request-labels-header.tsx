@@ -13,10 +13,9 @@ import {
 } from '@/views'
 
 interface LabelsWithValueType extends ILabelType {
-  value?: LabelValueType['value']
+  values?: LabelValueType[]
   isCustom?: boolean
-  valueId?: LabelValueType['id']
-  isSelected: boolean
+  isSelected?: boolean
 }
 
 interface LabelsHeaderProps {
@@ -35,7 +34,6 @@ const LabelsHeader = ({
   labelsValues,
   selectedLabels,
   addLabel,
-  removeLabel,
   searchQuery,
   setSearchQuery,
   useTranslationStore
@@ -49,46 +47,32 @@ const LabelsHeader = ({
   })
 
   const labelsListWithValues = useMemo(() => {
-    return labelsList.flatMap(label => {
-      const res: LabelsWithValueType[] = []
-
+    return labelsList.map(label => {
       const isCustom = label.type === LabelType.DYNAMIC
       const labelValues = labelsValues[label.key]
       const selectedLabel = selectedLabels.find(it => it.id === label.id)
 
+      let res: LabelsWithValueType = { ...label, isSelected: !!selectedLabel }
+
       if (isCustom) {
-        res.push({
-          ...label,
-          value: t('views:labelData.form.previewDynamicValue', '*can be added by users*'),
-          isCustom: true,
-          isSelected: false
-        })
+        res = {
+          ...res,
+          isCustom: true
+        }
       }
 
       if (labelValues) {
-        res.push(
-          ...labelValues.map(value => ({
-            ...label,
-            value: value.value,
-            color: value.color,
-            valueId: value.id,
-            isSelected: selectedLabel ? selectedLabel?.assigned_value?.id === value.id : false
-          }))
-        )
-      }
-
-      if (!isCustom && !labelValues) {
-        res.push({
-          ...label,
-          isSelected: !!selectedLabel
-        })
+        res = {
+          ...res,
+          values: labelValues
+        }
       }
 
       return res
     })
   }, [labelsList, labelsValues, selectedLabels])
 
-  const handleOnSelect = (label: LabelsWithValueType) => (e: Event) => {
+  const handleOnSelect = (label: LabelsWithValueType, valueId?: number) => (e: Event) => {
     e.preventDefault()
 
     if (label.isCustom) {
@@ -96,19 +80,15 @@ const LabelsHeader = ({
       return
     }
 
-    if (label.isSelected) {
-      removeLabel?.(label.id)
-    } else {
-      addLabel?.({
-        label_id: label.id,
-        value_id: label?.valueId
-      })
-    }
+    addLabel?.({
+      label_id: label.id,
+      value_id: valueId
+    })
   }
 
   return (
     <div className="flex items-center justify-between">
-      <span className="text-14 font-medium text-foreground-1">{t('views:pullRequests.labels')}</span>
+      <span className="text-14 text-foreground-1 font-medium">{t('views:pullRequests.labels')}</span>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
           <Button
@@ -148,21 +128,22 @@ const LabelsHeader = ({
               {labelsListWithValues.length ? (
                 <ScrollArea viewportClassName="max-h-[224px]">
                   {labelsListWithValues?.map((label, idx) => (
-                    <DropdownMenu.CheckboxItem
-                      key={`${label.id}-${label?.valueId || idx}`}
-                      checked={label.isSelected}
-                      onSelect={handleOnSelect(label)}
-                    >
-                      <div className="flex flex-col gap-y-1.5">
-                        <LabelMarker color={label.color} label={label.key} value={label?.value} />
+                    <DropdownMenu.Item key={`${label.id}-${idx}`} onSelect={handleOnSelect(label)}>
+                      <div className="relative flex w-full flex-col items-start justify-start gap-y-1.5">
+                        <LabelMarker
+                          color={label.color}
+                          label={label.key}
+                          value={label?.values?.length.toString() || (label.isCustom ? '+' : undefined)}
+                        />
                         {!!label?.description && <span className="text-foreground-4">{label.description}</span>}
+                        {label.isSelected && <Icon className="absolute right-0 top-1" name="checkbox" size={12} />}
                       </div>
-                    </DropdownMenu.CheckboxItem>
+                    </DropdownMenu.Item>
                   ))}
                 </ScrollArea>
               ) : (
                 <div className="px-5 py-4 text-center">
-                  <span className="leading-tight text-foreground-2">
+                  <span className="text-foreground-2 leading-tight">
                     {t('views:pullRequests.noLabels', 'No labels found')}
                   </span>
                 </div>

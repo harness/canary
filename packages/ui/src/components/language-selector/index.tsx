@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { Button, ButtonGroup, Dialog, Icon } from '@/components'
 
@@ -54,7 +54,7 @@ interface LanguageDialogProps {
   children: React.ReactNode
 }
 
-const LanguageDialog: React.FC<LanguageDialogProps> = ({
+const LanguageDialog: FC<LanguageDialogProps> = ({
   defaultLanguage,
   language,
   open,

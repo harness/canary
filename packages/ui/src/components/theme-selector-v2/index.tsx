@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
 import { Button, ButtonGroup, Dialog, Separator, Text } from '@/components'
 import { cn } from '@/utils/cn'
@@ -51,7 +51,7 @@ interface ThemeDialogProps {
   children: React.ReactNode
 }
 
-const ThemeDialog: React.FC<ThemeDialogProps> = ({
+const ThemeDialog: FC<ThemeDialogProps> = ({
   defaultTheme,
   theme,
   open,

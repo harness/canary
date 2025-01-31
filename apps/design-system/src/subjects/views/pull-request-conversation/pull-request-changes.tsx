@@ -72,11 +72,13 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         updateComment={noop}
         defaultCommitFilter={{
           name: 'All Commits (2)',
+          count: 2,
           value: 'ALL'
         }}
         selectedCommits={[
           {
             name: 'All Commits (2)',
+            count: 2,
             value: 'ALL'
           }
         ]}

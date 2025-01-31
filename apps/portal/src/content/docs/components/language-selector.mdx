@@ -10,7 +10,7 @@ import { LanguageDialog } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<LanguageDialog open={true} onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}} />`}
+  code={`<LanguageDialog open={false} onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}>Select Language</LanguageDialog>`}
 />
 
 ## Usage
@@ -40,8 +40,6 @@ function App() {
   };
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>Open Language Dialog</button>
       <LanguageDialog
         open={isOpen}
         onOpenChange={handleOpenChange}
@@ -49,9 +47,8 @@ function App() {
         onSave={handleSave}
         onCancel={handleCancel}
       >
-        <button>Open Language Dialog</button>
+        <button onClick={() => setIsOpen(true)}>Select Language</button>
       </LanguageDialog>
-    </div>
   );
 }
 

@@ -10,18 +10,20 @@ import { ThemeDialog } from "@harnessio/ui/components";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<ThemeDialog open={true} onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}} />`}
+  code={`<ThemeDialog open={false} onOpenChange={() => {}} onChange={() => {}} onSave={() => {}} onCancel={() => {}}>Customize theme</ThemeDialog>`}
 />
 
 ## Usage
 
 ```typescript jsx
+import { useState } from 'react';
 import { ThemeDialog } from '@harnessio/ui/components';
 
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenChange = (open: boolean) => {
-    console.log(open);
+    setIsOpen(open);
   };
 
   const handleChange = (theme: Partial<ThemeInterface>) => {
@@ -34,20 +36,19 @@ function App() {
 
   const handleCancel = () => {
     console.log('Cancelled');
+    setIsOpen(false);
   };
 
   return (
-    <div>
       <ThemeDialog
-        open={true}
+        open={isOpen}
         onOpenChange={handleOpenChange}
         onChange={handleChange}
         onSave={handleSave}
         onCancel={handleCancel}
       >
-        <button>Open Theme Dialog</button>
+        <button onClick={() => setIsOpen(true)}>Customize theme</button>
       </ThemeDialog>
-    </div>
   );
 }
 

@@ -66,7 +66,12 @@ const PipelineStudioWrapper = () => {
   const isYamlInvalid = errorData && !errorData?.isYamlValid
 
   return (
-    <div className="flex h-screen flex-col">
+    <div // eslint-disable-line jsx-a11y/no-static-element-interactions
+      className="flex h-screen flex-col"
+      onClick={() => {
+        setSelectedPath(undefined)
+      }}
+    >
       <ButtonGroup className="m-2 flex gap-2">
         <Button onClick={() => setView('graph')} variant={'secondary'} disabled={isYamlInvalid}>
           {isYamlInvalid ? <Icon name="triangle-warning" /> : null}

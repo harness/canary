@@ -67,36 +67,6 @@ const CalendarExample = () => {
 export default CalendarExample;
 ```
 
-## Anatomy
-
-All parts of the Calendar component can be imported and composed as required.
-
-```typescript jsx
-<Calendar
-  mode="single"
-  selected={new Date()}
-  onSelect={(date) => alert(\`Selected date: \${date}\`)}
-  showOutsideDays={true}
-  className="custom-calendar"
-  classNames={{
-    day: 'custom-day',
-    selected: 'custom-selected',
-    today: 'custom-today',
-  }}
-  components={{
-    Day: ({ date, selected, ...props }) => (
-      <div {...props} className={selected ? 'custom-selected' : 'custom-day'}>
-        {date.getDate()}
-      </div>
-    ),
-  }}
-  disabled={{ from: new Date(2023, 0, 1), to: new Date(2023, 0, 10) }}
-  fromDate={new Date(2023, 0, 1)}
-  toDate={new Date(2023, 11, 31)}
-  locale={navigator.language}
-  weekStartsOn={1}
-/>
-```
 
 ## API Reference
 

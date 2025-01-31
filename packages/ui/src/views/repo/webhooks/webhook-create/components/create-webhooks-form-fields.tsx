@@ -61,8 +61,8 @@ export const WebhookDescriptionField: FC<WebhookFormFieldProps> = ({ register, e
     <Textarea
       id="description"
       {...register!('description')}
-      placeholder={t('views:repos.desciptionPlaceholder', 'Enter a description of this rule...')}
-      label={t('views:repos.desciption', 'Description')}
+      placeholder={t('views:repos.descriptionPlaceholder', 'Enter a description')}
+      label={t('views:repos.description', 'Description')}
       error={errors?.description?.message?.toString()}
     />
   </ControlGroup>

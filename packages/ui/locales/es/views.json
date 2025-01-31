@@ -10,7 +10,11 @@
     "pull-requests": "Pull Requests",
     "branches": "Branches",
     "settings": "Settings",
+    "descriptionPlaceholder": "Enter a description",
+    "description": "Description",
     "error": "Error:",
+    "saving": "Saving...",
+    "save": "Save",
     "cancel": "Cancel",
     "tags": "Tags",
     "default": "Default",
@@ -59,7 +63,6 @@
     "enableRule": "Enable the rule",
     "enableRuleDescription": "By enabling the toggle, the branch rule will be enforced.",
     "enterRuleName": "Enter the rule name here",
-    "description": "Description",
     "ruleDescriptionPlaceholder": "Enter the description here",
     "targetPatterns": "target patterns",
     "createRuleCaption": "Match branches using globstar patterns (e.g.”golden”, “feature-*”, “releases/**”)",
@@ -112,8 +115,6 @@
     "visibility": "Visibility",
     "publicDescription": "Anyone with access to the gitness environment can clone this repo.",
     "privateDescription": "You can choose who can see and commit to this repository.",
-    "save": "Save",
-    "saving": "Saving...",
     "rulesApplied": "rules applied",
     "bypassAllowed": "bypass allowed",
     "bypassNotAllowed": " bypass not allowed",
@@ -138,8 +139,6 @@
     "openPullReq": "Open pull requests",
     "enableWebhookToggle": "Enable the webhook",
     "toggleDescription": "We will deliver event details when this hook is triggered",
-    "desciptionPlaceholder": "Enter a description of this rule...",
-    "desciption": "Description",
     "urlPlaceholder": "https://example.com/harness",
     "urlLabel": "Payload URL",
     "secret": "Secret",
@@ -207,6 +206,46 @@
     "projectNamePlaceholder": "Enter your project name",
     "creating": "Creating project...",
     "create": "Create project"
+  },
+  "labelData": {
+    "form": {
+      "colorValuePlaceholder": "Enter value name",
+      "colorLabelPlaceholder": "Enter label name",
+      "editTitle": "Label details",
+      "createTitle": "Create a label",
+      "labelName": "Label name",
+      "valueName": "Label value",
+      "addValue": "Add a value",
+      "allowUsersCheckboxLabel": "Allow users to add values",
+      "previewLabel": "Label preview",
+      "previewDynamicValue": "*can be added by users*"
+    },
+    "table": {
+      "name": "Name",
+      "created": "Created in",
+      "description": "Description"
+    },
+    "edit": "Edit label",
+    "delete": "Delete label",
+    "title": "Labels",
+    "showParentLabels": "Show labels from parent scopes",
+    "newLabel": "New label",
+    "create": "Create labels"
+  },
+  "projectSettings": {
+    "newLabels": "Create label",
+    "newMember": "",
+    "member": "",
+    "role": "",
+    "addMember": "",
+    "membersTable": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role"
+    },
+    "removeMember": "Remove member",
+    "inviteNewMember": "Invite new member",
+    "members": ""
   },
   "landingPage": {
     "selectProject": "Select a project to get started",
@@ -326,7 +365,6 @@
     "KeysTab": "Keys and Tokens"
   },
   "forms": {
-    "selectMemberError": "",
     "selectMember": "",
     "selectRole": "",
     "enterBranchName": "Enter branch name",
@@ -334,22 +372,8 @@
     "select": "Select",
     "baseBranch": "Base branch",
     "selectBranchError": "",
+    "selectMemberError": "",
     "selectRoleError": ""
-  },
-  "projectSettings": {
-    "newLabels": "Create label",
-    "newMember": "",
-    "member": "",
-    "role": "",
-    "addMember": "",
-    "membersTable": {
-      "user": "User",
-      "email": "Email",
-      "role": "Role"
-    },
-    "removeMember": "Remove member",
-    "inviteNewMember": "Invite new member",
-    "members": ""
   },
   "roles": {
     "owner": "Owner",
@@ -394,9 +418,6 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
-  },
-  "labelData": {
-    "create": "Create labels"
   },
   "profileSettingsTableHeader": {
     "token": "Token",

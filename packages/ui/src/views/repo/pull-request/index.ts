@@ -19,5 +19,6 @@ export * from './details/components/conversation/pull-request-comment-box'
 export * from './details/components/conversation/pull-request-overview'
 export * from './details/components/conversation/pull-request-panel'
 export * from './details/components/conversation/pull-request-filters'
+export * from './components/in-view-diff-renderer'
 
 export * from './details/pull-request-utils'

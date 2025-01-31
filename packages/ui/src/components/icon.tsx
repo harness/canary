@@ -7,11 +7,13 @@ import AddFolder from '../icons/add-folder-icon.svg'
 import AISparks from '../icons/ai-sparks.svg'
 import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
+import ArrowShort from '../icons/arrow-short.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
 import AttachmentImage from '../icons/attachment-image.svg'
 import Attachment from '../icons/attachment.svg'
 import BitrisePlugin from '../icons/bitrise-plugin.svg'
+import BoldPlus from '../icons/bold-plus.svg'
 import Bold from '../icons/bold.svg'
 import BookmarkAdd from '../icons/bookmark-add.svg'
 import BookmarkIcon from '../icons/bookmark-icon.svg'
@@ -139,6 +141,7 @@ import PrReview from '../icons/pr-review.svg'
 import Pull from '../icons/pull-icon.svg'
 import PythonAndNodeLogo from '../icons/python-and-node-logo.svg'
 import PythonLogo from '../icons/python-logo.svg'
+import RepoIcon from '../icons/repo-icon.svg'
 import RepositoriesGradient from '../icons/repositories-gradient.svg'
 import Repositories from '../icons/repositories-icon.svg'
 import Rocket from '../icons/rocket.svg'
@@ -371,7 +374,10 @@ const IconNameMap = {
   'attachment-image': AttachmentImage,
   'collapse-comment': CollapseComment,
   'expand-comment': ExpandComment,
-  suggestion: Suggestion
+  suggestion: Suggestion,
+  'repo-icon': RepoIcon,
+  'arrow-short': ArrowShort,
+  'bold-plus': BoldPlus
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

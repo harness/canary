@@ -18,14 +18,15 @@ const tableVariants = cva('w-full text-sm', {
 
 export interface TableProps extends React.HTMLAttributes<HTMLTableElement>, VariantProps<typeof tableVariants> {
   disableXScroll?: boolean
+  tableClassName?: string
 }
 
 const Table = React.forwardRef<HTMLTableElement, TableProps>(
-  ({ variant, disableXScroll, className, ...props }, ref) => (
+  ({ variant, disableXScroll, className, tableClassName, ...props }, ref) => (
     <div className={cn('relative w-full overflow-auto', tableVariants({ variant }), className)}>
       <table
         ref={ref}
-        className={cn('w-full overflow-x-auto', { 'min-w-auto overflow-x-hidden': disableXScroll })}
+        className={cn('w-full overflow-x-auto', { 'min-w-auto overflow-x-hidden': disableXScroll }, tableClassName)}
         {...props}
       />
     </div>

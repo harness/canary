@@ -10,6 +10,7 @@ import {
 } from '@/views'
 import { Avatar, AvatarFallback, Layout } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
 import { debounce, get } from 'lodash-es'
@@ -97,6 +98,38 @@ const PullRequestDiffViewer = ({
   const highlightRef = useRef(highlight)
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
+  const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
+
+  // Cleanup function for memory management
+  const cleanup = useCallback(() => {
+    // Clean up diff instance
+    if (diffFileInstance) {
+      diffFileInstance._destroy?.()
+      setDiffFileInstance(undefined)
+    }
+
+    // Clean up OverlayScrollbars instances
+    overlayScrollbarsInstances.current.forEach(instance => {
+      instance.destroy()
+    })
+    overlayScrollbarsInstances.current = []
+  }, [diffFileInstance])
+
+  // Use memory cleanup hook
+  useMemoryCleanup(cleanup)
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return cleanup
+  }, [])
+  useEffect(() => {
+    return () => {
+      if (diffFileInstance) {
+        diffFileInstance._destroy?.()
+        setDiffFileInstance(undefined)
+      }
+    }
+  }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
   const handleQuoteReply = useCallback((parentId: number, originalText: string) => {
@@ -183,7 +216,6 @@ const PullRequestDiffViewer = ({
 
   useEffect(() => {
     if (diffFileInstance && scrollBar && !wrap) {
-      const instanceArray: OverlayScrollbars[] = []
       const init = () => {
         const isSplitMode = mode & DiffModeEnum.Split
         if (isSplitMode) {
@@ -194,31 +226,11 @@ const PullRequestDiffViewer = ({
           ) as HTMLDivElement[]
           const [left, right] = scrollContainers
           if (left && right) {
-            const i1 = OverlayScrollbars(
-              { target: left, scrollbars: { slot: leftScrollbar } },
-              {
-                overflow: {
-                  y: 'hidden'
-                }
-              }
-            )
-            const i2 = OverlayScrollbars(
-              { target: right, scrollbars: { slot: rightScrollbar } },
-              {
-                overflow: {
-                  y: 'hidden'
-                }
-              }
-            )
-            instanceArray.push(i1, i2)
-            const leftScrollEle = i1.elements().scrollEventElement as HTMLDivElement
-            const rightScrollEle = i2.elements().scrollEventElement as HTMLDivElement
-            i1.on('scroll', () => {
-              rightScrollEle.scrollLeft = leftScrollEle.scrollLeft
-            })
-            i2.on('scroll', () => {
-              leftScrollEle.scrollLeft = rightScrollEle.scrollLeft
-            })
+            const instances = [
+              OverlayScrollbars({ target: left, scrollbars: { slot: leftScrollbar } }, { overflow: { y: 'hidden' } }),
+              OverlayScrollbars({ target: right, scrollbars: { slot: rightScrollbar } }, { overflow: { y: 'hidden' } })
+            ]
+            overlayScrollbarsInstances.current = instances
           }
         } else {
           const scrollBarContainer = reactWrapRef.current?.querySelector('[data-full]') as HTMLDivElement
@@ -232,17 +244,20 @@ const PullRequestDiffViewer = ({
                 }
               }
             )
-            instanceArray.push(i)
+            overlayScrollbarsInstances.current = [i]
           }
         }
       }
       const id = setTimeout(init, 1000)
       return () => {
         clearTimeout(id)
-        instanceArray.forEach(i => i.destroy())
+        overlayScrollbarsInstances.current.forEach(instance => {
+          instance.destroy()
+        })
+        overlayScrollbarsInstances.current = []
       }
     }
-  }, [diffFileInstance, scrollBar, wrap, mode, data])
+  }, [diffFileInstance, scrollBar, wrap, mode])
 
   const setDiffInstanceCb = useCallback(
     debounce((fileName: string, lang: string, diffString: string, content?: string) => {
@@ -560,9 +575,7 @@ const PullRequestDiffViewer = ({
       setScrolledToComment?.(true)
     }, 500)
 
-    return () => {
-      clearTimeout(timeoutId)
-    }
+    return () => clearTimeout(timeoutId)
   }, [commentId, extend, scrolledToComment, setScrolledToComment])
 
   return (

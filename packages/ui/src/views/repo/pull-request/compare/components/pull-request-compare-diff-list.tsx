@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import {
   Accordion,
@@ -12,12 +12,22 @@ import {
   StackedList,
   Text
 } from '@/components'
-import { DiffModeOptions, TranslationStore, TypesDiffStats } from '@/views'
+import { DiffModeOptions, InViewDiffRenderer, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { chunk } from 'lodash-es'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
 import { useDiffConfig } from '../../hooks/useDiffConfig'
-import { parseStartingLineIfOne, PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT } from '../../utils'
+import {
+  calculateDetectionMargin,
+  IN_VIEWPORT_DETECTION_MARGIN,
+  innerBlockName,
+  outterBlockName,
+  parseStartingLineIfOne,
+  PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE,
+  PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT,
+  shouldRetainDiffChildren
+} from '../../utils'
 import { HeaderProps } from '../pull-request-compare.types'
 
 interface LineTitleProps {
@@ -158,6 +168,9 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
   }
   const [openItems, setOpenItems] = useState<string[]>([])
+  const diffBlocks = useMemo(() => chunk(diffData, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [diffData])
+  const rootref = useRef<HTMLDivElement>(null)
+  const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     if (diffData.length > 0) {
@@ -191,7 +204,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
               with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
             </p>
             <DropdownMenu.Content align="end">
-              <DropdownMenu.Group>
+              <div className="max-h-[360px] overflow-y-auto px-1">
                 {diffData?.map(diff => (
                   <DropdownMenu.Item
                     key={diff.filePath}
@@ -215,7 +228,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
                     </div>
                   </DropdownMenu.Item>
                 ))}
-              </DropdownMenu.Group>
+              </div>
             </DropdownMenu.Content>
           </DropdownMenu.Root>
         </ListActions.Left>
@@ -229,21 +242,42 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
         </ListActions.Right>
       </ListActions.Root>
       <Spacer size={3} />
-      {diffData?.map((item, index) => (
-        <>
-          <Spacer size={3} />
-          <PullRequestAccordion
-            key={`item?.title ? ${item?.title}-${index} : ${index}`}
-            header={item}
-            currentUser={currentUser}
-            data={item?.data}
-            diffMode={diffMode}
-            useTranslationStore={useTranslationStore}
-            openItems={openItems}
-            onToggle={() => toggleOpen(item.text)}
-          />
-        </>
-      ))}
+      <div className="flex flex-col gap-4" ref={rootref}>
+        {diffBlocks?.map((diffsBlock, blockIndex) => {
+          return (
+            <InViewDiffRenderer
+              key={blockIndex}
+              blockName={outterBlockName(blockIndex)}
+              root={rootref as RefObject<Element>}
+              shouldRetainChildren={shouldRetainDiffChildren}
+              detectionMargin={calculateDetectionMargin(diffData?.length)}
+            >
+              {diffsBlock?.map((item, index) => (
+                <div className="pt-4" key={item.filePath}>
+                  <InViewDiffRenderer
+                    key={item.filePath}
+                    blockName={innerBlockName(item?.filePath ?? (blockIndex + index).toString())}
+                    root={diffsContainerRef}
+                    shouldRetainChildren={shouldRetainDiffChildren}
+                    detectionMargin={IN_VIEWPORT_DETECTION_MARGIN}
+                  >
+                    <PullRequestAccordion
+                      key={`item?.title ? ${item?.title}-${index} : ${index}`}
+                      header={item}
+                      currentUser={currentUser}
+                      data={item?.data}
+                      diffMode={diffMode}
+                      useTranslationStore={useTranslationStore}
+                      openItems={openItems}
+                      onToggle={() => toggleOpen(item.text)}
+                    />
+                  </InViewDiffRenderer>
+                </div>
+              ))}
+            </InViewDiffRenderer>
+          )
+        })}
+      </div>
     </>
   )
 }

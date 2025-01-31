@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { NoData } from '@components/no-data'
 import { PaginationComponent } from '@components/pagination-component'
+import { SkeletonList } from '@components/skeletons'
 import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@views/index'
 
 import { IPullRequestCommitsStore } from './pull-request-commits.types'
@@ -21,8 +22,12 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   toCommitDetails,
   toCode
 }) => {
-  const { commitsList, xNextPage, xPrevPage, page, setPage } = usePullRequestCommitsStore()
+  const { commitsList, xNextPage, xPrevPage, page, setPage, isFetchingCommits } = usePullRequestCommitsStore()
   const { t } = useTranslationStore()
+
+  if (isFetchingCommits) {
+    ;<SkeletonList />
+  }
 
   return (
     <SandboxLayout.Content>

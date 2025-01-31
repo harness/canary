@@ -94,7 +94,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   scrolledToComment,
   setScrolledToComment
 }) => {
-  const { diffs } = usePullRequestProviderStore()
+  const { diffs, pullReqStats } = usePullRequestProviderStore()
+
   // Convert activities to comment threads
   const activityBlocks = useMemo(() => {
     const parentActivities = orderBy(
@@ -182,7 +183,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         selectedCommits={selectedCommits}
         setSelectedCommits={setSelectedCommits}
         viewedFiles={diffs?.[0]?.fileViews?.size || 0}
-        totalFiles={diffs?.length || 0}
+        pullReqStats={pullReqStats}
         onCommitSuggestionsBatch={onCommitSuggestionsBatch}
         commitSuggestionsBatchCount={commitSuggestionsBatchCount}
         diffData={diffs?.map(diff => ({

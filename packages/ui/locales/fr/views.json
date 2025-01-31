@@ -10,7 +10,11 @@
     "pull-requests": "Requêtes de tirage",
     "branches": "Branches",
     "settings": "Paramètres",
+    "descriptionPlaceholder": "Entrez une description",
+    "description": "Description",
     "error": "Erreur :",
+    "saving": "Enregistrement...",
+    "save": "Enregistrer",
     "cancel": "Annuler",
     "tags": "Étiquettes",
     "default": "Par défaut",
@@ -59,7 +63,6 @@
     "enableRule": "Activer la règle",
     "enableRuleDescription": "En activant cette option, la règle sera appliquée.",
     "enterRuleName": "Enter the rule name here",
-    "description": "Description",
     "ruleDescriptionPlaceholder": "Enter the description here",
     "targetPatterns": "Modèles cibles",
     "createRuleCaption": "Définir les branches correspondant aux modèles globaux (ex : 'feature-*', 'release/**')",
@@ -112,8 +115,6 @@
     "visibility": "Visibilité",
     "publicDescription": "Toute personne ayant accès à l'environnement Gitness peut cloner ce dépôt.",
     "privateDescription": "Vous pouvez choisir qui peut voir et contribuer à ce dépôt.",
-    "save": "Enregistrer",
-    "saving": "Enregistrement...",
     "rulesApplied": "Règles appliquées",
     "bypassAllowed": "Contournement autorisé",
     "bypassNotAllowed": "Contournement non autorisé",
@@ -138,8 +139,6 @@
     "openPullReq": "Requêtes de tirage ouvertes",
     "enableWebhookToggle": "Activer le webhook",
     "toggleDescription": "Nous enverrons les détails lorsque ce webhook sera déclenché",
-    "desciptionPlaceholder": "Entrez une description de cette règle...",
-    "desciption": "Description",
     "urlPlaceholder": "https://example.com/harness",
     "urlLabel": "URL de la charge utile",
     "secret": "Secret",
@@ -207,6 +206,46 @@
     "projectNamePlaceholder": "Entrez le nom de votre projet",
     "creating": "Création du projet...",
     "create": "Créer un projet"
+  },
+  "labelData": {
+    "form": {
+      "colorValuePlaceholder": "Enter value name",
+      "colorLabelPlaceholder": "Enter label name",
+      "editTitle": "Label details",
+      "createTitle": "Create a label",
+      "labelName": "Label name",
+      "valueName": "Label value",
+      "addValue": "Add a value",
+      "allowUsersCheckboxLabel": "Allow users to add values",
+      "previewLabel": "Label preview",
+      "previewDynamicValue": "*can be added by users*"
+    },
+    "table": {
+      "name": "Name",
+      "created": "Created in",
+      "description": "Description"
+    },
+    "edit": "Edit label",
+    "delete": "Delete label",
+    "title": "Labels",
+    "showParentLabels": "Show labels from parent scopes",
+    "newLabel": "New label",
+    "create": "Create labels"
+  },
+  "projectSettings": {
+    "newLabels": "Create label",
+    "newMember": "",
+    "member": "",
+    "role": "",
+    "addMember": "",
+    "membersTable": {
+      "user": "User",
+      "email": "Email",
+      "role": "Role"
+    },
+    "removeMember": "Remove member",
+    "inviteNewMember": "Invite new member",
+    "members": ""
   },
   "landingPage": {
     "selectProject": "Sélectionnez un projet pour commencer",
@@ -332,7 +371,6 @@
     "KeysTab": "Clés et Jetons"
   },
   "forms": {
-    "selectMemberError": "",
     "selectMember": "",
     "selectRole": "",
     "enterBranchName": "Entrez le nom de la branche",
@@ -340,22 +378,8 @@
     "select": "Sélectionner",
     "baseBranch": "Branche de base",
     "selectBranchError": "La branche de base est requise",
+    "selectMemberError": "",
     "selectRoleError": ""
-  },
-  "projectSettings": {
-    "newLabels": "Create label",
-    "newMember": "",
-    "member": "",
-    "role": "",
-    "addMember": "",
-    "membersTable": {
-      "user": "User",
-      "email": "Email",
-      "role": "Role"
-    },
-    "removeMember": "Remove member",
-    "inviteNewMember": "Invite new member",
-    "members": ""
   },
   "roles": {
     "owner": "Owner",
@@ -400,8 +424,5 @@
     "create": "Create webhook",
     "edit": "Edit webhook",
     "delete": "Delete webhook"
-  },
-  "labelData": {
-    "create": "Create labels"
   }
 }

@@ -95,6 +95,7 @@ const ListItem = ({
   ...props
 }: ListItemProps) => {
   const Comp = asChild ? Slot : ('div' as any)
+
   return (
     <Comp
       className={cn(

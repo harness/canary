@@ -6,7 +6,18 @@ import react from "@astrojs/react";
 // if static building, mock `document` to prevent a bug triggered by a 3rd party dependency
 if (!("document" in globalThis)) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  globalThis.document = { createElement: () => ({}) } as any;
+  globalThis.document = {
+    createElement: () => ({
+      appendChild: () => ({}), // used by drawer > vaul
+    }),
+    getElementsByTagName: () => [], // used by drawer > vaul
+    createTextNode: () => ({}), // used by drawer > vaul
+    head: {
+      appendChild: () => ({}), // used by drawer > vaul
+    },
+  } as any;
+
+  globalThis.window = {} as any; // used by drawer > vaul
 }
 
 // https://astro.build/config

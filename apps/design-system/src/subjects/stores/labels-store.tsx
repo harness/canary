@@ -1,9 +1,17 @@
-import { ColorsEnum, ILabelsStore, ILabelType, LabelValueType } from '@harnessio/ui/views'
+import {
+  ColorsEnum,
+  ILabelsStore,
+  ILabelType,
+  LabelType,
+  LabelValueType,
+  SetRepoSpaceRefProps
+} from '@harnessio/ui/views'
 
 interface RepoLabelsListStore {
   useLabelsStore: () => ILabelsStore
 }
-export const RepoLabelsListStore: RepoLabelsListStore = {
+
+export const LabelsListStore: RepoLabelsListStore = {
   useLabelsStore: () => ({
     labels: [
       {
@@ -12,13 +20,14 @@ export const RepoLabelsListStore: RepoLabelsListStore = {
         scope: 0,
         key: 'label-1',
         description: 'sample label',
-        type: 'static',
+        type: LabelType.STATIC,
         color: ColorsEnum.INDIGO,
         value_count: 0,
         created: 1736962206814,
         updated: 1736962206814,
         created_by: 4,
-        updated_by: 4
+        updated_by: 4,
+        space_id: null
       },
       {
         id: 27,
@@ -26,17 +35,17 @@ export const RepoLabelsListStore: RepoLabelsListStore = {
         scope: 0,
         key: 'label-2',
         description: 'sample label 2',
-        type: 'static',
+        type: LabelType.STATIC,
         color: ColorsEnum.RED,
         value_count: 2,
         created: 1736884858874,
         updated: 1736884858874,
         created_by: 4,
-        updated_by: 4
+        updated_by: 4,
+        space_id: null
       }
     ],
 
-    presetEditLabel: null,
     totalPages: 1,
     page: 1,
     repo_ref: 'canary',
@@ -71,13 +80,13 @@ export const RepoLabelsListStore: RepoLabelsListStore = {
     setLabels: (_: ILabelType[]) => {},
 
     addLabel: (_: ILabelType) => {},
-    setPresetEditLabel: (_: ILabelType | null) => {},
 
     deleteLabel: (_: string) => {},
 
     setValues: (_: Record<string, LabelValueType[]>) => {},
-    setRepoSpaceRef: (_?: string) => {},
+    setRepoSpaceRef: (_: SetRepoSpaceRefProps) => {},
     setGetParentScopeLabels: (_: boolean) => {},
-    setPage: (_: number) => {}
+    setPage: (_: number) => {},
+    resetLabelsAndValues: () => {}
   })
 }

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import * as Diff2Html from 'diff2html'
 import { useAtom } from 'jotai'
-import { compact, isEqual } from 'lodash-es'
+import { compact } from 'lodash-es'
 
 import {
   CreateRepositoryErrorResponse,
@@ -36,7 +36,7 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { parseSpecificDiff } from '../../pages/pull-request/diff-utils'
-import { changesInfoAtom, DiffFileEntry, DiffViewerExchangeState } from '../../pages/pull-request/types/types'
+import { changesInfoAtom, DiffFileEntry } from '../../pages/pull-request/types/types'
 import { changedFileId, DIFF2HTML_CONFIG, normalizeGitFilePath } from '../../pages/pull-request/utils'
 import { PathParams } from '../../RouteDefinitions'
 import { normalizeGitRef } from '../../utils/git-utils'
@@ -183,60 +183,57 @@ export const CreatePullRequest = () => {
     },
     [rawDiff, path, setCachedDiff]
   )
-  // Diffs are rendered in blocks that can be destroyed when they go off-screen. Hence their internal
-  // states (such as collapse, view full diff) are reset when they are being re-rendered. To fix this,
-  // we maintained a map from this component and pass to each diff to retain their latest states.
-  // Map entry: <diff.filePath, DiffViewerExchangeState>
-  const memorizedState = useMemo(() => new Map<string, DiffViewerExchangeState>(), [])
 
-  //
   // Parsing diff and construct data structure to pass into DiffViewer component
-  //
   useEffect(() => {
     if (loadingRawDiff || cachedDiff.path !== path || typeof cachedDiff.raw !== 'string') {
       return
     }
-    if (cachedDiff.raw) {
-      const _diffs = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
-        .map(diff => {
-          diff.oldName = normalizeGitFilePath(diff.oldName)
-          diff.newName = normalizeGitFilePath(diff.newName)
-
-          const fileId = changedFileId([diff.oldName, diff.newName])
-          const containerId = `container-${fileId}`
-          const contentId = `content-${fileId}`
-
-          const filePath = diff.isDeleted ? diff.oldName : diff.newName
-          const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
-          return {
-            ...diff,
-            containerId,
-            contentId,
-            fileId,
-            filePath,
-            fileViews: cachedDiff.fileViews,
-            raw: diffString
-          }
-        })
-        .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
-
-      setDiffs(oldDiffs => {
-        if (isEqual(oldDiffs, _diffs)) return oldDiffs
-
-        // Clear memorizedState when diffs are changed
-        memorizedState.clear()
-        return _diffs
-      })
-    } else {
+    if (!cachedDiff.raw) {
       setDiffs([])
+      return
     }
-  }, [
-    // readOnly,
-    path,
-    cachedDiff,
-    loadingRawDiff,
-    memorizedState
-  ])
+    const parsed = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
+    let currentIndex = 0
+    let accumulated: DiffFileEntry[] = []
+
+    // slice out ~50 items for chunk - transform & push them into 'accumulated' and schedule remaining chunks in next tick
+    // for diffs with more than 200 files this is taking longer to parse and blocks main thread
+    const processNextChunk = () => {
+      const CHUNK_SIZE = 50
+      const endIndex = Math.min(currentIndex + CHUNK_SIZE, parsed.length)
+
+      const chunk = parsed.slice(currentIndex, endIndex).map(diff => {
+        diff.oldName = normalizeGitFilePath(diff.oldName)
+        diff.newName = normalizeGitFilePath(diff.newName)
+
+        const fileId = changedFileId([diff.oldName, diff.newName])
+        const containerId = `container-${fileId}`
+        const contentId = `content-${fileId}`
+        const filePath = diff.isDeleted ? diff.oldName : diff.newName
+        const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+
+        return {
+          ...diff,
+          containerId,
+          contentId,
+          fileId,
+          filePath,
+          fileViews: cachedDiff.fileViews,
+          raw: diffString
+        }
+      })
+      accumulated = [...accumulated, ...chunk]
+      setDiffs(accumulated)
+
+      currentIndex = endIndex
+      if (currentIndex < parsed.length) {
+        setTimeout(processNextChunk, 0)
+      }
+    }
+    processNextChunk()
+  }, [loadingRawDiff, path, cachedDiff])
+
   const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   useEffect(() => {
@@ -353,7 +350,7 @@ export const CreatePullRequest = () => {
   const [query, setQuery] = useQueryState('query')
 
   // TODO:handle pagination in compare commit tab
-  const { data: { body: commitData, headers } = {} } = useListCommitsQuery({
+  const { data: { body: commitData, headers } = {}, isFetching: isFetchingCommits } = useListCommitsQuery({
     repo_ref: repoRef,
 
     queryParams: {
@@ -550,6 +547,7 @@ export const CreatePullRequest = () => {
         reviewers={reviewers}
         handleAddReviewer={handleAddReviewer}
         handleDeleteReviewer={handleDeleteReviewer}
+        isFetchingCommits={isFetchingCommits}
       />
     )
   }

@@ -85,6 +85,12 @@ export interface PRPanelData {
   commentsInfoData: CommentsInfoData
   ruleViolationArr?: RuleViolationArr
 }
+export interface DiffStatistics {
+  additions?: number
+  commits?: number
+  deletions?: number
+  files_changed?: number
+}
 
 export interface PullRequestDataState {
   repoMetadata?: RepoRepositoryOutput

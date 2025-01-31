@@ -18,9 +18,10 @@ import { SettingsProfileGeneralPage } from './pages-v2/profile-settings/profile-
 import { SettingsProfileKeysPage } from './pages-v2/profile-settings/profile-settings-keys-container'
 import { ProfileSettingsThemePage } from './pages-v2/profile-settings/profile-settings-theme-page'
 import { SettingsLayout as ProfileSettingsLayout } from './pages-v2/profile-settings/settings-layout'
+import { ProjectLabelFormContainer } from './pages-v2/project/labels/project-label-form-container'
+import { ProjectLabelsList } from './pages-v2/project/labels/project-labels-list-container'
 import { ProjectGeneralSettingsPageContainer } from './pages-v2/project/project-general-settings-container'
 import { ImportProjectContainer } from './pages-v2/project/project-import-container'
-import { ProjectLabelsList } from './pages-v2/project/project-labels-list-container'
 import { ProjectMemberListPage } from './pages-v2/project/project-member-list'
 import { SettingsLayout as ProjectSettingsLayout } from './pages-v2/project/settings-layout'
 import PullRequestChanges from './pages-v2/pull-request/pull-request-changes'
@@ -30,6 +31,8 @@ import PullRequestConversationPage from './pages-v2/pull-request/pull-request-co
 import PullRequestDataProvider from './pages-v2/pull-request/pull-request-data-provider'
 import PullRequestLayout from './pages-v2/pull-request/pull-request-layout'
 import PullRequestListPage from './pages-v2/pull-request/pull-request-list'
+import { RepoLabelFormContainer } from './pages-v2/repo/labels/label-form-container.tsx'
+import { RepoLabelsList } from './pages-v2/repo/labels/labels-list-container'
 import { RepoBranchesListPage } from './pages-v2/repo/repo-branch-list'
 import { RepoBranchSettingsRulesPageContainer } from './pages-v2/repo/repo-branch-rules-container'
 import { RepoCode } from './pages-v2/repo/repo-code'
@@ -40,7 +43,6 @@ import { CreateRepo } from './pages-v2/repo/repo-create-page'
 import RepoExecutionListPage from './pages-v2/repo/repo-execution-list'
 import { ImportMultipleRepos } from './pages-v2/repo/repo-import-multiple-container'
 import { ImportRepo } from './pages-v2/repo/repo-import-page'
-import { RepoLabelsList } from './pages-v2/repo/repo-labels-container'
 import RepoLayout from './pages-v2/repo/repo-layout'
 import ReposListPage from './pages-v2/repo/repo-list'
 import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
@@ -437,11 +439,31 @@ export const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: 'labels',
-                element: <RepoLabelsList />,
                 handle: {
                   breadcrumb: () => <Text>{Page.Labels}</Text>,
-                  pageTitle: Page.Labels
-                }
+                  pageTitle: Page.Labels,
+                  routeName: RouteConstants.toRepoLabels
+                },
+                children: [
+                  {
+                    index: true,
+                    element: <RepoLabelsList />
+                  },
+                  {
+                    path: 'create',
+                    element: <RepoLabelFormContainer />,
+                    handle: {
+                      breadcrumb: () => <Text>Create a label</Text>
+                    }
+                  },
+                  {
+                    path: ':labelId',
+                    element: <RepoLabelFormContainer />,
+                    handle: {
+                      breadcrumb: ({ labelId }: { labelId: string }) => <Text>{labelId}</Text>
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -481,11 +503,31 @@ export const repoRoutes: CustomRouteObject[] = [
       },
       {
         path: 'labels',
-        element: <ProjectLabelsList />,
         handle: {
           breadcrumb: () => <Text>{Page.Labels}</Text>,
-          pageTitle: Page.Labels
-        }
+          pageTitle: Page.Labels,
+          routeName: RouteConstants.toProjectLabels
+        },
+        children: [
+          {
+            index: true,
+            element: <ProjectLabelsList />
+          },
+          {
+            path: 'create',
+            element: <ProjectLabelFormContainer />,
+            handle: {
+              breadcrumb: () => <Text>Create a label</Text>
+            }
+          },
+          {
+            path: ':labelId',
+            element: <ProjectLabelFormContainer />,
+            handle: {
+              breadcrumb: ({ labelId }: { labelId: string }) => <Text>{labelId}</Text>
+            }
+          }
+        ]
       }
     ]
   },

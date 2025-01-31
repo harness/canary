@@ -12,6 +12,7 @@ import {
   rawDiff,
   reviewSubmitPullReq,
   TypesPullReqActivity,
+  useDiffStatsQuery,
   useFileViewAddPullReqMutation,
   useFileViewDeletePullReqMutation,
   useFileViewListPullReqQuery,
@@ -22,7 +23,7 @@ import {
 import {
   CommitFilterItemProps,
   CreateCommentPullReqRequest,
-  DiffViewerExchangeState,
+  DiffFileEntry,
   FILE_VIEWED_OBSOLETE_SHA,
   PullRequestChangesPage
 } from '@harnessio/ui/views'
@@ -57,8 +58,16 @@ const sortSelectedCommits = (selectedCommits: string[], sortedCommits?: string[]
 }
 
 export default function PullRequestChanges() {
-  const { pullReqMetadata, refetchPullReq, refetchActivities, diffs, setDiffs, pullReqCommits, updateCommentStatus } =
-    usePullRequestProviderStore()
+  const {
+    pullReqMetadata,
+    refetchPullReq,
+    refetchActivities,
+    diffs,
+    setDiffs,
+    pullReqCommits,
+    updateCommentStatus,
+    setPullReqStats
+  } = usePullRequestProviderStore()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
   const [commitRange, setCommitRange] = useState<string[]>()
@@ -133,6 +142,17 @@ export default function PullRequestChanges() {
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
+  const { data: { body: PRDiffStats } = {} } = useDiffStatsQuery(
+    { queryParams: {}, repo_ref: repoRef, range: diffApiPath },
+    { enabled: !!repoRef && !!diffApiPath }
+  )
+
+  useEffect(() => {
+    if (PRDiffStats) {
+      setPullReqStats(PRDiffStats)
+    }
+  }, [PRDiffStats])
 
   const onGetFullDiff = async (path?: string) => {
     if (!path) return
@@ -228,34 +248,33 @@ export default function PullRequestChanges() {
       // readOnly
     ]
   )
-  // Diffs are rendered in blocks that can be destroyed when they go off-screen. Hence their internal
-  // states (such as collapse, view full diff) are reset when they are being re-rendered. To fix this,
-  // we maintained a map from this component and pass to each diff to retain their latest states.
-  // Map entry: <diff.filePath, DiffViewerExchangeState>
-  const memorizedState = useMemo(() => new Map<string, DiffViewerExchangeState>(), [])
 
   // Parsing diff and construct data structure to pass into DiffViewer component
   useEffect(() => {
-    if (
-      loadingRawDiff ||
-      cachedDiff.path !== path ||
-      typeof cachedDiff.raw !== 'string'
-      // || !cachedDiff.fileViews
-    ) {
+    if (loadingRawDiff || cachedDiff.path !== path || typeof cachedDiff.raw !== 'string') {
       return
     }
     if (cachedDiff.raw) {
-      const _diffs = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
-        .map(diff => {
+      const parsed = Diff2Html.parse(cachedDiff.raw, DIFF2HTML_CONFIG)
+      let currentIndex = 0
+      let accumulated: DiffFileEntry[] = []
+
+      // slice out ~50 items for chunk - transform & push them into 'accumulated' and schedule remaining chunks in next tick
+      // for diffs with more than 200 files this is taking longer to parse and blocks main thread
+      const processNextChunk = () => {
+        const CHUNK_SIZE = 50
+        const endIndex = Math.min(currentIndex + CHUNK_SIZE, parsed.length)
+
+        const chunk = parsed.slice(currentIndex, endIndex).map(diff => {
           diff.oldName = normalizeGitFilePath(diff.oldName)
           diff.newName = normalizeGitFilePath(diff.newName)
 
           const fileId = changedFileId([diff.oldName, diff.newName])
           const containerId = `container-${fileId}`
           const contentId = `content-${fileId}`
-
           const filePath = diff.isDeleted ? diff.oldName : diff.newName
           const diffString = parseSpecificDiff(cachedDiff.raw ?? '', diff.oldName, diff.newName)
+
           return {
             ...diff,
             containerId,
@@ -266,19 +285,20 @@ export default function PullRequestChanges() {
             raw: diffString
           }
         })
-        .sort((a, b) => (a.newName || a.oldName).localeCompare(b.newName || b.oldName, undefined, { numeric: true }))
+        accumulated = [...accumulated, ...chunk]
+        setDiffs(accumulated)
 
-      setDiffs(_diffs)
+        currentIndex = endIndex
+        if (currentIndex < parsed.length) {
+          setTimeout(processNextChunk, 0)
+        }
+      }
+      processNextChunk()
     } else {
       setDiffs([])
     }
-  }, [
-    // readOnly,
-    path,
-    cachedDiff,
-    loadingRawDiff,
-    memorizedState
-  ])
+  }, [loadingRawDiff, path, cachedDiff])
+
   const { data: { body: activityData } = {} } = useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: prId,

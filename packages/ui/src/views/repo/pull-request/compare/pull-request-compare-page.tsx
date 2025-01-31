@@ -8,6 +8,7 @@ import {
   Button,
   Icon,
   NoData,
+  SkeletonList,
   Spacer,
   StyledLink,
   Tabs,
@@ -94,6 +95,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   desc?: string
   setDesc: (desc: string) => void
+  isFetchingCommits?: boolean
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -129,7 +131,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   toCode,
   handleUpload,
   desc,
-  setDesc
+  setDesc,
+  isFetchingCommits
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -395,7 +398,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               )}
               <TabsContent className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
-                {(commitData ?? []).length > 0 ? (
+                {isFetchingCommits ? (
+                  <SkeletonList />
+                ) : (commitData ?? []).length > 0 ? (
                   <CommitsList
                     toCode={toCode}
                     toCommitDetails={toCommitDetails}

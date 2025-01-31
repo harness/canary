@@ -396,6 +396,36 @@
       hsl(240deg 6% 20%/40%),
       hsl(240deg 6% 20%/0%)
     );
+
+    /* TODO: Change labels colors for light theme */
+    /* Labels colors */
+    --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);
+    --canary-label-foreground-red-01: hsla(0, 100%, 65%, 1);
+    --canary-label-background-red-01: hsla(0, 100%, 65%, 0.12);
+    --canary-label-foreground-green-01: hsla(130, 75%, 65%, 1);
+    --canary-label-background-green-01: hsla(130, 75%, 65%, 0.12);
+    --canary-label-foreground-yellow-01: hsla(40, 100%, 65%, 1);
+    --canary-label-background-yellow-01: hsla(40, 100%, 65%, 0.12);
+    --canary-label-foreground-blue-01: hsla(210, 100%, 65%, 1);
+    --canary-label-background-blue-01: hsla(210, 100%, 65%, 0.12);
+    --canary-label-foreground-pink-01: hsla(310, 100%, 70%, 1);
+    --canary-label-background-pink-01: hsla(310, 100%, 70%, 0.12);
+    --canary-label-foreground-purple-01: hsla(270, 100%, 70%, 1);
+    --canary-label-background-purple-01: hsla(270, 100%, 70%, 0.12);
+    --canary-label-foreground-violet-01: hsla(250, 100%, 75%, 1);
+    --canary-label-background-violet-01: hsla(250, 100%, 75%, 0.12);
+    --canary-label-foreground-indigo-01: hsla(230, 100%, 65%, 1);
+    --canary-label-background-indigo-01: hsla(230, 100%, 65%, 0.12);
+    --canary-label-foreground-cyan-01: hsla(190, 100%, 60%, 1);
+    --canary-label-background-cyan-01: hsla(190, 100%, 60%, 0.12);
+    --canary-label-foreground-orange-01: hsla(20, 100%, 65%, 1);
+    --canary-label-background-orange-01: hsla(20, 100%, 65%, 0.12);
+    --canary-label-foreground-brown-01: hsla(30, 30%, 50%, 1);
+    --canary-label-background-brown-01: hsla(30, 30%, 50%, 0.12);
+    --canary-label-foreground-mint-01: hsla(155, 100%, 65%, 1);
+    --canary-label-background-mint-01: hsla(155, 100%, 65%, 0.12);
+    --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
+    --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
   }
 
   /* Need .light and .dark classes for MFE */
@@ -644,6 +674,36 @@
      hsla(var(--canary-tab-item-gradient-to));
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
+
+    /* TODO: Change labels colors for light theme */
+    /* Labels colors */
+    --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);
+    --canary-label-foreground-red-01: hsla(0, 100%, 65%, 1);
+    --canary-label-background-red-01: hsla(0, 100%, 65%, 0.12);
+    --canary-label-foreground-green-01: hsla(130, 75%, 65%, 1);
+    --canary-label-background-green-01: hsla(130, 75%, 65%, 0.12);
+    --canary-label-foreground-yellow-01: hsla(40, 100%, 65%, 1);
+    --canary-label-background-yellow-01: hsla(40, 100%, 65%, 0.12);
+    --canary-label-foreground-blue-01: hsla(210, 100%, 65%, 1);
+    --canary-label-background-blue-01: hsla(210, 100%, 65%, 0.12);
+    --canary-label-foreground-pink-01: hsla(310, 100%, 70%, 1);
+    --canary-label-background-pink-01: hsla(310, 100%, 70%, 0.12);
+    --canary-label-foreground-purple-01: hsla(270, 100%, 70%, 1);
+    --canary-label-background-purple-01: hsla(270, 100%, 70%, 0.12);
+    --canary-label-foreground-violet-01: hsla(250, 100%, 75%, 1);
+    --canary-label-background-violet-01: hsla(250, 100%, 75%, 0.12);
+    --canary-label-foreground-indigo-01: hsla(230, 100%, 65%, 1);
+    --canary-label-background-indigo-01: hsla(230, 100%, 65%, 0.12);
+    --canary-label-foreground-cyan-01: hsla(190, 100%, 60%, 1);
+    --canary-label-background-cyan-01: hsla(190, 100%, 60%, 0.12);
+    --canary-label-foreground-orange-01: hsla(20, 100%, 65%, 1);
+    --canary-label-background-orange-01: hsla(20, 100%, 65%, 0.12);
+    --canary-label-foreground-brown-01: hsla(30, 30%, 50%, 1);
+    --canary-label-background-brown-01: hsla(30, 30%, 50%, 0.12);
+    --canary-label-foreground-mint-01: hsla(155, 100%, 65%, 1);
+    --canary-label-background-mint-01: hsla(155, 100%, 65%, 0.12);
+    --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
+    --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
   }
   .dark,
   .dark-std-low,
@@ -852,6 +912,35 @@
       hsl(240deg 6% 20%/40%),
       hsl(240deg 6% 20%/0%)
     );
+
+    /* Labels colors */
+    --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);
+    --canary-label-foreground-red-01: hsla(0, 100%, 65%, 1);
+    --canary-label-background-red-01: hsla(0, 100%, 65%, 0.12);
+    --canary-label-foreground-green-01: hsla(130, 75%, 65%, 1);
+    --canary-label-background-green-01: hsla(130, 75%, 65%, 0.12);
+    --canary-label-foreground-yellow-01: hsla(40, 100%, 65%, 1);
+    --canary-label-background-yellow-01: hsla(40, 100%, 65%, 0.12);
+    --canary-label-foreground-blue-01: hsla(210, 100%, 65%, 1);
+    --canary-label-background-blue-01: hsla(210, 100%, 65%, 0.12);
+    --canary-label-foreground-pink-01: hsla(310, 100%, 70%, 1);
+    --canary-label-background-pink-01: hsla(310, 100%, 70%, 0.12);
+    --canary-label-foreground-purple-01: hsla(270, 100%, 70%, 1);
+    --canary-label-background-purple-01: hsla(270, 100%, 70%, 0.12);
+    --canary-label-foreground-violet-01: hsla(250, 100%, 75%, 1);
+    --canary-label-background-violet-01: hsla(250, 100%, 75%, 0.12);
+    --canary-label-foreground-indigo-01: hsla(230, 100%, 65%, 1);
+    --canary-label-background-indigo-01: hsla(230, 100%, 65%, 0.12);
+    --canary-label-foreground-cyan-01: hsla(190, 100%, 60%, 1);
+    --canary-label-background-cyan-01: hsla(190, 100%, 60%, 0.12);
+    --canary-label-foreground-orange-01: hsla(20, 100%, 65%, 1);
+    --canary-label-background-orange-01: hsla(20, 100%, 65%, 0.12);
+    --canary-label-foreground-brown-01: hsla(30, 30%, 50%, 1);
+    --canary-label-background-brown-01: hsla(30, 30%, 50%, 0.12);
+    --canary-label-foreground-mint-01: hsla(155, 100%, 65%, 1);
+    --canary-label-background-mint-01: hsla(155, 100%, 65%, 0.12);
+    --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
+    --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
   }
 
   .dark-std-high {

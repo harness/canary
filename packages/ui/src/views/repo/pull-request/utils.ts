@@ -59,7 +59,9 @@ export function parseStartingLineIfOne(diffString: string) {
 
 export const CRLF = '\n'
 
-export const PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT = 1000
+export const PULL_REQUEST_LARGE_DIFF_CHANGES_LIMIT = 500
+export const PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE = 5
+export const IN_VIEWPORT_DETECTION_MARGIN = 2000
 
 // helper to transform lines to quote format: each line => '> line' + blank line at end
 export function quoteTransform(raw: string): string {
@@ -69,3 +71,15 @@ export function quoteTransform(raw: string): string {
     .concat([CRLF])
     .join(CRLF)
 }
+
+// If a diff container has a Markdown Editor active, retain it event it's off-screen to make
+// sure editor content is not cleared out during off-screen optimization
+export const shouldRetainDiffChildren = (dom: HTMLElement | null) =>
+  !!dom?.querySelector('[data-comment-editor-shown="true"]')
+
+export const outterBlockName = (blockIndex: number) => `outter-${blockIndex}`
+export const innerBlockName = (filePath: string) => `inner-${filePath}`
+
+// If there are more than 200 diffs, we decrease the detection margin to make sure browser do not crash. As a result, Cmd-F won't work well on diffs that got hidden/out of viewport.
+export const calculateDetectionMargin = (diffsLength: number) =>
+  diffsLength >= 200 ? 5000 : IN_VIEWPORT_DETECTION_MARGIN

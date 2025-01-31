@@ -111,14 +111,12 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
         {/* Buttons */}
         <Dialog.Footer>
           <ButtonGroup>
-            <>
-              <Button variant="ghost" onClick={onCancel}>
-                Cancel
-              </Button>
-              <Button variant="default" onClick={handleSave}>
-                Save
-              </Button>
-            </>
+            <Button variant="ghost" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button variant="default" onClick={handleSave}>
+              Save
+            </Button>
           </ButtonGroup>
         </Dialog.Footer>
       </Dialog.Content>

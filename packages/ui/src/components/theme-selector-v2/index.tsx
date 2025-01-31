@@ -213,12 +213,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         {/* Buttons */}
         <Dialog.Footer>
           <ButtonGroup>
-            <>
-              <Button variant="secondary" onClick={onCancel}>
-                Cancel
-              </Button>
-              <Button onClick={() => onSave({ mode, contrast, colorAdjustment, accentColor })}>Save preferences</Button>
-            </>
+            <Button variant="secondary" onClick={onCancel}>
+              Cancel
+            </Button>
+            <Button onClick={() => onSave({ mode, contrast, colorAdjustment, accentColor })}>Save preferences</Button>
           </ButtonGroup>
         </Dialog.Footer>
       </Dialog.Content>

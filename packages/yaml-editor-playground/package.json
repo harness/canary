@@ -12,8 +12,8 @@
   "dependencies": {
     "@harnessio/yaml-editor": "workspace:*",
     "@monaco-editor/react": "4.6.0",
-    "monaco-editor": "0.40.0",
-    "monaco-yaml": "4.0.4",
+    "monaco-editor": "^0.40.0",
+    "monaco-yaml": "^4.0.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "ts-loader": "^9.5.1",

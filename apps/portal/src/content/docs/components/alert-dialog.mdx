@@ -48,7 +48,9 @@ return (
       </AlertDialog.Description>
       <AlertDialog.Footer>
         <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-        <AlertDialog.Action>Confirm</AlertDialog.Action>
+        <AlertDialog.Action onClick={handleConfirm}>
+          Confirm
+        </AlertDialog.Action>
       </AlertDialog.Footer>
     </AlertDialog.Content>
   </AlertDialog.Root>

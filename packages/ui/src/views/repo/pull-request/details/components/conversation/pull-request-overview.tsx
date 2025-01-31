@@ -273,7 +273,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       }
                     ]}
                     contentHeader={
-                      <span className="text-foreground-1 font-medium">
+                      <span className="font-medium text-foreground-1">
                         {(payload?.code_comment as PayloadCodeComment)?.path}
                       </span>
                     }

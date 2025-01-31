@@ -116,7 +116,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
           >
             <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
           </Button>
-          <span className="text-foreground-1 font-medium leading-tight">{text}</span>
+          <span className="font-medium leading-tight text-foreground-1">{text}</span>
           <CopyButton name={text} className="size-6" color="gray" />
         </div>
 
@@ -320,10 +320,10 @@ const PullRequestAccordion: React.FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item className="p-0 overflow-hidden" disableHover>
+      <StackedList.Item className="overflow-hidden p-0" disableHover>
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="px-4 py-3.5 text-left bg-background-2">
+            <Accordion.Trigger leftChevron className="bg-background-2 px-4 py-3.5 text-left">
               <StackedList.Field
                 title={
                   <LineTitle

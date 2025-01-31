@@ -83,7 +83,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
         <DropdownMenu.Root>
           <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
             <Icon
-              className="text-icons-1 group-hover:text-icons-2 transition-colors duration-200"
+              className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
               name="more-dots-fill"
               size={12}
             />
@@ -119,7 +119,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-center gap-1.5">
           {avatar && <div>{avatar}</div>}
-          {name && <span className="text-14 text-foreground-8 font-medium">{name}</span>}
+          {name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
           {description && <span className="text-14 text-foreground-4">{description}</span>}
         </div>
         {selectStatus && (
@@ -231,7 +231,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               />
               {isResolved && !contentHeader && (
                 <Button
-                  className="text-foreground-2 hover:text-foreground-8 h-auto gap-x-1.5 px-4 font-normal"
+                  className="h-auto gap-x-1.5 px-4 font-normal text-foreground-2 hover:text-foreground-8"
                   variant="custom"
                   onClick={() => setIsExpanded(prev => !prev)}
                 >
@@ -254,7 +254,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   {contentHeader}
                   {isResolved && (
                     <Button
-                      className="text-foreground-2 hover:text-foreground-8 h-auto gap-x-1.5 px-2.5 font-normal"
+                      className="h-auto gap-x-1.5 px-2.5 font-normal text-foreground-2 hover:text-foreground-8"
                       variant="custom"
                       onClick={() => setIsExpanded(prev => !prev)}
                     >

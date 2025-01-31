@@ -32,7 +32,7 @@ const LabelsHeader = ({
       <DropdownMenu.Root>
         <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
           <Icon
-            className="text-icons-1 group-hover:text-icons-2 transition-colors duration-200"
+            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
             name="vertical-ellipsis"
             size={12}
           />

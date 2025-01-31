@@ -114,7 +114,7 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
           </Layout.Horizontal>
         ) : (
           <Button
-            className="border border-borders-2 group"
+            className="group border border-borders-2"
             size="icon_xs"
             variant="custom"
             aria-label="Edit"
@@ -141,9 +141,9 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
         </Badge>
 
         <div className="inline-flex flex-wrap items-center gap-1 text-foreground-4">
-          <span className="text-foreground-1 font-medium">{author?.display_name || author?.email || ''}</span>
+          <span className="font-medium text-foreground-1">{author?.display_name || author?.email || ''}</span>
           <span>{merged ? 'merged' : ' wants to merge'}</span>
-          <span className="text-foreground-1 font-medium">
+          <span className="font-medium text-foreground-1">
             {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
           </span>
           <span>into</span>

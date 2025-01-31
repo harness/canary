@@ -223,8 +223,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
     <div className="flex items-center justify-between gap-x-5">
       <div className="flex grow items-center gap-x-5">
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="flex items-center gap-x-1.5 group">
-            <div className="flex items-center gap-x-0.5 text-foreground-2 text-14 group-hover:text-foreground-1">
+          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5">
+            <div className="flex items-center gap-x-0.5 text-14 text-foreground-2 group-hover:text-foreground-1">
               {selectedCommits[0].value === 'ALL' ? (
                 <>
                   <span>{defaultCommitFilter.name}</span>
@@ -245,7 +245,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
         </DropdownMenu.Root>
 
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-14 group">
+          <DropdownMenu.Trigger className="group flex items-center gap-x-1.5 text-14">
             <span className="text-foreground-2 group-hover:text-foreground-1">
               {diffMode === DiffModeEnum.Split ? t('views:pullRequests.split') : t('views:pullRequests.unified')}
             </span>
@@ -272,7 +272,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           <p className="text-14 leading-tight text-foreground-4">
             Showing{' '}
             <DropdownMenu.Trigger className="group">
-              <span className="text-foreground-accent group-hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200">
+              <span className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-foreground-accent">
                 {pullReqStats?.files_changed} changed files
               </span>
             </DropdownMenu.Trigger>{' '}

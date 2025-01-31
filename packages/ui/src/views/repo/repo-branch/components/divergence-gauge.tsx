@@ -28,15 +28,15 @@ export const DivergenceGauge = ({ behindAhead, className, useTranslationStore }:
   return (
     <div className={cn('mt-0.5 flex w-full flex-col gap-[3px]', className)}>
       <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
-        <span className="text-13 text-foreground-3 truncate text-right leading-none">
+        <span className="truncate text-right text-13 leading-none text-foreground-3">
           {behindAhead.behind ?? 0}
           <span className="sr-only">
             {t('views:repos.commits', 'commits')}
             {t('views:repos.behind', 'behind')}
           </span>
         </span>
-        <div className="bg-borders-2 h-3 w-px" aria-hidden />
-        <span className="text-13 text-foreground-3 truncate leading-none">
+        <div className="h-3 w-px bg-borders-2" aria-hidden />
+        <span className="truncate text-13 leading-none text-foreground-3">
           {behindAhead.ahead ?? 0}
           <span className="sr-only">
             {t('views:repos.commits', 'commits')}

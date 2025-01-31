@@ -112,7 +112,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
         <div>
           <div className="flex flex-col gap-1">
             <Text className="text-md font-medium">Color Adjustment</Text>
-            <Text className="text-xs text-foreground-3">Adjust colors for different types of color blindness.</Text>
+            <Text className="text-xs text-foreground-3">Adjust colors for different types of vision deficiencies.</Text>
           </div>
           <div className="mt-4 flex gap-2">
             {Object.values(ColorAdjustment).map(item => (

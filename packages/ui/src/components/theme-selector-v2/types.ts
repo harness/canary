@@ -13,7 +13,7 @@ export enum Mode {
 export enum Contrast {
   Default = 'Default',
   HighContrast = 'High Contrast',
-  Dimmer = 'Dimmer'
+  Dim = 'Dim'
 }
 
 export enum ColorAdjustment {

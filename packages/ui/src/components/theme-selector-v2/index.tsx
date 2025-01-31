@@ -105,7 +105,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                   <input
                     type="radio"
                     name="theme"
-                    value={mode}
+                    value={item}
                     checked={mode === item}
                     onChange={() => {
                       setMode(item)
@@ -116,7 +116,7 @@ const ThemeDialog: React.FC<ThemeDialogProps> = ({
                   <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
                     {mode === item && <div className="h-2 w-2 rounded-full bg-white" />}
                   </div>
-                  <span className="text-gray-300">{item}</span>
+                  {item}
                 </div>
               </label>
             ))}

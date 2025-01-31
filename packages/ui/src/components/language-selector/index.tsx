@@ -89,24 +89,23 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content className="w-[400px]">
         <Dialog.Title>Language</Dialog.Title>
-        <div>
-          {languages.map(lang => (
-            <div
-              key={lang.code}
-              className={'flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700'}
-              onClick={() => {
-                setSelectedLanguage(lang.code)
-                onChange(lang)
-              }}
-            >
-              <div className="flex items-center gap-2">
-                <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
-                <span>{lang.name}</span>
-              </div>
-              {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
+        {languages.map(lang => (
+          <Button
+            variant="ghost"
+            key={lang.code}
+            className="flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700"
+            onClick={() => {
+              setSelectedLanguage(lang.code)
+              onChange(lang)
+            }}
+          >
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
+              <span>{lang.name}</span>
             </div>
-          ))}
-        </div>
+            {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
+          </Button>
+        ))}
 
         {/* Buttons */}
         <Dialog.Footer>

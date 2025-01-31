@@ -120,7 +120,7 @@ const PullRequestMergeSection = ({
                           e.stopPropagation()
                         }
                       }}
-                      className="px-1 text-blue-500"
+                      className="px-1 text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
                     >
                       {/* {getString('commandLine')} */}
                       command line

@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:pointer-events-none disabled:cursor-not-allowed',
+  'text-14 inline-flex items-center justify-center whitespace-nowrap rounded font-medium transition-colors disabled:pointer-events-none disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
@@ -15,9 +15,9 @@ const buttonVariants = cva(
         destructive:
           'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-3',
         outline:
-          'border border-borders-2 bg-transparent text-foreground-2 hover:border-borders-6 hover:text-foreground-8',
-        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        tertiary: 'bg-tertiary text-secondary-foreground shadow-sm hover:bg-tertiary/80',
+          'border-borders-2 text-foreground-2 hover:border-borders-6 hover:text-foreground-8 border bg-transparent',
+        secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm',
+        tertiary: 'bg-tertiary text-secondary-foreground hover:bg-tertiary/80 shadow-sm',
         ghost: 'hover:bg-background-12 hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
         link_accent: 'text-foreground-accent underline-offset-4 hover:underline',
@@ -31,10 +31,11 @@ const buttonVariants = cva(
         xs: 'h-auto px-1.5 py-0.5 text-xs font-normal',
         md: 'h-9 px-7',
         lg: 'h-10 px-8',
+        icon_xs: 'size-6',
         icon: 'size-8',
         sm_icon: 'size-7',
         xs_split: 'h-auto p-0 text-xs font-medium',
-        md_split: 'h-8 text-14 font-medium',
+        md_split: 'text-14 h-8 font-medium',
         lg_split: 'h-10 p-0 font-medium'
       },
       borderRadius: {

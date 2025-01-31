@@ -91,12 +91,12 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
           <div className="flex items-center gap-2 font-medium">
             <span>{`${props?.pullReqMetadata?.merger?.display_name} merged branch`}</span>
             <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
               {props?.pullReqMetadata?.source_branch}
             </Badge>
             <span>into</span>
             <Badge variant="secondary" size="xs">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
+              <Icon name="branch" size={12} className="text-tertiary-background mr-1" />
               {props?.pullReqMetadata?.target_branch}
             </Badge>
             <span>{formattedTime}</span>
@@ -121,7 +121,7 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   }
   return (
     <div className="inline-flex items-center gap-2">
-      <h2 className="font-medium text-foreground-1">
+      <h2 className="text-foreground-1 font-medium">
         {props.isDraft
           ? 'This pull request is still a work in progress'
           : props.isClosed
@@ -205,13 +205,20 @@ const PullRequestPanel = ({
     [pullReqMetadata]
   )
 
+  const isShowMoreTooltip = useMemo(
+    () => pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft,
+    [pullReqMetadata]
+  )
+
   const moreTooltip = () => {
     return (
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-            <Icon name="vertical-ellipsis" size={12} />
-          </Button>
+        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
+          <Icon
+            className="text-icons-1 group-hover:text-icons-2 transition-colors duration-200"
+            name="more-dots-fill"
+            size={12}
+          />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[200px]" align="end">
           <DropdownMenu.Group>
@@ -248,7 +255,12 @@ const PullRequestPanel = ({
   }
   return (
     <StackedList.Root>
-      <StackedList.Item className="items-center py-2.5" disableHover>
+      <StackedList.Item
+        className={cn('items-center py-2.5', {
+          'pr-2': isShowMoreTooltip
+        })}
+        disableHover
+      >
         <StackedList.Field
           className={cn({ 'w-full': !pullReqMetadata?.merged })}
           title={
@@ -278,7 +290,7 @@ const PullRequestPanel = ({
                   {commitSuggestionsBatchCount > 0 ? (
                     <Button className="gap-x-2" variant="outline" onClick={() => onCommitSuggestions()}>
                       Commit suggestion
-                      <span className="flex h-[18px] min-w-[18px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+                      <span className="border-tag-border-blue-1 bg-tag-background-blue-1 text-11 text-tag-foreground-blue-1 flex h-[18px] min-w-[18px] items-center justify-center rounded border px-1">
                         {commitSuggestionsBatchCount}
                       </span>
                     </Button>
@@ -330,17 +342,12 @@ const PullRequestPanel = ({
                       {actions[parseInt(mergeButtonValue)].title}
                     </ButtonWithOptions>
                   ) : (
-                    <Button
-                      size="md"
-                      theme="primary"
-                      disabled={!checkboxBypass && ruleViolation}
-                      onClick={actions[0].action}
-                    >
+                    <Button theme="primary" disabled={!checkboxBypass && ruleViolation} onClick={actions[0].action}>
                       Open for review
                     </Button>
                   )}
 
-                  {pullReqMetadata?.state === PullRequestState.OPEN && !pullReqMetadata?.is_draft && moreTooltip()}
+                  {isShowMoreTooltip && moreTooltip()}
                 </Layout.Horizontal>
               )
             }

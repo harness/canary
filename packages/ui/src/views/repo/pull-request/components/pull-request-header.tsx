@@ -65,75 +65,85 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
   }, [description, val, updateTitle])
   return (
     <div className="flex w-full flex-col gap-y-4">
-      <div className="flex w-full items-center">
-        <div className="flex h-[44px] w-full max-w-full items-center gap-x-2.5 text-24 font-medium text-foreground-1">
-          {!edit && <div className="flex h-full max-w-[95%] items-center truncate">{original}</div>}
-          {!edit && <span className="font-normal text-foreground-4">#{number}</span>}
-          {edit ? (
-            <Layout.Horizontal className="w-full">
-              <input
-                className="w-fit max-w-full rounded-md border bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                // wrapperClassName={css.input}
-                value={val}
-                onFocus={event => event.target.select()}
-                onInput={event => setVal(event.currentTarget.value)}
-                autoFocus
-                onKeyDown={event => {
-                  switch (event.key) {
-                    case 'Enter':
-                      submitChange()
-                      break
-                    case 'Escape': // does not work, maybe TextInput cancels ESC?
-                      setEdit(false)
-                      break
-                  }
-                }}
-              />
-              <Button
-                variant={'default'}
-                size={'sm'}
-                disabled={(val || '').trim().length === 0 || title === val}
-                onClick={submitChange}
-              >
-                Save
-              </Button>
-              <Button
-                variant={'secondary'}
-                size={'sm'}
-                onClick={() => {
-                  setEdit(false)
-                  setVal(title)
-                }}
-              >
-                Cancel
-              </Button>
-            </Layout.Horizontal>
-          ) : (
+      <div className="flex w-full max-w-full items-center gap-x-3 text-24">
+        {!edit && (
+          <div className="flex items-center gap-x-2.5 leading-snug">
+            <h1 className="flex max-w-[95%] items-center truncate font-medium text-foreground-1">{original}</h1>
+            <span className="font-normal text-foreground-4">#{number}</span>
+          </div>
+        )}
+        {/* TODO: editing should be done through a modal window */}
+        {edit ? (
+          <Layout.Horizontal className="w-full">
+            <input
+              className="w-fit max-w-full rounded-md border bg-primary-background hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              // wrapperClassName={css.input}
+              value={val}
+              onFocus={event => event.target.select()}
+              onInput={event => setVal(event.currentTarget.value)}
+              autoFocus
+              onKeyDown={event => {
+                switch (event.key) {
+                  case 'Enter':
+                    submitChange()
+                    break
+                  case 'Escape': // does not work, maybe TextInput cancels ESC?
+                    setEdit(false)
+                    break
+                }
+              }}
+            />
             <Button
-              size="icon"
-              variant="custom"
-              aria-label="Edit"
+              variant={'default'}
+              size={'sm'}
+              disabled={(val || '').trim().length === 0 || title === val}
+              onClick={submitChange}
+            >
+              Save
+            </Button>
+            <Button
+              variant={'secondary'}
+              size={'sm'}
               onClick={() => {
-                setEdit(true)
+                setEdit(false)
+                setVal(title)
               }}
             >
-              <Icon name="edit-pen" size={16} className="text-foreground-4" />
+              Cancel
             </Button>
-          )}
-          {err && <Text className="text-destructive">{err}</Text>}
-        </div>
+          </Layout.Horizontal>
+        ) : (
+          <Button
+            className="border border-borders-2 group"
+            size="icon_xs"
+            variant="custom"
+            aria-label="Edit"
+            onClick={() => {
+              setEdit(true)
+            }}
+          >
+            <Icon name="edit-pen" size={16} className="text-icons-1 group-hover:text-icons-3" />
+          </Button>
+        )}
+        {err && <Text className="text-destructive">{err}</Text>}
       </div>
 
       <div className="flex items-center gap-x-3">
-        <Badge className="gap-x-1 font-normal" disableHover borderRadius="full" theme={stateObject.theme as ThemeType}>
+        <Badge
+          className="gap-x-1 font-normal"
+          size="md"
+          disableHover
+          borderRadius="full"
+          theme={stateObject.theme as ThemeType}
+        >
           <Icon name={stateObject.icon as IconType} size={13} />
           {stateObject.text}
         </Badge>
 
         <div className="inline-flex flex-wrap items-center gap-1 text-foreground-4">
-          <span className="text-foreground-1">{author?.display_name || author?.email || ''}</span>
+          <span className="text-foreground-1 font-medium">{author?.display_name || author?.email || ''}</span>
           <span>{merged ? 'merged' : ' wants to merge'}</span>
-          <span className="text-foreground-1">
+          <span className="text-foreground-1 font-medium">
             {stats?.commits} {stats?.commits === 1 ? 'commit' : 'commits'}
           </span>
           <span>into</span>

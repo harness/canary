@@ -365,7 +365,8 @@ export default function PullRequestChanges() {
   }
 
   const defaultCommitFilter: CommitFilterItemProps = {
-    name: `All Commits (${pullReqCommits?.commits?.length || 0})`,
+    name: 'All Commits',
+    count: pullReqCommits?.commits?.length || 0,
     value: 'ALL'
   }
 

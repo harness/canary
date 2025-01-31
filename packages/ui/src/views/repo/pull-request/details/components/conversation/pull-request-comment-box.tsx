@@ -76,7 +76,7 @@ const PullRequestCommentBox = ({
     return (
       <Avatar size="6">
         <AvatarFallback>
-          <span className="text-12 text-foreground-3">{getInitials(currentUser || '')}</span>
+          <span className="text-12 text-foreground-1">{getInitials(currentUser || '')}</span>
         </AvatarFallback>
       </Avatar>
     )
@@ -158,7 +158,7 @@ const PullRequestCommentBox = ({
       {!inReplyMode && !isEditMode && avatar}
 
       <div
-        className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -204,7 +204,7 @@ const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button size="icon" variant="ghost" onClick={item?.onClick}>
+                      <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-borders-2" />}

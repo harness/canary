@@ -319,7 +319,7 @@ const PullRequestDiffViewer = ({
       const commentText = newComments[commentKey] ?? ''
 
       return (
-        <div className="flex w-full flex-col border-l border-borders-1 bg-background-1 p-4">
+        <div className="border-borders-1 bg-background-1 flex w-full flex-col border-l p-4">
           <PullRequestCommentBox
             handleUpload={handleUpload}
             isEditMode
@@ -355,7 +355,7 @@ const PullRequestDiffViewer = ({
       if (!threads) return <></>
 
       return (
-        <div className="border-l border-borders-1 bg-background-1">
+        <div className="border-borders-1 bg-background-1 border-l">
           {threads.map(thread => {
             const parent = thread.parent
             const componentId = `activity-code-${parent?.id}`
@@ -385,7 +385,7 @@ const PullRequestDiffViewer = ({
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
                       {/* TODO: need to identify the author who resolved the conversation */}
-                      <span className="font-medium text-foreground-8">{parent.author}</span>
+                      <span className="text-foreground-8 font-medium">{parent.author}</span>
                       <span className="text-foreground-4">marked this conversation as resolved</span>
                     </div>
                   )
@@ -393,7 +393,7 @@ const PullRequestDiffViewer = ({
                 content={
                   <div className="px-4 pt-4">
                     <PullRequestTimelineItem
-                      titleClassName="max-w-full"
+                      titleClassName="w-full"
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
@@ -411,7 +411,7 @@ const PullRequestDiffViewer = ({
                       icon={
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">{parentInitials}</span>
+                            <span className="text-12 text-foreground-1">{parentInitials}</span>
                           </AvatarFallback>
                         </Avatar>
                       }
@@ -433,7 +433,7 @@ const PullRequestDiffViewer = ({
                       ]}
                       content={
                         parent?.deleted ? (
-                          <div className="rounded-md border bg-primary-background p-1">
+                          <div className="bg-primary-background rounded-md border p-1">
                             {t('views:pullRequests.deletedComment')}
                           </div>
                         ) : editModes[componentId] ? (
@@ -494,7 +494,7 @@ const PullRequestDiffViewer = ({
                               icon={
                                 <Avatar className="size-6 rounded-full p-0">
                                   <AvatarFallback>
-                                    <span className="text-12 text-foreground-3">{replyInitials}</span>
+                                    <span className="text-12 text-foreground-1">{replyInitials}</span>
                                   </AvatarFallback>
                                 </Avatar>
                               }
@@ -516,7 +516,7 @@ const PullRequestDiffViewer = ({
                               ]}
                               content={
                                 reply?.deleted ? (
-                                  <div className="rounded-md border bg-primary-background p-1">
+                                  <div className="bg-primary-background rounded-md border p-1">
                                     {t('views:pullRequests.deletedComment')}
                                   </div>
                                 ) : editModes[replyComponentId] ? (
@@ -585,7 +585,7 @@ const PullRequestDiffViewer = ({
         // @ts-ignore
         <DiffView<Thread[]>
           ref={ref}
-          className="bg-tr w-full text-tertiary-background"
+          className="bg-tr text-tertiary-background w-full"
           renderWidgetLine={renderWidgetLine}
           renderExtendLine={renderExtendLine}
           diffFile={diffFileInstance}

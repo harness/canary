@@ -23,7 +23,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
       <div className="flex items-center space-x-2">
         <Avatar className="size-6 rounded-full p-0">
           <AvatarFallback>
-            <span className="text-12 text-foreground-3">{getInitials(reviewer?.display_name || '')}</span>
+            <span className="text-12 text-foreground-1">{getInitials(reviewer?.display_name || '')}</span>
           </AvatarFallback>
         </Avatar>
         <div className="truncate text-14 font-medium text-foreground-8">{reviewer?.display_name}</div>

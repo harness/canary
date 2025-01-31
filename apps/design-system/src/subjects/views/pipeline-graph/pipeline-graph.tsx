@@ -92,7 +92,13 @@ export function SerialGroupNodeComponent({
   const { name } = node.data
 
   return (
-    <PipelineNodes.SerialGroupNode name={name} onEllipsisClick={() => undefined} onAddClick={() => undefined}>
+    <PipelineNodes.SerialGroupNode
+      name={name}
+      onEllipsisClick={() => undefined}
+      onAddClick={() => undefined}
+      onHeaderClick={() => undefined}
+      onAddInClick={() => undefined}
+    >
       {children}
     </PipelineNodes.SerialGroupNode>
   )
@@ -114,7 +120,13 @@ export function ParallelGroupNodeComponent({
   const { name } = node.data
 
   return (
-    <PipelineNodes.ParallelGroupNode name={name} onEllipsisClick={() => undefined} onAddClick={() => undefined}>
+    <PipelineNodes.ParallelGroupNode
+      name={name}
+      onEllipsisClick={() => undefined}
+      onAddClick={() => undefined}
+      onHeaderClick={() => undefined}
+      onAddInClick={() => undefined}
+    >
       {children}
     </PipelineNodes.ParallelGroupNode>
   )

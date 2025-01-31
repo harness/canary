@@ -15,26 +15,38 @@ export enum Language {
   LatinAmerican = 'Latin American'
 }
 
+export enum LanguageCode {
+  EN = 'EN',
+  БГ = 'БГ',
+  HR = 'HR',
+  CZ = 'CZ',
+  FR = 'FR',
+  DE = 'DE',
+  IE = 'IE',
+  PY = 'PY',
+  LA = 'LA'
+}
+
 export interface LanguageInterface {
-  code: string
+  code: LanguageCode
   name: Language
 }
 
 const languages: LanguageInterface[] = [
-  { code: 'EN', name: Language.English },
-  { code: 'БГ', name: Language.Bulgarian },
-  { code: 'HR', name: Language.Croatian },
-  { code: 'CZ', name: Language.Czech },
-  { code: 'FR', name: Language.French },
-  { code: 'DE', name: Language.German },
-  { code: 'IE', name: Language.Irish },
-  { code: 'PY', name: Language.Russian },
-  { code: 'LA', name: Language.LatinAmerican }
+  { code: LanguageCode.EN, name: Language.English },
+  { code: LanguageCode.БГ, name: Language.Bulgarian },
+  { code: LanguageCode.HR, name: Language.Croatian },
+  { code: LanguageCode.CZ, name: Language.Czech },
+  { code: LanguageCode.FR, name: Language.French },
+  { code: LanguageCode.DE, name: Language.German },
+  { code: LanguageCode.IE, name: Language.Irish },
+  { code: LanguageCode.PY, name: Language.Russian },
+  { code: LanguageCode.LA, name: Language.LatinAmerican }
 ]
 
 interface LanguageDialogProps {
-  defaultLanguage?: LanguageInterface
-  language?: LanguageInterface
+  defaultLanguage?: LanguageCode
+  language?: LanguageCode
   open: boolean
   onOpenChange: (open: boolean) => void
   onChange: (language: LanguageInterface) => void
@@ -53,13 +65,13 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
   onCancel,
   children
 }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<string | null>(null)
+  const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode | null>(null)
 
   useEffect(() => {
     if (language) {
-      setSelectedLanguage(language.code)
+      setSelectedLanguage(language)
     } else if (defaultLanguage) {
-      setSelectedLanguage(defaultLanguage.code)
+      setSelectedLanguage(defaultLanguage)
     }
   }, [defaultLanguage, language])
 
@@ -77,7 +89,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
       <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content className="w-[400px]">
         <Dialog.Title>Language</Dialog.Title>
-        <div className="space-y-2">
+        <div>
           {languages.map(lang => (
             <div
               key={lang.code}
@@ -91,7 +103,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
                 <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
                 <span>{lang.name}</span>
               </div>
-              {selectedLanguage === lang.code && <CheckIcon width={16} height={16} />}
+              {selectedLanguage === lang.code && <CheckIcon width={20} height={20} />}
             </div>
           ))}
         </div>

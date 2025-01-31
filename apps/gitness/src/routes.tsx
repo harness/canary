@@ -6,7 +6,7 @@ import {
   Button,
   ColorAdjustment,
   Contrast,
-  Language,
+  LanguageCode,
   LanguageDialog,
   LanguageInterface,
   Mode,
@@ -1002,7 +1002,7 @@ export const routes: CustomRouteObject[] = [
     path: 'language-select',
     element: (
       <LanguageDialog
-        defaultLanguage={{ code: 'FR', name: Language.French }}
+        defaultLanguage={LanguageCode.DE}
         onSave={(lang: LanguageInterface) => console.log(lang)}
         onChange={(lang: LanguageInterface) => console.log(lang)}
       >

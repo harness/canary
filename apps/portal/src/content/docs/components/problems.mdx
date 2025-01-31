@@ -1,0 +1,66 @@
+---
+title: Problems
+description: Problems component
+---
+
+The `Problems` component is used to display a list of problems with different severities. Each problem can be clicked to trigger an action, and the component supports highlighting a selected problem.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Problems
+  problems={[
+    { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error' },
+    { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning' },
+    { message: 'Info message', position: { row: 3, column: 15 }, severity: 'info' }
+  ]}
+  onClick={(problem) => console.log(problem)}
+/>`}
+/>
+
+<DocsPage.ComponentExample client:only code={`<NoProblemsFound />`} />
+
+## Usage
+
+```typescript jsx
+import { Problems, NoProblemsFound } from '@harnessio/ui/components'
+
+//...
+
+return (
+  <>
+    <Problems
+      problems={[
+        { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error' },
+        { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning' },
+        { message: 'Info message', position: { row: 3, column: 15 }, severity: 'info' }
+      ]}
+      onClick={(problem) => console.log(problem)}
+    />
+
+    <NoProblemsFound />
+  </>
+)
+```
+
+## API Reference
+
+```
+<Problems
+  problems={[
+    // Array of problems to display
+    {
+      message: "...", // Problem message
+      position: {
+        // Position of the problem for referencing in the YAML editor
+        row: 1, // Row number
+        column: 1, // Column number
+      },
+      severity: "...", // Severity of the problem ('error', 'warning', 'info')
+    },
+  ]}
+  onClick={handleClick} // Function to call when a problem is clicked
+  selectedProblemIdx={0} // [OPTIONAL] Index of the selected problem for controlled mode
+/>
+```

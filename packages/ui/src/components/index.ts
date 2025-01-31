@@ -73,6 +73,7 @@ export * from './pipeline-nodes'
 export * from './sidebar/sidebar'
 export * from './separator'
 export * from './label-marker'
+export * from './problems'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

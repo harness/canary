@@ -2,7 +2,17 @@ import { useState } from 'react'
 
 import { Icon } from '@components/icon'
 
-import { Problem, ProblemSeverity } from '../views/pipeline-edit/components/graph-implementation/types/problem-type'
+export type ProblemSeverity = 'error' | 'warning' | 'info'
+
+export interface Problem<T = unknown> {
+  severity: ProblemSeverity
+  message: string
+  position: {
+    row: number
+    column: number
+  }
+  data?: T
+}
 
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
   switch (severity) {

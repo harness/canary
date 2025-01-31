@@ -1,6 +1,5 @@
+import type { Problem, ProblemSeverity } from '@components/problems'
 import { MarkerSeverity as MarkerSeverityEnum, type editor, type MarkerSeverity } from 'monaco-editor'
-
-import { Problem, ProblemSeverity } from '../types/problem-type'
 
 const markerSeverity2ProblemSeverity = (severity: MarkerSeverity): ProblemSeverity => {
   switch (severity) {

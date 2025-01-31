@@ -1168,3 +1168,20 @@ mark {
 .monaco-diff-editor.side-by-side .editor.modified {
   @apply !border-borders-1 !border-l !border-solid !shadow-none;
 }
+
+/* In View Diff Renderer */
+.diffViewBlock {
+  @apply visible box-border flex h-auto min-h-[48px] flex-col;
+}
+
+/* .hidden extension */
+.diffViewBlock.hiddenDiff {
+  @apply invisible h-[var(--block-height)] [contain-intrinsic-size:auto_var(--block-height)] [content-visibility:auto];
+}
+
+.diffViewBlock.hiddenDiff > * {
+  visibility: hidden !important;
+}
+.diffViewBlock.hiddenDiff > * > * {
+  display: none !important;
+}

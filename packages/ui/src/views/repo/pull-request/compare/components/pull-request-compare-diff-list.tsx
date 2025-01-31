@@ -68,9 +68,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
 }) => {
   const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
-  const startingLine =
-    parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null
   const [showHiddenDiff, setShowHiddenDiff] = useState(false)
+  const startingLine = useMemo(
+    () => (parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null),
+    [header?.data]
+  )
 
   const fileDeleted = useMemo(() => header?.deleted, [header?.deleted])
   const isDiffTooLarge = useMemo(() => {
@@ -117,11 +119,11 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                   </Layout.Vertical>
                 ) : (
                   <>
-                    {startingLine ? (
+                    {startingLine && (
                       <div className="bg-[--diff-hunk-lineNumber--]">
                         <div className="ml-16 w-full px-2 py-1">{startingLine}</div>
                       </div>
-                    ) : null}
+                    )}
                     <PullRequestDiffViewer
                       currentUser={currentUser}
                       data={header?.data}

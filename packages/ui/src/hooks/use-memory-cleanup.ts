@@ -53,7 +53,7 @@ const getMemoryUsage = (): number | null => {
  * @param threshold Memory threshold in MB
  * @param interval Check interval in ms
  */
-export const useMemoryCleanup = (cleanupFn: () => void, threshold = 800, interval = 30000) => {
+export const useMemoryCleanup = (cleanupFn: () => void, threshold = 1200, interval = 30000) => {
   useEffect(() => {
     if (!hasMemoryAPI()) {
       console.debug('Memory API not available - memory cleanup disabled')

@@ -99,11 +99,36 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
+  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
+  const [isInView, setIsInView] = useState(false)
 
-  // Cleanup function for memory management
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the element is visible
+      }
+    )
+
+    const currentRef = diffInstanceRef.current
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [])
+
   const cleanup = useCallback(() => {
-    // Clean up diff instance
-    if (diffFileInstance) {
+    // clean up diff instance if it is not in view
+    if (!isInView && diffFileInstance) {
       diffFileInstance._destroy?.()
       setDiffFileInstance(undefined)
     }
@@ -113,7 +138,7 @@ const PullRequestDiffViewer = ({
       instance.destroy()
     })
     overlayScrollbarsInstances.current = []
-  }, [diffFileInstance])
+  }, [diffFileInstance, isInView])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -581,22 +606,24 @@ const PullRequestDiffViewer = ({
   return (
     <>
       {diffFileInstance && (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        <DiffView<Thread[]>
-          ref={ref}
-          className="bg-tr w-full text-tertiary-background"
-          renderWidgetLine={renderWidgetLine}
-          renderExtendLine={renderExtendLine}
-          diffFile={diffFileInstance}
-          extendData={extend}
-          diffViewFontSize={fontsize}
-          diffViewHighlight={highlight}
-          diffViewMode={mode}
-          registerHighlighter={highlighter}
-          diffViewWrap={wrap}
-          diffViewAddWidget={addWidget}
-        />
+        <div ref={diffInstanceRef}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <DiffView<Thread[]>
+            ref={ref}
+            className="bg-tr w-full text-tertiary-background"
+            renderWidgetLine={renderWidgetLine}
+            renderExtendLine={renderExtendLine}
+            diffFile={diffFileInstance}
+            extendData={extend}
+            diffViewFontSize={fontsize}
+            diffViewHighlight={highlight}
+            diffViewMode={mode}
+            registerHighlighter={highlighter}
+            diffViewWrap={wrap}
+            diffViewAddWidget={addWidget}
+          />
+        </div>
       )}
     </>
   )

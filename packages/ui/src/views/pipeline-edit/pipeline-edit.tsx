@@ -13,6 +13,7 @@ import { CommonNodeDataType } from './components/graph-implementation/types/comm
 import { ContentNodeType } from './components/graph-implementation/types/content-node-type'
 import { YamlEntityType } from './components/graph-implementation/types/yaml-entity-type'
 import { PipelineStudioNodeContextMenu } from './components/pipeline-studio-node-context-menu'
+import { ErrorDataType } from './components/pipeline-studio-yaml-view'
 import { ContentNodeFactory, PipelineStudio, PipelineStudioProps, YamlRevision } from './pipeline-studio'
 
 export interface PipelineEditProps {
@@ -34,6 +35,7 @@ export interface PipelineEditProps {
   onDeleteIntention: (nodeData: CommonNodeDataType) => undefined
   onRevealInYaml: (_path: string | undefined) => undefined
   yamlEditorConfig?: PipelineStudioProps['yamlEditorConfig']
+  onErrorChange?: (data: ErrorDataType) => void
 }
 
 export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
@@ -47,7 +49,8 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     onSelectIntention,
     onRevealInYaml,
     yamlEditorConfig,
-    selectedPath
+    selectedPath,
+    onErrorChange
   } = props
 
   const contentNodeFactory = new ContentNodeFactory()
@@ -119,6 +122,7 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
         yamlRevision={yamlRevision}
         onYamlRevisionChange={onYamlRevisionChange}
         yamlEditorConfig={yamlEditorConfig}
+        onErrorChange={onErrorChange}
       />
       <PipelineStudioNodeContextMenu />
     </PipelineStudioNodeContextProvider>

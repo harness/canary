@@ -1,20 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import { editor } from 'monaco-editor'
 import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
 import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
 import { StandaloneServices } from 'monaco-editor/esm/vs/editor/standalone/browser/standaloneServices.js'
 
-import { MonacoGlobals, YamlEditor } from '@harnessio/yaml-editor'
+import { MonacoGlobals, useYamlEditorContext, YamlEditor } from '@harnessio/yaml-editor'
 
 import { YamlRevision } from '../pipeline-studio'
 import unifiedSchema from '../schema/unifiedSchema.json'
 import { themes } from '../theme/monaco-theme'
+import { Problem, ProblemSeverity } from './graph-implementation/types/problem-type'
+import { countProblems, monacoMarkers2Problems } from './graph-implementation/utils/problems-utils'
 
 MonacoGlobals.set({
   ILanguageFeaturesService,
   OutlineModel,
   StandaloneServices
 })
+
+export type ErrorDataType = {
+  problems: Problem<editor.IMarker>[]
+  problemsCount: Record<ProblemSeverity | 'all', number>
+  isYamlValid: boolean
+}
 
 export interface PipelineStudioYamlViewProps {
   yamlRevision: YamlRevision
@@ -23,15 +32,28 @@ export interface PipelineStudioYamlViewProps {
     folding?: boolean
     minimap?: boolean
   }
+  onErrorChange?: (data: ErrorDataType) => void
 }
 
 const PipelineStudioYamlView = (props: PipelineStudioYamlViewProps): JSX.Element => {
-  const { yamlRevision, onYamlRevisionChange, yamlEditorConfig = {} } = props
+  const { yamlRevision, onYamlRevisionChange, yamlEditorConfig = {}, onErrorChange } = props
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
   const forceRerender = () => {
     setRerenderYamlEditor(reRenderYamlEditor + 1)
   }
+
+  const { markers } = useYamlEditorContext()
+
+  useEffect(() => {
+    if (onErrorChange) {
+      const problems = monacoMarkers2Problems(markers)
+      const problemsCount = countProblems(problems)
+      const isYamlValid = problemsCount.error === 0
+
+      onErrorChange({ problems, problemsCount, isYamlValid })
+    }
+  }, [markers])
 
   // stores current yaml we have in monaco
   const currentYamlRef = useRef<string | undefined>('')

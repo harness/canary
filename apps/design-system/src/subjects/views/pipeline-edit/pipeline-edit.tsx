@@ -1,9 +1,10 @@
 import { useState } from 'react'
 
-import { Button, ButtonGroup } from '@harnessio/ui/components'
+import { Button, ButtonGroup, Icon } from '@harnessio/ui/components'
 import {
   CommonNodeDataType,
   deleteItemInArray,
+  ErrorDataType,
   injectItemInArray,
   PipelineEdit,
   YamlEntityType
@@ -15,6 +16,7 @@ const PipelineStudioWrapper = () => {
   const [yamlRevision, setYamlRevision] = useState({ yaml: pipelineYaml1 })
   const [view, setView] = useState<'graph' | 'yaml'>('graph')
   const [selectedPath, setSelectedPath] = useState<string | undefined>()
+  const [errorData, setErrorData] = useState<ErrorDataType>()
 
   const processAddIntention = (
     nodeData: CommonNodeDataType,
@@ -61,10 +63,13 @@ const PipelineStudioWrapper = () => {
     setYamlRevision({ yaml: newYaml })
   }
 
+  const isYamlInvalid = errorData && !errorData?.isYamlValid
+
   return (
     <div className="flex h-screen flex-col">
       <ButtonGroup className="m-2 flex gap-2">
-        <Button onClick={() => setView('graph')} variant={'secondary'}>
+        <Button onClick={() => setView('graph')} variant={'secondary'} disabled={isYamlInvalid}>
+          {isYamlInvalid ? <Icon name="triangle-warning" /> : null}
           Visual
         </Button>
         <Button onClick={() => setView('yaml')} variant={'secondary'}>
@@ -77,6 +82,9 @@ const PipelineStudioWrapper = () => {
         onYamlRevisionChange={setYamlRevision}
         view={view}
         selectedPath={selectedPath}
+        onErrorChange={data => {
+          setErrorData(data)
+        }}
         onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
           console.log('onAddIntention')
           processAddIntention(nodeData, position, yamlEntityTypeToAdd)

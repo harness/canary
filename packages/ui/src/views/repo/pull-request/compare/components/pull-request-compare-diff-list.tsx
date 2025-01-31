@@ -69,7 +69,6 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
   const { t: _ts } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
   const [showHiddenDiff, setShowHiddenDiff] = useState(false)
-  const [isDiffReady, setIsDiffReady] = useState(false)
   const startingLine = useMemo(
     () => (parseStartingLineIfOne(header?.data ?? '') !== null ? parseStartingLineIfOne(header?.data ?? '') : null),
     [header?.data]
@@ -86,13 +85,6 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
     () => header?.unchangedPercentage === 100 || (header?.addedLines === 0 && header?.removedLines === 0),
     [header?.addedLines, header?.removedLines, header?.unchangedPercentage]
   )
-
-  const shouldShowDiff = !fileDeleted && !isDiffTooLarge && !fileUnchanged && !header?.isBinary
-  const isContentReady = isDiffReady || !shouldShowDiff
-
-  if (!isContentReady) {
-    return null
-  }
 
   return (
     <StackedList.Root>
@@ -148,7 +140,6 @@ const PullRequestAccordion: FC<PullRequestAccordionProps> = ({
                       deleted={header?.deleted}
                       unchangedPercentage={header?.unchangedPercentage}
                       useTranslationStore={useTranslationStore}
-                      onReady={() => setIsDiffReady(true)}
                     />
                   </>
                 )}

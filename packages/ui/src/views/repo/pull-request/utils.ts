@@ -72,7 +72,7 @@ export function quoteTransform(raw: string): string {
     .join(CRLF)
 }
 
-// If a diff container has a Markdown Editor active, retain it event it's off-screen to make
+// If a diff container has a Markdown Editor active, retain it even if it's off-screen to make
 // sure editor content is not cleared out during off-screen optimization
 export const shouldRetainDiffChildren = (dom: HTMLElement | null) =>
   !!dom?.querySelector('[data-comment-editor-shown="true"]')

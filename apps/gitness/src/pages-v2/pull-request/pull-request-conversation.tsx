@@ -564,7 +564,7 @@ export default function PullRequestConversationPage() {
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}
             {rebaseErrorMessage ? (
-              <Alert.Container variant="destructive" className="mb-5">
+              <Alert.Container closable variant="destructive" className="mb-5">
                 <Alert.Title>Cannot rebase branch</Alert.Title>
                 <Alert.Description>
                   <p>{rebaseErrorMessage}</p>

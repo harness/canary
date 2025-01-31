@@ -81,16 +81,17 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
           {languages.map(lang => (
             <div
               key={lang.code}
-              className={`flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700 ${selectedLanguage === lang.code ? 'bg-gray-600' : 'bg-gray-800'}`}
+              className={'flex justify-between items-center p-2 rounded-md cursor-pointer hover:bg-gray-700'}
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)
               }}
             >
-              <span>
-                {lang.code} - {lang.name}
-              </span>
-              {selectedLanguage === lang.code && <CheckIcon />}
+              <div className="flex items-center gap-2">
+                <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
+                <span>{lang.name}</span>
+              </div>
+              {selectedLanguage === lang.code && <CheckIcon width={16} height={16} />}
             </div>
           ))}
         </div>

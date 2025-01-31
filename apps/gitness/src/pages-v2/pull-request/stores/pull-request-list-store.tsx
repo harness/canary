@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 
 import { ListPullReqOkResponse } from '@harnessio/code-service-client'
+import { ColorsEnum, PRListLabelType } from '@harnessio/ui/src/views'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
@@ -20,10 +21,7 @@ interface PullRequestListType {
   comments?: number
   state?: string
   updated: number
-  labels?: {
-    text: string
-    color: string
-  }[]
+  labels: PRListLabelType[]
 }
 interface PullRequestListStore {
   pullRequests: PullRequestListType[] | null
@@ -42,6 +40,7 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
   page: 1,
   openPullReqs: 0,
   closedPullReqs: 0,
+  labels: [],
   setPage: page => set({ page }),
 
   setPullRequests: (data, headers) => {
@@ -63,8 +62,9 @@ export const usePullRequestListStore = create<PullRequestListStore>(set => ({
       targetBranch: item?.target_branch,
       state: item?.state,
       labels: item?.labels?.map(label => ({
-        text: label?.key && label?.value ? `${label?.key}:${label?.value}` : (label.key ?? ''),
-        color: label?.color as string
+        key: label?.key!,
+        value: label?.value,
+        color: (label?.value_color || label?.color) as ColorsEnum
       }))
     }))
 

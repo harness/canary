@@ -1,42 +1,29 @@
-import { Button, Icon } from '@components/index'
+import { FC } from 'react'
+
+import { LabelMarker } from '@/components'
+import { LabelAssignmentType } from '@/views'
 
 interface LabelsListProps {
-  labels?: { key?: string; id?: number; color?: string }[]
-  handleDelete?: (id: number) => void
-  addLabelError?: string
-  removeLabelError?: string
+  labels: LabelAssignmentType[]
 }
 
-const LabelsList: React.FC<LabelsListProps> = ({ labels, handleDelete, addLabelError, removeLabelError }) => (
-  <div className="flex flex-col gap-3">
-    {addLabelError || removeLabelError ? (
-      <span className="text-12 text-destructive">{addLabelError ?? removeLabelError}</span>
-    ) : (
-      <></>
-    )}
-    {labels?.length ? (
-      labels?.map(({ key, id, color }) => (
-        <div key={id} className="mr-1 flex items-center space-x-2">
-          <div className="p-0.5 outline outline-1" style={{ outlineColor: color }}>
-            <span className="px-1" style={{ color: color }}>
-              {key}
-            </span>
-            <Button
-              variant="ghost"
-              size="xs"
-              onClick={() => {
-                handleDelete?.(id ?? 0)
-              }}
-            >
-              <Icon name="close" size={12} className="text-tertiary-background" />
-            </Button>
-          </div>
-        </div>
-      ))
-    ) : (
-      <span className="text-14 font-medium text-foreground-5">No labels</span>
-    )}
-  </div>
-)
+const LabelsList: FC<LabelsListProps> = ({ labels }) => {
+  if (!labels.length) {
+    return <span className="text-14 font-medium text-foreground-5">No labels</span>
+  }
+
+  return (
+    <div className="flex gap-1.5">
+      {labels.map(label => (
+        <LabelMarker
+          key={label.id}
+          color={label?.assigned_value?.color || label.color}
+          label={label.key}
+          value={label?.assigned_value?.value || undefined}
+        />
+      ))}
+    </div>
+  )
+}
 
 export { LabelsList }

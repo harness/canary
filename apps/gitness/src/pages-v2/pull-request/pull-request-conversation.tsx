@@ -33,7 +33,9 @@ import {
   useUnassignLabelMutation,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
+import { OpenapiPullReqAssignLabelInput } from '@harnessio/code-service-client/dist/code-service/src/services/schemas/OpenapiPullReqAssignLabelInput'
 import { SkeletonList, Spacer } from '@harnessio/ui/components'
+import { HandleAddLabelType } from '@harnessio/ui/src/views'
 import {
   PullRequestCommentBox,
   PullRequestFilters,
@@ -59,6 +61,7 @@ import {
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
+import { useGetRepoLabelAndValuesData } from '../repo/labels/hooks/use-get-repo-label-and-values-data.ts'
 import { useActivityFilters } from './hooks/useActivityFilters'
 import { useDateFilters } from './hooks/useDataFilters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
@@ -84,7 +87,9 @@ export default function PullRequestConversationPage() {
     pullReqChecksDecision: state.pullReqChecksDecision,
     updateCommentStatus: state.updateCommentStatus
   }))
+
   const { currentUser: currentUserData } = useAppContext()
+
   const [checkboxBypass, setCheckboxBypass] = useState(false)
   const [searchReviewers, setSearchReviewers] = useState('')
   const [addReviewerError, setAddReviewerError] = useState('')
@@ -96,10 +101,6 @@ export default function PullRequestConversationPage() {
   const [errorMsg, setErrorMsg] = useState('')
   const { spaceId, repoId } = useParams<PathParams>()
 
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
-  })
   const [comment, setComment] = useState<string>('')
   const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -112,6 +113,12 @@ export default function PullRequestConversationPage() {
   const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
   const activityFilters = useActivityFilters()
   const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
+
+  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+  })
+
   const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
@@ -126,9 +133,14 @@ export default function PullRequestConversationPage() {
     queryParams: {}
   })
 
-  const { data: { body: labelsList } = {} } = useListRepoLabelsQuery({
-    repo_ref: repoRef,
-    queryParams: { inherited: true, query: searchLabel }
+  const {
+    isLoading: isLoadingLabels,
+    labels,
+    values: labelsValues
+  } = useGetRepoLabelAndValuesData({
+    query: searchLabel,
+    inherited: true,
+    limit: 100
   })
 
   const { data: { body: PRLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
@@ -163,20 +175,19 @@ export default function PullRequestConversationPage() {
     }
   )
 
-  const handleAddLabel = (id?: number) => {
-    if (!id) return
-    addLabel({
-      body: {
-        label_id: id
-      }
-    })
-  }
+  const handleAddLabel = useCallback(
+    (body: HandleAddLabelType) => {
+      addLabel({ body })
+    },
+    [addLabel]
+  )
 
-  const handleRemoveLabel = (id: number) => {
-    removeLabel({
-      label_id: id
-    })
-  }
+  const handleRemoveLabel = useCallback(
+    (label_id: number) => {
+      removeLabel({ label_id })
+    },
+    [removeLabel]
+  )
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
   const onRestoreBranch = () => {
@@ -700,20 +711,9 @@ export default function PullRequestConversationPage() {
               }))}
               searchQuery={searchReviewers}
               setSearchQuery={setSearchReviewers}
-              labelsList={labelsList?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
-              PRLabels={PRLabels?.label_data?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
+              labelsList={labels}
+              labelsValues={labelsValues}
+              PRLabels={PRLabels?.label_data || []}
               searchLabelQuery={searchLabel}
               setSearchLabelQuery={setSearchLabel}
               addLabel={handleAddLabel}

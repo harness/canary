@@ -5,7 +5,7 @@ import { cn } from '@utils/cn'
 
 export interface LabelMarkerProps {
   label: string
-  value?: string | number
+  value?: string
   color: ColorsEnum
   inTable?: boolean
 }

@@ -1,11 +1,29 @@
-import { Button, DropdownMenu, Icon, SearchBox } from '@/components'
-import { TranslationStore } from '@/views'
-import { cn } from '@utils/cn'
+import { useMemo, useState } from 'react'
+
+import { Button, DropdownMenu, Icon, LabelMarker, ScrollArea, SearchBox } from '@/components'
+import { useDebounceSearch } from '@/hooks'
+import {
+  HandleAddLabelType,
+  ILabelType,
+  LabelAssignmentType,
+  LabelType,
+  LabelValuesType,
+  LabelValueType,
+  TranslationStore
+} from '@/views'
+
+interface LabelsWithValueType extends ILabelType {
+  value?: LabelValueType['value']
+  isCustom?: boolean
+  valueId?: LabelValueType['id']
+  isSelected: boolean
+}
 
 interface LabelsHeaderProps {
-  labelsList?: { key?: string; id?: number; color?: string }[]
-  selectedLabels?: { key?: string; id?: number; color?: string }[]
-  addLabel?: (id?: number) => void
+  labelsList: ILabelType[]
+  labelsValues: LabelValuesType
+  selectedLabels: LabelAssignmentType[]
+  addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   searchQuery?: string
   setSearchQuery?: (query: string) => void
@@ -14,6 +32,7 @@ interface LabelsHeaderProps {
 
 const LabelsHeader = ({
   labelsList,
+  labelsValues,
   selectedLabels,
   addLabel,
   removeLabel,
@@ -22,8 +41,69 @@ const LabelsHeader = ({
   useTranslationStore
 }: LabelsHeaderProps) => {
   const { t } = useTranslationStore()
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery?.(event.target.value)
+  const [showCustomValueForm, setShowCustomValueForm] = useState(false)
+
+  const { search, handleSearchChange } = useDebounceSearch({
+    handleChangeSearchValue: setSearchQuery,
+    searchValue: searchQuery
+  })
+
+  const labelsListWithValues = useMemo(() => {
+    return labelsList.flatMap(label => {
+      const res: LabelsWithValueType[] = []
+
+      const isCustom = label.type === LabelType.DYNAMIC
+      const labelValues = labelsValues[label.key]
+      const selectedLabel = selectedLabels.find(it => it.id === label.id)
+
+      if (isCustom) {
+        res.push({
+          ...label,
+          value: t('views:labelData.form.previewDynamicValue', '*can be added by users*'),
+          isCustom: true,
+          isSelected: false
+        })
+      }
+
+      if (labelValues) {
+        res.push(
+          ...labelValues.map(value => ({
+            ...label,
+            value: value.value,
+            color: value.color,
+            valueId: value.id,
+            isSelected: selectedLabel ? selectedLabel?.assigned_value?.id === value.id : false
+          }))
+        )
+      }
+
+      if (!isCustom && !labelValues) {
+        res.push({
+          ...label,
+          isSelected: !!selectedLabel
+        })
+      }
+
+      return res
+    })
+  }, [labelsList, labelsValues, selectedLabels])
+
+  const handleOnSelect = (label: LabelsWithValueType) => (e: Event) => {
+    e.preventDefault()
+
+    if (label.isCustom) {
+      setShowCustomValueForm(true)
+      return
+    }
+
+    if (label.isSelected) {
+      removeLabel?.(label.id)
+    } else {
+      addLabel?.({
+        label_id: label.id,
+        value_id: label?.valueId
+      })
+    }
   }
 
   return (
@@ -31,57 +111,64 @@ const LabelsHeader = ({
       <span className="text-14 font-medium text-foreground-1">{t('views:pullRequests.labels')}</span>
       <DropdownMenu.Root>
         <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="px-2 py-1">
-            <Icon className="text-icons-2" name="vertical-ellipsis" size={12} />
+          <Button
+            className="text-icons-1 hover:text-icons-2 data-[state=open]:text-icons-2"
+            size="icon"
+            variant="custom"
+          >
+            <Icon name="vertical-ellipsis" size={12} />
           </Button>
         </DropdownMenu.Trigger>
-        <DropdownMenu.Content className="w-[280px] p-0" align="end">
-          <div
-            className="relative flex items-center justify-between border-b border-borders-1 px-3 py-2.5"
-            role="presentation"
-            onKeyDown={e => e.stopPropagation()}
-          >
-            <SearchBox.Root
-              className="w-full"
-              placeholder={t('views:pullRequests.searchLabels')}
-              value={searchQuery}
-              handleChange={handleSearchChange}
-              showOnFocus
-            />
-          </div>
+        <DropdownMenu.Content
+          className="w-80"
+          align="end"
+          sideOffset={-6}
+          alignOffset={10}
+          onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
+        >
+          {showCustomValueForm ? (
+            <Button onClick={() => setShowCustomValueForm(false)}>Cancel</Button>
+          ) : (
+            <>
+              {!!setSearchQuery && (
+                <>
+                  <div className="px-2 py-1.5">
+                    <SearchBox.Root
+                      className="w-full"
+                      placeholder={t('views:pullRequests.searchLabels', 'Search labels')}
+                      value={search}
+                      handleChange={handleSearchChange}
+                      showOnFocus
+                    />
+                  </div>
+                  <DropdownMenu.Separator />
+                </>
+              )}
 
-          <div className="p-1">
-            {labelsList?.length === 0 && (
-              <div className="px-5 py-4 text-center">
-                <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.noLabels')}</span>
-              </div>
-            )}
-            <div className="max-h-[360px] overflow-y-auto px-1">
-              {labelsList?.map(({ key, id }) => {
-                const isSelected = selectedLabels?.find(label => label.id === id)
-                return (
-                  <DropdownMenu.Item
-                    className={cn('py-2', {
-                      'pl-7': !isSelected
-                    })}
-                    key={id}
-                    onClick={() => {
-                      if (isSelected) {
-                        removeLabel?.(id as number)
-                      } else {
-                        addLabel?.(id)
-                      }
-                    }}
-                  >
-                    <div className="flex w-full min-w-0 items-center gap-x-2">
-                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <span className="truncate text-14 font-medium text-foreground-8">{key}</span>
-                    </div>
-                  </DropdownMenu.Item>
-                )
-              })}
-            </div>
-          </div>
+              {labelsListWithValues.length ? (
+                <ScrollArea viewportClassName="max-h-[224px]">
+                  {labelsListWithValues?.map((label, idx) => (
+                    <DropdownMenu.CheckboxItem
+                      key={`${label.id}-${label?.valueId || idx}`}
+                      checked={label.isSelected}
+                      onSelect={handleOnSelect(label)}
+                    >
+                      <div className="flex flex-col gap-y-1.5">
+                        <LabelMarker color={label.color} label={label.key} value={label?.value} />
+                        {!!label?.description && <span className="text-foreground-4">{label.description}</span>}
+                      </div>
+                    </DropdownMenu.CheckboxItem>
+                  ))}
+                </ScrollArea>
+              ) : (
+                <div className="px-5 py-4 text-center">
+                  <span className="leading-tight text-foreground-2">
+                    {t('views:pullRequests.noLabels', 'No labels found')}
+                  </span>
+                </div>
+              )}
+            </>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Root>
     </div>

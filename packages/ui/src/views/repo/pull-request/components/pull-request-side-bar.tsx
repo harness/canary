@@ -1,5 +1,8 @@
-import { TranslationStore } from '@/views'
+import { FC } from 'react'
 
+import { HandleAddLabelType, LabelAssignmentType, TranslationStore } from '@/views'
+
+import { ILabelType, LabelValuesType } from '../../../../../dist/views'
 import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../pull-request.types'
 import { LabelsHeader } from './pull-request-labels-header'
 import { LabelsList } from './pull-request-labels-list'
@@ -22,41 +25,41 @@ interface PullRequestSideBarProps {
   currentUserId?: string
   searchQuery: string
   setSearchQuery: (query: string) => void
-  labelsList?: { key?: string; id?: number; color?: string }[]
-  PRLabels?: { key?: string; id?: number; color?: string }[]
+  labelsList?: ILabelType[]
+  labelsValues?: LabelValuesType
+  PRLabels?: LabelAssignmentType[]
   searchLabelQuery?: string
   setSearchLabelQuery?: (query: string) => void
-  addLabel?: (id?: number) => void
+  addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
   addLabelError?: string
   removeLabelError?: string
   useTranslationStore: () => TranslationStore
 }
 
-const PullRequestSideBar = (props: PullRequestSideBarProps) => {
-  const {
-    usersList,
-    reviewers = [],
-    pullRequestMetadata,
-    processReviewDecision,
-    handleDelete,
-    addReviewerError,
-    removeReviewerError,
-    addReviewers,
-    currentUserId,
-    searchQuery,
-    setSearchQuery,
-    labelsList,
-    PRLabels,
-    searchLabelQuery,
-    setSearchLabelQuery,
-    addLabel,
-    removeLabel,
-    addLabelError,
-    removeLabelError,
-    useTranslationStore
-  } = props
-
+const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
+  usersList,
+  reviewers = [],
+  pullRequestMetadata,
+  processReviewDecision,
+  handleDelete,
+  addReviewerError,
+  removeReviewerError,
+  addReviewers,
+  currentUserId,
+  searchQuery,
+  setSearchQuery,
+  labelsList = [],
+  labelsValues = {},
+  PRLabels = [],
+  searchLabelQuery,
+  setSearchLabelQuery,
+  addLabel,
+  removeLabel,
+  addLabelError,
+  removeLabelError,
+  useTranslationStore
+}) => {
   return (
     <div>
       <div className="flex flex-col gap-3">
@@ -82,6 +85,7 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
       <div className="mt-8 flex flex-col gap-3">
         <LabelsHeader
           labelsList={labelsList}
+          labelsValues={labelsValues}
           selectedLabels={PRLabels}
           addLabel={addLabel}
           removeLabel={removeLabel}
@@ -89,12 +93,7 @@ const PullRequestSideBar = (props: PullRequestSideBarProps) => {
           setSearchQuery={setSearchLabelQuery}
           useTranslationStore={useTranslationStore}
         />
-        <LabelsList
-          labels={PRLabels}
-          handleDelete={removeLabel}
-          addLabelError={addLabelError}
-          removeLabelError={removeLabelError}
-        />
+        <LabelsList labels={PRLabels} />
       </div>
     </div>
   )

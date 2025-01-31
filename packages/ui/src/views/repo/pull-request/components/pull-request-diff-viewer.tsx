@@ -59,6 +59,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  onReady?: () => void
 }
 
 const PullRequestDiffViewer = ({
@@ -87,7 +88,8 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  onReady
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -99,11 +101,40 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
+  const diffInstanceRef = useRef<HTMLElement | null>(null)
+  const [isInView, setIsInView] = useState(false)
 
-  // Cleanup function for memory management
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the element is visible
+      }
+    )
+
+    const currentRef = diffInstanceRef.current
+    if (currentRef) {
+      observer.observe(currentRef)
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [])
+
+  const isDiffInstanceInView = () => {
+    return isInView
+  }
+
   const cleanup = useCallback(() => {
-    // Clean up diff instance
-    if (diffFileInstance) {
+    // Only clean up diff instance if it is not in view
+    if (!isDiffInstanceInView() && diffFileInstance) {
       diffFileInstance._destroy?.()
       setDiffFileInstance(undefined)
     }
@@ -113,7 +144,7 @@ const PullRequestDiffViewer = ({
       instance.destroy()
     })
     overlayScrollbarsInstances.current = []
-  }, [diffFileInstance])
+  }, [diffFileInstance, isInView])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -290,6 +321,12 @@ const PullRequestDiffViewer = ({
       setDiffInstanceCb(fileName, lang, data, fullContent)
     }
   }, [data, fileName, lang, fullContent, setDiffInstanceCb])
+
+  useEffect(() => {
+    if (diffFileInstance && onReady) {
+      onReady()
+    }
+  }, [diffFileInstance, onReady])
 
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
@@ -581,22 +618,24 @@ const PullRequestDiffViewer = ({
   return (
     <>
       {diffFileInstance && (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        <DiffView<Thread[]>
-          ref={ref}
-          className="bg-tr w-full text-tertiary-background"
-          renderWidgetLine={renderWidgetLine}
-          renderExtendLine={renderExtendLine}
-          diffFile={diffFileInstance}
-          extendData={extend}
-          diffViewFontSize={fontsize}
-          diffViewHighlight={highlight}
-          diffViewMode={mode}
-          registerHighlighter={highlighter}
-          diffViewWrap={wrap}
-          diffViewAddWidget={addWidget}
-        />
+        <div ref={diffInstanceRef}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <DiffView<Thread[]>
+            ref={ref}
+            className="bg-tr w-full text-tertiary-background"
+            renderWidgetLine={renderWidgetLine}
+            renderExtendLine={renderExtendLine}
+            diffFile={diffFileInstance}
+            extendData={extend}
+            diffViewFontSize={fontsize}
+            diffViewHighlight={highlight}
+            diffViewMode={mode}
+            registerHighlighter={highlighter}
+            diffViewWrap={wrap}
+            diffViewAddWidget={addWidget}
+          />
+        </div>
       )}
     </>
   )

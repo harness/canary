@@ -394,12 +394,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                   )
                                 }
                                 key={`${commentItem.id}-${commentItem.author}`}
+                                hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                               />
                             ) : null
                           })}
                         </div>
                       </div>
                     }
+                    hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                   />
                 ) : null
               }
@@ -538,6 +540,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 />
                               )
                             }
+                            hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                           />
                         ) : null
                       })}
@@ -548,6 +551,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   isLast={activityBlocks.length - 1 === index}
                   handleSaveComment={handleSaveComment}
                   parentCommentId={payload?.id}
+                  hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                 />
               ) : null
             }

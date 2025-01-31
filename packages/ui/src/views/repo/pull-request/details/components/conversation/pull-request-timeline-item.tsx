@@ -44,6 +44,7 @@ interface TimelineItemProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   onQuoteReply?: (parentId: number, rawText: string) => void
   quoteReplyText?: string
+  hideEditDelete?: boolean
 }
 
 interface ItemHeaderProps {
@@ -59,6 +60,7 @@ interface ItemHeaderProps {
   isDeleted?: boolean
   isNotCodeComment?: boolean
   onQuoteReply?: () => void
+  hideEditDelete?: boolean
 }
 
 const ItemHeader: FC<ItemHeaderProps> = memo(
@@ -74,7 +76,8 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     handleDeleteComment,
     isDeleted = false,
     isNotCodeComment = false,
-    onQuoteReply
+    onQuoteReply,
+    hideEditDelete
   }) => {
     const renderMenu = () => {
       // We only show the menu if it's an actual comment and not deleted
@@ -90,7 +93,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-[216px]" align="end">
             <DropdownMenu.Group>
-              <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item>
+              {!hideEditDelete ? <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item> : null}
               <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
@@ -101,15 +104,17 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
               <DropdownMenu.Item onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
                 Copy link to comment
               </DropdownMenu.Item>
-              <DropdownMenu.Item
-                className="text-foreground-danger hover:text-foreground-danger"
-                onClick={ev => {
-                  ev.stopPropagation()
-                  handleDeleteComment?.()
-                }}
-              >
-                Delete comment
-              </DropdownMenu.Item>
+              {!hideEditDelete ? (
+                <DropdownMenu.Item
+                  className="text-foreground-danger hover:text-foreground-danger"
+                  onClick={ev => {
+                    ev.stopPropagation()
+                    handleDeleteComment?.()
+                  }}
+                >
+                  Delete comment
+                </DropdownMenu.Item>
+              ) : null}
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
@@ -168,7 +173,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   data,
   handleUpload,
   onQuoteReply,
-  quoteReplyText
+  quoteReplyText,
+  hideEditDelete
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
@@ -228,6 +234,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   setHideReplyHere?.(true)
                   if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
                 }}
+                hideEditDelete={hideEditDelete}
               />
               {isResolved && !contentHeader && (
                 <Button

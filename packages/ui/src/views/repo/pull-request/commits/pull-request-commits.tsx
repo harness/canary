@@ -30,7 +30,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Content>
+    <SandboxLayout.Content className="pt-0">
       {!commitsList?.length && (
         <NoData
           iconName="no-data-folder"

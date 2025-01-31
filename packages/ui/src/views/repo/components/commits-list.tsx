@@ -46,12 +46,12 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
 
                   return (
                     <StackedList.Item
-                      className="flex !cursor-default items-start py-3"
+                      className="flex !cursor-default items-start py-3 pr-3"
                       key={commit?.sha || repo_idx}
                       isLast={commitData.length - 1 === repo_idx}
                     >
                       <Link
-                        className="grow "
+                        className="grow"
                         onClick={e => {
                           e.stopPropagation()
                         }}
@@ -71,7 +71,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                   </Link>
                                 </p>
                               ) : (
-                                <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
+                                <span className="text-16 truncate font-medium leading-snug">{commit.title}</span>
                               )}
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && (
@@ -92,7 +92,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                               <Button
-                                className="border hover:bg-background-3"
+                                className="hover:bg-background-3 border"
                                 title="View repository at this point of history"
                                 variant="custom"
                                 size="sm_icon"

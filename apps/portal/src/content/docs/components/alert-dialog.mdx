@@ -21,8 +21,8 @@ import { DocsPage } from "@/components/docs-page";
         Alert dialog content goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
       </AlertDialog.Description>
       <AlertDialog.Footer>
-        <AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-        <AlertDialog.Action>Confirm</AlertDialog.Action>
+        <AlertDialog.Cancel asChild><Button>Cancel</Button></AlertDialog.Cancel>
+        <AlertDialog.Action asChild><Button>Confirm</Button></AlertDialog.Action>
       </AlertDialog.Footer>
     </AlertDialog.Content>
   </AlertDialog.Root>`}
@@ -120,7 +120,8 @@ The `Trigger` component is used to open the alert dialog.
     },
     {
       name: "asChild",
-      description: "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
       required: false,
       value: "boolean",
     },
@@ -310,6 +311,13 @@ The `Action` component is used to define the action button of the alert dialog.
       required: false,
       value: "string",
     },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+    },
   ]}
 />
 
@@ -335,6 +343,13 @@ The `Cancel` component is used to define the cancel button of the alert dialog.
         "Additional class names to apply to the alert dialog cancel button",
       required: false,
       value: "string",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
     },
   ]}
 />

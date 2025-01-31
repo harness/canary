@@ -74,9 +74,7 @@ const LanguageDialog: React.FC<LanguageDialogProps> = ({
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
-      <Dialog.Trigger asChild>
-        <Button variant="outline">{children}</Button>
-      </Dialog.Trigger>
+      <Dialog.Trigger asChild>{children}</Dialog.Trigger>
       <Dialog.Content className="w-[400px]">
         <Dialog.Title>Language</Dialog.Title>
         <div className="space-y-2">

@@ -3,6 +3,7 @@ import { Navigate } from 'react-router-dom'
 import {
   AccentColor,
   Breadcrumb,
+  Button,
   ColorAdjustment,
   Contrast,
   Language,
@@ -993,7 +994,7 @@ export const routes: CustomRouteObject[] = [
         onSave={(theme: ThemeInterface) => console.log(theme)}
         onChange={(change: Partial<LanguageInterface>) => console.log(change)}
       >
-        Appearance Settings
+        <Button>Appearance Settings</Button>
       </ThemeDialog>
     )
   },
@@ -1005,7 +1006,7 @@ export const routes: CustomRouteObject[] = [
         onSave={(lang: LanguageInterface) => console.log(lang)}
         onChange={(lang: LanguageInterface) => console.log(lang)}
       >
-        Change Language
+        <Button>Change Language</Button>
       </LanguageDialog>
     )
   }

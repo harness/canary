@@ -204,6 +204,9 @@ importers:
       monaco-editor:
         specifier: 0.50.0
         version: 0.50.0
+      monaco-yaml:
+        specifier: ^4.0.4
+        version: 4.0.4(monaco-editor@0.50.0)
       pluralize:
         specifier: ^8.0.0
         version: 8.0.0
@@ -8442,6 +8445,11 @@ packages:
     resolution: {integrity: sha512-kdPL0yvg5qjhKPNVjJoym331PY/5JC11aPJXtCZNwWRvBr6jhkIamvYAyiY5P1AWFmNOy0aRDRoMdZfa71h8kg==}
     peerDependencies:
       monaco-editor: '>=0.30.0'
+
+  monaco-yaml@4.0.4:
+    resolution: {integrity: sha512-qbM36fY1twpDUs4lhhxoXDQGUPVyYAFCPJi3E0JKgLioD8wzsD/pawgauFFXSzpMa09z8wbt/DTLXjXEehnVFA==}
+    peerDependencies:
+      monaco-editor: '>=0.30'
 
   monaco-yaml@5.2.1:
     resolution: {integrity: sha512-hquqqJSOf1y+rDX5FbvynsMck5OG/x2wFGac8eRNcE9jfcczodHprYwqYylDfsH6+OtNl5FuENB24UmPzk7waQ==}
@@ -20097,6 +20105,20 @@ snapshots:
   monaco-worker-manager@2.0.1(monaco-editor@0.50.0):
     dependencies:
       monaco-editor: 0.50.0
+
+  monaco-yaml@4.0.4(monaco-editor@0.50.0):
+    dependencies:
+      '@types/json-schema': 7.0.15
+      jsonc-parser: 3.3.1
+      monaco-editor: 0.50.0
+      monaco-marker-data-provider: 1.2.4
+      monaco-worker-manager: 2.0.1(monaco-editor@0.50.0)
+      path-browserify: 1.0.1
+      prettier: 2.8.8
+      vscode-languageserver-textdocument: 1.0.12
+      vscode-languageserver-types: 3.17.5
+      vscode-uri: 3.0.8
+      yaml: 2.7.0
 
   monaco-yaml@5.2.1(monaco-editor@0.40.0):
     dependencies:

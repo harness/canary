@@ -4,16 +4,18 @@ import { PipelineNodes } from '@components/pipeline-nodes'
 
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 
-import { StageNodeContextMenu } from '../context-menu/stage-node-context-menu'
+import { StepGroupNodeContextMenu } from '../context-menu/step-group-node-context-menu'
+// import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
+// import { StageGroupNodeContextMenu } from '../context-menu/stage-group-node-context-menu'
 import { usePipelineStudioNodeContext } from '../context/PipelineStudioNodeContext'
 import { CommonNodeDataType } from '../types/common-node-data-type'
 
-export interface StageContentNodeDataType extends CommonNodeDataType {
+export interface SerialStepGroupContentNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
 }
 
-export function StageContentNode(props: {
-  node: SerialNodeInternalType<StageContentNodeDataType>
+export function SerialStepGroupContentNode(props: {
+  node: SerialNodeInternalType<SerialStepGroupContentNodeDataType>
   children?: React.ReactElement
   collapsed?: boolean
   isFirst?: boolean
@@ -21,26 +23,27 @@ export function StageContentNode(props: {
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
 }) {
   const { node, children, collapsed, isFirst, parentNodeType } = props
-  const data = node.data as StageContentNodeDataType
+  const data = node.data as SerialStepGroupContentNodeDataType
 
-  const { selectionPath, showContextMenu, onAddIntention, onSelectIntention } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onSelectIntention, onAddIntention } = usePipelineStudioNodeContext()
 
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
   return (
-    <PipelineNodes.StageNode
+    <PipelineNodes.SerialGroupNode
       collapsed={collapsed}
       name={data.name}
       isEmpty={node.children.length === 0}
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      onAddInClick={() => {
+      onAddInClick={e => {
+        e.stopPropagation()
         onAddIntention(data, 'in')
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
-        showContextMenu(StageNodeContextMenu, data, e.currentTarget)
+        showContextMenu(StepGroupNodeContextMenu, data, e.currentTarget)
       }}
       onHeaderClick={e => {
         e.stopPropagation()
@@ -51,6 +54,6 @@ export function StageContentNode(props: {
       }}
     >
       {children}
-    </PipelineNodes.StageNode>
+    </PipelineNodes.SerialGroupNode>
   )
 }

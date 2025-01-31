@@ -4,7 +4,9 @@ export enum ContentNodeType {
   End = 'End',
   Step = 'Step',
   Approval = 'Approval',
-  ParallelGroup = 'ParallelGroup',
-  SerialGroup = 'SerialGroup',
+  ParallelStageGroup = 'ParallelStageGroup',
+  SerialStageGroup = 'SerialStageGroup',
+  ParallelStepGroup = 'ParallelStepGroup',
+  SerialStepGroup = 'SerialStepGroup',
   Stage = 'Stage'
 }

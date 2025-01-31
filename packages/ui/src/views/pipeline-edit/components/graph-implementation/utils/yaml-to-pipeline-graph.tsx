@@ -7,8 +7,10 @@ import {
   SerialContainerNodeType
 } from '@harnessio/pipeline-graph'
 
-import { ParallelGroupContentNodeDataType } from '../nodes/parallel-group-content-node'
-import { SerialGroupContentNodeDataType } from '../nodes/serial-group-content-node'
+import { ParallelStageGroupContentNodeDataType } from '../nodes/parallel-stage-group-content-node'
+import { ParallelStepGroupContentNodeDataType } from '../nodes/parallel-step-group-content-node'
+import { SerialStageGroupContentNodeDataType } from '../nodes/serial-stage-group-content-node'
+import { SerialStepGroupContentNodeDataType } from '../nodes/serial-step-group-content-node'
 import { StageContentNodeDataType } from '../nodes/stage-content-node'
 import { StepNodeDataType } from '../nodes/step-content-node'
 import { ContentNodeType } from '../types/content-node-type'
@@ -52,7 +54,7 @@ const processStages = (
       const childrenPath = `${path}.${groupKey}.stages`
 
       return {
-        type: ContentNodeType.SerialGroup,
+        type: ContentNodeType.SerialStageGroup,
         config: {
           minWidth: 192,
           minHeight: 40,
@@ -65,7 +67,7 @@ const processStages = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.SerialStageGroup,
           name
-        } satisfies SerialGroupContentNodeDataType,
+        } satisfies SerialStageGroupContentNodeDataType,
         children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
@@ -74,7 +76,7 @@ const processStages = (
       const childrenPath = `${path}.${groupKey}.stages`
 
       return {
-        type: ContentNodeType.ParallelGroup,
+        type: ContentNodeType.ParallelStageGroup,
         config: {
           minWidth: 192,
           minHeight: 40,
@@ -87,7 +89,7 @@ const processStages = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.ParallelStageGroup,
           name
-        } satisfies ParallelGroupContentNodeDataType,
+        } satisfies ParallelStageGroupContentNodeDataType,
         children: processStages(stage[groupKey].stages, childrenPath, options)
       } satisfies ParallelContainerNodeType
     }
@@ -132,9 +134,10 @@ const processSteps = (
       const childrenPath = `${path}.${groupKey}.steps`
 
       return {
-        type: ContentNodeType.SerialGroup,
+        type: ContentNodeType.SerialStepGroup,
         config: {
           minWidth: 192,
+          minHeight: 40,
           hideDeleteButton: true,
           hideCollapseButton: false
         },
@@ -143,8 +146,7 @@ const processSteps = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.SerialStepGroup,
           name
-        }, // satisfies StageContentNodeDataType,
-
+        } satisfies SerialStepGroupContentNodeDataType,
         children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies SerialContainerNodeType
     } else if (groupKey === 'parallel') {
@@ -153,9 +155,10 @@ const processSteps = (
       const childrenPath = `${path}.${groupKey}.steps`
 
       return {
-        type: ContentNodeType.ParallelGroup,
+        type: ContentNodeType.ParallelStepGroup,
         config: {
           minWidth: 192,
+          minHeight: 40,
           hideDeleteButton: true
         },
         data: {
@@ -163,7 +166,7 @@ const processSteps = (
           yamlChildrenPath: childrenPath,
           yamlEntityType: YamlEntityType.ParallelStepGroup,
           name
-        }, // satisfies ParallelGroupContentNodeDataType,
+        } satisfies ParallelStepGroupContentNodeDataType,
         children: processSteps(step[groupKey].steps, childrenPath, options)
       } satisfies ParallelContainerNodeType
     }

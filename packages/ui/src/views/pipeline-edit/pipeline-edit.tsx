@@ -2,8 +2,10 @@ import { ContainerNode } from '@harnessio/pipeline-graph'
 
 import { PipelineStudioNodeContextProvider } from './components/graph-implementation/context/PipelineStudioNodeContext'
 import { EndContentNode } from './components/graph-implementation/nodes/end-content-node'
-import { ParallelGroupContentNode } from './components/graph-implementation/nodes/parallel-group-content-node'
-import { SerialGroupContentNode } from './components/graph-implementation/nodes/serial-group-content-node'
+import { ParallelStageGroupContentNode } from './components/graph-implementation/nodes/parallel-stage-group-content-node'
+import { ParallelStepGroupContentNode } from './components/graph-implementation/nodes/parallel-step-group-content-node'
+import { SerialStageGroupContentNode } from './components/graph-implementation/nodes/serial-stage-group-content-node'
+import { SerialStepGroupContentNode } from './components/graph-implementation/nodes/serial-step-group-content-node'
 import { StageContentNode } from './components/graph-implementation/nodes/stage-content-node'
 import { StartContentNode } from './components/graph-implementation/nodes/start-content-node'
 import { StepContentNode } from './components/graph-implementation/nodes/step-content-node'
@@ -14,12 +16,14 @@ import { PipelineStudioNodeContextMenu } from './components/pipeline-studio-node
 import { ContentNodeFactory, PipelineStudio, PipelineStudioProps, YamlRevision } from './pipeline-studio'
 
 export interface PipelineEditProps {
-  /* pipeline view */
+  /** pipeline view */
   view: 'yaml' | 'graph'
-  /* yaml state */
+  /** yaml state */
   yamlRevision: YamlRevision
-  /* yaml change callback */
+  /** yaml change callback */
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  /** selected path */
+  selectedPath?: string
   onSelectIntention: (nodeData: CommonNodeDataType) => undefined
   onAddIntention: (
     nodeData: CommonNodeDataType,
@@ -42,7 +46,8 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     onEditIntention,
     onSelectIntention,
     onRevealInYaml,
-    yamlEditorConfig
+    yamlEditorConfig,
+    selectedPath
   } = props
 
   const contentNodeFactory = new ContentNodeFactory()
@@ -59,11 +64,27 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     containerType: ContainerNode.leaf
   })
 
+  // ---
+
   contentNodeFactory.registerEntity(ContentNodeType.Step, {
     type: ContentNodeType.Step,
     component: StepContentNode,
     containerType: ContainerNode.leaf
   })
+
+  contentNodeFactory.registerEntity(ContentNodeType.ParallelStepGroup, {
+    type: ContentNodeType.ParallelStepGroup,
+    component: ParallelStepGroupContentNode,
+    containerType: ContainerNode.parallel
+  })
+
+  contentNodeFactory.registerEntity(ContentNodeType.SerialStepGroup, {
+    type: ContentNodeType.SerialStepGroup,
+    component: SerialStepGroupContentNode,
+    containerType: ContainerNode.serial
+  })
+
+  // ---
 
   contentNodeFactory.registerEntity(ContentNodeType.Stage, {
     type: ContentNodeType.Stage,
@@ -71,20 +92,21 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     containerType: ContainerNode.serial
   })
 
-  contentNodeFactory.registerEntity(ContentNodeType.ParallelGroup, {
-    type: ContentNodeType.ParallelGroup,
-    component: ParallelGroupContentNode,
+  contentNodeFactory.registerEntity(ContentNodeType.ParallelStageGroup, {
+    type: ContentNodeType.ParallelStageGroup,
+    component: ParallelStageGroupContentNode,
     containerType: ContainerNode.parallel
   })
 
-  contentNodeFactory.registerEntity(ContentNodeType.SerialGroup, {
-    type: ContentNodeType.SerialGroup,
-    component: SerialGroupContentNode,
+  contentNodeFactory.registerEntity(ContentNodeType.SerialStageGroup, {
+    type: ContentNodeType.SerialStageGroup,
+    component: SerialStageGroupContentNode,
     containerType: ContainerNode.serial
   })
 
   return (
     <PipelineStudioNodeContextProvider
+      selectedPath={selectedPath}
       onAddIntention={onAddIntention}
       onDeleteIntention={onDeleteIntention}
       onEditIntention={onEditIntention}

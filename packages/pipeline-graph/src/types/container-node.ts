@@ -7,7 +7,7 @@ export interface ContainerNodeProps<CONTAINER_NODE = AnyNodeInternal> {
   node: CONTAINER_NODE
   parentNode?: ParallelNodeInternalType | SerialNodeInternalType
   /* what type is a parent node */
-  parentNodeType: ContainerNodeType
+  parentNodeType?: ContainerNodeType
   /* nesting level from root */
   level: number
   /* position in array relative to parent */

@@ -14,6 +14,7 @@ import { pipelineYaml1 } from './mocks/pipelineYaml1'
 const PipelineStudioWrapper = () => {
   const [yamlRevision, setYamlRevision] = useState({ yaml: pipelineYaml1 })
   const [view, setView] = useState<'graph' | 'yaml'>('graph')
+  const [selectedPath, setSelectedPath] = useState<string | undefined>()
 
   const processAddIntention = (
     nodeData: CommonNodeDataType,
@@ -75,6 +76,7 @@ const PipelineStudioWrapper = () => {
         yamlRevision={yamlRevision}
         onYamlRevisionChange={setYamlRevision}
         view={view}
+        selectedPath={selectedPath}
         onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
           console.log('onAddIntention')
           processAddIntention(nodeData, position, yamlEntityTypeToAdd)
@@ -87,8 +89,9 @@ const PipelineStudioWrapper = () => {
         onEditIntention={() => {
           console.log('onEditIntention')
         }}
-        onSelectIntention={() => {
+        onSelectIntention={data => {
           console.log('onSelectIntention')
+          setSelectedPath(data.yamlPath)
         }}
         onRevealInYaml={() => {
           console.log('onSelectIntention')

@@ -1,4 +1,5 @@
 import { useGraphContext } from '../context/graph-provider'
+import { ContainerNodeType } from '../types/container-node'
 import { ContainerNode } from '../types/nodes'
 import {
   AnyNodeInternal,
@@ -11,8 +12,11 @@ export function RenderNodeContent(props: {
   node: AnyNodeInternal
   children?: React.ReactElement
   collapsed?: boolean
+  isFirst?: boolean
+  isLast?: boolean
+  parentNodeType?: ContainerNodeType
 }) {
-  const { node, children, collapsed } = props
+  const { node, children, collapsed, isFirst, isLast, parentNodeType } = props
   const { nodes } = useGraphContext()
 
   const nodeContent = nodes[node.type]
@@ -20,19 +24,37 @@ export function RenderNodeContent(props: {
   switch (nodeContent.containerType) {
     case ContainerNode.leaf:
       return (
-        <nodeContent.component node={node as LeafNodeInternalType<{}>} collapsed={collapsed}>
+        <nodeContent.component
+          node={node as LeafNodeInternalType<{}>}
+          collapsed={collapsed}
+          isFirst={isFirst}
+          isLast={isLast}
+          parentNodeType={parentNodeType}
+        >
           {children}
         </nodeContent.component>
       )
     case ContainerNode.serial:
       return (
-        <nodeContent.component node={node as SerialNodeInternalType<{}>} collapsed={collapsed}>
+        <nodeContent.component
+          node={node as SerialNodeInternalType<{}>}
+          collapsed={collapsed}
+          isFirst={isFirst}
+          isLast={isLast}
+          parentNodeType={parentNodeType}
+        >
           {children}
         </nodeContent.component>
       )
     case ContainerNode.parallel:
       return (
-        <nodeContent.component node={node as ParallelNodeInternalType<{}>} collapsed={collapsed}>
+        <nodeContent.component
+          node={node as ParallelNodeInternalType<{}>}
+          collapsed={collapsed}
+          isFirst={isFirst}
+          isLast={isLast}
+          parentNodeType={parentNodeType}
+        >
           {children}
         </nodeContent.component>
       )

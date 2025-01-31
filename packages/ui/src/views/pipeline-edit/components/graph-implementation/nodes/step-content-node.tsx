@@ -14,12 +14,17 @@ export interface StepNodeDataType extends CommonNodeDataType {
   selected?: boolean
 }
 
-export function StepContentNode(props: { node: LeafNodeInternalType<StepNodeDataType> }) {
-  const { node } = props
+export function StepContentNode(props: {
+  node: LeafNodeInternalType<StepNodeDataType>
+  isFirst?: boolean
+  isLast?: boolean
+  parentNodeType?: 'leaf' | 'serial' | 'parallel'
+}) {
+  const { node, isFirst, parentNodeType } = props
 
   const data = node.data
 
-  const { selectionPath, showContextMenu } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onSelectIntention, onAddIntention } = usePipelineStudioNodeContext()
 
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
@@ -27,11 +32,20 @@ export function StepContentNode(props: { node: LeafNodeInternalType<StepNodeData
     <PipelineNodes.StepNode
       name={data.name}
       icon={data.icon}
+      selected={selected}
+      isFirst={isFirst}
+      parentNodeType={parentNodeType}
       onEllipsisClick={e => {
         e.stopPropagation()
         showContextMenu(StepNodeContextMenu, data, e.currentTarget)
       }}
-      selected={selected}
+      onClick={e => {
+        e.stopPropagation()
+        onSelectIntention(data)
+      }}
+      onAddClick={position => {
+        onAddIntention(data, position)
+      }}
     ></PipelineNodes.StepNode>
   )
 }

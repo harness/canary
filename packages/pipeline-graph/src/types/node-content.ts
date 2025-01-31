@@ -1,3 +1,4 @@
+import { ContainerNodeType } from './container-node'
 import { ContainerNode } from './nodes'
 import { LeafNodeInternalType, ParallelNodeInternalType, SerialNodeInternalType } from './nodes-internal'
 
@@ -8,6 +9,9 @@ export interface LeafNodeContent<T = any> {
     node: LeafNodeInternalType<T>
     collapsed?: boolean
     children?: React.ReactElement
+    isFirst?: boolean
+    isLast?: boolean
+    parentNodeType?: ContainerNodeType
   }) => JSX.Element
 }
 
@@ -18,6 +22,9 @@ export interface SerialNodeContent<T = any> {
     node: SerialNodeInternalType<T>
     collapsed?: boolean
     children?: React.ReactElement
+    isFirst?: boolean
+    isLast?: boolean
+    parentNodeType?: ContainerNodeType
   }) => JSX.Element
 }
 
@@ -28,6 +35,9 @@ export interface ParallelNodeContent<T = any> {
     node: ParallelNodeInternalType<T>
     collapsed?: boolean
     children?: React.ReactElement
+    isFirst?: boolean
+    isLast?: boolean
+    parentNodeType?: ContainerNodeType
   }) => JSX.Element
 }
 

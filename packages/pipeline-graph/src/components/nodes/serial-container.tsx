@@ -16,7 +16,7 @@ export const SERIAL_PADDING = 26
 export const SERIAL_NODE_GAP = 36
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
-  const { node, level, parentNode } = props
+  const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
 
   const myLevel = level + 1
 
@@ -71,7 +71,13 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         />
       </div>
 
-      <RenderNodeContent node={node} collapsed={collapsed}>
+      <RenderNodeContent
+        node={node}
+        collapsed={collapsed}
+        isFirst={isFirst}
+        isLast={isLast}
+        parentNodeType={parentNodeType}
+      >
         {!collapsed && node.children.length > 0 ? (
           <div
             style={{

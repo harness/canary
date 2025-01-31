@@ -16,7 +16,7 @@ export const PADDING_BOTTOM = 25
 export const PARALLEL_NODE_GAP = 36
 
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
-  const { node, level, parentNode } = props
+  const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
 
   const myLevel = level + 1
 
@@ -72,7 +72,13 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         />
       </div>
 
-      <RenderNodeContent node={node} collapsed={collapsed}>
+      <RenderNodeContent
+        node={node}
+        collapsed={collapsed}
+        isFirst={isFirst}
+        isLast={isLast}
+        parentNodeType={parentNodeType}
+      >
         {!collapsed && node.children.length > 0 ? (
           <div
             style={{

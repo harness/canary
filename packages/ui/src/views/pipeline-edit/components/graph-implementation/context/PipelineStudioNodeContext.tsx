@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import { CommonNodeDataType } from '../types/common-node-data-type'
 import { YamlEntityType } from '../types/yaml-entity-type'
@@ -66,6 +66,7 @@ export function usePipelineStudioNodeContext(): PipelineStudioNodeContextProps {
 
 export interface PipelineStudioNodeContextProviderProps {
   children: React.ReactNode
+  selectedPath?: string
   onSelectIntention: (nodeData: CommonNodeDataType) => undefined
   onAddIntention: (
     nodeData: CommonNodeDataType,
@@ -77,7 +78,15 @@ export interface PipelineStudioNodeContextProviderProps {
   onRevealInYaml: (_path: string | undefined) => undefined
 }
 export const PipelineStudioNodeContextProvider: React.FC<PipelineStudioNodeContextProviderProps> = props => {
-  const { onSelectIntention, onAddIntention, onEditIntention, onDeleteIntention, onRevealInYaml, children } = props
+  const {
+    onSelectIntention,
+    onAddIntention,
+    onEditIntention,
+    onDeleteIntention,
+    onRevealInYaml,
+    children,
+    selectedPath
+  } = props
 
   const [contextMenuData, setContextMenuData] = useState<ContextMenuData | undefined>(undefined)
   const [selectionPath, setSelectionPath] = useState<string | undefined>(undefined)
@@ -101,6 +110,10 @@ export const PipelineStudioNodeContextProvider: React.FC<PipelineStudioNodeConte
   const hideContextMenu = () => {
     setContextMenuData(undefined)
   }
+
+  useEffect(() => {
+    setSelectionPath(selectedPath)
+  }, [selectedPath])
 
   return (
     <PipelineStudioNodeContext.Provider

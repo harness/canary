@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+
 import { PipelineNodes } from '@components/pipeline-nodes'
 
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
@@ -7,32 +9,47 @@ import { StageGroupNodeContextMenu } from '../context-menu/stage-group-node-cont
 import { usePipelineStudioNodeContext } from '../context/PipelineStudioNodeContext'
 import { CommonNodeDataType } from '../types/common-node-data-type'
 
-export interface SerialGroupContentNodeDataType extends CommonNodeDataType {
+export interface SerialStageGroupContentNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
 }
 
-export function SerialGroupContentNode(props: {
-  node: SerialNodeInternalType<SerialGroupContentNodeDataType>
+export function SerialStageGroupContentNode(props: {
+  node: SerialNodeInternalType<SerialStageGroupContentNodeDataType>
   children?: React.ReactElement
   collapsed?: boolean
+  isFirst?: boolean
+  isLast?: boolean
+  parentNodeType?: 'leaf' | 'serial' | 'parallel'
 }) {
-  const { node, children, collapsed } = props
-  const data = node.data as SerialGroupContentNodeDataType
+  const { node, children, collapsed, isFirst, parentNodeType } = props
+  const data = node.data as SerialStageGroupContentNodeDataType
 
-  const { showContextMenu } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onSelectIntention, onAddIntention } = usePipelineStudioNodeContext()
+
+  const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
   return (
     <PipelineNodes.SerialGroupNode
       collapsed={collapsed}
       name={data.name}
       isEmpty={node.children.length === 0}
-      onAddClick={e => {
+      selected={selected}
+      isFirst={isFirst}
+      parentNodeType={parentNodeType}
+      onAddInClick={e => {
         e.stopPropagation()
         showContextMenu(StageGroupAddInNodeContextMenu, data, e.currentTarget, true)
       }}
       onEllipsisClick={e => {
         e.stopPropagation()
         showContextMenu(StageGroupNodeContextMenu, data, e.currentTarget)
+      }}
+      onHeaderClick={e => {
+        e.stopPropagation()
+        onSelectIntention(data)
+      }}
+      onAddClick={position => {
+        onAddIntention(data, position)
       }}
     >
       {children}

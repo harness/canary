@@ -36,12 +36,12 @@ export enum AccentColor {
 }
 
 export interface ThemeDialogProps {
-  defaultTheme?: ThemeInterface
-  theme?: ThemeInterface
-  open: boolean
-  onOpenChange: (open: boolean) => void
   onChange: (language: ThemeInterface) => void
   onSave: (language: ThemeInterface) => void
-  onCancel: () => void
   children: React.ReactNode
+  defaultTheme?: ThemeInterface
+  theme?: ThemeInterface
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
+  onCancel?: () => void
 }

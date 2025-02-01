@@ -21,7 +21,9 @@ import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/co
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
-  toRepoWebhooks: (repoId: string) => string
+
+  toRepoWebhooks: (repoRef?: string) => string
+
   repo_ref: string
 }
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({

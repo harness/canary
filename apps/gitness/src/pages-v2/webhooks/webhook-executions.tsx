@@ -45,7 +45,7 @@ export const WebhookExecutionsContainer = () => {
     <RepoWebhookExecutionsPage
       useTranslationStore={useTranslationStore}
       useWebhookStore={useWebhookStore}
-      toRepoWebhooks={routes.toRepoWebhooks}
+      toRepoWebhooks={() => routes.toRepoWebhooks({ repoId: repo_ref })}
       repo_ref={repo_ref}
     />
   )

@@ -26,7 +26,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
   const { t } = useTranslationStore()
 
   if (isFetchingCommits) {
-    ;<SkeletonList />
+    return <SkeletonList />
   }
 
   return (

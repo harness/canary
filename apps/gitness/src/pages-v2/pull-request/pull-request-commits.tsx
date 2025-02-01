@@ -37,10 +37,8 @@ export function PullRequestCommitPage() {
   }, [commits, setCommitList, pathname])
 
   useEffect(() => {
-    if (isFetching) {
-      setIsFetchingCommits(isFetching)
-    }
-  }, [isFetching, setIsFetchingCommits])
+    setIsFetchingCommits(isFetching)
+  }, [isFetching])
 
   useEffect(() => {
     setPaginationFromHeaders(headers)

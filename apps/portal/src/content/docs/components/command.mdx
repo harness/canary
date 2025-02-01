@@ -1,0 +1,566 @@
+---
+title: Command
+description: Command component documentation
+---
+
+The `Command` component provides a flexible UI element for displaying a command palette. It is composed of several subcomponents such as `CommandInput`, `CommandList`, `CommandItem`, and `CommandShortcut` to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+import { Command } from "@harnessio/ui/components";
+import { Button } from "@harnessio/ui/components";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+return (<>
+
+<Command.Dialog open={isOpen} onOpenChange={setIsOpen}>
+  <Command.Input placeholder="Type a command or search..." />
+  <Command.List>
+    <Command.Empty>No results found.</Command.Empty>
+
+    <Command.Group heading="Suggestions">
+      <Command.Item>Item 1</Command.Item>
+      <Command.Item>Item 2</Command.Item>
+      <Command.Separator />
+      <Command.Item>Item 4</Command.Item>
+      <Command.Item>Item 3</Command.Item>
+    </Command.Group>
+
+    <Command.Group heading="Commands">
+      <Command.Item>
+        Command 1
+        <Command.Shortcut>⌘K</Command.Shortcut>
+      </Command.Item>
+      <Command.Item>
+        Command 2
+        <Command.Shortcut>⌘L</Command.Shortcut>
+      </Command.Item>
+    </Command.Group>
+
+  </Command.List>
+</Command.Dialog>
+<Button onClick={() => setIsOpen(true)}>Open Command Dialog</Button>
+
+  </>)
+  }`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Command } from '@harnessio/ui/components'
+
+const CommandUsage = () => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (<>
+    <Command.Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Command.Input placeholder="Type a command or search..." />
+      <Command.List>
+        <Command.Empty>No results found.</Command.Empty>
+        <Command.Group heading="Suggestions">
+          <Command.Item>Item 1</Command.Item>
+          <Command.Item>Item 2</Command.Item>
+          <Command.Separator />
+          <Command.Item>Item 4</Command.Item>
+          <Command.Item>Item 3</Command.Item>
+        </Command.Group>
+        <Command.Group heading="Commands">
+          <Command.Item>
+            Command 1
+            <Command.Shortcut>⌘K</Command.Shortcut>
+          </Command.Item>
+          <Command.Item>
+            Command 2
+            <Command.Shortcut>⌘L</Command.Shortcut>
+          </Command.Item>
+        </Command.Group>
+      </Command.List>
+    </Command.Dialog>
+    <Button onClick={() => setIsOpen(true)}>Open Command Dialog</Button>
+  </>)
+}
+```
+
+## Anatomy
+
+All parts of the Command component can be imported and composed as required.
+
+```typescript jsx
+<Command.Dialog>
+  <Command.Input placeholder="Type a command or search..." />
+  <Command.List>
+    <Command.Empty>No results found.</Command.Empty>
+    <Command.Group heading="Suggestions">
+      <Command.Item></Command.Item>
+      <Command.Item></Command.Item>
+    </Command.Group>
+    <Command.Separator />
+    <Command.Group heading="Commands">
+      <Command.Item>
+        <Command.Shortcut>⌘K</Command.Shortcut>
+      </Command.Item>
+      <Command.Item>
+        <Command.Shortcut>⌘L</Command.Shortcut>
+      </Command.Item>
+    </Command.Group>
+  </Command.List>
+</Command.Dialog>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all command elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Command.Input`, `Command.List`, and other subcomponents as children",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the root element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Accessible label for this command menu. Not shown visibly.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shouldFilter",
+      description:
+        "Optionally set to `false` to turn off the automatic filtering and sorting.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "filter",
+      description:
+        "Custom filter function for whether each command menu item should match the given search query.",
+      required: false,
+      value: "(value: string, search: string, keywords?: string[]) => number",
+    },
+    {
+      name: "defaultValue",
+      description: "Optional default item value when it is initially rendered.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description:
+        "Optional controlled state of the selected command menu item.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description:
+        "Event handler called when the selected item of the menu changes.",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "loop",
+      description:
+        "Optionally set to `true` to turn on looping around when using the arrow keys.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disablePointerSelection",
+      description:
+        "Optionally set to `true` to disable selection via pointer events.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "vimBindings",
+      description:
+        "Set to `false` to disable ctrl+n/j/p/k shortcuts. Defaults to `true`.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Dialog
+
+The `Dialog` component is used to display the command palette as a dialog.
+
+```typescript jsx
+<Command.Dialog>
+  <Command.Input placeholder="Type a command or search..." />
+  <Command.List>
+    <Command.Empty>No results found.</Command.Empty>
+    <Command.Group heading="Suggestions">
+      <Command.Item>Item 1</Command.Item>
+      <Command.Item>Item 2</Command.Item>
+    </Command.Group>
+    <Command.Separator />
+    <Command.Group heading="Commands">
+      <Command.Item>
+        <span>Command 1</span>
+        <Command.Shortcut>⌘K</Command.Shortcut>
+      </Command.Item>
+      <Command.Item>
+        <span>Command 2</span>
+        <Command.Shortcut>⌘L</Command.Shortcut>
+      </Command.Item>
+    </Command.Group>
+  </Command.List>
+</Command.Dialog>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "open",
+      description: "Whether the dialog is open or not",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultOpen",
+      description: "Whether the dialog is open by default",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description:
+        "Event handler called when the open state of the dialog changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "modal",
+      description: "Whether the dialog is modal",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the dialog",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "overlayClassName",
+      description: "Provide a className to the Dialog overlay.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "contentClassName",
+      description: "Provide a className to the Dialog content.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "container",
+      description: "Provide a custom element the Dialog should portal into.",
+      required: false,
+      value: "HTMLElement",
+    },
+  ]}
+/>
+
+### Input
+
+The `Input` component is used to capture user input for the command palette.
+
+```typescript jsx
+<Command.Input placeholder="Type a command or search..." />
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "placeholder",
+      description: "Placeholder text for the input",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the input",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description:
+        "Optional controlled state for the value of the search input.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Event handler called when the search value changes.",
+      required: false,
+      value: "(search: string) => void",
+    },
+  ]}
+/>
+
+### List
+
+The `List` component defines the main content area of the command palette.
+
+```typescript jsx
+<Command.List>
+  <Command.Empty>No results found.</Command.Empty>
+  <Command.Group heading="Suggestions">
+    <Command.Item>Item 1</Command.Item>
+    <Command.Item>Item 2</Command.Item>
+  </Command.Group>
+  <Command.Separator />
+  <Command.Group heading="Commands">
+    <Command.Item>
+      <span>Command 1</span>
+      <Command.Shortcut>⌘K</Command.Shortcut>
+    </Command.Item>
+    <Command.Item>
+      <span>Command 2</span>
+      <Command.Shortcut>⌘L</Command.Shortcut>
+    </Command.Item>
+  </Command.Group>
+</Command.List>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the list",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "heightClassName",
+      description: "Additional class names to apply to the height of the list",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description:
+        "Accessible label for this List of suggestions. Not shown visibly.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Empty
+
+The `Empty` component is used to display a message when there are no results.
+
+```typescript jsx
+<Command.Empty>No results found.</Command.Empty>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the empty state",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Group
+
+The `Group` component is used to group related command items.
+
+```typescript jsx
+<Command.Group heading="Suggestions">
+  <Command.Item>Item 1</Command.Item>
+  <Command.Item>Item 2</Command.Item>
+</Command.Group>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "heading",
+      description: "Heading for the group",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description:
+        "If no heading is provided, you must provide a value that is unique for this group.",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "forceMount",
+      description:
+        "Whether this group is forcibly rendered regardless of filtering.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Item
+
+The `Item` component defines an individual item within the command palette.
+
+```typescript jsx
+<Command.Item>
+  <span>Command 1</span>
+  <Command.Shortcut>⌘K</Command.Shortcut>
+</Command.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the item",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Whether this item is currently disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onSelect",
+      description:
+        "Event handler for when this item is selected, either via click or keyboard selection",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "value",
+      description: "A unique value for this item",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "keywords",
+      description: "Optional keywords to match against when filtering",
+      required: false,
+      value: "string[]",
+    },
+    {
+      name: "forceMount",
+      description:
+        "Whether this item is forcibly rendered regardless of filtering",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Shortcut
+
+The `Shortcut` component is used to display keyboard shortcuts for command items.
+
+```typescript jsx
+<Command.Item>
+  <span>Command 1</span>
+  <Command.Shortcut>⌘K</Command.Shortcut>
+</Command.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Shortcut content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the shortcut",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Separator
+
+The `Separator` component is used to separate groups of command items.
+
+```typescript jsx
+<Command.Separator />
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names to apply to the separator",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "alwaysRender",
+      description:
+        "Whether this separator should always be rendered. Useful if you disable automatic filtering.",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

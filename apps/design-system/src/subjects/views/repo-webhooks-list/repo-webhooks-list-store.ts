@@ -31,6 +31,12 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
       }
     ],
     error: undefined,
+    webhookExecutionPage: 1,
+    setWebhookExecutionPage: (_: number) => {},
+    totalWebhookExecutionPages: 1,
+    executions: [],
+    setExecutions: () => {},
+    setTotalWebhookExecutionPages: (_: Headers) => {},
     setError: noop,
     totalPages: 20,
     webhookLoading: false,

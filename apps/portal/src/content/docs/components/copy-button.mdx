@@ -1,0 +1,69 @@
+---
+title: CopyButton
+description: CopyButton component documentation
+---
+
+The `CopyButton` component provides a button that copies text to the clipboard when clicked. It includes visual feedback to indicate when the text has been copied successfully.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<CopyButton name="Text to copy" />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CopyButton } from '@harnessio/ui/components'
+
+return (
+  <CopyButton name="Text to copy" />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "The text to be copied to the clipboard",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "buttonVariant",
+      description: "Variant of the button",
+      required: false,
+      value: "ButtonProps['variant']",
+      defaultValue: "'custom'",
+    },
+    {
+      name: "iconSize",
+      description: "Size of the icon",
+      required: false,
+      value: "number",
+      defaultValue: 16,
+    },
+    {
+      name: "onClick",
+      description: "Function to handle click event",
+      required: false,
+      value: "(e: MouseEvent) => void",
+    },
+    {
+      name: "color",
+      description: "Color variant of the icon",
+      required: false,
+      value: "'gray' | 'white' | 'success'",
+      defaultValue: "'white'",
+    },
+  ]}
+/>

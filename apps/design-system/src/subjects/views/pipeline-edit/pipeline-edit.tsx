@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Button, ButtonGroup, Icon } from '@harnessio/ui/components'
+import { Button, ButtonGroup, Icon, IconProps } from '@harnessio/ui/components'
 import {
   CommonNodeDataType,
   deleteItemInArray,
@@ -87,6 +87,12 @@ const PipelineStudioWrapper = () => {
         onYamlRevisionChange={setYamlRevision}
         view={view}
         selectedPath={selectedPath}
+        getStepIcon={step => {
+          console.log(step)
+          const iconsNames: IconProps['name'][] = ['run', 'run-test', 'branch', 'artifacts']
+          const randomIconName = Math.floor(Math.random() * iconsNames.length)
+          return <Icon name={iconsNames[randomIconName]} size={48} className="p-2" />
+        }}
         onErrorChange={data => {
           setErrorData(data)
         }}

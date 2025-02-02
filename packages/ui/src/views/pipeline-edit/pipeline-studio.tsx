@@ -35,6 +35,7 @@ export interface PipelineStudioProps {
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   yamlEditorConfig?: PipelineStudioInternalProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioInternalProps['onErrorChange']
+  getStepIcon?: PipelineStudioInternalProps['getStepIcon']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

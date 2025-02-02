@@ -36,6 +36,7 @@ export interface PipelineEditProps {
   onRevealInYaml: (_path: string | undefined) => undefined
   yamlEditorConfig?: PipelineStudioProps['yamlEditorConfig']
   onErrorChange?: (data: ErrorDataType) => void
+  getStepIcon?: PipelineStudioProps['getStepIcon']
 }
 
 export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
@@ -50,7 +51,8 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     onRevealInYaml,
     yamlEditorConfig,
     selectedPath,
-    onErrorChange
+    onErrorChange,
+    getStepIcon
   } = props
 
   const contentNodeFactory = new ContentNodeFactory()
@@ -123,6 +125,7 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
         onYamlRevisionChange={onYamlRevisionChange}
         yamlEditorConfig={yamlEditorConfig}
         onErrorChange={onErrorChange}
+        getStepIcon={getStepIcon}
       />
       <PipelineStudioNodeContextMenu />
     </PipelineStudioNodeContextProvider>

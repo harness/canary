@@ -102,21 +102,21 @@ export const elements: ExecutionTreeProps['elements'] = [
     id: 'initialize',
     name: 'Initialize',
     status: ExecutionState.SUCCESS,
-    duration: '5s',
+    duration: '00:05',
     isSelectable: true,
     children: [
       {
         id: 'fetch-repo',
         name: 'Fetch Repository',
         status: ExecutionState.SUCCESS,
-        duration: '2s',
+        duration: '00:02',
         isSelectable: true
       },
       {
         id: 'checkout-code',
         name: 'Checkout Code',
         status: ExecutionState.SUCCESS,
-        duration: '3s',
+        duration: '00:03',
         isSelectable: true
       }
     ]
@@ -125,21 +125,21 @@ export const elements: ExecutionTreeProps['elements'] = [
     id: 'build',
     name: 'Build',
     status: ExecutionState.SUCCESS,
-    duration: '15s',
+    duration: '00:15',
     isSelectable: true,
     children: [
       {
         id: 'install-deps',
         name: 'Install Dependencies',
         status: ExecutionState.SUCCESS,
-        duration: '10s',
+        duration: '00:10',
         isSelectable: true
       },
       {
         id: 'compile',
         name: 'Compile Source',
         status: ExecutionState.SUCCESS,
-        duration: '5s',
+        duration: '00:05',
         isSelectable: true
       }
     ]
@@ -148,14 +148,14 @@ export const elements: ExecutionTreeProps['elements'] = [
     id: 'test',
     name: 'Test',
     status: ExecutionState.SUCCESS,
-    duration: '10s',
+    duration: '00:10',
     isSelectable: true,
     children: [
       {
         id: 'unit-tests',
         name: 'Run Unit Tests',
         status: ExecutionState.SUCCESS,
-        duration: '10s',
+        duration: '00:10',
         isSelectable: true
       }
     ]
@@ -164,14 +164,14 @@ export const elements: ExecutionTreeProps['elements'] = [
     id: 'deploy',
     name: 'Deploy',
     status: ExecutionState.SUCCESS,
-    duration: '10s',
+    duration: '00:10',
     isSelectable: true,
     children: [
       {
         id: 'deploy-staging',
         name: 'Deploy to Staging',
         status: ExecutionState.SUCCESS,
-        duration: '10s',
+        duration: '00:10',
         isSelectable: true
       }
     ]

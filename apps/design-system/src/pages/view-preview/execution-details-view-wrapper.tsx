@@ -1,7 +1,14 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route, Routes } from 'react-router-dom'
 
-import { ExecutionState, LivelogLine, StageExecution, StageProps } from '@harnessio/ui/views'
+import {
+  ExecutionState,
+  ExecutionTree,
+  ExecutionTreeProps,
+  LivelogLine,
+  StageExecution,
+  StageProps
+} from '@harnessio/ui/views'
 
 const logs: LivelogLine[] = [
   { pos: 1, time: 2, out: 'Initializing pipeline...' },
@@ -100,21 +107,111 @@ const stages: StageProps[] = [
   }
 ]
 
+const executionTreeElements: ExecutionTreeProps['elements'] = [
+  {
+    id: 'initialize',
+    name: 'Initialize',
+    status: ExecutionState.SUCCESS,
+    duration: '5s',
+    isSelectable: true,
+    children: [
+      {
+        id: 'fetch-repo',
+        name: 'Fetch Repository',
+        status: ExecutionState.SUCCESS,
+        duration: '2s',
+        isSelectable: true
+      },
+      {
+        id: 'checkout-code',
+        name: 'Checkout Code',
+        status: ExecutionState.SUCCESS,
+        duration: '3s',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'build',
+    name: 'Build',
+    status: ExecutionState.SUCCESS,
+    duration: '15s',
+    isSelectable: true,
+    children: [
+      {
+        id: 'install-deps',
+        name: 'Install Dependencies',
+        status: ExecutionState.SUCCESS,
+        duration: '10s',
+        isSelectable: true
+      },
+      {
+        id: 'compile',
+        name: 'Compile Source',
+        status: ExecutionState.SUCCESS,
+        duration: '5s',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'test',
+    name: 'Test',
+    status: ExecutionState.SUCCESS,
+    duration: '10s',
+    isSelectable: true,
+    children: [
+      {
+        id: 'unit-tests',
+        name: 'Run Unit Tests',
+        status: ExecutionState.SUCCESS,
+        duration: '10s',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'deploy',
+    name: 'Deploy',
+    status: ExecutionState.SUCCESS,
+    duration: '10s',
+    isSelectable: true,
+    children: [
+      {
+        id: 'deploy-staging',
+        name: 'Deploy to Staging',
+        status: ExecutionState.SUCCESS,
+        duration: '10s',
+        isSelectable: true
+      }
+    ]
+  }
+]
+
 export const ExecutionDetailsViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     <Routes>
       <Route
         path="*"
         element={
-          <StageExecution
-            logs={logs}
-            onCopy={() => {}}
-            onDownload={() => {}}
-            onEdit={() => {}}
-            onStepNav={() => {}}
-            selectedStepIdx={0}
-            stage={stages[0]}
-          />
+          <div className="flex">
+            <ExecutionTree
+              defaultSelectedId="initialize"
+              elements={executionTreeElements}
+              onSelectNode={({ parentId, childId }: { parentId: string; childId: string }) => {
+                console.log(`Selected node: Parent ${parentId}, Child ${childId}`)
+              }}
+            />
+            <StageExecution
+              logs={logs}
+              onCopy={() => {}}
+              onDownload={() => {}}
+              onEdit={() => {}}
+              onStepNav={() => {}}
+              selectedStepIdx={0}
+              stage={stages[0]}
+            />
+          </div>
         }
       >
         <Route path="*" element={children} />

@@ -1,12 +1,7 @@
-import { Tree, TreeViewElement } from '@/components'
+import { Tree } from '@/components'
 
+import { ExecutionTreeProps } from './types'
 import { renderTree } from './utils'
-
-export interface ExecutionTreeProps {
-  defaultSelectedId: string
-  elements: TreeViewElement[]
-  onSelectNode: ({ parentId, childId }: { parentId: string; childId: string }) => void
-}
 
 export const ExecutionTree: React.FC<ExecutionTreeProps> = props => {
   const { defaultSelectedId, elements } = props

@@ -5,6 +5,7 @@ import {
   FormSeparator,
   NoData,
   PaginationComponent,
+  SkeletonList,
   Table,
   TableBody,
   TableCell,
@@ -21,16 +22,16 @@ import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/co
 interface RepoWebhookExecutionsPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
-
   toRepoWebhooks: (repoRef?: string) => string
-
   repo_ref: string
+  isLoading: boolean
 }
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
   toRepoWebhooks,
-  repo_ref
+  repo_ref,
+  isLoading
 }) => {
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
@@ -40,17 +41,18 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   }, [])
 
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="2xl">
+    <SandboxLayout.Main className="mx-0">
+      <SandboxLayout.Content className="pl-0 max-w-[812px]">
         <h1 className="text-2xl font-medium text-foreground-1 mb-4">Order Status Update Webhook</h1>
         <Text>
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
-        {/* <Spacer size={6} /> */}
         <FormSeparator className="my-6" />
         <h1 className="text-xl font-medium text-foreground-1 mb-4">Executions</h1>
-        {executions && executions?.length > 0 ? (
+        {isLoading ? (
+          <SkeletonList />
+        ) : executions && executions.length > 0 ? (
           <>
             <Table variant="asStackedList">
               <TableHeader>
@@ -62,40 +64,39 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {executions &&
-                  executions.map(execution => (
-                    <TableRow key={execution.id}>
-                      <TableCell>
-                        <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
-                      </TableCell>
-                      <TableCell>
-                        {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
-                      </TableCell>
-                      <TableCell>
-                        <Badge
-                          size="md"
-                          disableHover
-                          borderRadius="full"
-                          theme={
-                            execution.result === 'success'
-                              ? 'success'
-                              : execution.result === 'fatal_error' || execution.result === 'retriable_error'
-                                ? 'destructive'
-                                : 'muted'
-                          }
-                        >
-                          {execution.result === 'success'
-                            ? 'Success'
-                            : execution.result === 'fatal_error' || execution.result === 'retriable_error'
-                              ? 'Failed'
-                              : 'Invalid'}
-                        </Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Text size={2}>{timeAgo(execution.created)}</Text>
-                      </TableCell>
-                    </TableRow>
-                  ))}
+                {executions.map(execution => (
+                  <TableRow key={execution.id}>
+                    <TableCell>
+                      <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
+                    </TableCell>
+                    <TableCell>
+                      {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        size="md"
+                        disableHover
+                        borderRadius="full"
+                        theme={
+                          execution.result === 'success'
+                            ? 'success'
+                            : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
+                              ? 'destructive'
+                              : 'muted'
+                        }
+                      >
+                        {execution.result === 'success'
+                          ? 'Success'
+                          : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
+                            ? 'Failed'
+                            : 'Invalid'}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <Text size={2}>{timeAgo(execution.created)}</Text>
+                    </TableCell>
+                  </TableRow>
+                ))}
               </TableBody>
             </Table>
             <PaginationComponent

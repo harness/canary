@@ -23,7 +23,7 @@ export const WebhookExecutionsContainer = () => {
     setPage: setWebhookExecutionPage
   })
 
-  const { data: { body: executions, headers } = {} } = useListRepoWebhookExecutionsQuery(
+  const { data: { body: executions, headers } = {}, isLoading } = useListRepoWebhookExecutionsQuery(
     {
       repo_ref,
       webhook_identifier: parseInt(webhookId ?? ''),
@@ -47,6 +47,7 @@ export const WebhookExecutionsContainer = () => {
       useWebhookStore={useWebhookStore}
       toRepoWebhooks={() => routes.toRepoWebhooks({ repoId: repo_ref })}
       repo_ref={repo_ref}
+      isLoading={isLoading}
     />
   )
 }

@@ -479,14 +479,26 @@ export const repoRoutes: CustomRouteObject[] = [
                 path: 'details',
                 element: <CreateWebhookContainer />,
                 handle: {
-                  breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                  breadcrumb: ({ webhookId }: { webhookId: string }) => (
+                    <>
+                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
+                      <Text className="ml-1.5">Details</Text>
+                    </>
+                  ),
+                  routeName: RouteConstants.toRepoWebhookDetails
                 }
               },
               {
                 path: 'executions',
                 element: <WebhookExecutionsContainer />,
                 handle: {
-                  breadcrumb: () => <Text>Executions</Text>
+                  breadcrumb: ({ webhookId }: { webhookId: string }) => (
+                    <>
+                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
+                      <Text className="ml-1.5">Executions</Text>
+                    </>
+                  ),
+                  routeName: RouteConstants.toRepoWebhookExecutions
                 }
               }
             ]

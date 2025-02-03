@@ -8,7 +8,6 @@ import {
   Icon,
   ListActions,
   MarkdownViewer,
-  NoData,
   SearchFiles,
   SkeletonList,
   Spacer,
@@ -65,6 +64,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   gitRef?: string
   latestCommitInfo?: {
     userName: string
+    avatarUrl?: string
     message: string
     timestamp: string
     sha: string | null
@@ -227,7 +227,7 @@ export function RepoSummaryView({
             <Summary
               toCommitDetails={toCommitDetails}
               latestFile={{
-                user: { name: latestCommitInfo?.userName || '' },
+                user: { name: latestCommitInfo?.userName || '', avatarUrl: latestCommitInfo?.avatarUrl },
                 lastCommitMessage: latestCommitInfo?.message || '',
                 timestamp: latestCommitInfo?.timestamp || '',
                 sha: latestCommitInfo?.sha || ''

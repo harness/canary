@@ -64,7 +64,7 @@ const DialogContent = forwardRef<ElementRef<typeof DialogPrimitive.Content>, Dia
             {mainContent}
           </div>
           {footer}
-          <DialogPrimitive.Close className="absolute right-3 top-[18px] disabled:pointer-events-none" asChild>
+          <DialogPrimitive.Close className="absolute right-3 top-3.5 disabled:pointer-events-none" asChild>
             <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2">
               <Icon name="close" size={16} />
               <span className="sr-only">Close</span>

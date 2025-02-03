@@ -29,102 +29,104 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
       <Dialog.Content className="max-w-[538px]">
-        <Dialog.Title className="text-20 font-medium">Appearance Settings</Dialog.Title>
+        <Dialog.Title className="text-20 font-medium">Appearance settings</Dialog.Title>
         {/* Mode */}
-        <div className="mt-1 grid grid-cols-[246px_1fr] gap-x-8">
-          <div>
-            <span className="text-16 font-medium text-foreground-1">Mode</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">
-              Choose Dark mode for low light or Light mode for bright spaces.
-            </p>
+        <div className="mt-1 flex flex-col gap-y-5">
+          <div className="grid grid-cols-[246px_1fr] gap-x-8">
+            <div>
+              <span className="text-16 text-foreground-1 font-medium">Mode</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
+                Choose Dark mode for low light or Light mode for bright spaces.
+              </p>
+            </div>
+            <Select name="mode" value={mode} onValueChange={(value: Mode) => setMode(value)} placeholder="Select">
+              <SelectContent>
+                {Object.values(Mode).map(item => (
+                  <SelectItem key={item} value={item}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
-          <Select name="mode" value={mode} onValueChange={(value: Mode) => setMode(value)} placeholder="Select">
-            <SelectContent>
-              {Object.values(Mode).map(item => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
+
+          <Separator className="h-px bg-[#1D1D20]" />
+
+          {/* Contrast */}
+          <div className="grid grid-cols-[246px_1fr] gap-x-8">
+            <div>
+              <span className="text-16 text-foreground-1 font-medium">Contrast</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
+                High contrast improves readability, Dimmer mode reduces glare.
+              </p>
+            </div>
+            <Select
+              name="contrast"
+              value={contrast}
+              onValueChange={(value: Contrast) => setContrast(value)}
+              placeholder="Select"
+            >
+              <SelectContent>
+                {Object.values(Contrast).map(item => (
+                  <SelectItem key={item} value={item}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Separator className="h-px bg-[#1D1D20]" />
+
+          {/* Color Adjustment */}
+          <div className="grid grid-cols-[246px_1fr] gap-x-8">
+            <div>
+              <span className="text-16 text-foreground-1 font-medium">Color adjustment</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">
+                Adjust colors for different types of color blindness.
+              </p>
+            </div>
+            <Select
+              name="color-adjustment"
+              value={colorAdjustment}
+              onValueChange={(value: ColorAdjustment) => setColorAdjustment(value)}
+              placeholder="Select"
+            >
+              <SelectContent>
+                {Object.values(ColorAdjustment).map(item => (
+                  <SelectItem key={item} value={item}>
+                    {item}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <Separator className="h-px bg-[#1D1D20]" />
+
+          {/* Accent Color */}
+          <div className="grid grid-cols-[246px_1fr] gap-x-8">
+            <div>
+              <span className="text-16 text-foreground-1 font-medium">Accent color</span>
+              <p className="text-14 text-foreground-3 mt-1.5 leading-snug">Select your application accent color.</p>
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {Object.values(AccentColor).map(item => (
+                <button
+                  key={item}
+                  className={cn(
+                    'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
+                    accentColor === item && 'border border-white'
+                  )}
+                  onClick={() => {
+                    setAccentColor(item)
+                    onChange({ accentColor: item, mode, contrast, colorAdjustment })
+                  }}
+                >
+                  <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
+                </button>
               ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Separator className="h-px bg-[#1D1D20]" />
-
-        {/* Contrast */}
-        <div className="grid grid-cols-[246px_1fr] gap-x-8">
-          <div>
-            <span className="text-16 font-medium text-foreground-1">Contrast</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">
-              High contrast improves readability, Dimmer mode reduces glare.
-            </p>
-          </div>
-          <Select
-            name="contrast"
-            value={contrast}
-            onValueChange={(value: Contrast) => setContrast(value)}
-            placeholder="Select"
-          >
-            <SelectContent>
-              {Object.values(Contrast).map(item => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Separator className="h-px bg-[#1D1D20]" />
-
-        {/* Color Adjustment */}
-        <div className="grid grid-cols-[246px_1fr] gap-x-8">
-          <div>
-            <span className="text-16 font-medium text-foreground-1">Color Adjustment</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">
-              Adjust colors for different types of color blindness.
-            </p>
-          </div>
-          <Select
-            name="color-adjustment"
-            value={colorAdjustment}
-            onValueChange={(value: ColorAdjustment) => setColorAdjustment(value)}
-            placeholder="Select"
-          >
-            <SelectContent>
-              {Object.values(ColorAdjustment).map(item => (
-                <SelectItem key={item} value={item}>
-                  {item}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-
-        <Separator className="h-px bg-[#1D1D20]" />
-
-        {/* Accent Color */}
-        <div className="grid grid-cols-[246px_1fr] gap-x-8">
-          <div>
-            <span className="text-16 font-medium text-foreground-1">Accent Color</span>
-            <p className="mt-1.5 text-14 leading-snug text-foreground-3">Select your application accent color.</p>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {Object.values(AccentColor).map(item => (
-              <button
-                key={item}
-                className={cn(
-                  'focus-visible:rounded-full h-[26px] w-[26px] rounded-full',
-                  accentColor === item && 'border border-white'
-                )}
-                onClick={() => {
-                  setAccentColor(item)
-                  onChange({ accentColor: item, mode, contrast, colorAdjustment })
-                }}
-              >
-                <span style={{ backgroundColor: item }} className="m-auto block size-[18px] rounded-full" />
-              </button>
-            ))}
+            </div>
           </div>
         </div>
       </Dialog.Content>

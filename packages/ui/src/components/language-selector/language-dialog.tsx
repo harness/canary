@@ -28,7 +28,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
       {!!children && <Dialog.Trigger asChild>{children}</Dialog.Trigger>}
       <Dialog.Content className="max-w-[400px]">
         <Dialog.Title className="text-20 font-medium">Language</Dialog.Title>
-        <div className="flex flex-col gap-3">
+        <div className="mt-1 flex flex-col gap-3">
           {languages.map(lang => (
             <button
               key={lang.code}
@@ -39,12 +39,19 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="bg-background-12 text-12 text-foreground-3 flex size-6 items-center justify-center rounded-sm">
+                <div className="bg-background-12 text-12 text-foreground-3 flex size-6 items-center justify-center rounded">
                   {lang.code}
                 </div>
-                <span className="text-foreground-1">{lang.name}</span>
+                <span
+                  className={cn(
+                    'group-hover:text-foreground-1',
+                    selectedLanguage === lang.code ? 'text-foreground-1' : 'text-foreground-2'
+                  )}
+                >
+                  {lang.name}
+                </span>
               </div>
-              {selectedLanguage === lang.code && <Icon className="text-icons-2 " name="tick" size={12} />}
+              {selectedLanguage === lang.code && <Icon className="text-icons-2" name="tick" size={12} />}
               <span
                 className={cn(
                   'absolute -inset-x-2 -inset-y-1 rounded group-hover:bg-background-4 group-focus-visible:outline group-focus-visible:outline-offset-2 group-focus-visible:outline-borders-accent group-focus-visible:outline-2',

@@ -18,7 +18,7 @@ export enum LanguageCode {
   FR = 'FR',
   DE = 'DE',
   IE = 'IE',
-  PY = 'PY',
+  RU = 'РУ',
   LA = 'LA'
 }
 
@@ -35,7 +35,7 @@ export const languages: LanguageInterface[] = [
   { code: LanguageCode.FR, name: Language.French },
   { code: LanguageCode.DE, name: Language.German },
   { code: LanguageCode.IE, name: Language.Irish },
-  { code: LanguageCode.PY, name: Language.Russian },
+  { code: LanguageCode.RU, name: Language.Russian },
   { code: LanguageCode.LA, name: Language.LatinAmerican }
 ]
 

@@ -47,7 +47,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
           </div>
           <div className="mt-4 flex gap-4">
             {Object.values(Mode).map(item => (
-              <label key={item} className="flex flex-col items-start cursor-pointer gap-2">
+              <label key={item} className="flex cursor-pointer flex-col items-start gap-2">
                 <div
                   className={cn(
                     'h-[131px] w-[225px] rounded border p-2',
@@ -67,8 +67,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     }}
                     className="hidden"
                   />
-                  <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
-                    {mode === item && <div className="h-2 w-2 rounded-full bg-white" />}
+                  <div className="flex size-4 items-center justify-center rounded-full border border-gray-600">
+                    {mode === item && <div className="size-2 rounded-full bg-white" />}
                   </div>
                   {item}
                 </div>
@@ -101,8 +101,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   }}
                   className="hidden"
                 />
-                <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
-                  {contrast === item && <div className="h-2 w-2 rounded-full bg-white" />}
+                <div className="flex size-4 items-center justify-center rounded-full border border-gray-600">
+                  {contrast === item && <div className="size-2 rounded-full bg-white" />}
                 </div>
                 <span className="text-gray-300">{item}</span>
               </label>
@@ -132,8 +132,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   }}
                   className="hidden"
                 />
-                <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
-                  {colorAdjustment === item && <div className="h-2 w-2 rounded-full bg-white" />}
+                <div className="flex size-4 items-center justify-center rounded-full border border-gray-600">
+                  {colorAdjustment === item && <div className="size-2 rounded-full bg-white" />}
                 </div>
                 <span className="text-gray-300">{item}</span>
               </label>

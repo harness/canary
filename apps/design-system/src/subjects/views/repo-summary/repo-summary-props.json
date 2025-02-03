@@ -1214,7 +1214,8 @@
         "name": "Abhinav Rastogi"
       },
       "sha": "5d6f2d7",
-      "path": "/canary/repos/canary/code//~/.dockerignore"
+      "path": "/canary/repos/canary/code//~/.dockerignore",
+      "status": "low_risk"
     },
     {
       "id": ".eslintignore",
@@ -1226,7 +1227,8 @@
         "name": "praneshg239"
       },
       "sha": "1e126e7",
-      "path": "/canary/repos/canary/code//~/.eslintignore"
+      "path": "/canary/repos/canary/code//~/.eslintignore",
+      "status": "medium_risk"
     },
     {
       "id": ".eslintrc.json",
@@ -1250,7 +1252,8 @@
         "name": "Calvin Lee"
       },
       "sha": "280c1cf",
-      "path": "/canary/repos/canary/code//~/.github"
+      "path": "/canary/repos/canary/code//~/.github",
+      "status": "high_risk"
     },
     {
       "id": ".gitignore",

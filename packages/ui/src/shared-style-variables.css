@@ -321,6 +321,7 @@
     --canary-icon-alert: var(--canary-orange-55);
     --canary-icon-success: var(--canary-green-65);
     --canary-icon-accent: var(--canary-blue-60);
+    --canary-icon-risk: var(--canary-yellow-100);
     --canary-icon-merged: var(--canary-purple);
     /* Tags */
     /* --canary-gray */

@@ -5,7 +5,7 @@ import { elements, logs, stages } from './mocks/mock-data'
 export const ExecutionDetailsView = () => {
   return (
     <div className="flex flex-col">
-      <ExecutionHeader />
+      <ExecutionHeader commitName="8fbru3ix" branchName="master" title="#311. Alerting docs: adds sns integration" />
       <div className="flex flex-1">
         <ExecutionTree
           defaultSelectedId="initialize"

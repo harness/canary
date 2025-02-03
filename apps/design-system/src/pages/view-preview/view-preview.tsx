@@ -41,6 +41,7 @@ import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import { useTranslationsStore } from '@utils/viewUtils'
 
+import { Chat } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
@@ -159,6 +160,32 @@ export const viewPreviews: Record<string, ReactNode> = {
   'pipeline-graph': (
     <RepoViewWrapper>
       <PipelineGraphWrapper />
+    </RepoViewWrapper>
+  ),
+  'chat-preview': (
+    <RepoViewWrapper>
+      <div className="max-w-[460px] h-full border-r border-borders-4">
+        <Chat.Root>
+          <Chat.Body>
+            <Chat.Message>
+              Hey Olivia! I&#39;ve finished with the requirements doc! I made some notes in the gdoc as well for Phoenix
+              to look over.
+            </Chat.Message>
+            <Chat.Message self>Awesome! Thanks, I&#39;ll take a look at this today.</Chat.Message>
+            <Chat.Separator title="Today" />
+            <Chat.Message>
+              No rush though — we still have to wait for Lana&#39;s design. Click the button in the actions panel below
+              to see branches which require your attention to fix and redeploy.
+            </Chat.Message>
+            <Chat.Message>Hey Olivia, can you please review the latest design when you have a chance?</Chat.Message>
+            <Chat.Message self>Sure thing, I&#39;ll have a look today. They&#39;re looking great!</Chat.Message>
+            <Chat.Typing />
+          </Chat.Body>
+          <Chat.Footer>
+            <Chat.Input />
+          </Chat.Footer>
+        </Chat.Root>
+      </div>
     </RepoViewWrapper>
   ),
   'pipeline-graph-minimal': (

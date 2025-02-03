@@ -21,13 +21,23 @@ import { ThemeDialog } from '@harnessio/ui/components';
 
 return (
   <ThemeDialog
-    open={isOpen}
-    onOpenChange={handleOpenChange}
-    onChange={handleChange}
-    onSave={handleSave}
-    onCancel={handleCancel}
+    open={open}
+    onOpenChange={setOpen}
+    theme={theme}
+    defaultTheme={{
+      mode: Mode.Light,
+      contrast: Contrast.HighContrast,
+      colorAdjustment: ColorAdjustment.Deuteranopia,
+      accentColor: AccentColor.Orange
+    }}
+    onSave={(appliedTheme: ThemeInterface) => {
+      setTheme(appliedTheme)
+      setOpen(false)
+    }}
+    onChange={(updatedTheme: ThemeInterface) => setTheme(updatedTheme)}
+    onCancel={() => setOpen(false)}
   >
-    <Button onClick={() => setIsOpen(true)}>Customize theme</Button>
+    <Button onClick={() => setOpen(true)}>Appearance Settings</Button>
   </ThemeDialog>
 )
 ```

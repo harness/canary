@@ -21,13 +21,18 @@ import { LanguageDialog } from '@harnessio/ui/components';
 
 return (
   <LanguageDialog
-    open={isOpen}
-    onOpenChange={handleOpenChange}
-    onChange={handleChange}
-    onSave={handleSave}
-    onCancel={handleCancel}
-  >
-    <Button onClick={() => setIsOpen(true)}>Select Language</Button>
+      open={open}
+      onOpenChange={setOpen}
+      language={language}
+      defaultLanguage={LanguageCode.DE}
+      onSave={(selectedLanguage: LanguageInterface) => {
+        setLanguage(selectedLanguage.code)
+        setOpen(false)
+      }}
+      onChange={(selectedLanguage: LanguageInterface) => setLanguage(selectedLanguage.code)}
+      onCancel={() => setOpen(false)}
+    >
+      <Button onClick={() => setOpen(true)}>Change Language</Button>
   </LanguageDialog>
 )
 ```

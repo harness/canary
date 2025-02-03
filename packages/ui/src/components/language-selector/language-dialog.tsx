@@ -1,12 +1,12 @@
-import React, { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 
 import { Button, ButtonGroup, Dialog, Icon } from '@/components'
 
-import { LanguageCode, LanguageDialogProps, languages } from './types'
+import { LanguageDialogProps, languages } from './types'
 
 const LanguageDialog: FC<LanguageDialogProps> = ({
   defaultLanguage,
-  language,
+  language: specifiedLanguage,
   open,
   onOpenChange,
   onChange,
@@ -14,19 +14,11 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
   onCancel,
   children
 }) => {
-  const [selectedLanguage, setSelectedLanguage] = useState<LanguageCode | null>(null)
-
-  useEffect(() => {
-    if (language) {
-      setSelectedLanguage(language)
-    } else if (defaultLanguage) {
-      setSelectedLanguage(defaultLanguage)
-    }
-  }, [defaultLanguage, language])
+  const language = specifiedLanguage || defaultLanguage
 
   const handleSave = (): void => {
-    if (selectedLanguage) {
-      const languageToSave = languages.find(lang => lang.code === selectedLanguage)
+    if (language) {
+      const languageToSave = languages.find(lang => lang.code === language)
       if (languageToSave) {
         onSave(languageToSave)
       }
@@ -44,16 +36,13 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               variant="ghost"
               key={lang.code}
               className="flex justify-between items-center py-2 px-1 rounded-md cursor-pointer hover:bg-gray-400"
-              onClick={() => {
-                setSelectedLanguage(lang.code)
-                onChange(lang)
-              }}
+              onClick={() => onChange(lang)}
             >
               <div className="flex items-center gap-2">
                 <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
                 <span>{lang.name}</span>
               </div>
-              {selectedLanguage === lang.code && <Icon name="tick" size={16} />}
+              {language === lang.code && <Icon name="tick" size={16} />}
             </Button>
           ))}
         </div>

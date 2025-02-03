@@ -5,6 +5,8 @@ import {
   Badge,
   Button,
   ButtonWithOptions,
+  ButtonWithOptionsTheme,
+  ButtonWithOptionsVariant,
   Checkbox,
   DropdownMenu,
   Icon,
@@ -138,6 +140,59 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
   )
 }
 
+const getButtonState = ({
+  mergeable,
+  ruleViolation,
+  isDraft,
+  checksInfo,
+  checkboxBypass,
+  canBypass
+}: {
+  mergeable: boolean
+  ruleViolation?: boolean
+  isDraft?: boolean
+  checksInfo: { status: EnumCheckStatus }
+  checkboxBypass?: boolean
+  canBypass?: boolean
+}) => {
+  if (isDraft) {
+    return {
+      disabled: false,
+      theme: 'primary'
+    }
+  }
+
+  if (['pending', 'running', 'failure'].includes(checksInfo.status)) {
+    return {
+      disabled: true,
+      theme: checksInfo.status === 'failure' ? 'disabled' : 'error',
+      variant: checksInfo.status === 'failure' ? 'default' : 'destractive'
+    }
+  }
+
+  if (ruleViolation) {
+    if (canBypass) {
+      return {
+        disabled: !checkboxBypass,
+        theme: checkboxBypass ? 'error' : 'disabled',
+        variant: checkboxBypass ? 'destractive' : 'default'
+      }
+    }
+  }
+
+  if (mergeable && !ruleViolation) {
+    return {
+      disabled: false,
+      theme: 'success'
+    }
+  }
+
+  return {
+    disabled: true,
+    theme: 'disabled'
+  }
+}
+
 const PullRequestPanel = ({
   pullReqMetadata,
   // PRStateLoading,
@@ -253,6 +308,15 @@ const PullRequestPanel = ({
       </DropdownMenu.Root>
     )
   }
+
+  const buttonState = getButtonState({
+    mergeable,
+    ruleViolation,
+    isDraft,
+    checksInfo,
+    checkboxBypass,
+    canBypass: !notBypassable
+  })
   return (
     <StackedList.Root>
       <StackedList.Item
@@ -314,20 +378,9 @@ const PullRequestPanel = ({
                   {actions && !pullReqMetadata?.closed ? (
                     <ButtonWithOptions
                       id="pr-type"
-                      theme={
-                        mergeable && !ruleViolation && !pullReqMetadata?.is_draft
-                          ? 'success'
-                          : pullReqMetadata?.is_draft
-                            ? 'primary'
-                            : checksInfo.status === 'pending' || checksInfo.status === 'running'
-                              ? 'warning'
-                              : 'disabled'
-                      }
-                      disabled={
-                        (!checkboxBypass && ruleViolation) ||
-                        !mergeable ||
-                        ['pending', 'running', 'failed'].includes(checksInfo.status)
-                      }
+                      theme={buttonState.theme as ButtonWithOptionsTheme}
+                      disabled={buttonState.disabled}
+                      variant={buttonState?.variant as ButtonWithOptionsVariant}
                       selectedValue={mergeButtonValue}
                       handleOptionChange={value => setMergeButtonValue(value)}
                       options={actions.map(action => ({

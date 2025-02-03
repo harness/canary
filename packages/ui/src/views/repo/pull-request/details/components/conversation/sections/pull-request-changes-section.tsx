@@ -226,7 +226,11 @@ const PullRequestChangesSection = ({
           title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
           description={<LineDescription text={changesInfo.content} />}
         />
-        {viewBtn && <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>}
+        {viewBtn && (
+          <span className="px-2 py-1.5 text-14 text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+            Show more
+          </span>
+        )}
       </Accordion.Trigger>
 
       <Accordion.Content>

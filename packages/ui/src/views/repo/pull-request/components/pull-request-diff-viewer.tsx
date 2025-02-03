@@ -408,7 +408,7 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-foreground-8">{parent.payload?.resolver?.display_name}</span>
+                      <span className="font-medium text-foreground-1">{parent.payload?.resolver?.display_name}</span>
                       <span className="text-foreground-4">marked this conversation as resolved</span>
                     </div>
                   )

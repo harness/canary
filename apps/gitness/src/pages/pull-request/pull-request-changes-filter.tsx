@@ -102,7 +102,7 @@ export const PullRequestChangesFilter: React.FC<FilterViewProps> = ({
         }}
       >
         <RadioGroup className="flex items-start gap-2">
-          <RadioGroupItem value="false" className="mt-1 size-3 text-tertiary-background" />
+          <RadioGroupItem value="false" className="text-tertiary-background mt-1 size-3" />
           <div className="flex flex-col">
             <Text truncate size={1} color="primary">
               {itm.title}

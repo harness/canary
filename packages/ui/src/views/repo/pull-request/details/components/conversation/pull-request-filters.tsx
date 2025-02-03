@@ -1,18 +1,4 @@
-import { Button, DropdownMenu, Icon, Text } from '@/components'
-
-interface DropdownButtonProps {
-  label: string
-  onClick: () => void
-}
-
-const DropdownButton: React.FC<DropdownButtonProps> = ({ label, onClick }) => {
-  return (
-    <Button variant="ghost" size="default" padding="sm" className="entity-list-action font-normal" onClick={onClick}>
-      {label}&nbsp;
-      <Icon name="chevron-down" size={12} className="chevron-down" />
-    </Button>
-  )
-}
+import { DropdownMenu, Icon } from '@/components'
 
 interface DropdownMenuComponentProps<T> {
   items: T[]
@@ -27,12 +13,15 @@ const DropdownMenuComponent = <T extends { label: string; value: string }>({
 }: DropdownMenuComponentProps<T>) => {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <DropdownButton label={selectedItem.label} onClick={() => {}} />
+      <DropdownMenu.Trigger className="flex items-center gap-x-1.5">
+        <span className="text-foreground-2 transition-colors duration-200 group-hover:text-foreground-1">
+          {selectedItem.label}
+        </span>
+        <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
       </DropdownMenu.Trigger>
-      <DropdownMenu.Content>
+      <DropdownMenu.Content className="w-56" align="end">
         {items.map(item => (
-          <DropdownMenu.Item key={item.value} onClick={() => onItemSelect(item)}>
+          <DropdownMenu.Item className="py-2.5" key={item.value} onClick={() => onItemSelect(item)}>
             {item.label}
           </DropdownMenu.Item>
         ))}
@@ -64,11 +53,9 @@ const PullRequestFilters = <T extends FilterOption>({
   setDateOrderSort
 }: PullRequestFilterProps<T>) => {
   return (
-    <div className="grid grid-cols-[1fr_auto] items-center border-b pb-2">
-      <Text size={4} weight="medium">
-        Overview
-      </Text>
-      <div className="flex items-center gap-4">
+    <div className="grid grid-cols-[1fr_auto] items-center border-b border-borders-1 pb-2">
+      <h3 className="text-18 font-medium leading-snug text-foreground-1">Overview</h3>
+      <div className="flex items-center gap-x-5">
         <DropdownMenuComponent items={activityFilters} selectedItem={activityFilter} onItemSelect={setActivityFilter} />
         <DropdownMenuComponent items={dateFilters} selectedItem={dateOrderSort} onItemSelect={setDateOrderSort} />
       </div>

@@ -162,7 +162,6 @@ export default {
           border: {
             'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'danger-3': 'hsla(var(--canary-button-border-danger-03))',
             'success-1': 'hsla(var(--canary-button-border-success-01))'
           }
         },

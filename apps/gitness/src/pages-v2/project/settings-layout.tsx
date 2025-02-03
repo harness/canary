@@ -5,7 +5,7 @@ import { ProjectSettingsPage } from '@harnessio/ui/views'
 export const SettingsLayout = () => {
   return (
     <>
-      <div className="sticky top-[55px] z-40 bg-background-1">
+      <div className="bg-background-1 sticky top-[55px] z-40">
         <ProjectSettingsPage />
       </div>
       <Outlet />

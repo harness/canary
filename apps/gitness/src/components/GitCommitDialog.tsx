@@ -163,7 +163,7 @@ export default function GitCommitDialog({
 
   return (
     <Dialog open={open} onOpenChange={onClose}>
-      <DialogContent className="max-w-[500px] border-border bg-primary-background">
+      <DialogContent className="border-border bg-primary-background max-w-[500px]">
         <DialogHeader>
           <DialogTitle>Commit Changes</DialogTitle>
         </DialogHeader>

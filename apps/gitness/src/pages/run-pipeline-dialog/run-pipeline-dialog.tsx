@@ -176,7 +176,7 @@ export default function RunPipelineForm({ pipelineId, branch, onClose, open }: R
             if (!open) onClose()
           }}
         >
-          <Dialog.Content className="max-w-[500px] border-border bg-primary-background">
+          <Dialog.Content className="border-border bg-primary-background max-w-[500px]">
             <Dialog.Header>
               <Dialog.Title>Run Pipeline</Dialog.Title>
             </Dialog.Header>

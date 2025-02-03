@@ -72,9 +72,9 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
               )}
               {out && logText(out)}
             </div>
-            <Text className="mr-2 flex gap-1 text-sm font-normal text-log">
-              {formatDuration(time ? time * 1_000 : 0)}
-            </Text>
+            {time ? (
+              <Text className="mr-2 flex gap-1 text-sm font-normal text-log">{formatDuration(time * 1_000)}</Text>
+            ) : null}
           </div>
         ))}
     </>

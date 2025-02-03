@@ -1,7 +1,16 @@
 import { Navigate } from 'react-router-dom'
 
+// import { use } from 'i18next'
+// import { Text } from '@harnessio/ui/components'
+
 import { Breadcrumb, Text } from '@harnessio/ui/components'
-import { EmptyPage, ProfileSettingsLayout, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
+import {
+  EmptyPage,
+  ProfileSettingsLayout,
+  RepoSettingsLayout,
+  SandboxLayout,
+  WebhookSettingsLayout
+} from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
@@ -52,6 +61,7 @@ import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
+import { WebhookExecutionsContainer } from './pages-v2/webhooks/webhook-executions'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
 enum Page {
@@ -426,14 +436,21 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <Text>Create a webhook</Text>
                     }
-                  },
-                  {
-                    path: ':webhookId',
-                    element: <CreateWebhookContainer />,
-                    handle: {
-                      breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
-                    }
                   }
+                  // {
+                  //   path: ':webhookId',
+                  //   element: <CreateWebhookContainer />,
+                  //   handle: {
+                  //     breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                  //   }
+                  // },
+                  // {
+                  //   path: ':webhookId/executions',
+                  //   element: <WebhookExecutionsContainer />,
+                  //   handle: {
+                  //     breadcrumb: () => <Text>Executions</Text>
+                  //   }
+                  // }
                 ]
               },
               {
@@ -463,6 +480,31 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   }
                 ]
+              }
+            ]
+          },
+
+          {
+            path: 'settings/webhooks/:webhookId',
+            element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="details" replace />
+              },
+              {
+                path: 'details',
+                element: <CreateWebhookContainer />,
+                handle: {
+                  breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
+                }
+              },
+              {
+                path: 'executions',
+                element: <WebhookExecutionsContainer />,
+                handle: {
+                  breadcrumb: () => <Text>Executions</Text>
+                }
               }
             ]
           }

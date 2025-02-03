@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { CreateWebhookFormFields, WebhookStore } from '@harnessio/ui/views'
+import { CreateWebhookFormFields, WebhookExecutionType, WebhookStore } from '@harnessio/ui/views'
 
 import { timeAgoFromEpochTime } from '../../../pages/pipeline-edit/utils/time-utils'
 import { PageResponseHeader } from '../../../types'
@@ -14,6 +14,7 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   page: 1,
   setPage: page => set({ page }),
   webhookLoading: false,
+  executions: null,
   setWebhookLoading: (webhookLoading: boolean) => set({ webhookLoading }),
   setWebhooks: data => {
     const transformedWebhooks = data.map(webhook => ({
@@ -30,6 +31,9 @@ export const useWebhookStore = create<WebhookStore>(set => ({
     set({
       webhooks: transformedWebhooks
     })
+  },
+  setExecutions: (data: WebhookExecutionType[]) => {
+    set({ executions: data })
   },
   setTotalPages: headers => set({ totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0') }),
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data })

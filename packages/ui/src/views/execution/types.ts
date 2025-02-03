@@ -46,6 +46,7 @@ export interface LivelogLine {
   out?: string
   pos?: number
   time?: number
+  duration?: number
 }
 
 export interface ExecutionTreeProps {

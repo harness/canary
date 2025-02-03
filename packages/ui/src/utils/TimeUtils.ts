@@ -53,3 +53,19 @@ export const formatDuration = (durationInMs: number): string => {
 
   return formatted.join(' ')
 }
+
+/**
+ * Formats an epoch timestamp into a string in the format "HH:mm:ss.SSS".
+ *
+ * @param epoch - The epoch timestamp (milliseconds since January 1, 1970).
+ * @returns A formatted string representing the time in "HH:mm:ss.SSS" format.
+ */
+export const formatTimestamp = (epoch: number): string => {
+  return new Intl.DateTimeFormat('en-GB', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    fractionalSecondDigits: 3,
+    hour12: false
+  }).format(new Date(epoch))
+}

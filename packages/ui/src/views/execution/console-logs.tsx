@@ -2,7 +2,7 @@ import { FC, useCallback } from 'react'
 
 import { Text } from '@/components'
 
-import { formatDuration } from '../../utils/TimeUtils'
+import { formatDuration, formatTimestamp } from '../../utils/TimeUtils'
 import { ConsoleLogsProps, LivelogLine } from './types'
 
 export const createStreamedLogLineElement = (log: LivelogLine) => {
@@ -45,7 +45,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
       const matchedText = log.slice(matchIndex, matchIndex + query?.length)
       const endText = log.slice(matchIndex + query?.length)
       return (
-        <Text className="ml-2 flex gap-1 font-mono text-sm font-normal text-ring">
+        <Text className="flex gap-1 font-mono text-sm font-normal text-ring">
           {startText ? <span>{startText}</span> : null}
           {matchedText ? <mark>{matchedText}</mark> : null}
           {endText ? <span>{endText}</span> : null}
@@ -59,17 +59,20 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
     <>
       {logs
         .filter(item => item !== null)
-        .map(({ pos, time, out }, index) => (
+        .map(({ pos, out, time, duration }, index) => (
           <div className="mb-2 flex items-baseline justify-between leading-[21px]" key={index}>
-            <div className="flex items-baseline">
+            <div className="flex items-baseline gap-2">
               {pos !== undefined && !isNaN(pos) && pos >= 0 && (
-                <Text className="flex min-w-5 justify-end text-log">{pos + 1}</Text>
+                <Text className="flex min-w-5 justify-end text-log">{pos}</Text>
               )}
-              {out && logText(out)}
+              {time ? (
+                <Text className="flex text-sm font-normal text-log">[{formatTimestamp(time * 1_000)}]</Text>
+              ) : null}
+              {out ? logText(out) : null}
             </div>
-            {time ? (
-              <Text className="mr-2 flex gap-1 text-sm font-normal text-log">{formatDuration(time * 1_000)}</Text>
-            ) : null}
+            <Text className="mr-2 text-sm font-normal text-log">
+              {formatDuration(duration && duration > 0 ? duration * 1_000 : 0)}
+            </Text>
           </div>
         ))}
     </>

@@ -85,8 +85,6 @@ export const StageExecution: React.FC<StageExecutionProps> = ({
 }): React.ReactElement => {
   const [selectedStepIndex, setSelectedStepIndex] = useState<number>(0)
   const [step, setStep] = useState<StepProps>()
-  const stepCount = (stage?.steps || []).length
-  const stepMaxIndex = stepCount > 1 ? stepCount - 1 : 0
 
   useEffect(() => {
     if (selectedStepIdx >= 0) {
@@ -104,35 +102,9 @@ export const StageExecution: React.FC<StageExecutionProps> = ({
     return <></>
   }
 
-  return (
-    <Layout.Horizontal gap="space-x-0">
-      <StepNavigation
-        stepIndex={selectedStepIndex}
-        onClickUp={() => {
-          const index = selectedStepIndex - 1 > 0 ? selectedStepIndex - 1 : 0
-          onStepNav(stage?.steps?.[index]?.number || 0)
-          setSelectedStepIndex(index)
-        }}
-        onClickDown={() => {
-          const index = selectedStepIndex + 1 < stepMaxIndex ? selectedStepIndex + 1 : stepMaxIndex
-          onStepNav(stage?.steps?.[index]?.number || 0)
-          setSelectedStepIndex(index)
-        }}
-        disableUp={selectedStepIndex === 0}
-        disableDown={stepCount - 1 === selectedStepIndex}
-      />
-      <Layout.Vertical gap="space-y-2" className="grow p-4">
-        {stage?.group ? (
-          <Layout.Horizontal gap="space-x-1" className="flex items-center">
-            <Text className="text-sm text-stage">{stage.group}</Text>
-            <Icon name="chevron-right" />
-            <Text className="text-sm text-ring">{stage.name}</Text>
-          </Layout.Horizontal>
-        ) : (
-          <Text>{stage.name}</Text>
-        )}
-        {step && <StepExecution step={step} logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />}
-      </Layout.Vertical>
-    </Layout.Horizontal>
+  return step ? (
+    <StepExecution step={step} logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />
+  ) : (
+    <></>
   )
 }

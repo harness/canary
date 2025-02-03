@@ -84,61 +84,52 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
 
   if (!step) return null
   return (
-    <Layout.Vertical>
-      <Layout.Horizontal className="flex items-center justify-between">
-        <Text className="text-lg">{step?.name}</Text>
-        <ExecutionStatus.Badge
-          status={step?.status}
-          duration={getFormattedDuration(step?.started ?? 0, step?.stopped ?? 0)}
-        />
-      </Layout.Horizontal>
-      <Tabs defaultValue={StepExecutionTab.LOG} className="mt-2 size-full">
-        <Layout.Vertical gap="space-y-3">
-          <Layout.Horizontal className="flex justify-between">
-            <TabsList className="w-fit">
-              <TabsTrigger className="h-full" value={StepExecutionTab.LOG}>
-                Logs
-              </TabsTrigger>
-              <TabsTrigger value={StepExecutionTab.INPUT}>Inputs</TabsTrigger>
-              <TabsTrigger value={StepExecutionTab.OUTPUT}>Output</TabsTrigger>
-            </TabsList>
-            <StepExecutionToolbar
-              onEdit={onEdit}
-              onDownload={onDownload}
-              onCopy={onCopy}
-              query={query}
-              handleInputChange={handleInputChange}
+    <Tabs defaultValue={StepExecutionTab.LOG} className="mt-2 size-full">
+      <Layout.Vertical gap="space-y-3">
+        <Layout.Horizontal className="flex justify-between">
+          <TabsList className="w-fit">
+            <TabsTrigger className="h-full" value={StepExecutionTab.LOG}>
+              Logs
+            </TabsTrigger>
+            <TabsTrigger value={StepExecutionTab.INPUT}>Inputs</TabsTrigger>
+            <TabsTrigger value={StepExecutionTab.OUTPUT}>Output</TabsTrigger>
+          </TabsList>
+          <StepExecutionToolbar
+            onEdit={onEdit}
+            onDownload={onDownload}
+            onCopy={onCopy}
+            query={query}
+            handleInputChange={handleInputChange}
+          />
+        </Layout.Horizontal>
+        <TabsContent value={StepExecutionTab.LOG}>
+          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
+            <ConsoleLogs logs={logs} query={query} />
+          </ScrollArea>
+        </TabsContent>
+        <TabsContent value={StepExecutionTab.INPUT}>
+          {/*here is the execution details of input table */}
+          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
+            <KeyValueTable
+              className="pt-2"
+              tableSpec={inputTable}
+              tableTitleName={'Input Name'}
+              tableTitleVal={'Input Value'}
             />
-          </Layout.Horizontal>
-          <TabsContent value={StepExecutionTab.LOG}>
-            <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
-              <ConsoleLogs logs={logs} query={query} />
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value={StepExecutionTab.INPUT}>
-            {/*here is the execution details of input table */}
-            <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
-              <KeyValueTable
-                className="pt-2"
-                tableSpec={inputTable}
-                tableTitleName={'Input Name'}
-                tableTitleVal={'Input Value'}
-              />
-            </ScrollArea>
-          </TabsContent>
-          <TabsContent value={StepExecutionTab.OUTPUT}>
-            {/*here is the execution details of output table */}
-            <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
-              <KeyValueTable
-                className="pt-2"
-                tableSpec={outputTable}
-                tableTitleName={'Output Name'}
-                tableTitleVal={'Output Value'}
-              />
-            </ScrollArea>
-          </TabsContent>
-        </Layout.Vertical>
-      </Tabs>
-    </Layout.Vertical>
+          </ScrollArea>
+        </TabsContent>
+        <TabsContent value={StepExecutionTab.OUTPUT}>
+          {/*here is the execution details of output table */}
+          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
+            <KeyValueTable
+              className="pt-2"
+              tableSpec={outputTable}
+              tableTitleName={'Output Name'}
+              tableTitleVal={'Output Value'}
+            />
+          </ScrollArea>
+        </TabsContent>
+      </Layout.Vertical>
+    </Tabs>
   )
 }

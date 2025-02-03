@@ -194,7 +194,7 @@ export const ExecutionDetailsViewWrapper: FC<PropsWithChildren<React.HTMLAttribu
       <Route
         path="*"
         element={
-          <div className="flex">
+          <div className="flex flex-1">
             <ExecutionTree
               defaultSelectedId="initialize"
               elements={executionTreeElements}

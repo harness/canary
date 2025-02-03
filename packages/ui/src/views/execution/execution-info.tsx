@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import { StepExecution } from './step-execution'
-import { StageExecutionProps, StepProps } from './types'
+import { ExecutionInfoProps, StepProps } from './types'
 
-export const StageExecution: React.FC<StageExecutionProps> = ({
+export const ExecutionInfo: React.FC<ExecutionInfoProps> = ({
   stage,
   selectedStepIdx,
   logs,

@@ -28,7 +28,7 @@ export interface StageProps {
   steps?: StepProps[]
 }
 
-export interface StageExecutionProps {
+export interface ExecutionInfoProps {
   stage: StageProps
   selectedStepIdx: number
   logs: LivelogLine[]
@@ -95,3 +95,5 @@ export interface Stage {
 export interface Execution {
   stages?: Stage[]
 }
+
+export interface ExecutionHeaderProps {}

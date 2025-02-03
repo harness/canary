@@ -100,6 +100,8 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         onGetFullDiff={() => Promise.resolve()}
         scrolledToComment={undefined}
         setScrolledToComment={noop}
+        jumpToDiff=''
+        setJumpToDiff={noop}
       />
     </>
   )

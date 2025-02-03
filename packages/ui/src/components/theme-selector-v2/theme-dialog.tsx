@@ -15,20 +15,13 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
   onCancel,
   children
 }) => {
-  const [theme, setTheme] = useState<ThemeInterface>({
-    mode: Mode.Dark,
-    contrast: Contrast.Default,
-    colorAdjustment: ColorAdjustment.Default,
-    accentColor: AccentColor.Blue
-  })
-
-  useEffect(() => {
-    if (appliedTheme) {
-      setTheme(appliedTheme)
-    } else if (defaultTheme) {
-      setTheme(defaultTheme)
+  const theme = appliedTheme ||
+    defaultTheme || {
+      mode: Mode.Dark,
+      contrast: Contrast.Default,
+      colorAdjustment: ColorAdjustment.Default,
+      accentColor: AccentColor.Blue
     }
-  }, [defaultTheme, appliedTheme])
 
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
@@ -57,10 +50,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                     name="theme"
                     value={item}
                     checked={theme.mode === item}
-                    onChange={() => {
-                      setTheme((currentTheme: ThemeInterface) => ({ ...currentTheme, mode: item }))
-                      onChange({ ...theme, mode: item })
-                    }}
+                    onChange={() => onChange({ ...theme, mode: item })}
                     className="hidden"
                   />
                   <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
@@ -91,10 +81,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   name="contrast"
                   value={item}
                   checked={theme.contrast === item}
-                  onChange={() => {
-                    setTheme((currentTheme: ThemeInterface) => ({ ...currentTheme, contrast: item }))
-                    onChange({ ...theme, contrast: item })
-                  }}
+                  onChange={() => onChange({ ...theme, contrast: item })}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
@@ -122,10 +109,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   name="color-adjustment"
                   value={item}
                   checked={theme.colorAdjustment === item}
-                  onChange={() => {
-                    setTheme((currentTheme: ThemeInterface) => ({ ...currentTheme, colorAdjustment: item }))
-                    onChange({ ...theme, colorAdjustment: item })
-                  }}
+                  onChange={() => onChange({ ...theme, colorAdjustment: item })}
                   className="hidden"
                 />
                 <div className="h-4 w-4 rounded-full border border-gray-600 flex items-center justify-center">
@@ -154,10 +138,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
                   theme.accentColor === item ? 'border-white' : 'border-gray-600'
                 )}
                 style={{ backgroundColor: item }}
-                onClick={() => {
-                  setTheme((currentTheme: ThemeInterface) => ({ ...currentTheme, accentColor: item }))
-                  onChange({ ...theme, accentColor: item })
-                }}
+                onClick={() => onChange({ ...theme, accentColor: item })}
               />
             ))}
           </div>
@@ -169,7 +150,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({
             <Button variant="secondary" onClick={onCancel}>
               Cancel
             </Button>
-            <Button onClick={() => onSave(theme)}>Save preferences</Button>
+            <Button type="submit" onClick={() => onSave(theme)}>
+              Save preferences
+            </Button>
           </ButtonGroup>
         </Dialog.Footer>
       </Dialog.Content>

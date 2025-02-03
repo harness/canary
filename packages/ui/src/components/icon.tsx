@@ -8,6 +8,7 @@ import AISparks from '../icons/ai-sparks.svg'
 import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
 import ArrowShort from '../icons/arrow-short.svg'
+import Arrow from '../icons/arrow.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
 import AttachmentImage from '../icons/attachment-image.svg'
@@ -376,6 +377,7 @@ const IconNameMap = {
   'expand-comment': ExpandComment,
   suggestion: Suggestion,
   'repo-icon': RepoIcon,
+  arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>

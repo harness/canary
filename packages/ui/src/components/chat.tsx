@@ -12,7 +12,7 @@ const Root: React.FC<{ children: ReactNode }> = ({ children }) => {
 // Body
 const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <div className="flex-1 flex flex-col gap-y-6 mb-5 px-6 py-4">
+    <div className="flex-1 flex flex-col gap-y-7 mb-5 px-6 py-4">
       <div className="flex items-center justify-between">
         <p className="text-foreground-1 text-16 font-medium">AI Assistant</p>
         <Button size="icon" variant="custom" className="text-icons-4 -mr-2 hover:text-icons-2">
@@ -27,7 +27,7 @@ const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
 
 // Footer
 const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="sticky bottom-0 px-5 py-6">{children}</div>
+  return <div className="sticky bottom-0 p-6">{children}</div>
 }
 
 // Message Component
@@ -112,13 +112,13 @@ const InputField: React.FC<InputFieldProps> = ({
   onSend = () => {},
   placeholder = 'Type a message...',
   disabled = false,
-  sendIcon = <Icon className="-rotate-90" name="arrow-long" size={14} />
+  sendIcon = <Icon name="arrow" size={12} />
 }) => {
   return (
     <div className="sticky bottom-0 flex items-center gap-2">
       <Input
         ref={inputRef}
-        className="flex-1 h-11 px-3 rounded-lg focus:ring-0 focus-visible:h-16 focus-visible:pb-8"
+        className="flex-1 h-11 px-3 rounded-lg focus:ring-0 focus-visible:rounded-lg focus-visible:h-16 focus-visible:pb-8"
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}

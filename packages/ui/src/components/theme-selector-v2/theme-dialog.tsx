@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 
 import { Button, ButtonGroup, Dialog, Separator, Text } from '@/components'
 import { cn } from '@/utils/cn'
 
-import { AccentColor, ColorAdjustment, Contrast, Mode, ThemeDialogProps, ThemeInterface } from './types'
+import { AccentColor, ColorAdjustment, Contrast, Mode, ThemeDialogProps } from './types'
 
 const ThemeDialog: FC<ThemeDialogProps> = ({
   defaultTheme,

@@ -5,12 +5,11 @@ description: ThemeDialog component for adjusting appearance settings.
 
 The `ThemeDialog` component allows users to adjust appearance settings such as mode, contrast, color adjustment, and accent color.
 
-import { useState } from "react";
 import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<ThemeDialog onChange={() => {}} onSave={() => {}} onCancel={() => {}}><button>Customize theme</button></ThemeDialog>`}
+  code={`<ThemeDialog onChange={() => {}} onSave={() => {}} onCancel={() => {}}><Button>Customize theme</Button></ThemeDialog>`}
 />
 
 ## Usage
@@ -28,7 +27,7 @@ return (
     onSave={handleSave}
     onCancel={handleCancel}
   >
-    <button onClick={() => setIsOpen(true)}>Customize theme</button>
+    <Button onClick={() => setIsOpen(true)}>Customize theme</Button>
   </ThemeDialog>
 )
 ```

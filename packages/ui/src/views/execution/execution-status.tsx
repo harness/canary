@@ -1,14 +1,7 @@
 import { Icon as CanaryIcon } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
-interface ExecutionStatusProps {
-  status: ExecutionState
-}
-
-interface BadgeProps {
-  duration: string /* time formatted as string */
-  minimal?: boolean
-}
+import { BadgeProps, ExecutionStatusProps } from './types'
 
 const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
   const { status, duration, minimal } = props

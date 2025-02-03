@@ -1,44 +1,10 @@
 import { useState } from 'react'
 
-import {
-  Button,
-  Icon,
-  Layout,
-  ScrollArea,
-  SearchBox,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Text
-} from '@/components'
-import { ExecutionState } from '@views/repo/pull-request'
+import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components'
 
-import { getFormattedDuration } from '../../utils/TimeUtils'
 import ConsoleLogs from './console-logs'
-import { ExecutionStatus } from './execution-status'
-import { KeyValuePair, KeyValueTable } from './key-value-table'
-import { LivelogLine } from './types'
-
-export interface StepProps {
-  name?: string
-  status: ExecutionState
-  started?: number
-  stopped?: number
-  inputs?: KeyValuePair[]
-  outputs?: KeyValuePair[]
-  number?: number
-}
-
-interface StepExecutionProps {
-  step: StepProps
-  logs: LivelogLine[]
-  onEdit: () => void
-  onDownload: () => void
-  onCopy: () => void
-  query?: string
-  handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
-}
+import { KeyValueTable } from './key-value-table'
+import { StepExecutionProps } from './types'
 
 enum StepExecutionTab {
   LOG = 'log',

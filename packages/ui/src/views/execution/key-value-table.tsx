@@ -1,16 +1,6 @@
 import { Accordion, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
 
-export type KeyValuePair = {
-  name: string
-  value: string | KeyValuePair[]
-}
-
-interface KeyValueTableProps {
-  tableTitleName: string
-  tableTitleVal: string
-  className?: string
-  tableSpec: KeyValuePair[]
-}
+import { KeyValuePair, KeyValueTableProps } from './types'
 
 //manage style for using repeatly
 const accordionContentStyle = `w-full pl-1 pr-0 pb-0`

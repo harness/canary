@@ -3,12 +3,7 @@ import { FC, useCallback } from 'react'
 import { Text } from '@/components'
 
 import { formatDuration } from '../../utils/TimeUtils'
-import { LivelogLine } from './types'
-
-interface ConsoleLogsProps {
-  logs: LivelogLine[]
-  query?: string
-}
+import { ConsoleLogsProps, LivelogLine } from './types'
 
 export const createStreamedLogLineElement = (log: LivelogLine) => {
   const lineElement = document.createElement('div')

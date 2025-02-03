@@ -3,27 +3,7 @@ import { CiStatus } from '@views/pipelines'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { getFormattedDuration } from '../../utils/TimeUtils'
-
-interface Step {
-  number?: number
-  name?: string
-  status?: CiStatus
-  started?: number
-  stopped?: number
-}
-
-interface Stage {
-  number?: number
-  name?: string
-  status?: CiStatus
-  started?: number
-  stopped?: number
-  steps?: Step[]
-}
-
-interface Execution {
-  stages?: Stage[]
-}
+import { Execution, Stage, Step } from './types'
 
 const mapCiStatusToExecutionState = (status: CiStatus): ExecutionState => {
   switch (status) {

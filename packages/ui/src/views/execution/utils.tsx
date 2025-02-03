@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { File, Folder, type TreeViewElement } from '@/components'
 
-import type { ExecutionTreeProps } from './execution-tree'
+import { ExecutionTreeProps } from './types'
 
 interface RenderTreeElementProps {
   element: TreeViewElement

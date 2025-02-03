@@ -595,7 +595,7 @@
     },
     "indigo": {
       "50": {
-        "$value": "#f6f7ff"
+        "$value": "#eff0ff"
       },
       "100": {
         "$value": "#dddffb"

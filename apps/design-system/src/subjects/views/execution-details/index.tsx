@@ -17,7 +17,6 @@ export const ExecutionDetailsView = () => {
         onCopy={() => {}}
         onDownload={() => {}}
         onEdit={() => {}}
-        onStepNav={() => {}}
         selectedStepIdx={0}
         stage={stages[0]}
       />

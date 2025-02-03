@@ -33,7 +33,6 @@ export interface StageExecutionProps {
   selectedStepIdx: number
   logs: LivelogLine[]
   onEdit: () => void
-  onStepNav: (selectedStepIdx: number) => void
   onDownload: () => void
   onCopy: () => void
 }

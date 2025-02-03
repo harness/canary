@@ -8,7 +8,6 @@ export const StageExecution: React.FC<StageExecutionProps> = ({
   selectedStepIdx,
   logs,
   onEdit,
-  onStepNav,
   onDownload,
   onCopy
 }): React.ReactElement => {

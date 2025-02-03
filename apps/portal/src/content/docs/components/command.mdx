@@ -9,42 +9,42 @@ import { DocsPage } from "@/components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`
-  () => {
+  code={`() => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-return (<>
+  return (
+    <>
+      <Command.Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <Command.Input placeholder="Type a command or search..." />
+        <Command.List>
+          <Command.Empty>No results found.</Command.Empty>
 
-<Command.Dialog open={isOpen} onOpenChange={setIsOpen}>
-  <Command.Input placeholder="Type a command or search..." />
-  <Command.List>
-    <Command.Empty>No results found.</Command.Empty>
+          <Command.Group heading="Suggestions">
+            <Command.Item>Item 1</Command.Item>
+            <Command.Item>Item 2</Command.Item>
+            <Command.Separator />
+            <Command.Item>Item 4</Command.Item>
+            <Command.Item>Item 3</Command.Item>
+          </Command.Group>
 
-    <Command.Group heading="Suggestions">
-      <Command.Item>Item 1</Command.Item>
-      <Command.Item>Item 2</Command.Item>
-      <Command.Separator />
-      <Command.Item>Item 4</Command.Item>
-      <Command.Item>Item 3</Command.Item>
-    </Command.Group>
+          <Command.Group heading="Commands">
+            <Command.Item>
+              Command 1
+              <Command.Shortcut>⌘K</Command.Shortcut>
+            </Command.Item>
+            <Command.Item>
+              Command 2
+              <Command.Shortcut>⌘L</Command.Shortcut>
+            </Command.Item>
+          </Command.Group>
 
-    <Command.Group heading="Commands">
-      <Command.Item>
-        Command 1
-        <Command.Shortcut>⌘K</Command.Shortcut>
-      </Command.Item>
-      <Command.Item>
-        Command 2
-        <Command.Shortcut>⌘L</Command.Shortcut>
-      </Command.Item>
-    </Command.Group>
+        </Command.List>
+      </Command.Dialog>
 
-  </Command.List>
-</Command.Dialog>
-<Button onClick={() => setIsOpen(true)}>Open Command Dialog</Button>
-
-  </>)
-  }`}
+      <Button onClick={() => setIsOpen(true)}>Open Command Dialog</Button>
+    </>
+  )
+}`}
 />
 
 ## Usage

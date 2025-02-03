@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { Button, Icon, Text } from '@/components'
+import { Button, Icon, Layout, Text } from '@/components'
 import { cn } from '@utils/cn'
 
-import { Layout } from './layout'
 import { StepExecution, StepProps } from './step-execution'
 import { LivelogLine } from './types'
 

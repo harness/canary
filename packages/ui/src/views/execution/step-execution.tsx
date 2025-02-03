@@ -1,13 +1,23 @@
 import { useState } from 'react'
 
-import { Button, Icon, ScrollArea, SearchBox, Tabs, TabsContent, TabsList, TabsTrigger, Text } from '@/components'
+import {
+  Button,
+  Icon,
+  Layout,
+  ScrollArea,
+  SearchBox,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+  Text
+} from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { getFormattedDuration } from '../../utils/TimeUtils'
 import ConsoleLogs from './console-logs'
 import { ExecutionStatus } from './execution-status'
 import { KeyValuePair, KeyValueTable } from './key-value-table'
-import { Layout } from './layout'
 import { LivelogLine } from './types'
 
 export interface StepProps {

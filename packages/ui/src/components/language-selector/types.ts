@@ -47,5 +47,5 @@ export interface LanguageDialogProps {
   onChange: (language: LanguageInterface) => void
   onSave: (language: LanguageInterface) => void
   onCancel: () => void
-  children: React.ReactNode
+  children?: React.ReactNode
 }

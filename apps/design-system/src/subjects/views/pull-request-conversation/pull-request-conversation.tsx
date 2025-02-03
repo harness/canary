@@ -8,6 +8,7 @@ import {
   EnumCheckStatus,
   EnumPullReqReviewDecision,
   ILabelType,
+  LabelAssignmentType,
   PullReqReviewDecision,
   PullRequestCommentBox,
   PullRequestFilters,
@@ -18,8 +19,7 @@ import {
   TypesCodeOwnerEvaluation,
   TypesCodeOwnerEvaluationEntry,
   TypesPullReqActivity,
-  TypesPullReqReviewer,
-  LabelAssignmentType
+  TypesPullReqReviewer
 } from '@harnessio/ui/views'
 
 import {

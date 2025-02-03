@@ -9,9 +9,9 @@ import {
   EnumPullReqActivityType,
   EnumPullReqReviewDecision,
   ILabelType,
+  LabelAssignmentType,
   LabelType,
-  TypesPullReqActivity,
-  LabelAssignmentType
+  TypesPullReqActivity
 } from '@harnessio/ui/views'
 
 export const prPanelInfo = {

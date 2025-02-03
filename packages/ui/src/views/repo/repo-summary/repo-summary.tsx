@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import {
   Button,
@@ -302,6 +302,7 @@ export function RepoSummaryView({
               is_public={repository?.is_public}
               useTranslationStore={useTranslationStore}
             />
+            <Outlet />
           </SandboxLayout.Content>
         </SandboxLayout.Column>
       </SandboxLayout.Columns>

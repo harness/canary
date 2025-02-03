@@ -150,7 +150,29 @@ interface FilterHandlers {
   clearFilterToOpen: () => void
 }
 
+export enum FilterFieldTypes {
+  Calendar = 'calendar',
+  Text = 'text',
+  Number = 'number'
+}
+
+interface FilterField<T = string | number> {
+  type: string
+  value?: T
+}
+
+interface FilterOptionConfig {
+  label: string
+  value: string
+  type: FilterFieldTypes
+}
+
+type FilterValueTypes = string | number | unknown
+
 export type {
+  FilterField,
+  FilterValueTypes,
+  FilterOptionConfig,
   FilterAction,
   FilterOption,
   CalendarFilterOption,

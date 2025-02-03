@@ -2,7 +2,10 @@ import { format } from 'date-fns'
 
 import {
   CheckboxFilterOption,
+  FilterField,
+  FilterOptionConfig,
   FilterSearchQueries,
+  FilterValueTypes,
   SortOption,
   SortValue,
   type FilterOption,
@@ -90,6 +93,32 @@ export const getFilterDisplayValue = (filterOption: FilterOption, filter: Filter
     }
     case 'number': {
       return filter.selectedValues.join(', ')
+    }
+    default:
+      return ''
+  }
+}
+
+export const getFilterLabelValue = <T extends FilterValueTypes>(
+  filterOption: FilterOptionConfig,
+  filter: FilterField<T>
+): string => {
+  switch (filterOption.type) {
+    case 'calendar': {
+      const filterValue = filter.value as Date
+      if (!filterValue) return ''
+
+      const formatDate = (dateString: Date) => {
+        const date = new Date(dateString)
+        const currentYear = new Date().getFullYear()
+        return date.getFullYear() === currentYear ? format(date, 'MMM d') : format(date, 'MMM d, yyyy')
+      }
+
+      return formatDate(filterValue)
+    }
+    case 'number':
+    case 'text': {
+      return filter.value as string
     }
     default:
       return ''

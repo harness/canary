@@ -118,7 +118,7 @@ const Filters = forwardRef(function Filters<T extends Record<string, unknown>>(
 
       // If default values is set, check if it is a valid non-null value and apply filter_applied status
       // If not, set the filter state to visible
-      const serializedDefaultValue = defaultValue ?? parser?.serialize(defaultValue)
+      const serializedDefaultValue = defaultValue === undefined ? defaultValue : parser?.serialize(defaultValue)
       let filterState = isStickyFilter ? FilterStatus.VISIBLE : FilterStatus.HIDDEN
 
       if (!isNullable(serializedDefaultValue)) {

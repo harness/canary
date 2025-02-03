@@ -5,7 +5,10 @@ import {
   type SortOption,
   type ViewLayoutOption
 } from '@components/filters'
+import { FilterFieldTypes } from '@components/filters/types'
 import { TFunction } from 'i18next'
+
+import { Parser } from '@harnessio/filters'
 
 export const getBasicConditions = (t: TFunction): FilterCondition[] => [
   { label: t('component:filter.is', 'is'), value: 'is' },
@@ -93,4 +96,29 @@ export const getSortDirections = (t: TFunction): SortDirection[] => [
 export const getLayoutOptions = (t: TFunction): ViewLayoutOption[] => [
   { label: t('component:layout.table', 'Table'), value: 'table' },
   { label: t('component:layout.list', 'List'), value: 'list' }
+]
+
+const dateParser: Parser<Date> = {
+  parse: (value: string) => (value ? new Date(Number(value)) : new Date()),
+  serialize: (value: Date) => value?.getTime().toString() || ''
+}
+
+export const getPRListFilterOptions = (t: TFunction) => [
+  {
+    label: t('component:filter.createdBy', 'Created By'),
+    value: 'created_by',
+    type: FilterFieldTypes.Text
+  },
+  {
+    label: t('component:filter.createdBefore', 'Created Before'),
+    value: 'created_lt',
+    type: FilterFieldTypes.Calendar,
+    parser: dateParser
+  },
+  {
+    label: t('component:filter.createdAfter', 'Created After'),
+    value: 'created_gt',
+    type: FilterFieldTypes.Calendar,
+    parser: dateParser
+  }
 ]

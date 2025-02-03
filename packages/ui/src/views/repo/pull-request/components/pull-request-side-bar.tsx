@@ -62,6 +62,8 @@ const PullRequestSideBar: FC<PullRequestSideBarProps> = ({
   removeLabel,
   useTranslationStore
 }) => {
+  console.log(PRLabels)
+
   return (
     <div>
       <div className="flex flex-col gap-3">

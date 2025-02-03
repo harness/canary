@@ -82,6 +82,7 @@ export default function PullRequestChanges() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
+  const [jumpToDiff, setJumpToDiff] = useState('')
 
   const {
     data: { body: reviewers } = {},
@@ -459,6 +460,8 @@ export default function PullRequestChanges() {
         onGetFullDiff={onGetFullDiff}
         scrolledToComment={scrolledToComment}
         setScrolledToComment={setScrolledToComment}
+        jumpToDiff={jumpToDiff}
+        setJumpToDiff={setJumpToDiff}
       />
     </>
   )

@@ -59,6 +59,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  collapseDiff?: () => void
 }
 
 const PullRequestDiffViewer = ({
@@ -87,7 +88,8 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  collapseDiff
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -129,16 +131,13 @@ const PullRequestDiffViewer = ({
   const cleanup = useCallback(() => {
     // clean up diff instance if it is not in view
     if (!isInView && diffFileInstance) {
-      diffFileInstance._destroy?.()
-      setDiffFileInstance(undefined)
+      const diffRect = diffInstanceRef.current?.getBoundingClientRect()
+      // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
+      if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
+        collapseDiff?.()
+      }
     }
-
-    // Clean up OverlayScrollbars instances
-    overlayScrollbarsInstances.current.forEach(instance => {
-      instance.destroy()
-    })
-    overlayScrollbarsInstances.current = []
-  }, [diffFileInstance, isInView])
+  }, [diffFileInstance, isInView, collapseDiff])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -146,14 +145,6 @@ const PullRequestDiffViewer = ({
   // Cleanup on unmount
   useEffect(() => {
     return cleanup
-  }, [])
-  useEffect(() => {
-    return () => {
-      if (diffFileInstance) {
-        diffFileInstance._destroy?.()
-        setDiffFileInstance(undefined)
-      }
-    }
   }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
@@ -604,7 +595,7 @@ const PullRequestDiffViewer = ({
   }, [commentId, extend, scrolledToComment, setScrolledToComment])
 
   return (
-    <>
+    <div data-diff-file-path={fileName}>
       {diffFileInstance && (
         <div ref={diffInstanceRef}>
           {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
@@ -625,7 +616,7 @@ const PullRequestDiffViewer = ({
           />
         </div>
       )}
-    </>
+    </div>
   )
 }
 

@@ -48,7 +48,7 @@ interface PullRequestOverviewProps extends RoutingProps {
   dateOrderSort: { label: string; value: string } // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   commentStatusPullReq: any
   repoId: string
-  diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
+  diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
   onCopyClick: (commentId?: number) => void
   suggestionsBatch: CommitSuggestion[]
   onCommitSuggestion: (suggestion: CommitSuggestion) => void

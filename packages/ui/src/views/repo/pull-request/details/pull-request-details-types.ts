@@ -589,3 +589,19 @@ export enum MergeStrategy {
   SQUASH = 'squash',
   REBASE = 'rebase'
 }
+
+export interface DiffHeaderProps {
+  text: string
+  data?: string
+  title: string
+  lang: string
+  addedLines?: number
+  deletedLines?: number
+  isBinary?: boolean
+  isDeleted?: boolean
+  unchangedPercentage?: number
+  filePath?: string
+  fileViews?: Map<string, string>
+  checksumAfter?: string
+  diffData?: DiffFileEntry
+}

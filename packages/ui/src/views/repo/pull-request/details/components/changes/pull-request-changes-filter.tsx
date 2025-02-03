@@ -52,6 +52,7 @@ export interface PullRequestChangesFilterProps {
     deletedLines: number
   }[]
   pullReqStats?: TypesPullReqStats
+  setJumpToDiff: (fileName: string) => void
 }
 
 export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> = ({
@@ -71,7 +72,8 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
   commitSuggestionsBatchCount,
   onCommitSuggestionsBatch,
   diffData,
-  pullReqStats
+  pullReqStats,
+  setJumpToDiff
 }) => {
   const { t } = useTranslationStore()
   const [commitFilterOptions, setCommitFilterOptions] = useState([defaultCommitFilter])
@@ -240,7 +242,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             <Icon name="chevron-fill-down" size={6} className="chevron-down text-icons-7" />
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-96" align="start">
-            <DropdownMenu.Group>{commitDropdownItems}</DropdownMenu.Group>
+            <div className="max-h-[360px] overflow-y-auto px-1">{commitDropdownItems}</div>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
 
@@ -283,7 +285,9 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
               {diffData?.map(diff => (
                 <DropdownMenu.Item
                   key={diff.filePath}
-                  onClick={() => {}}
+                  onClick={() => {
+                    setJumpToDiff(diff.filePath)
+                  }}
                   className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
                 >
                   <span className="flex-1 overflow-hidden truncate text-12 text-primary">{diff.filePath}</span>

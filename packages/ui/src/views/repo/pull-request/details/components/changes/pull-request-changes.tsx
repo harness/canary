@@ -10,6 +10,7 @@ import {
   FileViewedState,
   getFileViewedState,
   InViewDiffRenderer,
+  jumpToFile,
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
@@ -30,8 +31,8 @@ import { chunk } from 'lodash-es'
 
 interface HeaderProps {
   text: string
-  numAdditions?: number
-  numDeletions?: number
+  addedLines?: number
+  deletedLines?: number
   data?: string
   title: string
   lang: string
@@ -83,6 +84,8 @@ interface DataProps {
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  jumpToDiff?: string
+  setJumpToDiff: (filePath: string) => void
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -98,7 +101,7 @@ const LineTitle: React.FC<LineTitleProps> = ({
   useFullDiff
 }) => {
   const { t } = useTranslationStore()
-  const { text, numAdditions, numDeletions, filePath, checksumAfter } = header
+  const { text, addedLines, deletedLines, filePath, checksumAfter } = header
   return (
     <div className="flex items-center justify-between gap-x-3">
       <div className="inline-flex items-center gap-x-4">
@@ -121,14 +124,14 @@ const LineTitle: React.FC<LineTitleProps> = ({
         </div>
 
         <div className="flex items-center gap-x-1">
-          {numAdditions != null && numAdditions > 0 && (
+          {addedLines != null && addedLines > 0 && (
             <Badge variant="outline" size="sm" theme="success" disableHover>
-              +{numAdditions}
+              +{addedLines}
             </Badge>
           )}
-          {numDeletions != null && numDeletions > 0 && (
+          {deletedLines != null && deletedLines > 0 && (
             <Badge variant="outline" size="sm" theme="destructive" disableHover>
-              -{numDeletions}
+              -{deletedLines}
             </Badge>
           )}
         </div>
@@ -397,6 +400,7 @@ const PullRequestAccordion: React.FC<{
                       toggleConversationStatus={toggleConversationStatus}
                       scrolledToComment={scrolledToComment}
                       setScrolledToComment={setScrolledToComment}
+                      collapseDiff={() => setCollapsed(true)}
                     />
                   </>
                 )}
@@ -434,11 +438,12 @@ function PullRequestChangesInternal({
   handleUpload,
   onGetFullDiff,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  jumpToDiff,
+  setJumpToDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
-  const rootref = useRef<HTMLDivElement>(null)
   const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -494,14 +499,20 @@ function PullRequestChangesInternal({
     [setOpenItems]
   )
 
+  useEffect(() => {
+    if (jumpToDiff) {
+      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+    }
+  }, [jumpToDiff, diffBlocks, setJumpToDiff])
+
   return (
-    <div className="flex flex-col gap-4" ref={rootref}>
+    <div className="flex flex-col" ref={diffsContainerRef}>
       {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
           <InViewDiffRenderer
             key={blockIndex}
             blockName={outterBlockName(blockIndex)}
-            root={rootref as RefObject<Element>}
+            root={document as unknown as RefObject<Element>}
             shouldRetainChildren={shouldRetainDiffChildren}
             detectionMargin={calculateDetectionMargin(data?.length)}
           >

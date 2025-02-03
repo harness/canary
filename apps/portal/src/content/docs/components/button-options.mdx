@@ -96,23 +96,18 @@ import { DocsPage } from "@/components/docs-page";
 import { ButtonWithOptions } from '@harnessio/ui/components'
 
 return (
-  <div className="space-y-4">
-    <div className="mb-4 text-white">
-      <div className="text-lg font-bold">Primary Button (Default Size)</div>
-      <ButtonWithOptions
-        id="primary-button-default"
-        handleButtonClick={() => alert('Primary Button clicked')}
-        options={[
-          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
-          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
-        ]}
-        handleOptionChange={(val) => alert(\`Selected: \${val}\`)}
-        theme="primary"
-      >
-        Primary Button
-      </ButtonWithOptions>
-    </div>
-  </div>
+  <ButtonWithOptions
+    id="my-button"
+    handleButtonClick={handleClick}
+    options={[
+      { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+      { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+    ]}
+    handleOptionChange={handChangeOption}
+    theme="primary"
+  >
+    Primary Button
+  </ButtonWithOptions>
 )
 ```
 

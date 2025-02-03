@@ -10,6 +10,7 @@ import {
   FileViewedState,
   getFileViewedState,
   InViewDiffRenderer,
+  jumpToFile,
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
@@ -30,8 +31,8 @@ import { chunk } from 'lodash-es'
 
 interface HeaderProps {
   text: string
-  numAdditions?: number
-  numDeletions?: number
+  addedLines?: number
+  deletedLines?: number
   data?: string
   title: string
   lang: string
@@ -83,6 +84,8 @@ interface DataProps {
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  jumpToDiff?: string
+  setJumpToDiff: (filePath: string) => void
 }
 
 const LineTitle: React.FC<LineTitleProps> = ({
@@ -98,25 +101,15 @@ const LineTitle: React.FC<LineTitleProps> = ({
   useFullDiff
 }) => {
   const { t } = useTranslationStore()
-  const { text, numAdditions, numDeletions, filePath, checksumAfter } = header
+  const { text, addedLines, deletedLines, filePath, checksumAfter } = header
   return (
-    <div className="flex items-center justify-between gap-3">
-      <div className="inline-flex items-center gap-2">
-        <Text weight="medium">{text}</Text>
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={e => {
-            e.preventDefault()
-          }}
-        >
-          <CopyButton name={text} className="text-tertiary-background" />
-        </div>
-        <div role="button" tabIndex={0}>
+    <div className="flex items-center justify-between gap-x-3">
+      <div className="inline-flex items-center gap-x-4">
+        <div className="flex items-center gap-x-2">
           <Button
-            className="text-tertiary-background"
+            className="text-icons-1 hover:text-icons-2"
             variant="custom"
-            size="icon"
+            size="xs_icon"
             aria-label="expand diff"
             onClick={e => {
               e.preventDefault()
@@ -124,19 +117,24 @@ const LineTitle: React.FC<LineTitleProps> = ({
               toggleFullDiff()
             }}
           >
-            <Icon name={useFullDiff ? 'collapse-diff' : 'expand-diff'} size={16} />
+            <Icon name={useFullDiff ? 'collapse-comment' : 'expand-comment'} size={16} />
           </Button>
+          <span className="font-medium leading-tight text-foreground-1">{text}</span>
+          <CopyButton name={text} className="size-6" color="gray" />
         </div>
-        {numAdditions != null && numAdditions > 0 && (
-          <Badge variant="outline" size="sm" theme="success">
-            +{numAdditions}
-          </Badge>
-        )}
-        {numDeletions != null && numDeletions > 0 && (
-          <Badge variant="outline" size="sm" theme="destructive">
-            -{numDeletions}
-          </Badge>
-        )}
+
+        <div className="flex items-center gap-x-1">
+          {addedLines != null && addedLines > 0 && (
+            <Badge variant="outline" size="sm" theme="success" disableHover>
+              +{addedLines}
+            </Badge>
+          )}
+          {deletedLines != null && deletedLines > 0 && (
+            <Badge variant="outline" size="sm" theme="destructive" disableHover>
+              -{deletedLines}
+            </Badge>
+          )}
+        </div>
       </div>
       <div className="inline-flex items-center gap-x-6">
         {showViewed ? (
@@ -325,10 +323,10 @@ const PullRequestAccordion: React.FC<{
 
   return (
     <StackedList.Root>
-      <StackedList.Item disableHover isHeader className="cursor-default p-0 hover:bg-transparent">
+      <StackedList.Item className="overflow-hidden p-0" disableHover>
         <Accordion.Root type="multiple" className="w-full" value={openItems} onValueChange={onToggle}>
           <Accordion.Item isLast value={header?.text ?? ''}>
-            <Accordion.Trigger leftChevron className="p-4 text-left">
+            <Accordion.Trigger leftChevron className="bg-background-2 px-4 py-3.5 text-left">
               <StackedList.Field
                 title={
                   <LineTitle
@@ -402,6 +400,7 @@ const PullRequestAccordion: React.FC<{
                       toggleConversationStatus={toggleConversationStatus}
                       scrolledToComment={scrolledToComment}
                       setScrolledToComment={setScrolledToComment}
+                      collapseDiff={() => setCollapsed(true)}
                     />
                   </>
                 )}
@@ -439,11 +438,12 @@ function PullRequestChangesInternal({
   handleUpload,
   onGetFullDiff,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  jumpToDiff,
+  setJumpToDiff
 }: DataProps) {
   const [openItems, setOpenItems] = useState<string[]>([])
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
-  const rootref = useRef<HTMLDivElement>(null)
   const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -499,14 +499,20 @@ function PullRequestChangesInternal({
     [setOpenItems]
   )
 
+  useEffect(() => {
+    if (jumpToDiff) {
+      jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
+    }
+  }, [jumpToDiff, diffBlocks, setJumpToDiff])
+
   return (
-    <div className="flex flex-col gap-4" ref={rootref}>
+    <div className="flex flex-col" ref={diffsContainerRef}>
       {diffBlocks?.map((diffsBlock, blockIndex) => {
         return (
           <InViewDiffRenderer
             key={blockIndex}
             blockName={outterBlockName(blockIndex)}
-            root={rootref as RefObject<Element>}
+            root={document as unknown as RefObject<Element>}
             shouldRetainChildren={shouldRetainDiffChildren}
             detectionMargin={calculateDetectionMargin(data?.length)}
           >

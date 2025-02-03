@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 
+import type { Problem, ProblemSeverity } from '@components/problems'
 import { editor } from 'monaco-editor'
 import { ILanguageFeaturesService } from 'monaco-editor/esm/vs/editor/common/services/languageFeatures.js'
 import { OutlineModel } from 'monaco-editor/esm/vs/editor/contrib/documentSymbols/browser/outlineModel.js'
@@ -10,7 +11,6 @@ import { MonacoGlobals, useYamlEditorContext, YamlEditor } from '@harnessio/yaml
 import { YamlRevision } from '../pipeline-studio'
 import unifiedSchema from '../schema/unifiedSchema.json'
 import { themes } from '../theme/monaco-theme'
-import { Problem, ProblemSeverity } from './graph-implementation/types/problem-type'
 import { countProblems, monacoMarkers2Problems } from './graph-implementation/utils/problems-utils'
 
 MonacoGlobals.set({

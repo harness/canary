@@ -59,6 +59,7 @@ interface PullRequestDiffviewerProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  collapseDiff?: () => void
 }
 
 const PullRequestDiffViewer = ({
@@ -87,7 +88,8 @@ const PullRequestDiffViewer = ({
   toggleConversationStatus,
   handleUpload,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  collapseDiff
 }: PullRequestDiffviewerProps) => {
   const { t } = useTranslationStore()
   const ref = useRef<{ getDiffFileInstance: () => DiffFile }>(null)
@@ -99,21 +101,43 @@ const PullRequestDiffViewer = ({
   highlightRef.current = highlight
   const [diffFileInstance, setDiffFileInstance] = useState<DiffFile>()
   const overlayScrollbarsInstances = useRef<OverlayScrollbars[]>([])
+  const diffInstanceRef = useRef<HTMLDivElement | null>(null)
+  const [isInView, setIsInView] = useState(false)
 
-  // Cleanup function for memory management
-  const cleanup = useCallback(() => {
-    // Clean up diff instance
-    if (diffFileInstance) {
-      diffFileInstance._destroy?.()
-      setDiffFileInstance(undefined)
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting)
+      },
+      {
+        root: null, // Use the viewport as the root
+        rootMargin: '0px',
+        threshold: 0.1 // Trigger when 10% of the element is visible
+      }
+    )
+
+    const currentRef = diffInstanceRef.current
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
-    // Clean up OverlayScrollbars instances
-    overlayScrollbarsInstances.current.forEach(instance => {
-      instance.destroy()
-    })
-    overlayScrollbarsInstances.current = []
-  }, [diffFileInstance])
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef)
+      }
+    }
+  }, [])
+
+  const cleanup = useCallback(() => {
+    // clean up diff instance if it is not in view
+    if (!isInView && diffFileInstance) {
+      const diffRect = diffInstanceRef.current?.getBoundingClientRect()
+      // check if diff is below viewport and collapse it, collapsing a diff on top of viewport impacts scroll position
+      if (diffRect?.top && diffRect?.top >= (window.innerHeight || document.documentElement.clientHeight)) {
+        collapseDiff?.()
+      }
+    }
+  }, [diffFileInstance, isInView, collapseDiff])
 
   // Use memory cleanup hook
   useMemoryCleanup(cleanup)
@@ -121,14 +145,6 @@ const PullRequestDiffViewer = ({
   // Cleanup on unmount
   useEffect(() => {
     return cleanup
-  }, [])
-  useEffect(() => {
-    return () => {
-      if (diffFileInstance) {
-        diffFileInstance._destroy?.()
-        setDiffFileInstance(undefined)
-      }
-    }
   }, [])
 
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
@@ -393,7 +409,7 @@ const PullRequestDiffViewer = ({
                 content={
                   <div className="px-4 pt-4">
                     <PullRequestTimelineItem
-                      titleClassName="max-w-full"
+                      titleClassName="w-full"
                       parentCommentId={parent.id}
                       handleSaveComment={handleSaveComment}
                       isLast={replies.length === 0}
@@ -411,7 +427,7 @@ const PullRequestDiffViewer = ({
                       icon={
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">{parentInitials}</span>
+                            <span className="text-12 text-foreground-1">{parentInitials}</span>
                           </AvatarFallback>
                         </Avatar>
                       }
@@ -494,7 +510,7 @@ const PullRequestDiffViewer = ({
                               icon={
                                 <Avatar className="size-6 rounded-full p-0">
                                   <AvatarFallback>
-                                    <span className="text-12 text-foreground-3">{replyInitials}</span>
+                                    <span className="text-12 text-foreground-1">{replyInitials}</span>
                                   </AvatarFallback>
                                 </Avatar>
                               }
@@ -579,26 +595,28 @@ const PullRequestDiffViewer = ({
   }, [commentId, extend, scrolledToComment, setScrolledToComment])
 
   return (
-    <>
+    <div data-diff-file-path={fileName}>
       {diffFileInstance && (
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        <DiffView<Thread[]>
-          ref={ref}
-          className="bg-tr w-full text-tertiary-background"
-          renderWidgetLine={renderWidgetLine}
-          renderExtendLine={renderExtendLine}
-          diffFile={diffFileInstance}
-          extendData={extend}
-          diffViewFontSize={fontsize}
-          diffViewHighlight={highlight}
-          diffViewMode={mode}
-          registerHighlighter={highlighter}
-          diffViewWrap={wrap}
-          diffViewAddWidget={addWidget}
-        />
+        <div ref={diffInstanceRef}>
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          <DiffView<Thread[]>
+            ref={ref}
+            className="bg-tr w-full text-tertiary-background"
+            renderWidgetLine={renderWidgetLine}
+            renderExtendLine={renderExtendLine}
+            diffFile={diffFileInstance}
+            extendData={extend}
+            diffViewFontSize={fontsize}
+            diffViewHighlight={highlight}
+            diffViewMode={mode}
+            registerHighlighter={highlighter}
+            diffViewWrap={wrap}
+            diffViewAddWidget={addWidget}
+          />
+        </div>
       )}
-    </>
+    </div>
   )
 }
 

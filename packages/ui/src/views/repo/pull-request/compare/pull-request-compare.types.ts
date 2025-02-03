@@ -6,7 +6,7 @@ export interface HeaderProps {
   addedLines?: number
   removedLines?: number
   isBinary?: boolean
-  deleted?: boolean
+  isDeleted?: boolean
   unchangedPercentage?: number
   filePath?: string
 }

@@ -71,7 +71,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                                   </Link>
                                 </p>
                               ) : (
-                                <span className="text-16 truncate font-medium leading-snug">{commit.title}</span>
+                                <span className="truncate text-16 font-medium leading-snug">{commit.title}</span>
                               )}
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && (
@@ -92,7 +92,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                             <div className="flex gap-2.5">
                               <CommitCopyActions sha={commit.sha} toCommitDetails={toCommitDetails} />
                               <Button
-                                className="hover:bg-background-3 border"
+                                className="border hover:bg-background-3"
                                 title="View repository at this point of history"
                                 variant="custom"
                                 size="sm_icon"

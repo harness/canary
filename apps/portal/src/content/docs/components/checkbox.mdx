@@ -1,0 +1,77 @@
+---
+title: Checkbox
+description: Checkbox component documentation
+---
+
+The `Checkbox` component provides a customizable, accessible checkbox input. It is built on top of the Radix UI Checkbox primitive with additional styling.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [checked, setChecked] = React.useState(false);
+    return (<div className="flex flex-col gap-4">
+      <section class="flex items-center gap-3">
+        <Checkbox id="checkboxId" checked={checked} onCheckedChange={setChecked} />
+        <label className="Label" htmlFor="checkboxId">
+          Accept terms and conditions.
+        </label>
+      </section>
+    
+      <section class="flex items-center gap-3">
+        <Checkbox id="checkboxId2" checked={false} onCheckedChange={Function} disabled />
+        <label className="Label" htmlFor="checkboxId2">
+          Disabled checkbox
+        </label>
+      </section>
+    </div>)
+  }`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Checkbox } from '@harnessio/ui/components'
+
+return (
+  <Checkbox id="checkbox" checked={true} onCheckedChange={(checked) => alert(\`Checked: \${checked}\`)} />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the checkbox",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "checked",
+      description: "Indicates whether the checkbox is checked",
+      required: true,
+      value: "boolean",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Function to handle checked state change",
+      required: true,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description: "Indicates whether the checkbox is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the checkbox",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

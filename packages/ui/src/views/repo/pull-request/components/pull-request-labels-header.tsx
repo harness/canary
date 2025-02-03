@@ -1,4 +1,4 @@
-import { Button, DropdownMenu, Icon, SearchBox } from '@/components'
+import { DropdownMenu, Icon, SearchBox } from '@/components'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 
@@ -30,10 +30,12 @@ const LabelsHeader = ({
     <div className="flex items-center justify-between">
       <span className="text-14 font-medium text-foreground-1">{t('views:pullRequests.labels')}</span>
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <Button size="sm" variant="ghost" className="px-2 py-1">
-            <Icon className="text-icons-2" name="vertical-ellipsis" size={12} />
-          </Button>
+        <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
+          <Icon
+            className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
+            name="vertical-ellipsis"
+            size={12}
+          />
         </DropdownMenu.Trigger>
         <DropdownMenu.Content className="w-[280px] p-0" align="end">
           <div

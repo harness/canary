@@ -55,6 +55,8 @@ interface RepoPullRequestChangesPageProps {
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
+  jumpToDiff?: string
+  setJumpToDiff: (fileName: string) => void
 }
 const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   useTranslationStore,
@@ -92,7 +94,9 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
   handleUpload,
   onGetFullDiff,
   scrolledToComment,
-  setScrolledToComment
+  setScrolledToComment,
+  jumpToDiff,
+  setJumpToDiff
 }) => {
   const { diffs, pullReqStats } = usePullRequestProviderStore()
 
@@ -124,8 +128,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         data={
           diffs?.map(item => ({
             text: item.filePath,
-            numAdditions: item.addedLines,
-            numDeletions: item.deletedLines,
+            addedLines: item.addedLines,
+            deletedLines: item.deletedLines,
             data: item.raw,
             title: item.filePath,
             lang: item.filePath.split('.')[1],
@@ -161,6 +165,8 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
         onGetFullDiff={onGetFullDiff}
         scrolledToComment={scrolledToComment}
         setScrolledToComment={setScrolledToComment}
+        jumpToDiff={jumpToDiff}
+        setJumpToDiff={setJumpToDiff}
       />
     )
   }
@@ -191,6 +197,7 @@ const PullRequestChangesPage: FC<RepoPullRequestChangesPageProps> = ({
           addedLines: diff.addedLines,
           deletedLines: diff.deletedLines
         }))}
+        setJumpToDiff={setJumpToDiff}
       />
       <Spacer aria-setsize={5} />
 

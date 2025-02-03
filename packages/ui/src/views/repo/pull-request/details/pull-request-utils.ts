@@ -2,10 +2,12 @@ import { TypesUser } from '@/types'
 import { get, isEmpty } from 'lodash-es'
 
 import { PullReqReviewDecision } from '../pull-request.types'
+import { innerBlockName, outterBlockName } from '../utils'
 import {
   ApprovalItem,
   ApprovalItems,
   CommentItem,
+  DiffHeaderProps,
   EnumPullReqReviewDecisionExtended,
   ReviewerListPullReqOkResponse,
   TypesPullReqActivity,
@@ -256,4 +258,58 @@ export const handlePaste = (
       }
     }
   }
+}
+
+function isInViewport(ele: HTMLElement) {
+  const rect = ele.getBoundingClientRect()
+  return (
+    rect.top >= 0 &&
+    rect.left >= 0 &&
+    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  )
+}
+
+export const jumpToFile = (
+  filePath: string,
+  diffBlocks: DiffHeaderProps[][],
+  setJumpToDiff: (filePath: string) => void
+) => {
+  let loopCount = 0
+
+  const blockIndex = diffBlocks.findIndex(block => block.some(diff => diff.filePath === filePath))
+  if (blockIndex < 0) return
+
+  function attemptScroll() {
+    // Retrieve the top-level block + the sub-block + the final diff DOM
+    const outerDOM = document.querySelector(`[data-block="${outterBlockName(blockIndex)}"]`) as HTMLElement | null
+    const innerDOM = outerDOM?.querySelector(`[data-block="${innerBlockName(filePath)}"]`) as HTMLElement | null
+    const diffDOM = innerDOM?.querySelector(`[data-diff-file-path="${filePath}"]`) as HTMLElement | null
+
+    // Scroll them all in order outterBlock + innerBlock + the final diff
+    outerDOM?.scrollIntoView(false)
+    innerDOM?.scrollIntoView(false)
+    diffDOM?.scrollIntoView(true)
+
+    // Re-check after a short delay if it’s truly in viewport
+    // If not in viewport and loopCount < 100 => re-run
+    setTimeout(() => {
+      if (loopCount++ < 100) {
+        if (
+          !outerDOM ||
+          !innerDOM ||
+          !diffDOM ||
+          !isInViewport(outerDOM) ||
+          !isInViewport(innerDOM) ||
+          !isInViewport(diffDOM)
+        ) {
+          attemptScroll()
+        }
+      } else {
+        setJumpToDiff('')
+      }
+    }, 0)
+  }
+
+  attemptScroll()
 }

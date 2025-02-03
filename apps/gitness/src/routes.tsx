@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Text } from '@harnessio/ui/components'
+import { Breadcrumb, Text } from '@harnessio/ui/components'
 import { EmptyPage, ProfileSettingsLayout, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
@@ -955,18 +955,41 @@ export const routes: CustomRouteObject[] = [
       {
         path: 'profile-settings',
         element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} />,
+        handle: {
+          breadcrumb: () => (
+            <>
+              <Text>User</Text>
+              <Breadcrumb.Separator className="mx-2.5" />
+              <Text>{Page.Settings}</Text>
+            </>
+          ),
+          pageTitle: Page.Settings
+        },
         children: [
           {
             index: true,
-            element: <Navigate to="general" replace />
+            element: <Navigate to="general" replace />,
+            handle: {
+              breadcrumb: () => <Text>{Page.General}</Text>
+            }
           },
           {
             path: 'general',
-            element: <SettingsProfileGeneralPage />
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <Text>{Page.General}</Text>,
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: Page.General
+            }
           },
           {
             path: 'keys',
-            element: <SettingsProfileKeysPage />
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <Text>{Page.Keys}</Text>,
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: Page.Keys
+            }
           }
         ]
       }

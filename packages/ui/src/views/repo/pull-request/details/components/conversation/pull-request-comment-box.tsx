@@ -158,7 +158,7 @@ const PullRequestCommentBox = ({
       {!inReplyMode && !isEditMode && avatar}
 
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-scroll', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -214,10 +214,10 @@ const PullRequestCommentBox = ({
               </div>
             </div>
           </TabsContent>
-          <TabsContent className="mt-4" value={TABS_KEYS.PREVIEW}>
-            <div className="min-h-24">
+          <TabsContent className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
+            <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-background-2" source={comment} />
+                <MarkdownViewer markdownClassName="!bg-background-2 w-full" source={comment} />
               ) : (
                 <span className="text-foreground-8">Nothing to preview</span>
               )}

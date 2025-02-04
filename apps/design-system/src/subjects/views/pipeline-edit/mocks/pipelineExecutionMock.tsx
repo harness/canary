@@ -75,8 +75,7 @@ export const executionMock = [
                   yamlEntityType: 'Step',
                   name: 'go build',
                   icon: <Icon className="m-2 size-8" name={'harness-plugin'} />,
-                  selected: false,
-                  state: 'executing'
+                  selected: false
                 },
                 path: 'pipeline.children.1.children.0.children.0.children.0',
                 containerType: 'leaf'
@@ -94,7 +93,6 @@ export const executionMock = [
                   yamlEntityType: 'Step',
                   name: 'go test',
                   icon: <Icon className="m-2 size-8" name={'run'} />,
-
                   selected: false
                 },
                 path: 'pipeline.children.1.children.0.children.0.children.1',

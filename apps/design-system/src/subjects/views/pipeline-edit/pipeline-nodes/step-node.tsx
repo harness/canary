@@ -1,4 +1,4 @@
-import { Button, Icon, Text } from '@harnessio/ui/components'
+import { Badge, Button, Icon, Text } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
@@ -18,53 +18,67 @@ export interface StepNodeProps {
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+  const { nodeData, name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+  console.log(nodeData)
 
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className={cn('box-border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
-        'border-borders-2': !selected,
-        'border-borders-3': selected
-      })}
-      onClick={onClick}
-    >
-      {onEllipsisClick && (
-        <Button
-          className="absolute right-2 top-2"
-          variant="ghost"
-          size="sm_icon"
-          onMouseDown={e => e.stopPropagation()}
-          onClick={onEllipsisClick}
-        >
-          <Icon name="ellipsis" size={15} />
-        </Button>
-      )}
-      {isFirst && (
+    <>
+      {/* <div style={{ position: 'absolute', top: '-23px', left: '50px' }}>
+        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
+          <Icon name="tick" size={12} className="mr-1" />
+          Completed
+        </Badge>
+      </div> */}
+      {/* <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
+        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+          <Icon name="triangle-warning" size={12} className="mr-1" />
+          Warning
+        </Badge>
+      </div> */}
+      <div
+        role="button"
+        tabIndex={0}
+        className={cn('box-border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
+          'border-borders-2': !selected,
+          'border-borders-3': selected
+        })}
+        onClick={onClick}
+      >
+        {onEllipsisClick && (
+          <Button
+            className="absolute right-2 top-2"
+            variant="ghost"
+            size="sm_icon"
+            onMouseDown={e => e.stopPropagation()}
+            onClick={onEllipsisClick}
+          >
+            <Icon name="ellipsis" size={15} />
+          </Button>
+        )}
+        {isFirst && (
+          <FloatingAddButton
+            parentNodeType={parentNodeType}
+            position="before"
+            onClick={e => {
+              onAddClick?.('before', e)
+            }}
+          />
+        )}
         <FloatingAddButton
           parentNodeType={parentNodeType}
-          position="before"
+          position="after"
           onClick={e => {
-            onAddClick?.('before', e)
+            onAddClick?.('after', e)
           }}
         />
-      )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-      />
-      {/* position="left" */}
-      <div>{icon}</div>
-      <Text title={name} className="text-primary m-2 line-clamp-2">
-        {name}
-      </Text>
+        {/* position="left" */}
+        <div>{icon}</div>
+        <Text title={name} className="text-primary m-2 line-clamp-2">
+          {name}
+        </Text>
 
-      {/* TODO */}
-      {/* 
+        {/* TODO */}
+        {/* 
       <svg
         viewBox="0 0 140 80"
         style={{ position: 'absolute', zIndex: '-10', top: '0px', left: '0px', overflow: 'visible' }}
@@ -97,6 +111,7 @@ export function StepNode(props: StepNodeProps) {
           <path d={createRoundedRectPath(0, 0, 140, 80, 5)} strokeWidth={'1'} stroke="#43b5e6" fill="none"></path>
         </svg>
       )} */}
-    </div>
+      </div>
+    </>
   )
 }

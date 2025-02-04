@@ -1,4 +1,4 @@
-import { Button, Icon } from '@harnessio/ui/components'
+import { Badge, Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
@@ -36,6 +36,12 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
   return (
     <>
+      {/* <div style={{ position: 'absolute', top: '-23px', left: '60px' }}> */}
+      <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+        <Icon name="triangle-warning" size={12} className="mr-1" />
+        Warning
+      </Badge>
+      {/* </div> */}
       <div
         className={cn('absolute inset-0 -z-10 rounded-xl border', {
           'border-borders-2': !selected,

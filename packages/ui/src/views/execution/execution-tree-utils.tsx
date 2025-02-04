@@ -1,4 +1,4 @@
-import { Status, TreeViewElement } from '@/components'
+import { TreeViewElement } from '@/components'
 import { CiStatus } from '@views/pipelines'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -31,28 +31,6 @@ const mapCiStatusToExecutionState = (status: CiStatus): ExecutionState => {
   }
 }
 
-const mapStatus = (status: ExecutionState): Status => {
-  switch (status) {
-    case ExecutionState.RUNNING:
-      return Status.IN_PROGRESS
-    case ExecutionState.SUCCESS:
-      return Status.SUCCESS
-    case ExecutionState.ERROR:
-    case ExecutionState.FAILURE:
-    case ExecutionState.KILLED:
-      return Status.FAILED
-    case ExecutionState.PENDING:
-    case ExecutionState.BLOCKED:
-      return Status.QUEUED
-    case ExecutionState.SKIPPED:
-      return Status.SKIPPED
-    case ExecutionState.WAITING_ON_DEPENDENCIES:
-      return Status.WAITING_ON_DEPENDENCIES
-    default:
-      return Status.UNKNOWN
-  }
-}
-
 const getStageId = (stageNum: number) => `stage.${stageNum}`
 
 export const getStepId = (stageNum: number, stepNum: number) => `${getStageId(stageNum)}.step.${stepNum}`
@@ -69,12 +47,11 @@ export const parseStageStepId = (fullStepId: string): { stageId: string; stepId:
 
 // Recursively convert a step to TreeViewElement format
 const convertStepToTree = ({ stage, step }: { stage: Stage; step: Step }): TreeViewElement => {
-  const executionState = mapCiStatusToExecutionState(step.status ?? ExecutionState.ERROR)
   return {
     id: getStepId(stage.number ?? 0, step.number ?? 0),
     isSelectable: true,
     name: step.name ?? '',
-    status: mapStatus(executionState),
+    status: mapCiStatusToExecutionState(step.status as CiStatus),
     duration: getFormattedDuration(step.started, step.stopped),
     children: []
   }
@@ -82,13 +59,11 @@ const convertStepToTree = ({ stage, step }: { stage: Stage; step: Step }): TreeV
 
 // Convert a stage to TreeViewElement format
 const convertStageToTree = (stage: Stage): TreeViewElement => {
-  const executionState = mapCiStatusToExecutionState(stage.status ?? ExecutionState.ERROR)
-
   return {
     id: getStageId(stage.number ?? 0),
     isSelectable: true,
     name: stage.name ?? '',
-    status: mapStatus(executionState),
+    status: mapCiStatusToExecutionState(stage.status as CiStatus),
     duration: getFormattedDuration(stage.started, stage.stopped),
     children: stage.steps ? stage.steps.map(step => convertStepToTree({ stage, step })) : []
   }

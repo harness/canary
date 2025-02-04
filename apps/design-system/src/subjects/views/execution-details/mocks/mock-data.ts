@@ -124,7 +124,7 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'build',
     name: 'Build',
-    status: ExecutionState.SUCCESS,
+    status: ExecutionState.FAILURE,
     duration: '00:15',
     isSelectable: true,
     children: [
@@ -138,7 +138,7 @@ export const elements: ExecutionTreeProps['elements'] = [
       {
         id: 'compile',
         name: 'Compile Source',
-        status: ExecutionState.SUCCESS,
+        status: ExecutionState.FAILURE,
         duration: '00:05',
         isSelectable: true
       }
@@ -163,14 +163,14 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'deploy',
     name: 'Deploy',
-    status: ExecutionState.SUCCESS,
+    status: ExecutionState.PENDING,
     duration: '00:10',
     isSelectable: true,
     children: [
       {
         id: 'deploy-staging',
         name: 'Deploy to Staging',
-        status: ExecutionState.SUCCESS,
+        status: ExecutionState.PENDING,
         duration: '00:10',
         isSelectable: true
       }

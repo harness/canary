@@ -685,7 +685,7 @@
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
   }
-  
+
   .light-prot-std {
     --canary-background: var(--canary-base-chrome-50);
     --canary-foreground: var(--canary-base-chrome-850);
@@ -902,7 +902,7 @@
     --canary-box-shadow-pagination: var(--canary-base-chrome-300) / 0.12;
     --shadow-sm: var(--canary-base-chrome-100);
   }
-  
+
   .dark,
   .dark-std-low,
   .dark-std-std {
@@ -1385,7 +1385,7 @@
    --canary-tab-background-gradient: radial-gradient(closest-side, var(--canary-tab-item-gradient-stops));
    */
   }
-  
+
   .dark-prot-high {
     --canary-background: var(--canary-base-chrome-black);
     --canary-foreground: var(--canary-base-chrome-white);

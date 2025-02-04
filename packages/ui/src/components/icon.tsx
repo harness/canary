@@ -27,6 +27,7 @@ import CancelGrey from '../icons/cancel-grey.svg'
 import Changes from '../icons/changes.svg'
 import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
+import CheckboxCircle from '../icons/checkbox-circle.svg'
 import Checkbox from '../icons/checkbox.svg'
 import Checklist from '../icons/checklist.svg'
 import Checks from '../icons/checks.svg'
@@ -379,7 +380,8 @@ const IconNameMap = {
   suggestion: Suggestion,
   'repo-icon': RepoIcon,
   'arrow-short': ArrowShort,
-  'bold-plus': BoldPlus
+  'bold-plus': BoldPlus,
+  'checkbox-circle': CheckboxCircle
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

@@ -3,6 +3,7 @@ export interface ThemeInterface {
   contrast: Contrast
   colorAdjustment: ColorAdjustment
   accentColor: AccentColor
+  grayColor: GrayColor
 }
 
 export enum Mode {
@@ -38,6 +39,16 @@ export enum AccentColor {
   LightGreen = '#4DFFB5',
   Lime = '#A6FF4D',
   White = '#FFFFFF'
+}
+
+export enum GrayColor {
+  First = '#6B6E74',
+  Second = '#6E6E6E',
+  Third = '#6F6D76',
+  Fourth = '#6B6E75',
+  Fifth = '#66716B',
+  Sixth = '#6B7068',
+  Seventh = '#6F6D68'
 }
 
 export interface ThemeDialogProps {

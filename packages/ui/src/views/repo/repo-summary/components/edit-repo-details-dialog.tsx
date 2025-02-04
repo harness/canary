@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { AlertDialog, Button, ButtonGroup, Icon, Textarea } from '@/components'
+import { AlertDialog, Button, ButtonGroup, Textarea } from '@/components'
 
 interface EditRepoDetailsDialog {
   showEditRepoDetails: boolean

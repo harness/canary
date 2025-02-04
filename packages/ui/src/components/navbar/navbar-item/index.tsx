@@ -2,7 +2,6 @@ import { NavLink } from 'react-router-dom'
 
 import { Button, DropdownMenu, Icon, IconProps, Text } from '@/components'
 import { NavbarSkeleton } from '@components/navbar-skeleton'
-import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { NavbarItemType } from '../types'

@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 import { Button, DropdownMenu, Icon, IconProps, Text } from '@/components'
 import { NavbarSkeleton } from '@components/navbar-skeleton'
+import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { NavbarItemType } from '../types'
@@ -66,13 +67,15 @@ export const NavbarItem = ({
 
   return (
     <div className="group relative">
-      <NavLink className="block pr-6" to={item.to || ''}>
+      <NavLink className="block" to={item.to || ''}>
         {({ isActive }) => (
-          <NavbarSkeleton.Item
-            text={item.title}
-            icon={iconName && <Icon name={iconName} size={12} />}
-            active={isActive}
-          />
+          <div className={cn({ 'bg-background-4': isActive }, 'pr-6 pl-2 rounded-md')}>
+            <NavbarSkeleton.Item
+              text={item.title}
+              icon={iconName && <Icon name={iconName} size={12} />}
+              active={isActive}
+            />
+          </div>
         )}
       </NavLink>
       {!item.permanentlyPinned && (

@@ -1,5 +1,6 @@
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 
+import { useContainerNodeContext } from '../../context/container-node-provider'
 import { useGraphContext } from '../../context/graph-provider'
 import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
@@ -9,22 +10,24 @@ import { findAdjustment } from '../../utils/layout-utils'
 import CollapseButton from '../components/collapse'
 import Port from './port'
 
-export const PARALLEL_GROUP_ADJUSTMENT = 10
-export const PARALLEL_PADDING = 42
-export const PADDING_TOP = 30
-export const PADDING_BOTTOM = 25
-export const PARALLEL_NODE_GAP = 36
-
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
+  const { parallelContainerConfig, serialContainerConfig } = useContainerNodeContext()
 
   const myLevel = level + 1
 
   const { isCollapsed, collapse } = useGraphContext()
-
   const collapsed = useMemo(() => isCollapsed(props.node.path!), [isCollapsed])
 
-  const ADJUSTMENT = findAdjustment(node, parentNode) + PARALLEL_GROUP_ADJUSTMENT
+  const verticalAdjustment = parallelContainerConfig.parallelGroupAdjustment ?? 0
+
+  const ADJUSTMENT =
+    findAdjustment(
+      node,
+      serialContainerConfig.serialGroupAdjustment ?? 0,
+      parallelContainerConfig.parallelGroupAdjustment ?? 0,
+      parentNode
+    ) + verticalAdjustment
 
   return (
     <div
@@ -36,10 +39,10 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         position: 'relative',
         display: 'flex',
         flexDirection: 'column',
-        rowGap: PARALLEL_NODE_GAP + 'px',
-        padding: PARALLEL_PADDING + 'px',
-        paddingTop: (!collapsed ? PADDING_TOP + PARALLEL_GROUP_ADJUSTMENT : PADDING_TOP / 2) + 'px',
-        paddingBottom: (!collapsed ? PADDING_TOP - PARALLEL_GROUP_ADJUSTMENT : PADDING_TOP / 2) + 'px',
+        paddingLeft: parallelContainerConfig.paddingLeft + 'px',
+        paddingRight: parallelContainerConfig.paddingRight + 'px',
+        paddingTop: parallelContainerConfig.paddingTop + 'px',
+        paddingBottom: parallelContainerConfig.paddingBottom + 'px',
         top: collapsed || myLevel > 1 ? 0 : -ADJUSTMENT + 'px',
         alignItems: 'center',
         flexShrink: 0 // IMPORTANT: do not remove this
@@ -85,7 +88,7 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-              rowGap: PARALLEL_NODE_GAP + 'px'
+              rowGap: parallelContainerConfig.nodeGap + 'px'
             }}
           >
             {node.children.map((item: AnyNodeInternal, index: number) =>

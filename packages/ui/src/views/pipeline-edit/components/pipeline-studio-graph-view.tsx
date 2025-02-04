@@ -58,22 +58,12 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
     const yamlJson = parse(yamlRevision.yaml)
     const newData = yaml2Nodes(yamlJson, { getStepIcon })
 
-    if (newData.length === 0) {
-      // TODO: empty pipeline state
-      // newData.push({
-      //   type: ContentNodeTypes.add,
-      //   data: {
-      //     yamlChildrenPath: 'pipeline.stages',
-      //     name: '',
-      //     yamlEntityType: YamlEntityType.SerialGroup,
-      //     yamlPath: ''
-      //   } satisfies AddNodeDataType
-      // })
-    }
-
     newData.unshift(startNode)
     newData.push(endNode)
     setData(newData)
+
+    // NOTE: this will output json for execution mock
+    console.log(newData)
   }, [yamlRevision])
 
   const nodes = useMemo(() => {

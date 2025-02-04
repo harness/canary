@@ -1,10 +1,10 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
-import { SERIAL_NODE_GAP } from './components/nodes/serial-container'
 import { useCanvasContext } from './context/canvas-provider'
+import { useContainerNodeContext } from './context/container-node-provider'
 import { useGraphContext } from './context/graph-provider'
 import { renderNode } from './render/render-node'
-import { clear, getPortsConnectionPath } from './render/render-svg-lines'
+import { clear, CreateSVGPathType, getPortsConnectionPath } from './render/render-svg-lines'
 import { AnyContainerNodeType } from './types/nodes'
 import { AnyNodeInternal } from './types/nodes-internal'
 import { connectPorts } from './utils/connects-utils'
@@ -12,17 +12,20 @@ import { addPaths } from './utils/path-utils'
 
 export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
+  customCreateSVGPath?: CreateSVGPathType
   config?: {
     edgeClassName?: string
     readonly?: boolean
+    leftGap?: number
   }
 }
 
 export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { initialized, nodes: nodesBank, rerenderConnections, setInitialized } = useGraphContext()
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
+  const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {} } = props
+  const { data, config = {}, customCreateSVGPath } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -67,12 +70,17 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
       // draw lines
       if (svgGroupRef.current) {
-        let allPaths: string[] = []
+        let allPaths: { level1: string[]; level2: string[] } = { level1: [], level2: [] }
         connections.map(portPair => {
-          const path = getPortsConnectionPath(rootContainerEl, portPair, config.edgeClassName)
-          allPaths.push(path)
+          const levelPaths = getPortsConnectionPath({
+            pipelineGraphRoot: rootContainerEl,
+            connection: portPair,
+            customCreateSVGPath
+          })
+          allPaths.level1.push(levelPaths.level1)
+          allPaths.level2.push(levelPaths.level2)
         })
-        svgGroupRef.current.innerHTML = allPaths.join('')
+        svgGroupRef.current.innerHTML = allPaths.level1.join('') + allPaths.level2.join('')
       }
 
       // reset transform
@@ -104,8 +112,9 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
 
           setCanvasTransform({
             scale: 1,
-            translateX: canvasConfig.paddingForFit,
-            translateY: parentHeight / 2 - graphHeight / 2
+            translateX: config?.leftGap ?? canvasConfig.paddingForFit ?? 80,
+            translateY: parentHeight / 2 - graphHeight / 2,
+            rootContainer: rootContainerRef?.current
           })
         } else {
           if (graphSizeRef.current) {
@@ -165,7 +174,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          columnGap: `${SERIAL_NODE_GAP}px`
+          columnGap: `${serialContainerConfig.nodeGap}px`
         }}
       >
         {dataInternalRef.current?.map((node, index) =>

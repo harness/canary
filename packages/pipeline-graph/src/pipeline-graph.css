@@ -16,3 +16,24 @@
 .PipelineGraph-Canvas {
   width: 100%;
 }
+
+/* TODO: temporary */
+.PipelineGraph-AnimatePath {
+  animation: dashLine 1000ms linear;
+  animation-fill-mode: forwards;
+}
+
+/* TODO: temporary */
+.PipelineGraph-AnimateNode {
+  animation: dashLine 1500ms linear;
+  animation-fill-mode: forwards;
+  animation-delay: 1s;
+  animation-iteration-count: 5;
+}
+
+/* TODO: temporary */
+@keyframes dashLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

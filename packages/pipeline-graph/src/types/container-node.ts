@@ -18,3 +18,19 @@ export interface ContainerNodeProps<CONTAINER_NODE = AnyNodeInternal> extends No
   /* is last node in array relative to parent */
   isLast: boolean
 }
+
+interface CommonContainerConfig {
+  paddingLeft: number
+  paddingRight: number
+  paddingTop: number
+  paddingBottom: number
+}
+export interface ParallelContainerConfig extends CommonContainerConfig {
+  nodeGap: number
+  parallelGroupAdjustment?: number
+}
+
+export interface SerialContainerConfig extends CommonContainerConfig {
+  nodeGap: number
+  serialGroupAdjustment?: number
+}

@@ -6,9 +6,23 @@ interface ExecutionHeaderProps {
   commitName: string
   branchName: string
   title: { number: string; title: string }
+  storage: string
+  storageAverage: string
+  simpleOperation: string
+  advancedOperations: string
+  dataTransfer: string
 }
 
-export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, branchName, title }) => {
+export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
+  commitName,
+  branchName,
+  title,
+  storage,
+  storageAverage,
+  simpleOperation,
+  advancedOperations,
+  dataTransfer
+}) => {
   return (
     <div className="flex w-full items-center justify-between border-b border-default px-6 py-4">
       <div className="flex flex-col gap-2">
@@ -35,23 +49,23 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, br
       <div className="flex items-end gap-12 h-full">
         <div className="flex flex-col">
           <span className="text-foreground-5">Storage</span>
-          <span className="text-primary">0 B</span>
+          <span className="text-primary">{storage}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-foreground-5">Storage (average)</span>
-          <span className="text-primary">0 B / 250 MB</span>
+          <span className="text-primary">{storageAverage}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-foreground-5">Simple Operation</span>
-          <span className="text-primary">27/100k</span>
+          <span className="text-primary">{simpleOperation}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-foreground-5">Advanced Operations</span>
-          <span className="text-primary">2/50k</span>
+          <span className="text-primary">{advancedOperations}</span>
         </div>
         <div className="flex flex-col">
           <span className="text-foreground-5">Data Transfer</span>
-          <span className="text-primary">4.21 kB/5 GB</span>
+          <span className="text-primary">{dataTransfer}</span>
         </div>
       </div>
     </div>

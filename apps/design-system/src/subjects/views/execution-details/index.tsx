@@ -9,11 +9,16 @@ export const ExecutionDetailsView = () => {
       <ExecutionHeader
         commitName="8fbru3ix"
         branchName="master"
-        title={{ number: 311, title: 'Alerting docs: adds sns integration' }}
+        title={{ number: '311. ', title: 'Alerting docs: adds sns integration' }}
+        storage="0 B"
+        storageAverage="0 B / 250 MB"
+        simpleOperation="27/100k"
+        advancedOperations="2/50k"
+        dataTransfer="4.21 kB/5 GB"
       />
       <div className="grid p-4" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div>
-          <PipelineStatus />
+          <PipelineStatus status="Running" buildTime="1h 30m" createdTime="10 mins ago" />
           <ExecutionTree
             defaultSelectedId="initialize"
             elements={elements}

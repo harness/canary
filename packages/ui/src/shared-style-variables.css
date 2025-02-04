@@ -322,6 +322,7 @@
     --canary-border-danger: var(--canary-red-65);
     --canary-border-success: var(--canary-green-65);
     --canary-border-accent: var(--canary-blue-60);
+    --canary-border-alert: var(--canary-orange-55);
     /* Icons */
     --canary-icon-01: var(--canary-grey-60);
     --canary-icon-02: var(--canary-white);
@@ -1001,6 +1002,7 @@
     --canary-border-danger: var(--canary-red-65);
     --canary-border-success: var(--canary-green-65);
     --canary-border-accent: var(--canary-blue-60);
+    --canary-border-alert: var(--canary-orange-55);
     /* Button Borders */
     --canary-button-border-disabled-01: var(--canary-grey-40) / 0.15; /* grey70/15 */
     --canary-button-border-success-01: var(--canary-green-65) / 0.15; /* green65/15 */

@@ -19,28 +19,58 @@ export interface StepNodeProps {
 
 export function StepNode(props: StepNodeProps) {
   const { nodeData, name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
-  console.log(nodeData)
 
   return (
     <>
-      {/* <div style={{ position: 'absolute', top: '-23px', left: '50px' }}>
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
-          <Icon name="tick" size={12} className="mr-1" />
-          Completed
-        </Badge>
-      </div> */}
-      {/* <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
-        <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
-          <Icon name="triangle-warning" size={12} className="mr-1" />
-          Warning
-        </Badge>
-      </div> */}
+      {nodeData.state === 'executing' ? (
+        <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="muted">
+            <Icon name="running" size={12} className="mr-1 animate-spin" />
+            Running
+          </Badge>
+        </div>
+      ) : nodeData.state === 'success' ? (
+        <div style={{ position: 'absolute', top: '-23px', left: '50px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
+            <Icon name="tick" size={12} className="mr-1" />
+            Completed
+          </Badge>
+        </div>
+      ) : (
+        <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+            <Icon name="triangle-warning" size={12} className="mr-1" />
+            Warning
+          </Badge>
+        </div>
+      )}
+      {/* {nodeData.state === 'success' && (
+        <div style={{ position: 'absolute', top: '-23px', left: '50px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
+            <Icon name="tick" size={12} className="mr-1" />
+            Completed
+          </Badge>
+        </div>
+      )}
+
+      {nodeData.state === 'warning' && (
+        <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+            <Icon name="triangle-warning" size={12} className="mr-1" />
+            Warning
+          </Badge>
+        </div>
+      )} */}
+
       <div
         role="button"
         tabIndex={0}
-        className={cn('box-border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
+        className={cn('box border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
           'border-borders-2': !selected,
-          'border-borders-3': selected
+          'border-borders-3': selected,
+          'border-success': nodeData.state === 'success',
+          'border border-alert': nodeData.state === 'warning',
+          'border-primary animate-spin-slow': nodeData.state === 'executing'
         })}
         onClick={onClick}
       >

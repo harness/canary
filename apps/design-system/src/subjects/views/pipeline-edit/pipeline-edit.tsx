@@ -17,7 +17,7 @@ import PipelineExecution from './pipeline-execution'
 const PipelineStudioWrapper = () => {
   const [yamlRevision, setYamlRevision] = useState({ yaml: pipelineYaml1 })
   const [view, setView] = useState<'graph' | 'yaml'>('graph')
-  const [isExecution, setIsExecution] = useState(false)
+  const [isExecution, setIsExecution] = useState(true)
 
   const [selectedPath, setSelectedPath] = useState<string | undefined>()
   const [errorData, setErrorData] = useState<ErrorDataType>()

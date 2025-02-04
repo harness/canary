@@ -152,6 +152,7 @@ export interface TypesSignature {
 export interface TypesIdentity {
   email?: string
   name?: string
+  avatarUrl?: string
 }
 
 export interface TypesCommit {

@@ -45,6 +45,7 @@ export function RenderNodeContent(
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
+          readonly={readonly}
         >
           {children}
         </nodeContent.component>
@@ -57,6 +58,7 @@ export function RenderNodeContent(
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
+          readonly={readonly}
         >
           {children}
         </nodeContent.component>

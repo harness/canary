@@ -11,7 +11,7 @@ import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function ParallelNodeContainer(props: ContainerNodeProps<ParallelNodeInternalType>) {
-  const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
+  const { node, level, parentNode, isFirst, isLast, parentNodeType, readonly } = props
   const { parallelContainerConfig, serialContainerConfig } = useContainerNodeContext()
 
   const myLevel = level + 1
@@ -81,6 +81,7 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}
+        readonly={readonly}
       >
         {!collapsed && node.children.length > 0 ? (
           <div
@@ -99,7 +100,8 @@ export default function ParallelNodeContainer(props: ContainerNodeProps<Parallel
                 parentNodeType: 'parallel',
                 relativeIndex: index,
                 isFirst: index === 0,
-                isLast: index === node.children.length - 1
+                isLast: index === node.children.length - 1,
+                readonly: readonly
               })
             )}
           </div>

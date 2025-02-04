@@ -300,7 +300,7 @@ const data: AnyContainerNodeType[] = [
 const PipelineExecutionGraph = () => {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2', readonly: true }} />
+      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2', readonly: false }} />
     </CanvasProvider>
   )
 }

@@ -81,6 +81,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}
+        readonly={readonly}
       >
         {!collapsed && node.children.length > 0 ? (
           <div

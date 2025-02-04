@@ -9,7 +9,7 @@ export const ExecutionTabs = () => {
 
   return (
     <>
-      <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
+      <SandboxLayout.SubHeader className="h-[45px]">
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`summary`}>

@@ -26,7 +26,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="bg-studio-3 size-2 rounded-full" />
+          <div className="bg-studio-3 size-2 rounded-full bg-orange-400" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (

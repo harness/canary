@@ -1,23 +1,33 @@
-import React from 'react'
-
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ExecutionStatus } from './execution-status'
 
-export const PipelineStatus = ({
+const PipelineStatus = ({
   status,
   buildTime,
-  createdTime
+  createdTime,
+  commit,
+  branch
 }: {
   status: ExecutionState
   buildTime: string
   createdTime: string
+  commit: string
+  branch: string
 }) => {
   return (
-    <div className="flex justify-between border-b px-6 pb-4 pt-3">
+    <div className="flex justify-between gap-12">
+      <div className="flex flex-col">
+        <span className="text-foreground-5">Commit</span>
+        <span className="text-primary">{commit}</span>
+      </div>
+      <div className="flex flex-col">
+        <span className="text-foreground-5">Branch</span>
+        <span className="text-primary">{branch}</span>
+      </div>
       <div className="flex flex-col">
         <span className="text-foreground-5">Status</span>
-        <ExecutionStatus.Badge status={status} />
+        <ExecutionStatus.Badge status={status} minimal />
       </div>
       <div className="flex flex-col">
         <span className="text-foreground-5">Build time</span>

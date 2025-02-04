@@ -1413,8 +1413,6 @@
     --canary-input: var(--canary-base-chrome-850);
     --canary-input-background: var(--canary-base-chrome-950);
     --canary-ring: var(--canary-accent-300);
-
-
     --canary-radius: 0.5rem;
     --canary-success: var(--canary-yellow-200);
     --canary-error: var(--canary-indigo-200);

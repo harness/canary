@@ -8,16 +8,16 @@ import {
   SerialNodeInternalType
 } from '../types/nodes-internal'
 
-interface RenderNodeContentProps extends NodeProps {
-  node: AnyNodeInternal
-  children?: React.ReactElement
-  collapsed?: boolean
-  isFirst?: boolean
-  isLast?: boolean
-  parentNodeType?: ContainerNodeType
-}
-
-export function RenderNodeContent(props: RenderNodeContentProps) {
+export function RenderNodeContent(
+  props: {
+    node: AnyNodeInternal
+    children?: React.ReactElement
+    collapsed?: boolean
+    isFirst?: boolean
+    isLast?: boolean
+    parentNodeType?: ContainerNodeType
+  } & NodeProps
+) {
   const { node, children, collapsed, isFirst, isLast, parentNodeType, readonly } = props
   const { nodes } = useGraphContext()
 

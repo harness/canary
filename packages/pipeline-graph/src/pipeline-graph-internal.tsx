@@ -15,8 +15,8 @@ export interface PipelineGraphInternalProps {
   customCreateSVGPath?: CreateSVGPathType
   config?: {
     edgeClassName?: string
-    readonly?: boolean
     leftGap?: number
+    readonly?: boolean
   }
 }
 

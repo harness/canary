@@ -4,41 +4,29 @@ import { createContext, forwardRef, useCallback, useContext, useEffect, useState
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
+import { ExecutionState } from '@views/repo/pull-request'
 
 import { Icon as CanaryIcon } from '../components/icon'
 
-/**
- * @TODO remove this from treeview component
- */
-enum Status {
-  QUEUED = 'queued',
-  IN_PROGRESS = 'in_progress',
-  SUCCESS = 'success',
-  FAILED = 'failed',
-  SKIPPED = 'skipped',
-  WAITING_ON_DEPENDENCIES = 'waiting_on_dependencies',
-  UNKNOWN = 'unknown'
-}
-
 type ExecutionDetail = {
-  status: Status
+  status: ExecutionState
   /* formatted duration */
   duration?: string
 }
 
-const getStatusIcon = (status: Status): React.ReactElement => {
+const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
-    case Status.IN_PROGRESS:
+    case ExecutionState.RUNNING:
       return <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
-    case Status.SUCCESS:
+    case ExecutionState.SUCCESS:
       return <CanaryIcon name="success" size={16} />
-    case Status.FAILED:
+    case ExecutionState.FAILURE:
       return <CanaryIcon name="fail" size={16} />
-    case Status.WAITING_ON_DEPENDENCIES:
-    case Status.QUEUED:
+    case ExecutionState.WAITING_ON_DEPENDENCIES:
+    case ExecutionState.PENDING:
       return <CanaryIcon name="pending-clock" size={16} />
-    case Status.SKIPPED:
-    case Status.UNKNOWN:
+    case ExecutionState.SKIPPED:
+    case ExecutionState.UNKNOWN:
     default:
       return <CanaryIcon name="circle" size={16} />
   }
@@ -391,4 +379,4 @@ const CollapseButton = forwardRef<
 
 CollapseButton.displayName = 'CollapseButton'
 
-export { Status, Tree, Folder, File, CollapseButton, type TreeViewElement }
+export { Tree, Folder, File, CollapseButton, type TreeViewElement }

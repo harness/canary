@@ -11,7 +11,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.PENDING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-muted" />
+          <div className="bg-muted size-2 rounded-full" />
           <span className="text-muted">Pending</span>
         </div>
       ) : (
@@ -26,7 +26,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="bg-studio-3 size-2 rounded-full bg-orange-400" />
+          <div className="bg-warning size-2 rounded-full" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (
@@ -58,7 +58,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.SUCCESS:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-success" />
+          <div className="bg-success size-2 rounded-full" />
           <span className="text-success">Success</span>
         </div>
       ) : (
@@ -89,7 +89,7 @@ const Icon: React.FC<ExecutionStatusProps> = props => {
     case ExecutionState.SUCCESS:
       return <CanaryIcon size={16} name="success" />
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
+      return <CanaryIcon size={20} name="running" className="text-warning animate-spin" />
     case ExecutionState.SKIPPED:
     default:
       return <></>

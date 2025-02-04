@@ -1,9 +1,9 @@
 import { cn } from '@utils/cn'
 
-import { Button, Icon } from '..'
+import { Button, Icon, NodeProps } from '..'
 import { FloatingAddButton } from './components/floating-add-button'
 
-export interface SerialGroupNodeProps {
+export interface SerialGroupNodeProps extends NodeProps {
   name?: string
   children?: React.ReactElement
   collapsed?: boolean
@@ -29,7 +29,8 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onAddInClick,
     onHeaderClick,
     onAddClick,
-    parentNodeType
+    parentNodeType,
+    readonly
   } = props
 
   return (
@@ -53,15 +54,17 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </div>
       </div>
 
-      <Button
-        className="absolute right-2 top-2 z-10"
-        variant="ghost"
-        size="sm_icon"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={onEllipsisClick}
-      >
-        <Icon name="ellipsis" size={15} />
-      </Button>
+      {!readonly && (
+        <Button
+          className="absolute right-2 top-2 z-10"
+          variant="ghost"
+          size="sm_icon"
+          onMouseDown={e => e.stopPropagation()}
+          onClick={onEllipsisClick}
+        >
+          <Icon name="ellipsis" size={15} />
+        </Button>
+      )}
 
       {!collapsed && isEmpty && (
         <Button
@@ -75,7 +78,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </Button>
       )}
 
-      {isFirst && (
+      {!readonly && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -84,13 +87,15 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
           }}
         />
       )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-      />
+      {!readonly && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+        />
+      )}
 
       {children}
     </>

@@ -16,7 +16,7 @@ export const SERIAL_PADDING = 26
 export const SERIAL_NODE_GAP = 36
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
-  const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
+  const { node, level, parentNode, isFirst, isLast, parentNodeType, readonly } = props
 
   const myLevel = level + 1
 
@@ -95,7 +95,8 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
                 parentNodeType: 'serial',
                 relativeIndex: index,
                 isFirst: index === 0,
-                isLast: index === node.children.length - 1
+                isLast: index === node.children.length - 1,
+                readonly: readonly
               })
             )}
           </div>

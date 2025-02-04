@@ -1,9 +1,9 @@
 import { useState } from 'react'
 
-import { Input, Calendar as UICalendar, type CalendarDateRange } from '@/components'
+import { Input, Calendar as UICalendar } from '@/components'
 import { cn } from '@utils/cn'
 
-import { FilterField, FilterHandlers, FilterValue } from '../../../types'
+import { FilterField } from '../../../types'
 
 interface CalendarProps {
   filter: FilterField<Date>
@@ -18,13 +18,6 @@ interface DateInputState {
 interface ParsedDateResult {
   date: Date | null
   formattedValue: string
-}
-
-interface RangeState {
-  from: DateInputState
-  to: DateInputState
-  month: Date
-  range: CalendarDateRange | undefined
 }
 
 interface SingleState {
@@ -129,7 +122,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
   /**
    * Handles date input changes and resets error state
    */
-  const handleDateInput = (value: string, type?: 'from' | 'to') => {
+  const handleDateInput = (value: string) => {
     setSingleState(prev => ({
       ...prev,
       input: { value, isError: false }
@@ -139,7 +132,7 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
   /**
    * Handles date confirmation on Enter or blur
    */
-  const handleDateConfirm = (value: string, type?: 'from' | 'to') => {
+  const handleDateConfirm = (value: string) => {
     // If value is empty, don't show error
     if (!value.trim()) {
       setSingleState(prev => ({
@@ -178,10 +171,10 @@ const Calendar = ({ filter, onUpdateFilter }: CalendarProps) => {
   /**
    * Handles keyboard events
    */
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, type?: 'from' | 'to') => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       const value = singleState.input.value
-      handleDateConfirm(value, type)
+      handleDateConfirm(value)
     }
   }
 

@@ -29,7 +29,7 @@ export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   repoId?: string
   spaceId?: string
-  onFilterChange: (filterValues: PRListFilters) => void
+  onFilterChange?: (filterValues: PRListFilters) => void
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
   searchQuery?: string | null
@@ -166,7 +166,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
       return acc
     }, {} as PRListFilters)
 
-    onFilterChange(_filterValues)
+    onFilterChange?.(_filterValues)
     setFilterValues(_filterValues)
   }
 

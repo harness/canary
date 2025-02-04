@@ -43,6 +43,10 @@ const StartNodeComponent = () => <PipelineNodes.StartNode />
 // * end node
 const EndNodeComponent = () => <PipelineNodes.EndNode />
 
+interface NodeProps {
+  readonly?: boolean
+}
+
 // * step node
 export interface StepNodeDataType {
   name?: string
@@ -50,10 +54,15 @@ export interface StepNodeDataType {
   selected?: boolean
 }
 
-export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNodeDataType> }) {
+export function StepNodeComponent({
+  node,
+  readonly
+}: {
+  node: LeafNodeInternalType<StepNodeDataType>
+} & NodeProps) {
   const { name, icon } = node.data
 
-  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} />
+  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} readonly={readonly} />
 }
 
 // * approval step node
@@ -84,11 +93,12 @@ export interface SerialGroupNodeDataType {
 
 export function SerialGroupNodeComponent({
   node,
-  children
+  children,
+  readonly
 }: {
   node: SerialNodeInternalType<SerialGroupNodeDataType>
   children: React.ReactElement
-}) {
+} & NodeProps) {
   const { name } = node.data
 
   return (
@@ -98,6 +108,7 @@ export function SerialGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
+      readonly={readonly}
     >
       {children}
     </PipelineNodes.SerialGroupNode>
@@ -112,11 +123,12 @@ export interface ParallelGroupNodeDataType {
 
 export function ParallelGroupNodeComponent({
   node,
-  children
+  children,
+  readonly
 }: {
   node: ParallelNodeInternalType<ParallelGroupNodeDataType>
   children: React.ReactElement
-}) {
+} & NodeProps) {
   const { name } = node.data
 
   return (
@@ -126,6 +138,7 @@ export function ParallelGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
+      readonly={readonly}
     >
       {children}
     </PipelineNodes.ParallelGroupNode>

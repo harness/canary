@@ -83,7 +83,7 @@ export const Navbar = ({
               />
             ))}
             <button onClick={handleMoreMenu}>
-              <NavbarSkeleton.Item text="More" icon={<Icon name="ellipsis" size={12} />} active={showMoreMenu} />
+              <NavbarSkeleton.Item text="More" icon={<Icon name="ellipsis" size={14} />} active={showMoreMenu} />
             </button>
           </NavbarSkeleton.Group>
 
@@ -106,14 +106,14 @@ export const Navbar = ({
           <NavbarSkeleton.Group topBorder>
             {!!currentUser?.admin && (
               <Link to="/admin/default-settings">
-                <NavbarSkeleton.Item text="User Management" icon={<Icon name="account" size={12} />} />
+                <NavbarSkeleton.Item text="User Management" icon={<Icon name="account" size={14} />} />
               </Link>
             )}
 
             <button onClick={handleSettingsMenu}>
               <NavbarSkeleton.Item
                 text={adminMenuItem.title}
-                icon={adminMenuItem.iconName && <Icon name={adminMenuItem.iconName} size={12} />}
+                icon={adminMenuItem.iconName && <Icon name={adminMenuItem.iconName} size={14} />}
                 active={showSettingMenu}
               />
             </button>

@@ -7,7 +7,7 @@
     "dev": "npm-run-all -p build:watch build:css -- --watch",
     "build": "vite build && pnpm build:css",
     "build:watch": "vite build --watch --emptyOutDir=false",
-    "build:css": "pnpm exec tailwindcss -i ./src/styles.css -o ./dist/styles.css",
+    "build:css": "npx tailwindcss -i ./src/styles.css -o ./dist/styles.css",
     "lint": "eslint ./src",
     "pretty": "prettier --check ./src",
     "shadcn:update": "npx shadcn-ui@latest add -a -o -y",

@@ -115,9 +115,10 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
         className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
         {...props}
       >
-        {context.variant === 'navigation' && (
+        {/* Active tab Radial background - removed till we add different style */}
+        {/* {context.variant === 'navigation' && (
           <span className="bg-tab-gradient-radial absolute left-1/2 top-1/2 -z-10 hidden h-[calc(100%+40px)] w-[calc(100%+60px)] -translate-x-1/2 -translate-y-1/2 group-data-[state=active]:block" />
-        )}
+        )} */}
         {children}
       </TabsPrimitive.Trigger>
     )

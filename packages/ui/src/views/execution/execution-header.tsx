@@ -12,6 +12,12 @@ interface ExecutionHeaderProps {
   simpleOperation: string
   advancedOperations: string
   dataTransfer: string
+  branch: string
+  commit: string
+  status: ExecutionState
+  buildTime: string
+  createdTime: string
+  pipelineName: string
 }
 
 export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
@@ -20,21 +26,28 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
   storageAverage,
   simpleOperation,
   advancedOperations,
-  dataTransfer
+  dataTransfer,
+  branch,
+  commit,
+  status,
+  buildTime,
+  createdTime,
+  pipelineName
 }) => {
   return (
-    <div className="px-6 py-4 space-y-4">
+    <div className="space-y-4 px-6 py-4">
       <div className="flex flex-col gap-2">
         {/* Breadcrumbs */}
-        <Breadcrumb.Root className="select-none mb-4">
+        <Breadcrumb.Root className="mb-4 select-none">
           <Breadcrumb.List>
             <Breadcrumb.Item>
-              <Breadcrumb.Link href="#">Pipeline list</Breadcrumb.Link>
+              <Breadcrumb.Link href="/pipelines">Pipeline list</Breadcrumb.Link>
             </Breadcrumb.Item>
             <Breadcrumb.Separator />
-            <Breadcrumb.Page>build scan push test - k8s - Clone 2</Breadcrumb.Page>
+            <Breadcrumb.Page>{pipelineName}</Breadcrumb.Page>
           </Breadcrumb.List>
         </Breadcrumb.Root>
+
         {/* <div className="flex gap-2">
           <Button variant="secondary" size="xs" asChild>
             <Link to="/">
@@ -58,11 +71,11 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
 
       <div className="flex w-full items-center justify-between ">
         <PipelineStatus
-          branch="master"
-          commit="b8bruh99h"
-          status={ExecutionState.RUNNING}
-          buildTime="1h 30m"
-          createdTime="10 mins ago"
+          branch={branch}
+          commit={commit}
+          status={status}
+          buildTime={buildTime}
+          createdTime={createdTime}
         />
         <div className="flex h-full items-end gap-12">
           <div className="flex flex-col">

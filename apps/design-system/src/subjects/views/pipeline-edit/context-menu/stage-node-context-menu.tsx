@@ -1,7 +1,5 @@
 import { DropdownMenu, Icon, Text } from '@harnessio/ui/components'
-import { YamlEntityType } from '@harnessio/ui/views'
-
-import { usePipelineStudioNodeContext } from '../context/pipeline-studio-node-context'
+import { usePipelineStudioNodeContext, YamlEntityType } from '@harnessio/ui/views'
 
 export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any => {
   const { contextMenuData, onAddIntention, hideContextMenu, onEditIntention, onDeleteIntention } =

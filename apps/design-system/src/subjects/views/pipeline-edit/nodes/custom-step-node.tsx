@@ -1,10 +1,9 @@
 import { useMemo } from 'react'
 
 import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
-import { CommonNodeDataType } from '@harnessio/ui/views'
+import { CommonNodeDataType, usePipelineStudioNodeContext } from '@harnessio/ui/views'
 
 import { StepNodeContextMenu } from '../context-menu/step-node-context-menu'
-import { usePipelineStudioNodeContext } from '../context/pipeline-studio-node-context'
 import { PipelineNodes } from '../pipeline-nodes'
 
 export interface StepNodeDataType extends CommonNodeDataType {

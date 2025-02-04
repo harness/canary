@@ -1,6 +1,5 @@
 import { DropdownMenu, Icon, Text } from '@harnessio/ui/components'
-
-import { usePipelineStudioNodeContext } from '../context/pipeline-studio-node-context'
+import { usePipelineStudioNodeContext } from '@harnessio/ui/views'
 
 export const StepGroupNodeContextMenu = () => {
   const { contextMenuData, onAddIntention, hideContextMenu, onEditIntention, onDeleteIntention } =

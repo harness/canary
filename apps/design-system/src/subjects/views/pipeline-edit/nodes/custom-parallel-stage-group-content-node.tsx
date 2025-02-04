@@ -1,11 +1,10 @@
 import { useMemo } from 'react'
 
 import { ParallelNodeInternalType } from '@harnessio/pipeline-graph'
-import { CommonNodeDataType } from '@harnessio/ui/views'
+import { CommonNodeDataType, usePipelineStudioNodeContext } from '@harnessio/ui/views'
 
 import { StageGroupAddInNodeContextMenu } from '../context-menu/stage-group-add-in-node-context-menu'
 import { StageGroupNodeContextMenu } from '../context-menu/stage-group-node-context-menu'
-import { usePipelineStudioNodeContext } from '../context/pipeline-studio-node-context'
 import { PipelineNodes } from '../pipeline-nodes'
 
 export interface CustomParallelStageGroupContentNodeDataType extends CommonNodeDataType {

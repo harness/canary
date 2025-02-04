@@ -14,7 +14,7 @@ export const PipelineStatus = ({
   createdTime: string
 }) => {
   return (
-    <div className="flex justify-between pl-6 pr-6 pt-3 pb-4 border-b">
+    <div className="flex justify-between border-b px-6 pb-4 pt-3">
       <div className="flex flex-col">
         <span className="text-foreground-5">Status</span>
         <ExecutionStatus.Badge status={status} />

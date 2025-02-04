@@ -69,7 +69,7 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
           />
         </Layout.Horizontal>
         <TabsContent value={StepExecutionTab.LOG}>
-          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4 px-2">
+          <ScrollArea className="h-[calc(100vh-23rem)] border-t px-2 pt-4">
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </TabsContent>

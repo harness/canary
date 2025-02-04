@@ -46,7 +46,7 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
           <span className="text-primary">{title.title}</span>
         </Text>
       </div>
-      <div className="flex items-end gap-12 h-full">
+      <div className="flex h-full items-end gap-12">
         <div className="flex flex-col">
           <span className="text-foreground-5">Storage</span>
           <span className="text-primary">{storage}</span>

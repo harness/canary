@@ -2,8 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { ListPullReqQueryQueryParams, useListPullReqQuery } from '@harnessio/code-service-client'
-import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
-import type { PRListFilters } from '@harnessio/ui/views'
+import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
@@ -19,7 +18,7 @@ export default function PullRequestListPage() {
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
-  const [filterValues ,setFilterValues] = useState<ListPullReqQueryQueryParams>({})
+  const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -49,12 +48,14 @@ export default function PullRequestListPage() {
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
       onFilterChange={(filterData: PRListFilters) => {
-        setFilterValues(Object.entries(filterData).reduce((acc: any, [key, value]) => {
-          if (value instanceof Date) {
-            acc[key] = value.getTime()
-          }
-          return acc;
-        }, {}))
+        setFilterValues(
+          Object.entries(filterData).reduce((acc: any, [key, value]) => {
+            if (value instanceof Date) {
+              acc[key] = value.getTime()
+            }
+            return acc
+          }, {})
+        )
       }}
       searchQuery={query}
       setSearchQuery={setQuery}

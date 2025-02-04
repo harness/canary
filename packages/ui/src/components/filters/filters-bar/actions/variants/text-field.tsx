@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { DropdownMenu, Icon, Input } from '@/components'
 
 import { FilterField } from '../../../types'

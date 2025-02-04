@@ -20,12 +20,14 @@ const renderFilterValues = <T extends FilterValueTypes>(
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
-    case 'calendar':
+    case 'calendar': {
       const calendarFilter = filter as FilterField<Date>
       return <Calendar filter={calendarFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
-    case 'text':
+    }
+    case 'text': {
       const textFilter = filter as FilterField<string>
       return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
+    }
     default:
       return null
   }

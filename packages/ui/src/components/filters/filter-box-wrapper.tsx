@@ -31,8 +31,8 @@ const FilterBoxWrapper = ({
 
   return (
     <DropdownMenu.Root open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenu.Trigger className="bg-background-3 hover:bg-background-8 flex h-8 items-center gap-x-3 whitespace-nowrap rounded pl-2.5 pr-2 transition-colors duration-200">
-        <div className="text-13 flex items-center gap-x-1.5">
+      <DropdownMenu.Trigger className="flex h-8 items-center gap-x-3 whitespace-nowrap rounded bg-background-3 pl-2.5 pr-2 transition-colors duration-200 hover:bg-background-8">
+        <div className="flex items-center gap-x-1.5 text-13">
           <span className="text-foreground-1">
             {filterLabel}
             {!!valueLabel && ': '}
@@ -52,17 +52,17 @@ const FilterBoxWrapper = ({
             <DropdownMenu.Root>
               <DropdownMenu.Trigger className="group flex h-[18px] items-center px-1">
                 <Icon
-                  className="text-icons-1 group-hover:text-foreground-1 transition-colors duration-200"
+                  className="text-icons-1 transition-colors duration-200 group-hover:text-foreground-1"
                   name="more-dots-fill"
                   size={12}
                 />
               </DropdownMenu.Trigger>
               <DropdownMenu.Content align="start">
                 <DropdownMenu.Item
-                  className="text-foreground-4 hover:text-foreground-danger data-[highlighted]:text-foreground-danger duration-200 data-[highlighted]:bg-transparent data-[highlighted]:outline-none"
+                  className="text-foreground-4 duration-200 hover:text-foreground-danger data-[highlighted]:bg-transparent data-[highlighted]:text-foreground-danger data-[highlighted]:outline-none"
                   onSelect={() => handleRemoveFilter()}
                 >
-                  <button className="text-14 flex items-center gap-x-1.5">
+                  <button className="flex items-center gap-x-1.5 text-14">
                     <Icon name="trash" size={12} />
                     Delete filter
                   </button>

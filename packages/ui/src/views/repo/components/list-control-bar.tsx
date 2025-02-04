@@ -50,7 +50,7 @@ interface FilterOptionsRendererProps<T> {
   resetFilters: () => void
 }
 
-const ListControlBar = <T extends Object, V = T[keyof T]>({
+const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
   filterOptions,
   sortOptions,
   selectedFiltersCnt,
@@ -101,7 +101,7 @@ const ListControlBar = <T extends Object, V = T[keyof T]>({
         displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
       />
       <button
-        className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
+        className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
         onClick={() => {
           resetFilters()
         }}
@@ -133,7 +133,7 @@ const ListControlBar = <T extends Object, V = T[keyof T]>({
         />
       )}
 
-      {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="bg-borders-1 h-7 w-px" />}
+      {selectedFiltersCnt > 0 && activeSorts.length > 0 && <div className="h-7 w-px bg-borders-1" />}
       {renderSelectedFilters(filtersFieldRenderer)}
 
       {selectedFiltersCnt > 0 && (

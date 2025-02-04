@@ -15,12 +15,12 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-muted">Pending</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-muted bg-muted/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-0.5">
             <CanaryIcon size={12} name="pending-clock" />
             <span className="text-muted">Pending</span>
           </div>
-          {duration && <span className="text-muted">{duration}</span>}
+          {duration ? <span className="text-muted">{duration}</span> : null}
         </div>
       )
     case ExecutionState.RUNNING:
@@ -30,7 +30,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-studio-3">Running</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-studio-3/[0.12] bg-studio-3/10 px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-1">
             <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
             <span className="text-studio-3">Running</span>
@@ -47,7 +47,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-[#ED5E5E]">Failed</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-[#F76E6E1F] bg-[#F76E6E1A]/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-0.5">
             <CanaryIcon name="fail" width={20} />
             <span className="text-[#ED5E5E]">Failed</span>
@@ -62,7 +62,7 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
           <span className="text-success">Success</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-success bg-success/[0.1] px-1 py-0.5">
+        <div className="flex items-center gap-1 rounded-md">
           <div className="flex items-center gap-0.5">
             <CanaryIcon size={12} name="success" />
             <span className="text-success">Success</span>

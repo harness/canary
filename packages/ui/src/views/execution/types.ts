@@ -72,7 +72,7 @@ export interface ExecutionStatusProps {
 }
 
 export interface BadgeProps {
-  duration: string /* time formatted as string */
+  duration?: string /* time formatted as string */
   minimal?: boolean
 }
 

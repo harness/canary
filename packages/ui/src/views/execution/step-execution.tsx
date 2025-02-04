@@ -50,9 +50,9 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
 
   if (!step) return null
   return (
-    <Tabs defaultValue={StepExecutionTab.LOG} className="mt-2 size-full">
-      <Layout.Vertical gap="space-y-3">
-        <Layout.Horizontal className="flex justify-between">
+    <Tabs defaultValue={StepExecutionTab.LOG} className="size-full">
+      <Layout.Vertical>
+        <Layout.Horizontal className="flex justify-between p-4 pb-0">
           <TabsList className="w-fit">
             <TabsTrigger className="h-full" value={StepExecutionTab.LOG}>
               Logs
@@ -69,7 +69,7 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
           />
         </Layout.Horizontal>
         <TabsContent value={StepExecutionTab.LOG}>
-          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4">
+          <ScrollArea className="h-[calc(100vh-23rem)] border-t pt-4 px-2">
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
         </TabsContent>

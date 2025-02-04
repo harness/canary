@@ -24,7 +24,7 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
   dataTransfer
 }) => {
   return (
-    <div className="flex w-full items-center justify-between border-b border-default px-6 py-4">
+    <div className="flex w-full items-center justify-between px-6 py-4">
       <div className="flex flex-col gap-2">
         <div className="flex gap-2">
           <Button variant="secondary" size="xs" asChild>

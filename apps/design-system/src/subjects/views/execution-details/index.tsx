@@ -1,10 +1,17 @@
-import { ExecutionHeader, ExecutionInfo, ExecutionTabs, ExecutionTree, PipelineStatus } from '@harnessio/ui/views'
+import {
+  ExecutionHeader,
+  ExecutionInfo,
+  ExecutionState,
+  ExecutionTabs,
+  ExecutionTree,
+  PipelineStatus
+} from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionDetailsView = () => {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <ExecutionTabs />
       <ExecutionHeader
         commitName="8fbru3ix"
@@ -16,9 +23,9 @@ export const ExecutionDetailsView = () => {
         advancedOperations="2/50k"
         dataTransfer="4.21 kB/5 GB"
       />
-      <div className="grid p-4" style={{ gridTemplateColumns: '1fr 3fr' }}>
-        <div>
-          <PipelineStatus status="Running" buildTime="1h 30m" createdTime="10 mins ago" />
+      <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
+        <div className="flex flex-col gap-4 border border-white/10 border-r-0 border-t-0">
+          <PipelineStatus status={ExecutionState.RUNNING} buildTime="1h 30m" createdTime="10 mins ago" />
           <ExecutionTree
             defaultSelectedId="initialize"
             elements={elements}
@@ -27,14 +34,16 @@ export const ExecutionDetailsView = () => {
             }}
           />
         </div>
-        <ExecutionInfo
-          logs={logs}
-          onCopy={() => {}}
-          onDownload={() => {}}
-          onEdit={() => {}}
-          selectedStepIdx={0}
-          stage={stages[0]}
-        />
+        <div className="flex flex-col gap-4 border border-white/10 border-t-0">
+          <ExecutionInfo
+            logs={logs}
+            onCopy={() => {}}
+            onDownload={() => {}}
+            onEdit={() => {}}
+            selectedStepIdx={0}
+            stage={stages[0]}
+          />
+        </div>
       </div>
     </div>
   )

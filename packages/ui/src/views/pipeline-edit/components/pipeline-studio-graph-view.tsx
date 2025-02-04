@@ -40,10 +40,11 @@ export interface PipelineStudioGraphViewProps {
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
+  getStepIcon?: (step: Record<string, any>) => JSX.Element
 }
 
 export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): React.ReactElement => {
-  const { yamlRevision, contentNodeFactory } = props
+  const { yamlRevision, contentNodeFactory, getStepIcon } = props
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -55,24 +56,14 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
 
   useEffect(() => {
     const yamlJson = parse(yamlRevision.yaml)
-    const newData = yaml2Nodes(yamlJson)
-
-    if (newData.length === 0) {
-      // TODO: empty pipeline state
-      // newData.push({
-      //   type: ContentNodeTypes.add,
-      //   data: {
-      //     yamlChildrenPath: 'pipeline.stages',
-      //     name: '',
-      //     yamlEntityType: YamlEntityType.SerialGroup,
-      //     yamlPath: ''
-      //   } satisfies AddNodeDataType
-      // })
-    }
+    const newData = yaml2Nodes(yamlJson, { getStepIcon })
 
     newData.unshift(startNode)
     newData.push(endNode)
     setData(newData)
+
+    // NOTE: this will output json for execution mock
+    console.log(newData)
   }, [yamlRevision])
 
   const nodes = useMemo(() => {

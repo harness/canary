@@ -66,11 +66,11 @@ export const NavbarItem = ({
 
   return (
     <div className="group relative">
-      <NavLink className="block pr-6" to={item.to || ''}>
+      <NavLink className="block" to={item.to || ''}>
         {({ isActive }) => (
           <NavbarSkeleton.Item
             text={item.title}
-            icon={iconName && <Icon name={iconName} size={12} />}
+            icon={iconName && <Icon name={iconName} size={14} />}
             active={isActive}
           />
         )}

@@ -21,6 +21,7 @@ interface usePRCommonInteractionsProps {
   updateCommentStatus: (repoRef: string, prId: number, commentId: number, status: string, done: () => void) => void
   currentUserName?: string
   setActivities?: React.Dispatch<React.SetStateAction<ListPullReqActivitiesOkResponse | undefined>>
+  dryMerge?: () => void
 }
 
 export function usePRCommonInteractions({
@@ -29,7 +30,8 @@ export function usePRCommonInteractions({
   refetchActivities,
   updateCommentStatus,
   currentUserName,
-  setActivities
+  setActivities,
+  dryMerge
 }: usePRCommonInteractionsProps) {
   let count = generateAlphaNumericHash(5)
   const apiPath = useAPIPath()
@@ -211,6 +213,7 @@ export function usePRCommonInteractions({
     (status: string, parentId?: number) => {
       if (parentId && updateCommentStatus) {
         updateCommentStatus(repoRef, prId, parentId, status, refetchActivities)
+        dryMerge?.()
       }
     },
     [updateCommentStatus, prId, repoRef, refetchActivities]

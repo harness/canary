@@ -63,14 +63,14 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
           <div className="mb-2 flex items-baseline justify-between leading-[21px]" key={index}>
             <div className="flex items-baseline gap-2">
               {pos !== undefined && !isNaN(pos) && pos >= 0 && (
-                <Text className="flex min-w-5 justify-end text-log">{pos}</Text>
+                <Text className="text-log flex min-w-5 justify-end">{pos}</Text>
               )}
               {time ? (
-                <Text className="flex text-sm font-normal text-log">[{formatTimestamp(time * 1_000)}]</Text>
+                <Text className="text-log flex text-sm font-normal">[{formatTimestamp(time * 1_000)}]</Text>
               ) : null}
               {out ? logText(out) : null}
             </div>
-            <Text className="mr-2 text-sm font-normal text-log">
+            <Text className="text-log mr-2 text-sm font-normal">
               {formatDuration(duration && duration > 0 ? duration * 1_000 : 0)}
             </Text>
           </div>

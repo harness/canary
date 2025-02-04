@@ -1,4 +1,4 @@
-import { IconProps } from '@components/icon'
+import { Icon, IconProps } from '@components/icon'
 
 import {
   getIsActionStep,
@@ -8,7 +8,7 @@ import {
   getIsTemplateStep
 } from './common-step-utils'
 
-export const getIconBasedOnStep = (step: any): IconProps['name'] => {
+const getIconNameBasedOnStep = (step: any): IconProps['name'] => {
   if (getIsRunStep(step)) return 'run'
 
   if (getIsRunTestStep(step)) return 'run-test'
@@ -25,4 +25,8 @@ export const getIconBasedOnStep = (step: any): IconProps['name'] => {
    */
 
   return 'harness'
+}
+
+export const getIconBasedOnStep = (step: any): JSX.Element => {
+  return <Icon className="m-2 size-8" name={getIconNameBasedOnStep(step)} />
 }

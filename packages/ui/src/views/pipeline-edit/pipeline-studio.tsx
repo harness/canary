@@ -18,7 +18,7 @@ export class ContentNodeFactory {
     return this.entityBank.get(entityType)
   }
 
-  getNodesDefinition() {
+  getNodesDefinition(): NodeContent[] {
     return Array.from(this.entityBank.values())
   }
 }
@@ -35,6 +35,7 @@ export interface PipelineStudioProps {
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   yamlEditorConfig?: PipelineStudioInternalProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioInternalProps['onErrorChange']
+  getStepIcon?: PipelineStudioInternalProps['getStepIcon']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

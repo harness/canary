@@ -105,11 +105,6 @@ const dateParser: Parser<Date> = {
 
 export const getPRListFilterOptions = (t: TFunction) => [
   {
-    label: t('component:filter.createdBy', 'Created By'),
-    value: 'created_by',
-    type: FilterFieldTypes.Text
-  },
-  {
     label: t('component:filter.createdBefore', 'Created Before'),
     value: 'created_lt',
     type: FilterFieldTypes.Calendar,

@@ -3,7 +3,8 @@ import { ReactNode, useEffect, useState } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { FullTheme, getModeColorContrastFromFullTheme, IThemeStore, ModeType } from '@harnessio/ui/components'
+import { getModeColorContrastFromFullTheme } from '@harnessio/ui/components'
+import { FullTheme, IThemeStore, ModeType, ThemeProvider as UIThemeProvider } from '@harnessio/ui/context'
 
 import { useIsMFE } from '../hooks/useIsMFE'
 
@@ -71,5 +72,9 @@ export function ThemeProvider({ children, defaultTheme }: ThemeProviderProps) {
     }
   }, [theme, setTheme, systemMode])
 
-  return <>{children}</>
+  return (
+    <UIThemeProvider theme={theme} setTheme={setTheme}>
+      {children}
+    </UIThemeProvider>
+  )
 }

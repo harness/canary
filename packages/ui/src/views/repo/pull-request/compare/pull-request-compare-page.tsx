@@ -135,6 +135,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   branchSelectorRenderer
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
+
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const { navigate } = useRouterContext()

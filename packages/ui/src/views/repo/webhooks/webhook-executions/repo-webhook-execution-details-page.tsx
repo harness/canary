@@ -1,7 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, IThemeStore, ListActions, Spacer, Text } from '@/components'
+import { Badge, Button, ListActions, Spacer, Text } from '@/components'
+import { ModeType, useTheme } from '@/context'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { isLightTheme } from '@utils/is-light-theme'
 import { formatDuration } from '@utils/TimeUtils'
 import { timeAgo } from '@utils/utils'
 
@@ -10,27 +12,26 @@ import { CodeEditor } from '@harnessio/yaml-editor'
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
 import { WebhookExecutionEditorControlBar } from './components/webhook-executions-editor-control-bar'
 
-interface RepoWebhookExecutionDeatilsPageProps {
+interface RepoWebhookExecutionDetailsPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleRetriggerExecution: () => void
-  useThemeStore: () => IThemeStore
 }
-export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPageProps> = ({
+
+export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDetailsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
   isLoading,
-  handleRetriggerExecution,
-  useThemeStore
+  handleRetriggerExecution
 }) => {
   const { t } = useTranslationStore()
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
   const [view, setView] = useState('payload')
-  const { theme } = useThemeStore()
+  const { theme } = useTheme()
 
-  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+  const monacoTheme = useMemo(() => (isLightTheme(theme) ? ModeType.Light : ModeType.Dark), [theme])
 
   const themeConfig = useMemo(
     () => ({

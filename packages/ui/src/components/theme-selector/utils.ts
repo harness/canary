@@ -1,4 +1,4 @@
-import { ColorType, ContrastType, FullTheme, ModeType } from './types'
+import { ColorType, ContrastType, FullTheme, ModeType } from '@/context'
 
 export function getModeColorContrastFromFullTheme(theme?: FullTheme) {
   if (theme) {

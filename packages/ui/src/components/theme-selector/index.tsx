@@ -2,18 +2,16 @@
 
 import { useMemo } from 'react'
 
+import { useTheme } from '@/context'
+
 import { ColorSelect } from './color-select'
 import { ContrastSelect } from './contrast-select'
 import { ModeSelect } from './mode-select'
-import { IThemeStore } from './types'
 import { getModeColorContrastFromFullTheme } from './utils'
 
-interface ThemeSelectorProps {
-  useThemeStore: () => IThemeStore
-}
-function ThemeSelector({ useThemeStore }: ThemeSelectorProps) {
+function ThemeSelector() {
   // theme will be structured like dark-std-std which represents mode-color-contrast
-  const { theme, setTheme } = useThemeStore()
+  const { theme, setTheme } = useTheme()
   const { mode, color, contrast } = useMemo(() => getModeColorContrastFromFullTheme(theme), [theme])
 
   return (

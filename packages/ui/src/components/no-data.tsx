@@ -62,7 +62,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
+      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} themeDependent />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5', textWrapperClassName)}>
         <Text size={5} weight="medium">
           {title}

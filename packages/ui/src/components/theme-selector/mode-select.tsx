@@ -1,6 +1,5 @@
 import { Label, Select } from '@/components'
-
-import { ColorType, ContrastType, FullTheme, ModeType } from './types'
+import { ColorType, ContrastType, FullTheme, ModeType } from '@/context'
 
 export function ModeSelect({
   setTheme,

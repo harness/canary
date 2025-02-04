@@ -18,7 +18,6 @@ import { getNavbarMenuData } from '../data/navbar-menu-data'
 import { getPinnedMenuItemsData } from '../data/pinned-menu-items-data'
 import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
-import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
 import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
@@ -189,7 +188,6 @@ export const AppShell = () => {
           pinnedMenuItems={pinnedMenu}
           handleChangePinnedMenuItem={handleChangePinnedMenuItem}
           handleRemoveRecentMenuItem={handleRemoveRecentMenuItem}
-          useThemeStore={useThemeStore}
           useTranslationStore={useTranslationStore}
         />
       </SandboxLayout.LeftPanel>

@@ -1,6 +1,6 @@
 import { useRouterContext } from '@/context'
 
-import { NoData } from '../components/no-data'
+import { NoData } from '@/components'
 
 export const EmptyPage = ({ pathName }: { pathName: string }) => {
   const { navigate } = useRouterContext()

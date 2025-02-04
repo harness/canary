@@ -1440,8 +1440,6 @@
     --diff-add-widget-color--: hsl(var(--canary-base-chrome-200));
     --diff-empty-content--: hsl(var(--canary-background-01));
     --diff-hunk-content-color--: hsl(var(--canary-base-chrome-200));
-
-
     /* New colors design variables */
     /* Text */
     --canary-foreground-01: var(--canary-base-chrome-white);

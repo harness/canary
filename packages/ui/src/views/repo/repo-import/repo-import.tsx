@@ -33,15 +33,60 @@ const formSchema = z
     authorization: z.boolean().optional(),
     provider: z.string().min(1, { message: 'Please select a provider' }),
     password: z.string().optional(),
-    organization: z.string().min(1, { message: 'Please enter an organization' }),
-    repository: z.string().min(1, { message: 'Please enter a repository' })
+    organization: z.string().optional(),
+    repository: z.string().min(1, { message: 'Please enter a repository' }),
+    group: z.string().optional(),
+    workspace: z.string().optional(),
+    project: z.string().optional()
   })
   .superRefine((data, ctx) => {
-    if (data.provider === 'Github Enterprise' && !data.hostUrl) {
+    if (
+      (data.provider === 'Github' && !data.organization) ||
+      (data.provider === 'Github Enterprise' && !data.organization) ||
+      (data.provider === 'Gitea' && !data.organization) ||
+      (data.provider === 'Gogs' && !data.organization)
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['organization'],
+        message: 'Please enter a organization'
+      })
+    }
+    if (
+      (data.provider === 'Github Enterprise' && !data.hostUrl) ||
+      (data.provider === 'Gitlab Self Hosted' && !data.hostUrl) ||
+      (data.provider === 'Bitbucket Server' && !data.hostUrl) ||
+      (data.provider === 'Gitea' && !data.hostUrl) ||
+      (data.provider === 'Gogs' && !data.hostUrl)
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['hostUrl'],
         message: 'Repository URL is required'
+      })
+    }
+    if (data.provider === 'Gitlab' && !data.group) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['group'],
+        message: 'Group is required'
+      })
+    }
+    if (data.provider === 'Bitbucket' && !data.workspace) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['workspace'],
+        message: 'Workspace is required'
+      })
+    }
+    if (
+      (data.provider === 'Bitbucket Server' && !data.project) ||
+      (data.provider === 'Azure DevOps' && !data.project)
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['project'],
+        message: 'Project is required'
       })
     }
   })
@@ -82,7 +127,8 @@ export function RepoImportPage({
       provider: 'Github',
       password: '',
       organization: '',
-      repository: ''
+      repository: '',
+      group: ''
     }
   })
 
@@ -104,7 +150,7 @@ export function RepoImportPage({
   const handleCancel = () => {
     onFormCancel()
   }
-
+  console.log(errors)
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
@@ -131,9 +177,9 @@ export function RepoImportPage({
                         <SelectItem
                           key={option}
                           value={option}
-                          disabled={
-                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          }
+                          // disabled={
+                          //   option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
+                          // }
                         >
                           {option}
                         </SelectItem>
@@ -144,7 +190,11 @@ export function RepoImportPage({
             </ControlGroup>
           </Fieldset>
 
-          {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
+          {(watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE ||
+            watch('provider') === ProviderOptionsEnum.GITLAB_SELF_HOSTED ||
+            watch('provider') === ProviderOptionsEnum.BITBUCKET_SERVER ||
+            watch('provider') === ProviderOptionsEnum.GITEA ||
+            watch('provider') === ProviderOptionsEnum.GOGS) && (
             <Fieldset className="mt-4">
               <Input
                 id="host"
@@ -156,19 +206,63 @@ export function RepoImportPage({
               />
             </Fieldset>
           )}
+          {(watch('provider') === ProviderOptionsEnum.GITLAB ||
+            watch('provider') === ProviderOptionsEnum.GITLAB_SELF_HOSTED) && (
+            <Fieldset className="mt-4">
+              <Input
+                id="group"
+                label="Group"
+                {...register('group')}
+                placeholder="Enter the group name"
+                size="md"
+                error={errors.group?.message?.toString()}
+              />
+            </Fieldset>
+          )}
+
+          {watch('provider') === ProviderOptionsEnum.BITBUCKET && (
+            <Fieldset className="mt-4">
+              <Input
+                id="workspace"
+                label="Workspace"
+                {...register('workspace')}
+                placeholder="Enter the workspace name"
+                size="md"
+                error={errors.workspace?.message?.toString()}
+              />
+            </Fieldset>
+          )}
 
           {/* organization */}
-          <Fieldset className="mt-4">
-            <Input
-              id="organization"
-              label="Organization"
-              {...register('organization')}
-              placeholder="Enter the organization name"
-              size="md"
-              error={errors.organization?.message?.toString()}
-            />
-          </Fieldset>
-
+          {(watch('provider') === ProviderOptionsEnum.GITHUB ||
+            watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE ||
+            watch('provider') === ProviderOptionsEnum.GITEA ||
+            watch('provider') === ProviderOptionsEnum.GOGS ||
+            watch('provider') === ProviderOptionsEnum.AZURE_DEVOPS) && (
+            <Fieldset className="mt-4">
+              <Input
+                id="organization"
+                label="Organization"
+                {...register('organization')}
+                placeholder="Enter the organization name"
+                size="md"
+                error={errors.organization?.message?.toString()}
+              />
+            </Fieldset>
+          )}
+          {(watch('provider') === ProviderOptionsEnum.BITBUCKET_SERVER ||
+            watch('provider') === ProviderOptionsEnum.AZURE_DEVOPS) && (
+            <Fieldset className="mt-4">
+              <Input
+                id="project"
+                label="Project"
+                {...register('project')}
+                placeholder="Enter the project name"
+                size="md"
+                error={errors.project?.message?.toString()}
+              />
+            </Fieldset>
+          )}
           {/* repository */}
           <Fieldset className="mt-4">
             <Input

@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
-import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
+import { ImportRepoFormFields, ProviderOptionsEnum, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -16,6 +16,20 @@ export const ImportRepo = () => {
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
 
   const onSubmit = async (data: ImportRepoFormFields) => {
+    const providerRepo = data.provider.includes(ProviderOptionsEnum.GITHUB)
+      ? data.provider
+      : data.provider.includes(ProviderOptionsEnum.GITLAB)
+        ? data.group
+        : data.provider.includes(ProviderOptionsEnum.BITBUCKET)
+          ? data.workspace
+          : data.provider.includes(ProviderOptionsEnum.BITBUCKET_SERVER)
+            ? data.project
+            : data.provider.includes(ProviderOptionsEnum.GITEA) || data.provider.includes(ProviderOptionsEnum.GOGS)
+              ? data.organization
+              : data.provider.includes(ProviderOptionsEnum.AZURE_DEVOPS)
+                ? `${data.organization}/${data.project}`
+                : ''
+
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,
@@ -24,10 +38,10 @@ export const ImportRepo = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: 'github',
+        type: data.provider.split(' ')[0].toLowerCase(),
         username: ''
       },
-      provider_repo: `${data.organization}/${data.repository}`
+      provider_repo: `${providerRepo}/${data.repository}`
     }
     importRepoMutation(
       {

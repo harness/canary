@@ -2,7 +2,7 @@ import { ChangeEvent, KeyboardEvent, ReactNode, RefObject } from 'react'
 
 import { Button, Icon, Input } from '@/components'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
-import { cn } from '@/utils/cn'
+import { cn } from '@utils/cn'
 
 // Root Container
 const Root: React.FC<{ children: ReactNode }> = ({ children }) => {

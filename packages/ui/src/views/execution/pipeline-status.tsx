@@ -41,4 +41,4 @@ const PipelineStatus = ({
   )
 }
 
-export default PipelineStatus
+export { PipelineStatus }

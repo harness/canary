@@ -1,7 +1,7 @@
 import { Breadcrumb, Text } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
-import PipelineStatus from './pipeline-status'
+import { PipelineStatus } from './pipeline-status'
 
 interface ExecutionHeaderProps {
   commitName: string

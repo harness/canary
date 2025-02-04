@@ -104,7 +104,7 @@ const ListItem = ({
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-background-2' : '',
-        disableHover ? '' : 'hover:bg-background-2 cursor-pointer duration-150 ease-in-out'
+        disableHover ? '' : 'hover:bg-background-4 cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >

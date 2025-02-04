@@ -1423,8 +1423,6 @@
     --canary-ai-button-stop-2: var(--canary-pink-150);
     --canary-ai-button-stop-3: var(--canary-purple-300);
     --canary-ai-button-stop-4: var(--canary-cyan-200);
-
-
     --diff-grey: hsl(var(--canary-base-chrome-950));
     --diff-add-content--: hsl(var(--canary-yellow-950));
     --diff-del-content--: hsl(var(--canary-indigo-950));

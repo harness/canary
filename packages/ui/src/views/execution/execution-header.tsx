@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
 import { Button, Icon, Text } from '@/components'
-import { Spacer } from 'dist/components'
 
 interface ExecutionHeaderProps {
   commitName: string

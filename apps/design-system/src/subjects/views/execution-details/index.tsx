@@ -1,15 +1,12 @@
-import { ExecutionHeader, ExecutionInfo, ExecutionTree } from '@harnessio/ui/views'
+import { ExecutionHeader, ExecutionInfo, ExecutionTabs, ExecutionTree } from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionDetailsView = () => {
   return (
     <div className="flex flex-col">
-      <ExecutionHeader
-        commitName="8fbru3ix"
-        branchName="master"
-        title={{ number: '#311. ', title: 'Alerting docs: adds sns integration' }}
-      />
+      <ExecutionTabs />
+      <ExecutionHeader commitName="8fbru3ix" branchName="master" title="#311. Alerting docs: adds sns integration" />
       <div className="grid p-4" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <ExecutionTree
           defaultSelectedId="initialize"

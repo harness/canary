@@ -2,10 +2,10 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
 import { SandboxLayout } from '@/views'
+import useActiveTab from '@hooks/use-get-active-tab'
 
 export const ExecutionTabs = () => {
-  const location = useLocation()
-  const activeTab = location.pathname.split('/').pop() || 'summary'
+  const activeTab = useActiveTab('summary')
 
   return (
     <>
@@ -13,28 +13,28 @@ export const ExecutionTabs = () => {
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`summary`}>
-              <TabsTrigger value="general">Summary</TabsTrigger>
+              <TabsTrigger value="summary">Summary</TabsTrigger>
             </NavLink>
             <NavLink to={`logs`}>
-              <TabsTrigger value="members">Logs</TabsTrigger>
+              <TabsTrigger value="logs">Logs</TabsTrigger>
             </NavLink>
             <NavLink to={`inputs`}>
-              <TabsTrigger value="labels">Inputs</TabsTrigger>
+              <TabsTrigger value="inputs">Inputs</TabsTrigger>
             </NavLink>
             <NavLink to={`opa`}>
-              <TabsTrigger value="labels">Policy evaluations</TabsTrigger>
+              <TabsTrigger value="opa">Policy evaluations</TabsTrigger>
             </NavLink>
             <NavLink to={`artifacts`}>
-              <TabsTrigger value="labels">Artifacts</TabsTrigger>
+              <TabsTrigger value="artifacts">Artifacts</TabsTrigger>
             </NavLink>
             <NavLink to={`tests`}>
-              <TabsTrigger value="labels">Tests</TabsTrigger>
+              <TabsTrigger value="tests">Tests</TabsTrigger>
             </NavLink>
             <NavLink to={`sto`}>
-              <TabsTrigger value="labels">Security tests</TabsTrigger>
+              <TabsTrigger value="sto">Security tests</TabsTrigger>
             </NavLink>
             <NavLink to={`secrets`}>
-              <TabsTrigger value="labels">Secrets</TabsTrigger>
+              <TabsTrigger value="secrets">Secrets</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>

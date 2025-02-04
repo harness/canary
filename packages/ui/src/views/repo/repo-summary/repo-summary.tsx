@@ -79,6 +79,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   currentBranchDivergence: CommitDivergenceType
   searchQuery: string
   setSearchQuery: (query: string) => void
+  renderSidebarComponent?: React.ReactNode
 }
 
 export function RepoSummaryView({
@@ -105,7 +106,8 @@ export function RepoSummaryView({
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
-  toProfileKeys
+  toProfileKeys,
+  renderSidebarComponent
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -302,7 +304,7 @@ export function RepoSummaryView({
               is_public={repository?.is_public}
               useTranslationStore={useTranslationStore}
             />
-            <Outlet />
+            {renderSidebarComponent}
           </SandboxLayout.Content>
         </SandboxLayout.Column>
       </SandboxLayout.Columns>

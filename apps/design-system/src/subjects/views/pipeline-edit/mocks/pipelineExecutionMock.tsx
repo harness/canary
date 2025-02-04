@@ -27,7 +27,8 @@ export const executionMock = [
       yamlPath: 'pipeline.stages.0',
       yamlChildrenPath: 'pipeline.stages.0.group.stages',
       yamlEntityType: 'SerialStageGroup',
-      name: 'Serial 1'
+      name: 'Serial 1',
+      state: 'executing'
     },
     children: [
       {

@@ -27,6 +27,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     isEmpty,
     selected,
     isFirst,
+    nodeData,
     onEllipsisClick,
     onAddInClick,
     onHeaderClick,

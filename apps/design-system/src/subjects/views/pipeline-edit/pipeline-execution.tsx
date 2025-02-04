@@ -31,6 +31,8 @@ const PipelineExecutionInner = () => {
     <div className="relative flex h-screen grow">
       <CanvasProvider>
         <PipelineGraph
+          serialContainerConfig={{ paddingLeft: 100, nodeGap: 200 }}
+          parallelContainerConfig={{ paddingLeft: 100, nodeGap: 200 }}
           data={executionMock}
           nodes={nodes}
           customCreateSVGPath={props => {

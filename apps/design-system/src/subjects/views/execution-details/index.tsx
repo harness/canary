@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import { ExecutionHeader, ExecutionInfo, ExecutionTabs, ExecutionTree, PipelineStatus } from '@harnessio/ui/views'
-=======
-import { ExecutionHeader, ExecutionInfo, ExecutionTree, PipelineStatus } from '@harnessio/ui/views'
->>>>>>> c4607717a (feat: add pipeline status)
 
 import { elements, logs, stages } from './mocks/mock-data'
 

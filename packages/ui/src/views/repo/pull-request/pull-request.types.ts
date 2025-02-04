@@ -1,3 +1,5 @@
+import { ColorsEnum, LabelType } from '@/views'
+
 import { TranslationStore } from '../repo-list/types'
 
 export interface CommitSelectorListItem {
@@ -34,12 +36,9 @@ export interface PullRequestType {
   targetBranch?: string
   timestamp: string
   comments?: number
-  state?: string
+  state?: EnumPullReqState
   updated: number
-  labels?: {
-    text: string
-    color: string
-  }[]
+  labels: PRListLabelType[]
 }
 
 export type IconType = 'pr-open' | 'pr-closed' | 'pr-draft' | 'pr-merge'
@@ -117,6 +116,7 @@ export interface TypesPullReq {
   target_repo_id?: number
   title?: string
   labels?: TypesLabelPullReqAssignmentInfo[]
+  updated?: number
 }
 
 export interface TypesPrincipalInfo {
@@ -207,4 +207,35 @@ export interface CreateCommentPullReqRequest {
 export interface CommitSuggestion {
   check_sum: string
   comment_id: number
+}
+
+export interface LabelAssignmentType {
+  assigned?: boolean | null
+  assigned_value?: {
+    color?: ColorsEnum
+    id?: number | null
+    value?: string | null
+  }
+  color: ColorsEnum
+  id: number
+  key: string
+  scope: number
+  type: LabelType
+  values?: {
+    color?: ColorsEnum
+    id?: number | null
+    value?: string | null
+  }[]
+}
+
+export interface HandleAddLabelType {
+  label_id: number
+  value?: string
+  value_id?: number
+}
+
+export interface PRListLabelType {
+  color: ColorsEnum
+  key: string
+  value?: string
 }

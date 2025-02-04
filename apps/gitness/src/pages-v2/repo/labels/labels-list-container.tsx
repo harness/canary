@@ -11,7 +11,7 @@ import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-quer
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { PathParams } from '../../../RouteDefinitions'
 import { useLabelsStore } from '../../project/stores/labels-store'
-import { useGetRepoLabelAndValuesData } from './hooks/use-get-repo-label-and-values-data'
+import { useFullFillLabelStore } from './hooks/use-full-fill-label-store'
 
 export const RepoLabelsList = () => {
   const { spaceId } = useParams<PathParams>()
@@ -26,7 +26,7 @@ export const RepoLabelsList = () => {
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
-  const { isLoading, space_ref, repo_ref } = useGetRepoLabelAndValuesData({ queryPage, query })
+  const { isLoading, space_ref, repo_ref } = useFullFillLabelStore({ queryPage, query })
 
   const handleOpenDeleteDialog = (identifier: string) => {
     setOpenAlertDeleteDialog(true)

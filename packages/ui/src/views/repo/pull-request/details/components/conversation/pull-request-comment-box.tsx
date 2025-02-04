@@ -76,7 +76,7 @@ const PullRequestCommentBox = ({
     return (
       <Avatar size="6">
         <AvatarFallback>
-          <span className="text-12 text-foreground-3">{getInitials(currentUser || '')}</span>
+          <span className="text-12 text-foreground-1">{getInitials(currentUser || '')}</span>
         </AvatarFallback>
       </Avatar>
     )
@@ -154,11 +154,11 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3 font-sans">
+    <div className="flex items-start gap-x-3 font-sans" data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
 
       <div
-        className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-2 border-border-1', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-scroll', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -204,7 +204,7 @@ const PullRequestCommentBox = ({
                   const isFirst = index === 0
                   return (
                     <Fragment key={`${comment}-${index}`}>
-                      <Button size="icon" variant="ghost" onClick={item?.onClick}>
+                      <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
                       {isFirst && <div className="h-4 w-px bg-borders-2" />}
@@ -214,10 +214,10 @@ const PullRequestCommentBox = ({
               </div>
             </div>
           </TabsContent>
-          <TabsContent className="mt-4" value={TABS_KEYS.PREVIEW}>
-            <div className="min-h-24">
+          <TabsContent className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
+            <div className="min-h-24 w-full">
               {comment ? (
-                <MarkdownViewer markdownClassName="!bg-background-2" source={comment} />
+                <MarkdownViewer markdownClassName="!bg-background-2 w-full" source={comment} />
               ) : (
                 <span className="text-foreground-8">Nothing to preview</span>
               )}

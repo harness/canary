@@ -43,14 +43,14 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
             <Button
               variant="ghost"
               key={lang.code}
-              className="flex justify-between items-center py-2 px-1 rounded-md cursor-pointer hover:bg-gray-400"
+              className="flex cursor-pointer items-center justify-between rounded-md px-1 py-2 hover:bg-gray-400"
               onClick={() => {
                 setSelectedLanguage(lang.code)
                 onChange(lang)
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 flex justify-center items-center bg-background-12 rounded-sm">{lang.code}</div>
+                <div className="flex size-7 items-center justify-center rounded-sm bg-background-12">{lang.code}</div>
                 <span>{lang.name}</span>
               </div>
               {selectedLanguage === lang.code && <Icon name="tick" size={16} />}

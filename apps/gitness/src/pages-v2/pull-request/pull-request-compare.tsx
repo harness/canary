@@ -84,6 +84,7 @@ export const CreatePullRequest = () => {
   const sourceRef = useMemo(() => selectedSourceBranch.name, [selectedSourceBranch])
   const [cachedDiff, setCachedDiff] = useAtom(changesInfoAtom)
   const [mergeability, setMergeabilty] = useState<boolean>()
+  const [jumpToDiff, setJumpToDiff] = useState('')
   const diffApiPath = useMemo(
     () =>
       // show range of commits and user selected subrange
@@ -513,19 +514,21 @@ export const CreatePullRequest = () => {
         sourceBranch={selectedSourceBranch}
         prBranchCombinationExists={prBranchCombinationExists}
         diffData={
-          diffs?.map(item => ({
-            text: item.filePath,
-            data: item.raw,
-            title: item.filePath,
-            lang: item.filePath.split('.')?.[1],
-            addedLines: item.addedLines,
-            removedLines: item.deletedLines,
-            isBinary: item.isBinary,
-            deleted: item.isDeleted,
-            unchangedPercentage: item.unchangedPercentage,
-            blocks: item.blocks,
-            filePath: item.filePath
-          })) || []
+          diffStats?.files_changed || 0
+            ? diffs?.map(item => ({
+                text: item.filePath,
+                data: item.raw,
+                title: item.filePath,
+                lang: item.filePath.split('.')?.[1],
+                addedLines: item.addedLines,
+                removedLines: item.deletedLines,
+                isBinary: item.isBinary,
+                deleted: item.isDeleted,
+                unchangedPercentage: item.unchangedPercentage,
+                blocks: item.blocks,
+                filePath: item.filePath
+              })) || []
+            : []
         }
         diffStats={
           diffStats
@@ -548,6 +551,8 @@ export const CreatePullRequest = () => {
         handleAddReviewer={handleAddReviewer}
         handleDeleteReviewer={handleDeleteReviewer}
         isFetchingCommits={isFetchingCommits}
+        jumpToDiff={jumpToDiff}
+        setJumpToDiff={setJumpToDiff}
       />
     )
   }

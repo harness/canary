@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 
 import {
   Button,
@@ -8,7 +8,6 @@ import {
   Icon,
   ListActions,
   MarkdownViewer,
-  NoData,
   SearchFiles,
   SkeletonList,
   Spacer,
@@ -65,6 +64,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   gitRef?: string
   latestCommitInfo?: {
     userName: string
+    avatarUrl?: string
     message: string
     timestamp: string
     sha: string | null
@@ -79,6 +79,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   currentBranchDivergence: CommitDivergenceType
   searchQuery: string
   setSearchQuery: (query: string) => void
+  renderSidebarComponent?: React.ReactNode
 }
 
 export function RepoSummaryView({
@@ -105,7 +106,8 @@ export function RepoSummaryView({
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
-  toProfileKeys
+  toProfileKeys,
+  renderSidebarComponent
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -227,7 +229,7 @@ export function RepoSummaryView({
             <Summary
               toCommitDetails={toCommitDetails}
               latestFile={{
-                user: { name: latestCommitInfo?.userName || '' },
+                user: { name: latestCommitInfo?.userName || '', avatarUrl: latestCommitInfo?.avatarUrl },
                 lastCommitMessage: latestCommitInfo?.message || '',
                 timestamp: latestCommitInfo?.timestamp || '',
                 sha: latestCommitInfo?.sha || ''
@@ -302,6 +304,7 @@ export function RepoSummaryView({
               is_public={repository?.is_public}
               useTranslationStore={useTranslationStore}
             />
+            {renderSidebarComponent}
           </SandboxLayout.Content>
         </SandboxLayout.Column>
       </SandboxLayout.Columns>

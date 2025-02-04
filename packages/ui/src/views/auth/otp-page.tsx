@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { Fragment } from 'react/jsx-runtime'
 
-import { Button, Card, InputOTP, InputOTPGroup, InputOTPSlot, Spacer, Text } from '@/components'
+import { Button, Card, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -105,15 +105,15 @@ export function OTPPage({
                 name="otp"
                 control={control}
                 render={({ field: { onChange, value } }) => (
-                  <InputOTP value={value} onChange={onChange} maxLength={OTP_LENGTH}>
-                    <InputOTPGroup className="gap-x-3">
+                  <InputOTP.Root value={value} onChange={onChange} maxLength={OTP_LENGTH}>
+                    <InputOTP.Group className="gap-x-3">
                       {Array.from({ length: OTP_LENGTH }).map((_, idx) => (
                         <Fragment key={idx}>
-                          <InputOTPSlot index={idx} />
+                          <InputOTP.Slot index={idx} />
                         </Fragment>
                       ))}
-                    </InputOTPGroup>
-                  </InputOTP>
+                    </InputOTP.Group>
+                  </InputOTP.Root>
                 )}
               />
               {(errors.otp || serverError) && (

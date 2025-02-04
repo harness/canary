@@ -20,7 +20,7 @@ export function Legend({ title, description, className }: LegendProps) {
     <div className={className}>
       <p className="text-18 font-medium text-foreground-1">{title}</p>
       {description && (
-        <p className="text-14 mt-2" id="fieldset-description">
+        <p className="mt-2 text-14" id="fieldset-description">
           {description}
         </p>
       )}

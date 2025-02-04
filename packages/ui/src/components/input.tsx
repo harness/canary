@@ -9,7 +9,7 @@ export interface BaseInputProps
     VariantProps<typeof inputVariants> {}
 
 const inputVariants = cva(
-  'bg-transparent px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:text-foreground-7 disabled:bg-background-3',
+  'bg-transparent px-3 py-1 text-foreground-1 disabled:cursor-not-allowed disabled:bg-background-3 disabled:text-foreground-7',
   {
     variants: {
       variant: {
@@ -23,8 +23,9 @@ const inputVariants = cva(
       },
       theme: {
         default:
-          'border-borders-2 focus-visible:border-borders-3 disabled:border-borders-1 disabled:placeholder:text-foreground-9',
-        danger: 'border-borders-danger'
+          'border-borders-2 focus-within:border-borders-3 focus-visible:border-borders-3 disabled:border-borders-1 disabled:placeholder:text-foreground-9',
+        danger: 'border-borders-danger',
+        clean: 'bg-transparent outline-none focus:outline-none'
       }
     },
     defaultVariants: {
@@ -43,6 +44,31 @@ const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 
 BaseInput.displayName = 'BaseInput'
 
+export interface BaseInputWithWrapperProps extends BaseInputProps {
+  children: ReactNode
+}
+
+/**
+ * TODO: The component needs to be refined to cover all conditions.
+ */
+const BaseInputWithWrapper = forwardRef<HTMLInputElement, BaseInputWithWrapperProps>(
+  ({ className, type, variant, size, theme, children, ...props }, ref) => {
+    return (
+      <div className={cn(inputVariants({ variant, size, theme }), 'p-0 flex items-center', className)}>
+        {children}
+        <input
+          className={cn(inputVariants({ variant: 'extended', size, theme: 'clean' }), 'px-0')}
+          type={type}
+          ref={ref}
+          {...props}
+        />
+      </div>
+    )
+  }
+)
+
+BaseInputWithWrapper.displayName = 'BaseInputWithWrapper'
+
 interface InputProps extends BaseInputProps {
   label?: string
   caption?: ReactNode
@@ -51,8 +77,9 @@ interface InputProps extends BaseInputProps {
   className?: string
   wrapperClassName?: string
   inputIconName?: IconProps['name']
-  rightElement?: React.ReactNode
+  rightElement?: ReactNode
   rightElementVariant?: 'default' | 'filled'
+  customContent?: ReactNode
 }
 
 /**
@@ -82,6 +109,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       inputIconName,
       rightElement,
       rightElementVariant,
+      customContent,
       ...props
     },
     ref
@@ -94,18 +122,22 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         }
       : {}
 
+    const InputComponent = customContent ? BaseInputWithWrapper : BaseInput
+
     const baseInputComp = (
-      <BaseInput
+      <InputComponent
         className={cn(className, {
-          'pl-8': inputIconName,
-          'border-none': rightElement
+          'pl-8': !!inputIconName,
+          'border-none': !!rightElement
         })}
         id={id}
         ref={ref}
         theme={error ? 'danger' : theme}
         disabled={disabled}
         {...props}
-      />
+      >
+        {customContent}
+      </InputComponent>
     )
 
     const renderInput = () => {
@@ -136,13 +168,15 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <InputWrapper {...inputWrapperProps}>
-        {label && (
+        {!!label && (
           <Label className="mb-2.5" color={disabled ? 'disabled-dark' : 'secondary'} optional={optional} htmlFor={id}>
             {label}
           </Label>
         )}
+
         {renderInput()}
-        {error && (
+
+        {!!error && (
           <Message className={cn(caption ? 'mt-1' : 'absolute top-full translate-y-0.5')} theme={MessageTheme.ERROR}>
             {error}
           </Message>

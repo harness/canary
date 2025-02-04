@@ -39,6 +39,13 @@ export interface User {
   avatarUrl?: string
 }
 
+export enum FileStatus {
+  SAFE = 'safe',
+  LOW_RISK = 'low_risk',
+  MEDIUM_RISK = 'medium_risk',
+  HIGH_RISK = 'high_risk'
+}
+
 export interface RepoFile {
   id: string
   type: SummaryItemType
@@ -49,6 +56,7 @@ export interface RepoFile {
   sha?: string
   path: string
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  status?: string
 }
 
 export interface RepositoryType {

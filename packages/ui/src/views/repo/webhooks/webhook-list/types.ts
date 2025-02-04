@@ -12,16 +12,36 @@ export interface WebhookType {
   triggers: EnumWebhookTrigger[] | null
 }
 
+export interface WebhookExecutionType {
+  created?: number
+  duration?: number
+  error?: string
+  id?: number
+  request?: { body: string; headers: string; url: string }
+  response?: { body: string; headers: string; status: string; status_code: number }
+  result?: EnumWebhookExecutionResult
+  retrigger_of?: number | null
+  retriggerable?: boolean
+  trigger_type?: EnumWebhookTrigger
+  webhook_id?: number
+}
+
 export interface WebhookStore {
   webhooks: WebhookType[] | null
   // onDelete: (id: number) => void
+  totalWebhookExecutionPages: number
+  webhookExecutionPage: number
   preSetWebhookData: CreateWebhookFormFields | null
+  executions: WebhookExecutionType[] | null
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => void
+  setTotalWebhookExecutionPages: (headers: Headers) => void
   error: string | undefined
   setError: (error?: string) => void
   totalPages: number
   webhookLoading: boolean
   setWebhookLoading: (webhookLoading: boolean) => void
+  setWebhookExecutionPage: (page: number) => void
+  setExecutions: (data: WebhookExecutionType[]) => void
   page: number
   setPage: (page: number) => void
   setWebhooks: (data: ListRepoWebhooksOkResponse) => void

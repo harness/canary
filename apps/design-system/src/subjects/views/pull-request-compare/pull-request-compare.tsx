@@ -69,6 +69,8 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       setSearchTargetQuery={noop}
       searchReviewersQuery=""
       setSearchReviewersQuery={noop}
+      jumpToDiff=""
+      setJumpToDiff={noop}
       {...props}
     />
   )

@@ -67,7 +67,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
                   <AvatarFallback>
-                    <span className="text-12 text-foreground-3">
+                    <span className="text-12 text-foreground-1">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                     </span>
@@ -99,7 +99,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
       const authorAvatar = (
         <Avatar className="size-6 rounded-full p-0">
           <AvatarFallback>
-            <span className="text-12 text-foreground-3">{getInitials(author?.display_name || '')}</span>
+            <span className="text-12 text-foreground-1">{getInitials(author?.display_name || '')}</span>
           </AvatarFallback>
         </Avatar>
       )
@@ -142,7 +142,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
                   <AvatarFallback>
-                    <span className="text-12 text-foreground-3">
+                    <span className="text-12 text-foreground-1">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                     </span>
@@ -187,7 +187,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
               avatar: (
                 <Avatar className="size-6 rounded-full p-0">
                   <AvatarFallback>
-                    <span className="text-12 text-foreground-3">
+                    <span className="text-12 text-foreground-1">
                       {/* TODO: fix fallback string */}
                       {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                     </span>

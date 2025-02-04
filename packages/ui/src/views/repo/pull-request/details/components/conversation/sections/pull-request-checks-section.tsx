@@ -25,7 +25,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
       // TODO: fix icons to use from nucleo
       case ExecutionState.PENDING:
       case ExecutionState.BLOCKED:
-        return <Icon name="clock" />
+        return <Icon name="pending-clock" className="text-icons-alert" />
       case ExecutionState.RUNNING:
         return <Icon name="comments" className="text-warning" />
       case ExecutionState.FAILURE:
@@ -40,12 +40,11 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
     <Accordion.Item value="item-3">
       <Accordion.Trigger className="text-left">
         <StackedList.Field
+          className="gap-y-1"
           title={<LineTitle text={checksInfo.header} icon={getStatusIcon(checksInfo.status)} />}
           description={<LineDescription text={checksInfo.content} />}
         />
-        <Text className="pr-2" size={1}>
-          Show more
-        </Text>
+        <span className="px-2 py-1.5 text-14 text-foreground-2">Show more</span>
       </Accordion.Trigger>
       <Accordion.Content className={cn('flex flex-col pl-6', { 'pb-0': checkData.length === 1 })}>
         {checkData.map(check => {

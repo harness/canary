@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 import { Button, ButtonGroup } from '@harnessio/canary'
-import { Card, Icon, InputOTP, InputOTPGroup, InputOTPSlot, Spacer, Text } from '@harnessio/ui/components'
+import { Card, Icon, InputOTP, Spacer, Text } from '@harnessio/ui/components'
 import { Floating1ColumnLayout } from '@harnessio/ui/views'
 
 interface PageProps {
@@ -48,14 +48,14 @@ export function OTPPage({ handleResend, isLoading, handleFormSubmit }: PageProps
         <Spacer size={1} />
         <Card.Content>
           <form onSubmit={handleSubmit(onSubmit)}>
-            <InputOTP maxLength={4}>
-              <InputOTPGroup id="otp" className="mx-auto flex" {...register('otp')}>
-                <InputOTPSlot index={0} />
-                <InputOTPSlot index={1} />
-                <InputOTPSlot index={2} />
-                <InputOTPSlot index={3} />
-              </InputOTPGroup>
-            </InputOTP>
+            <InputOTP.Root maxLength={4}>
+              <InputOTP.Group id="otp" className="mx-auto flex" {...register('otp')}>
+                <InputOTP.Slot index={0} />
+                <InputOTP.Slot index={1} />
+                <InputOTP.Slot index={2} />
+                <InputOTP.Slot index={3} />
+              </InputOTP.Group>
+            </InputOTP.Root>
             <Spacer size={8} />
             <ButtonGroup.Root className="flex justify-center">
               <Button variant="default" borderRadius="full" type="submit" loading={isLoading} className="w-44">

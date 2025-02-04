@@ -9,8 +9,7 @@ import { pullRequestListStore } from './pull-request-list-store'
 const PullRequestListWrapper: FC<Partial<PullRequestPageProps>> = props => {
   const usePullRequestListStore = useCallback(
     () => ({
-      ...pullRequestListStore,
-      setPage: noop
+      ...pullRequestListStore
     }),
     []
   )

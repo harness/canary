@@ -19,21 +19,17 @@ import {
   statePullReq,
   TypesPullReqActivity,
   TypesPullReqReviewer,
-  useAssignLabelMutation,
   useCodeownersPullReqQuery,
   useCreateBranchMutation,
   useDeletePullReqSourceBranchMutation,
   useGetBranchQuery,
-  useListLabelsQuery,
   useListPrincipalsQuery,
   useListPullReqActivitiesQuery,
-  useListRepoLabelsQuery,
   useRestorePullReqSourceBranchMutation,
   useReviewerListPullReqQuery,
-  useUnassignLabelMutation,
   useUpdatePullReqMutation
 } from '@harnessio/code-service-client'
-import { SkeletonList, Spacer } from '@harnessio/ui/components'
+import { Alert, SkeletonList, Spacer } from '@harnessio/ui/components'
 import {
   PullRequestCommentBox,
   PullRequestFilters,
@@ -59,6 +55,7 @@ import {
 import { PathParams } from '../../RouteDefinitions'
 import { CodeOwnerReqDecision } from '../../types'
 import { filenameToLanguage } from '../../utils/git-utils'
+import { usePrConversationLabels } from './hooks/use-pr-conversation-labels'
 import { useActivityFilters } from './hooks/useActivityFilters'
 import { useDateFilters } from './hooks/useDataFilters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
@@ -84,22 +81,19 @@ export default function PullRequestConversationPage() {
     pullReqChecksDecision: state.pullReqChecksDecision,
     updateCommentStatus: state.updateCommentStatus
   }))
+
   const { currentUser: currentUserData } = useAppContext()
+
   const [checkboxBypass, setCheckboxBypass] = useState(false)
   const [searchReviewers, setSearchReviewers] = useState('')
   const [addReviewerError, setAddReviewerError] = useState('')
   const [removeReviewerError, setRemoveReviewerError] = useState('')
-  const [searchLabel, setSearchLabel] = useState('')
+
   const [changesLoading, setChangesLoading] = useState(true)
   const [showDeleteBranchButton, setShowDeleteBranchButton] = useState(false)
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const { spaceId, repoId } = useParams<PathParams>()
-
-  const { data: { body: principals } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
-  })
   const [comment, setComment] = useState<string>('')
   const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -112,6 +106,12 @@ export default function PullRequestConversationPage() {
   const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
   const activityFilters = useActivityFilters()
   const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
+
+  const { data: { body: principals } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+  })
+
   const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({
     repo_ref: repoRef,
     pullreq_number: prId
@@ -120,63 +120,22 @@ export default function PullRequestConversationPage() {
     repo_ref: repoRef,
     pullreq_number: prId
   })
+
   const { data: { body: activityData } = {} } = useListPullReqActivitiesQuery({
     repo_ref: repoRef,
     pullreq_number: prId,
     queryParams: {}
   })
 
-  const { data: { body: labelsList } = {} } = useListRepoLabelsQuery({
-    repo_ref: repoRef,
-    queryParams: { inherited: true, query: searchLabel }
-  })
-
-  const { data: { body: PRLabels } = {}, refetch: refetchPRLabels } = useListLabelsQuery({
-    repo_ref: repoRef,
-    pullreq_number: prId,
-    queryParams: {}
-  })
-
-  const { mutate: addLabel, error: addLabelError } = useAssignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: () => {
-        refetchPRLabels()
-        refetchActivities()
-      }
-    }
-  )
-
-  const { mutate: removeLabel, error: removeLabelError } = useUnassignLabelMutation(
-    {
-      repo_ref: repoRef,
-      pullreq_number: prId
-    },
-    {
-      onSuccess: () => {
-        refetchPRLabels()
-        refetchActivities()
-      }
-    }
-  )
-
-  const handleAddLabel = (id?: number) => {
-    if (!id) return
-    addLabel({
-      body: {
-        label_id: id
-      }
+  /**
+   * get all label-related data
+   */
+  const { searchLabel, changeSearchLabel, labels, labelsValues, handleAddLabel, handleRemoveLabel, appliedLabels } =
+    usePrConversationLabels({
+      repoRef,
+      prId,
+      refetchData: refetchActivities
     })
-  }
-
-  const handleRemoveLabel = (id: number) => {
-    removeLabel({
-      label_id: id
-    })
-  }
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
   const onRestoreBranch = () => {
@@ -440,10 +399,15 @@ export default function PullRequestConversationPage() {
       head_branch: pullReqMetadata?.source_branch,
       head_commit_sha: pullReqMetadata?.source_sha
     }
-    rebaseBranch({ body: payload, repo_ref: repoRef }).then(() => {
-      onPRStateChanged()
-      setRuleViolationArr(undefined)
-    })
+    rebaseBranch({ body: payload, repo_ref: repoRef }).then(
+      () => {
+        onPRStateChanged()
+        setRuleViolationArr(undefined)
+      },
+      error => {
+        setRebaseErrorMessage(error.message)
+      }
+    )
   }
   const mockPullRequestActions = [
     ...(pullReqMetadata?.closed
@@ -537,6 +501,8 @@ export default function PullRequestConversationPage() {
     setActivities // pass setActivities if you want ephemeral logic
   })
 
+  const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
+
   if (prPanelData?.PRStateLoading || changesLoading) {
     return <SkeletonList />
   }
@@ -552,10 +518,18 @@ export default function PullRequestConversationPage() {
         suggestions={suggestionsBatch?.length ? suggestionsBatch : suggestionToCommit ? [suggestionToCommit] : null}
         prId={prId}
       />
-      <SandboxLayout.Columns columnWidths="1fr 288px">
+      <SandboxLayout.Columns columnWidths="minmax(calc(100% - 288px), 1fr) 288px">
         <SandboxLayout.Column>
           <SandboxLayout.Content className="pl-0 pt-0">
             {/* TODO: fix handleaction for comment section in panel */}
+            {rebaseErrorMessage ? (
+              <Alert.Container closable variant="destructive" className="mb-5">
+                <Alert.Title>Cannot rebase branch</Alert.Title>
+                <Alert.Description>
+                  <p>{rebaseErrorMessage}</p>
+                </Alert.Description>
+              </Alert.Container>
+            ) : null}
             <PullRequestPanel
               handleRebaseBranch={handleRebaseBranch}
               handlePrState={handlePrState}
@@ -700,26 +674,13 @@ export default function PullRequestConversationPage() {
               }))}
               searchQuery={searchReviewers}
               setSearchQuery={setSearchReviewers}
-              labelsList={labelsList?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
-              PRLabels={PRLabels?.label_data?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
+              labelsList={labels}
+              labelsValues={labelsValues}
+              PRLabels={appliedLabels}
               searchLabelQuery={searchLabel}
-              setSearchLabelQuery={setSearchLabel}
+              setSearchLabelQuery={changeSearchLabel}
               addLabel={handleAddLabel}
               removeLabel={handleRemoveLabel}
-              addLabelError={addLabelError?.message}
-              removeLabelError={removeLabelError?.message}
               useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>

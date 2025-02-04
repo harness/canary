@@ -61,8 +61,8 @@ export const Navbar = ({
         <NavbarProjectChooser.Root
           logo={
             <Link className="flex items-center gap-1.5" to="/">
-              <Icon name="harness" size={18} className="text-foreground-1" />
-              <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-1" />
+              <Icon name="harness" size={18} className="text-foreground-accent" />
+              <Icon name="harness-logo-text" width={65} height={15} className="mb-0.5 text-foreground-01" />
             </Link>
           }
         />

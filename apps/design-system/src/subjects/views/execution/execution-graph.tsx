@@ -1,5 +1,7 @@
 import { ExecutionHeader, ExecutionState, ExecutionTabs } from '@harnessio/ui/views'
 
+import PipelineExecutionGraph from './pipeline-execution-graph'
+
 export const ExecutionGraphView = () => {
   return (
     <div className="flex flex-col h-full">
@@ -20,6 +22,7 @@ export const ExecutionGraphView = () => {
         createdTime="10 mins ago"
         pipelineName="build scan push test - k8s - Clone 2"
       />
+      <PipelineExecutionGraph />
     </div>
   )
 }

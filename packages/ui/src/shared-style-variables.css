@@ -88,12 +88,14 @@
   --canary-red-500: 4.5 66.5% 46.9%;
   --canary-red-600: 4.3 67.5% 41%;
   --canary-red-700: 4.5 65.7% 35.5%;
+  --canary-red-800: 5.5 60.5% 31.8%;
   --canary-red-850: 6 57.7% 20.4%;
   --canary-red-900: 8.3 46% 12.4%;
   --canary-red-950: 8 33.3% 8.8%;
   --canary-amber-50: 52.7 100% 93.5%;
   --canary-amber-100: 49 95.3% 83.1%;
   --canary-amber-200: 44.2 70.5% 69.4%;
+  --canary-amber-300: 42.1 63.3% 61.6%;
   --canary-amber-700: 30.6 48.5% 38%;
   --canary-amber-800: 25.7 40.2% 34.1%;
   --canary-amber-850: 19.5 33.9% 24.9%;
@@ -141,6 +143,7 @@
   --canary-indigo-500: 231.1 75% 57.6%;
   --canary-indigo-600: 231.9 59.2% 51%;
   --canary-indigo-700: 230.2 54.5% 43.9%;
+  --canary-indigo-800: 229 52.1% 32.7%;
   --canary-indigo-850: 227.4 47.9% 23.3%;
   --canary-indigo-900: 226.5 39.2% 15.5%;
   --canary-indigo-950: 227.1 29.2% 9.4%;

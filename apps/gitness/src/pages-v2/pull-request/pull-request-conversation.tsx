@@ -74,8 +74,10 @@ export default function PullRequestConversationPage() {
     setRuleViolationArr,
     prPanelData,
     pullReqChecksDecision,
-    updateCommentStatus
+    updateCommentStatus,
+    dryMerge
   } = usePullRequestProviderStore(state => ({
+    dryMerge: state.dryMerge,
     pullReqMetadata: state.pullReqMetadata,
     refetchPullReq: state.refetchPullReq,
     refetchActivities: state.refetchActivities,
@@ -404,6 +406,7 @@ export default function PullRequestConversationPage() {
     refetchCodeOwners()
     refetchPullReq()
     refetchActivities()
+    console.log('test')
   }, [refetchCodeOwners, repoRef, handleAddReviewer, handleDeleteReviewer]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleMerge = (method: string) => {
@@ -539,9 +542,14 @@ export default function PullRequestConversationPage() {
     refetchActivities,
     updateCommentStatus,
     currentUserName: currentUserData?.display_name,
-    setActivities // pass setActivities if you want ephemeral logic
+    setActivities, // pass setActivities if you want ephemeral logic
+    dryMerge
   })
 
+  // useEffect(() => {
+  //   console.log('dsdsd')
+  //   dryMerge()
+  // }, [toggleConversationStatus, dryMerge])
   const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
 
   if (prPanelData?.PRStateLoading || changesLoading) {

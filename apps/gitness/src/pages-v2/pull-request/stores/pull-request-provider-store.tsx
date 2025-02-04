@@ -74,6 +74,7 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
   refetchPullReq: () => {},
   retryOnErrorFunc: () => {},
   dryMerge: () => {
+    console.log('here in drm')
     const { repoMetadata, pullReqMetadata, refetchPullReq } = get()
     const isClosed = pullReqMetadata?.state === PullRequestState.CLOSED
     if (!isClosed && repoMetadata?.path !== undefined && pullReqMetadata?.state !== PullRequestState.MERGED) {

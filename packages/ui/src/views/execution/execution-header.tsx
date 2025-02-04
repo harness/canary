@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
 import { Button, Icon, Text } from '@/components'
+import { Spacer } from 'dist/components'
 
 interface ExecutionHeaderProps {
   commitName: string
@@ -29,25 +30,27 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, br
         </div>
         <Text size={5}>{title}</Text>
       </div>
-      <div className="flex flex-col">
-        <span>Storage</span>
-        <span className="text-primary">0 B</span>
-      </div>
-      <div className="flex flex-col">
-        <span>Storage (average)</span>
-        <span className="text-primary">0 B / 250 MB</span>
-      </div>
-      <div className="flex flex-col">
-        <span>Simple Operation</span>
-        <span className="text-primary">27/100k</span>
-      </div>
-      <div className="flex flex-col">
-        <span>Advanced Operations</span>
-        <span className="text-primary">2/50k</span>
-      </div>
-      <div className="flex flex-col">
-        <span>Data Transfer</span>
-        <span className="text-primary">4.21 kB/5 GB</span>
+      <div className="flex items-end gap-12 h-full">
+        <div className="flex flex-col">
+          <span className="text-foreground-5">Storage</span>
+          <span className="text-primary">0 B</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-foreground-5">Storage (average)</span>
+          <span className="text-primary">0 B / 250 MB</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-foreground-5">Simple Operation</span>
+          <span className="text-primary">27/100k</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-foreground-5">Advanced Operations</span>
+          <span className="text-primary">2/50k</span>
+        </div>
+        <div className="flex flex-col">
+          <span className="text-foreground-5">Data Transfer</span>
+          <span className="text-primary">4.21 kB/5 GB</span>
+        </div>
       </div>
     </div>
   )

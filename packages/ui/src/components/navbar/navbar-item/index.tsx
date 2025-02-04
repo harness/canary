@@ -69,13 +69,11 @@ export const NavbarItem = ({
     <div className="group relative">
       <NavLink className="block" to={item.to || ''}>
         {({ isActive }) => (
-          <div className={cn({ 'bg-background-4': isActive }, 'pr-6 pl-2 rounded-md')}>
-            <NavbarSkeleton.Item
-              text={item.title}
-              icon={iconName && <Icon name={iconName} size={12} />}
-              active={isActive}
-            />
-          </div>
+          <NavbarSkeleton.Item
+            text={item.title}
+            icon={iconName && <Icon name={iconName} size={12} />}
+            active={isActive}
+          />
         )}
       </NavLink>
       {!item.permanentlyPinned && (

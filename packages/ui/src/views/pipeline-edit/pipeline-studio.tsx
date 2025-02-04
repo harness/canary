@@ -18,7 +18,7 @@ export class ContentNodeFactory {
     return this.entityBank.get(entityType)
   }
 
-  getNodesDefinition() {
+  getNodesDefinition(): NodeContent[] {
     return Array.from(this.entityBank.values())
   }
 }

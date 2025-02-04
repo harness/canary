@@ -177,7 +177,7 @@ function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
             const { id, path, pathLength, targetNode } = props
 
             const pathStyle = targetNode?.data.state === 'executed' ? ` stroke="#00ff00"` : ` stroke="#ff00ff"`
-            const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle}  stroke-width="4"/>`
+            const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle}  stroke-width="2"/>`
 
             // let animationPath: string = ''
             // if (targetNode?.data.state === 'executing') {

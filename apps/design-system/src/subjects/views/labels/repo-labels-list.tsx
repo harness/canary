@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { LabelsListStore } from '@subjects/stores/labels-store'
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -21,6 +22,7 @@ export const RepoLabelsList = () => {
         setSearchQuery={() => {}}
         isLoading={false}
         isRepository
+        useThemeStore={useThemeStore}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

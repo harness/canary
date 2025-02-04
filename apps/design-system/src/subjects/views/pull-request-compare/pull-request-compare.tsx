@@ -1,5 +1,6 @@
 import { FC, useCallback } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
@@ -71,6 +72,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       setSearchReviewersQuery={noop}
       jumpToDiff=""
       setJumpToDiff={noop}
+      useThemeStore={useThemeStore}
       {...props}
     />
   )

@@ -5,12 +5,13 @@ import { useDeleteSpaceLabelMutation } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { ILabelType, LabelsListPage } from '@harnessio/ui/views'
 
+import { useThemeStore } from '../../../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../../i18n/stores/i18n-store'
 import { useLabelsStore } from '../stores/labels-store'
-import { useGetProjectLabelAndValuesData } from './hooks/use-get-project-label-and-values-data.ts'
+import { useGetProjectLabelAndValuesData } from './hooks/use-get-project-label-and-values-data'
 
 export const ProjectLabelsList = () => {
   const navigate = useNavigate()
@@ -64,6 +65,7 @@ export const ProjectLabelsList = () => {
         searchQuery={query}
         setSearchQuery={setQuery}
         isLoading={isLoading}
+        useThemeStore={useThemeStore}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

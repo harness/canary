@@ -1,7 +1,8 @@
 import { FC, PropsWithChildren, useCallback, useState } from 'react'
 import { Outlet, Route, Routes } from 'react-router-dom'
 
-import { noop, useThemeStore, useTranslationsStore } from '@utils/viewUtils'
+import { useThemeStore } from '@utils/theme-utils.ts'
+import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { Breadcrumb, MoreSubmenu, Navbar, NavbarItemType, SettingsMenu, Topbar } from '@harnessio/ui/components'
 import { SandboxLayout } from '@harnessio/ui/views'

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
@@ -83,6 +84,7 @@ export const SpaceSettingsMembers = () => {
         onEditMember={() => {}}
         setPrincipalsSearchQuery={setPrincipalsSearchQuery}
         principalsSearchQuery={principalsSearchQuery}
+        useThemeStore={useThemeStore}
       />
 
       <DeleteAlertDialog

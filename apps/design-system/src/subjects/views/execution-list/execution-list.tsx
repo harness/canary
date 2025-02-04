@@ -1,6 +1,7 @@
 import { FC } from 'react'
 import { Link } from 'react-router-dom'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { ExecutionListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
@@ -19,6 +20,7 @@ const ExecutionListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
       isError={false}
       LinkComponent={LinkComponent}
       handleExecutePipeline={noop}
+      useThemeStore={useThemeStore}
     />
   )
 }

@@ -2,6 +2,7 @@ import { FC } from 'react'
 
 import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout } from '@/views'
 
 import { PipelineList } from './pipeline-list'
@@ -17,8 +18,10 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
   setSearchQuery,
   handleCreatePipeline,
   LinkComponent,
-  toPipelineDetails
+  toPipelineDetails,
+  useThemeStore
 }) => {
+  const storeTheme = useThemeStore()
   const { t } = useTranslationStore()
   const { pipelines, totalPages, page, setPage } = usePipelineListStore()
 
@@ -47,45 +50,47 @@ const PipelineListPage: FC<IPipelineListPageProps> = ({
     )
 
   return (
-    <SandboxLayout.Main className="max-w-[1040px]">
-      <SandboxLayout.Content>
-        {pipelines && pipelines.length > 0 && (
-          <>
-            <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pipelines</h1>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-96"
-                  value={searchInput}
-                  handleChange={handleInputChange}
-                  placeholder={'Search'}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Button variant="default" onClick={handleCreatePipeline}>
-                  Create pipeline
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
-            <Spacer size={5} />
-          </>
-        )}
-        <PipelineList
-          pipelines={pipelines}
-          LinkComponent={LinkComponent}
-          query={searchQuery ?? ''}
-          handleResetQuery={handleResetSearch}
-          useTranslationStore={useTranslationStore}
-          isLoading={isLoading}
-          handleCreatePipeline={handleCreatePipeline}
-          toPipelineDetails={toPipelineDetails}
-        />
-        <Spacer size={8} />
-        <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Main className="max-w-[1040px]">
+        <SandboxLayout.Content>
+          {pipelines && pipelines.length > 0 && (
+            <>
+              <h1 className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pipelines</h1>
+              <Spacer size={6} />
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    width="full"
+                    className="max-w-96"
+                    value={searchInput}
+                    handleChange={handleInputChange}
+                    placeholder={'Search'}
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Button variant="default" onClick={handleCreatePipeline}>
+                    Create pipeline
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
+              <Spacer size={5} />
+            </>
+          )}
+          <PipelineList
+            pipelines={pipelines}
+            LinkComponent={LinkComponent}
+            query={searchQuery ?? ''}
+            handleResetQuery={handleResetSearch}
+            useTranslationStore={useTranslationStore}
+            isLoading={isLoading}
+            handleCreatePipeline={handleCreatePipeline}
+            toPipelineDetails={toPipelineDetails}
+          />
+          <Spacer size={8} />
+          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </ThemeProvider>
   )
 }
 

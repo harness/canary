@@ -6,6 +6,7 @@ import {
   Avatar,
   Button,
   Icon,
+  IThemeStore,
   NoData,
   SkeletonList,
   Spacer,
@@ -14,6 +15,7 @@ import {
   TabsContent,
   TabsList
 } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   BranchSelector,
@@ -112,6 +114,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
+  useThemeStore: () => IThemeStore
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -157,9 +160,12 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
-  removeLabel
+  removeLabel,
+  useThemeStore
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
+  const storeTheme = useThemeStore()
+
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
@@ -210,140 +216,141 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
     return review_decision
   }
   return (
-    <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
-          {t('views:pullRequests.compareChanges', 'Comparing changes')}
-        </span>
-        <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-14 leading-snug text-foreground-2">
-            {t(
-              'views:pullRequests.compareChangesDescription',
-              'Choose two branches to see what’s changed or to start a new pull request.'
-            )}
-          </p>
-          <Layout.Horizontal className="items-center" gap="gap-x-2.5">
-            <Icon name="compare" size={14} className="text-icons-1" />
-            <BranchSelector
-              isBranchOnly={true}
-              useTranslationStore={useTranslationStore}
-              useRepoBranchesStore={useRepoBranchesStore}
-              branchPrefix="base"
-              selectedBranch={targetBranch}
-              onSelectBranch={(branchTag, type) => {
-                selectBranch(branchTag, type, false)
-                handleBranchSelection()
-              }}
-              searchQuery={searchTargetQuery}
-              setSearchQuery={setSearchTargetQuery}
-            />
-
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
-            <BranchSelector
-              isBranchOnly={true}
-              useTranslationStore={useTranslationStore}
-              useRepoBranchesStore={useRepoBranchesStore}
-              branchPrefix="compare"
-              selectedBranch={sourceBranch}
-              onSelectBranch={(branchTag, type) => {
-                selectBranch(branchTag, type, true)
-                handleBranchSelection()
-              }}
-              searchQuery={searchSourceQuery}
-              setSearchQuery={setSearchSourceQuery}
-            />
-
-            {isBranchSelected &&
-              !isLoading && ( // Only render this block if isBranchSelected is true
-                <Layout.Horizontal gap="gap-x-1" className="items-center">
-                  {mergeability ? (
-                    <>
-                      <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-14 leading-none text-foreground-success">
-                        {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
-                        <span className="text-foreground-4">
-                          {t(
-                            'views:pullRequests.compareChangesAbleToMergeDescription',
-                            'These branches can be automatically merged.'
-                          )}
-                        </span>
-                      </p>
-                    </>
-                  ) : (
-                    <>
-                      {apiError === "head branch doesn't contain any new commits." ? (
-                        <>
-                          <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-14 leading-none text-foreground-4">
-                            {t(
-                              'views:pullRequests.compareChangesApiError',
-                              'Head branch doesn’t contain any new commits.'
-                            )}
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-14 leading-none text-foreground-danger">
-                            {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
-                            <span className="text-foreground-4">
-                              {t(
-                                'views:pullRequests.compareChangesCantMergeDesciption',
-                                'You can still create the pull request.'
-                              )}
-                            </span>
-                          </p>
-                        </>
-                      )}
-                    </>
-                  )}
-                </Layout.Horizontal>
-              )}
-          </Layout.Horizontal>
-        </Layout.Vertical>
-        {!prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
-            <p className="text-14 leading-none">
-              {isBranchSelected ? (
-                <>
-                  {t(
-                    'views:pullRequests.compareChangesDiscussChanges',
-                    'Discuss and review the changes in this comparison with others.'
-                  )}{' '}
-                  <StyledLink to="/">
-                    {t('views:pullRequests.compareChangesDiscussChangesLink', 'Learn about pull requests.')}
-                  </StyledLink>
-                </>
-              ) : (
-                t(
-                  'views:pullRequests.compareChangesChooseDifferent',
-                  'Choose different branches above to discuss and review changes.'
-                )
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Main fullWidth>
+        <SandboxLayout.Content className="px-20">
+          <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+            {t('views:pullRequests.compareChanges', 'Comparing changes')}
+          </span>
+          <Layout.Vertical className="mt-2.5">
+            <p className="max-w-xl text-14 leading-snug text-foreground-2">
+              {t(
+                'views:pullRequests.compareChangesDescription',
+                'Choose two branches to see what’s changed or to start a new pull request.'
               )}
             </p>
-            <PullRequestCompareButton
-              isSubmitted={isSubmitted}
-              isValid={isValid}
-              isLoading={isLoading}
-              formRef={formRef}
-              onFormDraftSubmit={onFormDraftSubmit}
-              onFormSubmit={onFormSubmit}
-              useTranslationStore={useTranslationStore}
-            />
-          </Layout.Horizontal>
-        )}
-        {prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
-            <div className="flex items-center gap-x-1.5">
-              <div>
-                <Layout.Horizontal className="items-center">
-                  <Icon name="compare" size={14} className="text-icons-success" />
-                  <div className="flex gap-x-1">
-                    {/* TODO: add the name of the PR instead this placeholder */}
-                    <p className="text-14 text-foreground-1">{prBranchCombinationExists.title}</p>
-                    <span className="text-foreground-4">{`#${prBranchCombinationExists.number}`}</span>
-                  </div>
-                </Layout.Horizontal>
+            <Layout.Horizontal className="items-center" gap="gap-x-2.5">
+              <Icon name="compare" size={14} className="text-icons-1" />
+              <BranchSelector
+                isBranchOnly={true}
+                useTranslationStore={useTranslationStore}
+                useRepoBranchesStore={useRepoBranchesStore}
+                branchPrefix="base"
+                selectedBranch={targetBranch}
+                onSelectBranch={(branchTag, type) => {
+                  selectBranch(branchTag, type, false)
+                  handleBranchSelection()
+                }}
+                searchQuery={searchTargetQuery}
+                setSearchQuery={setSearchTargetQuery}
+              />
+
+              <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+              <BranchSelector
+                isBranchOnly={true}
+                useTranslationStore={useTranslationStore}
+                useRepoBranchesStore={useRepoBranchesStore}
+                branchPrefix="compare"
+                selectedBranch={sourceBranch}
+                onSelectBranch={(branchTag, type) => {
+                  selectBranch(branchTag, type, true)
+                  handleBranchSelection()
+                }}
+                searchQuery={searchSourceQuery}
+                setSearchQuery={setSearchSourceQuery}
+              />
+
+              {isBranchSelected &&
+                !isLoading && ( // Only render this block if isBranchSelected is true
+                  <Layout.Horizontal gap="gap-x-1" className="items-center">
+                    {mergeability ? (
+                      <>
+                        <Icon className="text-icons-success" name="tick" size={12} />
+                        <p className="text-14 leading-none text-foreground-success">
+                          {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
+                          <span className="text-foreground-4">
+                            {t(
+                              'views:pullRequests.compareChangesAbleToMergeDescription',
+                              'These branches can be automatically merged.'
+                            )}
+                          </span>
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        {apiError === "head branch doesn't contain any new commits." ? (
+                          <>
+                            <Icon name={'x-mark'} size={12} className="text-icons-1" />
+                            <p className="text-14 leading-none text-foreground-4">
+                              {t(
+                                'views:pullRequests.compareChangesApiError',
+                                'Head branch doesn’t contain any new commits.'
+                              )}
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <Icon className="text-icons-danger" name="x-mark" size={12} />
+                            <p className="text-14 leading-none text-foreground-danger">
+                              {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
+                              <span className="text-foreground-4">
+                                {t(
+                                  'views:pullRequests.compareChangesCantMergeDesciption',
+                                  'You can still create the pull request.'
+                                )}
+                              </span>
+                            </p>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </Layout.Horizontal>
+                )}
+            </Layout.Horizontal>
+          </Layout.Vertical>
+          {!prBranchCombinationExists && (
+            <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+              <p className="text-14 leading-none">
+                {isBranchSelected ? (
+                  <>
+                    {t(
+                      'views:pullRequests.compareChangesDiscussChanges',
+                      'Discuss and review the changes in this comparison with others.'
+                    )}{' '}
+                    <StyledLink to="/">
+                      {t('views:pullRequests.compareChangesDiscussChangesLink', 'Learn about pull requests.')}
+                    </StyledLink>
+                  </>
+                ) : (
+                  t(
+                    'views:pullRequests.compareChangesChooseDifferent',
+                    'Choose different branches above to discuss and review changes.'
+                  )
+                )}
+              </p>
+              <PullRequestCompareButton
+                isSubmitted={isSubmitted}
+                isValid={isValid}
+                isLoading={isLoading}
+                formRef={formRef}
+                onFormDraftSubmit={onFormDraftSubmit}
+                onFormSubmit={onFormSubmit}
+                useTranslationStore={useTranslationStore}
+              />
+            </Layout.Horizontal>
+          )}
+          {prBranchCombinationExists && (
+            <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+              <div className="flex items-center gap-x-1.5">
+                <div>
+                  <Layout.Horizontal className="items-center">
+                    <Icon name="compare" size={14} className="text-icons-success" />
+                    <div className="flex gap-x-1">
+                      {/* TODO: add the name of the PR instead this placeholder */}
+                      <p className="text-14 text-foreground-1">{prBranchCombinationExists.title}</p>
+                      <span className="text-foreground-4">{`#${prBranchCombinationExists.number}`}</span>
+                    </div>
+                  </Layout.Horizontal>
 
                 <p className="text-14  text-foreground-2">{prBranchCombinationExists.description}</p>
               </div>
@@ -491,5 +498,6 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>
+    </ThemeProvider>
   )
 }

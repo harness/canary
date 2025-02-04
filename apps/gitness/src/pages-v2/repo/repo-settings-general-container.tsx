@@ -37,6 +37,7 @@ import {
 } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoId } from '../../framework/hooks/useGetRepoId'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -344,6 +345,7 @@ export const RepoSettingsGeneralPageContainer = () => {
         setSearchQuery={setBranchQuery}
         rulesSearchQuery={rulesSearchQuery}
         setRulesSearchQuery={setRulesSearchQuery}
+        useThemeStore={useThemeStore}
       />
 
       <DeleteAlertDialog

@@ -7,6 +7,7 @@ import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
@@ -141,6 +142,7 @@ export default function ReposListPage() {
         toRepository={(repo: RepositoryType) => routes.toRepoSummary({ spaceId, repoId: repo.name })}
         toCreateRepo={() => routes.toCreateRepo({ spaceId })}
         toImportRepo={() => routes.toImportRepo({ spaceId })}
+        useThemeStore={useThemeStore}
       />
       <Toaster />
     </>

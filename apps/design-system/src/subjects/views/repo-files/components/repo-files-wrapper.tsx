@@ -1,5 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { BranchSelectorTab, CodeModes, IBranchSelectorStore, RepoFiles } from '@harnessio/ui/views'
@@ -68,6 +69,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       defaultBranchName={repoFilesStore.repository.default_branch}
       currentBranchDivergence={{ behind: 0, ahead: 0 }}
       isLoadingRepoDetails={false}
+      useThemeStore={useThemeStore}
     >
       {renderCodeView}
     </RepoFiles>

@@ -1,5 +1,6 @@
-import { useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 
+import { useContainerNodeContext } from '../../context/container-node-provider'
 import { useGraphContext } from '../../context/graph-provider'
 import { renderNode } from '../../render/render-node'
 import { RenderNodeContent } from '../../render/render-node-content'
@@ -9,22 +10,24 @@ import { findAdjustment } from '../../utils/layout-utils'
 import CollapseButton from '../components/collapse'
 import Port from './port'
 
-export const SERIAL_GROUP_ADJUSTMENT = 10
-export const PADDING_TOP = 30
-export const PADDING_BOTTOM = 20
-export const SERIAL_PADDING = 26
-export const SERIAL_NODE_GAP = 36
-
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
+  const { serialContainerConfig, parallelContainerConfig } = useContainerNodeContext()
 
   const myLevel = level + 1
 
   const { isCollapsed, collapse } = useGraphContext()
-
   const collapsed = useMemo(() => isCollapsed(node.path!), [isCollapsed, node.path])
 
-  const ADJUSTMENT = findAdjustment(node, parentNode) + SERIAL_GROUP_ADJUSTMENT
+  const verticalAdjustment = serialContainerConfig.serialGroupAdjustment ?? 0
+
+  const ADJUSTMENT =
+    findAdjustment(
+      node,
+      serialContainerConfig.serialGroupAdjustment ?? 0,
+      parallelContainerConfig.parallelGroupAdjustment ?? 0,
+      parentNode
+    ) + verticalAdjustment
 
   return (
     <div
@@ -37,9 +40,10 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'start',
-        padding: SERIAL_PADDING + 'px',
-        paddingTop: (!collapsed ? PADDING_TOP + SERIAL_GROUP_ADJUSTMENT : PADDING_TOP / 2) + 'px',
-        paddingBottom: (!collapsed ? PADDING_TOP - SERIAL_GROUP_ADJUSTMENT : PADDING_TOP / 2) + 'px',
+        paddingLeft: serialContainerConfig.paddingLeft + 'px',
+        paddingRight: serialContainerConfig.paddingRight + 'px',
+        paddingTop: serialContainerConfig.paddingTop + 'px',
+        paddingBottom: serialContainerConfig.paddingBottom + 'px',
         top: collapsed || myLevel > 1 ? 0 : -ADJUSTMENT + 'px',
         flexShrink: 0
       }}
@@ -84,7 +88,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              columnGap: SERIAL_NODE_GAP + 'px'
+              columnGap: serialContainerConfig.nodeGap + 'px'
             }}
           >
             {node.children.map((item: AnyNodeInternal, index: number) =>

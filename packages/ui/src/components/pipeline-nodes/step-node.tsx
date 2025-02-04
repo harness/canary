@@ -1,9 +1,9 @@
 import { cn } from '@utils/cn'
 
-import { Button, Icon, Text } from '..'
+import { Button, Icon, NodeProps, Text } from '..'
 import { FloatingAddButton } from './components/floating-add-button'
 
-export interface StepNodeProps {
+export interface StepNodeProps extends NodeProps {
   name?: string
   icon?: React.ReactNode
   selected?: boolean
@@ -15,7 +15,7 @@ export interface StepNodeProps {
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType, readonly } = props
 
   return (
     <div
@@ -27,7 +27,7 @@ export function StepNode(props: StepNodeProps) {
       })}
       onClick={onClick}
     >
-      {onEllipsisClick && (
+      {!readonly && onEllipsisClick && (
         <Button
           className="absolute right-2 top-2"
           variant="ghost"
@@ -39,7 +39,7 @@ export function StepNode(props: StepNodeProps) {
         </Button>
       )}
 
-      {isFirst && (
+      {!readonly && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -48,13 +48,15 @@ export function StepNode(props: StepNodeProps) {
           }}
         />
       )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-      />
+      {!readonly && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+        />
+      )}
 
       {/* position="left" */}
       <div>{icon}</div>

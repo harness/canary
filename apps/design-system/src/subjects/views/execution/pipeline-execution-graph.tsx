@@ -48,12 +48,13 @@ export interface StepNodeDataType {
   name?: string
   icon?: React.ReactElement
   selected?: boolean
+  readonly?: boolean
 }
 
 export function StepNodeComponent({ node }: { node: LeafNodeInternalType<StepNodeDataType> }) {
-  const { name, icon } = node.data
+  const { name, icon, readonly } = node.data
 
-  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} />
+  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} readonly={readonly} />
 }
 
 // * approval step node
@@ -187,7 +188,8 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      readonly: true
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -198,7 +200,8 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.approval,
     data: {
       name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      readonly: true
     } satisfies StepNodeDataType,
     config: {
       width: 120,
@@ -219,7 +222,8 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 2',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+          readonly: true
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -230,7 +234,8 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 3',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+          readonly: true
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -253,7 +258,8 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+          readonly: true
         } satisfies StepNodeDataType,
         config: {
           width: 160,
@@ -264,7 +270,8 @@ const data: AnyContainerNodeType[] = [
         type: ContentNodeTypes.step,
         data: {
           name: 'Step 4',
-          icon: <Icon name="harness-plugin" className="m-2 size-8" />
+          icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+          readonly: true
         } satisfies StepNodeDataType,
         config: {
           width: 160,

@@ -28,7 +28,7 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, br
           </Button>
         </div>
         <Text size={5}>
-          <span className="text-foreground-5">{title.number} </span>
+          <span className="text-foreground-5">#{title.number} </span>
           <span className="text-primary">{title.title}</span>
         </Text>
       </div>

@@ -69,7 +69,7 @@ export const Summary = ({
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
                       ? file.status === FileStatus.LOW_RISK
-                        ? 'absolute left-0 border-l-2 border-yellow-300'
+                        ? 'absolute left-0 border-l-2 border-icons-risk'
                         : file.status === FileStatus.MEDIUM_RISK
                           ? 'absolute left-0 border-l-2 border-icons-alert'
                           : 'absolute left-0 border-l-2 border-icons-danger'
@@ -82,10 +82,10 @@ export const Summary = ({
                         ? file.status === FileStatus.SAFE
                           ? 'text-icons-9'
                           : file.status === FileStatus.LOW_RISK
-                            ? 'text-yellow-300 ml-3'
+                            ? 'ml-3 text-icons-risk'
                             : file.status === FileStatus.MEDIUM_RISK
-                              ? 'text-icons-alert ml-3'
-                              : 'text-icons-danger ml-3'
+                              ? 'ml-3 text-icons-alert'
+                              : 'ml-3 text-icons-danger'
                         : 'text-icons-9'
                     }
                     name={

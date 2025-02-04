@@ -1,3 +1,4 @@
+import { IThemeStore } from '@/components'
 import { MeterState } from '@components/meter'
 import { TranslationStore } from '@views/repo'
 import { TLinkComponent } from '@views/types/link-types'
@@ -43,6 +44,7 @@ export interface IPipelineListPageProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string | null) => void
   handleCreatePipeline: () => void
   LinkComponent: TLinkComponent
+  useThemeStore: () => IThemeStore
 }
 
 /**

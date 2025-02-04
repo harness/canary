@@ -59,7 +59,6 @@ import CommandSymbol from '../icons/command-symbol.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
-import CreateWorkspace from '../icons/create-workspace.svg'
 import CrossCircle from '../icons/cross-circle.svg'
 import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
@@ -110,16 +109,31 @@ import Italicize from '../icons/italicize.svg'
 import Key from '../icons/key-icon.svg'
 import Lightning from '../icons/lightning.svg'
 import List from '../icons/list.svg'
+// All icons with colors inside the SVG should also be available in the light theme with the {`light`} postfix.
+import CreateWorkspaceLight from '../icons/lists-data-icons/create-workspace-light.svg'
+import CreateWorkspace from '../icons/lists-data-icons/create-workspace.svg'
+import NoDataBranchesLight from '../icons/lists-data-icons/no-data-branches-light.svg'
 import NoDataBranches from '../icons/lists-data-icons/no-data-branches.svg'
+import NoDataCogLight from '../icons/lists-data-icons/no-data-cog-light.svg'
 import NoDataCog from '../icons/lists-data-icons/no-data-cog.svg'
+import NoDataCommitsLight from '../icons/lists-data-icons/no-data-commits-light.svg'
 import NoDataCommits from '../icons/lists-data-icons/no-data-commits.svg'
+import NoDataErrorLight from '../icons/lists-data-icons/no-data-error-light.svg'
 import NoDataError from '../icons/lists-data-icons/no-data-error.svg'
+import NoDataFolderLight from '../icons/lists-data-icons/no-data-folder-light.svg'
 import NoDataFolder from '../icons/lists-data-icons/no-data-folder.svg'
+import NoDataMembersLight from '../icons/lists-data-icons/no-data-members-light.svg'
 import NoDataMembers from '../icons/lists-data-icons/no-data-members.svg'
+import NoDataMergeLight from '../icons/lists-data-icons/no-data-merge-light.svg'
 import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
+import NoDataPRLight from '../icons/lists-data-icons/no-data-pr-light.svg'
+import NoDataPR from '../icons/lists-data-icons/no-data-pr.svg'
+import NoRepositoryLight from '../icons/lists-data-icons/no-data-repository-light.svg'
 import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
 import noDataTags from '../icons/lists-data-icons/no-data-tags.svg'
+import NoDataWebhooksLight from '../icons/lists-data-icons/no-data-webhooks-light.svg'
 import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
+import NoSearchMagnifyingGlassLight from '../icons/lists-data-icons/no-search-magnifying-glass-light.svg'
 import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
 import Lock from '../icons/lock.svg'
 import LogOut from '../icons/log-out-icon.svg'
@@ -130,7 +144,6 @@ import Merged from '../icons/merged.svg'
 import Minus from '../icons/minus-icon.svg'
 import Ellipsis from '../icons/more-dots-icon.svg'
 import Navigation from '../icons/navigation-icon.svg'
-import NoDataPR from '../icons/no-data-pr.svg'
 import NodeLogo from '../icons/node-logo.svg'
 import Notification from '../icons/notification-icon.svg'
 import OpenPR from '../icons/open-pr.svg'
@@ -240,14 +253,23 @@ const IconNameMap = {
   tasks: Tasks,
   tick: Tick,
   'no-data-folder': NoDataFolder,
+  'no-data-folder-light': NoDataFolderLight,
   'no-repository': NoRepository,
+  'no-repository-light': NoRepositoryLight,
   'no-data-merge': NoDataMerge,
+  'no-data-merge-light': NoDataMergeLight,
   'no-data-cog': NoDataCog,
+  'no-data-cog-light': NoDataCogLight,
   'no-data-branches': NoDataBranches,
+  'no-data-branches-light': NoDataBranchesLight,
   'no-search-magnifying-glass': NoSearchMagnifyingGlass,
+  'no-search-magnifying-glass-light': NoSearchMagnifyingGlassLight,
   'no-data-members': NoDataMembers,
+  'no-data-members-light': NoDataMembersLight,
   'no-data-error': NoDataError,
+  'no-data-error-light': NoDataErrorLight,
   'no-data-pr': NoDataPR,
+  'no-data-pr-light': NoDataPRLight,
   'no-data-tags': noDataTags,
   changes: Changes,
   checks: Checks,
@@ -287,7 +309,9 @@ const IconNameMap = {
   'git-branch': GitBranch,
   'pr-comment': PrComment,
   'create-workspace': CreateWorkspace,
+  'create-workspace-light': CreateWorkspaceLight,
   'no-data-webhooks': NoDataWebhooks,
+  'no-data-webhooks-light': NoDataWebhooksLight,
   'add-folder': AddFolder,
   'add-file': AddFile,
   lightning: Lightning,
@@ -386,6 +410,7 @@ const IconNameMap = {
   checklist: Checklist,
   italicize: Italicize,
   'no-data-commits': NoDataCommits,
+  'no-data-commits-light': NoDataCommitsLight,
   compare: Compare,
   lock: Lock,
   cross: Cross,
@@ -420,10 +445,14 @@ export interface IconProps {
   height?: number
   width?: number
   className?: string
+  isLight?: boolean
 }
 
-const Icon: React.FC<IconProps> = ({ name, size = 16, height, width, className }) => {
-  const Component = IconNameMap[name]
+const Icon: React.FC<IconProps> = ({ name, size = 16, height, width, className, isLight = false }) => {
+  const Component = isLight
+    ? IconNameMap[`${name}-light` as keyof typeof IconNameMap] || IconNameMap[name]
+    : IconNameMap[name]
+
   return <Component width={width || size} height={height || size} className={className} />
 }
 

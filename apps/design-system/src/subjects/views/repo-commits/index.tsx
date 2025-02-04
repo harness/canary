@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils'
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { BranchSelectorTab, IBranchSelectorStore, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
@@ -44,6 +45,7 @@ export const RepoCommitsView = () => {
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}
       setSearchQuery={setBranchTagQuery}
+      useThemeStore={useThemeStore}
     />
   )
 }

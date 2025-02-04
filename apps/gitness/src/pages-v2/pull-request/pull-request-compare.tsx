@@ -35,6 +35,7 @@ import {
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -607,6 +608,7 @@ export const CreatePullRequest = () => {
         removeLabel={handleDeleteLabel}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
+        useThemeStore={useThemeStore}
       />
     )
   }

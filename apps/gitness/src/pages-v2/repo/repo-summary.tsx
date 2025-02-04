@@ -31,16 +31,17 @@ import { SummaryItemType } from '@harnessio/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-request-utils'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
 import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
+import { generateAlphaNumericHash } from '../pull-request/pull-request-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
@@ -387,6 +388,7 @@ export default function RepoSummaryPage() {
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
         navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
+        useThemeStore={useThemeStore}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog

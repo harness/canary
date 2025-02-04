@@ -13,6 +13,7 @@ import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
 import { AppProvider } from './framework/context/AppContext'
 import { ExplorerPathsProvider } from './framework/context/ExplorerPathsContext'
+import { useThemeStore } from './framework/context/ThemeContext'
 import { CustomRouteObject, RouteConstants } from './framework/routing/types'
 import { useTranslationStore } from './i18n/stores/i18n-store'
 import CreateProject from './pages-v2/create-project/create-project-container'
@@ -300,7 +301,7 @@ export const repoRoutes: CustomRouteObject[] = [
                   },
                   {
                     path: 'checks',
-                    element: <EmptyPage pathName="PR Checks" />,
+                    element: <EmptyPage useThemeStore={useThemeStore} pathName="PR Checks" />,
                     handle: {
                       breadcrumb: () => <span>{Page.Checks}</span>,
                       routeName: RouteConstants.toPullRequestChecks,
@@ -693,7 +694,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'chaos',
-        element: <EmptyPage pathName="Chaos Engineering" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Chaos Engineering" />,
         handle: {
           routeName: RouteConstants.toChaos,
           pageTitle: 'Chaos Engineering'
@@ -701,7 +702,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'artifacts',
-        element: <EmptyPage pathName="Artifacts" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Artifacts" />,
         handle: {
           routeName: RouteConstants.toArtifacts,
           pageTitle: 'Artifacts'
@@ -709,7 +710,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'secrets',
-        element: <EmptyPage pathName="Secrets" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Secrets" />,
         handle: {
           routeName: RouteConstants.toSecrets,
           pageTitle: 'Secrets'
@@ -717,7 +718,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'connectors',
-        element: <EmptyPage pathName="Connectors" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Connectors" />,
         handle: {
           routeName: RouteConstants.toConnectors,
           pageTitle: 'Connectors'
@@ -725,7 +726,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'continuous-delivery-gitops',
-        element: <EmptyPage pathName="Continuous Delivery GitOps" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Continuous Delivery GitOps" />,
         handle: {
           routeName: RouteConstants.toGitOps,
           pageTitle: 'Continuous Delivery GitOps'
@@ -733,7 +734,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'continuous-integration',
-        element: <EmptyPage pathName="Continuous Integration" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Continuous Integration" />,
         handle: {
           routeName: RouteConstants.toCI,
           pageTitle: 'Continuous Integration'
@@ -741,7 +742,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'feature-flags',
-        element: <EmptyPage pathName="Feature Flags" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Feature Flags" />,
         handle: {
           routeName: RouteConstants.toFeatureFlags,
           pageTitle: 'Feature Flags'
@@ -749,7 +750,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'notifications',
-        element: <EmptyPage pathName="Notifications" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Notifications" />,
         handle: {
           routeName: RouteConstants.toNotifications,
           pageTitle: 'Notifications'
@@ -757,7 +758,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'environments',
-        element: <EmptyPage pathName="Environments" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Environments" />,
         handle: {
           routeName: RouteConstants.toEnvironments,
           pageTitle: 'Environments'
@@ -765,7 +766,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'delegates',
-        element: <EmptyPage pathName="File Store" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="File Store" />,
         handle: {
           routeName: RouteConstants.toFileStore,
           pageTitle: 'File Store'
@@ -773,7 +774,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'file-store',
-        element: <EmptyPage pathName="Delegates" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Delegates" />,
         handle: {
           routeName: RouteConstants.toDelegates,
           pageTitle: 'Delegates'
@@ -781,7 +782,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'templates',
-        element: <EmptyPage pathName="Templates" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Templates" />,
         handle: {
           routeName: RouteConstants.toTemplates,
           pageTitle: 'Templates'
@@ -789,7 +790,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'variables',
-        element: <EmptyPage pathName="Variables" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Variables" />,
         handle: {
           routeName: RouteConstants.toVariables,
           pageTitle: 'Variables'
@@ -797,7 +798,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'slo-downtime',
-        element: <EmptyPage pathName="SLO Downtime" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="SLO Downtime" />,
         handle: {
           routeName: RouteConstants.toSloDowntime,
           pageTitle: 'SLO Downtime'
@@ -805,7 +806,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'discovery',
-        element: <EmptyPage pathName="Discovery" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Discovery" />,
         handle: {
           routeName: RouteConstants.toDiscovery,
           pageTitle: 'Discovery'
@@ -813,7 +814,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'monitored-services',
-        element: <EmptyPage pathName="Monitored Services" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Monitored Services" />,
         handle: {
           routeName: RouteConstants.toMonitoredServices,
           pageTitle: 'Monitored Services'
@@ -821,7 +822,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'overrides',
-        element: <EmptyPage pathName="Overrides" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Overrides" />,
         handle: {
           routeName: RouteConstants.toOverrides,
           pageTitle: 'Overrides'
@@ -829,7 +830,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'certificates',
-        element: <EmptyPage pathName="Certificates" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Certificates" />,
         handle: {
           routeName: RouteConstants.toCertificates,
           pageTitle: 'Certificates'
@@ -837,7 +838,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'policies',
-        element: <EmptyPage pathName="Policies" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Policies" />,
         handle: {
           routeName: RouteConstants.toPolicies,
           pageTitle: 'Policies'
@@ -845,7 +846,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'freeze-windows',
-        element: <EmptyPage pathName="Freeze Windows" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Freeze Windows" />,
         handle: {
           routeName: RouteConstants.toFreezeWindows,
           pageTitle: 'Freeze Windows'
@@ -853,7 +854,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'external-tickets',
-        element: <EmptyPage pathName="External Tickets" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="External Tickets" />,
         handle: {
           routeName: RouteConstants.toExternalTickets,
           pageTitle: 'External Tickets'
@@ -861,7 +862,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'infrastructure-as-code',
-        element: <EmptyPage pathName="Infrastructure as Code" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Infrastructure as Code" />,
         handle: {
           routeName: RouteConstants.toInfrastructureAsCode,
           pageTitle: 'Infrastructure as Code'
@@ -869,7 +870,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'service-reliability',
-        element: <EmptyPage pathName="Service Reliability" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Service Reliability" />,
         handle: {
           routeName: RouteConstants.toServiceReliability,
           pageTitle: 'Service Reliability'
@@ -877,7 +878,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'developer/portal',
-        element: <EmptyPage pathName="Internal Developer Portal" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Internal Developer Portal" />,
         handle: {
           routeName: RouteConstants.toDevPortal,
           pageTitle: 'Internal Developer Portal'
@@ -885,7 +886,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'developer/environments',
-        element: <EmptyPage pathName="Environments" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Environments" />,
         handle: {
           routeName: RouteConstants.toDevEnvironments,
           pageTitle: 'Environments'
@@ -893,7 +894,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'developer/insights',
-        element: <EmptyPage pathName="Software Engineering Insights" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Software Engineering Insights" />,
         handle: {
           routeName: RouteConstants.toDevInsights,
           pageTitle: 'Software Engineering Insights'
@@ -901,7 +902,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'code-repository',
-        element: <EmptyPage pathName="Code Repository" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Code Repository" />,
         handle: {
           routeName: RouteConstants.toCode,
           pageTitle: 'Code Repository'
@@ -909,7 +910,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'supply-chain',
-        element: <EmptyPage pathName="Software Supply Chain Assurance" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Software Supply Chain Assurance" />,
         handle: {
           routeName: RouteConstants.toSupplyChain,
           pageTitle: 'Software Supply Chain Assurance'
@@ -917,7 +918,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'security-tests',
-        element: <EmptyPage pathName="Security Testing Orchestration" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Security Testing Orchestration" />,
         handle: {
           routeName: RouteConstants.toSecurityTests,
           pageTitle: 'Security Testing Orchestration'
@@ -925,7 +926,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'cloud-costs',
-        element: <EmptyPage pathName="Cloud Cost Management" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Cloud Cost Management" />,
         handle: {
           routeName: RouteConstants.toCloudCosts,
           pageTitle: 'Cloud Cost Management'
@@ -933,7 +934,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'incidents',
-        element: <EmptyPage pathName="Incidents" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Incidents" />,
         handle: {
           routeName: RouteConstants.toIncidents,
           pageTitle: 'Incidents'
@@ -941,7 +942,7 @@ export const routes: CustomRouteObject[] = [
       },
       {
         path: 'dashboards',
-        element: <EmptyPage pathName="Dashboards" />,
+        element: <EmptyPage useThemeStore={useThemeStore} pathName="Dashboards" />,
         handle: {
           routeName: RouteConstants.toDashboards,
           pageTitle: 'Dashboards'
@@ -977,7 +978,7 @@ export const routes: CustomRouteObject[] = [
           },
           {
             path: 'user-groups',
-            element: <EmptyPage pathName="User Groups" />,
+            element: <EmptyPage useThemeStore={useThemeStore} pathName="User Groups" />,
             handle: {
               breadcrumb: () => <span>User Groups</span>,
               routeName: RouteConstants.toUserGroups,
@@ -986,7 +987,7 @@ export const routes: CustomRouteObject[] = [
           },
           {
             path: 'service-accounts',
-            element: <EmptyPage pathName="Service Accounts" />,
+            element: <EmptyPage useThemeStore={useThemeStore} pathName="Service Accounts" />,
             handle: {
               breadcrumb: () => <span>Service Accounts</span>,
               routeName: RouteConstants.toServiceAccounts
@@ -994,7 +995,7 @@ export const routes: CustomRouteObject[] = [
           },
           {
             path: 'resource-groups',
-            element: <EmptyPage pathName="Resource Groups" />,
+            element: <EmptyPage useThemeStore={useThemeStore} pathName="Resource Groups" />,
             handle: {
               breadcrumb: () => <span>Resource Groups</span>,
               routeName: RouteConstants.toResourceGroups
@@ -1002,7 +1003,7 @@ export const routes: CustomRouteObject[] = [
           },
           {
             path: 'roles',
-            element: <EmptyPage pathName="Roles" />,
+            element: <EmptyPage useThemeStore={useThemeStore} pathName="Roles" />,
             handle: {
               breadcrumb: () => <span>Roles</span>,
               routeName: RouteConstants.toRoles

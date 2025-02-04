@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
+import { getThemeFromStorage } from '@utils/theme-utils.ts'
 import { clsx } from 'clsx'
 
 import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
@@ -23,15 +24,7 @@ enum Themes {
 
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
   const [showSettings, setShowSettings] = useState(false)
-  const [currentTheme, setCurrentTheme] = useState<Themes>(() => {
-    const storedTheme = sessionStorage.getItem('view-preview-theme') as Themes
-
-    if (storedTheme && Object.values(Themes).includes(storedTheme)) {
-      return storedTheme
-    }
-
-    return Themes.DARK
-  })
+  const [currentTheme, setCurrentTheme] = useState<Themes>(() => getThemeFromStorage())
 
   useEffect(() => {
     const bodyClass = document.body.classList

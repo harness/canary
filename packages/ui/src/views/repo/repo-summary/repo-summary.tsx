@@ -4,6 +4,7 @@ import {
   Button,
   ButtonGroup,
   Icon,
+  IThemeStore,
   ListActions,
   MarkdownViewer,
   SearchFiles,
@@ -12,6 +13,7 @@ import {
   StackedList,
   Text
 } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import {
   BranchSelectorListItem,
   CommitDivergenceType,
@@ -79,6 +81,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
+  useThemeStore: () => IThemeStore
 }
 
 export function RepoSummaryView({
@@ -106,9 +109,11 @@ export function RepoSummaryView({
   toCommitDetails,
   navigateToProfileKeys,
   renderSidebarComponent,
-  isRepoEmpty
+  isRepoEmpty,
+  useThemeStore
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
+  const storeTheme = useThemeStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
 
   if (loading) {
@@ -123,15 +128,17 @@ export function RepoSummaryView({
 
   if (isRepoEmpty) {
     return (
-      <RepoEmptyView
-        sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
-        httpUrl={repository?.git_url ?? 'could not fetch url'}
-        repoName={repoId}
-        projName={spaceId}
-        gitRef={gitRef || selectedBranchTag?.name || ''}
-        handleCreateToken={handleCreateToken}
-        navigateToProfileKeys={navigateToProfileKeys}
-      />
+      <ThemeProvider {...storeTheme}>
+        <RepoEmptyView
+          sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
+          httpUrl={repository?.git_url ?? 'could not fetch url'}
+          repoName={repoId}
+          projName={spaceId}
+          gitRef={gitRef || selectedBranchTag?.name || ''}
+          handleCreateToken={handleCreateToken}
+          navigateToProfileKeys={navigateToProfileKeys}
+        />
+      </ThemeProvider>
     )
   }
 

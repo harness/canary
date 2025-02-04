@@ -14,6 +14,7 @@ import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
@@ -192,6 +193,7 @@ export function ProjectMemberListPage() {
         onEditMember={handleOnEditMember}
         setPrincipalsSearchQuery={setPrincipalsSearchQuery}
         principalsSearchQuery={principalsSearchQuery}
+        useThemeStore={useThemeStore}
       />
 
       <DeleteAlertDialog

@@ -1,7 +1,9 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { NavLink } from 'react-router-dom'
 
+import { useTheme } from '@/providers/theme'
 import { cn } from '@utils/cn'
+import { isLightTheme } from '@utils/is-light-theme'
 
 import { Button } from './button'
 import { Icon, IconProps } from './icon'
@@ -53,6 +55,9 @@ export const NoData: FC<NoDataProps> = ({
   textWrapperClassName,
   className
 }) => {
+  const { theme } = useTheme()
+  const isLight = isLightTheme(theme)
+
   return (
     <div
       className={cn(
@@ -61,7 +66,7 @@ export const NoData: FC<NoDataProps> = ({
         className
       )}
     >
-      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} />}
+      {iconName && <Icon name={iconName as IconProps['name']} size={iconSize} isLight={isLight} />}
       <div className={cn('flex flex-col place-content-center place-items-center gap-2.5', textWrapperClassName)}>
         <Text size={5} weight="medium">
           {title}

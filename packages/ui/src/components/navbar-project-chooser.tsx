@@ -23,7 +23,7 @@ function Root({ logo }: ProjectProps) {
   }
 
   return (
-    <div className="flex w-full flex-col place-items-start px-3 pb-4">
+    <div className="flex w-full flex-col place-items-start px-3 pb-3">
       <div className="flex h-[58px] px-1 items-center">{logo}</div>
       <SearchBox
         width="full"

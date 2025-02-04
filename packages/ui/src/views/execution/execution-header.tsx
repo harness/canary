@@ -6,14 +6,14 @@ import { Spacer } from 'dist/components'
 interface ExecutionHeaderProps {
   commitName: string
   branchName: string
-  title: string
+  title: { number: string; title: string }
 }
 
 export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, branchName, title }) => {
   return (
     <div className="flex w-full items-center justify-between border-b border-default px-6 py-4">
       <div className="flex flex-col gap-2">
-        <div>
+        <div className="flex gap-2">
           <Button variant="secondary" size="xs" asChild>
             <Link to="/">
               <Icon name="tube-sign" size={12} className="mr-1 text-tertiary-background" />
@@ -28,7 +28,10 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({ commitName, br
             </Link>
           </Button>
         </div>
-        <Text size={5}>{title}</Text>
+        <Text size={5}>
+          <span className="text-foreground-5">{title.number} </span>
+          <span className="text-primary">{title.title}</span>
+        </Text>
       </div>
       <div className="flex items-end gap-12 h-full">
         <div className="flex flex-col">

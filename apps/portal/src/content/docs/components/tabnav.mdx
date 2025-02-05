@@ -65,13 +65,14 @@ An individual tab item that links to a specific route. It accepts the same props
 ```typescript jsx
 <TabNav.Item
   to="/path"              // The route path to link to
-  label="Tab Label"       // The label to display for the tab
   activeClassname="..."   // [OPTIONAL] Additional class names for the active state
-/>
+>
+  {label}
+</TabNav.Item>
 ```
 
 ### Props
 
 - `to`: A string representing the route path to link to.
-- `label`: A string representing the label to display for the tab.
+- `label`: A string or ReactNode representing the label to display for the tab.
 - `activeClassname`: An optional string for additional class names to apply when the tab is active.

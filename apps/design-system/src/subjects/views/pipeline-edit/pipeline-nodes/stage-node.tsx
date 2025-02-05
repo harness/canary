@@ -51,11 +51,18 @@ export function StageNode(props: StageNodeProps) {
             Completed
           </Badge>
         </div>
-      ) : (
+      ) : nodeData.state === 'warning' ? (
         <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
           <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
             <Icon name="triangle-warning" size={12} className="mr-1" />
             Warning
+          </Badge>
+        </div>
+      ) : (
+        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="destructive">
+            <Icon name="cross" size={12} className="mr-1" />
+            Error
           </Badge>
         </div>
       )}

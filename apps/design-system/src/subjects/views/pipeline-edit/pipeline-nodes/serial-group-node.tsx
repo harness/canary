@@ -1,7 +1,9 @@
+import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
-import { StepNodeDataType } from '../nodes/custom-step-node'
+import { CustomSerialStepGroupContentNodeDataType } from '../nodes/custom-serial-step-group-content-node'
+import { CollapsedGroupNode } from './components/collapsed-group-node'
 import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 
@@ -13,7 +15,7 @@ export interface SerialGroupNodeProps {
   selected?: boolean
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
-  nodeData: StepNodeDataType
+  node: SerialNodeInternalType<CustomSerialStepGroupContentNodeDataType>
   onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -33,8 +35,10 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onHeaderClick,
     onAddClick,
     parentNodeType,
-    nodeData
+    node
   } = props
+
+  const nodeData = node.data
 
   return (
     <>
@@ -97,8 +101,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
           onAddClick?.('after', e)
         }}
       />
-
-      {children}
+      {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'serial'} /> : children}
     </>
   )
 }

@@ -33,7 +33,7 @@ export function CustomStepContentNode(props: {
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      nodeData={node.data}
+      node={node}
       onEllipsisClick={e => {
         e.stopPropagation()
         showContextMenu(StepNodeContextMenu, data, e.currentTarget)

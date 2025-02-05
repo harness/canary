@@ -69,7 +69,7 @@ export const executionMock = [
                 type: 'Step',
                 config: {
                   minWidth: 198,
-                  minHeight: 77,
+                  minHeight: 50,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -89,7 +89,7 @@ export const executionMock = [
                 type: 'Step',
                 config: {
                   minWidth: 198,
-                  minHeight: 77,
+                  minHeight: 50,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -100,6 +100,26 @@ export const executionMock = [
                   name: 'go test',
                   icon: <Icon className="m-2 size-6" name={'run'} />,
                   state: 'error',
+                  selected: false
+                },
+                path: 'pipeline.children.1.children.0.children.0.children.1',
+                containerType: 'leaf'
+              },
+              {
+                type: 'Step',
+                config: {
+                  minWidth: 198,
+                  minHeight: 50,
+                  width: 140,
+                  hideDeleteButton: false,
+                  selectable: true
+                },
+                data: {
+                  yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.0.steps.1',
+                  yamlEntityType: 'Step',
+                  name: 'go test',
+                  icon: <Icon className="m-2 size-6" name={'run'} />,
+                  state: 'executing',
                   selected: false
                 },
                 path: 'pipeline.children.1.children.0.children.0.children.1',
@@ -130,7 +150,7 @@ export const executionMock = [
                 type: 'Step',
                 config: {
                   minWidth: 198,
-                  minHeight: 77,
+                  minHeight: 50,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -209,7 +229,7 @@ export const executionMock = [
                     type: 'Step',
                     config: {
                       minWidth: 198,
-                      minHeight: 77,
+                      minHeight: 50,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -229,7 +249,7 @@ export const executionMock = [
                     type: 'Step',
                     config: {
                       minWidth: 198,
-                      minHeight: 77,
+                      minHeight: 50,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -268,7 +288,7 @@ export const executionMock = [
                     type: 'Step',
                     config: {
                       minWidth: 198,
-                      minHeight: 77,
+                      minHeight: 50,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -288,7 +308,27 @@ export const executionMock = [
                     type: 'Step',
                     config: {
                       minWidth: 198,
-                      minHeight: 77,
+                      minHeight: 50,
+                      width: 140,
+                      hideDeleteButton: false,
+                      selectable: true
+                    },
+                    data: {
+                      yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1.parallel.steps.1',
+                      yamlEntityType: 'Step',
+                      name: 'go test',
+                      icon: <Icon className="m-2 size-6" name={'run'} />,
+                      state: 'error',
+                      selected: false
+                    },
+                    path: 'pipeline.children.1.children.1.children.0.children.1.children.1',
+                    containerType: 'leaf'
+                  },
+                  {
+                    type: 'Step',
+                    config: {
+                      minWidth: 198,
+                      minHeight: 50,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -299,6 +339,26 @@ export const executionMock = [
                       name: 'go test',
                       icon: <Icon className="m-2 size-6" name={'run'} />,
                       state: 'executing',
+                      selected: false
+                    },
+                    path: 'pipeline.children.1.children.1.children.0.children.1.children.1',
+                    containerType: 'leaf'
+                  },
+                  {
+                    type: 'Step',
+                    config: {
+                      minWidth: 198,
+                      minHeight: 50,
+                      width: 140,
+                      hideDeleteButton: false,
+                      selectable: true
+                    },
+                    data: {
+                      yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1.parallel.steps.1',
+                      yamlEntityType: 'Step',
+                      name: 'go test',
+                      icon: <Icon className="m-2 size-6" name={'run'} />,
+                      state: 'success',
                       selected: false
                     },
                     path: 'pipeline.children.1.children.1.children.0.children.1.children.1',

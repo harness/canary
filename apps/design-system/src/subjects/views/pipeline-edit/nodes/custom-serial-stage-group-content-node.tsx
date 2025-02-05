@@ -34,7 +34,7 @@ export function CustomSerialStageGroupContentNode(props: {
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      nodeData={data}
+      node={node}
       onAddInClick={e => {
         e.stopPropagation()
         showContextMenu(StageGroupAddInNodeContextMenu, data, e.currentTarget, true)

@@ -3,6 +3,8 @@ import { cn } from '@harnessio/ui/views'
 
 import './step-node.css'
 
+import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
+
 import { StepNodeDataType } from '../nodes/custom-step-node'
 import { ExecutionStatus } from './components/execution-status'
 // import { createRoundedRectPath } from '../utils/utils'
@@ -15,14 +17,16 @@ export interface StepNodeProps {
   selected?: boolean
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
-  nodeData: StepNodeDataType
+  node: LeafNodeInternalType<StepNodeDataType>
   onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { nodeData, name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+  const { node, name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+
+  const nodeData = node.data
 
   return (
     <>

@@ -33,7 +33,7 @@ export function CustomSerialStepGroupContentNode(props: {
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      nodeData={data}
+      node={node}
       onAddInClick={e => {
         e.stopPropagation()
         onAddIntention(data, 'in')

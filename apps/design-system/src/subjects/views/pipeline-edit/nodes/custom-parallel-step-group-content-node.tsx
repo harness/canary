@@ -26,14 +26,14 @@ export function CustomParallelStepGroupContentNode(props: {
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
   return (
-    <PipelineNodes.SerialGroupNode
+    <PipelineNodes.ParallelGroupNode
       collapsed={collapsed}
       name={data.name}
       isEmpty={node.children.length === 0}
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      nodeData={data}
+      node={node}
       onAddInClick={e => {
         e.stopPropagation()
         onAddIntention(data, 'in')
@@ -51,6 +51,6 @@ export function CustomParallelStepGroupContentNode(props: {
       }}
     >
       {children}
-    </PipelineNodes.SerialGroupNode>
+    </PipelineNodes.ParallelGroupNode>
   )
 }

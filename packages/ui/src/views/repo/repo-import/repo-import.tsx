@@ -41,10 +41,14 @@ const formSchema = z
   })
   .superRefine((data, ctx) => {
     if (
-      (data.provider === 'Github' && !data.organization) ||
-      (data.provider === 'Github Enterprise' && !data.organization) ||
-      (data.provider === 'Gitea' && !data.organization) ||
-      (data.provider === 'Gogs' && !data.organization)
+      [
+        ProviderOptionsEnum.GITHUB,
+        ProviderOptionsEnum.GITHUB_ENTERPRISE,
+        ProviderOptionsEnum.GITEA,
+        ProviderOptionsEnum.GOGS,
+        ProviderOptionsEnum.AZURE_DEVOPS
+      ].includes(data.provider as ProviderOptionsEnum) &&
+      !data.organization
     ) {
       ctx.addIssue({
         code: 'custom',
@@ -53,11 +57,14 @@ const formSchema = z
       })
     }
     if (
-      (data.provider === 'Github Enterprise' && !data.hostUrl) ||
-      (data.provider === 'Gitlab Self Hosted' && !data.hostUrl) ||
-      (data.provider === 'Bitbucket Server' && !data.hostUrl) ||
-      (data.provider === 'Gitea' && !data.hostUrl) ||
-      (data.provider === 'Gogs' && !data.hostUrl)
+      [
+        ProviderOptionsEnum.GITHUB_ENTERPRISE,
+        ProviderOptionsEnum.GITLAB_SELF_HOSTED,
+        ProviderOptionsEnum.BITBUCKET_SERVER,
+        ProviderOptionsEnum.GITEA,
+        ProviderOptionsEnum.GOGS
+      ].includes(data.provider as ProviderOptionsEnum) &&
+      !data.hostUrl
     ) {
       ctx.addIssue({
         code: 'custom',
@@ -65,14 +72,14 @@ const formSchema = z
         message: 'Repository URL is required'
       })
     }
-    if (data.provider === 'Gitlab' && !data.group) {
+    if ((data.provider as ProviderOptionsEnum) === ProviderOptionsEnum.GITLAB && !data.group) {
       ctx.addIssue({
         code: 'custom',
         path: ['group'],
         message: 'Group is required'
       })
     }
-    if (data.provider === 'Bitbucket' && !data.workspace) {
+    if ((data.provider as ProviderOptionsEnum) === ProviderOptionsEnum.BITBUCKET && !data.workspace) {
       ctx.addIssue({
         code: 'custom',
         path: ['workspace'],
@@ -80,8 +87,10 @@ const formSchema = z
       })
     }
     if (
-      (data.provider === 'Bitbucket Server' && !data.project) ||
-      (data.provider === 'Azure DevOps' && !data.project)
+      [ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(
+        data.provider as ProviderOptionsEnum
+      ) &&
+      !data.project
     ) {
       ctx.addIssue({
         code: 'custom',
@@ -150,7 +159,6 @@ export function RepoImportPage({
   const handleCancel = () => {
     onFormCancel()
   }
-  console.log(errors)
   return (
     <SandboxLayout.Main>
       <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
@@ -174,13 +182,7 @@ export function RepoImportPage({
                   {ProviderOptionsEnum &&
                     Object.values(ProviderOptionsEnum)?.map(option => {
                       return (
-                        <SelectItem
-                          key={option}
-                          value={option}
-                          // disabled={
-                          //   option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          // }
-                        >
+                        <SelectItem key={option} value={option}>
                           {option}
                         </SelectItem>
                       )
@@ -190,11 +192,13 @@ export function RepoImportPage({
             </ControlGroup>
           </Fieldset>
 
-          {(watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE ||
-            watch('provider') === ProviderOptionsEnum.GITLAB_SELF_HOSTED ||
-            watch('provider') === ProviderOptionsEnum.BITBUCKET_SERVER ||
-            watch('provider') === ProviderOptionsEnum.GITEA ||
-            watch('provider') === ProviderOptionsEnum.GOGS) && (
+          {[
+            ProviderOptionsEnum.GITHUB_ENTERPRISE,
+            ProviderOptionsEnum.GITLAB_SELF_HOSTED,
+            ProviderOptionsEnum.BITBUCKET_SERVER,
+            ProviderOptionsEnum.GITEA,
+            ProviderOptionsEnum.GOGS
+          ].includes(watch('provider') as ProviderOptionsEnum) && (
             <Fieldset className="mt-4">
               <Input
                 id="host"
@@ -206,8 +210,9 @@ export function RepoImportPage({
               />
             </Fieldset>
           )}
-          {(watch('provider') === ProviderOptionsEnum.GITLAB ||
-            watch('provider') === ProviderOptionsEnum.GITLAB_SELF_HOSTED) && (
+          {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(
+            watch('provider') as ProviderOptionsEnum
+          ) && (
             <Fieldset className="mt-4">
               <Input
                 id="group"
@@ -234,11 +239,13 @@ export function RepoImportPage({
           )}
 
           {/* organization */}
-          {(watch('provider') === ProviderOptionsEnum.GITHUB ||
-            watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE ||
-            watch('provider') === ProviderOptionsEnum.GITEA ||
-            watch('provider') === ProviderOptionsEnum.GOGS ||
-            watch('provider') === ProviderOptionsEnum.AZURE_DEVOPS) && (
+          {[
+            ProviderOptionsEnum.GITHUB,
+            ProviderOptionsEnum.GITHUB_ENTERPRISE,
+            ProviderOptionsEnum.GITEA,
+            ProviderOptionsEnum.GOGS,
+            ProviderOptionsEnum.AZURE_DEVOPS
+          ].includes(watch('provider') as ProviderOptionsEnum) && (
             <Fieldset className="mt-4">
               <Input
                 id="organization"
@@ -250,8 +257,9 @@ export function RepoImportPage({
               />
             </Fieldset>
           )}
-          {(watch('provider') === ProviderOptionsEnum.BITBUCKET_SERVER ||
-            watch('provider') === ProviderOptionsEnum.AZURE_DEVOPS) && (
+          {[ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(
+            watch('provider') as ProviderOptionsEnum
+          ) && (
             <Fieldset className="mt-4">
               <Input
                 id="project"

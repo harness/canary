@@ -1,6 +1,10 @@
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
+import {
+  ImporterProviderType,
+  ImportRepositoryRequestBody,
+  useImportRepositoryMutation
+} from '@harnessio/code-service-client'
 import { ImportRepoFormFields, ProviderOptionsEnum, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -16,20 +20,31 @@ export const ImportRepo = () => {
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
 
   const onSubmit = async (data: ImportRepoFormFields) => {
-    const providerRepo = data.provider.includes(ProviderOptionsEnum.GITHUB)
-      ? data.provider
-      : data.provider.includes(ProviderOptionsEnum.GITLAB)
-        ? data.group
-        : data.provider.includes(ProviderOptionsEnum.BITBUCKET)
-          ? data.workspace
-          : data.provider.includes(ProviderOptionsEnum.BITBUCKET_SERVER)
-            ? data.project
-            : data.provider.includes(ProviderOptionsEnum.GITEA) || data.provider.includes(ProviderOptionsEnum.GOGS)
-              ? data.organization
-              : data.provider.includes(ProviderOptionsEnum.AZURE_DEVOPS)
-                ? `${data.organization}/${data.project}`
-                : ''
+    const PROVIDER_REPO_CONFIG = {
+      [ProviderOptionsEnum.GITHUB]: data.organization,
+      [ProviderOptionsEnum.GITHUB_ENTERPRISE]: data.organization,
+      [ProviderOptionsEnum.GITLAB_SELF_HOSTED]: data.group,
+      [ProviderOptionsEnum.GITLAB]: data.group,
+      [ProviderOptionsEnum.BITBUCKET]: data.workspace,
+      [ProviderOptionsEnum.BITBUCKET_SERVER]: data.project,
+      [ProviderOptionsEnum.GITEA]: data.organization,
+      [ProviderOptionsEnum.GOGS]: data.organization,
+      [ProviderOptionsEnum.AZURE_DEVOPS]: `${data.organization}/${data.project}`
+    }
 
+    const PROVIDER_TYPE_MAP = {
+      [ProviderOptionsEnum.GITHUB]: 'github',
+      [ProviderOptionsEnum.GITHUB_ENTERPRISE]: 'github',
+      [ProviderOptionsEnum.GITLAB_SELF_HOSTED]: 'gitlab',
+      [ProviderOptionsEnum.GITLAB]: 'gitlab',
+      [ProviderOptionsEnum.BITBUCKET]: 'bitbucket',
+      [ProviderOptionsEnum.BITBUCKET_SERVER]: 'stash',
+      [ProviderOptionsEnum.GITEA]: 'gitea',
+      [ProviderOptionsEnum.GOGS]: 'gogs',
+      [ProviderOptionsEnum.AZURE_DEVOPS]: 'azure'
+    }
+
+    const providerRepo = PROVIDER_REPO_CONFIG[data.provider as keyof typeof PROVIDER_REPO_CONFIG]
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,
@@ -38,7 +53,7 @@ export const ImportRepo = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: data.provider.split(' ')[0].toLowerCase(),
+        type: PROVIDER_TYPE_MAP[data.provider] as ImporterProviderType,
         username: ''
       },
       provider_repo: `${providerRepo}/${data.repository}`

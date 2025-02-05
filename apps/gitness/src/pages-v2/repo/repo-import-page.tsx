@@ -53,7 +53,7 @@ export const ImportRepo = () => {
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: PROVIDER_TYPE_MAP[data.provider] as ImporterProviderType,
+        type: PROVIDER_TYPE_MAP[data.provider as ProviderOptionsEnum] as ImporterProviderType,
         username: ''
       },
       provider_repo: `${providerRepo}/${data.repository}`

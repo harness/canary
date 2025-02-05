@@ -52,8 +52,8 @@ interface NodeProps {
 }
 
 interface DataProps {
-  stage: StageProps
-  logs: LivelogLine[]
+  stage?: StageProps
+  logs?: LivelogLine[]
 }
 
 // * step node
@@ -83,12 +83,12 @@ export function StepNodeComponent({
         </Drawer.Header>
         <div>
           <ExecutionInfo
-            logs={logs}
+            logs={logs || []}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}
             selectedStepIdx={0}
-            stage={stage}
+            stage={stage || {}}
           />
         </div>
         <Drawer.Footer>
@@ -127,7 +127,7 @@ export function ApprovalStepNodeComponent({ node }: { node: LeafNodeInternalType
             <Drawer.Title>Approval</Drawer.Title>
             <Drawer.Description>Approve/Reject step execution</Drawer.Description>
           </Drawer.Header>
-          <div className="flex gap-2 items-center">
+          <div className="flex gap-2 justify-center">
             <Button type="submit">Approve</Button>
             <Button variant="secondary">Cancel</Button>
           </div>

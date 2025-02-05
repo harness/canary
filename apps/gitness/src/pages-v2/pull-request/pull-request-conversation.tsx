@@ -427,7 +427,7 @@ export default function PullRequestConversationPage() {
         ? [
             {
               id: '0',
-              title: 'Ready for reviewwwwww',
+              title: 'Ready for review',
               description: 'Open this pull request for review.',
               action: () => {
                 handlePrState('open')

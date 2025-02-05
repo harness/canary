@@ -21,14 +21,14 @@ const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) 
 
 const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
   return (
-    <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-4">
+    <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-2">
       {children}
     </div>
   )
 }
 
 const Footer: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
-  return <div className="bg-background-1 sticky bottom-0 p-3">{children}</div>
+  return <div className="bg-background-1 sticky bottom-0 py-3 px-6">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -85,6 +85,49 @@ const Separator: FC<SeparatorProps> = ({ title }) => {
   return <div className="text-center text-xs font-medium opacity-50">{title}</div>
 }
 
+const emptyStateButtons = [
+  {
+    text: 'Pipeline design'
+  },
+  {
+    text: 'Security reports'
+  },
+  {
+    text: 'Error detection'
+  },
+  {
+    text: 'Testing'
+  }
+]
+
+const EmptyState: FC = () => {
+  return (
+    <div className="flex flex-col gap-5 mt-auto">
+      <div>
+        <span className="text-foreground-4 text-20 block font-semibold leading-none">Hello Steven,</span>
+        <span className="text-foreground-1 text-20 mt-[3px] block font-semibold leading-none">how can I help?</span>
+      </div>
+      <div>
+        <span className="text-foreground-2 text-14 leading-relaxed">
+          Here are some suggestions to enhance your CI/CD pipeline:
+        </span>
+        <ul className="mt-3 flex flex-col gap-y-1.5">
+          {emptyStateButtons.map(({ text }, index) => (
+            <li key={index}>
+              <Button
+                className="bg-background-3 text-foreground-1 hover:bg-background-12 w-full justify-start rounded-lg px-3.5"
+                size="lg"
+              >
+                {text}
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
 interface InputFieldProps {
   value?: string
   inputRef?: RefObject<HTMLInputElement>
@@ -110,7 +153,7 @@ const InputField: FC<InputFieldProps> = ({
     <div className="relative">
       <Input
         ref={inputRef}
-        className="h-11 flex-1 rounded-lg px-3 focus:ring-0 focus-visible:h-16 focus-visible:rounded-lg focus-visible:pb-8"
+        className="h-11 flex-1 rounded-lg pl-3 pr-12 focus:ring-0 focus-visible:h-16 focus-visible:rounded-lg focus-visible:pb-8"
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -118,7 +161,7 @@ const InputField: FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
-        className="absolute bottom-2 right-3 z-10 size-7 rounded-full"
+        className="absolute bottom-2 right-2 z-10 size-7 rounded-full"
         onClick={onSend}
         size="icon"
         disabled={disabled}
@@ -137,5 +180,6 @@ export const Chat = {
   Message,
   Typing,
   Separator,
+  EmptyState,
   Input: InputField
 }

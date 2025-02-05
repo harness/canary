@@ -65,7 +65,7 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
   }, [data, lang, setDiffInstanceCb])
 
   return (
-    <div className="border-borders-1 bg-background-1 mt-3 flex flex-col rounded-md border">
+    <div className="border-borders-1 bg-background-1 mr-7 mt-3 flex flex-col rounded-md border">
       {fileName && (
         <span className="bg-background-2 text-foreground-1 text-14 rounded-[inherit] p-4 font-medium">{fileName}</span>
       )}

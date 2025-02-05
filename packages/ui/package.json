@@ -10,12 +10,17 @@
     "./views": "./dist/views.js",
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
-    "./tailwind.config": "./tailwind.config.js",
+    "./tailwind.config": "./dist/tailwind.config.js",
     "./styles.css": "./dist/styles.css",
     "./shared-style-variables.css": "./src/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
     "./context": "./dist/context.js"
   },
+  "files": [
+    "dist/**.*",
+    "src/shared-style-variables.css",
+    "src/components/markdown-viewer/style.css"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "vite build && pnpm extract",
@@ -36,9 +41,6 @@
   },
   "types": "./dist/index.d.ts",
   "style": "./dist/styles.css",
-  "files": [
-    "dist/**.*"
-  ],
   "sideEffects": false,
   "repository": {
     "type": "git",

@@ -63,7 +63,7 @@ const List: React.FC<ListProps> = ({
 }) => (
   <div
     className={cn(
-      'w-full',
+      'w-full bg-background-surface',
       'border [&>div:last-child]:border-0',
       '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-md',
       {

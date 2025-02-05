@@ -68,7 +68,7 @@ The `Root` component serves as the main container for all toggle group elements.
   props={[
     {
       name: "children",
-      description: "You can pass in your `ToggleGroup.Item` as children",
+      description: "You can pass in your `ToggleGroup.Item` as childrens",
       required: true,
       value: "ReactNode",
     },
@@ -83,6 +83,7 @@ The `Root` component serves as the main container for all toggle group elements.
       description: "Variant of the toggle group",
       required: false,
       value: "'default' | 'outline' | 'compact'",
+      defaultValue: "default"
     },
     {
       name: "type",
@@ -131,19 +132,15 @@ The `Root` component serves as the main container for all toggle group elements.
       description: "Whether the focus should loop around when reaching the end",
       required: false,
       value: "boolean",
+      defaultValue: "true"
     },
     {
       name: "orientation",
-      description: "Orientation of the toggle group",
+      description: "Orientation of the toggle group as how focus moves using arrows",
       required: false,
       value: "'horizontal' | 'vertical'",
-    },
-    {
-      name: "dir",
-      description: "Text direction of the toggle group",
-      required: false,
-      value: "'ltr' | 'rtl'",
-    },
+      defaultValue: "horizontal"
+    }
   ]}
 />
 

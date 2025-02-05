@@ -43,7 +43,7 @@ const ToggleGroupRoot = React.forwardRef<React.ElementRef<typeof ToggleGroupPrim
   )
 )
 
-ToggleGroup.displayName = ToggleGroupPrimitive.Root.displayName
+ToggleGroupRoot.displayName = ToggleGroupPrimitive.Root.displayName
 
 type ToggleGroupItemProps = React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Item> &
   VariantProps<typeof toggleVariants>

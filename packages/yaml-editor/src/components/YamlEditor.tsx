@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
@@ -46,44 +46,7 @@ export interface YamlEditorProps<T> {
   folding?: boolean
 }
 
-export function replaceYamlWithAnimation(
-  editor: monaco.editor.IStandaloneCodeEditor,
-  yaml: string
-  // intervalIdRef?: React.MutableRefObject<number | null>
-) {
-  const lines = yaml.split('\n')
-  const model = editor.getModel()
-  if (model) {
-    editor.pushUndoStop()
-    model.setValue('')
-    let index = 0
-    window.setInterval(() => {
-      if (index < lines.length) {
-        editor.executeEdits('addLine', [
-          {
-            range: new monaco.Range(index + 1, 1, index + 1, 1),
-            text: lines[index] + '\n'
-          }
-        ])
-        index++
-      } else {
-        // if (intervalIdRef.current) {
-        //   clearInterval(intervalIdRef.current)
-        // }
-      }
-    }, 100) // 100ms delay between each line
-    editor.pushUndoStop()
-  }
-}
-
-export interface EditorRef {
-  getEditor: () => monaco.editor.IStandaloneCodeEditor
-}
-
-export const YamlEditor = forwardRef(function YamlEditor<T>(
-  props: YamlEditorProps<T>,
-  ref: React.Ref<any>
-): JSX.Element {
+export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const {
     yamlRevision,
     schemaConfig,
@@ -108,6 +71,37 @@ export const YamlEditor = forwardRef(function YamlEditor<T>(
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
   const intervalIdRef = useRef<number | null>(null)
 
+  const replaceYamlWithAnimation = useCallback(
+    (yaml: string) => {
+      const lines = yaml.split('\n')
+      const model = editorRef.current?.getModel()
+      if (model) {
+        editorRef.current?.pushUndoStop()
+        model.setValue('')
+        let index = 0
+        intervalIdRef.current = window.setInterval(() => {
+          if (index < lines.length) {
+            if (monaco) {
+              editorRef.current?.executeEdits('addLine', [
+                {
+                  range: new monaco.Range(index + 1, 1, index + 1, 1),
+                  text: lines[index] + '\n'
+                }
+              ])
+            }
+            index++
+          } else {
+            if (intervalIdRef.current) {
+              clearInterval(intervalIdRef.current)
+            }
+          }
+        }, 100) // 100ms delay between each line
+        editorRef.current?.pushUndoStop()
+      }
+    },
+    [monaco]
+  )
+
   useEffect(() => {
     return () => {
       if (intervalIdRef.current) {
@@ -115,10 +109,6 @@ export const YamlEditor = forwardRef(function YamlEditor<T>(
       }
     }
   }, [])
-
-  useImperativeHandle(ref, () => ({
-    getEditor: () => editorRef.current
-  }))
 
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     editorRef.current = editor
@@ -143,18 +133,19 @@ export const YamlEditor = forwardRef(function YamlEditor<T>(
 
         const model = editorRef.current.getModel()
         if (model) {
-          editorRef.current.pushUndoStop()
+          // editorRef.current.pushUndoStop()
           editorRef.current.executeEdits('edit', [
             {
               range: model.getFullModelRange(),
-              text: yamlRevision.yaml
+              text: ''
             }
           ])
-          editorRef.current.pushUndoStop()
+          // editorRef.current.pushUndoStop()
+          replaceYamlWithAnimation(yamlRevision.yaml)
         }
       }
     }
-  }, [yamlRevision, editorRef.current])
+  }, [replaceYamlWithAnimation, yamlRevision])
 
   useSchema({ schemaConfig, instanceId })
 
@@ -191,4 +182,4 @@ export const YamlEditor = forwardRef(function YamlEditor<T>(
       />
     </div>
   )
-})
+}

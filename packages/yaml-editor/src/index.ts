@@ -1,7 +1,7 @@
 import { BlameEditor, BlameEditorProps } from './components/BlameEditor'
 import { CodeEditor, CodeEditorProps } from './components/CodeEditor'
 import { CodeDiffEditor, DiffEditorProps } from './components/DiffEditor'
-import { EditorRef, replaceYamlWithAnimation, YamlEditor, YamlEditorProps } from './components/YamlEditor'
+import { YamlEditor, YamlEditorProps } from './components/YamlEditor'
 import {
   useYamlEditorContext,
   YamlEditorContext,
@@ -16,8 +16,8 @@ import { MonacoGlobals } from './utils/monaco-globals'
 export { YamlEditorContext, YamlEditorContextProvider, useYamlEditorContext }
 export type { YamlEditorContextInterface }
 
-export { YamlEditor, replaceYamlWithAnimation }
-export type { YamlEditorProps, EditorRef }
+export { YamlEditor }
+export type { YamlEditorProps }
 
 export type { ThemeDefinition }
 

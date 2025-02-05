@@ -1,7 +1,4 @@
-import { useMemo } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
-
-import { TabNav, Tabs, TabsList, TabsTrigger } from '@/components'
+import { TabNav } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export enum RepoTabsKeys {
@@ -23,36 +20,18 @@ export const RepoSubheader = ({
   useTranslationStore: () => TranslationStore
   showPipelinesTab?: boolean
 }) => {
-  const location = useLocation()
   const { t } = useTranslationStore()
-
-  const activeTab = useMemo(() => {
-    // Prioritize 'pulls' over 'commits' if both are present in the pathname
-    if (location.pathname.includes(RepoTabsKeys.PULLS)) {
-      return RepoTabsKeys.PULLS
-    }
-    const tab = repoTabsKeysArr.find(key => location.pathname.includes(key))
-    return tab ?? RepoTabsKeys.SUMMARY
-  }, [location.pathname])
 
   return (
     <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
       <TabNav.Root>
-        <TabNav.Item>
-          <NavLink to="summary">Summary</NavLink>
-        </TabNav.Item>
-        <TabNav.Item>
-          <NavLink to="code">Files</NavLink>
-        </TabNav.Item>
-        <TabNav.Item>
-          <NavLink to="pipelines">Pipelines</NavLink>
-        </TabNav.Item>
-        <TabNav.Item>
-          <NavLink to="commits">Commits</NavLink>
-        </TabNav.Item>
-        <TabNav.Item>
-          <NavLink to="pulls">Pull Requests</NavLink>
-        </TabNav.Item>
+        <TabNav.Item to="summary">{t('views:repos.summary', 'Summary')}</TabNav.Item>
+        <TabNav.Item to="code">{t('views:repos.files', 'Files')}</TabNav.Item>
+        {showPipelinesTab ? <TabNav.Item to="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabNav.Item> : null}
+        <TabNav.Item to="commits">{t('views:repos.commits', 'Commits')}</TabNav.Item>
+        <TabNav.Item to="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabNav.Item>
+        <TabNav.Item to="branches">{t('views:repos.branches', 'Branches')}</TabNav.Item>
+        <TabNav.Item to="settings">{t('views:repos.settings', 'Settings')}</TabNav.Item>
       </TabNav.Root>
     </SandboxLayout.SubHeader>
   )

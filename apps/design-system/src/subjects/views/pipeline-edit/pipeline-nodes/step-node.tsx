@@ -55,11 +55,11 @@ export function StepNode(props: StepNodeProps) {
         <div
           role="button"
           tabIndex={0}
-          className={cn('box border size-full rounded-xl border bg-primary-foreground cursor-pointer', {
+          className={cn('box size-full rounded-xl border bg-primary-foreground cursor-pointer', {
             'border-borders-2': !selected,
             'border-borders-3': selected,
             'border-success': nodeData.state === 'success',
-            'border border-alert': nodeData.state === 'warning'
+            'card-wrapper-warning': nodeData.state === 'warning'
           })}
           onClick={onClick}
         >

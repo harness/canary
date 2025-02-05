@@ -96,6 +96,7 @@ export const executionMock = [
                   yamlEntityType: 'Step',
                   name: 'go test',
                   icon: <Icon className="m-2 size-8" name={'run'} />,
+                  state: 'warning',
                   selected: false
                 },
                 path: 'pipeline.children.1.children.0.children.0.children.1',

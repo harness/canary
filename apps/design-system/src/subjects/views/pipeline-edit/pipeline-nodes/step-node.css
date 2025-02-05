@@ -29,3 +29,7 @@
     --angle: 360deg;
   }
 }
+
+.card-wrapper-warning {
+  border: 1px solid #e3ac07;
+}

@@ -36,11 +36,6 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
   return (
     <>
-      <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
-        <Icon name="triangle-warning" size={12} className="mr-1" />
-        Warning
-      </Badge>
-      {/* </div> */}
       <div
         className={cn('absolute inset-0 -z-10 rounded-xl border', {
           'border-borders-2': !selected,

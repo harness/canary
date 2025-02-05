@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 import { Route } from 'react-router-dom'
 
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { RepoSubheader } from '@harnessio/ui/components'
 
@@ -14,7 +14,7 @@ const RepoViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTMLElement>>> 
       element={
         <>
           <div className="layer-high bg-background-1 sticky top-[55px]">
-            <RepoSubheader useTranslationStore={useTranslationsStore} />
+            <RepoSubheader useTranslationStore={useTranslationStore} />
           </div>
           {children}
         </>

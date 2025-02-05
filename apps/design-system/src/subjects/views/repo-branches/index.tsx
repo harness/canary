@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { IBranchSelectorStore, RepoBranchListView } from '@harnessio/ui/views'
 
@@ -16,7 +16,7 @@ export function RepoBranchesView() {
       isCreatingBranch={false}
       onSubmit={noop}
       useRepoBranchesStore={useRepoBranchesStore}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
       isCreateBranchDialogOpen={isCreateBranchDialogOpen}
       setCreateBranchDialogOpen={setCreateBranchDialogOpen}
       searchQuery={''}

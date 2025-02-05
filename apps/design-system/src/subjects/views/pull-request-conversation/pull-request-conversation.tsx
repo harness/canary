@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { CommitSuggestionsDialog, FilterOption, Spacer } from '@harnessio/ui/components'
 import {
@@ -170,7 +170,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
               handleUpdateDescription={noop}
               handleDeleteComment={noop}
               handleUpdateComment={noop}
-              useTranslationStore={useTranslationsStore}
+              useTranslationStore={useTranslationStore}
               repoId={repoRef}
               refetchActivities={noop}
               commentStatusPullReq={commentStatusPullReq}
@@ -244,7 +244,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
               setSearchLabelQuery={noop}
               addLabel={noop}
               removeLabel={noop}
-              useTranslationStore={useTranslationsStore}
+              useTranslationStore={useTranslationStore}
             />
           </SandboxLayout.Content>
         </SandboxLayout.Column>

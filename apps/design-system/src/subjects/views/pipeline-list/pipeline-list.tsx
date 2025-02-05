@@ -1,7 +1,7 @@
 import { FC, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { CreatePipelineDialog, PipelineListPage, RepoSummaryViewProps, TLinkComponent } from '@harnessio/ui/views'
 
@@ -15,7 +15,7 @@ const PipelineListWrapper: FC<Partial<RepoSummaryViewProps>> = () => {
     <>
       <PipelineListPage
         usePipelineListStore={usePipelineListStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         setSearchQuery={noop}
         isLoading={false}
         isError={false}

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { EditViewTypeValue, FileEditorControlBar, GitCommitDialog, GitCommitFormType } from '@harnessio/ui/components'
 import { CodeModes, PathActionBar } from '@harnessio/ui/views'
@@ -55,7 +55,7 @@ export const RepoFileEdit = () => {
       <PathActionBar
         codeMode={CodeModes.EDIT}
         pathParts={repoFilesStore.pathParts}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         changeFileName={vel => setFileName(vel)}
         onBlurFileName={noop}
         gitRefName={repoFilesStore.branchSelectorStore.selectedBranchTag.name}

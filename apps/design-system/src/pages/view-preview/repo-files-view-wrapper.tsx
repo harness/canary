@@ -2,7 +2,7 @@ import { FC, PropsWithChildren, useCallback } from 'react'
 
 import { repoFilesStore } from '@subjects/views/repo-files/components/repo-files-store'
 import { renderEntries } from '@utils/fileViewUtils'
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { FileExplorer } from '@harnessio/ui/components'
 import { BranchSelectorTab, IBranchSelectorStore, RepoSidebar as RepoSidebarView } from '@harnessio/ui/views'
@@ -34,7 +34,7 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTM
       <RepoSidebarView
         selectBranchOrTag={noop}
         useRepoBranchesStore={useRepoBranchesStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         navigateToNewFile={noop}
         navigateToFile={noop}
         filesList={repoFilesStore.filesList}

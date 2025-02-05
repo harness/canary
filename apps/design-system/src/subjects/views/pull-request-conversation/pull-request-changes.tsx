@@ -1,6 +1,6 @@
 import { FC, PropsWithChildren, useCallback } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { CommitSuggestionsDialog } from '@harnessio/ui/components'
 import { PullRequestChangesPage, TypesCommit, TypesPullReqActivity } from '@harnessio/ui/views'
@@ -55,7 +55,7 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
       <PullRequestChangesPage
         handleUpload={noop}
         usePullRequestProviderStore={usePullRequestProviderStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         setDiffMode={noop}
         loadingReviewers={undefined}
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

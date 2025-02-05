@@ -21,7 +21,7 @@ const Checkbox = forwardRef<ElementRef<typeof CheckboxPrimitive.Root>, CheckboxP
         {...props}
       >
         <CheckboxPrimitive.Indicator className={cn('flex items-center justify-center text-current mt-[1px]')}>
-          <Icon name="checkbox" width={10} height={7} />
+          <Icon name="checkbox" width={10} height={7} className="text-icons-5" />
         </CheckboxPrimitive.Indicator>
       </CheckboxPrimitive.Root>
     </div>

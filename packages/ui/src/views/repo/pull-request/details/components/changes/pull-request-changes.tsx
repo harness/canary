@@ -183,7 +183,6 @@ const PullRequestAccordion: React.FC<{
   selectedCommits: CommitFilterItemProps[]
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
-  commentId?: string
   autoExpand?: boolean
   onCopyClick?: (commentId?: number) => void
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
@@ -214,7 +213,6 @@ const PullRequestAccordion: React.FC<{
   selectedCommits,
   markViewed,
   unmarkViewed,
-  commentId,
   autoExpand,
   onCopyClick,
   suggestionsBatch,
@@ -562,7 +560,6 @@ function PullRequestChangesInternal({
                       selectedCommits={selectedCommits}
                       markViewed={markViewed}
                       unmarkViewed={unmarkViewed}
-                      commentId={commentId}
                       autoExpand={openItems.includes(item.text)}
                       onCopyClick={onCopyClick}
                       onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}

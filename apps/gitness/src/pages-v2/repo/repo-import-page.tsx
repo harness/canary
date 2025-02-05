@@ -44,7 +44,7 @@ export const ImportRepo = () => {
       [ProviderOptionsEnum.AZURE_DEVOPS]: 'azure'
     }
 
-    const providerRepo = PROVIDER_REPO_CONFIG[data.provider as keyof typeof PROVIDER_REPO_CONFIG]
+    const providerRepo = PROVIDER_REPO_CONFIG[data.provider as ProviderOptionsEnum]
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,

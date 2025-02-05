@@ -70,12 +70,15 @@ export function StepNodeComponent({
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
   const { name, icon, logs, stage } = node.data
+  const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
+
+  if (mode === 'Edit') {
+    return stepNode
+  }
 
   return (
     <Drawer.Root direction="right">
-      <Drawer.Trigger asChild>
-        <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
-      </Drawer.Trigger>
+      <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
       <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
         <Drawer.Header>
           <Drawer.Title>Logs</Drawer.Title>
@@ -102,25 +105,33 @@ export function StepNodeComponent({
 }
 
 // * approval step node
-export interface ApprovalNodeDataType {
+export interface ApprovalNodeDataType extends DataProps {
   name?: string
   selected?: boolean
 }
 
-export function ApprovalStepNodeComponent({ node }: { node: LeafNodeInternalType<ApprovalNodeDataType> }) {
+export function ApprovalStepNodeComponent({
+  node,
+  mode
+}: { node: LeafNodeInternalType<ApprovalNodeDataType> } & NodeProps) {
   const { name } = node.data
+  const approvalNode = (
+    <div className="flex h-full items-center justify-center">
+      <div
+        className="border-borders-2 bg-primary-foreground absolute -z-10 rotate-45 border"
+        style={{ inset: '18px' }}
+      ></div>
+      <div>{name}</div>
+    </div>
+  )
+
+  if (mode === 'Edit') {
+    return approvalNode
+  }
 
   return (
     <Drawer.Root direction="right">
-      <Drawer.Trigger asChild>
-        <div className="flex h-full items-center justify-center">
-          <div
-            className="border-borders-2 bg-primary-foreground absolute -z-10 rotate-45 border"
-            style={{ inset: '18px' }}
-          ></div>
-          <div>{name}</div>
-        </div>
-      </Drawer.Trigger>
+      <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
       <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
         <div className="flex flex-col gap-4">
           <Drawer.Header>

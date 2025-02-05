@@ -934,7 +934,7 @@
     --canary-border: var(--canary-grey-15);
     --canary-border-background: var(--canary-grey-10);
     --canary-input: var(--canary-grey-15);
-    --canary-input-background: var(--canary-grey-10);
+    --canary-input-background: var(--canary-grey-6);
     --canary-ring: var(--canary-grey-80);
     --canary-success: var(--canary-green);
     --canary-error: var(--canary-red);
@@ -979,6 +979,7 @@
     --canary-background-11: var(--canary-grey-40);
     --canary-background-12: var(--canary-grey-20);
     --canary-background-13: var(--canary-grey-30);
+    --canary-background-surface: var(--canary-grey-6);
     --canary-background-danger: var(--canary-red-65) / 0.1; /* red65/10 */
     --canary-background-success: 154 13% 10% / 0.4;
     --canary-background-accent: var(--canary-blue-70);

@@ -43,7 +43,7 @@ export const LandingPageView: React.FC<LandingPageProps> = ({ spaces, useTransla
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <Button variant="default" size={'lg'}>
-                  <Text color="tertiary" className="mr-5">
+                  <Text color="tertiary" className="mr-5 text-foreground-6">
                     {t('views:landingPage.projectSelector', 'Select Project')}
                   </Text>
                   <Icon name="chevron-down" size={15} className="chevron-down" />

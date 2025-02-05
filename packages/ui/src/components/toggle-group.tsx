@@ -72,8 +72,8 @@ const ToggleGroupItem = React.forwardRef<React.ElementRef<typeof ToggleGroupPrim
 
 ToggleGroupItem.displayName = ToggleGroupPrimitive.Item.displayName
 
-const ToggleGroupNamespaced = {
-  Root: ToggleGroup,
+const ToggleGroup = {
+  Root: ToggleGroupRoot,
   Item: ToggleGroupItem
 }
 

@@ -124,7 +124,7 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
-          background-surface: 'hsl(var(--canary-background-surface))',
+          surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },

@@ -44,7 +44,8 @@ export const executionMock = [
           yamlPath: 'pipeline.stages.0.group.stages.0',
           yamlChildrenPath: 'pipeline.stages.0.group.stages.0.parallel.stages',
           yamlEntityType: 'ParallelStageGroup',
-          name: 'Parallel 1'
+          name: 'Parallel 1',
+          state: 'executing'
         },
         children: [
           {
@@ -67,7 +68,8 @@ export const executionMock = [
               {
                 type: 'Step',
                 config: {
-                  maxWidth: 140,
+                  minWidth: 198,
+                  minHeight: 77,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -76,7 +78,7 @@ export const executionMock = [
                   yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.0.steps.0',
                   yamlEntityType: 'Step',
                   name: 'go build',
-                  icon: <Icon className="m-2 size-8" name={'harness-plugin'} />,
+                  icon: <Icon className="m-2 size-6" name={'harness-plugin'} />,
                   state: 'success',
                   selected: false
                 },
@@ -86,7 +88,8 @@ export const executionMock = [
               {
                 type: 'Step',
                 config: {
-                  maxWidth: 140,
+                  minWidth: 198,
+                  minHeight: 77,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -95,7 +98,7 @@ export const executionMock = [
                   yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.0.steps.1',
                   yamlEntityType: 'Step',
                   name: 'go test',
-                  icon: <Icon className="m-2 size-8" name={'run'} />,
+                  icon: <Icon className="m-2 size-6" name={'run'} />,
                   state: 'error',
                   selected: false
                 },
@@ -126,7 +129,8 @@ export const executionMock = [
               {
                 type: 'Step',
                 config: {
-                  maxWidth: 140,
+                  minWidth: 198,
+                  minHeight: 77,
                   width: 140,
                   hideDeleteButton: false,
                   selectable: true
@@ -134,10 +138,11 @@ export const executionMock = [
                 data: {
                   yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.1.steps.0',
                   yamlEntityType: 'Step',
-                  name: 'npm test',
-                  icon: <Icon className="m-2 size-8" name={'run'} />,
+                  name: 'Software Supply Chain Validation',
+                  icon: <Icon className="m-2 size-6" name={'run'} />,
                   state: 'warning',
-                  selected: false
+                  selected: false,
+                  warningMessage: 'High memory usage'
                 },
                 path: 'pipeline.children.1.children.0.children.1.children.0',
                 containerType: 'leaf'
@@ -196,13 +201,15 @@ export const executionMock = [
                   yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.0',
                   yamlChildrenPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.0.group.steps',
                   yamlEntityType: 'SerialStepGroup',
-                  name: 'Serial steps 1'
+                  name: 'Serial steps 1',
+                  state: 'executing'
                 },
                 children: [
                   {
                     type: 'Step',
                     config: {
-                      maxWidth: 140,
+                      minWidth: 198,
+                      minHeight: 77,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -210,8 +217,8 @@ export const executionMock = [
                     data: {
                       yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.0.group.steps.0',
                       yamlEntityType: 'Step',
-                      name: 'go build',
-                      icon: <Icon className="m-2 size-8" name={'run'} />,
+                      name: 'multi line step name multi line step name multi line step name multi line step name ',
+                      icon: <Icon className="m-2 size-6" name={'rocket'} />,
                       state: 'success',
                       selected: false
                     },
@@ -221,7 +228,8 @@ export const executionMock = [
                   {
                     type: 'Step',
                     config: {
-                      maxWidth: 140,
+                      minWidth: 198,
+                      minHeight: 77,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -230,7 +238,7 @@ export const executionMock = [
                       yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.0.group.steps.1',
                       yamlEntityType: 'Step',
                       name: 'go test',
-                      icon: <Icon className="m-2 size-8" name={'run'} />,
+                      icon: <Icon className="m-2 size-6" name={'run'} />,
                       state: 'executing',
                       selected: false
                     },
@@ -252,13 +260,15 @@ export const executionMock = [
                   yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1',
                   yamlChildrenPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1.parallel.steps',
                   yamlEntityType: 'ParallelStepGroup',
-                  name: 'Parallel steps 2'
+                  name: 'Parallel steps 2',
+                  state: 'success'
                 },
                 children: [
                   {
                     type: 'Step',
                     config: {
-                      maxWidth: 140,
+                      minWidth: 198,
+                      minHeight: 77,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -267,7 +277,7 @@ export const executionMock = [
                       yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1.parallel.steps.0',
                       yamlEntityType: 'Step',
                       name: 'go build',
-                      icon: <Icon className="m-2 size-8" name={'run'} />,
+                      icon: <Icon className="m-2 size-6" name={'run'} />,
                       state: 'success',
                       selected: false
                     },
@@ -277,7 +287,8 @@ export const executionMock = [
                   {
                     type: 'Step',
                     config: {
-                      maxWidth: 140,
+                      minWidth: 198,
+                      minHeight: 77,
                       width: 140,
                       hideDeleteButton: false,
                       selectable: true
@@ -286,7 +297,7 @@ export const executionMock = [
                       yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps.1.parallel.steps.1',
                       yamlEntityType: 'Step',
                       name: 'go test',
-                      icon: <Icon className="m-2 size-8" name={'run'} />,
+                      icon: <Icon className="m-2 size-6" name={'run'} />,
                       state: 'executing',
                       selected: false
                     },

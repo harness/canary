@@ -2,6 +2,7 @@ import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
+import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 
 export interface ParallelGroupNodeProps {
@@ -28,6 +29,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
     selected,
     isFirst,
     parentNodeType,
+    nodeData,
     onEllipsisClick,
     onAddInClick,
     onHeaderClick,
@@ -36,8 +38,10 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
   return (
     <>
+      <ExecutionStatus nodeData={nodeData} />
+
       <div
-        className={cn('absolute inset-0 -z-10 rounded-xl border', {
+        className={cn('absolute inset-0 -z-10 border-dashed rounded-md border', {
           'border-borders-2': !selected,
           'border-borders-3': selected
         })}

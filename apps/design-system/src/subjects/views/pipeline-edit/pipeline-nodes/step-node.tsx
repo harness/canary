@@ -1,11 +1,13 @@
-import { Badge, Button, Icon, Text } from '@harnessio/ui/components'
+import { Button, Icon, Text } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import './step-node.css'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
+import { ExecutionStatus } from './components/execution-status'
 // import { createRoundedRectPath } from '../utils/utils'
 import { FloatingAddButton } from './components/floating-add-button'
+import { WarningLabel } from './components/warning-label'
 
 export interface StepNodeProps {
   name?: string
@@ -24,35 +26,7 @@ export function StepNode(props: StepNodeProps) {
 
   return (
     <>
-      {nodeData.state === 'executing' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="muted">
-            <Icon name="running" size={12} className="mr-1 animate-spin" />
-            Running
-          </Badge>
-        </div>
-      ) : nodeData.state === 'success' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '50px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
-            <Icon name="tick" size={12} className="mr-1" />
-            Completed
-          </Badge>
-        </div>
-      ) : nodeData.state === 'warning' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
-            <Icon name="triangle-warning" size={12} className="mr-1" />
-            Warning
-          </Badge>
-        </div>
-      ) : (
-        <div style={{ position: 'absolute', top: '-23px', left: '80px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="destructive">
-            <Icon name="cross" size={12} className="mr-1" />
-            Error
-          </Badge>
-        </div>
-      )}
+      <ExecutionStatus nodeData={nodeData} align="right" />
 
       <div
         className={cn({
@@ -62,7 +36,7 @@ export function StepNode(props: StepNodeProps) {
         <div
           role="button"
           tabIndex={0}
-          className={cn('box size-full rounded-xl border bg-primary-foreground cursor-pointer', {
+          className={cn('box size-full rounded-md border bg-primary-foreground cursor-pointer', {
             'border-borders-2': !selected,
             'border-borders-3': selected,
             'border-success': nodeData.state === 'success',
@@ -102,6 +76,7 @@ export function StepNode(props: StepNodeProps) {
           <Text title={name} className="text-primary m-2 line-clamp-2">
             {name}
           </Text>
+          {nodeData.warningMessage && <WarningLabel>{nodeData.warningMessage}</WarningLabel>}
         </div>
       </div>
     </>

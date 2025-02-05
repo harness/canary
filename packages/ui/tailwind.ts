@@ -405,6 +405,8 @@ export default {
     'prose-img',
     'prose-code',
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-borders-2'
+    'stroke-borders-2',
+    // NOTE: temporary - used in design-system
+    { pattern: /bg-primary-./ }
   ]
 } satisfies TailwindConfig

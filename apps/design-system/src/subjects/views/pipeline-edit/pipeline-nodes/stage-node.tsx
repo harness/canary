@@ -1,7 +1,8 @@
-import { Badge, Button, Icon } from '@harnessio/ui/components'
+import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
+import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 
 export interface StageNodeProps {
@@ -37,39 +38,11 @@ export function StageNode(props: StageNodeProps) {
 
   return (
     <>
-      {nodeData.state === 'executing' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="muted">
-            <Icon name="running" size={12} className="mr-1 animate-spin" />
-            Running
-          </Badge>
-        </div>
-      ) : nodeData.state === 'success' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
-            <Icon name="double-tick" size={12} className="mr-1" />
-            Completed
-          </Badge>
-        </div>
-      ) : nodeData.state === 'warning' ? (
-        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
-            <Icon name="triangle-warning" size={12} className="mr-1" />
-            Warning
-          </Badge>
-        </div>
-      ) : (
-        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
-          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="destructive">
-            <Icon name="cross" size={12} className="mr-1" />
-            Error
-          </Badge>
-        </div>
-      )}
+      <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-xl border', {
-          'border-borders-2': !selected,
+        className={cn('absolute inset-0 -z-10 rounded-md border border-dashed bg-primary-foreground/40', {
+          'border-borders-2': !selected, // gray/8
           'border-borders-3': selected
         })}
       />

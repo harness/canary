@@ -19,7 +19,7 @@ export const SignUp: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(routes.toHome()) // Redirect to Home page
+      navigate(routes.toProjectCreate())
     }
   }, [isSuccess])
 

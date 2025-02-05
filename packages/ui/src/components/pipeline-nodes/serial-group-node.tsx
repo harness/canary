@@ -30,7 +30,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onHeaderClick,
     onAddClick,
     parentNodeType,
-    readonly
+    mode
   } = props
 
   return (
@@ -54,7 +54,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </div>
       </div>
 
-      {!readonly && (
+      {mode !== 'Execution' && (
         <Button
           className="absolute right-2 top-2 z-10"
           variant="ghost"
@@ -78,7 +78,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </Button>
       )}
 
-      {!readonly && isFirst && (
+      {mode !== 'Execution' && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -87,7 +87,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
           }}
         />
       )}
-      {!readonly && (
+      {mode !== 'Execution' && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="after"

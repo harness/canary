@@ -6,7 +6,7 @@ import { LeafNodeInternalType } from '../../types/nodes-internal'
 import Port from './port'
 
 export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInternalType>) {
-  const { node, isFirst, isLast, parentNodeType, readonly } = props
+  const { node, isFirst, isLast, parentNodeType, mode } = props
 
   const h = node.config?.height ? node.config?.height + 'px' : 'auto'
   const w = node.config?.width ? node.config?.width + 'px' : 'auto'
@@ -33,13 +33,7 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
       {!node.config?.hideLeftPort && <Port side="left" id={`left-port-${props.node.path}`} />}
       {!node.config?.hideRightPort && <Port side="right" id={`right-port-${props.node.path}`} />}
 
-      <RenderNodeContent
-        node={node}
-        isFirst={isFirst}
-        isLast={isLast}
-        parentNodeType={parentNodeType}
-        readonly={readonly}
-      />
+      <RenderNodeContent node={node} isFirst={isFirst} isLast={isLast} parentNodeType={parentNodeType} mode={mode} />
     </div>
   )
 }

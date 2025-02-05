@@ -30,7 +30,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
     onAddInClick,
     onHeaderClick,
     onAddClick,
-    readonly
+    mode
   } = props
 
   return (
@@ -54,7 +54,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         </div>
       </div>
 
-      {!readonly && (
+      {mode !== 'Execution' && (
         <Button
           className="absolute right-2 top-2 z-10"
           variant="ghost"
@@ -78,7 +78,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         </Button>
       )}
 
-      {!readonly && isFirst && (
+      {mode !== 'Execution' && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -87,7 +87,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
           }}
         />
       )}
-      {!readonly && (
+      {mode !== 'Execution' && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="after"

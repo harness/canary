@@ -18,7 +18,7 @@ export function RenderNodeContent(
     parentNodeType?: ContainerNodeType
   } & NodeProps
 ) {
-  const { node, children, collapsed, isFirst, isLast, parentNodeType, readonly } = props
+  const { node, children, collapsed, isFirst, isLast, parentNodeType, mode } = props
   const { nodes } = useGraphContext()
 
   const nodeContent = nodes[node.type]
@@ -32,7 +32,7 @@ export function RenderNodeContent(
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
-          readonly={readonly}
+          mode={mode}
         >
           {children}
         </nodeContent.component>
@@ -45,7 +45,7 @@ export function RenderNodeContent(
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
-          readonly={readonly}
+          mode={mode}
         >
           {children}
         </nodeContent.component>
@@ -58,7 +58,7 @@ export function RenderNodeContent(
           isFirst={isFirst}
           isLast={isLast}
           parentNodeType={parentNodeType}
-          readonly={readonly}
+          mode={mode}
         >
           {children}
         </nodeContent.component>

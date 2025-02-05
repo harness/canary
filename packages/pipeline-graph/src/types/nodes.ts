@@ -1,5 +1,5 @@
 export interface NodeProps {
-  readonly?: boolean
+  mode?: 'Edit' | 'Execution'
 }
 
 export enum ContainerNode {

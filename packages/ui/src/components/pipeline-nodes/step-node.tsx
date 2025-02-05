@@ -15,7 +15,7 @@ export interface StepNodeProps extends NodeProps {
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType, readonly } = props
+  const { name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType, mode } = props
 
   return (
     <div
@@ -27,7 +27,7 @@ export function StepNode(props: StepNodeProps) {
       })}
       onClick={onClick}
     >
-      {!readonly && onEllipsisClick && (
+      {mode !== 'Execution' && onEllipsisClick && (
         <Button
           className="absolute right-2 top-2"
           variant="ghost"
@@ -39,7 +39,7 @@ export function StepNode(props: StepNodeProps) {
         </Button>
       )}
 
-      {!readonly && isFirst && (
+      {mode !== 'Execution' && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -48,7 +48,7 @@ export function StepNode(props: StepNodeProps) {
           }}
         />
       )}
-      {!readonly && (
+      {mode !== 'Execution' && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="after"

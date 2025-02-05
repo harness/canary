@@ -48,7 +48,7 @@ const StartNodeComponent = () => <PipelineNodes.StartNode />
 const EndNodeComponent = () => <PipelineNodes.EndNode />
 
 interface NodeProps {
-  readonly?: boolean
+  mode?: 'Edit' | 'Execution'
 }
 
 interface DataProps {
@@ -65,7 +65,7 @@ export interface StepNodeDataType extends DataProps {
 
 export function StepNodeComponent({
   node,
-  readonly
+  mode
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
@@ -74,7 +74,7 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>
-        <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} readonly={readonly} />
+        <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
       </Drawer.Trigger>
       <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
         <Drawer.Header>
@@ -151,7 +151,7 @@ export interface SerialGroupNodeDataType {
 export function SerialGroupNodeComponent({
   node,
   children,
-  readonly
+  mode
 }: {
   node: SerialNodeInternalType<SerialGroupNodeDataType>
   children: React.ReactElement
@@ -165,7 +165,7 @@ export function SerialGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
-      readonly={readonly}
+      mode={mode}
     >
       {children}
     </PipelineNodes.SerialGroupNode>
@@ -181,7 +181,7 @@ export interface ParallelGroupNodeDataType {
 export function ParallelGroupNodeComponent({
   node,
   children,
-  readonly
+  mode
 }: {
   node: ParallelNodeInternalType<ParallelGroupNodeDataType>
   children: React.ReactElement
@@ -195,7 +195,7 @@ export function ParallelGroupNodeComponent({
       onAddClick={() => undefined}
       onHeaderClick={() => undefined}
       onAddInClick={() => undefined}
-      readonly={readonly}
+      mode={mode}
     >
       {children}
     </PipelineNodes.ParallelGroupNode>
@@ -359,7 +359,7 @@ const data: AnyContainerNodeType[] = [
 const PipelineExecutionGraph = () => {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2', readonly: true }} />
+      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2', mode: 'Execution' }} />
     </CanvasProvider>
   )
 }

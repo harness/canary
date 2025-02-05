@@ -1,0 +1,31 @@
+.card-wrapper {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -1px; /* Cover border area */
+  border-radius: 1rem;
+  background: conic-gradient(from var(--angle), #0c63e7, #060c21, #060c21, #0c63e7);
+  animation: rotate 3.5s linear infinite;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 3px; /* Border thickness */
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}

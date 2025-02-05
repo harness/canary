@@ -27,7 +27,8 @@ export const executionMock = [
       yamlPath: 'pipeline.stages.0',
       yamlChildrenPath: 'pipeline.stages.0.group.stages',
       yamlEntityType: 'SerialStageGroup',
-      name: 'Serial 1'
+      name: 'Serial 1',
+      state: 'executing'
     },
     children: [
       {
@@ -59,6 +60,7 @@ export const executionMock = [
               yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.0',
               yamlChildrenPath: 'pipeline.stages.0.group.stages.0.parallel.stages.0.steps',
               yamlEntityType: 'Stage',
+              state: 'success',
               name: 'Stage 1'
             },
             children: [
@@ -160,7 +162,8 @@ export const executionMock = [
           yamlPath: 'pipeline.stages.0.group.stages.1',
           yamlChildrenPath: 'pipeline.stages.0.group.stages.1.group.stages',
           yamlEntityType: 'SerialStageGroup',
-          name: 'Serial 2'
+          name: 'Serial 2',
+          state: 'success'
         },
         children: [
           {
@@ -176,6 +179,7 @@ export const executionMock = [
               yamlPath: 'pipeline.stages.0.group.stages.1.group.stages.0',
               yamlChildrenPath: 'pipeline.stages.0.group.stages.1.group.stages.0.steps',
               yamlEntityType: 'Stage',
+              state: 'warning',
               name: 'Stage 1'
             },
             children: [

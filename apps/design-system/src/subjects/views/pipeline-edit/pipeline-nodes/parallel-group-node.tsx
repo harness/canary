@@ -36,7 +36,6 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
   return (
     <>
-      {/* <div style={{ position: 'absolute', top: '-23px', left: '60px' }}> */}
       <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
         <Icon name="triangle-warning" size={12} className="mr-1" />
         Warning

@@ -1,4 +1,4 @@
-import { Button, Icon } from '@harnessio/ui/components'
+import { Badge, Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
@@ -31,11 +31,35 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onAddInClick,
     onHeaderClick,
     onAddClick,
-    parentNodeType
+    parentNodeType,
+    nodeData
   } = props
 
   return (
     <>
+      {nodeData.state === 'executing' ? (
+        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="muted">
+            <Icon name="running" size={12} className="mr-1 animate-spin" />
+            Running
+          </Badge>
+        </div>
+      ) : nodeData.state === 'success' ? (
+        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme={'success'}>
+            <Icon name="double-tick" size={12} className="mr-1" />
+            Completed
+          </Badge>
+        </div>
+      ) : (
+        <div style={{ position: 'absolute', top: '-23px', left: '0px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
+            <Icon name="triangle-warning" size={12} className="mr-1" />
+            Warning
+          </Badge>
+        </div>
+      )}
+
       <div
         className={cn('absolute inset-0 -z-10 rounded-xl border', {
           'border-borders-2': !selected,

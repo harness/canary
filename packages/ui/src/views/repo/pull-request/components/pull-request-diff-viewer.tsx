@@ -10,6 +10,7 @@ import {
 } from '@/views'
 import { Avatar, AvatarFallback, Layout } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
+import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
 import { getInitials, timeAgo } from '@utils/utils'
 import { DiffBlock } from 'diff2html/lib/types'
@@ -24,6 +25,15 @@ import { quoteTransform } from '../utils'
 interface Thread {
   parent: CommentItem<TypesPullReqActivity>
   replies: CommentItem<TypesPullReqActivity>[]
+}
+
+export enum DiffViewerEvent {
+  SCROLL_INTO_VIEW = 'scrollIntoView'
+}
+
+export interface DiffViewerCustomEvent {
+  action: DiffViewerEvent
+  commentId?: string
 }
 
 interface PullRequestDiffviewerProps {
@@ -48,7 +58,6 @@ interface PullRequestDiffviewerProps {
   deleteComment?: (id: number) => void
   updateComment?: (id: number, comment: string) => void
   useTranslationStore: () => TranslationStore
-  commentId?: string
   onCopyClick?: (commentId?: number) => void
   suggestionsBatch?: CommitSuggestion[]
   onCommitSuggestion?: (suggestion: CommitSuggestion) => void
@@ -78,7 +87,6 @@ const PullRequestDiffViewer = ({
   deleteComment,
   updateComment,
   useTranslationStore,
-  commentId,
   onCopyClick,
   suggestionsBatch,
   onCommitSuggestion,
@@ -400,8 +408,7 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      {/* TODO: need to identify the author who resolved the conversation */}
-                      <span className="font-medium text-foreground-8">{parent.author}</span>
+                      <span className="font-medium text-foreground-8">{parent.payload?.resolver?.display_name}</span>
                       <span className="text-foreground-4">marked this conversation as resolved</span>
                     </div>
                   )
@@ -580,19 +587,26 @@ const PullRequestDiffViewer = ({
     [currentUser, handleSaveComment, updateComment, deleteComment, fileName, hideReplyHeres, editModes, editComments, t]
   )
 
-  // Scroll to commentId whenever extendData or commentId changes
-  useEffect(() => {
-    if (!commentId || scrolledToComment) return
-    // Slight timeout so the UI has time to expand/hydrate
-    const timeoutId = setTimeout(() => {
-      const elem = document.getElementById(`comment-${commentId}`)
-      if (!elem) return
-      elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
-      setScrolledToComment?.(true)
-    }, 500)
+  useCustomEventListener<DiffViewerCustomEvent>(
+    fileName,
+    useCallback(
+      event => {
+        const { action, commentId } = event.detail
+        if (!commentId || scrolledToComment || action !== DiffViewerEvent.SCROLL_INTO_VIEW) return
+        // Slight timeout so the UI has time to expand/hydrate
+        const timeoutId = setTimeout(() => {
+          const elem = document.getElementById(`comment-${commentId}`)
+          if (!elem) return
+          elem.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          setScrolledToComment?.(true)
+        }, 500)
 
-    return () => clearTimeout(timeoutId)
-  }, [commentId, extend, scrolledToComment, setScrolledToComment])
+        return () => clearTimeout(timeoutId)
+      },
+      [scrolledToComment, setScrolledToComment]
+    ),
+    () => !!fileName
+  )
 
   return (
     <div data-diff-file-path={fileName}>

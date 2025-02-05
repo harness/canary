@@ -14,6 +14,7 @@ import {
 } from '@/components'
 import { DiffModeOptions, InViewDiffRenderer, jumpToFile, TranslationStore, TypesDiffStats } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
+import { formatNumber } from '@utils/utils'
 import { chunk } from 'lodash-es'
 
 import PullRequestDiffViewer from '../../components/pull-request-diff-viewer'
@@ -172,6 +173,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   jumpToDiff,
   setJumpToDiff
 }) => {
+  const { t } = useTranslationStore()
   const [diffMode, setDiffMode] = useState<DiffModeEnum>(DiffModeEnum.Split)
   const handleDiffModeChange = (value: string) => {
     setDiffMode(value === 'Split' ? DiffModeEnum.Split : DiffModeEnum.Unified)
@@ -199,7 +201,7 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
   useEffect(() => {
     if (!jumpToDiff) return
     jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
-  }, [jumpToDiff, diffBlocks])
+  }, [jumpToDiff, diffBlocks, setJumpToDiff])
 
   const setCollapsed = useCallback(
     (fileText: string, val: boolean) => {
@@ -222,13 +224,15 @@ const PullRequestCompareDiffList: FC<PullRequestCompareDiffListProps> = ({
         <ListActions.Left>
           <DropdownMenu.Root>
             <p className="text-14 leading-tight text-foreground-4">
-              Showing{' '}
+              {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
               <FilesChangedCount showAsDropdown={changedFilesCount !== 0}>
                 <span className="cursor-pointer text-foreground-accent ease-in-out">
-                  {changedFilesCount} changed files
+                  {formatNumber(changedFilesCount)} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
                 </span>
               </FilesChangedCount>{' '}
-              with {diffStats.additions || 0} additions and {diffStats.deletions || 0} deletions
+              {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
+              {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
+              {formatNumber(diffStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
             </p>
             <DropdownMenu.Content align="end">
               <div className="max-h-[360px] overflow-y-auto px-1">

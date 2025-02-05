@@ -1,4 +1,5 @@
 import { ICommitDetailsStore, TranslationStore } from '@/views'
+import { formatNumber } from '@utils/utils'
 
 import { CommitChanges } from './commit-changes'
 
@@ -16,10 +17,11 @@ export const CommitDiff: React.FC<CommitDiffsViewProps> = ({ useCommitDetailsSto
       <p className="mb-3.5 text-14 leading-tight text-foreground-4">
         {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
         <span className="text-foreground-accent">
-          {diffStats?.files_changed || 0} {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
+          {formatNumber(diffStats?.files_changed || 0)}{' '}
+          {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
         </span>{' '}
-        {t('views:commits.commitDetailsDiffWith', 'with')} {diffStats?.additions || 0}{' '}
-        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {diffStats?.deletions || 0}{' '}
+        {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(diffStats?.additions || 0)}{' '}
+        {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')} {formatNumber(diffStats?.deletions || 0)}{' '}
         {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
       </p>
       <CommitChanges

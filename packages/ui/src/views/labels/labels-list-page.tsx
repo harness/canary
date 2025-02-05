@@ -70,7 +70,7 @@ export const LabelsListPage: FC<LabelsListPageProps> = ({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content className="mx-auto max-w-[812px]">
+      <SandboxLayout.Content className="px-0">
         <h1 className="text-2xl font-medium text-foreground-1">{t('views:labelData.title', 'Labels')}</h1>
         <Spacer size={6} />
         {isRepository && (

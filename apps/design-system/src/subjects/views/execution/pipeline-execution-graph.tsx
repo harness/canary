@@ -10,13 +10,17 @@ import {
   SerialNodeContent,
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
-import { Icon, PipelineNodes } from '@harnessio/ui/components'
+import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 // *****************************************************
 // 1. Import CSS
 // *****************************************************
 
 import '@harnessio/pipeline-graph/dist/index.css'
+
+import { ExecutionInfo } from '@harnessio/ui/views'
+
+import { logs, stages } from './mocks/mock-data'
 
 // *****************************************************
 // 2. Define content nodes types
@@ -62,7 +66,34 @@ export function StepNodeComponent({
 } & NodeProps) {
   const { name, icon } = node.data
 
-  return <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} readonly={readonly} />
+  return (
+    <Drawer.Root direction="right">
+      <Drawer.Trigger asChild>
+        <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} readonly={readonly} />
+      </Drawer.Trigger>
+      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+        <Drawer.Header>
+          <Drawer.Title>Logs</Drawer.Title>
+          <Drawer.Description>{`View ${name} execution logs`}</Drawer.Description>
+        </Drawer.Header>
+        <div>
+          <ExecutionInfo
+            logs={logs}
+            onCopy={() => {}}
+            onDownload={() => {}}
+            onEdit={() => {}}
+            selectedStepIdx={0}
+            stage={stages[0]}
+          />
+        </div>
+        <Drawer.Footer>
+          <Drawer.Close>
+            <Button variant="outline">Close</Button>
+          </Drawer.Close>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
+  )
 }
 
 // * approval step node
@@ -75,13 +106,34 @@ export function ApprovalStepNodeComponent({ node }: { node: LeafNodeInternalType
   const { name } = node.data
 
   return (
-    <div className="flex h-full items-center justify-center">
-      <div
-        className="border-borders-2 bg-primary-foreground absolute -z-10 rotate-45 border"
-        style={{ inset: '18px' }}
-      ></div>
-      <div>{name}</div>
-    </div>
+    <Drawer.Root direction="right">
+      <Drawer.Trigger asChild>
+        <div className="flex h-full items-center justify-center">
+          <div
+            className="border-borders-2 bg-primary-foreground absolute -z-10 rotate-45 border"
+            style={{ inset: '18px' }}
+          ></div>
+          <div>{name}</div>
+        </div>
+      </Drawer.Trigger>
+      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+        <div className="flex flex-col gap-4">
+          <Drawer.Header>
+            <Drawer.Title>Approval</Drawer.Title>
+            <Drawer.Description>Approve/Reject step execution</Drawer.Description>
+          </Drawer.Header>
+          <div className="flex gap-2 items-center">
+            <Button type="submit">Approve</Button>
+            <Button variant="secondary">Cancel</Button>
+          </div>
+        </div>
+        <Drawer.Footer>
+          <Drawer.Close>
+            <Button variant="outline">Close</Button>
+          </Drawer.Close>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
   )
 }
 

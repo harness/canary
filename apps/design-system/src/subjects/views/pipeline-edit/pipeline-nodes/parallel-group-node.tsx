@@ -1,4 +1,4 @@
-import { Badge, Button, Icon } from '@harnessio/ui/components'
+import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'

@@ -8,7 +8,7 @@ import { PipelineNodes } from '../pipeline-nodes'
 
 export interface StepNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
-  state?: 'success' | 'executing' | 'executed' | 'warning'
+  state?: 'success' | 'executing' | 'executed' | 'warning' | 'error'
   selected?: boolean
 }
 

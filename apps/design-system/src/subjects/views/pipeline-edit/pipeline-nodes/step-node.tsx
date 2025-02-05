@@ -38,11 +38,18 @@ export function StepNode(props: StepNodeProps) {
             Completed
           </Badge>
         </div>
-      ) : (
+      ) : nodeData.state === 'warning' ? (
         <div style={{ position: 'absolute', top: '-23px', left: '60px' }}>
           <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="warning">
             <Icon name="triangle-warning" size={12} className="mr-1" />
             Warning
+          </Badge>
+        </div>
+      ) : (
+        <div style={{ position: 'absolute', top: '-23px', left: '80px' }}>
+          <Badge className="leading-none" size="sm" disableHover borderRadius="base" theme="destructive">
+            <Icon name="cross" size={12} className="mr-1" />
+            Error
           </Badge>
         </div>
       )}
@@ -59,7 +66,8 @@ export function StepNode(props: StepNodeProps) {
             'border-borders-2': !selected,
             'border-borders-3': selected,
             'border-success': nodeData.state === 'success',
-            'card-wrapper-warning': nodeData.state === 'warning'
+            'card-wrapper-warning': nodeData.state === 'warning',
+            'card-wrapper-error': nodeData.state === 'error'
           })}
           onClick={onClick}
         >

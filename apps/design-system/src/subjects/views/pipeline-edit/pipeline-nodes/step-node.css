@@ -1,6 +1,6 @@
 .card-wrapper {
   position: relative;
-  border-radius: 1rem;
+  border-radius: 0.95rem;
   overflow: hidden;
 }
 
@@ -9,13 +9,13 @@
   position: absolute;
   inset: -1px; /* Cover border area */
   border-radius: 1rem;
-  background: conic-gradient(from var(--angle), #0c63e7, #060c21, #060c21, #0c63e7);
+  background: conic-gradient(from var(--angle), #4da6ff, #16212e, #16212e, #4da6ff);
   animation: rotate 3.5s linear infinite;
   mask:
     linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   mask-composite: exclude;
-  padding: 3px; /* Border thickness */
+  padding: 2px; /* Border thickness */
 }
 
 @property --angle {
@@ -32,4 +32,8 @@
 
 .card-wrapper-warning {
   border: 1px solid #e3ac07;
+}
+
+.card-wrapper-error {
+  border: 1px solid #ff4d4f;
 }

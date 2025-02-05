@@ -38,49 +38,22 @@ export const RepoSubheader = ({
   return (
     <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
       <TabNav.Root>
-        <TabNav.Item asChild>
+        <TabNav.Item>
           <NavLink to="summary">Summary</NavLink>
         </TabNav.Item>
-        <TabNav.Item asChild>
+        <TabNav.Item>
           <NavLink to="code">Files</NavLink>
         </TabNav.Item>
-        <TabNav.Item asChild>
+        <TabNav.Item>
           <NavLink to="pipelines">Pipelines</NavLink>
         </TabNav.Item>
-        <TabNav.Item asChild>
+        <TabNav.Item>
           <NavLink to="commits">Commits</NavLink>
         </TabNav.Item>
-        <TabNav.Item asChild>
+        <TabNav.Item>
           <NavLink to="pulls">Pull Requests</NavLink>
         </TabNav.Item>
       </TabNav.Root>
-      {/* <Tabs variant="navigation" value={activeTab}>
-        <TabsList>
-          <NavLink to={RepoTabsKeys.SUMMARY}>
-            <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
-          </NavLink>
-          <NavLink to={RepoTabsKeys.CODE}>
-            <TabsTrigger value="code">{t('views:repos.files', 'Files')}</TabsTrigger>
-          </NavLink>
-          {showPipelinesTab && (
-            <NavLink to={RepoTabsKeys.PIPELINES}>
-              <TabsTrigger value="pipelines">{t('views:repos.pipelines', 'Pipelines')}</TabsTrigger>
-            </NavLink>
-          )}
-          <NavLink to={RepoTabsKeys.COMMITS}>
-            <TabsTrigger value="commits">{t('views:repos.commits', 'Commits')}</TabsTrigger>
-          </NavLink>
-          <NavLink to={RepoTabsKeys.PULLS}>
-            <TabsTrigger value="pulls">{t('views:repos.pull-requests', 'Pull Requests')}</TabsTrigger>
-          </NavLink>
-          <NavLink to={RepoTabsKeys.BRANCHES}>
-            <TabsTrigger value="branches">{t('views:repos.branches', 'Branches')}</TabsTrigger>
-          </NavLink>
-          <NavLink to={RepoTabsKeys.SETTINGS}>
-            <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
-          </NavLink>
-        </TabsList>
-      </Tabs> */}
     </SandboxLayout.SubHeader>
   )
 }

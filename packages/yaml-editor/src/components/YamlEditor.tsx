@@ -44,6 +44,8 @@ export interface YamlEditorProps<T> {
   }
   minimap?: boolean
   folding?: boolean
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
 }
 
 export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
@@ -57,7 +59,9 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
     theme: themeFromProps,
     options: userOptions,
     minimap = false,
-    folding = true
+    folding = true,
+    animateOnUpdate = false,
+    onAnimateEnd
   } = props
   const monaco = useMonaco()
   const [instanceId] = useState('yaml')
@@ -93,6 +97,7 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
           } else {
             if (intervalIdRef.current) {
               clearInterval(intervalIdRef.current)
+              onAnimateEnd?.()
             }
           }
         }, 100) // 100ms delay between each line
@@ -137,15 +142,17 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
           editorRef.current.executeEdits('edit', [
             {
               range: model.getFullModelRange(),
-              text: ''
+              text: animateOnUpdate ? '' : yamlRevision.yaml
             }
           ])
           // editorRef.current.pushUndoStop()
-          replaceYamlWithAnimation(yamlRevision.yaml)
+          if (animateOnUpdate) {
+            replaceYamlWithAnimation(yamlRevision.yaml)
+          }
         }
       }
     }
-  }, [replaceYamlWithAnimation, yamlRevision])
+  }, [replaceYamlWithAnimation, yamlRevision, animateOnUpdate])
 
   useSchema({ schemaConfig, instanceId })
 

@@ -73,6 +73,10 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttri
             inlineActions={inlineActionExample}
             themeConfig={themeConfig}
             selection={selection}
+            animateOnUpdate={true}
+            onAnimateEnd={() => {
+              console.log('animation ended')
+            }}
             options={{
               minimap: {
                 enabled: false

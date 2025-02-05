@@ -4,7 +4,7 @@ import { DashIcon } from '@radix-ui/react-icons'
 import { cn } from '@utils/cn'
 import { OTPInput, OTPInputContext } from 'input-otp'
 
-const InputOTP = forwardRef<ElementRef<typeof OTPInput>, ComponentPropsWithoutRef<typeof OTPInput>>(
+const InputOTPRoot = forwardRef<ElementRef<typeof OTPInput>, ComponentPropsWithoutRef<typeof OTPInput>>(
   ({ className, containerClassName, ...props }, ref) => (
     <OTPInput
       ref={ref}
@@ -14,7 +14,7 @@ const InputOTP = forwardRef<ElementRef<typeof OTPInput>, ComponentPropsWithoutRe
     />
   )
 )
-InputOTP.displayName = 'InputOTP'
+InputOTPRoot.displayName = 'InputOTPRoot'
 
 const InputOTPGroup = forwardRef<ElementRef<'div'>, ComponentPropsWithoutRef<'div'>>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn('flex items-center', className)} {...props} />
@@ -63,4 +63,11 @@ const InputOTPSeparator = forwardRef<ElementRef<'div'>, ComponentPropsWithoutRef
 ))
 InputOTPSeparator.displayName = 'InputOTPSeparator'
 
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+const InputOTP = {
+  Root: InputOTPRoot,
+  Group: InputOTPGroup,
+  Slot: InputOTPSlot,
+  Separator: InputOTPSeparator
+}
+
+export { InputOTP }

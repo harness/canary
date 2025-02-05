@@ -71,12 +71,14 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         deleteComment={noop}
         updateComment={noop}
         defaultCommitFilter={{
-          name: 'All Commits (2)',
+          name: 'All Commits',
+          count: 2,
           value: 'ALL'
         }}
         selectedCommits={[
           {
-            name: 'All Commits (2)',
+            name: 'All Commits',
+            count: 2,
             value: 'ALL'
           }
         ]}
@@ -98,6 +100,8 @@ const PullRequestChanges: FC<PullRequestChangesProps> = ({ state }) => {
         onGetFullDiff={() => Promise.resolve()}
         scrolledToComment={undefined}
         setScrolledToComment={noop}
+        jumpToDiff=""
+        setJumpToDiff={noop}
       />
     </>
   )

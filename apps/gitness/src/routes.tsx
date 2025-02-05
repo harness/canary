@@ -1,7 +1,13 @@
 import { Navigate } from 'react-router-dom'
 
-import { Text } from '@harnessio/ui/components'
-import { EmptyPage, ProfileSettingsLayout, RepoSettingsLayout, SandboxLayout } from '@harnessio/ui/views'
+import { Breadcrumb, Text } from '@harnessio/ui/components'
+import {
+  EmptyPage,
+  ProfileSettingsLayout,
+  RepoSettingsLayout,
+  SandboxLayout,
+  WebhookSettingsLayout
+} from '@harnessio/ui/views'
 
 import { AppShell, AppShellMFE } from './components-v2/app-shell'
 import { ProjectDropdown } from './components-v2/breadcrumbs/project-dropdown'
@@ -52,6 +58,7 @@ import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
+import { WebhookExecutionsContainer } from './pages-v2/webhooks/webhook-executions'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
 enum Page {
@@ -426,13 +433,6 @@ export const repoRoutes: CustomRouteObject[] = [
                     handle: {
                       breadcrumb: () => <Text>Create a webhook</Text>
                     }
-                  },
-                  {
-                    path: ':webhookId',
-                    element: <CreateWebhookContainer />,
-                    handle: {
-                      breadcrumb: ({ webhookId }: { webhookId: string }) => <Text>{webhookId}</Text>
-                    }
                   }
                 ]
               },
@@ -463,6 +463,43 @@ export const repoRoutes: CustomRouteObject[] = [
                     }
                   }
                 ]
+              }
+            ]
+          },
+
+          {
+            path: 'settings/webhooks/:webhookId',
+            element: <WebhookSettingsLayout useTranslationStore={useTranslationStore} />,
+            children: [
+              {
+                index: true,
+                element: <Navigate to="details" replace />
+              },
+              {
+                path: 'details',
+                element: <CreateWebhookContainer />,
+                handle: {
+                  breadcrumb: ({ webhookId }: { webhookId: string }) => (
+                    <>
+                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
+                      <Text className="ml-1.5">Details</Text>
+                    </>
+                  ),
+                  routeName: RouteConstants.toRepoWebhookDetails
+                }
+              },
+              {
+                path: 'executions',
+                element: <WebhookExecutionsContainer />,
+                handle: {
+                  breadcrumb: ({ webhookId }: { webhookId: string }) => (
+                    <>
+                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
+                      <Text className="ml-1.5">Executions</Text>
+                    </>
+                  ),
+                  routeName: RouteConstants.toRepoWebhookExecutions
+                }
               }
             ]
           }
@@ -955,18 +992,41 @@ export const routes: CustomRouteObject[] = [
       {
         path: 'profile-settings',
         element: <ProfileSettingsLayout useTranslationStore={useTranslationStore} />,
+        handle: {
+          breadcrumb: () => (
+            <>
+              <Text>User</Text>
+              <Breadcrumb.Separator className="mx-2.5" />
+              <Text>{Page.Settings}</Text>
+            </>
+          ),
+          pageTitle: Page.Settings
+        },
         children: [
           {
             index: true,
-            element: <Navigate to="general" replace />
+            element: <Navigate to="general" replace />,
+            handle: {
+              breadcrumb: () => <Text>{Page.General}</Text>
+            }
           },
           {
             path: 'general',
-            element: <SettingsProfileGeneralPage />
+            element: <SettingsProfileGeneralPage />,
+            handle: {
+              breadcrumb: () => <Text>{Page.General}</Text>,
+              routeName: RouteConstants.toProfileGeneral,
+              pageTitle: Page.General
+            }
           },
           {
             path: 'keys',
-            element: <SettingsProfileKeysPage />
+            element: <SettingsProfileKeysPage />,
+            handle: {
+              breadcrumb: () => <Text>{Page.Keys}</Text>,
+              routeName: RouteConstants.toProfileKeys,
+              pageTitle: Page.Keys
+            }
           }
         ]
       }

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { Icon, Spacer, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
-import { LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
+import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
 interface RoutingProps {
@@ -65,10 +65,40 @@ export const Summary = ({
           {files.map(file => (
             <TableRow key={file.id} onClick={() => navigate(file.path)}>
               <TableCell>
-                <div className="flex cursor-pointer items-center gap-1.5">
+                <div
+                  className={`flex cursor-pointer items-center gap-1.5 ${
+                    file.status && file.status !== FileStatus.SAFE
+                      ? file.status === FileStatus.LOW_RISK
+                        ? 'absolute left-0 border-l-2 border-icons-risk'
+                        : file.status === FileStatus.MEDIUM_RISK
+                          ? 'absolute left-0 border-l-2 border-icons-alert'
+                          : 'absolute left-0 border-l-2 border-icons-danger'
+                      : ''
+                  }`}
+                >
                   <Icon
-                    className="text-icons-9"
-                    name={file.type === SummaryItemType.File ? 'file' : 'folder'}
+                    className={
+                      file.status
+                        ? file.status === FileStatus.SAFE
+                          ? 'text-icons-9'
+                          : file.status === FileStatus.LOW_RISK
+                            ? 'ml-3 text-icons-risk'
+                            : file.status === FileStatus.MEDIUM_RISK
+                              ? 'ml-3 text-icons-alert'
+                              : 'ml-3 text-icons-danger'
+                        : 'text-icons-9'
+                    }
+                    name={
+                      file.status
+                        ? file.status === FileStatus.SAFE
+                          ? file.type === SummaryItemType.File
+                            ? 'file'
+                            : 'folder'
+                          : 'triangle-warning'
+                        : file.type === SummaryItemType.File
+                          ? 'file'
+                          : 'folder'
+                    }
                     size={16}
                   />
                   <Text truncate color="primary">

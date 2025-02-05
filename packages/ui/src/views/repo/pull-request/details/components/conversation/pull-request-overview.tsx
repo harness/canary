@@ -1,10 +1,10 @@
 import { useCallback, useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout } from '@components/index'
+import { Avatar, AvatarFallback, Icon, Layout } from '@/components'
+import { PullRequestCommentBox, TranslationStore } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
-import { PullRequestCommentBox, TranslationStore } from '@views/index'
 import PullRequestDiffViewer from '@views/repo/pull-request/components/pull-request-diff-viewer'
 import { useDiffConfig } from '@views/repo/pull-request/hooks/useDiffConfig'
 import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-request.types'
@@ -48,7 +48,7 @@ interface PullRequestOverviewProps extends RoutingProps {
   dateOrderSort: { label: string; value: string } // eslint-disable-next-line  @typescript-eslint/no-explicit-any
   commentStatusPullReq: any
   repoId: string
-  diffData?: { text: string; numAdditions?: number; numDeletions?: number; data?: string; title: string; lang: string }
+  diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
   onCopyClick: (commentId?: number) => void
   suggestionsBatch: CommitSuggestion[]
   onCommitSuggestion: (suggestion: CommitSuggestion) => void
@@ -260,7 +260,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         avatar: (
                           <Avatar className="size-6 rounded-full p-0">
                             <AvatarFallback>
-                              <span className="text-12 text-foreground-3">
+                              <span className="text-12 text-foreground-1">
                                 {/* TODO: fix fallback string */}
                                 {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                               </span>
@@ -272,7 +272,11 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                         description: payload?.created && `reviewed ${timeAgo(payload?.created)}`
                       }
                     ]}
-                    contentHeader={<span>{(payload?.code_comment as PayloadCodeComment)?.path}</span>}
+                    contentHeader={
+                      <span className="font-medium text-foreground-1">
+                        {(payload?.code_comment as PayloadCodeComment)?.path}
+                      </span>
+                    }
                     content={
                       <div className="flex flex-col">
                         {startingLine ? (
@@ -325,7 +329,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 icon={
                                   <Avatar className="size-6 rounded-full p-0">
                                     <AvatarFallback>
-                                      <span className="text-12 text-foreground-3">
+                                      <span className="text-12 text-foreground-1">
                                         {/* TODO: fix fallback string */}
                                         {getInitials(
                                           (
@@ -390,12 +394,14 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                   )
                                 }
                                 key={`${commentItem.id}-${commentItem.author}`}
+                                hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                               />
                             ) : null
                           })}
                         </div>
                       </div>
                     }
+                    hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                   />
                 ) : null
               }
@@ -419,7 +425,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       avatar: (
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">
+                            <span className="text-12 text-foreground-1">
                               {/* TODO: fix fallback string */}
                               {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                             </span>
@@ -468,7 +474,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                             icon={
                               <Avatar className="size-6 rounded-full p-0">
                                 <AvatarFallback>
-                                  <span className="text-12 text-foreground-3">
+                                  <span className="text-12 text-foreground-1">
                                     {/* TODO: fix fallback string */}
                                     {getInitials(
                                       (
@@ -534,6 +540,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                                 />
                               )
                             }
+                            hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                           />
                         ) : null
                       })}
@@ -544,6 +551,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   isLast={activityBlocks.length - 1 === index}
                   handleSaveComment={handleSaveComment}
                   parentCommentId={payload?.id}
+                  hideEditDelete={payload?.author?.uid !== currentUser?.uid}
                 />
               ) : null
             }

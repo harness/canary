@@ -1,6 +1,7 @@
 import React, {
   ForwardedRef,
   forwardRef,
+  ReactNode,
   useCallback,
   useEffect,
   type ChangeEventHandler,
@@ -43,6 +44,7 @@ interface SearchBoxProps {
   value?: InputHTMLAttributes<HTMLInputElement>['value']
   className?: string
   inputClassName?: string
+  children?: ReactNode
 }
 
 const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
@@ -62,7 +64,8 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
       value,
       showOnFocus = false,
       className,
-      inputClassName = 'h-8'
+      inputClassName = 'h-8',
+      children
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -131,6 +134,7 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
           onFocus={handleFocus}
           onInput={handleChange}
           value={value}
+          customContent={children}
         />
       </div>
     )

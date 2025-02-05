@@ -124,6 +124,7 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
+          surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
@@ -140,7 +141,8 @@ export default {
           10: 'hsl(var(--canary-border-10))',
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
-          accent: 'hsl(var(--canary-border-accent))'
+          accent: 'hsl(var(--canary-border-accent))',
+          risk: 'hsl(var(--canary-icon-risk))'
         },
         button: {
           foreground: {
@@ -275,39 +277,40 @@ export default {
           alert: 'hsl(var(--canary-icon-alert))',
           success: 'hsl(var(--canary-icon-success))',
           accent: 'hsl(var(--canary-icon-accent))',
-          merged: 'hsl(var(--canary-icon-merged))'
+          merged: 'hsl(var(--canary-icon-merged))',
+          risk: 'hsl(var(--canary-icon-risk))'
         },
         label: {
           foreground: {
-            'red': 'var(--canary-label-foreground-red-01)',
-            'green': 'var(--canary-label-foreground-green-01)',
-            'yellow': 'var(--canary-label-foreground-yellow-01)',
-            'blue': 'var(--canary-label-foreground-blue-01)',
-            'pink': 'var(--canary-label-foreground-pink-01)',
-            'purple': 'var(--canary-label-foreground-purple-01)',
-            'violet': 'var(--canary-label-foreground-violet-01)',
-            'indigo': 'var(--canary-label-foreground-indigo-01)',
-            'cyan': 'var(--canary-label-foreground-cyan-01)',
-            'orange': 'var(--canary-label-foreground-orange-01)',
-            'brown': 'var(--canary-label-foreground-brown-01)',
-            'mint': 'var(--canary-label-foreground-mint-01)',
-            'lime': 'var(--canary-label-foreground-lime-01)'
+            red: 'var(--canary-label-foreground-red-01)',
+            green: 'var(--canary-label-foreground-green-01)',
+            yellow: 'var(--canary-label-foreground-yellow-01)',
+            blue: 'var(--canary-label-foreground-blue-01)',
+            pink: 'var(--canary-label-foreground-pink-01)',
+            purple: 'var(--canary-label-foreground-purple-01)',
+            violet: 'var(--canary-label-foreground-violet-01)',
+            indigo: 'var(--canary-label-foreground-indigo-01)',
+            cyan: 'var(--canary-label-foreground-cyan-01)',
+            orange: 'var(--canary-label-foreground-orange-01)',
+            brown: 'var(--canary-label-foreground-brown-01)',
+            mint: 'var(--canary-label-foreground-mint-01)',
+            lime: 'var(--canary-label-foreground-lime-01)'
           },
           background: {
-            'black': 'var(--canary-label-background-black-01)',
-            'red': 'var(--canary-label-background-red-01)',
-            'green': 'var(--canary-label-background-green-01)',
-            'yellow': 'var(--canary-label-background-yellow-01)',
-            'blue': 'var(--canary-label-background-blue-01)',
-            'pink': 'var(--canary-label-background-pink-01)',
-            'purple': 'var(--canary-label-background-purple-01)',
-            'violet': 'var(--canary-label-background-violet-01)',
-            'indigo': 'var(--canary-label-background-indigo-01)',
-            'cyan': 'var(--canary-label-background-cyan-01)',
-            'orange': 'var(--canary-label-background-orange-01)',
-            'brown': 'var(--canary-label-background-brown-01)',
-            'mint': 'var(--canary-label-background-mint-01)',
-            'lime': 'var(--canary-label-background-lime-01)'
+            black: 'var(--canary-label-background-black-01)',
+            red: 'var(--canary-label-background-red-01)',
+            green: 'var(--canary-label-background-green-01)',
+            yellow: 'var(--canary-label-background-yellow-01)',
+            blue: 'var(--canary-label-background-blue-01)',
+            pink: 'var(--canary-label-background-pink-01)',
+            purple: 'var(--canary-label-background-purple-01)',
+            violet: 'var(--canary-label-background-violet-01)',
+            indigo: 'var(--canary-label-background-indigo-01)',
+            cyan: 'var(--canary-label-background-cyan-01)',
+            orange: 'var(--canary-label-background-orange-01)',
+            brown: 'var(--canary-label-background-brown-01)',
+            mint: 'var(--canary-label-background-mint-01)',
+            lime: 'var(--canary-label-background-lime-01)'
           }
         }
       },
@@ -367,11 +370,15 @@ export default {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        'border-spin': {
+          '100%': { transform: 'rotate(-360deg)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'border-spin': 'border-spin 7s linear infinite'
       }
     }
   },
@@ -399,6 +406,8 @@ export default {
     'prose-img',
     'prose-code',
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-borders-2'
+    'stroke-borders-2',
+    // NOTE: temporary - used in design-system
+    { pattern: /bg-primary-./ }
   ]
 } satisfies TailwindConfig

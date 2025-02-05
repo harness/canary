@@ -2,9 +2,8 @@ import { FC, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import { NoData, StackedList } from '@/components'
-import { TranslationStore } from '@views/repo/repo-list/types'
+import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType, TranslationStore } from '@/views'
 
-import { PULL_REQUEST_LIST_HEADER_FILTER_STATES, PullRequestType } from '../pull-request.types'
 import { PullRequestItemDescription } from './pull-request-item-description'
 import { PullRequestItemTitle } from './pull-request-item-title'
 import { PullRequestListHeader } from './pull-request-list-header'
@@ -35,9 +34,11 @@ export const PullRequestList: FC<PullRequestListProps> = ({
   useTranslationStore
 }) => {
   const { t } = useTranslationStore()
+
   const [headerFilter, setHeaderFilter] = useState<PULL_REQUEST_LIST_HEADER_FILTER_STATES>(
     PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN
   )
+
   const filteredData = useMemo<PullRequestType[]>(() => {
     if (!pullRequests) return []
 
@@ -62,8 +63,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
     !filteredData.length &&
     headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.OPEN &&
     openPRs === 0 &&
-    closedPRs &&
-    closedPRs > 0
+    !!closedPRs
   ) {
     return (
       <StackedList.Root>
@@ -97,6 +97,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       </StackedList.Root>
     )
   }
+
   if (
     !filteredData.length &&
     headerFilter === PULL_REQUEST_LIST_HEADER_FILTER_STATES.CLOSED &&
@@ -137,7 +138,9 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       </StackedList.Root>
     )
   }
-  if (!filteredData?.length) return null
+
+  if (!filteredData?.length) return <></>
+
   return (
     <StackedList.Root>
       <StackedList.Item disableHover>
@@ -156,7 +159,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
       {filteredData.map((pullRequest, pullRequest_idx) => (
         <Link key={pullRequest.sha} to={pullRequest.number?.toString() || ''}>
           <StackedList.Item className="px-4 py-3" isLast={filteredData.length - 1 === pullRequest_idx}>
-            {pullRequest.number && (
+            {!!pullRequest.number && (
               <>
                 <StackedList.Field
                   className="max-w-full gap-1.5"
@@ -167,7 +170,7 @@ export const PullRequestList: FC<PullRequestListProps> = ({
                         state={pullRequest.state}
                         success={!!pullRequest.merged}
                         title={pullRequest.name}
-                        labels={pullRequest.labels || []}
+                        labels={pullRequest.labels}
                         comments={pullRequest?.comments}
                         merged={pullRequest.merged}
                       />

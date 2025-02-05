@@ -1,49 +1,59 @@
+import { AnyNodeInternal } from '..'
+
 const RADIUS = 7
 const PARALLEL_LINE_OFFSET = 15
 const SERIAL_LINE_OFFSET = 10
+
+export type CreateSVGPathType = typeof createSVGPath
 
 export function clear(svgGroup: SVGElement) {
   svgGroup.innerHTML = ''
 }
 
-export function getPortsConnectionPath(
-  pipelineGraphRoot: HTMLDivElement,
+export function getPortsConnectionPath({
+  pipelineGraphRoot,
+  connection,
+  customCreateSVGPath
+}: {
+  pipelineGraphRoot: HTMLDivElement
   connection: {
     source: string
     target: string
+    targetNode?: AnyNodeInternal
     parallel?: {
       position: 'left' | 'right'
     }
     serial?: {
       position: 'left' | 'right'
     }
-  },
-  edgeClassName?: string
-) {
-  const { source, target, parallel, serial } = connection
+  }
+  customCreateSVGPath?: CreateSVGPathType
+}) {
+  const { source, target, parallel, serial, targetNode } = connection
 
   const fromEl = document.getElementById(source)
   const toEl = document.getElementById(target)
 
-  if (!fromEl || !toEl) return ''
+  if (!fromEl || !toEl) return { level1: '', level2: '' }
 
   const fromElBB = fromEl.getBoundingClientRect()
   const toElBB = toEl.getBoundingClientRect()
 
   const pipelineGraphRootBB = pipelineGraphRoot?.getBoundingClientRect() ?? new DOMRect(0, 0)
 
-  const pathHtml = getPath({
-    id: `${source}-${target}`,
+  const pathObj = getPath({
     startX: fromElBB.left - pipelineGraphRootBB.left,
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
     endY: toElBB.top - pipelineGraphRootBB.top,
     parallel,
     serial,
-    edgeClassName
+    targetNode
   })
 
-  return pathHtml
+  return customCreateSVGPath
+    ? customCreateSVGPath({ targetNode, id: `${source}-${target}`, ...pathObj })
+    : createSVGPath({ targetNode, id: `${source}-${target}`, ...pathObj })
 }
 
 function getHArcConfig(direction: 'down' | 'up') {
@@ -79,16 +89,13 @@ function getVArcConfig(direction: 'down' | 'up') {
 }
 
 function getPath({
-  id,
   startX,
   startY,
   endX,
   endY,
   parallel,
-  serial,
-  edgeClassName
+  serial
 }: {
-  id: string
   startX: number
   startY: number
   endX: number
@@ -100,13 +107,17 @@ function getPath({
     position: 'left' | 'right'
   }
   edgeClassName?: string
+  targetNode?: AnyNodeInternal
 }) {
   const correction = 3
 
   let path = ''
 
+  // NOTE: approximate line length
+  let pathLength = 0
   if (startY === endY) {
     path = 'M ' + (startX + correction) + ' ' + (startY + correction) + ' ' + 'H ' + (endX + correction)
+    pathLength = endX - startX
   } else {
     const diff = endX - startX
 
@@ -146,10 +157,34 @@ function getPath({
       arc2 +
       'H ' +
       (endX + correction)
+
+    pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
   }
 
-  // NOTE: if edgeClassName is not provided use hardcoded color
-  const pathStyle = edgeClassName ? ` class="${edgeClassName}"` : ` stroke="#5D5B65"`
+  return { path, pathLength }
+}
 
-  return `<path d="${path}" id="${id}" fill="none" ${pathStyle}/>`
+function createSVGPath({
+  path,
+  id,
+  pathLength,
+  targetNode
+}: {
+  path: string
+  id: string
+  pathLength: number
+  targetNode?: AnyNodeInternal
+}): {
+  level1: string
+  level2: string
+} {
+  const pathStyle = targetNode?.data.state === 'executed' ? ` stroke="#43b5e6"` : ` stroke="#5D5B65"`
+  const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+
+  let animationPath: string = ''
+  if (targetNode?.data.state === 'executing') {
+    animationPath = `<path d="${path}" id="${id}" fill="none" stroke="#43b5e6" class="PipelineGraph-AnimatePath" stroke-dasharray="${pathLength}" stroke-dashoffset="${pathLength}" />`
+  }
+
+  return { level1: staticPath, level2: animationPath }
 }

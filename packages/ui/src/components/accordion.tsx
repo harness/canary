@@ -28,8 +28,11 @@ const ChevronIcon = ({ chevronClassName }: { chevronClassName?: string }) => {
   return (
     <Icon
       name="chevron-down"
-      size={10}
-      className={cn('chevron-down text-icons-2 h-2.5 w-2.5 min-w-2.5 shrink-0', chevronClassName)}
+      size={12}
+      className={cn(
+        'chevron-down text-icons-1 group-hover:text-icons-2 transition-colors duration-200 size-3 shrink-0',
+        chevronClassName
+      )}
     />
   )
 }

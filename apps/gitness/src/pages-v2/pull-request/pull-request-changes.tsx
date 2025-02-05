@@ -66,7 +66,8 @@ export default function PullRequestChanges() {
     setDiffs,
     pullReqCommits,
     updateCommentStatus,
-    setPullReqStats
+    setPullReqStats,
+    dryMerge
   } = usePullRequestProviderStore()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
@@ -82,6 +83,7 @@ export default function PullRequestChanges() {
   const prId = (pullRequestId && Number(pullRequestId)) || -1
   const [commentId] = useQueryState('commentId')
   const [scrolledToComment, setScrolledToComment] = useState(false)
+  const [jumpToDiff, setJumpToDiff] = useState('')
 
   const {
     data: { body: reviewers } = {},
@@ -365,7 +367,8 @@ export default function PullRequestChanges() {
   }
 
   const defaultCommitFilter: CommitFilterItemProps = {
-    name: `All Commits (${pullReqCommits?.commits?.length || 0})`,
+    name: 'All Commits',
+    count: pullReqCommits?.commits?.length || 0,
     value: 'ALL'
   }
 
@@ -409,7 +412,8 @@ export default function PullRequestChanges() {
     repoRef,
     prId,
     refetchActivities,
-    updateCommentStatus
+    updateCommentStatus,
+    dryMerge
   })
 
   return (
@@ -458,6 +462,8 @@ export default function PullRequestChanges() {
         onGetFullDiff={onGetFullDiff}
         scrolledToComment={scrolledToComment}
         setScrolledToComment={setScrolledToComment}
+        jumpToDiff={jumpToDiff}
+        setJumpToDiff={setJumpToDiff}
       />
     </>
   )

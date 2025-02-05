@@ -27,7 +27,7 @@ const themeConfig = {
 export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = () => {
   const { yamlRevision, setYamlRevision } = useDataContext()
   const [showYamlEditor, setShowYamlEditor] = useState(true)
-  const [selectedPath, setSelectedPath] = useState<string | undefined>('pipeline.stages.0.steps.0')
+  const [selectedPath, setSelectedPath] = useState<string | undefined>()
 
   const inlineActionExample = useMemo(() => getInlineActionExample({ setSelectedPath }), [setSelectedPath])
 
@@ -61,7 +61,7 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttri
           Toggle mount
         </button>
       </div>
-      <div style={{ display: 'flex', height: '500px' }}>
+      <div style={{ display: 'flex', height: '1000px' }}>
         {showYamlEditor && (
           <YamlEditor
             onYamlRevisionChange={value => {
@@ -73,6 +73,19 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttri
             inlineActions={inlineActionExample}
             themeConfig={themeConfig}
             selection={selection}
+            animateOnUpdate={true}
+            onAnimateEnd={() => {
+              console.log('animation ended')
+            }}
+            options={{
+              minimap: {
+                enabled: false
+              },
+              overviewRulerBorder: false,
+              overviewRulerLanes: 0,
+              scrollBeyondLastLine: false,
+              renderLineHighlight: 'none'
+            }}
           />
         )}
       </div>

@@ -1,0 +1,199 @@
+---
+title: ButtonWithOptions
+description: ButtonWithOptions component documentation
+---
+
+The `ButtonWithOptions` component provides a flexible UI element for displaying a button with a dropdown of options. It can behave as a radio button group if a `selectedValue` is provided, or as a regular dropdown otherwise.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="space-y-4">
+    <div className="mb-4">
+      <p className="text-lg font-bold">Default Button (Default Size)</p>
+      <ButtonWithOptions
+        id="primary-button-default"
+        handleButtonClick={Function}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={Function}
+        theme="default"
+      >
+        Primary Button
+      </ButtonWithOptions>
+    </div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Primary Button (Medium Size)</p>
+      <ButtonWithOptions
+        id="primary-button-md"
+        handleButtonClick={Function}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={Function}
+        theme="primary"
+        size="md"
+      >
+        Primary Button
+      </ButtonWithOptions>
+    </div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">primary Button (Loading)</p>
+      <ButtonWithOptions
+        id="primary-button-loading"
+        handleButtonClick={Function}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={Function}
+        theme="primary"
+        loading={true}
+      >
+        Loading....
+      </ButtonWithOptions>
+    </div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Error Button (Default Size)</p>
+      <ButtonWithOptions
+        id="error-button-default"
+        handleButtonClick={Function}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={Function}
+        theme="error"
+      >
+        Error Button
+      </ButtonWithOptions>
+    </div>
+    <div className="mb-4">
+      <p className="text-lg font-bold">Success Button (Default Size)</p>
+      <ButtonWithOptions
+        id="success-button-default"
+        handleButtonClick={Function}
+        options={[
+          { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+          { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+        ]}
+        handleOptionChange={Function}
+        theme="success"
+      >
+        Success Button
+      </ButtonWithOptions>
+    </div>
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ButtonWithOptions } from '@harnessio/ui/components'
+
+return (
+  <ButtonWithOptions
+    id="my-button"
+    handleButtonClick={handleClick}
+    options={[
+      { value: 'option1', label: 'Option 1', description: 'Description for option 1' },
+      { value: 'option2', label: 'Option 2', description: 'Description for option 2' },
+    ]}
+    handleOptionChange={handChangeOption}
+    theme="primary"
+  >
+    Primary Button
+  </ButtonWithOptions>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "Unique identifier for the component",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "handleButtonClick",
+      description: "Function to handle button click",
+      required: true,
+    },
+    {
+      name: "loading",
+      description: "Indicates if the button is in a loading state",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "selectedValue",
+      description: "Selected value for the radio button group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "options",
+      description: "Array of options to display in the dropdown",
+      required: true,
+    },
+    {
+      name: "handleOptionChange",
+      description: "Function to handle option change",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the component",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "buttonClassName",
+      description: "Additional class names to apply to the button",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "size",
+      description: "Size of the button",
+      required: false,
+      value: "'default' | 'md'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "theme",
+      description: "Theme of the button",
+      required: false,
+      value:
+        "'default' | 'primary' | 'error' | 'success' | 'disabled' | 'warning' | 'muted'",
+      defaultValue: "'primary'",
+    },
+    {
+      name: "disabled",
+      description: "Indicates if the button is disabled",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "children",
+      description: "Content to display inside the button",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "dropdownContentClassName",
+      description: "Additional class names to apply to the dropdown content",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

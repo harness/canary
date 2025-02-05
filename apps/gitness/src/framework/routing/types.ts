@@ -73,7 +73,9 @@ export enum RouteConstants {
   toProfileKeys = 'toProfileKeys',
   toProfileGeneral = 'toProfileGeneral',
   toRepoLabels = 'toRepoLabels',
-  toProjectLabels = 'toProjectLabels'
+  toProjectLabels = 'toProjectLabels',
+  toRepoWebhookDetails = 'toRepoWebhookDetails',
+  toRepoWebhookExecutions = 'toRepoWebhookExecutions'
 }
 
 export interface RouteEntry {

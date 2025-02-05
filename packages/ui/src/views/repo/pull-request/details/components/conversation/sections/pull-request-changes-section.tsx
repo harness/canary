@@ -58,7 +58,7 @@ interface HeaderItemProps {
   header: string
 }
 const HeaderItem: React.FC<HeaderItemProps> = ({ header }: HeaderItemProps) => {
-  return <span className="text-12 text-foreground-3">{header}</span>
+  return <span className="text-12 text-foreground-1">{header}</span>
 }
 
 const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps) => {
@@ -73,7 +73,7 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
                 return (
                   <Avatar key={owner?.id} className="size-6 rounded-full">
                     <AvatarFallback>
-                      <span className="text-12 text-foreground-3">
+                      <span className="text-12 text-foreground-1">
                         {owner?.display_name && getInitials(owner?.display_name)}
                       </span>
                     </AvatarFallback>
@@ -116,7 +116,7 @@ const PullRequestChangesSection = ({
     switch (status) {
       // TODO: fix icons to use from nucleo
       case 'pending':
-        return <Icon name="pending-clock" className="text-warning" />
+        return <Icon name="pending-clock" className="text-icons-alert" />
       case 'warning':
         return <Icon name="triangle-warning" className="text-tertiary-background" />
       case 'error':
@@ -184,7 +184,7 @@ const PullRequestChangesSection = ({
       ) {
         return (
           <div className="flex items-center gap-x-2">
-            <Icon name="pending-clock" className="text-warning" />
+            <Icon name="pending-clock" className="text-icons-alert" />
             <span className="text-14 text-foreground-1">
               Latest changes are pending approval from required reviewers
             </span>
@@ -222,6 +222,7 @@ const PullRequestChangesSection = ({
         }}
       >
         <StackedList.Field
+          className="gap-y-1"
           title={<LineTitle text={changesInfo.header} icon={getStatusIcon(changesInfo.status)} />}
           description={<LineDescription text={changesInfo.content} />}
         />

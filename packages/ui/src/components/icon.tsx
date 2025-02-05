@@ -28,6 +28,7 @@ import CancelGrey from '../icons/cancel-grey.svg'
 import Changes from '../icons/changes.svg'
 import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
+import CheckboxCircle from '../icons/checkbox-circle.svg'
 import Checkbox from '../icons/checkbox.svg'
 import Checklist from '../icons/checklist.svg'
 import Checks from '../icons/checks.svg'
@@ -67,6 +68,7 @@ import DevInsights from '../icons/dev-insights-icon.svg'
 import DevPortalGradient from '../icons/dev-portal-gradient.svg'
 import DevPortal from '../icons/dev-portal-icon.svg'
 import MoreDotsFill from '../icons/dots-icon.svg'
+import DoubleTick from '../icons/double-tick.svg'
 import Download from '../icons/download-icon.svg'
 import Edit from '../icons/edit-icon.svg'
 import Environment from '../icons/environment-icon.svg'
@@ -196,6 +198,7 @@ const IconNameMap = {
   'chevron-up': ChevronUp,
   'filter-list': FilterList,
   'info-circle': InfoCircle,
+  'double-tick': DoubleTick,
   play: Play,
   download: Download,
   clock: Clock,
@@ -379,7 +382,8 @@ const IconNameMap = {
   'repo-icon': RepoIcon,
   arrow: Arrow,
   'arrow-short': ArrowShort,
-  'bold-plus': BoldPlus
+  'bold-plus': BoldPlus,
+  'checkbox-circle': CheckboxCircle
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

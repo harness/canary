@@ -33,7 +33,7 @@ const RadioButton = forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        `flex items-center justify-center relative border-icons-1 text-icons-5 aspect-square h-4 w-4 rounded-full border shadow
+        `flex items-center justify-center relative border-icons-1 text-icons-5 aspect-square h-4 w-4 rounded-full border
         hover:border-icons-3
         data-[state=checked]:border-icons-2 
         focus-visible:rounded-full

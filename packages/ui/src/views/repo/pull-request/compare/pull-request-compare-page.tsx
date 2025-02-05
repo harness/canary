@@ -96,6 +96,8 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   desc?: string
   setDesc: (desc: string) => void
   isFetchingCommits?: boolean
+  jumpToDiff: string
+  setJumpToDiff: (fileName: string) => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -132,7 +134,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   handleUpload,
   desc,
   setDesc,
-  isFetchingCommits
+  isFetchingCommits,
+  jumpToDiff,
+  setJumpToDiff
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -434,6 +438,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     currentUser={currentUser}
                     diffStats={diffStats}
                     useTranslationStore={useTranslationStore}
+                    jumpToDiff={jumpToDiff}
+                    setJumpToDiff={setJumpToDiff}
                   />
                 ) : (
                   <NoData

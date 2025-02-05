@@ -44,6 +44,7 @@ interface TimelineItemProps {
   handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
   onQuoteReply?: (parentId: number, rawText: string) => void
   quoteReplyText?: string
+  hideEditDelete?: boolean
 }
 
 interface ItemHeaderProps {
@@ -59,6 +60,7 @@ interface ItemHeaderProps {
   isDeleted?: boolean
   isNotCodeComment?: boolean
   onQuoteReply?: () => void
+  hideEditDelete?: boolean
 }
 
 const ItemHeader: FC<ItemHeaderProps> = memo(
@@ -74,50 +76,45 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     handleDeleteComment,
     isDeleted = false,
     isNotCodeComment = false,
-    onQuoteReply
+    onQuoteReply,
+    hideEditDelete
   }) => {
     const renderMenu = () => {
       // We only show the menu if it's an actual comment and not deleted
       if (!isComment || isDeleted) return null
       return (
         <DropdownMenu.Root>
-          <DropdownMenu.Trigger asChild>
-            <Button size="sm" variant="ghost" className="rotate-90 px-2 py-1">
-              <Icon name="vertical-ellipsis" size={12} />
-            </Button>
+          <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
+            <Icon
+              className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
+              name="more-dots-fill"
+              size={12}
+            />
           </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-[180px] rounded-[10px] border bg-background-2 py-2 shadow-sm">
+          <DropdownMenu.Content className="w-[216px]" align="end">
             <DropdownMenu.Group>
-              <DropdownMenu.Item onClick={onEditClick} className="cursor-pointer">
-                <DropdownMenu.Shortcut className="ml-0" />
-                Edit
-              </DropdownMenu.Item>
+              {!hideEditDelete ? <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item> : null}
               <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
                 }}
-                className="cursor-pointer"
               >
-                <DropdownMenu.Shortcut className="ml-0" />
                 Quote reply
               </DropdownMenu.Item>
-              <DropdownMenu.Item className="cursor-pointer" onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
-                <DropdownMenu.Shortcut className="ml-0" />
-                Copy Link
+              <DropdownMenu.Item onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
+                Copy link to comment
               </DropdownMenu.Item>
-              <DropdownMenu.Separator />
-              <DropdownMenu.Item
-                className="cursor-pointer text-destructive"
-                onClick={ev => {
-                  ev.stopPropagation()
-                  handleDeleteComment?.()
-                }}
-              >
-                <DropdownMenu.Shortcut className="ml-0">
-                  <Icon name="trash" className="mr-2 text-destructive" />
-                </DropdownMenu.Shortcut>
-                Delete
-              </DropdownMenu.Item>
+              {!hideEditDelete ? (
+                <DropdownMenu.Item
+                  className="text-foreground-danger hover:text-foreground-danger"
+                  onClick={ev => {
+                    ev.stopPropagation()
+                    handleDeleteComment?.()
+                  }}
+                >
+                  Delete comment
+                </DropdownMenu.Item>
+              ) : null}
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
@@ -176,7 +173,8 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   data,
   handleUpload,
   onQuoteReply,
-  quoteReplyText
+  quoteReplyText,
+  hideEditDelete
 }) => {
   const [comment, setComment] = useState('')
   const [isExpanded, setIsExpanded] = useState(!isResolved)
@@ -236,6 +234,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                   setHideReplyHere?.(true)
                   if (parentCommentId) onQuoteReply?.(parentCommentId, data ?? '')
                 }}
+                hideEditDelete={hideEditDelete}
               />
               {isResolved && !contentHeader && (
                 <Button
@@ -255,7 +254,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
               {contentHeader && (
                 <div
-                  className={cn('flex w-full items-center justify-between p-4 bg-background-2', {
+                  className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-background-2', {
                     'pr-1.5': isResolved
                   })}
                 >
@@ -312,7 +311,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       {currentUser ? (
                         <Avatar className="size-6 rounded-full p-0">
                           <AvatarFallback>
-                            <span className="text-12 text-foreground-3">{getInitials(currentUser ?? '', 2)}</span>
+                            <span className="text-12 text-foreground-1">{getInitials(currentUser ?? '', 2)}</span>
                           </AvatarFallback>
                         </Avatar>
                       ) : null}

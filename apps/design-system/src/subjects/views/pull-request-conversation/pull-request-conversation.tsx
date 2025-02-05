@@ -7,6 +7,8 @@ import {
   CommitSuggestion,
   EnumCheckStatus,
   EnumPullReqReviewDecision,
+  ILabelType,
+  LabelAssignmentType,
   PullReqReviewDecision,
   PullRequestCommentBox,
   PullRequestFilters,
@@ -22,7 +24,6 @@ import {
 
 import {
   changesInfoData,
-  Label,
   mockActivities,
   mockLabelList,
   mockPrLabels,
@@ -85,11 +86,12 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
 
   const searchReviewers = ''
 
-  const labelsList: Label[] = state === 'complex-1' ? mockLabelList : []
-  const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as Label[] }
+  const labelsList: ILabelType[] = state === 'complex-1' ? mockLabelList : []
+  const PRLabels = state === 'complex-1' ? mockPrLabels : { label_data: [] as LabelAssignmentType[] }
   const searchLabel = ''
   const pullReqMetadata = { source_sha: '' }
   const reviewers = state === 'complex-1' ? mockReviewers : undefined
+
   return (
     <>
       <CommitSuggestionsDialog
@@ -236,26 +238,12 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
               reviewers={reviewers}
               searchQuery={searchReviewers}
               setSearchQuery={noop}
-              labelsList={labelsList?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
-              PRLabels={PRLabels?.label_data?.map(label => {
-                return {
-                  id: label.id,
-                  key: label.key,
-                  color: label.color
-                }
-              })}
+              labelsList={labelsList}
+              PRLabels={PRLabels?.label_data}
               searchLabelQuery={searchLabel}
               setSearchLabelQuery={noop}
               addLabel={noop}
               removeLabel={noop}
-              addLabelError={undefined}
-              removeLabelError={undefined}
               useTranslationStore={useTranslationsStore}
             />
           </SandboxLayout.Content>

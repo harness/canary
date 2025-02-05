@@ -63,7 +63,7 @@ const List: React.FC<ListProps> = ({
 }) => (
   <div
     className={cn(
-      'w-full',
+      'w-full bg-background-surface',
       'border [&>div:last-child]:border-0',
       '[&>*:first-child_>.stacked-list-item]:rounded-t-md [&>.stacked-list-item:first-child]:rounded-t-md',
       {
@@ -104,7 +104,7 @@ const ListItem = ({
         className,
         isLast ? 'border-none' : 'border-b',
         isHeader ? 'bg-background-2' : '',
-        disableHover ? '' : 'hover:bg-background-2 cursor-pointer duration-150 ease-in-out'
+        disableHover ? '' : 'hover:bg-background-4 cursor-pointer duration-150 ease-in-out'
       )}
       {...props}
     >

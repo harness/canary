@@ -1,5 +1,3 @@
-import { Icon } from '@components/icon'
-
 import {
   AnyContainerNodeType,
   LeafContainerNodeType,
@@ -20,7 +18,10 @@ import { getNameBasedOnStep } from './step-name-utils'
 
 export const yaml2Nodes = (
   yamlObject: Record<string, any>,
-  options: { selectedPath?: string } = {}
+  options: {
+    selectedPath?: string
+    getStepIcon?: (step: Record<string, any>) => JSX.Element
+  } = {}
 ): AnyContainerNodeType[] => {
   const nodes: AnyContainerNodeType[] = []
 
@@ -43,7 +44,10 @@ const getGroupKey = (stage: Record<string, any>): 'group' | 'parallel' | undefin
 const processStages = (
   stages: any[],
   currentPath: string,
-  options: { selectedPath?: string }
+  options: {
+    selectedPath?: string
+    getStepIcon?: (step: Record<string, any>) => JSX.Element
+  }
 ): AnyContainerNodeType[] => {
   return stages.map((stage, idx) => {
     // parallel stage
@@ -123,7 +127,10 @@ const processStages = (
 const processSteps = (
   steps: any[],
   currentPath: string,
-  options: { selectedPath?: string }
+  options: {
+    selectedPath?: string
+    getStepIcon?: (step: Record<string, any>) => JSX.Element
+  }
 ): AnyContainerNodeType[] => {
   return steps.map((step, idx) => {
     // parallel stage
@@ -187,7 +194,8 @@ const processSteps = (
           yamlPath: path,
           yamlEntityType: YamlEntityType.Step,
           name,
-          icon: <Icon className="m-2 size-8" name={getIconBasedOnStep(step)} />,
+          icon: options.getStepIcon?.(step) ?? getIconBasedOnStep(step),
+
           selected: path === options?.selectedPath
         } satisfies StepNodeDataType
       } satisfies LeafContainerNodeType

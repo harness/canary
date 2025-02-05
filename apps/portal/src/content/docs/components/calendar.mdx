@@ -1,0 +1,133 @@
+---
+title: Calendar
+description: Calendar component documentation
+---
+
+The `Calendar` component provides a flexible UI element for displaying a date picker. It includes several customizations for styling and functionality.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [selectedDate, setSelectedDate] = React.useState<Date | undefined>([new Date()]);
+
+    return (
+      <Calendar
+        mode="range"
+        selected={selectedDate}
+        onSelect={setSelectedDate}
+        showOutsideDays
+        fromDate={new Date().setDate(new Date().getDate() - 10)}
+        toDate={new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn={1}
+      />
+    );
+
+};
+`}
+/>
+
+## Usage
+
+```typescript jsx
+import { useState } from 'react';
+import { Calendar } from '@harnessio/ui/components';
+
+const CalendarExample = () => {
+  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
+
+  return (
+      <Calendar
+        mode="range"
+        selected={selectedDate}
+        onSelect={setSelectedDate}
+        showOutsideDays
+        fromDate={new Date().setDate(new Date().getDate() - 10)}
+        toDate={new Date().setDate(new Date().getDate() + 10)}
+        weekStartsOn={1}
+      />
+    );
+};
+
+export default CalendarExample;
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "mode",
+      description: "The selection mode for the calendar",
+      required: false,
+      value: "'single' | 'multiple' | 'range'",
+      defaultValue: "'single'",
+    },
+    {
+      name: "selected",
+      description: "The currently selected date(s)",
+      required: false,
+      value: "Date | Date[] | { from: Date; to: Date }",
+    },
+    {
+      name: "onSelect",
+      description: "Function to handle date selection",
+      required: false,
+      value: "(date: Date | Date[] | { from: Date; to: Date }) => void",
+    },
+    {
+      name: "showOutsideDays",
+      description: "Whether to show days from adjacent months",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the calendar",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "classNames",
+      description: "Custom class names for various parts of the calendar",
+      required: false,
+    },
+    {
+      name: "components",
+      description: "Custom components for various parts of the calendar",
+      required: false,
+    },
+    {
+      name: "disabled",
+      description: "Dates that should be disabled",
+      required: false,
+      value: "Date | Date[] | { from: Date; to: Date }",
+    },
+    {
+      name: "fromDate",
+      description: "The earliest date that can be selected",
+      required: false,
+      value: "Date",
+    },
+    {
+      name: "toDate",
+      description: "The latest date that can be selected",
+      required: false,
+      value: "Date",
+    },
+    {
+      name: "locale",
+      description: "The locale to use for the calendar",
+      required: false,
+      value: "Locale",
+    },
+    {
+      name: "weekStartsOn",
+      description: "The day the week starts on",
+      required: false,
+      value: "0 | 1 | 2 | 3 | 4 | 5 | 6",
+    },
+  ]}
+/>

@@ -61,7 +61,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content>
         <Text size={5} weight={'medium'}>
           Commits

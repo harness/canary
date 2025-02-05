@@ -29,7 +29,7 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
       <DropdownMenu.Trigger asChild>
         <Button className="items-center gap-x-2 pl-5 pr-2.5">
           {t('views:repos.cloneRepo', 'Clone repository')}
-          <Icon name="chevron-down" size={12} className="text-icons-5" />
+          <Icon name="chevron-down" size={12} className="text-foreground-6" />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content className="w-[328px] p-0 shadow-2" align="end">

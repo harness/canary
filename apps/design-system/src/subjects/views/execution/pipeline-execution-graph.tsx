@@ -18,7 +18,7 @@ import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionInfo } from '@harnessio/ui/views'
+import { ExecutionInfo, LivelogLine, StageProps } from '@harnessio/ui/views'
 
 import { logs, stages } from './mocks/mock-data'
 
@@ -51,8 +51,13 @@ interface NodeProps {
   readonly?: boolean
 }
 
+interface DataProps {
+  stage: StageProps
+  logs: LivelogLine[]
+}
+
 // * step node
-export interface StepNodeDataType {
+export interface StepNodeDataType extends DataProps {
   name?: string
   icon?: React.ReactElement
   selected?: boolean
@@ -64,7 +69,7 @@ export function StepNodeComponent({
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
-  const { name, icon } = node.data
+  const { name, icon, logs, stage } = node.data
 
   return (
     <Drawer.Root direction="right">
@@ -83,7 +88,7 @@ export function StepNodeComponent({
             onDownload={() => {}}
             onEdit={() => {}}
             selectedStepIdx={0}
-            stage={stages[0]}
+            stage={stage}
           />
         </div>
         <Drawer.Footer>
@@ -252,7 +257,9 @@ const data: AnyContainerNodeType[] = [
     type: ContentNodeTypes.step,
     data: {
       name: 'Step 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      logs: logs,
+      stage: stages[0]
     } satisfies StepNodeDataType,
     config: {
       width: 160,

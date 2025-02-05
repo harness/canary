@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 
 import { Dialog, Icon, Select, SelectContent, SelectItem, Separator } from '@/components'
-import DarkModeImage from '@/svgs/theme-dark.svg'
-import LightModeImage from '@/svgs/theme-light.svg'
+import darkModeImage from '@/svgs/theme-dark.png'
+import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
 
 import { AccentColor, ColorAdjustment, Contrast, GrayColor, Mode, ThemeDialogProps } from './types'
@@ -44,7 +44,6 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
             </p>
             <div className="mt-[18px] grid grid-cols-2 gap-x-4">
               {Object.values(Mode).map(item => {
-                const Image = item === Mode.Dark ? DarkModeImage : LightModeImage
                 return (
                   <button
                     className="flex flex-col gap-y-2 focus-visible:outline-none"
@@ -55,7 +54,9 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                     }}
                   >
                     <div className="relative">
-                      <Image
+                      <img
+                        src={item === Mode.Dark ? darkModeImage : lightModeImage}
+                        alt=""
                         className={cn(
                           'w-full h-auto rounded border',
                           mode === item ? 'border-borders-8' : 'border-borders-4'
@@ -70,8 +71,8 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                           backgroundColor:
                             accentColor === AccentColor.White
                               ? item === Mode.Light
-                                ? '#484851'
-                                : '#A3A3B2'
+                                ? 'hsla(240, 6%, 40%, 1)'
+                                : 'hsla(240, 9%, 67%, 1)'
                               : accentColor
                         }}
                         aria-hidden
@@ -164,7 +165,10 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                   }}
                 >
                   <span
-                    style={{ backgroundColor: item === AccentColor.White && mode === Mode.Light ? '#484851' : item }}
+                    style={{
+                      backgroundColor:
+                        item === AccentColor.White && mode === Mode.Light ? 'hsla(240, 6%, 40%, 1)' : item
+                    }}
                     className="m-auto block size-[18px] rounded-full"
                   />
                 </button>

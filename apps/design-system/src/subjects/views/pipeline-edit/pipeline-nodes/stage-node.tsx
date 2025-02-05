@@ -70,7 +70,7 @@ export function StageNode(props: StageNodeProps) {
           onMouseDown={e => e.stopPropagation()}
           onClick={onEllipsisClick}
         >
-          <Icon name="ellipsis" size={15} />
+          <Icon className="text-icons-2" name="more-dots-fill" size={12} />
         </Button>
       )}
 

@@ -21,8 +21,8 @@ export function CollapsedGroupNode({
 
   if (nodesToShow.length === 0) return null
 
-  const bottomProp = ['-10px', '-20px']
-  const opacityProp = ['0.85', '0.7']
+  const bottomProp = ['-8px', '-16px']
+  const opacityProp = ['0.6', '0.35']
   const zIndexProp = ['-1', '-2']
 
   const firstNode = nodesToShow.shift()
@@ -53,8 +53,8 @@ export function CollapsedGroupNode({
               [containerNodeType === 'parallel' ? 'bottom' : 'right']: bottomProp[idx],
               zIndex: zIndexProp[idx],
               opacity: opacityProp[idx],
-              [containerNodeType === 'parallel' ? 'left' : 'top']: 10 * idx + 10 + 'px',
-              [containerNodeType === 'parallel' ? 'right' : 'bottom']: 10 * idx + 10 + 'px',
+              [containerNodeType === 'parallel' ? 'left' : 'top']: 5 * idx + 5 + 'px',
+              [containerNodeType === 'parallel' ? 'right' : 'bottom']: 5 * idx + 5 + 'px',
               [containerNodeType === 'parallel' ? 'height' : 'width']: '100%'
             }}
           >
@@ -76,10 +76,10 @@ function StackedNode({ state }: { state: string }) {
       <div
         role="button"
         tabIndex={0}
-        className={cn('box size-full rounded-md border bg-primary-foreground cursor-pointer border-borders-2', {
+        className={cn('box size-full rounded-md border bg-background-3 cursor-pointer shadow-1', {
           'border-success': state === 'success',
-          'card-wrapper-warning': state === 'warning',
-          'card-wrapper-error': state === 'error'
+          'border-borders-alert': state === 'warning',
+          'border-borders-danger': state === 'error'
         })}
       ></div>
     </div>

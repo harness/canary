@@ -3,7 +3,7 @@ import { useMemo } from 'react'
 import { CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 import { CanvasControls, PipelineStudioNodeContextMenu, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
 
-import { executionMock } from './mocks/pipelineExecutionMock'
+import { executionMock, parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
 import { contentNodeFactory } from './nodes-factory'
 
 const PipelineExecution = () => {
@@ -33,22 +33,10 @@ const PipelineExecutionInner = () => {
     <div className="relative flex h-screen grow">
       <CanvasProvider config={{ maxScale: 1 }}>
         <PipelineGraph
-          parallelContainerConfig={{
-            paddingLeft: 36,
-            paddingRight: 36,
-            paddingBottom: 23,
-            paddingTop: 60,
-            nodeGap: 40
-          }}
-          serialContainerConfig={{
-            paddingLeft: 36,
-            paddingRight: 36,
-            paddingBottom: 23,
-            paddingTop: 60,
-            nodeGap: 40
-          }}
           data={executionMock}
           nodes={nodes}
+          serialContainerConfig={serialContainerConfig}
+          parallelContainerConfig={parallelContainerConfig}
           customCreateSVGPath={props => {
             const { id, path, targetNode /* pathLength */ } = props
 

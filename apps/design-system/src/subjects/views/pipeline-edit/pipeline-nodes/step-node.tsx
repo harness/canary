@@ -1,4 +1,4 @@
-import { Button, Icon, Text } from '@harnessio/ui/components'
+import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import './step-node.css'
@@ -30,25 +30,30 @@ export function StepNode(props: StepNodeProps) {
 
   return (
     <>
-      <ExecutionStatus nodeData={nodeData} align="right" />
+      <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn({
+        className={cn('w-[200px]', {
           'card-wrapper': nodeData.state === 'executing'
         })}
       >
         <div
           role="button"
           tabIndex={0}
-          className={cn('box size-full rounded-md border bg-primary-foreground cursor-pointer', {
-            'border-borders-2': !selected,
-            'border-borders-3': selected,
-            'border-success': nodeData.state === 'success',
-            'card-wrapper-warning': nodeData.state === 'warning',
-            'card-wrapper-error': nodeData.state === 'error'
-          })}
+          className={cn(
+            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-background-8 cursor-pointer px-2.5 pt-2.5 pb-3 shadow-1',
+            {
+              'border-borders-2': !selected,
+              'border-borders-3': selected,
+              'border-success': nodeData.state === 'success',
+              'border-borders-alert': nodeData.state === 'warning',
+              'border-borders-danger': nodeData.state === 'error',
+              'border-0': nodeData.state === 'executing'
+            }
+          )}
           onClick={onClick}
         >
+          <div className="bg-graph-gradient-1 pointer-events-none absolute left-0 top-0 size-full" />
           {onEllipsisClick && (
             <Button
               className="absolute right-2 top-2"
@@ -57,7 +62,7 @@ export function StepNode(props: StepNodeProps) {
               onMouseDown={e => e.stopPropagation()}
               onClick={onEllipsisClick}
             >
-              <Icon name="ellipsis" size={15} />
+              <Icon className="text-icons-2" name="more-dots-fill" size={12} />
             </Button>
           )}
           {isFirst && (
@@ -76,10 +81,8 @@ export function StepNode(props: StepNodeProps) {
               onAddClick?.('after', e)
             }}
           />
-          <div>{icon}</div>
-          <Text title={name} className="text-primary m-2 line-clamp-2">
-            {name}
-          </Text>
+          {!!icon && <div className="mb-0.5">{icon}</div>}
+          <span className="text-foreground-1 text-14 line-clamp-2 leading-snug">{name}</span>
           {nodeData.warningMessage && <WarningLabel>{nodeData.warningMessage}</WarningLabel>}
         </div>
       </div>

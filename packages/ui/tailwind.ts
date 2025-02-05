@@ -327,6 +327,23 @@ export default {
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
       },
+      borderColor: {
+        'borders-1': 'hsl(var(--canary-border-01))',
+        'borders-2': 'hsl(var(--canary-border-02))',
+        'borders-3': 'hsl(var(--canary-border-03))',
+        'borders-4': 'hsl(var(--canary-border-04))',
+        'borders-5': 'hsl(var(--canary-border-05))',
+        'borders-6': 'hsl(var(--canary-border-06))',
+        'borders-7': 'hsl(var(--canary-border-07))',
+        'borders-8': 'hsl(var(--canary-border-08))',
+        'borders-9': 'hsl(var(--canary-border-09))',
+        'borders-10': 'hsl(var(--canary-border-10))',
+        'borders-danger': 'hsl(var(--canary-border-danger))',
+        'borders-success': 'hsl(var(--canary-border-success))',
+        'borders-accent': 'hsl(var(--canary-border-accent))',
+        'borders-risk': 'hsl(var(--canary-icon-risk))',
+        'borders-alert': 'hsl(var(--canary-border-alert))'
+      },
       borderRadius: {
         10: '0.625rem'
       },
@@ -362,7 +379,9 @@ export default {
         'navbar-gradient-4':
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-gradient-4-1)) 0%, hsla(var(--canary-nav-gradient-4-2)) 100%)',
         'navbar-item-gradient':
-          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)'
+          'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
+        'graph-gradient-1':
+            'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)'
       },
       keyframes: {
         'accordion-down': {
@@ -407,6 +426,10 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
+    { pattern: /^border-borders-/ },
+    { pattern: /^bg-graph-gradient-/ },
+    { pattern: /^text-foreground-/ },
+    { pattern: /^bg-background-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system

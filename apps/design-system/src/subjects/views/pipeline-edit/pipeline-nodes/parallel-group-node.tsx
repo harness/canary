@@ -40,6 +40,8 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
 
   const nodeData = node.data
 
+  // console.log(name)
+
   return (
     <>
       <ExecutionStatus nodeData={nodeData} />
@@ -70,7 +72,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         onMouseDown={e => e.stopPropagation()}
         onClick={onEllipsisClick}
       >
-        <Icon name="ellipsis" size={15} />
+        <Icon className="text-icons-2" name="more-dots-fill" size={12} />
       </Button>
 
       {!collapsed && isEmpty && (

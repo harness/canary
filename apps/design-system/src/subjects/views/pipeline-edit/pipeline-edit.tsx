@@ -10,6 +10,7 @@ import {
   YamlEntityType
 } from '@harnessio/ui/views'
 
+import { parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
 import { pipelineYaml1 } from './mocks/pipelineYaml1'
 import { contentNodeFactory } from './nodes-factory'
 import PipelineExecution from './pipeline-execution'
@@ -111,6 +112,8 @@ const PipelineStudioWrapper = () => {
           view={view}
           selectedPath={selectedPath}
           contentNodeFactory={contentNodeFactory}
+          serialContainerConfig={serialContainerConfig}
+          parallelContainerConfig={parallelContainerConfig}
           // getStepIcon={step => {
           //   console.log(step)
           //   const iconsNames: IconProps['name'][] = ['run', 'run-test', 'branch', 'artifacts']

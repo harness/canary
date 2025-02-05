@@ -79,7 +79,7 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
         <Drawer.Header>
           <Drawer.Title>Logs</Drawer.Title>
           <Drawer.Description>{`View ${name} execution logs`}</Drawer.Description>
@@ -132,13 +132,13 @@ export function ApprovalStepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
-      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
         <div className="flex flex-col gap-4">
           <Drawer.Header>
             <Drawer.Title>Approval</Drawer.Title>
             <Drawer.Description>Approve/Reject step execution</Drawer.Description>
           </Drawer.Header>
-          <div className="flex gap-2 justify-center">
+          <div className="flex justify-center gap-2">
             <Button type="submit">Approve</Button>
             <Button variant="secondary">Cancel</Button>
           </div>

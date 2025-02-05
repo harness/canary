@@ -38,6 +38,9 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     node
   } = props
 
+  // console.log(name)
+  // console.log(node)
+
   const nodeData = node.data
 
   return (
@@ -45,8 +48,8 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn('absolute inset-0 -z-10 border-dashed rounded-md border', {
-          'border-borders-2': !selected,
+        className={cn('absolute inset-0 -z-10 rounded-md border bg-background-1', {
+          'border-borders-4': !selected,
           'border-borders-3': selected
         })}
       />
@@ -70,7 +73,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         onMouseDown={e => e.stopPropagation()}
         onClick={onEllipsisClick}
       >
-        <Icon name="ellipsis" size={15} />
+        <Icon className="text-icons-2" name="more-dots-fill" size={12} />
       </Button>
 
       {!collapsed && isEmpty && (

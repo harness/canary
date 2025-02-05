@@ -4,7 +4,8 @@ import { ContentNodeFactory, YamlRevision } from '../pipeline-studio'
 import { PipelineStudioGraphView, PipelineStudioGraphViewProps } from './pipeline-studio-graph-view'
 import { PipelineStudioYamlView, PipelineStudioYamlViewProps } from './pipeline-studio-yaml-view'
 
-export interface PipelineStudioInternalProps {
+export interface PipelineStudioInternalProps
+  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
@@ -26,7 +27,9 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
     onErrorChange,
     getStepIcon,
     animateYamlOnUpdate: animateOnUpdate,
-    onYamlAnimateEnd: onAnimateEnd
+    onYamlAnimateEnd: onAnimateEnd,
+    serialContainerConfig,
+    parallelContainerConfig
   } = props
 
   return view === 'graph' ? (
@@ -35,6 +38,8 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
       yamlRevision={yamlRevision}
       onYamlRevisionChange={onYamlRevisionChange}
       getStepIcon={getStepIcon}
+      serialContainerConfig={serialContainerConfig}
+      parallelContainerConfig={parallelContainerConfig}
     />
   ) : (
     <YamlEditorContextProvider>

@@ -1,3 +1,5 @@
+import { PipelineStudioGraphViewProps } from '@views/pipeline-edit/components/pipeline-studio-graph-view'
+
 import { NodeContent } from '@harnessio/pipeline-graph'
 
 import { ContentNodeType } from './components/graph-implementation/types/content-node-type'
@@ -28,7 +30,8 @@ export interface YamlRevision {
   revision?: number
 }
 
-export interface PipelineStudioProps {
+export interface PipelineStudioProps
+  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision

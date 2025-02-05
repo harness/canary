@@ -4,7 +4,7 @@ import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <ExecutionTabs />
       <ExecutionHeader
         commitName="8fbru3ix"

@@ -438,6 +438,12 @@
     --canary-label-background-mint-01: hsla(155, 100%, 65%, 0.12);
     --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
     --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
+    --canary-graph-gradient-executing-1: hsla(220, 100%, 85%, 0.2);
+    --canary-graph-gradient-executing-2: hsla(220, 100%, 85%, 1);
   }
 
   /* Need .light and .dark classes for MFE */
@@ -659,6 +665,10 @@
     --canary-box-shadow-2: var(--canary-base-chrome-300) / 0.12;
     --canary-box-shadow-pagination: var(--canary-base-chrome-300) / 0.12;
     --shadow-sm: var(--canary-base-chrome-100);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -905,6 +915,10 @@
     --canary-box-shadow-2: var(--canary-base-chrome-300) / 0.12;
     --canary-box-shadow-pagination: var(--canary-base-chrome-300) / 0.12;
     --shadow-sm: var(--canary-base-chrome-100);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
   }
 
   .dark,
@@ -1127,6 +1141,10 @@
     --canary-label-background-mint-01: hsla(155, 100%, 65%, 0.12);
     --canary-label-foreground-lime-01: hsla(90, 100%, 75%, 1);
     --canary-label-background-lime-01: hsla(90, 100%, 75%, 0.12);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
   }
 
   .dark-std-high {
@@ -1345,6 +1363,10 @@
     --canary-box-shadow-2: var(--canary-base-chrome-black) / 0.6;
     --canary-box-shadow-pagination: var(--canary-base-chrome-black) / 0.5;
     --shadow-sm: 0px 1px 6px 0px var(--canary-base-chrome-black);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1588,5 +1610,9 @@
     --canary-box-shadow-2: var(--canary-base-chrome-black) / 0.6;
     --canary-box-shadow-pagination: var(--canary-base-chrome-black) / 0.5;
     --shadow-sm: 0px 1px 6px 0px var(--canary-base-chrome-black);
+
+    /* Graph */
+    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
+    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
   }
 }

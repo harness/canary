@@ -1,6 +1,6 @@
 import { FC, useCallback } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { PullRequestComparePage, PullRequestComparePageProps } from '@harnessio/ui/views'
 
@@ -61,7 +61,7 @@ const PullRequestCompareWrapper: FC<Partial<PullRequestComparePageProps>> = prop
       useRepoCommitsStore={useRepoCommitsListStore}
       searchCommitQuery={null}
       setSearchCommitQuery={noop}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
       isLoading={false}
       searchSourceQuery=""
       setSearchSourceQuery={noop}

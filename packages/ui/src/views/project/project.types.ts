@@ -21,7 +21,9 @@ export interface TypesSpace {
 
 export interface ISpaceStore {
   space: TypesSpace | null
+  isLoading: boolean
   setSpace: (space: TypesSpace | null) => void
+  setIsLoading: (isLoading: boolean) => void
 }
 
 export interface IMemberListStore {

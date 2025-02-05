@@ -4,5 +4,7 @@ import { ISpaceStore } from '@harnessio/ui/views'
 
 export const useSpaceStore = create<ISpaceStore>(set => ({
   space: null,
-  setSpace: space => set({ space })
+  isLoading: false,
+  setSpace: space => set({ space }),
+  setIsLoading: isLoading => set({ isLoading })
 }))

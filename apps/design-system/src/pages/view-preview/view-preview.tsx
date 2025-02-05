@@ -16,6 +16,7 @@ import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import { ProfileSettingsView } from '@subjects/views/profile-settings'
 import { ProfileSettingsKeysView } from '@subjects/views/profile-settings-keys'
+import { ProjectSettingsView } from '@subjects/views/project-settings/project-settings'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestChangesWrapper from '@subjects/views/pull-request-conversation/pull-request-changes-wrapper'
 import PullRequestCommits from '@subjects/views/pull-request-conversation/pull-request-commits'
@@ -39,7 +40,7 @@ import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhoo
 import { SignInView } from '@subjects/views/signin'
 import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
@@ -225,7 +226,7 @@ export const viewPreviews: Record<string, ReactNode> = {
   'rule-not-found': (
     <RepoViewWrapper>
       <RepoSettingsViewWrapper>
-        <NotFoundPage useTranslationStore={useTranslationsStore} pageTypeText="rules" />
+        <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
       </RepoSettingsViewWrapper>
     </RepoViewWrapper>
   ),
@@ -244,6 +245,11 @@ export const viewPreviews: Record<string, ReactNode> = {
   'space-settings-members': (
     <ProjectSettingsWrapper>
       <SpaceSettingsMembers />
+    </ProjectSettingsWrapper>
+  ),
+  'project-settings': (
+    <ProjectSettingsWrapper>
+      <ProjectSettingsView />
     </ProjectSettingsWrapper>
   ),
   'profile-settings': (

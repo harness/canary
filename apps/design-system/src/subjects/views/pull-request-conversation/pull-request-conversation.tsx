@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren } from 'react'
 
 import { usePrFilters } from '@subjects/views/pull-request-conversation/hooks/use-pr-filters'
-import { noop, useTranslationsStore } from '@utils/viewUtils'
+import { noop, useTranslationStore } from '@utils/viewUtils'
 
 import { CommitSuggestionsDialog } from '@harnessio/ui/components'
 import {
@@ -88,7 +88,7 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
       <PullRequestConversationPage
         rebaseErrorMessage={null}
         filtersProps={filtersData}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         panelProps={{
           handleRebaseBranch,
           handlePrState,

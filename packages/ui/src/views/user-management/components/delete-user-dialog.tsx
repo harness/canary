@@ -29,8 +29,8 @@ export const DeleteUserDialog: React.FC<IDeleteDialogProps> = ({
           )}
 
           <Button
-            size="default"
             theme="error"
+            variant="destructive"
             className="self-start"
             onClick={() => {
               handleDeleteUser(user!.uid ?? '')

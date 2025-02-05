@@ -18,6 +18,7 @@ import usePageTitle from '../hooks/usePageTitle'
 
 interface AppContextType {
   spaces: TypesSpace[]
+  isSpacesLoading: boolean
   setSpaces: (value: TypesSpace[]) => void
   addSpaces: (newSpaces: TypesSpace[]) => void
   currentUser?: TypesUser
@@ -34,6 +35,7 @@ interface AppContextType {
 
 const AppContext = createContext<AppContextType>({
   spaces: [],
+  isSpacesLoading: false,
   setSpaces: noop,
   addSpaces: noop,
   currentUser: undefined,
@@ -48,6 +50,7 @@ const AppContext = createContext<AppContextType>({
 export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
   usePageTitle()
   const [spaces, setSpaces] = useState<TypesSpace[]>([])
+  const [isSpacesLoading, setSpacesIsLoading] = useState(false)
   const [currentUser, setCurrentUser] = useLocalStorage<TypesUser>('currentUser', {})
   const [isLoadingUser, setIsLoadingUser] = useState(false)
   const [isUpdatingUser, setIsUpdatingUser] = useState(false)
@@ -91,6 +94,7 @@ export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }
 
   useEffect(() => {
+    setSpacesIsLoading(true)
     Promise.allSettled([
       membershipSpaces({
         queryParams: { page: 1, limit: 100, sort: 'identifier', order: 'asc' }
@@ -106,6 +110,9 @@ export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
       })
       .catch(() => {
         // Optionally handle error or show toast
+      })
+      .finally(() => {
+        setSpacesIsLoading(false)
       })
   }, [])
 
@@ -125,7 +132,8 @@ export const AppProvider: FC<{ children: ReactNode }> = ({ children }) => {
         updateUserProfile,
         isLoadingUser,
         isUpdatingUser,
-        updateUserError
+        updateUserError,
+        isSpacesLoading
       }}
     >
       {children}

@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Button,

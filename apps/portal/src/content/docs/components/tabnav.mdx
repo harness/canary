@@ -10,9 +10,9 @@ import { DocsPage } from "@/components/docs-page";
 <DocsPage.ComponentExample
   client:only
   code={`<TabNav.Root>
-  <TabNav.Item to="/home" label="Home" />
-  <TabNav.Item to="/about" label="About" />
-  <TabNav.Item to="/contact" label="Contact" />
+  <TabNav.Item to="/home">Home</TabNav.Item>
+  <TabNav.Item to="/about">About</TabNav.Item>
+  <TabNav.Item to="/contact">Contact</TabNav.Item>
 </TabNav.Root>`}
 />
 
@@ -25,9 +25,9 @@ import { TabNav } from '@harnessio/ui/components'
 
 return (
   <TabNav.Root>
-    <TabNav.Item to="/home" label="Home" />
-    <TabNav.Item to="/about" label="About" />
-    <TabNav.Item to="/contact" label="Contact" />
+    <TabNav.Item to="/home">Home</TabNav.Item>
+    <TabNav.Item to="/about">About</TabNav.Item>
+    <TabNav.Item to="/contact">Contact</TabNav.Item>
   </TabNav.Root>
 )
 ```
@@ -36,9 +36,9 @@ return (
 
 ```typescript jsx
 <TabNav.Root>
-  <TabNav.Item to="/home" label="Home" />
-  <TabNav.Item to="/about" label="About" />
-  <TabNav.Item to="/contact" label="Contact" />
+  <TabNav.Item to="/home">Home</TabNav.Item>
+  <TabNav.Item to="/about">About</TabNav.Item>
+  <TabNav.Item to="/contact">Contact</TabNav.Item>
 </TabNav.Root>
 ```
 
@@ -60,7 +60,7 @@ The root container for the tab navigation. It wraps the individual tab items.
 
 ### [`TabNav.Item`](packages/ui/src/components/tabnav.tsx)
 
-An individual tab item that links to a specific route. It accepts the following props:
+An individual tab item that links to a specific route. It accepts the same props as `NavLink` from `react-router-dom`:
 
 ```typescript jsx
 <TabNav.Item

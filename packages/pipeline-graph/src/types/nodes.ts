@@ -1,3 +1,7 @@
+export interface NodeProps {
+  readonly?: boolean
+}
+
 export enum ContainerNode {
   leaf = 'leaf',
   parallel = 'parallel',

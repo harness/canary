@@ -48,7 +48,7 @@ export const AlertContainer = forwardRef<HTMLDivElement, AlertContainerProps>(
         {closable && (
           <button
             type="button"
-            className="absolute top-2 right-2 text-gray-400 hover:text-gray-500"
+            className="absolute right-2 top-2 text-gray-400 hover:text-gray-500"
             onClick={() => setIsVisible(false)}
           >
             <Icon name="close" size={16} />

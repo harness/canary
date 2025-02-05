@@ -369,11 +369,15 @@ export default {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        'border-spin': {
+          '100%': { transform: 'rotate(-360deg)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'border-spin': 'border-spin 7s linear infinite'
       }
     }
   },
@@ -401,6 +405,8 @@ export default {
     'prose-img',
     'prose-code',
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-borders-2'
+    'stroke-borders-2',
+    // NOTE: temporary - used in design-system
+    { pattern: /bg-primary-./ }
   ]
 } satisfies TailwindConfig

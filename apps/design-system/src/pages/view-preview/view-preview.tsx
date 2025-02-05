@@ -45,7 +45,8 @@ import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
-import { ExecutionDetailsViewWrapper } from './execution-details-view-wrapper'
+import { ExecutionGraphViewWrapper } from './execution-graph-view-wrapper'
+import { ExecutionLogsViewWrapper } from './execution-logs-view-wrapper'
 import { ProjectSettingsWrapper } from './project-settings-wrapper'
 import PullRequestLayoutWrapper from './pull-request-layout-wrapper'
 import { RepoFilesViewWrapper } from './repo-files-view-wrapper'
@@ -253,9 +254,14 @@ export const viewPreviews: Record<string, ReactNode> = {
       <LabelsForm />
     </ProjectSettingsWrapper>
   ),
-  'execution-details': (
+  'execution-details/logs': (
     <RootViewWrapper>
-      <ExecutionDetailsViewWrapper />
+      <ExecutionLogsViewWrapper />
+    </RootViewWrapper>
+  ),
+  'execution-details/graph': (
+    <RootViewWrapper>
+      <ExecutionGraphViewWrapper />
     </RootViewWrapper>
   )
 }

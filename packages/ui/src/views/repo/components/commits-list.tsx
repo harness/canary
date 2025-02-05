@@ -1,7 +1,16 @@
 import { FC, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, NodeGroup, StackedList } from '@/components'
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  CommitCopyActions,
+  Icon,
+  NodeGroup,
+  StackedList
+} from '@/components'
 import { formatDate, getInitials } from '@/utils/utils'
 import { TypesCommit } from '@/views'
 
@@ -43,6 +52,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
               <StackedList.Root>
                 {commitData.map((commit, repo_idx) => {
                   const authorName = commit.author?.identity?.name
+                  const avatarUrl = commit.author?.identity?.avatarUrl
 
                   return (
                     <StackedList.Item
@@ -76,6 +86,7 @@ export const CommitsList: FC<CommitProps> = ({ data, toCommitDetails, toCode, cl
                               <div className="flex items-center gap-x-1.5">
                                 {authorName && (
                                   <Avatar className="size-[18px]">
+                                    {avatarUrl && <AvatarImage src={avatarUrl} alt={`${authorName} avatar`} />}
                                     <AvatarFallback className="text-10">{getInitials(authorName)}</AvatarFallback>
                                   </Avatar>
                                 )}

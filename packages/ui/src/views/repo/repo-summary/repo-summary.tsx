@@ -137,9 +137,9 @@ export function RepoSummaryView({
   }
 
   return (
-    <SandboxLayout.Main>
+    <SandboxLayout.Main fullWidth>
       <SandboxLayout.Columns columnWidths="1fr 256px">
-        <SandboxLayout.Column className="max-w-[1000px]">
+        <SandboxLayout.Column className="w-full">
           <SandboxLayout.Content className="pl-6">
             {/*
               TODO: Implement proper recent push detection logic:

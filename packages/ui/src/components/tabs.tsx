@@ -33,7 +33,7 @@ const tabsTriggerVariants = cva(
         underline:
           'm-0 h-11 border-b-2 border-solid border-b-transparent px-0 font-normal data-[state=active]:border-primary',
         navigation:
-          'm-0 -mb-px h-[44px] border-b border-solid border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
+          'm-0 -mb-px h-[44px] border-b-2 border-solid border-b-transparent px-0 font-normal text-foreground-2 duration-150 ease-in-out hover:text-foreground-1 data-[state=active]:border-borders-9',
         tabnav:
           'h-9 rounded-t-md border-x border-t border-transparent px-4 font-normal text-foreground-2 hover:text-foreground-1 data-[state=active]:border-borders-1 data-[state=active]:bg-background-1 data-[state=active]:text-foreground-1'
       }
@@ -115,9 +115,10 @@ const TabsTrigger = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Trigg
         className={cn(tabsTriggerVariants({ variant: context.variant ?? variant, className }))}
         {...props}
       >
-        {context.variant === 'navigation' && (
+        {/* Active tab Radial background - removed till we add different style */}
+        {/* {context.variant === 'navigation' && (
           <span className="bg-tab-gradient-radial absolute left-1/2 top-1/2 -z-10 hidden h-[calc(100%+40px)] w-[calc(100%+60px)] -translate-x-1/2 -translate-y-1/2 group-data-[state=active]:block" />
-        )}
+        )} */}
         {children}
       </TabsPrimitive.Trigger>
     )

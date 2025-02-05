@@ -66,7 +66,8 @@ export default function PullRequestChanges() {
     setDiffs,
     pullReqCommits,
     updateCommentStatus,
-    setPullReqStats
+    setPullReqStats,
+    dryMerge
   } = usePullRequestProviderStore()
   const { currentUser } = useAppContext()
   const repoRef = useGetRepoRef()
@@ -411,7 +412,8 @@ export default function PullRequestChanges() {
     repoRef,
     prId,
     refetchActivities,
-    updateCommentStatus
+    updateCommentStatus,
+    dryMerge
   })
 
   return (

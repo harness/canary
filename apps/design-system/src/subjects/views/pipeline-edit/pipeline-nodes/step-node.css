@@ -1,0 +1,39 @@
+.card-wrapper {
+  position: relative;
+  border-radius: 0.95rem;
+  overflow: hidden;
+}
+
+.card-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: -1px; /* Cover border area */
+  border-radius: 1rem;
+  background: conic-gradient(from var(--angle), #4da6ff, #16212e, #16212e, #4da6ff);
+  animation: rotate 3.5s linear infinite;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  padding: 2px; /* Border thickness */
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.card-wrapper-warning {
+  border: 1px solid #e3ac07;
+}
+
+.card-wrapper-error {
+  border: 1px solid #ed5e5e;
+}

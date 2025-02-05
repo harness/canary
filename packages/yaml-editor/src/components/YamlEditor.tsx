@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react'
 
 import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
@@ -36,6 +36,7 @@ export interface YamlEditorProps<T> {
   inlineActions?: { selectors: PathSelector[]; actions: InlineAction<T>[] }[]
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
   selection?: {
     path: string
     className: string
@@ -45,7 +46,44 @@ export interface YamlEditorProps<T> {
   folding?: boolean
 }
 
-export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
+export function replaceYamlWithAnimation(
+  editor: monaco.editor.IStandaloneCodeEditor,
+  yaml: string
+  // intervalIdRef?: React.MutableRefObject<number | null>
+) {
+  const lines = yaml.split('\n')
+  const model = editor.getModel()
+  if (model) {
+    editor.pushUndoStop()
+    model.setValue('')
+    let index = 0
+    window.setInterval(() => {
+      if (index < lines.length) {
+        editor.executeEdits('addLine', [
+          {
+            range: new monaco.Range(index + 1, 1, index + 1, 1),
+            text: lines[index] + '\n'
+          }
+        ])
+        index++
+      } else {
+        // if (intervalIdRef.current) {
+        //   clearInterval(intervalIdRef.current)
+        // }
+      }
+    }, 100) // 100ms delay between each line
+    editor.pushUndoStop()
+  }
+}
+
+export interface EditorRef {
+  getEditor: () => monaco.editor.IStandaloneCodeEditor
+}
+
+export const YamlEditor = forwardRef(function YamlEditor<T>(
+  props: YamlEditorProps<T>,
+  ref: React.Ref<any>
+): JSX.Element {
   const {
     yamlRevision,
     schemaConfig,
@@ -54,6 +92,7 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
     onYamlRevisionChange,
     selection,
     theme: themeFromProps,
+    options: userOptions,
     minimap = false,
     folding = true
   } = props
@@ -67,6 +106,19 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const currentRevisionRef = useRef<YamlRevision>({ yaml: '', revisionId: 0 })
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+  const intervalIdRef = useRef<number | null>(null)
+
+  useEffect(() => {
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current)
+      }
+    }
+  }, [])
+
+  useImperativeHandle(ref, () => ({
+    getEditor: () => editorRef.current
+  }))
 
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     editorRef.current = editor
@@ -118,9 +170,10 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
     () => ({
       ...options,
       folding,
-      minimap: { ...options.minimap, enabled: minimap }
+      minimap: { ...options.minimap, enabled: minimap },
+      ...userOptions
     }),
-    [folding, minimap]
+    [folding, minimap, userOptions]
   )
 
   return (
@@ -138,4 +191,4 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
       />
     </div>
   )
-}
+})

@@ -1,21 +1,15 @@
-import { ChangeEvent, KeyboardEvent, ReactNode, RefObject } from 'react'
+import { ChangeEvent, FC, HTMLAttributes, KeyboardEvent, PropsWithChildren, ReactNode, RefObject } from 'react'
 
 import { Button, Icon, Input } from '@/components'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
-// Root Container
-const Root: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="w-full h-full overflow-y-auto flex flex-col bg-background-1">{children}</div>
-}
-
-// Body
-const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
+const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
   return (
-    <div className="flex-1 flex flex-col gap-y-7 mb-5 px-6 py-4">
-      <div className="flex items-center justify-between">
+    <div className="bg-background-1 flex size-full max-w-[460px] flex-col">
+      <div className="bg-background-1 sticky top-0 flex items-center justify-between px-6 py-4">
         <p className="text-foreground-1 text-16 font-medium">AI Assistant</p>
-        <Button size="icon" variant="custom" className="text-icons-4 -mr-2 hover:text-icons-2">
+        <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2 -mr-2">
           <Icon name="close" size={16} />
           <span className="sr-only">Close</span>
         </Button>
@@ -25,20 +19,25 @@ const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
   )
 }
 
-// Footer
-const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="sticky bottom-0 p-6">{children}</div>
+const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+  return (
+    <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-4">
+      {children}
+    </div>
+  )
 }
 
-// Message Component
-interface MessageProps {
+const Footer: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+  return <div className="bg-background-1 sticky bottom-0 p-3">{children}</div>
+}
+
+interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
   self?: boolean
   avatar?: ReactNode
   actions?: ReactNode
-  children: ReactNode
 }
 
-const Message: React.FC<MessageProps> = ({ self, avatar, actions, children }) => {
+const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   return (
     <div
       className={cn('flex gap-x-3 content-center items-start', {
@@ -59,40 +58,33 @@ const Message: React.FC<MessageProps> = ({ self, avatar, actions, children }) =>
         >
           {children}
         </div>
-        {actions && (
-          <div className="flex gap-3 items-center justify-between mt-1">
-            <div className="flex gap-1 items-center justify-start">{actions}</div>
-          </div>
-        )}
+        {actions && <div className="mt-1 flex items-center gap-1">{actions}</div>}
       </div>
     </div>
   )
 }
 
-// Typing Indicator
 interface TypingProps {
   avatar?: ReactNode
 }
 
-const Typing: React.FC<TypingProps> = ({ avatar }) => {
+const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="flex items-center gap-x-3.5 mt-3">
+    <div className="mt-3 flex items-center gap-x-3.5">
       {avatar || <ChatAvatarIcon />}
-      <span className="w-2.5 h-2.5 rounded-full bg-foreground-2" aria-hidden />
+      <span className="bg-foreground-2 size-2.5 rounded-full" aria-hidden />
     </div>
   )
 }
 
-// Separator (For Date Breaks)
 interface SeparatorProps {
   title: string
 }
 
-const Separator: React.FC<SeparatorProps> = ({ title }) => {
+const Separator: FC<SeparatorProps> = ({ title }) => {
   return <div className="text-center text-xs font-medium opacity-50">{title}</div>
 }
 
-// Input Field
 interface InputFieldProps {
   value?: string
   inputRef?: RefObject<HTMLInputElement>
@@ -101,10 +93,10 @@ interface InputFieldProps {
   onSend?: () => void
   placeholder?: string
   disabled?: boolean
-  sendIcon?: React.ReactNode
+  sendIcon?: ReactNode
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const InputField: FC<InputFieldProps> = ({
   value = '',
   inputRef,
   onChange = () => {},
@@ -115,10 +107,10 @@ const InputField: React.FC<InputFieldProps> = ({
   sendIcon = <Icon name="arrow" size={12} />
 }) => {
   return (
-    <div className="sticky bottom-0 flex items-center gap-2">
+    <div className="relative">
       <Input
         ref={inputRef}
-        className="flex-1 h-11 px-3 rounded-lg focus:ring-0 focus-visible:rounded-lg focus-visible:h-16 focus-visible:pb-8"
+        className="h-11 flex-1 rounded-lg px-3 focus:ring-0 focus-visible:h-16 focus-visible:rounded-lg focus-visible:pb-8"
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -126,10 +118,11 @@ const InputField: React.FC<InputFieldProps> = ({
         aria-label="Chat input"
       />
       <Button
-        className="absolute right-3 bottom-2 z-10 size-7 rounded-full"
+        className="absolute bottom-2 right-3 z-10 size-7 rounded-full"
         onClick={onSend}
         size="icon"
         disabled={disabled}
+        aria-label="Send message"
       >
         {sendIcon}
       </Button>

@@ -738,6 +738,15 @@
       background-color 5000s,
       color 5000s;
   }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .border-linear {

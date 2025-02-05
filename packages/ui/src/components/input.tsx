@@ -14,7 +14,7 @@ const inputVariants = cva(
     variants: {
       variant: {
         default:
-          'flex w-full rounded border text-sm shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
+          'flex w-full rounded border text-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-foreground-4 focus-visible:rounded focus-visible:outline-none',
         extended: 'grow border-none focus-visible:outline-none'
       },
       size: {

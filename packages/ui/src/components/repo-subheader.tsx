@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { Tabs, TabsList, TabsTrigger } from '@/components'
+import { TabNav, Tabs, TabsList, TabsTrigger } from '@/components'
 import { SandboxLayout, TranslationStore } from '@/views'
 
 export enum RepoTabsKeys {
@@ -37,7 +37,24 @@ export const RepoSubheader = ({
 
   return (
     <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
-      <Tabs variant="navigation" value={activeTab}>
+      <TabNav.Root>
+        <TabNav.Item asChild>
+          <NavLink to="summary">Summary</NavLink>
+        </TabNav.Item>
+        <TabNav.Item asChild>
+          <NavLink to="code">Files</NavLink>
+        </TabNav.Item>
+        <TabNav.Item asChild>
+          <NavLink to="pipelines">Pipelines</NavLink>
+        </TabNav.Item>
+        <TabNav.Item asChild>
+          <NavLink to="commits">Commits</NavLink>
+        </TabNav.Item>
+        <TabNav.Item asChild>
+          <NavLink to="pulls">Pull Requests</NavLink>
+        </TabNav.Item>
+      </TabNav.Root>
+      {/* <Tabs variant="navigation" value={activeTab}>
         <TabsList>
           <NavLink to={RepoTabsKeys.SUMMARY}>
             <TabsTrigger value="summary">{t('views:repos.summary', 'Summary')}</TabsTrigger>
@@ -63,7 +80,7 @@ export const RepoSubheader = ({
             <TabsTrigger value="settings">{t('views:repos.settings', 'Settings')}</TabsTrigger>
           </NavLink>
         </TabsList>
-      </Tabs>
+      </Tabs> */}
     </SandboxLayout.SubHeader>
   )
 }

@@ -42,7 +42,7 @@ export const languages: LanguageInterface[] = [
 export interface LanguageDialogProps {
   defaultLanguage?: LanguageCode
   language?: LanguageCode
-  supportedLanguages: LanguageInterface[],
+  supportedLanguages: LanguageInterface[]
   open: boolean
   onOpenChange: (open: boolean) => void
   onChange: (language: LanguageInterface) => void

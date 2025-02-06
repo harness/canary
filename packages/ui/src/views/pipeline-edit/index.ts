@@ -1,6 +1,8 @@
 // TODO: review exports after POC
 
 export * from './pipeline-edit'
+export { PipelineStudioNodeContextMenu } from './components/pipeline-studio-node-context-menu'
+
 export { ContentNodeFactory } from './pipeline-studio'
 export * from './utils/yaml-utils'
 export * from './components/graph-implementation/types/yaml-entity-type'

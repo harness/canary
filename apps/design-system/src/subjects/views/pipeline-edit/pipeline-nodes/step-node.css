@@ -5,6 +5,7 @@
 }
 
 .card-wrapper::after {
+  pointer-events: none;
   content: '';
   position: absolute;
   inset: -1px; /* Cover border area */

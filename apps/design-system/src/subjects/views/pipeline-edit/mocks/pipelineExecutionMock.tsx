@@ -158,11 +158,32 @@ export const executionMock = [
                 data: {
                   yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.1.steps.0',
                   yamlEntityType: 'Step',
-                  name: 'Software Supply Chain Validation',
+                  name: 'Software Supply Chain Validation 1',
                   icon: <Icon className="m-2 size-6" name={'run'} />,
                   state: 'warning',
                   selected: false,
                   warningMessage: 'High memory usage'
+                },
+                path: 'pipeline.children.1.children.0.children.1.children.0',
+                containerType: 'leaf'
+              },
+              {
+                type: 'Step',
+                config: {
+                  minWidth: 198,
+                  minHeight: 50,
+                  width: 140,
+                  hideDeleteButton: false,
+                  selectable: true
+                },
+                data: {
+                  yamlPath: 'pipeline.stages.0.group.stages.0.parallel.stages.1.steps.0',
+                  yamlEntityType: 'Step',
+                  name: 'Software Supply Chain Validation 2',
+                  icon: <Icon className="m-2 size-6" name={'run'} />,
+                  state: 'warning',
+                  selected: false,
+                  warningMessage: 'High CPU usage'
                 },
                 path: 'pipeline.children.1.children.0.children.1.children.0',
                 containerType: 'leaf'

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
-import { CanvasControls, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
+import { CanvasControls, PipelineStudioNodeContextMenu, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
 
 import { executionMock } from './mocks/pipelineExecutionMock'
 import { contentNodeFactory } from './nodes-factory'
@@ -10,13 +10,15 @@ const PipelineExecution = () => {
   return (
     <div className="relative flex h-screen grow">
       <PipelineStudioNodeContextProvider
-        onSelectIntention={() => {}}
-        onAddIntention={() => {}}
-        onEditIntention={() => {}}
-        onDeleteIntention={() => {}}
-        onRevealInYaml={() => {}}
+        selectedPath={''}
+        onAddIntention={() => undefined}
+        onDeleteIntention={() => undefined}
+        onEditIntention={() => undefined}
+        onRevealInYaml={() => undefined}
+        onSelectIntention={() => undefined}
       >
         <PipelineExecutionInner />
+        <PipelineStudioNodeContextMenu />
       </PipelineStudioNodeContextProvider>
     </div>
   )

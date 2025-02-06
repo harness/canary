@@ -10,7 +10,7 @@ export interface Problem<T = unknown> {
     column: number
   }
   data?: T
-  action?: string | React.ReactNode
+  action?: React.ReactNode
 }
 
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {

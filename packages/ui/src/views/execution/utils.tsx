@@ -43,7 +43,9 @@ const renderTreeFile = ({ element: fileElement, handleClick, parentElement }: Re
       value={fileElement.id}
       status={fileElement.status}
       duration={fileElement.duration}
-      handleSelect={(stepId: string) => handleClick({ parentId: parentElement?.id || '', childId: stepId })}
+      handleSelect={(stepId: string) =>
+        handleClick({ parentId: parentElement?.id || '', childId: stepId, status: fileElement.status })
+      }
     >
       <p>{fileElement.name}</p>
     </File>

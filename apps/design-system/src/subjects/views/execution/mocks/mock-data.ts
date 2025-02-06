@@ -196,15 +196,31 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'deploy',
     name: 'Deploy',
-    status: ExecutionState.PENDING,
+    status: ExecutionState.RUNNING,
     duration: '00:10',
     isSelectable: true,
     children: [
       {
         id: 'deploy-staging',
         name: 'Deploy to Staging',
-        status: ExecutionState.PENDING,
+        status: ExecutionState.RUNNING,
         duration: '00:10',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'network-test',
+    name: 'Check inbound traffic',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
+    isSelectable: true,
+    children: [
+      {
+        id: 'health-check',
+        name: 'Perform Health Check',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
         isSelectable: true
       }
     ]

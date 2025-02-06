@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useLogs } from '@/hooks/useLogs'
 
@@ -8,13 +8,19 @@ import {
   ExecutionState,
   ExecutionTabs,
   ExecutionTree,
-  ILogsStore
+  ILogsStore,
+  NodeSelectionProps
 } from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const { logs: currentLogs } = useLogs({ logs })
+  const [step, setStep] = useState<NodeSelectionProps | undefined>(undefined)
+  const { logs: currentLogs } = useLogs({
+    logs,
+    isStreaming: step?.status === ExecutionState.RUNNING
+  })
+
   const useLogsStore = useCallback(
     (): ILogsStore => ({
       logs: currentLogs
@@ -46,9 +52,7 @@ export const ExecutionLogsView = () => {
           <ExecutionTree
             defaultSelectedId="initialize"
             elements={elements}
-            onSelectNode={({ parentId, childId }: { parentId: string; childId: string }) => {
-              console.log(`Selected node: Parent ${parentId}, Child ${childId}`)
-            }}
+            onSelectNode={(selectedStep: NodeSelectionProps) => setStep(selectedStep)}
           />
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">

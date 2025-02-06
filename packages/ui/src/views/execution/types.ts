@@ -53,10 +53,15 @@ export interface LivelogLine {
   duration?: number
 }
 
+export interface NodeSelectionProps extends ExecutionStatusProps {
+  parentId: string
+  childId: string
+}
+
 export interface ExecutionTreeProps {
   defaultSelectedId: string
   elements: TreeViewElement[]
-  onSelectNode: ({ parentId, childId }: { parentId: string; childId: string }) => void
+  onSelectNode: ({ parentId, childId, status }: NodeSelectionProps) => void
 }
 
 export type KeyValuePair = {

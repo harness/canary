@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 import { useLogs } from '@/hooks/useLogs'
+import { useTree } from '@/hooks/useTree'
 
 import {
   ExecutionHeader,
@@ -15,10 +16,11 @@ import {
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [step, setStep] = useState<NodeSelectionProps | undefined>(undefined)
+  const { nodes: updatedElements, currentParent, currentChild } = useTree(elements)
+
   const { logs: currentLogs } = useLogs({
     logs,
-    isStreaming: step?.status === ExecutionState.RUNNING
+    isStreaming: currentParent?.status === ExecutionState.RUNNING && currentChild?.status === ExecutionState.RUNNING
   })
 
   const useLogsStore = useCallback(
@@ -50,9 +52,9 @@ export const ExecutionLogsView = () => {
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
           <ExecutionTree
-            defaultSelectedId="initialize"
-            elements={elements}
-            onSelectNode={(selectedStep: NodeSelectionProps) => setStep(selectedStep)}
+            defaultSelectedId={currentChild ? currentChild.id : elements[0]?.children?.[0]?.id}
+            elements={updatedElements}
+            onSelectNode={(_selectedStep: NodeSelectionProps) => {}}
           />
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">

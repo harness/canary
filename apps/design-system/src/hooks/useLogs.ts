@@ -12,7 +12,7 @@ interface UseLogsProps {
 /**
  *
  * @param logs - Array of log lines to display
- * @param delay - Delay in milliseconds between each log line
+ * @param delay - Delay in seconds between each log line
  * @param isStreaming - Flag to enable/disable streaming of logs
  * @param defaultLogLines - Number of log lines to display initially
  * @returns logs - Array of log lines to display
@@ -20,9 +20,9 @@ interface UseLogsProps {
  */
 export const useLogs = ({
   logs,
-  delay = 2000,
+  delay = 2,
   isStreaming = false,
-  defaultLogLines = 20
+  defaultLogLines = 3
 }: UseLogsProps): { logs: LivelogLine[]; timerId: number | null } => {
   const [logLines, setLogLines] = useState<LivelogLine[]>([])
   const [intervalId, setIntervalId] = useState<number | null>(null)
@@ -56,7 +56,7 @@ export const useLogs = ({
       setLogLines(prev => [...prev, logs[currentIndexRef.current]])
 
       currentIndexRef.current += 1
-    }, delay)
+    }, delay * 1000)
 
     setIntervalId(interval)
 

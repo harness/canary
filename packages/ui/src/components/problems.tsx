@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 import { Icon } from '@components/icon'
 
 export type ProblemSeverity = 'error' | 'warning' | 'info'

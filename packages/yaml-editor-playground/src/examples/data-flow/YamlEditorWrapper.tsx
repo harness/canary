@@ -77,15 +77,6 @@ export const YamlEditorWrapper: React.FC<React.PropsWithChildren<React.HTMLAttri
             onAnimateEnd={() => {
               console.log('animation ended')
             }}
-            options={{
-              minimap: {
-                enabled: false
-              },
-              overviewRulerBorder: false,
-              overviewRulerLanes: 0,
-              scrollBeyondLastLine: false,
-              renderLineHighlight: 'none'
-            }}
           />
         )}
       </div>

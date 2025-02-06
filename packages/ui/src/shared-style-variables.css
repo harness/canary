@@ -534,7 +534,7 @@
     --canary-background-05: var(--canary-accent-500);
     --canary-background-06: var(--canary-accent-500) / 0.2;
     --canary-background-07: var(--canary-base-chrome-50);
-    --canary-background-08: var(--canary-base-chrome-100);
+    --canary-background-08: var(--canary-base-chrome-white);
     --canary-background-09: var(--canary-base-chrome-150);
     --canary-background-10: var(--canary-accent-600);
     --canary-background-11: var(--canary-base-chrome-200);
@@ -784,7 +784,7 @@
     --canary-background-05: var(--canary-accent-500);
     --canary-background-06: var(--canary-accent-500) / 0.2;
     --canary-background-07: var(--canary-base-chrome-50);
-    --canary-background-08: var(--canary-base-chrome-100);
+    --canary-background-08: var(--canary-base-chrome-white);
     --canary-background-09: var(--canary-base-chrome-150);
     --canary-background-10: var(--canary-accent-500);
     --canary-background-11: var(--canary-base-chrome-200);

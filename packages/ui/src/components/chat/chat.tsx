@@ -4,7 +4,7 @@ import { Button, Icon, Input } from '@/components'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
-const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
 }
 
@@ -20,7 +20,7 @@ const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   )
 }
 
-const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-2">
       {children}
@@ -28,7 +28,7 @@ const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) 
   )
 }
 
-const Footer: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return <div className="sticky bottom-0 bg-background-1 px-6 py-3">{children}</div>
 }
 
@@ -65,7 +65,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   )
 }
 
-const CodeBlock: FC<{ className?: string }> = ({ children, className }) => {
+const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
   return (
     <code
       className={cn(

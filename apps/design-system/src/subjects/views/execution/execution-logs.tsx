@@ -1,30 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useLogs } from '@/hooks/useLogs'
 
 import { ExecutionHeader, ExecutionInfo, ExecutionState, ExecutionTabs, ExecutionTree } from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [logLines, setLogLines] = useState(logs.slice(0, 20)) // Initial 20 logs
-  const [currentIndex, setCurrentIndex] = useState(20)
-  const [_intervalId, setIntervalId] = useState<number | null>(null)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLogLines(prev => {
-        if (currentIndex >= logs.length) {
-          clearInterval(interval)
-          return prev
-        }
-        return [...prev, logs[currentIndex]]
-      })
-
-      setCurrentIndex(prev => prev + 1)
-    }, 2000) // Append one log every 2 seconds
-
-    setIntervalId(interval)
-    return () => clearInterval(interval)
-  }, [currentIndex])
+  const currentLogs = useLogs({ logs, delay: 1000 })
 
   return (
     <div className="flex h-full flex-col">
@@ -57,7 +38,7 @@ export const ExecutionLogsView = () => {
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">
           <ExecutionInfo
-            logs={logLines}
+            logs={currentLogs}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}

@@ -1,7 +1,6 @@
 import { useCallback } from 'react'
 
 import { useLogs } from '@/hooks/useLogs'
-import { logsStore } from '@subjects/stores/logs-store'
 
 import {
   ExecutionHeader,
@@ -15,7 +14,7 @@ import {
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const currentLogs = useLogs({ logs })
+  const { logs: currentLogs } = useLogs({ logs })
   const useLogsStore = useCallback(
     (): ILogsStore => ({
       logs: currentLogs

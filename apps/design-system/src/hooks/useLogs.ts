@@ -11,12 +11,13 @@ interface UseLogsProps {
  *
  * @param logs - Array of log lines to display
  * @param delay - Delay in milliseconds between each log line
- * @returns - Array of log lines to display
+ * @returns logs - Array of log lines to display
+ * @returns timerId - ID of the interval timer to manually stop the auto-scrolling
  */
-export const useLogs = ({ logs, delay = 2000 }: UseLogsProps): LivelogLine[] => {
+export const useLogs = ({ logs, delay = 2000 }: UseLogsProps): { logs: LivelogLine[]; timerId: number | null } => {
   const [logLines, setLogLines] = useState<LivelogLine[]>(logs.slice(0, 20))
   const [currentIndex, setCurrentIndex] = useState(20)
-  const [_intervalId, setIntervalId] = useState<number | null>(null)
+  const [intervalId, setIntervalId] = useState<number | null>(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,5 +36,5 @@ export const useLogs = ({ logs, delay = 2000 }: UseLogsProps): LivelogLine[] => 
     return () => clearInterval(interval)
   }, [currentIndex])
 
-  return logLines
+  return { logs: logLines, timerId: intervalId }
 }

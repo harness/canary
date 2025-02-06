@@ -27,7 +27,11 @@ export const EditRepoDetails = ({
   }, [description])
   return (
     <AlertDialog.Root open={showEditRepoDetails} onOpenChange={onClose}>
-      <AlertDialog.Content className="h-80 max-h-[70vh] w-[460px] !rounded" onOverlayClick={handleClose}>
+      <AlertDialog.Content
+        className="h-80 max-h-[70vh] w-[460px] !rounded"
+        onClose={handleClose}
+        onOverlayClick={handleClose}
+      >
         <AlertDialog.Header>
           <AlertDialog.Title className="mb-4">Repository Description</AlertDialog.Title>
         </AlertDialog.Header>

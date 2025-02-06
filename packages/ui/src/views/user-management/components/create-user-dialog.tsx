@@ -57,7 +57,7 @@ export function CreateUserDialog({
 
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
-      <AlertDialog.Content>
+      <AlertDialog.Content onClose={onClose}>
         <AlertDialog.Header>
           <AlertDialog.Title>Add a new user</AlertDialog.Title>
         </AlertDialog.Header>

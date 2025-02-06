@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import {
   useGetRepoWebhookExecutionQuery,
@@ -16,6 +16,7 @@ export const WebhookExecutionDetailsContainer = () => {
   const { webhookId, executionId } = useParams<PathParams>()
   const repo_ref = useGetRepoRef()
   const { setExecutionId, updateExecution } = useWebhookStore()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setExecutionId(parseInt(executionId ?? ''))
@@ -33,7 +34,16 @@ export const WebhookExecutionDetailsContainer = () => {
     }
   )
 
-  const { mutate: retriggerExecution } = useRetriggerRepoWebhookExecutionMutation({})
+  const { mutate: retriggerExecution, isLoading: isTriggeringExecution } = useRetriggerRepoWebhookExecutionMutation(
+    {},
+    {
+      onSuccess: data => {
+        console.log('Retriggered execution', data)
+        updateExecution(data.body as WebhookExecutionType)
+        navigate(`../executions/${data.body.id}`)
+      }
+    }
+  )
 
   useEffect(() => {
     if (execution) {
@@ -53,7 +63,7 @@ export const WebhookExecutionDetailsContainer = () => {
     <RepoWebhookExecutionDetailsPage
       useWebhookStore={useWebhookStore}
       useTranslationStore={useTranslationStore}
-      isLoading={false}
+      isLoading={isTriggeringExecution}
       handleRetriggerExecution={handleRetriggerExecution}
     />
   )

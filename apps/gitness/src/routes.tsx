@@ -504,7 +504,17 @@ export const repoRoutes: CustomRouteObject[] = [
               },
               {
                 path: 'executions/:executionId',
-                element: <WebhookExecutionDetailsContainer />
+                element: <WebhookExecutionDetailsContainer />,
+                handle: {
+                  breadcrumb: ({ webhookId, executionId }: { webhookId: string; executionId: string }) => (
+                    <>
+                      <Text>{webhookId}</Text> <Breadcrumb.Separator />
+                      <Text className="ml-1.5">Executions</Text>
+                      <Breadcrumb.Separator className="mx-1.5" />
+                      <Text>{executionId}</Text>
+                    </>
+                  )
+                }
               }
             ]
           }

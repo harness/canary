@@ -41,11 +41,15 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   setExecutions: (data: WebhookExecutionType[]) => {
     set({ executions: data })
   },
+  // if a webhook execution is already in the list, update it, otherwise add it
   updateExecution: (updatedExecution: WebhookExecutionType) => {
     set(state => ({
-      executions: state.executions?.map(exec => (exec.id === updatedExecution.id ? updatedExecution : exec)) || null
+      executions: state.executions?.some(exec => exec.id === updatedExecution.id)
+        ? state.executions.map(exec => (exec.id === updatedExecution.id ? updatedExecution : exec))
+        : [...(state.executions ?? []), updatedExecution]
     }))
   },
+
   setTotalPages: headers => set({ totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0') }),
   setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data }),
   setExecutionId: (id: number | null) => set({ executionId: id })

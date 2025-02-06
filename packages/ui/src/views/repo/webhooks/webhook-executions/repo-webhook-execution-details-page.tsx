@@ -35,9 +35,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
     }
   }, [execution])
 
-  console.log('execution', execution)
-
-  const monacoTheme = 'light'
+  const monacoTheme = 'dark'
 
   const themeConfig = useMemo(
     () => ({
@@ -86,8 +84,8 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
             </Badge>
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" size="md" onClick={handleRetriggerExecution}>
-              Re-trigger Execution
+            <Button variant="default" size="md" onClick={handleRetriggerExecution} disabled={isLoading}>
+              {isLoading ? 'Re-triggering Execution' : 'Re-trigger Execution'}
             </Button>
           </ListActions.Right>
         </ListActions.Root>
@@ -108,17 +106,16 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
           </div>
         </div>
         <Spacer size={6} />
-        {/* {execution && <MarkdownViewer source={execution} withBorderWrapper />} */}
         <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
         <CodeEditor
-          height="100%"
-          language="yaml"
+          height="500px"
+          language="json"
           codeRevision={codeEditorContent}
           onCodeRevisionChange={() => {}}
           themeConfig={themeConfig}
           theme={monacoTheme}
           options={{
-            readOnly: true
+            readOnly: false
           }}
         />
       </SandboxLayout.Content>

@@ -45,7 +45,7 @@ export function StepNode(props: StepNodeProps) {
             {
               'border-borders-2': !selected,
               'border-borders-3': selected,
-              'border-success': nodeData.state === 'success',
+              'border-borders-success': nodeData.state === 'success',
               'border-borders-alert': nodeData.state === 'warning',
               'border-borders-danger': nodeData.state === 'error',
               'border-0': nodeData.state === 'executing'

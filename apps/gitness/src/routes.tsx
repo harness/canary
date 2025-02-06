@@ -58,6 +58,7 @@ import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
 import { CreateWebhookContainer } from './pages-v2/webhooks/create-webhook-container'
+import { WebhookExecutionDetailsContainer } from './pages-v2/webhooks/webhook-execution-details-container'
 import { WebhookExecutionsContainer } from './pages-v2/webhooks/webhook-executions'
 import WebhookListPage from './pages-v2/webhooks/webhook-list'
 
@@ -500,6 +501,10 @@ export const repoRoutes: CustomRouteObject[] = [
                   ),
                   routeName: RouteConstants.toRepoWebhookExecutions
                 }
+              },
+              {
+                path: 'executions/:executionId',
+                element: <WebhookExecutionDetailsContainer />
               }
             ]
           }

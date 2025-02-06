@@ -7,4 +7,5 @@ export * from '@views/repo/webhooks/webhook-create/repo-webhook-create-page'
 export * from '@views/repo/webhooks/webhook-create/types'
 
 // webhook executions
-export * from '@views/repo/webhooks/webhook-executions/repo-webhook-executions-page'
+export * from '@views/repo/webhooks/webhook-executions/repo-webhook-executions-list-page'
+export * from '@views/repo/webhooks/webhook-executions/repo-webhook-execution-details-page'

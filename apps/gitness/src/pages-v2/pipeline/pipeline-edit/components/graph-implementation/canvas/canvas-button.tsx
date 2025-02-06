@@ -6,7 +6,7 @@ export function CanvasButton(props: React.PropsWithChildren<{ onClick: () => voi
       role="button"
       tabIndex={0}
       onClick={onClick}
-      className="bg-muted text-primary flex size-8 items-center justify-center border"
+      className="flex size-8 items-center justify-center border bg-muted text-primary"
     >
       {children}
     </div>

@@ -13,7 +13,7 @@ export function CanvasControls() {
       <CanvasButton onClick={() => decrease()}>-</CanvasButton> 
       */}
       <CanvasButton onClick={() => fit()}>
-        <div className="border-primary size-3 border"></div>
+        <div className="size-3 border border-primary"></div>
       </CanvasButton>
     </div>
   )

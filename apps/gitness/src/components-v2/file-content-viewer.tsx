@@ -182,7 +182,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
         return (
           <div className="pb-11">
             <CommitsList
-              className="bg-background-1 rounded-b-md border-x border-b p-6"
+              className="rounded-b-md border-x border-b bg-background-1 p-6"
               toCommitDetails={({ sha }: { sha: string }) =>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }

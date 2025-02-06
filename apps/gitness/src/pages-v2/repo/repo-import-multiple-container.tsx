@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { ImporterProviderType, ImportSpaceRequestBody } from '@harnessio/code-service-client'
-import { ImportMultipleReposFormFields, ProviderOptionsEnum, RepoImportMultiplePage } from '@harnessio/ui/views'
+import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
+import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { PathParams } from '../../RouteDefinitions'
+import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 
 export const ImportMultipleRepos = () => {
   const routes = useRoutes()
@@ -16,20 +17,19 @@ export const ImportMultipleRepos = () => {
   const [apiError, setApiError] = useState<string>('')
 
   const onSubmit = async (data: ImportMultipleReposFormFields) => {
+    const provider_space = getRepoProviderConfig(data)
     const body: ImportSpaceRequestBody = {
       identifier: spaceURL,
       description: '',
       parent_ref: spaceURL,
-      pipelines: data.pipelines === true ? 'convert' : 'ignore',
+      pipelines: data.pipelines ? 'convert' : 'ignore',
       provider: {
         host: data.hostUrl ?? '',
+        username: data.username,
         password: data.password,
-        type:
-          data.provider === ProviderOptionsEnum.GITHUB || data.provider === ProviderOptionsEnum.GITHUB_ENTERPRISE
-            ? (ProviderOptionsEnum.GITHUB.toLocaleLowerCase() as ImporterProviderType)
-            : undefined
+        type: PROVIDER_TYPE_MAP[data.provider]
       },
-      provider_space: data.organization
+      provider_space
     }
 
     try {

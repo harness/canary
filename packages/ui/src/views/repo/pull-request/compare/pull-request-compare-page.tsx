@@ -262,7 +262,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                         </>
                       ) : (
                         <>
-                          <Icon className="text-icons-danger" name="x-mark" size={12} />
+                          <Icon className="text-icons-danger" name="x-mark" size={20} />
                           <p className="text-14 leading-none text-foreground-danger">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-foreground-4">

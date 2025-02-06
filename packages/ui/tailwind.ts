@@ -142,7 +142,8 @@ export default {
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
           accent: 'hsl(var(--canary-border-accent))',
-          risk: 'hsl(var(--canary-icon-risk))'
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
         },
         button: {
           foreground: {

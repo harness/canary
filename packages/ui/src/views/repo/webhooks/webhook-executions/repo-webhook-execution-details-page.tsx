@@ -1,8 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, ListActions, MarkdownViewer, Spacer, Text } from '@/components'
+import { Badge, Button, ListActions, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { formatNs, timeAgo } from '@utils/utils'
+import { IThemeStore } from 'dist/components'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -14,16 +15,29 @@ interface RepoWebhookExecutionDeatilsPageProps {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   handleRetriggerExecution: () => void
+  useThemeStore: () => IThemeStore
 }
 export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
   isLoading,
-  handleRetriggerExecution
+  handleRetriggerExecution,
+  useThemeStore
 }) => {
   const { t } = useTranslationStore()
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
+  const { theme } = useThemeStore()
+
+  const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
+
+  const themeConfig = useMemo(
+    () => ({
+      defaultTheme: monacoTheme
+      //   themes
+    }),
+    [monacoTheme]
+  )
 
   const execution = useMemo(() => {
     return executions?.find(e => e.id === executionId)
@@ -34,16 +48,6 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
       setCodeEditorContent({ code: execution.request?.body ?? '' })
     }
   }, [execution])
-
-  const monacoTheme = 'dark'
-
-  const themeConfig = useMemo(
-    () => ({
-      defaultTheme: monacoTheme
-      //   themes
-    }),
-    [monacoTheme]
-  )
 
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]

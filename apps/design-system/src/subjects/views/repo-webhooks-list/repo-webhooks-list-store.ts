@@ -46,6 +46,9 @@ export const repoWebhooksListStore: RepoWebhooksListStore = {
     setTotalPages: (_: Headers | undefined) => {},
     setWebhooks: (_data: ListRepoWebhooksOkResponse) => {},
     preSetWebhookData: null,
-    setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {}
+    setPreSetWebhookData: (_: CreateWebhookFormFields | null) => {},
+    executionId: null,
+    setExecutionId: (_: number | null) => {},
+    updateExecution: () => {}
   })
 }

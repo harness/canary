@@ -7,6 +7,7 @@ import {
 } from '@harnessio/code-service-client'
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
 
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -38,7 +39,6 @@ export const WebhookExecutionDetailsContainer = () => {
     {},
     {
       onSuccess: data => {
-        console.log('Retriggered execution', data)
         updateExecution(data.body as WebhookExecutionType)
         navigate(`../executions/${data.body.id}`)
       }
@@ -65,6 +65,7 @@ export const WebhookExecutionDetailsContainer = () => {
       useTranslationStore={useTranslationStore}
       isLoading={isTriggeringExecution}
       handleRetriggerExecution={handleRetriggerExecution}
+      useThemeStore={useThemeStore}
     />
   )
 }

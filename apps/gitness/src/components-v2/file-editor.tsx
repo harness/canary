@@ -156,6 +156,8 @@ export const FileEditor: FC<FileEditorProps> = ({ repoDetails, defaultBranch }) 
     setView(value)
   }
 
+  console.log('orignal file content', originalFileContent)
+
   return (
     <>
       <GitCommitDialog

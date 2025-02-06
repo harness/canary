@@ -1,33 +1,42 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useEffect, useMemo, useState } from 'react'
 
 import { Badge, Button, ListActions, MarkdownViewer, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
+import { formatNs, timeAgo } from '@utils/utils'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
-// import { timeAgo } from '@utils/utils'
 import { WebhookExecutionEditorControlBar } from './components/webhook-executions-editor-control-bar'
 
 interface RepoWebhookExecutionDeatilsPageProps {
   useWebhookStore: () => WebhookStore
   useTranslationStore: () => TranslationStore
-  //   toRepoWebhooks: (repoRef?: string) => string
-  //   repo_ref: string
   isLoading: boolean
-  execution?: any
+  handleRetriggerExecution: () => void
 }
 export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
-  //   toRepoWebhooks,
-  //   repo_ref,
-  isLoading = false,
-  execution
+  isLoading,
+  handleRetriggerExecution
 }) => {
   const { t } = useTranslationStore()
-  const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
+  const { executionId, executions } = useWebhookStore()
+  const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
+
+  const execution = useMemo(() => {
+    return executions?.find(e => e.id === executionId)
+  }, [executions, executionId])
+
+  useEffect(() => {
+    if (execution) {
+      setCodeEditorContent({ code: execution.request?.body ?? '' })
+    }
+  }, [execution])
+
   console.log('execution', execution)
+
   const monacoTheme = 'light'
 
   const themeConfig = useMemo(
@@ -54,14 +63,30 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
         <ListActions.Root>
           <ListActions.Left>
             <Text size={6} className="text-foreground-1" weight="medium">
-              #124567
+              #{executionId}
             </Text>
-            <Badge size="md" borderRadius="full" theme="success" className="mt-1">
-              Success
+            <Badge
+              size="md"
+              disableHover
+              borderRadius="full"
+              className="mt-1"
+              theme={
+                execution?.result === 'success'
+                  ? 'success'
+                  : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
+                    ? 'destructive'
+                    : 'muted'
+              }
+            >
+              {execution?.result === 'success'
+                ? 'Success'
+                : ['fatal_error', 'retriable_error'].includes(execution?.result ?? '')
+                  ? 'Failed'
+                  : 'Invalid'}
             </Badge>
           </ListActions.Left>
           <ListActions.Right>
-            <Button variant="default" size="md">
+            <Button variant="default" size="md" onClick={handleRetriggerExecution}>
               Re-trigger Execution
             </Button>
           </ListActions.Right>
@@ -71,15 +96,15 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
         <div className="flex gap-10">
           <div className="flex gap-1">
             <Text color="foreground-5">Triggered Event:</Text>
-            <Text>Branch Updates</Text>
+            <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
           </div>
           <div className="flex gap-1">
             <Text color="foreground-5">At:</Text>
-            <Text>2 days ago</Text>
+            <Text>{timeAgo(execution?.created)}</Text>
           </div>
           <div className="flex gap-1">
             <Text color="foreground-5">Duration:</Text>
-            <Text>5s</Text>
+            <Text>{formatNs(execution?.duration ?? 0)}</Text>
           </div>
         </div>
         <Spacer size={6} />
@@ -87,8 +112,8 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
         <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
         <CodeEditor
           height="100%"
-          language="json"
-          codeRevision={{ code: execution }}
+          language="yaml"
+          codeRevision={codeEditorContent}
           onCodeRevisionChange={() => {}}
           themeConfig={themeConfig}
           theme={monacoTheme}

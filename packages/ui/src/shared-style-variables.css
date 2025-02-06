@@ -21,6 +21,7 @@
   --canary-grey-98: 0 0% 98%;
   --canary-white: 0 0% 100%;
 
+  --canary-red-55: 0 80% 55%;
   --canary-red-65: 0 80% 65%;
   --canary-orange-55: 35 75% 55%;
   --canary-green-65: 150 75% 65%;
@@ -1014,6 +1015,7 @@
     --canary-background-accent: var(--canary-blue-70);
     /* Button Backgrounds */
     --canary-button-background-danger-01: var(--canary-red-65) / 0.1; /* red65/10 */
+    --canary-button-background-danger-02: var(--canary-red-55) / 0.1; /* red55/10 */
     --canary-button-background-danger-03: var(--canary-red-65) / 0.16; /* red65/16 */
     --canary-button-background-disabled-01: var(--canary-grey-40) / 0.1; /* grey70/10 */
     --canary-button-background-success-01: var(--canary-green-65) / 0.1; /* green65/10 */

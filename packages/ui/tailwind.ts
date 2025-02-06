@@ -153,6 +153,7 @@ export default {
           background: {
             'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-background-danger-01))',
+            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
             'danger-3': 'hsla(var(--canary-button-background-danger-03))',
             'success-1': 'hsla(var(--canary-button-background-success-01))',
             'success-2': 'hsla(var(--canary-button-background-success-02))'

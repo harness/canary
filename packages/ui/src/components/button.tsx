@@ -13,7 +13,7 @@ const buttonVariants = cva(
         default:
           'bg-background-5 text-foreground-6 hover:bg-background-10 disabled:bg-background-6 disabled:text-foreground-9',
         destructive:
-          'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-3',
+          'bg-button-background-danger-1 text-button-foreground-danger-1 hover:bg-button-background-danger-2',
         outline:
           'border border-borders-2 bg-transparent text-foreground-2 hover:border-borders-6 hover:text-foreground-8',
         secondary: 'bg-secondary text-secondary-foreground hover:bg-secondary/80',
@@ -45,8 +45,9 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'border-borders-danger/30 bg-background-danger text-error',
-        warning: 'border-borders-danger/30 bg-background-danger text-warning',
+        error: 'border-borders-danger/30 bg-button-background-danger-1 hover:bg-button-background-danger-2 text-error',
+        warning:
+          'border-borders-danger/30 bg-button-background-danger-1 hover:bg-button-background-danger-2 text-warning',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',

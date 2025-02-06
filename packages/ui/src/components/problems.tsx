@@ -87,7 +87,7 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
   return (
     <ProblemsComponent.Root>
       {/* TODO: don't use idx, compose id from problem data*/}
-      {problems.map((problem, idx) => {
+      {problems.map(problem => {
         const { message, position, severity, action } = problem
 
         return (

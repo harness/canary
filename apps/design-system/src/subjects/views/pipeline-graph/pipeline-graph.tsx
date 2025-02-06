@@ -11,6 +11,7 @@ import {
   SerialNodeInternalType
 } from '@harnessio/pipeline-graph'
 import { Icon, PipelineNodes } from '@harnessio/ui/components'
+import { PipelineStudioFooter } from '@harnessio/ui/views'
 
 // *****************************************************
 // 1. Import CSS
@@ -286,9 +287,15 @@ const data: AnyContainerNodeType[] = [
 
 const PipelineGraphWrapper = () => {
   return (
-    <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
-    </CanvasProvider>
+    <>
+      <CanvasProvider>
+        <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+      </CanvasProvider>
+      <PipelineStudioFooter
+        problems={{ error: 0, warning: 3, info: 2 }}
+        lastCommitInfo={{ authorName: 'User Name', committedTimeAgo: '3 days ago' }}
+      />
+    </>
   )
 }
 

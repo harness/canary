@@ -113,7 +113,7 @@ const PipelineStudioWrapper = () => {
             customCreateSVGPath={props => {
               const { id, path /*, pathLength, targetNode*/ } = props
               // TODO
-              const pathStyle = ` stroke="#5D5B65"`
+              const pathStyle = ` stroke="hsl(var(--canary-border-03))"`
               const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
               return { level1: staticPath, level2: '' }
             }}

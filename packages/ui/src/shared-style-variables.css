@@ -550,7 +550,7 @@
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-150);
     --canary-border-02: var(--canary-base-chrome-150);
-    --canary-border-03: var(--canary-base-chrome-600);
+    --canary-border-03: var(--canary-base-chrome-300);
     --canary-border-04: var(--canary-base-chrome-150);
     --canary-border-05: var(--canary-base-chrome-150);
     --canary-border-06: var(--canary-base-chrome-600);
@@ -669,6 +669,8 @@
     /* Graph */
     --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
     --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
+    --canary-graph-gradient-executing-1: hsla(var(--canary-accent-200) / 0.2);
+    --canary-graph-gradient-executing-2: hsla(var(--canary-accent-500));
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -800,7 +802,7 @@
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-150);
     --canary-border-02: var(--canary-base-chrome-150);
-    --canary-border-03: var(--canary-base-chrome-600);
+    --canary-border-03: var(--canary-base-chrome-300);
     --canary-border-04: var(--canary-base-chrome-150);
     --canary-border-05: var(--canary-base-chrome-150);
     --canary-border-06: var(--canary-base-chrome-600);

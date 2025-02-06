@@ -2,7 +2,7 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
   const { adjustment = 0 } = props
 
   const lineWeight = 1
-  const r = 7
+  const r = 5
 
   return (
     <div
@@ -13,8 +13,8 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
         top: `calc( 50% - ${r / 2}px + ${adjustment}px)`,
         width: `${r}px`,
         height: `${r}px`,
-        background: '#121214',
-        border: `${lineWeight}px solid #6D6B75`,
+        background: 'hsl(var(--canary-background-02))',
+        border: `${lineWeight}px solid hsl(var(--canary-border-03))`,
         borderRadius: '50%',
         boxSizing: 'border-box'
       }}

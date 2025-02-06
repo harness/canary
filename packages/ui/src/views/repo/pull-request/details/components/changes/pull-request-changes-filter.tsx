@@ -187,7 +187,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           className="flex cursor-pointer items-center"
         >
           <Checkbox checked={isSelected} />
-          <Text size={1} className="pl-3 text-primary truncate">
+          <Text size={1} className="truncate pl-3 text-primary">
             {item.name}
           </Text>
         </DropdownMenu.Item>

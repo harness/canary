@@ -5,16 +5,17 @@ import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
 const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+  return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
+}
+
+const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="flex size-full max-w-[460px] flex-col bg-background-1">
-      <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
-        <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
-        <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2">
-          <Icon name="close" size={16} />
-          <span className="sr-only">Close</span>
-        </Button>
-      </div>
-      {children}
+    <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
+      <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
+      <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
+        <Icon name="close" size={16} />
+        <span className="sr-only">Close</span>
+      </Button>
     </div>
   )
 }
@@ -194,6 +195,7 @@ const InputField: FC<InputFieldProps> = ({
 export const Chat = {
   Root,
   Body,
+  Header,
   Footer,
   Message,
   Typing,

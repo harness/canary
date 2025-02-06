@@ -1,11 +1,27 @@
-import { useLogs } from '@/hooks/useLogs'
+import { useCallback } from 'react'
 
-import { ExecutionHeader, ExecutionInfo, ExecutionState, ExecutionTabs, ExecutionTree } from '@harnessio/ui/views'
+import { useLogs } from '@/hooks/useLogs'
+import { logsStore } from '@subjects/stores/logs-store'
+
+import {
+  ExecutionHeader,
+  ExecutionInfo,
+  ExecutionState,
+  ExecutionTabs,
+  ExecutionTree,
+  ILogsStore
+} from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const currentLogs = useLogs({ logs, delay: 1000 })
+  const currentLogs = useLogs({ logs })
+  const useLogsStore = useCallback(
+    (): ILogsStore => ({
+      logs: currentLogs
+    }),
+    [currentLogs]
+  )
 
   return (
     <div className="flex h-full flex-col">
@@ -38,7 +54,7 @@ export const ExecutionLogsView = () => {
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">
           <ExecutionInfo
-            logs={currentLogs}
+            useLogsStore={useLogsStore}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}

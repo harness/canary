@@ -63,6 +63,8 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
     [query]
   )
 
+  if (!logs || !logs.length) return <Text>No logs found</Text>
+
   return (
     <div ref={containerRef} className="max-h-[600px] overflow-y-auto">
       {logs.filter(Boolean).map(({ pos, out, time, duration }, index) => (

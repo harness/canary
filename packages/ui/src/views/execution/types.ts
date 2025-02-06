@@ -28,17 +28,21 @@ export interface StageProps {
   steps?: StepProps[]
 }
 
+export interface ILogsStore {
+  logs?: LivelogLine[]
+}
+
 export interface ExecutionInfoProps {
   stage: StageProps
   selectedStepIdx: number
-  logs: LivelogLine[]
+  useLogsStore: () => ILogsStore
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
 }
 
 export interface ConsoleLogsProps {
-  logs: LivelogLine[]
+  logs?: LivelogLine[]
   query?: string
 }
 
@@ -96,5 +100,3 @@ export interface Stage {
 export interface Execution {
   stages?: Stage[]
 }
-
-export interface ExecutionHeaderProps {}

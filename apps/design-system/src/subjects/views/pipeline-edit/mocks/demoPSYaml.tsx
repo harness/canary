@@ -26,7 +26,7 @@ export const demoPSYaml = `pipeline:
           repo: harness/petstore
           tags: latest
 
-    - temmplate:
+    - template:
         uses: slack
         with:
           channel: general

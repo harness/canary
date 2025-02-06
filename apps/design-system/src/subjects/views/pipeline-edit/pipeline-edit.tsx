@@ -15,6 +15,7 @@ import { parallelContainerConfig, serialContainerConfig } from './mocks/pipeline
 import { contentNodeFactory } from './nodes-factory'
 import PipelineExecution from './pipeline-execution'
 import CustomPort from './pipeline-nodes/components/custom-port'
+import { getIconBasedOnStep } from './utils/step-icon-utils'
 
 const PipelineStudioWrapper = () => {
   const [yamlRevision, setYamlRevision] = useState({ yaml: demoPSYaml })
@@ -125,12 +126,7 @@ const PipelineStudioWrapper = () => {
             contentNodeFactory={contentNodeFactory}
             serialContainerConfig={serialContainerConfig}
             parallelContainerConfig={parallelContainerConfig}
-            // getStepIcon={step => {
-            //   console.log(step)
-            //   const iconsNames: IconProps['name'][] = ['run', 'run-test', 'branch', 'artifacts']
-            //   const randomIconName = Math.floor(Math.random() * iconsNames.length)
-            //   return <Icon name={iconsNames[randomIconName]} size={48} className="p-2" />
-            // }}
+            getStepIcon={getIconBasedOnStep}
             onErrorChange={data => {
               setErrorData(data)
             }}

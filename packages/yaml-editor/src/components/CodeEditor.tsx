@@ -24,9 +24,7 @@ export interface CodeEditorProps<_> {
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
-  options?: {
-    readOnly?: boolean
-  }
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
   height?: EditorProps['height']
 }
 

@@ -19,14 +19,14 @@ export function Item({ icon, text, description, active, submenuItem, className }
       <div
         className={cn(
           'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] items-center gap-3 pb-[0.6875rem] pt-[0.5625rem] py-2 px-3 rounded-md',
-          { 'bg-background-4': active },
+          // { 'bg-background-4': active },
           { 'gap-0': !icon },
           className
         )}
       >
         <div
           className={cn(
-            'group-hover:bg-background-4 absolute -inset-x-3 z-0 h-full w-auto rounded-[10px] bg-transparent transition-colors',
+            'group-hover:bg-background-4 absolute z-0 h-full w-full rounded-[10px] bg-transparent transition-colors',
             { 'bg-background-4': active }
           )}
         />
@@ -68,7 +68,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
   return (
     <div
       className={cn(
-        'group flex cursor-pointer select-none gap-2.5 py-2 px-3 rounded-md',
+        'group flex cursor-pointer select-none gap-2 py-1.5 px-4 rounded-md',
         { 'bg-background-4': active },
         { 'gap-0': !icon },
         className

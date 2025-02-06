@@ -183,7 +183,6 @@ const PullRequestAccordion: React.FC<{
   selectedCommits: CommitFilterItemProps[]
   markViewed: (filePath: string, checksumAfter: string) => void
   unmarkViewed: (filePath: string) => void
-  commentId?: string
   autoExpand?: boolean
   onCopyClick?: (commentId?: number) => void
   onCommentSaveAndStatusChange?: (comment: string, status: string, parentId?: number) => void
@@ -214,7 +213,6 @@ const PullRequestAccordion: React.FC<{
   selectedCommits,
   markViewed,
   unmarkViewed,
-  commentId,
   autoExpand,
   onCopyClick,
   suggestionsBatch,
@@ -390,7 +388,6 @@ const PullRequestAccordion: React.FC<{
                       deleteComment={deleteComment}
                       updateComment={updateComment}
                       useTranslationStore={useTranslationStore}
-                      commentId={commentId}
                       onCopyClick={onCopyClick}
                       onCommitSuggestion={onCommitSuggestion}
                       addSuggestionToBatch={addSuggestionToBatch}
@@ -446,19 +443,23 @@ function PullRequestChangesInternal({
   const diffBlocks = useMemo(() => chunk(data, PULL_REQUEST_DIFF_RENDERING_BLOCK_SIZE), [data])
   const diffsContainerRef = useRef<HTMLDivElement | null>(null)
 
+  const getFileComments = (diffItem: HeaderProps) => {
+    return (
+      comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
+        thread.some(
+          (comment: CommentItem<TypesPullReqActivity>) => comment.payload?.payload?.code_comment?.path === diffItem.text
+        )
+      ) || []
+    )
+  }
+
   useEffect(() => {
     if (data.length > 0) {
       const itemsToOpen: string[] = []
       data.map(diffItem => {
-        const fileComments =
-          comments?.filter((thread: CommentItem<TypesPullReqActivity>[]) =>
-            thread.some(
-              (comment: CommentItem<TypesPullReqActivity>) =>
-                comment.payload?.payload?.code_comment?.path === diffItem.text
-            )
-          ) || []
-        const found = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
-        if (commentId && found) {
+        const fileComments = getFileComments(diffItem)
+        const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
+        if (commentId && diffHasComment) {
           itemsToOpen.push(diffItem.text)
         } else {
           const isFileViewed =
@@ -503,7 +504,16 @@ function PullRequestChangesInternal({
     if (jumpToDiff) {
       jumpToFile(jumpToDiff, diffBlocks, setJumpToDiff)
     }
-  }, [jumpToDiff, diffBlocks, setJumpToDiff])
+    if (commentId) {
+      data.map(diffItem => {
+        const fileComments = getFileComments(diffItem)
+        const diffHasComment = fileComments.some(thread => thread.some(comment => String(comment.id) === commentId))
+        if (commentId && diffHasComment) {
+          jumpToFile(diffItem.text, diffBlocks, setJumpToDiff, commentId)
+        }
+      })
+    }
+  }, [jumpToDiff, diffBlocks, setJumpToDiff, commentId])
 
   return (
     <div className="flex flex-col" ref={diffsContainerRef}>
@@ -550,7 +560,6 @@ function PullRequestChangesInternal({
                       selectedCommits={selectedCommits}
                       markViewed={markViewed}
                       unmarkViewed={unmarkViewed}
-                      commentId={commentId}
                       autoExpand={openItems.includes(item.text)}
                       onCopyClick={onCopyClick}
                       onCommentSaveAndStatusChange={onCommentSaveAndStatusChange}

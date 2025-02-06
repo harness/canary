@@ -1,9 +1,5 @@
 import { AnyNodeInternal } from '..'
 
-const RADIUS = 7
-const PARALLEL_LINE_OFFSET = 15
-const SERIAL_LINE_OFFSET = 10
-
 export type CreateSVGPathType = typeof createSVGPath
 
 export function clear(svgGroup: SVGElement) {
@@ -13,7 +9,8 @@ export function clear(svgGroup: SVGElement) {
 export function getPortsConnectionPath({
   pipelineGraphRoot,
   connection,
-  customCreateSVGPath
+  customCreateSVGPath,
+  edgesConfig = {}
 }: {
   pipelineGraphRoot: HTMLDivElement
   connection: {
@@ -28,7 +25,19 @@ export function getPortsConnectionPath({
     }
   }
   customCreateSVGPath?: CreateSVGPathType
+  edgesConfig?: {
+    radius?: number
+    parallelNodeOffset?: number
+    serialNodeOffset?: number
+  }
 }) {
+  const edgesConfigWithDefaults = {
+    radius: 10,
+    parallelNodeOffset: 10,
+    serialNodeOffset: 10,
+    ...edgesConfig
+  }
+
   const { source, target, parallel, serial, targetNode } = connection
 
   const fromEl = document.getElementById(source)
@@ -46,9 +55,11 @@ export function getPortsConnectionPath({
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
     endY: toElBB.top - pipelineGraphRootBB.top,
+    portAdjustment: fromElBB.height / 2, // center of circle
     parallel,
     serial,
-    targetNode
+    targetNode,
+    edgesConfig: edgesConfigWithDefaults
   })
 
   return customCreateSVGPath
@@ -56,34 +67,34 @@ export function getPortsConnectionPath({
     : createSVGPath({ targetNode, id: `${source}-${target}`, ...pathObj })
 }
 
-function getHArcConfig(direction: 'down' | 'up') {
+function getHArcConfig(direction: 'down' | 'up', r: number) {
   if (direction === 'down') {
     return {
-      arc: `a${RADIUS},${RADIUS} 0 0 1 ${RADIUS},${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: 7
+      arc: `a${r},${r} 0 0 1 ${r},${r}`,
+      hCorrection: r,
+      vCorrection: r
     }
   } else {
     return {
-      arc: `a${RADIUS},-${RADIUS} 0 0 0 ${RADIUS},-${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: -7
+      arc: `a${r},-${r} 0 0 0 ${r},-${r}`,
+      hCorrection: r,
+      vCorrection: -r
     }
   }
 }
 
-function getVArcConfig(direction: 'down' | 'up') {
+function getVArcConfig(direction: 'down' | 'up', r: number) {
   if (direction === 'down') {
     return {
-      arc: `a${RADIUS},${RADIUS} 0 0 0 ${RADIUS},${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: 7
+      arc: `a${r},${r} 0 0 0 ${r},${r}`,
+      hCorrection: r,
+      vCorrection: r
     }
   } else {
     return {
-      arc: `a${RADIUS},-${RADIUS} 0 0 1 ${RADIUS},-${RADIUS}`,
-      hCorrection: 7,
-      vCorrection: -7
+      arc: `a${r},-${r} 0 0 1 ${r},-${r}`,
+      hCorrection: r,
+      vCorrection: -r
     }
   }
 }
@@ -94,12 +105,15 @@ function getPath({
   endX,
   endY,
   parallel,
-  serial
+  serial,
+  edgesConfig,
+  portAdjustment
 }: {
   startX: number
   startY: number
   endX: number
   endY: number
+  portAdjustment: number
   parallel?: {
     position: 'left' | 'right'
   }
@@ -108,55 +122,62 @@ function getPath({
   }
   edgeClassName?: string
   targetNode?: AnyNodeInternal
+  edgesConfig: {
+    radius: number
+    parallelNodeOffset: number
+    serialNodeOffset: number
+  }
 }) {
-  const correction = 3
-
   let path = ''
 
-  // NOTE: approximate line length
+  // NOTE: approximate line length (arc is not included in calc)
   let pathLength = 0
   if (startY === endY) {
-    path = 'M ' + (startX + correction) + ' ' + (startY + correction) + ' ' + 'H ' + (endX + correction)
+    path = 'M ' + (startX + portAdjustment) + ' ' + (startY + portAdjustment) + ' ' + 'H ' + (endX + portAdjustment)
     pathLength = endX - startX
   } else {
-    const diff = endX - startX
+    // reduce radius avoid broken line
+    const xyMinForRadius = Math.min(Math.abs(endY - startY) / 2, Math.abs(endX - startX) / 2)
+    const radius = Math.min(edgesConfig.radius, xyMinForRadius)
 
-    let hMiddle = startX + diff / 2
+    const totalHDistance = endX - startX
+    const halfHDistance = totalHDistance / 2
+    let absArcStart = endX - halfHDistance - radius
+
     if (parallel?.position === 'right') {
-      hMiddle = startX + diff - PARALLEL_LINE_OFFSET * 2 - RADIUS * 2
+      absArcStart = endX - radius * 2 - edgesConfig.parallelNodeOffset
     }
     if (parallel?.position === 'left') {
-      hMiddle = startX + PARALLEL_LINE_OFFSET
+      absArcStart = startX + edgesConfig.parallelNodeOffset
     }
     if (serial?.position === 'right') {
-      hMiddle = startX + diff - SERIAL_LINE_OFFSET - RADIUS * 2
+      absArcStart = endX - radius * 2 - edgesConfig.serialNodeOffset
     }
     if (serial?.position === 'left') {
-      hMiddle = startX + SERIAL_LINE_OFFSET - RADIUS * 2
+      absArcStart = startX + edgesConfig.serialNodeOffset
     }
 
-    const { arc, hCorrection, vCorrection } = getHArcConfig(endY + correction > startY + correction ? 'down' : 'up')
+    const { arc } = getHArcConfig(endY + portAdjustment > startY + portAdjustment ? 'down' : 'up', radius)
 
-    const {
-      arc: arc2,
-      hCorrection: hCorrection2,
-      vCorrection: vCorrection2
-    } = getVArcConfig(endY + correction > startY + correction ? 'down' : 'up')
+    const { arc: arc2, vCorrection: vCorrection2 } = getVArcConfig(
+      endY + portAdjustment > startY + portAdjustment ? 'down' : 'up',
+      radius
+    )
 
     path =
       'M ' +
-      (startX + correction) +
+      (startX + portAdjustment) +
       ' ' +
-      (startY + correction) +
+      (startY + portAdjustment) +
       ' ' +
       'H ' +
-      (hMiddle + correction + hCorrection) + //- 6
+      (absArcStart + portAdjustment) +
       arc +
       'V ' +
-      (endY + correction - vCorrection2) + //- 6
+      (endY + portAdjustment - vCorrection2) +
       arc2 +
       'H ' +
-      (endX + correction)
+      (endX + portAdjustment)
 
     pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
   }

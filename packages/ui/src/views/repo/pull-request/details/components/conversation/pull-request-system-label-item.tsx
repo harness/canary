@@ -1,5 +1,7 @@
-import { Avatar, AvatarFallback, Badge, Icon, Text } from '@components/index'
+import { Avatar, AvatarFallback, Icon, Text } from '@components/index'
+import { LabelMarker } from '@components/label-marker'
 import { getInitials } from '@utils/stringUtils'
+import { ColorsEnum } from '@views/labels'
 
 import { GeneralPayload, LabelActivity, PayloadAuthor, TypesPullReqActivity } from '../../pull-request-details-types'
 import PullRequestTimelineItem from './pull-request-timeline-item'
@@ -38,15 +40,12 @@ const PullRequestSystemLabelItem: React.FC<PullRequestSystemLabelItemProps> = ({
                 </>
               )}{' '}
               label{'  '}
-              <Badge
-                variant="outline"
-                size="sm"
-                borderRadius="full"
-                className="ml-2 outline outline-1"
-                style={{ outlineColor: data?.label_color as string, color: data?.label_color as string }}
-              >
-                <p className="max-w-[376px] truncate">{data?.label as string}</p>
-              </Badge>
+              <LabelMarker
+                key={data?.label as string}
+                color={data?.label_color as ColorsEnum}
+                label={data?.label as string}
+                value={data?.value as string}
+              />
             </Text>
           )
         }

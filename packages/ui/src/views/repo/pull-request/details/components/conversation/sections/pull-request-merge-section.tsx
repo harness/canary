@@ -100,7 +100,7 @@ const PullRequestMergeSection = ({
                   ) : (
                     <>
                       {mergeable ? (
-                        <Icon name="success" className="text-success" />
+                        <Icon name="success" className="text-foreground-success" />
                       ) : (
                         <Icon name="triangle-warning" className="text-destructive" />
                       )}

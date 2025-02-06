@@ -33,7 +33,7 @@ export function CustomStageContentNode(props: {
       selected={selected}
       isFirst={isFirst}
       parentNodeType={parentNodeType}
-      nodeData={data}
+      node={node}
       onAddInClick={() => {
         onAddIntention(data, 'in')
       }}

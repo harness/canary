@@ -7,6 +7,7 @@ import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
+import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 
 export const ImportRepo = () => {
   const routes = useRoutes()
@@ -16,18 +17,19 @@ export const ImportRepo = () => {
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
 
   const onSubmit = async (data: ImportRepoFormFields) => {
+    const providerRepo = getRepoProviderConfig(data)
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
       description: data.description,
       parent_ref: spaceURL,
-      pipelines: data.pipelines === true ? 'convert' : 'ignore',
+      pipelines: data.pipelines ? 'convert' : 'ignore',
       provider: {
         host: data.hostUrl ?? '',
         password: data.password,
-        type: 'github',
+        type: PROVIDER_TYPE_MAP[data.provider],
         username: ''
       },
-      provider_repo: `${data.organization}/${data.repository}`
+      provider_repo: `${providerRepo}/${data.repository}`
     }
     importRepoMutation(
       {

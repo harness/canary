@@ -11,8 +11,8 @@ import CollapseButton from '../components/collapse'
 import Port from './port'
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
-  const { node, level, parentNode, isFirst, isLast, parentNodeType } = props
-  const { serialContainerConfig, parallelContainerConfig } = useContainerNodeContext()
+  const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
+  const { serialContainerConfig, parallelContainerConfig, portComponent } = useContainerNodeContext()
 
   const myLevel = level + 1
 
@@ -48,12 +48,19 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         flexShrink: 0
       }}
     >
-      {!node.config?.hideLeftPort && (
-        <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      )}
-      {!node.config?.hideRightPort && (
-        <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      )}
+      {!node.config?.hideLeftPort &&
+        (portComponent ? (
+          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+        ) : (
+          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+        ))}
+
+      {!node.config?.hideRightPort &&
+        (portComponent ? (
+          portComponent({ side: 'right', id: `right-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+        ) : (
+          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+        ))}
 
       <div
         className="serial-node-header"
@@ -81,6 +88,7 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         isFirst={isFirst}
         isLast={isLast}
         parentNodeType={parentNodeType}
+        mode={mode}
       >
         {!collapsed && node.children.length > 0 ? (
           <div
@@ -99,7 +107,8 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
                 parentNodeType: 'serial',
                 relativeIndex: index,
                 isFirst: index === 0,
-                isLast: index === node.children.length - 1
+                isLast: index === node.children.length - 1,
+                mode
               })
             )}
           </div>

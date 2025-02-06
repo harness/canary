@@ -8,7 +8,6 @@ import {
   Icon,
   StackedList,
   ToggleGroup,
-  ToggleGroupItem,
   ViewTypeValue
 } from '@/components'
 
@@ -77,7 +76,7 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
   return (
     <StackedList.Root onlyTopRounded borderBackground>
       <StackedList.Item disableHover isHeader className="px-4 py-1.5">
-        <ToggleGroup
+        <ToggleGroup.Root
           className="gap-0"
           onValueChange={onChangeView}
           value={view}
@@ -85,11 +84,11 @@ export const FileViewerControlBar: FC<FileViewerControlBarProps> = ({
           unselectable={'on'}
           size="xs"
         >
-          {isMarkdown && <ToggleGroupItem value={'preview'}>Preview</ToggleGroupItem>}
-          <ToggleGroupItem value={'code'}>Code</ToggleGroupItem>
-          <ToggleGroupItem value={'blame'}>Blame</ToggleGroupItem>
-          <ToggleGroupItem value={'history'}>History</ToggleGroupItem>
-        </ToggleGroup>
+          {isMarkdown && <ToggleGroup.Item value={'preview'}>Preview</ToggleGroup.Item>}
+          <ToggleGroup.Item value={'code'}>Code</ToggleGroup.Item>
+          <ToggleGroup.Item value={'blame'}>Blame</ToggleGroup.Item>
+          <ToggleGroup.Item value={'history'}>History</ToggleGroup.Item>
+        </ToggleGroup.Root>
         <StackedList.Field right title={<RightDetails />} />
       </StackedList.Item>
     </StackedList.Root>

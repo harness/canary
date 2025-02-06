@@ -28,7 +28,7 @@ const PropsTable: FC<PropsTableProps> = ({ props }) => (
         <TableHead>Prop</TableHead>
         <TableHead>Required</TableHead>
         <TableHead>Default</TableHead>
-        <TableHead>Value</TableHead>
+        <TableHead>Type</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>

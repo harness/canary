@@ -127,7 +127,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
           />
 
           <div
-            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-1 border border-borders-2 rounded-md', {
+            className={cn('pb-5 pt-1.5 px-4 flex-1 bg-background-surface border border-borders-2 rounded-md', {
               // 'border rounded-md': !inReplyMode || isEditMode,
               // 'border-t': inReplyMode
             })}

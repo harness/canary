@@ -52,7 +52,11 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
         }
 
         const divisor = ctrlKey ? 100 : 250
-        const scaleDiff = 1 - deltaY / divisor
+        let scaleDiff = 1 - deltaY / divisor
+
+        if (canvasTransformRef.current.scale * scaleDiff > config.maxScale) {
+          scaleDiff = config.maxScale / canvasTransformRef.current.scale
+        }
 
         const newTransform = calculateTransform({
           scaleDiff,
@@ -121,9 +125,11 @@ export function Canvas({ children }: React.PropsWithChildren<React.HTMLAttribute
 
   const mouseDownHandler = (event: MouseEvent | any) => {
     if (mainRef.current) {
-      latestPointRef.current = event
-      mainRef.current.addEventListener('mousemove', mouseMoveHandler)
-      document.addEventListener('mouseup', mouseUpHandler)
+      if (event.button === 0) {
+        latestPointRef.current = event
+        mainRef.current.addEventListener('mousemove', mouseMoveHandler)
+        document.addEventListener('mouseup', mouseUpHandler)
+      }
     }
   }
 

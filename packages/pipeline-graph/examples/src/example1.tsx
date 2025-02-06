@@ -30,6 +30,7 @@ import { CanvasProvider } from '../../src/context/canvas-provider'
 import { AnyNodeInternal } from '../../src/types/nodes-internal'
 import { CanvasControls } from './canvas/CanvasControls'
 import { getIcon } from './parser/utils'
+import CustomPort from './ports/custom-port'
 import { getExecutionPipeline } from './sample-data/pipeline-data'
 import { ContentNodeTypes } from './types/content-node-types'
 
@@ -186,6 +187,8 @@ function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
 
             return { level1: staticPath, level2: '' }
           }}
+          portComponent={CustomPort}
+          edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
           serialContainerConfig={{}}
           parallelContainerConfig={{}}
           data={data}

@@ -11,8 +11,8 @@ import { DocsPage } from "@/components/docs-page";
   client:only
   code={`<Problems
   problems={[
-    { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error' },
-    { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning' },
+    { message: 'Error message', position: { row: 1, column: 5 }, severity: 'error', action: 'Debug' },
+    { message: 'Warning message', position: { row: 2, column: 10 }, severity: 'warning', action: <Button>Check</Button> },
     { message: 'Info message', position: { row: 3, column: 15 }, severity: 'info' }
   ]}
   onClick={(problem) => console.log(problem)}

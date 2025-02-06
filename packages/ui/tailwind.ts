@@ -124,6 +124,7 @@ export default {
           11: 'hsl(var(--canary-background-11))',
           12: 'hsl(var(--canary-background-12))',
           13: 'hsl(var(--canary-background-13))',
+          surface: 'hsl(var(--canary-background-surface))',
           danger: 'hsla(var(--canary-background-danger))',
           success: 'hsla(var(--canary-background-success))'
         },
@@ -141,7 +142,8 @@ export default {
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
           accent: 'hsl(var(--canary-border-accent))',
-          risk: 'hsl(var(--canary-icon-risk))'
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
         },
         button: {
           foreground: {
@@ -152,6 +154,7 @@ export default {
           background: {
             'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-background-danger-01))',
+            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
             'danger-3': 'hsla(var(--canary-button-background-danger-03))',
             'success-1': 'hsla(var(--canary-button-background-success-01))',
             'success-2': 'hsla(var(--canary-button-background-success-02))'
@@ -369,11 +372,15 @@ export default {
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' }
+        },
+        'border-spin': {
+          '100%': { transform: 'rotate(-360deg)' }
         }
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out'
+        'accordion-up': 'accordion-up 0.2s ease-out',
+        'border-spin': 'border-spin 7s linear infinite'
       }
     }
   },
@@ -401,6 +408,8 @@ export default {
     'prose-img',
     'prose-code',
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
-    'stroke-borders-2'
+    'stroke-borders-2',
+    // NOTE: temporary - used in design-system
+    { pattern: /bg-primary-./ }
   ]
 } satisfies TailwindConfig

@@ -12,11 +12,22 @@ export interface PipelineStudioInternalProps {
   yamlEditorConfig?: PipelineStudioYamlViewProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioYamlViewProps['onErrorChange']
   getStepIcon?: PipelineStudioGraphViewProps['getStepIcon']
+  animateYamlOnUpdate?: boolean
+  onYamlAnimateEnd?: () => void
 }
 
 export default function PipelineStudioInternal(props: PipelineStudioInternalProps) {
-  const { view, yamlRevision, onYamlRevisionChange, contentNodeFactory, yamlEditorConfig, onErrorChange, getStepIcon } =
-    props
+  const {
+    view,
+    yamlRevision,
+    onYamlRevisionChange,
+    contentNodeFactory,
+    yamlEditorConfig,
+    onErrorChange,
+    getStepIcon,
+    animateYamlOnUpdate: animateOnUpdate,
+    onYamlAnimateEnd: onAnimateEnd
+  } = props
 
   return view === 'graph' ? (
     <PipelineStudioGraphView
@@ -32,6 +43,8 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
         onYamlRevisionChange={onYamlRevisionChange}
         yamlEditorConfig={yamlEditorConfig}
         onErrorChange={onErrorChange}
+        animateOnUpdate={animateOnUpdate}
+        onAnimateEnd={onAnimateEnd}
       />
     </YamlEditorContextProvider>
   )

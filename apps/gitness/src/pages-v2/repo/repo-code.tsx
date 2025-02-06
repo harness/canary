@@ -18,20 +18,10 @@ import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import useCodePathDetails from '../../hooks/useCodePathDetails'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
+import { sortFilesByType } from '../../utils/common-utils'
 import { FILE_SEPERATOR, getTrimmedSha, normalizeGitRef } from '../../utils/git-utils'
 import { splitPathWithParents } from '../../utils/path-utils'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
-
-const sortFilesByType = (entries: RepoFile[]): RepoFile[] => {
-  return entries.sort((a, b) => {
-    if (a.type === SummaryItemType.Folder && b.type === SummaryItemType.File) {
-      return -1
-    } else if (a.type === SummaryItemType.File && b.type === SummaryItemType.Folder) {
-      return 1
-    }
-    return 0
-  })
-}
 
 /**
  * TODO: This code was migrated from V2 and needs to be refactored.

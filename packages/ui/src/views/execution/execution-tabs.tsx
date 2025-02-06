@@ -12,28 +12,31 @@ export const ExecutionTabs = () => {
       <SandboxLayout.SubHeader className="h-[45px]">
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
-            <NavLink to={`summary`}>
+            <NavLink to={'summary'}>
               <TabsTrigger value="summary">Summary</TabsTrigger>
             </NavLink>
-            <NavLink to={`logs`}>
+            <NavLink to={'logs'}>
               <TabsTrigger value="logs">Logs</TabsTrigger>
             </NavLink>
-            <NavLink to={`inputs`}>
+            <NavLink to={'graph'}>
+              <TabsTrigger value="graph">Graph</TabsTrigger>
+            </NavLink>
+            <NavLink to={'inputs'}>
               <TabsTrigger value="inputs">Inputs</TabsTrigger>
             </NavLink>
-            <NavLink to={`opa`}>
+            <NavLink to={'opa'}>
               <TabsTrigger value="opa">Policy evaluations</TabsTrigger>
             </NavLink>
-            <NavLink to={`artifacts`}>
+            <NavLink to={'artifacts'}>
               <TabsTrigger value="artifacts">Artifacts</TabsTrigger>
             </NavLink>
-            <NavLink to={`tests`}>
+            <NavLink to={'tests'}>
               <TabsTrigger value="tests">Tests</TabsTrigger>
             </NavLink>
-            <NavLink to={`sto`}>
+            <NavLink to={'sto'}>
               <TabsTrigger value="sto">Security tests</TabsTrigger>
             </NavLink>
-            <NavLink to={`secrets`}>
+            <NavLink to={'secrets'}>
               <TabsTrigger value="secrets">Secrets</TabsTrigger>
             </NavLink>
           </TabsList>

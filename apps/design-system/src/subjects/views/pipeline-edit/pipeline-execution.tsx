@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 
 import { CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
-import { CanvasControls, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
+import { CanvasControls, PipelineStudioNodeContextMenu, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
 
 import { executionMock } from './mocks/pipelineExecutionMock'
 import { contentNodeFactory } from './nodes-factory'
@@ -10,13 +10,15 @@ const PipelineExecution = () => {
   return (
     <div className="relative flex h-screen grow">
       <PipelineStudioNodeContextProvider
-        onSelectIntention={() => {}}
-        onAddIntention={() => {}}
-        onEditIntention={() => {}}
-        onDeleteIntention={() => {}}
-        onRevealInYaml={() => {}}
+        selectedPath={''}
+        onAddIntention={() => undefined}
+        onDeleteIntention={() => undefined}
+        onEditIntention={() => undefined}
+        onRevealInYaml={() => undefined}
+        onSelectIntention={() => undefined}
       >
         <PipelineExecutionInner />
+        <PipelineStudioNodeContextMenu />
       </PipelineStudioNodeContextProvider>
     </div>
   )
@@ -29,8 +31,22 @@ const PipelineExecutionInner = () => {
 
   return (
     <div className="relative flex h-screen grow">
-      <CanvasProvider>
+      <CanvasProvider config={{ maxScale: 1 }}>
         <PipelineGraph
+          parallelContainerConfig={{
+            paddingLeft: 36,
+            paddingRight: 36,
+            paddingBottom: 23,
+            paddingTop: 60,
+            nodeGap: 40
+          }}
+          serialContainerConfig={{
+            paddingLeft: 36,
+            paddingRight: 36,
+            paddingBottom: 23,
+            paddingTop: 60,
+            nodeGap: 40
+          }}
           data={executionMock}
           nodes={nodes}
           customCreateSVGPath={props => {

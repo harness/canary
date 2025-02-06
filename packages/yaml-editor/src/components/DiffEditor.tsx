@@ -16,7 +16,6 @@ export interface CodeRevision {
 
 const defaultOptions: monaco.editor.IStandaloneDiffEditorConstructionOptions = {
   ...MonacoCommonDefaultOptions,
-  minimap: { enabled: false },
   codeLens: false,
   smartSelect: {
     selectLeadingAndTrailingWhitespace: true
@@ -31,9 +30,7 @@ export interface DiffEditorProps<_> {
   language: string
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
-  options?: {
-    readOnly?: boolean
-  }
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
   height?: EditorProps['height']
 }
 

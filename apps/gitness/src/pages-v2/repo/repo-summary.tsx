@@ -36,6 +36,7 @@ import { generateAlphaNumericHash } from '../../pages-v2/pull-request/pull-reque
 import { timeAgoFromISOTime } from '../../pages/pipeline-edit/utils/time-utils'
 import { PathParams } from '../../RouteDefinitions'
 import { orderSortDate } from '../../types'
+import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
@@ -262,16 +263,18 @@ export default function RepoSummaryPage() {
       .then(({ body: response }: { body: RepoPathsDetailsOutput }) => {
         if (response?.details && response.details.length) {
           setFiles(
-            response.details.map((item: GitPathDetails) => ({
-              id: item?.path || '',
-              type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
-              name: item?.path || '',
-              lastCommitMessage: item?.last_commit?.message || '',
-              timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
-              user: { name: item?.last_commit?.author?.identity?.name || '' },
-              sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
-              path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
-            }))
+            sortFilesByType(
+              response.details.map((item: GitPathDetails) => ({
+                id: item?.path || '',
+                type: item?.path ? getSummaryItemType(repoEntryPathToFileTypeMap.get(item.path)) : SummaryItemType.File,
+                name: item?.path || '',
+                lastCommitMessage: item?.last_commit?.message || '',
+                timestamp: item?.last_commit?.author?.when ? timeAgoFromISOTime(item.last_commit.author.when) : '',
+                user: { name: item?.last_commit?.author?.identity?.name || '' },
+                sha: item?.last_commit?.sha && getTrimmedSha(item.last_commit.sha),
+                path: `${routes.toRepoFiles({ spaceId, repoId })}/${gitRef}/~/${item?.path}`
+              }))
+            )
           )
         }
       })

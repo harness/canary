@@ -8,7 +8,7 @@ const tableVariants = cva('w-full text-sm', {
     variant: {
       default: 'caption-bottom',
       asStackedList:
-        'rounded-md border [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-background-2'
+        'bg-background-surface rounded-md border [&_td]:px-4 [&_td]:py-2.5 [&_td]:align-top [&_th]:px-4 [&_thead]:bg-background-2'
     }
   },
   defaultVariants: {

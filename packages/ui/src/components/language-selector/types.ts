@@ -18,7 +18,7 @@ export enum LanguageCode {
   FR = 'FR',
   DE = 'DE',
   IE = 'IE',
-  PY = 'PY',
+  RU = 'РУ',
   LA = 'LA'
 }
 
@@ -27,25 +27,14 @@ export interface LanguageInterface {
   name: Language
 }
 
-export const languages: LanguageInterface[] = [
-  { code: LanguageCode.EN, name: Language.English },
-  { code: LanguageCode.БГ, name: Language.Bulgarian },
-  { code: LanguageCode.HR, name: Language.Croatian },
-  { code: LanguageCode.CZ, name: Language.Czech },
-  { code: LanguageCode.FR, name: Language.French },
-  { code: LanguageCode.DE, name: Language.German },
-  { code: LanguageCode.IE, name: Language.Irish },
-  { code: LanguageCode.PY, name: Language.Russian },
-  { code: LanguageCode.LA, name: Language.LatinAmerican }
-]
-
 export interface LanguageDialogProps {
   defaultLanguage?: LanguageCode
   language?: LanguageCode
+  supportedLanguages: LanguageInterface[]
   open: boolean
   onOpenChange: (open: boolean) => void
   onChange: (language: LanguageInterface) => void
   onSave: (language: LanguageInterface) => void
   onCancel: () => void
-  children: React.ReactNode
+  children?: React.ReactNode
 }

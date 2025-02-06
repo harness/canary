@@ -36,14 +36,13 @@ const CanvasContext = createContext<CanvasContextProps>({
 })
 
 export interface CanvasProviderProps {
-  config?: CanvasConfig
+  config?: Partial<CanvasConfig>
   children: React.ReactNode
 }
 
-export const CanvasProvider = ({
-  children,
-  config = { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20 }
-}: CanvasProviderProps) => {
+export const CanvasProvider = ({ children, config: configFromProps }: CanvasProviderProps) => {
+  const config = { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 20, ...configFromProps }
+
   const canvasTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
   const targetElRef = useRef<HTMLElement>()
 

@@ -16,6 +16,12 @@ export interface PipelineGraphInternalProps {
   config?: {
     edgeClassName?: string
     leftGap?: number
+    mode?: 'Edit' | 'Execution'
+  }
+  edgesConfig?: {
+    radius?: number
+    parallelNodeOffset?: number
+    serialNodeOffset?: number
   }
 }
 
@@ -24,7 +30,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath } = props
+  const { data, config = {}, customCreateSVGPath, edgesConfig } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -74,7 +80,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           const levelPaths = getPortsConnectionPath({
             pipelineGraphRoot: rootContainerEl,
             connection: portPair,
-            customCreateSVGPath
+            customCreateSVGPath,
+            edgesConfig
           })
           allPaths.level1.push(levelPaths.level1)
           allPaths.level2.push(levelPaths.level2)
@@ -183,7 +190,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             parentNodeType: 'serial',
             relativeIndex: index,
             isFirst: index === 0,
-            isLast: index === dataInternalRef.current?.length - 1
+            isLast: index === dataInternalRef.current?.length - 1,
+            mode: config?.mode
           })
         )}
       </div>

@@ -5,6 +5,7 @@ import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { cn } from '@utils/cn'
+import { formatNumber } from '@utils/utils'
 
 import {
   EnumPullReqReviewDecision,
@@ -186,7 +187,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           className="flex cursor-pointer items-center"
         >
           <Checkbox checked={isSelected} />
-          <Text size={1} className="pl-3 text-primary">
+          <Text size={1} className="pl-3 text-primary truncate">
             {item.name}
           </Text>
         </DropdownMenu.Item>
@@ -272,13 +273,16 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
 
         <DropdownMenu.Root>
           <p className="text-14 leading-tight text-foreground-4">
-            Showing{' '}
+            {t('views:commits.commitDetailsDiffShowing', 'Showing')}{' '}
             <DropdownMenu.Trigger className="group">
               <span className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 group-hover:decoration-foreground-accent">
-                {pullReqStats?.files_changed} changed files
+                {formatNumber(pullReqStats?.files_changed || 0)}{' '}
+                {t('views:commits.commitDetailsDiffChangedFiles', 'changed files')}
               </span>
             </DropdownMenu.Trigger>{' '}
-            with {pullReqStats?.additions || 0} additions and {pullReqStats?.deletions || 0} deletions
+            {t('views:commits.commitDetailsDiffWith', 'with')} {formatNumber(pullReqStats?.additions || 0)}{' '}
+            {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
+            {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
           </p>
           <DropdownMenu.Content align="start">
             <div className="max-h-[360px] overflow-y-auto px-1">

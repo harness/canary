@@ -2,7 +2,7 @@ import { ExecutionHeader, ExecutionInfo, ExecutionState, ExecutionTabs, Executio
 
 import { elements, logs, stages } from './mocks/mock-data'
 
-export const ExecutionDetailsView = () => {
+export const ExecutionLogsView = () => {
   return (
     <div className="flex flex-col h-full">
       <ExecutionTabs />

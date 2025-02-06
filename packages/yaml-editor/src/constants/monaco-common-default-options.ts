@@ -8,7 +8,7 @@ export const MonacoCommonDefaultOptions: monaco.editor.IStandaloneDiffEditorCons
     bottom: 16
   },
   minimap: { enabled: false },
-  fontSize: 14,
+  fontSize: 13,
   fontFamily: '"JetBrains Mono", "monospace"',
   lineHeight: 20,
   scrollbar: {
@@ -16,5 +16,8 @@ export const MonacoCommonDefaultOptions: monaco.editor.IStandaloneDiffEditorCons
     horizontalScrollbarSize: 14,
     verticalSliderSize: 6,
     horizontalSliderSize: 6
-  }
+  },
+  overviewRulerBorder: false,
+  overviewRulerLanes: 0,
+  renderLineHighlight: 'none'
 }

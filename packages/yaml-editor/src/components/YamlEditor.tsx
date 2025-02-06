@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 
+import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
 import { useCodeLenses } from '../hooks/useCodeLens'
 import { useDecoration } from '../hooks/useDecoration'
 import { useProblems } from '../hooks/useProblems'
@@ -22,10 +23,7 @@ export interface YamlRevision {
 }
 
 const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true,
-  minimap: {
-    enabled: true
-  },
+  ...MonacoCommonDefaultOptions,
   folding: true
 }
 
@@ -36,16 +34,17 @@ export interface YamlEditorProps<T> {
   inlineActions?: { selectors: PathSelector[]; actions: InlineAction<T>[] }[]
   themeConfig?: { rootElementSelector?: string; defaultTheme?: string; themes?: ThemeDefinition[] }
   theme?: string
+  options?: monaco.editor.IStandaloneEditorConstructionOptions
   selection?: {
     path: string
     className: string
     revealInCenter?: boolean
   }
-  minimap?: boolean
-  folding?: boolean
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
 }
 
-export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
+export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const {
     yamlRevision,
     schemaConfig,
@@ -54,8 +53,9 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
     onYamlRevisionChange,
     selection,
     theme: themeFromProps,
-    minimap = false,
-    folding = true
+    options: userOptions,
+    animateOnUpdate = false,
+    onAnimateEnd
   } = props
   const monaco = useMonaco()
   const [instanceId] = useState('yaml')
@@ -67,6 +67,47 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const currentRevisionRef = useRef<YamlRevision>({ yaml: '', revisionId: 0 })
 
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+  const intervalIdRef = useRef<number | null>(null)
+
+  const replaceYamlWithAnimation = useCallback(
+    (yaml: string) => {
+      const lines = yaml.split('\n')
+      const model = editorRef.current?.getModel()
+      if (model) {
+        editorRef.current?.pushUndoStop()
+        model.setValue('')
+        let index = 0
+        intervalIdRef.current = window.setInterval(() => {
+          if (index < lines.length) {
+            if (monaco) {
+              editorRef.current?.executeEdits('addLine', [
+                {
+                  range: new monaco.Range(index + 1, 1, index + 1, 1),
+                  text: lines[index] + '\n'
+                }
+              ])
+            }
+            index++
+          } else {
+            if (intervalIdRef.current) {
+              clearInterval(intervalIdRef.current)
+              onAnimateEnd?.()
+            }
+          }
+        }, 100) // 100ms delay between each line
+        editorRef.current?.pushUndoStop()
+      }
+    },
+    [monaco]
+  )
+
+  useEffect(() => {
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current)
+      }
+    }
+  }, [])
 
   function handleEditorDidMount(editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) {
     editorRef.current = editor
@@ -91,18 +132,21 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
 
         const model = editorRef.current.getModel()
         if (model) {
-          editorRef.current.pushUndoStop()
+          // editorRef.current.pushUndoStop()
           editorRef.current.executeEdits('edit', [
             {
               range: model.getFullModelRange(),
-              text: yamlRevision.yaml
+              text: animateOnUpdate ? '' : yamlRevision.yaml
             }
           ])
-          editorRef.current.pushUndoStop()
+          // editorRef.current.pushUndoStop()
+          if (animateOnUpdate) {
+            replaceYamlWithAnimation(yamlRevision.yaml)
+          }
         }
       }
     }
-  }, [yamlRevision, editorRef.current])
+  }, [replaceYamlWithAnimation, yamlRevision, animateOnUpdate])
 
   useSchema({ schemaConfig, instanceId })
 
@@ -117,10 +161,9 @@ export function YamlEditor<T>(props: YamlEditorProps<T>): JSX.Element {
   const mergedOptions = useMemo(
     () => ({
       ...options,
-      folding,
-      minimap: { ...options.minimap, enabled: minimap }
+      ...userOptions
     }),
-    [folding, minimap]
+    [userOptions]
   )
 
   return (

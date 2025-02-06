@@ -1,6 +1,6 @@
 import { formatDistance, formatDistanceToNow } from 'date-fns'
 
-export const getInitials = (name: string, length?: number) => {
+export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings
   const words = name.split(' ').filter(Boolean)
 
@@ -97,4 +97,16 @@ export function generateAlphaNumericHash(length: number) {
   }
 
   return result
+}
+
+/**
+ * Format a number with current locale.
+ * @param num number
+ * @returns Formatted string.
+ */
+export function formatNumber(num: number | bigint): string {
+  return num ? new Intl.NumberFormat(LOCALE).format(num) : ''
+}
+export interface Violation {
+  violation: string
 }

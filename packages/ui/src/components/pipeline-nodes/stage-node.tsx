@@ -1,9 +1,9 @@
 import { cn } from '@utils/cn'
 
-import { Button, Icon } from '..'
+import { Button, Icon, NodeProps } from '..'
 import { FloatingAddButton } from './components/floating-add-button'
 
-export interface StageNodeProps {
+export interface StageNodeProps extends NodeProps {
   name?: string
   children?: React.ReactElement
   collapsed?: boolean
@@ -29,7 +29,8 @@ export function StageNode(props: StageNodeProps) {
     onAddInClick,
     onHeaderClick,
     onAddClick,
-    parentNodeType
+    parentNodeType,
+    mode
   } = props
 
   return (
@@ -53,7 +54,7 @@ export function StageNode(props: StageNodeProps) {
         </div>
       </div>
 
-      {onEllipsisClick && (
+      {mode !== 'Execution' && onEllipsisClick && (
         <Button
           className="absolute right-2 top-2 z-10"
           variant="ghost"
@@ -77,7 +78,7 @@ export function StageNode(props: StageNodeProps) {
         </Button>
       )}
 
-      {isFirst && (
+      {mode !== 'Execution' && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -86,13 +87,15 @@ export function StageNode(props: StageNodeProps) {
           }}
         />
       )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-      />
+      {mode !== 'Execution' && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+        />
+      )}
 
       {children}
     </>

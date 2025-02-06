@@ -1,7 +1,10 @@
+import { ParallelNodeInternalType } from '@harnessio/pipeline-graph'
 import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
-import { StepNodeDataType } from '../nodes/custom-step-node'
+import { CustomParallelStepGroupContentNodeDataType } from '../nodes/custom-parallel-step-group-content-node'
+import { CollapsedGroupNode } from './components/collapsed-group-node'
+import { ExecutionStatus } from './components/execution-status'
 import { FloatingAddButton } from './components/floating-add-button'
 
 export interface ParallelGroupNodeProps {
@@ -12,7 +15,7 @@ export interface ParallelGroupNodeProps {
   selected?: boolean
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
-  nodeData: StepNodeDataType
+  node: ParallelNodeInternalType<CustomParallelStepGroupContentNodeDataType>
   onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -28,16 +31,21 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
     selected,
     isFirst,
     parentNodeType,
+    node,
     onEllipsisClick,
     onAddInClick,
     onHeaderClick,
     onAddClick
   } = props
 
+  const nodeData = node.data
+
   return (
     <>
+      <ExecutionStatus nodeData={nodeData} />
+
       <div
-        className={cn('absolute inset-0 -z-10 rounded-xl border', {
+        className={cn('absolute inset-0 -z-10 border-dashed rounded-md border', {
           'border-borders-2': !selected,
           'border-borders-3': selected
         })}
@@ -93,8 +101,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
           onAddClick?.('after', e)
         }}
       />
-
-      {children}
+      {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'parallel'} /> : children}
     </>
   )
 }

@@ -64,9 +64,14 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   )
 }
 
-const CodeBlock: FC = ({ children }) => {
+const CodeBlock: FC<{ className: string }> = ({ children, className }) => {
   return (
-    <code className="inline-block rounded-[3px] border border-borders-2 bg-background-8 px-1.5 text-13 leading-[18px]">
+    <code
+      className={cn(
+        'inline-block rounded-[3px] border border-borders-2 bg-background-8 px-1.5 text-13 leading-[18px]',
+        className
+      )}
+    >
       {children}
     </code>
   )

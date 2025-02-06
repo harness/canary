@@ -8,7 +8,7 @@ interface PipelineStudioFooterProps {
     warning: number
     info: number
   }
-  lastCommitInfo: {
+  lastCommitInfo?: {
     committedTimeAgo: string
     authorName: string
     authorInitials?: string
@@ -23,8 +23,13 @@ interface PipelineStudioFooterProps {
 }
 
 export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props: PipelineStudioFooterProps) => {
-  const { currentBranch, branchesLoading, branches, lastCommitInfo, onBranchChange } = props
-  const { committedTimeAgo, authorName, authorInitials, commitSha, commitMessage } = lastCommitInfo
+  const {
+    currentBranch,
+    branchesLoading,
+    branches,
+    lastCommitInfo: { committedTimeAgo, authorName, authorInitials, commitSha, commitMessage } = {},
+    onBranchChange
+  } = props
 
   return (
     <footer

@@ -61,7 +61,7 @@ export const demoExecutionMock = [
               yamlPath: 'pipeline.stages.0.parallel.stages.0.steps.0',
               yamlEntityType: 'Step',
               name: 'npm install',
-              icon: <Icon className="size-6" name={'harness-plugin'} />,
+              icon: <Icon className="size-6" name={'run'} />,
               state: 'error'
             },
             path: 'pipeline.children.1.children.0.children.0',
@@ -80,7 +80,7 @@ export const demoExecutionMock = [
               yamlPath: 'pipeline.stages.0.parallel.stages.0.steps.1',
               yamlEntityType: 'Step',
               name: 'npm test',
-              icon: <Icon className="size-6" name={'harness-plugin'} />,
+              icon: <Icon className="size-6" name={'run'} />,
               selected: false,
               state: 'executing'
             },
@@ -121,7 +121,7 @@ export const demoExecutionMock = [
               yamlPath: 'pipeline.stages.0.parallel.stages.1.steps.0',
               yamlEntityType: 'Step',
               name: 'go build',
-              icon: <Icon className="size-6" name={'harness-plugin'} />,
+              icon: <Icon className="size-6" name={'run'} />,
               selected: false,
               state: 'warning',
               warningMessage: 'Timeout'
@@ -142,7 +142,7 @@ export const demoExecutionMock = [
               yamlPath: 'pipeline.stages.0.parallel.stages.1.steps.1',
               yamlEntityType: 'Step',
               name: 'go test -cover',
-              icon: <Icon className="size-6" name={'harness-plugin'} />,
+              icon: <Icon className="size-6" name={'run'} />,
               selected: false,
               state: 'executing'
             },

@@ -28,8 +28,6 @@ const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
 export interface ProblemsProps<T = unknown> {
   problems: Problem<T>[]
   onClick: (data: Problem<T>) => void
-  /** Selected problem idx, for controlled mode*/
-  selectedProblemIdx?: number
 }
 
 const ProblemsComponent = {
@@ -37,16 +35,8 @@ const ProblemsComponent = {
     return <div className="min-h-12 overflow-scroll text-[13px] leading-[15px] text-neutral-400">{children}</div>
   },
 
-  Row: function Root({
-    selected,
-    onClick,
-    children
-  }: {
-    selected: boolean
-    onClick?: () => void
-    children: React.ReactNode
-  }) {
-    const rowClasses = selected ? 'bg-neutral-800 text-neutral-200' : ''
+  Row: function Root({ onClick, children }: { onClick?: () => void; children: React.ReactNode }) {
+    const rowClasses = 'bg-neutral-800 text-neutral-200'
     return (
       <div
         role="button"
@@ -89,26 +79,18 @@ const ProblemsComponent = {
 
 // TODO: remove hardcoded colors - implement proper variables from theme
 const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
-  const { problems, onClick, selectedProblemIdx } = props
-  const [selectedLine, setSelectedLine] = useState<number | undefined>()
+  const { problems, onClick } = props
 
   return (
     <ProblemsComponent.Root>
       {/* TODO: don't use idx, compose id from problem data*/}
       {problems.map((problem, idx) => {
         const { message, position, severity } = problem
-        const selected = (typeof selectedProblemIdx !== 'undefined' ? selectedProblemIdx : selectedLine) === idx
 
         return (
           <ProblemsComponent.Row
             key={`${problem.message}_${problem.position.column}_${problem.position.row}`}
-            selected={selected}
-            onClick={() => {
-              if (typeof selectedProblemIdx === 'undefined') {
-                setSelectedLine(idx)
-              }
-              onClick(problem)
-            }}
+            onClick={() => onClick(problem)}
           >
             <ProblemsComponent.Icon severity={severity} />
             <ProblemsComponent.Message message={message} />

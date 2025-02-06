@@ -43,6 +43,9 @@ export interface PipelineEditProps
   contentNodeFactory?: ContentNodeFactory
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
+  customCreateSVGPath?: PipelineStudioProps['customCreateSVGPath']
+  edgesConfig?: PipelineStudioProps['edgesConfig']
+  portComponent?: PipelineStudioProps['portComponent']
 }
 
 export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
@@ -63,7 +66,10 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     animateYamlOnUpdate,
     onYamlAnimateEnd,
     serialContainerConfig,
-    parallelContainerConfig
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent
   } = props
 
   const defaultContentNodeFactory = new ContentNodeFactory()
@@ -154,6 +160,9 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
         onYamlAnimateEnd={onYamlAnimateEnd}
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}
+        customCreateSVGPath={customCreateSVGPath}
+        edgesConfig={edgesConfig}
+        portComponent={portComponent}
       />
       <PipelineStudioNodeContextMenu />
     </PipelineStudioNodeContextProvider>

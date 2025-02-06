@@ -41,6 +41,9 @@ export interface PipelineStudioProps
   getStepIcon?: PipelineStudioInternalProps['getStepIcon']
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
+  customCreateSVGPath?: PipelineStudioGraphViewProps['customCreateSVGPath']
+  edgesConfig?: PipelineStudioGraphViewProps['edgesConfig']
+  portComponent?: PipelineStudioGraphViewProps['portComponent']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

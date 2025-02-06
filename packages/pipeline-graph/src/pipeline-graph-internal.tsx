@@ -120,7 +120,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             scale: 1,
             translateX: config?.leftGap ?? canvasConfig.paddingForFit ?? 80,
             translateY: parentHeight / 2 - graphHeight / 2,
-            rootContainer: rootContainerRef?.current
+            rootContainer: rootContainerRef?.current,
+            isInitial: true
           })
         } else {
           if (graphSizeRef.current) {

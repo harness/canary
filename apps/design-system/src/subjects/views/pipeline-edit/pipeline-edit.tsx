@@ -10,13 +10,14 @@ import {
   YamlEntityType
 } from '@harnessio/ui/views'
 
+import { demoPSYaml } from './mocks/demoPSYaml'
 import { parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
-import { pipelineYaml1 } from './mocks/pipelineYaml1'
 import { contentNodeFactory } from './nodes-factory'
 import PipelineExecution from './pipeline-execution'
+import CustomPort from './pipeline-nodes/components/custom-port'
 
 const PipelineStudioWrapper = () => {
-  const [yamlRevision, setYamlRevision] = useState({ yaml: pipelineYaml1 })
+  const [yamlRevision, setYamlRevision] = useState({ yaml: demoPSYaml })
   const [view, setView] = useState<'graph' | 'yaml'>('graph')
   const [isExecution, setIsExecution] = useState(true)
 
@@ -106,43 +107,54 @@ const PipelineStudioWrapper = () => {
       {isExecution && <PipelineExecution />}
 
       {!isExecution && (
-        <PipelineEdit
-          yamlRevision={yamlRevision}
-          onYamlRevisionChange={setYamlRevision}
-          view={view}
-          selectedPath={selectedPath}
-          contentNodeFactory={contentNodeFactory}
-          serialContainerConfig={serialContainerConfig}
-          parallelContainerConfig={parallelContainerConfig}
-          // getStepIcon={step => {
-          //   console.log(step)
-          //   const iconsNames: IconProps['name'][] = ['run', 'run-test', 'branch', 'artifacts']
-          //   const randomIconName = Math.floor(Math.random() * iconsNames.length)
-          //   return <Icon name={iconsNames[randomIconName]} size={48} className="p-2" />
-          // }}
-          onErrorChange={data => {
-            setErrorData(data)
-          }}
-          onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
-            console.log('onAddIntention')
-            processAddIntention(nodeData, position, yamlEntityTypeToAdd)
-          }}
-          onDeleteIntention={data => {
-            console.log('onDeleteIntention')
-            const updatedYaml = deleteItemInArray(yamlRevision.yaml, { path: data.yamlPath })
-            setYamlRevision({ yaml: updatedYaml })
-          }}
-          onEditIntention={() => {
-            console.log('onEditIntention')
-          }}
-          onSelectIntention={data => {
-            console.log('onSelectIntention')
-            setSelectedPath(data.yamlPath)
-          }}
-          onRevealInYaml={() => {
-            console.log('onSelectIntention')
-          }}
-        />
+        <>
+          <PipelineEdit
+            customCreateSVGPath={props => {
+              const { id, path /*, pathLength, targetNode*/ } = props
+              // TODO
+              const pathStyle = ` stroke="#5D5B65"`
+              const staticPath = `<path d="${path}" id="${id}" fill="none" ${pathStyle} />`
+              return { level1: staticPath, level2: '' }
+            }}
+            portComponent={CustomPort}
+            edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
+            yamlRevision={yamlRevision}
+            onYamlRevisionChange={setYamlRevision}
+            view={view}
+            selectedPath={selectedPath}
+            contentNodeFactory={contentNodeFactory}
+            serialContainerConfig={serialContainerConfig}
+            parallelContainerConfig={parallelContainerConfig}
+            // getStepIcon={step => {
+            //   console.log(step)
+            //   const iconsNames: IconProps['name'][] = ['run', 'run-test', 'branch', 'artifacts']
+            //   const randomIconName = Math.floor(Math.random() * iconsNames.length)
+            //   return <Icon name={iconsNames[randomIconName]} size={48} className="p-2" />
+            // }}
+            onErrorChange={data => {
+              setErrorData(data)
+            }}
+            onAddIntention={(nodeData, position, yamlEntityTypeToAdd) => {
+              console.log('onAddIntention')
+              processAddIntention(nodeData, position, yamlEntityTypeToAdd)
+            }}
+            onDeleteIntention={data => {
+              console.log('onDeleteIntention')
+              const updatedYaml = deleteItemInArray(yamlRevision.yaml, { path: data.yamlPath })
+              setYamlRevision({ yaml: updatedYaml })
+            }}
+            onEditIntention={() => {
+              console.log('onEditIntention')
+            }}
+            onSelectIntention={data => {
+              console.log('onSelectIntention')
+              setSelectedPath(data.yamlPath)
+            }}
+            onRevealInYaml={() => {
+              console.log('onSelectIntention')
+            }}
+          />
+        </>
       )}
     </div>
   )

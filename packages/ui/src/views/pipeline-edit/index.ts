@@ -14,6 +14,8 @@ export * from './components/visual-yaml-toggle'
 
 export * from './components/graph-implementation/canvas/canvas-controls'
 
+export { yaml2Nodes, yamlString2Nodes } from './components/graph-implementation/utils/yaml-to-pipeline-graph'
+
 export type { ErrorDataType } from './components/pipeline-studio-yaml-view'
 
 // TODO: temporary

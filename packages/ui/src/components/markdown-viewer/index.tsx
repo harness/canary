@@ -193,7 +193,7 @@ export function MarkdownViewer({
                     name={code}
                     iconSize={13}
                   />
-                  <pre>{children}</pre>
+                  <pre className="!bg-background-1">{children}</pre>
                 </div>
               )
             },

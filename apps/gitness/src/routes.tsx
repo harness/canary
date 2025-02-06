@@ -513,7 +513,8 @@ export const repoRoutes: CustomRouteObject[] = [
                       <Breadcrumb.Separator className="mx-1.5" />
                       <Text>{executionId}</Text>
                     </>
-                  )
+                  ),
+                  routeName: RouteConstants.toRepoWebhookExecutionDetails
                 }
               }
             ]

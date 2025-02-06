@@ -7,6 +7,7 @@ import {
 } from '@harnessio/code-service-client'
 import { RepoWebhookExecutionDetailsPage, WebhookExecutionType } from '@harnessio/ui/views'
 
+import { useRoutes } from '../../framework/context/NavigationContext'
 import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -14,10 +15,11 @@ import { PathParams } from '../../RouteDefinitions'
 import { useWebhookStore } from './stores/webhook-store'
 
 export const WebhookExecutionDetailsContainer = () => {
-  const { webhookId, executionId } = useParams<PathParams>()
+  const { repoId, spaceId, webhookId, executionId } = useParams<PathParams>()
   const repo_ref = useGetRepoRef()
   const { setExecutionId, updateExecution } = useWebhookStore()
   const navigate = useNavigate()
+  const routes = useRoutes()
 
   useEffect(() => {
     setExecutionId(parseInt(executionId ?? ''))
@@ -40,7 +42,7 @@ export const WebhookExecutionDetailsContainer = () => {
     {
       onSuccess: data => {
         updateExecution(data.body as WebhookExecutionType)
-        navigate(`../executions/${data.body.id}`)
+        navigate(routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId: `${data.body.id}` }))
       }
     }
   )

@@ -26,13 +26,15 @@ interface RepoWebhookExecutionsPageProps {
   toRepoWebhooks: (repoRef?: string) => string
   repo_ref: string
   isLoading: boolean
+  toRepoWebookExecutionDetails: (executionId: string) => string
 }
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
   toRepoWebhooks,
   repo_ref,
-  isLoading
+  isLoading,
+  toRepoWebookExecutionDetails
 }) => {
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
@@ -66,7 +68,11 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
               </TableHeader>
               <TableBody>
                 {executions.map(execution => (
-                  <TableRow key={execution.id} onClick={() => navigate(`${execution.id}`)} className="cursor-pointer">
+                  <TableRow
+                    key={execution.id}
+                    onClick={() => navigate(toRepoWebookExecutionDetails(`${execution.id}`))}
+                    className="cursor-pointer"
+                  >
                     <TableCell>
                       <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
                     </TableCell>

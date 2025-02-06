@@ -14,7 +14,7 @@ import { useWebhookStore } from './stores/webhook-store'
 export const WebhookExecutionsContainer = () => {
   const repo_ref = useGetRepoRef()
   const routes = useRoutes()
-  const { webhookId } = useParams<PathParams>()
+  const { spaceId, repoId, webhookId } = useParams<PathParams>()
   const { webhookExecutionPage, setWebhookExecutionPage, setExecutions, setTotalWebhookExecutionPages } =
     useWebhookStore()
 
@@ -45,9 +45,12 @@ export const WebhookExecutionsContainer = () => {
     <RepoWebhookExecutionsPage
       useTranslationStore={useTranslationStore}
       useWebhookStore={useWebhookStore}
-      toRepoWebhooks={() => routes.toRepoWebhooks({ repoId: repo_ref })}
+      toRepoWebhooks={() => routes.toRepoWebhooks({ webhookId })}
       repo_ref={repo_ref}
       isLoading={isLoading}
+      toRepoWebookExecutionDetails={(executionId: string) =>
+        routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId })
+      }
     />
   )
 }

@@ -121,7 +121,8 @@ export function RepoImportMultiplePage({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<ImportMultipleReposFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
@@ -135,7 +136,11 @@ export function RepoImportMultiplePage({
   const providerValue = watch('provider')
 
   const handleSelectChange = (fieldName: keyof ImportMultipleReposFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
+    if (fieldName === 'provider') {
+      reset({ provider: value as ProviderOptionsEnum, repositories: true, pipelines: false })
+    } else {
+      setValue(fieldName, value, { shouldValidate: true })
+    }
   }
 
   const onSubmit: SubmitHandler<ImportMultipleReposFormFields> = data => {
@@ -148,7 +153,7 @@ export function RepoImportMultiplePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
+      <SandboxLayout.Content key={providerValue} paddingClassName="w-[570px] sdfsdfsdfdsf mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
           Import Repositories
@@ -205,7 +210,7 @@ export function RepoImportMultiplePage({
                   id="username"
                   label="Username"
                   {...register('username')}
-                  placeholder="Enter Username"
+                  placeholder="Enter your Username"
                   size="md"
                   error={errors.password?.message?.toString()}
                 />

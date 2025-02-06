@@ -15,6 +15,7 @@ export const ImportMultipleRepos = () => {
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const [apiError, setApiError] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const onSubmit = async (data: ImportMultipleReposFormFields) => {
     const provider_space = getRepoProviderConfig(data)
@@ -33,6 +34,7 @@ export const ImportMultipleRepos = () => {
     }
 
     try {
+      setLoading(true)
       const response = await fetch(`/api/v1/spaces/${spaceId}/+/import`, {
         method: 'POST',
         headers: {
@@ -50,17 +52,21 @@ export const ImportMultipleRepos = () => {
           navigate('/login')
         }
 
+        setLoading(false)
         setApiError(errorData.message || 'Failed to import space')
 
         return
       }
+      setLoading(false)
       navigate(routes.toRepositories({ spaceId }))
     } catch (error) {
+      setLoading(false)
       setApiError((error as Error).message || 'An unexpected error occurred')
     }
   }
 
   const onCancel = () => {
+    setLoading(false)
     navigate(routes.toRepositories({ spaceId }))
   }
 
@@ -70,7 +76,7 @@ export const ImportMultipleRepos = () => {
       <RepoImportMultiplePage
         onFormSubmit={onSubmit}
         onFormCancel={onCancel}
-        isLoading={false}
+        isLoading={loading}
         apiErrorsValue={apiError}
       />
     </>

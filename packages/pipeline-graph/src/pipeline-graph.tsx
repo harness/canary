@@ -15,7 +15,8 @@ export interface PipelineGraphProps extends PipelineGraphInternalProps {
 }
 
 export function PipelineGraph(props: PipelineGraphProps) {
-  const { data, nodes, config, serialContainerConfig, parallelContainerConfig, customCreateSVGPath } = props
+  const { data, nodes, config, serialContainerConfig, parallelContainerConfig, customCreateSVGPath, edgesConfig } =
+    props
 
   return (
     <GraphProvider nodes={nodes}>
@@ -24,7 +25,12 @@ export function PipelineGraph(props: PipelineGraphProps) {
         parallelContainerConfig={parallelContainerConfig}
       >
         <Canvas>
-          <PipelineGraphInternal data={data} config={config} customCreateSVGPath={customCreateSVGPath} />
+          <PipelineGraphInternal
+            data={data}
+            config={config}
+            customCreateSVGPath={customCreateSVGPath}
+            edgesConfig={edgesConfig}
+          />
         </Canvas>
       </ContainerNodeProvider>
     </GraphProvider>

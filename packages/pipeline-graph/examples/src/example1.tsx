@@ -186,6 +186,7 @@ function Example1({ addStepType }: { addStepType: ContentNodeTypes }) {
 
             return { level1: staticPath, level2: '' }
           }}
+          edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
           serialContainerConfig={{}}
           parallelContainerConfig={{}}
           data={data}

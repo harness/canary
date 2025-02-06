@@ -3,11 +3,12 @@ import { FC, useEffect, useState } from 'react'
 import { Dialog, Icon } from '@/components'
 import { cn } from '@utils/cn'
 
-import { LanguageCode, LanguageDialogProps, languages } from './types'
+import { LanguageCode, LanguageDialogProps } from './types'
 
 const LanguageDialog: FC<LanguageDialogProps> = ({
   defaultLanguage = LanguageCode.EN,
   language,
+  supportedLanguages,
   open,
   onOpenChange,
   onChange,
@@ -29,7 +30,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
       <Dialog.Content className="max-w-[400px]">
         <Dialog.Title className="text-20 font-medium">Language</Dialog.Title>
         <div className="mt-1 flex flex-col gap-3">
-          {languages.map(lang => (
+          {supportedLanguages.map(lang => (
             <button
               key={lang.code}
               className="group relative flex cursor-pointer items-center justify-between rounded-md px-0 focus-visible:outline-none"

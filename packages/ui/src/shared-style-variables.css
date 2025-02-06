@@ -1390,7 +1390,7 @@
    */
   }
 
-  .dark-prot-high {
+  .dark-prot-std {
     --canary-background: var(--canary-base-chrome-black);
     --canary-foreground: var(--canary-base-chrome-white);
     --canary-card: var(--canary-base-chrome-950);

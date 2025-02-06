@@ -67,9 +67,9 @@ export const PullRequestHeader: React.FC<PullRequestTitleProps> = ({
     <div className="flex w-full flex-col gap-y-4">
       <div className="flex w-full max-w-full items-center gap-x-3 text-24">
         {!edit && (
-          <div className="flex items-center gap-x-2.5 leading-snug">
-            <h1 className="flex max-w-[95%] items-center truncate font-medium text-foreground-1">{original}</h1>
-            <span className="font-normal text-foreground-4">#{number}</span>
+          <div className="flex min-w-0 items-center gap-x-2.5 leading-snug">
+            <h1 className="min-w-0 flex-1 truncate font-medium text-foreground-1">{original}</h1>
+            <span className="flex-none font-normal text-foreground-4">#{number}</span>
           </div>
         )}
         {/* TODO: editing should be done through a modal window */}

@@ -32,7 +32,7 @@ const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullReque
       case ExecutionState.ERROR:
         return <Icon name="triangle-warning" className="text-destructive" />
       default:
-        return <Icon name="success" className="text-success" />
+        return <Icon name="success" className="text-foreground-success" />
     }
   }
 

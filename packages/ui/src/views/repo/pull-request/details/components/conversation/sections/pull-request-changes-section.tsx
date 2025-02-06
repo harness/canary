@@ -122,7 +122,7 @@ const PullRequestChangesSection = ({
       case 'error':
         return <Icon name="triangle-warning" className="text-destructive" />
       default:
-        return <Icon name="success" className="text-success" />
+        return <Icon name="success" className="text-foreground-success" />
     }
   }
 
@@ -162,7 +162,7 @@ const PullRequestChangesSection = ({
     if (latestCodeOwnerApprovalArr && latestCodeOwnerApprovalArr?.length > 0 && reqCodeOwnerLatestApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-success" />
+          <Icon name="success" className="text-foreground-success" />
           <span className="text-14 text-foreground-1">Latest changes were approved by code owners</span>
         </div>
       )
@@ -170,7 +170,7 @@ const PullRequestChangesSection = ({
     if (codeOwnerApprovalEntries && codeOwnerApprovalEntries?.length > 0 && reqCodeOwnerApproval) {
       return (
         <div className="flex items-center gap-x-2">
-          <Icon name="success" className="text-success" />
+          <Icon name="success" className="text-foreground-success" />
           <span className="text-14 text-foreground-1">Changes were approved by code owners</span>
         </div>
       )
@@ -237,7 +237,7 @@ const PullRequestChangesSection = ({
             <div className="ml-6 flex items-center justify-between">
               {approvedEvaluations && minApproval && minApproval <= approvedEvaluations?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-icons-success" />
+                  <Icon name="success" className="text-foreground-success" />
                   <span className="text-14 text-foreground-1">
                     {`Changes were approved by ${approvedEvaluations?.length} ${easyPluralize(approvedEvaluations?.length, 'reviewer', 'reviewers')}`}
                   </span>
@@ -262,7 +262,7 @@ const PullRequestChangesSection = ({
               minReqLatestApproval !== undefined &&
               minReqLatestApproval <= latestApprovalArr?.length ? (
                 <div className="flex items-center gap-x-2">
-                  <Icon name="success" className="text-icons-success" />
+                  <Icon name="success" className="text-foreground-success" />
                   <span className="text-14 text-foreground-1">{`Latest changes were approved by ${latestApprovalArr?.length || minReqLatestApproval || ''} ${easyPluralize(latestApprovalArr?.length || minReqLatestApproval, 'reviewer', 'reviewers')}`}</span>
                 </div>
               ) : (

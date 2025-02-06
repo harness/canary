@@ -9,7 +9,7 @@ const ReviewerItem = ({ reviewer, reviewDecision, sha, sourceSHA, processReviewD
       case PullReqReviewDecision.outdated:
         return <Icon name="comments" className="text-warning" />
       case PullReqReviewDecision.approved:
-        return <Icon name="success" className="text-icons-success" />
+        return <Icon name="success" className="text-foreground-success" />
       case PullReqReviewDecision.changeReq:
         return <Icon name="triangle-warning" className="text-destructive" />
       case PullReqReviewDecision.pending:

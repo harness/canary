@@ -3,6 +3,7 @@ import { format } from 'date-fns'
 import {
   CheckboxFilterOption,
   FilterField,
+  FilterFieldTypes,
   FilterOptionConfig,
   FilterSearchQueries,
   FilterValueTypes,
@@ -104,7 +105,7 @@ export const getFilterLabelValue = <T extends FilterValueTypes>(
   filter: FilterField<T>
 ): string => {
   switch (filterOption.type) {
-    case 'calendar': {
+    case FilterFieldTypes.Calendar: {
       const filterValue = filter.value as Date
       if (!filterValue) return ''
 
@@ -116,9 +117,13 @@ export const getFilterLabelValue = <T extends FilterValueTypes>(
 
       return formatDate(filterValue)
     }
-    case 'number':
-    case 'text': {
+    case FilterFieldTypes.Number:
       return filter.value as string
+
+    case FilterFieldTypes.ComboBox: {
+      const options = filterOption.filterFieldConfig?.options || []
+      const selectedOption = options.find(option => option.value === filter.value)
+      return selectedOption?.label || ''
     }
     default:
       return ''

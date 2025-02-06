@@ -12,7 +12,7 @@ import {
   StackedList
 } from '@/components'
 import { useDebounceSearch } from '@/hooks'
-import { PullRequestListStore, SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
 import { noop } from 'lodash-es'
 
@@ -24,23 +24,7 @@ import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-
-export interface PullRequestPageProps {
-  usePullRequestListStore: () => PullRequestListStore
-  repoId?: string
-  spaceId?: string
-  onFilterChange?: (filterValues: PRListFilters) => void
-  useTranslationStore: () => TranslationStore
-  isLoading?: boolean
-  searchQuery?: string | null
-  setSearchQuery: (query: string | null) => void
-}
-
-type PRListFilters = {
-  created_by?: number
-  created_lt?: Date
-  created_gt?: Date
-}
+import { PRListFilters, PullRequestPageProps } from './pull-request.types'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -51,7 +35,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   spaceId,
   repoId,
   onFilterChange,
+  setPrincipalsSearchQuery,
   useTranslationStore,
+  principalData,
   isLoading,
   searchQuery,
   setSearchQuery
@@ -59,7 +45,18 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   const { pullRequests, totalPages, page, setPage, openPullReqs, closedPullReqs } = usePullRequestListStore()
   const { t } = useTranslationStore()
 
-  const PR_FILTER_OPTIONS = getPRListFilterOptions(t)
+  const PR_FILTER_OPTIONS = getPRListFilterOptions({
+    t,
+    onAuthorSearch: searchText => {
+      setPrincipalsSearchQuery?.(searchText)
+    },
+    principalData:
+      principalData?.map(userInfo => ({
+        label: userInfo.display_name || '',
+        value: String(userInfo.id),
+        email: userInfo.email
+      })) ?? []
+  })
   const SORT_OPTIONS = getSortOptions(t)
   const SORT_DIRECTIONS = getSortDirections(t)
 
@@ -76,13 +73,12 @@ const PullRequestList: FC<PullRequestPageProps> = ({
    * Initialize filters hook with handlers for managing filter state
    */
   const filterHandlers = useFilters()
-  const [filterValues, setFilterValues] = useState<PRListFilters>({} as PRListFilters)
   const [openedFilter, setOpenedFilter] = useState<PRListFiltersKeys>()
   const filtersRef = useRef<FilterRefType<PRListFilters>>({} as FilterRefType<PRListFilters>)
 
   const filteredPullReqs = filterPullRequests(pullRequests, filterHandlers.activeFilters)
   const sortedPullReqs = sortPullRequests(filteredPullReqs, filterHandlers.activeSorts)
-  const selectedFiltersCnt = Object.keys(filterValues).length
+  const [selectedFiltersCnt, setSelectedFiltersCnt] = useState(0)
 
   const noData = !(sortedPullReqs && sortedPullReqs.length > 0)
   const handleCloseClick = () => {
@@ -91,6 +87,10 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 
   const handleOpenClick = () => {
     filterHandlers.handleResetFilters()
+  }
+
+  const onFilterSelectionChange = (filterValues: PRListFiltersKeys[]) => {
+    setSelectedFiltersCnt(filterValues.length)
   }
 
   const showTopBar = !noData || selectedFiltersCnt > 0 || filterHandlers.activeSorts.length > 0 || !!searchQuery?.length
@@ -160,18 +160,23 @@ const PullRequestList: FC<PullRequestPageProps> = ({
 
   const onFilterValueChange = (filterValues: PRListFilters) => {
     const _filterValues = Object.entries(filterValues).reduce((acc, [key, value]) => {
+      // TODO Need to address the type issue here
       if (value !== undefined) {
-        acc[key as PRListFiltersKeys] = value as number & Date
+        acc[key as PRListFiltersKeys] = value as string & Date
       }
       return acc
     }, {} as PRListFilters)
 
     onFilterChange?.(_filterValues)
-    setFilterValues(_filterValues)
   }
 
   return (
-    <PRListFilterHandler ref={filtersRef} onChange={onFilterValueChange} view="dropdown">
+    <PRListFilterHandler
+      ref={filtersRef}
+      onFilterSelectionChange={onFilterSelectionChange}
+      onChange={onFilterValueChange}
+      view="dropdown"
+    >
       <SandboxLayout.Main className="max-w-[1040px]">
         <SandboxLayout.Content>
           {showTopBar && (
@@ -193,7 +198,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                   <PRListFilterHandler.Dropdown>
                     {(addFilter, availableFilters, resetFilters) => (
                       <FilterSelect
-                        options={PR_FILTER_OPTIONS}
+                        options={PR_FILTER_OPTIONS.filter(option =>
+                          availableFilters.includes(option.value as PRListFiltersKeys)
+                        )}
                         onChange={option => {
                           addFilter(option.value as PRListFiltersKeys)
                           setOpenedFilter(option.value as PRListFiltersKeys)
@@ -220,7 +227,12 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                   <PRListFilterHandler.Content className={'flex items-center gap-x-2'}>
                     {PR_FILTER_OPTIONS.map(filterOption => (
                       <PRListFilterHandler.Component
-                        parser={filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>}
+                        parser={
+                          'parser' in filterOption
+                            ? // TODO Need to address the type issue here
+                              (filterOption.parser as unknown as Parser<PRListFilters[PRListFiltersKeys]>)
+                            : undefined
+                        }
                         filterKey={filterOption.value as PRListFiltersKeys}
                         key={filterOption.value}
                       >
@@ -233,9 +245,9 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                 )}
                 renderFilterOptions={filterOptionsRenderer => (
                   <PRListFilterHandler.Dropdown>
-                    {(addFilter, _availableFilters, resetFilters) => (
+                    {(addFilter, availableFilters, resetFilters) => (
                       <div className="flex items-center gap-x-4">
-                        {filterOptionsRenderer({ addFilter, resetFilters })}
+                        {filterOptionsRenderer({ addFilter, resetFilters, availableFilters })}
                       </div>
                     )}
                   </PRListFilterHandler.Dropdown>

@@ -5,7 +5,7 @@ import {
   type SortOption,
   type ViewLayoutOption
 } from '@components/filters'
-import { FilterFieldTypes } from '@components/filters/types'
+import { FilterFieldTypes, FilterOptionConfig } from '@components/filters/types'
 import { TFunction } from 'i18next'
 
 import { Parser } from '@harnessio/filters'
@@ -103,7 +103,24 @@ const dateParser: Parser<Date> = {
   serialize: (value: Date) => value?.getTime().toString() || ''
 }
 
-export const getPRListFilterOptions = (t: TFunction) => [
+interface PRListFilterOptions {
+  t: TFunction
+  onAuthorSearch: (name: string) => void
+  principalData: {label: string, value: string}[] 
+}
+
+export const getPRListFilterOptions = ({t, onAuthorSearch, principalData}: PRListFilterOptions): FilterOptionConfig[] => [
+  {
+    label: t('component:filter.createdBy', 'Created By'),
+    value: 'created_by',
+    type: FilterFieldTypes.ComboBox,
+    filterFieldConfig: {
+      options: principalData,
+      onSearch: onAuthorSearch,
+      noResultsMessage: 'No results found',
+      placeholder: 'Search by author'
+    }
+  },
   {
     label: t('component:filter.createdBefore', 'Created Before'),
     value: 'created_lt',

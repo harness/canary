@@ -1,5 +1,6 @@
 import FilterBoxWrapper from './filter-box-wrapper'
 import Calendar from './filters-bar/actions/variants/calendar-field'
+import ComboboxDemo from './filters-bar/actions/variants/combo-box'
 import Text from './filters-bar/actions/variants/text-field'
 import { FilterField, FilterFieldTypes, FilterOptionConfig, FilterValueTypes } from './types'
 import { getFilterLabelValue } from './utils'
@@ -20,13 +21,27 @@ const renderFilterValues = <T extends FilterValueTypes>(
   if (!onUpdateFilter) return null
 
   switch (filterOption.type) {
-    case 'calendar': {
+    case FilterFieldTypes.Calendar: {
       const calendarFilter = filter as FilterField<Date>
       return <Calendar filter={calendarFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
     }
-    case 'text': {
+    case FilterFieldTypes.Text: {
       const textFilter = filter as FilterField<string>
       return <Text filter={textFilter} onUpdateFilter={values => onUpdateFilter(values as T)} />
+    }
+    case FilterFieldTypes.ComboBox: {
+      const comboBoxFilter = filter as FilterField<string>
+      const { options = [], onSearch, placeholder, noResultsMessage } = filterOption.filterFieldConfig
+      return (
+        <ComboboxDemo
+          filterValue={comboBoxFilter.value || ''}
+          options={options}
+          onSearch={onSearch}
+          placeholder={placeholder}
+          noResultsMessage={noResultsMessage}
+          onUpdateFilter={values => onUpdateFilter(values as T)}
+        />
+      )
     }
     default:
       return null

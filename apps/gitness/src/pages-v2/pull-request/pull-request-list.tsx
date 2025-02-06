@@ -1,7 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ListPullReqQueryQueryParams, useListPullReqQuery } from '@harnessio/code-service-client'
+import {
+  ListPullReqQueryQueryParams,
+  TypesPrincipalInfo,
+  useListPrincipalsQuery,
+  useListPullReqQuery
+} from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -19,6 +24,8 @@ export default function PullRequestListPage() {
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
+  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
+  const [principalData, setPrincipalData] = useState<TypesPrincipalInfo[]>()
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -28,12 +35,23 @@ export default function PullRequestListPage() {
     { retry: false }
   )
 
+  const { data: { body: principalDataList } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
+  })
+
   useEffect(() => {
     if (pullRequestData) {
       setPullRequests(pullRequestData, headers)
       setOpenClosePullRequests(pullRequestData)
     }
   }, [pullRequestData, headers, setPullRequests])
+
+  useEffect(() => {
+    if (principalDataList) {
+      setPrincipalData(principalDataList)
+    }
+  }, [principalDataList])
 
   useEffect(() => {
     setQueryPage(page)
@@ -45,11 +63,17 @@ export default function PullRequestListPage() {
       repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
+      principalData={principalData}
+      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
       onFilterChange={(filterData: PRListFilters) => {
         setFilterValues(
+          // TODO Need to address the type issue here
           Object.entries(filterData).reduce((acc: any, [key, value]) => {
+            if (value !== '' && value !== undefined) {
+              acc[key] = value
+            }
             if (value instanceof Date) {
               acc[key] = value.getTime()
             }

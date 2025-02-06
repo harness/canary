@@ -18,7 +18,7 @@ interface FiltersBarProps<T, V> {
     filterFieldRenderer: (filterFieldConfig: FilterFieldRendererProps<V>) => ReactElement
   ) => ReactElement
   renderFilterOptions: (
-    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<T>) => ReactElement
+    filterOptionsRenderer: (filterFieldConfig: FilterOptionsRendererProps<keyof T>) => ReactElement
   ) => ReactElement
   sortDirections: SortDirection[]
   t: TFunction
@@ -46,7 +46,8 @@ interface FilterFieldRendererProps<T> {
 }
 
 interface FilterOptionsRendererProps<T> {
-  addFilter: (filter: keyof T) => void
+  addFilter: (filter: T) => void
+  availableFilters: T[]
   resetFilters: () => void
 }
 
@@ -87,10 +88,14 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
     )
   }
 
-  const filterOptionsRenderer = ({ addFilter, resetFilters }: FilterOptionsRendererProps<T>) => (
+  const filterOptionsRenderer = ({
+    addFilter,
+    resetFilters,
+    availableFilters
+  }: FilterOptionsRendererProps<keyof T>) => (
     <>
       <FilterSelect
-        options={filterOptions}
+        options={filterOptions.filter(option => availableFilters.includes(option.value))}
         dropdownAlign="start"
         onChange={(option: { value: any }) => {
           addFilter(option.value)
@@ -101,7 +106,7 @@ const ListControlBar = <T extends Record<string, any>, V = T[keyof T]>({
         displayLabel={<FilterSelectAddIconLabel displayLabel={t('component:filter.defaultLabel', 'Filter')} />}
       />
       <button
-        className="flex items-center gap-x-1.5 text-14 text-foreground-4 outline-none ring-offset-2 ring-offset-background transition-colors duration-200 hover:text-foreground-danger focus:ring-2"
+        className="text-14 text-foreground-4 ring-offset-background hover:text-foreground-danger flex items-center gap-x-1.5 outline-none ring-offset-2 transition-colors duration-200 focus:ring-2"
         onClick={() => {
           resetFilters()
         }}

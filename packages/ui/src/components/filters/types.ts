@@ -1,3 +1,5 @@
+import { Parser } from "@harnessio/filters"
+
 type FilterActionKind = 'filter' | 'sort'
 
 interface FilterAction {
@@ -153,7 +155,8 @@ interface FilterHandlers {
 export enum FilterFieldTypes {
   Calendar = 'calendar',
   Text = 'text',
-  Number = 'number'
+  Number = 'number',
+  ComboBox = 'combobox',
 }
 
 interface FilterField<T = string | number> {
@@ -161,11 +164,35 @@ interface FilterField<T = string | number> {
   value?: T
 }
 
-interface FilterOptionConfig {
+interface FilterOptionConfigBase {
   label: string
   value: string
-  type: FilterFieldTypes
 }
+
+interface ComboBoxFilterOptionConfig extends FilterOptionConfigBase {
+  type: FilterFieldTypes.ComboBox
+  filterFieldConfig: {
+    options: Array<{ label: string; value: string }>
+    onSearch: (query: string) => void
+    noResultsMessage: string
+    placeholder: string
+  }
+}
+
+interface CalendarFilterOptionConfig extends FilterOptionConfigBase {
+  type: FilterFieldTypes.Calendar
+  parser: Parser<Date>
+}
+
+interface TextFilterOptionConfig extends FilterOptionConfigBase {
+  type: FilterFieldTypes.Text
+}
+
+interface NumberFilterOptionConfig extends FilterOptionConfigBase {
+  type: FilterFieldTypes.Number
+}
+
+type FilterOptionConfig = ComboBoxFilterOptionConfig | CalendarFilterOptionConfig | TextFilterOptionConfig | NumberFilterOptionConfig
 
 type FilterValueTypes = string | number | unknown
 

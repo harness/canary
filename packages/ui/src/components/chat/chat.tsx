@@ -64,7 +64,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   )
 }
 
-const CodeBlock: FC<{ className: string }> = ({ children, className }) => {
+const CodeBlock: FC<{ className?: string }> = ({ children, className }) => {
   return (
     <code
       className={cn(

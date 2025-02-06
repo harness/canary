@@ -10,6 +10,7 @@ export interface Problem<T = unknown> {
     column: number
   }
   data?: T
+  action?: string | React.ReactNode
 }
 
 const getProblemIcon = (severity: ProblemSeverity): React.ReactElement => {
@@ -40,7 +41,7 @@ const ProblemsComponent = {
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className={`width-100 flex flex-1 cursor-pointer items-center gap-2 text-nowrap py-0.5 ${rowClasses}`}
+        className={`width-100 flex flex-1 cursor-pointer items-center gap-2 text-nowrap py-0.5 justify-between px-4 ${rowClasses}`}
       >
         {children}
       </div>
@@ -48,7 +49,7 @@ const ProblemsComponent = {
   },
 
   Icon: function Root({ severity }: { severity: ProblemSeverity }) {
-    return <div className="pl-4">{getProblemIcon(severity)}</div>
+    return <div>{getProblemIcon(severity)}</div>
   },
 
   Message: function Root({ message }: { message: string }) {
@@ -72,6 +73,10 @@ const ProblemsComponent = {
         [{position.row}, {position.column}]
       </div>
     )
+  },
+
+  Action: function Root({ children }: { children: React.ReactNode }) {
+    return <div className="flex items-center">{children}</div>
   }
 }
 
@@ -83,16 +88,19 @@ const Problems = <T,>(props: ProblemsProps<T>): React.ReactElement => {
     <ProblemsComponent.Root>
       {/* TODO: don't use idx, compose id from problem data*/}
       {problems.map((problem, idx) => {
-        const { message, position, severity } = problem
+        const { message, position, severity, action } = problem
 
         return (
           <ProblemsComponent.Row
             key={`${problem.message}_${problem.position.column}_${problem.position.row}`}
             onClick={() => onClick(problem)}
           >
-            <ProblemsComponent.Icon severity={severity} />
-            <ProblemsComponent.Message message={message} />
-            <ProblemsComponent.Position position={position} />
+            <div className="flex items-center gap-2">
+              <ProblemsComponent.Icon severity={severity} />
+              <ProblemsComponent.Message message={message} />
+              <ProblemsComponent.Position position={position} />
+            </div>
+            {action ? <ProblemsComponent.Action>{action}</ProblemsComponent.Action> : null}
           </ProblemsComponent.Row>
         )
       })}

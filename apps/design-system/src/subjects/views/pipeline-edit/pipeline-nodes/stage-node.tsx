@@ -44,7 +44,7 @@ export function StageNode(props: StageNodeProps) {
       <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn('absolute inset-0 -z-10 rounded-md border border-dashed bg-primary-foreground/40', {
+        className={cn('absolute inset-0 -z-10 rounded-md border border-dashed bg-background-2', {
           'border-borders-2': !selected, // gray/8
           'border-borders-3': selected
         })}

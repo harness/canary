@@ -1,8 +1,10 @@
-export default function Port(props: { side: 'left' | 'right'; id?: string; adjustment?: number }) {
+import React from 'react'
+
+export default function CustomPort(props: { side: 'left' | 'right'; id?: string; adjustment?: number }) {
   const { adjustment = 0 } = props
 
-  const lineWeight = 1
-  const r = 7
+  const lineWeight = 2
+  const r = 15
 
   return (
     <div
@@ -13,8 +15,8 @@ export default function Port(props: { side: 'left' | 'right'; id?: string; adjus
         top: `calc( 50% - ${r / 2}px + ${adjustment}px)`,
         width: `${r}px`,
         height: `${r}px`,
-        background: '#121214',
-        border: `${lineWeight}px solid #6D6B75`,
+        background: 'yellow',
+        border: `${lineWeight}px solid red`,
         borderRadius: '50%',
         boxSizing: 'border-box'
       }}

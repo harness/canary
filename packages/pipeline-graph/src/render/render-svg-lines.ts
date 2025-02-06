@@ -55,6 +55,7 @@ export function getPortsConnectionPath({
     startY: fromElBB.top - pipelineGraphRootBB.top,
     endX: toElBB.left - pipelineGraphRootBB.left,
     endY: toElBB.top - pipelineGraphRootBB.top,
+    portAdjustment: fromElBB.height / 2, // center of circle
     parallel,
     serial,
     targetNode,
@@ -105,12 +106,14 @@ function getPath({
   endY,
   parallel,
   serial,
-  edgesConfig
+  edgesConfig,
+  portAdjustment
 }: {
   startX: number
   startY: number
   endX: number
   endY: number
+  portAdjustment: number
   parallel?: {
     position: 'left' | 'right'
   }
@@ -125,14 +128,12 @@ function getPath({
     serialNodeOffset: number
   }
 }) {
-  const correction = 3
-
   let path = ''
 
   // NOTE: approximate line length (arc is not included in calc)
   let pathLength = 0
   if (startY === endY) {
-    path = 'M ' + (startX + correction) + ' ' + (startY + correction) + ' ' + 'H ' + (endX + correction)
+    path = 'M ' + (startX + portAdjustment) + ' ' + (startY + portAdjustment) + ' ' + 'H ' + (endX + portAdjustment)
     pathLength = endX - startX
   } else {
     // reduce radius avoid broken line
@@ -156,27 +157,27 @@ function getPath({
       absArcStart = startX + edgesConfig.serialNodeOffset
     }
 
-    const { arc } = getHArcConfig(endY + correction > startY + correction ? 'down' : 'up', radius)
+    const { arc } = getHArcConfig(endY + portAdjustment > startY + portAdjustment ? 'down' : 'up', radius)
 
     const { arc: arc2, vCorrection: vCorrection2 } = getVArcConfig(
-      endY + correction > startY + correction ? 'down' : 'up',
+      endY + portAdjustment > startY + portAdjustment ? 'down' : 'up',
       radius
     )
 
     path =
       'M ' +
-      (startX + correction) +
+      (startX + portAdjustment) +
       ' ' +
-      (startY + correction) +
+      (startY + portAdjustment) +
       ' ' +
       'H ' +
-      (absArcStart + correction) +
+      (absArcStart + portAdjustment) +
       arc +
       'V ' +
-      (endY + correction - vCorrection2) +
+      (endY + portAdjustment - vCorrection2) +
       arc2 +
       'H ' +
-      (endX + correction)
+      (endX + portAdjustment)
 
     pathLength = Math.abs(endX - startX) + Math.abs(endY - startY)
   }

@@ -5,24 +5,34 @@ import { NodeContent } from './types/node-content'
 
 import './pipeline-graph.css'
 
-import ContainerNodeProvider from './context/container-node-provider'
+import ContainerNodeProvider, { ContainerNodeProviderProps } from './context/container-node-provider'
 import { ParallelContainerConfig, SerialContainerConfig } from './types/container-node'
 
 export interface PipelineGraphProps extends PipelineGraphInternalProps {
   nodes: NodeContent[]
   serialContainerConfig?: Partial<SerialContainerConfig>
   parallelContainerConfig?: Partial<ParallelContainerConfig>
+  portComponent?: ContainerNodeProviderProps['portComponent']
 }
 
 export function PipelineGraph(props: PipelineGraphProps) {
-  const { data, nodes, config, serialContainerConfig, parallelContainerConfig, customCreateSVGPath, edgesConfig } =
-    props
+  const {
+    data,
+    nodes,
+    config,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent
+  } = props
 
   return (
     <GraphProvider nodes={nodes}>
       <ContainerNodeProvider
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}
+        portComponent={portComponent}
       >
         <Canvas>
           <PipelineGraphInternal

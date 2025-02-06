@@ -12,7 +12,7 @@ import Port from './port'
 
 export default function SerialNodeContainer(props: ContainerNodeProps<SerialNodeInternalType>) {
   const { node, level, parentNode, isFirst, isLast, parentNodeType, mode } = props
-  const { serialContainerConfig, parallelContainerConfig } = useContainerNodeContext()
+  const { serialContainerConfig, parallelContainerConfig, portComponent } = useContainerNodeContext()
 
   const myLevel = level + 1
 
@@ -48,12 +48,19 @@ export default function SerialNodeContainer(props: ContainerNodeProps<SerialNode
         flexShrink: 0
       }}
     >
-      {!node.config?.hideLeftPort && (
-        <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      )}
-      {!node.config?.hideRightPort && (
-        <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
-      )}
+      {!node.config?.hideLeftPort &&
+        (portComponent ? (
+          portComponent({ side: 'left', id: `left-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+        ) : (
+          <Port side="left" id={`left-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+        ))}
+
+      {!node.config?.hideRightPort &&
+        (portComponent ? (
+          portComponent({ side: 'right', id: `right-port-${node.path}`, adjustment: collapsed ? 0 : ADJUSTMENT })
+        ) : (
+          <Port side="right" id={`right-port-${node.path}`} adjustment={collapsed ? 0 : ADJUSTMENT} />
+        ))}
 
       <div
         className="serial-node-header"

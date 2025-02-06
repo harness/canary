@@ -54,24 +54,22 @@ export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props:
             <span className="text-[12px] text-primary">{props.problems.info}</span>
           </div>
         </div>
-        {branchesLoading ||
-          branches ||
-          (currentBranch && (
-            <div className={'flex gap-2'}>
-              <div className={'flex items-center'}>
-                <span className="mr-1 text-[12px] text-tertiary-background">Branch:</span>
-                <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
-                  <SelectContent>
-                    {branches?.map(branch => (
-                      <SelectItem key={branch} value={branch}>
-                        {branch}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
+        {branchesLoading || branches || currentBranch ? (
+          <div className={'flex gap-2'}>
+            <div className={'flex items-center'}>
+              <span className="mr-1 text-[12px] text-tertiary-background">Branch:</span>
+              <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
+                <SelectContent>
+                  {branches?.map(branch => (
+                    <SelectItem key={branch} value={branch}>
+                      {branch}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-          ))}
+          </div>
+        ) : null}
       </div>
       {committedTimeAgo && authorName && (
         <Popover>

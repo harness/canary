@@ -15,7 +15,7 @@ import {
   NodeSelectionProps
 } from '@harnessio/ui/views'
 
-import { elements, logsBank, stages } from './mocks/mock-data'
+import { elements, logsBank } from './mocks/mock-data'
 
 const getLogsForCurrentNodeId = (logKey: string): LivelogLine[] => logsBank[logKey] ?? []
 
@@ -24,7 +24,7 @@ export const ExecutionLogsView = () => {
   const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ elements }) // Animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 5 }) // Animates the execution tree
 
   const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream }) // Animates the logs
 
@@ -80,14 +80,7 @@ export const ExecutionLogsView = () => {
           />
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">
-          <ExecutionInfo
-            useLogsStore={useLogsStore}
-            onCopy={() => {}}
-            onDownload={() => {}}
-            onEdit={() => {}}
-            selectedStepIdx={0}
-            stage={stages[0]}
-          />
+          <ExecutionInfo useLogsStore={useLogsStore} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
       </div>
     </div>

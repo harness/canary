@@ -37,7 +37,6 @@ export interface ExecutionInfoProps {
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
-  stage?: StageProps
 }
 
 export interface ConsoleLogsProps {

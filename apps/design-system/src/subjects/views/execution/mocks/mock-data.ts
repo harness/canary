@@ -1,4 +1,4 @@
-import { ExecutionState, ExecutionTreeProps, LivelogLine, StageProps } from '@harnessio/ui/views'
+import { ExecutionState, ExecutionTreeProps, LivelogLine } from '@harnessio/ui/views'
 
 export const logs: LivelogLine[] = [
   { out: 'Starting dependency installation...', pos: 1, time: 1700000001, duration: 2 },
@@ -163,59 +163,6 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     }))
   ]
 }
-
-export const stages: StageProps[] = [
-  {
-    name: 'Parallel Stage 1',
-    steps: [
-      {
-        name: 'Install dependencies',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      },
-      {
-        name: 'Run tests',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      }
-    ]
-  },
-  {
-    name: 'Parallel Stage 2',
-    steps: [
-      {
-        name: 'Build Golang project',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      },
-      {
-        name: 'Run Golang tests',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      }
-    ]
-  },
-  {
-    name: 'Docker Template Stage',
-    steps: [
-      {
-        name: 'Pull Docker image',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      }
-    ]
-  },
-  {
-    name: 'Slack Notification Stage',
-    steps: [
-      {
-        name: 'Send Slack notification',
-        status: ExecutionState.PENDING,
-        started: Date.now()
-      }
-    ]
-  }
-]
 
 export const elements: ExecutionTreeProps['elements'] = [
   {

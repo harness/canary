@@ -18,9 +18,9 @@ import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionInfo, LivelogLine, StageProps } from '@harnessio/ui/views'
+import { ExecutionInfo, LivelogLine } from '@harnessio/ui/views'
 
-import { logs, stages } from './mocks/mock-data'
+import { logs } from './mocks/mock-data'
 
 // *****************************************************
 // 2. Define content nodes types
@@ -52,7 +52,6 @@ interface NodeProps {
 }
 
 interface DataProps {
-  stage?: StageProps
   logs?: LivelogLine[]
 }
 
@@ -69,7 +68,7 @@ export function StepNodeComponent({
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
-  const { name, icon, logs, stage } = node.data
+  const { name, icon, logs } = node.data
   const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
 
   if (mode === 'Edit') {
@@ -85,14 +84,7 @@ export function StepNodeComponent({
           <Drawer.Description>{`View ${name} execution logs`}</Drawer.Description>
         </Drawer.Header>
         <div>
-          <ExecutionInfo
-            useLogsStore={() => ({ logs })}
-            onCopy={() => {}}
-            onDownload={() => {}}
-            onEdit={() => {}}
-            selectedStepIdx={0}
-            stage={stage || {}}
-          />
+          <ExecutionInfo useLogsStore={() => ({ logs })} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
         <Drawer.Footer>
           <Drawer.Close>
@@ -269,8 +261,7 @@ const data: AnyContainerNodeType[] = [
     data: {
       name: 'Step 1',
       icon: <Icon name="harness-plugin" className="m-2 size-8" />,
-      logs: logs,
-      stage: stages[0]
+      logs: logs
     } satisfies StepNodeDataType,
     config: {
       width: 160,

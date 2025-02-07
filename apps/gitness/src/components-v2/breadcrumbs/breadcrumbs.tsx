@@ -23,7 +23,9 @@ function Breadcrumbs() {
                 <Breadcrumb.Item key={match.pathname}>
                   {!isFirst ? <Breadcrumb.Separator /> : null}
                   {isLast || !asLink ? (
-                    <Breadcrumb.Page>{breadcrumbContent}</Breadcrumb.Page>
+                    <Breadcrumb.Page className={isLast ? 'text-foreground' : 'text-muted-foreground'}>
+                      {breadcrumbContent}
+                    </Breadcrumb.Page>
                   ) : (
                     <Breadcrumb.Link asChild>
                       <Link to={match.pathname}>{breadcrumbContent}</Link>

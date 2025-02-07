@@ -242,9 +242,10 @@ export function RepoCreatePage({
                 description={
                   <>
                     This is where you can write a long description for your project.{' '}
-                    <StyledLink className="inline-block" to="/">
+                    {/* TODO: when theres a README docs , link to it
+                     <StyledLink className="inline-block" to="/">
                       Learn more about README
-                    </StyledLink>
+                    </StyledLink> */}
                   </>
                 }
               />

@@ -1,7 +1,7 @@
 import { FC } from 'react'
 
-import { ColorsEnum } from '@/views'
 import { cn } from '@utils/cn'
+import { ColorsEnum } from '@views/labels'
 
 export interface LabelMarkerProps {
   label: string

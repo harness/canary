@@ -2,13 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { parse } from 'yaml'
 
-import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
+import { AnyContainerNodeType, CanvasProvider, PipelineGraph, PipelineGraphProps } from '@harnessio/pipeline-graph'
 
 import { ContentNodeFactory, YamlRevision } from '../pipeline-studio'
 import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
 import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
+
+import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
 
 import { ContentNodeType } from './graph-implementation/types/content-node-type'
 
@@ -41,10 +43,24 @@ export interface PipelineStudioGraphViewProps {
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   getStepIcon?: (step: Record<string, any>) => JSX.Element
+  serialContainerConfig?: Partial<SerialContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfig>
+  customCreateSVGPath?: PipelineGraphProps['customCreateSVGPath']
+  edgesConfig?: PipelineGraphProps['edgesConfig']
+  portComponent?: PipelineGraphProps['portComponent']
 }
 
 export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): React.ReactElement => {
-  const { yamlRevision, contentNodeFactory, getStepIcon } = props
+  const {
+    yamlRevision,
+    contentNodeFactory,
+    getStepIcon,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent
+  } = props
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -73,7 +89,16 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
   return (
     <div className="relative flex grow">
       <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+        <PipelineGraph
+          customCreateSVGPath={customCreateSVGPath}
+          edgesConfig={edgesConfig}
+          portComponent={portComponent}
+          data={data}
+          nodes={nodes}
+          config={{ edgeClassName: 'stroke-borders-2' }}
+          serialContainerConfig={serialContainerConfig}
+          parallelContainerConfig={parallelContainerConfig}
+        />
         <CanvasControls />
       </CanvasProvider>
     </div>

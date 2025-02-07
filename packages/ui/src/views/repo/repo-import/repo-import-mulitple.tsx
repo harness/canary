@@ -27,16 +27,76 @@ const formSchema = z
     hostUrl: z.string().optional(),
     pipelines: z.boolean().optional(),
     repositories: z.boolean().optional(),
-    provider: z.string().min(1, { message: 'Please select a provider' }),
+    provider: z.nativeEnum(ProviderOptionsEnum, { message: 'Please select a provider' }),
     password: z.string().optional(),
-    organization: z.string().min(1, { message: 'Please enter an organization' })
+    organization: z.string().optional(),
+    group: z.string().optional(),
+    username: z.string().optional(),
+    workspace: z.string().optional(),
+    project: z.string().optional()
   })
   .superRefine((data, ctx) => {
-    if (data.provider === 'Github Enterprise' && !data.hostUrl) {
+    if (
+      [
+        ProviderOptionsEnum.GITHUB,
+        ProviderOptionsEnum.GITHUB_ENTERPRISE,
+        ProviderOptionsEnum.GITEA,
+        ProviderOptionsEnum.GOGS,
+        ProviderOptionsEnum.AZURE_DEVOPS
+      ].includes(data.provider) &&
+      !data.organization?.trim()
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['organization'],
+        message: 'Please enter an organization'
+      })
+    }
+
+    if (data.provider === ProviderOptionsEnum.BITBUCKET && !data.workspace?.trim()) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['workspace'],
+        message: 'Please enter a Workspace'
+      })
+    }
+
+    if (
+      [ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(data.provider) &&
+      !data.group?.trim()
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['group'],
+        message: 'Please enter a Group'
+      })
+    }
+
+    if (
+      [
+        ProviderOptionsEnum.GITHUB_ENTERPRISE,
+        ProviderOptionsEnum.GITLAB_SELF_HOSTED,
+        ProviderOptionsEnum.BITBUCKET_SERVER,
+        ProviderOptionsEnum.GITEA,
+        ProviderOptionsEnum.GOGS
+      ].includes(data.provider) &&
+      !data.hostUrl?.trim()
+    ) {
       ctx.addIssue({
         code: 'custom',
         path: ['hostUrl'],
-        message: 'Repository URL is required'
+        message: 'Please enter a Host URL'
+      })
+    }
+
+    if (
+      [ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(data.provider) &&
+      !data.project?.trim()
+    ) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['project'],
+        message: 'Please enter a Project'
       })
     }
   })
@@ -61,23 +121,26 @@ export function RepoImportMultiplePage({
     handleSubmit,
     setValue,
     watch,
-    formState: { errors }
+    formState: { errors },
+    reset
   } = useForm<ImportMultipleReposFormFields>({
     resolver: zodResolver(formSchema),
     mode: 'onChange',
     defaultValues: {
       pipelines: false,
       repositories: true,
-      provider: 'Github',
-      password: '',
-      organization: ''
+      provider: ProviderOptionsEnum.GITHUB
     }
   })
 
   const providerValue = watch('provider')
 
   const handleSelectChange = (fieldName: keyof ImportMultipleReposFormFields, value: string) => {
-    setValue(fieldName, value, { shouldValidate: true })
+    if (fieldName === 'provider') {
+      reset({ provider: value as ProviderOptionsEnum, repositories: true, pipelines: false })
+    } else {
+      setValue(fieldName, value, { shouldValidate: true })
+    }
   }
 
   const onSubmit: SubmitHandler<ImportMultipleReposFormFields> = data => {
@@ -90,7 +153,7 @@ export function RepoImportMultiplePage({
 
   return (
     <SandboxLayout.Main>
-      <SandboxLayout.Content paddingClassName="w-[570px] mx-auto pt-11 pb-20">
+      <SandboxLayout.Content key={providerValue} paddingClassName="w-[570px] sdfsdfsdfdsf mx-auto pt-11 pb-20">
         <Spacer size={5} />
         <Text className="tracking-tight" size={5} weight="medium">
           Import Repositories
@@ -111,13 +174,7 @@ export function RepoImportMultiplePage({
                   {ProviderOptionsEnum &&
                     Object.values(ProviderOptionsEnum)?.map(option => {
                       return (
-                        <SelectItem
-                          key={option}
-                          value={option}
-                          disabled={
-                            option !== ProviderOptionsEnum.GITHUB && option !== ProviderOptionsEnum.GITHUB_ENTERPRISE
-                          }
-                        >
+                        <SelectItem key={option} value={option}>
                           {option}
                         </SelectItem>
                       )
@@ -126,7 +183,14 @@ export function RepoImportMultiplePage({
               </Select>
             </ControlGroup>
           </Fieldset>
-          {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (
+
+          {[
+            ProviderOptionsEnum.GITHUB_ENTERPRISE,
+            ProviderOptionsEnum.GITLAB_SELF_HOSTED,
+            ProviderOptionsEnum.BITBUCKET_SERVER,
+            ProviderOptionsEnum.GITEA,
+            ProviderOptionsEnum.GOGS
+          ].includes(watch('provider')) && (
             <Fieldset>
               <Input
                 id="host"
@@ -139,15 +203,38 @@ export function RepoImportMultiplePage({
             </Fieldset>
           )}
 
+          {[ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
+            <Fieldset>
+              <ControlGroup>
+                <Input
+                  id="username"
+                  label="Username"
+                  {...register('username')}
+                  placeholder="Enter your Username"
+                  size="md"
+                  error={errors.password?.message?.toString()}
+                />
+              </ControlGroup>
+            </Fieldset>
+          )}
+
           {/* token */}
           <Fieldset>
             <ControlGroup>
               <Input
                 type="password"
                 id="password"
-                label="Token"
+                label={
+                  [ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider'))
+                    ? 'Password'
+                    : 'Token'
+                }
                 {...register('password')}
-                placeholder="Enter your access token"
+                placeholder={
+                  [ProviderOptionsEnum.BITBUCKET, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider'))
+                    ? 'Enter your password'
+                    : 'Enter your access token'
+                }
                 size="md"
                 error={errors.password?.message?.toString()}
               />
@@ -156,17 +243,65 @@ export function RepoImportMultiplePage({
 
           <FormSeparator />
 
+          {[ProviderOptionsEnum.GITLAB, ProviderOptionsEnum.GITLAB_SELF_HOSTED].includes(watch('provider')) && (
+            <Fieldset className="mt-4">
+              <Input
+                id="group"
+                label="Group"
+                {...register('group')}
+                placeholder="Enter the group name"
+                size="md"
+                error={errors.group?.message?.toString()}
+              />
+            </Fieldset>
+          )}
+
+          {watch('provider') === ProviderOptionsEnum.BITBUCKET && (
+            <Fieldset className="mt-4">
+              <Input
+                id="workspace"
+                label="Workspace"
+                {...register('workspace')}
+                placeholder="Enter the workspace name"
+                size="md"
+                error={errors.workspace?.message?.toString()}
+              />
+            </Fieldset>
+          )}
+
           {/* organization */}
-          <Fieldset>
-            <Input
-              id="organization"
-              label="Organization"
-              {...register('organization')}
-              placeholder="Enter the organization name"
-              size="md"
-              error={errors.organization?.message?.toString()}
-            />
-          </Fieldset>
+          {[
+            ProviderOptionsEnum.GITHUB,
+            ProviderOptionsEnum.GITHUB_ENTERPRISE,
+            ProviderOptionsEnum.GITEA,
+            ProviderOptionsEnum.GOGS,
+            ProviderOptionsEnum.AZURE_DEVOPS
+          ].includes(watch('provider')) && (
+            <Fieldset>
+              <Input
+                id="organization"
+                label="Organization"
+                {...register('organization')}
+                placeholder="Enter the organization name"
+                size="md"
+                error={errors.organization?.message?.toString()}
+              />
+            </Fieldset>
+          )}
+
+          {/* Project */}
+          {[ProviderOptionsEnum.BITBUCKET_SERVER, ProviderOptionsEnum.AZURE_DEVOPS].includes(watch('provider')) && (
+            <Fieldset className="mt-4">
+              <Input
+                id="project"
+                label="Project"
+                {...register('project')}
+                placeholder="Enter the project name"
+                size="md"
+                error={errors.project?.message?.toString()}
+              />
+            </Fieldset>
+          )}
 
           {/* authorization - pipelines */}
           <Fieldset>
@@ -187,7 +322,7 @@ export function RepoImportMultiplePage({
                   />
                 }
                 id="pipelines"
-                label="Import Pipelines"
+                label="Pipelines"
                 className="mt-0 flex min-h-8 items-center"
               />
             </ControlGroup>

@@ -58,7 +58,7 @@ const PullRequestLayout: React.FC<PullRequestLayoutProps> = ({
           </>
         )}
         <Tabs variant="tabnav">
-          <TabsList className="before:left-1/2 before:w-screen before:-translate-x-1/2">
+          <TabsList className="before:left-1/2 before:w-[calc(100vw-220px)] before:-translate-x-1/2">
             <NavLink to={PullRequestTabsKeys.CONVERSATION}>
               {({ isActive }) => (
                 <TabsTrigger

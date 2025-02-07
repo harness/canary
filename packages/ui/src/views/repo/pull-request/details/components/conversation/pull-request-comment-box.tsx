@@ -156,9 +156,8 @@ const PullRequestCommentBox = ({
   return (
     <div className="flex items-start gap-x-3 font-sans" data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
-
       <div
-        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-scroll', {
+        className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-auto', {
           'border rounded-md': !inReplyMode || isEditMode,
           'border-t': inReplyMode
         })}
@@ -183,7 +182,7 @@ const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 p-3 pb-10 text-foreground-1"
+                className="min-h-24 bg-background-2 p-3 pb-10 text-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}

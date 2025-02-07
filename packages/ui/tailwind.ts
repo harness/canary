@@ -142,7 +142,8 @@ export default {
           danger: 'hsl(var(--canary-border-danger))',
           success: 'hsl(var(--canary-border-success))',
           accent: 'hsl(var(--canary-border-accent))',
-          risk: 'hsl(var(--canary-icon-risk))'
+          risk: 'hsl(var(--canary-icon-risk))',
+          alert: 'hsl(var(--canary-border-alert))'
         },
         button: {
           foreground: {
@@ -153,6 +154,7 @@ export default {
           background: {
             'disabled-1': 'hsla(var(--canary-button-background-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-background-danger-01))',
+            'danger-2': 'hsla(var(--canary-button-background-danger-02))',
             'danger-3': 'hsla(var(--canary-button-background-danger-03))',
             'success-1': 'hsla(var(--canary-button-background-success-01))',
             'success-2': 'hsla(var(--canary-button-background-success-02))'
@@ -160,7 +162,6 @@ export default {
           border: {
             'disabled-1': 'hsla(var(--canary-button-border-disabled-01))',
             'danger-1': 'hsla(var(--canary-button-border-danger-01))',
-            'danger-3': 'hsla(var(--canary-button-border-danger-03))',
             'success-1': 'hsla(var(--canary-button-border-success-01))'
           }
         },
@@ -325,6 +326,23 @@ export default {
         'commit-list-bullet':
           '0px 0px 3px 0.5px hsla(var(--canary-background-05) / 0.2), 0px 0px 8px 1px hsla(var(--canary-background-05) / 0.3)'
       },
+      borderColor: {
+        'borders-1': 'hsl(var(--canary-border-01))',
+        'borders-2': 'hsl(var(--canary-border-02))',
+        'borders-3': 'hsl(var(--canary-border-03))',
+        'borders-4': 'hsl(var(--canary-border-04))',
+        'borders-5': 'hsl(var(--canary-border-05))',
+        'borders-6': 'hsl(var(--canary-border-06))',
+        'borders-7': 'hsl(var(--canary-border-07))',
+        'borders-8': 'hsl(var(--canary-border-08))',
+        'borders-9': 'hsl(var(--canary-border-09))',
+        'borders-10': 'hsl(var(--canary-border-10))',
+        'borders-danger': 'hsl(var(--canary-border-danger))',
+        'borders-success': 'hsl(var(--canary-border-success))',
+        'borders-accent': 'hsl(var(--canary-border-accent))',
+        'borders-risk': 'hsl(var(--canary-icon-risk))',
+        'borders-alert': 'hsl(var(--canary-border-alert))'
+      },
       borderRadius: {
         10: '0.625rem'
       },
@@ -366,7 +384,9 @@ export default {
         'widget-number-gradient':
           'linear-gradient(180deg, hsla(var(--canary-widget-number-gradient-from)) 35.9%, hsla(var(--canary-widget-number-gradient-to)) 100%)',
         'widget-number-bg-gradient':
-          'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)'
+          'linear-gradient(135deg, hsla(var(--canary-widget-number-bg-gradient-from)) 0%, hsla(var(--canary-widget-number-bg-gradient-to)) 67.67%)',
+        'graph-gradient-1':
+          'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)'
       },
       keyframes: {
         'accordion-down': {
@@ -411,6 +431,10 @@ export default {
     'prose-a',
     'prose-img',
     'prose-code',
+    { pattern: /^border-borders-/ },
+    { pattern: /^bg-graph-gradient-/ },
+    { pattern: /^text-foreground-/ },
+    { pattern: /^bg-background-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph
     'stroke-borders-2',
     // NOTE: temporary - used in design-system

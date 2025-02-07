@@ -41,6 +41,7 @@ import { SignUpView } from '@subjects/views/signup'
 import { SpaceSettingsMembers } from '@subjects/views/space-settings-members/space-settings-members'
 import { useTranslationsStore } from '@utils/viewUtils'
 
+import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
@@ -161,6 +162,16 @@ export const viewPreviews: Record<string, ReactNode> = {
   'pipeline-graph': (
     <RepoViewWrapper>
       <PipelineGraphWrapper />
+    </RepoViewWrapper>
+  ),
+  'chat-preview': (
+    <RepoViewWrapper>
+      <ChatPreviewWrapper />
+    </RepoViewWrapper>
+  ),
+  'chat-empty-preview': (
+    <RepoViewWrapper>
+      <ChatEmptyPreviewWrapper />
     </RepoViewWrapper>
   ),
   'pipeline-graph-minimal': (

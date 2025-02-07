@@ -18,8 +18,11 @@ interface CanvasTransform {
 interface CanvasContextProps {
   canvasTransformRef: React.MutableRefObject<CanvasTransform>
   setTargetEl: (el: HTMLDivElement) => void
-  setCanvasTransform: (canvasTransform: CanvasTransform & { rootContainer?: HTMLDivElement }) => void
+  setCanvasTransform: (
+    canvasTransform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial: boolean }
+  ) => void
   fit: () => void
+  reset: () => void
   increase: () => void
   decrease: () => void
   config: CanvasConfig
@@ -30,6 +33,7 @@ const CanvasContext = createContext<CanvasContextProps>({
   setTargetEl: (el: HTMLElement) => undefined,
   setCanvasTransform: (_canvasTransform: CanvasTransform) => undefined,
   fit: () => undefined,
+  reset: () => undefined,
   increase: () => undefined,
   decrease: () => undefined,
   config: { minScale: 0.1, maxScale: 10, scaleFactor: 0.3, paddingForFit: 30 }
@@ -45,15 +49,27 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
 
   const canvasTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
   const targetElRef = useRef<HTMLElement>()
+  const initialTransformRef = useRef<CanvasTransform>({ scale: 1, translateX: 0, translateY: 0 })
 
-  const setCanvasTransform = useCallback((transform: CanvasTransform & { rootContainer?: HTMLDivElement }) => {
-    canvasTransformRef.current = transform
+  const setCanvasTransform = useCallback(
+    (transform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }) => {
+      canvasTransformRef.current = transform
 
-    const el = targetElRef.current ?? transform.rootContainer
-    el?.style.setProperty('--scale', `${transform.scale}`)
-    el?.style.setProperty('--x', `${transform.translateX}px`)
-    el?.style.setProperty('--y', `${transform.translateY}px`)
-  }, [])
+      const el = targetElRef.current ?? transform.rootContainer
+      el?.style.setProperty('--scale', `${transform.scale}`)
+      el?.style.setProperty('--x', `${transform.translateX}px`)
+      el?.style.setProperty('--y', `${transform.translateY}px`)
+
+      if (transform.isInitial) {
+        initialTransformRef.current = {
+          scale: transform.scale,
+          translateX: transform.translateX,
+          translateY: transform.translateY
+        }
+      }
+    },
+    []
+  )
 
   const setTargetEl = useCallback((targetEl: HTMLElement) => {
     targetElRef.current = targetEl
@@ -92,6 +108,14 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
 
   const decrease = useCallback(() => {
     scaleInc(-0.2)
+  }, [scaleInc])
+
+  const reset = useCallback(() => {
+    setCanvasTransform({
+      scale: initialTransformRef.current.scale,
+      translateX: initialTransformRef.current.translateX,
+      translateY: initialTransformRef.current.translateY
+    })
   }, [scaleInc])
 
   const fit = useCallback(() => {
@@ -139,6 +163,7 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
         setTargetEl,
         setCanvasTransform,
         fit,
+        reset,
         increase,
         decrease,
         config

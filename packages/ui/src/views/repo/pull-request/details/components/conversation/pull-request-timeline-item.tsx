@@ -316,6 +316,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                         </Avatar>
                       ) : null}
                       <Input
+                        className="bg-background-2"
                         placeholder="Reply here"
                         size="md"
                         onClick={() => {
@@ -327,7 +328,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       />
                     </div>
                   )}
-                  <div className={cn('flex gap-3 border-t', replyBoxClassName)}>
+                  <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
                     <Button
                       variant="outline"
                       onClick={() => {
@@ -336,6 +337,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     >
                       {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
                     </Button>
+
+                    {isResolved && (
+                      <span className="text-14 text-foreground-4">
+                        {/* TODO: need to identify the author who resolved the conversation */}
+                        <span className="font-medium text-foreground-1">{currentUser}</span> marked this conversation as
+                        resolved.
+                      </span>
+                    )}
                   </div>
                 </>
               )}

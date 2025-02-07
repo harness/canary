@@ -115,7 +115,11 @@ export const ManageNavigation = ({
 
   return (
     <AlertDialog.Root open={showManageNavigation} onOpenChange={handleCancel}>
-      <AlertDialog.Content className="h-[574px] max-h-[70vh] max-w-[410px]" onOverlayClick={handleCancel}>
+      <AlertDialog.Content
+        className="h-[574px] max-h-[70vh] max-w-[410px]"
+        onClose={handleCancel}
+        onOverlayClick={handleCancel}
+      >
         <AlertDialog.Header>
           <AlertDialog.Title className="mb-4">Manage navigation</AlertDialog.Title>
           <ManageNavigationSearch

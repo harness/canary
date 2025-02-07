@@ -21,6 +21,7 @@ export const defaultParallelContainerConfig = {
 interface ContainerNodeContextProps {
   serialContainerConfig: SerialContainerConfig
   parallelContainerConfig: ParallelContainerConfig
+  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
 }
 
 const ContainerNodeContext = createContext<ContainerNodeContextProps>({
@@ -28,14 +29,18 @@ const ContainerNodeContext = createContext<ContainerNodeContextProps>({
   parallelContainerConfig: defaultParallelContainerConfig
 })
 
+export interface ContainerNodeProviderProps {
+  serialContainerConfig?: Partial<SerialContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfig>
+  portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
+}
+
 const ContainerNodeProvider = ({
   serialContainerConfig,
   parallelContainerConfig,
+  portComponent,
   children
-}: React.PropsWithChildren<{
-  serialContainerConfig?: Partial<SerialContainerConfig>
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
-}>) => {
+}: React.PropsWithChildren<ContainerNodeProviderProps>) => {
   const serialConfig: SerialContainerConfig = useMemo(() => {
     const merged = { ...defaultSerialContainerConfig, ...serialContainerConfig }
     merged.serialGroupAdjustment = (merged.paddingTop - merged.paddingBottom) / 2
@@ -52,7 +57,8 @@ const ContainerNodeProvider = ({
     <ContainerNodeContext.Provider
       value={{
         serialContainerConfig: serialConfig,
-        parallelContainerConfig: parallelConfig
+        parallelContainerConfig: parallelConfig,
+        portComponent
       }}
     >
       {children}

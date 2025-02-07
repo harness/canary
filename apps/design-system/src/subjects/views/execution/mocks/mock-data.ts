@@ -1,97 +1,82 @@
 import { ExecutionState, ExecutionTreeProps, LivelogLine, StageProps } from '@harnessio/ui/views'
 
 export const logs: LivelogLine[] = [
-  { pos: 1, time: 1707000000, duration: 2, out: 'Initializing pipeline...' },
-  { pos: 2, time: 1707000002, duration: 3, out: 'Fetching repository...' },
-  { pos: 3, time: 1707000005, duration: 5, out: 'Checking out commit abc123...' },
-  { pos: 4, time: 1707000010, duration: 10, out: 'Installing dependencies...' },
-  { pos: 5, time: 1707000020, duration: 7, out: 'Running pre-build checks...' },
-  { pos: 6, time: 1707000027, duration: 12, out: 'Compiling source files...' },
-  { pos: 7, time: 1707000039, duration: 3, out: "Compiler warning: Unused variable 'x' in src/utils.ts" },
-  { pos: 8, time: 1707000042, duration: 8, out: 'Build completed successfully.' },
-  { pos: 9, time: 1707000050, duration: 15, out: 'Running unit tests...' },
-  { pos: 10, time: 1707000065, duration: 10, out: 'Test suite passed: 42 tests executed, 0 failed.' },
-  { pos: 11, time: 1707000075, duration: 10, out: 'Deploying artifacts...' },
-  { pos: 12, time: 1707000085, duration: 12, out: 'Deployment completed successfully.' },
-  { pos: 13, time: 1707000097, duration: 2, out: 'Pipeline execution finished.' }
+  { out: 'Starting dependency installation...', pos: 1, time: 1700000001, duration: 2 },
+  { out: 'Fetching npm registry metadata...', pos: 2, time: 1700000003, duration: 1 },
+  { out: 'Downloading packages...', pos: 3, time: 1700000004, duration: 2 },
+  { out: 'Extracting packages...', pos: 4, time: 1700000006, duration: 1 },
+  { out: 'Resolving dependencies...', pos: 5, time: 1700000007, duration: 2 },
+  { out: 'npm WARN deprecated package@1.0.0: Use package@2.0.0 instead', pos: 6, time: 1700000009, duration: 1 },
+  { out: 'Dependencies installed successfully.', pos: 7, time: 1700000010, duration: 1 },
+  { out: 'Starting test execution...', pos: 8, time: 1700000011, duration: 1 },
+  { out: 'Running test suite: user authentication tests...', pos: 9, time: 1700000012, duration: 2 },
+  { out: '✔ Login test passed', pos: 10, time: 1700000014, duration: 1 },
+  { out: '✔ Signup test passed', pos: 11, time: 1700000015, duration: 1 },
+  { out: '✔ Logout test passed', pos: 12, time: 1700000016, duration: 1 },
+  { out: 'Running test suite: API response tests...', pos: 13, time: 1700000017, duration: 2 },
+  { out: '✔ GET /users returned 200 OK', pos: 14, time: 1700000019, duration: 1 },
+  { out: '✔ POST /users created new user', pos: 15, time: 1700000020, duration: 1 },
+  { out: '✔ DELETE /users/:id removed user', pos: 16, time: 1700000021, duration: 1 },
+  { out: 'Test suite completed. 10 tests executed.', pos: 17, time: 1700000022, duration: 1 },
+  { out: 'Initializing Go build...', pos: 18, time: 1700000023, duration: 2 },
+  { out: 'Compiling main.go...', pos: 19, time: 1700000025, duration: 3 },
+  { out: 'Linking dependencies...', pos: 20, time: 1700000028, duration: 2 },
+  { out: 'Build successful: bin/app created.', pos: 21, time: 1700000030, duration: 1 },
+  { out: 'Running Go tests with coverage analysis...', pos: 22, time: 1700000031, duration: 2 },
+  { out: '✔ auth_test.go passed (coverage: 88%)', pos: 23, time: 1700000033, duration: 1 },
+  { out: '✔ db_test.go passed (coverage: 92%)', pos: 24, time: 1700000034, duration: 1 },
+  { out: '✔ api_test.go passed (coverage: 85%)', pos: 25, time: 1700000035, duration: 1 },
+  { out: 'ok   project/module  0.123s  coverage: 85.7%', pos: 26, time: 1700000036, duration: 1 }
 ]
 
 export const stages: StageProps[] = [
   {
-    name: 'Initialize',
-    group: 'Setup',
+    name: 'Parallel Stage 1',
     steps: [
       {
-        name: 'Fetch Repository',
-        status: ExecutionState.SUCCESS,
-        started: 1707000000,
-        stopped: 1707000002,
-        inputs: [{ name: 'branch', value: 'main' }],
-        outputs: [{ name: 'commit', value: 'abc123' }],
-        number: 1
+        name: 'Install dependencies',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       },
       {
-        name: 'Checkout Code',
-        status: ExecutionState.SUCCESS,
-        started: 1707000003,
-        stopped: 1707000005,
-        inputs: [{ name: 'commit', value: 'abc123' }],
-        outputs: [{ name: 'workspace', value: '/build/workspace' }],
-        number: 2
+        name: 'Run tests',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       }
     ]
   },
   {
-    name: 'Build',
-    group: 'Compilation',
+    name: 'Parallel Stage 2',
     steps: [
       {
-        name: 'Install Dependencies',
-        status: ExecutionState.SUCCESS,
-        started: 1707000010,
-        stopped: 1707000015,
-        inputs: [{ name: 'package.json', value: '/build/workspace/package.json' }],
-        outputs: [{ name: 'node_modules', value: '/build/workspace/node_modules' }],
-        number: 3
+        name: 'Build Golang project',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       },
       {
-        name: 'Compile Source',
-        status: ExecutionState.SUCCESS,
-        started: 1707000016,
-        stopped: 1707000025,
-        inputs: [{ name: 'source', value: '/build/workspace/src' }],
-        outputs: [{ name: 'binary', value: '/build/workspace/dist' }],
-        number: 4
+        name: 'Run Golang tests',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       }
     ]
   },
   {
-    name: 'Test',
-    group: 'Verification',
+    name: 'Docker Template Stage',
     steps: [
       {
-        name: 'Run Unit Tests',
-        status: ExecutionState.SUCCESS,
-        started: 1707000030,
-        stopped: 1707000040,
-        inputs: [{ name: 'binary', value: '/build/workspace/dist' }],
-        outputs: [{ name: 'testReport', value: '/build/workspace/reports/tests.xml' }],
-        number: 5
+        name: 'Pull Docker image',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       }
     ]
   },
   {
-    name: 'Deploy',
-    group: 'Deployment',
+    name: 'Slack Notification Stage',
     steps: [
       {
-        name: 'Deploy to Staging',
-        status: ExecutionState.SUCCESS,
-        started: 1707000050,
-        stopped: 1707000060,
-        inputs: [{ name: 'testReport', value: '/build/workspace/reports/tests.xml' }],
-        outputs: [{ name: 'deploymentURL', value: 'https://staging.example.com' }],
-        number: 6
+        name: 'Send Slack notification',
+        status: ExecutionState.PENDING,
+        started: Date.now()
       }
     ]
   }
@@ -101,77 +86,100 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'initialize',
     name: 'Initialize',
-    status: ExecutionState.SUCCESS,
-    duration: '00:05',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
     isSelectable: true,
     children: [
       {
         id: 'fetch-repo',
         name: 'Fetch Repository',
-        status: ExecutionState.SUCCESS,
-        duration: '00:02',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
         isSelectable: true
       },
       {
         id: 'checkout-code',
         name: 'Checkout Code',
-        status: ExecutionState.SUCCESS,
-        duration: '00:03',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
         isSelectable: true
       }
     ]
   },
   {
-    id: 'build',
-    name: 'Build',
-    status: ExecutionState.FAILURE,
-    duration: '00:15',
+    id: 'parallel-stage-1',
+    name: 'Parallel Stage 1',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
     isSelectable: true,
     children: [
       {
-        id: 'install-deps',
-        name: 'Install Dependencies',
-        status: ExecutionState.SUCCESS,
-        duration: '00:10',
+        id: 'install-dependencies',
+        name: 'Install dependencies',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
         isSelectable: true
       },
       {
-        id: 'compile',
-        name: 'Compile Source',
-        status: ExecutionState.FAILURE,
-        duration: '00:05',
-        isSelectable: true
-      }
-    ]
-  },
-  {
-    id: 'test',
-    name: 'Test',
-    status: ExecutionState.SUCCESS,
-    duration: '00:10',
-    isSelectable: true,
-    children: [
-      {
-        id: 'unit-tests',
-        name: 'Run Unit Tests',
-        status: ExecutionState.SUCCESS,
-        duration: '00:10',
-        isSelectable: true
-      }
-    ]
-  },
-  {
-    id: 'deploy',
-    name: 'Deploy',
-    status: ExecutionState.PENDING,
-    duration: '00:10',
-    isSelectable: true,
-    children: [
-      {
-        id: 'deploy-staging',
-        name: 'Deploy to Staging',
+        id: 'run-tests',
+        name: 'Run tests',
         status: ExecutionState.PENDING,
-        duration: '00:10',
+        duration: '--:--',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'parallel-stage-2',
+    name: 'Parallel Stage 2',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
+    isSelectable: true,
+    children: [
+      {
+        id: 'build-golang-project',
+        name: 'Build Golang project',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
+        isSelectable: true
+      },
+      {
+        id: 'run-golang-tests',
+        name: 'Run Golang tests',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'docker-template-stage',
+    name: 'Docker Template Stage',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
+    isSelectable: true,
+    children: [
+      {
+        id: 'pull-docker-image',
+        name: 'Pull Docker image',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
+        isSelectable: true
+      }
+    ]
+  },
+  {
+    id: 'slack-notification-stage',
+    name: 'Slack Notification Stage',
+    status: ExecutionState.PENDING,
+    duration: '--:--',
+    isSelectable: true,
+    children: [
+      {
+        id: 'send-slack-notification',
+        name: 'Send Slack notification',
+        status: ExecutionState.PENDING,
+        duration: '--:--',
         isSelectable: true
       }
     ]

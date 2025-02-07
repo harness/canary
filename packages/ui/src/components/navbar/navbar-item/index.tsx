@@ -79,7 +79,7 @@ export const NavbarItem = ({
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild>
             <Button
-              className="absolute right-[-0.8125rem] top-0 text-icons-4 opacity-0 hover:text-icons-2 focus:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100"
+              className="absolute right-[-0.1rem] top-[2px] text-icons-4 opacity-0 hover:text-icons-2 focus:opacity-100 focus-visible:opacity-100 group-hover:opacity-100 data-[state=open]:opacity-100"
               size="sm_icon"
               variant="custom"
             >

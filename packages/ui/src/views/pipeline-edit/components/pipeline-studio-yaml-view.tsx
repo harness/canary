@@ -33,10 +33,19 @@ export interface PipelineStudioYamlViewProps {
     minimap?: boolean
   }
   onErrorChange?: (data: ErrorDataType) => void
+  animateOnUpdate?: boolean
+  onAnimateEnd?: () => void
 }
 
 const PipelineStudioYamlView = (props: PipelineStudioYamlViewProps): JSX.Element => {
-  const { yamlRevision, onYamlRevisionChange, yamlEditorConfig = {}, onErrorChange } = props
+  const {
+    yamlRevision,
+    onYamlRevisionChange,
+    yamlEditorConfig = {},
+    onErrorChange,
+    animateOnUpdate,
+    onAnimateEnd
+  } = props
 
   const [reRenderYamlEditor, setRerenderYamlEditor] = useState(0)
   const forceRerender = () => {
@@ -151,6 +160,8 @@ const PipelineStudioYamlView = (props: PipelineStudioYamlViewProps): JSX.Element
           schemaConfig={schemaConfig}
           // inlineActions={inlineActions} // TODO
           // selection={selection} // TODO
+          animateOnUpdate={animateOnUpdate}
+          onAnimateEnd={onAnimateEnd}
           {...yamlEditorConfig}
         />
       </div>

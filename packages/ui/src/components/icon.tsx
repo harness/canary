@@ -8,6 +8,7 @@ import AISparks from '../icons/ai-sparks.svg'
 import AppleShortcut from '../icons/apple-shortcut.svg'
 import ArrowLong from '../icons/arrow-long.svg'
 import ArrowShort from '../icons/arrow-short.svg'
+import Arrow from '../icons/arrow.svg'
 import ArtifactsGradient from '../icons/artifacts-gradient.svg'
 import Artifacts from '../icons/artifacts-icon.svg'
 import AttachmentImage from '../icons/attachment-image.svg'
@@ -27,6 +28,7 @@ import CancelGrey from '../icons/cancel-grey.svg'
 import Changes from '../icons/changes.svg'
 import ChaosEngineeringGradient from '../icons/chaos-engineering-gradient.svg'
 import ChaosEngineering from '../icons/chaos-engineering-icon.svg'
+import CheckboxCircle from '../icons/checkbox-circle.svg'
 import Checkbox from '../icons/checkbox.svg'
 import Checklist from '../icons/checklist.svg'
 import Checks from '../icons/checks.svg'
@@ -54,6 +56,7 @@ import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import CrossCircle from '../icons/cross-circle.svg'
 import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
 import Dashboards from '../icons/dashboards-icon.svg'
@@ -189,6 +192,7 @@ import User from '../icons/user-icon.svg'
 import Users from '../icons/users-icon.svg'
 import Variable from '../icons/variable-icon.svg'
 import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
+import WarningTriangleOutline from '../icons/warning-triangle-outline.svg'
 import Webhook from '../icons/webhook-icon.svg'
 import Wrench from '../icons/wrench-icon.svg'
 import XMark from '../icons/x-mark.svg'
@@ -384,8 +388,12 @@ const IconNameMap = {
   'expand-comment': ExpandComment,
   suggestion: Suggestion,
   'repo-icon': RepoIcon,
+  arrow: Arrow,
   'arrow-short': ArrowShort,
-  'bold-plus': BoldPlus
+  'bold-plus': BoldPlus,
+  'checkbox-circle': CheckboxCircle,
+  'cross-circle': CrossCircle,
+  'warning-triangle-outline': WarningTriangleOutline
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

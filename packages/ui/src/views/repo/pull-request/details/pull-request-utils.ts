@@ -1,6 +1,8 @@
 import { TypesUser } from '@/types'
+import { dispatchCustomEvent } from '@hooks/use-event-listener'
 import { get, isEmpty } from 'lodash-es'
 
+import { DiffViewerCustomEvent, DiffViewerEvent } from '../components/pull-request-diff-viewer'
 import { PullReqReviewDecision } from '../pull-request.types'
 import { innerBlockName, outterBlockName } from '../utils'
 import {
@@ -273,7 +275,8 @@ function isInViewport(ele: HTMLElement) {
 export const jumpToFile = (
   filePath: string,
   diffBlocks: DiffHeaderProps[][],
-  setJumpToDiff: (filePath: string) => void
+  setJumpToDiff: (filePath: string) => void,
+  commentId?: string
 ) => {
   let loopCount = 0
 
@@ -290,6 +293,13 @@ export const jumpToFile = (
     outerDOM?.scrollIntoView(false)
     innerDOM?.scrollIntoView(false)
     diffDOM?.scrollIntoView(true)
+
+    if (diffDOM && commentId) {
+      dispatchCustomEvent<DiffViewerCustomEvent>(filePath, {
+        action: DiffViewerEvent.SCROLL_INTO_VIEW,
+        commentId: commentId
+      })
+    }
 
     // Re-check after a short delay if it’s truly in viewport
     // If not in viewport and loopCount < 100 => re-run

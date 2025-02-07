@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Editor, { loader, Monaco, useMonaco } from '@monaco-editor/react'
 import * as monaco from 'monaco-editor'
 
+import { MonacoCommonDefaultOptions } from '../constants/monaco-common-default-options'
 import { useCodeLenses } from '../hooks/useCodeLens'
 import { useDecoration } from '../hooks/useDecoration'
 import { useProblems } from '../hooks/useProblems'
@@ -22,10 +23,7 @@ export interface YamlRevision {
 }
 
 const options: monaco.editor.IStandaloneEditorConstructionOptions = {
-  selectOnLineNumbers: true,
-  minimap: {
-    enabled: true
-  },
+  ...MonacoCommonDefaultOptions,
   folding: true
 }
 
@@ -42,8 +40,6 @@ export interface YamlEditorProps<T> {
     className: string
     revealInCenter?: boolean
   }
-  minimap?: boolean
-  folding?: boolean
   animateOnUpdate?: boolean
   onAnimateEnd?: () => void
 }
@@ -58,8 +54,6 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
     selection,
     theme: themeFromProps,
     options: userOptions,
-    minimap = false,
-    folding = true,
     animateOnUpdate = false,
     onAnimateEnd
   } = props
@@ -167,11 +161,9 @@ export const YamlEditor = function YamlEditor<T>(props: YamlEditorProps<T>): JSX
   const mergedOptions = useMemo(
     () => ({
       ...options,
-      folding,
-      minimap: { ...options.minimap, enabled: minimap },
       ...userOptions
     }),
-    [folding, minimap, userOptions]
+    [userOptions]
   )
 
   return (

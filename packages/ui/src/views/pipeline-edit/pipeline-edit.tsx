@@ -1,3 +1,5 @@
+import { PipelineStudioGraphViewProps } from '@views/pipeline-edit/components/pipeline-studio-graph-view'
+
 import { ContainerNode } from '@harnessio/pipeline-graph'
 
 import { PipelineStudioNodeContextProvider } from './components/graph-implementation/context/PipelineStudioNodeContext'
@@ -16,7 +18,8 @@ import { PipelineStudioNodeContextMenu } from './components/pipeline-studio-node
 import { ErrorDataType } from './components/pipeline-studio-yaml-view'
 import { ContentNodeFactory, PipelineStudio, PipelineStudioProps, YamlRevision } from './pipeline-studio'
 
-export interface PipelineEditProps {
+export interface PipelineEditProps
+  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
   /** pipeline view */
   view: 'yaml' | 'graph'
   /** yaml state */
@@ -38,6 +41,11 @@ export interface PipelineEditProps {
   onErrorChange?: (data: ErrorDataType) => void
   getStepIcon?: PipelineStudioProps['getStepIcon']
   contentNodeFactory?: ContentNodeFactory
+  animateYamlOnUpdate?: boolean
+  onYamlAnimateEnd?: () => void
+  customCreateSVGPath?: PipelineStudioProps['customCreateSVGPath']
+  edgesConfig?: PipelineStudioProps['edgesConfig']
+  portComponent?: PipelineStudioProps['portComponent']
 }
 
 export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
@@ -54,7 +62,14 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     selectedPath,
     onErrorChange,
     getStepIcon,
-    contentNodeFactory
+    contentNodeFactory,
+    animateYamlOnUpdate,
+    onYamlAnimateEnd,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent
   } = props
 
   const defaultContentNodeFactory = new ContentNodeFactory()
@@ -141,6 +156,13 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
         yamlEditorConfig={yamlEditorConfig}
         onErrorChange={onErrorChange}
         getStepIcon={getStepIcon}
+        animateYamlOnUpdate={animateYamlOnUpdate}
+        onYamlAnimateEnd={onYamlAnimateEnd}
+        serialContainerConfig={serialContainerConfig}
+        parallelContainerConfig={parallelContainerConfig}
+        customCreateSVGPath={customCreateSVGPath}
+        edgesConfig={edgesConfig}
+        portComponent={portComponent}
       />
       <PipelineStudioNodeContextMenu />
     </PipelineStudioNodeContextProvider>

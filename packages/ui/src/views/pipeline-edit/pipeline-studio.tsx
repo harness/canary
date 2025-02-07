@@ -1,3 +1,5 @@
+import { PipelineStudioGraphViewProps } from '@views/pipeline-edit/components/pipeline-studio-graph-view'
+
 import { NodeContent } from '@harnessio/pipeline-graph'
 
 import { ContentNodeType } from './components/graph-implementation/types/content-node-type'
@@ -28,7 +30,8 @@ export interface YamlRevision {
   revision?: number
 }
 
-export interface PipelineStudioProps {
+export interface PipelineStudioProps
+  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
@@ -36,6 +39,11 @@ export interface PipelineStudioProps {
   yamlEditorConfig?: PipelineStudioInternalProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioInternalProps['onErrorChange']
   getStepIcon?: PipelineStudioInternalProps['getStepIcon']
+  animateYamlOnUpdate?: boolean
+  onYamlAnimateEnd?: () => void
+  customCreateSVGPath?: PipelineStudioGraphViewProps['customCreateSVGPath']
+  edgesConfig?: PipelineStudioGraphViewProps['edgesConfig']
+  portComponent?: PipelineStudioGraphViewProps['portComponent']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

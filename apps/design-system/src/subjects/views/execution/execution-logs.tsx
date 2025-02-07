@@ -1,10 +1,49 @@
-import { ExecutionHeader, ExecutionInfo, ExecutionState, ExecutionTabs, ExecutionTree } from '@harnessio/ui/views'
+import { useCallback, useEffect, useState } from 'react'
+
+import { useLogs } from '@/hooks/useLogs'
+import { useTree } from '@/hooks/useTree'
+
+import { TreeViewElement } from '@harnessio/ui/components'
+import {
+  ExecutionHeader,
+  ExecutionInfo,
+  ExecutionState,
+  ExecutionTabs,
+  ExecutionTree,
+  ILogsStore,
+  NodeSelectionProps
+} from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
+  const [currentStep, setCurrentStep] = useState<TreeViewElement | null | undefined>(null)
+  const { nodes: updatedElements, currentParent, currentChild } = useTree(elements)
+
+  const { logs: currentLogs, timerId } = useLogs({
+    logs: currentStep ? (currentStep?.status === ExecutionState.PENDING ? [] : logs) : [],
+    isStreaming: currentStep?.status === ExecutionState.RUNNING
+  })
+
+  const useLogsStore = useCallback(
+    (): ILogsStore => ({
+      logs: currentLogs
+    }),
+    [currentLogs]
+  )
+
+  useEffect(() => {
+    setCurrentStep(currentChild)
+  }, [currentChild])
+
+  useEffect(() => {
+    if (timerId) {
+      clearInterval(timerId)
+    }
+  }, [currentParent, currentChild])
+
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex h-full flex-col">
       <ExecutionTabs />
       <ExecutionHeader
         commitName="8fbru3ix"
@@ -25,16 +64,16 @@ export const ExecutionLogsView = () => {
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
           <ExecutionTree
-            defaultSelectedId="initialize"
-            elements={elements}
-            onSelectNode={({ parentId, childId }: { parentId: string; childId: string }) => {
-              console.log(`Selected node: Parent ${parentId}, Child ${childId}`)
+            defaultSelectedId={currentStep?.id ?? elements[0]?.children?.[0]?.id ?? ''}
+            elements={updatedElements}
+            onSelectNode={(selectedNode: NodeSelectionProps) => {
+              setCurrentStep(selectedNode?.childNode)
             }}
           />
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">
           <ExecutionInfo
-            logs={logs}
+            useLogsStore={useLogsStore}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}

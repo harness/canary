@@ -738,6 +738,15 @@
       background-color 5000s,
       color 5000s;
   }
+
+  .scrollbar-hidden {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 }
 
 .border-linear {
@@ -746,6 +755,10 @@
     linear-gradient(#fff 0 0) padding-box,
     linear-gradient(#fff 0 0);
   mask-composite: exclude;
+}
+
+.connector-gradient {
+  @apply bg-gradient-to-b from-[#2F2F33]/0 to-[#161619]/100;
 }
 
 /* Text utilities */

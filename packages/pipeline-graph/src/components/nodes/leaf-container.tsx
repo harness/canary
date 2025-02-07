@@ -1,5 +1,4 @@
-import { useRef } from 'react'
-
+import { useContainerNodeContext } from '../../context/container-node-provider'
 import { RenderNodeContent } from '../../render/render-node-content'
 import { ContainerNodeProps } from '../../types/container-node'
 import { LeafNodeInternalType } from '../../types/nodes-internal'
@@ -7,6 +6,7 @@ import Port from './port'
 
 export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInternalType>) {
   const { node, isFirst, isLast, parentNodeType, mode } = props
+  const { portComponent } = useContainerNodeContext()
 
   const h = node.config?.height ? node.config?.height + 'px' : 'auto'
   const w = node.config?.width ? node.config?.width + 'px' : 'auto'
@@ -30,8 +30,19 @@ export default function LeafNodeContainer(props: ContainerNodeProps<LeafNodeInte
         flexShrink: 0 // IMPORTANT: do not remove this
       }}
     >
-      {!node.config?.hideLeftPort && <Port side="left" id={`left-port-${props.node.path}`} />}
-      {!node.config?.hideRightPort && <Port side="right" id={`right-port-${props.node.path}`} />}
+      {!node.config?.hideLeftPort &&
+        (portComponent ? (
+          portComponent({ side: 'left', id: `left-port-${node.path}` })
+        ) : (
+          <Port side="left" id={`left-port-${node.path}`} />
+        ))}
+
+      {!node.config?.hideRightPort &&
+        (portComponent ? (
+          portComponent({ side: 'right', id: `right-port-${node.path}` })
+        ) : (
+          <Port side="right" id={`right-port-${node.path}`} />
+        ))}
 
       <RenderNodeContent node={node} isFirst={isFirst} isLast={isLast} parentNodeType={parentNodeType} mode={mode} />
     </div>

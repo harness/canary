@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { ExecutionState, TreeViewElement } from '@harnessio/ui/views'
+import { TreeViewElement } from '@harnessio/ui/components'
+import { ExecutionState } from '@harnessio/ui/views'
 
 export const useTree = (
   nodes: TreeViewElement[],

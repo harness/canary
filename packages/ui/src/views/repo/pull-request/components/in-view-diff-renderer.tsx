@@ -31,7 +31,7 @@ const InViewDiffRendererInternal: FC<InViewDiffRendererProps> = ({
     initialInView: false
   })
   const setContainerRef = useCallback(
-    node => {
+    (node: HTMLDivElement) => {
       containerRef.current = node
       ref(node)
     },

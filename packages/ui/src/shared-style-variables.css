@@ -1225,7 +1225,7 @@
     --canary-foreground-danger: var(--canary-red-200);
     --canary-foreground-alert: var(--canary-amber-200);
     --canary-foreground-success: var(--canary-green-200);
-    --canary-foreground-accent: var(--canary-accent-200);
+    --canary-foreground-accent: var(--canary-blue-60);
 
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-black);

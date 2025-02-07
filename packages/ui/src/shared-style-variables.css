@@ -48,7 +48,7 @@
   --canary-base-chrome-white: 0 0% 100%;
   --canary-base-chrome-50: 240 20% 99%;
   --canary-base-chrome-100: 240 28% 95.1%;
-  --canary-base-chrome-150: 240 29.4% 90%;
+  --canary-base-chrome-150: 240 29.4% 88%;
   --canary-base-chrome-200: 240 13% 82%;
   --canary-base-chrome-400: 240 8.9% 66.9%;
   --canary-base-chrome-300: 240 12.9% 80.2%;
@@ -554,7 +554,7 @@
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-150);
     --canary-border-02: var(--canary-base-chrome-150);
-    --canary-border-03: var(--canary-base-chrome-300);
+    --canary-border-03: var(--canary-base-chrome-600);
     --canary-border-04: var(--canary-base-chrome-150);
     --canary-border-05: var(--canary-base-chrome-150);
     --canary-border-06: var(--canary-base-chrome-600);
@@ -806,7 +806,7 @@
     /* Borders */
     --canary-border-01: var(--canary-base-chrome-150);
     --canary-border-02: var(--canary-base-chrome-150);
-    --canary-border-03: var(--canary-base-chrome-300);
+    --canary-border-03: var(--canary-base-chrome-600);
     --canary-border-04: var(--canary-base-chrome-150);
     --canary-border-05: var(--canary-base-chrome-150);
     --canary-border-06: var(--canary-base-chrome-600);

@@ -55,7 +55,7 @@ export function StepNode(props: StepNodeProps) {
           role="button"
           tabIndex={0}
           className={cn(
-            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-background-8 cursor-pointer px-2.5 pt-2.5 pb-3 shadow-1',
+            'flex flex-col justify-end gap-y-2 box size-full rounded-md border bg-graph-gradient-1 cursor-pointer px-2.5 pt-2.5 pb-3 shadow-1',
             {
               'border-borders-2': !selected,
               'border-borders-3': selected,
@@ -67,7 +67,6 @@ export function StepNode(props: StepNodeProps) {
           )}
           onClick={onClick}
         >
-          <div className="bg-graph-gradient-1 pointer-events-none absolute left-0 top-0 size-full" />
           {onEllipsisClick && (
             <Button
               className="absolute right-2 top-2"

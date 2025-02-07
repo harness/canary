@@ -74,7 +74,7 @@ const PipelineStudioWrapper = () => {
 
   return (
     <div // eslint-disable-line jsx-a11y/no-static-element-interactions
-      className="flex h-screen flex-col"
+      className="bg-graph-bg-gradient bg-graph-bg-size flex h-screen flex-col"
       onClick={() => {
         setSelectedPath(undefined)
       }}

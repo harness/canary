@@ -1,3 +1,5 @@
+import { getNestedStepsCount } from '@subjects/views/pipeline-edit/utils/common-step-utils'
+
 import { ParallelNodeInternalType } from '@harnessio/pipeline-graph'
 import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
@@ -39,16 +41,15 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
   } = props
 
   const nodeData = node.data
-
-  // console.log(name)
+  const counter = getNestedStepsCount(node.children)
 
   return (
     <>
       <ExecutionStatus nodeData={nodeData} />
 
       <div
-        className={cn('absolute inset-0 -z-10 border-dashed rounded-md border', {
-          'border-borders-2': !selected,
+        className={cn('absolute inset-0 -z-10 rounded-md border bg-background-1', {
+          'border-borders-4': !selected,
           'border-borders-3': selected
         })}
       />
@@ -58,10 +59,10 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
           role="button"
           tabIndex={0}
           title={name}
-          className="text-primary-muted h-10 cursor-pointer truncate px-9 pt-2.5"
+          className="text-foreground-3 text-14 h-10 cursor-pointer truncate px-9 pt-2.5 font-medium leading-snug"
           onClick={onHeaderClick}
         >
-          {name}
+          {name} <span className="text-foreground-5">({counter})</span>
         </div>
       </div>
 
@@ -94,6 +95,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
           onClick={e => {
             onAddClick?.('before', e)
           }}
+          collapsed={collapsed}
         />
       )}
       <FloatingAddButton
@@ -102,6 +104,7 @@ export function ParallelGroupNode(props: ParallelGroupNodeProps) {
         onClick={e => {
           onAddClick?.('after', e)
         }}
+        collapsed={collapsed}
       />
       {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'parallel'} /> : children}
     </>

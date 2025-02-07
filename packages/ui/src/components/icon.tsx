@@ -168,6 +168,7 @@ import Sparks from '../icons/sparks.svg'
 import SshKey from '../icons/ssh-key.svg'
 import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
+import Stop from '../icons/stop-icon.svg'
 import SubMenuEllipse from '../icons/sub-menu-ellipse.svg'
 import Success from '../icons/success.svg'
 import Suggestion from '../icons/suggestion.svg'
@@ -383,7 +384,8 @@ const IconNameMap = {
   arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
-  'checkbox-circle': CheckboxCircle
+  'checkbox-circle': CheckboxCircle,
+  stop: Stop
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

@@ -72,7 +72,6 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
       if (view === 'payload') {
         setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
       } else if (view === 'server-response') {
-        console.log('execution.response?.body', execution.response?.body)
         setCodeEditorContent({ code: formatHtml(execution.response?.body ?? '') })
       }
     }

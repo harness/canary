@@ -72,7 +72,7 @@ const FilterBoxWrapper = ({
           </div>
         </div>
 
-        <div>{children}</div>
+        <section id="dropdown-filter-field">{children}</section>
       </DropdownMenu.Content>
     </DropdownMenu.Root>
   )

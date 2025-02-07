@@ -2,6 +2,7 @@ import { ReactNode } from 'react'
 
 import { Command } from '@components/command'
 import { Icon } from '@components/icon'
+import { debounce } from 'lodash-es'
 
 interface ComboBoxProps {
   options: Array<{ label: string; value: string }>
@@ -20,13 +21,14 @@ export default function ComboBox({
   placeholder,
   noResultsMessage
 }: ComboBoxProps) {
+  const debouncedSearch = onSearch ? debounce(onSearch, 400) : undefined
   return (
     <Command.Root shouldFilter={false}>
       <Command.Input
         placeholder={placeholder}
         className="h-9"
         autoFocus
-        onInput={e => onSearch?.((e.target as HTMLInputElement).value)}
+        onInput={e => debouncedSearch?.(e.currentTarget.value)}
       />
       <Command.List>
         {options.length === 0 && <Command.Empty>{noResultsMessage}</Command.Empty>}

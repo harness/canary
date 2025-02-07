@@ -101,9 +101,7 @@ export const Summary = ({
                     }
                     size={16}
                   />
-                  <span color="primary" className="w-44 truncate">
-                    {file.name}
-                  </span>
+                  <span className="w-44 truncate text-foreground-1">{file.name}</span>
                 </div>
               </TableCell>
               <TableCell>

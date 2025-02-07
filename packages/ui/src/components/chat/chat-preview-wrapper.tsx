@@ -21,6 +21,7 @@ export const ChatPreviewWrapper: FC = () => {
   return (
     <div className="h-[calc(100vh-100px)] border-r border-borders-4">
       <Chat.Root>
+        <Chat.Header onClose={() => {}} />
         <Chat.Body>
           <Chat.Message>
             Hey Olivia! I&#39;ve finished with the requirements doc! I made some notes in the gdoc as well for Phoenix

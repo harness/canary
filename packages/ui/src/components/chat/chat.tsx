@@ -4,22 +4,23 @@ import { Button, Icon, Input } from '@/components'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
-const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+  return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
+}
+
+const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="flex size-full max-w-[460px] flex-col bg-background-1">
-      <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
-        <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
-        <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2">
-          <Icon name="close" size={16} />
-          <span className="sr-only">Close</span>
-        </Button>
-      </div>
-      {children}
+    <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
+      <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
+      <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
+        <Icon name="close" size={16} />
+        <span className="sr-only">Close</span>
+      </Button>
     </div>
   )
 }
 
-const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-2">
       {children}
@@ -27,7 +28,7 @@ const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) 
   )
 }
 
-const Footer: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return <div className="sticky bottom-0 bg-background-1 px-6 py-3">{children}</div>
 }
 
@@ -64,7 +65,7 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   )
 }
 
-const CodeBlock: FC<{ className?: string }> = ({ children, className }) => {
+const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
   return (
     <code
       className={cn(
@@ -194,6 +195,7 @@ const InputField: FC<InputFieldProps> = ({
 export const Chat = {
   Root,
   Body,
+  Header,
   Footer,
   Message,
   Typing,

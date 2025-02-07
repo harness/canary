@@ -29,6 +29,23 @@ export const yamlString2Nodes = (
   return yaml2Nodes(yamlJson, options)
 }
 
+export const processGithubJobsToStages = (yamlJson: Record<string, any>) => {
+  if (yamlJson.jobs) {
+    yamlJson.pipeline = yamlJson.pipeline || {}
+    yamlJson.pipeline.stages = yamlJson.pipeline.stages || []
+
+    Object.entries(yamlJson.jobs).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        yamlJson.pipeline.stages.push({ ...value, id: key, name: key })
+      }
+    })
+
+    delete yamlJson.jobs
+    return yamlJson
+  }
+  return yamlJson
+}
+
 export const yaml2Nodes = (
   yamlObject: Record<string, any>,
   options: {
@@ -37,8 +54,8 @@ export const yaml2Nodes = (
   } = {}
 ): AnyContainerNodeType[] => {
   const nodes: AnyContainerNodeType[] = []
-
-  const stages = yamlObject?.pipeline?.stages ?? []
+  const processedYamlObject = processGithubJobsToStages(yamlObject)
+  const stages = processedYamlObject?.pipeline?.stages ?? []
 
   if (stages) {
     const stagesNodes = processStages(stages, 'pipeline.stages', options)

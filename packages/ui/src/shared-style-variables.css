@@ -49,7 +49,6 @@
   --canary-base-chrome-50: 240 20% 99%;
   --canary-base-chrome-100: 240 28% 95.1%;
   --canary-base-chrome-150: 240 29.4% 88%;
-  --canary-base-chrome-150: 240 29.4% 88%;
   --canary-base-chrome-200: 240 13% 82%;
   --canary-base-chrome-400: 240 8.9% 66.9%;
   --canary-base-chrome-300: 240 12.9% 80.2%;
@@ -57,7 +56,6 @@
   --canary-base-chrome-600: 244.3 6.4% 43.1%;
   --canary-base-chrome-700: 240 8.2% 38%;
   --canary-base-chrome-800: 240 7.8% 27.6%;
-  --canary-base-chrome-850: 240 8% 18%;
   --canary-base-chrome-850: 240 8% 18%;
   --canary-base-chrome-900: 240 6.4% 9.2%;
   --canary-base-chrome-950: 240 8.1% 7.3%;
@@ -81,7 +79,6 @@
   --canary-green-200: 137.7 62.8% 64.1%;
   --canary-green-300: 139.8 56.5% 54.9%;
   --canary-green-400: 145.5 75.5% 38.4%;
-  --canary-green-400: 145.5 75.5% 38.4%;
   --canary-green-600: 146.7 87.5% 28.2%;
   --canary-green-700: 142.7 64.3% 27.5%;
   --canary-green-850: 136.2 39.8% 18.2%;
@@ -90,10 +87,8 @@
   --canary-red-50: 11.2 80% 96.1%;
   --canary-red-100: 9.4 100% 93.7%;
   --canary-red-150: 9.3 93.5% 87.8%;
-  --canary-red-150: 9.3 93.5% 87.8%;
   --canary-red-200: 7.8 100% 74.3%;
   --canary-red-300: 6.4 100% 68.8%;
-  --canary-red-400: 4.7 69.7% 53.3%;
   --canary-red-400: 4.7 69.7% 53.3%;
   --canary-red-500: 4.5 66.5% 46.9%;
   --canary-red-600: 4.3 67.5% 41%;
@@ -136,8 +131,8 @@
   --canary-yellow-150: 34.2 100% 83.1%;
   --canary-yellow-200: 37.4 98.8% 68.4%;
   --canary-yellow-300: 38.3 80.9% 59%;
-  --canary-yellow-500: 39.9 67.5% 45.9%;
   --canary-yellow-400: 39.8 67.9% 51.2%;
+  --canary-yellow-500: 39.9 67.5% 45.9%;
   --canary-yellow-600: 39.7 59.6% 42.7%;
   --canary-yellow-700: 40 62.9% 32.7%;
   --canary-yellow-850: 38.7 44.4% 21.2%;
@@ -159,7 +154,6 @@
   --canary-indigo-300: 229.2 100% 76.1%;
   --canary-indigo-400: 229.2 100% 76.1%;
   --canary-indigo-500: 231.1 75% 57.6%;
-  --canary-indigo-400: 229.2 100% 76.1%;
   --canary-indigo-600: 231.9 59.2% 51%;
   --canary-indigo-700: 230.2 54.5% 43.9%;
   --canary-indigo-800: 229 52.1% 32.7%;

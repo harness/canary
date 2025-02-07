@@ -29,29 +29,60 @@ export const getFormattedDuration = (startTs = 0, endTs = 0): string => {
  * Formats duration in milliseconds to human-readable duration format.
  * For 3723000 is formatted as "1h 2m 3s".
  * @param durationInMs
+ * @param unit
  * @returns
  */
-export const formatDuration = (durationInMs: number): string => {
-  if (!durationInMs) return '0s'
-  const seconds = Math.floor(durationInMs / 1000)
-  const minutes = Math.floor(seconds / 60)
-  const hours = Math.floor(minutes / 60)
+// export const formatDuration = (durationInMs: number): string => {
+//   if (!durationInMs) return '0s'
+//   const seconds = Math.floor(durationInMs / 1000)
+//   const minutes = Math.floor(seconds / 60)
+//   const hours = Math.floor(minutes / 60)
 
-  const remainingSeconds = seconds % 60
-  const remainingMinutes = minutes % 60
+//   const remainingSeconds = seconds % 60
+//   const remainingMinutes = minutes % 60
+//   const formatted = []
+
+//   if (hours > 0) {
+//     formatted.push(new Intl.NumberFormat().format(hours) + 'h')
+//   }
+//   if (remainingMinutes > 0) {
+//     formatted.push(new Intl.NumberFormat().format(remainingMinutes) + 'm')
+//   }
+//   if (remainingSeconds > 0) {
+//     formatted.push(new Intl.NumberFormat().format(remainingSeconds) + 's')
+//   }
+
+//   return formatted.join(' ')
+// }
+
+export const formatDuration = (duration: number, unit: 'ms' | 'ns' = 'ms'): string => {
+  if (!duration) return '0s'
+
+  let totalSeconds: number
+  let remainingMs = 0
+
+  if (unit === 'ms') {
+    totalSeconds = Math.floor(duration / 1000)
+    if (totalSeconds === 0) remainingMs = duration
+  } else {
+    totalSeconds = Math.floor(duration / 1e9)
+    if (totalSeconds === 0) remainingMs = (duration % 1e9) / 1e6
+  }
+
+  if (totalSeconds === 0) {
+    return remainingMs > 0 ? new Intl.NumberFormat().format(remainingMs) + 'ms' : '0s'
+  }
+
+  const hours = Math.floor(totalSeconds / 3600)
+  const remainingMinutes = Math.floor((totalSeconds % 3600) / 60)
+  const remainingSeconds = totalSeconds % 60
+
   const formatted = []
+  if (hours > 0) formatted.push(new Intl.NumberFormat().format(hours) + 'h')
+  if (remainingMinutes > 0) formatted.push(new Intl.NumberFormat().format(remainingMinutes) + 'm')
+  if (remainingSeconds > 0) formatted.push(new Intl.NumberFormat().format(remainingSeconds) + 's')
 
-  if (hours > 0) {
-    formatted.push(new Intl.NumberFormat().format(hours) + 'h')
-  }
-  if (remainingMinutes > 0) {
-    formatted.push(new Intl.NumberFormat().format(remainingMinutes) + 'm')
-  }
-  if (remainingSeconds > 0) {
-    formatted.push(new Intl.NumberFormat().format(remainingSeconds) + 's')
-  }
-
-  return formatted.join(' ')
+  return formatted.join(' ') || '0s'
 }
 
 /**

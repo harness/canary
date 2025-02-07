@@ -110,34 +110,3 @@ export function formatNumber(num: number | bigint): string {
 export interface Violation {
   violation: string
 }
-
-/**
- * Convert nanoseconds to simple human-readable format
- * @example
- * formatNs(416_328_583) // "416ms"
- * formatNs(1_234_567_890) // "1s 234ms"
- * formatNs(90_000_000_000) // "1m 30s"
- */
-export function formatNs(nanoseconds: number): string {
-  if (!nanoseconds || nanoseconds < 0) return '0s'
-
-  const seconds = nanoseconds / 1_000_000_000
-  const duration = intervalToDuration({
-    start: 0,
-    end: Math.round(seconds * 1000) // Convert to milliseconds
-  })
-
-  const parts: string[] = []
-  if (duration.days) parts.push(`${duration.days}d`)
-  if (duration.hours) parts.push(`${duration.hours}h`)
-  if (duration.minutes) parts.push(`${duration.minutes}m`)
-  if (duration.seconds) parts.push(`${duration.seconds}s`)
-
-  // Show milliseconds for durations under 1 minute
-  if (seconds < 60) {
-    const ms = Math.round((nanoseconds % 1_000_000_000) / 1_000_000)
-    if (ms > 0) parts.push(`${ms}ms`)
-  }
-
-  return parts.join(' ') || '0s'
-}

@@ -2,7 +2,8 @@ import { FC, useEffect, useMemo, useState } from 'react'
 
 import { Badge, Button, ListActions, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
-import { formatNs, timeAgo } from '@utils/utils'
+import { formatDuration } from '@utils/TimeUtils'
+import { timeAgo } from '@utils/utils'
 import { IThemeStore } from 'dist/components'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
@@ -61,7 +62,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
     try {
       const parser = new DOMParser()
       const doc = parser.parseFromString(htmlString, 'text/html')
-      return doc.documentElement.outerHTML.replace(/></g, '>\n<') // Adds newlines for better readability
+      return doc.documentElement.outerHTML.replace(/></g, '>\n<')
     } catch (error) {
       return htmlString
     }
@@ -132,7 +133,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
           </div>
           <div className="flex gap-1">
             <Text color="foreground-5">Duration:</Text>
-            <Text>{formatNs(execution?.duration ?? 0)}</Text>
+            <Text>{formatDuration(execution?.duration ?? 0, 'ns')}</Text>
           </div>
         </div>
         <Spacer size={6} />

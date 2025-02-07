@@ -42,10 +42,23 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
   const execution = useMemo(() => {
     return executions?.find(e => e.id === executionId)
   }, [executions, executionId])
+  const unescapeAndEscapeToJson = (escapedString: string) => {
+    try {
+      //  Unescape the string by parsing it
+      const unescapedValue = JSON.parse(escapedString)
+
+      //  Escape the unescaped value back into a JSON string
+      const escapedJson = JSON.stringify(unescapedValue, null, 4)
+
+      return escapedJson
+    } catch (error) {
+      return ''
+    }
+  }
 
   useEffect(() => {
     if (execution) {
-      setCodeEditorContent({ code: execution.request?.body ?? '' })
+      setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
     }
   }, [execution])
 

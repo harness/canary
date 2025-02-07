@@ -20,7 +20,11 @@ export const ExecutionLogsView = () => {
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | undefined | null>(null)
 
   const { updatedElements, currentNode } = useAnimateTree({ nodes: elements, logs, delay: 5 }) // animates the execution tree
-  const { logs: streamedLogs } = useLogs({ logs, isStreaming: true, delay: 2 }) // animates the logs
+  const { logs: streamedLogs } = useLogs({
+    logs: currentNode?.status === ExecutionState.PENDING ? [] : logs,
+    isStreaming: true,
+    delay: 2
+  }) // animates the logs
 
   const useLogsStore = useCallback(
     (): ILogsStore => ({

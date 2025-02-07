@@ -54,8 +54,8 @@ export interface LivelogLine {
 }
 
 export interface NodeSelectionProps {
-  parentNode: TreeViewElement | null | undefined
-  childNode: TreeViewElement | null | undefined
+  parentNode?: TreeViewElement
+  childNode?: TreeViewElement
 }
 
 export interface ExecutionTreeProps {

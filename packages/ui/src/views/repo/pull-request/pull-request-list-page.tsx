@@ -282,4 +282,4 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     </PRListFilterHandler>
   )
 }
-export { PullRequestList, PRListFilters }
+export { PullRequestList }

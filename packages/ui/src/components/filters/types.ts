@@ -1,4 +1,4 @@
-import { Parser } from "@harnessio/filters"
+import { Parser } from '@harnessio/filters'
 
 type FilterActionKind = 'filter' | 'sort'
 
@@ -156,7 +156,7 @@ export enum FilterFieldTypes {
   Calendar = 'calendar',
   Text = 'text',
   Number = 'number',
-  ComboBox = 'combobox',
+  ComboBox = 'combobox'
 }
 
 interface FilterField<T = string | number> {
@@ -192,7 +192,11 @@ interface NumberFilterOptionConfig extends FilterOptionConfigBase {
   type: FilterFieldTypes.Number
 }
 
-type FilterOptionConfig = ComboBoxFilterOptionConfig | CalendarFilterOptionConfig | TextFilterOptionConfig | NumberFilterOptionConfig
+type FilterOptionConfig =
+  | ComboBoxFilterOptionConfig
+  | CalendarFilterOptionConfig
+  | TextFilterOptionConfig
+  | NumberFilterOptionConfig
 
 type FilterValueTypes = string | number | unknown
 

@@ -106,10 +106,14 @@ const dateParser: Parser<Date> = {
 interface PRListFilterOptions {
   t: TFunction
   onAuthorSearch: (name: string) => void
-  principalData: {label: string, value: string}[] 
+  principalData: { label: string; value: string }[]
 }
 
-export const getPRListFilterOptions = ({t, onAuthorSearch, principalData}: PRListFilterOptions): FilterOptionConfig[] => [
+export const getPRListFilterOptions = ({
+  t,
+  onAuthorSearch,
+  principalData
+}: PRListFilterOptions): FilterOptionConfig[] => [
   {
     label: t('component:filter.createdBy', 'Created By'),
     value: 'created_by',

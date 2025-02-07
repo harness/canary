@@ -31,18 +31,6 @@ export const useLogs = ({
   const currentIndexRef = useRef(0)
 
   useEffect(() => {
-    if (logs.length === 0) {
-      if (logLines.length !== 0) {
-        setLogLines([]) // Only update if not already empty
-      }
-      currentIndexRef.current = 0
-      if (intervalId) {
-        clearInterval(intervalId)
-        setIntervalId(null)
-      }
-      return
-    }
-
     if (!isStreaming) {
       if (logLines.length !== logs.length) {
         setLogLines(logs) // Only update if logs actually changed
@@ -71,7 +59,9 @@ export const useLogs = ({
 
     setIntervalId(interval)
 
-    return () => clearInterval(interval)
+    return () => {
+      clearInterval(interval)
+    }
   }, [isStreaming, logs, delay])
 
   return { logs: logLines, timerId: intervalId }

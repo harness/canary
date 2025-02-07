@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useState } from 'react'
 
+import { useAnimateTree } from '@/hooks/useAnimateTree'
 import { useLogs } from '@/hooks/useLogs'
-import { TreeNode, useTree } from '@/hooks/useTree'
 
+import { TreeViewElement } from '@harnessio/ui/components'
 import {
   ExecutionHeader,
   ExecutionInfo,
@@ -10,44 +11,23 @@ import {
   ExecutionTabs,
   ExecutionTree,
   ILogsStore,
-  LivelogLine,
   NodeSelectionProps
 } from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [currentStep, setCurrentStep] = useState<TreeNode>(null)
-  const { nodes: updatedElements, currentChild } = useTree({ nodes: elements, delay: 5 })
+  const [_, setCurrentStep] = useState<TreeViewElement | undefined | null>(null)
 
-  const memoizedLogs = useMemo((): LivelogLine[] => {
-    if (!currentStep || currentStep?.status === ExecutionState.PENDING) return []
-    return logs
-  }, [currentStep, logs])
-
-  const { logs: currentLogs, timerId: animateLogsTimerId } = useLogs({
-    logs: memoizedLogs,
-    isStreaming: currentStep?.status === ExecutionState.RUNNING
-  })
+  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements, logs, delay: 2 }) // animates the execution tree
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: true }) // animates the logs
 
   const useLogsStore = useCallback(
     (): ILogsStore => ({
-      logs: currentLogs
+      logs: streamedLogs
     }),
-    [currentLogs]
+    [streamedLogs]
   )
-
-  useEffect(() => {
-    setCurrentStep(currentChild)
-  }, [currentChild])
-
-  const resetLogAnimation = useCallback((): void => {
-    if (animateLogsTimerId) clearInterval(animateLogsTimerId)
-  }, [animateLogsTimerId])
-
-  useEffect(() => {
-    resetLogAnimation()
-  }, [currentChild])
 
   return (
     <div className="flex h-full flex-col">
@@ -71,7 +51,7 @@ export const ExecutionLogsView = () => {
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
           <ExecutionTree
-            defaultSelectedId={currentStep?.id ?? elements[0]?.children?.[0]?.id ?? ''}
+            defaultSelectedId={currentNode?.id ?? elements[0].id}
             elements={updatedElements}
             onSelectNode={(selectedNode: NodeSelectionProps) => {
               setCurrentStep(selectedNode?.childNode)

@@ -54,7 +54,7 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
               <TableRow key={key.identifier}>
                 <TableCell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
-                    <Icon name="ssh-key" size={32} className="bg-background-8 text-foreground-2 rounded-md" />
+                    <Icon name="ssh-key" size={32} className="rounded-md bg-background-8 text-foreground-2" />
                     <div className="flex flex-col">
                       <span className="block w-[200px] truncate font-medium text-foreground-1">{key.identifier}</span>
                       <span className="w-[200px] truncate text-12 text-foreground-3">{key.fingerprint}</span>

@@ -1,3 +1,5 @@
+import { getNestedStepsCount } from '@subjects/views/pipeline-edit/utils/common-step-utils'
+
 import { LeafNodeInternalType, ParallelNodeInternalType, SerialNodeInternalType } from '@harnessio/pipeline-graph'
 import { cn } from '@harnessio/ui/views'
 
@@ -5,8 +7,6 @@ import { PipelineNodes } from '..'
 import { CustomParallelStepGroupContentNodeDataType } from '../../nodes/custom-parallel-step-group-content-node'
 import { CustomSerialStepGroupContentNodeDataType } from '../../nodes/custom-serial-step-group-content-node'
 import { StepNodeDataType } from '../../nodes/custom-step-node'
-
-export type ExecutionStatusAlign = 'left' | 'right'
 
 export function CollapsedGroupNode({
   node,
@@ -26,6 +26,10 @@ export function CollapsedGroupNode({
   const zIndexProp = ['-1', '-2']
 
   const firstNode = nodesToShow.shift()
+  const counter =
+    !!firstNode && 'children' in firstNode && Array.isArray(firstNode.children)
+      ? getNestedStepsCount(firstNode?.children)
+      : undefined
 
   return (
     <>
@@ -42,6 +46,8 @@ export function CollapsedGroupNode({
           node={firstNode as LeafNodeInternalType<StepNodeDataType>}
           icon={firstNode?.data?.icon}
           name={firstNode?.data?.name}
+          counter={counter}
+          isCollapsedNode
         />
 
         {/* other nodes without content*/}

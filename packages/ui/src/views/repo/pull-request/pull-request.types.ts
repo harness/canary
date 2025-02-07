@@ -79,7 +79,7 @@ export interface RepoRepositoryOutput {
   updated?: number
 }
 
-export type EnumRepoState = number
+export type EnumRepoState = number | null
 
 export interface TypesDiffStats {
   additions?: number | null

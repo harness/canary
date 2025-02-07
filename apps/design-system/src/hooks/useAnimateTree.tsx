@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
 
 import { TreeViewElement } from '@harnessio/ui/components'
-import { ExecutionState, LivelogLine } from '@harnessio/ui/views'
+import { ExecutionState } from '@harnessio/ui/views'
 
 interface UseAnimateTreeProps {
-  nodes: TreeViewElement[]
-  logs: LivelogLine[]
+  elements: TreeViewElement[]
   delay?: number
 }
 
@@ -14,8 +13,8 @@ interface UseAnimatePipelineReturnType {
   updatedElements: TreeViewElement[]
 }
 
-export const useAnimateTree = ({ nodes, logs, delay = 15 }: UseAnimateTreeProps): UseAnimatePipelineReturnType => {
-  const [updatedNodes, setUpdatedNodes] = useState<TreeViewElement[]>(nodes)
+export const useAnimateTree = ({ elements, delay = 15 }: UseAnimateTreeProps): UseAnimatePipelineReturnType => {
+  const [updatedElements, setUpdatedElements] = useState<TreeViewElement[]>(elements)
   const [currentNode, setCurrentNode] = useState<TreeViewElement | null>(null)
 
   useEffect(() => {
@@ -33,6 +32,7 @@ export const useAnimateTree = ({ nodes, logs, delay = 15 }: UseAnimateTreeProps)
       const updatedChildren =
         parentNode.children?.map((child, index) => {
           if (index === currentChildIndex) {
+            setCurrentNode(child) // Set the running child as currentNode
             return { ...child, status: ExecutionState.RUNNING }
           }
 
@@ -51,7 +51,7 @@ export const useAnimateTree = ({ nodes, logs, delay = 15 }: UseAnimateTreeProps)
         status: allChildrenSuccess ? ExecutionState.SUCCESS : parentNode.status
       }
 
-      setUpdatedNodes(prevState => {
+      setUpdatedElements(prevState => {
         const newNodes = [...prevState]
         newNodes[currentParentIndex] = updatedParentNode
         return newNodes
@@ -61,8 +61,8 @@ export const useAnimateTree = ({ nodes, logs, delay = 15 }: UseAnimateTreeProps)
     }
 
     const intervalId = setInterval(() => {
-      if (currentParentIndex < nodes.length) {
-        const parentNode = nodes[currentParentIndex]
+      if (currentParentIndex < elements.length) {
+        const parentNode = elements[currentParentIndex]
 
         // Mark parent as RUNNING when processing starts or after its children are processed
         if (parentNode.status !== ExecutionState.RUNNING && currentChildIndex === 0) {
@@ -76,25 +76,27 @@ export const useAnimateTree = ({ nodes, logs, delay = 15 }: UseAnimateTreeProps)
             currentChildIndex++
           } else {
             currentChildIndex = 0
+            parentNode.status = ExecutionState.SUCCESS // Mark parent as SUCCESS when all children are done
             currentParentIndex++
-            if (currentParentIndex < nodes.length) {
-              markParentRunning(nodes[currentParentIndex])
+            if (currentParentIndex < elements.length) {
+              markParentRunning(elements[currentParentIndex])
             }
           }
         } else {
+          parentNode.status = ExecutionState.SUCCESS // Mark parent as SUCCESS if it has no children
           currentParentIndex++
-          if (currentParentIndex < nodes.length) {
-            markParentRunning(nodes[currentParentIndex])
+          if (currentParentIndex < elements.length) {
+            markParentRunning(elements[currentParentIndex])
           }
         }
       }
     }, delay * 1000) // Adjust interval based on desired speed
 
     return () => clearInterval(intervalId) // Cleanup on component unmount
-  }, [nodes, logs]) // Added currentLogsMap to dependencies
+  }, [elements])
 
   return {
     currentNode,
-    updatedElements: updatedNodes
+    updatedElements: updatedElements
   }
 }

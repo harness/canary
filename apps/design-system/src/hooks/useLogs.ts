@@ -19,7 +19,7 @@ interface UseLogsProps {
  * @returns timerId - ID of the interval timer to manually stop the auto-scrolling
  */
 export const useLogs = ({
-  logs,
+  logs = [],
   delay = 1,
   isStreaming = false,
   defaultLogLines = 1

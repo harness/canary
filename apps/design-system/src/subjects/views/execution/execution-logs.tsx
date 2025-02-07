@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useAnimateTree } from '@/hooks/useAnimateTree'
 import { useLogs } from '@/hooks/useLogs'
@@ -11,20 +11,48 @@ import {
   ExecutionTabs,
   ExecutionTree,
   ILogsStore,
+  LivelogLine,
   NodeSelectionProps
 } from '@harnessio/ui/views'
 
-import { elements, logs, stages } from './mocks/mock-data'
+import { elements, logsBank, stages } from './mocks/mock-data'
+
+const getLogsForCurrentNode = (currentNode: TreeViewElement | null | undefined): LivelogLine[] => {
+  const logKey = currentNode?.id ?? ''
+  const logs = logKey ? logsBank[logKey] : []
+  return logs
+}
 
 export const ExecutionLogsView = () => {
+  const [shouldStream, setShouldStream] = useState(false)
+  const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | undefined | null>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements, logs, delay: 5 }) // animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements }) // animates the execution tree
+
+  useEffect(() => {
+    setShouldStream(true)
+    setLogs(getLogsForCurrentNode(currentNode))
+  }, [currentNode?.id])
+
+  useEffect(() => {
+    if (selectedStep?.status === ExecutionState.PENDING) {
+      setLogs([])
+    } else if (selectedStep?.status === ExecutionState.RUNNING) {
+      setShouldStream(true)
+      setLogs(getLogsForCurrentNode(selectedStep))
+    } else if (selectedStep?.status === ExecutionState.SUCCESS) {
+      setShouldStream(false)
+      setLogs(getLogsForCurrentNode(selectedStep))
+    }
+    // if (intervalId) clearInterval(intervalId)
+  }, [selectedStep])
+
+  // animates the logs
   const { logs: streamedLogs } = useLogs({
-    logs: currentNode?.status === ExecutionState.PENDING ? [] : logs,
-    isStreaming: true,
-    delay: 2
-  }) // animates the logs
+    logs,
+    isStreaming: shouldStream
+  })
 
   const useLogsStore = useCallback(
     (): ILogsStore => ({

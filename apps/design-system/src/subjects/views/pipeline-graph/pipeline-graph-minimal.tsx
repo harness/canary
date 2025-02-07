@@ -221,7 +221,7 @@ const data: AnyContainerNodeType[] = [
 const PipelineGraphMinimalWrapper = () => {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+      <PipelineGraph data={data} nodes={nodes} />
     </CanvasProvider>
   )
 }

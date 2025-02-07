@@ -289,7 +289,7 @@ const PipelineGraphWrapper = () => {
   return (
     <>
       <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+        <PipelineGraph data={data} nodes={nodes} />
       </CanvasProvider>
       <PipelineStudioFooter
         problems={{ error: 0, warning: 3, info: 2 }}

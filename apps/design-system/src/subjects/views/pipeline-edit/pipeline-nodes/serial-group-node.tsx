@@ -20,6 +20,8 @@ export interface SerialGroupNodeProps {
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
   node: SerialNodeInternalType<CustomSerialStepGroupContentNodeDataType>
+  hideContextMenu?: boolean
+  hideFloatingButtons?: boolean
   onEllipsisClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -39,7 +41,9 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
     onHeaderClick,
     onAddClick,
     parentNodeType,
-    node
+    node,
+    hideContextMenu,
+    hideFloatingButtons
   } = props
 
   const nodeData = node.data
@@ -59,7 +63,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
 
       <NodeTitle name={name} onHeaderClick={onHeaderClick} counter={counter} />
 
-      <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />
+      {!hideContextMenu && <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />}
 
       {!collapsed && isEmpty && (
         <Button
@@ -73,7 +77,7 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
         </Button>
       )}
 
-      {isFirst && (
+      {!hideFloatingButtons && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
@@ -83,14 +87,16 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
           collapsed={collapsed}
         />
       )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-        collapsed={collapsed}
-      />
+      {!hideFloatingButtons && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+          collapsed={collapsed}
+        />
+      )}
       {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'serial'} /> : children}
     </>
   )

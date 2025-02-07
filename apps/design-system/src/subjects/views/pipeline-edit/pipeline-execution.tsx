@@ -32,7 +32,7 @@ export default PipelineExecution
 
 const PipelineExecutionInner = () => {
   const nodes = useMemo(() => contentNodeFactory.getNodesDefinition(), [contentNodeFactory])
-  const { nodes: animatedNodes } = useAnimatePipeline({ nodes: demoExecutionMock, delay: 5 })
+  const { nodes: animatedNodes } = useAnimatePipeline({ nodes: demoExecutionMock })
 
   return (
     <div className="relative flex  grow">

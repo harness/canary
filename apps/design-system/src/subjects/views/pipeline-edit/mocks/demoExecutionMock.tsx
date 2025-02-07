@@ -4,8 +4,8 @@ export const demoExecutionMock = [
   {
     type: 'Start',
     config: {
-      width: 40,
-      height: 40,
+      width: 36,
+      height: 36,
       hideDeleteButton: true,
       hideBeforeAdd: true,
       hideLeftPort: true
@@ -223,8 +223,8 @@ export const demoExecutionMock = [
   {
     type: 'End',
     config: {
-      width: 40,
-      height: 40,
+      width: 36,
+      height: 36,
       hideDeleteButton: true,
       hideAfterAdd: true,
       hideRightPort: true

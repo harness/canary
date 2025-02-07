@@ -17,11 +17,11 @@ import {
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [currentStep, setCurrentStep] = useState<TreeViewElement | null>(null)
+  const [currentStep, setCurrentStep] = useState<TreeViewElement | null | undefined>(null)
   const { nodes: updatedElements, currentParent, currentChild } = useTree(elements)
 
   const { logs: currentLogs, timerId } = useLogs({
-    logs,
+    logs: currentStep ? (currentStep?.status === ExecutionState.PENDING ? [] : logs) : [],
     isStreaming: currentStep?.status === ExecutionState.RUNNING
   })
 
@@ -64,7 +64,7 @@ export const ExecutionLogsView = () => {
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
           <ExecutionTree
-            defaultSelectedId={currentChild ? currentChild.id : elements[0]?.children?.[0]?.id}
+            defaultSelectedId={currentStep?.id ?? elements[0]?.children?.[0]?.id ?? ''}
             elements={updatedElements}
             onSelectNode={(selectedNode: NodeSelectionProps) => {
               setCurrentStep(selectedNode?.childNode)

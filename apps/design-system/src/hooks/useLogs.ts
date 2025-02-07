@@ -20,9 +20,9 @@ interface UseLogsProps {
  */
 export const useLogs = ({
   logs,
-  delay = 2,
+  delay = 1,
   isStreaming = false,
-  defaultLogLines = 3
+  defaultLogLines = 1
 }: UseLogsProps): { logs: LivelogLine[]; timerId: number | null } => {
   const [logLines, setLogLines] = useState<LivelogLine[]>([])
   const [intervalId, setIntervalId] = useState<number | null>(null)
@@ -31,10 +31,23 @@ export const useLogs = ({
   const currentIndexRef = useRef(0)
 
   useEffect(() => {
-    // Handle case when streaming is off, return all logs
+    if (logs.length === 0) {
+      if (logLines.length !== 0) {
+        setLogLines([]) // Only update if not already empty
+      }
+      currentIndexRef.current = 0
+      if (intervalId) {
+        clearInterval(intervalId)
+        setIntervalId(null)
+      }
+      return
+    }
+
     if (!isStreaming) {
-      setLogLines(logs) // Set all logs when streaming is false
-      currentIndexRef.current = logs.length // Make sure currentIndex points to the end
+      if (logLines.length !== logs.length) {
+        setLogLines(logs) // Only update if logs actually changed
+      }
+      currentIndexRef.current = logs.length
       if (intervalId) {
         clearInterval(intervalId)
         setIntervalId(null)
@@ -45,7 +58,6 @@ export const useLogs = ({
     setLogLines(logs.slice(0, defaultLogLines))
     currentIndexRef.current = defaultLogLines
 
-    // Start a new interval to stream logs
     const interval = setInterval(() => {
       if (currentIndexRef.current >= logs.length) {
         clearInterval(interval)
@@ -54,16 +66,12 @@ export const useLogs = ({
       }
 
       setLogLines(prev => [...prev, logs[currentIndexRef.current]])
-
       currentIndexRef.current += 1
     }, delay * 1000)
 
     setIntervalId(interval)
 
-    // Cleanup on effect cleanup or when isStreaming changes
-    return () => {
-      clearInterval(interval)
-    }
+    return () => clearInterval(interval)
   }, [isStreaming, logs, delay])
 
   return { logs: logLines, timerId: intervalId }

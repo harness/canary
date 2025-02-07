@@ -63,7 +63,7 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
     [query]
   )
 
-  if (!logs || !logs.length) return <Text>No logs found</Text>
+  if (!logs || !logs.length) return null
 
   return (
     <div ref={containerRef} className="max-h-[600px] overflow-y-auto">

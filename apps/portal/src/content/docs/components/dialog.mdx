@@ -3,7 +3,7 @@ title: Dialog
 description: Dialog component documentation
 ---
 
-The Dialog component provides a flexible UI element for displaying overlaid content, often used for dialogs or modals. It is composed of several subcomponents such as Dialog.Header, Dialog.Footer, Dialog.Title, and Dialog.Description to offer a structured and customizable interface.
+The `Dialog` component provides a flexible UI element for displaying overlaid content, often used for dialogs or modals. It is composed of several subcomponents such as Dialog.Header, Dialog.Footer, Dialog.Title, and Dialog.Description to offer a structured and customizable interface.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -83,7 +83,8 @@ The `Root` component serves as the main container for all dialog elements.
   props={[
     {
       name: "children",
-      description: "You can pass in your `Dialog.Trigger` and `Dialog.Content` as children",
+      description:
+        "You can pass in your `Dialog.Trigger` and `Dialog.Content` as children",
       required: true,
       value: "ReactNode",
     },
@@ -101,7 +102,8 @@ The `Root` component serves as the main container for all dialog elements.
     },
     {
       name: "onOpenChange",
-      description: "Callback that fires when the open state of the dialog changes",
+      description:
+        "Callback that fires when the open state of the dialog changes",
       required: false,
       value: "(open: boolean) => void",
     },

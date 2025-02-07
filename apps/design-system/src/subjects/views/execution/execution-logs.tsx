@@ -25,7 +25,7 @@ export const ExecutionLogsView = () => {
     return logs
   }, [currentStep, logs])
 
-  const { logs: currentLogs, timerId } = useLogs({
+  const { logs: currentLogs, timerId: animateLogsTimerId } = useLogs({
     logs: memoizedLogs,
     isStreaming: currentStep?.status === ExecutionState.RUNNING
   })
@@ -41,8 +41,12 @@ export const ExecutionLogsView = () => {
     setCurrentStep(currentChild)
   }, [currentChild])
 
+  const resetLogAnimation = useCallback((): void => {
+    if (animateLogsTimerId) clearInterval(animateLogsTimerId)
+  }, [animateLogsTimerId])
+
   useEffect(() => {
-    if (timerId) clearInterval(timerId)
+    resetLogAnimation()
   }, [currentChild])
 
   return (

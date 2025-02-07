@@ -5,16 +5,18 @@ import { ExecutionState } from '@harnessio/ui/views'
 
 export type TreeNode = TreeViewElement | null | undefined
 
-export const useTree = ({
-  nodes,
-  delay = 15
-}: {
+interface UseTreeReturnType {
   nodes: TreeViewElement[]
-  delay?: number
-}): { nodes: TreeViewElement[]; currentParent: TreeNode; currentChild: TreeNode } => {
+  currentParent: TreeNode
+  currentChild: TreeNode
+  timerId: number | null
+}
+
+export const useTree = ({ nodes, delay = 15 }: { nodes: TreeViewElement[]; delay?: number }): UseTreeReturnType => {
   const [updatedNodes, setUpdatedNodes] = useState<TreeViewElement[]>(nodes)
   const [currentParent, setCurrentParent] = useState<TreeNode>(null)
   const [currentChild, setCurrentChild] = useState<TreeNode>(null)
+  const [intervalId, setIntervalId] = useState<number | null>(null)
 
   useEffect(() => {
     if (nodes.length === 0) return
@@ -104,8 +106,10 @@ export const useTree = ({
       }
     }, delay * 1000) // Convert seconds to milliseconds
 
+    setIntervalId(intervalId)
+
     return () => clearInterval(intervalId) // Cleanup interval on component unmount or re-render
   }, [nodes, delay])
 
-  return { nodes: updatedNodes, currentParent, currentChild }
+  return { nodes: updatedNodes, currentParent, currentChild, timerId: intervalId }
 }

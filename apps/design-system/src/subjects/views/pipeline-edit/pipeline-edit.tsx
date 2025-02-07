@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import { CollapseButton } from '@subjects/views/pipeline-edit/pipeline-nodes/components/collapse-button.tsx'
+
 import { Button, ButtonGroup, Icon } from '@harnessio/ui/components'
 import {
   CommonNodeDataType,
@@ -118,6 +120,7 @@ const PipelineStudioWrapper = () => {
               return { level1: staticPath, level2: '' }
             }}
             portComponent={CustomPort}
+            collapseButtonComponent={CollapseButton}
             edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
             yamlRevision={yamlRevision}
             onYamlRevisionChange={setYamlRevision}

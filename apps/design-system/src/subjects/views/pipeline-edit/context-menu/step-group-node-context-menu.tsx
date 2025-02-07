@@ -33,7 +33,7 @@ export const StepGroupNodeContextMenu = () => {
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key="add-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before')
@@ -43,7 +43,7 @@ export const StepGroupNodeContextMenu = () => {
           <Text wrap="nowrap">Add Step/Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key="add-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after')

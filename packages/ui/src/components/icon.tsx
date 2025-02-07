@@ -52,6 +52,8 @@ import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import CollapseComment from '../icons/collapse-comment.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
+import CollapseIn from '../icons/collapse-in.svg'
+import CollapseOut from '../icons/collapse-out.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
@@ -385,7 +387,9 @@ const IconNameMap = {
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
   'checkbox-circle': CheckboxCircle,
-  stop: Stop
+  stop: Stop,
+  'collapse-out': CollapseOut,
+  'collapse-in': CollapseIn
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

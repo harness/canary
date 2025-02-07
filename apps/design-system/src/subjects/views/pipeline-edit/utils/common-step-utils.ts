@@ -1,4 +1,5 @@
 import { AnyNodeInternal } from '@harnessio/pipeline-graph'
+import { YamlEntityType } from '@harnessio/ui/views'
 
 export const getIsRunStep = (step: Record<string, any>) => typeof step === 'object' && 'run' in step
 
@@ -16,11 +17,13 @@ export const getNestedStepsCount = (children?: AnyNodeInternal[]): number => {
   if (!children) return 0
 
   for (const child of children) {
-    if (child.type === 'Step') {
+    if (child.type === YamlEntityType.Step) {
       count += 1
     }
 
-    count += getNestedStepsCount(child?.children)
+    if ('children' in child && Array.isArray(child.children)) {
+      count += getNestedStepsCount(child.children)
+    }
   }
 
   return count

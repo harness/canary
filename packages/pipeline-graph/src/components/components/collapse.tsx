@@ -1,6 +1,19 @@
-// TODO: move this component outside of library
-export default function CollapseButton(props: { collapsed: boolean; onToggle?: () => void }) {
-  const { collapsed, onToggle } = props
+import {useContainerNodeContext} from "../../context/container-node-provider";
+
+export interface CollapseButtonProps {
+    collapsed: boolean
+    onToggle?: () => void
+}
+
+export default function CollapseButton({
+   collapsed,
+   onToggle,
+}: CollapseButtonProps) {
+  const { collapseButtonComponent } = useContainerNodeContext()
+
+  if (!!collapseButtonComponent) {
+    return collapseButtonComponent({ collapsed, onToggle })
+  }
 
   return (
     <span

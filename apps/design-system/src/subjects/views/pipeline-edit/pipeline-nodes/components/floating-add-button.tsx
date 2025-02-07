@@ -56,7 +56,7 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
   return (
     <div className="group absolute flex size-full items-center justify-center" style={style}>
       <Button
-        className="bg-background-9 hidden w-5 h-5 self-center rounded-full p-0 group-hover:flex"
+        className="bg-background-9 hidden size-5 self-center rounded-full p-0 group-hover:flex"
         style={{
           alignSelf: 'center',
           marginTop: `${buttonMarginTopValue}px`

@@ -1,3 +1,5 @@
+import { NodeMenuTrigger } from '@subjects/views/pipeline-edit/pipeline-nodes/components/node-menu-trigger.tsx'
+import { NodeTitle } from '@subjects/views/pipeline-edit/pipeline-nodes/components/node-title.tsx'
 import { getNestedStepsCount } from '@subjects/views/pipeline-edit/utils/common-step-utils'
 
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
@@ -50,31 +52,14 @@ export function SerialGroupNode(props: SerialGroupNodeProps) {
       <div
         className={cn('absolute inset-0 -z-10 rounded-md border bg-background-1', {
           'border-borders-4': !selected,
-          'border-borders-3': selected
+          'border-borders-3': selected,
+          'bg-background-2 border-borders-2': collapsed
         })}
       />
 
-      <div className="absolute inset-x-0 top-0 h-0">
-        <div
-          role="button"
-          tabIndex={0}
-          title={name}
-          className="text-foreground-3 text-14 h-10 cursor-pointer truncate px-9 pt-2.5 font-medium leading-snug"
-          onClick={onHeaderClick}
-        >
-          {name} <span className="text-foreground-5">({counter})</span>
-        </div>
-      </div>
+      <NodeTitle name={name} onHeaderClick={onHeaderClick} counter={counter} />
 
-      <Button
-        className="absolute right-2 top-2 z-10"
-        variant="ghost"
-        size="sm_icon"
-        onMouseDown={e => e.stopPropagation()}
-        onClick={onEllipsisClick}
-      >
-        <Icon className="text-icons-2" name="more-dots-fill" size={12} />
-      </Button>
+      <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />
 
       {!collapsed && isEmpty && (
         <Button

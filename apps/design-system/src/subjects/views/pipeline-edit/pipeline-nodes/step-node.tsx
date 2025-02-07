@@ -21,10 +21,24 @@ export interface StepNodeProps {
   onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  counter?: number
+  isCollapsedNode?: boolean
 }
 
 export function StepNode(props: StepNodeProps) {
-  const { node, name, icon, selected, onEllipsisClick, onClick, onAddClick, isFirst, parentNodeType } = props
+  const {
+    node,
+    name,
+    icon,
+    selected,
+    onEllipsisClick,
+    onClick,
+    onAddClick,
+    isFirst,
+    parentNodeType,
+    counter,
+    isCollapsedNode
+  } = props
 
   const nodeData = node.data
 
@@ -65,7 +79,7 @@ export function StepNode(props: StepNodeProps) {
               <Icon className="text-icons-2" name="more-dots-fill" size={12} />
             </Button>
           )}
-          {isFirst && (
+          {isFirst && !isCollapsedNode && (
             <FloatingAddButton
               parentNodeType={parentNodeType}
               position="before"
@@ -74,15 +88,20 @@ export function StepNode(props: StepNodeProps) {
               }}
             />
           )}
-          <FloatingAddButton
-            parentNodeType={parentNodeType}
-            position="after"
-            onClick={e => {
-              onAddClick?.('after', e)
-            }}
-          />
+          {!isCollapsedNode && (
+            <FloatingAddButton
+              parentNodeType={parentNodeType}
+              position="after"
+              onClick={e => {
+                onAddClick?.('after', e)
+              }}
+            />
+          )}
           {!!icon && <div className="mb-0.5">{icon}</div>}
-          <span className="text-foreground-1 text-14 line-clamp-2 leading-snug">{name}</span>
+          <span className="text-foreground-1 text-14 line-clamp-2 leading-snug">
+            {name}
+            {!!counter && <span className="text-foreground-5"> ({counter})</span>}
+          </span>
           {nodeData.warningMessage && <WarningLabel>{nodeData.warningMessage}</WarningLabel>}
         </div>
       </div>

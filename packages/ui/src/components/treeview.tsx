@@ -32,7 +32,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   }
 }
 
-export type TreeViewElement = {
+type TreeViewElement = {
   id: string
   name: string
   isSelectable?: boolean
@@ -379,4 +379,4 @@ const CollapseButton = forwardRef<
 
 CollapseButton.displayName = 'CollapseButton'
 
-export { Tree, Folder, File, CollapseButton, TreeViewElement }
+export { Tree, Folder, File, CollapseButton, type TreeViewElement }

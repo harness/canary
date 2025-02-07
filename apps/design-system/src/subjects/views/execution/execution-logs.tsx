@@ -17,21 +17,22 @@ import {
 
 import { elements, logsBank, stages } from './mocks/mock-data'
 
-const getLogsForCurrentNode = (currentNode: TreeViewElement | null | undefined): LivelogLine[] => {
-  const logKey = currentNode?.id ?? ''
-  return logKey ? logsBank[logKey] : []
-}
+const getLogsForCurrentNodeId = (logKey: string): LivelogLine[] => logsBank[logKey] ?? []
 
 export const ExecutionLogsView = () => {
   const [enableStream, setEnableStream] = useState(false)
   const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 10 }) // Animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ elements }) // Animates the execution tree
+
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream }) // Animates the logs
+
+  const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
 
   useEffect(() => {
     setEnableStream(true)
-    setLogs(getLogsForCurrentNode(currentNode))
+    setLogs(getLogsForCurrentNodeId(currentNode?.id || ''))
   }, [currentNode?.id])
 
   useEffect(() => {
@@ -44,15 +45,10 @@ export const ExecutionLogsView = () => {
       case ExecutionState.RUNNING:
       case ExecutionState.SUCCESS:
         setEnableStream(selectedStep.status === ExecutionState.RUNNING)
-        setLogs(getLogsForCurrentNode(selectedStep))
+        setLogs(getLogsForCurrentNodeId(selectedStep?.id || ''))
         break
     }
   }, [selectedStep])
-
-  // Animates the logs
-  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream })
-
-  const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
 
   return (
     <div className="flex h-full flex-col">

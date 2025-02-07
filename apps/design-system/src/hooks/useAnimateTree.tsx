@@ -15,7 +15,7 @@ interface UseAnimatePipelineReturnType {
 
 export const useAnimateTree = ({ elements, delay = 15 }: UseAnimateTreeProps): UseAnimatePipelineReturnType => {
   const [updatedElements, setUpdatedElements] = useState<TreeViewElement[]>(elements)
-  const [currentNode, setCurrentNode] = useState<TreeViewElement | null>(null)
+  const [currentNode, setCurrentNode] = useState<TreeViewElement | null>(elements[0]) // by default, set the first node as currentNode
 
   useEffect(() => {
     let currentParentIndex = 0

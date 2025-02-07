@@ -34,9 +34,9 @@ export const logsBank: { [key: string]: LivelogLine[] } = {
     { out: 'Initializing build...', pos: 1, time: 1700000001, duration: 1 },
     { out: 'Provisioning infra...', pos: 2, time: 1700000002, duration: 2 },
     { out: 'Creating secrets...', pos: 3, time: 1700000004, duration: 1 },
-    { out: 'Pull manifest...', pos: 4, time: 1700000005, duration: 1 },
+    { out: 'Pulling manifests...', pos: 4, time: 1700000005, duration: 1 },
     ...Array.from({ length: 46 }, (_, i) => ({
-      out: `Setting up CI ${i + 5}`,
+      out: `Setting up for build and deploy ${i + 5}`,
       pos: i + 5,
       time: 1700000006 + i,
       duration: 1

@@ -23,17 +23,13 @@ export const useAnimatePipeline = ({
 
       // Ensure that 'data' is an object and exists before spreading
       const updatedNodes = [...animatedNodes]
-      const nodeData = updatedNodes[index].data ?? {} // Fallback to empty object if 'data' is null or undefined
-      updatedNodes[index].data = { ...nodeData, state: PipelineNodeStatus.Executing }
+      updatedNodes[index].data = { ...(updatedNodes[index].data ?? {}), state: PipelineNodeStatus.Executing }
 
       setAnimatedNodes(updatedNodes)
 
       setTimeout(() => {
-        // Ensure that 'data' is an object before modifying
-        const updatedData = updatedNodes[index].data ?? {} // Fallback to empty object
-        updatedNodes[index].data = { ...updatedData, state: PipelineNodeStatus.Success }
+        updatedNodes[index].data = { ...(updatedNodes[index].data ?? {}), state: PipelineNodeStatus.Success }
         setAnimatedNodes([...updatedNodes])
-
         index++
         processNext() // Move to next node
       }, delay * 1000)

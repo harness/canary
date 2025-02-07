@@ -188,7 +188,7 @@ export const demoExecutionMock = [
           yamlPath: 'pipeline.stages.1.steps.0',
           yamlEntityType: 'Step',
           name: 'docker',
-          icon: <Icon className="size-6" name={'harness-plugin'} />,
+          icon: <Icon className="size-6" name={'docker'} />,
           selected: false,
           state: 'warning',
           warningMessage: 'Timeout'
@@ -209,7 +209,7 @@ export const demoExecutionMock = [
           yamlPath: 'pipeline.stages.1.steps.1',
           yamlEntityType: 'Step',
           name: 'Step 2',
-          icon: <Icon className="size-6" name={'harness-plugin'} />,
+          icon: <Icon className="size-6" name={'slack'} />,
           selected: false,
           state: 'success'
         },

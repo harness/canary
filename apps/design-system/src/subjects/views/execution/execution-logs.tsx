@@ -19,47 +19,40 @@ import { elements, logsBank, stages } from './mocks/mock-data'
 
 const getLogsForCurrentNode = (currentNode: TreeViewElement | null | undefined): LivelogLine[] => {
   const logKey = currentNode?.id ?? ''
-  const logs = logKey ? logsBank[logKey] : []
-  return logs
+  return logKey ? logsBank[logKey] : []
 }
 
 export const ExecutionLogsView = () => {
-  const [shouldStream, setShouldStream] = useState(false)
+  const [enableStream, setEnableStream] = useState(false)
   const [logs, setLogs] = useState<LivelogLine[]>([])
-  const [selectedStep, setSelectedStep] = useState<TreeViewElement | undefined | null>(null)
+  const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements }) // animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 10 }) // Animates the execution tree
 
   useEffect(() => {
-    setShouldStream(true)
+    setEnableStream(true)
     setLogs(getLogsForCurrentNode(currentNode))
   }, [currentNode?.id])
 
   useEffect(() => {
-    if (selectedStep?.status === ExecutionState.PENDING) {
-      setLogs([])
-    } else if (selectedStep?.status === ExecutionState.RUNNING) {
-      setShouldStream(true)
-      setLogs(getLogsForCurrentNode(selectedStep))
-    } else if (selectedStep?.status === ExecutionState.SUCCESS) {
-      setShouldStream(false)
-      setLogs(getLogsForCurrentNode(selectedStep))
+    if (!selectedStep) return
+
+    switch (selectedStep.status) {
+      case ExecutionState.PENDING:
+        setLogs([])
+        break
+      case ExecutionState.RUNNING:
+      case ExecutionState.SUCCESS:
+        setEnableStream(selectedStep.status === ExecutionState.RUNNING)
+        setLogs(getLogsForCurrentNode(selectedStep))
+        break
     }
-    // if (intervalId) clearInterval(intervalId)
   }, [selectedStep])
 
-  // animates the logs
-  const { logs: streamedLogs } = useLogs({
-    logs,
-    isStreaming: shouldStream
-  })
+  // Animates the logs
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream })
 
-  const useLogsStore = useCallback(
-    (): ILogsStore => ({
-      logs: streamedLogs
-    }),
-    [streamedLogs]
-  )
+  const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
 
   return (
     <div className="flex h-full flex-col">

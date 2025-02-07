@@ -32,7 +32,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   }
 }
 
-interface TreeViewElement extends ExecutionDetail {
+export interface TreeViewElement extends ExecutionDetail {
   id: string
   name: string
   isSelectable?: boolean

@@ -42,8 +42,9 @@ export function CreateBranchDialog({
     handleSubmit,
     setValue,
     watch,
-    resetField,
-    formState: { errors, isValid }
+    reset,
+    clearErrors,
+    formState: { errors, isValid, isSubmitSuccessful }
   } = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema),
     mode: 'onChange',
@@ -53,9 +54,22 @@ export function CreateBranchDialog({
     }
   })
 
+  useEffect(() => {
+    clearErrors()
+    reset()
+    setValue('name', '', { shouldValidate: false })
+    setValue('target', defaultBranch || '', { shouldValidate: false })
+
+    if (isSubmitSuccessful) {
+      clearErrors()
+      onClose()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful, open, onClose])
   const handleClose = () => {
-    resetField('name')
-    resetField('target', { defaultValue: defaultBranch })
+    clearErrors()
+    setValue('name', '', { shouldValidate: false })
+    setValue('target', defaultBranch || '', { shouldValidate: false })
     handleChangeSearchValue('')
     onClose()
   }
@@ -150,7 +164,22 @@ export function CreateBranchDialog({
           ) : null}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button variant="outline" onClick={onClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                clearErrors()
+                // handleClose()
+                // reset({
+                //   name: '',
+                //   target: defaultBranch || ''
+                // })
+                onClose()
+                setValue('target', defaultBranch || '')
+                setValue('name', '')
+              }}
+              loading={isCreatingBranch}
+              disabled={isCreatingBranch}
+            >
               {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingBranch || !isValid}>

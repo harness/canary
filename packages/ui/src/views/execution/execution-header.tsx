@@ -1,4 +1,4 @@
-import { Breadcrumb, Text } from '@/components'
+import { Breadcrumb, Icon, Text } from '@/components'
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { PipelineStatus } from './pipeline-status'
@@ -31,45 +31,18 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
   commit,
   status,
   buildTime,
-  createdTime,
-  pipelineName
+  createdTime
 }) => {
   return (
-    <div className="space-y-4 px-6 py-4">
-      <div className="flex flex-col gap-2">
-        {/* Breadcrumbs */}
-        <Breadcrumb.Root className="mb-4 select-none">
-          <Breadcrumb.List>
-            <Breadcrumb.Item>
-              <Breadcrumb.Link href="/pipelines">Pipeline list</Breadcrumb.Link>
-            </Breadcrumb.Item>
-            <Breadcrumb.Separator />
-            <Breadcrumb.Page>{pipelineName}</Breadcrumb.Page>
-          </Breadcrumb.List>
-        </Breadcrumb.Root>
-
-        {/* <div className="flex gap-2">
-          <Button variant="secondary" size="xs" asChild>
-            <Link to="/">
-              <Icon name="tube-sign" size={12} className="mr-1 text-tertiary-background" />
-              {commitName}
-            </Link>
-          </Button>
-          <span className="text-foreground-1"> to </span>
-          <Button variant="secondary" size="xs" asChild>
-            <Link to="/">
-              <Icon name="branch" size={12} className="mr-1 text-tertiary-background" />
-              {branchName}
-            </Link>
-          </Button>
-        </div> */}
-        <Text size={5}>
-          <span className="text-foreground-5">#{title.number} </span>
-          <span className="text-primary">{title.title}</span>
-        </Text>
+    <div className="px-6 py-5">
+      <div className="flex flex-col gap-[18px]">
+        <h1 className="text-18 max-w-[600px] font-medium leading-snug">
+          <span className="text-foreground-4">#{title.number} </span>
+          <span className="text-foreground-1">{title.title}</span>
+        </h1>
       </div>
 
-      <div className="flex w-full items-center justify-between ">
+      <div className="text-14 mt-6 flex w-full flex-wrap items-center justify-between gap-6 leading-none">
         <PipelineStatus
           branch={branch}
           commit={commit}
@@ -77,26 +50,37 @@ export const ExecutionHeader: React.FC<ExecutionHeaderProps> = ({
           buildTime={buildTime}
           createdTime={createdTime}
         />
-        <div className="flex h-full items-end gap-12">
-          <div className="flex flex-col">
-            <span className="text-foreground-5">Storage</span>
-            <span className="text-primary">{storage}</span>
+        <div className="flex h-full items-end gap-11">
+          <div className="flex flex-col gap-1.5">
+            <span className="text-foreground-4 leading-tight">Storage</span>
+            <span className="text-foreground-1">{storage}</span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-foreground-5">Storage (average)</span>
-            <span className="text-primary">{storageAverage}</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-foreground-4 leading-tight">Storage (average)</span>
+            <span className="text-foreground-1 inline-flex gap-x-1.5">
+              {storageAverage} <span className="border-icons-7 size-3.5 rounded-full border" />
+            </span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-foreground-5">Simple Operation</span>
-            <span className="text-primary">{simpleOperation}</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-foreground-4 leading-tight">Simple Operation</span>
+            <span className="text-foreground-1 inline-flex gap-x-1.5">
+              {simpleOperation}
+              <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+            </span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-foreground-5">Advanced Operations</span>
-            <span className="text-primary">{advancedOperations}</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-foreground-4 leading-tight">Advanced Operations</span>
+            <span className="text-foreground-1 inline-flex gap-x-1.5">
+              {advancedOperations}
+              <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+            </span>
           </div>
-          <div className="flex flex-col">
-            <span className="text-foreground-5">Data Transfer</span>
-            <span className="text-primary">{dataTransfer}</span>
+          <div className="flex flex-col gap-1.5">
+            <span className="text-foreground-4 leading-tight">Data Transfer</span>
+            <span className="text-foreground-1 inline-flex gap-x-1.5">
+              {dataTransfer}
+              <Icon className="text-icons-7" name="circle-with-sector" size={14} />
+            </span>
           </div>
         </div>
       </div>

@@ -42,11 +42,18 @@ export interface ConsoleLogsProps {
   query?: string
 }
 
+export enum LivelogLineType {
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info'
+}
+
 export interface LivelogLine {
   out?: string
   pos?: number
   time?: number
   duration?: number
+  type?: LivelogLineType
 }
 
 export interface ExecutionTreeProps {

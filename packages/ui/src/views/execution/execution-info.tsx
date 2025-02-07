@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import { StepExecution } from './step-execution'
 import { ExecutionInfoProps, StepProps } from './types'
 
-export const ExecutionInfo: React.FC<ExecutionInfoProps> = ({
-  stage,
-  selectedStepIdx,
-  logs,
-  onEdit,
-  onDownload,
-  onCopy
-}): React.ReactElement => {
+export const ExecutionInfo: FC<ExecutionInfoProps> = ({ stage, selectedStepIdx, logs, onEdit, onDownload, onCopy }) => {
   const [selectedStepIndex, setSelectedStepIndex] = useState<number>(0)
   const [step, setStep] = useState<StepProps>()
 
@@ -27,12 +20,8 @@ export const ExecutionInfo: React.FC<ExecutionInfoProps> = ({
   }, [stage?.steps, selectedStepIndex])
 
   if (!stage || !stage?.steps) {
-    return <></>
+    return null
   }
 
-  return step ? (
-    <StepExecution step={step} logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />
-  ) : (
-    <></>
-  )
+  return step ? <StepExecution step={step} logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} /> : null
 }

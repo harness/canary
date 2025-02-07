@@ -40,6 +40,7 @@ import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../icons/circle-arrows-updown.svg'
 import CirclePlus from '../icons/circle-plus.svg'
+import CircleWithSector from '../icons/circle-with-sector.svg'
 import Circle from '../icons/circle.svg'
 import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
@@ -52,6 +53,7 @@ import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import CollapseComment from '../icons/collapse-comment.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
+import CommandSymbol from '../icons/command-symbol.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
@@ -383,7 +385,9 @@ const IconNameMap = {
   arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
-  'checkbox-circle': CheckboxCircle
+  'checkbox-circle': CheckboxCircle,
+  'circle-with-sector': CircleWithSector,
+  'command-symbol': CommandSymbol
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

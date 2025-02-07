@@ -1,9 +1,10 @@
 import { FC, useCallback } from 'react'
 
 import { Text } from '@/components'
+import { cn } from '@utils/cn'
 
-import { formatDuration, formatTimestamp } from '../../utils/TimeUtils'
-import { ConsoleLogsProps, LivelogLine } from './types'
+import { formatTimestamp } from '../../utils/TimeUtils'
+import { ConsoleLogsProps, LivelogLine, LivelogLineType } from './types'
 
 export const createStreamedLogLineElement = (log: LivelogLine) => {
   const lineElement = document.createElement('div')
@@ -38,18 +39,18 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
     (log: string) => {
       const match = log.match(new RegExp(query || ''))
       if (!match || !query?.length) {
-        return <Text className="ml-2 flex gap-1 font-mono text-sm font-normal text-ring">{log}</Text>
+        return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
       }
       const matchIndex = match?.index || 0
       const startText = log.slice(0, matchIndex)
       const matchedText = log.slice(matchIndex, matchIndex + query?.length)
       const endText = log.slice(matchIndex + query?.length)
       return (
-        <Text className="flex gap-1 font-mono text-sm font-normal text-ring">
+        <span className="flex gap-1 font-mono text-sm font-normal">
           {startText ? <span>{startText}</span> : null}
           {matchedText ? <mark>{matchedText}</mark> : null}
           {endText ? <span>{endText}</span> : null}
-        </Text>
+        </span>
       )
     },
     [query]
@@ -59,20 +60,22 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
     <>
       {logs
         .filter(item => item !== null)
-        .map(({ pos, out, time, duration }, index) => (
-          <div className="mb-2 flex items-baseline justify-between leading-[21px]" key={index}>
-            <div className="flex items-baseline gap-2">
+        .map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
+          <div className="w-full" key={index}>
+            <div className="text-15 flex w-full items-baseline gap-5 font-mono">
               {pos !== undefined && !isNaN(pos) && pos >= 0 && (
-                <Text className="text-log flex min-w-5 justify-end">{pos}</Text>
+                <span className="text-log text-foreground-7 flex min-w-5 justify-end">{pos}</span>
               )}
-              {time ? (
-                <Text className="text-log flex text-sm font-normal">[{formatTimestamp(time * 1_000)}]</Text>
-              ) : null}
-              {out ? logText(out) : null}
+              <span
+                className={cn(
+                  'text-log flex shrink-0 grow font-normal',
+                  type === LivelogLineType.ERROR && 'text-foreground-danger bg-tag-background-red-2',
+                  type === LivelogLineType.WARNING && 'text-foreground-alert bg-tag-background-amber-2'
+                )}
+              >
+                {time && `[${formatTimestamp(time * 1_000)}]`} {out && logText(out)}
+              </span>
             </div>
-            <Text className="text-log mr-2 text-sm font-normal">
-              {formatDuration(duration && duration > 0 ? duration * 1_000 : 0)}
-            </Text>
           </div>
         ))}
     </>

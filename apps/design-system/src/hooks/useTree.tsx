@@ -24,7 +24,7 @@ export const useTree = (
     }
 
     // Process the current parent node and its children one by one
-    const processChildren = (currentNode: TreeViewElement): void => {
+    const processChildren = (currentNode: TreeViewElement): TreeViewElement => {
       const updatedChildren =
         currentNode.children?.map((child: TreeViewElement, index: number) => {
           setCurrentChild(child)

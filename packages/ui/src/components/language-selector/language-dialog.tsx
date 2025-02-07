@@ -40,7 +40,7 @@ const LanguageDialog: FC<LanguageDialogProps> = ({
               }}
             >
               <div className="flex items-center gap-2">
-                <div className="bg-background-12 text-12 text-foreground-3 flex size-6 items-center justify-center rounded">
+                <div className="flex size-6 items-center justify-center rounded bg-background-12 text-12 text-foreground-3">
                   {lang.code}
                 </div>
                 <span

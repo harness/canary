@@ -31,7 +31,15 @@ export interface YamlRevision {
 }
 
 export interface PipelineStudioProps
-  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
+  extends Pick<
+    PipelineStudioGraphViewProps,
+    | 'serialContainerConfig'
+    | 'parallelContainerConfig'
+    | 'customCreateSVGPath'
+    | 'edgesConfig'
+    | 'portComponent'
+    | 'collapseButtonComponent'
+  > {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
@@ -41,9 +49,6 @@ export interface PipelineStudioProps
   getStepIcon?: PipelineStudioInternalProps['getStepIcon']
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
-  customCreateSVGPath?: PipelineStudioGraphViewProps['customCreateSVGPath']
-  edgesConfig?: PipelineStudioGraphViewProps['edgesConfig']
-  portComponent?: PipelineStudioGraphViewProps['portComponent']
 }
 
 const PipelineStudio = (props: PipelineStudioProps): JSX.Element => {

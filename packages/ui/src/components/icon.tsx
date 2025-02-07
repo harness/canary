@@ -162,6 +162,8 @@ import SidebarLeft from '../icons/sidebar-left.svg'
 import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
+import SparksGradientDark from '../icons/sparks-gradient-dark.svg'
+import SparksGradientLight from '../icons/sparks-gradient-light.svg'
 import SparksGradient from '../icons/sparks-gradient.svg'
 import Sparks from '../icons/sparks.svg'
 import SshKey from '../icons/ssh-key.svg'
@@ -262,6 +264,8 @@ const IconNameMap = {
   'ai-sparks': AISparks,
   sparks: Sparks,
   'sparks-gradient': SparksGradient,
+  'sparks-gradient-dark': SparksGradientDark,
+  'sparks-gradient-light': SparksGradientLight,
   'pr-open': PrOpen,
   'pr-review': PrReview,
   'pr-closed': PrClosed,

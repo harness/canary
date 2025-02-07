@@ -17,16 +17,23 @@ import {
 
 import { elements, logsBank } from './mocks/mock-data'
 
-const getLogsForCurrentNodeId = (logKey: string): LivelogLine[] => logsBank[logKey] ?? []
+const getRandomDuration = (): number => Math.random() * (5 - 1) + 1
+
+const getLogsForCurrentNodeId = (logKey: string): LivelogLine[] => {
+  return (logsBank[logKey] ?? []).map((log: LivelogLine) => ({
+    ...log,
+    duration: getRandomDuration()
+  }))
+}
 
 export const ExecutionLogsView = () => {
   const [enableStream, setEnableStream] = useState(false)
   const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 5 }) // Animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 15 }) // Animates the execution tree
 
-  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream }) // Animates the logs
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream, delay: 0.5 }) // Animates the logs
 
   const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
 

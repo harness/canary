@@ -1,18 +1,24 @@
 import { CSSProperties } from 'react'
 
+import {
+  parallelContainerConfig,
+  serialContainerConfig
+} from '@subjects/views/pipeline-edit/mocks/pipelineExecutionMock'
+
 import { Button, Icon } from '@harnessio/ui/components'
 
-const CONTAINER_WIDTH = '36'
-const CONTAINER_HEIGHT = '36'
+const CONTAINER_WIDTH = '40'
+const CONTAINER_HEIGHT = '40'
 
 export interface FloatingAddButtonProp {
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
   position: 'before' | 'after'
   onClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void
+  collapsed?: boolean
 }
 
 export function FloatingAddButton(props: FloatingAddButtonProp) {
-  const { onClick, position, parentNodeType } = props
+  const { onClick, position, parentNodeType, collapsed } = props
 
   const style: CSSProperties = {}
   if (position === 'before' && parentNodeType === 'serial') {
@@ -38,20 +44,31 @@ export function FloatingAddButton(props: FloatingAddButtonProp) {
     style.right = '0px'
   }
 
+  const typeStyleConf =
+    parentNodeType === 'parallel'
+      ? parallelContainerConfig
+      : parentNodeType === 'serial'
+        ? serialContainerConfig
+        : undefined
+  const buttonMarginTopValue =
+    !!typeStyleConf && collapsed === false ? typeStyleConf.paddingTop - typeStyleConf.paddingBottom : 0
+
   return (
     <div className="group absolute flex size-full items-center justify-center" style={style}>
       <Button
-        className="bg-background-2 hidden size-6 self-center rounded-full p-1 group-hover:flex"
-        style={{ alignSelf: 'center' }}
-        variant={'outline'}
-        size={'sm'}
+        className="bg-background-2 hidden h-5 w-5 self-center rounded-full p-0 group-hover:flex"
+        style={{
+          alignSelf: 'center',
+          marginTop: `${buttonMarginTopValue}px`
+        }}
+        variant="outline"
         onMouseDown={e => e.stopPropagation()}
         onClick={e => {
           e.stopPropagation()
           onClick(e)
         }}
       >
-        <Icon name="plus" size={15} />
+        <Icon className="text-icons-3" name="bold-plus" size={10} />
       </Button>
     </div>
   )

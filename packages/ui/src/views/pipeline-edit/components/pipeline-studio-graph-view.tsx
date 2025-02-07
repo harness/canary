@@ -38,16 +38,17 @@ const endNode = {
   data: {}
 } satisfies AnyContainerNodeType
 
-export interface PipelineStudioGraphViewProps {
+export interface PipelineStudioGraphViewProps
+  extends Pick<
+    PipelineGraphProps,
+    'edgesConfig' | 'portComponent' | 'customCreateSVGPath' | 'collapseButtonComponent'
+  > {
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   getStepIcon?: (step: Record<string, any>) => JSX.Element
   serialContainerConfig?: Partial<SerialContainerConfig>
   parallelContainerConfig?: Partial<ParallelContainerConfig>
-  customCreateSVGPath?: PipelineGraphProps['customCreateSVGPath']
-  edgesConfig?: PipelineGraphProps['edgesConfig']
-  portComponent?: PipelineGraphProps['portComponent']
 }
 
 export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): React.ReactElement => {
@@ -59,7 +60,8 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
     parallelContainerConfig,
     customCreateSVGPath,
     edgesConfig,
-    portComponent
+    portComponent,
+    collapseButtonComponent
   } = props
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
@@ -93,9 +95,9 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
           customCreateSVGPath={customCreateSVGPath}
           edgesConfig={edgesConfig}
           portComponent={portComponent}
+          collapseButtonComponent={collapseButtonComponent}
           data={data}
           nodes={nodes}
-          config={{ edgeClassName: 'stroke-borders-2' }}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
         />

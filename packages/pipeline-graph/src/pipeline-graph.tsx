@@ -8,12 +8,13 @@ import './pipeline-graph.css'
 import ContainerNodeProvider, { ContainerNodeProviderProps } from './context/container-node-provider'
 import { ParallelContainerConfig, SerialContainerConfig } from './types/container-node'
 
-export interface PipelineGraphProps extends PipelineGraphInternalProps {
-  nodes: NodeContent[]
-  serialContainerConfig?: Partial<SerialContainerConfig>
-  parallelContainerConfig?: Partial<ParallelContainerConfig>
-  portComponent?: ContainerNodeProviderProps['portComponent']
-}
+export interface PipelineGraphProps extends
+    PipelineGraphInternalProps,
+    Pick<ContainerNodeProviderProps, 'portComponent' | 'collapseButtonComponent'> {
+      nodes: NodeContent[]
+      serialContainerConfig?: Partial<SerialContainerConfig>
+      parallelContainerConfig?: Partial<ParallelContainerConfig>
+  }
 
 export function PipelineGraph(props: PipelineGraphProps) {
   const {
@@ -24,7 +25,8 @@ export function PipelineGraph(props: PipelineGraphProps) {
     parallelContainerConfig,
     customCreateSVGPath,
     edgesConfig,
-    portComponent
+    portComponent,
+    collapseButtonComponent
   } = props
 
   return (
@@ -33,6 +35,7 @@ export function PipelineGraph(props: PipelineGraphProps) {
         serialContainerConfig={serialContainerConfig}
         parallelContainerConfig={parallelContainerConfig}
         portComponent={portComponent}
+        collapseButtonComponent={collapseButtonComponent}
       >
         <Canvas>
           <PipelineGraphInternal

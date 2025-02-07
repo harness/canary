@@ -1,3 +1,7 @@
+import { NodeMenuTrigger } from '@subjects/views/pipeline-edit/pipeline-nodes/components/node-menu-trigger.tsx'
+import { NodeTitle } from '@subjects/views/pipeline-edit/pipeline-nodes/components/node-title.tsx'
+import { getNestedStepsCount } from '@subjects/views/pipeline-edit/utils/common-step-utils'
+
 import { SerialNodeInternalType } from '@harnessio/pipeline-graph'
 import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
@@ -16,6 +20,8 @@ export interface StageNodeProps {
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
   node: SerialNodeInternalType<CustomSerialStageGroupContentNodeDataType>
+  hideContextMenu?: boolean
+  hideFloatingButtons?: boolean
   onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddInClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onHeaderClick: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -35,10 +41,14 @@ export function StageNode(props: StageNodeProps) {
     onHeaderClick,
     onAddClick,
     parentNodeType,
-    node
+    node,
+    hideContextMenu,
+    hideFloatingButtons
   } = props
 
   const nodeData = node.data
+  const counter = getNestedStepsCount(node.children)
+
   return (
     <>
       <ExecutionStatus nodeData={nodeData} />
@@ -50,29 +60,9 @@ export function StageNode(props: StageNodeProps) {
         })}
       />
 
-      <div className="absolute inset-x-0 top-0 h-0">
-        <div
-          role="button"
-          tabIndex={0}
-          title={name}
-          className="text-primary-muted h-10 cursor-pointer truncate px-9 pt-2.5"
-          onClick={onHeaderClick}
-        >
-          {name}
-        </div>
-      </div>
+      <NodeTitle name={name} onHeaderClick={onHeaderClick} counter={counter} />
 
-      {onEllipsisClick && (
-        <Button
-          className="absolute right-2 top-2 z-10"
-          variant="ghost"
-          size="sm_icon"
-          onMouseDown={e => e.stopPropagation()}
-          onClick={onEllipsisClick}
-        >
-          <Icon className="text-icons-2" name="more-dots-fill" size={12} />
-        </Button>
-      )}
+      {!hideContextMenu && <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />}
 
       {!collapsed && isEmpty && (
         <Button
@@ -86,22 +76,26 @@ export function StageNode(props: StageNodeProps) {
         </Button>
       )}
 
-      {isFirst && (
+      {!hideFloatingButtons && isFirst && (
         <FloatingAddButton
           parentNodeType={parentNodeType}
           position="before"
           onClick={e => {
             onAddClick?.('before', e)
           }}
+          collapsed={collapsed}
         />
       )}
-      <FloatingAddButton
-        parentNodeType={parentNodeType}
-        position="after"
-        onClick={e => {
-          onAddClick?.('after', e)
-        }}
-      />
+      {!hideFloatingButtons && (
+        <FloatingAddButton
+          parentNodeType={parentNodeType}
+          position="after"
+          onClick={e => {
+            onAddClick?.('after', e)
+          }}
+          collapsed={collapsed}
+        />
+      )}
 
       {collapsed ? <CollapsedGroupNode node={node} containerNodeType={'serial'} /> : children}
     </>

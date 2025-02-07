@@ -5,19 +5,24 @@ import { PipelineStudioGraphView, PipelineStudioGraphViewProps } from './pipelin
 import { PipelineStudioYamlView, PipelineStudioYamlViewProps } from './pipeline-studio-yaml-view'
 
 export interface PipelineStudioInternalProps
-  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'> {
+  extends Pick<
+    PipelineStudioGraphViewProps,
+    | 'serialContainerConfig'
+    | 'parallelContainerConfig'
+    | 'getStepIcon'
+    | 'customCreateSVGPath'
+    | 'edgesConfig'
+    | 'portComponent'
+    | 'collapseButtonComponent'
+  > {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   yamlEditorConfig?: PipelineStudioYamlViewProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioYamlViewProps['onErrorChange']
-  getStepIcon?: PipelineStudioGraphViewProps['getStepIcon']
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
-  customCreateSVGPath?: PipelineStudioGraphViewProps['customCreateSVGPath']
-  edgesConfig?: PipelineStudioGraphViewProps['edgesConfig']
-  portComponent?: PipelineStudioGraphViewProps['portComponent']
 }
 
 export default function PipelineStudioInternal(props: PipelineStudioInternalProps) {
@@ -35,7 +40,8 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
     parallelContainerConfig,
     customCreateSVGPath,
     edgesConfig,
-    portComponent
+    portComponent,
+    collapseButtonComponent
   } = props
 
   return view === 'graph' ? (
@@ -49,6 +55,7 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
       customCreateSVGPath={customCreateSVGPath}
       edgesConfig={edgesConfig}
       portComponent={portComponent}
+      collapseButtonComponent={collapseButtonComponent}
     />
   ) : (
     <YamlEditorContextProvider>

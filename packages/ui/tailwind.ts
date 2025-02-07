@@ -380,7 +380,12 @@ export default {
         'navbar-item-gradient':
           'radial-gradient(50% 50% at 50% 50%, hsla(var(--canary-nav-item-gradient-1)) 0%, hsla(var(--canary-nav-item-gradient-2)) 17.63%, hsla(var(--canary-nav-item-gradient-3)) 40.23%, hsla(var(--canary-nav-item-gradient-4)) 61.54%, hsla(var(--canary-nav-item-gradient-5)) 80%, hsla(var(--canary-nav-item-gradient-6)) 100%)',
         'graph-gradient-1':
-            'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)'
+            'radial-gradient(88.57% 100% at 14.29% 0%, var(--canary-graph-gradient-bg-1) 10.62%, var(--canary-graph-gradient-bg-2) 75.86%)',
+        'graph-bg-gradient':
+            'radial-gradient(circle, var(--canary-graph-viewport-bg) 1px, transparent 1px)'
+      },
+      backgroundSize: {
+        'graph-bg-size': '22px 22px'
       },
       keyframes: {
         'accordion-down': {
@@ -426,7 +431,7 @@ export default {
     'prose-img',
     'prose-code',
     { pattern: /^border-borders-/ },
-    { pattern: /^bg-graph-gradient-/ },
+    { pattern: /^bg-graph-/ },
     { pattern: /^text-foreground-/ },
     { pattern: /^bg-background-/ },
     // NOTE: stroke-border-2 temporary here as it is used by in gitness for pipeline-graph

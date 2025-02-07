@@ -1229,7 +1229,7 @@
 
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-black);
-    --canary-background-02: var(--canary-base-chrome-900);
+    --canary-background-02: var(--canary-base-chrome-950);
     --canary-background-03: var(--canary-base-chrome-950);
     --canary-background-04: var(--canary-base-chrome-850) / 0.5;
     --canary-background-05: var(--canary-accent-600);
@@ -1476,7 +1476,7 @@
 
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-black);
-    --canary-background-02: var(--canary-base-chrome-900);
+    --canary-background-02: var(--canary-base-chrome-950);
     --canary-background-03: var(--canary-base-chrome-950);
     --canary-background-04: var(--canary-base-chrome-850) / 0.5;
     --canary-background-05: var(--canary-accent-600);

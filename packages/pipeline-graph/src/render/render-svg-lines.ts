@@ -120,7 +120,6 @@ function getPath({
   serial?: {
     position: 'left' | 'right'
   }
-  edgeClassName?: string
   targetNode?: AnyNodeInternal
   edgesConfig: {
     radius: number

@@ -98,7 +98,6 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
           collapseButtonComponent={collapseButtonComponent}
           data={data}
           nodes={nodes}
-          config={{ edgeClassName: 'stroke-borders-2' }}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}
         />

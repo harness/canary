@@ -11,6 +11,12 @@ import { demoExecutionMock } from './mocks/animations/demoExecutionMock'
 import { parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
 import { contentNodeFactory } from './nodes-factory'
 import CustomPort from './pipeline-nodes/components/custom-port'
+import { GlobalData } from './types/common'
+
+const globalDataConfigForExecution: GlobalData = {
+  hideContextMenu: true,
+  hideFloatingButtons: true
+}
 
 const PipelineExecution = () => {
   return (
@@ -22,6 +28,7 @@ const PipelineExecution = () => {
         onEditIntention={() => undefined}
         onRevealInYaml={() => undefined}
         onSelectIntention={() => undefined}
+        globalData={globalDataConfigForExecution}
       >
         <PipelineExecutionInner />
         <PipelineStudioNodeContextMenu />

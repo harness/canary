@@ -56,6 +56,7 @@ import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import CrossCircle from '../icons/cross-circle.svg'
 import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
 import Dashboards from '../icons/dashboards-icon.svg'
@@ -188,6 +189,7 @@ import User from '../icons/user-icon.svg'
 import Users from '../icons/users-icon.svg'
 import Variable from '../icons/variable-icon.svg'
 import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
+import WarningTriangleOutline from '../icons/warning-triangle-outline.svg'
 import Webhook from '../icons/webhook-icon.svg'
 import Wrench from '../icons/wrench-icon.svg'
 import XMark from '../icons/x-mark.svg'
@@ -383,7 +385,9 @@ const IconNameMap = {
   arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
-  'checkbox-circle': CheckboxCircle
+  'checkbox-circle': CheckboxCircle,
+  'cross-circle': CrossCircle,
+  'warning-triangle-outline': WarningTriangleOutline
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

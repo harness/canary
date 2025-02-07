@@ -668,11 +668,11 @@
     --shadow-sm: var(--canary-base-chrome-100);
 
     /* Graph */
-    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
-    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-accent-200) / 0.2);
-    --canary-graph-gradient-executing-2: hsla(var(--canary-accent-500));
-    --canary-graph-viewport-bg: hsl(var(--canary-base-chrome-150));
+    --canary-graph-gradient-bg-1: hsla(var(--canary-base-chrome-white));
+    --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-100) / 0.3);
+    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-150));
+    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-600));
+    --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-150));
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -921,11 +921,11 @@
     --shadow-sm: var(--canary-base-chrome-100);
 
     /* Graph */
-    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
-    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
-    --canary-graph-gradient-executing-1: hsla(var(--canary-accent-200) / 0.2);
-    --canary-graph-gradient-executing-2: hsla(var(--canary-accent-500));
-    --canary-graph-viewport-bg: hsl(var(--canary-base-chrome-150));
+    --canary-graph-gradient-bg-1: hsla(var(--canary-base-chrome-white));
+    --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-100) / 0.3);
+    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-150));
+    --canary-graph-gradient-executing-2: hsla(var(--canary-amber-600));
+    --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-150));
   }
 
   .dark,
@@ -1155,7 +1155,7 @@
     --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
     --canary-graph-gradient-executing-1: hsla(220, 100%, 85%, 0.2);
     --canary-graph-gradient-executing-2: hsla(220, 100%, 85%, 1);
-    --canary-graph-viewport-bg: hsl(var(--canary-grey-12));
+    --canary-graph-viewport-bg: hsla(var(--canary-grey-12));
   }
 
   .dark-std-high {
@@ -1376,11 +1376,11 @@
     --shadow-sm: 0px 1px 6px 0px var(--canary-base-chrome-black);
 
     /* Graph */
-    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
-    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
-    --canary-graph-gradient-executing-1: hsla(220, 100%, 85%, 0.2);
-    --canary-graph-gradient-executing-2: hsla(220, 100%, 85%, 1);
-    --canary-graph-viewport-bg: hsl(var(--canary-grey-12));
+    --canary-graph-gradient-bg-1: hsla(var(--canary-base-chrome-850));
+    --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-900));
+    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-200));
+    --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
+    --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.4);
 
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
@@ -1626,10 +1626,10 @@
     --shadow-sm: 0px 1px 6px 0px var(--canary-base-chrome-black);
 
     /* Graph */
-    --canary-graph-gradient-bg-1: hsla(0, 0%, 100%, 0.04);
-    --canary-graph-gradient-bg-2: hsla(0, 0%, 100%, 0);
-    --canary-graph-gradient-executing-1: hsla(220, 100%, 85%, 0.2);
-    --canary-graph-gradient-executing-2: hsla(220, 100%, 85%, 1);
-    --canary-graph-viewport-bg: hsl(var(--canary-grey-12));
+    --canary-graph-gradient-bg-1: hsla(var(--canary-base-chrome-850));
+    --canary-graph-gradient-bg-2: hsla(var(--canary-base-chrome-900));
+    --canary-graph-gradient-executing-1: hsla(var(--canary-amber-200));
+    --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
+    --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.4);
   }
 }

@@ -14,6 +14,7 @@ import {
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
+import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { noop } from 'lodash-es'
 
 import { createFilters, FilterRefType, Parser } from '@harnessio/filters'
@@ -24,7 +25,7 @@ import { useFilters } from '../hooks'
 import { filterPullRequests } from '../utils/filtering/pulls'
 import { sortPullRequests } from '../utils/sorting/pulls'
 import { PullRequestList as PullRequestListContent } from './components/pull-request-list'
-import { PRListFilters, PullRequestPageProps } from './pull-request.types'
+import type { PRListFilters, PullRequestPageProps } from './pull-request.types'
 
 type PRListFiltersKeys = keyof PRListFilters
 
@@ -217,6 +218,16 @@ const PullRequestList: FC<PullRequestPageProps> = ({
                       />
                     )}
                   </PRListFilterHandler.Dropdown>
+                  <FilterTrigger
+                    type="sort"
+                    activeFilters={filterHandlers.activeSorts}
+                    onChange={filterHandlers.handleSortChange}
+                    onReset={filterHandlers.handleResetSorts}
+                    searchQueries={filterHandlers.searchQueries}
+                    onSearchChange={filterHandlers.handleSearchChange}
+                    options={SORT_OPTIONS}
+                    t={t}
+                  />
                   <Button variant="default" asChild>
                     <Link to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`}>New pull request</Link>
                   </Button>

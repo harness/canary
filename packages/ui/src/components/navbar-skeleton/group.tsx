@@ -22,7 +22,7 @@ export function Group({ children, title, topBorder, isSubMenu = false, titleClas
     >
       {title && (
         <div className={cn('text-foreground-7 mt-1.5', isSubMenu ? 'mb-3' : 'mb-1.5', titleClassName)}>
-          <p className="text-xs font-normal px-2.5">{title}</p>
+          <p className="px-2.5 text-xs font-normal">{title}</p>
         </div>
       )}
       {children}

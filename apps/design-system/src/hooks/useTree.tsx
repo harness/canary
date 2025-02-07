@@ -3,13 +3,18 @@ import { useEffect, useState } from 'react'
 import { TreeViewElement } from '@harnessio/ui/components'
 import { ExecutionState } from '@harnessio/ui/views'
 
-export const useTree = (
-  nodes: TreeViewElement[],
-  interval: number = 15
-): { nodes: TreeViewElement[]; currentParent: TreeViewElement | null; currentChild: TreeViewElement | null } => {
+export type TreeNode = TreeViewElement | null | undefined
+
+export const useTree = ({
+  nodes,
+  delay = 15
+}: {
+  nodes: TreeViewElement[]
+  delay?: number
+}): { nodes: TreeViewElement[]; currentParent: TreeNode; currentChild: TreeNode } => {
   const [updatedNodes, setUpdatedNodes] = useState<TreeViewElement[]>(nodes)
-  const [currentParent, setCurrentParent] = useState<TreeViewElement | null>(null)
-  const [currentChild, setCurrentChild] = useState<TreeViewElement | null>(null)
+  const [currentParent, setCurrentParent] = useState<TreeNode>(null)
+  const [currentChild, setCurrentChild] = useState<TreeNode>(null)
 
   useEffect(() => {
     if (nodes.length === 0) return
@@ -97,10 +102,10 @@ export const useTree = (
           }
         }
       }
-    }, interval * 1000) // Convert seconds to milliseconds
+    }, delay * 1000) // Convert seconds to milliseconds
 
     return () => clearInterval(intervalId) // Cleanup interval on component unmount or re-render
-  }, [nodes, interval])
+  }, [nodes, delay])
 
   return { nodes: updatedNodes, currentParent, currentChild }
 }

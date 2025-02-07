@@ -48,7 +48,6 @@ export const StepExecution: React.FC<StepExecutionProps> = ({ step, logs, onEdit
     setQuery(value)
   }
 
-  if (!step) return null
   return (
     <Tabs defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical>

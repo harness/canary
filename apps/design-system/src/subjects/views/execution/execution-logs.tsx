@@ -1,9 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import { useLogs } from '@/hooks/useLogs'
-import { useTree } from '@/hooks/useTree'
+import { TreeNode, useTree } from '@/hooks/useTree'
 
-import { TreeViewElement } from '@harnessio/ui/components'
 import {
   ExecutionHeader,
   ExecutionInfo,
@@ -11,17 +10,23 @@ import {
   ExecutionTabs,
   ExecutionTree,
   ILogsStore,
+  LivelogLine,
   NodeSelectionProps
 } from '@harnessio/ui/views'
 
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [currentStep, setCurrentStep] = useState<TreeViewElement | null | undefined>(null)
-  const { nodes: updatedElements, currentParent, currentChild } = useTree(elements)
+  const [currentStep, setCurrentStep] = useState<TreeNode>(null)
+  const { nodes: updatedElements, currentChild } = useTree({ nodes: elements, delay: 5 })
+
+  const memoizedLogs = useMemo((): LivelogLine[] => {
+    if (!currentStep || currentStep?.status === ExecutionState.PENDING) return []
+    return logs
+  }, [currentStep, logs])
 
   const { logs: currentLogs, timerId } = useLogs({
-    logs: currentStep ? (currentStep?.status === ExecutionState.PENDING ? [] : logs) : [],
+    logs: memoizedLogs,
     isStreaming: currentStep?.status === ExecutionState.RUNNING
   })
 
@@ -37,10 +42,8 @@ export const ExecutionLogsView = () => {
   }, [currentChild])
 
   useEffect(() => {
-    if (timerId) {
-      clearInterval(timerId)
-    }
-  }, [currentParent, currentChild])
+    if (timerId) clearInterval(timerId)
+  }, [currentChild])
 
   return (
     <div className="flex h-full flex-col">

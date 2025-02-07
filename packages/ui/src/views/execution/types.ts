@@ -13,11 +13,11 @@ export interface StepProps {
 }
 
 export interface StepExecutionProps {
-  step: StepProps
-  logs: LivelogLine[]
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
+  step?: StepProps
+  logs?: LivelogLine[]
   query?: string
   handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -33,12 +33,11 @@ export interface ILogsStore {
 }
 
 export interface ExecutionInfoProps {
-  stage: StageProps
-  selectedStepIdx: number
   useLogsStore: () => ILogsStore
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
+  stage?: StageProps
 }
 
 export interface ConsoleLogsProps {

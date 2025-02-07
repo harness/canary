@@ -395,7 +395,11 @@ const PullRequestPanel = ({
                       {actions[parseInt(mergeButtonValue)].title}
                     </ButtonWithOptions>
                   ) : (
-                    <Button theme="primary" disabled={!checkboxBypass && ruleViolation} onClick={actions[0].action}>
+                    <Button
+                      theme="primary"
+                      disabled={!checkboxBypass && ruleViolation && !isClosed}
+                      onClick={actions[0].action}
+                    >
                       Open for review
                     </Button>
                   )}

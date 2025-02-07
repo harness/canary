@@ -227,33 +227,30 @@ export default function PullRequestConversationPage() {
   }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
   useEffect(() => {
-    if (branchError) {
-      if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
-        setShowRestoreBranchButton(true)
-      } else {
-        setShowDeleteBranchButton(false)
-        createBranch({
-          repo_ref: repoRef,
-          body: {
-            name: pullReqMetadata?.source_branch || '',
-            target: pullReqMetadata?.source_sha,
-            bypass_rules: true,
-            dry_run_rules: true
-          }
-        }).then(res => {
-          if (res?.body?.rule_violations) {
-            const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
-            if (checkIfBypassAllowed) {
-              setShowRestoreBranchButton(true)
-            } else {
-              setShowRestoreBranchButton(false)
-            }
-          } else {
-            setShowRestoreBranchButton(true)
-          }
-        })
-      }
+    if (!branchError) return
+
+    if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
+      return setShowRestoreBranchButton(true)
     }
+
+    setShowDeleteBranchButton(false)
+    createBranch({
+      repo_ref: repoRef,
+      body: {
+        name: pullReqMetadata?.source_branch || '',
+        target: pullReqMetadata?.source_sha,
+        bypass_rules: true,
+        dry_run_rules: true
+      }
+    }).then(res => {
+      if (res?.body?.rule_violations) {
+        const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+
+        return setShowRestoreBranchButton(checkIfBypassAllowed)
+      }
+
+      setShowRestoreBranchButton(true)
+    })
   }, [branchError])
 
   const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
@@ -348,16 +345,12 @@ export default function PullRequestConversationPage() {
 
   const handleAddReviewer = (id?: number) => {
     reviewerAddPullReq({ repo_ref: repoRef, pullreq_number: prId, body: { reviewer_id: id } })
-      .then(() => {
-        refetchReviewers()
-      })
+      .then(() => refetchReviewers())
       .catch(error => setAddReviewerError(error.message))
   }
   const handleDeleteReviewer = (id: number) => {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
-      .then(() => {
-        refetchReviewers()
-      })
+      .then(() => refetchReviewers())
       .catch(error => setRemoveReviewerError(error.message))
   }
 
@@ -653,7 +646,8 @@ export default function PullRequestConversationPage() {
           searchLabelQuery: searchLabel,
           setSearchLabelQuery: changeSearchLabel,
           addLabel: handleAddLabel,
-          removeLabel: handleRemoveLabel
+          removeLabel: handleRemoveLabel,
+          editLabelsProps: { to: routes.toRepoLabels({ spaceId, repoId }) }
         }}
       />
     </>

@@ -414,17 +414,21 @@ const IconNameMap = {
   'square-dashed': SquareDashed
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
-export interface IconProps {
+export interface IconProps extends React.SVGProps<SVGSVGElement> {
   name: keyof typeof IconNameMap
   size?: number
-  height?: number
-  width?: number
-  className?: string
 }
 
 const Icon: React.FC<IconProps> = ({ name, size = 16, height, width, className }) => {
   const Component = IconNameMap[name]
-  return <Component width={width || size} height={height || size} className={className} />
+  return (
+    <Component
+      width={width || size}
+      height={height || size}
+      className={className}
+      style={{ minWidth: `${width || size}px`, minHeight: `${height || size}px` }}
+    />
+  )
 }
 
 export { Icon }

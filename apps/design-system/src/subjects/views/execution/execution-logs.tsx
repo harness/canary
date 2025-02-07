@@ -1,8 +1,9 @@
-import { useCallback } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { useLogs } from '@/hooks/useLogs'
 import { useTree } from '@/hooks/useTree'
 
+import { TreeViewElement } from '@harnessio/ui/components'
 import {
   ExecutionHeader,
   ExecutionInfo,
@@ -16,11 +17,12 @@ import {
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
+  const [currentStep, setCurrentStep] = useState<TreeViewElement | null>(null)
   const { nodes: updatedElements, currentParent, currentChild } = useTree(elements)
 
-  const { logs: currentLogs } = useLogs({
+  const { logs: currentLogs, timerId } = useLogs({
     logs,
-    isStreaming: currentParent?.status === ExecutionState.RUNNING && currentChild?.status === ExecutionState.RUNNING
+    isStreaming: currentStep?.status === ExecutionState.RUNNING
   })
 
   const useLogsStore = useCallback(
@@ -29,6 +31,16 @@ export const ExecutionLogsView = () => {
     }),
     [currentLogs]
   )
+
+  useEffect(() => {
+    setCurrentStep(currentChild)
+  }, [currentChild])
+
+  useEffect(() => {
+    if (timerId) {
+      clearInterval(timerId)
+    }
+  }, [currentParent, currentChild])
 
   return (
     <div className="flex h-full flex-col">
@@ -54,7 +66,9 @@ export const ExecutionLogsView = () => {
           <ExecutionTree
             defaultSelectedId={currentChild ? currentChild.id : elements[0]?.children?.[0]?.id}
             elements={updatedElements}
-            onSelectNode={(_selectedStep: NodeSelectionProps) => {}}
+            onSelectNode={(selectedNode: NodeSelectionProps) => {
+              setCurrentStep(selectedNode?.childNode)
+            }}
           />
         </div>
         <div className="flex flex-col gap-4 border border-t-0 border-white/10">

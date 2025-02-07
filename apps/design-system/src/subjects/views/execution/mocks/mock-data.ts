@@ -106,14 +106,14 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'initialize',
     name: 'Initialize',
-    status: ExecutionState.PENDING,
+    status: ExecutionState.RUNNING,
     duration: '--:--',
     isSelectable: true,
     children: [
       {
         id: 'fetch-repo',
         name: 'Fetch Repository',
-        status: ExecutionState.PENDING,
+        status: ExecutionState.RUNNING,
         duration: '--:--',
         isSelectable: true
       },

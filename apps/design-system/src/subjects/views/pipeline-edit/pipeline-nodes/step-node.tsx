@@ -1,4 +1,3 @@
-import { Button, Icon } from '@harnessio/ui/components'
 import { cn } from '@harnessio/ui/views'
 
 import './step-node.css'
@@ -7,8 +6,8 @@ import { LeafNodeInternalType } from '@harnessio/pipeline-graph'
 
 import { StepNodeDataType } from '../nodes/custom-step-node'
 import { ExecutionStatus } from './components/execution-status'
-// import { createRoundedRectPath } from '../utils/utils'
 import { FloatingAddButton } from './components/floating-add-button'
+import { NodeMenuTrigger } from './components/node-menu-trigger'
 import { WarningLabel } from './components/warning-label'
 
 export interface StepNodeProps {
@@ -18,6 +17,8 @@ export interface StepNodeProps {
   isFirst?: boolean
   parentNodeType?: 'leaf' | 'serial' | 'parallel'
   node: LeafNodeInternalType<StepNodeDataType>
+  hideContextMenu?: boolean
+  hideFloatingButtons?: boolean
   onEllipsisClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onClick?: (e: React.MouseEvent<HTMLElement, MouseEvent>) => void
   onAddClick?: (position: 'before' | 'after', e: React.MouseEvent<HTMLElement, MouseEvent>) => void
@@ -37,7 +38,9 @@ export function StepNode(props: StepNodeProps) {
     isFirst,
     parentNodeType,
     counter,
-    isCollapsedNode
+    isCollapsedNode,
+    hideContextMenu,
+    hideFloatingButtons
   } = props
 
   const nodeData = node.data
@@ -67,18 +70,9 @@ export function StepNode(props: StepNodeProps) {
           )}
           onClick={onClick}
         >
-          {onEllipsisClick && (
-            <Button
-              className="absolute right-2 top-2"
-              variant="ghost"
-              size="sm_icon"
-              onMouseDown={e => e.stopPropagation()}
-              onClick={onEllipsisClick}
-            >
-              <Icon className="text-icons-2" name="more-dots-fill" size={12} />
-            </Button>
-          )}
-          {isFirst && !isCollapsedNode && (
+          {!hideContextMenu && <NodeMenuTrigger onEllipsisClick={onEllipsisClick} />}
+
+          {!hideFloatingButtons && isFirst && !isCollapsedNode && (
             <FloatingAddButton
               parentNodeType={parentNodeType}
               position="before"
@@ -87,7 +81,7 @@ export function StepNode(props: StepNodeProps) {
               }}
             />
           )}
-          {!isCollapsedNode && (
+          {!hideFloatingButtons && !isCollapsedNode && (
             <FloatingAddButton
               parentNodeType={parentNodeType}
               position="after"

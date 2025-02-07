@@ -86,7 +86,7 @@ export function StepNodeComponent({
         </Drawer.Header>
         <div>
           <ExecutionInfo
-            logs={logs || []}
+            useLogsStore={() => ({ logs })}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}

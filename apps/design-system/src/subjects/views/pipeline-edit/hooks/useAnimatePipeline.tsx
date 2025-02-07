@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 
 import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
 
+import { PipelineNodeStatus } from '../nodes/types'
+
 export const useAnimatePipeline = ({
   nodes,
   delay = 1
@@ -19,14 +21,17 @@ export const useAnimatePipeline = ({
     const processNext = () => {
       if (index >= animatedNodes.length) return
 
-      // Mark node as 'executing'
+      // Ensure that 'data' is an object and exists before spreading
       const updatedNodes = [...animatedNodes]
-      updatedNodes[index].data = { ...updatedNodes[index].data, state: 'executing' }
+      const nodeData = updatedNodes[index].data ?? {} // Fallback to empty object if 'data' is null or undefined
+      updatedNodes[index].data = { ...nodeData, state: PipelineNodeStatus.Executing }
+
       setAnimatedNodes(updatedNodes)
 
       setTimeout(() => {
-        // Mark node as 'success' after delay
-        updatedNodes[index].data.state = 'success'
+        // Ensure that 'data' is an object before modifying
+        const updatedData = updatedNodes[index].data ?? {} // Fallback to empty object
+        updatedNodes[index].data = { ...updatedData, state: PipelineNodeStatus.Success }
         setAnimatedNodes([...updatedNodes])
 
         index++

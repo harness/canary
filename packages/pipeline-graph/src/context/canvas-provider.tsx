@@ -19,7 +19,7 @@ interface CanvasContextProps {
   canvasTransformRef: React.MutableRefObject<CanvasTransform>
   setTargetEl: (el: HTMLDivElement) => void
   setCanvasTransform: (
-    canvasTransform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial: boolean }
+    canvasTransform: CanvasTransform & { rootContainer?: HTMLDivElement; isInitial?: boolean }
   ) => void
   fit: () => void
   reset: () => void

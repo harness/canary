@@ -23,6 +23,8 @@ import {
   CommitSelectorListItem,
   CommitsList,
   IBranchSelectorStore,
+  ILabelType,
+  LabelValuesType,
   PullRequestSideBar,
   SandboxLayout,
   TranslationStore,
@@ -38,7 +40,13 @@ import TabTriggerItem from '@views/repo/pull-request/compare/components/pull-req
 import { noop } from 'lodash-es'
 import { z } from 'zod'
 
-import { EnumPullReqReviewDecision, PRReviewer, PullReqReviewDecision } from '../pull-request.types'
+import {
+  EnumPullReqReviewDecision,
+  HandleAddLabelType,
+  LabelAssignmentType,
+  PRReviewer,
+  PullReqReviewDecision
+} from '../pull-request.types'
 import PullRequestCompareDiffList from './components/pull-request-compare-diff-list'
 import { HeaderProps } from './pull-request-compare.types'
 
@@ -98,6 +106,13 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   isFetchingCommits?: boolean
   jumpToDiff: string
   setJumpToDiff: (fileName: string) => void
+  labelsList?: ILabelType[]
+  labelsValues?: LabelValuesType
+  PRLabels?: LabelAssignmentType[]
+  searchLabelQuery?: string
+  setSearchLabelQuery?: (query: string) => void
+  addLabel?: (data: HandleAddLabelType) => void
+  removeLabel?: (id: number) => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -136,7 +151,14 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   setDesc,
   isFetchingCommits,
   jumpToDiff,
-  setJumpToDiff
+  setJumpToDiff,
+  labelsList = [],
+  labelsValues = {},
+  PRLabels = [],
+  searchLabelQuery,
+  setSearchLabelQuery,
+  addLabel,
+  removeLabel
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
   const formRef = useRef<HTMLFormElement>(null) // Create a ref for the form
@@ -396,6 +418,13 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       searchQuery={searchReviewersQuery}
                       setSearchQuery={setSearchReviewersQuery}
                       useTranslationStore={useTranslationStore}
+                      labelsList={labelsList}
+                      labelsValues={labelsValues}
+                      PRLabels={PRLabels}
+                      addLabel={addLabel}
+                      removeLabel={removeLabel}
+                      searchLabelQuery={searchLabelQuery}
+                      setSearchLabelQuery={setSearchLabelQuery}
                     />
                   </div>
                 </TabsContent>

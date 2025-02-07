@@ -19,10 +19,10 @@ export const WebhookExecutionEditorControlBar: FC<FileEditorControlBarProps> = (
           unselectable={'on'}
           size="xs"
         >
-          <ToggleGroup.Item value="Payload" className="text-md">
+          <ToggleGroup.Item value="payload" className="text-md">
             Payload
           </ToggleGroup.Item>
-          <ToggleGroup.Item value="Server Response" className="text-md">
+          <ToggleGroup.Item value="server-response" className="text-md">
             Server Response
           </ToggleGroup.Item>
         </ToggleGroup.Root>

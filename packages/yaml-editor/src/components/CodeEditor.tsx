@@ -42,6 +42,7 @@ export function CodeEditor<T>({
   const monacoRef = useRef<typeof monaco>()
   const currentRevisionRef = useRef<CodeRevision>({ code: '', revisionId: 0 })
   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null)
+  console.log(codeRevision)
 
   const handleEditorDidMount = useCallback(
     (editorVal: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {

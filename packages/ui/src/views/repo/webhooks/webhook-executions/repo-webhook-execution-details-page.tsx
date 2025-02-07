@@ -27,6 +27,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
   const { t } = useTranslationStore()
   const { executionId, executions } = useWebhookStore()
   const [codeEditorContent, setCodeEditorContent] = useState({ code: '' })
+  const [view, setView] = useState('payload')
   const { theme } = useThemeStore()
 
   const monacoTheme = (theme ?? '').startsWith('dark') ? 'dark' : 'light'
@@ -42,6 +43,7 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
   const execution = useMemo(() => {
     return executions?.find(e => e.id === executionId)
   }, [executions, executionId])
+
   const unescapeAndEscapeToJson = (escapedString: string) => {
     try {
       //  Unescape the string by parsing it
@@ -58,15 +60,18 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
 
   useEffect(() => {
     if (execution) {
-      setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
+      if (view === 'payload') {
+        setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
+      } else if (view === 'server-response') {
+        console.log('execution.response?.body', execution.response?.body)
+        setCodeEditorContent({ code: execution.response?.body ?? '' })
+      }
     }
-  }, [execution])
+  }, [execution, view])
 
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
   }, [])
-
-  const [view, setView] = useState('Payload')
 
   const onChangeView = (value: string) => {
     setView(value)
@@ -126,13 +131,13 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
         <WebhookExecutionEditorControlBar view={view} onChangeView={onChangeView} />
         <CodeEditor
           height="500px"
-          language="json"
+          language={view === 'payload' ? 'json' : 'html'}
           codeRevision={codeEditorContent}
           onCodeRevisionChange={() => {}}
           themeConfig={themeConfig}
           theme={monacoTheme}
           options={{
-            readOnly: false
+            readOnly: true
           }}
         />
       </SandboxLayout.Content>

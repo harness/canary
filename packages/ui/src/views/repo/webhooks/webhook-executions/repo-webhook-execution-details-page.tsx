@@ -57,14 +57,22 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
       return ''
     }
   }
-
+  const formatHtml = (htmlString: string) => {
+    try {
+      const parser = new DOMParser()
+      const doc = parser.parseFromString(htmlString, 'text/html')
+      return doc.documentElement.outerHTML.replace(/></g, '>\n<') // Adds newlines for better readability
+    } catch (error) {
+      return htmlString
+    }
+  }
   useEffect(() => {
     if (execution) {
       if (view === 'payload') {
         setCodeEditorContent({ code: unescapeAndEscapeToJson(execution.request?.body ?? '') })
       } else if (view === 'server-response') {
         console.log('execution.response?.body', execution.response?.body)
-        setCodeEditorContent({ code: execution.response?.body ?? '' })
+        setCodeEditorContent({ code: formatHtml(execution.response?.body ?? '') })
       }
     }
   }, [execution, view])

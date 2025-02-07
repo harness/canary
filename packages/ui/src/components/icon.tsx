@@ -67,6 +67,7 @@ import DevInsightsGradient from '../icons/dev-insights-gradient.svg'
 import DevInsights from '../icons/dev-insights-icon.svg'
 import DevPortalGradient from '../icons/dev-portal-gradient.svg'
 import DevPortal from '../icons/dev-portal-icon.svg'
+import Docker from '../icons/docker.svg'
 import MoreDotsFill from '../icons/dots-icon.svg'
 import DoubleTick from '../icons/double-tick.svg'
 import Download from '../icons/download-icon.svg'
@@ -163,6 +164,7 @@ import SidebarIcon from '../icons/sidebar-icon.svg'
 import SidebarLeft from '../icons/sidebar-left.svg'
 import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
+import Slack from '../icons/slack.svg'
 import Snow from '../icons/snow-icon.svg'
 import Sparks from '../icons/sparks.svg'
 import SshKey from '../icons/ssh-key.svg'
@@ -383,7 +385,9 @@ const IconNameMap = {
   arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
-  'checkbox-circle': CheckboxCircle
+  'checkbox-circle': CheckboxCircle,
+  slack: Slack,
+  docker: Docker
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

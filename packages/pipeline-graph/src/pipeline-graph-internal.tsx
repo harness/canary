@@ -14,7 +14,6 @@ export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
   customCreateSVGPath?: CreateSVGPathType
   config?: {
-    edgeClassName?: string
     leftGap?: number
     mode?: 'Edit' | 'Execution'
   }

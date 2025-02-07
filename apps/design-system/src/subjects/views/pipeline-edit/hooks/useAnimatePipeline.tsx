@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
+import { AnyContainerNodeType, ParallelContainerNodeType, SerialContainerNodeType } from '@harnessio/pipeline-graph'
 
 import { PipelineNodeStatus } from '../nodes/types'
 
@@ -17,7 +17,7 @@ export const useAnimatePipeline = ({
     node.data = { ...(node.data ?? {}), state }
   }
 
-  const processParallelGroup = (node: AnyContainerNodeType, callback: () => void) => {
+  const processParallelGroup = (node: ParallelContainerNodeType, callback: () => void) => {
     if (!node.children || node.children.length === 0) {
       callback()
       return
@@ -36,7 +36,7 @@ export const useAnimatePipeline = ({
     })
   }
 
-  const processSerialGroup = (node: AnyContainerNodeType, callback: () => void) => {
+  const processSerialGroup = (node: SerialContainerNodeType, callback: () => void) => {
     if (!node.children || node.children.length === 0) {
       callback()
       return
@@ -62,9 +62,9 @@ export const useAnimatePipeline = ({
 
     setTimeout(() => {
       if (node.type === 'ParallelStageGroup') {
-        processParallelGroup(node, callback)
-      } else if (node.children && node.children.length > 0) {
-        processSerialGroup(node, callback)
+        processParallelGroup(node as ParallelContainerNodeType<unknown>, callback)
+      } else if ((node as SerialContainerNodeType).children && (node as SerialContainerNodeType).children.length > 0) {
+        processSerialGroup(node as SerialContainerNodeType, callback)
       } else {
         updateNodeState(node, PipelineNodeStatus.Success)
         setAnimatedNodes([...animatedNodes])

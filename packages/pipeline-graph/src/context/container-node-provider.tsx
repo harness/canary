@@ -1,6 +1,7 @@
 import { createContext, useContext, useMemo } from 'react'
 
 import { ParallelContainerConfig, SerialContainerConfig } from '../types/container-node'
+import {CollapseButtonProps} from "../components/components/collapse";
 
 export const defaultSerialContainerConfig = {
   paddingLeft: 42,
@@ -22,6 +23,7 @@ interface ContainerNodeContextProps {
   serialContainerConfig: SerialContainerConfig
   parallelContainerConfig: ParallelContainerConfig
   portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
+  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
 }
 
 const ContainerNodeContext = createContext<ContainerNodeContextProps>({
@@ -33,12 +35,14 @@ export interface ContainerNodeProviderProps {
   serialContainerConfig?: Partial<SerialContainerConfig>
   parallelContainerConfig?: Partial<ParallelContainerConfig>
   portComponent?: (props: { side: 'left' | 'right'; id?: string; adjustment?: number }) => JSX.Element
+  collapseButtonComponent?: (props: CollapseButtonProps) => JSX.Element
 }
 
 const ContainerNodeProvider = ({
   serialContainerConfig,
   parallelContainerConfig,
   portComponent,
+  collapseButtonComponent,
   children
 }: React.PropsWithChildren<ContainerNodeProviderProps>) => {
   const serialConfig: SerialContainerConfig = useMemo(() => {
@@ -58,7 +62,8 @@ const ContainerNodeProvider = ({
       value={{
         serialContainerConfig: serialConfig,
         parallelContainerConfig: parallelConfig,
-        portComponent
+        portComponent,
+        collapseButtonComponent
       }}
     >
       {children}

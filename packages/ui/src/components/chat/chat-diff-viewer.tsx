@@ -65,16 +65,16 @@ export const ChatDiffViewer = ({ data, mode = 4, lang = 'go', fileName }: ChatDi
   }, [data, lang, setDiffInstanceCb])
 
   return (
-    <div className="border-borders-1 bg-background-1 mr-7 mt-3 flex flex-col rounded-md border">
+    <div className="mr-7 mt-3 flex flex-col rounded-md border border-borders-1 bg-background-1">
       {fileName && (
-        <span className="bg-background-2 text-foreground-1 text-14 rounded-[inherit] p-4 font-medium">{fileName}</span>
+        <span className="rounded-[inherit] bg-background-2 p-4 text-14 font-medium text-foreground-1">{fileName}</span>
       )}
       {diffFileInstance && (
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         <DiffView
           style={{ '--diff-plain-lineNumber--': 'hsl(var(--canary-background-01))' } as CSSProperties}
-          className="text-foreground-8 w-full"
+          className="w-full text-foreground-8"
           diffFile={diffFileInstance}
           diffViewFontSize={14}
           diffViewHighlight={true}

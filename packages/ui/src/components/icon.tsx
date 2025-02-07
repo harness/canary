@@ -162,6 +162,7 @@ import SidebarLeft from '../icons/sidebar-left.svg'
 import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
 import Snow from '../icons/snow-icon.svg'
+import SparksGradient from '../icons/sparks-gradient.svg'
 import Sparks from '../icons/sparks.svg'
 import SshKey from '../icons/ssh-key.svg'
 import Stack from '../icons/stack-icon.svg'
@@ -260,6 +261,7 @@ const IconNameMap = {
   'python-and-node-logo': PythonAndNodeLogo,
   'ai-sparks': AISparks,
   sparks: Sparks,
+  'sparks-gradient': SparksGradient,
   'pr-open': PrOpen,
   'pr-review': PrReview,
   'pr-closed': PrClosed,

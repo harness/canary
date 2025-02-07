@@ -75,6 +75,7 @@ export * from './separator'
 export * from './label-marker'
 export * from './problems'
 export * from './treeview'
+export * from './widget'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

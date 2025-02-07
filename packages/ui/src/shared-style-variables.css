@@ -658,6 +658,13 @@
     --canary-box-shadow-pagination: var(--canary-base-chrome-300) / 0.12;
     --shadow-sm: var(--canary-base-chrome-100);
 
+    --canary-widget-bg-gradient-from: var(--canary-base-chrome-100) / 1;
+    --canary-widget-bg-gradient-to: var(--canary-base-chrome-white) / 1;
+    --canary-widget-number-gradient-from: var(--canary-base-chrome-500) / 1;
+    --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 1;
+    --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-150) / 1;
+    --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-white) / 1;
+
     /* Navigation gradients */
     /* We’ve removed them until we find a better solution in the design.
     --canary-nav-gradient-1-1: var();
@@ -1113,6 +1120,13 @@
       hsl(240deg 6% 20%/40%),
       hsl(240deg 6% 20%/0%)
     );
+
+    --canary-widget-bg-gradient-from: var(--canary-grey-20) / 0.4;
+    --canary-widget-bg-gradient-to: var(--canary-grey-20) / 0;
+    --canary-widget-number-gradient-from: var(--canary-grey-80) / 1;
+    --canary-widget-number-gradient-to: var(--canary-base-chrome-200) / 0;
+    --canary-widget-number-bg-gradient-from: var(--canary-grey-40) / 0.8;
+    --canary-widget-number-bg-gradient-to: var(--canary-grey-40) / 0;
 
     /* Labels colors */
     --canary-label-background-black-01: hsla(240, 13%, 3%, 0.47);

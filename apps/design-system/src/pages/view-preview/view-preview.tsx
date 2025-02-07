@@ -33,6 +33,7 @@ import { RepoFilesMarkdownView } from '@subjects/views/repo-files/repo-files-mar
 import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-general-settings'
 import { ImportRepoView } from '@subjects/views/repo-import'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
+import RepoSummaryViewWithWidgetWrapper from '@subjects/views/repo-summary-with-widget/repo-summary-with-widget'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
@@ -81,6 +82,11 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RootViewWrapper>
       <RepoListWrapper />
     </RootViewWrapper>
+  ),
+  'repo-summary-with-widget': (
+    <RepoViewWrapper>
+      <RepoSummaryViewWithWidgetWrapper />
+    </RepoViewWrapper>
   ),
   'pull-request-list': (
     <RepoViewWrapper>

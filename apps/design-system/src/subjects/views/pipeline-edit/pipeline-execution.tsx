@@ -4,7 +4,8 @@ import { CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
 import { PipelineStudioNodeContextMenu, PipelineStudioNodeContextProvider } from '@harnessio/ui/views'
 
 import { CanvasControls } from './canvas/canvas-controls'
-import { demoExecutionMock } from './mocks/demoExecutionMock'
+import { useAnimatePipeline } from './hooks/useAnimatePipeline'
+import { demoExecutionMock } from './mocks/animations/demoExecutionMock'
 import { parallelContainerConfig, serialContainerConfig } from './mocks/pipelineExecutionMock'
 import { contentNodeFactory } from './nodes-factory'
 import CustomPort from './pipeline-nodes/components/custom-port'
@@ -31,6 +32,7 @@ export default PipelineExecution
 
 const PipelineExecutionInner = () => {
   const nodes = useMemo(() => contentNodeFactory.getNodesDefinition(), [contentNodeFactory])
+  const { nodes: animatedNodes } = useAnimatePipeline({ nodes: demoExecutionMock, delay: 5 })
 
   return (
     <div className="relative flex  grow">
@@ -45,7 +47,7 @@ const PipelineExecutionInner = () => {
           }}
           portComponent={CustomPort}
           edgesConfig={{ radius: 10, parallelNodeOffset: 10, serialNodeOffset: 10 }}
-          data={demoExecutionMock}
+          data={animatedNodes}
           nodes={nodes}
           serialContainerConfig={serialContainerConfig}
           parallelContainerConfig={parallelContainerConfig}

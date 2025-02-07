@@ -1,7 +1,6 @@
-import { AnyContainerNodeType } from '@harnessio/pipeline-graph'
 import { Icon } from '@harnessio/ui/components'
 
-export const demoExecutionMock: AnyContainerNodeType[] = [
+export const demoExecutionMock = [
   {
     type: 'Start',
     config: {

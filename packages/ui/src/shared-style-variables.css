@@ -62,6 +62,7 @@
   --canary-base-chrome-black: 240 10.3% 5.7%;
   --canary-accent-50: 210 100% 96.5%;
   --canary-accent-100: 210.7 100% 92%;
+  --canary-accent-150: 215.3 89.5% 88.8%;
   --canary-accent-200: 212.6 100% 77.6%;
   --canary-accent-300: 213.2 100% 67.1%;
   --canary-accent-400: 211 99.2% 50.2%;
@@ -84,7 +85,7 @@
   --canary-green-950: 135 23.5% 6.7%;
   --canary-red-50: 11.2 80% 96.1%;
   --canary-red-100: 9.4 100% 93.7%;
-  --canary-red-150: 9.2 100% 89.8%;
+  --canary-red-150: 9.3 93.5% 87.8%;
   --canary-red-200: 7.8 100% 74.3%;
   --canary-red-300: 6.4 100% 68.8%;
   --canary-red-400: 4.7 69.7% 53.3%;
@@ -97,6 +98,7 @@
   --canary-red-950: 8 33.3% 8.8%;
   --canary-amber-50: 52.7 100% 93.5%;
   --canary-amber-100: 49 95.3% 83.1%;
+  --canary-amber-150: 45.9 83.5% 81%;
   --canary-amber-200: 44.2 70.5% 69.4%;
   --canary-amber-300: 42.1 63.3% 61.6%;
   --canary-amber-400: 40.2 56.5% 54.9%;
@@ -114,6 +116,7 @@
   --canary-pink-900: 330 32.4% 13.3%;
   --canary-purple-50: 260 100% 98.8%;
   --canary-purple-100: 262.8 100% 94.3%;
+  --canary-purple-150: 265.1 100% 89.2%;
   --canary-purple-200: 267.8 100% 81%;
   --canary-purple-300: 266.7 98.3% 76.3%;
   --canary-purple-400: 267.9 73.4% 66.1%;
@@ -171,6 +174,7 @@
   --canary-violet-900: 270 52.6% 14.9%;
   --canary-peach-50: 0 100% 98%;
   --canary-peach-100: 1.9 100% 93.9%;
+  --canary-peach-150: 0.9 100% 86.7%;
   --canary-peach-200: 358.9 100% 78.2%;
   --canary-peach-700: 355.5 48.7% 37.5%;
   --canary-peach-850: 355.6 50.5% 21.4%;
@@ -589,35 +593,35 @@
     --canary-tag-foreground-gray-01: var(--canary-base-chrome-800);
     --canary-tag-border-gray-01: var(--canary-base-chrome-200);
     --canary-tag-background-gray-01: var(--canary-base-chrome-100);
-    --canary-tag-background-gray-02: var(--canary-base-chrome-200);
+    --canary-tag-background-gray-02: var(--canary-base-chrome-150);
     /* --purple */
     --canary-tag-foreground-purple-01: var(--canary-purple-700);
-    --canary-tag-border-purple-01: var(--canary-purple-100);
+    --canary-tag-border-purple-01: var(--canary-purple-150);
     --canary-tag-background-purple-01: var(--canary-purple-50);
     --canary-tag-background-purple-02: var(--canary-purple-100);
     /* --blue */
     --canary-tag-foreground-blue-01: var(--canary-accent-700);
-    --canary-tag-border-blue-01: var(--canary-accent-100);
+    --canary-tag-border-blue-01: var(--canary-accent-150);
     --canary-tag-background-blue-01: var(--canary-accent-50);
     --canary-tag-background-blue-02: var(--canary-accent-100);
     /* --mint */
     --canary-tag-foreground-mint-01: var(--canary-green-700);
-    --canary-tag-border-mint-01: var(--canary-green-100);
+    --canary-tag-border-mint-01: var(--canary-green-150);
     --canary-tag-background-mint-01: var(--canary-green-50);
     --canary-tag-background-mint-02: var(--canary-green-100);
     /* --amber */
     --canary-tag-foreground-amber-01: var(--canary-amber-700);
-    --canary-tag-border-amber-01: var(--canary-amber-100);
+    --canary-tag-border-amber-01: var(--canary-amber-150);
     --canary-tag-background-amber-01: var(--canary-amber-50);
     --canary-tag-background-amber-02: var(--canary-amber-100);
     /* --peach */
     --canary-tag-foreground-peach-01: var(--canary-peach-700);
-    --canary-tag-border-peach-01: var(--canary-peach-100);
+    --canary-tag-border-peach-01: var(--canary-peach-150);
     --canary-tag-background-peach-01: var(--canary-peach-50);
     --canary-tag-background-peach-02: var(--canary-peach-100);
     /* --red */
     --canary-tag-foreground-red-01: var(--canary-red-700);
-    --canary-tag-border-red-01: var(--canary-red-100);
+    --canary-tag-border-red-01: var(--canary-red-150);
     --canary-tag-background-red-01: var(--canary-red-50);
     --canary-tag-background-red-02: var(--canary-red-100);
 
@@ -841,35 +845,35 @@
     --canary-tag-foreground-gray-01: var(--canary-base-chrome-800);
     --canary-tag-border-gray-01: var(--canary-base-chrome-200);
     --canary-tag-background-gray-01: var(--canary-base-chrome-100);
-    --canary-tag-background-gray-02: var(--canary-base-chrome-200);
+    --canary-tag-background-gray-02: var(--canary-base-chrome-150);
     /* --purple */
     --canary-tag-foreground-purple-01: var(--canary-purple-700);
-    --canary-tag-border-purple-01: var(--canary-purple-100);
+    --canary-tag-border-purple-01: var(--canary-purple-150);
     --canary-tag-background-purple-01: var(--canary-purple-50);
     --canary-tag-background-purple-02: var(--canary-purple-100);
     /* --blue */
     --canary-tag-foreground-blue-01: var(--canary-accent-700);
-    --canary-tag-border-blue-01: var(--canary-accent-100);
+    --canary-tag-border-blue-01: var(--canary-accent-150);
     --canary-tag-background-blue-01: var(--canary-accent-50);
     --canary-tag-background-blue-02: var(--canary-accent-100);
     /* --mint */
     --canary-tag-foreground-mint-01: var(--canary-yellow-700);
-    --canary-tag-border-mint-01: var(--canary-yellow-100);
+    --canary-tag-border-mint-01: var(--canary-yellow-150);
     --canary-tag-background-mint-01: var(--canary-yellow-50);
     --canary-tag-background-mint-02: var(--canary-yellow-100);
     /* --amber */
     --canary-tag-foreground-amber-01: var(--canary-amber-700);
-    --canary-tag-border-amber-01: var(--canary-amber-100);
+    --canary-tag-border-amber-01: var(--canary-amber-150);
     --canary-tag-background-amber-01: var(--canary-amber-50);
     --canary-tag-background-amber-02: var(--canary-amber-100);
     /* --peach */
     --canary-tag-foreground-peach-01: var(--canary-peach-700);
-    --canary-tag-border-peach-01: var(--canary-peach-100);
+    --canary-tag-border-peach-01: var(--canary-peach-150);
     --canary-tag-background-peach-01: var(--canary-peach-50);
     --canary-tag-background-peach-02: var(--canary-peach-100);
     /* --red */
     --canary-tag-foreground-red-01: var(--canary-indigo-700);
-    --canary-tag-border-red-01: var(--canary-indigo-100);
+    --canary-tag-border-red-01: var(--canary-indigo-150);
     --canary-tag-background-red-01: var(--canary-indigo-50);
     --canary-tag-background-red-02: var(--canary-indigo-100);
 

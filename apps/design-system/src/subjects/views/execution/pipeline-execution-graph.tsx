@@ -1,3 +1,5 @@
+import { useCallback } from 'react'
+
 import {
   AnyContainerNodeType,
   CanvasProvider,
@@ -18,7 +20,9 @@ import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionInfo, LivelogLine, StageProps } from '@harnessio/ui/views'
+import { useLogs } from '@/hooks/useLogs'
+
+import { ExecutionInfo, ExecutionState, ILogsStore, LivelogLine, StageProps } from '@harnessio/ui/views'
 
 import { logs, stages } from './mocks/mock-data'
 
@@ -52,6 +56,7 @@ interface NodeProps {
 }
 
 interface DataProps {
+  status?: ExecutionState
   stage?: StageProps
   logs?: LivelogLine[]
 }
@@ -69,7 +74,19 @@ export function StepNodeComponent({
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
-  const { name, icon, logs, stage } = node.data
+  const { name, icon, logs = [], stage, status } = node.data
+  const { logs: currentLogs } = useLogs({
+    logs: logs,
+    isStreaming: status === ExecutionState.RUNNING
+  })
+
+  const useLogsStore = useCallback(
+    (): ILogsStore => ({
+      logs: currentLogs
+    }),
+    [currentLogs]
+  )
+
   const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
 
   if (mode === 'Edit') {
@@ -86,7 +103,7 @@ export function StepNodeComponent({
         </Drawer.Header>
         <div>
           <ExecutionInfo
-            useLogsStore={() => ({ logs })}
+            useLogsStore={useLogsStore}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}
@@ -267,10 +284,11 @@ const data: AnyContainerNodeType[] = [
   {
     type: ContentNodeTypes.step,
     data: {
-      name: 'Step 1',
+      name: 'Node Install',
       icon: <Icon name="harness-plugin" className="m-2 size-8" />,
-      logs: logs,
-      stage: stages[0]
+      logs,
+      stage: stages[0],
+      status: ExecutionState.RUNNING
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -278,14 +296,17 @@ const data: AnyContainerNodeType[] = [
     }
   },
   {
-    type: ContentNodeTypes.approval,
+    type: ContentNodeTypes.step,
     data: {
-      name: 'Approval 1',
-      icon: <Icon name="harness-plugin" className="m-2 size-8" />
+      name: 'Node Test',
+      icon: <Icon name="harness-plugin" className="m-2 size-8" />,
+      logs,
+      stage: stages[0],
+      status: ExecutionState.SUCCESS
     } satisfies StepNodeDataType,
     config: {
-      width: 120,
-      height: 120
+      width: 160,
+      height: 80
     }
   },
   {
@@ -301,7 +322,7 @@ const data: AnyContainerNodeType[] = [
       {
         type: ContentNodeTypes.step,
         data: {
-          name: 'Step 2',
+          name: 'Go Build',
           icon: <Icon name="harness-plugin" className="m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
@@ -312,7 +333,7 @@ const data: AnyContainerNodeType[] = [
       {
         type: ContentNodeTypes.step,
         data: {
-          name: 'Step 3',
+          name: 'Go Test',
           icon: <Icon name="harness-plugin" className="m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
@@ -335,7 +356,7 @@ const data: AnyContainerNodeType[] = [
       {
         type: ContentNodeTypes.step,
         data: {
-          name: 'Step 4',
+          name: 'Dockerize',
           icon: <Icon name="harness-plugin" className="m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {
@@ -346,7 +367,7 @@ const data: AnyContainerNodeType[] = [
       {
         type: ContentNodeTypes.step,
         data: {
-          name: 'Step 4',
+          name: 'Slack Notify',
           icon: <Icon name="harness-plugin" className="m-2 size-8" />
         } satisfies StepNodeDataType,
         config: {

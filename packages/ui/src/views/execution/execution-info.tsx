@@ -32,7 +32,7 @@ export const ExecutionInfo: React.FC<ExecutionInfoProps> = ({
   }
 
   return step ? (
-    <StepExecution step={step} logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />
+    <StepExecution step={step} logs={logs || []} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />
   ) : (
     <></>
   )

@@ -86,7 +86,7 @@ export const elements: ExecutionTreeProps['elements'] = [
   {
     id: 'initialize',
     name: 'Initialize',
-    status: ExecutionState.PENDING,
+    status: ExecutionState.RUNNING,
     duration: '--:--',
     isSelectable: true,
     children: [

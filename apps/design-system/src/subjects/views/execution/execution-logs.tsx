@@ -17,10 +17,10 @@ import {
 import { elements, logs, stages } from './mocks/mock-data'
 
 export const ExecutionLogsView = () => {
-  const [_, setCurrentStep] = useState<TreeViewElement | undefined | null>(null)
+  const [selectedStep, setSelectedStep] = useState<TreeViewElement | undefined | null>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements, logs, delay: 2 }) // animates the execution tree
-  const { logs: streamedLogs } = useLogs({ logs, isStreaming: true }) // animates the logs
+  const { updatedElements, currentNode } = useAnimateTree({ nodes: elements, logs, delay: 5 }) // animates the execution tree
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: true, delay: 2 }) // animates the logs
 
   const useLogsStore = useCallback(
     (): ILogsStore => ({
@@ -51,10 +51,10 @@ export const ExecutionLogsView = () => {
       <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
         <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
           <ExecutionTree
-            defaultSelectedId={currentNode?.id ?? elements[0].id}
+            defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}
             elements={updatedElements}
             onSelectNode={(selectedNode: NodeSelectionProps) => {
-              setCurrentStep(selectedNode?.childNode)
+              setSelectedStep(selectedNode?.childNode)
             }}
           />
         </div>

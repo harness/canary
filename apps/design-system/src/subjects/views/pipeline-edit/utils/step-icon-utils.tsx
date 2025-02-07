@@ -20,10 +20,10 @@ const getIconNameBasedOnStep = (step: any): IconProps['name'] => {
   if (getIsTemplateStep(step)) {
     switch (step.template.uses) {
       case 'slack':
-        return 'rocket'
+        return 'slack'
         break
       case 'docker':
-        return 'star'
+        return 'docker'
         break
     }
   }

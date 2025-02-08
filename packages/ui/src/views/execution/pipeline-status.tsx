@@ -1,5 +1,3 @@
-import { FC } from 'react'
-
 import { ExecutionState } from '@views/repo/pull-request'
 
 import { ExecutionStatus } from './execution-status'

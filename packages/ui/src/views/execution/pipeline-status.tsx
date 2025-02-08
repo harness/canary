@@ -16,8 +16,8 @@ interface PipelineStatusProps {
 
 const PipelineStatus: FC<PipelineStatusProps> = ({
   status,
-  // buildTime,
-  // createdTime,
+  buildTime,
+  createdTime,
   commit,
   branch,
   // startedTime,

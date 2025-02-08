@@ -2,7 +2,7 @@
 export * from './types/link-types'
 
 // layouts
-export * as SandboxLayout from './layouts/SandboxLayout'
+export * from './layouts/SandboxLayout'
 export * from './layouts/Floating1ColumnLayout'
 export * from './layouts/PullRequestLayout'
 export * from './layouts/content-layout-with-sidebar'

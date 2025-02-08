@@ -80,13 +80,13 @@ const PipelineStatus: FC<PipelineStatusProps> = ({
         <span className="leading-tight text-foreground-4">Status</span>
         <ExecutionStatus.Badge status={status} minimal />
       </div>
-      <div className="flex flex-col">
-        <span className="text-foreground-5">Build time</span>
-        <span className="text-primary">{elapsedTime}</span>
+      <div className="flex flex-col gap-1.5">
+        <span className="text-foreground-4">Build time</span>
+        <span className="text-foreground-1">{elapsedTime}</span>
       </div>
-      <div className="flex flex-col">
-        <span className="text-foreground-5">Created</span>
-        <span className="text-primary">{createdTimeElapsed}</span>
+      <div className="flex flex-col gap-1.5">
+        <span className="text-foreground-4">Created</span>
+        <span className="text-foreground-1">{createdTimeElapsed}</span>
       </div>
       {delegateType && (
         <div className="flex flex-col gap-1.5">

@@ -1,4 +1,4 @@
-import { ExecutionState, ExecutionTreeProps, LivelogLine } from '@harnessio/ui/views'
+import { ExecutionState, ExecutionTreeProps, LivelogLine, LivelogLineType } from '@harnessio/ui/views'
 
 export const logs: LivelogLine[] = [
   { out: 'Starting dependency installation...', pos: 1, time: 1700000001, duration: 2 },

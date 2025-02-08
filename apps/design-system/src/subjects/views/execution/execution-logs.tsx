@@ -75,12 +75,12 @@ export const ExecutionLogsView = () => {
         branch="master"
         commit="b8bruh99h"
         status={ExecutionState.RUNNING}
-        buildTime={formatTime(buildTime)}
+        buildTime="1h 30m"
         createdTime="10 mins ago"
         pipelineName="build scan push test - k8s - Clone 2"
       />
-      <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
-        <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
+      <div className="border-borders-4 grid h-[inherit] border-t" style={{ gridTemplateColumns: '1fr 3fr' }}>
+        <div className="border-borders-4 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
           <ExecutionTree
             defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}
             elements={updatedElements}
@@ -89,7 +89,7 @@ export const ExecutionLogsView = () => {
             }}
           />
         </div>
-        <div className="flex flex-col gap-4 border border-t-0 border-white/10">
+        <div className="border-borders-4 flex flex-col gap-4">
           <ExecutionInfo useLogsStore={useLogsStore} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
       </div>

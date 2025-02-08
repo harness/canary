@@ -1,6 +1,5 @@
 import { FC, useCallback, useEffect, useRef } from 'react'
 
-import { Text } from '@/components'
 import { cn } from '@utils/cn'
 
 import { formatTimestamp } from '../../utils/TimeUtils'

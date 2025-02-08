@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
-import { Icon as CanaryIcon } from '@/components'
+import { Icon as CanaryIcon, ScrollArea } from '@/components'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -139,19 +138,21 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           direction
         }}
       >
-        <div className={cn('size-full', className)}>
-          <AccordionPrimitive.Root
-            {...props}
-            type="multiple"
-            defaultValue={expendedItems}
-            value={expendedItems}
-            className="flex flex-col gap-3"
-            onValueChange={value => setExpendedItems(prev => [...(prev ?? []), value[0]])}
-            dir={dir as Direction}
-          >
-            {children}
-          </AccordionPrimitive.Root>
-        </div>
+        <ScrollArea className="pt-4" dir={dir as Direction}>
+          <div className={cn('size-full', className)}>
+            <AccordionPrimitive.Root
+              {...props}
+              type="multiple"
+              defaultValue={expendedItems}
+              value={expendedItems}
+              className="flex flex-col gap-3"
+              onValueChange={value => setExpendedItems(prev => [...(prev ?? []), value[0]])}
+              dir={dir as Direction}
+            >
+              {children}
+            </AccordionPrimitive.Root>
+          </div>
+        </ScrollArea>
       </TreeContext.Provider>
     )
   }
@@ -193,10 +194,10 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
     const { direction, handleExpand, expendedItems, setExpendedItems } = useTree()
 
     return (
-      <AccordionPrimitive.Item {...props} value={value} className="relative size-full overflow-hidden">
+      <AccordionPrimitive.Item {...props} value={value} className="relative -mb-3 size-full overflow-hidden pb-3">
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full items-center gap-1 rounded-md text-sm`,
+            `flex w-full items-center gap-1 rounded-md text-sm px-5`,
             className,
             {
               'rounded-md': isSelect && isSelectable,
@@ -224,7 +225,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
             <span className="text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-hidden text-sm">
+        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-visible px-5 text-sm">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -284,8 +285,11 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
-            { ['bg-[#18181B] px-2']: isSelected },
+            'flex relative w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
+            {
+              ['after:absolute after:bg-background-4 after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+                isSelected
+            },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
             level >= 2 && 'pl-14',
             level === 1 && 'pl-7',
@@ -296,12 +300,12 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="flex w-full items-baseline justify-between pl-4">
-            <div className="flex items-baseline">
-              <div className="mr-1 flex size-4 self-center">{getStatusIcon(status)}</div>
-              <span className="ml-1 text-sm font-normal">{children}</span>
+          <div className="relative flex w-full items-center justify-between pl-4">
+            <div className="flex items-center">
+              {getStatusIcon(status)}
+              <span className="text-foreground-8 ml-1 leading-tight">{children}</span>
             </div>
-            <span className="text-muted-foreground">{duration ?? '--'}</span>
+            <span className="text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

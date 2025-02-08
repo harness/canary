@@ -8,6 +8,7 @@ interface RenderTreeElementProps {
   element: TreeViewElement
   handleClick: ExecutionTreeProps['onSelectNode']
   parentElement?: TreeViewElement | null
+  level?: number
 }
 
 export const renderTree = (
@@ -20,41 +21,53 @@ export const renderTree = (
   ))
 }
 
-const renderTreeFolder = ({ element: folderElement, handleClick }: RenderTreeElementProps): ReactNode => {
+const renderTreeFolder = ({ element: folderElement, handleClick, level = 0 }: RenderTreeElementProps): ReactNode => {
   return (
     <Folder
       element={folderElement.name}
       value={folderElement.id}
       status={folderElement.status}
       duration={folderElement.duration}
+      level={level}
     >
       {folderElement.children?.map(childElement => (
-        <div key={childElement.id}>
-          {renderTreeElement({ parentElement: folderElement, element: childElement, handleClick })}
+        <div key={childElement.id} data-level={level}>
+          {renderTreeElement({ parentElement: folderElement, element: childElement, handleClick, level: level + 1 })}
         </div>
       ))}
     </Folder>
   )
 }
 
-const renderTreeFile = ({ element: fileElement, handleClick, parentElement }: RenderTreeElementProps): ReactNode => {
+const renderTreeFile = ({
+  element: fileElement,
+  handleClick,
+  parentElement,
+  level = 0
+}: RenderTreeElementProps): ReactNode => {
   return (
     <File
       value={fileElement.id}
       status={fileElement.status}
       duration={fileElement.duration}
       handleSelect={() => handleClick({ parentNode: parentElement, childNode: fileElement })}
+      level={level}
     >
-      <p>{fileElement.name}</p>
+      <p data-level={level}>{fileElement.name}</p>
     </File>
   )
 }
 
-const renderTreeElement = ({ element, handleClick, parentElement }: RenderTreeElementProps): React.ReactNode => {
+const renderTreeElement = ({
+  element,
+  handleClick,
+  parentElement,
+  level = 0
+}: RenderTreeElementProps): React.ReactNode => {
   if (element.children && element.children.length > 0) {
-    return renderTreeFolder({ element, handleClick, parentElement })
+    return renderTreeFolder({ element, handleClick, parentElement, level })
   }
-  return renderTreeFile({ element, handleClick, parentElement })
+  return renderTreeFile({ element, handleClick, parentElement, level })
 }
 
 export const getElementById = (elements: TreeViewElement[], id: string): TreeViewElement | null => {

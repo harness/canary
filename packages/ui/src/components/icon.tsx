@@ -175,6 +175,7 @@ import SparksGradientDark from '../icons/sparks-gradient-dark.svg'
 import SparksGradientLight from '../icons/sparks-gradient-light.svg'
 import SparksGradient from '../icons/sparks-gradient.svg'
 import Sparks from '../icons/sparks.svg'
+import SquareDashed from '../icons/square-dashed.svg'
 import SshKey from '../icons/ssh-key.svg'
 import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
@@ -407,7 +408,8 @@ const IconNameMap = {
   docker: Docker,
   stop: Stop,
   'collapse-out': CollapseOut,
-  'collapse-in': CollapseIn
+  'collapse-in': CollapseIn,
+  'square-dashed': SquareDashed
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

@@ -1,0 +1,272 @@
+---
+title: Card
+description: Card component documentation
+---
+
+The `Card` component provides a flexible UI element for displaying content within a card layout. It is composed of several subcomponents such as Card.Header, Card.Footer, Card.Title, Card.Description, and Card.Content to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex flex-col space-y-8">
+    <Card.Root variant="default" width="md">
+      <Card.Header>
+        <Card.Title as="h4">Card Title H4</Card.Title>
+        <Card.Description>This is the card description.</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        Card content goes here.
+      </Card.Content>
+      <Card.Footer>
+        Footer text goes here.
+      </Card.Footer>
+    </Card.Root>
+
+    <Card.Root variant="plain" width="lg">
+      <Card.Header>
+        <Card.Title as="h5">Card Title H5</Card.Title>
+        <Card.Description>This is the card description.</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        Card content goes here.
+      </Card.Content>
+      <Card.Footer>
+        Footer text goes here.
+      </Card.Footer>
+    </Card.Root>
+
+    <Card.Root variant="default" width="full">
+      <Card.Header>
+        <Card.Title as="h6">Card Title H6</Card.Title>
+        <Card.Description>This is the card description.</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        Card content goes here.
+      </Card.Content>
+      <Card.Footer>
+        Footer text goes here.
+      </Card.Footer>
+    </Card.Root>
+
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Card } from '@harnessio/ui/components'
+
+return (
+    <Card.Root variant="default" width="md">
+      <Card.Header>
+        <Card.Title as="h1">Card Title H1</Card.Title>
+        <Card.Description>This is the card description.</Card.Description>
+      </Card.Header>
+      <Card.Content>
+        Card content goes here.
+      </Card.Content>
+      <Card.Footer>
+        Footer text goes here.
+      </Card.Footer>
+    </Card.Root>
+)
+```
+
+## Anatomy
+
+All parts of the Card component can be imported and composed as required.
+
+```typescript jsx
+<Card.Root>
+  <Card.Header>
+    <Card.Title>Card Title</Card.Title>
+    <Card.Description>This is the card description.</Card.Description>
+  </Card.Header>
+  <Card.Content>
+    Card content goes here.
+  </Card.Content>
+  <Card.Footer>
+    Footer text goes here.
+  </Card.Footer>
+</Card.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all card elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Card.Header`, `Card.Content`, and `Card.Footer` as children",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the root element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "variant",
+      description: "Variant of the card",
+      required: false,
+      value: "'default' | 'plain'",
+      defaultValue: "default",
+    },
+    {
+      name: "width",
+      description: "Width of the card",
+      required: false,
+      value:
+        "'auto' | 'full' | 'screen' | 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | string",
+      defaultValue: "auto",
+    },
+  ]}
+/>
+
+### Header
+
+The `Header` component is used to define the header section of the card.
+
+```typescript jsx
+<Card.Header>
+  <Card.Title>Card Title</Card.Title>
+  <Card.Description>This is the card description.</Card.Description>
+</Card.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the header",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Title
+
+The `Title` component displays the title of the card.
+
+```typescript jsx
+<Card.Title>Card Title</Card.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the title",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "as",
+      description: "HTML tag to use for the title",
+      required: false,
+      value: "'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
+      defaultValue: "h3",
+    },
+  ]}
+/>
+
+### Description
+
+The `Description` component displays the description of the card.
+
+```typescript jsx
+<Card.Description>This is the card description.</Card.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the description",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Content
+
+The `Content` component defines the main content area of the card.
+
+```typescript jsx
+<Card.Content>
+  Card content goes here.
+</Card.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the content",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Footer
+
+The `Footer` component is used to define the footer section of the card.
+
+```typescript jsx
+<Card.Footer>
+  Footer text goes here.
+</Card.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the footer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

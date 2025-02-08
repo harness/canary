@@ -6,8 +6,8 @@ import { ExecutionStatus } from './execution-status'
 
 const PipelineStatus = ({
   status,
-  buildTime,
-  createdTime,
+  // buildTime,
+  // createdTime,
   commit,
   branch
 }: {

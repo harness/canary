@@ -1,4 +1,5 @@
 import { Icon, Popover, PopoverContent, PopoverTrigger, Select, SelectContent, SelectItem } from '@/components'
+import { cn } from '@utils/cn'
 
 import { PopoverCommitInfo } from './popover-commit-info'
 
@@ -44,25 +45,31 @@ export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props:
           onClick={() => {
             props.togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
+          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
         >
           <div className="flex items-center gap-1.5">
-            <Icon name="fail" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{props.problems.error}</span>
+            <Icon
+              size={14}
+              name="cross-circle"
+              className={props.problems.error > 0 ? 'text-destructive' : 'text-tertiary-background'}
+            />
+            <span className={cn('text-[12px]', props.problems.error > 0 ? 'text-destructive' : 'text-primary')}>
+              {props.problems.error}
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon name="triangle-warning" className="text-tertiary-background" />
+            <Icon size={14} name="warning-triangle-outline" className="text-tertiary-background" />
             <span className="text-[12px] text-primary">{props.problems.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon name="info-circle" className="text-tertiary-background" />
+            <Icon size={14} name="info-circle" className="text-tertiary-background" />
             <span className="text-[12px] text-primary">{props.problems.info}</span>
           </div>
         </div>
         {branchesLoading || branches || currentBranch ? (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
-              <span className="mr-1 text-[12px] text-tertiary-background">Branch:</span>
+              <span className="text-[12px] text-tertiary-background">Branch:</span>
               <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
                 <SelectContent>
                   {branches?.map(branch => (

@@ -58,7 +58,7 @@
   --canary-base-chrome-700: 240 8.2% 32%;
   --canary-base-chrome-800: 240 7.8% 27.6%;
   --canary-base-chrome-850: 240 8% 18%;
-  --canary-base-chrome-900: 240 6.4% 11%;
+  --canary-base-chrome-900: 240 6.4% 10%;
   --canary-base-chrome-950: 240 8.1% 7.3%;
   --canary-base-chrome-1000: 240 10.3% 5.7%;
   --canary-accent-50: 210 100% 96.5%;
@@ -1520,7 +1520,7 @@
     --canary-background-04: var(--canary-base-chrome-400) / 0.2;
     --canary-background-05: var(--canary-base-chrome-100);
     --canary-background-06: var(--canary-base-chrome-200);
-    --canary-background-07: var(--canary-chrome-1000);
+    --canary-background-07: var(--canary-base-chrome-1000);
     --canary-background-08: var(--canary-base-chrome-850);
     --canary-background-09: var(--canary-base-chrome-850);
     --canary-background-10: var(--canary-base-chrome-200);

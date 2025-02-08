@@ -1517,7 +1517,7 @@
     --canary-background-01: var(--canary-base-chrome-1000);
     --canary-background-02: var(--canary-base-chrome-950);
     --canary-background-03: var(--canary-base-chrome-900);
-    --canary-background-04: var(--canary-base-chrome-400) / 0.2;
+    --canary-background-04: var(--canary-base-chrome-400) / 0.1;
     --canary-background-05: var(--canary-base-chrome-100);
     --canary-background-06: var(--canary-base-chrome-200);
     --canary-background-07: var(--canary-base-chrome-1000);

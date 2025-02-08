@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom'
 
-import { Breadcrumb } from '@harnessio/ui/components'
+import { Breadcrumb, Text } from '@harnessio/ui/components'
 import {
   EmptyPage,
   ProfileSettingsLayout,

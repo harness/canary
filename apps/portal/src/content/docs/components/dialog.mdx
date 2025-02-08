@@ -1,0 +1,295 @@
+---
+title: Dialog
+description: Dialog component documentation
+---
+
+The `Dialog` component provides a flexible UI element for displaying overlaid content, often used for dialogs or modals. It is composed of several subcomponents such as Dialog.Header, Dialog.Footer, Dialog.Title, and Dialog.Description to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Dialog.Root>
+  <Dialog.Trigger asChild>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Header>
+      <Dialog.Title>Dialog Title</Dialog.Title>
+    </Dialog.Header>
+    <Dialog.Description>This is the dialog description.</Dialog.Description>
+    <Dialog.Footer>
+      <Button>Footer Action</Button>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Dialog } from '@harnessio/ui/components'
+
+return (
+  <Dialog.Root>
+    <Dialog.Trigger asChild>
+      <Button>Open Dialog</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+      <Dialog.Header>
+        <Dialog.Title>Dialog Title</Dialog.Title>
+        <Dialog.Description>This is the dialog description.</Dialog.Description>
+      </Dialog.Header>
+      <p>Dialog content goes here.</p>
+      <Dialog.Footer>
+        <Button>Footer Action</Button>
+      </Dialog.Footer>
+    </Dialog.Content>
+  </Dialog.Root>
+)
+```
+
+## Anatomy
+
+All parts of the Dialog component can be imported and composed as required.
+
+```typescript jsx
+<Dialog.Root>
+  <Dialog.Trigger>
+    <Button>Open Dialog</Button>
+  </Dialog.Trigger>
+  <Dialog.Content>
+    <Dialog.Header>
+      <Dialog.Title>Dialog Title</Dialog.Title>
+      <Dialog.Description>This is the dialog description.</Dialog.Description>
+    </Dialog.Header>
+
+    <p>Dialog content goes here.</p>
+
+    <Dialog.Footer>
+      <Button>Footer Action</Button>
+    </Dialog.Footer>
+  </Dialog.Content>
+</Dialog.Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for all dialog elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description:
+        "You can pass in your `Dialog.Trigger` and `Dialog.Content` as children",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "open",
+      description: "Whether the dialog is open",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultOpen",
+      description: "Whether the dialog is open by default",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description:
+        "Callback that fires when the open state of the dialog changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "modal",
+      description: "Whether the dialog is modal",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Trigger
+
+The `Trigger` component is used to open the dialog.
+
+```typescript jsx
+<Dialog.Trigger>
+  <Button>Open Dialog</Button>
+</Dialog.Trigger>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description: "Whether to render the trigger as a child element",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Content
+
+The `Content` component defines the main content area of the dialog.
+
+```typescript jsx
+<Dialog.Content>
+  <Dialog.Header>
+    <Dialog.Title>Dialog Title</Dialog.Title>
+    <Dialog.Description>This is the dialog description.</Dialog.Description>
+  </Dialog.Header>
+  <p>Dialog content goes here.</p>
+  <Dialog.Footer>
+    <Button>Footer Action</Button>
+  </Dialog.Footer>
+</Dialog.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the content",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onOverlayClick",
+      description: "Callback that fires when the overlay is clicked",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "forceMount",
+      description: "Force mounting when more control is needed",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Header
+
+The `Header` component is used to define the header section of the dialog.
+
+```typescript jsx
+<Dialog.Header>
+  <Dialog.Title>Dialog Title</Dialog.Title>
+  <Dialog.Description>This is the dialog description.</Dialog.Description>
+</Dialog.Header>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Content to display",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the header",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Footer
+
+The `Footer` component is used to define the footer section of the dialog.
+
+```typescript jsx
+<Dialog.Footer>
+  <Button>Footer Action</Button>
+</Dialog.Footer>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Footer content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the footer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Title
+
+The `Title` component displays the title of the dialog.
+
+```typescript jsx
+<Dialog.Title>Dialog Title</Dialog.Title>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Title content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the title",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Description
+
+The `Description` component displays the description of the dialog.
+
+```typescript jsx
+<Dialog.Description>This is the dialog description.</Dialog.Description>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Description content",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names to apply to the description",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

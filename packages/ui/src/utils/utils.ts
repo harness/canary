@@ -1,4 +1,4 @@
-import { formatDistance, formatDistanceToNow, intervalToDuration } from 'date-fns'
+import { formatDistance, formatDistanceToNow } from 'date-fns'
 
 export const getInitials = (name: string, length = 2) => {
   // Split the name into an array of words, ignoring empty strings

@@ -31,12 +31,11 @@ export const ExecutionLogsView = () => {
   const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
 
-  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 15 }) // Animates the execution tree
+  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 2 }) // Animates the execution tree
 
-  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream, delay: 0.5 }) // Animates the logs
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream, delay: 0.0 }) // Animates the logs
 
   const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
-
   useEffect(() => {
     setEnableStream(true)
     setLogs(getLogsForCurrentNodeId(currentNode?.id || ''))
@@ -57,6 +56,13 @@ export const ExecutionLogsView = () => {
     }
   }, [selectedStep])
 
+  const updateHighLevelStatus = (elements: TreeViewElement[]) => {
+    if (elements.every(node => node.status === ExecutionState.SUCCESS)) {
+      return ExecutionState.SUCCESS
+    }
+    return ExecutionState.RUNNING
+  }
+
   return (
     <div className="flex h-full flex-col">
       <ExecutionTabs />
@@ -71,7 +77,7 @@ export const ExecutionLogsView = () => {
         dataTransfer="4.21 kB/5 GB"
         branch="master"
         commit="b8bruh99h"
-        status={ExecutionState.RUNNING}
+        status={updateHighLevelStatus(updatedElements)}
         buildTime="1h 30m"
         createdTime="10 mins ago"
         pipelineName="build scan push test - k8s - Clone 2"

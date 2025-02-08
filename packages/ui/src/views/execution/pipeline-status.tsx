@@ -20,7 +20,7 @@ const PipelineStatus: FC<PipelineStatusProps> = ({
   // createdTime,
   commit,
   branch,
-  startedTime,
+  // startedTime,
   delegateType
 }) => {
   const [elapsedTime, setElapsedTime] = useState('00:00')
@@ -88,12 +88,6 @@ const PipelineStatus: FC<PipelineStatusProps> = ({
         <span className="text-foreground-5">Created</span>
         <span className="text-primary">{createdTimeElapsed}</span>
       </div>
-      {startedTime && (
-        <div className="flex flex-col gap-1.5">
-          <span className="leading-tight text-foreground-4">Started</span>
-          <span className="text-foreground-1">{startedTime}</span>
-        </div>
-      )}
       {delegateType && (
         <div className="flex flex-col gap-1.5">
           <span className="leading-tight text-foreground-4">Delegate type</span>

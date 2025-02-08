@@ -13,6 +13,7 @@ export interface StepProps {
 }
 
 export interface StepExecutionProps {
+  isDrawer?: boolean
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
@@ -33,6 +34,7 @@ export interface ILogsStore {
 }
 
 export interface ExecutionInfoProps {
+  isDrawer?: boolean
   useLogsStore: () => ILogsStore
   onEdit: () => void
   onDownload: () => void

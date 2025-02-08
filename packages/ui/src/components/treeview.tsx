@@ -15,7 +15,7 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={20} name="running" className="text-warning animate-spin" />
+      return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
     case ExecutionState.SUCCESS:
       return <CanaryIcon name="success" size={16} className="text-foreground-success" />
     case ExecutionState.FAILURE:
@@ -24,7 +24,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
     case ExecutionState.PENDING:
       return (
         <div className="flex size-5 items-center justify-center">
-          <span className="border-icons-7 size-4 rounded-full border" />
+          <span className="size-4 rounded-full border border-icons-7" />
         </div>
       )
     case ExecutionState.SKIPPED:
@@ -218,14 +218,14 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center">
               {getStatusIcon(status)}
-              <span className="text-foreground-8 ml-1 leading-tight">
+              <span className="ml-1 leading-tight text-foreground-8">
                 {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
               </span>
             </div>
             <span className="text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down relative h-full overflow-visible px-5 text-sm">
+        <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
@@ -303,7 +303,7 @@ const File = forwardRef<
           <div className="relative flex w-full items-center justify-between pl-4">
             <div className="flex items-center">
               {getStatusIcon(status)}
-              <span className="text-foreground-8 ml-1 leading-tight">{children}</span>
+              <span className="ml-1 leading-tight text-foreground-8">{children}</span>
             </div>
             <span className="text-foreground-4">{duration ?? '--'}</span>
           </div>

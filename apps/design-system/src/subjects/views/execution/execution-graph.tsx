@@ -7,14 +7,13 @@ export const ExecutionGraphView = () => {
     <div className="flex h-full flex-col">
       <ExecutionTabs />
       <ExecutionHeader
+        className="border-borders-4 border-b"
         commitName="8fbru3ix"
         branchName="master"
         title={{ number: '311. ', title: 'Alerting docs: adds sns integration' }}
         storage="0 B"
         storageAverage="0 B / 250 MB"
         simpleOperation="27/100k"
-        advancedOperations="2/50k"
-        dataTransfer="4.21 kB/5 GB"
         branch="master"
         commit="b8bruh99h"
         status={ExecutionState.RUNNING}

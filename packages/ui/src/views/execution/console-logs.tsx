@@ -66,12 +66,12 @@ const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
   if (!logs || !logs.length) return null
 
   return (
-    <div ref={containerRef} className="max-h-[600px] overflow-y-auto">
+    <div ref={containerRef} className="overflow-y-auto pl-5">
       {logs.filter(Boolean).map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
         <div className="w-full" key={index}>
-          <div className="text-15 flex w-full items-baseline gap-5 font-mono">
+          <div className="flex w-full items-baseline gap-5 font-mono text-15">
             {pos !== undefined && pos >= 0 ? (
-              <span className="text-log text-foreground-7 flex min-w-5 justify-end">{pos}</span>
+              <span className="text-log flex min-w-5 justify-end text-foreground-7">{pos}</span>
             ) : null}
             <span
               className={cn(

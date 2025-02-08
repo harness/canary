@@ -5,6 +5,7 @@ import { CommonNodeDataType, usePipelineStudioNodeContext } from '@harnessio/ui/
 
 import { StepGroupNodeContextMenu } from '../context-menu/step-group-node-context-menu'
 import { PipelineNodes } from '../pipeline-nodes'
+import { GlobalData } from '../types/common'
 
 export interface CustomSerialStepGroupContentNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
@@ -21,7 +22,10 @@ export function CustomSerialStepGroupContentNode(props: {
   const { node, children, collapsed, isFirst, parentNodeType } = props
   const data = node.data as CustomSerialStepGroupContentNodeDataType
 
-  const { selectionPath, showContextMenu, onSelectIntention, onAddIntention } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onSelectIntention, onAddIntention, globalData } =
+    usePipelineStudioNodeContext<GlobalData>()
+
+  const { hideContextMenu, hideFloatingButtons } = globalData ?? {}
 
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
@@ -34,6 +38,8 @@ export function CustomSerialStepGroupContentNode(props: {
       isFirst={isFirst}
       parentNodeType={parentNodeType}
       node={node}
+      hideContextMenu={hideContextMenu}
+      hideFloatingButtons={hideFloatingButtons}
       onAddInClick={e => {
         e.stopPropagation()
         onAddIntention(data, 'in')

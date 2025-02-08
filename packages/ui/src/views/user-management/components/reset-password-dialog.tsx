@@ -19,7 +19,7 @@ export const ResetPasswordDialog: FC<IResetPasswordDialogProps> = ({
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
       <AlertDialog.Trigger asChild></AlertDialog.Trigger>
-      <AlertDialog.Content>
+      <AlertDialog.Content onClose={onClose}>
         <AlertDialog.Header>
           {generatePassword ? (
             <AlertDialog.Title>Reset Password</AlertDialog.Title>

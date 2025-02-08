@@ -84,7 +84,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
           ]}
           icon={
             (payload?.payload?.payload as GeneralPayload)?.decision === 'approved' ? (
-              <Icon name="success" size={18} />
+              <Icon name="success" size={18} className="text-foreground-success" />
             ) : (
               <Icon name="triangle-warning" size={18} className="text-destructive" />
             )

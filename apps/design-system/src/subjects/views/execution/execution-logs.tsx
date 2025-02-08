@@ -1,28 +1,61 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
-import { ScrollArea } from '@harnessio/ui/components'
-import { ExecutionHeader, ExecutionInfo, ExecutionState, ExecutionTabs, ExecutionTree } from '@harnessio/ui/views'
+import { useAnimateTree } from '@/hooks/useAnimateTree'
+import { useLogs } from '@/hooks/useLogs'
 
-import { elements, logs, stages } from './mocks/mock-data'
+import { TreeViewElement } from '@harnessio/ui/components'
+import {
+  ExecutionHeader,
+  ExecutionInfo,
+  ExecutionState,
+  ExecutionTabs,
+  ExecutionTree,
+  ILogsStore,
+  LivelogLine,
+  NodeSelectionProps
+} from '@harnessio/ui/views'
 
-function formatTime(seconds: number) {
-  const minutes = Math.floor(seconds / 60)
-  const remainingSeconds = seconds % 60
-  const hours = Math.floor(minutes / 60)
-  return hours > 0
-    ? `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`
-    : `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`
+import { elements, logsBank } from './mocks/mock-data'
+
+const getRandomDuration = (): number => Math.random() * (5 - 1) + 1
+
+const getLogsForCurrentNodeId = (logKey: string): LivelogLine[] => {
+  return (logsBank[logKey] ?? []).map((log: LivelogLine) => ({
+    ...log,
+    duration: getRandomDuration()
+  }))
 }
 
 export const ExecutionLogsView = () => {
-  const [buildTime, setBuildTime] = useState<number>(30)
+  const [enableStream, setEnableStream] = useState(false)
+  const [logs, setLogs] = useState<LivelogLine[]>([])
+  const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
+
+  const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 15 }) // Animates the execution tree
+
+  const { logs: streamedLogs } = useLogs({ logs, isStreaming: enableStream, delay: 0.5 }) // Animates the logs
+
+  const useLogsStore = useCallback<() => ILogsStore>(() => ({ logs: streamedLogs }), [streamedLogs])
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setBuildTime(buildTime + 1)
-    }, 1000)
-    return () => clearInterval(interval)
-  }, [buildTime])
+    setEnableStream(true)
+    setLogs(getLogsForCurrentNodeId(currentNode?.id || ''))
+  }, [currentNode?.id])
+
+  useEffect(() => {
+    if (!selectedStep) return
+
+    switch (selectedStep.status) {
+      case ExecutionState.PENDING:
+        setLogs([])
+        break
+      case ExecutionState.RUNNING:
+      case ExecutionState.SUCCESS:
+        setEnableStream(selectedStep.status === ExecutionState.RUNNING)
+        setLogs(getLogsForCurrentNodeId(selectedStep?.id || ''))
+        break
+    }
+  }, [selectedStep])
 
   return (
     <div className="flex h-full flex-col">
@@ -46,27 +79,18 @@ export const ExecutionLogsView = () => {
         createdTime="10 mins ago"
         pipelineName="build scan push test - k8s - Clone 2"
       />
-      <div className="border-borders-4 grid h-[inherit] border-t " style={{ gridTemplateColumns: '1fr 3fr' }}>
-        <div className="border-borders-4 flex h-[calc(100vh-226px)] flex-col gap-4 border-r">
-          <ScrollArea className="pt-4">
-            <ExecutionTree
-              defaultSelectedId="initialize"
-              elements={elements}
-              onSelectNode={({ parentId, childId }: { parentId: string; childId: string }) => {
-                console.log(`Selected node: Parent ${parentId}, Child ${childId}`)
-              }}
-            />
-          </ScrollArea>
-        </div>
-        <div className="border-borders-4 flex flex-col gap-4">
-          <ExecutionInfo
-            logs={logs}
-            onCopy={() => {}}
-            onDownload={() => {}}
-            onEdit={() => {}}
-            selectedStepIdx={0}
-            stage={stages[0]}
+      <div className="grid h-[inherit]" style={{ gridTemplateColumns: '1fr 3fr' }}>
+        <div className="flex flex-col gap-4 border border-r-0 border-t-0 border-white/10 pt-4">
+          <ExecutionTree
+            defaultSelectedId={currentNode?.id ?? selectedStep?.id ?? elements[0].id}
+            elements={updatedElements}
+            onSelectNode={(selectedNode: NodeSelectionProps) => {
+              setSelectedStep(selectedNode?.childNode)
+            }}
           />
+        </div>
+        <div className="flex flex-col gap-4 border border-t-0 border-white/10">
+          <ExecutionInfo useLogsStore={useLogsStore} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
         </div>
       </div>
     </div>

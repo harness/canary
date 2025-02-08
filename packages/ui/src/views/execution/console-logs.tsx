@@ -1,4 +1,4 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect, useRef } from 'react'
 
 import { Text } from '@/components'
 import { cn } from '@utils/cn'
@@ -35,50 +35,59 @@ export const createStreamedLogLineElement = (log: LivelogLine) => {
 }
 
 const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }
+  }, [logs])
+
   const logText = useCallback(
     (log: string) => {
-      const match = log.match(new RegExp(query || ''))
-      if (!match || !query?.length) {
+      if (!query?.length) {
         return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
       }
-      const matchIndex = match?.index || 0
-      const startText = log.slice(0, matchIndex)
-      const matchedText = log.slice(matchIndex, matchIndex + query?.length)
-      const endText = log.slice(matchIndex + query?.length)
+
+      const match = log.match(new RegExp(query, 'i'))
+      if (!match) return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
+
+      const matchIndex = match.index ?? 0
       return (
         <span className="flex gap-1 font-mono text-sm font-normal">
-          {startText ? <span>{startText}</span> : null}
-          {matchedText ? <mark>{matchedText}</mark> : null}
-          {endText ? <span>{endText}</span> : null}
+          {log.slice(0, matchIndex)}
+          <mark>{log.slice(matchIndex, matchIndex + query.length)}</mark>
+          {log.slice(matchIndex + query.length)}
         </span>
       )
     },
     [query]
   )
 
+  if (!logs || !logs.length) return null
+
   return (
-    <>
-      {logs
-        .filter(item => item !== null)
-        .map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
-          <div className="w-full" key={index}>
-            <div className="text-15 flex w-full items-baseline gap-5 font-mono">
-              {pos !== undefined && !isNaN(pos) && pos >= 0 && (
-                <span className="text-log text-foreground-7 flex min-w-5 justify-end">{pos}</span>
+    <div ref={containerRef} className="max-h-[600px] overflow-y-auto">
+      {logs.filter(Boolean).map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
+        <div className="w-full" key={index}>
+          <div className="text-15 flex w-full items-baseline gap-5 font-mono">
+            {pos !== undefined && pos >= 0 ? (
+              <span className="text-log text-foreground-7 flex min-w-5 justify-end">{pos}</span>
+            ) : null}
+            <span
+              className={cn(
+                'text-log flex shrink-0 grow font-normal',
+                type === LivelogLineType.ERROR && 'text-foreground-danger bg-tag-background-red-2',
+                type === LivelogLineType.WARNING && 'text-foreground-alert bg-tag-background-amber-2'
               )}
-              <span
-                className={cn(
-                  'text-log flex shrink-0 grow font-normal',
-                  type === LivelogLineType.ERROR && 'text-foreground-danger bg-tag-background-red-2',
-                  type === LivelogLineType.WARNING && 'text-foreground-alert bg-tag-background-amber-2'
-                )}
-              >
-                {time && `[${formatTimestamp(time * 1_000)}]`} {out && logText(out)}
-              </span>
-            </div>
+            >
+              {time ? `[${formatTimestamp(time * 1_000)}]` : null}
+              {out ? logText(out) : null}
+            </span>
           </div>
-        ))}
-    </>
+        </div>
+      ))}
+    </div>
   )
 }
 

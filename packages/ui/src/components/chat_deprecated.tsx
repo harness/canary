@@ -5,17 +5,17 @@ import { cn } from '@/utils/cn'
 
 // Root Container
 const Root: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="w-full h-full overflow-y-auto flex flex-col">{children}</div>
+  return <div className="flex size-full flex-col overflow-y-auto">{children}</div>
 }
 
 // Body
 const Body: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="flex-1 flex flex-col gap-6 mb-3 p-6">{children}</div>
+  return <div className="mb-3 flex flex-1 flex-col gap-6 p-6">{children}</div>
 }
 
 // Footer
 const Footer: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <div className="sticky bottom-0 p-6 pt-0 bg-background">{children}</div>
+  return <div className="sticky bottom-0 bg-background p-6 pt-0">{children}</div>
 }
 
 // Message Component
@@ -48,8 +48,8 @@ const Message: React.FC<MessageProps> = ({ self, time, avatar, actions, children
         >
           {children}
         </div>
-        <div className="flex gap-3 items-center justify-between mt-1">
-          <div>{actions && <div className="flex gap-1 items-center justify-start">{actions}</div>}</div>
+        <div className="mt-1 flex items-center justify-between gap-3">
+          <div>{actions && <div className="flex items-center justify-start gap-1">{actions}</div>}</div>
           {time && (
             <Text size={1} className="text-primary opacity-20">
               {time}
@@ -68,9 +68,9 @@ interface TypingProps {
 
 const Typing: React.FC<TypingProps> = ({ avatar }) => {
   return (
-    <div className="flex items-center gap-3 mt-3">
+    <div className="mt-3 flex items-center gap-3">
       {avatar}
-      <div className="flex gap-1 text-success text-lg font-medium" aria-live="polite">
+      <div className="flex gap-1 text-lg font-medium text-success" aria-live="polite">
         <span className="dot animate-bounce">&middot;</span>
         <span className="dot animate-bounce" style={{ animationDelay: '0.15s' }}>
           &middot;
@@ -115,10 +115,10 @@ const InputField: React.FC<InputFieldProps> = ({
   sendIcon = <Icon name="chevron-up" size={16} />
 }) => {
   return (
-    <div className="sticky bottom-0 bg-background flex items-center gap-2">
+    <div className="sticky bottom-0 flex items-center gap-2 bg-background">
       <Input
         ref={inputRef}
-        className="flex-1 pt-6 px-4 pb-16 rounded-lg focus:ring-0"
+        className="flex-1 rounded-lg px-4 pb-16 pt-6 focus:ring-0"
         value={value}
         onChange={onChange}
         onKeyDown={onKeyDown}
@@ -130,7 +130,7 @@ const InputField: React.FC<InputFieldProps> = ({
         variant="outline"
         size="icon"
         disabled={disabled}
-        className="absolute right-3.5 bottom-3.5 z-10 w-6 h-6"
+        className="absolute bottom-3.5 right-3.5 z-10 size-6"
       >
         {sendIcon}
       </Button>

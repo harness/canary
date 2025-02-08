@@ -14,9 +14,13 @@ export interface PipelineGraphInternalProps {
   data: AnyContainerNodeType[]
   customCreateSVGPath?: CreateSVGPathType
   config?: {
-    edgeClassName?: string
     leftGap?: number
     mode?: 'Edit' | 'Execution'
+  }
+  edgesConfig?: {
+    radius?: number
+    parallelNodeOffset?: number
+    serialNodeOffset?: number
   }
 }
 
@@ -25,7 +29,7 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
   const { setCanvasTransform, canvasTransformRef, config: canvasConfig, setTargetEl } = useCanvasContext()
   const { serialContainerConfig } = useContainerNodeContext()
 
-  const { data, config = {}, customCreateSVGPath } = props
+  const { data, config = {}, customCreateSVGPath, edgesConfig } = props
   const graphSizeRef = useRef<{ h: number; w: number } | undefined>()
 
   const svgGroupRef = useRef<SVGAElement>(null)
@@ -75,7 +79,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
           const levelPaths = getPortsConnectionPath({
             pipelineGraphRoot: rootContainerEl,
             connection: portPair,
-            customCreateSVGPath
+            customCreateSVGPath,
+            edgesConfig
           })
           allPaths.level1.push(levelPaths.level1)
           allPaths.level2.push(levelPaths.level2)
@@ -114,7 +119,8 @@ export function PipelineGraphInternal(props: PipelineGraphInternalProps) {
             scale: 1,
             translateX: config?.leftGap ?? canvasConfig.paddingForFit ?? 80,
             translateY: parentHeight / 2 - graphHeight / 2,
-            rootContainer: rootContainerRef?.current
+            rootContainer: rootContainerRef?.current,
+            isInitial: true
           })
         } else {
           if (graphSizeRef.current) {

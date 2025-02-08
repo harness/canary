@@ -68,7 +68,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
   return (
     <div
       className={cn(
-        'group flex cursor-pointer select-none gap-2 py-1.5 px-4 rounded-md',
+        'group flex cursor-pointer select-none gap-2 py-1.5 px-3 rounded-md',
         { 'bg-background-4': active },
         { 'gap-0': !icon },
         className

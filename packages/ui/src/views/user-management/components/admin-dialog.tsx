@@ -16,7 +16,7 @@ export const AdminDialog: React.FC<IRemoveAdminDialogProps> = ({
   return (
     <AlertDialog.Root open={open} onOpenChange={onClose}>
       <AlertDialog.Trigger asChild></AlertDialog.Trigger>
-      <AlertDialog.Content>
+      <AlertDialog.Content onClose={onClose}>
         <AlertDialog.Header>
           <AlertDialog.Title>
             {isAdmin ? `Are you sure you want to remove ` : `Are you sure you want to grant `}

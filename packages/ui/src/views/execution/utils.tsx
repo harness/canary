@@ -50,7 +50,7 @@ const renderTreeFile = ({
       value={fileElement.id}
       status={fileElement.status}
       duration={fileElement.duration}
-      handleSelect={(stepId: string) => handleClick({ parentId: parentElement?.id || '', childId: stepId })}
+      handleSelect={() => handleClick({ parentNode: parentElement, childNode: fileElement })}
       level={level}
     >
       <p data-level={level}>{fileElement.name}</p>

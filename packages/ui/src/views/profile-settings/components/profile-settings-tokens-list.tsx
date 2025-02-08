@@ -57,7 +57,7 @@ export const ProfileTokensList: FC<ProfileTokensListProps> = ({
                 </TableCell>
                 <TableCell className="content-center">
                   <div className="flex items-center gap-x-1.5">
-                    <Icon name="green-dot" size={8} />
+                    <Icon name="green-dot" size={8} className="text-foreground-success" />
                     <span className="text-foreground-3">{t('views:profileSettings.active', 'Active')}</span>
                   </div>
                 </TableCell>

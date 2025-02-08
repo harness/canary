@@ -757,6 +757,10 @@
   mask-composite: exclude;
 }
 
+.connector-gradient {
+  @apply bg-gradient-to-b from-[#2F2F33]/0 to-[#161619]/100;
+}
+
 /* Text utilities */
 .text-radial-gradient {
   /* remove hardcode colors */

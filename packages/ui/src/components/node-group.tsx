@@ -33,7 +33,7 @@ function Icon({
     <div className="col-start-1 row-start-1 self-start">
       <div
         className={cn(
-          'border-tertiary-background/30 bg-background text-primary relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
+          'border-borders-4 bg-background text-icons-8 relative flex h-6 w-6 place-content-center place-items-center rounded-full border p-1 layer-medium',
           { 'bg-transparent border-none size-1 p-0 mt-2 shadow-commit-list-bullet': simpleNodeIcon },
           className
         )}
@@ -62,7 +62,7 @@ function Connector({ first, last, className }: { first?: boolean; last?: boolean
       className={cn('absolute bottom-0 left-2.5 top-0 z-10 w-1', { 'top-3': first }, { 'bottom-8': last }, className)}
       data-connector
     >
-      <span className="absolute inset-y-0 left-1/2 w-px -translate-x-1/2 bg-borders-4" />
+      <span className="connector-gradient absolute inset-y-0 left-1/2 w-px -translate-x-1/2" />
     </div>
   )
 }

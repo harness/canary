@@ -27,21 +27,10 @@ export interface LanguageInterface {
   name: Language
 }
 
-export const languages: LanguageInterface[] = [
-  { code: LanguageCode.EN, name: Language.English },
-  { code: LanguageCode.БГ, name: Language.Bulgarian },
-  { code: LanguageCode.HR, name: Language.Croatian },
-  { code: LanguageCode.CZ, name: Language.Czech },
-  { code: LanguageCode.FR, name: Language.French },
-  { code: LanguageCode.DE, name: Language.German },
-  { code: LanguageCode.IE, name: Language.Irish },
-  { code: LanguageCode.RU, name: Language.Russian },
-  { code: LanguageCode.LA, name: Language.LatinAmerican }
-]
-
 export interface LanguageDialogProps {
   defaultLanguage?: LanguageCode
   language?: LanguageCode
+  supportedLanguages: LanguageInterface[]
   open: boolean
   onOpenChange: (open: boolean) => void
   onChange: (language: LanguageInterface) => void

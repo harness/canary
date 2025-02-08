@@ -165,7 +165,7 @@ export function RepoWebhookList({
                   />
                 </StackedList.Item>
               </TableCell>
-              <TableCell className="content-center cursor-pointer">
+              <TableCell className="cursor-pointer content-center">
                 <Badge
                   size="md"
                   disableHover
@@ -188,7 +188,7 @@ export function RepoWebhookList({
                 </Badge>
               </TableCell>
 
-              <TableCell className="content-center text-right cursor-pointer">
+              <TableCell className="cursor-pointer content-center text-right">
                 <MoreActionsTooltip
                   actions={[
                     {

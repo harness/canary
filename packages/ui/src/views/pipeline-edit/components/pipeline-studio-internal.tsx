@@ -4,14 +4,23 @@ import { ContentNodeFactory, YamlRevision } from '../pipeline-studio'
 import { PipelineStudioGraphView, PipelineStudioGraphViewProps } from './pipeline-studio-graph-view'
 import { PipelineStudioYamlView, PipelineStudioYamlViewProps } from './pipeline-studio-yaml-view'
 
-export interface PipelineStudioInternalProps {
+export interface PipelineStudioInternalProps
+  extends Pick<
+    PipelineStudioGraphViewProps,
+    | 'serialContainerConfig'
+    | 'parallelContainerConfig'
+    | 'getStepIcon'
+    | 'customCreateSVGPath'
+    | 'edgesConfig'
+    | 'portComponent'
+    | 'collapseButtonComponent'
+  > {
   view: 'yaml' | 'graph'
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   yamlEditorConfig?: PipelineStudioYamlViewProps['yamlEditorConfig']
   onErrorChange?: PipelineStudioYamlViewProps['onErrorChange']
-  getStepIcon?: PipelineStudioGraphViewProps['getStepIcon']
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
 }
@@ -26,7 +35,13 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
     onErrorChange,
     getStepIcon,
     animateYamlOnUpdate: animateOnUpdate,
-    onYamlAnimateEnd: onAnimateEnd
+    onYamlAnimateEnd: onAnimateEnd,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent,
+    collapseButtonComponent
   } = props
 
   return view === 'graph' ? (
@@ -35,6 +50,12 @@ export default function PipelineStudioInternal(props: PipelineStudioInternalProp
       yamlRevision={yamlRevision}
       onYamlRevisionChange={onYamlRevisionChange}
       getStepIcon={getStepIcon}
+      serialContainerConfig={serialContainerConfig}
+      parallelContainerConfig={parallelContainerConfig}
+      customCreateSVGPath={customCreateSVGPath}
+      edgesConfig={edgesConfig}
+      portComponent={portComponent}
+      collapseButtonComponent={collapseButtonComponent}
     />
   ) : (
     <YamlEditorContextProvider>

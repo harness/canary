@@ -18,7 +18,7 @@ const getStatusIcon = (status: ExecutionState): React.ReactElement => {
     case ExecutionState.RUNNING:
       return <CanaryIcon size={20} name="running" className="text-warning animate-spin" />
     case ExecutionState.SUCCESS:
-      return <CanaryIcon name="success" size={16} />
+      return <CanaryIcon name="success" size={16} className="text-foreground-success" />
     case ExecutionState.FAILURE:
       return <CanaryIcon name="fail" size={16} />
     case ExecutionState.WAITING_ON_DEPENDENCIES:

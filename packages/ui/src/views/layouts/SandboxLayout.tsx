@@ -102,4 +102,5 @@ function Column({ children, className }: { children: ReactNode; className?: stri
   )
 }
 
-export { Root, LeftPanel, LeftSubPanel, Header, SubHeader, Main, Content, Columns, Column }
+const SandboxLayout = { Root, LeftPanel, LeftSubPanel, Header, SubHeader, Main, Content, Columns, Column }
+export { SandboxLayout }

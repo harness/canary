@@ -1242,7 +1242,6 @@
    */
   }
 
-
   .light-prot-std {
     --canary-background: var(--canary-base-chrome-50);
     --canary-foreground: var(--canary-base-chrome-850);

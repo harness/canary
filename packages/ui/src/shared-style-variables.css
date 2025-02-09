@@ -1805,7 +1805,7 @@
     --canary-border-01: var(--canary-base-chrome-850);
     --canary-border-02: var(--canary-base-chrome-850);
     --canary-border-03: var(--canary-base-chrome-400);
-    --canary-border-04: var(--canary-base-chrome-850);
+    --canary-border-04: var(--canary-base-chrome-850) / 0.6;
     --canary-border-05: var(--canary-base-chrome-850);
     --canary-border-06: var(--canary-base-chrome-400);
     --canary-border-07: var(--canary-pure-white);
@@ -2058,7 +2058,7 @@
     --canary-border-01: var(--canary-base-chrome-700);
     --canary-border-02: var(--canary-base-chrome-700);
     --canary-border-03: var(--canary-base-chrome-200);
-    --canary-border-04: var(--canary-base-chrome-700);
+    --canary-border-04: var(--canary-base-chrome-700) / 0.6;
     --canary-border-05: var(--canary-base-chrome-700);
     --canary-border-06: var(--canary-base-chrome-400);
     --canary-border-07: var(--canary-pure-white);
@@ -2308,7 +2308,7 @@
     --canary-border-01: var(--canary-base-chrome-850);
     --canary-border-02: var(--canary-base-chrome-850);
     --canary-border-03: var(--canary-base-chrome-400);
-    --canary-border-04: var(--canary-base-chrome-850);
+    --canary-border-04: var(--canary-base-chrome-850) / 0.6;
     --canary-border-05: var(--canary-base-chrome-850);
     --canary-border-06: var(--canary-base-chrome-400);
     --canary-border-07: var(--canary-pure-white);

@@ -59,7 +59,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                         alt=""
                         className={cn(
                           'w-full h-auto rounded border',
-                          mode === item ? 'border-borders-8' : 'border-borders-4'
+                          mode === item ? 'border-borders-accent' : 'border-borders-4'
                         )}
                       />
                       {mode === item && (

@@ -40,6 +40,7 @@ import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../icons/circle-arrows-updown.svg'
 import CirclePlus from '../icons/circle-plus.svg'
+import CircleWithSector from '../icons/circle-with-sector.svg'
 import Circle from '../icons/circle.svg'
 import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
@@ -54,6 +55,7 @@ import CollapseComment from '../icons/collapse-comment.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
 import CollapseIn from '../icons/collapse-in.svg'
 import CollapseOut from '../icons/collapse-out.svg'
+import CommandSymbol from '../icons/command-symbol.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
@@ -397,6 +399,8 @@ const IconNameMap = {
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
   'checkbox-circle': CheckboxCircle,
+  'circle-with-sector': CircleWithSector,
+  'command-symbol': CommandSymbol,
   'cross-circle': CrossCircle,
   'warning-triangle-outline': WarningTriangleOutline,
   slack: Slack,

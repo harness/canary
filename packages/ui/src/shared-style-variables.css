@@ -1414,7 +1414,7 @@
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.6);
 
-    --canary-widget-number-gradient-from: var(--canary-grey-200) / 1;
+    --canary-widget-number-gradient-from: var(--canary-base-chrome-200) / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-800);
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);

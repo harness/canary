@@ -1414,8 +1414,8 @@
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.6);
 
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-150);
-    --canary-widget-number-gradient-to: var(--canary-pure-white);
+    --canary-widget-number-gradient-from: var(--canary-grey-200) / 1;
+    --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-800);
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
@@ -1674,8 +1674,8 @@
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-700));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-700) / 0.5);
 
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-150);
-    --canary-widget-number-gradient-to: var(--canary-pure-white);
+    --canary-widget-number-gradient-from: var(--canary-base-chrome-100);
+    --canary-widget-number-gradient-to: var(--canary-base-chrome-500);
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-800);
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);
@@ -1931,8 +1931,8 @@
     --canary-graph-gradient-executing-2: hsla(var(--canary-base-chrome-850));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.4);
 
-    --canary-widget-number-gradient-from: var(--canary-base-chrome-150);
-    --canary-widget-number-gradient-to: var(--canary-pure-white);
+    --canary-widget-number-gradient-from: var(--canary-grey-200) / 1;
+    --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-800);
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);
     --canary-widget-bg-gradient-from: var(--canary-base-chrome-850);

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useEffect, useRef, useState } from 'react'
-=======
-import { FC } from 'react'
->>>>>>> 81e39e95 (feat: update execution-logs design (#1040))
+import { FC, useEffect, useRef, useState } from 'react'
 
 import { ExecutionState } from '@views/repo/pull-request'
 
@@ -84,16 +80,14 @@ const PipelineStatus: FC<PipelineStatusProps> = ({
         <span className="leading-tight text-foreground-4">Status</span>
         <ExecutionStatus.Badge status={status} minimal />
       </div>
-      <div className="flex flex-col gap-1.5">
-        <span className="leading-tight text-foreground-4">Build time</span>
-        <span className="text-tag-foreground-amber-1">{buildTime}</span>
+      <div className="flex flex-col">
+        <span className="text-foreground-5">Build time</span>
+        <span className="text-primary">{elapsedTime}</span>
       </div>
-      {createdTime && (
-        <div className="flex flex-col gap-1.5">
-          <span className="leading-tight text-foreground-4">Created</span>
-          <span className="text-foreground-1">{createdTime}</span>
-        </div>
-      )}
+      <div className="flex flex-col">
+        <span className="text-foreground-5">Created</span>
+        <span className="text-primary">{createdTimeElapsed}</span>
+      </div>
       {startedTime && (
         <div className="flex flex-col gap-1.5">
           <span className="leading-tight text-foreground-4">Started</span>

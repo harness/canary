@@ -13,6 +13,7 @@ export interface StepProps {
 }
 
 export interface StepExecutionProps {
+  isDrawer?: boolean
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
@@ -33,6 +34,7 @@ export interface ILogsStore {
 }
 
 export interface ExecutionInfoProps {
+  isDrawer?: boolean
   useLogsStore: () => ILogsStore
   onEdit: () => void
   onDownload: () => void
@@ -44,11 +46,18 @@ export interface ConsoleLogsProps {
   query?: string
 }
 
+export enum LivelogLineType {
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info'
+}
+
 export interface LivelogLine {
   out?: string
   pos?: number
   time?: number
   duration?: number
+  type?: LivelogLineType
 }
 
 export interface NodeSelectionProps {

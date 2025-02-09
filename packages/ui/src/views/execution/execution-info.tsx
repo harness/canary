@@ -5,9 +5,10 @@ export const ExecutionInfo: React.FC<ExecutionInfoProps> = ({
   useLogsStore,
   onEdit,
   onDownload,
-  onCopy
+  onCopy,
+  isDrawer = false
 }): React.ReactElement => {
   const { logs } = useLogsStore()
 
-  return <StepExecution logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} />
+  return <StepExecution logs={logs} onEdit={onEdit} onDownload={onDownload} onCopy={onCopy} isDrawer={isDrawer} />
 }

@@ -18,7 +18,7 @@ import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionInfo, LivelogLine } from '@harnessio/ui/views'
+import { ExecutionHeader, ExecutionInfo, ExecutionState, LivelogLine } from '@harnessio/ui/views'
 
 import { logs } from './mocks/mock-data'
 
@@ -78,19 +78,28 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
+      <Drawer.Content className="bg-background-1 border-borders-5 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header>
-          <Drawer.Title>Logs</Drawer.Title>
-          <Drawer.Description>{`View ${name} execution logs`}</Drawer.Description>
+          <ExecutionHeader
+            commitName="8fbru3ix"
+            branchName="master"
+            title={{ title: 'npm_build' }}
+            status={ExecutionState.RUNNING}
+            buildTime="1h 30m"
+            startedTime="10 mins ago"
+            delegateType="cloud"
+            pipelineName="npm_build"
+          />
         </Drawer.Header>
-        <div>
-          <ExecutionInfo useLogsStore={() => ({ logs })} onCopy={() => {}} onDownload={() => {}} onEdit={() => {}} />
+        <div className="border-borders-4 mt-1 border-t pt-3">
+          <ExecutionInfo
+            isDrawer
+            useLogsStore={() => ({ logs })}
+            onCopy={() => {}}
+            onDownload={() => {}}
+            onEdit={() => {}}
+          />
         </div>
-        <Drawer.Footer>
-          <Drawer.Close>
-            <Button variant="outline">Close</Button>
-          </Drawer.Close>
-        </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
   )

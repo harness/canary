@@ -1506,7 +1506,7 @@
     --canary-accent-foreground: var(--canary-white);
     --canary-destructive: var(--canary-red);
     --canary-destructive-foreground: var(--canary-white);
-    --canary-border: var(--canary-grey-15);
+    --canary-border: var(--canary-grey-20);
     --canary-border-background: var(--canary-grey-10);
     --canary-input: var(--canary-grey-15);
     --canary-input-background: var(--canary-grey-6);

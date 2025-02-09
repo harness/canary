@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { useAnimateTree } from '@/hooks/useAnimateTree'
 import { useLogs } from '@/hooks/useLogs'
@@ -30,6 +30,11 @@ export const ExecutionLogsView = () => {
   const [enableStream, setEnableStream] = useState(false)
   const [logs, setLogs] = useState<LivelogLine[]>([])
   const [selectedStep, setSelectedStep] = useState<TreeViewElement | null | undefined>(null)
+  const [status, setStatus] = useState<ExecutionState>(ExecutionState.RUNNING)
+  const [elapsedTime, setElapsedTime] = useState('00:00')
+  const [createdTimeElapsed, setCreatedTimeElapsed] = useState('00:00')
+  const createdStartRef = useRef<number>(Date.now())
+  const elapsedStartRef = useRef<number>(Date.now())
 
   const { updatedElements, currentNode } = useAnimateTree({ elements, delay: 2 }) // Animates the execution tree
 
@@ -56,12 +61,48 @@ export const ExecutionLogsView = () => {
     }
   }, [selectedStep])
 
-  const updateHighLevelStatus = (elements: TreeViewElement[]) => {
-    if (elements.every(node => node.status === ExecutionState.SUCCESS)) {
-      return ExecutionState.SUCCESS
-    }
-    return ExecutionState.RUNNING
+  const isAllSuccess = useMemo(
+    () => updatedElements.every(node => node.status === ExecutionState.SUCCESS),
+    [updatedElements]
+  )
+
+  useEffect(() => {
+    setStatus(isAllSuccess ? ExecutionState.SUCCESS : ExecutionState.RUNNING)
+  }, [isAllSuccess])
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60)
+    const secs = seconds % 60
+    return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
+
+  // Created timer (always counts up from 0)
+  useEffect(() => {
+    createdStartRef.current = Date.now()
+
+    const interval = setInterval(() => {
+      const now = Date.now()
+      const totalDiff = Math.floor((now - createdStartRef.current) / 1000)
+      setCreatedTimeElapsed(formatTime(totalDiff))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  // Elapsed timer (stops when status changes to success)
+  useEffect(() => {
+    elapsedStartRef.current = Date.now()
+
+    const interval = setInterval(() => {
+      if (status === 'success') return
+
+      const now = Date.now()
+      const elapsedDiff = Math.floor((now - elapsedStartRef.current) / 1000)
+      setElapsedTime(formatTime(elapsedDiff))
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [status])
 
   return (
     <div className="flex h-full flex-col">
@@ -80,9 +121,9 @@ export const ExecutionLogsView = () => {
         dataTransfer="4.21 kB/5 GB"
         branch="master"
         commit="b8bruh99h"
-        status={updateHighLevelStatus(updatedElements)}
-        buildTime="1h 30m"
-        createdTime="10 mins ago"
+        status={status}
+        buildTime={elapsedTime}
+        createdTime={createdTimeElapsed}
         pipelineName="build scan push test - k8s - Clone 2"
       />
       <div className="border-borders-4 grid h-[inherit] border-t" style={{ gridTemplateColumns: '1fr 3fr' }}>

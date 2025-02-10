@@ -326,7 +326,7 @@
       "unselected": {
         "background": {
           "$type": "color",
-          "$value": "{background.canvas}",
+          "$value": "{colors.base-chrome.white}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
         },
         "foreground": {
@@ -360,17 +360,17 @@
       "selected": {
         "background": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
         },
         "foreground": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.white}",
           "$description": "Text color for selected items.\nCommon uses: selected item labels."
         },
         "border": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
         }
       },

@@ -91,7 +91,7 @@
     },
     "1-half": {
       "$type": "spacing",
-      "$value": "0.325rem",
+      "$value": "0.375rem",
       "$description": "6px"
     },
     "2-half": {

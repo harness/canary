@@ -542,7 +542,7 @@
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-50);
     --canary-background-02: var(--canary-pure-white);
-    --canary-background-03: var(--canary-chrome-50);
+    --canary-background-03: var(--canary-base-chrome-50);
     --canary-background-04: var(--canary-base-chrome-500) / 0.12;
     --canary-background-05: var(--canary-base-chrome-950);
     --canary-background-06: var(--canary-base-chrome-850);
@@ -804,7 +804,7 @@
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-50);
     --canary-background-02: var(--canary-pure-white);
-    --canary-background-03: var(--canary-chrome-50);
+    --canary-background-03: var(--canary-base-chrome-50);
     --canary-background-04: var(--canary-base-chrome-500) / 0.12;
     --canary-background-05: var(--canary-base-chrome-950);
     --canary-background-06: var(--canary-base-chrome-850);
@@ -1066,7 +1066,7 @@
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-50);
     --canary-background-02: var(--canary-pure-white);
-    --canary-background-03: var(--canary-chrome-50);
+    --canary-background-03: var(--canary-base-chrome-50);
     --canary-background-04: var(--canary-base-chrome-500) / 0.12;
     --canary-background-05: var(--canary-base-chrome-950);
     --canary-background-06: var(--canary-base-chrome-850);
@@ -1326,7 +1326,7 @@
     /* Backgrounds */
     --canary-background-01: var(--canary-base-chrome-50);
     --canary-background-02: var(--canary-pure-white);
-    --canary-background-03: var(--canary-chrome-50);
+    --canary-background-03: var(--canary-base-chrome-50);
     --canary-background-04: var(--canary-base-chrome-500) / 0.12;
     --canary-background-05: var(--canary-base-chrome-950);
     --canary-background-06: var(--canary-base-chrome-850);
@@ -2465,7 +2465,7 @@
     --canary-graph-gradient-executing-4: hsla(var(--canary-amber-200));
     --canary-graph-viewport-bg: hsla(var(--canary-base-chrome-850) / 0.4);
 
-    --canary-widget-number-gradient-from: var(--canary-grey-200) / 1;
+    --canary-widget-number-gradient-from: var(--canary-base-chrome-200) / 1;
     --canary-widget-number-gradient-to: var(--canary-base-chrome-600) / 0;
     --canary-widget-number-bg-gradient-from: var(--canary-base-chrome-800);
     --canary-widget-number-bg-gradient-to: var(--canary-base-chrome-850);

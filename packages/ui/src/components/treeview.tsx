@@ -197,7 +197,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
       <AccordionPrimitive.Item {...props} value={value} className="relative -mb-3 size-full overflow-hidden pb-3">
         <AccordionPrimitive.Trigger
           className={cn(
-            `flex w-full items-center gap-1 rounded-md text-sm px-5`,
+            `flex w-full gap-1 rounded-md text-sm px-5`,
             className,
             {
               'rounded-md': isSelect && isSelectable,
@@ -212,17 +212,17 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
         >
           <CanaryIcon
             name="chevron-right"
-            className={cn('text-icons-1', expendedItems?.includes(value) && 'rotate-90')}
+            className={cn('text-icons-1 mt-1', expendedItems?.includes(value) && 'rotate-90')}
             size={12}
           />
-          <div className="flex w-full items-center justify-between">
-            <div className="flex items-center">
-              {getStatusIcon(status)}
-              <span className="ml-1 leading-tight text-foreground-8">
+          <div className="flex w-full justify-between gap-x-2">
+            <div className="flex gap-x-2">
+              <div className="flex-none flex size-5 items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="leading-tight text-foreground-8 mt-0.5 text-left">
                 {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="text-foreground-4">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
         <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
@@ -300,12 +300,12 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="relative flex w-full items-center justify-between pl-4">
-            <div className="flex items-center">
-              {getStatusIcon(status)}
-              <span className="ml-1 leading-tight text-foreground-8">{children}</span>
+          <div className="relative flex w-full justify-between pl-4 gap-x-2">
+            <div className="flex gap-x-2">
+              <div className="flex-none flex size-5 items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="leading-tight text-foreground-8 mt-0.5 text-left">{children}</span>
             </div>
-            <span className="text-foreground-4">{duration ?? '--'}</span>
+            <span className="text-foreground-4 flex-none">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

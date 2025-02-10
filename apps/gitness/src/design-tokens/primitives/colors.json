@@ -47,11 +47,11 @@
       "950": {
         "$value": "#0d0e0f"
       },
+      "1000": {
+        "$value": "#000000"
+      },
       "white": {
         "$value": "#FFFFFF"
-      },
-      "black": {
-        "$value": "#000000"
       }
     },
     "base-chrome": {
@@ -94,11 +94,11 @@
       "950": {
         "$value": "#111114"
       },
+      "1000": {
+        "$value": "#0d0d10"
+      },
       "white": {
         "$value": "#ffffff"
-      },
-      "black": {
-        "$value": "#0d0d10"
       }
     },
     "accent": {

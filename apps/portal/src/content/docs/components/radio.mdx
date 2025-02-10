@@ -1,0 +1,168 @@
+---
+title: Radio
+description: Radio component documentation
+---
+
+The Radio component provides a UI element for selecting a single option from a list of options. It includes a radio button and a label.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<RadioGroup defaultValue="option1">
+    <div className="flex items-center gap-4">
+      <RadioButton value="option1" id="option1" />
+      <Label htmlFor="option1">Option 1</Label>
+    </div>
+    <div className="flex items-center gap-4">
+      <RadioButton value="option2" id="option2" />
+      <Label htmlFor="option2">Option 2</Label>
+    </div>
+</RadioGroup>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { RadioGroup, RadioButton, Label } from '@harnessio/ui/components'
+
+return (
+  <RadioGroup>
+    <div className="flex items-center gap-4">
+      <RadioButton value="option1" id="option1" />
+      <Label htmlFor="option1">Option 1</Label>
+    </div>
+    <div className="flex items-center gap-4">
+      <RadioButton value="option2" id="option2" />
+      <Label htmlFor="option2">Option 2</Label>
+    </div>
+  </RadioGroup>
+)
+```
+
+## Anatomy
+
+The Radio component can be used to select a single option from a list of options.
+
+```typescript jsx
+<RadioGroup>
+  <div>
+    <RadioButton value="option1" id="option1" />
+    <Label htmlFor="option1">Option 1</Label>
+  </div>
+  <div>
+    <RadioButton value="option2" id="option2" />
+    <Label htmlFor="option2">Option 2</Label>
+  </div>
+</RadioGroup>
+```
+
+## API Reference
+
+### RadioGroup
+
+The `RadioGroup` component serves as the main container for radio group items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "The name of the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "required",
+      description: "Whether the radio group is required",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the radio group is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "orientation",
+      description: "The orientation of the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "loop",
+      description: "Whether the radio group should loop while navigating",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultValue",
+      description: "The default value of the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The current value of the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Handler for value change",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the radio group",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### RadioButton
+
+The `RadioButton` component is used to display an individual radio button.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The value of the radio button",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "checked",
+      description: "Whether the radio button is checked",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "required",
+      description: "Whether the radio button is required",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the radio button is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onChange",
+      description: "Handler for when the radio button is checked/unchecked",
+      required: false,
+      value: "(value: boolean) => void",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the radio button",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

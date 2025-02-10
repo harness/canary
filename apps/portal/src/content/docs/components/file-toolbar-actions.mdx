@@ -1,0 +1,67 @@
+---
+title: File Toolbar Actions
+description: File Toolbar Actions component documentation
+---
+
+The File Toolbar Actions component provides a set of actions for file management, including copying, editing, and downloading files.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="inline-flex"> 
+    <FileToolbarActions 
+      onDownloadClick={() => console.log('Download clicked')} 
+      onEditClick={() => console.log('Edit clicked')} 
+      copyContent="Sample content to copy" 
+      showEdit={true} 
+    />
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FileToolbarActions } from '@harnessio/ui/components'
+
+return (
+  <FileToolbarActions
+    onDownloadClick={() => console.log('Download clicked')}
+    onEditClick={() => console.log('Edit clicked')}
+    copyContent="Sample content to copy"
+    showEdit={true}
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "onDownloadClick",
+      description: "Handler for the download button click",
+      required: true,
+      value: "() => void",
+    },
+    {
+      name: "onEditClick",
+      description: "Handler for the edit button click",
+      required: true,
+      value: "() => void",
+    },
+    {
+      name: "copyContent",
+      description: "Content to be copied to the clipboard",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "showEdit",
+      description: "Whether to show the edit button",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

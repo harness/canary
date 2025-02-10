@@ -1,0 +1,84 @@
+---
+title: Label Marker
+description: Label Marker component documentation
+---
+
+The Label Marker component provides a UI element for displaying labels with optional values and color coding.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="inline-flex flex-wrap gap-10">
+  <LabelMarker label="Bug" value="High Priority" color="red" inTable={false} />
+  <LabelMarker label="Feature" value="New" color="blue" inTable={false} />
+  <LabelMarker label="Improvement" value="Medium Priority" color="green" inTable={false} />
+  <LabelMarker label="Task" value="Low Priority" color="yellow" inTable={false} />
+  <LabelMarker label="Research" value="Optional" color="purple" inTable={false} />
+</div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { LabelMarker } from '@harnessio/ui/components'
+
+return (
+  <div className="inline-flex flex-wrap gap-10">
+    <LabelMarker label="Bug" value="High Priority" color="red" inTable={false} />
+    <LabelMarker label="Feature" value="New" color="blue" inTable={false} />
+    <LabelMarker label="Improvement" value="Medium Priority" color="green" inTable={false} />
+    <LabelMarker label="Task" value="Low Priority" color="yellow" inTable={false} />
+    <LabelMarker label="Research" value="Optional" color="purple" inTable={false} />
+  </div>
+)
+```
+
+## Anatomy
+
+The Label Marker component can be used to display labels with optional values and color coding.
+
+```typescript jsx
+<LabelMarker
+  label="Bug"
+  value="High Priority"
+  color="red"
+  inTable={false}
+/>
+```
+
+## API Reference
+
+### LabelMarker
+
+The `LabelMarker` component serves as the main container for displaying labels with optional values and color coding.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "The label text to display",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Optional value to display next to the label",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "color",
+      description: "Color of the label",
+      required: true,
+      value: "ColorsEnum",
+    },
+    {
+      name: "inTable",
+      description: "Whether the label is displayed in a table",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>

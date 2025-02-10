@@ -1,0 +1,197 @@
+---
+title: Input OTP
+description: Input OTP component documentation
+---
+
+The Input OTP component provides a UI element for entering one-time passwords (OTPs). It includes slots for each digit and supports custom separators.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<InputOTP.Root maxLength={6}>
+  <InputOTP.Group>
+    <InputOTP.Slot index={0} />
+    <InputOTP.Slot index={1} />
+    <InputOTP.Slot index={2} />
+  </InputOTP.Group>
+  <InputOTP.Separator />
+  <InputOTP.Group>
+    <InputOTP.Slot index={3} />
+    <InputOTP.Slot index={4} />
+    <InputOTP.Slot index={5} />
+  </InputOTP.Group>
+</InputOTP.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { InputOTP } from '@harnessio/ui/components'
+
+return (
+  <InputOTP.Root maxLength={6}>
+    <InputOTP.Group>
+      <InputOTP.Slot index={0} />
+      <InputOTP.Slot index={1} />
+      <InputOTP.Slot index={2} />
+    </InputOTP.Group>
+    <InputOTP.Separator />
+    <InputOTP.Group>
+      <InputOTP.Slot index={3} />
+      <InputOTP.Slot index={4} />
+      <InputOTP.Slot index={5} />
+    </InputOTP.Group>
+  </InputOTP.Root>
+)
+```
+
+## Anatomy
+
+The Input OTP component can be used to enter one-time passwords with custom separators.
+
+```typescript jsx
+<InputOTP.Root maxLength={6}>
+  <InputOTP.Group>
+    <InputOTP.Slot index={0} />
+    <InputOTP.Slot index={1} />
+    <InputOTP.Slot index={2} />
+    <InputOTP.Separator />
+    <InputOTP.Slot index={3} />
+    <InputOTP.Slot index={4} />
+    <InputOTP.Slot index={5} />
+  </InputOTP.Group>
+</InputOTP.Root>
+```
+
+## API Reference
+
+### InputOTP
+
+The `InputOTP` component serves as the main container for entering one-time passwords.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "containerClassName",
+      description: "Additional class names for the container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The current value of the OTP input",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description: "Handler for value change",
+      required: false,
+      value: "(newValue: string) => unknown",
+    },
+    {
+      name: "maxLength",
+      description: "Maximum length of the OTP input",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "textAlign",
+      description: "Text alignment within the OTP input",
+      required: false,
+      value: "'left' | 'center' | 'right'",
+    },
+    {
+      name: "onComplete",
+      description: "Handler for when the OTP input is complete",
+      required: false,
+      value: "(...args: any[]) => unknown",
+    },
+    {
+      name: "pushPasswordManagerStrategy",
+      description: "Strategy for handling password managers",
+      required: false,
+      value: "'increase-width' | 'none'",
+    },
+    {
+      name: "pasteTransformer",
+      description: "Function to transform pasted content",
+      required: false,
+      value: "(pasted: string) => string",
+    },
+    {
+      name: "noScriptCSSFallback",
+      description: "Fallback CSS for no-script scenarios",
+      required: false,
+      value: "string | null",
+    },
+  ]}
+/>
+
+### InputOTPGroup
+
+The `InputOTPGroup` component is used to group the OTP slots.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the group",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names for the group",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### InputOTPSlot
+
+The `InputOTPSlot` component is used to display an individual OTP slot.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "index",
+      description: "The index of the OTP slot",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the slot",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### InputOTPSeparator
+
+The `InputOTPSeparator` component is used to display a separator between OTP slots.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the separator",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

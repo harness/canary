@@ -1,0 +1,72 @@
+---
+title: Meter
+description: Meter component documentation
+---
+
+The Meter component provides a UI element for displaying progress or performance metrics. It includes a visual representation of the metric.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Meter 
+    data={[
+      { id: '1', state: MeterState.Success },
+      { id: '2', state: MeterState.Warning },
+      { id: '3', state: MeterState.Error },
+    ]}
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Meter, MeterState } from '@harnessio/ui/components'
+
+return (
+  <Meter
+    data={[
+      { id: '1', state: MeterState.Success },
+      { id: '2', state: MeterState.Warning },
+      { id: '3', state: MeterState.Error },
+    ]}
+  />
+)
+```
+
+## Anatomy
+
+The Meter component can be used to display progress or performance metrics with a visual representation.
+
+```typescript jsx
+<Meter
+  data={[
+    { id: '1', state: MeterState.Success },
+    { id: '2', state: MeterState.Warning },
+    { id: '3', state: MeterState.Error },
+  ]}
+/>
+```
+
+## API Reference
+
+### Meter
+
+The `Meter` component serves as the main container for displaying progress or performance metrics.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "data",
+      description: "Array of data objects representing the meter states",
+      required: false,
+      value: "{ id?: string; state: MeterState }[]",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the meter",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

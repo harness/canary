@@ -1,0 +1,58 @@
+---
+title: Progress
+description: Progress component documentation
+---
+
+The Progress component provides a UI element for displaying progress or performance metrics. It includes a visual representation of the metric.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Progress value={75} max={100} />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Progress } from '@harnessio/ui/components'
+
+return (
+  <Progress value={75} max={100} />
+)
+```
+
+## API Reference
+
+### Progress
+
+The `Progress` component serves as the main container for displaying progress or performance metrics.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The current value of the progress",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "max",
+      description: "The maximum value of the progress",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "getValueLabel",
+      description: "Function to get the value label",
+      required: false,
+      value: "(value: number, max: number) => string",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the progress",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

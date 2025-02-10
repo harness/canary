@@ -1,0 +1,83 @@
+---
+title: Separator
+description: Separator component documentation
+---
+
+The Separator component provides a UI element for creating a visual separation between content. It supports both horizontal and vertical orientations.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div>
+      <div className="space-y-1">
+        <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
+        <p className="text-sm text-muted-foreground">
+          An open-source UI component library.
+        </p>
+      </div>
+
+      <Separator className="my-4" />
+
+      <div className="flex h-5 items-center space-x-4 text-sm">
+        <div>Blog</div>
+        <Separator orientation="vertical" />
+        <div>Docs</div>
+        <Separator orientation="vertical" />
+        <div>Source</div>
+      </div>
+    </div>`}
+
+/>
+
+## Usage
+
+```typescript jsx
+import { Separator } from '@harnessio/ui/components'
+
+return (
+  <div>
+    <div className="space-y-1">
+      <h4 className="text-sm font-medium leading-none">Radix Primitives</h4>
+      <p className="text-sm text-muted-foreground">
+        An open-source UI component library.
+      </p>
+    </div>
+    <Separator className="my-4" />
+    <div className="flex h-5 items-center space-x-4 text-sm">
+      <div>Blog</div>
+      <Separator orientation="vertical" />
+      <div>Docs</div>
+      <Separator orientation="vertical" />
+      <div>Source</div>
+    </div>
+  </div>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "orientation",
+      description: "The orientation of the separator",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'horizontal'",
+    },
+    {
+      name: "decorative",
+      description: "Whether the separator is decorative",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the separator",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

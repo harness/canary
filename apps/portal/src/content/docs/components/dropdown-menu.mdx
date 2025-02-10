@@ -1,0 +1,334 @@
+---
+title: Dropdown Menu
+description: A vertically stacked menu that appears when triggered by a button.
+---
+
+The Dropdown Menu component provides a flexible menu interface that appears when triggered by a button. It's built on top of Radix UI's dropdown menu primitive and includes various subcomponents for creating rich menu structures.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<DropdownMenu.Root>
+  <DropdownMenu.Trigger>
+    <Button>
+      Options
+      <Icon name="chevron-down" className="ml-2 h-4 w-4" />
+    </Button>
+  </DropdownMenu.Trigger>
+  <DropdownMenu.Content>
+    <DropdownMenu.Item>New File</DropdownMenu.Item>
+    <DropdownMenu.Item>Open</DropdownMenu.Item>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Sub>
+      <DropdownMenu.SubTrigger>
+        More Options
+      </DropdownMenu.SubTrigger>
+      <DropdownMenu.SubContent>
+        <DropdownMenu.Item>Save As...</DropdownMenu.Item>
+        <DropdownMenu.Item>Export</DropdownMenu.Item>
+      </DropdownMenu.SubContent>
+    </DropdownMenu.Sub>
+    <DropdownMenu.Separator />
+    <DropdownMenu.CheckboxItem checked={true}>
+      Show Line Numbers
+    </DropdownMenu.CheckboxItem>
+    <DropdownMenu.CheckboxItem checked={false}>
+      Word Wrap
+    </DropdownMenu.CheckboxItem>
+    <DropdownMenu.Separator />
+    <DropdownMenu.RadioGroup value="vscode">
+      <DropdownMenu.RadioItem value="vscode">
+        VS Code Theme
+      </DropdownMenu.RadioItem>
+      <DropdownMenu.RadioItem value="atom">
+        Atom Theme
+      </DropdownMenu.RadioItem>
+      <DropdownMenu.RadioItem value="sublime">
+        Sublime Theme
+      </DropdownMenu.RadioItem>
+    </DropdownMenu.RadioGroup>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { DropdownMenu } from '@harnessio/ui/components'
+
+return (
+  <DropdownMenu.Root>
+    <DropdownMenu.Trigger>
+      <Button>
+        Options
+        <Icon name="chevron-down" className="ml-2 h-4 w-4" />
+      </Button>
+    </DropdownMenu.Trigger>
+    <DropdownMenu.Content>
+      <DropdownMenu.Item>New File</DropdownMenu.Item>
+      <DropdownMenu.Item>Open</DropdownMenu.Item>
+      <DropdownMenu.Separator />
+      <DropdownMenu.Sub>
+        <DropdownMenu.SubTrigger>
+          More Options
+          <Icon name="chevron-right" className="ml-auto h-4 w-4" />
+        </DropdownMenu.SubTrigger>
+        <DropdownMenu.SubContent>
+          <DropdownMenu.Item>Save As...</DropdownMenu.Item>
+          <DropdownMenu.Item>Export</DropdownMenu.Item>
+        </DropdownMenu.SubContent>
+      </DropdownMenu.Sub>
+      <DropdownMenu.Separator />
+      <DropdownMenu.CheckboxItem checked={true}>
+        Show Line Numbers
+      </DropdownMenu.CheckboxItem>
+      <DropdownMenu.CheckboxItem checked={false}>
+        Word Wrap
+      </DropdownMenu.CheckboxItem>
+      <DropdownMenu.Separator />
+      <DropdownMenu.RadioGroup value="vscode">
+        <DropdownMenu.RadioItem value="vscode">
+          VS Code Theme
+        </DropdownMenu.RadioItem>
+        <DropdownMenu.RadioItem value="atom">
+          Atom Theme
+        </DropdownMenu.RadioItem>
+        <DropdownMenu.RadioItem value="sublime">
+          Sublime Theme
+        </DropdownMenu.RadioItem>
+      </DropdownMenu.RadioGroup>
+    </DropdownMenu.Content>
+  </DropdownMenu.Root>
+)
+```
+
+## Anatomy
+
+The Dropdown Menu is composed of several subcomponents that can be imported and used as needed:
+
+```typescript jsx
+<DropdownMenu.Root>
+  <DropdownMenu.Trigger />
+  <DropdownMenu.Content>
+    <DropdownMenu.Item />
+    <DropdownMenu.Group>
+      <DropdownMenu.Item />
+    </DropdownMenu.Group>
+    <DropdownMenu.Separator />
+    <DropdownMenu.Sub>
+      <DropdownMenu.SubTrigger />
+      <DropdownMenu.SubContent />
+    </DropdownMenu.Sub>
+    <DropdownMenu.CheckboxItem />
+    <DropdownMenu.RadioGroup>
+      <DropdownMenu.RadioItem />
+    </DropdownMenu.RadioGroup>
+  </DropdownMenu.Content>
+</DropdownMenu.Root>
+```
+
+## API Reference
+
+### Root
+
+The main container for the dropdown menu.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "Must contain a Trigger and Content component",
+      required: true,
+      value: "React.ReactNode",
+    },
+    {
+      name: "defaultOpen",
+      description:
+        "The open state of the dropdown menu when it is initially rendered",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "open",
+      description: "The controlled open state of the dropdown menu",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onOpenChange",
+      description: "Event handler called when the open state changes",
+      required: false,
+      value: "(open: boolean) => void",
+    },
+    {
+      name: "modal",
+      description: "The modality of the dropdown menu",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Trigger
+
+The button that triggers the dropdown menu.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "asChild",
+      description:
+        "Change the component to the HTML tag or custom component of the only child",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "insideSplitButton",
+      description: "Whether the trigger is part of a split button",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description:
+        "When true, prevents the user from interacting with the item",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### Content
+
+The content container for the dropdown menu items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "sideOffset",
+      description: "Distance in pixels from the trigger",
+      required: false,
+      value: "number",
+      defaultValue: "4",
+    },
+    {
+      name: "align",
+      description: "Preferred alignment against the trigger",
+      required: false,
+      value: "'start' | 'center' | 'end'",
+    },
+    {
+      name: "side",
+      description: "Preferred side of the trigger to render against",
+      required: false,
+      value: "'top' | 'right' | 'bottom' | 'left'",
+    },
+    {
+      name: "collisionPadding",
+      description: "The padding between the arrow and the edges of the content",
+      required: false,
+      value:
+        "number | { top?: number; right?: number; bottom?: number; left?: number }",
+    },
+  ]}
+/>
+
+### Item
+
+An individual menu item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "inset",
+      description: "Whether the item should be inset",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description:
+        "When true, prevents the user from interacting with the item",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onSelect",
+      description: "Event handler called when the user selects an item",
+      required: false,
+      value: "(event: Event) => void",
+    },
+  ]}
+/>
+
+### CheckboxItem
+
+A menu item that can be checked/unchecked.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "checked",
+      description: "The controlled checked state of the item",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Event handler called when the checked state changes",
+      required: false,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "disabled",
+      description:
+        "When true, prevents the user from interacting with the item",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### RadioGroup
+
+A group of radio items where only one can be checked.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The controlled value of the radio group",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Event handler called when the value changes",
+      required: false,
+      value: "(value: string) => void",
+    },
+  ]}
+/>
+
+### RadioItem
+
+A menu item that can be selected as part of a radio group.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "The unique value of the radio item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description:
+        "When true, prevents the user from interacting with the item",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

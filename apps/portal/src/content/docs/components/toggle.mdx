@@ -1,0 +1,56 @@
+---
+title: Toggle
+description: Toggle component documentation
+---
+
+The Toggle component provides a UI element for toggling between two states. It includes various styles and sizes.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Toggle variant="default" size="default">Toggle</Toggle>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Toggle } from '@harnessio/ui/components'
+
+return (
+  <Toggle variant="default" size="default">Toggle</Toggle>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The variant of the toggle",
+      required: false,
+      value: "'default' | 'outline' | 'compact'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "size",
+      description: "The size of the toggle",
+      required: false,
+      value: "'default' | 'sm' | 'lg' | 'xs' | 'icon'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the toggle",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content to display inside the toggle",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

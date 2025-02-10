@@ -1,9 +1,9 @@
 ---
 title: TabNav
-description: TabNav component
+description: TabNav component documentation
 ---
 
-The `TabNav` component is used to create a tabbed navigation interface. It consists of a root container and individual tab items that can be linked to different routes.
+The `TabNav` component provides a tabbed navigation interface. It consists of a root container and individual tab items that can be linked to different routes.
 
 import { DocsPage } from "@/components/docs-page";
 
@@ -21,8 +21,6 @@ import { DocsPage } from "@/components/docs-page";
 ```typescript jsx
 import { TabNav } from '@harnessio/ui/components'
 
-//...
-
 return (
   <TabNav.Root>
     <TabNav.Item to="/home">Home</TabNav.Item>
@@ -34,6 +32,8 @@ return (
 
 ## Anatomy
 
+The TabNav component can be used to create a tabbed navigation interface.
+
 ```typescript jsx
 <TabNav.Root>
   <TabNav.Item to="/home">Home</TabNav.Item>
@@ -44,35 +44,43 @@ return (
 
 ## API Reference
 
-### [`TabNav`](packages/ui/src/components/tabnav.tsx)
+### TabNav.Root
 
-The [`TabNav`](packages/ui/src/components/tabnav.tsx) component provides a tabbed navigation interface. It consists of the following subcomponents:
+The `Root` component serves as the main container for the tab navigation.
 
-### [`TabNav.Root`](packages/ui/src/components/tabnav.tsx)
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+    },
+  ]}
+/>
 
-The root container for the tab navigation. It wraps the individual tab items.
+### TabNav.Item
 
-```typescript jsx
-<TabNav.Root>
-  {/* TabNav.Item elements as children */}
-</TabNav.Root>
-```
+The `Item` component is used to display an individual tab item.
 
-### [`TabNav.Item`](packages/ui/src/components/tabnav.tsx)
-
-An individual tab item that links to a specific route. It accepts the same props as `NavLink` from `react-router-dom`:
-
-```typescript jsx
-<TabNav.Item
-  to="/path"              // The route path to link to
-  activeClassname="..."   // [OPTIONAL] Additional class names for the active state
->
-  {label}
-</TabNav.Item>
-```
-
-### Props
-
-- `to`: A string representing the route path to link to.
-- `label`: A string or ReactNode representing the label to display for the tab.
-- `activeClassname`: An optional string for additional class names to apply when the tab is active.
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "to",
+      description: "The route path to link to",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The label to display for the tab",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "activeClassName",
+      description: "Additional class names for the active state",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

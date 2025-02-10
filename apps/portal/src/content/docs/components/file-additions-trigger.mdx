@@ -1,0 +1,69 @@
+---
+title: File Additions Trigger
+description: File Additions Trigger component documentation
+---
+
+The File Additions Trigger component provides a UI element for creating new files or uploading files. It uses a dropdown menu to offer these options.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<FileAdditionsTrigger 
+  useTranslationStore={() => ({ t: (key, fallback) => fallback })} 
+  pathNewFile="/new-file" 
+  pathUploadFiles="/upload-files" 
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { FileAdditionsTrigger } from '@harnessio/ui/components'
+
+return (
+  <FileAdditionsTrigger
+    useTranslationStore={() => ({ t: (key, fallback) => fallback })}
+    pathNewFile="/new-file"
+    pathUploadFiles="/upload-files"
+  />
+)
+```
+
+## Anatomy
+
+The File Additions Trigger component can be used to provide options for creating new files or uploading files.
+
+```typescript jsx
+<FileAdditionsTrigger
+  useTranslationStore={() => ({ t: (key, fallback) => fallback })}
+  pathNewFile="/new-file"
+  pathUploadFiles="/upload-files"
+/>
+```
+
+## API Reference
+
+### FileAdditionsTrigger
+
+The `FileAdditionsTrigger` component serves as the main container for the dropdown menu options to create new files or upload files.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "useTranslationStore",
+      description: "Function to get the translation store",
+      required: true,
+    },
+    {
+      name: "pathNewFile",
+      description: "Path to navigate for creating a new file",
+      required: true,
+    },
+    {
+      name: "pathUploadFiles",
+      description: "Path to navigate for uploading files",
+      required: true,
+    },
+  ]}
+/>

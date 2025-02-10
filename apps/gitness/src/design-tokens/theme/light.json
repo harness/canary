@@ -326,12 +326,12 @@
       "unselected": {
         "background": {
           "$type": "color",
-          "$value": "{colors.base-chrome.white}",
+          "$value": "{colors.base-chrome.150}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
         },
         "foreground": {
           "$type": "color",
-          "$value": "{foreground.base}",
+          "$value": "{colors.base-chrome.600}",
           "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
         },
         "border": {

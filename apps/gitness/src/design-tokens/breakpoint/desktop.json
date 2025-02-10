@@ -1,54 +1,4 @@
 {
-  "spacing": {
-    "1": {
-      "$type": "spacing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 1) / 2) * 2"
-    },
-    "2": {
-      "$type": "spacing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 1.4) / 2) * 2"
-    },
-    "3": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 2) / 2) * 2"
-    },
-    "4": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 2.2) / 2) * 2"
-    },
-    "5": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 2.5)/ 2) * 2"
-    },
-    "6": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 3) / 2) * 2"
-    },
-    "7": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 3.6) / 2) * 2"
-    },
-    "8": {
-      "$type": "spacing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 4) / 2) * 2"
-    },
-    "9": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 4.6) / 2) * 2"
-    },
-    "10": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 5) / 2) * 2"
-    },
-    "11": {
-      "$type": "spacing",
-      "$value": "round({step.base} * pow({multiplier.desktop}, 5.58) / 2) * 2"
-    },
-    "base": {
-      "$type": "spacing",
-      "$value": "{step.base}"
-    }
-  },
   "breakpoint": {
     "viewport": {
       "$type": "number",
@@ -67,55 +17,17 @@
       "$value": "{spacing.8}"
     }
   },
-  "font-size": {
-    "0": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 0))"
-    },
-    "1": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 0.6))"
-    },
-    "2": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 1))"
-    },
-    "3": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 1.4))"
-    },
-    "4": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 1.8))"
-    },
-    "5": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, 2.2))"
-    },
-    "-3": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.5))"
-    },
-    "-2": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.4))"
-    },
-    "-1": {
-      "$type": "fontSizes",
-      "$value": "round(16 * pow({multiplier.desktop}, -0.2))"
-    }
-  },
   "typography": {
     "display": {
-      "strong": {
+      "large": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.3}",
-          "lineHeight": "{line-height.3}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.5xl}",
           "letterSpacing": "{tracking.tight}",
-          "textCase": "{text-case.none}"
+          "textCase": "{text-case.none}",
+          "lineHeight": "{leading.5xl.tight}"
         },
         "$description": "Large headlines with extra emphasis."
       },
@@ -123,23 +35,23 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.2}",
-          "lineHeight": "{line-height.2}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.3xl}",
           "letterSpacing": "{tracking.tight}",
-          "textCase": "{text-case.none}"
+          "textCase": "{text-case.none}",
+          "lineHeight": "{leading.3xl.tight}"
         },
         "$description": "Large headlines, hero sections."
       }
     },
     "title": {
-      "strong": {
+      "large": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.1}",
-          "lineHeight": "{line-height.1}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.2xl}",
+          "lineHeight": "{leading.2xl.tight}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Emphasized section headers."
@@ -148,93 +60,106 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.0}",
-          "lineHeight": "{line-height.0}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.base}",
+          "lineHeight": "{leading.base.tight}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Section headers."
       }
     },
     "body": {
-      "subtle": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.300}",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-1}",
-          "letterSpacing": "{tracking.normal}"
+      "leading-normal": {
+        "subtle": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.300}",
+            "lineHeight": "{leading.sm.normal}",
+            "letterSpacing": "{tracking.normal}",
+            "fontSize": "{text.sm}"
+          },
+          "$description": "De-emphasized body text, secondary information."
         },
-        "$description": "De-emphasized body text, secondary information."
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.400}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.normal}",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Primary text style for UI and content."
+        },
+        "accent": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.500}",
+            "lineHeight": "{leading.sm.normal}",
+            "letterSpacing": "{tracking.tight}",
+            "fontSize": "{text.sm}"
+          },
+          "$description": "Emphasized body text for important information."
+        },
+        "strong": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.600}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.normal}",
+            "letterSpacing": "{tracking.tight}"
+          },
+          "$description": "Strongly emphasized body text for high importance."
+        }
       },
-      "base": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-1}",
-          "letterSpacing": "{tracking.normal}"
+      "leading-none": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.400}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.none}",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Primary text style for UI and content."
         },
-        "$description": "Primary text style for UI and content."
+        "accent": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.500}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.none}",
+            "letterSpacing": "{tracking.normal}"
+          }
+        }
       },
-      "emphasized": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-1}",
-          "letterSpacing": "{tracking.tight}"
+      "leading-tight": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.400}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.tight}",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Primary text style for UI and content."
         },
-        "$description": "Emphasized body text for important information."
-      },
-      "strong": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.600}",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-1}",
-          "letterSpacing": "{tracking.tight}"
-        },
-        "$description": "Strongly emphasized body text for high importance."
-      }
-    },
-    "caption": {
-      "base": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.-2}",
-          "lineHeight": "{line-height.-2}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Primary caption style, small but important text."
-      },
-      "subtle": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.-2}",
-          "lineHeight": "{line-height.-2}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Helper text, meta information."
-      },
-      "data": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{default-font-weight-normal.500}",
-          "fontSize": "{font-size.-3}",
-          "lineHeight": "{line-height.-3}",
-          "letterSpacing": "{tracking.wide}"
-        },
-        "$description": "Small informational text used for displaying numerical, statistical, or technical data. "
+        "accent": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.500}",
+            "fontSize": "{text.sm}",
+            "lineHeight": "{leading.sm.tight}",
+            "letterSpacing": "{tracking.normal}"
+          }
+        }
       }
     },
     "code": {
@@ -242,9 +167,9 @@
         "$type": "typography",
         "$value": {
           "fontFamily": "{font-family.mono}",
-          "fontWeight": "{default-font-weight-normal.400}",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-1-relaxed}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.normal}",
           "letterSpacing": "{tracking.tight}"
         },
         "$description": "Code blocks and larger code snippets."
@@ -256,7 +181,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.600}",
+            "fontWeight": "{font-weight.default.normal.600}",
             "fontSize": "{font-size.2}",
             "lineHeight": "{line-height.2}",
             "letterSpacing": "{tracking.tight}"
@@ -267,7 +192,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.600}",
+            "fontWeight": "{font-weight.default.normal.600}",
             "fontSize": "{font-size.1}",
             "lineHeight": "{line-height.1-relaxed}",
             "letterSpacing": "{tracking.tight}"
@@ -278,7 +203,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.600}",
+            "fontWeight": "{font-weight.default.normal.600}",
             "fontSize": "{font-size.0}",
             "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.normal}"
@@ -291,7 +216,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.400}",
+            "fontWeight": "{font-weight.default.normal.400}",
             "fontSize": "{font-size.1}",
             "lineHeight": "{line-height.1-relaxed}",
             "letterSpacing": "{tracking.tight}"
@@ -302,7 +227,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.400}",
+            "fontWeight": "{font-weight.default.normal.400}",
             "fontSize": "{font-size.0}",
             "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.normal}"
@@ -313,7 +238,7 @@
           "$type": "typography",
           "$value": {
             "fontFamily": "{font-family.default}",
-            "fontWeight": "{default-font-weight-normal.500}",
+            "fontWeight": "{font-weight.default.normal.500}",
             "fontSize": "{font-size.0}",
             "lineHeight": "{line-height.0-relaxed}",
             "letterSpacing": "{tracking.tight}"
@@ -321,181 +246,31 @@
           "$description": "Emphasized paragraph text."
         }
       }
-    }
-  },
-  "radii": {
-    "2xs": {
-      "$type": "borderRadius",
-      "$value": "{spacing.base}",
-      "$description": "Super small border radius for minimal rounding."
     },
-    "xs": {
-      "$type": "borderRadius",
-      "$value": "{spacing.1}",
-      "$description": "Extra small border radius for minimal rounding."
-    },
-    "sm": {
-      "$type": "borderRadius",
-      "$value": "{spacing.2}",
-      "$description": "Small rounding for compact components like form controls, small buttons, and tight UI elements."
-    },
-    "md": {
-      "$type": "borderRadius",
-      "$value": "{spacing.4}",
-      "$description": "Medium border radius for standard interactive elements like cards, standard buttons, and content containers. "
-    },
-    "lg": {
-      "$type": "borderRadius",
-      "$value": "{spacing.5}",
-      "$description": "Large border radius for prominent UI elements like feature cards, significant content blocks, and main interactive surfaces."
-    },
-    "circle": {
-      "$type": "borderRadius",
-      "$value": "999",
-      "$description": "Circular radius used for avatars, circular buttons, and other symmetrical, rounded elements that require a completely round shape."
-    }
-  },
-  "line-height": {
-    "0": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.0}* {leading.snug}/2) * 2"
-    },
-    "1": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.1}* {leading.tight}/2) * 2"
-    },
-    "2": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.2}* {leading.tight}/2) * 2"
-    },
-    "3": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.3}* {leading.tight}/2) * 2"
-    },
-    "4": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.4}* {leading.tight}/2) * 2"
-    },
-    "5": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.5}* {leading.tight}/2) * 2"
-    },
-    "100%": {
-      "$type": "lineHeights",
-      "$value": "100%"
-    },
-    "-3": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.-3}* {leading.snug}/2) * 2"
-    },
-    "-2": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.-2}* {leading.snug}/2) * 2"
-    },
-    "-1": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.-1}* {leading.snug}/2) * 2"
-    },
-    "-1-relaxed": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.-1}* {leading.normal}/2) * 2"
-    },
-    "0-relaxed": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.0}* {leading.relaxed}/2) * 2"
-    },
-    "1-relaxed": {
-      "$type": "lineHeights",
-      "$value": "round({font-size.1}* {leading.normal}/2) * 2"
-    }
-  },
-  "sizing": {
-    "1": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 2.8) / 2) * 2"
-    },
-    "2": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 3) / 2) * 2"
-    },
-    "3": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 3.6) / 2) * 2"
-    },
-    "4": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 3.8) / 2) * 2"
-    },
-    "5": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 4) / 2) * 2"
-    },
-    "6": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 4.3) / 2) * 2"
-    },
-    "7": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 4.6) / 2) * 2"
-    },
-    "8": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 5) / 2) * 2"
-    },
-    "9": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 5.32) / 2) * 2"
-    },
-    "10": {
-      "$type": "sizing",
-      "$value": "round({step.base}* pow({multiplier.desktop}, 5.44) / 2) * 2"
-    }
-  },
-  "Components setup": {
-    "components-leadingnone": {
-      "base": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "Regular",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.100%}",
-          "letterSpacing": "{tracking.normal}"
-        }
-      },
-      "emphasized": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "Medium",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.100%}",
-          "letterSpacing": "{tracking.normal}"
-        }
-      }
-    },
-    "labels": {
-      "base": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "Regular",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-2}",
-          "letterSpacing": "{tracking.normal}"
+    "caption": {
+      "leading-snug": {
+        "default": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.500}",
+            "fontSize": "{text.xs}",
+            "lineHeight": "{leading.xs.snug}",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Primary caption style, small but important text."
         },
-        "$description": "for labels with icon on the left"
-      },
-      "emphasized": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "Medium",
-          "fontSize": "{font-size.-1}",
-          "lineHeight": "{line-height.-2}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "for labels with icon on the left"
+        "subtle": {
+          "$type": "typography",
+          "$value": {
+            "fontFamily": "{font-family.default}",
+            "fontWeight": "{font-weight.default.normal.400}",
+            "fontSize": "{text.xs}",
+            "lineHeight": "{leading.xs.snug}",
+            "letterSpacing": "{tracking.normal}"
+          },
+          "$description": "Helper text, meta information."
+        }
       }
     }
   }

@@ -872,19 +872,60 @@
     }
   },
   "shadow": {
+    "sm": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "#000000",
+        "type": "dropShadow"
+      }
+    },
     "base": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "space": "p3",
-            "type": "alpha",
-            "value": "0.5"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.base-gray.black}",
-      "$description": "Standard shadow color for basic elevation.\nCommon uses: color value for default shadow effects."
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "#000000",
+        "type": "dropShadow"
+      }
+    },
+    "md": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "#000000",
+        "type": "dropShadow"
+      }
+    },
+    "lg": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "#000000",
+        "type": "dropShadow"
+      }
+    },
+    "xl": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "0",
+        "blur": "0",
+        "spread": "0",
+        "color": "#000000",
+        "type": "dropShadow"
+      }
     }
   }
 }

@@ -12,7 +12,7 @@
     },
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-gray.50}",
+      "$value": "{colors.base-chrome.50}",
       "$description": "Emphasized surface color for important elements.\nCommon uses: selected states, active tabs, highlighted sections."
     },
     "overlay": {
@@ -56,17 +56,17 @@
   "border": {
     "base": {
       "$type": "color",
-      "$value": "{colors.base-gray.150}",
+      "$value": "{colors.base-chrome.150}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
     },
     "interactive": {
       "$type": "color",
-      "$value": "{colors.base-gray.300}",
+      "$value": "{colors.base-chrome.300}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "subtle": {
       "$type": "color",
-      "$value": "{colors.base-gray.100}",
+      "$value": "{colors.base-chrome.100}",
       "$description": "Softer border color for minimal separation.\nCommon uses: subtle dividers, grouped content."
     },
     "ring": {
@@ -133,7 +133,7 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "{colors.base-gray.100}",
+            "$value": "{colors.base-chrome.150}",
             "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
           },
           "foreground": {

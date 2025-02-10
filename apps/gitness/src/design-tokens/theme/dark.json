@@ -44,7 +44,7 @@
     },
     "muted": {
       "$type": "color",
-      "$value": "{colors.base-chrome.800}",
+      "$value": "{colors.base-chrome.700}",
       "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
     },
     "accent": {
@@ -382,12 +382,12 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.500}",
+          "$value": "{colors.base-chrome.700}",
           "$description": "Text color when disabled.\nCommon uses: disabled option labels."
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.base-chrome.500}",
+          "$value": "{colors.base-chrome.700}",
           "$description": "Border for disabled elements.\nCommon uses: disabled item outlines."
         }
       }

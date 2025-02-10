@@ -110,7 +110,7 @@
             "fontWeight": "{font-weight.default.normal.600}",
             "fontSize": "{text.sm}",
             "lineHeight": "{leading.sm.normal}",
-            "letterSpacing": "{tracking.tight}"
+            "letterSpacing": "{tracking.normal}"
           },
           "$description": "Strongly emphasized body text for high importance."
         }

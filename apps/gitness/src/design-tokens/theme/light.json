@@ -29,22 +29,22 @@
   "foreground": {
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-gray.1000}",
+      "$value": "{colors.base-chrome.1000}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
     "base": {
       "$type": "color",
-      "$value": "{colors.base-gray.850}",
+      "$value": "{colors.base-chrome.700}",
       "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
     },
     "secondary": {
       "$type": "color",
-      "$value": "{colors.base-gray.600}",
+      "$value": "{colors.base-chrome.600}",
       "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
     },
     "muted": {
       "$type": "color",
-      "$value": "{colors.base-gray.500}",
+      "$value": "{colors.base-chrome.500}",
       "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
     },
     "accent": {
@@ -377,17 +377,17 @@
       "disabled": {
         "background": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.50}",
           "$description": "Background for non-interactive options.\nCommon uses: disabled checkboxes, inactive options."
         },
         "foreground": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.500}",
           "$description": "Text color when disabled.\nCommon uses: disabled option labels."
         },
         "border": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.500}",
           "$description": "Border for disabled elements.\nCommon uses: disabled item outlines."
         }
       }

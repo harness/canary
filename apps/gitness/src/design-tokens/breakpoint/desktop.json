@@ -182,8 +182,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{font-size.2}",
-            "lineHeight": "{line-height.2}",
+            "fontSize": "{text.3xl}",
+            "lineHeight": "{leading.3xl.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article main heading."
@@ -193,8 +193,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{font-size.1}",
-            "lineHeight": "{line-height.1-relaxed}",
+            "fontSize": "{text.2xl}",
+            "lineHeight": "{leading.2xl.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article section heading."
@@ -204,8 +204,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{font-size.0}",
-            "lineHeight": "{line-height.0-relaxed}",
+            "fontSize": "{text.base}",
+            "lineHeight": "{leading.base.normal}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article subsection heading."
@@ -217,8 +217,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{font-size.1}",
-            "lineHeight": "{line-height.1-relaxed}",
+            "fontSize": "{text.xl}",
+            "lineHeight": "{leading.xl.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article introduction paragraph."
@@ -228,8 +228,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{font-size.0}",
-            "lineHeight": "{line-height.0-relaxed}",
+            "fontSize": "{text.base}",
+            "lineHeight": "{leading.base.relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article paragraph text."
@@ -239,8 +239,8 @@
           "$value": {
             "fontFamily": "{font-family.default}",
             "fontWeight": "{font-weight.default.normal.500}",
-            "fontSize": "{font-size.0}",
-            "lineHeight": "{line-height.0-relaxed}",
+            "fontSize": "{text.base}",
+            "lineHeight": "{leading.base.relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Emphasized paragraph text."

@@ -24,8 +24,6 @@
       "font-weight.default.normal.700": "5fd29225ee3705c8274a2645023319375af0c8e3",
       "font-weight.default.normal.800": "2ff10578624dc42b64679d05de848ebd7f457117",
       "font-weight.default.normal.900": "ea5e9d7d8ce93ae9840ecdd5f5ef8a6f45fa071c",
-      "font-family.default": "b3029cc23533e297d5f82de1f6b1cc3f2ee65ccd",
-      "font-family.mono": "de8535b4b8bdcc4409d7d0a7f6ea7958159e95dd",
       "font-weight.default.italic.100": "43d0002762b9c9a7c0f35eefb907969a9f758fea",
       "font-weight.default.italic.200": "0f1f4e310005804e3e83fac156664369c7176999",
       "font-weight.default.italic.300": "7deb2beeda2aee66be1c9d49121ab9bd64f8f2ee",
@@ -49,6 +47,8 @@
       "font-weight.mono.italic.500": "8336b97a68975d8b26aac475c39f5cf97e2ba939",
       "font-weight.mono.italic.700": "87bfb2084b514d4e037a4033bfca62528636f330",
       "font-weight.mono.italic.800": "9ee2e3005e4b6f956c4fdca98d5b2055627556cd",
+      "font-family.default": "b3029cc23533e297d5f82de1f6b1cc3f2ee65ccd",
+      "font-family.mono": "de8535b4b8bdcc4409d7d0a7f6ea7958159e95dd",
       "text.xs": "afb8cb97b881922b2f8f2de126d93b0309f17b45",
       "text.sm": "45b600e5b13416050fd4ffa8b585b40afa3db76e",
       "text.lg": "4043aae26f6e726d94066e9128de78023dc847d3",
@@ -158,9 +158,9 @@
       "colors.base-gray.800": "60188f351256e236a9bebaf7e5b2092034ef381f",
       "colors.base-gray.850": "9ac10db36bc7be54580ba6afa8ce36740d724f9d",
       "colors.base-gray.900": "f356500cf4e718d8981c6434ce5ab20470536ab9",
+      "colors.base-gray.1000": "157bfb4df4fe2127682eef47b0e9d335ff08cc65",
       "colors.base-gray.950": "8bf4a0536f23b10cdb9b206a70ef3182d0d4b1a9",
       "colors.base-gray.white": "3c1f61ac9595b290eaaf66b55f8089e4b2384bd4",
-      "colors.base-gray.black": "157bfb4df4fe2127682eef47b0e9d335ff08cc65",
       "colors.base-chrome.50": "4ca1d358a12ef8261ad8f6337c2850748bbfec90",
       "colors.base-chrome.100": "41aa5a04433cd6b4835a8b2a7b00e839b57f420f",
       "colors.base-chrome.150": "428664b109e4b4681b92daf31ea01c33028895d0",
@@ -174,8 +174,8 @@
       "colors.base-chrome.850": "a3f46a7ddd10a8d6f7444d3035dc4cd8035100cf",
       "colors.base-chrome.900": "ce1b927a7ec177223dfdd2f980481f55c70519ef",
       "colors.base-chrome.950": "4c375954d323216c43c41504f8141d76a59143d4",
+      "colors.base-chrome.1000": "83cb2d76a11204ee8ba462c18f884922c5464655",
       "colors.base-chrome.white": "c28b457e030c6f72c223da30c0f5aebf62002391",
-      "colors.base-chrome.black": "83cb2d76a11204ee8ba462c18f884922c5464655",
       "colors.accent.50": "71f35631e4d2cdc9954b08c9978b8e10be286f45",
       "colors.accent.100": "ef359b04503f36d1103c147ed64bb00f173294ca",
       "colors.accent.150": "aade2bd74e9050f082b33715f0ea1c0d35dcb6d0",
@@ -580,7 +580,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.bg": "cc4ad74a9c6f3143a8addf954a77edde13d78538"
+      "feedback.warning.subtle.default.bg": "8950352bd69c8cda52ea6e51523f47d6d0886366"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -809,7 +809,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.background": "03afb11694d3bafb60378892a941bcb17ff18c6e"
+      "feedback.warning.subtle.default.background": "23da6410f164e0d12077b070b9db575ab495a8b1"
     }
   }
 ]

@@ -29,7 +29,7 @@
   "foreground": {
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-gray.black}",
+      "$value": "{colors.base-gray.1000}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
     "base": {
@@ -336,7 +336,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.base}",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
         }
       },
@@ -494,7 +494,7 @@
       "intense": {
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-gray.black}",
+          "$value": "{colors.base-gray.1000}",
           "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
         },
         "background": {
@@ -593,7 +593,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-gray.black}"
+          "$value": "{colors.base-gray.1000}"
         }
       },
       "subtle": {
@@ -686,7 +686,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-gray.black}"
+          "$value": "{colors.base-gray.1000}"
         }
       },
       "subtle": {
@@ -774,7 +774,7 @@
       "intense": {
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-gray.black}"
+          "$value": "{colors.base-gray.1000}"
         },
         "background": {
           "$type": "color",

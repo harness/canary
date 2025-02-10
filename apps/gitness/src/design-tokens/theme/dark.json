@@ -7,12 +7,12 @@
     },
     "surface": {
       "$type": "color",
-      "$value": "{colors.base-chrome.900}",
+      "$value": "{colors.base-chrome.950}",
       "$description": "Secondary surface color for contained content.\nCommon uses: cards, panels, sidebars, form containers."
     },
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-chrome.950}",
+      "$value": "{colors.base-chrome.900}",
       "$description": "Emphasized surface color for important elements.\nCommon uses: selected states, active tabs, highlighted sections."
     },
     "overlay": {
@@ -22,7 +22,7 @@
     },
     "nav": {
       "$type": "color",
-      "$value": "{colors.base-chrome.950}",
+      "$value": "{colors.base-chrome.1000}",
       "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
     }
   },
@@ -377,17 +377,17 @@
       "disabled": {
         "background": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Background for non-interactive options.\nCommon uses: disabled checkboxes, inactive options."
         },
         "foreground": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.500}",
           "$description": "Text color when disabled.\nCommon uses: disabled option labels."
         },
         "border": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.500}",
           "$description": "Border for disabled elements.\nCommon uses: disabled item outlines."
         }
       }

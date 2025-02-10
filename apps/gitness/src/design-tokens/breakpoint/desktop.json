@@ -175,75 +175,77 @@
         "$description": "Code blocks and larger code snippets."
       }
     },
-    "article": {
-      "title": {
-        "h1": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.3xl}",
-            "lineHeight": "{leading.3xl.normal}",
-            "letterSpacing": "{tracking.tight}"
+    "component": {
+      "markdown-editor": {
+        "title": {
+          "h1": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.600}",
+              "fontSize": "{text.3xl}",
+              "lineHeight": "{leading.3xl.normal}",
+              "letterSpacing": "{tracking.tight}"
+            },
+            "$description": "Article main heading."
           },
-          "$description": "Article main heading."
+          "h2": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.600}",
+              "fontSize": "{text.2xl}",
+              "lineHeight": "{leading.2xl.normal}",
+              "letterSpacing": "{tracking.tight}"
+            },
+            "$description": "Article section heading."
+          },
+          "h3": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.600}",
+              "fontSize": "{text.base}",
+              "lineHeight": "{leading.base.normal}",
+              "letterSpacing": "{tracking.normal}"
+            },
+            "$description": "Article subsection heading."
+          }
         },
-        "h2": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.2xl}",
-            "lineHeight": "{leading.2xl.normal}",
-            "letterSpacing": "{tracking.tight}"
+        "content": {
+          "lead": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.400}",
+              "fontSize": "{text.xl}",
+              "lineHeight": "{leading.xl.normal}",
+              "letterSpacing": "{tracking.tight}"
+            },
+            "$description": "Article introduction paragraph."
           },
-          "$description": "Article section heading."
-        },
-        "h3": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.normal}",
-            "letterSpacing": "{tracking.normal}"
+          "paragraph": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.400}",
+              "fontSize": "{text.base}",
+              "lineHeight": "{leading.base.relaxed}",
+              "letterSpacing": "{tracking.normal}"
+            },
+            "$description": "Article paragraph text."
           },
-          "$description": "Article subsection heading."
-        }
-      },
-      "content": {
-        "lead": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{text.xl}",
-            "lineHeight": "{leading.xl.normal}",
-            "letterSpacing": "{tracking.tight}"
-          },
-          "$description": "Article introduction paragraph."
-        },
-        "paragraph": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.relaxed}",
-            "letterSpacing": "{tracking.normal}"
-          },
-          "$description": "Article paragraph text."
-        },
-        "emphasized": {
-          "$type": "typography",
-          "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.500}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.relaxed}",
-            "letterSpacing": "{tracking.tight}"
-          },
-          "$description": "Emphasized paragraph text."
+          "emphasized": {
+            "$type": "typography",
+            "$value": {
+              "fontFamily": "{font-family.default}",
+              "fontWeight": "{font-weight.default.normal.500}",
+              "fontSize": "{text.base}",
+              "lineHeight": "{leading.base.relaxed}",
+              "letterSpacing": "{tracking.tight}"
+            },
+            "$description": "Emphasized paragraph text."
+          }
         }
       }
     },

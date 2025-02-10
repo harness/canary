@@ -75,28 +75,34 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
     targetElRef.current = targetEl
   }, [])
 
-  const scaleInc = useCallback((scaleDiff: number) => {
-    const rootContainerEl = targetElRef?.current
-    const parentEl = rootContainerEl?.parentElement
+  const scaleInc = useCallback((scaleIncValue: number) => {
+    const targetEl = targetElRef?.current
+    const parentEl = targetEl?.parentElement
 
-    if (!rootContainerEl || !parentEl) return
+    if (!targetEl || !parentEl) return
 
-    let newScale = canvasTransformRef.current.scale + scaleDiff
+    let newScale = canvasTransformRef.current.scale + scaleIncValue
     newScale = Math.max(newScale, config.minScale)
+    newScale = Math.min(newScale, config.maxScale)
 
-    const rect = parentEl.getBoundingClientRect()
+    const scaleDiff = newScale / canvasTransformRef.current.scale
 
-    let originX = rect.width / 2
-    let originY = rect.height / 2
+    const parentElRect = parentEl.getBoundingClientRect()
+    const targetElRect = targetEl.getBoundingClientRect()
 
-    const currentRect = rootContainerEl.getBoundingClientRect()
-    originX -= currentRect.left
-    originY -= currentRect.top
+    const centerX = parentElRect.left + parentElRect.width / 2
+    const centerY = parentElRect.top + parentElRect.height / 2
+
+    let originX = centerX - targetElRect.left
+    let originY = centerY - targetElRect.top
 
     const newTransform = calculateTransform({
-      scaleDiff: newScale / canvasTransformRef.current.scale,
-      originX: originX,
-      originY: originY
+      scaleDiff,
+      originX,
+      originY,
+      currentScale: canvasTransformRef.current.scale,
+      currentTranslateX: canvasTransformRef.current.translateX,
+      currentTranslateY: canvasTransformRef.current.translateY
     })
 
     setCanvasTransform(newTransform)
@@ -116,20 +122,22 @@ export const CanvasProvider = ({ children, config: configFromProps }: CanvasProv
       translateX: initialTransformRef.current.translateX,
       translateY: initialTransformRef.current.translateY
     })
-  }, [scaleInc])
+  }, [setCanvasTransform])
 
   const fit = useCallback(() => {
-    const rootContainerEl = targetElRef?.current
-    const parentEl = rootContainerEl?.parentElement
-    const nodesContainerEl = rootContainerEl?.getElementsByClassName(
-      'PipelineGraph-NodesContainer'
-    )[0] as HTMLDivElement
-    const { width: parentWidth, height: parentHeight } = parentEl?.getBoundingClientRect() ?? new DOMRect()
-    const { width: graphWidth, height: graphHeight } = nodesContainerEl?.getBoundingClientRect() ?? new DOMRect()
+    const targetEl = targetElRef?.current
+    const parentEl = targetEl?.parentElement
+    const nodesContainerEl = targetEl?.getElementsByClassName('PipelineGraph-NodesContainer')[0] as
+      | HTMLDivElement
+      | undefined
+
+    if (!parentEl || !nodesContainerEl) return
+
+    const { width: parentWidth, height: parentHeight } = parentEl.getBoundingClientRect()
+    const { width: graphWidth, height: graphHeight } = nodesContainerEl.getBoundingClientRect()
 
     let scaleH = ((parentHeight - config.paddingForFit * 2) / graphHeight) * canvasTransformRef.current.scale
     let scaleW = ((parentWidth - config.paddingForFit * 2) / graphWidth) * canvasTransformRef.current.scale
-
     scaleH = Math.max(scaleH, config.minScale)
     scaleW = Math.max(scaleW, config.minScale)
 

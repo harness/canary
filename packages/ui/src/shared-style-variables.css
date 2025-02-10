@@ -898,22 +898,22 @@
     --canary-label-background-orange-01: hsla(var(--canary-orange-100));
     --canary-label-background-pink-01: hsla(var(--canary-pink-100));
     --canary-label-background-purple-01: hsla(var(--canary-purple-100));
-    --canary-label-background-red-01: var(--canary-yellow-100);
-    --canary-label-background-violet-01: var(--canary-violet-100);
-    --canary-label-background-yellow-01: var(--canary-yellow-100);
-    --canary-label-foreground-blue-01: var(--canary-accent-700);
-    --canary-label-foreground-brown-01: var(--canary-brown-700);
-    --canary-label-foreground-cyan-01: var(--canary-cyan-700);
-    --canary-label-foreground-green-01: var(--canary-indigo-700);
-    --canary-label-foreground-indigo-01: var(--canary-indigo-700);
-    --canary-label-foreground-lime-01: var(--canary-lime-700);
-    --canary-label-foreground-mint-01: var(--canary-mint-700);
-    --canary-label-foreground-orange-01: var(--canary-orange-700);
-    --canary-label-foreground-pink-01: var(--canary-pink-700);
-    --canary-label-foreground-purple-01: var(--canary-purple-700);
-    --canary-label-foreground-red-01: var(--canary-yellow-700);
-    --canary-label-foreground-violet-01: var(--canary-violet-700);
-    --canary-label-foreground-yellow-01: var(--canary-yellow-700);
+    --canary-label-background-red-01: hsla(var(--canary-yellow-100));
+    --canary-label-background-violet-01: hsla(var(--canary-violet-100));
+    --canary-label-background-yellow-01: hsla(var(--canary-yellow-100));
+    --canary-label-foreground-blue-01: hsla(var(--canary-accent-700));
+    --canary-label-foreground-brown-01: hsla(var(--canary-brown-700));
+    --canary-label-foreground-cyan-01: hsla(var(--canary-cyan-700));
+    --canary-label-foreground-green-01: hsla(var(--canary-indigo-700));
+    --canary-label-foreground-indigo-01: hsla(var(--canary-indigo-700));
+    --canary-label-foreground-lime-01: hsla(var(--canary-lime-700));
+    --canary-label-foreground-mint-01: hsla(var(--canary-mint-700));
+    --canary-label-foreground-orange-01: hsla(var(--canary-orange-700));
+    --canary-label-foreground-pink-01: hsla(var(--canary-pink-700));
+    --canary-label-foreground-purple-01: hsla(var(--canary-purple-700));
+    --canary-label-foreground-red-01: hsla(var(--canary-yellow-700));
+    --canary-label-foreground-violet-01: hsla(var(--canary-violet-700));
+    --canary-label-foreground-yellow-01: hsla(var(--canary-yellow-700));
 
     /* Button */
     --canary-button-foreground-danger-01: var(--canary-yellow-700);

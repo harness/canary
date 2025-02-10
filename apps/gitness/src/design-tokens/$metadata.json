@@ -2,13 +2,10 @@
   "tokenSetOrder": [
     "typography/settings",
     "primitives/colors",
-    "primitives/multiplier",
+    "primitives/size",
     "theme/dark",
     "theme/light",
-    "breakpoint/mobile",
-    "breakpoint/tablet",
     "breakpoint/desktop",
-    "breakpoint/wide",
     "components/pipeline",
     "components/base"
   ]

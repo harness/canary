@@ -638,7 +638,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.bg": "b864264a4fa74ffa84d8d1f3cebeab5a520607e1"
+      "feedback.warning.subtle.default.bg": "2055505af3ab854634e3ca67bf846f88c8504ec0"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -879,7 +879,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.background": "d27828345b3df402fa8a174f9d40568fe7bc5c5e"
+      "feedback.warning.subtle.default.background": "6e5118132eb19dd9b48b2f4cfdb3642ee7a6c224"
     }
   }
 ]

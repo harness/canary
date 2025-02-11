@@ -3,11 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Badge,
-  Button,
   FormSeparator,
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
   NoData,
   PaginationComponent,
   SkeletonList,
@@ -21,7 +17,6 @@ import {
   TimeAgoHoverCard
 } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
-import { timeAgo } from '@utils/utils'
 
 import { getBranchEvents, getPrEvents, getTagEvents } from '../webhook-create/components/create-webhook-form-data'
 

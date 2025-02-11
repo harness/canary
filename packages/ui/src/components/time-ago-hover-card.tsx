@@ -1,5 +1,3 @@
-import React from 'react'
-
 import { timeAgo } from '../utils/utils'
 import { Button } from './button'
 import { HoverCard, HoverCardContent, HoverCardTrigger } from './hover-card'

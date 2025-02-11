@@ -906,20 +906,22 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "#000000",
+        "color": "{shadow.color.none}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
     },
     "sm": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
-        "y": "0",
-        "blur": "0",
+        "y": "1",
+        "blur": "2",
         "spread": "0",
-        "color": "#000000",
+        "color": "{shadow.color.sm}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
     },
     "base": {
       "$type": "boxShadow",
@@ -928,9 +930,10 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "#000000",
+        "color": "{colors.pure.black}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
     },
     "md": {
       "$type": "boxShadow",
@@ -939,9 +942,10 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "#000000",
+        "color": "{colors.pure.black}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
     },
     "lg": {
       "$type": "boxShadow",
@@ -950,9 +954,10 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "#000000",
+        "color": "{colors.pure.black}",
         "type": "dropShadow"
-      }
+      },
+      "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
     },
     "xl": {
       "$type": "boxShadow",
@@ -961,8 +966,89 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "#000000",
+        "color": "{colors.pure.black}",
         "type": "dropShadow"
+      },
+      "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
+    },
+    "color": {
+      "none": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "sm": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.05",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "base": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.05",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "md": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.05",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "lg": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.05",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "xl": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.05",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
       }
     }
   },
@@ -987,7 +1073,7 @@
           "type": "innerShadow"
         }
       ],
-      "$description": "Focus ring effect with background offset and accent border"
+      "$description": "Focus ring effect with background offset and accent border."
     }
   }
 }

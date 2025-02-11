@@ -111,7 +111,6 @@ export function RepoSummaryView({
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
-  console.log(files)
 
   if (loading) {
     return (

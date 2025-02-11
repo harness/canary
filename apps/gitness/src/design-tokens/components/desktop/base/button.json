@@ -1,0 +1,10 @@
+{
+  "height": {
+    "btn": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.7}"
+      }
+    }
+  }
+}

@@ -7,7 +7,8 @@
     },
     "1": {
       "$type": "spacing",
-      "$value": "4px"
+      "$value": "0.25rem",
+      "$description": "4px"
     },
     "2": {
       "$type": "spacing",
@@ -146,6 +147,22 @@
     "full": {
       "$type": "borderRadius",
       "$value": "9999px"
+    }
+  },
+  "size": {
+    "0": {
+      "$type": "sizing",
+      "$value": "0rem",
+      "$description": "0px"
+    },
+    "px": {
+      "$type": "sizing",
+      "$value": "1px"
+    },
+    "half": {
+      "$type": "sizing",
+      "$value": "0.125rem",
+      "$description": "2px"
     }
   }
 }

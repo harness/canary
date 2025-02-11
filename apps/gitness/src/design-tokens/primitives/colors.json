@@ -7,51 +7,12 @@
   },
   "colors": {
     "$type": "color",
-    "base-gray": {
-      "50": {
-        "$value": "#fcfcfd"
-      },
-      "100": {
-        "$value": "#f6f5f4"
-      },
-      "150": {
-        "$value": "#efeeed"
-      },
-      "200": {
-        "$value": "#dbd9d7"
-      },
-      "300": {
-        "$value": "#c9c4c1"
-      },
-      "400": {
-        "$value": "#bab1a9"
-      },
-      "500": {
-        "$value": "#a69a92"
-      },
-      "600": {
-        "$value": "#8b837e"
-      },
-      "700": {
-        "$value": "#736c67"
-      },
-      "800": {
-        "$value": "#57514d"
-      },
-      "850": {
-        "$value": "#3a3734"
-      },
-      "900": {
-        "$value": "#201e1d"
-      },
-      "950": {
-        "$value": "#0d0e0f"
-      },
-      "1000": {
-        "$value": "#000000"
-      },
+    "pure": {
       "white": {
-        "$value": "#FFFFFF"
+        "$value": "#ffffff"
+      },
+      "black": {
+        "$value": "#09090b"
       }
     },
     "base-chrome": {
@@ -96,9 +57,6 @@
       },
       "1000": {
         "$value": "#0d0d10"
-      },
-      "white": {
-        "$value": "#ffffff"
       }
     },
     "accent": {

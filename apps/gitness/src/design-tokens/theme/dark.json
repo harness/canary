@@ -29,7 +29,7 @@
   "foreground": {
     "highlight": {
       "$type": "color",
-      "$value": "{colors.base-chrome.white}",
+      "$value": "{colors.pure.white}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
     "base": {
@@ -61,7 +61,7 @@
     },
     "interactive": {
       "$type": "color",
-      "$value": "{colors.base-chrome.700}",
+      "$value": "{colors.base-chrome.400}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "subtle": {
@@ -86,7 +86,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.pure.white}",
             "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
           }
         },
@@ -98,7 +98,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.pure.white}",
             "$description": "Text/icon color when hovering.\nCommon uses: hover state text, interactive icon color."
           }
         },
@@ -110,7 +110,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.base-chrome.white}",
+            "$value": "{colors.pure.white}",
             "$description": "Text/icon color during press state.\nCommon uses: text color while pressing, active content."
           }
         },
@@ -855,28 +855,46 @@
     }
   },
   "overlay": {
-    "base": {
+    "hover": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.2",
+            "value": "0.5",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.base-chrome.400}",
+      "$value": "{colors.base-chrome.850}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "intense": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.7",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "#fff",
+      "$value": "{colors.base-chrome.850}",
       "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
     },
     "backdrop": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "#fff",
+      "$value": "{colors.base-chrome.1000}",
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },

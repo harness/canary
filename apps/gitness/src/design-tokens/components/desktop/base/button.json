@@ -5,6 +5,34 @@
         "$type": "sizing",
         "$value": "{size.7}"
       }
+    },
+    "btn-link": {
+      "sm": {
+        "$type": "sizing",
+        "$value": "{size.4}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.4}"
+      }
+    }
+  },
+  "gap": {
+    "btn": {
+      "sm": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
+    },
+    "btn-link": {
+      "sm": {
+        "$type": "spacing",
+        "$value": "{spacing.2}"
+      },
+      "default": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
     }
   }
 }

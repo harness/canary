@@ -6,6 +6,8 @@
     "primitives/icon",
     "theme/dark",
     "theme/light",
-    "breakpoint/desktop"
+    "breakpoint/desktop",
+    "components/desktop/base/button",
+    "components/desktop/feature/pipline"
   ]
 }

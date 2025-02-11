@@ -930,7 +930,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{colors.pure.black}",
+        "color": "{shadow.color.base}",
         "type": "dropShadow"
       },
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
@@ -942,7 +942,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{colors.pure.black}",
+        "color": "{shadow.color.md}",
         "type": "dropShadow"
       },
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
@@ -954,7 +954,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{colors.pure.black}",
+        "color": "{shadow.color.lg}",
         "type": "dropShadow"
       },
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
@@ -966,7 +966,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{colors.pure.black}",
+        "color": "{shadow.color.xl}",
         "type": "dropShadow"
       },
       "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."

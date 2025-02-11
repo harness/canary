@@ -1150,17 +1150,17 @@
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "0",
-          "color": "#000000",
-          "type": "innerShadow"
+          "spread": "2",
+          "color": "{background.canvas}",
+          "type": "dropShadow"
         },
         {
           "x": "0",
           "y": "0",
           "blur": "0",
-          "spread": "0",
-          "color": "#000000",
-          "type": "innerShadow"
+          "spread": "4",
+          "color": "{border.ring}",
+          "type": "dropShadow"
         }
       ],
       "$description": "Focus ring effect with background offset and accent border."

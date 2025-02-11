@@ -399,5 +399,32 @@
       "$value": "0.875rem",
       "$description": "14px (3.5)"
     }
+  },
+  "border": {
+    "0": {
+      "$type": "borderWidth",
+      "$value": "0rem",
+      "$description": "No border (border-0)"
+    },
+    "2": {
+      "$type": "borderWidth",
+      "$value": "2px",
+      "$description": "Medium border width (border-2)"
+    },
+    "4": {
+      "$type": "borderWidth",
+      "$value": "4px",
+      "$description": "Thick border width (border-4)"
+    },
+    "8": {
+      "$type": "borderWidth",
+      "$value": "8px",
+      "$description": "Extra thick border width (border-8)"
+    },
+    "default": {
+      "$type": "borderWidth",
+      "$value": "1px",
+      "$description": "Default border width (border)"
+    }
   }
 }

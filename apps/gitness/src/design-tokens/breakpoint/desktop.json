@@ -257,17 +257,6 @@
       }
     },
     "leading-snug": {
-      "subtle": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.xs}",
-          "lineHeight": "{leading.xs.snug}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Helper text, meta information."
-      },
       "default": {
         "$type": "typography",
         "$value": {
@@ -278,6 +267,17 @@
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
+      },
+      "subtle": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.xs}",
+          "lineHeight": "{leading.xs.snug}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Helper text, meta information."
       }
     }
   },

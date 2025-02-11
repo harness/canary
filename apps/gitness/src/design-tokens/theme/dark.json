@@ -947,5 +947,29 @@
         "type": "dropShadow"
       }
     }
+  },
+  "ring": {
+    "focus": {
+      "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "0",
+          "blur": "0",
+          "spread": "0",
+          "color": "#000000",
+          "type": "innerShadow"
+        },
+        {
+          "x": "0",
+          "y": "0",
+          "blur": "0",
+          "spread": "0",
+          "color": "#000000",
+          "type": "innerShadow"
+        }
+      ],
+      "$description": "Focus ring effect with background offset and accent border"
+    }
   }
 }

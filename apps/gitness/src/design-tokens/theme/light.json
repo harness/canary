@@ -325,6 +325,15 @@
     "selection": {
       "unselected": {
         "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.5",
+                "space": "p3"
+              }
+            }
+          },
           "$type": "color",
           "$value": "{colors.base-chrome.150}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
@@ -376,8 +385,17 @@
       },
       "disabled": {
         "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.3",
+                "space": "p3"
+              }
+            }
+          },
           "$type": "color",
-          "$value": "{colors.base-chrome.50}",
+          "$value": "{colors.base-chrome.150}",
           "$description": "Background for non-interactive options.\nCommon uses: disabled checkboxes, inactive options."
         },
         "foreground": {

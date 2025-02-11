@@ -255,6 +255,30 @@
         },
         "$description": "Helper text, meta information."
       }
+    },
+    "leading-none": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.xs}",
+          "lineHeight": "{leading.xs.none}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary caption style, small but important text."
+      },
+      "subtle": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.xs}",
+          "lineHeight": "{leading.xs.none}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Helper text, meta information."
+      }
     }
   },
   "code": {
@@ -341,6 +365,59 @@
           },
           "$description": "Emphasized paragraph text."
         }
+      }
+    }
+  },
+  "base": {
+    "button": {
+      "sm": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      },
+      "default": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      },
+      "lg": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      },
+      "icon": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      }
+    },
+    "button-link": {
+      "sm": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      },
+      "default": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        }
+      }
+    }
+  },
+  "feature": {
+    "pipline": {
+      "card": {
+        "$type": "composition",
+        "$value": {
+          "height": "1"
+        },
+        "$description": "TO DO"
       }
     }
   }

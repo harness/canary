@@ -13,11 +13,11 @@
     "sm": {
       "$type": "composition",
       "$value": {
-        "borderRadius": "{radii.xs}",
-        "horizontalPadding": "{spacing.5}",
-        "verticalPadding": "{spacing.2}",
-        "itemSpacing": "{spacing.2}",
-        "height": "{sizing.4}"
+        "borderRadius": "{rounded.rounded}",
+        "horizontalPadding": "{spacing.3}",
+        "verticalPadding": "{spacing.2-half}",
+        "itemSpacing": "{spacing.2-half}",
+        "height": "{size.7}"
       }
     },
     "lg": {
@@ -35,6 +35,22 @@
       "$value": {
         "borderRadius": "{radii.xs}",
         "sizing": "{sizing.5}"
+      }
+    }
+  },
+  "button-link": {
+    "default": {
+      "$type": "composition",
+      "$value": {
+        "itemSpacing": "{spacing.2-half}",
+        "height": "{size.4}"
+      }
+    },
+    "sm": {
+      "$type": "composition",
+      "$value": {
+        "itemSpacing": "{spacing.2-half}",
+        "height": "{size.4}"
       }
     }
   }

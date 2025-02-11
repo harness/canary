@@ -1,8 +1,8 @@
 {
   "tokenSetOrder": [
-    "typography/settings",
     "primitives/colors",
-    "primitives/size",
+    "primitives/typography",
+    "primitives/dimensions",
     "theme/dark",
     "theme/light",
     "breakpoint/desktop",

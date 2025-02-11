@@ -4,8 +4,8 @@
     "name": "value",
     "selectedTokenSets": {
       "primitives/colors": "enabled",
-      "typography/settings": "enabled",
-      "primitives/size": "enabled"
+      "primitives/typography": "enabled",
+      "primitives/dimensions": "enabled"
     },
     "$figmaStyleReferences": {},
     "$figmaVariableReferences": {
@@ -411,7 +411,9 @@
     "id": "06c0447b12ae4d0bf224a0eb90b673f151ba8f24",
     "name": "dark",
     "selectedTokenSets": {
-      "theme/dark": "enabled"
+      "theme/dark": "enabled",
+      "primitives/typography": "disabled",
+      "primitives/dimensions": "disabled"
     },
     "$figmaStyleReferences": {
       "brand_typography.text-xl": "S:1befb2b289e263331f60edbfe130631462dc9883,",
@@ -640,7 +642,9 @@
       "typography.code.base": "S:0ec5c86536762ad84288fd64bf915d386b283d1f,"
     },
     "selectedTokenSets": {
-      "breakpoint/desktop": "enabled"
+      "breakpoint/desktop": "enabled",
+      "primitives/typography": "disabled",
+      "primitives/dimensions": "disabled"
     },
     "$figmaCollectionId": "VariableCollectionId:630:194356",
     "$figmaModeId": "630:7",
@@ -657,7 +661,9 @@
     "name": "light",
     "$figmaStyleReferences": {},
     "selectedTokenSets": {
-      "theme/light": "enabled"
+      "theme/light": "enabled",
+      "primitives/typography": "disabled",
+      "primitives/dimensions": "disabled"
     },
     "group": "theme",
     "$figmaCollectionId": "VariableCollectionId:426:491162",

@@ -1,6 +1,6 @@
 {
   "name": "@harnessio/forms",
-  "version": "0.0.1",
+  "version": "0.0.1-react18.alpha.1",
   "description": "Harness Forms Library",
   "scripts": {
     "dev": "run-p build:watch",
@@ -48,8 +48,8 @@
     "@types/jest": "^27.5.2",
     "@types/lodash-es": "^4.17.3",
     "@types/node": "^16.18.84",
-    "@types/react": "^17.0.3",
-    "@types/react-dom": "^17.0.3",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
     "@types/uuid": "^8.3.0",
     "@types/yup": "^0.29.0",
     "@vitejs/plugin-react-swc": "^3.7.2",

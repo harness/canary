@@ -7,6 +7,7 @@
     "theme/light",
     "breakpoint/desktop",
     "components/pipeline",
+    "components/icon",
     "components/base"
   ]
 }

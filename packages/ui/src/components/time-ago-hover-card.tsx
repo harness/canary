@@ -32,7 +32,9 @@ export const TimeAgoHoverCard = ({ timeStamp }: { timeStamp: number }) => {
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button variant="link">{timeAgo(timeStamp)}</Button>
+        <Button variant="ghost" className="hover:bg-transparent">
+          {timeAgo(timeStamp)}
+        </Button>
       </HoverCardTrigger>
       <HoverCardContent className="w-auto p-3 space-y-1 text-sm" avoidCollisions={true}>
         <div className="flex gap-2">

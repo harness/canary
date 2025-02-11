@@ -1023,6 +1023,18 @@
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
+    "inner": {
+      "$type": "boxShadow",
+      "$value": {
+        "x": "0",
+        "y": "2",
+        "blur": "4",
+        "spread": "0",
+        "color": "{shadow.color.inner}",
+        "type": "innerShadow"
+      },
+      "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
+    },
     "color": {
       "none": {
         "$extensions": {
@@ -1035,7 +1047,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "sm": {
         "$extensions": {
@@ -1048,7 +1060,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "base": {
         "$extensions": {
@@ -1061,7 +1073,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "md": {
         "$extensions": {
@@ -1074,7 +1086,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "lg": {
         "$extensions": {
@@ -1087,7 +1099,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "xl": {
         "$extensions": {
@@ -1100,7 +1112,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "2xl": {
         "$extensions": {
@@ -1113,7 +1125,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       },
       "inner": {
         "$extensions": {
@@ -1126,7 +1138,7 @@
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.base-chrome.850}"
       }
     }
   },

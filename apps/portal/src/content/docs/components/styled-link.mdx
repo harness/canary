@@ -1,0 +1,48 @@
+---
+title: Styled Link
+description: Styled Link component documentation
+---
+
+The Styled Link component provides a UI element for creating styled links using `react-router-dom`. It includes optional features like custom class names.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<StyledLink to="/example">Example Link</StyledLink>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { StyledLink } from '@harnessio/ui/components'
+
+return (
+  <StyledLink to="/example">Example Link</StyledLink>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "to",
+      description: "The destination URL for the link",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the link",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content to display inside the link",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

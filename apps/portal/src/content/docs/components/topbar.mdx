@@ -1,0 +1,133 @@
+---
+title: Topbar
+description: Topbar component documentation
+---
+
+The Topbar component provides a UI element for displaying a top navigation bar. It includes various sections like left, center, and right.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Topbar.Root>
+    <Topbar.Left>
+      Left Action contents
+    </Topbar.Left>
+    <Topbar.Center>
+      Center Content
+    </Topbar.Center>
+    <Topbar.Right>
+      Right Action contents
+    </Topbar.Right>
+  </Topbar.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Topbar } from '@harnessio/ui/components'
+
+return (
+  <Topbar.Root>
+    <Topbar.Left>
+      <Button>Left Action</Button>
+    </Topbar.Left>
+    <Topbar.Center>
+      <Text>Center Content</Text>
+    </Topbar.Center>
+    <Topbar.Right>
+      <Button>Right Action</Button>
+    </Topbar.Right>
+  </Topbar.Root>
+)
+```
+
+## Anatomy
+
+The Topbar component can be used to display a top navigation bar with various sections like left, center, and right.
+
+```typescript jsx
+<Topbar.Root>
+  <Topbar.Left>
+    <Button>Left Action</Button>
+  </Topbar.Left>
+  <Topbar.Center>
+    <Text>Center Content</Text>
+  </Topbar.Center>
+  <Topbar.Right>
+    <Button>Right Action</Button>
+  </Topbar.Right>
+</Topbar.Root>
+```
+
+## API Reference
+
+### Topbar
+
+The `Topbar` component provides a UI element for displaying a top navigation bar. It consists of the following subcomponents:
+
+### Topbar.Root
+
+The `Root` component serves as the main container for the topbar.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Topbar.Left
+
+The `Left` component is used to display the left section of the topbar.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the left section",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Topbar.Center
+
+The `Center` component is used to display the center section of the topbar.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the center section",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### Topbar.Right
+
+The `Right` component is used to display the right section of the topbar.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the right section",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>

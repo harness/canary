@@ -1,0 +1,126 @@
+---
+title: No Data
+description: No Data component documentation
+---
+
+The No Data component provides a UI element for displaying a message when there is no data available. It includes optional features like icons, descriptions, and action buttons.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<NoData 
+    title="No Data Available" 
+    iconName="no-data-folder" 
+    description={["There is no data to display."]} 
+    primaryButton={{ label: "Primary Action", onClick: () => console.log("Primary Action Clicked") }} 
+    secondaryButton={{ label: "Secondary Action", onClick: () => console.log("Secondary Action Clicked") }} 
+  />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { NoData } from '@harnessio/ui/components'
+
+return (
+  <NoData
+    title="No Data Available"
+    iconName="no-data-folder"
+    description={["There is no data to display."]}
+    primaryButton={{ label: "Primary Action", onClick: () => console.log("Primary Action Clicked") }}
+    secondaryButton={{ label: "Secondary Action", onClick: () => console.log("Secondary Action Clicked") }}
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "The title of the no data message",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "iconName",
+      description: "The name of the icon to display",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "iconSize",
+      description: "The size of the icon",
+      required: false,
+      value: "number",
+      defaultValue: "112",
+    },
+    {
+      name: "description",
+      description: "The description text for the no data message",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "primaryButton",
+      description: "The primary action button",
+      required: false,
+      value: "{ label: string, onClick?: () => void, to?: string }",
+    },
+    {
+      name: "secondaryButton",
+      description: "The secondary action button",
+      required: false,
+      value: "{ label: string, onClick?: () => void, to?: string }",
+    },
+    {
+      name: "withBorder",
+      description: "Whether to display a border around the no data message",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "loadState",
+      description: "The current load state",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "setLoadState",
+      description: "Function to set the load state",
+      required: false,
+      value: "Dispatch<SetStateAction<string>>",
+    },
+    {
+      name: "textWrapperClassName",
+      description: "Additional class names for the text wrapper",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the no data message",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### Supported Icon Names
+
+The `NoData` component supports the following icon names:
+
+- `no-data-folder`
+- `no-search-magnifying-glass`
+- `no-data-merge`
+- `no-data-cog`
+- `no-data-webhooks`
+- `no-data-branches`
+- `no-data-members`
+- `no-repository`
+- `no-data-error`
+- `no-data-commits`
+- `no-data-pr`

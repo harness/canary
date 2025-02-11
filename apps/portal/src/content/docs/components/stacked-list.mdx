@@ -1,0 +1,201 @@
+---
+title: Stacked List
+description: Stacked List component documentation
+---
+
+The Stacked List component provides a UI element for displaying a list of items in a stacked layout. It includes various customization options.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<StackedList.Root>
+    <StackedList.Item>
+      <StackedList.Field title="Item 1" description="Description for item 1" />
+    </StackedList.Item>
+    <StackedList.Item thumbnail={<Icon name="clone" />} actions={<Button>Item Action</Button>} >
+      <StackedList.Field title="Item 2" description="Description for item 2" />
+    </StackedList.Item>
+  </StackedList.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { StackedList } from '@harnessio/ui/components'
+
+return (
+  <StackedList.Root>
+    <StackedList.Item>
+      <StackedList.Field title="Item 1" description="Description for item 1" />
+    </StackedList.Item>
+    <StackedList.Item thumbnail={<Icon name="clone" />} actions={<Button>Item Action</Button>} >
+      <StackedList.Field title="Item 2" description="Description for item 2" />
+    </StackedList.Item>
+  </StackedList.Root>
+)
+```
+
+## Anatomy
+
+The Stacked List component can be used to display a list of items in a stacked layout with various customization options.
+
+```typescript jsx
+<StackedList.Root>
+  <StackedList.Item>
+    <StackedList.Field title="Item 1" description="Description for item 1" />
+  </StackedList.Item>
+  <StackedList.Item thumbnail={<Icon name="clone" />} actions={<Button>Item Action</Button>} >
+    <StackedList.Field title="Item 2" description="Description for item 2" />
+  </StackedList.Item>
+</StackedList.Root>
+```
+
+## API Reference
+
+### StackedList.Root
+
+The `Root` component serves as the main container for the stacked list.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "onlyTopRounded",
+      description: "Whether to apply rounded corners only to the top",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "borderBackground",
+      description: "Whether to apply a border background",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "withoutBorder",
+      description: "Whether to remove the border",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### StackedList.Item
+
+The `Item` component is used to display an individual item in the stacked list.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "thumbnail",
+      description: "The thumbnail to display inside the item",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "actions",
+      description: "The actions to display inside the item",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "asChild",
+      description: "Whether to render the item as a child element",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "isLast",
+      description: "Whether the item is the last in the list",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "isHeader",
+      description: "Whether the item is a header",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disableHover",
+      description: "Whether to disable hover effects",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### StackedList.Field
+
+The `Field` component is used to display a field inside the stacked list item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "The title of the field",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "description",
+      description: "The description of the field",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "label",
+      description: "Whether the field is a label",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "primary",
+      description: "Whether the field is primary",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "secondary",
+      description: "Whether the field is secondary",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "right",
+      description: "Whether to align the field to the right",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the field",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

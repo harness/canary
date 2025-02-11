@@ -1,0 +1,122 @@
+---
+title: Textarea
+description: Textarea component documentation
+---
+
+The Textarea component provides a UI element for entering multi-line text. It includes optional features like labels, captions, and error messages.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Textarea 
+    id="example-textarea" 
+    label="Textarea Label" 
+    placeholder="Enter text here" 
+    caption="This is a caption" 
+    optional 
+    resizable 
+  />`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Textarea } from '@harnessio/ui/components'
+
+return (
+  <Textarea
+    id="example-textarea"
+    label="Textarea Label"
+    placeholder="Enter text here"
+    caption="This is a caption"
+    error="This is an error message"
+    optional
+    resizable
+  />
+)
+```
+
+## API Reference
+
+### Textarea
+
+The `Textarea` component serves as the main container for the textarea element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "id",
+      description: "The id of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "The label text for the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "The caption text for the textarea",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "error",
+      description: "The error message for the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "optional",
+      description: "Whether the textarea is optional",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "resizable",
+      description: "Whether the textarea is resizable",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Whether the textarea is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "placeholder",
+      description: "The placeholder text for the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "The current value of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "defaultValue",
+      description: "The default value of the textarea",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onChange",
+      description: "Handler for value change",
+      required: false,
+      value: "React.ChangeEventHandler<HTMLTextAreaElement>",
+    },
+  ]}
+/>

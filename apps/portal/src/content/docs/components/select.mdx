@@ -1,0 +1,256 @@
+---
+title: Select
+description: Select component documentation
+---
+
+The Select component provides a UI element for selecting an option from a dropdown list. It includes optional features like labels, error states, and captions.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Select placeholder="Select an option" onValueChange={console.log}>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Group 1</SelectLabel>
+        <SelectItem value="option1">Option 1</SelectItem>
+        <SelectItem value="option2">Option 2</SelectItem>
+      </SelectGroup>
+      <SelectSeparator />
+      <SelectGroup>
+        <SelectLabel>Group 2</SelectLabel>
+        <SelectItem value="option3">Option 3</SelectItem>
+        <SelectItem value="option4">Option 4</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Select, SelectGroup, SelectLabel, SelectItem, SelectSeparator } from '@harnessio/ui/components'
+
+return (
+  <Select placeholder="Select an option" onValueChange={console.log}>
+    <SelectContent>
+      <SelectGroup>
+        <SelectLabel>Group 1</SelectLabel>
+        <SelectItem value="option1">Option 1</SelectItem>
+        <SelectItem value="option2">Option 2</SelectItem>
+      </SelectGroup>
+      <SelectSeparator />
+      <SelectGroup>
+        <SelectLabel>Group 2</SelectLabel>
+        <SelectItem value="option3">Option 3</SelectItem>
+        <SelectItem value="option4">Option 4</SelectItem>
+      </SelectGroup>
+    </SelectContent>
+  </Select>
+)
+```
+
+## Anatomy
+
+The Select component can be used to select an option from a dropdown list with optional features like labels, error states, and captions.
+
+```typescript jsx
+<Select placeholder="Select an option" onValueChange={console.log}>
+  <SelectContent>
+    <SelectGroup>
+      <SelectLabel>Group 1</SelectLabel>
+      <SelectItem value="option1">Option 1</SelectItem>
+      <SelectItem value="option2">Option 2</SelectItem>
+    </SelectGroup>
+    <SelectSeparator />
+    <SelectGroup>
+      <SelectLabel>Group 2</SelectLabel>
+      <SelectItem value="option3">Option 3</SelectItem>
+      <SelectItem value="option4">Option 4</SelectItem>
+    </SelectGroup>
+  </SelectContent>
+</Select>
+```
+
+## API Reference
+
+### Select
+
+The `Select` component serves as the main container for the select element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "label",
+      description: "The label text for the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "error",
+      description: "The error message for the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "caption",
+      description: "The caption text for the select",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "disabled",
+      description: "Whether the select is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "placeholder",
+      description: "The placeholder text for the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "selectValueChildren",
+      description: "Custom content to display inside the select value",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "children",
+      description: "The child components to render inside the select",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### SelectTrigger
+
+The `SelectTrigger` component is used to display the trigger button for the select dropdown.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the trigger",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "iconClassName",
+      description: "Additional class names for the icon",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the trigger",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SelectContent
+
+The `SelectContent` component is used to display the content container for the select dropdown.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the content container",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "position",
+      description: "The position of the content container",
+      required: false,
+      value: "'popper' | 'item'",
+      defaultValue: "'popper'",
+    },
+    {
+      name: "withSearch",
+      description: "Whether to include a search panel for options",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "searchProps",
+      description: "Props for the search panel",
+      required: false,
+      value: "SelectContentSearchProps",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the content container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SelectLabel
+
+The `SelectLabel` component is used to display a label for grouping select items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the label",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the label",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SelectItem
+
+The `SelectItem` component is used to display an individual selectable item within the dropdown.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the item",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "isItemTextAsChild",
+      description: "Whether to render the item text as a child element",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### SelectSeparator
+
+The `SelectSeparator` component is used to display a visual separator between select items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the separator",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

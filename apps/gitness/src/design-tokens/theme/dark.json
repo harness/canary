@@ -236,7 +236,7 @@
       "default": {
         "background": {
           "$type": "color",
-          "$value": "{background.highlight}",
+          "$value": "{colors.base-chrome.950}",
           "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
         },
         "foreground": {
@@ -246,7 +246,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.base}",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
         },
         "icon": {
@@ -1054,7 +1054,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.6",
               "space": "p3"
             }
           }
@@ -1067,7 +1067,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.1",
+              "value": "0.6",
               "space": "p3"
             }
           }
@@ -1080,7 +1080,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.5",
               "space": "p3"
             }
           }
@@ -1093,7 +1093,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.5",
               "space": "p3"
             }
           }
@@ -1106,7 +1106,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.5",
               "space": "p3"
             }
           }
@@ -1119,7 +1119,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.25",
+              "value": "0.6",
               "space": "p3"
             }
           }
@@ -1132,13 +1132,13 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.1",
               "space": "p3"
             }
           }
         },
         "$type": "color",
-        "$value": "{colors.pure.black}"
+        "$value": "{colors.pure.white}"
       }
     }
   },

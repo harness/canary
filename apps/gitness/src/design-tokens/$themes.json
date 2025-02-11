@@ -489,7 +489,8 @@
       "shadow.base": "S:70378f090cb66b03ee4b18e25742743934f37757,",
       "shadow.md": "S:aa7e83fd47e75f5a1ae3e17f64417d5e9fcb96ae,",
       "shadow.lg": "S:5dfba690094db266c4ab7686fccbbedd8c16385f,",
-      "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,"
+      "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,",
+      "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,"
     },
     "$figmaVariableReferences": {
       "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
@@ -638,7 +639,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.bg": "2055505af3ab854634e3ca67bf846f88c8504ec0"
+      "feedback.warning.subtle.default.bg": "baec577d6191bdfc81354d62d8b353e9a64a0d36"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -724,7 +725,8 @@
       "shadow.base": "S:70378f090cb66b03ee4b18e25742743934f37757,",
       "shadow.md": "S:aa7e83fd47e75f5a1ae3e17f64417d5e9fcb96ae,",
       "shadow.lg": "S:5dfba690094db266c4ab7686fccbbedd8c16385f,",
-      "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,"
+      "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,",
+      "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,"
     },
     "selectedTokenSets": {
       "theme/light": "enabled"

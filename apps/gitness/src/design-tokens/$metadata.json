@@ -6,7 +6,6 @@
     "primitives/icon",
     "theme/dark",
     "theme/light",
-    "breakpoint/desktop",
-    "components/base"
+    "breakpoint/desktop"
   ]
 }

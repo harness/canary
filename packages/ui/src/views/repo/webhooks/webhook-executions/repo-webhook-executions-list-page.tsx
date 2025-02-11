@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Badge,
+  Button,
   FormSeparator,
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
   NoData,
   PaginationComponent,
   SkeletonList,
@@ -28,6 +32,32 @@ interface RepoWebhookExecutionsPageProps {
   isLoading: boolean
   toRepoWebookExecutionDetails: (executionId: string) => string
 }
+const utcFormatter = new Intl.DateTimeFormat(undefined, {
+  weekday: 'short',
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+  timeZone: 'UTC',
+  timeZoneName: 'short'
+})
+
+// Create local formatter with same format
+const localFormatter = new Intl.DateTimeFormat(undefined, {
+  weekday: 'short',
+  day: '2-digit',
+  month: 'short',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+  timeZoneName: 'short'
+})
+
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
   useTranslationStore,
@@ -99,8 +129,24 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                             : 'Invalid'}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right">
-                      <Text size={2}>{timeAgo(execution.created)}</Text>
+                    <TableCell className="text-right relative">
+                      {/* Add relative positioning */}
+                      <HoverCard>
+                        <HoverCardTrigger asChild>
+                          <Button variant="link">{timeAgo(execution.created)}</Button>
+                        </HoverCardTrigger>
+                        <HoverCardContent className="w-auto p-3 space-y-1 text-sm" avoidCollisions={true}>
+                          <div className="flex gap-2">
+                            <span className="font-medium text-muted-foreground">UTC:</span>
+                            <span>{utcFormatter.format(execution.created)}</span>
+                          </div>
+                          <div className="flex gap-2">
+                            <span className="font-medium text-muted-foreground">Local:</span>
+                            {/* <span>{timeAgo(execution.created)}</span> */}
+                            <span className="text-left">{localFormatter.format(execution.created)}</span>
+                          </div>
+                        </HoverCardContent>
+                      </HoverCard>
                     </TableCell>
                   </TableRow>
                 ))}

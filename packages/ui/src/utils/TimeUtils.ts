@@ -26,7 +26,7 @@ export const getFormattedDuration = (startTs = 0, endTs = 0): string => {
 }
 
 /**
- * Formats duration in milliseconds to human-readable duration format.
+ * Formats duration in milliseconds or nanoseconds to human-readable duration format.
  * For 3723000 is formatted as "1h 2m 3s".
  * @param durationInMs
  * @param unit

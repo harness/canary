@@ -70,14 +70,51 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
  * @example
  * timeAgo(1708113838167) // Returns "1 hour ago"
  */
+// export const timeAgo = (timestamp?: number | null): string => {
+//   if (timestamp === null || timestamp === undefined) {
+//     return 'Unknown time'
+//   }
+
+//   try {
+//     return formatDistanceToNow(timestamp, {
+//       addSuffix: true, // add "ago" to the end of the string
+//       includeSeconds: true
+//     })
+//   } catch (error) {
+//     console.error(`Failed to format time ago: ${error}`)
+//     return 'Unknown time'
+//   }
+// }
+
 export const timeAgo = (timestamp?: number | null): string => {
   if (timestamp === null || timestamp === undefined) {
     return 'Unknown time'
   }
 
+  const now = Date.now()
+  const threeDaysMs = 3 * 24 * 60 * 60 * 1000
+  const isOld = now - timestamp > threeDaysMs
+
+  if (isOld) {
+    const date = new Date(timestamp)
+    return (
+      new Intl.DateTimeFormat(LOCALE, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      }).format(date) +
+      ' at ' +
+      new Intl.DateTimeFormat(LOCALE, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      }).format(date)
+    )
+  }
+
   try {
     return formatDistanceToNow(timestamp, {
-      addSuffix: true, // add "ago" to the end of the string
+      addSuffix: true,
       includeSeconds: true
     })
   } catch (error) {

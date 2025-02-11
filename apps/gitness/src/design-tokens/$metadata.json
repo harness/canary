@@ -8,6 +8,7 @@
     "theme/light",
     "breakpoint/desktop",
     "components/desktop/base/button",
+    "components/desktop/base/input",
     "components/desktop/feature/pipline"
   ]
 }

@@ -1,12 +1,66 @@
 {
-  "height": {
-    "btn": {
+  "btn": {
+    "size": {
       "sm": {
         "$type": "sizing",
         "$value": "{size.7}"
+      },
+      "default": {
+        "$type": "sizing",
+        "$value": "{size.7}"
+      },
+      "icon": {
+        "$type": "sizing",
+        "$value": "{size.7}"
+      },
+      "lg": {
+        "$type": "sizing",
+        "$value": "{size.9}"
       }
     },
-    "btn-link": {
+    "gap": {
+      "sm": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "default": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      },
+      "lg": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
+    },
+    "radius": {
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.rounded}"
+      },
+      "rounded": {
+        "$type": "borderRadius",
+        "$value": "{rounded.full}"
+      }
+    },
+    "border": {
+      "$type": "borderWidth",
+      "$value": "{border.default}"
+    },
+    "px": {
+      "lg": {
+        "$type": "spacing",
+        "$value": "{spacing.4}"
+      }
+    },
+    "py": {
+      "lg": {
+        "$type": "spacing",
+        "$value": "{spacing.2-half}"
+      }
+    }
+  },
+  "btn-link": {
+    "size": {
       "sm": {
         "$type": "sizing",
         "$value": "{size.4}"
@@ -15,16 +69,8 @@
         "$type": "sizing",
         "$value": "{size.4}"
       }
-    }
-  },
-  "gap": {
-    "btn": {
-      "sm": {
-        "$type": "spacing",
-        "$value": "{spacing.2-half}"
-      }
     },
-    "btn-link": {
+    "gap": {
       "sm": {
         "$type": "spacing",
         "$value": "{spacing.2}"

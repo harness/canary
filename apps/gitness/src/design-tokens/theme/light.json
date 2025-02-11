@@ -374,7 +374,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.white}",
+          "$value": "{colors.pure.white}",
           "$description": "Text color for selected items.\nCommon uses: selected item labels."
         },
         "border": {
@@ -873,7 +873,7 @@
     }
   },
   "overlay": {
-    "base": {
+    "hover": {
       "$extensions": {
         "studio.tokens": {
           "modify": {

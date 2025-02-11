@@ -137,6 +137,19 @@
         }
       }
     },
+    "leading-snug": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.snug}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      }
+    },
     "leading-tight": {
       "default": {
         "$type": "typography",

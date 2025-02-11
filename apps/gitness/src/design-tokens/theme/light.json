@@ -925,51 +925,103 @@
     },
     "base": {
       "$type": "boxShadow",
-      "$value": {
-        "x": "0",
-        "y": "0",
-        "blur": "0",
-        "spread": "0",
-        "color": "{shadow.color.base}",
-        "type": "dropShadow"
-      },
+      "$value": [
+        {
+          "x": "0",
+          "y": "1",
+          "blur": "3",
+          "spread": "0",
+          "color": "{shadow.color.base}",
+          "type": "dropShadow"
+        },
+        {
+          "x": "0",
+          "y": "1",
+          "blur": "2",
+          "spread": "-1",
+          "color": "{shadow.color.base}",
+          "type": "innerShadow"
+        }
+      ],
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
     },
     "md": {
       "$type": "boxShadow",
-      "$value": {
-        "x": "0",
-        "y": "0",
-        "blur": "0",
-        "spread": "0",
-        "color": "{shadow.color.md}",
-        "type": "dropShadow"
-      },
+      "$value": [
+        {
+          "x": "0",
+          "y": "4",
+          "blur": "6",
+          "spread": "-1",
+          "color": "{shadow.color.md}",
+          "type": "dropShadow"
+        },
+        {
+          "x": "0",
+          "y": "2",
+          "blur": "4",
+          "spread": "-2",
+          "color": "{shadow.color.md}",
+          "type": "innerShadow"
+        }
+      ],
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
     },
     "lg": {
       "$type": "boxShadow",
-      "$value": {
-        "x": "0",
-        "y": "0",
-        "blur": "0",
-        "spread": "0",
-        "color": "#000000",
-        "type": "dropShadow"
-      },
+      "$value": [
+        {
+          "x": "0",
+          "y": "10",
+          "blur": "15",
+          "spread": "-3",
+          "color": "{shadow.color.lg}",
+          "type": "dropShadow"
+        },
+        {
+          "x": "0",
+          "y": "4",
+          "blur": "6",
+          "spread": "-4",
+          "color": "{shadow.color.lg}",
+          "type": "innerShadow"
+        }
+      ],
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
     },
     "xl": {
       "$type": "boxShadow",
+      "$value": [
+        {
+          "x": "0",
+          "y": "20",
+          "blur": "25",
+          "spread": "-5",
+          "color": "{shadow.color.xl}",
+          "type": "dropShadow"
+        },
+        {
+          "x": "0",
+          "y": "8",
+          "blur": "10",
+          "spread": "-6",
+          "color": "{shadow.color.xl}",
+          "type": "innerShadow"
+        }
+      ],
+      "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
+    },
+    "2xl": {
+      "$type": "boxShadow",
       "$value": {
         "x": "0",
-        "y": "0",
-        "blur": "0",
-        "spread": "0",
-        "color": "{shadow.color.xl}",
+        "y": "25",
+        "blur": "50",
+        "spread": "-12",
+        "color": "{shadow.color.2xl}",
         "type": "dropShadow"
       },
-      "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
+      "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
     },
     "color": {
       "none": {
@@ -1003,7 +1055,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.1",
               "space": "p3"
             }
           }
@@ -1016,7 +1068,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.1",
               "space": "p3"
             }
           }
@@ -1029,7 +1081,7 @@
           "studio.tokens": {
             "modify": {
               "type": "alpha",
-              "value": "0.05",
+              "value": "0.1",
               "space": "p3"
             }
           }
@@ -1038,6 +1090,32 @@
         "$value": "{colors.pure.black}"
       },
       "xl": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.1",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "2xl": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.25",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.pure.black}"
+      },
+      "inner": {
         "$extensions": {
           "studio.tokens": {
             "modify": {

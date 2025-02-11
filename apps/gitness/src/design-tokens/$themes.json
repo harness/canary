@@ -477,7 +477,8 @@
       "shadow.lg": "S:5dfba690094db266c4ab7686fccbbedd8c16385f,",
       "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,",
       "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
-      "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
+      "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,",
+      "shadow.2xl": "S:da8e7b5b0f1352215fbaab66eff62a3e19d22b67,"
     },
     "$figmaVariableReferences": {
       "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
@@ -632,7 +633,9 @@
       "shadow.color.md": "4a5cc435ee470ddc91386b74e9b126616fbf8921",
       "shadow.color.lg": "5b63eb4c2e845b4ab40dc5f63fbe2d58c311eb30",
       "shadow.color.xl": "eab7047ee73ee2b490e6cb79369ee0c62a5e65be",
-      "feedback.warning.subtle.default.bg": "9802b4be808dc2518fead2f48f5d031193031344"
+      "shadow.color.2xl": "69af1b6a95f5cbe8385572d1965004d9be717c0a",
+      "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
+      "feedback.warning.subtle.default.bg": "3088a43935d276b59f941031f5b541f921280bc0"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -720,7 +723,8 @@
       "shadow.lg": "S:5dfba690094db266c4ab7686fccbbedd8c16385f,",
       "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,",
       "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
-      "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
+      "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,",
+      "shadow.2xl": "S:da8e7b5b0f1352215fbaab66eff62a3e19d22b67,"
     },
     "selectedTokenSets": {
       "theme/light": "enabled"
@@ -881,7 +885,9 @@
       "shadow.color.md": "4a5cc435ee470ddc91386b74e9b126616fbf8921",
       "shadow.color.lg": "5b63eb4c2e845b4ab40dc5f63fbe2d58c311eb30",
       "shadow.color.xl": "eab7047ee73ee2b490e6cb79369ee0c62a5e65be",
-      "feedback.warning.subtle.default.background": "46380c4751c32de72d6238a672520505cd789a72"
+      "shadow.color.2xl": "69af1b6a95f5cbe8385572d1965004d9be717c0a",
+      "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
+      "feedback.warning.subtle.default.background": "01bff749dff5b2963cf209c2fdb8ef167c0fd0b4"
     }
   }
 ]

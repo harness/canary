@@ -202,6 +202,11 @@
             "$type": "color",
             "$value": "{foreground.highlight}",
             "$description": "Text color during hover state.\nCommon uses: hover text in outlined variant."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.hover}",
+            "$description": "Background color during hover state.\nCommon uses: hover fill in outlined variant."
           }
         },
         "active": {
@@ -214,6 +219,11 @@
             "$type": "color",
             "$value": "{foreground.highlight}",
             "$description": "Text color during press state.\nCommon uses: active text in outlined variant."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.intense}",
+            "$description": "Background color during active state.\nCommon uses: active fill in outlined variant."
           }
         },
         "disabled": {

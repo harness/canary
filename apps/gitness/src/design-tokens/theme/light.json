@@ -202,6 +202,11 @@
             "$type": "color",
             "$value": "{foreground.highlight}",
             "$description": "Text color during hover state.\nCommon uses: hover text in outlined variant."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.hover}",
+            "$description": "Background color during hover state.\nCommon uses: hover fill in outlined variant."
           }
         },
         "active": {
@@ -214,6 +219,11 @@
             "$type": "color",
             "$value": "{foreground.highlight}",
             "$description": "Text color during press state.\nCommon uses: active text in outlined variant."
+          },
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.intense}",
+            "$description": "Background color during active state.\nCommon uses: active fill in outlined variant."
           }
         },
         "disabled": {
@@ -888,8 +898,17 @@
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "intense": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.4",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "#fff",
+      "$value": "{colors.base-chrome.400}",
       "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
     },
     "backdrop": {

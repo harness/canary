@@ -1,9 +1,8 @@
-import { PropsWithChildren } from 'react'
 import { NavLink, NavLinkProps } from 'react-router-dom'
 
 import { cn } from '@utils/cn'
 
-const TabNavRoot: React.FC<PropsWithChildren> = ({ children }) => {
+const TabNavRoot: React.FC = ({ children }) => {
   return (
     <nav className="inline-flex h-[44px] w-full items-center justify-start gap-6 border-b border-border-background px-6 text-muted-foreground">
       {children}

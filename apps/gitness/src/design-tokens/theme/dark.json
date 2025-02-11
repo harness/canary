@@ -619,8 +619,17 @@
             "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.red.850}",
+            "$value": "{colors.red.300}",
             "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
           }
         },
@@ -636,8 +645,17 @@
             "$description": "Text color for hoverable error content.\nCommon uses: interactive error text, hover state content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.red.800}",
+            "$value": "{colors.red.300}",
             "$description": "Border color for hover state.\nCommon uses: interactive error borders, hover boundaries."
           }
         },

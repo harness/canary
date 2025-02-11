@@ -610,7 +610,7 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "{colors.red.900}",
+            "$value": "{colors.red.950}",
             "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
           },
           "foreground": {
@@ -620,19 +620,19 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{colors.red.800}",
+            "$value": "{colors.red.850}",
             "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
           }
         },
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "{colors.red.850}",
+            "$value": "{colors.red.900}",
             "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.red.150}",
+            "$value": "{colors.red.200}",
             "$description": "Text color for hoverable error content.\nCommon uses: interactive error text, hover state content."
           },
           "border": {

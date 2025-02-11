@@ -1,4 +1,4 @@
-import { Accordion, Avatar, AvatarFallback, Badge, Icon, Layout, StackedList } from '@/components'
+import { Accordion, Avatar, Badge, Icon, Layout, StackedList } from '@/components'
 import {
   easyPluralize,
   TypesCodeOwnerEvaluation,
@@ -71,13 +71,9 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
             evaluations.map(({ owner }, idx) => {
               if (idx < 2) {
                 return (
-                  <Avatar key={owner?.id} className="size-6 rounded-full">
-                    <AvatarFallback>
-                      <span className="text-12 text-foreground-1">
-                        {owner?.display_name && getInitials(owner?.display_name)}
-                      </span>
-                    </AvatarFallback>
-                  </Avatar>
+                  <Avatar.Root key={owner?.id || idx}>
+                    <Avatar.Fallback className="text-12">{getInitials(owner?.display_name || '')}</Avatar.Fallback>
+                  </Avatar.Root>
                 )
               }
               if (idx === 2 && evaluations.length && evaluations.length > 2) {

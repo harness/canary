@@ -2,7 +2,6 @@ import { Fragment, useMemo, useRef, useState } from 'react'
 
 import {
   Avatar,
-  AvatarFallback,
   Button,
   Icon,
   IconProps,
@@ -72,11 +71,9 @@ const PullRequestCommentBox = ({
 
   const avatar = useMemo(() => {
     return (
-      <Avatar size="6">
-        <AvatarFallback>
-          <span className="text-12 text-foreground-1">{getInitials(currentUser || '')}</span>
-        </AvatarFallback>
-      </Avatar>
+      <Avatar.Root>
+        <Avatar.Fallback className="text-12">{getInitials(currentUser || '')}</Avatar.Fallback>
+      </Avatar.Root>
     )
   }, [currentUser])
 

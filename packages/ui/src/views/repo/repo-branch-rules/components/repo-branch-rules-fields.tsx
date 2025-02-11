@@ -2,8 +2,6 @@ import { FC, useCallback, useMemo, useState } from 'react'
 
 import {
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   Button,
   ButtonWithOptions,
   Checkbox,
@@ -195,10 +193,13 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
 const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
   return (
     <>
-      <Avatar className="overflow-hidden rounded-md" size="6">
-        {!!option?.avatar_url && <AvatarImage src={option.avatar_url} alt={option.display_name} />}
-        <AvatarFallback>{getInitials(option.display_name)}</AvatarFallback>
-      </Avatar>
+      <Avatar.Root>
+        {option.url ? (
+          <Avatar.Image src={option.url} alt={option.display_name} />
+        ) : (
+          <Avatar.Fallback>{getInitials(option.display_name)}</Avatar.Fallback>
+        )}
+      </Avatar.Root>
       <span className="font-medium">{option.display_name}</span>
     </>
   )

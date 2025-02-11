@@ -2,8 +2,6 @@ import { useMemo } from 'react'
 
 import {
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   DropdownMenu,
   Icon,
   MoreActionsTooltip,
@@ -50,10 +48,13 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
             {/* USER */}
             <TableCell className="content-center">
               <div className="flex items-center gap-2">
-                <Avatar size="6">
-                  {!!member.avatarUrl && <AvatarImage src={member.avatarUrl} />}
-                  <AvatarFallback>{getInitials(member.display_name)}</AvatarFallback>
-                </Avatar>
+                <Avatar.Root>
+                  {member.avatarUrl ? (
+                    <Avatar.Image src={member.avatarUrl} />
+                  ) : (
+                    <Avatar.Fallback>{getInitials(member.display_name)}</Avatar.Fallback>
+                  )}
+                </Avatar.Root>
                 <span className="font-medium text-foreground-8">{member.display_name}</span>
               </div>
             </TableCell>

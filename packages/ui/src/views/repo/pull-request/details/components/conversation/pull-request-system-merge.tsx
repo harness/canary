@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, CommitCopyActions, Icon, Text } from '@components/index'
+import { Avatar, CommitCopyActions, Icon } from '@/components'
 import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -33,14 +33,12 @@ const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
       header={[
         {
           avatar: (
-            <Avatar className="size-6 rounded-full p-0">
-              <AvatarFallback>
-                <Text size={1} color="tertiaryBackground">
-                  {/* TODO: fix fallback string */}
-                  {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                </Text>
-              </AvatarFallback>
-            </Avatar>
+            <Avatar.Root>
+              <Avatar.Fallback>
+                {/* TODO: fix fallback string */}
+                {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+              </Avatar.Fallback>
+            </Avatar.Root>
           ),
           name: (payload?.payload?.author as PayloadAuthor)?.display_name,
           description: (

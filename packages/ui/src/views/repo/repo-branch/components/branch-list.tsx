@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom'
 
 import {
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   Badge,
   Button,
   CopyButton,
@@ -132,12 +130,15 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 {/* user avatar and timestamp */}
                 <TableCell className="content-center">
                   <div className="flex items-center gap-2">
-                    <Avatar className="size-[1.125rem]">
-                      {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
-                      <AvatarFallback className="text-center text-10">
-                        {getInitials(branch?.user?.name ?? '', 2)}
-                      </AvatarFallback>
-                    </Avatar>
+                    <Avatar.Root size="4.5">
+                      {branch?.user?.avatarUrl ? (
+                        <Avatar.Image src={branch?.user?.avatarUrl} />
+                      ) : (
+                        <Avatar.Fallback className="text-center text-10">
+                          {getInitials(branch?.user?.name ?? '')}
+                        </Avatar.Fallback>
+                      )}
+                    </Avatar.Root>
                     <span className="truncate text-foreground-1">{branch?.timestamp}</span>
                   </div>
                 </TableCell>

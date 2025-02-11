@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Avatar, AvatarFallback, CommitCopyActions, Icon, Layout, Text } from '@components/index'
+import { Avatar, CommitCopyActions, Icon, Layout, Text } from '@/components'
 import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -82,14 +82,12 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
           header={[
             {
               avatar: (
-                <Avatar className="size-6 rounded-full p-0">
-                  <AvatarFallback>
-                    <span className="text-12 text-foreground-1">
-                      {/* TODO: fix fallback string */}
-                      {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </span>
-                  </AvatarFallback>
-                </Avatar>
+                <Avatar.Root>
+                  <Avatar.Fallback className="text-12">
+                    {/* TODO: fix fallback string */}
+                    {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                  </Avatar.Fallback>
+                </Avatar.Root>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               // TODO: fix timeline item to handle commit update as rn it doesnt work
@@ -114,11 +112,9 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
       const author = payload?.author as PayloadAuthor
 
       const authorAvatar = (
-        <Avatar className="size-6 rounded-full p-0">
-          <AvatarFallback>
-            <span className="text-12 text-foreground-1">{getInitials(author?.display_name || '')}</span>
-          </AvatarFallback>
-        </Avatar>
+        <Avatar.Root>
+          <Avatar.Fallback className="text-12">{getInitials(author?.display_name || '')}</Avatar.Fallback>
+        </Avatar.Root>
       )
 
       return (
@@ -157,14 +153,12 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
           header={[
             {
               avatar: (
-                <Avatar className="size-6 rounded-full p-0">
-                  <AvatarFallback>
-                    <span className="text-12 text-foreground-1">
-                      {/* TODO: fix fallback string */}
-                      {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </span>
-                  </AvatarFallback>
-                </Avatar>
+                <Avatar.Root>
+                  <Avatar.Fallback className="text-12">
+                    {/* TODO: fix fallback string */}
+                    {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                  </Avatar.Fallback>
+                </Avatar.Root>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               description: (
@@ -204,14 +198,12 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
           header={[
             {
               avatar: (
-                <Avatar className="size-6 rounded-full p-0">
-                  <AvatarFallback>
-                    <span className="text-12 text-foreground-1">
-                      {/* TODO: fix fallback string */}
-                      {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                    </span>
-                  </AvatarFallback>
-                </Avatar>
+                <Avatar.Root>
+                  <Avatar.Fallback className="text-12">
+                    {/* TODO: fix fallback string */}
+                    {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                  </Avatar.Fallback>
+                </Avatar.Root>
               ),
               name: (payload?.payload?.author as PayloadAuthor)?.display_name,
               description: (

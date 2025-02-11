@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   Avatar,
-  AvatarFallback,
   Button,
   Icon,
   NoData,
@@ -383,9 +382,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   <div className="grid grid-cols-[1fr_288px] gap-x-8">
                     <div className="flex gap-x-3">
                       {currentUser && (
-                        <Avatar className="overflow-hidden rounded-full" size="6">
-                          <AvatarFallback>{getInitials(currentUser)}</AvatarFallback>
-                        </Avatar>
+                        <Avatar.Root>
+                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
+                        </Avatar.Root>
                       )}
                       <div className="w-full">
                         <Spacer size={1} />

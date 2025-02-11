@@ -4,8 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import {
   Alert,
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   Button,
   ButtonGroup,
   ControlGroup,
@@ -55,7 +53,6 @@ interface SettingsAccountGeneralPageProps {
   useTranslationStore: () => TranslationStore
 }
 
-const AVATAR_INITIALS_LENGTH = 2
 const SUCCESS_MESSAGE_DURATION = 2000
 
 const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
@@ -173,14 +170,12 @@ const SettingsAccountGeneralPage: FC<SettingsAccountGeneralPageProps> = ({
                  FIXME: Avatar size does not work correctly
                  issue – https://github.com/harness/canary/issues/817
               */}
-            <Avatar size="20" className="size-20 shadow-md">
-              <AvatarImage src="/images/anon.jpg" />
-              <AvatarFallback>
-                <span className="text-24 font-medium text-foreground-3">
-                  {getInitials(userData?.name || '', AVATAR_INITIALS_LENGTH)}
-                </span>
-              </AvatarFallback>
-            </Avatar>
+            <Avatar.Root size="20" className="shadow-md">
+              <Avatar.Image src="/images/anon.jpg" />
+              <Avatar.Fallback className="text-24 font-medium text-foreground-3">
+                {getInitials(userData?.name || '')}
+              </Avatar.Fallback>
+            </Avatar.Root>
             <Fieldset>
               <Input
                 id="name"

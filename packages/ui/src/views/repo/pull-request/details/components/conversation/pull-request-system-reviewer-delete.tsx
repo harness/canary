@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, Icon, Text } from '@components/index'
+import { Avatar, Icon, Text } from '@/components'
 import { getInitials } from '@utils/stringUtils'
 
 import { PayloadAuthor, TypesPullReqActivity } from '../../pull-request-details-types'
@@ -21,14 +21,12 @@ const PullRequestSystemReviewerDeleteItem: React.FC<PullRequestSystemReviewerDel
       header={[
         {
           avatar: (
-            <Avatar className="size-6 rounded-full p-0">
-              <AvatarFallback>
-                <Text size={1} color="tertiaryBackground">
-                  {/* TODO: fix fallback string */}
-                  {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                </Text>
-              </AvatarFallback>
-            </Avatar>
+            <Avatar.Root>
+              <Avatar.Fallback>
+                {/* TODO: fix fallback string */}
+                {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+              </Avatar.Fallback>
+            </Avatar.Root>
           ),
           name: (payload?.payload?.author as PayloadAuthor)?.display_name,
           description: (

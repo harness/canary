@@ -1,6 +1,6 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, AvatarFallback, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
+import { Avatar, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/utils'
 
@@ -308,13 +308,11 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     />
                   ) : (
                     <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
-                      {currentUser ? (
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <span className="text-12 text-foreground-1">{getInitials(currentUser ?? '', 2)}</span>
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : null}
+                      {!!currentUser && (
+                        <Avatar.Root>
+                          <Avatar.Fallback className="text-12">{getInitials(currentUser)}</Avatar.Fallback>
+                        </Avatar.Root>
+                      )}
                       <Input
                         className="bg-background-2"
                         placeholder="Reply here"

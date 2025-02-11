@@ -1,6 +1,6 @@
 import { FC, useCallback, useMemo, useState } from 'react'
 
-import { Avatar, AvatarFallback, Icon, Layout } from '@/components'
+import { Avatar, Icon, Layout } from '@/components'
 import {
   CommentItem,
   EnumPullReqActivityType,
@@ -262,14 +262,12 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                     header={[
                       {
                         avatar: (
-                          <Avatar className="size-6 rounded-full p-0">
-                            <AvatarFallback>
-                              <span className="text-12 text-foreground-1">
-                                {/* TODO: fix fallback string */}
-                                {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                              </span>
-                            </AvatarFallback>
-                          </Avatar>
+                          <Avatar.Root>
+                            <Avatar.Fallback className="text-12">
+                              {/* TODO: fix fallback string */}
+                              {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                            </Avatar.Fallback>
+                          </Avatar.Root>
                         ),
                         name: (payload?.author as PayloadAuthor)?.display_name,
                         // TODO: fix comment to tell between comment or code comment?
@@ -331,19 +329,17 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                                 replyBoxClassName="p-4"
                                 toggleConversationStatus={toggleConversationStatus}
                                 icon={
-                                  <Avatar className="size-6 rounded-full p-0">
-                                    <AvatarFallback>
-                                      <span className="text-12 text-foreground-1">
-                                        {/* TODO: fix fallback string */}
-                                        {getInitials(
-                                          (
-                                            (commentItem as unknown as TypesPullReqActivity)?.payload
-                                              ?.author as PayloadAuthor
-                                          )?.display_name || ''
-                                        )}
-                                      </span>
-                                    </AvatarFallback>
-                                  </Avatar>
+                                  <Avatar.Root>
+                                    <Avatar.Fallback className="text-12">
+                                      {/* TODO: fix fallback string */}
+                                      {getInitials(
+                                        (
+                                          (commentItem as unknown as TypesPullReqActivity)?.payload
+                                            ?.author as PayloadAuthor
+                                        )?.display_name || ''
+                                      )}
+                                    </Avatar.Fallback>
+                                  </Avatar.Root>
                                 }
                                 header={[
                                   {
@@ -427,14 +423,12 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                   header={[
                     {
                       avatar: (
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <span className="text-12 text-foreground-1">
-                              {/* TODO: fix fallback string */}
-                              {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
-                            </span>
-                          </AvatarFallback>
-                        </Avatar>
+                        <Avatar.Root>
+                          <Avatar.Fallback className="text-12">
+                            {/* TODO: fix fallback string */}
+                            {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
+                          </Avatar.Fallback>
+                        </Avatar.Root>
                       ),
                       name: (payload?.author as PayloadAuthor)?.display_name,
                       // TODO: fix comment to tell between comment or code comment?
@@ -476,19 +470,15 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                             replyBoxClassName="p-4"
                             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                             icon={
-                              <Avatar className="size-6 rounded-full p-0">
-                                <AvatarFallback>
-                                  <span className="text-12 text-foreground-1">
-                                    {/* TODO: fix fallback string */}
-                                    {getInitials(
-                                      (
-                                        (commentItem as unknown as TypesPullReqActivity)?.payload
-                                          ?.author as PayloadAuthor
-                                      ).display_name || ''
-                                    )}
-                                  </span>
-                                </AvatarFallback>
-                              </Avatar>
+                              <Avatar.Root>
+                                <Avatar.Fallback className="text-12">
+                                  {/* TODO: fix fallback string */}
+                                  {getInitials(
+                                    ((commentItem as unknown as TypesPullReqActivity)?.payload?.author as PayloadAuthor)
+                                      .display_name || ''
+                                  )}
+                                </Avatar.Fallback>
+                              </Avatar.Root>
                             }
                             header={[
                               {

@@ -506,7 +506,7 @@ export default function PullRequestConversationPage() {
 
   const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
 
-  if (prPanelData?.PRStateLoading || changesLoading) {
+  if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
     return <SkeletonList />
   }
 

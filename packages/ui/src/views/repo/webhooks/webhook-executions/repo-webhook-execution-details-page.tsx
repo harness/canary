@@ -1,10 +1,9 @@
 import { FC, useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, ListActions, Spacer, Text } from '@/components'
+import { Badge, Button, IThemeStore, ListActions, Spacer, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { formatDuration } from '@utils/TimeUtils'
 import { timeAgo } from '@utils/utils'
-import { IThemeStore } from 'dist/components'
 
 import { CodeEditor } from '@harnessio/yaml-editor'
 

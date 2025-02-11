@@ -1,1 +1,14 @@
-{}
+{
+  "iconSize": {
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.4}"
+    }
+  },
+  "iconWidth": {
+    "sm": {
+      "$type": "borderWidth",
+      "$value": "1.4"
+    }
+  }
+}

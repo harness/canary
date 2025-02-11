@@ -626,7 +626,13 @@
       "overlay.hover": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.bg": "2bd7a7e92ef641614d5bd4e391d05546e1f2d473"
+      "shadow.color.none": "ae20a8fd47fc2afcdf0a6a1b86f43a4cd772f4b6",
+      "shadow.color.sm": "768f07b961f1d704c1f6d3c4d7145ab28fdbcbdc",
+      "shadow.color.base": "4063d3b124f6fed3a1e639138060fa7a0a7f6019",
+      "shadow.color.md": "4a5cc435ee470ddc91386b74e9b126616fbf8921",
+      "shadow.color.lg": "5b63eb4c2e845b4ab40dc5f63fbe2d58c311eb30",
+      "shadow.color.xl": "eab7047ee73ee2b490e6cb79369ee0c62a5e65be",
+      "feedback.warning.subtle.default.bg": "2a2973b0c59c39433b6e3d9b0ba3cadba57599ea"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -713,7 +719,8 @@
       "shadow.md": "S:aa7e83fd47e75f5a1ae3e17f64417d5e9fcb96ae,",
       "shadow.lg": "S:5dfba690094db266c4ab7686fccbbedd8c16385f,",
       "shadow.xl": "S:d6752151a8dd3bd4b4bf12ad15a80c522f760731,",
-      "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,"
+      "shadow.none": "S:a2ed3778198048e91067a04633c27ba20e9fcbec,",
+      "ring.focus": "S:062018f6483f54f1255b952aa1759b028d502ac3,"
     },
     "selectedTokenSets": {
       "theme/light": "enabled"
@@ -868,7 +875,13 @@
       "overlay.hover": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.background": "88bc291c4a575fc978da246461625f438cf03ef5"
+      "shadow.color.none": "ae20a8fd47fc2afcdf0a6a1b86f43a4cd772f4b6",
+      "shadow.color.sm": "768f07b961f1d704c1f6d3c4d7145ab28fdbcbdc",
+      "shadow.color.base": "4063d3b124f6fed3a1e639138060fa7a0a7f6019",
+      "shadow.color.md": "4a5cc435ee470ddc91386b74e9b126616fbf8921",
+      "shadow.color.lg": "5b63eb4c2e845b4ab40dc5f63fbe2d58c311eb30",
+      "shadow.color.xl": "eab7047ee73ee2b490e6cb79369ee0c62a5e65be",
+      "feedback.warning.subtle.default.background": "ffe828fbed8c7fe1a2dde7eb8cf2c43ab45af649"
     }
   }
 ]

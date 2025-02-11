@@ -70,21 +70,6 @@ export const timeDistance = (date1 = 0, date2 = 0, onlyHighestDenomination = fal
  * @example
  * timeAgo(1708113838167) // Returns "1 hour ago"
  */
-// export const timeAgo = (timestamp?: number | null): string => {
-//   if (timestamp === null || timestamp === undefined) {
-//     return 'Unknown time'
-//   }
-
-//   try {
-//     return formatDistanceToNow(timestamp, {
-//       addSuffix: true, // add "ago" to the end of the string
-//       includeSeconds: true
-//     })
-//   } catch (error) {
-//     console.error(`Failed to format time ago: ${error}`)
-//     return 'Unknown time'
-//   }
-// }
 
 export const timeAgo = (timestamp?: number | null): string => {
   if (timestamp === null || timestamp === undefined) {

@@ -78,6 +78,7 @@ export * from './problems'
 export * from './chat'
 export * from './treeview'
 export * from './hover-card'
+export * from './time-ago-hover-card'
 
 export * as NodeGroup from './node-group'
 export * as ShaBadge from './sha-badge'

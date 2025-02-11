@@ -1193,5 +1193,17 @@
       ],
       "$description": "Focus ring effect with background offset and accent border."
     }
+  },
+  "components": {
+    "link": {
+      "default": {
+        "$type": "color",
+        "$value": "{colors.accent.200}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{colors.accent.100}"
+      }
+    }
   }
 }

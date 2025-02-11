@@ -183,6 +183,52 @@
         },
         "$description": "Strongly emphasized body text for high importance."
       }
+    },
+    "leading-relaxed": {
+      "subtle": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.300}",
+          "lineHeight": "{leading.sm.relaxed}",
+          "letterSpacing": "{tracking.normal}",
+          "fontSize": "{text.sm}"
+        },
+        "$description": "De-emphasized body text, secondary information."
+      },
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.relaxed}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      },
+      "accent": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "lineHeight": "{leading.sm.relaxed}",
+          "letterSpacing": "{tracking.tight}",
+          "fontSize": "{text.sm}"
+        },
+        "$description": "Emphasized body text for important information."
+      },
+      "strong": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.600}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.relaxed}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Strongly emphasized body text for high importance."
+      }
     }
   },
   "caption": {

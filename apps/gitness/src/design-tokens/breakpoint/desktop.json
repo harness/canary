@@ -68,6 +68,76 @@
     }
   },
   "body": {
+    "leading-none": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.none}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      },
+      "accent": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.none}",
+          "letterSpacing": "{tracking.normal}"
+        }
+      }
+    },
+    "leading-tight": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.tight}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      },
+      "accent": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.tight}",
+          "letterSpacing": "{tracking.normal}"
+        }
+      }
+    },
+    "leading-snug": {
+      "default": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.400}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.snug}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      },
+      "accent": {
+        "$type": "typography",
+        "$value": {
+          "fontFamily": "{font-family.default}",
+          "fontWeight": "{font-weight.default.normal.500}",
+          "fontSize": "{text.sm}",
+          "lineHeight": "{leading.sm.snug}",
+          "letterSpacing": "{tracking.normal}"
+        },
+        "$description": "Primary text style for UI and content."
+      }
+    },
     "leading-normal": {
       "subtle": {
         "$type": "typography",
@@ -112,65 +182,6 @@
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Strongly emphasized body text for high importance."
-      }
-    },
-    "leading-none": {
-      "default": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.none}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Primary text style for UI and content."
-      },
-      "accent": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.none}",
-          "letterSpacing": "{tracking.normal}"
-        }
-      }
-    },
-    "leading-snug": {
-      "default": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.snug}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Primary text style for UI and content."
-      }
-    },
-    "leading-tight": {
-      "default": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.tight}",
-          "letterSpacing": "{tracking.normal}"
-        },
-        "$description": "Primary text style for UI and content."
-      },
-      "accent": {
-        "$type": "typography",
-        "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.tight}",
-          "letterSpacing": "{tracking.normal}"
-        }
       }
     }
   },

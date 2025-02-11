@@ -585,7 +585,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.bg": "ae4a72a909630e0c35a04b00cab1d07a426e4b90"
+      "feedback.warning.subtle.default.bg": "1d137b1677985dbc952bed7c9bdd5a48df7a9210"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -642,7 +642,8 @@
       "component.markdown-editor.title.h3": "S:444147bec52c621c396465535113b0d47d75f8b4,",
       "component.markdown-editor.content.lead": "S:d43eac69416ebbe90e979781fea7077d0eb25fa2,",
       "component.markdown-editor.content.emphasized": "S:6278184be3d67a39b1fefb5c7f692c76edc313ae,",
-      "component.markdown-editor.content.paragraph": "S:8a4f1825f36e471609e9c408127097465dce26a4,"
+      "component.markdown-editor.content.paragraph": "S:8a4f1825f36e471609e9c408127097465dce26a4,",
+      "body.leading-snug.default": "S:28630acb25db04b872ed24440f400260aca55db2,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled"
@@ -820,7 +821,7 @@
       "overlay.base": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
-      "feedback.warning.subtle.default.background": "a1426e1818f3e832498a95e5e47e290f19645048"
+      "feedback.warning.subtle.default.background": "4170ab703e089affbb71908acf4d6f61d719df30"
     }
   }
 ]

@@ -691,9 +691,9 @@
       },
       "subtle": {
         "default": {
-          "bg": {
+          "background": {
             "$type": "color",
-            "$value": "{colors.amber.900}",
+            "$value": "{colors.amber.950}",
             "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
           },
           "foreground": {

@@ -179,7 +179,7 @@
           }
         }
       },
-      "outline": {
+      "ghost": {
         "default": {
           "border": {
             "$type": "color",
@@ -442,16 +442,6 @@
             "$type": "color",
             "$value": "#fff",
             "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
-          },
-          "hover": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Segment appearance on hover.\nCommon uses: interactive segment feedback."
-          },
-          "active": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Currently selected segment.\nCommon uses: current step, active segment."
           }
         }
       },

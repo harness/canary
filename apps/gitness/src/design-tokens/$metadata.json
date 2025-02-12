@@ -9,6 +9,7 @@
     "breakpoint/desktop",
     "components/desktop/base/button",
     "components/desktop/base/input",
+    "components/desktop/base/dropdown menu",
     "components/desktop/feature/pipline"
   ]
 }

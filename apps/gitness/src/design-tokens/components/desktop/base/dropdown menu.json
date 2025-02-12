@@ -1,0 +1,10 @@
+{
+  "menu item": {
+    "$type": "composition",
+    "$value": {
+      "verticalPadding": "{spacing.2-half}",
+      "horizontalPadding": "{spacing.2}",
+      "itemSpacing": "{spacing.2}"
+    }
+  }
+}

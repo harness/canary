@@ -637,7 +637,10 @@
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
       "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
-      "components.link.visited": "cb45d9671a880e4b1cc8dbf5b7af13d464282d1a"
+      "components.label.red.foreground": "7896bb063131b4fc9531474cfb9079601e91d296",
+      "components.label.red.background": "f6e949124c9bcdad7b62af427bd17384f6d4513a",
+      "components.label.red.background-subtle": "1b25e8c6e712be65a08bb83365a861306491f8c1",
+      "components.link.visited": "08664adb92b51e688b7dbc5932bcefcd925d4ea0"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -927,7 +930,10 @@
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
       "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
-      "components.link.vidited": "7309b7c00899a71dddcbd6bbb795e2a003d16f4e"
+      "components.label.red.foreground": "7896bb063131b4fc9531474cfb9079601e91d296",
+      "components.label.red.background": "f6e949124c9bcdad7b62af427bd17384f6d4513a",
+      "components.label.red.background-subtle": "1b25e8c6e712be65a08bb83365a861306491f8c1",
+      "components.link.vidited": "fed3f6e1ce16a988fa2fb2f86d1ec90339114b24"
     }
   }
 ]

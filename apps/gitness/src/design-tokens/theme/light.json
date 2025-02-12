@@ -1179,6 +1179,50 @@
         "$type": "color",
         "$value": "{colors.purple.700}"
       }
+    },
+    "label": {
+      "red": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.700}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.100}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.50}"
+        }
+      },
+      "green": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "yellow": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      }
     }
   }
 }

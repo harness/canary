@@ -1472,5 +1472,11 @@
         }
       }
     }
+  },
+  "gradient": {
+    "ai": {
+      "$type": "color",
+      "$value": "linear-gradient(94deg, {colors.yellow.100} 0%, {colors.pink.150} 33.42%, {colors.purple.300} 69.03%, {colors.cyan.200} 100%)"
+    }
   }
 }

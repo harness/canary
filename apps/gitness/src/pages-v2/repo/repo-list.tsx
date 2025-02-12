@@ -21,7 +21,7 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage } = useRepoStore()
+  const { setRepositories, page, setPage, importRepo } = useRepoStore()
   const [importToastId, setImportToastId] = useState<string | null>(null)
   const [importedRepoData, setImportedRepoData] = useState<RepoRepositoryOutput | null>(null)
   const { toast, dismiss } = useToast()
@@ -58,16 +58,16 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  const isRepoImporting: boolean = useMemo(() => {
-    return repoData?.some(repository => repository.importing) ?? false
-  }, [repoData])
+  // const isRepoImporting: boolean = useMemo(() => {
+  //   return repoData?.some(repository => repository.importing) ?? false
+  // }, [repoData])
 
   useEffect(() => {
-    if (isRepoImporting && !importToastId) {
+    if (importRepo && !importToastId) {
       // Show toast when import starts
       const { id } = toast({
         title: `Import in progress`,
-        description: 'Your repository',
+        description: importRepo,
         duration: Infinity,
         action: (
           <ToastAction
@@ -102,7 +102,7 @@ export default function ReposListPage() {
         )
       })
     }
-  }, [isRepoImporting])
+  }, [importRepo, importedRepoData])
 
   const onEvent = useCallback(
     (eventData: RepoRepositoryOutput) => {

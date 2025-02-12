@@ -4,6 +4,7 @@ import { RepositoryType, RepoStore } from '@harnessio/ui/views'
 
 export const useRepoStore = create<RepoStore>(set => ({
   repositories: null,
+  importRepo: null,
   totalPages: 0,
   isRepoStillImporting: false,
   page: 1,
@@ -14,5 +15,8 @@ export const useRepoStore = create<RepoStore>(set => ({
       repositories: data,
       totalPages: totalPages
     })
+  },
+  setImportRepo(identifier: string) {
+    set({ importRepo: identifier })
   }
 }))

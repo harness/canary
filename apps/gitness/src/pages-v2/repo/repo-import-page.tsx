@@ -8,6 +8,7 @@ import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
+import { useRepoStore } from './stores/repo-list-store'
 
 export const ImportRepo = () => {
   const routes = useRoutes()
@@ -15,8 +16,10 @@ export const ImportRepo = () => {
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
+  const { setImportRepo } = useRepoStore()
 
   const onSubmit = async (data: ImportRepoFormFields) => {
+    setImportRepo(data.identifier)
     const providerRepo = getRepoProviderConfig(data)
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,

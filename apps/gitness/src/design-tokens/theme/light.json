@@ -1194,6 +1194,10 @@
       "hover": {
         "$type": "color",
         "$value": "{colors.accent.700}"
+      },
+      "vidited": {
+        "$type": "color",
+        "$value": "{colors.purple.700}"
       }
     }
   }

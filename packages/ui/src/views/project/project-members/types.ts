@@ -1,4 +1,5 @@
-import { IPrincipalListStore, PrincipalData } from '@views/account'
+import { PrincipalType } from '@/types'
+import { IPrincipalListStore } from '@views/account'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
 
@@ -40,7 +41,7 @@ export interface InviteMemberDialogProps {
   onSubmit: (formValues: InviteMemberFormFields) => void
   useTranslationStore: () => TranslationStore
   isInvitingMember: boolean
-  principals: Array<PrincipalData>
+  principals: PrincipalType[]
   error?: string
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string

@@ -15,7 +15,8 @@ import {
   SelectContent,
   SelectItem
 } from '@/components'
-import { InviteMemberDialogProps, InviteMemberFormFields, PrincipalData } from '@/views'
+import { PrincipalType } from '@/types'
+import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -27,7 +28,7 @@ export const inviteMemberFormSchema = z.object({
 })
 
 interface PrincipalOptionProps {
-  principal: PrincipalData
+  principal: PrincipalType
   isShortView?: boolean
 }
 
@@ -66,7 +67,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
    * Since the select component works only with strings,
    * we need to construct the full data model based on the selected item.
    */
-  const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalData | null>(null)
+  const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalType | null>(null)
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
 

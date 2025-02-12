@@ -9,9 +9,9 @@ import {
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import { SkeletonForm } from '@harnessio/ui/components'
+import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
-  BypassUsersList,
   getBranchRules,
   MergeStrategy,
   NotFoundPage,
@@ -173,7 +173,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   useEffect(() => {
     if (principals) {
-      setPrincipals(principals as BypassUsersList[])
+      setPrincipals(principals as PrincipalType[])
     }
   }, [principals, setPrincipals])
 

@@ -15,7 +15,7 @@ import {
   TabsContent,
   TabsList
 } from '@/components'
-import { TypesDiffStats } from '@/types'
+import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   BranchSelector,
   BranchSelectorListItem,
@@ -96,7 +96,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchTargetQuery: (query: string) => void
   searchReviewersQuery: string
   setSearchReviewersQuery: (query: string) => void
-  usersList?: { display_name?: string; id?: number; uid?: string }[]
+  usersList?: PrincipalType[]
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void

@@ -15,6 +15,7 @@
       "@components/*": ["src/components/*"],
       "@views/*": ["src/views/*"],
       "@hooks/*": ["src/hooks/*"],
+      "@types/*": ["src/types/*"],
       "@/*": ["src/*"]
     },
     "types": ["vitest/globals"]

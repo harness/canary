@@ -14,7 +14,8 @@
     "./styles.css": "./dist/styles.css",
     "./shared-style-variables.css": "./src/shared-style-variables.css",
     "./markdown-preview-styles.css": "./src/components/markdown-viewer/style.css",
-    "./context": "./dist/context.js"
+    "./context": "./dist/context.js",
+    "./types": "./dist/types.js"
   },
   "files": [
     "dist/**.*",

@@ -1,7 +1,23 @@
-import { useCallback, useMemo, useState } from 'react'
+import { FC, useCallback, useMemo, useState } from 'react'
 
 import { Avatar, AvatarFallback, Icon, Layout } from '@/components'
-import { PullRequestCommentBox, TranslationStore } from '@/views'
+import {
+  CommentItem,
+  EnumPullReqActivityType,
+  GeneralPayload,
+  isCodeComment,
+  isComment,
+  isSystemComment,
+  orderSortDate,
+  PayloadAuthor,
+  PayloadCodeComment,
+  PayloadCreated,
+  PRCommentFilterType,
+  PullRequestCommentBox,
+  removeLastPlus,
+  TranslationStore,
+  TypesPullReqActivity
+} from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
@@ -11,53 +27,11 @@ import { CommitSuggestion, TypesPullReq } from '@views/repo/pull-request/pull-re
 import { parseStartingLineIfOne, quoteTransform } from '@views/repo/pull-request/utils'
 import { get, orderBy } from 'lodash-es'
 
-import {
-  CommentItem,
-  EnumPullReqActivityType,
-  GeneralPayload,
-  orderSortDate,
-  PayloadAuthor,
-  PayloadCodeComment,
-  PayloadCreated,
-  PRCommentFilterType,
-  TypesPullReqActivity
-} from '../../pull-request-details-types'
-import { isCodeComment, isComment, isSystemComment, removeLastPlus } from '../../pull-request-utils'
 import PRCommentView from '../common/pull-request-comment-view'
 import PullRequestDescBox from './pull-request-description-box'
-// import { PullRequestStatusSelect } from './pull-request-status-select-button'
 import PullRequestSystemComments from './pull-request-system-comments'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
-interface RoutingProps {
-  toCommitDetails?: ({ sha }: { sha: string }) => string
-}
-interface PullRequestOverviewProps extends RoutingProps {
-  handleUpdateDescription: (title: string, description: string) => void
-  data?: TypesPullReqActivity[]
-  currentUser?: { display_name?: string; uid?: string }
-  handleUpdateComment: (id: number, comment: string) => void
-  handleSaveComment: (comment: string, parentId?: number) => void
-  refetchActivities: () => void
-  useTranslationStore: () => TranslationStore
-  handleDeleteComment: (id: number) => void
-  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
-  // data: CommentItem<TypesPullReqActivity>[][]
-  pullReqMetadata: TypesPullReq | undefined
-  activityFilter: { label: string; value: string }
-  dateOrderSort: { label: string; value: string } // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-  commentStatusPullReq: any
-  repoId: string
-  diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
-  onCopyClick: (commentId?: number) => void
-  suggestionsBatch: CommitSuggestion[]
-  onCommitSuggestion: (suggestion: CommitSuggestion) => void
-  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
-  removeSuggestionFromBatch: (commentId: number) => void
-  filenameToLanguage: (fileName: string) => string | undefined
-  toggleConversationStatus: (status: string, parentId?: number) => void
-  toCode?: ({ sha }: { sha: string }) => string
-}
 export const activityToCommentItem = (activity: TypesPullReqActivity): CommentItem<TypesPullReqActivity> => ({
   id: activity.id || 0,
   author: activity.author?.display_name as string,
@@ -70,7 +44,34 @@ export const activityToCommentItem = (activity: TypesPullReqActivity): CommentIt
   payload: activity
 })
 
-const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
+interface RoutingProps {
+  toCommitDetails?: ({ sha }: { sha: string }) => string
+}
+
+export interface PullRequestOverviewProps extends RoutingProps {
+  handleUpdateDescription: (title: string, description: string) => void
+  data?: TypesPullReqActivity[]
+  currentUser?: { display_name?: string; uid?: string }
+  handleUpdateComment: (id: number, comment: string) => void
+  handleSaveComment: (comment: string, parentId?: number) => void
+  useTranslationStore: () => TranslationStore
+  handleDeleteComment: (id: number) => void
+  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
+  pullReqMetadata?: TypesPullReq
+  activityFilter: { label: string; value: string }
+  dateOrderSort: { label: string; value: string }
+  diffData?: { text: string; addedLines?: number; deletedLines?: number; data?: string; title: string; lang: string }
+  onCopyClick: (commentId?: number) => void
+  suggestionsBatch: CommitSuggestion[]
+  onCommitSuggestion: (suggestion: CommitSuggestion) => void
+  addSuggestionToBatch: (suggestion: CommitSuggestion) => void
+  removeSuggestionFromBatch: (commentId: number) => void
+  filenameToLanguage: (fileName: string) => string | undefined
+  toggleConversationStatus: (status: string, parentId?: number) => void
+  toCode?: ({ sha }: { sha: string }) => string
+}
+
+const PullRequestOverview: FC<PullRequestOverviewProps> = ({
   data,
   pullReqMetadata,
   activityFilter,

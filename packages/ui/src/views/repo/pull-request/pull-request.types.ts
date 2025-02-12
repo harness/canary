@@ -1,3 +1,4 @@
+import { PrincipalType } from '@/types'
 import { ColorsEnum, LabelType } from '@/views'
 
 import { TranslationStore } from '../repo-list/types'
@@ -93,7 +94,7 @@ export interface IPullRequestStore {
 }
 
 export interface TypesPullReq {
-  author?: TypesPrincipalInfo
+  author?: Partial<PrincipalType>
   closed?: number | null
   created?: number
   description?: string
@@ -105,7 +106,7 @@ export interface TypesPullReq {
   merge_method?: EnumMergeMethod
   merge_target_sha?: string | null
   merged?: number | null
-  merger?: TypesPrincipalInfo
+  merger?: Partial<PrincipalType>
   number?: number
   source_branch?: string
   source_repo_id?: number
@@ -118,18 +119,6 @@ export interface TypesPullReq {
   labels?: TypesLabelPullReqAssignmentInfo[]
   updated?: number
 }
-
-export interface TypesPrincipalInfo {
-  created?: number
-  display_name?: string
-  email?: string
-  id?: number
-  type?: EnumPrincipalType
-  uid?: string
-  updated?: number
-}
-
-export type EnumPrincipalType = 'service' | 'serviceaccount' | 'user'
 
 export type EnumMergeMethod = 'fast-forward' | 'merge' | 'rebase' | 'squash'
 
@@ -158,12 +147,6 @@ export interface PRReviewer {
   reviewer: { display_name: string; id: number }
   review_decision?: EnumPullReqReviewDecision
   sha?: string
-}
-
-export interface PRReviewUsers {
-  display_name?: string
-  id?: number
-  uid?: string
 }
 
 export interface TypesLabelPullReqAssignmentInfo {

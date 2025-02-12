@@ -217,8 +217,8 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           />
           <div className="flex w-full justify-between gap-x-2">
             <div className="flex gap-x-2">
-              <div className="flex-none flex size-5 items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="leading-tight text-foreground-8 mt-0.5 text-left">
+              <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">
                 {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
               </span>
             </div>
@@ -300,12 +300,12 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="relative flex w-full justify-between pl-4 gap-x-2">
+          <div className="relative flex w-full justify-between gap-x-2 pl-4">
             <div className="flex gap-x-2">
-              <div className="flex-none flex size-5 items-center justify-center">{getStatusIcon(status)}</div>
-              <span className="leading-tight text-foreground-8 mt-0.5 text-left">{children}</span>
+              <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">{children}</span>
             </div>
-            <span className="text-foreground-4 flex-none">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

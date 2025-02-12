@@ -3,7 +3,8 @@ import { useState } from 'react'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { PrincipalData, ProjectMemberListView } from '@harnessio/ui/views'
+import { PrincipalType } from '@harnessio/ui/types'
+import { ProjectMemberListView } from '@harnessio/ui/views'
 
 const usePrincipalListStore = () => {
   return {
@@ -21,7 +22,7 @@ const usePrincipalListStore = () => {
         avatar_url: ''
       }
     ],
-    setPrincipalList: (_principals: PrincipalData[]) => {}
+    setPrincipalList: (_principals: PrincipalType[]) => {}
   }
 }
 

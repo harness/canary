@@ -13,11 +13,9 @@ import {
   TabsTrigger,
   Textarea
 } from '@/components'
+import { handleFileDrop, handlePaste, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
-
-import { ToolbarAction } from '../../pull-request-details-types'
-import { handleFileDrop, handlePaste } from '../../pull-request-utils'
 
 interface ToolbarItem {
   icon: IconProps['name']
@@ -27,7 +25,7 @@ interface ToolbarItem {
   onClick?: () => void
 }
 
-interface PullRequestCommentBoxProps {
+export interface PullRequestCommentBoxProps {
   onSaveComment: (comment: string) => void
   comment: string
   setComment: (comment: string) => void

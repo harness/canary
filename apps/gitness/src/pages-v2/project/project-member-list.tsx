@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import {
   EnumMembershipRole,
-  TypesPrincipalInfo,
   useListPrincipalsQuery,
   useMembershipAddMutation,
   useMembershipDeleteMutation,
@@ -12,6 +11,7 @@ import {
   useMembershipUpdateMutation
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -140,15 +140,7 @@ export function ProjectMemberListPage() {
 
   useEffect(() => {
     if (principalData) {
-      setPrincipalList(
-        principalData.map((member: TypesPrincipalInfo) => ({
-          display_name: member?.display_name ?? '',
-          uid: member?.uid ?? '',
-          email: member?.email ?? '',
-          // TODO: add avatar to API response
-          avatar_url: ''
-        }))
-      )
+      setPrincipalList(principalData as PrincipalType[])
     }
   }, [principalData, setPrincipalList])
 

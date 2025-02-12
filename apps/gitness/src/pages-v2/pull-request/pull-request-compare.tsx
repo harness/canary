@@ -19,6 +19,7 @@ import {
   useListTagsQuery,
   useRawDiffQuery
 } from '@harnessio/code-service-client'
+import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchSelectorListItem,
   BranchSelectorTab,
@@ -28,7 +29,6 @@ import {
   LabelAssignmentType,
   LabelValueType,
   PRReviewer,
-  PRReviewUsers,
   PullReqReviewDecision,
   PullRequestComparePage
 } from '@harnessio/ui/views'
@@ -76,7 +76,6 @@ export const CreatePullRequest = () => {
     description: string
   } | null>(null)
   const [reviewers, setReviewers] = useState<PRReviewer[]>([])
-  const [reviewUsers, setReviewUsers] = useState<PRReviewUsers[]>()
   const [diffs, setDiffs] = useState<DiffFileEntry[]>()
   const [labels, setLabels] = useState<LabelAssignmentType[]>([])
   const [searchLabel, setSearchLabel] = useState('')
@@ -178,12 +177,6 @@ export const CreatePullRequest = () => {
     inherited: true,
     limit: 100
   })
-
-  useEffect(() => {
-    if (principals?.length) {
-      setReviewUsers(principals?.map(user => ({ id: user.id, display_name: user.display_name, uid: user.uid })))
-    }
-  }, [principals])
 
   useEffect(
     function updateCacheWhenDiffDataArrives() {
@@ -594,7 +587,7 @@ export const CreatePullRequest = () => {
         setSearchSourceQuery={setSourceQuery}
         searchTargetQuery={targetQuery}
         setSearchTargetQuery={setTargetQuery}
-        usersList={reviewUsers}
+        usersList={principals as PrincipalType[]}
         searchReviewersQuery={searchReviewers}
         setSearchReviewersQuery={setSearchReviewers}
         reviewers={reviewers}

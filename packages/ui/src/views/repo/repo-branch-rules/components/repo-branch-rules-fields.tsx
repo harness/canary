@@ -21,7 +21,8 @@ import {
   Switch,
   Textarea
 } from '@/components'
-import { BypassUsersList, FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
+import { PrincipalType } from '@/types'
+import { FieldProps, getBranchRules, MergeStrategy, PatternsButtonType, Rule } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 import { TFunction } from 'i18next'
@@ -191,11 +192,11 @@ export const BranchSettingsRuleTargetPatternsField: FC<FieldProps> = ({ setValue
   )
 }
 
-const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<BypassUsersList>) => {
+const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<PrincipalType>) => {
   return (
     <>
       <Avatar className="overflow-hidden rounded-md" size="6">
-        {!!option.url && <AvatarImage src={option.url} alt={option.display_name} />}
+        {!!option?.avatar_url && <AvatarImage src={option.avatar_url} alt={option.display_name} />}
         <AvatarFallback>{getInitials(option.display_name)}</AvatarFallback>
       </Avatar>
       <span className="font-medium">{option.display_name}</span>
@@ -205,7 +206,7 @@ const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<Bypass
 
 export const BranchSettingsRuleBypassListField: FC<
   FieldProps & {
-    bypassOptions: BypassUsersList[] | null
+    bypassOptions: PrincipalType[] | null
     setPrincipalsSearchQuery: (val: string) => void
     principalsSearchQuery: string
   }
@@ -216,7 +217,7 @@ export const BranchSettingsRuleBypassListField: FC<
   }))
 
   const handleCheckboxChange = useCallback(
-    (option: MultiSelectOptionType<Partial<BypassUsersList>>) => {
+    (option: MultiSelectOptionType<Partial<PrincipalType>>) => {
       const selectedIds = selectedBypassUsers.map(it => it.id)
 
       setValue!(
@@ -236,10 +237,11 @@ export const BranchSettingsRuleBypassListField: FC<
     [selectedBypassUsers, setValue]
   )
 
-  const multiSelectOptions: MultiSelectOptionType<BypassUsersList>[] = useMemo(() => {
+  const multiSelectOptions: MultiSelectOptionType<PrincipalType>[] = useMemo(() => {
     return (
       bypassOptions?.map(option => ({
         ...option,
+        id: option.id!,
         label: option.display_name
       })) || []
     )
@@ -252,7 +254,7 @@ export const BranchSettingsRuleBypassListField: FC<
           {t('views:repos.bypassList', 'Bypass list')}
         </Label>
 
-        <MultiSelect<BypassUsersList>
+        <MultiSelect<PrincipalType>
           selectedItems={selectedBypassUsers}
           t={t}
           placeholder={t('views:repos.selectUsers', 'Select users')}

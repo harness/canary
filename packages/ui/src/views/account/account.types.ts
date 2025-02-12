@@ -1,13 +1,8 @@
-export interface PrincipalData {
-  display_name: string
-  uid: string
-  email: string
-  avatar_url: string
-}
+import { PrincipalType } from '@/types'
 
 export interface IPrincipalListStore {
   // state
-  principalList: PrincipalData[]
+  principalList: PrincipalType[]
   // actions
-  setPrincipalList: (principals: PrincipalData[]) => void
+  setPrincipalList: (principals: PrincipalType[]) => void
 }

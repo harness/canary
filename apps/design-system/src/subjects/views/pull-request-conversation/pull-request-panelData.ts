@@ -1,10 +1,10 @@
 import { noop } from '@utils/viewUtils'
 
+import { EnumPrincipalType } from '@harnessio/ui/types'
 import {
   ColorsEnum,
   EnumCheckPayloadKind,
   EnumCheckStatus,
-  EnumPrincipalType,
   EnumPullReqActivityKind,
   EnumPullReqActivityType,
   EnumPullReqReviewDecision,

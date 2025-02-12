@@ -15,8 +15,6 @@ interface ExecutionPayloadType {
 interface PullRequestMergeSectionProps extends Partial<PullRequestRoutingProps> {
   checkData: TypesPullReqCheck[]
   checksInfo: { header: string; content: string; status: EnumCheckStatus }
-  spaceId?: string
-  repoId?: string
 }
 
 const PullRequestCheckSection = ({ checkData, checksInfo, toPRCheck }: PullRequestMergeSectionProps) => {

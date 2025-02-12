@@ -1,12 +1,13 @@
 import { Avatar, AvatarFallback, DropdownMenu, Icon, SearchBox } from '@/components'
+import { PrincipalType } from '@/types'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { PRReviewer, PRReviewUsers } from '../../pull-request.types'
+import { PRReviewer } from '../../pull-request.types'
 
 interface ReviewersHeaderProps {
-  usersList?: PRReviewUsers[]
+  usersList?: PrincipalType[]
   reviewers: PRReviewer[]
   addReviewers?: (id?: number) => void
   handleDelete: (id: number) => void

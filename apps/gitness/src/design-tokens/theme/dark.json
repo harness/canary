@@ -147,7 +147,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.pure.white}",
+            "$value": "{foreground.base}",
             "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
           }
         },

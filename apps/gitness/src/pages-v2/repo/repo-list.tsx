@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 
-import { RepoRepositoryOutput, useListReposQuery } from '@harnessio/code-service-client'
+import { RepoRepositoryOutput, useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
@@ -48,6 +48,16 @@ export default function ReposListPage() {
     }
   )
 
+  const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
+    {},
+    {
+      onSuccess: () => {
+        dismiss(importToastId ?? '')
+        setImportToastId(null)
+      }
+    }
+  )
+
   useEffect(() => {
     const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
@@ -71,11 +81,14 @@ export default function ReposListPage() {
         action: (
           <ToastAction
             onClick={() => {
-              dismiss(id)
+              deleteRepository({
+                queryParams: {},
+                repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
+              })
             }}
             altText="Cancel import"
           >
-            Cancel
+            {isCancellingImport ? 'Canceling...' : 'Cancel'}
           </ToastAction>
         )
       })

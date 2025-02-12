@@ -868,13 +868,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.3",
+            "value": "0.2",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.base-chrome.400}",
+      "$value": "{colors.base-chrome.300}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "intense": {

@@ -1,5 +1,4 @@
-import { Toast, ToastClose, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from './toast'
-import { useToast } from './use-toast'
+import { Toast, ToastClose, ToastDescription, ToastTitle, ToastViewport, useToast } from '@harnessio/ui/components'
 
 export function Toaster() {
   const { toasts } = useToast()

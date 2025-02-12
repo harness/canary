@@ -71,8 +71,8 @@ interface PaginationProps {
   totalPages?: number
   nextPage?: number
   previousPage?: number
-  t: TFunction
   className?: string
+  t: TFunction
 }
 
 export const Pagination: FC<PaginationProps> = ({
@@ -106,7 +106,7 @@ export const Pagination: FC<PaginationProps> = ({
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Previous
                 size="sm"
-                onClick={() => handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined)}
+                onClick={handleGoToPage(currentPage > 1 ? currentPage - 1 : undefined)}
                 disabled={currentPage === 1}
                 t={t}
               />
@@ -121,7 +121,7 @@ export const Pagination: FC<PaginationProps> = ({
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Next
                 size="sm"
-                onClick={() => handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined)}
+                onClick={handleGoToPage(currentPage < totalPages ? currentPage + 1 : undefined)}
                 disabled={currentPage === totalPages}
                 t={t}
               />
@@ -133,7 +133,7 @@ export const Pagination: FC<PaginationProps> = ({
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Previous
                 size="sm"
-                onClick={() => handleGoToPage(previousPage ?? undefined)}
+                onClick={handleGoToPage(previousPage ?? undefined)}
                 disabled={!previousPage}
                 t={t}
               />
@@ -142,7 +142,7 @@ export const Pagination: FC<PaginationProps> = ({
             <PaginationPrimitive.Item>
               <PaginationPrimitive.Next
                 size="sm"
-                onClick={() => handleGoToPage(nextPage ?? undefined)}
+                onClick={handleGoToPage(nextPage ?? undefined)}
                 disabled={!nextPage}
                 t={t}
               />

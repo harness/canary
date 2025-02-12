@@ -1,0 +1,152 @@
+---
+title: Pagination
+description: Pagination component
+---
+
+The `Pagination` component allows navigation through pages of content. It supports displaying a range of page numbers, as well as "Previous" and "Next" buttons.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const t = (key, fallback) => fallback || key
+    const [currentPage, setCurrentPage] = React.useState(1)
+
+    return (
+        <div className="flex flex-col space-y-4">
+            <div>
+                <h5>With Known Total Pages</h5>
+                <Pagination
+                    totalPages={10}
+                    currentPage={currentPage}
+                    goToPage={setCurrentPage}
+                    t={t}
+                />
+            </div>
+
+            <hr />
+
+            <div>
+                <h5>Without Known Total Pages</h5>
+                <Pagination
+                    currentPage={2}
+                    nextPage={3}
+                    previousPage={1}
+                    goToPage={(pageNum) => console.log("Go to page:", pageNum)}
+                    t={t}
+                />
+            </div>
+        </div>
+    )
+
+}
+`} />
+
+## Usage
+
+### With Known Total Pages
+
+```typescript jsx
+import { Pagination } from '@harnessio/ui/components'
+
+//...
+
+const [currentPage, setCurrentPage] = useState(1)
+const { t } = useTranslationStore()
+
+return (
+  <Pagination
+    totalPages={10}
+    currentPage={currentPage}
+    goToPage={setCurrentPage}
+    t={t}
+  />
+)
+```
+
+### Without Known Total Pages
+
+```typescript jsx
+import { Pagination } from '@harnessio/ui/components'
+
+//...
+
+const [currentPage, setCurrentPage] = useState(1)
+const { t } = useTranslationStore()
+
+return (
+  <Pagination
+    currentPage={currentPage}
+    nextPage={currentPage + 1}
+    previousPage={currentPage - 1}
+    goToPage={setCurrentPage}
+    t={t}
+  />
+)
+```
+
+## API Reference
+
+The `Pagination` component controls the navigation through pages. It displays page numbers, and "Previous" and "Next" buttons.
+
+The component can be used either with a known total number of pages or with just the "Next" and "Previous" buttons. If `totalPages` is provided, it will display the page numbers along with the navigation buttons. If `totalPages` is not provided, it will only display the "Next" and "Previous" buttons based on the `nextPage` and `previousPage` props.
+
+```typescript jsx
+<Pagination
+  currentPage={1}              // current page number
+  goToPage={(pageNum) => {}}   // function to handle page change
+  t={t}                        // translation function
+  totalPages={10}              // [OPTIONAL] total number of pages
+  nextPage={2}                 // [OPTIONAL] next page number
+  previousPage={0}             // [OPTIONAL] previous page number
+  className="custom-class"     // [OPTIONAL] custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "totalPages",
+      description: "Total number of pages",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "currentPage",
+      description: "Current page number",
+      required: true,
+      value: "number",
+    },
+    {
+      name: "goToPage",
+      description: "Function to handle page change",
+      required: true,
+      value: "(pageNum: number) => void",
+    },
+    {
+      name: "nextPage",
+      description: "Next page number",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "previousPage",
+      description: "Previous page number",
+      required: false,
+      value: "number",
+    },
+    {
+      name: "t",
+      description: "Translation function",
+      required: true,
+      value: "TFunction",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

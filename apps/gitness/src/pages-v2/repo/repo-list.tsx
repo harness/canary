@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 
 import { RepoRepositoryOutput, useListReposQuery } from '@harnessio/code-service-client'
 import { ToastAction, useToast } from '@harnessio/ui/components'
@@ -21,10 +21,10 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage, importRepo } = useRepoStore()
+  const { setRepositories, page, setPage, importRepoIdentifier, setImportRepoIdentifier, addRepository } =
+    useRepoStore()
   const [importToastId, setImportToastId] = useState<string | null>(null)
-  const [importedRepoData, setImportedRepoData] = useState<RepoRepositoryOutput | null>(null)
-  const { toast, dismiss } = useToast()
+  const { toast, dismiss, update } = useToast()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -63,18 +63,15 @@ export default function ReposListPage() {
   // }, [repoData])
 
   useEffect(() => {
-    if (importRepo && !importToastId) {
-      // Show toast when import starts
+    if (importRepoIdentifier && !importToastId) {
       const { id } = toast({
         title: `Import in progress`,
-        description: importRepo,
+        description: importRepoIdentifier,
         duration: Infinity,
         action: (
           <ToastAction
             onClick={() => {
-              // Add your cancel logic here
               dismiss(id)
-              // setImportToastId(null)
             }}
             altText="Cancel import"
           >
@@ -82,37 +79,31 @@ export default function ReposListPage() {
           </ToastAction>
         )
       })
-      console.log('toast id', id)
       setImportToastId(id)
-    } else if (importToastId) {
-      dismiss(importToastId ?? '')
-      toast({
-        title: 'Repository imported',
-        description: `${importedRepoData?.identifier}`,
-        duration: Infinity,
-        action: (
-          <ToastAction
-            onClick={() => {
-              // Add your action logic here
-            }}
-            altText="View"
-          >
-            View
-          </ToastAction>
-        )
-      })
     }
-  }, [importRepo, importedRepoData])
+  }, [importRepoIdentifier, setImportRepoIdentifier])
 
   const onEvent = useCallback(
     (eventData: RepoRepositoryOutput) => {
-      // console.log('toast id is', importToastId)
-      setImportedRepoData(eventData)
-
-      refetch()
+      update({
+        id: importToastId ?? '',
+        title: 'Repository imported',
+        description: importRepoIdentifier,
+        duration: 5000,
+        action: (
+          <Link to={routes.toRepoSummary({ spaceId, repoId: importRepoIdentifier ?? '' })}>
+            <ToastAction altText="View repository">View</ToastAction>
+          </Link>
+        ),
+        variant: 'success'
+      })
+      const transformedRepo = transformRepoList([eventData])
+      addRepository(transformedRepo[0])
+      setImportRepoIdentifier(null)
     },
-    [refetch]
+    [importToastId, refetch]
   )
+
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
 
   useSpaceSSE({

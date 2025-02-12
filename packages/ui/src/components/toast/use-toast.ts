@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { update } from 'lodash-es'
+
 import type { ToastActionElement, ToastProps } from './toast'
 
 const TOAST_LIMIT = 3
@@ -151,7 +153,8 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId })
+    dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
+    update: (props: ToasterToast) => dispatch({ type: 'UPDATE_TOAST', toast: { ...props } })
   }
 }
 

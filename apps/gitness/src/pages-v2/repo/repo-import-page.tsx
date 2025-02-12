@@ -16,10 +16,10 @@ export const ImportRepo = () => {
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
-  const { setImportRepo } = useRepoStore()
+  const { setImportRepoIdentifier } = useRepoStore()
 
   const onSubmit = async (data: ImportRepoFormFields) => {
-    setImportRepo(data.identifier)
+    setImportRepoIdentifier(data.identifier)
     const providerRepo = getRepoProviderConfig(data)
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,

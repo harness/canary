@@ -5,10 +5,11 @@ export interface RepoStore {
   repositories: RepositoryType[] | null
   totalPages: number
   page: number
-  importRepo: string | null
+  importRepoIdentifier: string | null
   setPage: (page: number) => void
   setRepositories: (data: RepositoryType[], totalPages: number) => void
-  setImportRepo: (identifier: string) => void
+  setImportRepoIdentifier: (identifier: string | null) => void
+  addRepository: (repo: RepositoryType) => void
 }
 
 export interface TranslationStore {

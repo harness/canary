@@ -7,7 +7,7 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { toast, Toaster } from '@harnessio/ui/components'
+// import { toast } from '@harnessio/ui/components'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
@@ -47,10 +47,10 @@ export const CreateRepo = () => {
         },
         onError: (error: CreateRepositoryErrorResponse) => {
           const message = error.message || 'An unknown error occurred.'
-          toast({
-            title: message,
-            variant: 'destructive'
-          })
+          // toast({
+          //   title: message,
+          //   variant: 'destructive'
+          // })
         }
       }
     )
@@ -75,7 +75,6 @@ export const CreateRepo = () => {
         licenseOptions={licenseOptions}
         useTranslationStore={useTranslationStore}
       />
-      <Toaster />
     </>
   )
 }

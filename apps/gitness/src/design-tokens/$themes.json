@@ -676,7 +676,7 @@
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
       "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
-      "components.link.visited": "57ee104fb80ea342e9e215b4424d00b8e75dbf60"
+      "components.link.visited": "33523ea7b0f59162b2b594181fe53c883352d32a"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -1005,7 +1005,7 @@
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
       "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
-      "components.link.vidited": "cf87358e6009a70414122ede1499680d0b12aaca"
+      "components.link.vidited": "c5ed4508dcab946182fb19e42c8b1b49ca5432eb"
     }
   }
 ]

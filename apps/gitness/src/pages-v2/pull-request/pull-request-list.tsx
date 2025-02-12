@@ -1,8 +1,13 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { useListPullReqQuery } from '@harnessio/code-service-client'
-import { PullRequestList as SandboxPullRequestListPage } from '@harnessio/ui/views'
+import {
+  ListPullReqQueryQueryParams,
+  TypesPrincipalInfo,
+  useListPrincipalsQuery,
+  useListPullReqQuery
+} from '@harnessio/code-service-client'
+import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
@@ -18,14 +23,22 @@ export default function PullRequestListPage() {
   /* Query and Pagination */
   const [query, setQuery] = useQueryState('query')
   const [queryPage, setQueryPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
+  const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
+  const [principalData, setPrincipalData] = useState<TypesPrincipalInfo[]>()
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
-      queryParams: { page, query: query ?? '' },
+      queryParams: { page, query: query ?? '', ...filterValues },
       repo_ref: repoRef
     },
     { retry: false }
   )
+
+  const { data: { body: principalDataList } = {} } = useListPrincipalsQuery({
+    // @ts-expect-error : BE issue - not implemnted
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
+  })
 
   useEffect(() => {
     if (pullRequestData) {
@@ -33,6 +46,12 @@ export default function PullRequestListPage() {
       setOpenClosePullRequests(pullRequestData)
     }
   }, [pullRequestData, headers, setPullRequests])
+
+  useEffect(() => {
+    if (principalDataList) {
+      setPrincipalData(principalDataList)
+    }
+  }, [principalDataList])
 
   useEffect(() => {
     setQueryPage(page)
@@ -44,8 +63,24 @@ export default function PullRequestListPage() {
       repoId={repoId}
       spaceId={spaceId || ''}
       isLoading={fetchingPullReqData}
+      principalData={principalData}
+      setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       usePullRequestListStore={usePullRequestListStore}
       useTranslationStore={useTranslationStore}
+      onFilterChange={(filterData: PRListFilters) => {
+        setFilterValues(
+          // TODO Need to address the type issue here
+          Object.entries(filterData).reduce((acc: any, [key, value]) => {
+            if (value !== '' && value !== undefined) {
+              acc[key] = value
+            }
+            if (value instanceof Date) {
+              acc[key] = value.getTime()
+            }
+            return acc
+          }, {})
+        )
+      }}
       searchQuery={query}
       setSearchQuery={setQuery}
     />

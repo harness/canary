@@ -239,3 +239,22 @@ export interface PRListLabelType {
   key: string
   value?: string
 }
+
+export interface PullRequestPageProps {
+  usePullRequestListStore: () => PullRequestListStore
+  repoId?: string
+  spaceId?: string
+  principalData?: TypesPrincipalInfo[]
+  setPrincipalsSearchQuery?: (query: string) => void
+  onFilterChange?: (filterValues: PRListFilters) => void
+  useTranslationStore: () => TranslationStore
+  isLoading?: boolean
+  searchQuery?: string | null
+  setSearchQuery: (query: string | null) => void
+}
+
+export type PRListFilters = {
+  created_by?: string
+  created_lt?: Date
+  created_gt?: Date
+}

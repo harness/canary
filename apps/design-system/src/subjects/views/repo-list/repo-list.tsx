@@ -11,7 +11,10 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
     () => ({
       ...repoListStore,
       setPage: noop,
-      setRepositories: noop
+      setRepositories: noop,
+      importRepoIdentifier: null,
+      setImportRepoIdentifier: noop,
+      addRepository: noop
     }),
     []
   )

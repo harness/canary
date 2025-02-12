@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react'
 
-import { update } from 'lodash-es'
-
 import type { ToastActionElement, ToastProps } from './toast'
 
 const TOAST_LIMIT = 3

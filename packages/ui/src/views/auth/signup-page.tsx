@@ -40,7 +40,6 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
     trigger
   } = useForm({

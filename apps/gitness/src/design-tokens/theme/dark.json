@@ -1287,6 +1287,22 @@
         "$type": "color",
         "$value": "{colors.purple.300}"
       }
+    },
+    "label": {
+      "red": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      }
     }
   }
 }

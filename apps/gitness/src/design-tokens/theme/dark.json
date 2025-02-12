@@ -533,51 +533,51 @@
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.900}",
             "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.200}",
             "$description": "Text color for hoverable success content.\nCommon uses: interactive success text, hover state content."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.850}",
             "$description": "Border color for hover state.\nCommon uses: interactive success borders, hover boundaries."
           }
         },
         "active": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.900}",
             "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.200}",
             "$description": "Text color for active success content.\nCommon uses: pressed state text, active content."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.850}",
             "$description": "Border color for active state.\nCommon uses: active success borders, pressed state."
           }
         },
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.950}",
             "$description": "Background for non-interactive success elements.\nCommon uses: disabled success messages, inactive states."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{foreground.muted}",
             "$description": "Text color for disabled success content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{border.subtle}",
             "$description": "Border color for disabled state.\nCommon uses: disabled success borders, inactive boundaries."
           }
         }
@@ -771,17 +771,17 @@
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.950}",
             "$description": "Background for non-interactive warning elements.\nCommon uses: disabled warning messages, inactive states."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{foreground.muted}",
             "$description": "Text color for disabled warning content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{border.subtle}",
             "$description": "Border color for disabled state.\nCommon uses: disabled warning borders, inactive boundaries."
           }
         }
@@ -864,17 +864,17 @@
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.950}",
             "$description": "Background for non-interactive info elements.\nCommon uses: disabled help messages, inactive states."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{foreground.muted}",
             "$description": "Text color for disabled info content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{border.subtle}",
             "$description": "Border color for disabled state.\nCommon uses: disabled info borders, inactive boundaries."
           }
         }

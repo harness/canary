@@ -103,13 +103,13 @@ const HeaderTitle = ({ ...props }: HeaderProps) => {
             </Badge>
             <span>{formattedTime}</span>
           </div>
-          {props.showRestoreBranchButton ? (
-            <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
-              Restore Branch
-            </Button>
-          ) : props.showDeleteBranchButton ? (
+          {props.showDeleteBranchButton ? (
             <Button variant="secondary" size="sm" onClick={props.onDeleteBranch}>
               Delete Branch
+            </Button>
+          ) : props.showRestoreBranchButton ? (
+            <Button variant="secondary" size="sm" onClick={props.onRestoreBranch}>
+              Restore Branch
             </Button>
           ) : null}
         </div>

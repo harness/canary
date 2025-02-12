@@ -854,7 +854,7 @@
       "intense": {
         "background": {
           "$type": "color",
-          "$value": "{colors.accent.300}",
+          "$value": "{colors.base-chrome.500}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         },
         "foreground": {
@@ -866,12 +866,12 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "{colors.accent.950}",
+            "$value": "{colors.base-chrome.900}",
             "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.accent.200}",
+            "$value": "{colors.base-chrome.200}",
             "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
           },
           "border": {
@@ -885,19 +885,19 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.accent.300}",
+            "$value": "{colors.base-chrome.300}",
             "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
           }
         },
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "{colors.accent.900}",
+            "$value": "{colors.base-chrome.850}",
             "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.accent.200}",
+            "$value": "{colors.base-chrome.200}",
             "$description": "Text color for hoverable info content.\nCommon uses: interactive help text, hover state content."
           },
           "border": {
@@ -911,19 +911,19 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.accent.300}",
+            "$value": "{colors.base-chrome.300}",
             "$description": "Border color for hover state.\nCommon uses: interactive info borders, hover boundaries."
           }
         },
         "active": {
           "background": {
             "$type": "color",
-            "$value": "{colors.accent.900}",
+            "$value": "{colors.base-chrome.850}",
             "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{colors.accent.200}",
+            "$value": "{colors.base-chrome.200}",
             "$description": "Text color for active info content.\nCommon uses: pressed state text, active content."
           },
           "border": {
@@ -937,7 +937,7 @@
               }
             },
             "$type": "color",
-            "$value": "{colors.accent.300}",
+            "$value": "{colors.base-chrome.300}",
             "$description": "Border color for active state.\nCommon uses: active info borders, pressed state."
           }
         },

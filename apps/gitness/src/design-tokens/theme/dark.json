@@ -850,7 +850,7 @@
         }
       }
     },
-    "info": {
+    "neutral": {
       "foreground": {
         "$type": "color",
         "$value": "{colors.accent.200}",

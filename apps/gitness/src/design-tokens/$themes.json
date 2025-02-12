@@ -887,7 +887,7 @@
       "components.label.lime.background": "S:05b22948145fb6ac6c7328deee7cf8ff98360d9f,",
       "components.label.lime.background-subtle": "S:5c67cf33048cfb8672b5b9d76c32beff1542db49,",
       "components.link.visited": "S:41852670373291c7838b70aeb50a474d67107256,",
-      "gradient.ai": "S:4ebdcb6ac88a1ed9475ff8b1b20648b0afd80123,"
+      "ai.gradient": "S:4ebdcb6ac88a1ed9475ff8b1b20648b0afd80123,"
     },
     "$figmaVariableReferences": {
       "background.canvas": "8dff0e14e7846409a99021c14fbe2142576205df",
@@ -1084,7 +1084,11 @@
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
       "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
-      "components.link.visited": "8716f291a9c827665b242af1a6b9be664698727d"
+      "ai.gradient-stop-1": "028cdd696b3f2d9a9c607591d812017b7435808d",
+      "ai.gradient-stop-2": "a1cba63d09bd02ad65ae4f7c5dd6f3bc9df7ec7c",
+      "ai.gradient-step-3": "24da4e37a4f1390e5adbb81fe97f12676c883c75",
+      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9",
+      "components.link.visited": "d672eda18310274d83d0ad63ff7becf90f3d8cb2"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -1608,7 +1612,11 @@
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
       "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
-      "components.link.vidited": "6a44d7e4b0b326a69844638866333f6d3de5f7c9"
+      "ai.gradient-stop-1": "028cdd696b3f2d9a9c607591d812017b7435808d",
+      "ai.gradient-stop-2": "a1cba63d09bd02ad65ae4f7c5dd6f3bc9df7ec7c",
+      "ai.gradient-step-3": "24da4e37a4f1390e5adbb81fe97f12676c883c75",
+      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9",
+      "components.link.vidited": "07199b78428d8fa943271456ed5802e7dae58f7f"
     }
   }
 ]

@@ -1364,5 +1364,27 @@
         }
       }
     }
+  },
+  "ai": {
+    "gradient": {
+      "$type": "color",
+      "$value": "linear-gradient(94deg, {ai.gradient-stop-1} 0%, {ai.gradient-stop-2} 33.42%, {ai.gradient-stop-3} 69.03%, {ai.gradient-stop-4} 100%)"
+    },
+    "gradient-stop-1": {
+      "$type": "color",
+      "$value": "{colors.yellow.100}"
+    },
+    "gradient-stop-2": {
+      "$type": "color",
+      "$value": "{colors.pink.150}"
+    },
+    "gradient-step-3": {
+      "$type": "color",
+      "$value": "{colors.purple.300}"
+    },
+    "gradient-step-4": {
+      "$type": "color",
+      "$value": "{colors.cyan.200}"
+    }
   }
 }

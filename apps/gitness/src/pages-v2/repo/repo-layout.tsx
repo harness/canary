@@ -13,7 +13,6 @@ const RepoLayout = () => {
       <div className="layer-high sticky top-[55px] bg-background-1">
         <RepoSubheader showPipelinesTab={!isMFE} useTranslationStore={useTranslationStore} />
       </div>
-      <Toaster />
       <Outlet />
     </>
   )

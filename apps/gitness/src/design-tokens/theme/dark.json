@@ -525,8 +525,17 @@
             "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.2",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.green.850}",
+            "$value": "{colors.green.300}",
             "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
           }
         },
@@ -542,8 +551,17 @@
             "$description": "Text color for hoverable success content.\nCommon uses: interactive success text, hover state content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.green.850}",
+            "$value": "{colors.green.300}",
             "$description": "Border color for hover state.\nCommon uses: interactive success borders, hover boundaries."
           }
         },
@@ -559,8 +577,17 @@
             "$description": "Text color for active success content.\nCommon uses: pressed state text, active content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.4",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.green.850}",
+            "$value": "{colors.green.300}",
             "$description": "Border color for active state.\nCommon uses: active success borders, pressed state."
           }
         },
@@ -591,7 +618,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.red.800}",
+        "$value": "{colors.red.400}",
         "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
       },
       "intense": {
@@ -602,7 +629,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.1000}"
+          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
@@ -622,7 +649,7 @@
               "studio.tokens": {
                 "modify": {
                   "type": "alpha",
-                  "value": "0.15",
+                  "value": "0.2",
                   "space": "p3"
                 }
               }
@@ -670,8 +697,17 @@
             "$description": "Text color for active error content.\nCommon uses: pressed state text, active content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.4",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.red.800}",
+            "$value": "{colors.red.300}",
             "$description": "Border color for active state.\nCommon uses: active error borders, pressed state."
           }
         },
@@ -702,7 +738,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.amber.850}",
+        "$value": "{colors.amber.500}",
         "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
       },
       "intense": {
@@ -713,7 +749,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.1000}"
+          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
@@ -729,42 +765,69 @@
             "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.2",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.amber.850}",
+            "$value": "{colors.amber.300}",
             "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
           }
         },
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.900}",
             "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.200}",
             "$description": "Text color for hoverable warning content.\nCommon uses: interactive warning text, hover state content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.300}",
             "$description": "Border color for hover state.\nCommon uses: interactive warning borders, hover boundaries."
           }
         },
         "active": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.900}",
             "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.200}",
             "$description": "Text color for active warning content.\nCommon uses: pressed state text, active content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.4",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.amber.300}",
             "$description": "Border color for active state.\nCommon uses: active warning borders, pressed state."
           }
         },
@@ -795,7 +858,7 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.accent.800}",
+        "$value": "{colors.accent.400}",
         "$description": "Border color for info containers.\nCommon uses: info alert borders, message boundaries."
       },
       "intense": {
@@ -806,7 +869,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.1000}"
+          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
@@ -822,42 +885,69 @@
             "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.2",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "{colors.accent.800}",
+            "$value": "{colors.accent.300}",
             "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
           }
         },
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.900}",
             "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.200}",
             "$description": "Text color for hoverable info content.\nCommon uses: interactive help text, hover state content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.300}",
             "$description": "Border color for hover state.\nCommon uses: interactive info borders, hover boundaries."
           }
         },
         "active": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.900}",
             "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
           },
           "foreground": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.200}",
             "$description": "Text color for active info content.\nCommon uses: pressed state text, active content."
           },
           "border": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.4",
+                  "space": "p3"
+                }
+              }
+            },
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.300}",
             "$description": "Border color for active state.\nCommon uses: active info borders, pressed state."
           }
         },

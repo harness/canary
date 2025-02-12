@@ -446,7 +446,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                       {commentItems?.map((commentItem, idx) => {
                         const componentId = `activity-comment-${commentItem?.id}`
                         // const diffCommentItem = activitiesToDiffCommentItems(commentItem)
-                        const commentIdAttr = `comment-${payload?.id}`
+                        const commentIdAttr = `comment-${commentItem?.id}`
 
                         return payload?.id ? (
                           <PullRequestTimelineItem

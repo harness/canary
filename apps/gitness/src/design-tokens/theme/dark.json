@@ -851,16 +851,6 @@
       }
     },
     "neutral": {
-      "foreground": {
-        "$type": "color",
-        "$value": "{colors.accent.200}",
-        "$description": "Primary text color for info content.\nCommon uses: info message text, help text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.accent.400}",
-        "$description": "Border color for info containers.\nCommon uses: info alert borders, message boundaries."
-      },
       "intense": {
         "background": {
           "$type": "color",

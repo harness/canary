@@ -31,7 +31,7 @@ export default function ReposListPage() {
 
   const {
     data: { body: repoData, headers } = {},
-    refetch,
+    refetch: refetchListRepos,
     isFetching,
     isError,
     error
@@ -54,6 +54,8 @@ export default function ReposListPage() {
       onSuccess: () => {
         dismiss(importToastId ?? '')
         setImportToastId(null)
+        setImportRepoIdentifier(null)
+        refetchListRepos()
       }
     }
   )
@@ -114,7 +116,7 @@ export default function ReposListPage() {
       addRepository(transformedRepo[0])
       setImportRepoIdentifier(null)
     },
-    [importToastId, refetch]
+    [importToastId]
   )
 
   const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])

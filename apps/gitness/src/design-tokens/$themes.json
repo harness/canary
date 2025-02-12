@@ -640,7 +640,8 @@
       "shadow.color.2xl": "69af1b6a95f5cbe8385572d1965004d9be717c0a",
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
-      "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882"
+      "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
+      "components.link.visited": "d713494b6a9be91643a5e5a23e8b26985f0a4d2d"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -933,7 +934,8 @@
       "shadow.color.2xl": "69af1b6a95f5cbe8385572d1965004d9be717c0a",
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
-      "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882"
+      "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
+      "components.link.vidited": "22d138e7b5e46d40bd640bc37b887e4d97431ac3"
     }
   }
 ]

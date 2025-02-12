@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom'
 
 import { Badge, Icon, NoData, SkeletonList, StackedList } from '@/components'
-import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
 import { RepositoryType } from '../repo.types'

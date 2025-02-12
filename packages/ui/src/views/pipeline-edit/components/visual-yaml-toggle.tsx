@@ -12,7 +12,7 @@ export const VisualYamlToggle = (props: VisualYamlToggleProps): JSX.Element => {
   const { view, setView, isYamlValid } = props
   return (
     <ToggleGroup.Root
-      className="rounded-md border border-borders-1 bg-background-3 h-8 px-1"
+      className="h-8 rounded-md border border-borders-1 bg-background-3 px-1"
       onValueChange={value => {
         if (value) {
           setView(value as VisualYamlValue)

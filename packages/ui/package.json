@@ -128,7 +128,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.0.1",
+    "@testing-library/react": "^12.1.5",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^22.9.0",
     "@types/react": "^17.0.3",

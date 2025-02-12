@@ -7,13 +7,13 @@ import {
   FiltersBar,
   ListActions,
   NoData,
-  PaginationComponent,
+  Pagination,
   SearchBox,
   Spacer
 } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { SandboxLayout } from '@/views'
 
-import { SandboxLayout } from '../../index'
 import { getFilterOptions, getLayoutOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
 import { useFilters, useViewManagement } from '../hooks'
 import { filterRepositories } from '../utils/filtering/repos'
@@ -196,7 +196,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           {...routingProps}
         />
         {!!reposWithFormattedDates.length && (
-          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

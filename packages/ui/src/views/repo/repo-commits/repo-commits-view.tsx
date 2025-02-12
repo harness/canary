@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
 import {
   BranchSelector,
   BranchSelectorListItem,
@@ -128,7 +128,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             ) : (
               <>
                 <CommitsList data={commitsList} toCode={toCode} toCommitDetails={toCommitDetails} />
-                <PaginationComponent
+                <Pagination
                   className="pl-[26px]"
                   nextPage={xNextPage}
                   previousPage={xPrevPage}

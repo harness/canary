@@ -1,11 +1,7 @@
 import { FC } from 'react'
 
-import { NoData } from '@components/no-data'
-import { PaginationComponent } from '@components/pagination-component'
-import { SkeletonList } from '@components/skeletons'
-import { CommitsList, SandboxLayout, TranslationStore, TypesCommit } from '@views/index'
-
-import { IPullRequestCommitsStore } from './pull-request-commits.types'
+import { NoData, Pagination, SkeletonList } from '@/components'
+import { CommitsList, IPullRequestCommitsStore, SandboxLayout, TranslationStore, TypesCommit } from '@/views'
 
 interface RoutingProps {
   toCommitDetails?: ({ sha }: { sha: string }) => string
@@ -54,13 +50,7 @@ const PullRequestCommitsView: FC<RepoPullRequestCommitsViewProps> = ({
         />
       )}
 
-      <PaginationComponent
-        nextPage={xNextPage}
-        previousPage={xPrevPage}
-        currentPage={page}
-        goToPage={(pageNum: number) => setPage(pageNum)}
-        t={t}
-      />
+      <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
     </SandboxLayout.Content>
   )
 }

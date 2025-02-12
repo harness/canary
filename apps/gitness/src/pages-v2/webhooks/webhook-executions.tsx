@@ -48,7 +48,7 @@ export const WebhookExecutionsContainer = () => {
       toRepoWebhooks={() => routes.toRepoWebhooks({ webhookId })}
       repo_ref={repo_ref}
       isLoading={isLoading}
-      toRepoWebookExecutionDetails={(executionId: string) =>
+      toRepoWebhookExecutionDetails={(executionId: string) =>
         routes.toRepoWebhookExecutionDetails({ spaceId, repoId, webhookId, executionId })
       }
     />

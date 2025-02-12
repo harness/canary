@@ -3,10 +3,10 @@ import * as React from 'react'
 import { cn } from '@utils/cn'
 import { TFunction } from 'i18next'
 
-import { ButtonProps, buttonVariants } from './button'
-import { Icon } from './icon'
+import { ButtonProps, buttonVariants } from '../button'
+import { Icon } from '../icon'
 
-const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
+const PaginationPrimitiveRoot = ({ className, ...props }: React.ComponentProps<'nav'>) => (
   <nav
     role="navigation"
     aria-label="pagination"
@@ -14,39 +14,39 @@ const Pagination = ({ className, ...props }: React.ComponentProps<'nav'>) => (
     {...props}
   />
 )
-Pagination.displayName = 'Pagination'
+PaginationPrimitiveRoot.displayName = 'PaginationPrimitiveRoot'
 
-const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
+const PaginationPrimitiveContent = React.forwardRef<HTMLUListElement, React.ComponentProps<'ul'>>(
   ({ className, ...props }, ref) => (
     <ul ref={ref} className={cn('flex flex-grow items-center justify-center gap-3', className)} {...props} />
   )
 )
-PaginationContent.displayName = 'PaginationContent'
+PaginationPrimitiveContent.displayName = 'PaginationPrimitiveContent'
 
-const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(({ className, ...props }, ref) => (
-  <li ref={ref} className={cn('first:mr-auto last:ml-auto', className)} {...props} />
-))
-PaginationItem.displayName = 'PaginationItem'
+const PaginationPrimitiveItem = React.forwardRef<HTMLLIElement, React.ComponentProps<'li'>>(
+  ({ className, ...props }, ref) => <li ref={ref} className={cn('first:mr-auto last:ml-auto', className)} {...props} />
+)
+PaginationPrimitiveItem.displayName = 'PaginationPrimitiveItem'
 
-type PaginationLinkGeneralProps = {
+type PaginationPrimitiveLinkGeneralProps = {
   isActive?: boolean
   disabled?: boolean
   t: TFunction
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
-interface PaginationLinkProps extends Omit<PaginationLinkGeneralProps, 't'> {
+interface PaginationPrimitiveLinkProps extends Omit<PaginationPrimitiveLinkGeneralProps, 't'> {
   isFullRounded?: boolean
 }
 
-const PaginationLink = ({
+const PaginationPrimitiveLink = ({
   className,
   isActive,
   size,
   isFullRounded = true,
   children,
   ...props
-}: PaginationLinkProps) => (
+}: PaginationPrimitiveLinkProps) => (
   <a
     aria-current={isActive ? 'page' : undefined}
     className={cn(
@@ -66,10 +66,16 @@ const PaginationLink = ({
     {children}
   </a>
 )
-PaginationLink.displayName = 'PaginationLink'
+PaginationPrimitiveLink.displayName = 'PaginationPrimitiveLink'
 
-const PaginationPrevious = ({ t, disabled, className, href = '#', ...props }: PaginationLinkGeneralProps) => (
-  <PaginationLink
+const PaginationPrimitivePrevious = ({
+  t,
+  disabled,
+  className,
+  href = '#',
+  ...props
+}: PaginationPrimitiveLinkGeneralProps) => (
+  <PaginationPrimitiveLink
     aria-label="Go to previous page"
     size="default"
     isFullRounded={false}
@@ -84,12 +90,18 @@ const PaginationPrevious = ({ t, disabled, className, href = '#', ...props }: Pa
   >
     <Icon name="arrow-long" size={12} className="rotate-180" />
     <span>{t('component:pagination.previous', 'Previous')}</span>
-  </PaginationLink>
+  </PaginationPrimitiveLink>
 )
-PaginationPrevious.displayName = 'PaginationPrevious'
+PaginationPrimitivePrevious.displayName = 'PaginationPrimitivePrevious'
 
-const PaginationNext = ({ t, disabled, className, href = '#', ...props }: PaginationLinkGeneralProps) => (
-  <PaginationLink
+const PaginationPrimitiveNext = ({
+  t,
+  disabled,
+  className,
+  href = '#',
+  ...props
+}: PaginationPrimitiveLinkGeneralProps) => (
+  <PaginationPrimitiveLink
     aria-label="Go to next page"
     size="default"
     isFullRounded={false}
@@ -104,11 +116,11 @@ const PaginationNext = ({ t, disabled, className, href = '#', ...props }: Pagina
   >
     <span>{t('component:pagination.next', 'Next')}</span>
     <Icon name="arrow-long" size={12} />
-  </PaginationLink>
+  </PaginationPrimitiveLink>
 )
-PaginationNext.displayName = 'PaginationNext'
+PaginationPrimitiveNext.displayName = 'PaginationPrimitiveNext'
 
-const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
+const PaginationPrimitiveEllipsis = ({ className, ...props }: React.ComponentProps<'span'>) => (
   <span
     aria-hidden
     className={cn(
@@ -121,14 +133,16 @@ const PaginationEllipsis = ({ className, ...props }: React.ComponentProps<'span'
     <span className="sr-only">More pages</span>
   </span>
 )
-PaginationEllipsis.displayName = 'PaginationEllipsis'
+PaginationPrimitiveEllipsis.displayName = 'PaginationPrimitiveEllipsis'
 
-export {
-  Pagination,
-  PaginationContent,
-  PaginationLink,
-  PaginationItem,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis
+const PaginationPrimitive = {
+  Root: PaginationPrimitiveRoot,
+  Content: PaginationPrimitiveContent,
+  Link: PaginationPrimitiveLink,
+  Item: PaginationPrimitiveItem,
+  Previous: PaginationPrimitivePrevious,
+  Next: PaginationPrimitiveNext,
+  Ellipsis: PaginationPrimitiveEllipsis
 }
+
+export { PaginationPrimitive }

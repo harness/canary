@@ -2,13 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { OpenapiGetContentOutput, TypesCommit, useListCommitsQuery } from '@harnessio/code-service-client'
-import {
-  FileViewerControlBar,
-  MarkdownViewer,
-  PaginationComponent,
-  SkeletonList,
-  ViewTypeValue
-} from '@harnessio/ui/components'
+import { FileViewerControlBar, MarkdownViewer, Pagination, SkeletonList, ViewTypeValue } from '@harnessio/ui/components'
 import { BranchSelectorTab, CommitsList } from '@harnessio/ui/views'
 import { CodeEditor } from '@harnessio/yaml-editor'
 
@@ -196,13 +190,7 @@ export default function FileContentViewer({ repoContent }: FileContentViewerProp
                 committer: item.committer
               }))}
             />
-            <PaginationComponent
-              nextPage={xNextPage}
-              previousPage={xPrevPage}
-              currentPage={page}
-              goToPage={setPage}
-              t={t}
-            />
+            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
           </div>
         )
       default:

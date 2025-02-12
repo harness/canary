@@ -5,7 +5,7 @@ import {
   Badge,
   FormSeparator,
   NoData,
-  PaginationComponent,
+  Pagination,
   SkeletonList,
   Table,
   TableBody,
@@ -26,7 +26,7 @@ interface RepoWebhookExecutionsPageProps {
   toRepoWebhooks: (repoRef?: string) => string
   repo_ref: string
   isLoading: boolean
-  toRepoWebookExecutionDetails: (executionId: string) => string
+  toRepoWebhookExecutionDetails: (executionId: string) => string
 }
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   useWebhookStore,
@@ -34,7 +34,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   toRepoWebhooks,
   repo_ref,
   isLoading,
-  toRepoWebookExecutionDetails
+  toRepoWebhookExecutionDetails
 }) => {
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
@@ -70,7 +70,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 {executions.map(execution => (
                   <TableRow
                     key={execution.id}
-                    onClick={() => navigate(toRepoWebookExecutionDetails(`${execution.id}`))}
+                    onClick={() => navigate(toRepoWebhookExecutionDetails(`${execution.id}`))}
                     className="cursor-pointer"
                   >
                     <TableCell>
@@ -106,7 +106,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                 ))}
               </TableBody>
             </Table>
-            <PaginationComponent
+            <Pagination
               totalPages={totalWebhookExecutionPages}
               currentPage={webhookExecutionPage}
               goToPage={setWebhookExecutionPage}

@@ -1,6 +1,6 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
@@ -110,13 +110,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           {...routingProps}
         />
         {!isLoading && (
-          <PaginationComponent
-            nextPage={xNextPage}
-            previousPage={xPrevPage}
-            currentPage={page}
-            goToPage={(pageNum: number) => setPage(pageNum)}
-            t={t}
-          />
+          <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
       <CreateBranchDialog

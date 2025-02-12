@@ -4,7 +4,7 @@ import {
   Badge,
   MoreActionsTooltip,
   NoData,
-  PaginationComponent,
+  Pagination,
   Spacer,
   StackedList,
   Switch,
@@ -207,7 +207,7 @@ export function RepoWebhookList({
           ))}
         </TableBody>
       </Table>
-      <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+      <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
     </>
   )
 }

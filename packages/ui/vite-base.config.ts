@@ -17,6 +17,12 @@ const external = [
 
 export default defineConfig({
   plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],
+  // resolve: {
+  //   alias: {
+  //     'react/jsx-dev-runtime': 'react/jsx-dev-runtime.js',
+  //     'react/jsx-runtime': 'react/jsx-runtime.js'
+  //   }
+  // },
   build: {
     lib: {
       cssFileName: 'styles',

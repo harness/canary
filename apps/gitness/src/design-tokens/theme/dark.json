@@ -65,8 +65,17 @@
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "subtle": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
+          }
+        }
+      },
       "$type": "color",
-      "$value": "{colors.base-chrome.900}",
+      "$value": "{colors.base-chrome.850}",
       "$description": "Softer border color for minimal separation.\nCommon uses: subtle dividers, grouped content."
     },
     "ring": {
@@ -105,7 +114,7 @@
         "active": {
           "background": {
             "$type": "color",
-            "$value": "{colors.accent.500}",
+            "$value": "{colors.accent.400}",
             "$description": "Background color when action is pressed.\nCommon uses: pressed state, click feedback, active indication."
           },
           "foreground": {
@@ -138,7 +147,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{colors.pure.white}",
             "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
           }
         },
@@ -150,7 +159,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{colors.pure.white}",
             "$description": "Text color during hover.\nCommon uses: hover state labels, interactive text."
           }
         },
@@ -162,7 +171,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{colors.pure.white}",
             "$description": "Text color during press state.\nCommon uses: active text color, pressed state content."
           }
         },
@@ -179,7 +188,7 @@
           }
         }
       },
-      "outline": {
+      "ghost": {
         "default": {
           "border": {
             "$type": "color",
@@ -268,7 +277,7 @@
       "hover": {
         "background": {
           "$type": "color",
-          "$value": "{background.highlight}",
+          "$value": "{colors.base-chrome.900}",
           "$description": "Background color when hovering inputs.\nCommon uses: hover state for input fields."
         },
         "foreground": {
@@ -290,7 +299,7 @@
       "active": {
         "background": {
           "$type": "color",
-          "$value": "{background.highlight}",
+          "$value": "{colors.base-chrome.950}",
           "$description": "Background color for focused/active inputs.\nCommon uses: active input field, focused state."
         },
         "foreground": {
@@ -300,7 +309,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.ring}",
+          "$value": "{border.interactive}",
           "$description": "Border color for focused state.\nCommon uses: focus indication, active boundary."
         },
         "icon": {
@@ -312,7 +321,7 @@
       "disabled": {
         "background": {
           "$type": "color",
-          "$value": "{background.canvas}",
+          "$value": "{colors.base-chrome.950}",
           "$description": "Background for disabled input elements.\nCommon uses: non-interactive inputs."
         },
         "foreground": {
@@ -353,17 +362,17 @@
       "hover": {
         "background": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Background when hovering selectable items.\nCommon uses: hover state for options."
         },
         "foreground": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.600}",
           "$description": "Text color during hover.\nCommon uses: hover state labels."
         },
         "border": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.50}",
           "$description": "Border color during hover.\nCommon uses: hover state outlines."
         }
       },
@@ -406,34 +415,24 @@
       "track": {
         "base": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.base-chrome.850}",
           "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
         },
         "progress": {
           "$type": "color",
-          "$value": "#fff",
+          "$value": "{colors.accent.300}",
           "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
         },
         "segments": {
           "base": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.600}",
             "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
           },
           "progress": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.accent.800}",
             "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
-          },
-          "hover": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Segment appearance on hover.\nCommon uses: interactive segment feedback."
-          },
-          "active": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Currently selected segment.\nCommon uses: current step, active segment."
           }
         }
       },
@@ -441,48 +440,48 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.100}",
             "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.850}",
             "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
           }
         },
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.pure.white}",
             "$description": "Handle surface in hover state.\nCommon uses: interactive feedback, hoverable controls, adjustable grips."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.800}",
             "$description": "Handle outline during hover.\nCommon uses: hover state boundary."
           }
         },
         "active": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.100}",
             "$description": "Handle surface while dragging.\nCommon uses: active drag state."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.850}",
             "$description": "Handle outline while dragging.\nCommon uses: active handle boundary."
           }
         },
         "disabled": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.700}",
             "$description": "Handle surface when inactive.\nCommon uses: non-interactive handle."
           },
           "border": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.base-chrome.900}",
             "$description": "Handle outline when inactive.\nCommon uses: disabled handle boundary."
           }
         }
@@ -498,13 +497,13 @@
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.green.800}",
+        "$value": "{colors.green.400}",
         "$description": "Border color for success containers.\nCommon uses: success alert borders, confirmation boundaries."
       },
       "intense": {
         "foreground": {
           "$type": "color",
-          "$value": "{colors.base-chrome.1000}",
+          "$value": "{colors.pure.black}",
           "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
         },
         "background": {
@@ -517,7 +516,7 @@
         "default": {
           "background": {
             "$type": "color",
-            "$value": "{colors.green.900}",
+            "$value": "{colors.green.950}",
             "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
           },
           "foreground": {

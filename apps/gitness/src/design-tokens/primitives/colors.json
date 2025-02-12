@@ -9,7 +9,7 @@
         "$value": "#09090b"
       }
     },
-    "base-chrome": {
+    "chrome": {
       "50": {
         "$value": "#fcfcfd"
       },

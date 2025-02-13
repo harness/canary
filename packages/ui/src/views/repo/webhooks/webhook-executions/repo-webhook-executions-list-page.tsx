@@ -13,8 +13,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-  Text,
-  TimeAgoHoverCard
+  Text
 } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
@@ -75,13 +74,13 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                     onClick={() => navigate(toRepoWebookExecutionDetails(`${execution.id}`))}
                     className="cursor-pointer"
                   >
-                    <TableCell>
+                    <TableCell className="content-center">
                       <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
                     </TableCell>
                     <TableCell>
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="content-center">
                       <Badge
                         size="md"
                         disableHover

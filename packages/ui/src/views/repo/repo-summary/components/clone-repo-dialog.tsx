@@ -1,6 +1,6 @@
 import { FC, useState } from 'react'
 
-import { Button, CopyButton, DropdownMenu, Icon, Input, Tabs, TabsList, TabsTrigger } from '@/components'
+import { Button, CopyButton, DropdownMenu, Icon, Input, Tabs } from '@/components'
 import { TranslationStore } from '@/views'
 
 export interface CloneRepoDialogProps {
@@ -36,13 +36,13 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
         <div className="px-4 pt-4 leading-none">
           <span className="inline-block text-14 font-medium">{t('views:repos.cloneRepo', 'Clone repository')}</span>
         </div>
-        <Tabs
+        <Tabs.Root
           className="mt-4"
           variant="tabnav"
           value={currentTab}
           onValueChange={val => setCurrentTab(val as CloneRepoTabs)}
         >
-          <TabsList className="px-4">
+          <Tabs.List className="px-4">
             <DropdownMenu.Item
               className="rounded-t-md p-0"
               onSelect={e => {
@@ -50,9 +50,9 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 setCurrentTab(CloneRepoTabs.HTTPS)
               }}
             >
-              <TabsTrigger className="px-4 data-[state=active]:bg-background-2" value={CloneRepoTabs.HTTPS}>
+              <Tabs.Trigger className="px-4 data-[state=active]:bg-background-2" value={CloneRepoTabs.HTTPS}>
                 {t('views:repos.cloneHttps', 'HTTPS')}
-              </TabsTrigger>
+              </Tabs.Trigger>
             </DropdownMenu.Item>
             <DropdownMenu.Item
               className="rounded-t-md p-0"
@@ -61,16 +61,16 @@ export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({
                 setCurrentTab(CloneRepoTabs.SSH)
               }}
             >
-              <TabsTrigger
+              <Tabs.Trigger
                 className="px-4 data-[state=active]:bg-background-2"
                 value={CloneRepoTabs.SSH}
                 onClick={e => e.stopPropagation()}
               >
                 {t('views:repos.cloneSsh', 'SSH')}
-              </TabsTrigger>
+              </Tabs.Trigger>
             </DropdownMenu.Item>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
         <div className="p-4">
           <div className="mb-2.5 flex items-center">
             <span className="inline-block leading-none text-foreground-2">

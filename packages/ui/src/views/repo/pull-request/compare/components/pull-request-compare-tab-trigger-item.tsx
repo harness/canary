@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { Badge } from '@components/badge'
 import { Icon, IconProps } from '@components/icon'
-import { TabsTrigger } from '@components/tabs'
+import { Tabs } from '@components/tabs'
 
 interface TabTriggerItemProps {
   value: string
@@ -13,7 +13,7 @@ interface TabTriggerItemProps {
 
 const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCount }) => {
   return (
-    <TabsTrigger value={value} className="gap-x-1.5">
+    <Tabs.Trigger value={value} className="gap-x-1.5">
       <div className="flex items-center gap-x-1">
         <Icon size={14} name={icon as IconProps['name']} />
         <span>{label}</span>
@@ -23,7 +23,7 @@ const TabTriggerItem: FC<TabTriggerItemProps> = ({ value, icon, label, badgeCoun
           {badgeCount}
         </Badge>
       )}
-    </TabsTrigger>
+    </Tabs.Trigger>
   )
 }
 

@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom'
 
-import { Tabs, TabsList, TabsTrigger } from '@/components'
+import { Tabs } from '@/components'
 import { SandboxLayout } from '@/views'
 
 function ProjectSettingsPage() {
@@ -10,19 +10,19 @@ function ProjectSettingsPage() {
   return (
     <>
       <SandboxLayout.SubHeader className="h-[45px] overflow-hidden">
-        <Tabs variant="navigation" value={activeTab}>
-          <TabsList>
+        <Tabs.Root variant="navigation" value={activeTab}>
+          <Tabs.List>
             <NavLink to={`general`}>
-              <TabsTrigger value="general">General</TabsTrigger>
+              <Tabs.Trigger value="general">General</Tabs.Trigger>
             </NavLink>
             <NavLink to={`members`}>
-              <TabsTrigger value="members">Members</TabsTrigger>
+              <Tabs.Trigger value="members">Members</Tabs.Trigger>
             </NavLink>
             <NavLink to={`labels`}>
-              <TabsTrigger value="labels">Labels</TabsTrigger>
+              <Tabs.Trigger value="labels">Labels</Tabs.Trigger>
             </NavLink>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
       </SandboxLayout.SubHeader>
     </>
   )

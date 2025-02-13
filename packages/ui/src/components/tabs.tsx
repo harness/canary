@@ -65,18 +65,19 @@ const TabsContext = React.createContext<VariantProps<typeof tabsListVariants | t
   variant: 'default'
 })
 
-interface TabsProps
+interface TabsRootProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>,
     VariantProps<typeof tabsListVariants | typeof tabsTriggerVariants> {}
 
-const Tabs = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsProps>(
+const TabsRoot = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Root>, TabsRootProps>(
   ({ children, variant, ...props }, ref) => (
     <TabsPrimitive.Root ref={ref} {...props}>
       <TabsContext.Provider value={{ variant }}>{children}</TabsContext.Provider>
     </TabsPrimitive.Root>
   )
 )
-Tabs.displayName = 'Tabs'
+TabsRoot.displayName = 'TabsRoot'
+
 interface TabsListProps
   extends React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>,
     VariantProps<typeof tabsListVariants> {}
@@ -145,5 +146,11 @@ const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Conte
 )
 TabsContent.displayName = TabsPrimitive.Content.displayName
 
-export { Tabs, TabsList, TabsTrigger, TabsContent }
-export type { TabsListProps, TabsProps }
+const Tabs = {
+  Root: TabsRoot,
+  List: TabsList,
+  Trigger: TabsTrigger,
+  Content: TabsContent
+}
+
+export { Tabs }

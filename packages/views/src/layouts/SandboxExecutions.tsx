@@ -1,11 +1,12 @@
+import { FC } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
-import { Tabs, TabsList, TabsTrigger } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 
 import { SandboxLayout } from '..'
 import { ExecutionsTopBar } from '../components/layout/executions-top-bar'
 
-const SandboxExecutions: React.FC = () => {
+const SandboxExecutions: FC = () => {
   const location = useLocation()
   const activeTab = location.pathname.split('/').pop() || 'summary'
 
@@ -15,34 +16,34 @@ const SandboxExecutions: React.FC = () => {
         <ExecutionsTopBar />
       </SandboxLayout.Header>
       <SandboxLayout.SubHeader>
-        <Tabs variant="navigation" value={activeTab}>
-          <TabsList>
+        <Tabs.Root variant="navigation" value={activeTab}>
+          <Tabs.List>
             <NavLink to={`summary`}>
-              <TabsTrigger value="summary">Summary</TabsTrigger>
+              <Tabs.Trigger value="summary">Summary</Tabs.Trigger>
             </NavLink>
             <NavLink to={`logs`}>
-              <TabsTrigger value="logs">Logs</TabsTrigger>
+              <Tabs.Trigger value="logs">Logs</Tabs.Trigger>
             </NavLink>
             <NavLink to={`inputs`}>
-              <TabsTrigger value="inputs">Inputs</TabsTrigger>
+              <Tabs.Trigger value="inputs">Inputs</Tabs.Trigger>
             </NavLink>
             <NavLink to={`policy-evaluations`}>
-              <TabsTrigger value="policy-evaluations">Policy evaluations</TabsTrigger>
+              <Tabs.Trigger value="policy-evaluations">Policy evaluations</Tabs.Trigger>
             </NavLink>
             <NavLink to={`artifacts`}>
-              <TabsTrigger value="artifacts">Artifacts</TabsTrigger>
+              <Tabs.Trigger value="artifacts">Artifacts</Tabs.Trigger>
             </NavLink>
             <NavLink to={`tests`}>
-              <TabsTrigger value="tests">Tests</TabsTrigger>
+              <Tabs.Trigger value="tests">Tests</Tabs.Trigger>
             </NavLink>
             <NavLink to={`security-tests`}>
-              <TabsTrigger value="security-tests">Security tests</TabsTrigger>
+              <Tabs.Trigger value="security-tests">Security tests</Tabs.Trigger>
             </NavLink>
             <NavLink to={`secrets`}>
-              <TabsTrigger value="secrets">Secrets</TabsTrigger>
+              <Tabs.Trigger value="secrets">Secrets</Tabs.Trigger>
             </NavLink>
-          </TabsList>
-        </Tabs>
+          </Tabs.List>
+        </Tabs.Root>
       </SandboxLayout.SubHeader>
       <Outlet />
     </>

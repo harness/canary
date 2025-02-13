@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
-import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs, TabsContent, TabsList, TabsTrigger } from '@/components'
+import { Button, Icon, Layout, ScrollArea, SearchBox, Tabs } from '@/components'
 import { cn } from '@utils/cn'
 
 import ConsoleLogs from './console-logs'
@@ -13,7 +13,7 @@ enum StepExecutionTab {
   OUTPUT = 'output'
 }
 
-const StepExecutionToolbar: React.FC<
+const StepExecutionToolbar: FC<
   Pick<StepExecutionProps, 'onEdit' | 'onDownload' | 'onCopy' | 'query' | 'handleInputChange'>
 > = ({ onEdit, onDownload, onCopy, query, handleInputChange }) => {
   return (
@@ -50,46 +50,39 @@ const StepExecutionToolbar: React.FC<
   )
 }
 
-export const StepExecution: React.FC<StepExecutionProps> = ({
-  step,
-  logs,
-  onEdit,
-  onDownload,
-  onCopy,
-  isDrawer = false
-}) => {
+export const StepExecution: FC<StepExecutionProps> = ({ step, logs, onEdit, onDownload, onCopy, isDrawer = false }) => {
   const inputTable = step?.inputs || []
   const outputTable = step?.outputs || []
   const [query, setQuery] = useState('')
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setQuery(value)
   }
 
   return (
-    <Tabs defaultValue={StepExecutionTab.LOG} className="size-full">
+    <Tabs.Root defaultValue={StepExecutionTab.LOG} className="size-full">
       <Layout.Vertical className="space-y-0">
         <Layout.Horizontal className="flex justify-between py-2.5 pl-5 pr-3.5">
-          <TabsList className="h-8 w-fit gap-x-0.5 border border-borders-1 bg-background-3">
-            <TabsTrigger
+          <Tabs.List className="h-8 w-fit gap-x-0.5 border border-borders-1 bg-background-3">
+            <Tabs.Trigger
               className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
               value={StepExecutionTab.LOG}
             >
               Logs
-            </TabsTrigger>
-            <TabsTrigger
+            </Tabs.Trigger>
+            <Tabs.Trigger
               className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
               value={StepExecutionTab.INPUT}
             >
               Inputs
-            </TabsTrigger>
-            <TabsTrigger
+            </Tabs.Trigger>
+            <Tabs.Trigger
               className="h-6 w-[68px] data-[state=active]:border data-[state=active]:border-borders-2 data-[state=active]:bg-background-9"
               value={StepExecutionTab.OUTPUT}
             >
               Output
-            </TabsTrigger>
-          </TabsList>
+            </Tabs.Trigger>
+          </Tabs.List>
           <StepExecutionToolbar
             onEdit={onEdit}
             onDownload={onDownload}
@@ -98,12 +91,12 @@ export const StepExecution: React.FC<StepExecutionProps> = ({
             handleInputChange={handleInputChange}
           />
         </Layout.Horizontal>
-        <TabsContent value={StepExecutionTab.LOG}>
+        <Tabs.Content value={StepExecutionTab.LOG}>
           <ScrollArea className={cn(isDrawer ? 'pt-1.5 h-[calc(100vh-196px)]' : 'pt-4 h-[calc(100vh-278px)] border-t')}>
             <ConsoleLogs logs={logs} query={query} />
           </ScrollArea>
-        </TabsContent>
-        <TabsContent value={StepExecutionTab.INPUT}>
+        </Tabs.Content>
+        <Tabs.Content value={StepExecutionTab.INPUT}>
           {/*here is the execution details of input table */}
           <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
             <KeyValueTable
@@ -113,8 +106,8 @@ export const StepExecution: React.FC<StepExecutionProps> = ({
               tableTitleVal={'Input Value'}
             />
           </ScrollArea>
-        </TabsContent>
-        <TabsContent value={StepExecutionTab.OUTPUT}>
+        </Tabs.Content>
+        <Tabs.Content value={StepExecutionTab.OUTPUT}>
           {/*here is the execution details of output table */}
           <ScrollArea className="h-[calc(100vh-278px)] border-t pt-4">
             <KeyValueTable
@@ -124,8 +117,8 @@ export const StepExecution: React.FC<StepExecutionProps> = ({
               tableTitleVal={'Output Value'}
             />
           </ScrollArea>
-        </TabsContent>
+        </Tabs.Content>
       </Layout.Vertical>
-    </Tabs>
+    </Tabs.Root>
   )
 }

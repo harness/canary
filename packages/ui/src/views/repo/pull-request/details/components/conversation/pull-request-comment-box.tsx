@@ -1,17 +1,6 @@
-import { Fragment, useMemo, useRef, useState } from 'react'
+import { ChangeEvent, ClipboardEvent, DragEvent, Fragment, useMemo, useRef, useState } from 'react'
 
-import {
-  Avatar,
-  Button,
-  Icon,
-  IconProps,
-  MarkdownViewer,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Textarea
-} from '@/components'
+import { Avatar, Button, Icon, IconProps, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, ToolbarAction } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -87,14 +76,14 @@ const PullRequestCommentBox = ({
     fileInputRef.current?.click()
   }
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
       handleUploadCallback(file)
     }
   }
 
-  const handleDragEnter = (e: React.DragEvent) => {
+  const handleDragEnter = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -103,7 +92,7 @@ const PullRequestCommentBox = ({
     }
   }
 
-  const handleDragLeave = (e: React.DragEvent) => {
+  const handleDragLeave = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -112,7 +101,7 @@ const PullRequestCommentBox = ({
     }
   }
 
-  const handleDrop = (e: React.DragEvent) => {
+  const handleDrop = (e: DragEvent) => {
     e.preventDefault()
     e.stopPropagation()
     setIsDragging(false)
@@ -124,7 +113,7 @@ const PullRequestCommentBox = ({
     handleFileDrop(event, handleUploadCallback)
   }
 
-  const handlePasteForUpload = (event: React.ClipboardEvent) => {
+  const handlePasteForUpload = (event: ClipboardEvent) => {
     handlePaste(event, handleUploadCallback)
   }
 
@@ -157,17 +146,17 @@ const PullRequestCommentBox = ({
           'border-t': inReplyMode
         })}
       >
-        <Tabs variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-            <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
+        <Tabs.Root variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
+          <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
+            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.WRITE}>
               Write
-            </TabsTrigger>
-            <TabsTrigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.PREVIEW}>
+            </Tabs.Trigger>
+            <Tabs.Trigger className="data-[state=active]:bg-background-2" value={TABS_KEYS.PREVIEW}>
               Preview
-            </TabsTrigger>
-          </TabsList>
+            </Tabs.Trigger>
+          </Tabs.List>
 
-          <TabsContent className="mt-4" value={TABS_KEYS.WRITE}>
+          <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
             <div
               className="relative"
               onDrop={handleDrop}
@@ -177,7 +166,7 @@ const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="min-h-24 bg-background-2 p-3 pb-10 text-foreground-1"
+                className="bg-background-2 text-foreground-1 min-h-24 p-3 pb-10"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -190,10 +179,10 @@ const PullRequestCommentBox = ({
                 resizable
               />
               {isDragging && (
-                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
+                <div className="border-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
               )}
 
-              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-background-2 pb-2 pt-1">
+              <div className="bg-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -201,14 +190,14 @@ const PullRequestCommentBox = ({
                       <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
-                      {isFirst && <div className="h-4 w-px bg-borders-2" />}
+                      {isFirst && <div className="bg-borders-2 h-4 w-px" />}
                     </Fragment>
                   )
                 })}
               </div>
             </div>
-          </TabsContent>
-          <TabsContent className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
+          </Tabs.Content>
+          <Tabs.Content className="mt-4 w-full" value={TABS_KEYS.PREVIEW}>
             <div className="min-h-24 w-full">
               {comment ? (
                 <MarkdownViewer markdownClassName="!bg-background-2 w-full" source={comment} />
@@ -216,15 +205,15 @@ const PullRequestCommentBox = ({
                 <span className="text-foreground-8">Nothing to preview</span>
               )}
             </div>
-          </TabsContent>
-        </Tabs>
+          </Tabs.Content>
+        </Tabs.Root>
 
         <div className="mt-4 flex items-center justify-between">
           {activeTab === TABS_KEYS.WRITE && (
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button
-                className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
+                className="text-foreground-3 hover:bg-background-8 gap-x-2 px-2.5 font-normal"
                 variant="custom"
                 onClick={handleFileSelect}
               >

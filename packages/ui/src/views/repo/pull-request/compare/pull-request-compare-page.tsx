@@ -2,18 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Avatar,
-  Button,
-  Icon,
-  NoData,
-  SkeletonList,
-  Spacer,
-  StyledLink,
-  Tabs,
-  TabsContent,
-  TabsList
-} from '@/components'
+import { Avatar, Button, Icon, NoData, SkeletonList, Spacer, StyledLink, Tabs } from '@/components'
 import { PrincipalType, TypesDiffStats } from '@/types'
 import {
   BranchSelector,
@@ -212,11 +201,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   return (
     <SandboxLayout.Main fullWidth>
       <SandboxLayout.Content className="px-20">
-        <span className="mt-7 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+        <span className="text-24 text-foreground-1 mt-7 font-medium leading-snug tracking-tight">
           {t('views:pullRequests.compareChanges', 'Comparing changes')}
         </span>
         <Layout.Vertical className="mt-2.5">
-          <p className="max-w-xl text-14 leading-snug text-foreground-2">
+          <p className="text-14 text-foreground-2 max-w-xl leading-snug">
             {t(
               'views:pullRequests.compareChangesDescription',
               'Choose two branches to see what’s changed or to start a new pull request.'
@@ -238,7 +227,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
               setSearchQuery={setSearchTargetQuery}
             />
 
-            <Icon name="arrow-long" size={12} className="rotate-180 text-icons-1" />
+            <Icon name="arrow-long" size={12} className="text-icons-1 rotate-180" />
             <BranchSelector
               isBranchOnly={true}
               useTranslationStore={useTranslationStore}
@@ -259,7 +248,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   {mergeability ? (
                     <>
                       <Icon className="text-icons-success" name="tick" size={12} />
-                      <p className="text-14 leading-none text-foreground-success">
+                      <p className="text-14 text-foreground-success leading-none">
                         {t('views:pullRequests.compareChangesAbleToMerge', 'Able to merge.')}{' '}
                         <span className="text-foreground-4">
                           {t(
@@ -274,7 +263,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       {apiError === "head branch doesn't contain any new commits." ? (
                         <>
                           <Icon name={'x-mark'} size={12} className="text-icons-1" />
-                          <p className="text-14 leading-none text-foreground-4">
+                          <p className="text-14 text-foreground-4 leading-none">
                             {t(
                               'views:pullRequests.compareChangesApiError',
                               'Head branch doesn’t contain any new commits.'
@@ -284,7 +273,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       ) : (
                         <>
                           <Icon className="text-icons-danger" name="x-mark" size={12} />
-                          <p className="text-14 leading-none text-foreground-danger">
+                          <p className="text-14 text-foreground-danger leading-none">
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-foreground-4">
                               {t(
@@ -302,7 +291,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         </Layout.Vertical>
         {!prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="border-borders-1 bg-background-2 mt-4 items-center justify-between rounded-md border p-4">
             <p className="text-14 leading-none">
               {isBranchSelected ? (
                 <>
@@ -333,7 +322,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
           </Layout.Horizontal>
         )}
         {prBranchCombinationExists && (
-          <Layout.Horizontal className="mt-4 items-center justify-between rounded-md border border-borders-1 bg-background-2 p-4">
+          <Layout.Horizontal className="border-borders-1 bg-background-2 mt-4 items-center justify-between rounded-md border p-4">
             <div className="flex items-center gap-x-1.5">
               <div>
                 <Layout.Horizontal className="items-center">
@@ -355,8 +344,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
         )}
         {isBranchSelected ? (
           <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
+            <Tabs.Root variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
+              <Tabs.List className="before:bg-borders-4 relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20">
                 {!prBranchCombinationExists && (
                   <TabTriggerItem
                     value="overview"
@@ -376,9 +365,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                   label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
                   badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
                 />
-              </TabsList>
+              </Tabs.List>
               {!prBranchCombinationExists && (
-                <TabsContent className="pt-7" value="overview">
+                <Tabs.Content className="pt-7" value="overview">
                   <div className="grid grid-cols-[1fr_288px] gap-x-8">
                     <div className="flex gap-x-3">
                       {currentUser && (
@@ -426,9 +415,9 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       setSearchLabelQuery={setSearchLabelQuery}
                     />
                   </div>
-                </TabsContent>
+                </Tabs.Content>
               )}
-              <TabsContent className="pt-7" value="commits">
+              <Tabs.Content className="pt-7" value="commits">
                 {/* TODO: add pagination to this */}
                 {isFetchingCommits ? (
                   <SkeletonList />
@@ -457,8 +446,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     ]}
                   />
                 )}
-              </TabsContent>
-              <TabsContent className="pt-7" value="changes">
+              </Tabs.Content>
+              <Tabs.Content className="pt-7" value="changes">
                 {/* Content for Changes */}
                 {(diffData ?? []).length > 0 ? (
                   <PullRequestCompareDiffList
@@ -476,8 +465,8 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     description={['There are no changes to display for the selected branches.']}
                   />
                 )}
-              </TabsContent>
-            </Tabs>
+              </Tabs.Content>
+            </Tabs.Root>
           </Layout.Vertical>
         ) : (
           <>

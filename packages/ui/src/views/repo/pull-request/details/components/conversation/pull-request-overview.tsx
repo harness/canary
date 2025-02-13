@@ -263,7 +263,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                       {
                         avatar: (
                           <Avatar.Root>
-                            <Avatar.Fallback className="text-12">
+                            <Avatar.Fallback>
                               {/* TODO: fix fallback string */}
                               {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                             </Avatar.Fallback>
@@ -330,7 +330,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                                 toggleConversationStatus={toggleConversationStatus}
                                 icon={
                                   <Avatar.Root>
-                                    <Avatar.Fallback className="text-12">
+                                    <Avatar.Fallback>
                                       {/* TODO: fix fallback string */}
                                       {getInitials(
                                         (
@@ -424,7 +424,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                     {
                       avatar: (
                         <Avatar.Root>
-                          <Avatar.Fallback className="text-12">
+                          <Avatar.Fallback>
                             {/* TODO: fix fallback string */}
                             {getInitials((payload?.author as PayloadAuthor)?.display_name || '')}
                           </Avatar.Fallback>
@@ -471,7 +471,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                             key={`${commentItem.id}-${commentItem.author}-pr-comment`}
                             icon={
                               <Avatar.Root>
-                                <Avatar.Fallback className="text-12">
+                                <Avatar.Fallback>
                                   {/* TODO: fix fallback string */}
                                   {getInitials(
                                     ((commentItem as unknown as TypesPullReqActivity)?.payload?.author as PayloadAuthor)

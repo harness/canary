@@ -63,7 +63,7 @@ const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({
         {
           avatar: (
             <Avatar.Root>
-              <Avatar.Fallback className="text-12">{getInitials(author || '')}</Avatar.Fallback>
+              <Avatar.Fallback>{getInitials(author || '')}</Avatar.Fallback>
             </Avatar.Root>
           ),
           name: author,

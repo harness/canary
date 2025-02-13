@@ -20,7 +20,8 @@ export const PopoverCommitInfo = {
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-x-3">
           <Avatar.Root size="8" className="inline-flex">
-            {avatarUrl ? <Avatar.Image src={avatarUrl} alt="@shadcn" /> : <Avatar.Fallback>{initials}</Avatar.Fallback>}
+            {!!avatarUrl && <Avatar.Image src={avatarUrl} />}
+            <Avatar.Fallback>{initials}</Avatar.Fallback>
           </Avatar.Root>
           <span>{authorName}</span>
         </div>

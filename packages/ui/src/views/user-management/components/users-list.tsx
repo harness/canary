@@ -41,11 +41,8 @@ export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
                 <TableCell className="my-6 content-center">
                   <div className="flex items-center gap-2">
                     <Avatar.Root>
-                      {user?.avatarUrl ? (
-                        <Avatar.Image src={user.avatarUrl} />
-                      ) : (
-                        <Avatar.Fallback>{getInitials(user.uid!)}</Avatar.Fallback>
-                      )}
+                      {!!user?.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
+                      <Avatar.Fallback>{getInitials(user.uid!)}</Avatar.Fallback>
                     </Avatar.Root>
                     <Text size={2} weight="medium" wrap="nowrap" truncate className="text-primary">
                       {user.uid}

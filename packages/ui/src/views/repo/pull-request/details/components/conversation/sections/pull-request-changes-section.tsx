@@ -72,7 +72,7 @@ const AvatarItem: React.FC<AvatarItemProps> = ({ evaluations }: AvatarItemProps)
               if (idx < 2) {
                 return (
                   <Avatar.Root key={owner?.id || idx}>
-                    <Avatar.Fallback className="text-12">{getInitials(owner?.display_name || '')}</Avatar.Fallback>
+                    <Avatar.Fallback>{getInitials(owner?.display_name || '')}</Avatar.Fallback>
                   </Avatar.Root>
                 )
               }

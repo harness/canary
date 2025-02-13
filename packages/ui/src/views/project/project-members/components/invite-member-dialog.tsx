@@ -34,11 +34,8 @@ const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ prin
   return (
     <div ref={ref} className={`flex w-full ${isShortView ? 'gap-x-2' : 'gap-x-2.5 pl-1'} cursor-pointer items-center`}>
       <Avatar.Root size={isShortView ? '6' : '8'}>
-        {principal.avatar_url ? (
-          <Avatar.Image src={principal.avatar_url} alt={principal.display_name} />
-        ) : (
-          <Avatar.Fallback>{getInitials(principal.display_name)}</Avatar.Fallback>
-        )}
+        {!!principal.avatar_url && <Avatar.Image src={principal.avatar_url} alt={principal.display_name} />}
+        <Avatar.Fallback>{getInitials(principal.display_name)}</Avatar.Fallback>
       </Avatar.Root>
       <span className="flex flex-col overflow-hidden leading-tight">
         <span className={`truncate ${isShortView ? 'text-foreground-1' : 'text-foreground-8'}`}>

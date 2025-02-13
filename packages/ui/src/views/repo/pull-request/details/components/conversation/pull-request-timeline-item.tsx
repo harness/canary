@@ -310,7 +310,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
                       {!!currentUser && (
                         <Avatar.Root>
-                          <Avatar.Fallback className="text-12">{getInitials(currentUser)}</Avatar.Fallback>
+                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
                         </Avatar.Root>
                       )}
                       <Input

@@ -433,7 +433,7 @@ const PullRequestDiffViewer = ({
                       onQuoteReply={handleQuoteReply}
                       icon={
                         <Avatar.Root>
-                          <Avatar.Fallback className="text-12">{parentInitials}</Avatar.Fallback>
+                          <Avatar.Fallback>{parentInitials}</Avatar.Fallback>
                         </Avatar.Root>
                       }
                       header={[
@@ -514,7 +514,7 @@ const PullRequestDiffViewer = ({
                               onQuoteReply={handleQuoteReply}
                               icon={
                                 <Avatar.Root>
-                                  <Avatar.Fallback className="text-12">{replyInitials}</Avatar.Fallback>
+                                  <Avatar.Fallback>{replyInitials}</Avatar.Fallback>
                                 </Avatar.Root>
                               }
                               header={[

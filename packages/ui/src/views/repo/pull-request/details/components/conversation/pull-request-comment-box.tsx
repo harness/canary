@@ -72,7 +72,7 @@ const PullRequestCommentBox = ({
   const avatar = useMemo(() => {
     return (
       <Avatar.Root>
-        <Avatar.Fallback className="text-12">{getInitials(currentUser || '')}</Avatar.Fallback>
+        <Avatar.Fallback>{getInitials(currentUser || '')}</Avatar.Fallback>
       </Avatar.Root>
     )
   }, [currentUser])

@@ -49,11 +49,8 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
             <TableCell className="content-center">
               <div className="flex items-center gap-2">
                 <Avatar.Root>
-                  {member.avatarUrl ? (
-                    <Avatar.Image src={member.avatarUrl} />
-                  ) : (
-                    <Avatar.Fallback>{getInitials(member.display_name)}</Avatar.Fallback>
-                  )}
+                  {!!member.avatarUrl && <Avatar.Image src={member.avatarUrl} />}
+                  <Avatar.Fallback>{getInitials(member.display_name)}</Avatar.Fallback>
                 </Avatar.Root>
                 <span className="font-medium text-foreground-8">{member.display_name}</span>
               </div>

@@ -8,11 +8,8 @@ const TopTitle: FC<LatestFileTypes> = ({ user, lastCommitMessage }) => {
   return (
     <div className="flex items-center gap-2">
       <Avatar.Root>
-        {user?.avatarUrl ? (
-          <Avatar.Image src={user.avatarUrl} />
-        ) : (
-          <Avatar.Fallback className="text-12">{getInitials(user?.name || '')}</Avatar.Fallback>
-        )}
+        {!!user?.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
+        <Avatar.Fallback>{getInitials(user?.name || '')}</Avatar.Fallback>
       </Avatar.Root>
       <Text size={2} weight="normal" color="tertiaryBackground" wrap="nowrap">
         {user?.name || ''}

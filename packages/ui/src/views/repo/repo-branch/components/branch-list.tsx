@@ -131,13 +131,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                 <TableCell className="content-center">
                   <div className="flex items-center gap-2">
                     <Avatar.Root size="4.5">
-                      {branch?.user?.avatarUrl ? (
-                        <Avatar.Image src={branch?.user?.avatarUrl} />
-                      ) : (
-                        <Avatar.Fallback className="text-center text-10">
-                          {getInitials(branch?.user?.name ?? '')}
-                        </Avatar.Fallback>
-                      )}
+                      {!!branch?.user?.avatarUrl && <Avatar.Image src={branch?.user?.avatarUrl} />}
+                      <Avatar.Fallback className="text-center text-10">
+                        {getInitials(branch?.user?.name ?? '')}
+                      </Avatar.Fallback>
                     </Avatar.Root>
                     <span className="truncate text-foreground-1">{branch?.timestamp}</span>
                   </div>

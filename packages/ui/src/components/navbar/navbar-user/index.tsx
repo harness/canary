@@ -41,7 +41,8 @@ const UserBlock = ({ username, email, url, isButton = false, className }: UserBl
       )}
       <div className="col-start-1 row-span-2">
         <Avatar.Root className="rounded-md" size="8">
-          {url ? <Avatar.Image src={url} alt="user" /> : <Avatar.Fallback>{getInitials(username)}</Avatar.Fallback>}
+          {!!url && <Avatar.Image src={url} alt="user" />}
+          <Avatar.Fallback>{getInitials(username)}</Avatar.Fallback>
         </Avatar.Root>
       </div>
       <p className="col-start-2 row-start-1 truncate text-13 font-medium leading-tight text-foreground-1">{username}</p>

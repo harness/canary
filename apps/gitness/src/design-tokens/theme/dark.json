@@ -51,6 +51,21 @@
       "$type": "color",
       "$value": "{colors.accent.200}",
       "$description": "Contrasting color for interactive elements or design focus.\nCommon uses: links, buttons, interactive icons."
+    },
+    "success": {
+      "$type": "color",
+      "$value": "{colors.green.200}",
+      "$description": "Primary text color for success content.\nCommon uses: success message text, completion text."
+    },
+    "danger": {
+      "$type": "color",
+      "$value": "{colors.red.200}",
+      "$description": "Primary text color for error content.\nCommon uses: error message text, validation text."
+    },
+    "warning": {
+      "$type": "color",
+      "$value": "{colors.amber.200}",
+      "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
     }
   },
   "border": {
@@ -82,6 +97,21 @@
       "$type": "color",
       "$value": "{colors.accent.200}",
       "$description": "Focus state indicator color.\nCommon uses: focus rings, keyboard navigation, selection indicators."
+    },
+    "success": {
+      "$type": "color",
+      "$value": "{colors.green.400}",
+      "$description": "Border color for success containers.\nCommon uses: success alert borders, confirmation boundaries."
+    },
+    "danger": {
+      "$type": "color",
+      "$value": "{colors.red.400}",
+      "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
+    },
+    "warning": {
+      "$type": "color",
+      "$value": "{colors.amber.500}",
+      "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
     }
   },
   "action": {
@@ -490,16 +520,6 @@
   },
   "feedback": {
     "success": {
-      "foreground": {
-        "$type": "color",
-        "$value": "{colors.green.200}",
-        "$description": "Primary text color for success content.\nCommon uses: success message text, completion text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.green.400}",
-        "$description": "Border color for success containers.\nCommon uses: success alert borders, confirmation boundaries."
-      },
       "intense": {
         "foreground": {
           "$type": "color",
@@ -611,16 +631,6 @@
       }
     },
     "danger": {
-      "foreground": {
-        "$type": "color",
-        "$value": "{colors.red.200}",
-        "$description": "Primary text color for error content.\nCommon uses: error message text, validation text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.red.400}",
-        "$description": "Border color for error containers.\nCommon uses: error alert borders, validation boundaries."
-      },
       "intense": {
         "background": {
           "$type": "color",
@@ -731,16 +741,6 @@
       }
     },
     "warning": {
-      "foreground": {
-        "$type": "color",
-        "$value": "{colors.amber.200}",
-        "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.amber.500}",
-        "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
-      },
       "intense": {
         "background": {
           "$type": "color",

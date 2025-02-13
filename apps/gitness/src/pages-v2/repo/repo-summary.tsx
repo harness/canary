@@ -29,6 +29,7 @@ import {
 } from '@harnessio/ui/views'
 import { SummaryItemType } from '@harnessio/views'
 
+import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useIsMFE } from '../../framework/hooks/useIsMFE'
@@ -42,7 +43,6 @@ import { sortFilesByType } from '../../utils/common-utils'
 import { decodeGitContent, getTrimmedSha, normalizeGitRef, REFS_TAGS_PREFIX } from '../../utils/git-utils'
 import { useRepoBranchesStore } from '././stores/repo-branches-store'
 import { transformBranchList } from './transform-utils/branch-transform'
-import { useAppContext } from '../../framework/context/AppContext'
 
 export default function RepoSummaryPage() {
   const routes = useRoutes()
@@ -131,7 +131,9 @@ export default function RepoSummaryPage() {
 
   const [MFETokenFlag, setMFETokenFlag] = useState(false)
   const [showTokenDialog, setShowTokenDialog] = useState(false)
-  const MFEtokenData = isMFE ? customHooks.useGenerateToken(generateAlphaNumericHash(5), currentUser?.uid, MFETokenFlag) : null
+  const MFEtokenData = isMFE
+    ? customHooks.useGenerateToken(generateAlphaNumericHash(5), currentUser?.uid, MFETokenFlag)
+    : null
   const [createdTokenData, setCreatedTokenData] = useState<(TokenFormType & { token: string }) | null>(null)
   const [successTokenDialog, setSuccessTokenDialog] = useState(false)
 

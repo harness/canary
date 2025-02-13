@@ -120,13 +120,15 @@ export const RepoWebhookExecutionDetailsPage: FC<RepoWebhookExecutionDeatilsPage
         </ListActions.Root>
 
         <Spacer size={6} />
-        <div className="flex gap-10">
+        <div className="flex gap-10 items-center">
           <div className="flex gap-1">
             <Text color="foreground-5">Triggered Event:</Text>
             <Text> {events.find(event => event.id === execution?.trigger_type)?.event || execution?.trigger_type}</Text>
           </div>
-          <div className="flex gap-1">
-            <Text color="foreground-5">At:</Text>
+          <div className="flex gap-1 items-center">
+            <Text color="foreground-5" className="flex items-center">
+              At:
+            </Text>
             <Text>{timeAgo(execution?.created)}</Text>
           </div>
           <div className="flex gap-1">

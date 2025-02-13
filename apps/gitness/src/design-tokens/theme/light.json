@@ -240,7 +240,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.base}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: hover text in outlined variant."
           },
           "background": {
@@ -262,7 +262,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.base}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
           },
           "background": {

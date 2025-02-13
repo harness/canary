@@ -219,7 +219,12 @@
           "foreground": {
             "$type": "color",
             "$value": "{foreground.base}",
-            "$description": "Text color for outlined variants.\nCommon uses: outlined button text, bordered control labels."
+            "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{foreground.base}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           }
         },
         "hover": {
@@ -231,7 +236,12 @@
           "foreground": {
             "$type": "color",
             "$value": "{foreground.highlight}",
-            "$description": "Text color during hover state.\nCommon uses: hover text in outlined variant."
+            "$description": "Text color for outlined / ghost variants during hover state.\nCommon uses: hover text in outlined variant."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{foreground.highlight}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: hover text in outlined variant."
           },
           "background": {
             "$type": "color",
@@ -248,7 +258,12 @@
           "foreground": {
             "$type": "color",
             "$value": "{foreground.highlight}",
-            "$description": "Text color during press state.\nCommon uses: active text in outlined variant."
+            "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{foreground.highlight}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
           },
           "background": {
             "$type": "color",
@@ -265,7 +280,12 @@
           "foreground": {
             "$type": "color",
             "$value": "{foreground.muted}",
-            "$description": "Text color when disabled.\nCommon uses: disabled text in outlined variant."
+            "$description": "Text color for outlined / ghost variants when disabled.\nCommon uses: disabled text in outlined variant."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{foreground.muted}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: disabled text in outlined variant."
           }
         }
       }

@@ -32,7 +32,7 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
-  toProfileKeys: () => string
+  navigateToProfileKeys: () => void
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -107,7 +107,7 @@ export function RepoSummaryView({
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
-  toProfileKeys,
+  navigateToProfileKeys,
   renderSidebarComponent,
   isRepoEmpty
 }: RepoSummaryViewProps) {
@@ -133,7 +133,7 @@ export function RepoSummaryView({
         projName={spaceId}
         gitRef={gitRef || selectedBranchTag?.name || ''}
         handleCreateToken={handleCreateToken}
-        toProfileKeys={toProfileKeys}
+        navigateToProfileKeys={navigateToProfileKeys}
       />
     )
   }

@@ -8,7 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface RoutingProps {
-  toManageToken?: () => string
+  navigateToManageToken?: () => void
 }
 interface CloneCredentialDialogProps extends Partial<RoutingProps> {
   open: boolean
@@ -31,7 +31,7 @@ export type TCloneCredentialsDialog = z.infer<typeof formSchema>
 export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
   open,
   onClose,
-  toManageToken,
+  navigateToManageToken,
   tokenData,
   useTranslationStore
 }) => {
@@ -89,8 +89,8 @@ export const CloneCredentialDialog: FC<CloneCredentialDialogProps> = ({
               <Button variant="outline" onClick={onClose}>
                 Close
               </Button>
-              <Button type="button">
-                <Link to={`${toManageToken?.()}`}>{t('views:repos.manageAPIToken')}</Link>
+              <Button type="button" onClick={() => navigateToManageToken?.()}>
+                {t('views:repos.manageAPIToken')}
               </Button>
             </>
           </ButtonGroup>

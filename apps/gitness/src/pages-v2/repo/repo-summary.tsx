@@ -68,7 +68,7 @@ export default function RepoSummaryPage() {
 
   const { currentUser } = useAppContext()
   const isMFE = useIsMFE()
-  const { customHooks } = useMFEContext()
+  const { customHooks, customUtils } = useMFEContext()
 
   const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -385,14 +385,14 @@ export default function RepoSummaryPage() {
         searchQuery={branchTagQuery}
         setSearchQuery={setBranchTagQuery}
         toRepoFiles={() => routes.toRepoFiles({ spaceId, repoId })}
-        toProfileKeys={() => routes.toProfileKeys()}
+        navigateToProfileKeys={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
         isRepoEmpty={repository?.is_empty}
       />
       {showTokenDialog && createdTokenData && (
         <CloneCredentialDialog
           open={successTokenDialog}
           onClose={() => setSuccessTokenDialog(false)}
-          toManageToken={() => routes.toProfileKeys({ spaceId, repoId })}
+          navigateToManageToken={() => (isMFE ? customUtils.navigateToUserProfile() : navigate(routes.toProfileKeys()))}
           tokenData={createdTokenData}
           useTranslationStore={useTranslationStore}
         />

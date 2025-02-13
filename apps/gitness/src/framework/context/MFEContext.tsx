@@ -17,9 +17,13 @@ interface IMFEContext {
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
+  customUtils: Partial<{
+    navigateToUserProfile: Unknown
+  }>
 }
 export const MFEContext = createContext<IMFEContext>({
   scope: {},
   renderUrl: '',
-  customHooks: {}
+  customHooks: {},
+  customUtils: {}
 })

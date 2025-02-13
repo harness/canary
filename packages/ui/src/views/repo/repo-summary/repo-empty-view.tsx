@@ -21,7 +21,7 @@ interface RepoEmptyViewProps {
   sshUrl: string
   gitRef: string
   handleCreateToken: () => void
-  toProfileKeys?: () => string
+  navigateToProfileKeys?: () => void
 }
 
 export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
@@ -31,7 +31,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   sshUrl,
   gitRef,
   handleCreateToken,
-  toProfileKeys
+  navigateToProfileKeys
 }) => {
   const getInitialCommitMarkdown = () => {
     return `
@@ -89,9 +89,12 @@ git push -u origin main
             </ButtonGroup>
             <p className="mt-2">
               You can also manage your git credential{' '}
-              <StyledLink to={toProfileKeys?.() ?? ''} relative="path">
+              <span
+                className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                onClick={() => navigateToProfileKeys?.()}
+              >
                 here
-              </StyledLink>
+              </span>
             </p>
           </ControlGroup>
 
@@ -107,9 +110,12 @@ git push -u origin main
             <MarkdownViewer source={getExistingRepoMarkdown()} />
             <p>
               You might need to{' '}
-              <StyledLink to={toProfileKeys?.() ?? ''} relative="path">
+              <span
+                className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
+                onClick={() => navigateToProfileKeys?.()}
+              >
                 create an API token
-              </StyledLink>{' '}
+              </span>
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

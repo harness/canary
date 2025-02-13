@@ -83,6 +83,9 @@ interface AppMFEProps {
   customHooks: Partial<{
     useGenerateToken: Unknown
   }>
+  customUtils: Partial<{
+    navigateToUserProfile: Unknown
+  }>
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -96,7 +99,8 @@ export default function AppMFE({
   useMFEThemeContext,
   parentLocationPath,
   onRouteChange,
-  customHooks
+  customHooks,
+  customUtils
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -153,7 +157,14 @@ export default function AppMFE({
             <ShadowRootLoader theme={theme} />
           ) : (
             <PortalProvider portalContainer={portalContainer}>
-              <MFEContext.Provider value={{ scope, renderUrl, customHooks }}>
+              <MFEContext.Provider
+                value={{
+                  scope,
+                  renderUrl,
+                  customHooks,
+                  customUtils
+                }}
+              >
                 <I18nextProvider i18n={i18n}>
                   <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
                     <QueryClientProvider client={queryClient}>

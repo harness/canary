@@ -25,6 +25,7 @@
 # $2 - the output file which should ultimately contain file names from the diff that affect a service
 #
 # See BT-10437 for more information
+# See BT-11220 for improvement
 #
 # Called by https://harness0.harness.io/ng/account/l7B_kbSEQD2wjrM7PShm5w/all/orgs/Audit/projects/Engops_Audit/pipelines/PRMergedGithub/pipeline-studio/?storeType=INLINE
 # Unlike other scripts for detecting changes, this one doesn't receive a git diff, rather a unique list of files changed by the git update.
@@ -52,6 +53,13 @@ if [ ! -f "$sourceDiffNames" ]; then
   exit 4
 fi
 
+##### Detect git diff file, or processed filenames only
+isDiffFile=$(grep -E "^diff --git a\/" "$uniqueFileNamesFile" | wc -l)
+if [ $isDiffFile -gt 0 ]; then
+  echo "Received a diff file... fix it to be a filenames only file"
+  fileNamesOnlyVar=$(cat "$uniqueFileNamesFile"|grep -E "^diff --git" | sed 's/diff --git a\///' | sed 's/ b\/.*$//' | sort -u)
+  echo -e "$fileNamesOnlyVar">"$uniqueFileNamesFile"
+fi
 
 # Java files (and other files) which end up in jars - these are kept in .../src/main/x/x/x/* 
 cat "$uniqueFileNamesFile" | grep -E ".*.java$" | grep -v "/test/" > $sourceDiffNames

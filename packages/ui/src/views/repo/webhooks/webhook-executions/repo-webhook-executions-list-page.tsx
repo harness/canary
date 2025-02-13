@@ -77,7 +77,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                     <TableCell className="content-center">
                       <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
                     </TableCell>
-                    <TableCell>
+                    <TableCell className="content-center">
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
                     </TableCell>
                     <TableCell className="content-center">
@@ -100,10 +100,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                             : 'Invalid'}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right relative">
-                      {/* Add relative positioning */}
-                      {timeAgo(execution.created ?? Date.now())}
-                    </TableCell>
+                    <TableCell className="text-right relative">{timeAgo(execution.created ?? Date.now())}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

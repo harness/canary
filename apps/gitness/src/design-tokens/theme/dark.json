@@ -1480,19 +1480,19 @@
     },
     "gradient-stop-1": {
       "$type": "color",
-      "$value": "#ffeabe"
+      "$value": "{colors.yellow.100}"
     },
     "gradient-stop-2": {
       "$type": "color",
-      "$value": "#ffd1f2"
+      "$value": "{colors.pink.150}"
     },
     "gradient-stop-3": {
       "$type": "color",
-      "$value": "#bf82ff"
+      "$value": "{colors.purple.300}"
     },
     "gradient-stop-4": {
       "$type": "color",
-      "$value": "#76caf0"
+      "$value": "{colors.cyan.200}"
     }
   }
 }

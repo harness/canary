@@ -170,7 +170,7 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
               description: (
                 <>
                   {isSourceBranchDeleted ? (
-                    <span className=" flex items-center gap-x-1 text-14 text-foreground-4">
+                    <span className="flex items-center gap-x-1 text-14 text-foreground-4">
                       deleted the
                       <PullRequestBranchBadge
                         branchName={pullReqMetadata?.source_branch as string}
@@ -179,14 +179,14 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
                       branch
                     </span>
                   ) : (
-                    <Text className=" flex items-center gap-x-1 text-14 text-foreground-4">
+                    <span className="flex items-center gap-x-1 text-14 text-foreground-4">
                       restored the
                       <PullRequestBranchBadge
                         branchName={pullReqMetadata?.source_branch as string}
                         onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
                       />
                       branch
-                    </Text>
+                    </span>
                   )}
                 </>
               )

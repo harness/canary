@@ -223,7 +223,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.base}",
+            "$value": "{foreground.secondary}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           }
         },

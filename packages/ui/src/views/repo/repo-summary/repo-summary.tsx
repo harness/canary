@@ -80,6 +80,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   searchQuery: string
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
+  isRepoEmpty?: boolean
 }
 
 export function RepoSummaryView({
@@ -107,7 +108,8 @@ export function RepoSummaryView({
   toRepoFiles,
   toCommitDetails,
   toProfileKeys,
-  renderSidebarComponent
+  renderSidebarComponent,
+  isRepoEmpty
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -122,7 +124,7 @@ export function RepoSummaryView({
     )
   }
 
-  if (!repoEntryPathToFileTypeMap.size) {
+  if (isRepoEmpty) {
     return (
       <RepoEmptyView
         sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}

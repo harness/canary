@@ -854,7 +854,7 @@
       "intense": {
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.500}",
+          "$value": "{colors.chrome.400}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         },
         "foreground": {

@@ -18,6 +18,7 @@ import {
   EnumCheckStatus,
   extractInfoFromRuleViolationArr,
   MergeCheckStatus,
+  PRPanelData,
   PullRequestAction,
   PullRequestChangesSectionProps,
   PullRequestFilterOption,
@@ -28,7 +29,6 @@ import { cn } from '@utils/cn'
 import { timeAgo } from '@utils/utils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
-import { PRPanelData } from '../../../../../../../dist/views'
 import { PullRequestRoutingProps } from '../../pull-request-details-types'
 import PullRequestChangesSection from './sections/pull-request-changes-section'
 import PullRequestCheckSection from './sections/pull-request-checks-section'
@@ -57,8 +57,8 @@ export interface PullRequestPanelProps
   commitSuggestionsBatchCount: number
   onCommitSuggestions: () => void
   prPanelData: PRPanelData
-    spaceId?: string
-    repoId?: string
+  spaceId?: string
+  repoId?: string
 }
 
 interface HeaderProps {
@@ -397,66 +397,66 @@ const PullRequestPanel = ({
         )}
       </StackedList.Item>
       <StackedList.Item disableHover className="cursor-default py-0 hover:bg-transparent">
-          {!isClosed ? (
-                <Accordion.Root type="multiple" className="w-full">
-                  {!pullReqMetadata?.merged && (
-                    <PullRequestChangesSection
-                      changesInfo={changesInfo}
-                      minApproval={prPanelData.minApproval}
-                      minReqLatestApproval={prPanelData.minReqLatestApproval}
-                      approvedEvaluations={approvedEvaluations}
-                      changeReqEvaluations={changeReqEvaluations}
-                      codeOwners={codeOwners}
-                      latestApprovalArr={latestApprovalArr}
-                      reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
-                      changeReqReviewer={changeReqReviewer}
-                      codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
-                      reqCodeOwnerApproval={prPanelData.reqCodeOwnerApproval}
-                      reqCodeOwnerLatestApproval={prPanelData.reqCodeOwnerLatestApproval}
-                      codeOwnerPendingEntries={codeOwnerPendingEntries}
-                      codeOwnerApprovalEntries={codeOwnerApprovalEntries}
-                      latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
-                    />
-                  )}
-                  {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) && !pullReqMetadata?.merged && (
-                    <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />
-                  )}
-                  <PullRequestCheckSection checkData={checkData} checksInfo={checksInfo} {...routingProps} />
+        {!isClosed ? (
+          <Accordion.Root type="multiple" className="w-full">
+            {!pullReqMetadata?.merged && (
+              <PullRequestChangesSection
+                changesInfo={changesInfo}
+                minApproval={prPanelData.minApproval}
+                minReqLatestApproval={prPanelData.minReqLatestApproval}
+                approvedEvaluations={approvedEvaluations}
+                changeReqEvaluations={changeReqEvaluations}
+                codeOwners={codeOwners}
+                latestApprovalArr={latestApprovalArr}
+                reqNoChangeReq={prPanelData.atLeastOneReviewerRule}
+                changeReqReviewer={changeReqReviewer}
+                codeOwnerChangeReqEntries={codeOwnerChangeReqEntries}
+                reqCodeOwnerApproval={prPanelData.reqCodeOwnerApproval}
+                reqCodeOwnerLatestApproval={prPanelData.reqCodeOwnerLatestApproval}
+                codeOwnerPendingEntries={codeOwnerPendingEntries}
+                codeOwnerApprovalEntries={codeOwnerApprovalEntries}
+                latestCodeOwnerApprovalArr={latestCodeOwnerApprovalArr}
+              />
+            )}
+            {(!!prPanelData?.resolvedCommentArr || prPanelData.requiresCommentApproval) && !pullReqMetadata?.merged && (
+              <PullRequestCommentSection commentsInfo={prPanelData.commentsInfoData} />
+            )}
+            <PullRequestCheckSection checkData={checkData} checksInfo={checksInfo} {...routingProps} />
 
-                    {!pullReqMetadata?.merged && (
-                        <PullRequestMergeSection
-                            unchecked={unchecked}
-                            mergeable={mergeable}
-                            pullReqMetadata={pullReqMetadata}
-                            conflictingFiles={prPanelData.conflictingFiles}
-                        />
-                    )}
-                </Accordion.Root>
-          ) : (
-              <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
-                  <Layout.Horizontal className="flex w-full">
-                      <Badge variant="tertiary" size="md" borderRadius="base">
-                          <Link
-                              className="flex items-center gap-x-1.5"
-                              to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
-                          >
-                              <Icon name="branch" size={12} className="text-icons-9" />
-                              {pullReqMetadata?.source_branch}
-                          </Link>
-                      </Badge>{' '}
-                      <span className="text-14 text-foreground-1"> branch has unmerged changes.</span>
-                  </Layout.Horizontal>
-                  {showDeleteBranchButton ? (
-                      <Button theme="primary" size="sm" onClick={onDeleteBranch}>
-                          Delete Branch
-                      </Button>
-                  ) : showRestoreBranchButton ? (
-                      <Button theme="primary" size="sm" onClick={onRestoreBranch}>
-                          Restore Branch
-                      </Button>
-                  ) : null}
-              </Layout.Horizontal>
-          )}
+            {!pullReqMetadata?.merged && (
+              <PullRequestMergeSection
+                unchecked={unchecked}
+                mergeable={mergeable}
+                pullReqMetadata={pullReqMetadata}
+                conflictingFiles={prPanelData.conflictingFiles}
+              />
+            )}
+          </Accordion.Root>
+        ) : (
+          <Layout.Horizontal gap="space-x-2" className="flex w-full items-center justify-between py-4">
+            <Layout.Horizontal className="flex w-full">
+              <Badge variant="tertiary" size="md" borderRadius="base">
+                <Link
+                  className="flex items-center gap-x-1.5"
+                  to={`${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/code/${pullReqMetadata?.source_branch}`}
+                >
+                  <Icon name="branch" size={12} className="text-icons-9" />
+                  {pullReqMetadata?.source_branch}
+                </Link>
+              </Badge>{' '}
+              <span className="text-14 text-foreground-1"> branch has unmerged changes.</span>
+            </Layout.Horizontal>
+            {showDeleteBranchButton ? (
+              <Button theme="primary" size="sm" onClick={onDeleteBranch}>
+                Delete Branch
+              </Button>
+            ) : showRestoreBranchButton ? (
+              <Button theme="primary" size="sm" onClick={onRestoreBranch}>
+                Restore Branch
+              </Button>
+            ) : null}
+          </Layout.Horizontal>
+        )}
       </StackedList.Item>
     </StackedList.Root>
   )

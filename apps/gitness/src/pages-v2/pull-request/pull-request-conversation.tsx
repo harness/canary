@@ -560,7 +560,9 @@ export default function PullRequestConversationPage() {
           headerMsg: errorMsg,
           commitSuggestionsBatchCount: suggestionsBatch?.length,
           onCommitSuggestions: onCommitSuggestionsBatch,
-          toPRCheck: ({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId })
+          toPRCheck: ({ pipelineId, executionId }) => routes.toExecution({ spaceId, repoId, pipelineId, executionId }),
+          spaceId,
+          repoId
         }}
         overviewProps={{
           toCommitDetails: ({ sha }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
@@ -584,7 +586,7 @@ export default function PullRequestConversationPage() {
           removeSuggestionFromBatch,
           filenameToLanguage,
           handleUpload,
-            toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
+          toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
         }}
         commentBoxProps={{
           comment,

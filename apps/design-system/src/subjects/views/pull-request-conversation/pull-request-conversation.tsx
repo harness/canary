@@ -123,7 +123,9 @@ const PullRequestConversation: FC<PullRequestConversationProps> = ({ state }) =>
           headerMsg: errorMsg,
           commitSuggestionsBatchCount: suggestionsBatch?.length,
           onCommitSuggestions: noop,
-          toPRCheck: _ => ''
+          toPRCheck: _ => '',
+          spaceId: '',
+          repoId: ''
         }}
         overviewProps={{
           toCommitDetails: _ => '',

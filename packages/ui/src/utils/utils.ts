@@ -95,8 +95,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
       hour12: false
     }).format(date)
 
-    // return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
-    return <TimeAgoHoverCard formattedDate={formattedDate} timeStamp={timestamp} />
+    return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
   }
 
   try {
@@ -104,8 +103,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
       addSuffix: true,
       includeSeconds: true
     })
-    // return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
-    return <TimeAgoHoverCard formattedDate={formattedDate} timeStamp={timestamp} />
+    return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
   } catch (error) {
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'

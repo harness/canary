@@ -602,6 +602,7 @@ export default function PullRequestConversationPage() {
               toCommitDetails={({ sha }: { sha: string }) =>
                 routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha })
               }
+              toCode={({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`}
               handleUpdateDescription={handleUpdateDescription}
               handleDeleteComment={deleteComment}
               handleUpdateComment={updateComment}

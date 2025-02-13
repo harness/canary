@@ -56,6 +56,7 @@ interface PullRequestOverviewProps extends RoutingProps {
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
+  toCode?: ({ sha }: { sha: string }) => string
 }
 export const activityToCommentItem = (activity: TypesPullReqActivity): CommentItem<TypesPullReqActivity> => ({
   id: activity.id || 0,
@@ -88,7 +89,8 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
   filenameToLanguage,
   toggleConversationStatus,
   handleUpdateDescription,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
   const { t } = useTranslationStore()
   const {
@@ -214,6 +216,7 @@ const PullRequestOverview: React.FC<PullRequestOverviewProps> = ({
                   commentItems={commentItems}
                   isLast={activityBlocks.length - 1 === index}
                   pullReqMetadata={pullReqMetadata}
+                  toCode={toCode}
                 />
               )
             } else {

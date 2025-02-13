@@ -1,4 +1,6 @@
-import { Avatar, AvatarFallback, Button, CommitCopyActions, Icon, Layout, Text } from '@components/index'
+import { useNavigate } from 'react-router-dom'
+
+import { Avatar, AvatarFallback, CommitCopyActions, Icon, Layout, Text } from '@components/index'
 import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -9,6 +11,7 @@ import {
   PayloadAuthor,
   TypesPullReqActivity
 } from '../../pull-request-details-types'
+import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestSystemLabelItem from './pull-request-system-label-item'
 import PullRequestSystemMergeItem from './pull-request-system-merge'
 import PullRequestSystemReviewerAddItem from './pull-request-system-reviewer-add'
@@ -22,13 +25,17 @@ interface SystemCommentProps extends TypesPullReq {
   isLast: boolean
   pullReqMetadata: TypesPullReq | undefined
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  toCode?: ({ sha }: { sha: string }) => string
 }
 const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
   commentItems,
   isLast,
   pullReqMetadata,
-  toCommitDetails
+  toCommitDetails,
+  toCode
 }) => {
+  const navigate = useNavigate()
+
   const payload = commentItems[0].payload
   const type = payload?.payload?.type
   const openFromDraft =
@@ -38,6 +45,9 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
     (payload?.payload?.payload as GeneralPayload)?.old_draft === false &&
     (payload?.payload?.payload as GeneralPayload)?.new_draft === true
 
+  const handleNavigation = (url?: string) => {
+    navigate(url || '')
+  }
   const getIcon = () => {
     if (openFromDraft || changedToDraft) {
       return changedToDraft ? <Icon name="pr-draft" size={12} /> : <Icon name="pr-review" size={12} />
@@ -55,7 +65,14 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
   switch (type) {
     case CommentType.MERGE:
       return (
-        <PullRequestSystemMergeItem payload={payload} isLast={isLast} avatarUrl="" pullReqMetadata={pullReqMetadata} />
+        <PullRequestSystemMergeItem
+          toCommitDetails={toCommitDetails}
+          toCode={toCode}
+          payload={payload}
+          isLast={isLast}
+          avatarUrl=""
+          pullReqMetadata={pullReqMetadata}
+        />
       )
     case CommentType.REVIEW_SUBMIT:
       return (
@@ -153,19 +170,21 @@ const PullRequestSystemComments: React.FC<SystemCommentProps> = ({
               description: (
                 <>
                   {isSourceBranchDeleted ? (
-                    <Text color="tertiaryBackground">
+                    <span className=" flex items-center gap-x-1 text-14 text-foreground-4">
                       deleted the
-                      <Button className="mx-1" variant="secondary" size="xs">
-                        {pullReqMetadata?.source_branch}
-                      </Button>
+                      <PullRequestBranchBadge
+                        branchName={pullReqMetadata?.source_branch as string}
+                        onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
+                      />
                       branch
-                    </Text>
+                    </span>
                   ) : (
-                    <Text color="tertiaryBackground">
+                    <Text className=" flex items-center gap-x-1 text-14 text-foreground-4">
                       restored the
-                      <Button className="mx-1" variant="secondary" size="xs">
-                        {pullReqMetadata?.source_branch}
-                      </Button>
+                      <PullRequestBranchBadge
+                        branchName={pullReqMetadata?.source_branch as string}
+                        onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
+                      />
                       branch
                     </Text>
                   )}

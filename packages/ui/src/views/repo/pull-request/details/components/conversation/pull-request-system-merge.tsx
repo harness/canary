@@ -1,8 +1,11 @@
-import { Avatar, AvatarFallback, Button, Icon, Text } from '@components/index'
+import { useNavigate } from 'react-router-dom'
+
+import { Avatar, AvatarFallback, CommitCopyActions, Icon, Text } from '@components/index'
 import { getInitials } from '@utils/stringUtils'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
 import { GeneralPayload, MergeStrategy, PayloadAuthor, TypesPullReqActivity } from '../../pull-request-details-types'
+import PullRequestBranchBadge from './pull-request-branch-badge'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
 interface PullRequestSystemMergeItemProps {
@@ -10,12 +13,20 @@ interface PullRequestSystemMergeItemProps {
   isLast: boolean
   avatarUrl: string
   pullReqMetadata: TypesPullReq | undefined
+  toCode?: ({ sha }: { sha: string }) => string
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
   payload,
   isLast,
-  pullReqMetadata
+  pullReqMetadata,
+  toCode,
+  toCommitDetails
 }) => {
+  const navigate = useNavigate()
+  const handleNavigation = (url?: string) => {
+    navigate(url || '')
+  }
   return (
     <PullRequestTimelineItem
       key={payload?.id} // Consider using a unique ID if available
@@ -35,32 +46,41 @@ const PullRequestSystemMergeItem: React.FC<PullRequestSystemMergeItemProps> = ({
           description: (
             <>
               {(payload?.payload?.payload as GeneralPayload)?.merge_method === MergeStrategy.REBASE ? (
-                <Text color="tertiaryBackground">
+                <span className=" flex items-center gap-x-1 text-14 text-foreground-4">
                   rebased changes from branch
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {pullReqMetadata?.source_branch}
-                  </Button>
-                  onto
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {pullReqMetadata?.target_branch}
-                  </Button>
-                  , now at {(payload?.payload?.payload as GeneralPayload)?.merge_sha as string}
-                </Text>
-              ) : (
-                <Text color="tertiaryBackground">
-                  merged changes from
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {pullReqMetadata?.source_branch}
-                  </Button>
+                  <PullRequestBranchBadge
+                    branchName={pullReqMetadata?.source_branch as string}
+                    onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
+                  />
                   into
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {pullReqMetadata?.target_branch}
-                  </Button>
+                  <PullRequestBranchBadge
+                    branchName={pullReqMetadata?.target_branch as string}
+                    onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.target_branch as string }))}
+                  />
+                  , now at{' '}
+                  <CommitCopyActions
+                    toCommitDetails={toCommitDetails}
+                    sha={(payload?.payload?.payload as GeneralPayload)?.merge_sha as string}
+                  />
+                </span>
+              ) : (
+                <span className=" flex items-center gap-x-1 text-14 text-foreground-4">
+                  merged changes from
+                  <PullRequestBranchBadge
+                    branchName={pullReqMetadata?.source_branch as string}
+                    onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.source_branch as string }))}
+                  />
+                  into
+                  <PullRequestBranchBadge
+                    branchName={pullReqMetadata?.target_branch as string}
+                    onClick={() => handleNavigation(toCode?.({ sha: pullReqMetadata?.target_branch as string }))}
+                  />
                   by commit
-                  <Button className="mx-1" variant="secondary" size="xs">
-                    {((payload?.payload?.payload as GeneralPayload)?.merge_sha as string)?.substring(0, 6)}
-                  </Button>
-                </Text>
+                  <CommitCopyActions
+                    toCommitDetails={toCommitDetails}
+                    sha={(payload?.payload?.payload as GeneralPayload)?.merge_sha as string}
+                  />
+                </span>
               )}
             </>
           )

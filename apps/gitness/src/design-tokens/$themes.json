@@ -1045,6 +1045,7 @@
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
       "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
+      "components.link.visited": "cbf370c4e67a3cb91e5024c280058390f0fbb47b",
       "components.label.red.foreground": "7896bb063131b4fc9531474cfb9079601e91d296",
       "components.label.red.background": "f6e949124c9bcdad7b62af427bd17384f6d4513a",
       "components.label.red.background-subtle": "1b25e8c6e712be65a08bb83365a861306491f8c1",
@@ -1087,8 +1088,7 @@
       "ai.gradient-stop-1": "028cdd696b3f2d9a9c607591d812017b7435808d",
       "ai.gradient-stop-2": "a1cba63d09bd02ad65ae4f7c5dd6f3bc9df7ec7c",
       "ai.gradient-step-3": "24da4e37a4f1390e5adbb81fe97f12676c883c75",
-      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9",
-      "components.link.visited": "d672eda18310274d83d0ad63ff7becf90f3d8cb2"
+      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -1573,6 +1573,7 @@
       "shadow.color.inner": "afe6e266739ebd43080f3bd8e37100f7add2dc2e",
       "components.link.default": "fe134f1b1038fd276d8a22e40251c2d9062bf7a3",
       "components.link.hover": "5883ecdc464309fe47076b3af61f9df8e6c68882",
+      "components.link.visited": "cbf370c4e67a3cb91e5024c280058390f0fbb47b",
       "components.label.red.foreground": "7896bb063131b4fc9531474cfb9079601e91d296",
       "components.label.red.background": "f6e949124c9bcdad7b62af427bd17384f6d4513a",
       "components.label.red.background-subtle": "1b25e8c6e712be65a08bb83365a861306491f8c1",
@@ -1615,8 +1616,7 @@
       "ai.gradient-stop-1": "028cdd696b3f2d9a9c607591d812017b7435808d",
       "ai.gradient-stop-2": "a1cba63d09bd02ad65ae4f7c5dd6f3bc9df7ec7c",
       "ai.gradient-step-3": "24da4e37a4f1390e5adbb81fe97f12676c883c75",
-      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9",
-      "components.link.vidited": "07199b78428d8fa943271456ed5802e7dae58f7f"
+      "ai.gradient-step-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9"
     }
   }
 ]

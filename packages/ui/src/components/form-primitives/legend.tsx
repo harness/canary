@@ -1,4 +1,6 @@
-import { ReactNode } from 'react'
+import { PropsWithChildren, ReactNode } from 'react'
+
+import { cn } from '@utils/cn'
 
 interface LegendProps {
   title: ReactNode
@@ -14,16 +16,19 @@ interface LegendProps {
  *   title="Personal Information"
  *   description="Please fill in your details below"
  * />
+ *
+ * <Legend title="Some Title" description="Some Description">
+ *   <Button>Some Button</Button>
+ * </Legend>
  */
-export function Legend({ title, description, className }: LegendProps) {
+export function Legend({ title, description, className, children }: PropsWithChildren<LegendProps>) {
   return (
-    <div className={className}>
-      <p className="text-18 font-medium text-foreground-1">{title}</p>
-      {description && (
-        <p className="mt-2 text-14" id="fieldset-description">
-          {description}
-        </p>
-      )}
-    </div>
+    <section className={cn('grid gap-y-2.5', className)}>
+      <h6 className="text-18 font-medium leading-tight text-foreground-1">{title}</h6>
+
+      {description && <p className="text-sm text-foreground-2">{description}</p>}
+
+      {children}
+    </section>
   )
 }

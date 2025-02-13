@@ -240,6 +240,22 @@
   },
   "projectSettings": {
     "newLabels": "Create label",
+    "general": {
+      "mainTitle": "",
+      "projectNamePlaceholder": "",
+      "projectNameLabel": "",
+      "projectDescriptionPlaceholder": "",
+      "projectDescriptionLabel": "",
+      "formSubmitButton": {
+        "savingState": "",
+        "defaultState": "",
+        "savedState": ""
+      },
+      "formCancelButton": "Cancel",
+      "deleteProjectTitle": "",
+      "deleteProjectDescription": "",
+      "deleteProjectButton": ""
+    },
     "newMember": "",
     "member": "",
     "role": "",
@@ -251,7 +267,12 @@
     },
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
-    "members": ""
+    "members": "",
+    "tabs": {
+      "general": "General",
+      "members": "Members",
+      "labels": "Labels"
+    }
   },
   "landingPage": {
     "selectProject": "Select a project to get started",

@@ -1,9 +1,15 @@
+import { FC } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Tabs, TabsList, TabsTrigger } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 
-function ProjectSettingsPage() {
+export interface ProjectSettingsTabNavProps {
+  useTranslationStore: () => TranslationStore
+}
+
+export const ProjectSettingsPage: FC<ProjectSettingsTabNavProps> = ({ useTranslationStore }) => {
+  const { t } = useTranslationStore()
   const location = useLocation()
   const activeTab = location.pathname.split('/').pop() || 'general'
 
@@ -13,13 +19,13 @@ function ProjectSettingsPage() {
         <Tabs variant="navigation" value={activeTab}>
           <TabsList>
             <NavLink to={`general`}>
-              <TabsTrigger value="general">General</TabsTrigger>
+              <TabsTrigger value="general">{t('views:projectSettings.tabs.general', 'General')}</TabsTrigger>
             </NavLink>
             <NavLink to={`members`}>
-              <TabsTrigger value="members">Members</TabsTrigger>
+              <TabsTrigger value="members">{t('views:projectSettings.tabs.members', 'Members')}</TabsTrigger>
             </NavLink>
             <NavLink to={`labels`}>
-              <TabsTrigger value="labels">Labels</TabsTrigger>
+              <TabsTrigger value="labels">{t('views:projectSettings.tabs.labels', 'Labels')}</TabsTrigger>
             </NavLink>
           </TabsList>
         </Tabs>
@@ -27,5 +33,3 @@ function ProjectSettingsPage() {
     </>
   )
 }
-
-export { ProjectSettingsPage }

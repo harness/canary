@@ -240,6 +240,22 @@
   },
   "projectSettings": {
     "newLabels": "Create label",
+    "general": {
+      "mainTitle": "General settings",
+      "projectNamePlaceholder": "Enter project name",
+      "projectNameLabel": "Project name",
+      "projectDescriptionPlaceholder": "Enter description (optional)",
+      "projectDescriptionLabel": "Description",
+      "formSubmitButton": {
+        "savingState": "Saving...",
+        "defaultState": "Save changes",
+        "savedState": "Saved"
+      },
+      "formCancelButton": "Cancel",
+      "deleteProjectTitle": "Delete project",
+      "deleteProjectDescription": "This will permanently delete this project, and everything contained in it. All repositories in it will also be deleted.",
+      "deleteProjectButton": "Delete project"
+    },
     "newMember": "New member",
     "member": "Member",
     "role": "Role",
@@ -251,7 +267,12 @@
     },
     "removeMember": "Remove member",
     "inviteNewMember": "Invite new member",
-    "members": "Members"
+    "members": "Members",
+    "tabs": {
+      "general": "General",
+      "members": "Members",
+      "labels": "Labels"
+    }
   },
   "landingPage": {
     "selectProject": "Select a project to get started",

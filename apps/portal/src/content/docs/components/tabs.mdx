@@ -1,0 +1,237 @@
+---
+title: Tabs
+description: Tabs component documentation
+---
+
+The Tabs component provides a UI element for creating tabbed navigation interfaces. It includes various styles and sizes.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+  <div className="mb-8">
+    <h4 className="mb-4">Default Variant</h3>
+    <Tabs defaultValue="tab1">
+      <TabsList variant="default">
+        <TabsTrigger variant="default" value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger variant="default" value="tab2">Tab 2</TabsTrigger>
+      </TabsList>
+      <TabsContent className="mt-4" value="tab1">Content for Tab 1</TabsContent>
+      <TabsContent className="mt-4" value="tab2">Content for Tab 2</TabsContent>
+    </Tabs>
+  </div>
+  <div className="mb-8">
+    <h4 className="mb-4">Underline Variant</h3>
+    <Separator />
+    <Tabs defaultValue="tab1">
+      <TabsList variant="underline">
+        <TabsTrigger variant="underline" value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger variant="underline" value="tab2">Tab 2</TabsTrigger>
+      </TabsList>
+      <TabsContent className="mt-4" value="tab1">Content for Tab 1</TabsContent>
+      <TabsContent className="mt-4" value="tab2">Content for Tab 2</TabsContent>
+    </Tabs>
+  </div>
+  <div className="mb-8">
+    <h4 className="mb-4">Navigation Variant</h3>
+    <Separator />
+    <Tabs defaultValue="tab1">
+      <TabsList variant="navigation">
+        <TabsTrigger variant="navigation" value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger variant="navigation" value="tab2">Tab 2</TabsTrigger>
+      </TabsList>
+      <TabsContent className="mt-4" value="tab1">Content for Tab 1</TabsContent>
+      <TabsContent className="mt-4" value="tab2">Content for Tab 2</TabsContent>
+    </Tabs>
+  </div>
+  <div className="mb-8">
+    <h4 className="mb-4">Tabnav Variant</h3>
+    <Tabs defaultValue="tab1">
+      <TabsList variant="tabnav">
+        <TabsTrigger variant="tabnav" value="tab1">Tab 1</TabsTrigger>
+        <TabsTrigger variant="tabnav" value="tab2">Tab 2</TabsTrigger>
+      </TabsList>
+      <TabsContent className="mt-4" value="tab1">Content for Tab 1</TabsContent>
+      <TabsContent className="mt-4" value="tab2">Content for Tab 2</TabsContent>
+    </Tabs>
+  </div>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@harnessio/ui/components'
+
+return (
+  <Tabs defaultValue="tab1">
+    <TabsList variant="default">
+      <TabsTrigger variant="default" value="tab1">Tab 1</TabsTrigger>
+      <TabsTrigger variant="default" value="tab2">Tab 2</TabsTrigger>
+    </TabsList>
+    <TabsContent value="tab1">Content for Tab 1</TabsContent>
+    <TabsContent value="tab2">Content for Tab 2</TabsContent>
+  </Tabs>
+)
+```
+
+## Anatomy
+
+The Tabs component can be used to create tabbed navigation interfaces with various styles and sizes.
+
+```typescript jsx
+<Tabs defaultValue="tab1">
+  <TabsList variant="default">
+    <TabsTrigger variant="default" value="tab1">Tab 1</TabsTrigger>
+    <TabsTrigger variant="default" value="tab2">Tab 2</TabsTrigger>
+  </TabsList>
+  <TabsContent value="tab1">Content for Tab 1</TabsContent>
+  <TabsContent value="tab2">Content for Tab 2</TabsContent>
+</Tabs>
+```
+
+## API Reference
+
+### Tabs
+
+The `Tabs` component serves as the main container for the tabs element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "defaultValue",
+      description: "The default value of the tabs",
+      required: false,
+      type: "string",
+    },
+    {
+      name: "value",
+      description: "The current value of the tabs",
+      required: false,
+      type: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Handler for value change",
+      required: false,
+      type: "(value: string) => void",
+    },
+    {
+      name: "variant",
+      description: "The variant of the tabs",
+      required: false,
+      type: "'default' | 'underline' | 'navigation' | 'tabnav'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the tabs",
+      required: false,
+      type: "string",
+    },
+  ]}
+/>
+
+### TabsList
+
+The `TabsList` component is used to display the list of tab triggers.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the list",
+      required: true,
+      type: "ReactNode",
+    },
+    {
+      name: "variant",
+      description: "The variant of the tabs list",
+      required: false,
+      type: "'default' | 'underline' | 'navigation' | 'tabnav'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "fontSize",
+      description: "The font size of the tabs list",
+      required: false,
+      type: "'xs' | 'sm'",
+      defaultValue: "'sm'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the tabs list",
+      required: false,
+      type: "string",
+    },
+  ]}
+/>
+
+### TabsTrigger
+
+The `TabsTrigger` component is used to display an individual tab trigger.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the tab trigger",
+      required: true,
+      type: "ReactNode",
+    },
+    {
+      name: "value",
+      description: "The value of the tab trigger",
+      required: true,
+      type: "string",
+    },
+    {
+      name: "variant",
+      description: "The variant of the tab trigger",
+      required: false,
+      type: "'default' | 'underline' | 'navigation' | 'tabnav'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the tab trigger",
+      required: false,
+      type: "string",
+    },
+  ]}
+/>
+
+### TabsContent
+
+The `TabsContent` component is used to display the content of a tab.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the tab",
+      required: true,
+      type: "ReactNode",
+    },
+    {
+      name: "value",
+      description: "The value of the tab content",
+      required: true,
+      type: "string",
+    },
+    {
+      name: "variant",
+      description: "The variant of the tab content",
+      required: false,
+      type: "'default' | 'underline' | 'navigation' | 'tabnav'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the tab content",
+      required: false,
+      type: "string",
+    },
+  ]}
+/>

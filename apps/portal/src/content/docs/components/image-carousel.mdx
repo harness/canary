@@ -1,0 +1,80 @@
+---
+title: Image Carousel
+description: Image Carousel component documentation
+---
+
+The Image Carousel component provides a UI element for displaying a series of images in a carousel format. It includes zoom in and zoom out functionalities.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+  const [isOpen, setIsOpen] = React.useState(false);
+  return <>
+    <ImageCarousel 
+      isOpen={isOpen} 
+      setIsOpen={(value) => setIsOpen(value)} 
+      imgEvent={['https://picsum.photos/1240/800', 'https://picsum.photos/seed/picsum/1240/800']} 
+      title="Image Carousel" 
+      initialSlide={1} 
+    />
+
+    <Button onClick={() => setIsOpen(true)}>Open Image Carousel</Button>
+
+</>}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ImageCarousel } from '@harnessio/ui/components'
+
+return (
+  <ImageCarousel
+    isOpen={true}
+    setIsOpen={(value) => console.log('Set isOpen:', value)}
+    imgEvent={['/path/to/image1.jpg', '/path/to/image2.jpg']}
+    title="Image Carousel"
+    initialSlide={0}
+  />
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "isOpen",
+      description: "Whether the carousel is open",
+      required: true,
+      value: "boolean",
+    },
+    {
+      name: "setIsOpen",
+      description: "Function to set the open state of the carousel",
+      required: true,
+      value: "(value: boolean) => void",
+    },
+    {
+      name: "imgEvent",
+      description: "Array of image URLs to display in the carousel",
+      required: true,
+      value: "string[]",
+    },
+    {
+      name: "title",
+      description: "Title of the carousel",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "initialSlide",
+      description: "Index of the initial slide to display",
+      required: false,
+      value: "number",
+      defaultValue: "0",
+    },
+  ]}
+/>

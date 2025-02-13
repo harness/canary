@@ -1,0 +1,92 @@
+---
+title: Branch Chooser
+description: Branch Chooser component documentation
+---
+
+The Branch Chooser component provides a UI element for selecting a branch from a list of branches. It includes a dropdown menu for branch selection.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<BranchSelector 
+  name="mains" 
+  branchList={[{ name: 'main' }, { name: 'develop' }]} 
+  selectBranch={(branch) => console.log('Selected branch:', branch)} 
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { BranchSelector } from '@harnessio/ui/components'
+
+return (
+  <BranchSelector
+    name="main"
+    branchList={[{ name: 'main' }, { name: 'develop' }]}
+    selectBranch={(branch) => console.log('Selected branch:', branch)}
+  />
+)
+```
+
+## Anatomy
+
+The Branch Chooser component can be used to select a branch from a list of branches with a dropdown menu.
+
+```typescript jsx
+<BranchSelector
+  name="main"
+  branchList={[{ name: 'main' }, { name: 'develop' }]}
+  selectBranch={(branch) => console.log('Selected branch:', branch)}
+/>
+```
+
+## API Reference
+
+### BranchSelector
+
+The `BranchSelector` component serves as the main container for the branch chooser element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "The name of the selected branch",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "branchList",
+      description: "The list of branches to choose from",
+      required: false,
+      value: "BranchListProps[]",
+    },
+    {
+      name: "size",
+      description: "The size of the branch chooser",
+      required: false,
+      value: "'default' | 'sm'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "width",
+      description: "The width of the branch chooser",
+      required: false,
+      value: "'auto' | 'sm' | 'md' | 'lg' | 'full'",
+      defaultValue: "'auto'",
+    },
+    {
+      name: "selectBranch",
+      description: "Function to handle branch selection",
+      required: true,
+      value: "(branch: string) => void",
+    },
+    {
+      name: "prefix",
+      description: "Optional prefix to display before the branch name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

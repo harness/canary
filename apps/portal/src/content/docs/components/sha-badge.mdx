@@ -1,0 +1,132 @@
+---
+title: SHA Badge
+description: SHA Badge component documentation
+---
+
+The SHA Badge component provides a UI element for displaying a commit SHA with optional actions. It includes a root container, content area, and an icon button.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<div className="inline-flex"> 
+    <ShaBadge.Root>
+      <ShaBadge.Content>
+        abc1234
+      </ShaBadge.Content>
+      <ShaBadge.Icon handleClick={() => console.log('Icon clicked')}>
+        <Icon name="clone" size={16} />
+      </ShaBadge.Icon>
+    </ShaBadge.Root>
+  </div>
+  `}
+/>
+
+## Usage
+
+```typescript jsx
+import { ShaBadge } from '@harnessio/ui/components'
+
+return (
+  <ShaBadge.Root>
+    <ShaBadge.Content>
+      abc1234
+    </ShaBadge.Content>
+    <ShaBadge.Icon handleClick={() => console.log('Icon clicked')}>
+      <Icon name="clone" size={16} />
+    </ShaBadge.Icon>
+  </ShaBadge.Root>
+)
+```
+
+## Anatomy
+
+The SHA Badge component can be used to display a commit SHA with optional actions.
+
+```typescript jsx
+<ShaBadge.Root>
+  <ShaBadge.Content>
+    abc1234
+  </ShaBadge.Content>
+  <ShaBadge.Icon handleClick={() => console.log('Icon clicked')}>
+    <Icon name="clone" size={16} />
+  </ShaBadge.Icon>
+</ShaBadge.Root>
+```
+
+## API Reference
+
+### ShaBadge.Root
+
+The `Root` component serves as the main container for the SHA badge.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### ShaBadge.Content
+
+The `Content` component is used to display the content of the SHA badge.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the SHA badge",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the content",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "asChild",
+      description: "Whether to render the content as a child element",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>
+
+### ShaBadge.Icon
+
+The `Icon` component is used to display an icon button inside the SHA badge.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The icon to display inside the button",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "handleClick",
+      description: "Function to handle the icon button click",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the icon button",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

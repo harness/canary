@@ -1,0 +1,91 @@
+---
+title: More Actions Tooltip
+description: More Actions Tooltip component documentation
+---
+
+The More Actions Tooltip component provides a UI element for displaying a button that, when clicked, shows a tooltip with a list of actions.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<MoreActionsTooltip 
+    actions={[
+      { title: 'Edit', onClick: () => console.log('Edit clicked') },
+      { title: 'Delete', onClick: () => console.log('Delete clicked'), isDanger: true }
+    ]}
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { MoreActionsTooltip } from '@harnessio/ui/components'
+
+return (
+  <MoreActionsTooltip
+    actions={[
+      { title: 'Edit', onClick: () => console.log('Edit clicked') },
+      { title: 'Delete', onClick: () => console.log('Delete clicked'), isDanger: true }
+    ]}
+  />
+)
+```
+
+## API Reference
+
+### MoreActionsTooltip
+
+The `MoreActionsTooltip` component serves as the main container for displaying a button that shows a tooltip with a list of actions.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "actions",
+      description:
+        "Array of action objects representing the actions to display",
+      required: true,
+      value: "ActionData[]",
+    },
+    {
+      name: "isInTable",
+      description: "Whether the tooltip is displayed in a table",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### ActionData
+
+The `ActionData` type represents an action to display in the tooltip.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "to",
+      description: "The link to navigate to when the action is clicked",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "title",
+      description: "The title of the action",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "onClick",
+      description: "Handler for when the action is clicked",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "isDanger",
+      description: "Whether the action is a dangerous action",
+      required: false,
+      value: "boolean",
+    },
+  ]}
+/>

@@ -1,0 +1,147 @@
+---
+title: Search Box
+description: Search Box component documentation
+---
+
+The Search Box component provides a UI element for entering search queries. It includes optional features like search icon, keyboard shortcuts, and custom content.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<SearchBox.Root
+  placeholder="Search..." 
+  hasSearchIcon={true} 
+  hasShortcut={true} 
+  shortcutLetter="K" 
+  shortcutModifier="alt" 
+/>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { SearchBox } from '@harnessio/ui/components'
+
+return (
+  <SearchBox
+    placeholder="Search..."
+    hasSearchIcon={true}
+    hasShortcut={true}
+    shortcutLetter="K"
+    shortcutModifier="cmd"
+  />
+)
+```
+
+## API Reference
+
+### SearchBox
+
+The `SearchBox` component serves as the main container for the search box element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "placeholder",
+      description: "The placeholder text for the search box",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "width",
+      description: "The width of the search box",
+      required: false,
+      value: "'full' | 'fixed'",
+      defaultValue: "'fixed'",
+    },
+    {
+      name: "hasShortcut",
+      description: "Whether to enable keyboard shortcuts",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "hasSearchIcon",
+      description: "Whether to display the search icon",
+      required: false,
+      value: "boolean",
+      defaultValue: "true",
+    },
+    {
+      name: "shortcutLetter",
+      description: "The letter for the keyboard shortcut",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "shortcutModifier",
+      description: "The modifier key for the keyboard shortcut",
+      required: false,
+      value: "'cmd' | 'ctrl' | 'alt' | 'shift'",
+    },
+    {
+      name: "textSize",
+      description: "The text size of the search box",
+      required: false,
+      value: "TextSize",
+      defaultValue: "TextSize['text-sm']",
+    },
+    {
+      name: "onSearch",
+      description: "Function to handle search action",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "onFocus",
+      description: "Function to handle focus action",
+      required: false,
+      value: "() => void",
+    },
+    {
+      name: "handleChange",
+      description: "Function to handle input change",
+      required: false,
+      value: "ChangeEventHandler<HTMLInputElement>",
+    },
+    {
+      name: "showOnFocus",
+      description: "Whether to show the search box on focus",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "defaultValue",
+      description: "The default value of the search box",
+      required: false,
+      value: "InputHTMLAttributes<HTMLInputElement>['defaultValue']",
+    },
+    {
+      name: "value",
+      description: "The current value of the search box",
+      required: false,
+      value: "InputHTMLAttributes<HTMLInputElement>['value']",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the search box",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "inputClassName",
+      description: "Additional class names for the input element",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "Custom content to display inside the search box",
+      required: false,
+      value: "ReactNode",
+    },
+  ]}
+/>

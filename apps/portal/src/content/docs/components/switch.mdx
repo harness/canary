@@ -1,0 +1,75 @@
+---
+title: Switch
+description: Switch component documentation
+---
+
+The Switch component provides a UI element for toggling between two states. It includes a thumb that moves when the switch is toggled.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample client:only code={`<Switch defaultChecked />`} />
+
+## Usage
+
+```typescript jsx
+import { Switch } from '@harnessio/ui/components'
+
+return (
+  <Switch defaultChecked />
+)
+```
+
+## Anatomy
+
+The Switch component can be used to toggle between two states.
+
+```typescript jsx
+<Switch defaultChecked />
+```
+
+## API Reference
+
+### Switch
+
+The `Switch` component serves as the main container for the switch element.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "checked",
+      description: "Whether the switch is checked",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "defaultChecked",
+      description: "Whether the switch is checked by default",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "required",
+      description: "Whether the switch is required",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the switch is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "onCheckedChange",
+      description: "Handler for when the switch is toggled",
+      required: false,
+      value: "(checked: boolean) => void",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the switch",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

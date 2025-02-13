@@ -1,0 +1,258 @@
+---
+title: Pagination
+description: Pagination component documentation
+---
+
+The Pagination component provides a UI element for navigating through pages. It includes links for previous, next, and specific pages.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious t={(key) => "Previous"} disabled={false} />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive={true}>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">3</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationEllipsis />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">10</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext t={(key) => "Next"} disabled={false} />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from '@harnessio/ui/components'
+
+return (
+  <Pagination>
+    <PaginationContent>
+      <PaginationItem>
+        <PaginationPrevious t={(key) => key} disabled={false} />
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#" isActive={true}>1</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationLink href="#">2</PaginationLink>
+      </PaginationItem>
+      <PaginationItem>
+        <PaginationNext t={(key) => key} disabled={false} />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+)
+```
+
+## Anatomy
+
+The Pagination component can be used to navigate through pages with links for previous, next, and specific pages.
+
+```typescript jsx
+<Pagination>
+  <PaginationContent>
+    <PaginationItem>
+      <PaginationPrevious t={(key) => key} disabled={false} />
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#" isActive={true}>1</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationLink href="#">2</PaginationLink>
+    </PaginationItem>
+    <PaginationItem>
+      <PaginationNext t={(key) => key} disabled={false} />
+    </PaginationItem>
+  </PaginationContent>
+</Pagination>
+```
+
+## API Reference
+
+### Pagination
+
+The `Pagination` component serves as the main container for pagination elements.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the pagination container",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationContent
+
+The `PaginationContent` component is used to group pagination items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the pagination content",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationItem
+
+The `PaginationItem` component is used to display an individual pagination item.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the pagination item",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationLink
+
+The `PaginationLink` component is used to display a link for a specific page.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "isActive",
+      description: "Whether the link is active",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "disabled",
+      description: "Whether the link is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "t",
+      description: "Translation function",
+      required: true,
+      value: "TFunction",
+    },
+    {
+      name: "size",
+      description: "Size of the link",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "isFullRounded",
+      description: "Whether the link is fully rounded",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the link",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationPrevious
+
+The `PaginationPrevious` component is used to display a link for the previous page.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "t",
+      description: "Translation function",
+      required: true,
+      value: "TFunction",
+    },
+    {
+      name: "disabled",
+      description: "Whether the link is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the link",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "href",
+      description: "The URL to navigate to",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationNext
+
+The `PaginationNext` component is used to display a link for the next page.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "t",
+      description: "Translation function",
+      required: true,
+      value: "TFunction",
+    },
+    {
+      name: "disabled",
+      description: "Whether the link is disabled",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the link",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "href",
+      description: "The URL to navigate to",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### PaginationEllipsis
+
+The `PaginationEllipsis` component is used to display an ellipsis indicating more pages.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Additional class names for the ellipsis",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

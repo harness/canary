@@ -1,0 +1,51 @@
+---
+title: Spacer
+description: Spacer component documentation
+---
+
+The Spacer component provides a UI element for adding vertical spacing between elements. It includes various size options.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+    <div>Element 1</div>
+    <Spacer size={4} />
+    <div>Element 2</div>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Spacer } from '@harnessio/ui/components'
+
+return (
+  <div>
+    <div>Element 1</div>
+    <Spacer size={4} />
+    <div>Element 2</div>
+  </div>
+)
+```
+
+## API Reference
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description: "The size of the spacer",
+      required: false,
+      value:
+        "1 | 1.5 | 2 | 2.5 | 3 | 4 | 4.5 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the spacer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

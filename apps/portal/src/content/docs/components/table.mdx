@@ -1,0 +1,289 @@
+---
+title: Table
+description: Table component documentation
+---
+
+The Table component provides a UI element for displaying tabular data. It includes various subcomponents such as TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell, and TableCaption to offer a structured and customizable interface.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<Table variant="asStackedList">
+  <TableHeader>
+    <TableRow>
+      <TableHead>Header 1</TableHead>
+      <TableHead>Header 2</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Data 1</TableCell>
+      <TableCell>Data 2</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Data 3</TableCell>
+      <TableCell>Data 4</TableCell>
+    </TableRow>
+  </TableBody>
+  <TableFooter>
+    <TableRow>
+      <TableCell>Footer 1</TableCell>
+      <TableCell>Footer 2</TableCell>
+    </TableRow>
+  </TableFooter>
+</Table>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Table, TableHeader, TableBody, TableFooter, TableRow, TableHead, TableCell } from '@harnessio/ui/components'
+
+return (
+  <Table>
+    <TableHeader>
+      <TableRow>
+        <TableHead>Header 1</TableHead>
+        <TableHead>Header 2</TableHead>
+      </TableRow>
+    </TableHeader>
+    <TableBody>
+      <TableRow>
+        <TableCell>Data 1</TableCell>
+        <TableCell>Data 2</TableCell>
+      </TableRow>
+      <TableRow>
+        <TableCell>Data 3</TableCell>
+        <TableCell>Data 4</TableCell>
+      </TableRow>
+    </TableBody>
+    <TableFooter>
+      <TableRow>
+        <TableCell>Footer 1</TableCell>
+        <TableCell>Footer 2</TableCell>
+      </TableRow>
+    </TableFooter>
+  </Table>
+)
+```
+
+## Anatomy
+
+The Table component can be used to display tabular data with various subcomponents for a structured and customizable interface.
+
+```typescript jsx
+<Table>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Header 1</TableHead>
+      <TableHead>Header 2</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Data 1</TableCell>
+      <TableCell>Data 2</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Data 3</TableCell>
+      <TableCell>Data 4</TableCell>
+    </TableRow>
+  </TableBody>
+  <TableFooter>
+    <TableRow>
+      <TableCell>Footer 1</TableCell>
+      <TableCell>Footer 2</TableCell>
+    </TableRow>
+  </TableFooter>
+</Table>
+```
+
+## API Reference
+
+### Table
+
+The `Table` component serves as the main container for displaying tabular data.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "variant",
+      description: "The variant of the table",
+      required: false,
+      value: "'default' | 'asStackedList'",
+      defaultValue: "'default'",
+    },
+    {
+      name: "disableXScroll",
+      description: "Whether to disable horizontal scrolling",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "tableClassName",
+      description: "Additional class names for the table",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the table container",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "children",
+      description: "The content to display inside the table",
+      required: true,
+      value: "ReactNode",
+    },
+  ]}
+/>
+
+### TableHeader
+
+The `TableHeader` component is used to define the header section of the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the header",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the header",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableBody
+
+The `TableBody` component is used to define the body section of the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the body",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the body",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableFooter
+
+The `TableFooter` component is used to define the footer section of the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the footer",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the footer",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableRow
+
+The `TableRow` component is used to define a row in the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the row",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the row",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableHead
+
+The `TableHead` component is used to define a header cell in the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the header cell",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the header cell",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableCell
+
+The `TableCell` component is used to define a cell in the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the cell",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the cell",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### TableCaption
+
+The `TableCaption` component is used to define a caption for the table.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the caption",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the caption",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

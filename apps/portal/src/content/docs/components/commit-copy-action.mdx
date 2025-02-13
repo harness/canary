@@ -1,0 +1,59 @@
+---
+title: Commit Copy Action
+description: Commit Copy Action component documentation
+---
+
+The Commit Copy Action component provides a UI element for displaying a commit SHA and copying it to the clipboard. It also allows navigation to the commit details page.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`
+  <div className="flex">
+    <CommitCopyActions sha="abc1234" toCommitDetails={({ sha }) => \`/commit/\${sha}\`} />
+  </div>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { CommitCopyActions } from '@harnessio/ui/components'
+
+return (
+  <div className="flex">
+    <CommitCopyActions sha="abc1234" toCommitDetails={({ sha }) => \`/commit/\${sha}\`} />
+  </div>
+)
+```
+
+## Anatomy
+
+The Commit Copy Action component can be used to display a commit SHA and provide copy and navigation functionalities.
+
+```typescript jsx
+<div className="flex">
+  <CommitCopyActions sha="abc1234" toCommitDetails={({ sha }) => \`/commit/\${sha}\`} />
+</div>
+```
+
+## API Reference
+
+### CommitCopyActions
+
+The `CommitCopyActions` component serves as the main container for displaying the commit SHA and providing copy and navigation functionalities.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "sha",
+      description: "The commit SHA to display and copy",
+      required: true,
+    },
+    {
+      name: "toCommitDetails",
+      description: "Function to generate the URL for commit details",
+      required: false,
+    },
+  ]}
+/>

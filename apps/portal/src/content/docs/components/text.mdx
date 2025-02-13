@@ -1,0 +1,134 @@
+---
+title: Text
+description: Text component documentation
+---
+
+The Text component provides a UI element for displaying text with various styles and properties. It includes options for alignment, size, weight, color, and more.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<>
+    <Text size={4} weight="bold" color="primary">Example Text</Text>
+    <Separator className="my-4" />
+    <Text size={2} weight="medium" color="secondary">Another Example Text</Text>
+    <Separator className="my-4" />
+    <Text size={3} weight="semibold">Yet Another Example Text</Text>
+</>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Text } from '@harnessio/ui/components'
+
+return (
+  <>
+    <Text size={4} weight="bold" color="primary">Example Text</Text>
+    <hr className="my-4" />
+    <Text size={2} weight="medium" color="secondary">Another Example Text</Text>
+    <hr className="my-4" />
+    <Text size={3} weight="semibold" color="tertiary">Yet Another Example Text</Text>
+  </>
+)
+```
+
+## Anatomy
+
+The Text component can be used to display text with various styles and properties.
+
+```typescript jsx
+<>
+  <Text size={4} weight="bold" color="primary">Example Text</Text>
+  <hr className="my-4" />
+  <Text size={2} weight="medium" color="secondary">Another Example Text</Text>
+  <hr className="my-4" />
+  <Text size={3} weight="semibold" color="tertiary">Yet Another Example Text</Text>
+</>
+```
+
+## API Reference
+
+### Text
+
+The `Text` component serves as the main container for displaying text with various styles and properties.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "as",
+      description:
+        "Shorthand for changing the default rendered element into a semantically appropriate alternative.",
+      required: false,
+      value:
+        "'span' | 'div' | 'label' | 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'",
+    },
+    {
+      name: "asChild",
+      description:
+        "Change the default rendered element for the one passed as a child, merging their props and behavior.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "align",
+      description: "Sets the CSS text-align property.",
+      required: false,
+      value: "'left' | 'center' | 'right'",
+    },
+    {
+      name: "size",
+      description: "Sets the text size.",
+      required: false,
+      value: "0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13",
+      defaultValue: "2",
+    },
+    {
+      name: "trim",
+      description:
+        "Trims the leading whitespace from the start or end of the text.",
+      required: false,
+      value: "'normal' | 'start' | 'end' | 'both'",
+    },
+    {
+      name: "truncate",
+      description: "Truncates text with an ellipsis.",
+      required: false,
+      value: "boolean",
+    },
+    {
+      name: "weight",
+      description: "Sets the font-weight property.",
+      required: false,
+      value: "'normal' | 'medium' | 'semibold' | 'bold'",
+      defaultValue: "normal",
+    },
+    {
+      name: "color",
+      description: "Sets the color property.",
+      required: false,
+      value:
+        "'primary' | 'secondary' | 'tertiary' | 'tertiaryBackground' | 'foreground-5' | 'foreground-4' | 'inherit'",
+      defaultValue: "primary",
+    },
+    {
+      name: "wrap",
+      description: "Controls the wrapping behavior of the text.",
+      required: false,
+      value: "'wrap' | 'nowrap' | 'pretty' | 'balance'",
+    },
+    {
+      name: "children",
+      description: "The content to display inside the text component.",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the text component.",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

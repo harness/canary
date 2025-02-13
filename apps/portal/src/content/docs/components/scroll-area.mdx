@@ -1,0 +1,106 @@
+---
+title: Scroll Area
+description: Scroll Area component documentation
+---
+
+The Scroll Area component provides a UI element for creating scrollable areas with custom scrollbars. It includes various customization options.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ScrollArea className="h-24">
+  <div className="p-4">
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+  </div>
+</ScrollArea>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ScrollArea } from '@harnessio/ui/components'
+
+return (
+  <ScrollArea className="h-64 w-64">
+    <div className="p-4">
+      <p>Scrollable content goes here.</p>
+      <p>Scrollable content goes here.</p>
+      <p>Scrollable content goes here.</p>
+      <p>Scrollable content goes here.</p>
+      <p>Scrollable content goes here.</p>
+    </div>
+  </ScrollArea>
+)
+```
+
+## Anatomy
+
+The Scroll Area component can be used to create scrollable areas with custom scrollbars.
+
+```typescript jsx
+<ScrollArea className="h-64 w-64">
+  <div className="p-4">
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+    <p>Scrollable content goes here.</p>
+  </div>
+</ScrollArea>
+```
+
+## API Reference
+
+### ScrollArea
+
+The `ScrollArea` component serves as the main container for the scrollable area.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content to display inside the scroll area",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the scroll area",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "viewportClassName",
+      description: "Additional class names for the viewport",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### ScrollBar
+
+The `ScrollBar` component is used to display a custom scrollbar inside the scroll area.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "orientation",
+      description: "The orientation of the scrollbar",
+      required: false,
+      value: "'horizontal' | 'vertical'",
+      defaultValue: "'vertical'",
+    },
+    {
+      name: "className",
+      description: "Additional class names for the scrollbar",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

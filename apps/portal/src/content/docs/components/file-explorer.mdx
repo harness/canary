@@ -1,0 +1,167 @@
+---
+title: File Explorer
+description: File Explorer component documentation
+---
+
+The File Explorer component provides a UI element for browsing and selecting files or directories. It displays a hierarchical view of the file system.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<FileExplorer.Root
+  value={['src']}
+  onValueChange={(value) => console.log('Value changed:', value)}
+>
+  <FileExplorer.FolderItem content={
+    <div className="flex flex-col">
+      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+    </div>
+  } value="src" link="/src">
+    src
+  </FileExplorer.FolderItem>
+
+  <FileExplorer.FolderItem content={
+    <div className="flex flex-col">
+      <FileExplorer.FileItem link="/src/index.tsx">index.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/file-explorer.tsx">FileExplorer.tsx</FileExplorer.FileItem>
+      <FileExplorer.FileItem link="/src/type.ts">type.ts</FileExplorer.FileItem>
+    </div>
+  } value="assets" link="/assets">
+    assets
+  </FileExplorer.FolderItem>
+  <FileExplorer.FileItem link="/package.json">package.json</FileExplorer.FileItem>
+</FileExplorer.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Root, FileItem, FolderItem } from '@harnessio/ui/components/file-explorer'
+
+return (
+  <Root value={['src']} onValueChange={(value) => console.log('Value changed:', value)}>
+    <FolderItem value="src" link="/src">
+      src
+      <FileItem link="/src/index.tsx">index.tsx</FileItem>
+    </FolderItem>
+    <FileItem link="/package.json">package.json</FileItem>
+  </Root>
+)
+```
+
+## Anatomy
+
+The File Explorer component can be used to display a hierarchical view of the file system and handle file or directory selection.
+
+```typescript jsx
+<Root value={['src']} onValueChange={(value) => console.log('Value changed:', value)}>
+  <FolderItem value="src" link="/src">
+    src
+    <FileItem link="/src/index.tsx">index.tsx</FileItem>
+  </FolderItem>
+  <FileItem link="/package.json">package.json</FileItem>
+</Root>
+```
+
+## API Reference
+
+### Root
+
+The `Root` component serves as the main container for displaying the file system hierarchy and handling file or directory selection.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+    },
+    {
+      name: "onValueChange",
+      description: "Handler for value change",
+      required: true,
+      value: "(value: string | string[]) => void",
+    },
+    {
+      name: "value",
+      description: "The current value of the selected items",
+      required: true,
+      value: "string[]",
+    },
+  ]}
+/>
+
+### FolderItem
+
+The `FolderItem` component is used to display a folder in the file explorer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the folder",
+      required: true,
+    },
+    {
+      name: "value",
+      description: "The value of the folder item",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "isActive",
+      description: "Whether the folder item is active",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "content",
+      description: "Additional content to render inside the folder",
+      required: false,
+      value: "ReactNode",
+    },
+    {
+      name: "chevronClassName",
+      description: "Additional class names for the chevron icon",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "link",
+      description: "The link to navigate to when the folder item is clicked",
+      required: true,
+      value: "string",
+    },
+  ]}
+/>
+
+### FileItem
+
+The `FileItem` component is used to display a file in the file explorer.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the file item",
+      required: true,
+    },
+    {
+      name: "isActive",
+      description: "Whether the file item is active",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "link",
+      description: "The link to navigate to when the file item is clicked",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

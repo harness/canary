@@ -1,0 +1,168 @@
+---
+title: List Actions
+description: List Actions component documentation
+---
+
+The List Actions component provides a UI element for displaying actions that can be performed on a list of items. It includes dropdown menus for selecting actions.
+
+import { DocsPage } from "@/components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`<ListActions.Root>
+  <ListActions.Left>
+    <ListActions.Dropdown 
+      title="Actions" 
+      items={[
+        { name: 'Edit', value: 'edit' },
+        { name: 'Delete', value: 'delete' }
+      ]}
+      onChange={(value) => console.log('Selected:', value)}
+    />
+  </ListActions.Left>
+  <ListActions.Right>
+    <button className="btn">Add Item</button>
+  </ListActions.Right>
+</ListActions.Root>`}
+/>
+
+## Usage
+
+```typescript jsx
+import { ListActions } from '@harnessio/ui/components'
+
+return (
+  <ListActions.Root>
+    <ListActions.Left>
+      <ListActions.Dropdown
+        title="Actions"
+        items={[
+          { name: 'Edit', value: 'edit' },
+          { name: 'Delete', value: 'delete' }
+        ]}
+        onChange={(value) => console.log('Selected:', value)}
+      />
+    </ListActions.Left>
+    <ListActions.Right>
+      <button className="btn">Add Item</button>
+    </ListActions.Right>
+  </ListActions.Root>
+)
+```
+
+## Anatomy
+
+The List Actions component can be used to display actions that can be performed on a list of items.
+
+```typescript jsx
+<ListActions.Root>
+  <ListActions.Left>
+    <ListActions.Dropdown
+      title="Actions"
+      items={[
+        { name: 'Edit', value: 'edit' },
+        { name: 'Delete', value: 'delete' }
+      ]}
+      onChange={(value) => console.log('Selected:', value)}
+    />
+  </ListActions.Left>
+  <ListActions.Right>
+    <button className="btn">Add Item</button>
+  </ListActions.Right>
+</ListActions.Root>
+```
+
+## API Reference
+
+### ListActions
+
+The `ListActions` component serves as the main container for displaying actions that can be performed on a list of items.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the root",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names for the root",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### ListActions.Left
+
+The `ListActions.Left` component is used to group the actions on the left side.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the left group",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names for the left group",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### ListActions.Right
+
+The `ListActions.Right` component is used to group the actions on the right side.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The child components to render inside the right group",
+      required: true,
+    },
+    {
+      name: "className",
+      description: "Additional class names for the right group",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### ListActions.Dropdown
+
+The `ListActions.Dropdown` component is used to display a dropdown menu for selecting actions.
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "title",
+      description: "The title of the dropdown menu",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "items",
+      description: "The items to display in the dropdown menu",
+      required: true,
+      value: "Array<{ name: string; value?: string }>",
+    },
+    {
+      name: "onChange",
+      description: "Handler for when an item is selected",
+      required: false,
+      value: "(value: string) => void",
+    },
+    {
+      name: "selectedValue",
+      description: "The currently selected value",
+      required: false,
+      value: "string | null",
+    },
+  ]}
+/>

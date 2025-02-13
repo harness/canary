@@ -144,7 +144,7 @@
         "active": {
           "background": {
             "$type": "color",
-            "$value": "{colors.accent.400}",
+            "$value": "{colors.accent.700}",
             "$description": "Background color when action is pressed.\nCommon uses: pressed state, click feedback, active indication."
           },
           "foreground": {
@@ -196,7 +196,7 @@
         "active": {
           "background": {
             "$type": "color",
-            "$value": "{colors.chrome.800}",
+            "$value": "{colors.chrome.850}",
             "$description": "Background when secondary action is pressed.\nCommon uses: active state, press feedback."
           },
           "foreground": {
@@ -249,7 +249,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.secondary}",
+            "$value": "{foreground.highlight}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: hover text in outlined variant."
           },
           "background": {
@@ -271,7 +271,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.secondary}",
+            "$value": "{foreground.highlight}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
           },
           "background": {

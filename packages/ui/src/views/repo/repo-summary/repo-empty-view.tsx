@@ -9,7 +9,6 @@ import {
   MarkdownViewer,
   NoData,
   Spacer,
-  StyledLink,
   Text
 } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -90,8 +89,16 @@ git push -u origin main
             <p className="mt-2">
               You can also manage your git credential{' '}
               <span
+                role="button"
+                tabIndex={0}
                 className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
                 onClick={() => navigateToProfileKeys?.()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }
+                }}
               >
                 here
               </span>
@@ -111,8 +118,16 @@ git push -u origin main
             <p>
               You might need to{' '}
               <span
+                role="button"
+                tabIndex={0}
                 className="text-foreground-accent hover:decoration-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200"
                 onClick={() => navigateToProfileKeys?.()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }
+                }}
               >
                 create an API token
               </span>

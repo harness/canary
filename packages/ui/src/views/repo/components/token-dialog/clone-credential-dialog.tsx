@@ -1,6 +1,5 @@
 import { FC } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
 import { Button, ButtonGroup, CopyButton, Dialog, Input } from '@/components'
 import { TranslationStore } from '@/views'

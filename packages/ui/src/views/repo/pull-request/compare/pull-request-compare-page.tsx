@@ -352,152 +352,152 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                     </div>
                   </Layout.Horizontal>
 
-                <p className="text-14  text-foreground-2">{prBranchCombinationExists.description}</p>
+                  <p className="text-14  text-foreground-2">{prBranchCombinationExists.description}</p>
+                </div>
               </div>
-            </div>
-            <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>
-              {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
-            </Button>
-          </Layout.Horizontal>
-        )}
-        {isBranchSelected ? (
-          <Layout.Vertical className="mt-10">
-            <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
-              <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
-                {!prBranchCombinationExists && (
-                  <TabTriggerItem
-                    value="overview"
-                    icon="comments"
-                    label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
-                  />
-                )}
-                <TabTriggerItem
-                  value="commits"
-                  icon="tube-sign"
-                  label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
-                  badgeCount={diffStats.commits ? diffStats.commits : undefined}
-                />
-                <TabTriggerItem
-                  value="changes"
-                  icon="changes"
-                  label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
-                  badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
-                />
-              </TabsList>
-              {!prBranchCombinationExists && (
-                <TabsContent className="pt-7" value="overview">
-                  <div className="grid grid-cols-[1fr_288px] gap-x-8">
-                    <div className="flex gap-x-3">
-                      {currentUser && (
-                        <Avatar.Root>
-                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
-                        </Avatar.Root>
-                      )}
-                      <div className="w-full">
-                        <Spacer size={1} />
-                        <PullRequestCompareForm
-                          desc={desc}
-                          setDesc={setDesc}
-                          handleUpload={handleUpload}
-                          register={register}
-                          ref={formRef}
-                          apiError={apiError}
-                          isLoading={isLoading}
-                          onFormDraftSubmit={onFormDraftSubmit}
-                          onFormSubmit={onFormSubmit}
-                          isValid={isValid}
-                          errors={errors}
-                          handleSubmit={handleSubmit}
-                          useTranslationStore={useTranslationStore}
-                        />
-                      </div>
-                    </div>
-                    <PullRequestSideBar
-                      addReviewers={handleAddReviewer}
-                      usersList={usersList ?? []}
-                      currentUserId={currentUser}
-                      pullRequestMetadata={{ source_sha: '' }}
-                      processReviewDecision={mockProcessReviewDecision}
-                      refetchReviewers={noop}
-                      handleDelete={handleDeleteReviewer}
-                      reviewers={reviewers ?? []}
-                      searchQuery={searchReviewersQuery}
-                      setSearchQuery={setSearchReviewersQuery}
-                      useTranslationStore={useTranslationStore}
-                      labelsList={labelsList}
-                      labelsValues={labelsValues}
-                      PRLabels={PRLabels}
-                      addLabel={addLabel}
-                      removeLabel={removeLabel}
-                      searchLabelQuery={searchLabelQuery}
-                      setSearchLabelQuery={setSearchLabelQuery}
+              <Button onClick={() => navigate(`../${prBranchCombinationExists.number}/conversation`)}>
+                {t('views:pullRequests.compareChangesViewPRLink', 'View pull request')}
+              </Button>
+            </Layout.Horizontal>
+          )}
+          {isBranchSelected ? (
+            <Layout.Vertical className="mt-10">
+              <Tabs variant="tabnav" defaultValue={prBranchCombinationExists ? 'commits' : 'overview'}>
+                <TabsList className="relative left-1/2 w-[calc(100%+160px)] -translate-x-1/2 px-20 before:bg-borders-4">
+                  {!prBranchCombinationExists && (
+                    <TabTriggerItem
+                      value="overview"
+                      icon="comments"
+                      label={t('views:pullRequests.compareChangesTabOverview', 'Overview')}
                     />
-                  </div>
+                  )}
+                  <TabTriggerItem
+                    value="commits"
+                    icon="tube-sign"
+                    label={t('views:pullRequests.compareChangesTabCommits', 'Commits')}
+                    badgeCount={diffStats.commits ? diffStats.commits : undefined}
+                  />
+                  <TabTriggerItem
+                    value="changes"
+                    icon="changes"
+                    label={t('views:pullRequests.compareChangesTabChanges', 'Changes')}
+                    badgeCount={diffStats.files_changed ? diffStats.files_changed : undefined}
+                  />
+                </TabsList>
+                {!prBranchCombinationExists && (
+                  <TabsContent className="pt-7" value="overview">
+                    <div className="grid grid-cols-[1fr_288px] gap-x-8">
+                      <div className="flex gap-x-3">
+                        {currentUser && (
+                          <Avatar.Root>
+                            <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
+                          </Avatar.Root>
+                        )}
+                        <div className="w-full">
+                          <Spacer size={1} />
+                          <PullRequestCompareForm
+                            desc={desc}
+                            setDesc={setDesc}
+                            handleUpload={handleUpload}
+                            register={register}
+                            ref={formRef}
+                            apiError={apiError}
+                            isLoading={isLoading}
+                            onFormDraftSubmit={onFormDraftSubmit}
+                            onFormSubmit={onFormSubmit}
+                            isValid={isValid}
+                            errors={errors}
+                            handleSubmit={handleSubmit}
+                            useTranslationStore={useTranslationStore}
+                          />
+                        </div>
+                      </div>
+                      <PullRequestSideBar
+                        addReviewers={handleAddReviewer}
+                        usersList={usersList ?? []}
+                        currentUserId={currentUser}
+                        pullRequestMetadata={{ source_sha: '' }}
+                        processReviewDecision={mockProcessReviewDecision}
+                        refetchReviewers={noop}
+                        handleDelete={handleDeleteReviewer}
+                        reviewers={reviewers ?? []}
+                        searchQuery={searchReviewersQuery}
+                        setSearchQuery={setSearchReviewersQuery}
+                        useTranslationStore={useTranslationStore}
+                        labelsList={labelsList}
+                        labelsValues={labelsValues}
+                        PRLabels={PRLabels}
+                        addLabel={addLabel}
+                        removeLabel={removeLabel}
+                        searchLabelQuery={searchLabelQuery}
+                        setSearchLabelQuery={setSearchLabelQuery}
+                      />
+                    </div>
+                  </TabsContent>
+                )}
+                <TabsContent className="pt-7" value="commits">
+                  {/* TODO: add pagination to this */}
+                  {isFetchingCommits ? (
+                    <SkeletonList />
+                  ) : (commitData ?? []).length > 0 ? (
+                    <CommitsList
+                      toCode={toCode}
+                      toCommitDetails={toCommitDetails}
+                      data={commitData?.map((item: TypesCommit) => ({
+                        sha: item.sha,
+                        parent_shas: item.parent_shas,
+                        title: item.title,
+                        message: item.message,
+                        author: item.author,
+                        committer: item.committer
+                      }))}
+                    />
+                  ) : (
+                    <NoData
+                      iconName={'no-data-commits'}
+                      title={t('views:noData.noCommitsYet', 'No commits yet')}
+                      description={[
+                        t(
+                          'views:noData.noCommitsYetDescription',
+                          "Your commits will appear here once they're made. Start committing to see your changes reflected."
+                        )
+                      ]}
+                    />
+                  )}
                 </TabsContent>
-              )}
-              <TabsContent className="pt-7" value="commits">
-                {/* TODO: add pagination to this */}
-                {isFetchingCommits ? (
-                  <SkeletonList />
-                ) : (commitData ?? []).length > 0 ? (
-                  <CommitsList
-                    toCode={toCode}
-                    toCommitDetails={toCommitDetails}
-                    data={commitData?.map((item: TypesCommit) => ({
-                      sha: item.sha,
-                      parent_shas: item.parent_shas,
-                      title: item.title,
-                      message: item.message,
-                      author: item.author,
-                      committer: item.committer
-                    }))}
-                  />
-                ) : (
-                  <NoData
-                    iconName={'no-data-commits'}
-                    title={t('views:noData.noCommitsYet', 'No commits yet')}
-                    description={[
-                      t(
-                        'views:noData.noCommitsYetDescription',
-                        "Your commits will appear here once they're made. Start committing to see your changes reflected."
-                      )
-                    ]}
-                  />
-                )}
-              </TabsContent>
-              <TabsContent className="pt-7" value="changes">
-                {/* Content for Changes */}
-                {(diffData ?? []).length > 0 ? (
-                  <PullRequestCompareDiffList
-                    diffData={diffData}
-                    currentUser={currentUser}
-                    diffStats={diffStats}
-                    useTranslationStore={useTranslationStore}
-                    jumpToDiff={jumpToDiff}
-                    setJumpToDiff={setJumpToDiff}
-                  />
-                ) : (
-                  <NoData
-                    iconName="no-data-folder"
-                    title="No changes to display"
-                    description={['There are no changes to display for the selected branches.']}
-                  />
-                )}
-              </TabsContent>
-            </Tabs>
-          </Layout.Vertical>
-        ) : (
-          <>
-            <Spacer size={10} />
-            <NoData
-              iconName="no-data-pr"
-              title={t('views:noData.compareChanges')}
-              description={[t('views:noData.compareChangesDescription')]}
-            />
-          </>
-        )}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+                <TabsContent className="pt-7" value="changes">
+                  {/* Content for Changes */}
+                  {(diffData ?? []).length > 0 ? (
+                    <PullRequestCompareDiffList
+                      diffData={diffData}
+                      currentUser={currentUser}
+                      diffStats={diffStats}
+                      useTranslationStore={useTranslationStore}
+                      jumpToDiff={jumpToDiff}
+                      setJumpToDiff={setJumpToDiff}
+                    />
+                  ) : (
+                    <NoData
+                      iconName="no-data-folder"
+                      title="No changes to display"
+                      description={['There are no changes to display for the selected branches.']}
+                    />
+                  )}
+                </TabsContent>
+              </Tabs>
+            </Layout.Vertical>
+          ) : (
+            <>
+              <Spacer size={10} />
+              <NoData
+                iconName="no-data-pr"
+                title={t('views:noData.compareChanges')}
+                description={[t('views:noData.compareChangesDescription')]}
+              />
+            </>
+          )}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
     </ThemeProvider>
   )
 }

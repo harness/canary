@@ -1,16 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Icon,
-  MoreActionsTooltip,
-  SkeletonTable,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components'
+import { Icon, MoreActionsTooltip, SkeletonTable, Table } from '@/components'
 import { timeAgo } from '@utils/utils'
 import { TranslationStore } from '@views/repo'
 
@@ -32,27 +22,27 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
   const { t } = useTranslationStore()
 
   return (
-    <Table
+    <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="asStackedList"
     >
-      <TableHeader>
-        <TableRow>
-          <TableHead>{t('views:profileSettings.name', 'Name')}</TableHead>
-          <TableHead>{t('views:profileSettings.added', 'Added')}</TableHead>
-          <TableHead>{t('views:profileSettings.lastUsedDate', 'Last used date')}</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>{t('views:profileSettings.name', 'Name')}</Table.Head>
+          <Table.Head>{t('views:profileSettings.added', 'Added')}</Table.Head>
+          <Table.Head>{t('views:profileSettings.lastUsedDate', 'Last used date')}</Table.Head>
+          <Table.Head />
+        </Table.Row>
+      </Table.Header>
 
       {isLoading ? (
         <SkeletonTable countRows={4} countColumns={4} />
       ) : (
-        <TableBody>
+        <Table.Body>
           {publicKeys.length ? (
             publicKeys.map((key: KeysList) => (
-              <TableRow key={key.identifier}>
-                <TableCell className="content-center">
+              <Table.Row key={key.identifier}>
+                <Table.Cell className="content-center">
                   <div className="inline-flex items-center gap-x-2.5">
                     <Icon name="ssh-key" size={32} className="rounded-md bg-background-8 text-foreground-2" />
                     <div className="flex flex-col">
@@ -60,17 +50,17 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
                       <span className="w-[200px] truncate text-12 text-foreground-3">{key.fingerprint}</span>
                     </div>
                   </div>
-                </TableCell>
-                <TableCell className="h-1 content-center">
+                </Table.Cell>
+                <Table.Cell className="h-1 content-center">
                   <span className="text-foreground-1">{timeAgo(new Date(key.created!).getTime())}</span>
-                </TableCell>
-                <TableCell className="h-1 content-center">
+                </Table.Cell>
+                <Table.Cell className="h-1 content-center">
                   {/* TODO: pass the data to KeysList item about last used date */}
                   {/* <span className="text-foreground-1">
                   {key.last_used ? new Date(key.last_used).toLocaleString() : 'Never used'}
                 </span> */}
-                </TableCell>
-                <TableCell className="content-center text-right">
+                </Table.Cell>
+                <Table.Cell className="content-center text-right">
                   <MoreActionsTooltip
                     isInTable
                     actions={[
@@ -81,23 +71,23 @@ export const ProfileKeysList: FC<ProfileKeysListProps> = ({
                       }
                     ]}
                   />
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             ))
           ) : (
-            <TableRow className="hover:bg-transparent">
-              <TableCell className="content-center !p-4" colSpan={4}>
+            <Table.Row className="hover:bg-transparent">
+              <Table.Cell className="content-center !p-4" colSpan={4}>
                 <p className="text-center text-14 text-foreground-4">
                   {t(
                     'views:profileSettings.noDataKeysDescription',
                     'There are no SSH keys associated with this account.'
                   )}
                 </p>
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           )}
-        </TableBody>
+        </Table.Body>
       )}
-    </Table>
+    </Table.Root>
   )
 }

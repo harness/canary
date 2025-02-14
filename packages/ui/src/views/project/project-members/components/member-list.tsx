@@ -1,17 +1,6 @@
 import { useMemo } from 'react'
 
-import {
-  Avatar,
-  DropdownMenu,
-  Icon,
-  MoreActionsTooltip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components'
+import { Avatar, DropdownMenu, Icon, MoreActionsTooltip, Table } from '@/components'
 import { MembersProps, TranslationStore } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -33,20 +22,20 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
   }
 
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead>{t('views:projectSettings.membersTable.user', 'User')}</TableHead>
-          <TableHead>{t('views:projectSettings.membersTable.email', 'Email')}</TableHead>
-          <TableHead>{t('views:projectSettings.membersTable.role', 'Role')}</TableHead>
-          <TableHead />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>{t('views:projectSettings.membersTable.user', 'User')}</Table.Head>
+          <Table.Head>{t('views:projectSettings.membersTable.email', 'Email')}</Table.Head>
+          <Table.Head>{t('views:projectSettings.membersTable.role', 'Role')}</Table.Head>
+          <Table.Head />
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {members.map(member => (
-          <TableRow key={member.uid}>
+          <Table.Row key={member.uid}>
             {/* USER */}
-            <TableCell className="content-center">
+            <Table.Cell className="content-center">
               <div className="flex items-center gap-2">
                 <Avatar.Root>
                   {!!member.avatarUrl && <Avatar.Image src={member.avatarUrl} />}
@@ -54,13 +43,13 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                 </Avatar.Root>
                 <span className="font-medium text-foreground-8">{member.display_name}</span>
               </div>
-            </TableCell>
+            </Table.Cell>
 
             {/* EMAIL */}
-            <TableCell className="content-center text-foreground-2">{member.email}</TableCell>
+            <Table.Cell className="content-center text-foreground-2">{member.email}</Table.Cell>
 
             {/* ROLE */}
-            <TableCell className="w-1/5 content-center">
+            <Table.Cell className="w-1/5 content-center">
               <DropdownMenu.Root>
                 <DropdownMenu.Trigger className="flex items-center gap-x-1.5 text-foreground-2 hover:text-foreground-1">
                   {getRoleLabel(member.role)}
@@ -83,9 +72,9 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                   ))}
                 </DropdownMenu.Content>
               </DropdownMenu.Root>
-            </TableCell>
+            </Table.Cell>
 
-            <TableCell className="text-right">
+            <Table.Cell className="text-right">
               <MoreActionsTooltip
                 isInTable
                 actions={[
@@ -96,10 +85,10 @@ export const MembersList = ({ members, onDelete, onEdit, useTranslationStore }: 
                   }
                 ]}
               />
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

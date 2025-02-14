@@ -1,17 +1,5 @@
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Badge,
-  Icon,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@harnessio/canary'
+import { Avatar, AvatarFallback, AvatarImage, Badge, Icon, Text } from '@harnessio/canary'
+import { Table } from '@harnessio/ui/components'
 
 import { getInitials } from '../utils/utils'
 
@@ -29,25 +17,25 @@ interface PageProps {
 
 export const UsersList = ({ users }: PageProps) => {
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-primary">Name</TableHead>
-          <TableHead className="text-primary">Role</TableHead>
-          <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-right text-primary">Date added</TableHead>
-          <TableHead>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="text-primary">Name</Table.Head>
+          <Table.Head className="text-primary">Role</Table.Head>
+          <Table.Head className="text-primary">Email</Table.Head>
+          <Table.Head className="text-right text-primary">Date added</Table.Head>
+          <Table.Head>
             <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {users &&
           users.map((user, index) => {
             return (
-              <TableRow key={index}>
+              <Table.Row key={index}>
                 {/* NAME */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-4">
                     <Avatar size="10">
                       {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
@@ -68,32 +56,32 @@ export const UsersList = ({ users }: PageProps) => {
                       )}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* ROLE */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-1.5">
                     <Text size={2} wrap="nowrap" truncate className="text-tertiary-background">
                       {user.role}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* EMAIL */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                       {user.email}
                     </Text>
                   </div>
-                </TableCell>
-                <TableCell className="my-6 content-center">
+                </Table.Cell>
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center justify-end gap-1.5">
                     <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" />
                   </div>
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             )
           })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

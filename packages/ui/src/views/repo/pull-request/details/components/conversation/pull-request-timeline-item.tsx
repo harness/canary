@@ -6,13 +6,15 @@ import { getInitials } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 
-interface TimelineItemProps {
-  header: {
-    avatar?: ReactNode
-    name?: string
-    description?: ReactNode
-    selectStatus?: ReactNode
-  }[]
+interface TimelineItemPropsHeaderType {
+  avatar?: ReactNode
+  name?: string
+  description?: ReactNode
+  selectStatus?: ReactNode
+}
+
+export interface TimelineItemProps {
+  header: TimelineItemPropsHeaderType[]
   parentCommentId?: number
   commentId?: number
   currentUser?: string
@@ -93,7 +95,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-[216px]" align="end">
             <DropdownMenu.Group>
-              {!hideEditDelete ? <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item> : null}
+              {!hideEditDelete && <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item>}
               <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
@@ -104,7 +106,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
               <DropdownMenu.Item onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
                 Copy link to comment
               </DropdownMenu.Item>
-              {!hideEditDelete ? (
+              {!hideEditDelete && (
                 <DropdownMenu.Item
                   className="text-foreground-danger hover:text-foreground-danger"
                   onClick={ev => {
@@ -114,20 +116,21 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
                 >
                   Delete comment
                 </DropdownMenu.Item>
-              ) : null}
+              )}
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )
     }
+
     return (
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-center gap-1.5">
-          {avatar && <div>{avatar}</div>}
-          {name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
-          {description && <span className="text-14 text-foreground-4">{description}</span>}
+          {!!avatar && <div className="mr-0.5">{avatar}</div>}
+          {!!name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
+          {!!description && <span className="text-14 text-foreground-4">{description}</span>}
         </div>
-        {selectStatus && (
+        {!!selectStatus && (
           <div className="justify-end">
             <Text size={2} color="tertiaryBackground">
               {selectStatus}
@@ -216,10 +219,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <div id={id}>
       <NodeGroup.Root className={cn('pb-7 font-sans', wrapperClassName)}>
-        {icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
+        {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
         <NodeGroup.Title className={titleClassName}>
           {/* Ensure that header has at least one item */}
-          {header.length > 0 && (
+          {!!header.length && (
             <div className="flex w-full items-center justify-between gap-x-2">
               <ItemHeader
                 isDeleted={isDeleted}

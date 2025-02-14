@@ -50,18 +50,18 @@ export const TimeAgoHoverCard: FC<TimeAgoHoverCardProps> = ({ formattedDate, tim
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
-        <Button variant="ghost" className="px-0 hover:bg-transparent">
+        <Button className="h-auto px-0 font-normal hover:bg-transparent" variant="ghost">
           {formattedDate}
         </Button>
       </HoverCardTrigger>
-      <HoverCardContent className="w-80 p-3 space-y-2 text-sm" avoidCollisions>
+      <HoverCardContent className="w-80 space-y-2 p-3 text-sm" avoidCollisions>
         {(['UTC', 'Local'] as const).map(zone => (
           <div key={zone} className="flex items-center gap-2">
-            <Badge variant="tertiary" size="sm" borderRadius="base" className="flex justify-center w-10">
+            <Badge variant="tertiary" size="sm" borderRadius="base" className="flex w-10 justify-center">
               {zone === 'UTC' ? 'UTC' : getTimeZoneAbbreviation()}
             </Badge>
             <span>{zone === 'UTC' ? formattedDates.utcDate : formattedDates.localDate}</span>
-            <span className="text-foreground-5 ml-auto">
+            <span className="ml-auto text-foreground-5">
               {zone === 'UTC' ? formattedDates.utcTime : formattedDates.localTime}
             </span>
           </div>

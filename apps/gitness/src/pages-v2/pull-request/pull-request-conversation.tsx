@@ -99,11 +99,6 @@ export default function PullRequestConversationPage() {
 
   const filtersData = usePrFilters()
 
-  // const dateFilters = useDateFilters()
-  // const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
-  // const activityFilters = useActivityFilters()
-  // const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
-
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
     queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }

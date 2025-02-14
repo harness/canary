@@ -103,6 +103,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
     //  setWrap,
     fontsize
   } = useDiffConfig()
+
   const activityBlocks = useMemo(() => {
     // Each block may have one or more activities which are grouped into it. For example, one comment block
     // contains a parent comment and multiple replied comments
@@ -162,6 +163,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
     activityFilter,
     currentUser?.uid
   ])
+
   const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
   const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
   const [hideReplyHeres, setHideReplyHeres] = useState<{ [key: string]: boolean }>({})
@@ -221,7 +223,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                 />
               )
             } else {
-              const payload = commentItems[0]?.payload?.payload // Ensure payload is typed correctly
+              const payload = commentItems[0]?.payload // Ensure payload is typed correctly
               const parentIdAttr = `comment-${payload?.id}`
 
               const codeDiffSnapshot = [
@@ -405,6 +407,7 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                   />
                 ) : null
               }
+
               return payload?.id ? (
                 <PullRequestTimelineItem
                   handleUpload={handleUpload}
@@ -432,11 +435,14 @@ const PullRequestOverview: FC<PullRequestOverviewProps> = ({
                       ),
                       name: (payload?.author as PayloadAuthor)?.display_name,
                       // TODO: fix comment to tell between comment or code comment?
-                      description: (
-                        <div className="flex space-x-4">
-                          <div className="pr-2">{payload?.created && `commented ${timeAgo(payload?.created)}`} </div>
-                        </div>
-                      )
+                      ...(payload?.created && {
+                        description: (
+                          <div className="flex gap-x-1">
+                            commented
+                            {timeAgo(payload?.created)}
+                          </div>
+                        )
+                      })
                     }
                   ]}
                   content={

@@ -100,7 +100,7 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                             : 'Invalid'}
                       </Badge>
                     </TableCell>
-                    <TableCell className="text-right relative">{timeAgo(execution.created ?? Date.now())}</TableCell>
+                    <TableCell className="relative text-right">{timeAgo(execution.created ?? Date.now())}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

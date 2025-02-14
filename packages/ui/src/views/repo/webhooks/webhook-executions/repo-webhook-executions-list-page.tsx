@@ -1,20 +1,7 @@
 import { FC, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  Badge,
-  FormSeparator,
-  NoData,
-  Pagination,
-  SkeletonList,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@/components'
+import { Badge, FormSeparator, NoData, Pagination, SkeletonList, Table, Text } from '@/components'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
 
@@ -47,40 +34,40 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   return (
     <SandboxLayout.Main className="mx-0">
       <SandboxLayout.Content className="pl-0">
-        <h1 className="mb-4 text-2xl font-medium text-foreground-1">Order Status Update Webhook</h1>
+        <h1 className="text-foreground-1 mb-4 text-2xl font-medium">Order Status Update Webhook</h1>
         <Text>
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
         <FormSeparator className="my-6" />
-        <h1 className="mb-4 text-xl font-medium text-foreground-1">Executions</h1>
+        <h1 className="text-foreground-1 mb-4 text-xl font-medium">Executions</h1>
         {isLoading ? (
           <SkeletonList />
         ) : executions && executions.length > 0 ? (
           <>
-            <Table variant="asStackedList">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Event</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Last triggered at</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <Table.Root variant="asStackedList">
+              <Table.Header>
+                <Table.Row>
+                  <Table.Head>ID</Table.Head>
+                  <Table.Head>Event</Table.Head>
+                  <Table.Head>Status</Table.Head>
+                  <Table.Head className="text-right">Last triggered at</Table.Head>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
                 {executions.map(execution => (
-                  <TableRow
+                  <Table.Row
                     key={execution.id}
                     onClick={() => navigate(toRepoWebhookExecutionDetails(`${execution.id}`))}
                     className="cursor-pointer"
                   >
-                    <TableCell className="content-center">
+                    <Table.Cell className="content-center">
                       <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
-                    </TableCell>
-                    <TableCell className="content-center">
+                    </Table.Cell>
+                    <Table.Cell className="content-center">
                       {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
-                    </TableCell>
-                    <TableCell className="content-center">
+                    </Table.Cell>
+                    <Table.Cell className="content-center">
                       <Badge
                         size="md"
                         disableHover
@@ -99,12 +86,12 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
                             ? 'Failed'
                             : 'Invalid'}
                       </Badge>
-                    </TableCell>
-                    <TableCell className="relative text-right">{timeAgo(execution.created ?? Date.now())}</TableCell>
-                  </TableRow>
+                    </Table.Cell>
+                    <Table.Cell className="relative text-right">{timeAgo(execution.created ?? Date.now())}</Table.Cell>
+                  </Table.Row>
                 ))}
-              </TableBody>
-            </Table>
+              </Table.Body>
+            </Table.Root>
             <Pagination
               totalPages={totalWebhookExecutionPages}
               currentPage={webhookExecutionPage}

@@ -13,14 +13,9 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
   Text
 } from '@harnessio/canary'
+import { Table } from '@harnessio/ui/components'
 
 import { getInitials } from '../../utils/utils'
 import { MembersProps } from './interfaces'
@@ -35,22 +30,22 @@ interface PageProps {
 
 export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-primary">Name</TableHead>
-          <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-primary">Role</TableHead>
-          <TableHead>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="text-primary">Name</Table.Head>
+          <Table.Head className="text-primary">Email</Table.Head>
+          <Table.Head className="text-primary">Role</Table.Head>
+          <Table.Head>
             <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {members.map(member => (
-          <TableRow key={member.uid}>
+          <Table.Row key={member.uid}>
             {/* NAME */}
-            <TableCell className="my-6 content-center">
+            <Table.Cell className="my-6 content-center">
               <div className="flex items-center gap-4">
                 <Avatar size="10">
                   {member.avatarUrl && <AvatarImage src={member.avatarUrl} />}
@@ -62,17 +57,17 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
                   {member.display_name}
                 </Text>
               </div>
-            </TableCell>
+            </Table.Cell>
             {/* EMAIL */}
-            <TableCell className="my-6 content-center">
+            <Table.Cell className="my-6 content-center">
               <div className="flex gap-1.5">
                 <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                   {member.email}
                 </Text>
               </div>
-            </TableCell>
+            </Table.Cell>
             {/* ROLE */}
-            <TableCell className="my-6 content-center">
+            <Table.Cell className="my-6 content-center">
               <Select
                 value={member.role}
                 onValueChange={newRole => onEdit({ ...member, role: transformValue(newRole) })}
@@ -108,15 +103,15 @@ export const MembersList = ({ members, onDelete, onEdit }: PageProps) => {
                   </SelectItem>
                 </SelectContent>
               </Select>
-            </TableCell>
-            <TableCell className="my-6 content-center">
+            </Table.Cell>
+            <Table.Cell className="my-6 content-center">
               <div className="flex items-center justify-end gap-1.5">
                 <MoreActionsDropdown member={member} onDelete={onDelete} />
               </div>
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

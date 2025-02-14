@@ -12,14 +12,9 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
   Icon,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
   Text
 } from '@harnessio/canary'
+import { Table } from '@harnessio/ui/components'
 
 import { getInitials, timeAgo } from '../../utils/utils'
 import { UsersProps } from './interfaces'
@@ -33,7 +28,7 @@ interface PageProps {
   onSetAdmin: (user: UsersProps) => void
 }
 
-// fix the edit form dialog and mock data and coressponding props
+// fix the edit form dialog and mock data and corresponding props
 export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassword, onSetAdmin }: PageProps) => {
   //TODO: migrate actions component
   const moreActionsTooltip = ({ user }: { user: UsersProps }) => {
@@ -101,25 +96,25 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
   }
 
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-primary">Name</TableHead>
-          <TableHead className="text-primary">Email</TableHead>
-          <TableHead className="text-primary">Display Name</TableHead>
-          <TableHead className="text-right text-primary">Date added</TableHead>
-          <TableHead>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="text-primary">Name</Table.Head>
+          <Table.Head className="text-primary">Email</Table.Head>
+          <Table.Head className="text-primary">Display Name</Table.Head>
+          <Table.Head className="text-right text-primary">Date added</Table.Head>
+          <Table.Head>
             <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {users &&
           users.map(user => {
             return (
-              <TableRow key={user.uid}>
+              <Table.Row key={user.uid}>
                 {/* NAME */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-4">
                     <Avatar size="10">
                       {user.avatarUrl && <AvatarImage src={user.avatarUrl} />}
@@ -138,44 +133,44 @@ export const UsersList = ({ users, onDelete, onEdit, onRemoveAdmin, onResetPassw
                       )}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* EMAIL */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                       {user.email}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
 
                 {/* displayName */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                       {user.display_name}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
 
                 {/* TimeStamp */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center justify-end gap-1.5">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                       {timeAgo(user.created)}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
 
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center justify-end gap-1.5">
                     {/* <Icon name="vertical-ellipsis" size={14} className="text-tertiary-background" /> */}
                     {moreActionsTooltip({ user })}
                   </div>
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             )
           })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

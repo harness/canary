@@ -1,4 +1,4 @@
-import { TableBody, TableCell, TableRow } from '@/components'
+import { Table } from '@/components'
 import { cn } from '@utils/cn'
 
 import { Skeleton } from './components/skeleton'
@@ -14,16 +14,16 @@ interface SkeletonTableProps {
 
 export const SkeletonTable = ({ className, countRows = 12, countColumns = 5 }: SkeletonTableProps) => {
   return (
-    <TableBody className={cn('relative h-full w-full', className)}>
+    <Table.Body className={cn('relative h-full w-full', className)}>
       {Array.from({ length: countRows }).map((_, index) => (
-        <TableRow key={`row-${index}`}>
+        <Table.Row key={`row-${index}`}>
           {Array.from({ length: countColumns }).map((_, columnIndex) => (
-            <TableCell className="h-12 flex-1 content-center" key={`cell-${index}-${columnIndex}`}>
+            <Table.Cell className="h-12 flex-1 content-center" key={`cell-${index}-${columnIndex}`}>
               <Skeleton className="h-2.5" style={{ width: getRandomPercentageWidth(30, 80) }} />
-            </TableCell>
+            </Table.Cell>
           ))}
-        </TableRow>
+        </Table.Row>
       ))}
-    </TableBody>
+    </Table.Body>
   )
 }

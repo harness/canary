@@ -1,16 +1,6 @@
 import { FC } from 'react'
 
-import {
-  Icon,
-  MoreActionsTooltip,
-  NoData,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components'
+import { Icon, MoreActionsTooltip, NoData, Table } from '@/components'
 import { ILabelsStore, ILabelType, LabelValuesType, TranslationStore } from '@/views'
 
 import { LabelCellContent } from './label-cell-content'
@@ -74,24 +64,24 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
   }
 
   return (
-    <Table tableClassName="table-fixed" variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead>
+    <Table.Root tableClassName="table-fixed" variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>
             <span className="pl-[22px]">{t('views:labelData.table.name', 'Name')}</span>
-          </TableHead>
-          <TableHead>{t('views:labelData.table.created', 'Created in')}</TableHead>
-          <TableHead>{t('views:labelData.table.description', 'Description')}</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+          </Table.Head>
+          <Table.Head>{t('views:labelData.table.created', 'Created in')}</Table.Head>
+          <Table.Head>{t('views:labelData.table.description', 'Description')}</Table.Head>
+          <Table.Head />
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {labels.map(label => (
-          <TableRow key={label.key}>
-            <TableCell className="w-1/4 !py-3">
+          <Table.Row key={label.key}>
+            <Table.Cell className="w-1/4 !py-3">
               <LabelCellContent label={label} values={values} />
-            </TableCell>
-            <TableCell className="w-1/4 !py-3.5 leading-none">
+            </Table.Cell>
+            <Table.Cell className="w-1/4 !py-3.5 leading-none">
               <span className="inline-flex h-4 max-w-full items-center gap-x-1 rounded bg-background-8 px-1.5 text-12 leading-4 text-foreground-8">
                 <Icon
                   className="flex-none text-icons-9"
@@ -100,11 +90,11 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                 />
                 <span className="truncate">{label.scope === 0 ? (repo_ref ?? '') : (space_ref ?? '')}</span>
               </span>
-            </TableCell>
-            <TableCell className="w-1/2 !py-3">
+            </Table.Cell>
+            <Table.Cell className="w-1/2 !py-3">
               <span className="text-sm text-foreground-3">{label?.description || ''}</span>
-            </TableCell>
-            <TableCell className="w-[54px] !py-2 text-right">
+            </Table.Cell>
+            <Table.Cell className="w-[54px] !py-2 text-right">
               <MoreActionsTooltip
                 isInTable
                 actions={[
@@ -119,10 +109,10 @@ export const LabelsListView: FC<LabelsListViewProps> = ({
                   }
                 ]}
               />
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         ))}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

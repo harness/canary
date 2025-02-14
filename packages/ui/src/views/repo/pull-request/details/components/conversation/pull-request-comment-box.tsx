@@ -166,7 +166,7 @@ const PullRequestCommentBox = ({
               ref={dropZoneRef}
             >
               <Textarea
-                className="bg-background-2 text-foreground-1 min-h-24 p-3 pb-10"
+                className="min-h-24 bg-background-2 p-3 pb-10 text-foreground-1"
                 autoFocus={!!inReplyMode}
                 placeholder="Add your comment here"
                 value={comment}
@@ -179,10 +179,10 @@ const PullRequestCommentBox = ({
                 resizable
               />
               {isDragging && (
-                <div className="border-borders-2 absolute inset-1 cursor-copy rounded-sm border border-dashed" />
+                <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
               )}
 
-              <div className="bg-background-2 absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center pb-2 pt-1">
+              <div className="absolute bottom-px left-1/2 -ml-0.5 flex w-[calc(100%-16px)] -translate-x-1/2 items-center bg-background-2 pb-2 pt-1">
                 {toolbar.map((item, index) => {
                   const isFirst = index === 0
                   return (
@@ -190,7 +190,7 @@ const PullRequestCommentBox = ({
                       <Button className="hover:bg-background-8" size="icon" variant="ghost" onClick={item?.onClick}>
                         <Icon className="text-icons-9" name={item.icon} />
                       </Button>
-                      {isFirst && <div className="bg-borders-2 h-4 w-px" />}
+                      {isFirst && <div className="h-4 w-px bg-borders-2" />}
                     </Fragment>
                   )
                 })}
@@ -213,7 +213,7 @@ const PullRequestCommentBox = ({
             <div>
               <input type="file" ref={fileInputRef} className="hidden" onChange={handleFileChange} />
               <Button
-                className="text-foreground-3 hover:bg-background-8 gap-x-2 px-2.5 font-normal"
+                className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
                 variant="custom"
                 onClick={handleFileSelect}
               >

@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Icon, Spacer, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@/components'
+import { Icon, Spacer, Table, Text } from '@/components'
 import { FileStatus, LatestFileTypes, RepoFile, SummaryItemType, TranslationStore } from '@/views'
 import { FileLastChangeBar } from '@views/repo/components'
 
@@ -38,20 +38,20 @@ export const Summary = ({
         </>
       )}
 
-      <Table variant="asStackedList">
+      <Table.Root variant="asStackedList">
         {!hideHeader && (
-          <TableHeader>
-            <TableRow>
-              <TableHead>{t('views:repos.name', 'Name')}</TableHead>
-              <TableHead>{t('views:repos.lastCommit', 'Last commit message')}</TableHead>
-              <TableHead className="text-right">{t('views:repos.date', 'Date')}</TableHead>
-            </TableRow>
-          </TableHeader>
+          <Table.Header>
+            <Table.Row>
+              <Table.Head>{t('views:repos.name', 'Name')}</Table.Head>
+              <Table.Head>{t('views:repos.lastCommit', 'Last commit message')}</Table.Head>
+              <Table.Head className="text-right">{t('views:repos.date', 'Date')}</Table.Head>
+            </Table.Row>
+          </Table.Header>
         )}
-        <TableBody>
+        <Table.Body>
           {hideHeader && (
-            <TableRow>
-              <TableCell className="!p-0" colSpan={3}>
+            <Table.Row>
+              <Table.Cell className="!p-0" colSpan={3}>
                 <FileLastChangeBar
                   onlyTopRounded
                   withoutBorder
@@ -59,12 +59,12 @@ export const Summary = ({
                   useTranslationStore={useTranslationStore}
                   {...latestFile}
                 />
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           )}
           {files.map(file => (
-            <TableRow key={file.id} onClick={() => navigate(file.path)}>
-              <TableCell>
+            <Table.Row key={file.id} onClick={() => navigate(file.path)}>
+              <Table.Cell>
                 <div
                   className={`flex cursor-pointer items-center gap-1.5 ${
                     file.status && file.status !== FileStatus.SAFE
@@ -103,21 +103,21 @@ export const Summary = ({
                   />
                   <span className="w-44 truncate text-foreground-1">{file.name}</span>
                 </div>
-              </TableCell>
-              <TableCell>
+              </Table.Cell>
+              <Table.Cell>
                 <Text color="tertiaryBackground" className="line-clamp-1">
                   {file.lastCommitMessage}
                 </Text>
-              </TableCell>
-              <TableCell className="text-right">
+              </Table.Cell>
+              <Table.Cell className="text-right">
                 <Text color="tertiaryBackground" wrap="nowrap">
                   {file.timestamp}
                 </Text>
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           ))}
-        </TableBody>
-      </Table>
+        </Table.Body>
+      </Table.Root>
     </>
   )
 }

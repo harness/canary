@@ -35,6 +35,7 @@ import {
 
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -603,6 +604,7 @@ export const CreatePullRequest = () => {
         removeLabel={handleDeleteLabel}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
+        useThemeStore={useThemeStore}
       />
     )
   }

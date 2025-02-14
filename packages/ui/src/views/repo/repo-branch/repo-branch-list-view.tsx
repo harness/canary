@@ -1,6 +1,7 @@
 import { FC, useMemo } from 'react'
 
 import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
@@ -26,8 +27,10 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   onDeleteBranch,
   searchBranches,
   setCreateBranchSearchQuery,
+  useThemeStore,
   ...routingProps
 }) => {
+  const storeTheme = useThemeStore()
   const { t } = useTranslationStore()
   const { branchList, defaultBranch, xNextPage, xPrevPage, page, setPage } = useRepoBranchesStore()
 
@@ -52,81 +55,83 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   }, [page, filterHandlers.activeFilters, searchQuery])
 
   return (
-    <SandboxLayout.Main className="max-w-[1132px]">
-      <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
-        <Spacer size={2} />
-        {(isLoading || !!branchList.length || isDirtyList) && (
-          <>
-            <span className="text-24 font-medium text-foreground-1">{t('views:repos.branches', 'Branches')}</span>
-            <Spacer size={6} />
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  width="full"
-                  className="max-w-80"
-                  value={search || ''}
-                  handleChange={handleSearchChange}
-                  placeholder={t('views:repos.search', 'Search')}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  t={t}
-                />
-                <Button
-                  variant="default"
-                  onClick={() => {
-                    setCreateBranchDialogOpen(true)
-                  }}
-                >
-                  {t('views:repos.newBranch', 'New branch')}
-                </Button>
-              </ListActions.Right>
-            </ListActions.Root>
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Main className="max-w-[1132px]">
+        <SandboxLayout.Content className={cn({ 'h-full': !isLoading && !branchList.length && !searchQuery })}>
+          <Spacer size={2} />
+          {(isLoading || !!branchList.length || isDirtyList) && (
+            <>
+              <span className="text-24 font-medium text-foreground-1">{t('views:repos.branches', 'Branches')}</span>
+              <Spacer size={6} />
+              <ListActions.Root>
+                <ListActions.Left>
+                  <SearchBox.Root
+                    width="full"
+                    className="max-w-80"
+                    value={search || ''}
+                    handleChange={handleSearchChange}
+                    placeholder={t('views:repos.search', 'Search')}
+                  />
+                </ListActions.Left>
+                <ListActions.Right>
+                  <Filters
+                    filterOptions={FILTER_OPTIONS}
+                    sortOptions={SORT_OPTIONS}
+                    filterHandlers={filterHandlers}
+                    t={t}
+                  />
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      setCreateBranchDialogOpen(true)
+                    }}
+                  >
+                    {t('views:repos.newBranch', 'New branch')}
+                  </Button>
+                </ListActions.Right>
+              </ListActions.Root>
 
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              t={t}
-            />
+              <FiltersBar
+                filterOptions={FILTER_OPTIONS}
+                sortOptions={SORT_OPTIONS}
+                sortDirections={SORT_DIRECTIONS}
+                filterHandlers={filterHandlers}
+                t={t}
+              />
 
-            <Spacer size={5} />
-          </>
-        )}
-        <BranchesList
-          isLoading={isLoading}
-          defaultBranch={defaultBranch}
-          branches={branchList}
+              <Spacer size={5} />
+            </>
+          )}
+          <BranchesList
+            isLoading={isLoading}
+            defaultBranch={defaultBranch}
+            branches={branchList}
+            useTranslationStore={useTranslationStore}
+            setCreateBranchDialogOpen={setCreateBranchDialogOpen}
+            handleResetFiltersAndPages={handleResetFiltersAndPages}
+            onDeleteBranch={onDeleteBranch}
+            isDirtyList={isDirtyList}
+            {...routingProps}
+          />
+          {!isLoading && (
+            <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
+          )}
+        </SandboxLayout.Content>
+        <CreateBranchDialog
+          open={isCreateBranchDialogOpen}
+          onClose={() => {
+            setCreateBranchDialogOpen(false)
+          }}
+          onSubmit={onSubmit}
+          branches={searchBranches}
+          isLoadingBranches={isLoading}
+          isCreatingBranch={isCreatingBranch}
           useTranslationStore={useTranslationStore}
-          setCreateBranchDialogOpen={setCreateBranchDialogOpen}
-          handleResetFiltersAndPages={handleResetFiltersAndPages}
-          onDeleteBranch={onDeleteBranch}
-          isDirtyList={isDirtyList}
-          {...routingProps}
+          error={createBranchError}
+          defaultBranch={defaultBranch}
+          handleChangeSearchValue={setCreateBranchSearchQuery}
         />
-        {!isLoading && (
-          <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
-        )}
-      </SandboxLayout.Content>
-      <CreateBranchDialog
-        open={isCreateBranchDialogOpen}
-        onClose={() => {
-          setCreateBranchDialogOpen(false)
-        }}
-        onSubmit={onSubmit}
-        branches={searchBranches}
-        isLoadingBranches={isLoading}
-        isCreatingBranch={isCreatingBranch}
-        useTranslationStore={useTranslationStore}
-        error={createBranchError}
-        defaultBranch={defaultBranch}
-        handleChangeSearchValue={setCreateBranchSearchQuery}
-      />
-    </SandboxLayout.Main>
+      </SandboxLayout.Main>
+    </ThemeProvider>
   )
 }

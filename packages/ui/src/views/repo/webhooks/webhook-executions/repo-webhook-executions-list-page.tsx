@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import {
   Badge,
   FormSeparator,
+  IThemeStore,
   NoData,
   Pagination,
   SkeletonList,
@@ -15,6 +16,7 @@ import {
   TableRow,
   Text
 } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import { SandboxLayout, TranslationStore, WebhookStore } from '@/views'
 import { timeAgo } from '@utils/utils'
 
@@ -27,6 +29,7 @@ interface RepoWebhookExecutionsPageProps {
   repo_ref: string
   isLoading: boolean
   toRepoWebhookExecutionDetails: (executionId: string) => string
+  useThemeStore: () => IThemeStore
 }
 
 const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
@@ -35,103 +38,107 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   toRepoWebhooks,
   repo_ref,
   isLoading,
-  toRepoWebhookExecutionDetails
+  toRepoWebhookExecutionDetails,
+  useThemeStore
 }) => {
+  const storeTheme = useThemeStore()
   const { t } = useTranslationStore()
   const { executions, webhookExecutionPage, setWebhookExecutionPage, totalWebhookExecutionPages } = useWebhookStore()
   const navigate = useNavigate()
   const events = useMemo(() => {
     return [...getBranchEvents(t), ...getTagEvents(t), ...getPrEvents(t)]
-  }, [])
+  }, [t])
 
   return (
-    <SandboxLayout.Main className="mx-0">
-      <SandboxLayout.Content className="pl-0">
-        <h1 className="mb-4 text-2xl font-medium text-foreground-1">Order Status Update Webhook</h1>
-        <Text>
-          This webhook triggers every time an order status is updated, sending data to the specified endpoint for
-          real-time tracking.
-        </Text>
-        <FormSeparator className="my-6" />
-        <h1 className="mb-4 text-xl font-medium text-foreground-1">Executions</h1>
-        {isLoading ? (
-          <SkeletonList />
-        ) : executions && executions.length > 0 ? (
-          <>
-            <Table variant="asStackedList">
-              <TableHeader>
-                <TableRow>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Event</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Last triggered at</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {executions.map(execution => (
-                  <TableRow
-                    key={execution.id}
-                    onClick={() => navigate(toRepoWebhookExecutionDetails(`${execution.id}`))}
-                    className="cursor-pointer"
-                  >
-                    <TableCell className="content-center">
-                      <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
-                    </TableCell>
-                    <TableCell className="content-center">
-                      {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
-                    </TableCell>
-                    <TableCell className="content-center">
-                      <Badge
-                        size="md"
-                        disableHover
-                        borderRadius="full"
-                        theme={
-                          execution.result === 'success'
-                            ? 'success'
-                            : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
-                              ? 'destructive'
-                              : 'muted'
-                        }
-                      >
-                        {execution.result === 'success'
-                          ? 'Success'
-                          : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
-                            ? 'Failed'
-                            : 'Invalid'}
-                      </Badge>
-                    </TableCell>
-                    <TableCell className="text-right relative">{timeAgo(execution.created ?? Date.now())}</TableCell>
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Main className="mx-0">
+        <SandboxLayout.Content className="pl-0">
+          <h1 className="mb-4 text-2xl font-medium text-foreground-1">Order Status Update Webhook</h1>
+          <Text>
+            This webhook triggers every time an order status is updated, sending data to the specified endpoint for
+            real-time tracking.
+          </Text>
+          <FormSeparator className="my-6" />
+          <h1 className="mb-4 text-xl font-medium text-foreground-1">Executions</h1>
+          {isLoading ? (
+            <SkeletonList />
+          ) : executions && executions.length > 0 ? (
+            <>
+              <Table variant="asStackedList">
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>ID</TableHead>
+                    <TableHead>Event</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Last triggered at</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Pagination
-              totalPages={totalWebhookExecutionPages}
-              currentPage={webhookExecutionPage}
-              goToPage={setWebhookExecutionPage}
-              t={t}
+                </TableHeader>
+                <TableBody>
+                  {executions.map(execution => (
+                    <TableRow
+                      key={execution.id}
+                      onClick={() => navigate(toRepoWebhookExecutionDetails(`${execution.id}`))}
+                      className="cursor-pointer"
+                    >
+                      <TableCell className="content-center">
+                        <Text className="text-foreground-1" size={2}>{`#${execution.id}`}</Text>
+                      </TableCell>
+                      <TableCell className="content-center">
+                        {events.find(event => event.id === execution.trigger_type)?.event || execution.trigger_type}
+                      </TableCell>
+                      <TableCell className="content-center">
+                        <Badge
+                          size="md"
+                          disableHover
+                          borderRadius="full"
+                          theme={
+                            execution.result === 'success'
+                              ? 'success'
+                              : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
+                                ? 'destructive'
+                                : 'muted'
+                          }
+                        >
+                          {execution.result === 'success'
+                            ? 'Success'
+                            : ['fatal_error', 'retriable_error'].includes(execution.result ?? '')
+                              ? 'Failed'
+                              : 'Invalid'}
+                        </Badge>
+                      </TableCell>
+                      <TableCell className="text-right relative">{timeAgo(execution.created ?? Date.now())}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <Pagination
+                totalPages={totalWebhookExecutionPages}
+                currentPage={webhookExecutionPage}
+                goToPage={setWebhookExecutionPage}
+                t={t}
+              />
+            </>
+          ) : (
+            <NoData
+              withBorder
+              textWrapperClassName="max-w-[350px]"
+              iconName="no-data-cog"
+              title={t('views:noData.noWebhookExecution', 'No webhook executions yet')}
+              description={[
+                t(
+                  'views:noData.noWebhookExecutionsDescription',
+                  "Your webhook executions will appear here once they're completed. Trigger your webhook to see results."
+                )
+              ]}
+              primaryButton={{
+                label: t('views:webhookData.create', 'Create webhook'),
+                to: `${toRepoWebhooks(repo_ref)}/create`
+              }}
             />
-          </>
-        ) : (
-          <NoData
-            withBorder
-            textWrapperClassName="max-w-[350px]"
-            iconName="no-data-cog"
-            title={t('views:noData.noWebhookExecution', 'No webhook executions yet')}
-            description={[
-              t(
-                'views:noData.noWebhookExecutionsDescription',
-                "Your webhook executions will appear here once they're completed. Trigger your webhook to see results."
-              )
-            ]}
-            primaryButton={{
-              label: t('views:webhookData.create', 'Create webhook'),
-              to: `${toRepoWebhooks(repo_ref)}/create`
-            }}
-          />
-        )}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+          )}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </ThemeProvider>
   )
 }
 

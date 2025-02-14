@@ -12,6 +12,7 @@ import {
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
 
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
@@ -125,6 +126,7 @@ export default function WebhookListPage() {
         setSearchQuery={setQuery}
         webhookLoading={isFetching}
         handleEnableWebhook={handleEnableWebhook}
+        useThemeStore={useThemeStore}
       />
       <DeleteAlertDialog
         open={deleteWebhookId !== null}

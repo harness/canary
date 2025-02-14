@@ -1,5 +1,6 @@
 import { FC, useCallback } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { noop, useTranslationsStore } from '@utils/viewUtils'
 
 import { RepoListProps, SandboxRepoListPage } from '@harnessio/ui/views'
@@ -27,6 +28,7 @@ const RepoListWrapper: FC<Partial<RepoListProps>> = props => {
       isError={false}
       searchQuery=""
       setSearchQuery={noop}
+      useThemeStore={useThemeStore}
       {...props}
     />
   )

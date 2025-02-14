@@ -1,6 +1,7 @@
 import { FC, ReactNode, useMemo } from 'react'
 
-import { NoData, PathParts, SkeletonList, Spacer } from '@/components'
+import { IThemeStore, NoData, PathParts, SkeletonList, Spacer } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import {
   BranchInfoBar,
   CodeModes,
@@ -33,6 +34,7 @@ interface RepoFilesProps {
   currentBranchDivergence: CommitDivergenceType
   toCommitDetails?: ({ sha }: { sha: string }) => string
   isLoadingRepoDetails: boolean
+  useThemeStore: () => IThemeStore
 }
 
 export const RepoFiles: FC<RepoFilesProps> = ({
@@ -52,8 +54,10 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   currentBranchDivergence,
   isRepoEmpty,
   toCommitDetails,
-  isLoadingRepoDetails
+  isLoadingRepoDetails,
+  useThemeStore
 }) => {
+  const storeTheme = useThemeStore()
   const { selectedBranchTag } = useRepoBranchesStore()
   const { t } = useTranslationStore()
 
@@ -142,19 +146,21 @@ export const RepoFiles: FC<RepoFilesProps> = ({
   ])
 
   return (
-    <SandboxLayout.Main fullWidth>
-      <SandboxLayout.Content className="flex h-full flex-col pt-4">
-        {isView && !isRepoEmpty && (
-          <PathActionBar
-            codeMode={codeMode}
-            pathParts={pathParts}
-            useTranslationStore={useTranslationStore}
-            pathNewFile={pathNewFile}
-            pathUploadFiles={pathUploadFiles}
-          />
-        )}
-        {content}
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Main fullWidth>
+        <SandboxLayout.Content className="flex h-full flex-col pt-4">
+          {isView && !isRepoEmpty && (
+            <PathActionBar
+              codeMode={codeMode}
+              pathParts={pathParts}
+              useTranslationStore={useTranslationStore}
+              pathNewFile={pathNewFile}
+              pathUploadFiles={pathUploadFiles}
+            />
+          )}
+          {content}
+        </SandboxLayout.Content>
+      </SandboxLayout.Main>
+    </ThemeProvider>
   )
 }

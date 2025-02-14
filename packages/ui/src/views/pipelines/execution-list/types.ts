@@ -1,5 +1,6 @@
 import { ComponentType, JSXElementConstructor, ReactElement, ReactNode } from 'react'
 
+import { IThemeStore } from '@/components'
 import { CiStatus, PipelineExecutionStatus } from '@/views'
 import { TranslationStore } from '@views/repo'
 import { TLinkComponent } from '@views/types/link-types'
@@ -36,6 +37,7 @@ export interface IExecutionListPageProps {
   setSearchQuery: (query: string | null) => void
   handleExecutePipeline: () => void
   LinkComponent: TLinkComponent
+  useThemeStore: () => IThemeStore
 }
 
 export interface IExecutionListProps {

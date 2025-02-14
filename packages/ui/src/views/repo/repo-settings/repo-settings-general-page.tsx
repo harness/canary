@@ -1,7 +1,8 @@
 import { FC, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 
-import { Fieldset, FormSeparator } from '@/components'
+import { Fieldset, FormSeparator, IThemeStore } from '@/components'
+import { ThemeProvider } from '@/providers/theme'
 import { BranchSelectorListItem, IBranchSelectorStore, SandboxLayout, TranslationStore } from '@/views'
 import { BranchSelectorTab } from '@/views/repo/components'
 
@@ -36,6 +37,7 @@ interface RepoSettingsGeneralPageProps {
   setSearchQuery: (query: string) => void
   rulesSearchQuery: string
   setRulesSearchQuery: (query: string) => void
+  useThemeStore: () => IThemeStore
 }
 
 const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
@@ -54,9 +56,11 @@ const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   searchQuery,
   setSearchQuery,
   rulesSearchQuery,
-  setRulesSearchQuery
+  setRulesSearchQuery,
+  useThemeStore
 }) => {
   const { t } = useTranslationStore()
+  const storeTheme = useThemeStore()
   const location = useLocation()
   const rulesRef = useRef<HTMLDivElement | null>(null)
 
@@ -73,52 +77,54 @@ const RepoSettingsGeneralPage: FC<RepoSettingsGeneralPageProps> = ({
   const { repoData, securityScanning, rules } = useRepoRulesStore()
 
   return (
-    <SandboxLayout.Content className="max-w-[570px] px-0">
-      <h1 className="mb-10 text-2xl font-medium text-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
-      <Fieldset>
-        <RepoSettingsGeneralForm
-          repoData={repoData}
-          handleRepoUpdate={handleRepoUpdate}
-          apiError={apiError}
-          isLoadingRepoData={loadingStates.isLoadingRepoData}
-          isUpdatingRepoData={loadingStates.isUpdatingRepoData}
-          isRepoUpdateSuccess={isRepoUpdateSuccess}
-          useRepoBranchesStore={useRepoBranchesStore}
-          useTranslationStore={useTranslationStore}
-          selectBranchOrTag={selectBranchOrTag}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-        />
-        <FormSeparator />
-        <div ref={rulesRef}>
-          <RepoSettingsGeneralRules
-            isLoading={loadingStates.isRulesLoading}
-            rules={rules}
+    <ThemeProvider {...storeTheme}>
+      <SandboxLayout.Content className="max-w-[570px] px-0">
+        <h1 className="mb-10 text-2xl font-medium text-foreground-1">{t('views:repos.settings', 'Settings')}</h1>
+        <Fieldset>
+          <RepoSettingsGeneralForm
+            repoData={repoData}
+            handleRepoUpdate={handleRepoUpdate}
             apiError={apiError}
-            handleRuleClick={handleRuleClick}
-            openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+            isLoadingRepoData={loadingStates.isLoadingRepoData}
+            isUpdatingRepoData={loadingStates.isUpdatingRepoData}
+            isRepoUpdateSuccess={isRepoUpdateSuccess}
+            useRepoBranchesStore={useRepoBranchesStore}
             useTranslationStore={useTranslationStore}
-            rulesSearchQuery={rulesSearchQuery}
-            setRulesSearchQuery={setRulesSearchQuery}
+            selectBranchOrTag={selectBranchOrTag}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
           />
-        </div>
-        <FormSeparator />
-        <RepoSettingsSecurityForm
-          securityScanning={securityScanning}
-          handleUpdateSecuritySettings={handleUpdateSecuritySettings}
-          apiError={apiError}
-          isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
-          isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
-          useTranslationStore={useTranslationStore}
-        />
-        <FormSeparator />
-        <RepoSettingsGeneralDelete
-          apiError={apiError}
-          openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
-          useTranslationStore={useTranslationStore}
-        />
-      </Fieldset>
-    </SandboxLayout.Content>
+          <FormSeparator />
+          <div ref={rulesRef}>
+            <RepoSettingsGeneralRules
+              isLoading={loadingStates.isRulesLoading}
+              rules={rules}
+              apiError={apiError}
+              handleRuleClick={handleRuleClick}
+              openRulesAlertDeleteDialog={openRulesAlertDeleteDialog}
+              useTranslationStore={useTranslationStore}
+              rulesSearchQuery={rulesSearchQuery}
+              setRulesSearchQuery={setRulesSearchQuery}
+            />
+          </div>
+          <FormSeparator />
+          <RepoSettingsSecurityForm
+            securityScanning={securityScanning}
+            handleUpdateSecuritySettings={handleUpdateSecuritySettings}
+            apiError={apiError}
+            isUpdatingSecuritySettings={loadingStates.isUpdatingSecuritySettings}
+            isLoadingSecuritySettings={loadingStates.isLoadingSecuritySettings}
+            useTranslationStore={useTranslationStore}
+          />
+          <FormSeparator />
+          <RepoSettingsGeneralDelete
+            apiError={apiError}
+            openRepoAlertDeleteDialog={openRepoAlertDeleteDialog}
+            useTranslationStore={useTranslationStore}
+          />
+        </Fieldset>
+      </SandboxLayout.Content>
+    </ThemeProvider>
   )
 }
 

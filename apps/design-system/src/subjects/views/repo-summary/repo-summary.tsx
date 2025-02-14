@@ -1,5 +1,6 @@
 import { FC, useCallback, useMemo } from 'react'
 
+import { useThemeStore } from '@utils/theme-utils.ts'
 import { useTranslationsStore } from '@utils/viewUtils'
 
 import { BranchSelectorTab, IBranchSelectorStore, RepoSummaryView, RepoSummaryViewProps } from '@harnessio/ui/views'
@@ -50,6 +51,7 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       selectBranchOrTag={noop}
       searchQuery=""
       setSearchQuery={noop}
+      useThemeStore={useThemeStore}
       {...props}
     />
   )

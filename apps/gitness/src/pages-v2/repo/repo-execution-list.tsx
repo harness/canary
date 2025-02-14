@@ -8,6 +8,7 @@ import { Icon } from '@harnessio/ui/components'
 import { ExecutionListPage, IExecution } from '@harnessio/ui/views'
 
 import { LinkComponent } from '../../components/LinkComponent'
+import { useThemeStore } from '../../framework/context/ThemeContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -65,6 +66,7 @@ export default function RepoExecutionListPage() {
         setSearchQuery={setQuery}
         handleExecutePipeline={noop}
         LinkComponent={LinkComponent}
+        useThemeStore={useThemeStore}
       />
       {/* TODO */}
       {/* <RunPipelineDialog

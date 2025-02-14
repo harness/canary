@@ -1,15 +1,4 @@
-import {
-  Avatar,
-  Badge,
-  MoreActionsTooltip,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  Text
-} from '@/components'
+import { Avatar, Badge, MoreActionsTooltip, Table, Text } from '@/components'
 import { getInitials } from '@/utils/utils'
 
 import { DialogLabels, UsersProps } from '../types'
@@ -21,24 +10,22 @@ interface PageProps {
 
 export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead>User</TableHead>
-          <TableHead>Display Name</TableHead>
-          <TableHead>Email</TableHead>
-          <TableHead>
-            <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>User</Table.Head>
+          <Table.Head>Display Name</Table.Head>
+          <Table.Head>Email</Table.Head>
+          <Table.Head />
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {users &&
           users.map(user => {
             return (
-              <TableRow key={user.uid}>
+              <Table.Row key={user.uid}>
                 {/* NAME */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex items-center gap-2">
                     <Avatar.Root>
                       {!!user?.avatarUrl && <Avatar.Image src={user.avatarUrl} />}
@@ -57,25 +44,25 @@ export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
                       )}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
 
                 {/* DISPLAY NAME */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <Text size={2} weight="medium" wrap="nowrap" truncate className="text-primary">
                     {user.display_name}
                   </Text>
-                </TableCell>
+                </Table.Cell>
 
                 {/* EMAIL */}
-                <TableCell className="my-6 content-center">
+                <Table.Cell className="my-6 content-center">
                   <div className="flex gap-1.5">
                     <Text wrap="nowrap" size={1} truncate className="text-tertiary-background">
                       {user.email}
                     </Text>
                   </div>
-                </TableCell>
+                </Table.Cell>
 
-                <TableCell className="text-right">
+                <Table.Cell className="text-right">
                   <MoreActionsTooltip
                     isInTable
                     actions={[
@@ -98,11 +85,11 @@ export const UsersList = ({ users, handleDialogOpen }: PageProps) => {
                       }
                     ]}
                   />
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             )
           })}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

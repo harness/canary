@@ -32,12 +32,7 @@ export const RepoGeneralSettings = () => {
   const closeRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(false)
   const openRepoAlertDeleteDialog = () => setRepoAlertDeleteDialogOpen(true)
 
-  const useRepoBranchesStore = useCallback(
-    () => ({
-      ...repoBranchListStore
-    }),
-    []
-  )
+  const useRepoBranchesStore = useCallback(() => ({ ...repoBranchListStore }), [])
 
   return (
     <>

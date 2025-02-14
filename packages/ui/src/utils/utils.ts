@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { createElement, ReactNode } from 'react'
 
 import { TimeAgoHoverCard } from '@views/repo/components/time-ago-hover-card'
 import { formatDistance, formatDistanceToNow } from 'date-fns'
@@ -95,7 +95,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
       hour12: false
     }).format(date)
 
-    return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
   }
 
   try {
@@ -103,7 +103,7 @@ export const timeAgo = (timestamp?: number | null, cutoffDays: number = 3): Reac
       addSuffix: true,
       includeSeconds: true
     })
-    return React.createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
+    return createElement(TimeAgoHoverCard, { formattedDate, timeStamp: timestamp })
   } catch (error) {
     console.error(`Failed to format time ago: ${error}`)
     return 'Unknown time'
@@ -133,4 +133,26 @@ export function formatNumber(num: number | bigint): string {
 }
 export interface Violation {
   violation: string
+}
+
+/**
+ * Helps to construct conditional objects like this: {a: b, ...(some ? c : {}), z: x}
+ */
+export const wrapConditionalObjectElement = <T extends Record<string, unknown>>(element: T, isPassing: boolean) => {
+  if (!element || !isPassing) {
+    return {} as T
+  }
+
+  return element
+}
+
+/**
+ * Helps to construct conditional arrays like this: [item1, condition && item2, item3].filter(item => !!item)
+ */
+export const wrapConditionalArrayElements = <T>(elements: T[], isPassing: boolean) => {
+  if (!elements || !isPassing) {
+    return []
+  }
+
+  return elements
 }

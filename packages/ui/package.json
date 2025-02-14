@@ -8,6 +8,7 @@
   "exports": {
     "./components": "./dist/components.js",
     "./views": "./dist/views.js",
+    "./utils": "./dist/utils.js",
     "./hooks": "./dist/hooks.js",
     "./locales": "./dist/locales.js",
     "./tailwind.config": "./dist/tailwind.config.js",

@@ -1,9 +1,9 @@
 import { ChangeEvent, FC, useState } from 'react'
 
-import { AlertDialog, Button, Fieldset, Input, Spacer, Text } from '@/components'
+import { AlertDialog, Button, Fieldset, Input } from '@/components'
 import { TranslationStore } from '@views/repo'
 
-const DELETE = 'DELETE'
+const DELETION_KEYWORD = 'DELETE'
 
 export interface DeleteAlertDialogProps {
   open: boolean
@@ -12,7 +12,7 @@ export interface DeleteAlertDialogProps {
   deleteFn: (id: string) => void
   type?: string
   isLoading?: boolean
-  error?: { type: string; message: string } | null
+  error?: { type?: string; message: string } | null
   useTranslationStore: () => TranslationStore
   withForm?: boolean
 }
@@ -35,7 +35,7 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
     setVerification(event.target.value)
   }
 
-  const isDisabled = isLoading || (withForm && verification !== DELETE)
+  const isDisabled = isLoading || (withForm && verification !== DELETION_KEYWORD)
 
   const handleDelete = () => {
     if (isDisabled) return
@@ -67,20 +67,15 @@ export const DeleteAlertDialog: FC<DeleteAlertDialogProps> = ({
               value={verification}
               placeholder=""
               onChange={handleChangeVerification}
-              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} “${DELETE}”`}
+              label={`${t('component:deleteDialog.inputLabel', `To confirm, type`)} “${DELETION_KEYWORD}”`}
               disabled={isLoading}
               autoFocus
             />
           </Fieldset>
         )}
-        {!!error && (error.type === 'tokenDelete' || error.type === 'keyDelete') && (
-          <>
-            <Text size={1} className="text-destructive">
-              {error.message}
-            </Text>
-            <Spacer size={4} />
-          </>
-        )}
+
+        {!!error && error.message && <p className="text-xs text-destructive">{error.message}</p>}
+
         <AlertDialog.Footer>
           <Button variant="outline" onClick={onClose} disabled={isLoading}>
             {t('component:deleteDialog.cancel', 'Cancel')}

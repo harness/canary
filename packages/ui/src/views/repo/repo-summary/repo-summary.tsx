@@ -86,7 +86,6 @@ export function RepoSummaryView({
   filesList,
   navigateToFile,
   repository,
-  repoEntryPathToFileTypeMap,
   files,
   decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },

@@ -39,9 +39,7 @@ export function RepoBranchesListPage() {
   const [isCreateBranchDialogOpen, setCreateBranchDialogOpen] = useState(false)
   const [deleteBranchName, setDeleteBranchName] = useState<string | null>(null)
 
-  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({
-    repo_ref: repoRef
-  })
+  const { data: { body: repoMetadata } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { isLoading: isLoadingBranches, data: { body: branches, headers } = {} } = useListBranchesQuery({
     queryParams: {
@@ -69,9 +67,7 @@ export function RepoBranchesListPage() {
     data: { body: _branchDivergence = [] } = {},
     mutate: calculateBranchDivergence
   } = useCalculateCommitDivergenceMutation(
-    {
-      repo_ref: repoRef
-    },
+    { repo_ref: repoRef },
     {
       onSuccess: data => {
         if (data.body && branches) {
@@ -102,9 +98,7 @@ export function RepoBranchesListPage() {
     error: deleteBranchError,
     reset: resetDeleteBranch
   } = useDeleteBranchMutation(
-    {
-      repo_ref: repoRef
-    },
+    { repo_ref: repoRef },
     {
       onSuccess: () => {
         handleResetDeleteBranch()
@@ -118,19 +112,13 @@ export function RepoBranchesListPage() {
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
 
-    await saveBranch({
-      repo_ref: repoRef,
-      body: { name, target, bypass_rules: false }
-    })
+    await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
     handleInvalidateBranchList()
     setCreateBranchDialogOpen(false)
   }
 
   const handleDeleteBranch = (branch_name: string) => {
-    deleteBranch({
-      branch_name,
-      queryParams: {}
-    })
+    deleteBranch({ branch_name, queryParams: {} })
   }
 
   useEffect(() => {
@@ -141,17 +129,15 @@ export function RepoBranchesListPage() {
   }, [headers, setPaginationFromHeaders])
 
   useEffect(() => {
-    if (branches) {
-      if (branches?.length !== 0) {
-        calculateBranchDivergence({
-          body: {
-            requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || []
-          }
-        })
-      } else {
-        setBranchList([])
-      }
+    if (!branches) return
+
+    if (branches?.length === 0) {
+      return setBranchList([])
     }
+
+    calculateBranchDivergence({
+      body: { requests: branches?.map(branch => ({ from: branch.name, to: repoMetadata?.default_branch })) || [] }
+    })
   }, [calculateBranchDivergence, branches, repoMetadata?.default_branch])
 
   useEffect(() => {
@@ -186,18 +172,12 @@ export function RepoBranchesListPage() {
         searchBranches={searchBranches || []}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
+
       <DeleteAlertDialog
         open={deleteBranchName !== null}
         onClose={handleResetDeleteBranch}
         deleteFn={handleDeleteBranch}
-        error={
-          deleteBranchError
-            ? {
-                type: '',
-                message: deleteBranchError?.message || ''
-              }
-            : null
-        }
+        error={deleteBranchError ? { message: deleteBranchError?.message ?? '' } : null}
         type="branch"
         identifier={deleteBranchName ?? undefined}
         isLoading={isDeletingBranch}

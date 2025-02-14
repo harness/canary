@@ -41,7 +41,7 @@ export function ProjectMemberListPage() {
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const { data: { body: principalData } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
+    // @ts-expect-error : BE issue - not implemented
     queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
   })
 
@@ -194,14 +194,7 @@ export function ProjectMemberListPage() {
         open={deleteMemberId !== null}
         onClose={handleResetDeleteMember}
         deleteFn={handleDeleteMember}
-        error={
-          deleteMemberError
-            ? {
-                type: '',
-                message: deleteMemberError?.message || ''
-              }
-            : null
-        }
+        error={deleteMemberError ? { message: deleteMemberError?.message ?? '' } : null}
         type="member"
         identifier={deleteMemberId ?? undefined}
         isLoading={isDeletingMember}

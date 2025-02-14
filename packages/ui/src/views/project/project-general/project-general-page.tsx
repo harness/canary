@@ -15,16 +15,17 @@ import {
   SkeletonForm,
   Textarea
 } from '@/components'
-import { ISpaceStore, SandboxLayout, TranslationStore } from '@/views'
+import { SandboxLayout, TranslationStore, TypesSpace } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
 interface ProjectSettingsGeneralPageProps {
+  data?: TypesSpace
+  isLoading?: boolean
   onFormSubmit: (formData: ProjectSettingsGeneralFields) => void
   isUpdating: boolean
   isUpdateSuccess: boolean
   updateError: string | null
-  useSpaceStore: () => ISpaceStore
   setOpenDeleteDialog: () => void
   useTranslationStore: () => TranslationStore
 }
@@ -37,7 +38,8 @@ const projectSettingsSchema = z.object({
 export type ProjectSettingsGeneralFields = z.infer<typeof projectSettingsSchema>
 
 export const ProjectSettingsGeneralPage = ({
-  useSpaceStore,
+  data,
+  isLoading = false,
   onFormSubmit,
   isUpdating,
   isUpdateSuccess,
@@ -45,9 +47,7 @@ export const ProjectSettingsGeneralPage = ({
   setOpenDeleteDialog,
   useTranslationStore
 }: ProjectSettingsGeneralPageProps) => {
-  // Project Settings form handling
   const { t } = useTranslationStore()
-  const { space: spaceData, isLoading } = useSpaceStore()
   const {
     register,
     handleSubmit,
@@ -58,8 +58,8 @@ export const ProjectSettingsGeneralPage = ({
     resolver: zodResolver(projectSettingsSchema),
     mode: 'onSubmit',
     defaultValues: {
-      identifier: spaceData?.identifier ?? '', //project name
-      description: spaceData?.description ?? ''
+      identifier: data?.identifier ?? '', //project name
+      description: data?.description ?? ''
     }
   })
 
@@ -81,28 +81,28 @@ export const ProjectSettingsGeneralPage = ({
       }, 1000)
 
       reset({
-        identifier: spaceData?.identifier ?? '',
-        description: spaceData?.description ?? ''
+        identifier: data?.identifier ?? '',
+        description: data?.description ?? ''
       })
 
       return () => clearTimeout(timer)
     }
-  }, [isUpdateSuccess, reset, spaceData?.description, spaceData?.identifier])
+  }, [isUpdateSuccess, reset, data?.description, data?.identifier])
 
   useEffect(() => {
-    setValue('description', spaceData?.description ?? '')
-  }, [spaceData?.description, setValue])
+    setValue('description', data?.description ?? '')
+  }, [data?.description, setValue])
 
   useEffect(() => {
-    setValue('identifier', spaceData?.identifier ?? '')
-  }, [spaceData?.identifier, setValue])
+    setValue('identifier', data?.identifier ?? '')
+  }, [data?.identifier, setValue])
 
   useEffect(() => {
     reset({
-      identifier: spaceData?.identifier ?? '',
-      description: spaceData?.description ?? ''
+      identifier: data?.identifier ?? '',
+      description: data?.description ?? ''
     })
-  }, [spaceData, reset])
+  }, [data, reset])
 
   return (
     <SandboxLayout.Main>

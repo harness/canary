@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
-import { redirect } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import {
   DeleteSpaceErrorResponse,
@@ -8,22 +8,23 @@ import {
   useDeleteSpaceMutation,
   useUpdateSpaceMutation
 } from '@harnessio/code-service-client'
-import { DeleteAlertDialog } from '@harnessio/ui/components'
+import { DeleteAlertDialog, DeleteAlertDialogProps } from '@harnessio/ui/components'
 import { ProjectSettingsGeneralFields, ProjectSettingsGeneralPage } from '@harnessio/ui/views'
 
 import { useAppContext } from '../../framework/context/AppContext'
+import { useRoutes } from '../../framework/context/NavigationContext.tsx'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store.ts'
-import { useSpaceStore } from './stores/spaces-store'
 
 export const ProjectGeneralSettingsPageContainer = () => {
+  const routes = useRoutes()
+  const navigate = useNavigate()
   const spaceURL = useGetSpaceURLParam()
-  const { spaces, isSpacesLoading } = useAppContext()
-  const { setSpace, setIsLoading } = useSpaceStore()
+  const { spaces, isSpacesLoading, setSpaces } = useAppContext()
   const space = spaces.find((space: TypesSpace) => space?.identifier === spaceURL)
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
   const [updateError, setUpdateError] = useState<string | null>(null)
-  const [deleteError, setDeleteError] = useState<{ type: string; message: string } | null>(null)
+  const [deleteError, setDeleteError] = useState<DeleteAlertDialogProps['error']>(null)
 
   const updateDescription = useUpdateSpaceMutation(
     { space_ref: space?.path },
@@ -33,7 +34,7 @@ export const ProjectGeneralSettingsPageContainer = () => {
           setUpdateError('')
           space.description = data?.description
         }
-        redirect('/')
+        navigate(routes.toHome())
       },
       onError: (error: UpdateSpaceErrorResponse) => {
         const errormsg = error?.message || 'An unknown error occurred.'
@@ -51,42 +52,26 @@ export const ProjectGeneralSettingsPageContainer = () => {
     { space_ref: space?.path },
     {
       onSuccess: ({ body: data }) => {
-        if (data) {
-          setDeleteError(null)
-          redirect('/')
-        }
+        if (!data) return
+
+        setDeleteError(null)
+        navigate(routes.toHome())
+        setSpaces(spaces.filter((s: TypesSpace) => s.identifier !== space?.identifier))
       },
       onError: (error: DeleteSpaceErrorResponse) => {
         const deleteErrorMsg = error?.message || 'An unknown error occurred.'
-        setDeleteError({ type: '', message: deleteErrorMsg })
+        setDeleteError({ message: deleteErrorMsg })
       }
     }
   )
 
-  const handleDeleteProject = () => {
-    deleteSpaceMutation.mutate(
-      { space_ref: space?.path },
-      {
-        onSuccess: () => {
-          setDeleteError(null)
-          redirect('/')
-        }
-      }
-    )
-  }
-
-  useEffect(() => {
-    setIsLoading(isSpacesLoading)
-  }, [isSpacesLoading, setIsLoading])
-
-  useEffect(() => {
-    setSpace(space || null)
-  }, [space, setSpace])
+  const handleDeleteProject = () => deleteSpaceMutation.mutate({}, {})
 
   return (
     <>
       <ProjectSettingsGeneralPage
-        useSpaceStore={useSpaceStore}
+        data={space}
+        isLoading={isSpacesLoading}
         onFormSubmit={handleFormSubmit}
         isUpdating={updateDescription.isLoading}
         isUpdateSuccess={updateDescription.isSuccess}
@@ -100,7 +85,6 @@ export const ProjectGeneralSettingsPageContainer = () => {
         deleteFn={handleDeleteProject}
         type="Project"
         error={deleteError}
-        identifier=""
         isLoading={deleteSpaceMutation.isLoading}
         withForm
         useTranslationStore={useTranslationStore}

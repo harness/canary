@@ -210,7 +210,6 @@ export type EnumPullReqActivityType =
   | 'branch-update'
   | 'code-comment'
   | 'comment'
-  | 'label-modify'
   | 'merge'
   | 'review-submit'
   | 'reviewer-delete'

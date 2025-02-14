@@ -194,7 +194,7 @@ const BranchSettingsRuleBypassListOption = (option: MultiSelectOptionType<Princi
   return (
     <>
       <Avatar.Root>
-        {!!option?.url && <Avatar.Image src={option.url} alt={option.display_name} />}
+        {!!option?.avatar_url && <Avatar.Image src={option.avatar_url} alt={option.display_name} />}
         <Avatar.Fallback>{getInitials(option.display_name)}</Avatar.Fallback>
       </Avatar.Root>
       <span className="font-medium">{option.display_name}</span>

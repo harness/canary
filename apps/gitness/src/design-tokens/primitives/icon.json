@@ -11,6 +11,11 @@
     },
     "md": {
       "$type": "sizing",
+      "$value": "{size.5}",
+      "$description": "20px\n"
+    },
+    "lg": {
+      "$type": "sizing",
       "$value": "{size.8}",
       "$description": "32px\n"
     }
@@ -25,6 +30,10 @@
       "$value": "1"
     },
     "md": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "lg": {
       "$type": "borderWidth",
       "$value": "2"
     }

@@ -11,18 +11,22 @@
     },
     "md": {
       "$type": "sizing",
-      "$value": "{size.6}",
-      "$description": "24px\n"
+      "$value": "{size.8}",
+      "$description": "32px\n"
     }
   },
   "iconWidth": {
+    "xs": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
     "sm": {
       "$type": "borderWidth",
       "$value": "1"
     },
     "md": {
       "$type": "borderWidth",
-      "$value": "1.5"
+      "$value": "2"
     }
   }
 }

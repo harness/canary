@@ -130,10 +130,12 @@
       }
     }
   }
+
   & img {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
+
   .token {
     &.punctuation {
       color: var(--color-prettylights-syntax-string);
@@ -246,6 +248,14 @@
 
     thead tr {
       @apply border-0;
+    }
+  }
+
+  &.comment {
+    @apply !text-14 !text-foreground-2 !bg-transparent !leading-snug;
+
+    blockquote {
+      @apply before:bg-borders-2 relative border-0 before:absolute before:inset-y-0 before:left-0 before:w-[3px] before:rounded-sm;
     }
   }
 }

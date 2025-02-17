@@ -3,7 +3,7 @@ import { FC, useMemo } from 'react'
 import { TypesUser } from '@/types'
 import { SkeletonList, Spacer } from '@components/index'
 import { DiffModeEnum } from '@git-diff-view/react'
-import { activityToCommentItem, TypesCommit } from '@views/index'
+import { activityToCommentItem, HandleUploadType, TypesCommit } from '@views/index'
 import { TranslationStore } from '@views/repo/repo-list/types'
 import { orderBy } from 'lodash-es'
 
@@ -51,7 +51,7 @@ interface RepoPullRequestChangesPageProps {
   toggleConversationStatus: (status: string, parentId?: number) => void
   commitSuggestionsBatchCount: number
   onCommitSuggestionsBatch: () => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void

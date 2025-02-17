@@ -222,3 +222,5 @@ export interface PRListLabelType {
   key: string
   value?: string
 }
+
+export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void) => void

@@ -2,7 +2,7 @@ import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, TranslationStore } from '@/views'
+import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
 
@@ -28,7 +28,7 @@ interface PullRequestFormProps {
   handleSubmit: UseFormHandleSubmit<FormFields>
   register: UseFormRegister<FormFields>
   useTranslationStore: () => TranslationStore
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
 }

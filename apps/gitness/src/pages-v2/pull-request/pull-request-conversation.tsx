@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
@@ -54,6 +54,17 @@ import { usePrFilters } from './hooks/use-pr-filters'
 import { usePRCommonInteractions } from './hooks/usePRCommonInteractions'
 import { extractInfoFromRuleViolationArr, processReviewDecision } from './pull-request-utils'
 import { usePullRequestProviderStore } from './stores/pull-request-provider-store'
+
+const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
+  if (!commentId) return
+
+  const url = new URL(window.location.href)
+
+  if (isNotCodeComment) url.pathname = url.pathname.replace('/conversation', '/changes')
+
+  url.searchParams.set('commentId', commentId.toString())
+  copy(url.toString())
+}
 
 export default function PullRequestConversationPage() {
   const routes = useRoutes()
@@ -173,12 +184,15 @@ export default function PullRequestConversationPage() {
     pullreq_number: Number(pullRequestId)
   })
 
-  const handleUpdateDescription = (title: string, description: string) => {
-    updateTitle({ body: { title, description } }).catch(err => {
-      setErrorMsg(err.message)
-    })
-    refetchPullReq()
-  }
+  const handleUpdateDescription = useCallback(
+    (title: string, description: string) => {
+      updateTitle({ body: { title, description } }).catch(err => {
+        setErrorMsg(err.message)
+      })
+      refetchPullReq()
+    },
+    [updateTitle, refetchPullReq]
+  )
 
   const onDeleteBranch = () => {
     deleteBranch({
@@ -282,16 +296,6 @@ export default function PullRequestConversationPage() {
     setActivities(activityData)
   }, [activityData])
 
-  const onCopyClick = (commentId?: number, isNotCodeComment = false) => {
-    if (commentId) {
-      const url = new URL(window.location.href)
-      if (isNotCodeComment) {
-        url.pathname = url.pathname.replace('/conversation', '/changes')
-      }
-      url.searchParams.set('commentId', commentId.toString())
-      copy(url.toString())
-    }
-  }
   useEffect(() => {
     if (!commentId || isScrolledToComment || prPanelData.PRStateLoading || activityData?.length === 0) return
     // Slight timeout so the UI has time to expand/hydrate
@@ -505,6 +509,55 @@ export default function PullRequestConversationPage() {
 
   const [rebaseErrorMessage, setRebaseErrorMessage] = useState<string | null>(null)
 
+  /**
+   * Memoize overviewProps
+   */
+  const overviewProps = useMemo(
+    () => ({
+      toCommitDetails: ({ sha }: { sha: string }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
+      handleUpdateDescription,
+      handleDeleteComment: deleteComment,
+      handleUpdateComment: updateComment,
+      data: activities,
+      pullReqMetadata,
+      activityFilter: filtersData.activityFilter,
+      dateOrderSort: filtersData.dateOrderSort,
+      handleSaveComment,
+      currentUser: {
+        display_name: currentUserData?.display_name,
+        uid: currentUserData?.uid
+      },
+      onCopyClick,
+      toggleConversationStatus,
+      onCommitSuggestion,
+      addSuggestionToBatch,
+      suggestionsBatch,
+      removeSuggestionFromBatch,
+      filenameToLanguage,
+      handleUpload,
+      toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
+    }),
+    [
+      routes,
+      handleUpdateDescription,
+      deleteComment,
+      updateComment,
+      activities,
+      pullReqMetadata,
+      filtersData,
+      handleSaveComment,
+      currentUserData,
+      toggleConversationStatus,
+      onCommitSuggestion,
+      addSuggestionToBatch,
+      suggestionsBatch,
+      removeSuggestionFromBatch,
+      handleUpload,
+      spaceId,
+      repoId
+    ]
+  )
+
   if (prPanelData?.PRStateLoading || (changesLoading && !!pullReqMetadata?.closed)) {
     return <SkeletonList />
   }
@@ -522,6 +575,7 @@ export default function PullRequestConversationPage() {
         rebaseErrorMessage={rebaseErrorMessage}
         filtersProps={filtersData}
         useTranslationStore={useTranslationStore}
+        // TODO: create useMemo of panelProps
         panelProps={{
           handleRebaseBranch,
           handlePrState,
@@ -563,30 +617,8 @@ export default function PullRequestConversationPage() {
           spaceId,
           repoId
         }}
-        overviewProps={{
-          toCommitDetails: ({ sha }) => routes.toRepoCommitDetails({ spaceId, repoId, commitSHA: sha }),
-          handleUpdateDescription,
-          handleDeleteComment: deleteComment,
-          handleUpdateComment: updateComment,
-          data: activities,
-          pullReqMetadata,
-          activityFilter: filtersData.activityFilter,
-          dateOrderSort: filtersData.dateOrderSort,
-          handleSaveComment,
-          currentUser: {
-            display_name: currentUserData?.display_name,
-            uid: currentUserData?.uid
-          },
-          onCopyClick,
-          toggleConversationStatus,
-          onCommitSuggestion,
-          addSuggestionToBatch,
-          suggestionsBatch,
-          removeSuggestionFromBatch,
-          filenameToLanguage,
-          handleUpload,
-          toCode: ({ sha }: { sha: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${sha}`
-        }}
+        overviewProps={overviewProps}
+        // TODO: create useMemo of commentBoxProps
         commentBoxProps={{
           comment,
           setComment,
@@ -594,6 +626,7 @@ export default function PullRequestConversationPage() {
           onSaveComment: handleSaveComment,
           handleUpload
         }}
+        // TODO: create useMemo of sideBarProps
         sideBarProps={{
           addReviewers: handleAddReviewer,
           usersList: principals as PrincipalType[],

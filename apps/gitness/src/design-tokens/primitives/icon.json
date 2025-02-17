@@ -1,14 +1,24 @@
 {
   "iconSize": {
+    "xs": {
+      "$type": "sizing",
+      "$value": "{size.3-half}"
+    },
     "sm": {
       "$type": "sizing",
-      "$value": "{size.4}"
+      "$value": "{size.4}",
+      "$description": "16px"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.6}",
+      "$description": "24px\n"
     }
   },
   "iconWidth": {
     "sm": {
       "$type": "borderWidth",
-      "$value": "1.4"
+      "$value": "1"
     }
   }
 }

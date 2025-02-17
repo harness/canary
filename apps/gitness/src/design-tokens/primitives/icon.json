@@ -2,7 +2,8 @@
   "iconSize": {
     "xs": {
       "$type": "sizing",
-      "$value": "{size.3-half}"
+      "$value": "{size.3-half}",
+      "$description": "14px"
     },
     "sm": {
       "$type": "sizing",

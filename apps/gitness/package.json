@@ -17,7 +17,7 @@
     "test:changed": "vitest --run --changed=origin/main",
     "extract": "i18next --config './i18n.config.ts'",
     "typecheck": "tsc -b",
-    "build:webpack": "webpack --config webpack.config.cjs",
+    "build:webpack": "rm -rf dist && webpack --config webpack.config.cjs",
     "start:webpack": "webpack serve --config webpack.config.cjs"
   },
   "dependencies": {

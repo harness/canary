@@ -5,7 +5,8 @@
     "selectedTokenSets": {
       "primitives/colors": "enabled",
       "primitives/typography": "enabled",
-      "primitives/dimensions": "enabled"
+      "primitives/dimensions": "enabled",
+      "primitives/icon": "enabled"
     },
     "$figmaStyleReferences": {
       "colors.pure.white": "S:b8bdca9fbe3f6357180e05d25146f83172409a7e,",

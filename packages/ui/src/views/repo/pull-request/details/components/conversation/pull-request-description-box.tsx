@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
 import { Avatar, Button, DropdownMenu, Icon, MarkdownViewer, Text } from '@/components'
+import { HandleUploadType } from '@/views'
 import { getInitials } from '@utils/stringUtils'
 import { timeAgo } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 import PullRequestTimelineItem from './pull-request-timeline-item'
 
-interface PullRequestDescBoxProps {
+export interface PullRequestDescBoxProps {
   isLast: boolean
   title?: string
   author?: string
@@ -15,10 +16,10 @@ interface PullRequestDescBoxProps {
   createdAt?: number
   description?: string
   handleUpdateDescription: (title: string, description: string) => void
-  handleUpload: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload: HandleUploadType
 }
 
-const PullRequestDescBox: React.FC<PullRequestDescBoxProps> = ({
+const PullRequestDescBox: FC<PullRequestDescBoxProps> = ({
   isLast,
   author,
   prNum,

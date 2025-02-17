@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { Button } from '@components/button'
 import { DropdownMenu } from '@components/dropdown-menu'
-import { Icon } from '@components/icon'
+import { Icon, IconProps } from '@components/icon'
 import { cn } from '@utils/cn'
 
 export interface ActionData {
@@ -16,12 +16,23 @@ export interface ActionData {
 export interface MoreActionsTooltipProps {
   actions: ActionData[]
   isInTable?: boolean
+  iconName?: IconProps['name']
+  sideOffset?: number
+  alignOffset?: number
+  className?: string
 }
 
 /**
  * A component for displaying a button that, when clicked, shows a tooltip with a list of actions.
  */
-export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInTable = false }) => {
+export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({
+  actions,
+  isInTable = false,
+  iconName = 'vertical-ellipsis',
+  sideOffset = -6,
+  alignOffset = 10,
+  className
+}) => {
   if (!actions.length) return <></>
 
   return (
@@ -34,14 +45,14 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
           variant="custom"
           size="icon"
         >
-          <Icon name="vertical-ellipsis" size={12} />
+          <Icon name={iconName} size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Content
-        className="w-[180px]"
+        className={cn('w-[180px]', className)}
         align="end"
-        sideOffset={-6}
-        alignOffset={10}
+        sideOffset={sideOffset}
+        alignOffset={alignOffset}
         onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
       >
         <DropdownMenu.Group>

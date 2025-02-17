@@ -46,10 +46,11 @@ const useGetPullRequestTab = ({
 
   useEffect(() => {
     const matchedRoute = routeTabMapping.find(route => route.match)
-    if (matchedRoute) {
-      setPullRequestTab(matchedRoute.tab)
-    }
-  }, [routeTabMapping, spaceId, repoId, pullRequestId])
+    if (!matchedRoute) return
+
+    setPullRequestTab(matchedRoute.tab)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [spaceId, repoId, pullRequestId])
 
   return pullRequestTab
 }

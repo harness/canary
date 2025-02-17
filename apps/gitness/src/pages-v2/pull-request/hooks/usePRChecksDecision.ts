@@ -33,6 +33,7 @@ export function usePRChecksDecision({
     pullreq_number: pullReqMetadata?.number ?? 0,
     queryParams: { debounce: 500 }
   })
+
   const [count, setCount] = useState(DEFAULT_COUNTS)
   const [color, setColor] = useState<string>('text-success')
   const [background, setBackground] = useState<string>('text-success')

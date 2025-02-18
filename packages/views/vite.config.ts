@@ -13,7 +13,6 @@ const external = [
   'moment',
   '@harnessio/canary',
   '@harnessio/forms',
-  '@harnessio/unified-pipeline',
   'react-router-dom'
 ]
 

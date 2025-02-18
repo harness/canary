@@ -582,7 +582,7 @@
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "#fff",
+            "$value": "{colors.green.100}",
             "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
           },
           "foreground": {

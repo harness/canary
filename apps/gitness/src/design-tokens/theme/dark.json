@@ -1033,7 +1033,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{shadow.color.none}",
+        "color": "{shadow-color.none}",
         "type": "dropShadow"
       },
       "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
@@ -1045,7 +1045,7 @@
         "y": "1",
         "blur": "2",
         "spread": "0",
-        "color": "{shadow.color.sm}",
+        "color": "{shadow-color.sm}",
         "type": "dropShadow"
       },
       "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
@@ -1058,7 +1058,7 @@
           "y": "1",
           "blur": "3",
           "spread": "0",
-          "color": "{shadow.color.base}",
+          "color": "{shadow-color.base}",
           "type": "dropShadow"
         },
         {
@@ -1066,7 +1066,7 @@
           "y": "1",
           "blur": "2",
           "spread": "-1",
-          "color": "{shadow.color.base}",
+          "color": "{shadow-color.base}",
           "type": "innerShadow"
         }
       ],
@@ -1080,7 +1080,7 @@
           "y": "4",
           "blur": "6",
           "spread": "-1",
-          "color": "{shadow.color.md}",
+          "color": "{shadow-color.md}",
           "type": "dropShadow"
         },
         {
@@ -1088,7 +1088,7 @@
           "y": "2",
           "blur": "4",
           "spread": "-2",
-          "color": "{shadow.color.md}",
+          "color": "{shadow-color.md}",
           "type": "innerShadow"
         }
       ],
@@ -1102,7 +1102,7 @@
           "y": "10",
           "blur": "15",
           "spread": "-3",
-          "color": "{shadow.color.lg}",
+          "color": "{shadow-color.lg}",
           "type": "dropShadow"
         },
         {
@@ -1124,7 +1124,7 @@
           "y": "20",
           "blur": "25",
           "spread": "-5",
-          "color": "{shadow.color.xl}",
+          "color": "{shadow-color.xl}",
           "type": "dropShadow"
         },
         {
@@ -1132,7 +1132,7 @@
           "y": "8",
           "blur": "10",
           "spread": "-6",
-          "color": "{shadow.color.xl}",
+          "color": "{shadow-color.xl}",
           "type": "dropShadow"
         }
       ],
@@ -1145,7 +1145,7 @@
         "y": "25",
         "blur": "50",
         "spread": "-12",
-        "color": "{shadow.color.2xl}",
+        "color": "{shadow-color.2xl}",
         "type": "dropShadow"
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
@@ -1157,116 +1157,116 @@
         "y": "2",
         "blur": "4",
         "spread": "0",
-        "color": "{shadow.color.inner}",
+        "color": "{shadow-color.inner}",
         "type": "innerShadow"
       },
       "$description": "Inner shadow. \nCommon uses: Pressed buttons, selected states, inset form fields."
+    }
+  },
+  "shadow-color": {
+    "none": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.pure.black}"
     },
-    "color": {
-      "none": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0",
-              "space": "p3"
-            }
+    "sm": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.6",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "sm": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.6",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "base": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.6",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "base": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.6",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "md": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "md": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.5",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "lg": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "lg": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.5",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "xl": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "xl": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.5",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "2xl": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.6",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "2xl": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.6",
-              "space": "p3"
-            }
+      "$type": "color",
+      "$value": "{colors.pure.black}"
+    },
+    "inner": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.1",
+            "space": "p3"
           }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.black}"
+        }
       },
-      "inner": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.1",
-              "space": "p3"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.pure.white}"
-      }
+      "$type": "color",
+      "$value": "{colors.pure.white}"
     }
   },
   "ring": {

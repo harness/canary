@@ -12,16 +12,16 @@
   ],
   "types": "./dist/index.d.ts",
   "scripts": {
+    "dev": "vite build --watch",
     "webpack": "webpack",
     "build": "vite build",
     "build:ci": "vite build",
-    "watch:build": "watch 'pnpm build-yalc' ./src",
-    "build-yalc": "pnpm build && pnpm yalc-push",
-    "yalc-push": "yalc push",
+    "build:watch": "vite build --watch",
     "prepublishOnly": "pnpm build",
     "pretty": "prettier --check ./src",
     "lint": "eslint ./src",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+    "playground": "vite dev --config vite.config.playground.ts"
   },
   "peerDependencies": {
     "@monaco-editor/react": "4.6.0",

@@ -8,7 +8,7 @@ import { Demo3 } from './demo3/demo3'
 
 const demoArr = [
   {
-    name: 'YamlEditor 1',
+    name: 'YamlEditor',
     component: Demo1
   },
   {

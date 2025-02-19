@@ -287,7 +287,7 @@
       "$value": "{colors.chrome.200}",
       "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
     },
-    "secondary": {
+    "subtle": {
       "$type": "color",
       "$value": "{colors.chrome.400}",
       "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
@@ -482,7 +482,7 @@
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.secondary}",
+            "$value": "{foreground.subtle}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           }
         },
@@ -570,7 +570,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{foreground.secondary}",
+          "$value": "{foreground.subtle}",
           "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
         }
       },
@@ -592,7 +592,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{foreground.secondary}",
+          "$value": "{foreground.subtle}",
           "$description": "Icon color during hover.\nCommon uses: interactive icon states."
         }
       },
@@ -614,7 +614,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{foreground.secondary}",
+          "$value": "{foreground.subtle}",
           "$description": "Icon color in active state.\nCommon uses: active state indicators."
         }
       },

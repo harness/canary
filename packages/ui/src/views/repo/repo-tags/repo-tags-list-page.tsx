@@ -24,7 +24,7 @@ interface RepoTagsListViewProps {
   isLoading: boolean
   openCreateBranchDialog: () => void
   searchQuery: string
-  setSearchQuery: (value: string) => void
+  setSearchQuery: (value: string | null) => void
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => any
 }
@@ -39,27 +39,27 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   useRepoTagsStore
 }) => {
   const { t } = useTranslationStore()
-  const { tags: tagsList } = useRepoTagsStore()
+  const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
 
   const { search, handleSearchChange } = useDebounceSearch({
     handleChangeSearchValue: setSearchQuery,
     searchValue: searchQuery || ''
   })
 
-  // const FILTER_OPTIONS = getFilterOptions(t)
-  // const SORT_OPTIONS = getSortOptions(t)
-  // const SORT_DIRECTIONS = getSortDirections(t)
-  // const filterHandlers = useFilters()
+  const FILTER_OPTIONS = getFilterOptions(t)
+  const SORT_OPTIONS = getSortOptions(t)
+  const SORT_DIRECTIONS = getSortDirections(t)
+  const filterHandlers = useFilters()
 
-  // const handleResetFiltersAndPages = () => {
-  //   setPage(1)
-  //   setSearchQuery(null)
-  //   filterHandlers.handleResetFilters()
-  // }
+  const handleResetFiltersAndPages = () => {
+    setPage(1)
+    setSearchQuery(null)
+    filterHandlers.handleResetFilters()
+  }
 
-  // const isDirtyList = useMemo(() => {
-  //   return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
-  // }, [page, filterHandlers.activeFilters, searchQuery])
+  const isDirtyList = useMemo(() => {
+    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
+  }, [page, filterHandlers.activeFilters, searchQuery])
 
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
@@ -81,25 +81,25 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
               />
             </ListActions.Left>
             <ListActions.Right>
-              {/* <Filters
+              <Filters
                 filterOptions={FILTER_OPTIONS}
                 sortOptions={SORT_OPTIONS}
                 filterHandlers={filterHandlers}
                 t={t}
-              /> */}
+              />
               <Button variant="default" onClick={openCreateBranchDialog}>
                 {t('views:repos.newTag', 'New tag')}
               </Button>
             </ListActions.Right>
           </ListActions.Root>
 
-          {/* <FiltersBar
+          <FiltersBar
             filterOptions={FILTER_OPTIONS}
             sortOptions={SORT_OPTIONS}
             sortDirections={SORT_DIRECTIONS}
             filterHandlers={filterHandlers}
             t={t}
-          /> */}
+          />
           <Spacer size={5} />
 
           <Table.Root variant="asStackedList">
@@ -160,6 +160,8 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 
           <Spacer size={5} />
         </>
+        <Pagination currentPage={page} nextPage={xNextPage} previousPage={xPrevPage} goToPage={setPage} t={t} />
+
         {/* )} */}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

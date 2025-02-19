@@ -7,32 +7,37 @@ import {
   useListTagsQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CreateTagDialog, CreateTagFromFields, RepoTagsListView } from '@harnessio/ui/views'
+import { CommitTagType, CreateTagDialog, CreateTagFromFields, RepoTagsListView } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useQueryState } from '../../framework/hooks/useQueryState'
+import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
+import { PageResponseHeader } from '../../types'
 import { useRepoBranchesStore } from './stores/repo-branches-store'
 import { useRepoTagsStore } from './stores/repo-tags-store'
 import { transformBranchList } from './transform-utils/branch-transform'
 
 export const RepoTagsListContainer = () => {
   const repo_ref = useGetRepoRef()
-  const { setTags, addTag, removeTag } = useRepoTagsStore()
+  const { setTags, addTag, removeTag, page, setPage, setPaginationFromHeaders } = useRepoTagsStore()
   const { setBranchList, setDefaultBranch } = useRepoBranchesStore()
   const [query, setQuery] = useQueryState('query')
+  const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [openCreateTagDialog, setOpenCreateTagDialog] = useState(false)
   const [deleteTagDialog, setDeleteTagDialog] = useState(false)
   const [deleteTagName, setDeleteTagName] = useState<string | null>(null)
 
-  const { data: { body: tagsList } = {}, isLoading: isLoadingTags } = useListTagsQuery({
+  const { data: { body: tagsList, headers } = {}, isLoading: isLoadingTags } = useListTagsQuery({
     repo_ref: repo_ref,
     queryParams: {
       query: query ?? '',
-      include_commit: true
+      page: queryPage
     }
   })
+
+  console.log(headers)
 
   const { isLoading: isLoadingBranches, data: { body: branches } = {} } = useListBranchesQuery({
     queryParams: {
@@ -50,7 +55,7 @@ export const RepoTagsListContainer = () => {
     {
       onSuccess: data => {
         setOpenCreateTagDialog(false)
-        addTag(data.body)
+        addTag(data.body as CommitTagType)
       }
     }
   )
@@ -67,7 +72,7 @@ export const RepoTagsListContainer = () => {
 
   useEffect(() => {
     if (tagsList) {
-      setTags(tagsList)
+      setTags(tagsList as CommitTagType[])
     }
   }, [tagsList, setTags])
 
@@ -76,6 +81,13 @@ export const RepoTagsListContainer = () => {
       setBranchList(transformBranchList(branches))
     }
   }, [branches, setBranchList])
+
+  useEffect(() => {
+    setPaginationFromHeaders(
+      parseInt(headers?.get(PageResponseHeader.xNextPage) || ''),
+      parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
+    )
+  }, [headers, setPaginationFromHeaders])
 
   const onSubmit = (data: CreateTagFromFields) => {
     createTag({

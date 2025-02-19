@@ -10,12 +10,15 @@ import {
   FormWrapper,
   Icon,
   Input,
+  Label,
   Select,
   SelectContent,
   SelectItem,
   Textarea
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { BranchSelector } from '@views/repo/components'
+// import { BranchSelector } from '@views/repo/components'
 import { TranslationStore } from '@views/repo/repo-list/types'
 import { IBranchSelectorStore } from '@views/repo/repo.types'
 import { z } from 'zod'
@@ -25,11 +28,12 @@ interface CreateTagDialogProps {
   onClose: () => void
   onSubmit: (data: CreateTagFromFields) => void
   //   branches?: { name: string }[]
+  branchQuery?: string
+  setBranchQuery: (query: string) => void
   useRepoBranchesStore: () => IBranchSelectorStore
   isLoadingBranches?: boolean
   error?: string
   useTranslationStore: () => TranslationStore
-  handleChangeSearchValue: (value: string) => void
   isLoading?: boolean
 }
 
@@ -49,12 +53,12 @@ export function CreateTagDialog({
   isLoadingBranches,
   error,
   useTranslationStore,
-  handleChangeSearchValue,
-  isLoading
+  isLoading,
+  branchQuery,
+  setBranchQuery
 }: CreateTagDialogProps) {
   const { t } = useTranslationStore()
   const { branchList: branches, defaultBranch } = useRepoBranchesStore()
-  console.log('defaultBranch', defaultBranch)
   const {
     register,
     handleSubmit,
@@ -88,7 +92,6 @@ export function CreateTagDialog({
     clearErrors()
     setValue('name', '', { shouldValidate: false })
     setValue('target', defaultBranch || '', { shouldValidate: false })
-    handleChangeSearchValue('')
     onClose()
   }
 
@@ -136,40 +139,17 @@ export function CreateTagDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Select
-                name="target"
-                value={targetValue || defaultBranch}
-                onValueChange={value => handleSelectChange('target', value)}
-                placeholder={t('views:forms.select', 'Select')}
-                label={t('views:forms.baseTag', 'Based on')}
-                error={
-                  errors.target?.message
-                    ? t('views:forms.selectBranchError', errors.target?.message?.toString())
-                    : undefined
-                }
-                disabled={isLoadingBranches || !branches?.length}
-              >
-                <SelectContent
-                  withSearch
-                  searchProps={{
-                    placeholder: t('views:repos.search', 'Search'),
-                    searchValue: '',
-                    handleChangeSearchValue
-                  }}
-                >
-                  {processedBranches?.map(
-                    branch =>
-                      branch?.name && (
-                        <SelectItem key={branch.name} value={branch.name as string}>
-                          <span className="flex items-center gap-1.5">
-                            <Icon name="branch" size={14} />
-                            {branch.name}
-                          </span>
-                        </SelectItem>
-                      )
-                  )}
-                </SelectContent>
-              </Select>
+              <Label htmlFor="target" className="mb-2.5">
+                Based on
+              </Label>
+              <BranchSelector
+                useRepoBranchesStore={useRepoBranchesStore}
+                useTranslationStore={useTranslationStore}
+                onSelectBranch={value => handleSelectChange('target', value.name)}
+                isBranchOnly={true}
+                searchQuery={branchQuery}
+                setSearchQuery={setBranchQuery}
+              />
             </ControlGroup>
           </Fieldset>
 

@@ -37,7 +37,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
 
   return (
     <DropdownMenu.Content
-      className="w-[298px] p-0"
+      className="p-0"
+      style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
       align="start"
       onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
     >

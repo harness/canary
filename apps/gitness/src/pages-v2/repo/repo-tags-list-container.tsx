@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import {
   useCreateTagMutation,
   useDeleteTagMutation,
+  useFindRepositoryQuery,
   useListBranchesQuery,
   useListTagsQuery
 } from '@harnessio/code-service-client'
@@ -21,31 +22,34 @@ import { transformBranchList } from './transform-utils/branch-transform'
 export const RepoTagsListContainer = () => {
   const repo_ref = useGetRepoRef()
   const { setTags, addTag, removeTag, page, setPage, setPaginationFromHeaders } = useRepoTagsStore()
-  const { setBranchList, setDefaultBranch } = useRepoBranchesStore()
+  const { setBranchList, setDefaultBranch, setSelectedBranchTag, branchList } = useRepoBranchesStore()
   const [query, setQuery] = useQueryState('query')
+  const [branchQuery, setBranchQuery] = useState('')
+
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [openCreateTagDialog, setOpenCreateTagDialog] = useState(false)
   const [deleteTagDialog, setDeleteTagDialog] = useState(false)
   const [deleteTagName, setDeleteTagName] = useState<string | null>(null)
 
+  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repo_ref })
+
   const { data: { body: tagsList, headers } = {}, isLoading: isLoadingTags } = useListTagsQuery({
     repo_ref: repo_ref,
     queryParams: {
       query: query ?? '',
-      page: queryPage
+      page: queryPage,
+      limit: 10
     }
   })
 
-  console.log(headers)
-
-  const { isLoading: isLoadingBranches, data: { body: branches } = {} } = useListBranchesQuery({
+  const { data: { body: branches } = {} } = useListBranchesQuery({
     queryParams: {
       limit: 50,
-      //   query: query ?? '',
-      //   order: orderSortDate.DESC,
-      include_commit: true,
-      include_pullreqs: true
+      query: branchQuery ?? ''
+      // order: orderSortDate.DESC,
+      //   include_commit: true,
+      //   include_pullreqs: true
     },
     repo_ref: repo_ref
   })
@@ -78,9 +82,9 @@ export const RepoTagsListContainer = () => {
 
   useEffect(() => {
     if (branches) {
-      setBranchList(transformBranchList(branches))
+      setBranchList(transformBranchList(branches, repository?.default_branch))
     }
-  }, [branches, setBranchList])
+  }, [branches, setBranchList, repository])
 
   useEffect(() => {
     setPaginationFromHeaders(
@@ -88,6 +92,16 @@ export const RepoTagsListContainer = () => {
       parseInt(headers?.get(PageResponseHeader.xPrevPage) || '')
     )
   }, [headers, setPaginationFromHeaders])
+
+  useEffect(() => {
+    const defaultBranch = branchList?.find(branch => branch.default)
+    setSelectedBranchTag({
+      name: defaultBranch?.name || repository?.default_branch || '',
+      sha: defaultBranch?.sha || '',
+      default: true
+    })
+    setDefaultBranch(repository?.default_branch ?? '')
+  }, [branchList, repository?.default_branch])
 
   const onSubmit = (data: CreateTagFromFields) => {
     createTag({
@@ -123,7 +137,8 @@ export const RepoTagsListContainer = () => {
         open={openCreateTagDialog}
         onClose={() => setOpenCreateTagDialog(false)}
         onSubmit={onSubmit}
-        handleChangeSearchValue={() => {}}
+        branchQuery={branchQuery}
+        setBranchQuery={setBranchQuery}
         useRepoBranchesStore={useRepoBranchesStore}
         isLoading={isCreatingTag}
       />

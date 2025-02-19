@@ -28,7 +28,7 @@ export interface BranchProps {
       error: number
     }
   }
-  behindAhead: {
+  behindAhead?: {
     behind?: number
     ahead?: number
     default?: boolean

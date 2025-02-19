@@ -31,6 +31,10 @@ export * from '@views/repo/repo-commits'
 export * from '@views/repo/repo-branch'
 export * from '@views/repo/repo-branch/types'
 
+// repo tags
+export * from '@views/repo/repo-tags/repo-tags-list-page'
+export * from '@views/repo/repo-tags/components/create-tags-dialog'
+
 // repo settings
 export * from '@views/repo/repo-settings/repo-settings-layout'
 export * from '@views/repo/repo-settings/repo-settings-general-page'

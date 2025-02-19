@@ -54,6 +54,7 @@ import RepoPipelineListPage from './pages-v2/repo/repo-pipeline-list'
 import { RepoSettingsGeneralPageContainer } from './pages-v2/repo/repo-settings-general-container'
 import { RepoSidebar } from './pages-v2/repo/repo-sidebar'
 import RepoSummaryPage from './pages-v2/repo/repo-summary'
+import { RepoTagsListContainer } from './pages-v2/repo/repo-tags-list-container.tsx'
 import { SignIn } from './pages-v2/signin'
 import { SignUp } from './pages-v2/signup'
 import { UserManagementPageContainer } from './pages-v2/user-management/user-management-container'
@@ -215,6 +216,10 @@ export const repoRoutes: CustomRouteObject[] = [
                 element: <RepoCode />
               }
             ]
+          },
+          {
+            path: 'tags',
+            element: <RepoTagsListContainer />
           },
           {
             path: 'pulls',

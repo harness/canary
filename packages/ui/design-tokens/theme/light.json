@@ -13,7 +13,7 @@
     "top": {
       "$type": "color",
       "$value": "{colors.chrome.50}",
-      "$description": "Represents elements that sit on top of the middle layer (Level 3) - these are the most prominent elements like selected items or emphasized content."
+      "$description": "Represents elements that sit on top of the middle layer (Level 3) - these are the most prominent elements like emphasized content."
     },
     "float": {
       "$type": "color",

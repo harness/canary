@@ -7,7 +7,6 @@ export interface ApprovalNodeDataType {}
 export function ApprovalNode(_props: { node: LeafNodeInternalType<ApprovalNodeDataType> }) {
   const style: React.CSSProperties = {
     transformOrigin: 'center center',
-    // zIndex: '-10',
     position: 'absolute',
     transform: 'rotate(45deg)',
     boxSizing: 'border-box',

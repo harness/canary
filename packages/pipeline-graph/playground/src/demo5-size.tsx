@@ -1,21 +1,20 @@
+import React from 'react'
+
 import { parse } from 'yaml'
 
+import { CanvasProvider } from '../../src/context/canvas-provider'
 import { PipelineGraph } from '../../src/pipeline-graph'
 import { NodeContent } from '../../src/types/node-content'
 import { ContainerNode } from '../../src/types/nodes'
-import { yaml2Nodes } from './parser/yaml2AnyNodes'
-import { pipeline } from './sample-data/pipeline'
-
-import './sample-data/pipeline-data'
-
-import React from 'react'
-
-import { CanvasProvider } from '../../src/context/canvas-provider'
 import { CanvasControls } from './canvas/CanvasControls'
 import { SimpleParallelGroupNodeContent } from './nodes-simple/simple-parallel-group-node'
 import { SimpleSerialGroupContentNode } from './nodes-simple/simple-stage-node'
 import { SimpleStepNode } from './nodes-simple/simple-step-node'
+import { yaml2Nodes } from './parser/yaml2AnyNodes'
+import { pipeline } from './sample-data/pipeline'
 import { ContentNodeTypes } from './types/content-node-types'
+
+import './sample-data/pipeline-data'
 
 const nodes: NodeContent[] = [
   {
@@ -43,25 +42,13 @@ const nodes: NodeContent[] = [
 const yamlObject = parse(pipeline)
 const plData = yaml2Nodes(yamlObject, {})
 
-function Example4() {
+function Demo5Size() {
   return (
-    <div
-      style={{
-        position: 'relative',
-        left: '5vw',
-        top: '10vh',
-        height: '80vh',
-        width: '90vw',
-        overflow: 'hidden',
-        border: '1px solid gray'
-      }}
-    >
-      <CanvasProvider>
-        <PipelineGraph data={plData} nodes={nodes} />
-        <CanvasControls />
-      </CanvasProvider>
-    </div>
+    <CanvasProvider>
+      <PipelineGraph data={plData} nodes={nodes} />
+      <CanvasControls />
+    </CanvasProvider>
   )
 }
 
-export default Example4
+export default Demo5Size

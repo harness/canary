@@ -49,25 +49,13 @@ const nodes: NodeContent[] = [
 
 const data = getPipeline(9, 12, 3, 'success')
 
-function PerformanceExample() {
+function Demo4Performance() {
   return (
-    <div
-      style={{
-        position: 'relative',
-        left: '5vw',
-        top: '10vh',
-        height: '80vh',
-        width: '90vw',
-        overflow: 'hidden',
-        border: '1px solid gray'
-      }}
-    >
-      <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} />
-        <CanvasControls />
-      </CanvasProvider>
-    </div>
+    <CanvasProvider>
+      <PipelineGraph data={data} nodes={nodes} />
+      <CanvasControls />
+    </CanvasProvider>
   )
 }
 
-export default PerformanceExample
+export default Demo4Performance

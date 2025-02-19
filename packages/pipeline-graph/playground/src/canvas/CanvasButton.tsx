@@ -6,7 +6,7 @@ export function CanvasButton(props: React.PropsWithChildren<{ onClick: () => voi
       onClick={onClick}
       style={{
         display: 'flex',
-        width: '30px',
+        width: '56px',
         height: '30px',
         border: '1px solid #333333',
         cursor: 'pointer',

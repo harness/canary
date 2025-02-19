@@ -33,8 +33,8 @@ const getPipelineInternal = ({
   },
   {
     type: 'step',
-    config: { width: 250, height: 250 },
-    data: { name: 'VERY LARGE STEP NODE', icon: getIcon(1) }
+    config,
+    data: { name: 'STEP NODE', icon: getIcon(1) }
   },
   { type: 'approval', config: { width: 100, height: 100 }, data: {} },
   { type: 'approval', config: { width: 200, height: 200 }, data: {} },

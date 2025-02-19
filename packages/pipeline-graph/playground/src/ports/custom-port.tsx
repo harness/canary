@@ -3,8 +3,8 @@ import React from 'react'
 export default function CustomPort(props: { side: 'left' | 'right'; id?: string; adjustment?: number }) {
   const { adjustment = 0 } = props
 
-  const lineWeight = 2
-  const r = 15
+  const lineWeight = 1
+  const r = 5
 
   return (
     <div

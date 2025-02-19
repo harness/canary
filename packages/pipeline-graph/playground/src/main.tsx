@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from 'react-dom'
 
-import Examples from './examples'
+import Playground from './playground'
 
 render(
   <React.StrictMode>
-    <Examples />
+    <Playground />
   </React.StrictMode>,
   document.getElementById('root')
 )

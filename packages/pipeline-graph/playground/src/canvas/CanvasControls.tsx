@@ -17,7 +17,7 @@ export function CanvasControls() {
     >
       <CanvasButton onClick={() => increase()}>+</CanvasButton>
       <CanvasButton onClick={() => decrease()}>-</CanvasButton>
-      <CanvasButton onClick={() => reset()}>RES</CanvasButton>
+      <CanvasButton onClick={() => reset()}>RESET</CanvasButton>
       <CanvasButton onClick={() => fit()}>FIT</CanvasButton>
     </div>
   )

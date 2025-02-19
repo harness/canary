@@ -14,6 +14,6 @@ export const useRepoTagsStore = create<RepoTagsStore>(set => ({
   tags: [],
   branches: [],
   setTags: tags => set({ tags }),
-  addTag: tag => set(state => ({ tags: [...state.tags, tag] })),
+  addTag: tag => set(state => ({ tags: [tag, ...state.tags] })),
   removeTag: tagName => set(state => ({ tags: state.tags.filter(t => t.name !== tagName) }))
 }))

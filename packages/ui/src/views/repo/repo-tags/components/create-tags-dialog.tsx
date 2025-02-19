@@ -17,6 +17,7 @@ import {
 } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo/repo-list/types'
+import { IBranchSelectorStore } from '@views/repo/repo.types'
 import { z } from 'zod'
 
 interface CreateTagDialogProps {
@@ -24,11 +25,10 @@ interface CreateTagDialogProps {
   onClose: () => void
   onSubmit: (data: CreateTagFromFields) => void
   //   branches?: { name: string }[]
-  branches?: any[]
+  useRepoBranchesStore: () => IBranchSelectorStore
   isLoadingBranches?: boolean
   error?: string
   useTranslationStore: () => TranslationStore
-  defaultBranch?: string
   handleChangeSearchValue: (value: string) => void
   isLoading?: boolean
 }
@@ -45,15 +45,16 @@ export function CreateTagDialog({
   open,
   onClose,
   onSubmit,
-  branches,
+  useRepoBranchesStore,
   isLoadingBranches,
   error,
   useTranslationStore,
-  defaultBranch,
   handleChangeSearchValue,
   isLoading
 }: CreateTagDialogProps) {
   const { t } = useTranslationStore()
+  const { branchList: branches, defaultBranch } = useRepoBranchesStore()
+  console.log('defaultBranch', defaultBranch)
   const {
     register,
     handleSubmit,
@@ -61,7 +62,7 @@ export function CreateTagDialog({
     watch,
     reset,
     clearErrors,
-    formState: { errors, isValid, isSubmitSuccessful }
+    formState: { errors, isSubmitSuccessful }
   } = useForm<CreateTagFromFields>({
     resolver: zodResolver(createTagFormSchema),
     mode: 'onChange',

@@ -118,6 +118,7 @@ import NoDataFolder from '../icons/lists-data-icons/no-data-folder.svg'
 import NoDataMembers from '../icons/lists-data-icons/no-data-members.svg'
 import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
 import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
+import noDataTags from '../icons/lists-data-icons/no-data-tags.svg'
 import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
 import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
 import Lock from '../icons/lock.svg'
@@ -247,6 +248,7 @@ const IconNameMap = {
   'no-data-members': NoDataMembers,
   'no-data-error': NoDataError,
   'no-data-pr': NoDataPR,
+  'no-data-tags': noDataTags,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,

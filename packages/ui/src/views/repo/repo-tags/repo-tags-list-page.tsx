@@ -5,10 +5,12 @@ import {
   CommitCopyActions,
   ListActions,
   MoreActionsTooltip,
+  NoData,
   Pagination,
   SearchBox,
   SkeletonTable,
   Spacer,
+  StackedList,
   Table
 } from '@/components'
 import { RepoTagsStore, SandboxLayout, TranslationStore } from '@/views'
@@ -18,6 +20,8 @@ import { cn } from '@utils/cn'
 import { formatDate } from '@utils/utils'
 import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
 import { useFilters } from '@views/repo/hooks'
+
+import { RepoTagsList } from './components/repo-tags-list'
 
 interface RepoTagsListViewProps {
   useTranslationStore: () => TranslationStore
@@ -40,6 +44,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
 }) => {
   const { t } = useTranslationStore()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
+  const noData = !(tagsList && tagsList.length > 0)
 
   const { search, handleSearchChange } = useDebounceSearch({
     handleChangeSearchValue: setSearchQuery,
@@ -60,6 +65,59 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   const isDirtyList = useMemo(() => {
     return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
   }, [page, filterHandlers.activeFilters, searchQuery])
+
+  const renderListContent = () => {
+    if (isLoading) {
+      return <SkeletonTable countRows={10} countColumns={4} />
+    } else if (noData) {
+      return filterHandlers.activeFilters.length > 0 || searchQuery ? (
+        <StackedList.Root>
+          <div className="flex min-h-[50vh] items-center justify-center py-20">
+            <NoData
+              iconName="no-search-magnifying-glass"
+              title={t('views:noData.noResults', 'No search results')}
+              description={[
+                t('views:noData.checkSpelling', 'Check your spelling and filter options,'),
+                t('views:noData.changeSearch', 'or search for a different keyword.')
+              ]}
+              primaryButton={{
+                label: t('views:noData.clearSearch', 'Clear search'),
+                onClick: handleResetFiltersAndPages
+              }}
+              secondaryButton={{
+                label: t('views:noData.clearFilters', 'Clear filters'),
+                onClick: filterHandlers.handleResetFilters
+              }}
+            />
+          </div>
+        </StackedList.Root>
+      ) : (
+        <div className="flex min-h-[70vh] items-center justify-center py-20">
+          <NoData
+            iconName="no-data-tags"
+            title="No tags yet"
+            description={[
+              t('views:noData.noTags', 'There are no tags in this project yet.'),
+              t('views:noData.createNewTag', 'Create a new Tag.')
+            ]}
+            primaryButton={{
+              label: 'Create tag',
+              onClick: openCreateBranchDialog
+              // to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
+            }}
+          />
+        </div>
+      )
+    }
+    return (
+      <RepoTagsList
+        isLoading={isLoading}
+        onDeleteTag={onDeleteTag}
+        useTranslationStore={useTranslationStore}
+        useRepoTagsStore={useRepoTagsStore}
+      />
+    )
+  }
 
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
@@ -102,62 +160,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
             <Spacer size={5} />
           </>
         )}
-
-        <Table.Root variant="asStackedList">
-          <Table.Header>
-            <Table.Row>
-              <Table.Head className="w-2/5">{t('views:repos.tag', 'Tag')}</Table.Head>
-              <Table.Head className="w-1/5">{t('views:repos.commit', 'Commit')}</Table.Head>
-              <Table.Head className="w-1/5">{t('views:repos.date', 'Date')}</Table.Head>
-              <Table.Head className="w-1/5" />
-            </Table.Row>
-          </Table.Header>
-          {isLoading ? (
-            <SkeletonTable countRows={10} countColumns={4} />
-          ) : (
-            <Table.Body>
-              {tagsList.map(tag => {
-                return (
-                  <Table.Row key={tag.sha}>
-                    <Table.Cell className="content-center">{tag.name}</Table.Cell>
-                    <Table.Cell className="content-center p-0">
-                      <div className="max-w-[130px]">
-                        <CommitCopyActions
-                          sha={tag.sha}
-                          toCommitDetails={_sha => {
-                            return ''
-                          }}
-                        />
-                      </div>
-                    </Table.Cell>
-                    <Table.Cell className="content-center">{formatDate(tag.tagger?.when ?? 0)}</Table.Cell>
-
-                    <Table.Cell className="text-right">
-                      <MoreActionsTooltip
-                        isInTable
-                        actions={[
-                          {
-                            title: t('views:repos.createBranch', 'Create branch')
-                            // to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
-                          },
-                          {
-                            title: t('views:repos.viewFiles', 'View Files'),
-                            to: `../code/refs/tags/${tag.name}`
-                          },
-                          {
-                            isDanger: true,
-                            title: t('views:repos.deleteTag', 'Delete tag'),
-                            onClick: () => onDeleteTag(tag.name)
-                          }
-                        ]}
-                      />
-                    </Table.Cell>
-                  </Table.Row>
-                )
-              })}
-            </Table.Body>
-          )}
-        </Table.Root>
+        {renderListContent()}
 
         <Spacer size={5} />
         <Pagination currentPage={page} nextPage={xNextPage} previousPage={xPrevPage} goToPage={setPage} t={t} />

@@ -122,7 +122,7 @@ export const RepoTagsListContainer = () => {
     <>
       <RepoTagsListView
         useTranslationStore={useTranslationStore}
-        isLoading={isLoadingTags}
+        isLoading={isLoadingTags || isCreatingTag}
         openCreateBranchDialog={() => setOpenCreateTagDialog(true)}
         searchQuery={query}
         setSearchQuery={setQuery}

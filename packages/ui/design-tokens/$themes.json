@@ -1106,7 +1106,6 @@
       "feedback.neutral.subtle.disabled.foreground": "80ad1cfeb375e3751415337f0d2d2411b7ab7aae",
       "feedback.neutral.subtle.disabled.border": "fe12ba1afc98c446ccf50069a7088f7f351f7eb7",
       "overlay.hover": "6a70951152b8c48de7fe037475669f21ff9dd921",
-      "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow-color.none": "ae18c652257aca8604642987d9cbaa37c5149240",
       "shadow-color.sm": "a04b6c81c43bcc592da539aabce3c3b68879fc69",
@@ -1119,7 +1118,8 @@
       "ai.gradient-stop-1": "028cdd696b3f2d9a9c607591d812017b7435808d",
       "ai.gradient-stop-2": "a1cba63d09bd02ad65ae4f7c5dd6f3bc9df7ec7c",
       "ai.gradient-stop-3": "24da4e37a4f1390e5adbb81fe97f12676c883c75",
-      "ai.gradient-stop-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9"
+      "ai.gradient-stop-4": "4ffd52de2bea7a3cca7e975e7f4fcbdba60240d9",
+      "overlay.selected": "7af27ad7e84f33cca27107699cab676d409bd66b"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -1610,7 +1610,6 @@
       "feedback.neutral.subtle.disabled.foreground": "80ad1cfeb375e3751415337f0d2d2411b7ab7aae",
       "feedback.neutral.subtle.disabled.border": "fe12ba1afc98c446ccf50069a7088f7f351f7eb7",
       "overlay.hover": "6a70951152b8c48de7fe037475669f21ff9dd921",
-      "overlay.intense": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow-color.none": "ae18c652257aca8604642987d9cbaa37c5149240",
       "shadow-color.sm": "a04b6c81c43bcc592da539aabce3c3b68879fc69",
@@ -1671,7 +1670,8 @@
       "components.nav.item.hover.icon": "5e85acbe14930b5475f29ac61feab047b0a7d7fd",
       "components.nav.item.selected.background": "40bc7f33555f53977048ab977168c1def2e8c614",
       "components.nav.item.selected.foreground": "e2904bd7a672b7dbc4a1de795821de149d704089",
-      "components.nav.item.selected.icon": "a1003cdc705342a08f0e213f27c6c39cca04f7a5"
+      "components.nav.item.selected.icon": "a1003cdc705342a08f0e213f27c6c39cca04f7a5",
+      "overlay.selected": "7af27ad7e84f33cca27107699cab676d409bd66b"
     }
   }
 ]

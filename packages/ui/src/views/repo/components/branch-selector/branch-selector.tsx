@@ -15,6 +15,7 @@ interface BranchSelectorProps {
   isBranchOnly?: boolean
   searchQuery?: string
   setSearchQuery: (query: string) => void
+  dynamicWidth?: boolean
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
@@ -25,7 +26,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   onSelectBranch,
   isBranchOnly = false,
   searchQuery = '',
-  setSearchQuery
+  setSearchQuery,
+  dynamicWidth = false
 }) => {
   const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
 
@@ -63,6 +65,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         useTranslationStore={useTranslationStore}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        dynamicWidth={dynamicWidth}
       />
     </DropdownMenu.Root>
   )

@@ -141,8 +141,8 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                             // to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
                           },
                           {
-                            title: t('views:repos.viewFiles', 'View Files')
-                            // to: toBranchRules?.()
+                            title: t('views:repos.viewFiles', 'View Files'),
+                            to: `../code/refs/tags/${tag.name}`
                           },
                           {
                             isDanger: true,

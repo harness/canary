@@ -16,7 +16,8 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   useTranslationStore,
   isBranchOnly = false,
   searchQuery,
-  setSearchQuery
+  setSearchQuery,
+  dynamicWidth = false
 }) => {
   const [activeTab, setActiveTab] = useState<BranchSelectorTab>(BranchSelectorTab.BRANCHES)
   const { t } = useTranslationStore()
@@ -38,7 +39,9 @@ export const BranchSelectorDropdown: FC<BranchSelectorDropdownProps> = ({
   return (
     <DropdownMenu.Content
       className="p-0"
-      style={{ width: 'var(--radix-dropdown-menu-trigger-width)' }}
+      style={{
+        width: dynamicWidth ? 'var(--radix-dropdown-menu-trigger-width)' : '298px'
+      }}
       align="start"
       onCloseAutoFocus={event => event.preventDefault()} // Prevent focus on hidden content
     >

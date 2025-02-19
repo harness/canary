@@ -1,24 +1,9 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Icon,
-  Input,
-  Label,
-  Select,
-  SelectContent,
-  SelectItem,
-  Textarea
-} from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label, Textarea } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelector } from '@views/repo/components'
-// import { BranchSelector } from '@views/repo/components'
 import { TranslationStore } from '@views/repo/repo-list/types'
 import { IBranchSelectorStore } from '@views/repo/repo.types'
 import { z } from 'zod'
@@ -27,11 +12,9 @@ interface CreateTagDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (data: CreateTagFromFields) => void
-  //   branches?: { name: string }[]
   branchQuery?: string
   setBranchQuery: (query: string) => void
   useRepoBranchesStore: () => IBranchSelectorStore
-  isLoadingBranches?: boolean
   error?: string
   useTranslationStore: () => TranslationStore
   isLoading?: boolean
@@ -50,7 +33,6 @@ export function CreateTagDialog({
   onClose,
   onSubmit,
   useRepoBranchesStore,
-  isLoadingBranches,
   error,
   useTranslationStore,
   isLoading,
@@ -95,18 +77,6 @@ export function CreateTagDialog({
     onClose()
   }
 
-  const processedBranches = useMemo(
-    () =>
-      defaultBranch
-        ? branches?.some(branch => branch.name === defaultBranch)
-          ? branches
-          : [{ name: defaultBranch }, ...(branches || [])]
-        : branches,
-    [branches, defaultBranch]
-  )
-
-  const targetValue = watch('target')
-
   const handleSelectChange = (fieldName: keyof CreateTagFromFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
@@ -149,6 +119,7 @@ export function CreateTagDialog({
                 isBranchOnly={true}
                 searchQuery={branchQuery}
                 setSearchQuery={setBranchQuery}
+                dynamicWidth
               />
             </ControlGroup>
           </Fieldset>

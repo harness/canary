@@ -61,7 +61,7 @@
         "selected": {
           "background": {
             "$type": "color",
-            "$value": "{overlay.intense}",
+            "$value": "{overlay.selected}",
             "$description": "Background color for selected navigation items.\nCommon uses: active nav links, selected tabs, active menu items."
           },
           "foreground": {
@@ -526,7 +526,7 @@
           },
           "background": {
             "$type": "color",
-            "$value": "{overlay.intense}",
+            "$value": "{overlay.selected}",
             "$description": "Background color during active state.\nCommon uses: active fill in outlined variant."
           }
         },
@@ -1246,7 +1246,7 @@
       "$value": "{colors.chrome.850}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
-    "intense": {
+    "selected": {
       "$extensions": {
         "studio.tokens": {
           "modify": {

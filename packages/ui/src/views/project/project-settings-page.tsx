@@ -2,7 +2,7 @@ import { FC } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 
 import { Tabs } from '@/components'
-import { SandboxLayout } from '@/views'
+import { SandboxLayout, TranslationStore } from '@/views'
 
 export interface ProjectSettingsTabNavProps {
   useTranslationStore: () => TranslationStore

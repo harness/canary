@@ -34,13 +34,13 @@ const RepoWebhookExecutionsPage: FC<RepoWebhookExecutionsPageProps> = ({
   return (
     <SandboxLayout.Main className="mx-0">
       <SandboxLayout.Content className="pl-0">
-        <h1 className="text-foreground-1 mb-4 text-2xl font-medium">Order Status Update Webhook</h1>
+        <h1 className="mb-4 text-2xl font-medium text-foreground-1">Order Status Update Webhook</h1>
         <Text>
           This webhook triggers every time an order status is updated, sending data to the specified endpoint for
           real-time tracking.
         </Text>
         <FormSeparator className="my-6" />
-        <h1 className="text-foreground-1 mb-4 text-xl font-medium">Executions</h1>
+        <h1 className="mb-4 text-xl font-medium text-foreground-1">Executions</h1>
         {isLoading ? (
           <SkeletonList />
         ) : executions && executions.length > 0 ? (

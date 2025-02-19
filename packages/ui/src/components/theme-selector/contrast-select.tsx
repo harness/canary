@@ -1,4 +1,5 @@
-import { Label, Select, SelectContent, SelectItem } from '..'
+import { Label, Select } from '@/components'
+
 import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function ContrastSelect({
@@ -15,7 +16,7 @@ export function ContrastSelect({
   return (
     <div>
       <Label className="text-xs">Contrast</Label>
-      <Select
+      <Select.Root
         name="contrast"
         placeholder="Select a theme contrast"
         value={contrast}
@@ -23,12 +24,12 @@ export function ContrastSelect({
           setTheme(`${mode}-${color}-${contrast}`)
         }}
       >
-        <SelectContent defaultValue={contrast}>
-          <SelectItem value={ContrastType.Standard}>Standard</SelectItem>
-          <SelectItem value={ContrastType.Low}>Low</SelectItem>
-          <SelectItem value={ContrastType.High}>High</SelectItem>
-        </SelectContent>
-      </Select>
+        <Select.Content defaultValue={contrast}>
+          <Select.Item value={ContrastType.Standard}>Standard</Select.Item>
+          <Select.Item value={ContrastType.Low}>Low</Select.Item>
+          <Select.Item value={ContrastType.High}>High</Select.Item>
+        </Select.Content>
+      </Select.Root>
     </div>
   )
 }

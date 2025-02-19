@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import { Dialog, Icon, Select, SelectContent, SelectItem, Separator } from '@/components'
+import { Dialog, Icon, Select, Separator } from '@/components'
 import darkModeImage from '@/svgs/theme-dark.png'
 import lightModeImage from '@/svgs/theme-light.png'
 import { cn } from '@/utils/cn'
@@ -95,7 +95,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                 High contrast improves readability, Dimmer mode reduces glare.
               </p>
             </div>
-            <Select
+            <Select.Root
               name="contrast"
               value={contrast}
               onValueChange={(value: Contrast) => {
@@ -104,14 +104,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
               }}
               placeholder="Select"
             >
-              <SelectContent>
+              <Select.Content>
                 {Object.values(Contrast).map(item => (
-                  <SelectItem key={item} value={item}>
+                  <Select.Item key={item} value={item}>
                     {item}
-                  </SelectItem>
+                  </Select.Item>
                 ))}
-              </SelectContent>
-            </Select>
+              </Select.Content>
+            </Select.Root>
           </div>
 
           <Separator className="h-px bg-borders-4" />
@@ -124,7 +124,7 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
                 Adjust colors for different types of color blindness.
               </p>
             </div>
-            <Select
+            <Select.Root
               name="color-adjustment"
               value={colorAdjustment}
               onValueChange={(value: ColorAdjustment) => {
@@ -133,14 +133,14 @@ const ThemeDialog: FC<ThemeDialogProps> = ({ defaultTheme, theme, open, onOpenCh
               }}
               placeholder="Select"
             >
-              <SelectContent>
+              <Select.Content>
                 {Object.values(ColorAdjustment).map(item => (
-                  <SelectItem key={item} value={item}>
+                  <Select.Item key={item} value={item}>
                     {item}
-                  </SelectItem>
+                  </Select.Item>
                 ))}
-              </SelectContent>
-            </Select>
+              </Select.Content>
+            </Select.Root>
           </div>
 
           <Separator className="h-px bg-borders-4" />

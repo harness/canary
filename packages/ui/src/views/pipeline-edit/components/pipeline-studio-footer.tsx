@@ -1,4 +1,4 @@
-import { Icon, Popover, Select, SelectContent, SelectItem } from '@/components'
+import { Icon, Popover, Select } from '@/components'
 import { cn } from '@utils/cn'
 
 import { PopoverCommitInfo } from './popover-commit-info'
@@ -70,15 +70,15 @@ export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props:
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
               <span className="text-[12px] text-tertiary-background">Branch:</span>
-              <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
-                <SelectContent>
+              <Select.Root value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
+                <Select.Content>
                   {branches?.map(branch => (
-                    <SelectItem key={branch} value={branch}>
+                    <Select.Item key={branch} value={branch}>
                       {branch}
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </div>
           </div>
         ) : null}

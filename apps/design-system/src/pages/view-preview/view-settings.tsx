@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import { clsx } from 'clsx'
 
-import { Button, Icon, Select, SelectContent, SelectItem, Spacer } from '@harnessio/ui/components'
+import { Button, Icon, Select, Spacer } from '@harnessio/ui/components'
 
 import css from './view-settings.module.css'
 
@@ -17,7 +17,7 @@ enum Themes {
   DARK_PROT_STD = 'dark-prot-std',
   DARK_STANDARD_HIGH = 'dark-std-high',
   LIGHT = 'light-std-std',
-  LIGHT_PROTO_STD = 'light-prot-std'
+  LIGHT_PROT_STD = 'light-prot-std'
 }
 
 const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
@@ -65,30 +65,30 @@ const ViewSettings: FC<ViewSettingsProps> = ({ routes }) => {
 
       {showSettings && (
         <>
-          <Select placeholder="Select view" label="View" value={currentView} onValueChange={navigate}>
-            <SelectContent>
+          <Select.Root placeholder="Select view" label="View" value={currentView} onValueChange={navigate}>
+            <Select.Content>
               {routes.map(route => (
-                <SelectItem key={route} value={route}>
+                <Select.Item key={route} value={route}>
                   {route}
-                </SelectItem>
+                </Select.Item>
               ))}
-            </SelectContent>
-          </Select>
+            </Select.Content>
+          </Select.Root>
           <Spacer size={5} />
-          <Select
+          <Select.Root
             placeholder="Select theme"
             label="Theme"
             value={currentTheme}
             onValueChange={(newTheme: Themes) => setCurrentTheme(newTheme)}
           >
-            <SelectContent>
+            <Select.Content>
               {Object.values(Themes).map(theme => (
-                <SelectItem key={theme} value={theme}>
+                <Select.Item key={theme} value={theme}>
                   {theme}
-                </SelectItem>
+                </Select.Item>
               ))}
-            </SelectContent>
-          </Select>
+            </Select.Content>
+          </Select.Root>
         </>
       )}
     </aside>

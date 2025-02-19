@@ -12,8 +12,6 @@ import {
   Input,
   Option,
   Select,
-  SelectContent,
-  SelectItem,
   Spacer,
   Text
 } from '@/components'
@@ -104,18 +102,18 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
           {/* provider */}
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="provider"
                 value={providerValue}
                 onValueChange={value => handleSelectChange('provider', value)}
                 placeholder="Select"
                 label="Git provider"
               >
-                <SelectContent>
+                <Select.Content>
                   {ProviderOptionsEnum &&
                     Object.values(ProviderOptionsEnum)?.map(option => {
                       return (
-                        <SelectItem
+                        <Select.Item
                           key={option}
                           value={option}
                           disabled={
@@ -123,11 +121,11 @@ export function ImportProjectPage({ onFormSubmit, onFormCancel, isLoading, apiEr
                           }
                         >
                           {option}
-                        </SelectItem>
+                        </Select.Item>
                       )
                     })}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
           {watch('provider') === ProviderOptionsEnum.GITHUB_ENTERPRISE && (

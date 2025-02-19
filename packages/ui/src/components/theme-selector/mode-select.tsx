@@ -1,4 +1,5 @@
-import { Label, Select, SelectContent, SelectItem } from '..'
+import { Label, Select } from '@/components'
+
 import { ColorType, ContrastType, FullTheme, ModeType } from './types'
 
 export function ModeSelect({
@@ -15,7 +16,7 @@ export function ModeSelect({
   return (
     <div>
       <Label className="text-xs">Mode</Label>
-      <Select
+      <Select.Root
         name="mode"
         placeholder="Select a theme mode"
         value={mode}
@@ -23,12 +24,12 @@ export function ModeSelect({
           setTheme(`${mode}-${color}-${contrast}`)
         }}
       >
-        <SelectContent defaultValue={mode}>
-          <SelectItem value={ModeType.Light}>Light</SelectItem>
-          <SelectItem value={ModeType.Dark}>Dark</SelectItem>
-          <SelectItem value={ModeType.System}>System</SelectItem>
-        </SelectContent>
-      </Select>
+        <Select.Content defaultValue={mode}>
+          <Select.Item value={ModeType.Light}>Light</Select.Item>
+          <Select.Item value={ModeType.Dark}>Dark</Select.Item>
+          <Select.Item value={ModeType.System}>System</Select.Item>
+        </Select.Content>
+      </Select.Root>
     </div>
   )
 }

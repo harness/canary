@@ -1,18 +1,7 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Avatar,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
+import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select } from '@/components'
 import { PrincipalType } from '@/types'
 import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -122,7 +111,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="member"
                 value={invitedMember}
                 onValueChange={handleMemberChange}
@@ -133,7 +122,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   !!invitedMemberFullModel && <PrincipalOption isShortView principal={invitedMemberFullModel} />
                 }
               >
-                <SelectContent
+                <Select.Content
                   withSearch
                   searchProps={{
                     placeholder: t('views:repos.search', 'Search'),
@@ -142,15 +131,15 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   }}
                 >
                   {principals.map(principal => (
-                    <SelectItem key={principal.uid} value={principal.uid} isItemTextAsChild>
+                    <Select.Item key={principal.uid} value={principal.uid} isItemTextAsChild>
                       <PrincipalOption principal={principal} />
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="role"
                 value={memberRole}
                 onValueChange={value => handleSelectChange('role', value)}
@@ -161,17 +150,17 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   !!selectedRoleFullModel && <span className="text-foreground-1">{selectedRoleFullModel.label}</span>
                 }
               >
-                <SelectContent>
+                <Select.Content>
                   {roleOptions.map(option => (
-                    <SelectItem key={option.uid} value={option.uid} isItemTextAsChild>
+                    <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
                       <div className="flex cursor-pointer flex-col gap-y-1.5">
                         <span className="leading-none text-foreground-8">{option.label}</span>
                         <span className="leading-tight text-foreground-4">{option.description}</span>
                       </div>
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

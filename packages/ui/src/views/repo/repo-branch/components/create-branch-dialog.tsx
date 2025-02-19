@@ -1,19 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Icon,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Icon, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -118,7 +106,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="target"
                 value={targetValue || defaultBranch}
                 onValueChange={value => handleSelectChange('target', value)}
@@ -131,7 +119,7 @@ export function CreateBranchDialog({
                 }
                 disabled={isLoadingBranches || !branches?.length}
               >
-                <SelectContent
+                <Select.Content
                   withSearch
                   searchProps={{
                     placeholder: t('views:repos.search', 'Search'),
@@ -142,16 +130,16 @@ export function CreateBranchDialog({
                   {processedBranches?.map(
                     branch =>
                       branch?.name && (
-                        <SelectItem key={branch.name} value={branch.name as string}>
+                        <Select.Item key={branch.name} value={branch.name as string}>
                           <span className="flex items-center gap-1.5">
                             <Icon name="branch" size={14} />
                             {branch.name}
                           </span>
-                        </SelectItem>
+                        </Select.Item>
                       )
                   )}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

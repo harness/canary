@@ -15,8 +15,6 @@ import {
   RadioButton,
   RadioGroup,
   Select,
-  SelectContent,
-  SelectItem,
   Spacer,
   StyledLink,
   Text,
@@ -154,7 +152,7 @@ export function RepoCreatePage({
           {/* GITIGNORE */}
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="gitignore"
                 value={gitignoreValue}
                 onValueChange={value => handleSelectChange('gitignore', value)}
@@ -163,20 +161,20 @@ export function RepoCreatePage({
                 error={errors.gitignore?.message?.toString()}
                 caption="Choose which files not to track from a list of templates."
               >
-                <SelectContent>
+                <Select.Content>
                   {!!gitIgnoreOptions &&
                     gitIgnoreOptions.map(option => (
-                      <SelectItem key={option} value={option}>
+                      <Select.Item key={option} value={option}>
                         {option}
-                      </SelectItem>
+                      </Select.Item>
                     ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
 
             {/* LICENSE */}
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="license"
                 value={licenseValue}
                 onValueChange={value => handleSelectChange('license', value)}
@@ -185,15 +183,15 @@ export function RepoCreatePage({
                 error={errors.license?.message?.toString()}
                 caption="A license tells others what they can and can't do with your code."
               >
-                <SelectContent>
+                <Select.Content>
                   {licenseOptions &&
                     licenseOptions?.map(option => (
-                      <SelectItem key={option.value} value={option.value ?? ''}>
+                      <Select.Item key={option.value} value={option.value ?? ''}>
                         {option.label}
-                      </SelectItem>
+                      </Select.Item>
                     ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

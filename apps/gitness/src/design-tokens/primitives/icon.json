@@ -21,7 +21,7 @@
       "$description": "32px\n"
     }
   },
-  "iconWidth": {
+  "iconStrokeWidth": {
     "xs": {
       "$type": "borderWidth",
       "$value": "1"

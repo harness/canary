@@ -1,23 +1,10 @@
 import { FC, useMemo } from 'react'
 
-import {
-  Button,
-  CommitCopyActions,
-  ListActions,
-  MoreActionsTooltip,
-  NoData,
-  Pagination,
-  SearchBox,
-  SkeletonTable,
-  Spacer,
-  StackedList,
-  Table
-} from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonTable, Spacer, StackedList } from '@/components'
 import { RepoTagsStore, SandboxLayout, TranslationStore } from '@/views'
 import { Filters, FiltersBar } from '@components/filters'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { formatDate } from '@utils/utils'
 import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
 import { useFilters } from '@views/repo/hooks'
 
@@ -103,7 +90,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
             primaryButton={{
               label: 'Create tag',
               onClick: openCreateBranchDialog
-              // to: `${spaceId ? `/${spaceId}` : ''}/repos/${repoId}/pulls/compare/`
             }}
           />
         </div>

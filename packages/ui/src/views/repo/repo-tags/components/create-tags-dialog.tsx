@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input, Label, Textarea } from '@/components'
@@ -40,12 +40,11 @@ export function CreateTagDialog({
   setBranchQuery
 }: CreateTagDialogProps) {
   const { t } = useTranslationStore()
-  const { branchList: branches, defaultBranch } = useRepoBranchesStore()
+  const { defaultBranch } = useRepoBranchesStore()
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
     reset,
     clearErrors,
     formState: { errors, isSubmitSuccessful }

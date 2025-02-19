@@ -47,9 +47,6 @@ export const RepoTagsListContainer = () => {
     queryParams: {
       limit: 50,
       query: branchQuery ?? ''
-      // order: orderSortDate.DESC,
-      //   include_commit: true,
-      //   include_pullreqs: true
     },
     repo_ref: repo_ref
   })

@@ -1,0 +1,46 @@
+{
+  "dropdown-item": {
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.2-half}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.sm}"
+    },
+    "size": {
+      "$type": "sizing",
+      "$value": "{size.10}"
+    }
+  },
+  "dropdown-sub-item": {
+    "py": {
+      "$type": "spacing",
+      "$value": "{spacing.1-half}"
+    },
+    "px": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "gap": {
+      "$type": "spacing",
+      "$value": "{spacing.2}"
+    },
+    "radius": {
+      "$type": "borderRadius",
+      "$value": "{rounded.sm}"
+    },
+    "size": {
+      "$type": "sizing",
+      "$value": "{size.8}"
+    }
+  }
+}

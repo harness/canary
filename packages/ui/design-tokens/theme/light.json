@@ -80,7 +80,7 @@
     "link": {
       "default": {
         "$type": "color",
-        "$value": "{colors.accent.600}"
+        "$value": "{foreground.accent}"
       },
       "hover": {
         "$type": "color",

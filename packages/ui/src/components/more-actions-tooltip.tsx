@@ -47,7 +47,13 @@ export const MoreActionsTooltip: FC<MoreActionsTooltipProps> = ({ actions, isInT
         <DropdownMenu.Group>
           {actions.map((action, idx) =>
             action.to ? (
-              <Link key={`${action.title}-${idx}`} to={action.to}>
+              <Link
+                key={`${action.title}-${idx}`}
+                to={action.to}
+                onClick={e => {
+                  e.stopPropagation()
+                }}
+              >
                 <DropdownMenu.Item>
                   <span className={cn('truncate text-sm', { 'text-foreground-danger': action.isDanger })}>
                     {action.title}

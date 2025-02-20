@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Avatar,
@@ -31,9 +31,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
   toBranchRules,
   toPullRequestCompare,
   toPullRequest,
+  toCode,
   onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
+  const navigate = useNavigate()
 
   if (!branches?.length && !isLoading) {
     return (
@@ -107,7 +109,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
             const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
             return (
-              <Table.Row key={branch.id}>
+              <Table.Row
+                key={branch.id}
+                className="cursor-pointer"
+                onClick={() => navigate(`${toCode?.({ branchName: branch.name })}`)}
+              >
                 {/* branch name */}
                 <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
@@ -222,6 +228,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       {
                         title: t('views:repos.viewRules', 'View Rules'),
                         to: toBranchRules?.()
+                      },
+                      {
+                        title: t('views:repos.browse', 'Browse'),
+                        to: toCode?.({ branchName: branch.name }) || ''
                       },
                       {
                         isDanger: true,

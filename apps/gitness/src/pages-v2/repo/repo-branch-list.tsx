@@ -168,6 +168,7 @@ export function RepoBranchesListPage() {
         toPullRequest={({ pullRequestId }: { pullRequestId: number }) =>
           routes.toPullRequest({ spaceId, repoId, pullRequestId: pullRequestId.toString() })
         }
+        toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
         searchBranches={searchBranches || []}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}

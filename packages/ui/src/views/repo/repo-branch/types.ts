@@ -40,6 +40,7 @@ interface RoutingProps {
   toBranchRules: () => string
   toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
+  toCode: ({ branchName }: { branchName: string }) => string
 }
 
 export interface BranchListPageProps extends Partial<RoutingProps> {

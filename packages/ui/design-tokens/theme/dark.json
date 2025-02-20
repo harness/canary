@@ -1092,13 +1092,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.5",
+            "value": "0.15",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.850}",
+      "$value": "{colors.chrome.200}",
       "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
     },
     "selected": {
@@ -1106,13 +1106,13 @@
         "studio.tokens": {
           "modify": {
             "type": "alpha",
-            "value": "0.7",
+            "value": "0.12",
             "space": "p3"
           }
         }
       },
       "$type": "color",
-      "$value": "{colors.chrome.850}",
+      "$value": "{colors.chrome.200}",
       "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
     },
     "backdrop": {

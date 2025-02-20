@@ -49,8 +49,8 @@ const useGetPullRequestTab = ({
     if (!matchedRoute) return
 
     setPullRequestTab(matchedRoute.tab)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [spaceId, repoId, pullRequestId])
+    // TODO: The routeTabMapping dependency, which gets recreated on every render, causes the useEffect to be triggered continuously.
+  }, [spaceId, repoId, pullRequestId, routeTabMapping])
 
   return pullRequestTab
 }

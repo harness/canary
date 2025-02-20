@@ -9,12 +9,14 @@ interface RepoTagsListProps {
   isLoading: boolean
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 export const RepoTagsList: React.FC<RepoTagsListProps> = ({
   useTranslationStore,
   isLoading,
   onDeleteTag,
-  useRepoTagsStore
+  useRepoTagsStore,
+  toCommitDetails
 }) => {
   const { t } = useTranslationStore()
   const { tags: tagsList } = useRepoTagsStore()
@@ -39,12 +41,7 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
                 <Table.Cell className="content-center">{tag.name}</Table.Cell>
                 <Table.Cell className="content-center p-0">
                   <div className="max-w-[130px]">
-                    <CommitCopyActions
-                      sha={tag.sha}
-                      toCommitDetails={_sha => {
-                        return ''
-                      }}
-                    />
+                    <CommitCopyActions sha={tag.sha} toCommitDetails={toCommitDetails} />
                   </div>
                 </Table.Cell>
                 <Table.Cell className="content-center">{formatDate(tag.tagger?.when ?? 0)}</Table.Cell>
@@ -55,7 +52,6 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
                     actions={[
                       {
                         title: t('views:repos.createBranch', 'Create branch')
-                        // to: toPullRequestCompare?.({ diffRefs: `${defaultBranch}...${branch.name}` }) || ''
                       },
                       {
                         title: t('views:repos.viewFiles', 'View Files'),

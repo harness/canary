@@ -18,6 +18,7 @@ interface RepoTagsListViewProps {
   setSearchQuery: (value: string | null) => void
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
+  toCommitDetails?: ({ sha }: { sha: string }) => string
 }
 
 export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
@@ -27,7 +28,8 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onDeleteTag,
-  useRepoTagsStore
+  useRepoTagsStore,
+  toCommitDetails
 }) => {
   const { t } = useTranslationStore()
   const { tags: tagsList, page, xNextPage, xPrevPage, setPage } = useRepoTagsStore()
@@ -101,6 +103,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         onDeleteTag={onDeleteTag}
         useTranslationStore={useTranslationStore}
         useRepoTagsStore={useRepoTagsStore}
+        toCommitDetails={toCommitDetails}
       />
     )
   }

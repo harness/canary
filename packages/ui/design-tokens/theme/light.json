@@ -21,261 +21,6 @@
       "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
     }
   },
-  "components": {
-    "nav": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.1000}",
-        "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
-      },
-      "item": {
-        "default": {
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{colors.chrome.500}",
-            "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
-          }
-        },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{overlay.hover}",
-            "$description": "Background color for navigation items on hover.\nCommon uses: hovered nav links, hovered tabs, hovered menu items."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Text color for navigation items on hover.\nCommon uses: hovered nav link text, hovered tab text, hovered menu labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{colors.chrome.500}",
-            "$description": "Icon color for navigation items on hover.\nCommon uses: hovered nav icons, hovered tab icons, hovered menu icons."
-          }
-        },
-        "selected": {
-          "background": {
-            "$type": "color",
-            "$value": "{overlay.selected}",
-            "$description": "Background color for selected navigation items.\nCommon uses: active nav links, selected tabs, active menu items."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.pure.white}",
-            "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{colors.pure.white}",
-            "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
-          }
-        }
-      }
-    },
-    "link": {
-      "default": {
-        "$type": "color",
-        "$value": "{foreground.accent}"
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{colors.accent.700}"
-      },
-      "visited": {
-        "$type": "color",
-        "$value": "{colors.purple.700}"
-      }
-    },
-    "label": {
-      "red": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.700}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.100}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.50}"
-        }
-      },
-      "green": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "yellow": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "blue": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "pink": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "purple": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "violet": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "indigo": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "cyan": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "orange": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "brown": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "mint": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "lime": {
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      }
-    }
-  },
   "foreground": {
     "highlight": {
       "$type": "color",
@@ -1565,6 +1310,261 @@
     "gradient-stop-4": {
       "$type": "color",
       "$value": "{colors.cyan.200}"
+    }
+  },
+  "components": {
+    "nav": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.1000}",
+        "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
+      },
+      "item": {
+        "default": {
+          "foreground": {
+            "$type": "color",
+            "$value": "{colors.chrome.200}",
+            "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{colors.chrome.500}",
+            "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
+          }
+        },
+        "hover": {
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.hover}",
+            "$description": "Background color for navigation items on hover.\nCommon uses: hovered nav links, hovered tabs, hovered menu items."
+          },
+          "foreground": {
+            "$type": "color",
+            "$value": "{colors.chrome.200}",
+            "$description": "Text color for navigation items on hover.\nCommon uses: hovered nav link text, hovered tab text, hovered menu labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{colors.chrome.500}",
+            "$description": "Icon color for navigation items on hover.\nCommon uses: hovered nav icons, hovered tab icons, hovered menu icons."
+          }
+        },
+        "selected": {
+          "background": {
+            "$type": "color",
+            "$value": "{overlay.selected}",
+            "$description": "Background color for selected navigation items.\nCommon uses: active nav links, selected tabs, active menu items."
+          },
+          "foreground": {
+            "$type": "color",
+            "$value": "{colors.pure.white}",
+            "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{colors.pure.white}",
+            "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
+          }
+        }
+      }
+    },
+    "link": {
+      "default": {
+        "$type": "color",
+        "$value": "{foreground.accent}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{colors.accent.700}"
+      },
+      "visited": {
+        "$type": "color",
+        "$value": "{colors.purple.700}"
+      }
+    },
+    "label": {
+      "red": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.700}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.100}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.50}"
+        }
+      },
+      "green": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "yellow": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "blue": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "pink": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "purple": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "violet": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "indigo": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "cyan": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "orange": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "brown": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "mint": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "lime": {
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      }
     }
   }
 }

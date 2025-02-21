@@ -44,7 +44,7 @@
     },
     "border": {
       "$type": "borderWidth",
-      "$value": "{border.base}"
+      "$value": "{border.default}"
     },
     "px": {
       "sm": {

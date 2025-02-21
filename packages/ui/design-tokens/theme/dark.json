@@ -183,7 +183,7 @@
     "solid": {
       "text": {
         "$type": "color",
-        "$value": "{fontSize.2}",
+        "$value": "{text.2}",
         "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
       },
       "background": {
@@ -196,12 +196,12 @@
       "unselected": {
         "text": {
           "$type": "color",
-          "$value": "{fontSize.2}",
+          "$value": "{text.2}",
           "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
         },
         "icon": {
           "$type": "color",
-          "$value": "{fontSize.3}",
+          "$value": "{text.3}",
           "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
         },
         "border": {
@@ -213,12 +213,12 @@
       "selected": {
         "text": {
           "$type": "color",
-          "$value": "{fontSize.1}",
+          "$value": "{text.1}",
           "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
         },
         "icon": {
           "$type": "color",
-          "$value": "{fontSize.1}",
+          "$value": "{text.1}",
           "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
         },
         "border": {

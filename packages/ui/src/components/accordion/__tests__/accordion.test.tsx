@@ -6,7 +6,7 @@ import { Accordion } from '../accordion'
 
 describe('Accordion Component', () => {
   test('renders the accordion with trigger and content', () => {
-    const { container } = render(
+    render(
       <Accordion.Root type="single">
         <Accordion.Item value="item-1">
           <Accordion.Trigger>Trigger</Accordion.Trigger>

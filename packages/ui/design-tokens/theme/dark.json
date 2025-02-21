@@ -692,7 +692,7 @@
     }
   },
   "shadow": {
-    "none": {
+    "0": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
@@ -704,7 +704,7 @@
       },
       "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
     },
-    "sm": {
+    "1": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",
@@ -716,7 +716,7 @@
       },
       "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
     },
-    "base": {
+    "2": {
       "$type": "boxShadow",
       "$value": [
         {
@@ -738,7 +738,7 @@
       ],
       "$description": "Default shadow. \nCommon uses: Cards, dropdowns, popovers in their default state."
     },
-    "md": {
+    "3": {
       "$type": "boxShadow",
       "$value": [
         {
@@ -760,7 +760,7 @@
       ],
       "$description": "Medium shadow. \nCommon uses: Elevated cards, active buttons, interactive elements on hover."
     },
-    "lg": {
+    "4": {
       "$type": "boxShadow",
       "$value": [
         {
@@ -782,7 +782,7 @@
       ],
       "$description": "Large shadow. \nCommon uses: Modals, floating panels, navigation dropdowns."
     },
-    "xl": {
+    "5": {
       "$type": "boxShadow",
       "$value": [
         {
@@ -804,7 +804,7 @@
       ],
       "$description": "Extra large shadow. \nCommon uses: Large modals, sidebars, elevated content sections."
     },
-    "2xl": {
+    "6": {
       "$type": "boxShadow",
       "$value": {
         "x": "0",

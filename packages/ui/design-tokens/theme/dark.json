@@ -327,7 +327,7 @@
   },
   "feedback": {
     "success": {
-      "emphasis": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{colors.pure.black}",
@@ -339,7 +339,7 @@
           "$description": "Default success background color.\nCommon uses: success alerts, confirmation messages."
         }
       },
-      "subtle": {
+      "soft": {
         "text": {
           "$type": "color",
           "$value": "{colors.green.200}",
@@ -406,7 +406,7 @@
       }
     },
     "danger": {
-      "emphasis": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
@@ -417,7 +417,7 @@
           "$description": "Default error background color.\nCommon uses: error alerts, validation messages."
         }
       },
-      "subtle": {
+      "soft": {
         "text": {
           "$type": "color",
           "$value": "{colors.red.200}",
@@ -484,7 +484,7 @@
       }
     },
     "warning": {
-      "emphasis": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
@@ -495,7 +495,7 @@
           "$description": "Default warning background color.\nCommon uses: warning alerts, caution messages."
         }
       },
-      "subtle": {
+      "soft": {
         "text": {
           "$type": "color",
           "$value": "{colors.amber.200}",
@@ -562,7 +562,7 @@
       }
     },
     "info": {
-      "emphasis": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
@@ -573,7 +573,7 @@
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         }
       },
-      "subtle": {
+      "soft": {
         "text": {
           "$type": "color",
           "$value": "{colors.chrome.200}",
@@ -613,7 +613,7 @@
       }
     },
     "merge": {
-      "emphasis": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
@@ -624,7 +624,7 @@
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         }
       },
-      "subtle": {
+      "soft": {
         "text": {
           "$type": "color",
           "$value": "{colors.purple.200}",

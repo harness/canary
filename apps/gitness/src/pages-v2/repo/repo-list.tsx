@@ -21,9 +21,17 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage, importRepoIdentifier, setImportRepoIdentifier, addRepository } =
-    useRepoStore()
-  const [importToastId, setImportToastId] = useState<string | null>(null)
+  const {
+    setRepositories,
+    page,
+    setPage,
+    importRepoIdentifier,
+    setImportRepoIdentifier,
+    updateRepository,
+    importToastId,
+    setImportToastId
+  } = useRepoStore()
+  // const [importToastId, setImportToastId] = useState<string | null>(null)
   const { toast, dismiss, update } = useToast()
 
   const [query, setQuery] = useQueryState('query')
@@ -94,6 +102,8 @@ export default function ReposListPage() {
           </ToastAction>
         )
       })
+      console.log('importRepoIdentifier', importRepoIdentifier, importToastId, id)
+
       setImportToastId(id)
     }
   }, [importRepoIdentifier, setImportRepoIdentifier])
@@ -113,8 +123,10 @@ export default function ReposListPage() {
         variant: 'success'
       })
       const transformedRepo = transformRepoList([eventData])
-      addRepository(transformedRepo[0])
+      updateRepository(transformedRepo[0])
+      // addRepository(transformedRepo[0])
       setImportRepoIdentifier(null)
+      setImportToastId(null)
     },
     [importToastId]
   )

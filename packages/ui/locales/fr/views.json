@@ -109,6 +109,7 @@
     "create-repository": "Créer un dépôt",
     "private": "Privé",
     "public": "Public",
+    "importing": "Importing…",
     "updated": "Mis à jour",
     "deleteRepo": "Supprimer le dépôt",
     "deleteRepoDescription": "Cette action supprimera définitivement ce dépôt et son contenu.",
@@ -170,7 +171,7 @@
     "updateWebhook": "Update webhook",
     "createWebhook": "Create webhook",
     "tagger": "Tagger",
-    "importing": "Importing…",
+
     "renameBranch": "Renommer la branche",
     "add": "Ajouter",
     "users": "Utilisateurs",

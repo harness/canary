@@ -144,6 +144,17 @@
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Primary text style for UI and content."
+    },
+    "code": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{fontFamily.mono}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{fontSize.2}",
+        "lineHeight": "{lineHeight.2.normal}",
+        "letterSpacing": "{tracking.tight}"
+      },
+      "$description": "Code blocks and larger code snippets."
     }
   },
   "caption": {
@@ -192,19 +203,6 @@
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Helper text, meta information."
-    }
-  },
-  "code": {
-    "base": {
-      "$type": "typography",
-      "$value": {
-        "fontFamily": "{fontFamily.mono}",
-        "fontWeight": "{fontWeight.default.normal.400}",
-        "fontSize": "{fontSize.2}",
-        "lineHeight": "{lineHeight.2.normal}",
-        "letterSpacing": "{tracking.tight}"
-      },
-      "$description": "Code blocks and larger code snippets."
     }
   },
   "component": {

@@ -286,100 +286,66 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.green.950}",
-            "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.green.200}",
-            "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.2",
-                  "space": "p3"
-                }
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "lch"
               }
-            },
-            "$type": "color",
-            "$value": "{colors.green.300}",
-            "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
-          }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.green.900}",
-            "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.green.200}",
-            "$description": "Text color for hoverable success content.\nCommon uses: interactive success text, hover state content."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.green.200}",
+          "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
               }
-            },
-            "$type": "color",
-            "$value": "{colors.green.300}",
-            "$description": "Border color for hover state.\nCommon uses: interactive success borders, hover boundaries."
-          }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.300}",
+          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.green.900}",
-            "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.green.200}",
-            "$description": "Text color for active success content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.4",
-                  "space": "p3"
-                }
+        "background-hover": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.15",
+                "space": "p3"
               }
-            },
-            "$type": "color",
-            "$value": "{colors.green.300}",
-            "$description": "Border color for active state.\nCommon uses: active success borders, pressed state."
-          }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.950}",
-            "$description": "Background for non-interactive success elements.\nCommon uses: disabled success messages, inactive states."
+        "background-active": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.25",
+                "space": "p3"
+              }
+            }
           },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.disabled}",
-            "$description": "Text color for disabled success content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.subtle}",
-            "$description": "Border color for disabled state.\nCommon uses: disabled success borders, inactive boundaries."
-          }
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
         }
       }
     },

@@ -956,15 +956,6 @@
       "control.adjustment.handle.border": "e83cc3f7afb0a355cfeeb15ee8e0dcff57dcec2f",
       "status.success.intense.foreground": "f12d605760c8ea7b0636f3732f09fba2fd6909c7",
       "status.success.intense.background": "894e35c61b06dc5a3afd716f59cf5eb8217a4111",
-      "status.success.subtle.default.background": "1d8f379bbde00aae425530956202ba497e3dd656",
-      "status.success.subtle.default.foreground": "1d094a67dbd71e01c82ac1a862e80cd3231073d2",
-      "status.success.subtle.default.border": "6070c95e7ff6ae16caa72f74fcbef89d6cb9268e",
-      "status.success.subtle.hover.background": "33dbedcd782781ece87d7e1abdd2212516143a4b",
-      "status.success.subtle.hover.foreground": "014cacd9bee04d23378d8a9659aa531f8c2efb9f",
-      "status.success.subtle.hover.border": "909233665a75d956c6ffa54b4c6f3fb818dea434",
-      "status.success.subtle.active.background": "b3bffb39d9ab574210129567a02144962cf33b77",
-      "status.success.subtle.active.foreground": "1e2641acc97cf282730f91571d30128dc8427979",
-      "status.success.subtle.active.border": "281f034da858cc476409ea50a6ef6e269d84fde1",
       "status.success.subtle.disabled.background": "cb43f8786b9373a0ea28946c820ba1e71bc1b847",
       "status.success.subtle.disabled.foreground": "1062075d7d83e28a7e3f586ad8b7fed76d19fe0c",
       "status.success.subtle.disabled.border": "34dfcf41770357bc299d99a97223ada42b213ca1",
@@ -1090,7 +1081,12 @@
       "components.label.mint.background-subtle": "ffa4050a47e5e3948af2d157fbdbaf15b723bd47",
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
-      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1"
+      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
+      "status.success.subtle.background": "1d8f379bbde00aae425530956202ba497e3dd656",
+      "status.success.subtle.foreground": "1d094a67dbd71e01c82ac1a862e80cd3231073d2",
+      "status.success.subtle.border": "6070c95e7ff6ae16caa72f74fcbef89d6cb9268e",
+      "status.success.subtle.background-hover": "33dbedcd782781ece87d7e1abdd2212516143a4b",
+      "status.success.subtle.background-active": "b3bffb39d9ab574210129567a02144962cf33b77"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",
@@ -1479,13 +1475,8 @@
       "control.adjustment.handle.border": "e83cc3f7afb0a355cfeeb15ee8e0dcff57dcec2f",
       "status.success.intense.foreground": "f12d605760c8ea7b0636f3732f09fba2fd6909c7",
       "status.success.intense.background": "894e35c61b06dc5a3afd716f59cf5eb8217a4111",
-      "status.success.subtle.default.background": "1d8f379bbde00aae425530956202ba497e3dd656",
-      "status.success.subtle.default.foreground": "1d094a67dbd71e01c82ac1a862e80cd3231073d2",
-      "status.success.subtle.default.border": "6070c95e7ff6ae16caa72f74fcbef89d6cb9268e",
-      "status.success.subtle.hover.background": "33dbedcd782781ece87d7e1abdd2212516143a4b",
       "status.success.subtle.hover.foreground": "014cacd9bee04d23378d8a9659aa531f8c2efb9f",
       "status.success.subtle.hover.border": "909233665a75d956c6ffa54b4c6f3fb818dea434",
-      "status.success.subtle.active.background": "b3bffb39d9ab574210129567a02144962cf33b77",
       "status.success.subtle.active.foreground": "1e2641acc97cf282730f91571d30128dc8427979",
       "status.success.subtle.active.border": "281f034da858cc476409ea50a6ef6e269d84fde1",
       "status.success.subtle.disabled.background": "cb43f8786b9373a0ea28946c820ba1e71bc1b847",
@@ -1613,7 +1604,12 @@
       "components.label.mint.background-subtle": "ffa4050a47e5e3948af2d157fbdbaf15b723bd47",
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
-      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1"
+      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
+      "status.success.subtle.background": "1d8f379bbde00aae425530956202ba497e3dd656",
+      "status.success.subtle.foreground": "1d094a67dbd71e01c82ac1a862e80cd3231073d2",
+      "status.success.subtle.border": "6070c95e7ff6ae16caa72f74fcbef89d6cb9268e",
+      "status.success.subtle.background-hover": "33dbedcd782781ece87d7e1abdd2212516143a4b",
+      "status.success.subtle.background-active": "b3bffb39d9ab574210129567a02144962cf33b77"
     }
   }
 ]

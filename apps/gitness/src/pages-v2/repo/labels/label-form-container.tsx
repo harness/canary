@@ -14,52 +14,31 @@ export const RepoLabelFormContainer = () => {
   const { spaceId, repoId, labelId } = useParams<PathParams>()
   const navigate = useNavigate()
 
-  const { isLoading: isDataLoading, repo_ref } = useFullFillLabelStore({
-    query: labelId,
-    enabled: !!labelId
-  })
+  const { repo_ref } = useFullFillLabelStore({ query: labelId, enabled: !!labelId })
+
+  const onFormCancel = () => navigate(routes.toRepoLabels({ spaceId, repoId }))
 
   const {
     mutate,
-    isLoading,
+    isLoading: isSaving,
     error: createError
-  } = useSaveRepoLabelMutation(
-    {
-      repo_ref
-    },
-    {
-      onSuccess: () => {
-        onFormCancel()
-      }
-    }
-  )
-
-  const onFormCancel = () => {
-    navigate(routes.toRepoLabels({ spaceId, repoId }))
-  }
+  } = useSaveRepoLabelMutation({ repo_ref }, { onSuccess: onFormCancel })
 
   const onSubmit = (data: CreateLabelFormFields) => {
     const { values, ...rest } = data
 
-    mutate({
-      body: {
-        label: {
-          ...rest
-        },
-        values
-      }
-    })
+    mutate({ body: { label: { ...rest }, values } })
   }
 
   return (
     <LabelFormPage
+      className="w-[570px] px-0"
       useLabelsStore={useLabelsStore}
       useTranslationStore={useTranslationStore}
-      isLoading={isLoading}
+      isSaving={isSaving}
       onSubmit={onSubmit}
       onFormCancel={onFormCancel}
       error={createError?.message}
-      isDataLoading={isDataLoading}
       labelId={labelId}
     />
   )

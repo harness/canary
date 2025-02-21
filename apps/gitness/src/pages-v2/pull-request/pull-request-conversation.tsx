@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import copy from 'clipboard-copy'
 import { isEmpty } from 'lodash-es'
@@ -56,6 +56,7 @@ import { usePullRequestProviderStore } from './stores/pull-request-provider-stor
 
 export default function PullRequestConversationPage() {
   const routes = useRoutes()
+  const navigate = useNavigate()
   const {
     pullReqMetadata,
     refetchPullReq,
@@ -129,6 +130,8 @@ export default function PullRequestConversationPage() {
       prId,
       refetchData: refetchActivities
     })
+
+  const handleEditLabels = () => navigate(routes.toRepoLabels({ spaceId, repoId }))
 
   const { mutateAsync: restoreBranch } = useRestorePullReqSourceBranchMutation({})
   const onRestoreBranch = () => {
@@ -209,33 +212,30 @@ export default function PullRequestConversationPage() {
   }, [sourceBranch, pullReqMetadata?.merged, pullReqMetadata?.closed])
 
   useEffect(() => {
-    if (branchError) {
-      if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
-        setShowRestoreBranchButton(true)
-      } else {
-        setShowDeleteBranchButton(false)
-        createBranch({
-          repo_ref: repoRef,
-          body: {
-            name: pullReqMetadata?.source_branch || '',
-            target: pullReqMetadata?.source_sha,
-            bypass_rules: true,
-            dry_run_rules: true
-          }
-        }).then(res => {
-          if (res?.body?.rule_violations) {
-            const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
-            if (checkIfBypassAllowed) {
-              setShowRestoreBranchButton(true)
-            } else {
-              setShowRestoreBranchButton(false)
-            }
-          } else {
-            setShowRestoreBranchButton(true)
-          }
-        })
-      }
+    if (!branchError) return
+
+    if (pullReqMetadata?.merged || pullReqMetadata?.closed) {
+      return setShowRestoreBranchButton(true)
     }
+
+    setShowDeleteBranchButton(false)
+    createBranch({
+      repo_ref: repoRef,
+      body: {
+        name: pullReqMetadata?.source_branch || '',
+        target: pullReqMetadata?.source_sha,
+        bypass_rules: true,
+        dry_run_rules: true
+      }
+    }).then(res => {
+      if (res?.body?.rule_violations) {
+        const { checkIfBypassAllowed } = extractInfoFromRuleViolationArr(res.body?.rule_violations)
+
+        return setShowRestoreBranchButton(checkIfBypassAllowed)
+      }
+
+      setShowRestoreBranchButton(true)
+    })
   }, [branchError])
 
   const [activities, setActivities] = useState<TypesPullReqActivity[] | undefined>(activityData)
@@ -340,16 +340,12 @@ export default function PullRequestConversationPage() {
 
   const handleAddReviewer = (id?: number) => {
     reviewerAddPullReq({ repo_ref: repoRef, pullreq_number: prId, body: { reviewer_id: id } })
-      .then(() => {
-        refetchReviewers()
-      })
+      .then(() => refetchReviewers())
       .catch(error => setAddReviewerError(error.message))
   }
   const handleDeleteReviewer = (id: number) => {
     reviewerDeletePullReq({ repo_ref: repoRef, pullreq_number: prId, pullreq_reviewer_id: id })
-      .then(() => {
-        refetchReviewers()
-      })
+      .then(() => refetchReviewers())
       .catch(error => setRemoveReviewerError(error.message))
   }
 
@@ -616,7 +612,8 @@ export default function PullRequestConversationPage() {
           searchLabelQuery: searchLabel,
           setSearchLabelQuery: changeSearchLabel,
           addLabel: handleAddLabel,
-          removeLabel: handleRemoveLabel
+          removeLabel: handleRemoveLabel,
+          editLabels: handleEditLabels
         }}
       />
     </>

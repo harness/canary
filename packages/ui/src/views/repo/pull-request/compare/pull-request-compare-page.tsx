@@ -101,6 +101,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   setSearchLabelQuery?: (query: string) => void
   addLabel?: (data: HandleAddLabelType) => void
   removeLabel?: (id: number) => void
+  editLabels?: () => void
 }
 
 export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
@@ -146,6 +147,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   searchLabelQuery,
   setSearchLabelQuery,
   addLabel,
+  editLabels,
   removeLabel
 }) => {
   const { commits: commitData } = useRepoCommitsStore()
@@ -153,11 +155,11 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false)
   const navigate = useNavigate()
   const { t } = useTranslationStore()
+
   const {
     register,
     handleSubmit,
     reset,
-
     formState: { errors, isValid }
   } = useForm<CompareFormFields>({
     resolver: zodResolver(pullRequestFormSchema),
@@ -277,7 +279,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                             {t('views:pullRequests.compareChangesCantMerge', 'Can’t be merged.')}{' '}
                             <span className="text-foreground-4">
                               {t(
-                                'views:pullRequests.compareChangesCantMergeDesciption',
+                                'views:pullRequests.compareChangesCantMergeDescription',
                                 'You can still create the pull request.'
                               )}
                             </span>
@@ -411,6 +413,7 @@ export const PullRequestComparePage: FC<PullRequestComparePageProps> = ({
                       PRLabels={PRLabels}
                       addLabel={addLabel}
                       removeLabel={removeLabel}
+                      editLabels={editLabels}
                       searchLabelQuery={searchLabelQuery}
                       setSearchLabelQuery={setSearchLabelQuery}
                     />

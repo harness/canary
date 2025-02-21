@@ -26,7 +26,7 @@ export const RepoLabelsList = () => {
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
-  const { isLoading, space_ref, repo_ref } = useFullFillLabelStore({ queryPage, query })
+  const { space_ref, repo_ref } = useFullFillLabelStore({ queryPage, query })
 
   const handleOpenDeleteDialog = (identifier: string) => {
     setOpenAlertDeleteDialog(true)
@@ -34,9 +34,7 @@ export const RepoLabelsList = () => {
   }
 
   const { mutate: deleteRepoLabel, isLoading: isDeletingRepoLabel } = useDeleteRepoLabelMutation(
-    {
-      repo_ref: repo_ref ?? ''
-    },
+    { repo_ref: repo_ref ?? '' },
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
@@ -46,9 +44,7 @@ export const RepoLabelsList = () => {
   )
 
   const { mutate: deleteSpaceLabel, isLoading: isDeletingSpaceLabel } = useDeleteSpaceLabelMutation(
-    {
-      space_ref: space_ref ?? ''
-    },
+    { space_ref: space_ref ?? '' },
     {
       onSuccess: (_data, variables) => {
         setOpenAlertDeleteDialog(false)
@@ -72,15 +68,14 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
+        className="max-w-[570px] px-0"
         useTranslationStore={useTranslationStore}
         useLabelsStore={useLabelsStore}
         createdIn={space_ref}
-        handleEditLabel={handleEditLabel}
-        handleDeleteLabel={handleOpenDeleteDialog}
         searchQuery={query}
         setSearchQuery={setQuery}
-        isLoading={isLoading}
         isRepository
+        labelsListViewProps={{ widthType: 'small', handleDeleteLabel: handleOpenDeleteDialog, handleEditLabel }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

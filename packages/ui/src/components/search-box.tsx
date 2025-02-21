@@ -1,14 +1,6 @@
-import React, {
-  ForwardedRef,
-  forwardRef,
-  ReactNode,
-  useCallback,
-  useEffect,
-  type ChangeEventHandler,
-  type InputHTMLAttributes
-} from 'react'
+import { ForwardedRef, forwardRef, ReactNode, useCallback, useEffect, type ChangeEventHandler } from 'react'
 
-import { Icon, Input, Text } from '@/components'
+import { Icon, Input, InputProps } from '@/components'
 import { cn } from '@utils/cn'
 import { noop } from 'lodash-es'
 
@@ -28,8 +20,7 @@ enum TextSize {
   'text-9xl' = 12
 }
 
-interface SearchBoxProps {
-  placeholder: string
+interface SearchBoxProps extends InputProps {
   width?: 'full' | 'fixed'
   hasShortcut?: boolean
   hasSearchIcon?: boolean
@@ -40,9 +31,6 @@ interface SearchBoxProps {
   onFocus?: () => void
   handleChange?: ChangeEventHandler<HTMLInputElement>
   showOnFocus?: boolean // New prop to control dialog appearance on focus
-  defaultValue?: InputHTMLAttributes<HTMLInputElement>['defaultValue']
-  value?: InputHTMLAttributes<HTMLInputElement>['value']
-  className?: string
   inputClassName?: string
   children?: ReactNode
 }
@@ -65,7 +53,8 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
       showOnFocus = false,
       className,
       inputClassName = 'h-8',
-      children
+      children,
+      ...restInputProps
     },
     ref: ForwardedRef<HTMLInputElement>
   ) => {
@@ -115,17 +104,18 @@ const Root = forwardRef<HTMLInputElement, SearchBoxProps>(
     return (
       <div className={cn('relative', width === 'full' ? 'w-full' : 'w-96', className)}>
         {hasSearchIcon && (
-          <Icon name="search" size={12} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-icons-1" />
+          <Icon name="search" size={12} className="absolute left-2.5 top-1/2 z-10 -translate-y-1/2 text-icons-1" />
         )}
+
         {hasShortcut && !!shortcutLetter && (
           <div className="absolute right-1.5 top-1/2 flex h-5 -translate-y-1/2 cursor-pointer items-center gap-0.5 rounded-sm border bg-background-3 px-1 text-foreground-2 duration-100 ease-in-out">
             <Icon name="apple-shortcut" size={12} />
-            <Text size={0} className="text-inherit">
-              {shortcutLetter}
-            </Text>
+
+            <span className="text-inherit">{shortcutLetter}</span>
           </div>
         )}
         <Input
+          {...restInputProps}
           ref={ref}
           placeholder={placeholder}
           defaultValue={defaultValue}

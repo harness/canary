@@ -424,7 +424,14 @@ export interface IconProps {
 
 const Icon: React.FC<IconProps> = ({ name, size = 16, height, width, className }) => {
   const Component = IconNameMap[name]
-  return <Component width={width || size} height={height || size} className={className} />
+  return (
+    <Component
+      width={width || size}
+      height={height || size}
+      className={className}
+      style={{ minWidth: `${width || size}px`, minHeight: `${height || size}px` }}
+    />
+  )
 }
 
 export { Icon }

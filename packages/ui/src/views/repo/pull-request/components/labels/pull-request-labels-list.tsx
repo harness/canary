@@ -1,26 +1,32 @@
 import { FC } from 'react'
 
-import { LabelMarker } from '@/components'
+import { LabelMarker, LabelMarkerProps } from '@/components'
 import { PRListLabelType } from '@/views'
 import { cn } from '@utils/cn'
 
+type LabelListLabel = PRListLabelType & Pick<LabelMarkerProps, 'onDelete'>
+
 interface LabelsListProps {
-  labels: PRListLabelType[]
+  labels: LabelListLabel[]
   className?: string
 }
 
-const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
+export const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
   if (!labels.length) {
     return <span className="text-14 font-medium text-foreground-5">No labels</span>
   }
 
   return (
-    <div className={cn('flex flex-wrap gap-1.5 pl-[22px]', className)}>
+    <div className={cn('flex flex-wrap gap-1.5', className)}>
       {labels.map(label => (
-        <LabelMarker key={label.key} color={label.color} label={label.key} value={label?.value} />
+        <LabelMarker
+          key={label.key}
+          color={label.color}
+          label={label.key}
+          value={label?.value}
+          onDelete={label.onDelete}
+        />
       ))}
     </div>
   )
 }
-
-export { LabelsList }

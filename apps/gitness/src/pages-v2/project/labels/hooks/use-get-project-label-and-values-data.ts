@@ -27,16 +27,21 @@ export const useGetProjectLabelAndValuesData = ({
   const space_ref = useGetSpaceURLParam()
   const [isLoadingValues, setIsLoadingValues] = useState(false)
 
-  const { labels: storeLabels, setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues } = useLabelsStore()
+  const {
+    labels: storeLabels,
+    setLabels,
+    setValues,
+    setRepoSpaceRef,
+    resetLabelsAndValues,
+    setIsLoading
+  } = useLabelsStore()
 
   const { data: { body: labels } = {}, isLoading: isLoadingSpaceLabels } = useListSpaceLabelsQuery(
     {
       space_ref: space_ref ?? '',
       queryParams: { page: queryPage || 1, limit: 10, query: query ?? '' }
     },
-    {
-      enabled
-    }
+    { enabled }
   )
 
   /**
@@ -123,13 +128,19 @@ export const useGetProjectLabelAndValuesData = ({
    * Set space_ref to store
    */
   useEffect(() => {
-    setRepoSpaceRef({
-      space_ref: space_ref ?? ''
-    })
+    setRepoSpaceRef({ space_ref: space_ref ?? '' })
   }, [space_ref, setRepoSpaceRef])
 
-  return {
-    isLoading: isLoadingSpaceLabels || isLoadingValues,
-    space_ref
-  }
+  /**
+   * Set loading state to store
+   */
+  useEffect(() => {
+    if (enabled) {
+      return setIsLoading(isLoadingSpaceLabels)
+    }
+
+    setIsLoading(isLoadingValues)
+  }, [isLoadingSpaceLabels, isLoadingValues, setIsLoading, query, enabled])
+
+  return { space_ref }
 }

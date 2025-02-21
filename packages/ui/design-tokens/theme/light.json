@@ -833,29 +833,7 @@
             "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
           }
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{state.hover}",
-            "$description": "Background color for navigation items on hover.\nCommon uses: hovered nav links, hovered tabs, hovered menu items."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Text color for navigation items on hover.\nCommon uses: hovered nav link text, hovered tab text, hovered menu labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{colors.chrome.500}",
-            "$description": "Icon color for navigation items on hover.\nCommon uses: hovered nav icons, hovered tab icons, hovered menu icons."
-          }
-        },
         "selected": {
-          "background": {
-            "$type": "color",
-            "$value": "{state.selected}",
-            "$description": "Background color for selected navigation items.\nCommon uses: active nav links, selected tabs, active menu items."
-          },
           "foreground": {
             "$type": "color",
             "$value": "{colors.pure.white}",

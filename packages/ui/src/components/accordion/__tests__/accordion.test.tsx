@@ -15,6 +15,8 @@ describe('Accordion Component', () => {
       </Accordion.Root>
     )
 
+    // const accordion = screen.getByText('')
+
     expect(screen.getByText('Trigger')).toBeInTheDocument()
   })
 })

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Icon, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelector } from '@views/repo/components'
+import { set } from 'date-fns'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
@@ -27,6 +28,8 @@ export function CreateBranchDialog({
   handleChangeSearchValue
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
+  const { setSelectedBranchTag } = useRepoBranchesStore()
+
   const {
     register,
     handleSubmit,
@@ -50,7 +53,7 @@ export function CreateBranchDialog({
       reset()
       setValue('name', '', { shouldValidate: false })
       setValue('target', defaultBranch || '', { shouldValidate: false })
-      clearErrors()
+      setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
       onClose()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -59,15 +62,20 @@ export function CreateBranchDialog({
     clearErrors()
     setValue('name', '', { shouldValidate: false })
     setValue('target', defaultBranch || '', { shouldValidate: false })
+    setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
     handleChangeSearchValue('')
     onClose()
   }
 
-  const { setSelectedBranchTag } = useRepoBranchesStore()
-
   const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
+
+  useEffect(() => {
+    if (defaultBranch) {
+      setValue('target', defaultBranch, { shouldValidate: true })
+    }
+  }, [defaultBranch, setValue])
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
@@ -159,6 +167,7 @@ export function CreateBranchDialog({
                 onClose()
                 setValue('target', defaultBranch || '')
                 setValue('name', '')
+                setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
               }}
               loading={isCreatingBranch}
               disabled={isCreatingBranch}

@@ -119,7 +119,6 @@ export function RepoBranchesListPage() {
 
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
-    console.log(name, target)
     await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
     handleInvalidateBranchList()
     setCreateBranchDialogOpen(false)

@@ -58,12 +58,11 @@ export function CreateTagDialog({
   })
 
   useEffect(() => {
-    clearErrors()
-    reset()
-    setValue('name', '', { shouldValidate: false })
-    setValue('target', defaultBranch || '', { shouldValidate: false })
-
     if (isSubmitSuccessful) {
+      reset()
+      setValue('name', '', { shouldValidate: false })
+      setValue('target', defaultBranch || '', { shouldValidate: false })
+      setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
       clearErrors()
       onClose()
     }
@@ -73,6 +72,7 @@ export function CreateTagDialog({
     clearErrors()
     setValue('name', '', { shouldValidate: false })
     setValue('target', defaultBranch || '', { shouldValidate: false })
+    setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
     onClose()
   }
 
@@ -80,11 +80,11 @@ export function CreateTagDialog({
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  // useEffect(() => {
-  //   if (defaultBranch) {
-  //     setValue('target', defaultBranch, { shouldValidate: true })
-  //   }
-  // }, [defaultBranch, setValue])
+  useEffect(() => {
+    if (defaultBranch) {
+      setValue('target', defaultBranch, { shouldValidate: true })
+    }
+  }, [defaultBranch, setValue])
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>

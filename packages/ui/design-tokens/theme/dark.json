@@ -53,48 +53,6 @@
       "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
     }
   },
-  "state": {
-    "disabled": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.chrome.700}",
-        "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
-      },
-      "bg": {
-        "$type": "color",
-        "$value": "{colors.chrome.950}",
-        "$description": "Muted bg color.\nCommon uses: disabled states."
-      }
-    },
-    "hover": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.15",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.200}",
-      "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
-    },
-    "selected": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.2",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.200}",
-      "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
-    }
-  },
   "border": {
     "1": {
       "$type": "color",
@@ -139,6 +97,53 @@
       "$type": "color",
       "$value": "{colors.amber.500}",
       "$description": "Border color for warning containers.\nCommon uses: warning alert borders, notice boundaries."
+    }
+  },
+  "state": {
+    "hover": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.15",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.chrome.200}",
+      "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
+    },
+    "selected": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.2",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.chrome.200}",
+      "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
+    },
+    "disabled": {
+      "text": {
+        "$type": "color",
+        "$value": "{colors.chrome.700}",
+        "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Muted bg color.\nCommon uses: disabled states."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Muted border color.\nCommon uses: disabled border states."
+      }
     }
   },
   "overlay": {

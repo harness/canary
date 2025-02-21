@@ -56,7 +56,7 @@
   "border": {
     "1": {
       "$type": "color",
-      "$value": "{colors.chrome.400}",
+      "$value": "{colors.chrome.300}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "2": {
@@ -232,22 +232,22 @@
   "form": {
     "text": {
       "$type": "color",
-      "$value": "{fontSize.2}",
+      "$value": "{text.2}",
       "$description": "Default text color for input content.\nCommon uses: input text, entered content."
     },
     "icon": {
       "$type": "color",
-      "$value": "{fontSize.3}",
+      "$value": "{text.3}",
       "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
     },
     "background": {
       "$type": "color",
-      "$value": "{colors.chrome.950}",
+      "$value": "{background.2}",
       "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
     },
     "border": {
       "$type": "color",
-      "$value": "{colors.chrome.850}",
+      "$value": "{border.2}",
       "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
     }
   },
@@ -255,17 +255,17 @@
     "unselected": {
       "text": {
         "$type": "color",
-        "$value": "{colors.chrome.600}",
+        "$value": "{text.3}",
         "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.900}",
+        "$value": "{background.2}",
         "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.chrome.50}",
+        "$value": "{border.1}",
         "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
       }
     },
@@ -277,12 +277,12 @@
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.50}",
+        "$value": "{colors.chrome.300}",
         "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
       },
       "border": {
         "$type": "color",
-        "$value": "{colors.chrome.50}",
+        "$value": "{border.1}",
         "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
       }
     }

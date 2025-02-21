@@ -17,8 +17,8 @@
       "$value": "{spacing.8}"
     }
   },
-  "display": {
-    "large": {
+  "title": {
+    "hero": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
@@ -30,7 +30,7 @@
       },
       "$description": "Large headlines with extra emphasis."
     },
-    "base": {
+    "section": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
@@ -41,10 +41,8 @@
         "lineHeight": "{lineHeight.7.tight}"
       },
       "$description": "Large headlines, hero sections."
-    }
-  },
-  "title": {
-    "large": {
+    },
+    "subsection": {
       "$type": "typography",
       "$value": {
         "fontFamily": "{fontFamily.default}",
@@ -69,7 +67,7 @@
   },
   "body": {
     "none": {
-      "default": {
+      "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -80,7 +78,7 @@
         },
         "$description": "Primary text style for UI and content."
       },
-      "accent": {
+      "strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -92,7 +90,7 @@
       }
     },
     "tight": {
-      "default": {
+      "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -103,7 +101,7 @@
         },
         "$description": "Primary text style for UI and content."
       },
-      "accent": {
+      "strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -115,7 +113,7 @@
       }
     },
     "snug": {
-      "default": {
+      "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -126,7 +124,7 @@
         },
         "$description": "Primary text style for UI and content."
       },
-      "accent": {
+      "strong": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -141,7 +139,7 @@
   },
   "caption": {
     "none": {
-      "default": {
+      "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -152,7 +150,7 @@
         },
         "$description": "Primary caption style, small but important text."
       },
-      "subtle": {
+      "soft": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -165,7 +163,7 @@
       }
     },
     "snug": {
-      "default": {
+      "normal": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",
@@ -176,7 +174,7 @@
         },
         "$description": "Primary caption style, small but important text."
       },
-      "subtle": {
+      "soft": {
         "$type": "typography",
         "$value": {
           "fontFamily": "{fontFamily.default}",

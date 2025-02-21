@@ -1,41 +1,36 @@
 {
   "background": {
-    "base": {
+    "1": {
       "$type": "color",
       "$value": "{colors.chrome.1000}",
       "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background."
     },
-    "subtle": {
+    "2": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
       "$description": "Level 2. Represents elements that sit on top of the bottom layer. Things like cards and containers that appear to be raised slightly above the background."
     },
-    "emphasis": {
+    "3": {
       "$type": "color",
       "$value": "{colors.chrome.900}",
       "$description": "Level 3. Represents elements that sit on top of the middle layer. These are the most prominent elements like emphasized content."
     }
   },
   "text": {
-    "emphasis": {
+    "1": {
       "$type": "color",
       "$value": "{colors.pure.white}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
-    "default": {
+    "2": {
       "$type": "color",
       "$value": "{colors.chrome.200}",
       "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
     },
-    "subtle": {
+    "3": {
       "$type": "color",
       "$value": "{colors.chrome.400}",
       "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
-    },
-    "disabled": {
-      "$type": "color",
-      "$value": "{colors.chrome.700}",
-      "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
     },
     "accent": {
       "$type": "color",
@@ -58,18 +53,60 @@
       "$description": "Primary text color for warning content.\nCommon uses: warning message text, alert text."
     }
   },
+  "state": {
+    "disabled": {
+      "text": {
+        "$type": "color",
+        "$value": "{colors.chrome.700}",
+        "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
+      },
+      "bg": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Muted bg color.\nCommon uses: disabled states."
+      }
+    },
+    "hover": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.15",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.chrome.200}",
+      "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
+    },
+    "selected": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.2",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.chrome.200}",
+      "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
+    }
+  },
   "border": {
-    "emphasis": {
+    "1": {
       "$type": "color",
       "$value": "{colors.chrome.400}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
-    "default": {
+    "2": {
       "$type": "color",
       "$value": "{colors.chrome.850}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
     },
-    "subtle": {
+    "3": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -125,41 +162,6 @@
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
-  "state": {
-    "hover": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.15",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.200}",
-      "$description": "Light overlay for gentle effects.\nCommon uses: hover states, soft interactions."
-    },
-    "selected": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.2",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.200}",
-      "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
-    },
-    "disabled": {
-      "$type": "color",
-      "$value": "{colors.chrome.950}",
-      "$description": "Muted bg color.\nCommon uses: disabled states."
-    }
-  },
   "primary": {
     "background": {
       "$type": "color",
@@ -181,7 +183,7 @@
       },
       "text": {
         "$type": "color",
-        "$value": "{text.default}",
+        "$value": "{text.2}",
         "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
       }
     },
@@ -189,34 +191,34 @@
       "unselected": {
         "text": {
           "$type": "color",
-          "$value": "{text.default}",
+          "$value": "{text.2}",
           "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
         },
         "icon": {
           "$type": "color",
-          "$value": "{text.subtle}",
+          "$value": "{text.3}",
           "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
         },
         "border": {
           "$type": "color",
-          "$value": "{border.default}",
+          "$value": "{border.2}",
           "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
         }
       },
       "selected": {
         "text": {
           "$type": "color",
-          "$value": "{text.emphasis}",
+          "$value": "{text.1}",
           "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
         },
         "icon": {
           "$type": "color",
-          "$value": "{text.emphasis}",
+          "$value": "{text.1}",
           "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
         },
         "border": {
           "$type": "color",
-          "$value": "{border.emphasis}",
+          "$value": "{border.1}",
           "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
         }
       }
@@ -230,7 +232,7 @@
     },
     "text": {
       "$type": "color",
-      "$value": "{text.default}",
+      "$value": "{text.2}",
       "$description": "Default text color for input content.\nCommon uses: input text, entered content."
     },
     "border": {
@@ -240,7 +242,7 @@
     },
     "icon": {
       "$type": "color",
-      "$value": "{text.subtle}",
+      "$value": "{text.3}",
       "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
     }
   },
@@ -927,7 +929,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{background.base}",
+          "color": "{background.1}",
           "type": "dropShadow"
         },
         {

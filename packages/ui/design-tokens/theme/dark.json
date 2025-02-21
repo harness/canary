@@ -1075,7 +1075,12 @@
       "$value": "{colors.chrome.200}",
       "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
     },
-    "backdrop": {
+    "disabled": {
+      "$type": "color",
+      "$value": "{colors.chrome.950}",
+      "$description": "Muted bg color.\nCommon uses: disabled states."
+    },
+    "overlay-backdrop": {
       "$extensions": {
         "studio.tokens": {
           "modify": {

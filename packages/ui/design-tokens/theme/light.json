@@ -976,7 +976,12 @@
       "$value": "{colors.chrome.400}",
       "$description": "Strong overlay for emphasis.\nCommon uses: selected states, hard interactions."
     },
-    "backdrop": {
+    "disabled": {
+      "$type": "color",
+      "$value": "{colors.chrome.300}",
+      "$description": "Muted bg color.\nCommon uses: disabled states."
+    },
+    "overlay-backdrop": {
       "$type": "color",
       "$value": "#fff",
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."

@@ -128,11 +128,6 @@
       },
       "ghost": {
         "unselected": {
-          "border": {
-            "$type": "color",
-            "$value": "{border.base}",
-            "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
-          },
           "foreground": {
             "$type": "color",
             "$value": "{foreground.base}",
@@ -142,14 +137,14 @@
             "$type": "color",
             "$value": "{foreground.subtle}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.base}",
+            "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
           }
         },
         "selected": {
-          "border": {
-            "$type": "color",
-            "$value": "{border.emphasis}",
-            "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
-          },
           "foreground": {
             "$type": "color",
             "$value": "{foreground.emphasis}",
@@ -159,100 +154,37 @@
             "$type": "color",
             "$value": "{foreground.base}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.emphasis}",
+            "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
           }
         }
       }
     }
   },
   "control": {
-    "interactive": {
-      "default": {
-        "background": {
-          "$type": "color",
-          "$value": "{background.base}",
-          "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "{foreground.base}",
-          "$description": "Default text color for input content.\nCommon uses: input text, entered content."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.base}",
-          "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{foreground.subtle}",
-          "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
-        }
+    "input": {
+      "background": {
+        "$type": "color",
+        "$value": "{background.base}",
+        "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
       },
-      "hover": {
-        "background": {
-          "$type": "color",
-          "$value": "{background.base}",
-          "$description": "Background color when hovering inputs.\nCommon uses: hover state for input fields."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "{foreground.base}",
-          "$description": "Text color during hover state.\nCommon uses: text appearance on hover."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.emphasis}",
-          "$description": "Border color during hover.\nCommon uses: hover state boundaries."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{foreground.subtle}",
-          "$description": "Icon color during hover.\nCommon uses: interactive icon states."
-        }
+      "foreground": {
+        "$type": "color",
+        "$value": "{foreground.base}",
+        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
       },
-      "active": {
-        "background": {
-          "$type": "color",
-          "$value": "{background.base}",
-          "$description": "Background color for focused/active inputs.\nCommon uses: active input field, focused state."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "{foreground.base}",
-          "$description": "Text color when input is active.\nCommon uses: text in focused input."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.focus}",
-          "$description": "Border color for focused state.\nCommon uses: focus indication, active boundary."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{foreground.subtle}",
-          "$description": "Icon color in active state.\nCommon uses: active state indicators."
-        }
+      "border": {
+        "$type": "color",
+        "$value": "{border.base}",
+        "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
       },
-      "disabled": {
-        "background": {
-          "$type": "color",
-          "$value": "{background.base}",
-          "$description": "Background for disabled input elements.\nCommon uses: non-interactive inputs."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "{foreground.disabled}",
-          "$description": "Text color for disabled inputs.\nCommon uses: disabled input content."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.subtle}",
-          "$description": "Border color for disabled state.\nCommon uses: inactive input boundaries."
-        },
-        "icon": {
-          "$type": "color",
-          "$value": "{foreground.disabled}",
-          "$description": "Icon color when disabled.\nCommon uses: disabled state indicators."
-        }
+      "icon": {
+        "$type": "color",
+        "$value": "{foreground.subtle}",
+        "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
       }
     },
     "selection": {
@@ -282,23 +214,6 @@
           "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
         }
       },
-      "hover": {
-        "background": {
-          "$type": "color",
-          "$value": "#fff",
-          "$description": "Background when hovering selectable items.\nCommon uses: hover state for options."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "#fff",
-          "$description": "Text color during hover.\nCommon uses: hover state labels."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "#fff",
-          "$description": "Border color during hover.\nCommon uses: hover state outlines."
-        }
-      },
       "selected": {
         "background": {
           "$type": "color",
@@ -315,32 +230,6 @@
           "$value": "{colors.chrome.850}",
           "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
         }
-      },
-      "disabled": {
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.3",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.chrome.150}",
-          "$description": "Background for non-interactive options.\nCommon uses: disabled checkboxes, inactive options."
-        },
-        "foreground": {
-          "$type": "color",
-          "$value": "{colors.chrome.400}",
-          "$description": "Text color when disabled.\nCommon uses: disabled option labels."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.chrome.400}",
-          "$description": "Border for disabled elements.\nCommon uses: disabled item outlines."
-        }
       }
     },
     "adjustment": {
@@ -354,68 +243,30 @@
           "$type": "color",
           "$value": "#fff",
           "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
+        }
+      },
+      "track-segments": {
+        "base": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
         },
-        "segments": {
-          "base": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
-          },
-          "progress": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
-          }
+        "progress": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
         }
       },
       "handle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle surface in hover state.\nCommon uses: interactive feedback, hoverable controls, adjustable grips."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle outline during hover.\nCommon uses: hover state boundary."
-          }
-        },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle surface while dragging.\nCommon uses: active drag state."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle outline while dragging.\nCommon uses: active handle boundary."
-          }
-        },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle surface when inactive.\nCommon uses: non-interactive handle."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Handle outline when inactive.\nCommon uses: disabled handle boundary."
-          }
+        "border": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
         }
       }
     }

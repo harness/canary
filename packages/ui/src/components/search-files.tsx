@@ -110,7 +110,7 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
       >
         <Command.Root>
           <Command.List heightClassName="max-h-60">
-            {!!filteredFiles.length ? (
+            {filteredFiles.length ? (
               <Command.Group>
                 {filteredFiles?.map(({ file, element }) => (
                   <Command.Item

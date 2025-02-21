@@ -242,7 +242,6 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
               customHeaderData={{
                 name,
                 avatar: undefined,
-                // TODO: fix comment to tell between comment or code comment?
                 description: (
                   <Layout.Horizontal className="text-foreground-4">
                     <span>{timeAgo(commentItem?.created ? Number(commentItem.created) : undefined)}</span>

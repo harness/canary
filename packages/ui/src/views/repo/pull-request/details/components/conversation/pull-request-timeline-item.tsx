@@ -37,6 +37,34 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     onQuoteReply,
     hideEditDelete
   }) => {
+    const actions = [
+      ...(!hideEditDelete
+        ? [
+            {
+              title: 'Edit',
+              onClick: () => onEditClick?.()
+            }
+          ]
+        : []),
+      {
+        title: 'Quote reply',
+        onClick: () => onQuoteReply?.()
+      },
+      {
+        title: 'Copy link to comment',
+        onClick: () => onCopyClick?.(commentId, isNotCodeComment)
+      },
+      ...(!hideEditDelete
+        ? [
+            {
+              title: 'Delete comment',
+              onClick: () => handleDeleteComment?.(),
+              isDanger: true
+            }
+          ]
+        : [])
+    ]
+
     return (
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-baseline gap-1.5">
@@ -51,33 +79,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
             iconName="more-dots-fill"
             sideOffset={-8}
             alignOffset={2}
-            actions={[
-              ...(!hideEditDelete
-                ? [
-                    {
-                      title: 'Edit',
-                      onClick: () => onEditClick?.()
-                    }
-                  ]
-                : []),
-              {
-                title: 'Quote reply',
-                onClick: () => onQuoteReply?.()
-              },
-              {
-                title: 'Copy link to comment',
-                onClick: () => onCopyClick?.(commentId, isNotCodeComment)
-              },
-              ...(!hideEditDelete
-                ? [
-                    {
-                      title: 'Delete comment',
-                      onClick: () => handleDeleteComment?.(),
-                      isDanger: true
-                    }
-                  ]
-                : [])
-            ]}
+            actions={actions}
           />
         )}
       </div>

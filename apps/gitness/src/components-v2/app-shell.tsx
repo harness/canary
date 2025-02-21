@@ -20,9 +20,11 @@ import { useAppContext } from '../framework/context/AppContext'
 import { useRoutes } from '../framework/context/NavigationContext'
 import { useThemeStore } from '../framework/context/ThemeContext'
 import { useLocationChange } from '../framework/hooks/useLocationChange'
+import { useRepoImportEvents } from '../framework/hooks/useRepoImportEvent'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
 import { PathParams } from '../RouteDefinitions'
 import Breadcrumbs from './breadcrumbs/breadcrumbs'
+import { Toaster } from './toaster'
 
 interface NavLinkStorageInterface {
   state: {
@@ -170,6 +172,7 @@ export const AppShell = () => {
     },
     [setPinned]
   )
+  useRepoImportEvents()
 
   return (
     <SandboxLayout.Root>
@@ -205,6 +208,7 @@ export const AppShell = () => {
         onSave={handleSave}
         onClose={handleCustomNav}
       />
+      <Toaster />
     </SandboxLayout.Root>
   )
 }

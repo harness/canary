@@ -29,8 +29,16 @@ export function RepoBranchesListPage() {
   const { spaceId, repoId } = useParams<PathParams>()
   const queryClient = useQueryClient()
 
-  const { page, setPage, setBranchList, setDefaultBranch, setSpaceIdAndRepoId, setPaginationFromHeaders } =
-    useRepoBranchesStore()
+  const {
+    page,
+    setPage,
+    setBranchList,
+    setDefaultBranch,
+    setSelectedBranchTag,
+    setSpaceIdAndRepoId,
+    setPaginationFromHeaders,
+    branchList
+  } = useRepoBranchesStore()
 
   const [query, setQuery] = useQueryState('query')
   const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
@@ -111,7 +119,7 @@ export function RepoBranchesListPage() {
 
   const onSubmit = async (formValues: CreateBranchFormFields) => {
     const { name, target } = formValues
-
+    console.log(name, target)
     await saveBranch({ repo_ref: repoRef, body: { name, target, bypass_rules: false } })
     handleInvalidateBranchList()
     setCreateBranchDialogOpen(false)
@@ -144,9 +152,19 @@ export function RepoBranchesListPage() {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId, setSpaceIdAndRepoId])
 
+  // useEffect(() => {
+  //   setDefaultBranch(repoMetadata?.default_branch || '')
+  // }, [repoMetadata, setDefaultBranch])
+
   useEffect(() => {
-    setDefaultBranch(repoMetadata?.default_branch || '')
-  }, [repoMetadata, setDefaultBranch])
+    const defaultBranch = branchList?.find(branch => branch.default)
+    setSelectedBranchTag({
+      name: defaultBranch?.name || repoMetadata?.default_branch || '',
+      sha: defaultBranch?.sha || '',
+      default: true
+    })
+    setDefaultBranch(repoMetadata?.default_branch ?? '')
+  }, [branchList, repoMetadata?.default_branch])
 
   return (
     <>

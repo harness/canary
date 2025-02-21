@@ -118,6 +118,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         onClose={() => {
           setCreateBranchDialogOpen(false)
         }}
+        useRepoBranchesStore={useRepoBranchesStore}
         onSubmit={onSubmit}
         branches={searchBranches}
         isLoadingBranches={isLoading}

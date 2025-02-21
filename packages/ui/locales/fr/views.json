@@ -419,10 +419,10 @@
     "selectRole": "",
     "enterBranchName": "Entrez le nom de la branche",
     "createBranchError": "Le nom de la branche est requis",
+    "enterTagName": "Enter tag name",
     "select": "Sélectionner",
     "baseBranch": "Branche de base",
     "selectBranchError": "La branche de base est requise",
-    "enterTagName": "Enter tag name",
     "baseTag": "Based on",
     "selectMemberError": "",
     "selectRoleError": ""

@@ -40,7 +40,7 @@ export function CreateTagDialog({
   setBranchQuery
 }: CreateTagDialogProps) {
   const { t } = useTranslationStore()
-  const { defaultBranch } = useRepoBranchesStore()
+  const { defaultBranch, setSelectedBranchTag } = useRepoBranchesStore()
   const {
     register,
     handleSubmit,
@@ -80,11 +80,11 @@ export function CreateTagDialog({
     setValue(fieldName, value, { shouldValidate: true })
   }
 
-  useEffect(() => {
-    if (defaultBranch) {
-      setValue('target', defaultBranch, { shouldValidate: true })
-    }
-  }, [defaultBranch, setValue])
+  // useEffect(() => {
+  //   if (defaultBranch) {
+  //     setValue('target', defaultBranch, { shouldValidate: true })
+  //   }
+  // }, [defaultBranch, setValue])
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
@@ -114,8 +114,10 @@ export function CreateTagDialog({
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
                 useTranslationStore={useTranslationStore}
-                onSelectBranch={value => handleSelectChange('target', value.name)}
-                isBranchOnly={true}
+                onSelectBranch={value => {
+                  handleSelectChange('target', value.name)
+                  setSelectedBranchTag(value)
+                }}
                 searchQuery={branchQuery}
                 setSearchQuery={setBranchQuery}
                 dynamicWidth

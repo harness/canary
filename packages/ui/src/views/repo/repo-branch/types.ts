@@ -84,4 +84,5 @@ export interface CreateBranchDialogProps {
   useTranslationStore: () => TranslationStore
   defaultBranch?: string
   handleChangeSearchValue: Dispatch<SetStateAction<string>>
+  useRepoBranchesStore: () => IBranchSelectorStore
 }

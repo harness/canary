@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 
 import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Icon, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { BranchSelector } from '@views/repo/components'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
@@ -22,6 +23,7 @@ export function CreateBranchDialog({
   error,
   useTranslationStore,
   defaultBranch,
+  useRepoBranchesStore,
   handleChangeSearchValue
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
@@ -43,12 +45,11 @@ export function CreateBranchDialog({
   })
 
   useEffect(() => {
-    clearErrors()
-    reset()
-    setValue('name', '', { shouldValidate: false })
-    setValue('target', defaultBranch || '', { shouldValidate: false })
-
     if (isSubmitSuccessful) {
+      clearErrors()
+      reset()
+      setValue('name', '', { shouldValidate: false })
+      setValue('target', defaultBranch || '', { shouldValidate: false })
       clearErrors()
       onClose()
     }
@@ -62,27 +63,11 @@ export function CreateBranchDialog({
     onClose()
   }
 
-  const processedBranches = useMemo(
-    () =>
-      defaultBranch
-        ? branches?.some(branch => branch.name === defaultBranch)
-          ? branches
-          : [{ name: defaultBranch }, ...(branches || [])]
-        : branches,
-    [branches, defaultBranch]
-  )
-
-  const targetValue = watch('target')
+  const { setSelectedBranchTag } = useRepoBranchesStore()
 
   const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
   }
-
-  useEffect(() => {
-    if (defaultBranch) {
-      setValue('target', defaultBranch, { shouldValidate: true })
-    }
-  }, [defaultBranch, setValue])
 
   return (
     <Dialog.Root open={open} onOpenChange={handleClose}>
@@ -106,7 +91,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Select.Root
+              {/* <Select.Root
                 name="target"
                 value={targetValue || defaultBranch}
                 onValueChange={value => handleSelectChange('target', value)}
@@ -139,7 +124,17 @@ export function CreateBranchDialog({
                       )
                   )}
                 </Select.Content>
-              </Select.Root>
+              </Select.Root> */}
+              <BranchSelector
+                useRepoBranchesStore={useRepoBranchesStore}
+                useTranslationStore={useTranslationStore}
+                onSelectBranch={value => {
+                  handleSelectChange('target', value.name)
+                  setSelectedBranchTag(value)
+                }}
+                setSearchQuery={handleChangeSearchValue}
+                dynamicWidth
+              />
             </ControlGroup>
           </Fieldset>
 

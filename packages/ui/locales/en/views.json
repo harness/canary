@@ -423,10 +423,10 @@
     "selectRole": "Select role",
     "enterBranchName": "Enter branch name",
     "createBranchError": "Branch name is required",
+    "enterTagName": "Enter tag name",
     "select": "Select",
     "baseBranch": "Base branch",
     "selectBranchError": "Base branch is required",
-    "enterTagName": "Enter tag name",
     "baseTag": "Based on",
     "selectMemberError": "Member is required",
     "selectRoleError": "Role is required"

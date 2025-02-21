@@ -13,7 +13,7 @@
     "emphasis": {
       "$type": "color",
       "$value": "{colors.chrome.900}",
-      "$description": "Represents elements that sit on top of the middle layer (Level 3) - these are the most prominent elements like emphasized content."
+      "$description": "Level 3. Represents elements that sit on top of the middle layer. These are the most prominent elements like emphasized content."
     }
   },
   "overlay": {
@@ -37,13 +37,13 @@
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
-  "foreground": {
+  "text": {
     "emphasis": {
       "$type": "color",
       "$value": "{colors.pure.white}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
     },
-    "base": {
+    "default": {
       "$type": "color",
       "$value": "{colors.chrome.200}",
       "$description": "Primary text color for general content.\nCommon uses: body text, primary content, default icons."
@@ -132,7 +132,7 @@
         "$value": "{colors.accent.600}",
         "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
       },
-      "foreground": {
+      "text": {
         "$type": "color",
         "$value": "{colors.pure.white}",
         "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
@@ -145,22 +145,22 @@
           "$value": "{colors.chrome.850}",
           "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
-          "$value": "{foreground.base}",
+          "$value": "{text.default}",
           "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
         }
       },
       "ghost": {
         "unselected": {
-          "foreground": {
+          "text": {
             "$type": "color",
-            "$value": "{foreground.base}",
+            "$value": "{text.default}",
             "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.subtle}",
+            "$value": "{text.subtle}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           },
           "border": {
@@ -170,14 +170,14 @@
           }
         },
         "selected": {
-          "foreground": {
+          "text": {
             "$type": "color",
-            "$value": "{foreground.emphasis}",
+            "$value": "{text.emphasis}",
             "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.emphasis}",
+            "$value": "{text.emphasis}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
           },
           "border": {
@@ -196,9 +196,9 @@
         "$value": "{colors.chrome.950}",
         "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
       },
-      "foreground": {
+      "text": {
         "$type": "color",
-        "$value": "{foreground.base}",
+        "$value": "{text.default}",
         "$description": "Default text color for input content.\nCommon uses: input text, entered content."
       },
       "border": {
@@ -208,7 +208,7 @@
       },
       "icon": {
         "$type": "color",
-        "$value": "{foreground.subtle}",
+        "$value": "{text.subtle}",
         "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
       }
     },
@@ -219,7 +219,7 @@
           "$value": "{colors.chrome.900}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.chrome.600}",
           "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
@@ -236,7 +236,7 @@
           "$value": "{colors.chrome.50}",
           "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.chrome.950}",
           "$description": "Text color for selected items.\nCommon uses: selected item labels."
@@ -290,7 +290,7 @@
   "status": {
     "success": {
       "emphasis": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pure.black}",
           "$description": "Text color for success intence surface.\nCommon uses: success message text, completion text."
@@ -316,7 +316,7 @@
           "$value": "{colors.green.500}",
           "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.green.200}",
           "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
@@ -372,7 +372,7 @@
           "$value": "{colors.red.300}",
           "$description": "Default error background color.\nCommon uses: error alerts, validation messages."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
         }
@@ -392,7 +392,7 @@
           "$value": "{colors.red.500}",
           "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.red.200}",
           "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
@@ -448,7 +448,7 @@
           "$value": "{colors.amber.300}",
           "$description": "Default warning background color.\nCommon uses: warning alerts, caution messages."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
         }
@@ -468,7 +468,7 @@
           "$value": "{colors.amber.500}",
           "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.amber.200}",
           "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
@@ -524,7 +524,7 @@
           "$value": "{colors.chrome.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
         }
@@ -535,7 +535,7 @@
           "$value": "{colors.chrome.900}",
           "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.chrome.200}",
           "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
@@ -573,7 +573,7 @@
           "$value": "{colors.purple.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pure.black}"
         }
@@ -593,7 +593,7 @@
           "$value": "{colors.purple.500}",
           "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.purple.200}",
           "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
@@ -977,7 +977,7 @@
       },
       "item": {
         "unselected": {
-          "foreground": {
+          "text": {
             "$type": "color",
             "$value": "{colors.chrome.200}",
             "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
@@ -989,7 +989,7 @@
           }
         },
         "selected": {
-          "foreground": {
+          "text": {
             "$type": "color",
             "$value": "{colors.pure.white}",
             "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
@@ -1005,7 +1005,7 @@
     "link": {
       "default": {
         "$type": "color",
-        "$value": "{foreground.accent}"
+        "$value": "{text.accent}"
       },
       "hover": {
         "$type": "color",
@@ -1018,7 +1018,7 @@
     },
     "label": {
       "red": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.red.300}"
         },
@@ -1032,7 +1032,7 @@
         }
       },
       "green": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.green.300}"
         },
@@ -1046,7 +1046,7 @@
         }
       },
       "yellow": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.yellow.300}"
         },
@@ -1060,7 +1060,7 @@
         }
       },
       "blue": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.accent.300}"
         },
@@ -1074,7 +1074,7 @@
         }
       },
       "pink": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.pink.300}"
         },
@@ -1088,7 +1088,7 @@
         }
       },
       "purple": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.purple.300}"
         },
@@ -1102,7 +1102,7 @@
         }
       },
       "violet": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.violet.300}"
         },
@@ -1116,7 +1116,7 @@
         }
       },
       "indigo": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.indigo.300}"
         },
@@ -1130,7 +1130,7 @@
         }
       },
       "cyan": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.cyan.300}"
         },
@@ -1144,7 +1144,7 @@
         }
       },
       "orange": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.orange.300}"
         },
@@ -1158,7 +1158,7 @@
         }
       },
       "brown": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.brown.300}"
         },
@@ -1172,7 +1172,7 @@
         }
       },
       "mint": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.mint.300}"
         },
@@ -1186,7 +1186,7 @@
         }
       },
       "lime": {
-        "foreground": {
+        "text": {
           "$type": "color",
           "$value": "{colors.lime.300}"
         },

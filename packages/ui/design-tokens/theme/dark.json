@@ -85,7 +85,7 @@
       "$value": "{colors.chrome.400}",
       "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
-    "base": {
+    "default": {
       "$type": "color",
       "$value": "{colors.chrome.850}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
@@ -165,7 +165,7 @@
           },
           "border": {
             "$type": "color",
-            "$value": "{border.base}",
+            "$value": "{border.default}",
             "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
           }
         },
@@ -335,7 +335,7 @@
           "$value": "{colors.green.300}",
           "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
         },
-        "background-hover": {
+        "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -349,7 +349,7 @@
           "$value": "{colors.green.500}",
           "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
         },
-        "background-active": {
+        "active": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -411,7 +411,7 @@
           "$value": "{colors.red.300}",
           "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
         },
-        "background-hover": {
+        "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -425,7 +425,7 @@
           "$value": "{colors.red.500}",
           "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
         },
-        "background-active": {
+        "active": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -487,7 +487,7 @@
           "$value": "{colors.amber.300}",
           "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
         },
-        "background-hover": {
+        "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -501,7 +501,7 @@
           "$value": "{colors.amber.500}",
           "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
         },
-        "background-active": {
+        "active": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -554,12 +554,12 @@
           "$value": "{colors.chrome.300}",
           "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
         },
-        "background-hover": {
+        "hover": {
           "$type": "color",
           "$value": "{colors.chrome.850}",
           "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
         },
-        "background-active": {
+        "active": {
           "$type": "color",
           "$value": "{colors.chrome.800}",
           "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
@@ -612,7 +612,7 @@
           "$value": "{colors.purple.300}",
           "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
         },
-        "background-hover": {
+        "hover": {
           "$extensions": {
             "studio.tokens": {
               "modify": {
@@ -626,7 +626,7 @@
           "$value": "{colors.purple.500}",
           "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
         },
-        "background-active": {
+        "active": {
           "$extensions": {
             "studio.tokens": {
               "modify": {

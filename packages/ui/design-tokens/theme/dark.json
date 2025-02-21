@@ -168,28 +168,28 @@
     }
   },
   "primary": {
-    "background": {
-      "$type": "color",
-      "$value": "{colors.accent.600}",
-      "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
-    },
     "text": {
       "$type": "color",
       "$value": "{colors.pure.white}",
       "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
+    },
+    "background": {
+      "$type": "color",
+      "$value": "{colors.accent.600}",
+      "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
     }
   },
   "secondary": {
     "solid": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
-      },
       "text": {
         "$type": "color",
         "$value": "{text.2}",
         "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.850}",
+        "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
       }
     },
     "ghost": {
@@ -230,38 +230,38 @@
     }
   },
   "form": {
-    "background": {
-      "$type": "color",
-      "$value": "{colors.chrome.950}",
-      "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
-    },
     "text": {
       "$type": "color",
       "$value": "{text.2}",
       "$description": "Default text color for input content.\nCommon uses: input text, entered content."
     },
-    "border": {
-      "$type": "color",
-      "$value": "{colors.chrome.850}",
-      "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
-    },
     "icon": {
       "$type": "color",
       "$value": "{text.3}",
       "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
+    },
+    "background": {
+      "$type": "color",
+      "$value": "{colors.chrome.950}",
+      "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{colors.chrome.850}",
+      "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
     }
   },
   "selection": {
     "unselected": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.900}",
-        "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
-      },
       "text": {
         "$type": "color",
         "$value": "{colors.chrome.600}",
         "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.900}",
+        "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
       },
       "border": {
         "$type": "color",
@@ -270,15 +270,15 @@
       }
     },
     "selected": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.50}",
-        "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
-      },
       "text": {
         "$type": "color",
         "$value": "{colors.chrome.950}",
         "$description": "Text color for selected items.\nCommon uses: selected item labels."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.50}",
+        "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
       },
       "border": {
         "$type": "color",
@@ -340,20 +340,6 @@
         }
       },
       "subtle": {
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.500}",
-          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
-        },
         "text": {
           "$type": "color",
           "$value": "{colors.green.200}",
@@ -372,6 +358,20 @@
           "$type": "color",
           "$value": "{colors.green.300}",
           "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
         },
         "hover": {
           "$extensions": {
@@ -405,31 +405,17 @@
     },
     "danger": {
       "emphasis": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.black}"
+        },
         "background": {
           "$type": "color",
           "$value": "{colors.red.300}",
           "$description": "Default error background color.\nCommon uses: error alerts, validation messages."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.500}",
-          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
-        },
         "text": {
           "$type": "color",
           "$value": "{colors.red.200}",
@@ -448,6 +434,20 @@
           "$type": "color",
           "$value": "{colors.red.300}",
           "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.red.500}",
+          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
         },
         "hover": {
           "$extensions": {
@@ -481,31 +481,17 @@
     },
     "warning": {
       "emphasis": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.black}"
+        },
         "background": {
           "$type": "color",
           "$value": "{colors.amber.300}",
           "$description": "Default warning background color.\nCommon uses: warning alerts, caution messages."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.amber.500}",
-          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
-        },
         "text": {
           "$type": "color",
           "$value": "{colors.amber.200}",
@@ -524,6 +510,20 @@
           "$type": "color",
           "$value": "{colors.amber.300}",
           "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.amber.500}",
+          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
         },
         "hover": {
           "$extensions": {
@@ -557,22 +557,17 @@
     },
     "neutral": {
       "emphasis": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.black}"
+        },
         "background": {
           "$type": "color",
           "$value": "{colors.chrome.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-        },
         "text": {
           "$type": "color",
           "$value": "{colors.chrome.200}",
@@ -592,6 +587,11 @@
           "$value": "{colors.chrome.300}",
           "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
         },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}",
+          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
+        },
         "hover": {
           "$type": "color",
           "$value": "{colors.chrome.850}",
@@ -606,31 +606,17 @@
     },
     "merge": {
       "emphasis": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.black}"
+        },
         "background": {
           "$type": "color",
           "$value": "{colors.purple.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.black}"
         }
       },
       "subtle": {
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.purple.500}",
-          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-        },
         "text": {
           "$type": "color",
           "$value": "{colors.purple.200}",
@@ -649,6 +635,20 @@
           "$type": "color",
           "$value": "{colors.purple.300}",
           "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.purple.500}",
+          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
         "hover": {
           "$extensions": {

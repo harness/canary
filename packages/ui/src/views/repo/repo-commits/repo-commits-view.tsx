@@ -11,9 +11,6 @@ import {
   TranslationStore,
   TypesCommit
 } from '@/views'
-import { Filters, FiltersBar } from '@components/filters'
-import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
-import { useFilters } from '@views/repo/hooks'
 
 export interface RepoCommitsViewProps {
   isFetchingCommits: boolean

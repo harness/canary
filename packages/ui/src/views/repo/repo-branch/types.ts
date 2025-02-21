@@ -77,8 +77,6 @@ export interface CreateBranchDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (formValues: CreateBranchFormFields) => void
-  isLoadingBranches: boolean
-  branches?: Branch[]
   error?: string
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore

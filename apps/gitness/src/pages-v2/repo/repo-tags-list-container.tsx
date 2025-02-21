@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import {
+  useCreateBranchMutation,
   useCreateTagMutation,
   useDeleteTagMutation,
   useFindRepositoryQuery,
@@ -9,7 +10,14 @@ import {
   useListTagsQuery
 } from '@harnessio/code-service-client'
 import { DeleteAlertDialog } from '@harnessio/ui/components'
-import { CommitTagType, CreateTagDialog, CreateTagFromFields, RepoTagsListView } from '@harnessio/ui/views'
+import {
+  CommitTagType,
+  CreateBranchDialog,
+  CreateBranchFormFields,
+  CreateTagDialog,
+  CreateTagFromFields,
+  RepoTagsListView
+} from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
@@ -35,6 +43,7 @@ export const RepoTagsListContainer = () => {
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const [openCreateTagDialog, setOpenCreateTagDialog] = useState(false)
+  const [openCreateBranchDialog, setOpenCreateBranchDialog] = useState(false)
   const [deleteTagDialog, setDeleteTagDialog] = useState(false)
   const [deleteTagName, setDeleteTagName] = useState<string | null>(null)
 
@@ -73,6 +82,15 @@ export const RepoTagsListContainer = () => {
       onSuccess: () => {
         setDeleteTagDialog(false)
         removeTag(deleteTagName ?? '')
+      }
+    }
+  )
+
+  const { mutate: createBranch, error: createBranchError } = useCreateBranchMutation(
+    {},
+    {
+      onSuccess: () => {
+        setOpenCreateBranchDialog(false)
       }
     }
   )
@@ -121,12 +139,22 @@ export const RepoTagsListContainer = () => {
     })
   }
 
+  const handleCreateBranch = (data: CreateBranchFormFields) => {
+    createBranch({
+      repo_ref,
+      body: {
+        ...data
+      }
+    })
+  }
+
   return (
     <>
       <RepoTagsListView
         useTranslationStore={useTranslationStore}
         isLoading={isLoadingTags}
-        openCreateBranchDialog={() => setOpenCreateTagDialog(true)}
+        openCreateBranchDialog={() => setOpenCreateBranchDialog(true)}
+        openCreateTagDialog={() => setOpenCreateTagDialog(true)}
         searchQuery={query}
         setSearchQuery={setQuery}
         onDeleteTag={(tagName: string) => {
@@ -145,6 +173,15 @@ export const RepoTagsListContainer = () => {
         setBranchQuery={setBranchQuery}
         useRepoBranchesStore={useRepoBranchesStore}
         isLoading={isCreatingTag}
+      />
+      <CreateBranchDialog
+        open={openCreateBranchDialog}
+        onClose={() => setOpenCreateBranchDialog(false)}
+        useRepoBranchesStore={useRepoBranchesStore}
+        onSubmit={handleCreateBranch}
+        useTranslationStore={useTranslationStore}
+        handleChangeSearchValue={setBranchQuery}
+        error={createBranchError?.message}
       />
       <DeleteAlertDialog
         open={deleteTagDialog}

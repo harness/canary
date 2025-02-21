@@ -83,6 +83,7 @@ export function CreateTagDialog({
   useEffect(() => {
     if (defaultBranch) {
       setValue('target', defaultBranch, { shouldValidate: true })
+      setSelectedBranchTag({ name: defaultBranch, sha: '' })
     }
   }, [defaultBranch, setValue])
 
@@ -145,9 +146,14 @@ export function CreateTagDialog({
 
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button
+              type="button"
               variant="outline"
               onClick={() => {
                 clearErrors()
+                reset({
+                  name: '',
+                  target: defaultBranch || ''
+                })
                 onClose()
               }}
               loading={isLoading}

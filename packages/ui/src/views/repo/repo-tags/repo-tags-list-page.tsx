@@ -14,6 +14,7 @@ interface RepoTagsListViewProps {
   useTranslationStore: () => TranslationStore
   isLoading: boolean
   openCreateBranchDialog: () => void
+  openCreateTagDialog: () => void
   searchQuery: string
   setSearchQuery: (value: string | null) => void
   onDeleteTag: (tagName: string) => void
@@ -25,6 +26,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
   useTranslationStore,
   isLoading,
   openCreateBranchDialog,
+  openCreateTagDialog,
   searchQuery,
   setSearchQuery,
   onDeleteTag,
@@ -91,7 +93,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
             ]}
             primaryButton={{
               label: 'Create tag',
-              onClick: openCreateBranchDialog
+              onClick: openCreateTagDialog
             }}
           />
         </div>
@@ -104,6 +106,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
         useTranslationStore={useTranslationStore}
         useRepoTagsStore={useRepoTagsStore}
         toCommitDetails={toCommitDetails}
+        openCreateBranchDialog={openCreateBranchDialog}
       />
     )
   }
@@ -133,7 +136,7 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                   filterHandlers={filterHandlers}
                   t={t}
                 />
-                <Button variant="default" onClick={openCreateBranchDialog}>
+                <Button variant="default" onClick={openCreateTagDialog}>
                   {t('views:repos.newTag', 'New tag')}
                 </Button>
               </ListActions.Right>

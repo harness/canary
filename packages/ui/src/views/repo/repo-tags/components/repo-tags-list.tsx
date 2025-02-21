@@ -10,13 +10,15 @@ interface RepoTagsListProps {
   onDeleteTag: (tagName: string) => void
   useRepoTagsStore: () => RepoTagsStore
   toCommitDetails?: ({ sha }: { sha: string }) => string
+  openCreateBranchDialog: () => void
 }
 export const RepoTagsList: React.FC<RepoTagsListProps> = ({
   useTranslationStore,
   isLoading,
   onDeleteTag,
   useRepoTagsStore,
-  toCommitDetails
+  toCommitDetails,
+  openCreateBranchDialog
 }) => {
   const { t } = useTranslationStore()
   const { tags: tagsList } = useRepoTagsStore()
@@ -51,7 +53,8 @@ export const RepoTagsList: React.FC<RepoTagsListProps> = ({
                     isInTable
                     actions={[
                       {
-                        title: t('views:repos.createBranch', 'Create branch')
+                        title: t('views:repos.createBranch', 'Create branch'),
+                        onClick: openCreateBranchDialog
                       },
                       {
                         title: t('views:repos.viewFiles', 'View Files'),

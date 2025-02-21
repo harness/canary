@@ -18,23 +18,19 @@ export function CreateBranchDialog({
   open,
   onClose,
   onSubmit,
-  branches,
-  isLoadingBranches,
   isCreatingBranch,
   error,
   useTranslationStore,
-  defaultBranch,
   useRepoBranchesStore,
   handleChangeSearchValue
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
-  const { setSelectedBranchTag } = useRepoBranchesStore()
+  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore()
 
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
     reset,
     clearErrors,
     formState: { errors, isValid, isSubmitSuccessful }
@@ -74,6 +70,7 @@ export function CreateBranchDialog({
   useEffect(() => {
     if (defaultBranch) {
       setValue('target', defaultBranch, { shouldValidate: true })
+      setSelectedBranchTag({ name: defaultBranch, sha: '' })
     }
   }, [defaultBranch, setValue])
 
@@ -157,6 +154,7 @@ export function CreateBranchDialog({
           <Dialog.Footer className="-mx-5 -mb-5">
             <Button
               variant="outline"
+              type="button"
               onClick={() => {
                 clearErrors()
                 // handleClose()

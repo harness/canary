@@ -120,8 +120,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         }}
         useRepoBranchesStore={useRepoBranchesStore}
         onSubmit={onSubmit}
-        branches={searchBranches}
-        isLoadingBranches={isLoading}
         isCreatingBranch={isCreatingBranch}
         useTranslationStore={useTranslationStore}
         error={createBranchError}

@@ -273,7 +273,7 @@
   },
   "status": {
     "success": {
-      "intense": {
+      "emphasis": {
         "foreground": {
           "$type": "color",
           "$value": "{colors.pure.black}",
@@ -314,7 +314,7 @@
       }
     },
     "danger": {
-      "intense": {
+      "emphasis": {
         "background": {
           "$type": "color",
           "$value": "{colors.red.300}",
@@ -326,78 +326,35 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.red.50}",
-            "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.red.700}",
-            "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{colors.red.100}",
-            "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.50}",
+          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for hoverable error content.\nCommon uses: interactive error text, hover state content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for hover state.\nCommon uses: interactive error borders, hover boundaries."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.red.700}",
+          "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for active error content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for active state.\nCommon uses: active error borders, pressed state."
-          }
+        "border": {
+          "$type": "color",
+          "$value": "{colors.red.100}",
+          "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Background for non-interactive error elements.\nCommon uses: disabled error messages, inactive states."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for disabled error content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for disabled state.\nCommon uses: disabled error borders, inactive boundaries."
-          }
+        "background-hover": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
+        },
+        "background-active": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
         }
       }
     },
     "warning": {
-      "intense": {
+      "emphasis": {
         "background": {
           "$type": "color",
           "$value": "{colors.amber.400}",
@@ -409,78 +366,35 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.amber.50}",
-            "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.amber.800}",
-            "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{colors.amber.100}",
-            "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.amber.50}",
+          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for hoverable warning content.\nCommon uses: interactive warning text, hover state content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for hover state.\nCommon uses: interactive warning borders, hover boundaries."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.amber.800}",
+          "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for active warning content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for active state.\nCommon uses: active warning borders, pressed state."
-          }
+        "border": {
+          "$type": "color",
+          "$value": "{colors.amber.100}",
+          "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Background for non-interactive warning elements.\nCommon uses: disabled warning messages, inactive states."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for disabled warning content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for disabled state.\nCommon uses: disabled warning borders, inactive boundaries."
-          }
+        "background-hover": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
+        },
+        "background-active": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
         }
       }
     },
     "neutral": {
-      "intense": {
+      "emphasis": {
         "foreground": {
           "$type": "color",
           "$value": "{colors.pure.black}"
@@ -492,78 +406,35 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.accent.50}",
-            "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.accent.700}",
-            "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{colors.accent.100}",
-            "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.50}",
+          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for hoverable info content.\nCommon uses: interactive help text, hover state content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for hover state.\nCommon uses: interactive info borders, hover boundaries."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.accent.700}",
+          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for active info content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for active state.\nCommon uses: active info borders, pressed state."
-          }
+        "border": {
+          "$type": "color",
+          "$value": "{colors.accent.100}",
+          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Background for non-interactive info elements.\nCommon uses: disabled help messages, inactive states."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for disabled info content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for disabled state.\nCommon uses: disabled info borders, inactive boundaries."
-          }
+        "background-hover": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
+        },
+        "background-active": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
         }
       }
     },
     "merge": {
-      "intense": {
+      "emphasis": {
         "background": {
           "$type": "color",
           "$value": "{colors.purple.300}",
@@ -575,100 +446,39 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.purple.950}",
-            "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.purple.200}",
-            "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.2",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.purple.300}",
-            "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.950}",
+          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.purple.900}",
-            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.purple.200}",
-            "$description": "Text color for hoverable info content.\nCommon uses: interactive help text, hover state content."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.purple.300}",
-            "$description": "Border color for hover state.\nCommon uses: interactive info borders, hover boundaries."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.purple.200}",
+          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.purple.900}",
-            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.purple.200}",
-            "$description": "Text color for active info content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.4",
-                  "space": "p3"
-                }
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
               }
-            },
-            "$type": "color",
-            "$value": "{colors.purple.300}",
-            "$description": "Border color for active state.\nCommon uses: active info borders, pressed state."
-          }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.purple.300}",
+          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.950}",
-            "$description": "Background for non-interactive info elements.\nCommon uses: disabled help messages, inactive states."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.disabled}",
-            "$description": "Text color for disabled info content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.subtle}",
-            "$description": "Border color for disabled state.\nCommon uses: disabled info borders, inactive boundaries."
-          }
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
+        },
+        "background-active": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
         }
       }
     }

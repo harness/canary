@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Badge } from '@components/badge'
+import { Badge } from '@components/badge/badge'
 import { Icon, IconProps } from '@components/icon'
 import { Tabs } from '@components/tabs'
 

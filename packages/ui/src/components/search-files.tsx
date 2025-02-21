@@ -126,7 +126,9 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
                   </Command.Item>
                 ))}
               </Command.Group>
-            ) : <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>}
+            ) : (
+              <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
+            )}
           </Command.List>
         </Command.Root>
       </Popover.Content>

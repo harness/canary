@@ -33,7 +33,11 @@ export const useGetRepoLabelAndValuesData = ({
   const [isLoadingValues, setIsLoadingValues] = useState(false)
   const [values, setValues] = useState<LabelValuesType>({})
 
-  const { data: { body: labels } = {}, isLoading: isLoadingRepoLabels, refetch: refetchLabels } = useListRepoLabelsQuery(
+  const {
+    data: { body: labels } = {},
+    isLoading: isLoadingRepoLabels,
+    refetch: refetchLabels
+  } = useListRepoLabelsQuery(
     {
       repo_ref: repo_ref ?? '',
       queryParams: { page: queryPage || 1, limit, query: query ?? '', inherited }

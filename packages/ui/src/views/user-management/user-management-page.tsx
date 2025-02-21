@@ -1,48 +1,32 @@
-import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
-import { SandboxLayout } from '@/views'
+import { DialogsProvider } from '@/views/user-management/providers/dialogs-provider'
+import { SearchProvider } from '@/views/user-management/providers/search-provider'
+import { StateProvider } from '@/views/user-management/providers/state-provider'
+import { UserManagementStoreProvider } from '@/views/user-management/providers/store-provider'
+import { IUserManagementPageProps } from '@/views/user-management/types'
 
-import { UsersList } from './components/users-list'
-import { DialogLabels, IUserManagementPageProps, UsersProps } from './types'
+import { UserManagementPageContent } from './components'
 
 export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
   useAdminListUsersStore,
   useTranslationStore,
-  handleDialogOpen
+  handlers,
+  loadingStates,
+  errorStates,
+  searchQuery,
+  setSearchQuery
 }) => {
-  const { users: userData, totalPages, page: currentPage, setPage } = useAdminListUsersStore()
-  const { t } = useTranslationStore()
-
-  const renderUserListContent = () => {
-    return (
-      <>
-        <UsersList users={userData as UsersProps[]} handleDialogOpen={handleDialogOpen} />
-      </>
-    )
-  }
-
   return (
-    <SandboxLayout.Main>
-      <SandboxLayout.Content maxWidth="3xl">
-        <Spacer size={10} />
-        <Text size={5} weight={'medium'}>
-          Users
-        </Text>
-        <Spacer size={6} />
-        <ListActions.Root>
-          <ListActions.Left>
-            <SearchBox.Root width="full" className="max-w-96" placeholder="search" />
-          </ListActions.Left>
-          <ListActions.Right>
-            <Button variant="default" onClick={() => handleDialogOpen(null, DialogLabels.CREATE_USER)}>
-              New user
-            </Button>
-          </ListActions.Right>
-        </ListActions.Root>
-        <Spacer size={5} />
-        {renderUserListContent()}
-        <Spacer size={8} />
-        <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={setPage} t={t} />
-      </SandboxLayout.Content>
-    </SandboxLayout.Main>
+    <UserManagementStoreProvider
+      useAdminListUsersStore={useAdminListUsersStore}
+      useTranslationStore={useTranslationStore}
+    >
+      <StateProvider loadingStates={loadingStates} errorStates={errorStates}>
+        <SearchProvider searchQuery={searchQuery} setSearchQuery={setSearchQuery}>
+          <DialogsProvider>
+            <UserManagementPageContent handlers={handlers} />
+          </DialogsProvider>
+        </SearchProvider>
+      </StateProvider>
+    </UserManagementStoreProvider>
   )
 }

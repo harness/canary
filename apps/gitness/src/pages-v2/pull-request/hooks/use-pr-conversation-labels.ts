@@ -21,7 +21,11 @@ export const usePrConversationLabels = ({ repoRef, prId, refetchData }: UsePrCon
     setSearchLabel(data)
   }, [])
 
-  const { labels, values: labelsValues, refetchLabels } = useGetRepoLabelAndValuesData({
+  const {
+    labels,
+    values: labelsValues,
+    refetchLabels
+  } = useGetRepoLabelAndValuesData({
     query: searchLabel,
     inherited: true,
     limit: 100

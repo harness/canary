@@ -223,104 +223,102 @@
     }
   },
   "form": {
-    "input": {
+    "background": {
+      "$type": "color",
+      "$value": "{colors.chrome.950}",
+      "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
+    },
+    "text": {
+      "$type": "color",
+      "$value": "{text.default}",
+      "$description": "Default text color for input content.\nCommon uses: input text, entered content."
+    },
+    "border": {
+      "$type": "color",
+      "$value": "{colors.chrome.850}",
+      "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
+    },
+    "icon": {
+      "$type": "color",
+      "$value": "{text.subtle}",
+      "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
+    }
+  },
+  "selection": {
+    "unselected": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.950}",
-        "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
+        "$value": "{colors.chrome.900}",
+        "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
       },
       "text": {
         "$type": "color",
-        "$value": "{text.default}",
-        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
+        "$value": "{colors.chrome.600}",
+        "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{colors.chrome.50}",
+        "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
+      }
+    },
+    "selected": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.50}",
+        "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
+      },
+      "text": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Text color for selected items.\nCommon uses: selected item labels."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{colors.chrome.50}",
+        "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
+      }
+    }
+  },
+  "progress": {
+    "track": {
+      "base": {
+        "$type": "color",
+        "$value": "{colors.chrome.850}",
+        "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
+      },
+      "progress": {
+        "$type": "color",
+        "$value": "{colors.accent.300}",
+        "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
+      }
+    },
+    "track-segments": {
+      "base": {
+        "$type": "color",
+        "$value": "{colors.chrome.600}",
+        "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
+      },
+      "progress": {
+        "$type": "color",
+        "$value": "{colors.accent.800}",
+        "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
+      }
+    },
+    "handle": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.100}",
+        "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
       },
       "border": {
         "$type": "color",
         "$value": "{colors.chrome.850}",
-        "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
-      },
-      "icon": {
-        "$type": "color",
-        "$value": "{text.subtle}",
-        "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
-      }
-    },
-    "selection": {
-      "unselected": {
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}",
-          "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.600}",
-          "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.chrome.50}",
-          "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
-        }
-      },
-      "selected": {
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.50}",
-          "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
-        },
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.950}",
-          "$description": "Text color for selected items.\nCommon uses: selected item labels."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.chrome.50}",
-          "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
-        }
-      }
-    },
-    "slider": {
-      "track": {
-        "base": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
-        },
-        "progress": {
-          "$type": "color",
-          "$value": "{colors.accent.300}",
-          "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
-        }
-      },
-      "track-segments": {
-        "base": {
-          "$type": "color",
-          "$value": "{colors.chrome.600}",
-          "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
-        },
-        "progress": {
-          "$type": "color",
-          "$value": "{colors.accent.800}",
-          "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
-        }
-      },
-      "handle": {
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.100}",
-          "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
-        }
+        "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
       }
     }
   },
-  "status": {
+  "feedback": {
     "success": {
       "emphasis": {
         "text": {

@@ -277,12 +277,12 @@
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.300}",
+        "$value": "{colors.pure.white}",
         "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
       },
       "border": {
         "$type": "color",
-        "$value": "{border.1}",
+        "$value": "{colors.pure.white}",
         "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
       }
     }

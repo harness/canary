@@ -373,33 +373,35 @@
           "$value": "{colors.green.500}",
           "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
         },
-        "hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.15",
-                "space": "p3"
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
               }
-            }
+            },
+            "$type": "color",
+            "$value": "{colors.green.500}",
+            "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
           },
-          "$type": "color",
-          "$value": "{colors.green.500}",
-          "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
-        },
-        "active": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "p3"
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
               }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.500}",
-          "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
+            },
+            "$type": "color",
+            "$value": "{colors.green.500}",
+            "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
+          }
         }
       }
     },
@@ -449,33 +451,35 @@
           "$value": "{colors.red.500}",
           "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
         },
-        "hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.15",
-                "space": "p3"
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
               }
-            }
+            },
+            "$type": "color",
+            "$value": "{colors.red.500}",
+            "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
           },
-          "$type": "color",
-          "$value": "{colors.red.500}",
-          "$description": "Hover state for interactive error elements.\nCommon uses: clickable error messages, interactive errors."
-        },
-        "active": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "p3"
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
               }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.500}",
-          "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
+            },
+            "$type": "color",
+            "$value": "{colors.red.500}",
+            "$description": "Active state for interactive error elements.\nCommon uses: pressed state, active error indicators."
+          }
         }
       }
     },
@@ -525,37 +529,39 @@
           "$value": "{colors.amber.500}",
           "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
         },
-        "hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.15",
-                "space": "p3"
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
               }
-            }
+            },
+            "$type": "color",
+            "$value": "{colors.amber.500}",
+            "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
           },
-          "$type": "color",
-          "$value": "{colors.amber.500}",
-          "$description": "Hover state for interactive warning elements.\nCommon uses: clickable warnings, interactive alerts."
-        },
-        "active": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "p3"
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
               }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.amber.500}",
-          "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
+            },
+            "$type": "color",
+            "$value": "{colors.amber.500}",
+            "$description": "Active state for interactive warning elements.\nCommon uses: pressed state, active warning indicators."
+          }
         }
       }
     },
-    "neutral": {
+    "info": {
       "emphasis": {
         "text": {
           "$type": "color",
@@ -592,15 +598,17 @@
           "$value": "{colors.chrome.900}",
           "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "hover": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-        },
-        "active": {
-          "$type": "color",
-          "$value": "{colors.chrome.800}",
-          "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
+        "state": {
+          "hover": {
+            "$type": "color",
+            "$value": "{colors.chrome.850}",
+            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
+          },
+          "active": {
+            "$type": "color",
+            "$value": "{colors.chrome.800}",
+            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
+          }
         }
       }
     },
@@ -650,33 +658,35 @@
           "$value": "{colors.purple.500}",
           "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
         },
-        "hover": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.15",
-                "space": "p3"
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
               }
-            }
+            },
+            "$type": "color",
+            "$value": "{colors.purple.500}",
+            "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
           },
-          "$type": "color",
-          "$value": "{colors.purple.500}",
-          "$description": "Hover state for interactive info elements.\nCommon uses: clickable help messages, interactive hints."
-        },
-        "active": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.25",
-                "space": "p3"
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
               }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.purple.500}",
-          "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
+            },
+            "$type": "color",
+            "$value": "{colors.purple.500}",
+            "$description": "Active state for interactive info elements.\nCommon uses: pressed state, active info indicators."
+          }
         }
       }
     }

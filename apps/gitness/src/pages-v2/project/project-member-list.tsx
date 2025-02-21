@@ -15,6 +15,7 @@ import { PrincipalType } from '@harnessio/ui/types'
 import { InviteMemberFormFields, MembersProps, ProjectMemberListView } from '@harnessio/ui/views'
 
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -33,6 +34,9 @@ export function ProjectMemberListPage() {
   const { setPrincipalList } = usePrincipalListStore()
   const queryClient = useQueryClient()
   const [query, setQuery] = useQueryState('query')
+  const {
+    scope: { accountId }
+  } = useMFEContext()
 
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const [isInviteDialogOpen, setIsInviteDialogOpen] = useState(false)
@@ -42,7 +46,7 @@ export function ProjectMemberListPage() {
 
   const { data: { body: principalData } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemented
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
+    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery, accountIdentifier: accountId }
   })
 
   const { isLoading, data: { body: membersData } = {} } = useMembershipListQuery({

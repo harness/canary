@@ -5,7 +5,6 @@
     "primitives/dimensions",
     "primitives/icon",
     "theme/dark",
-    "theme/light",
     "breakpoint/desktop",
     "components/desktop/base/button",
     "components/desktop/base/input",

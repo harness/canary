@@ -974,7 +974,7 @@
         "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
       },
       "item": {
-        "default": {
+        "unselected": {
           "foreground": {
             "$type": "color",
             "$value": "{colors.chrome.200}",

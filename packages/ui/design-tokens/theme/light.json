@@ -115,57 +115,19 @@
     },
     "secondary": {
       "solid": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.150}",
-            "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.emphasis}",
-            "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.150}",
+          "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Background color for hover interaction.\nCommon uses: secondary button hover, interactive state."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.emphasis}",
-            "$description": "Text color during hover.\nCommon uses: hover state labels, interactive text."
-          }
-        },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Background when secondary action is pressed.\nCommon uses: active state, press feedback."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.emphasis}",
-            "$description": "Text color during press state.\nCommon uses: active text color, pressed state content."
-          }
-        },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.200}",
-            "$description": "Background for disabled secondary actions.\nCommon uses: inactive secondary buttons, disabled alternatives."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.disabled}",
-            "$description": "Text color for disabled state.\nCommon uses: disabled secondary text, inactive labels."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{foreground.emphasis}",
+          "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
         }
       },
       "ghost": {
-        "default": {
+        "unselected": {
           "border": {
             "$type": "color",
             "$value": "{border.base}",
@@ -182,29 +144,7 @@
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
           }
         },
-        "hover": {
-          "border": {
-            "$type": "color",
-            "$value": "{border.emphasis}",
-            "$description": "Border color during hover.\nCommon uses: hover state outline, interactive border."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.emphasis}",
-            "$description": "Text color for outlined / ghost variants during hover state.\nCommon uses: hover text in outlined variant."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{foreground.base}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: hover text in outlined variant."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{state.hover}",
-            "$description": "Background color during hover state.\nCommon uses: hover fill in outlined variant."
-          }
-        },
-        "active": {
+        "selected": {
           "border": {
             "$type": "color",
             "$value": "{border.emphasis}",
@@ -219,28 +159,6 @@
             "$type": "color",
             "$value": "{foreground.base}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
-          },
-          "background": {
-            "$type": "color",
-            "$value": "{state.selected}",
-            "$description": "Background color during active state.\nCommon uses: active fill in outlined variant."
-          }
-        },
-        "disabled": {
-          "border": {
-            "$type": "color",
-            "$value": "{border.subtle}",
-            "$description": "Border color for disabled state.\nCommon uses: inactive outline, disabled border."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.disabled}",
-            "$description": "Text color for outlined / ghost variants when disabled.\nCommon uses: disabled text in outlined variant."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{foreground.disabled}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: disabled text in outlined variant."
           }
         }
       }

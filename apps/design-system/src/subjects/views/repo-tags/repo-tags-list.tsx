@@ -23,6 +23,7 @@ export const RepoTagsList = () => {
         onDeleteTag={noop}
         useRepoTagsStore={useRepoTagsStore}
         toCommitDetails={() => ''}
+        openCreateTagDialog={noop}
       />
       <CreateTagDialog
         useTranslationStore={useTranslationStore}

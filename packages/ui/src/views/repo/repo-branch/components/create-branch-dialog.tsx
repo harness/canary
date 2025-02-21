@@ -1,10 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Icon, Input, Select } from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { BranchSelector } from '@views/repo/components'
-import { set } from 'date-fns'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'

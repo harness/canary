@@ -24,7 +24,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
-  searchBranches,
   setCreateBranchSearchQuery,
   ...routingProps
 }) => {

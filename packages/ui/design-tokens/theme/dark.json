@@ -829,7 +829,7 @@
       "intense": {
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.400}",
+          "$value": "{colors.chrome.300}",
           "$description": "Default info background color. \nCommon uses: info alerts, help messages."
         },
         "foreground": {

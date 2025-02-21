@@ -282,343 +282,343 @@
       "$description": "128px"
     }
   },
-  "leading": {
+  "lineHeight": {
     "1": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.none}"
+        "$value": "{text.1}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.tight}"
+        "$value": "{text.1}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.snug}"
+        "$value": "{text.1}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.normal}"
+        "$value": "{text.1}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.relaxed}"
+        "$value": "{text.1}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.1}*{leading.loose}"
+        "$value": "{text.1}*{lineHeight.loose}"
       }
     },
     "2": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.none}"
+        "$value": "{text.2}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.tight}"
+        "$value": "{text.2}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.snug}"
+        "$value": "{text.2}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.normal}"
+        "$value": "{text.2}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.relaxed}"
+        "$value": "{text.2}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.2}*{leading.loose}"
+        "$value": "{text.2}*{lineHeight.loose}"
       }
     },
     "3": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.none}"
+        "$value": "{text.4}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.tight}"
+        "$value": "{text.4}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.snug}"
+        "$value": "{text.4}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.normal}"
+        "$value": "{text.4}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.relaxed}"
+        "$value": "{text.4}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.4}*{leading.loose}"
+        "$value": "{text.4}*{lineHeight.loose}"
       }
     },
     "4": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.none}"
+        "$value": "{text.3}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.tight}"
+        "$value": "{text.3}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.snug}"
+        "$value": "{text.3}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.normal}"
+        "$value": "{text.3}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.relaxed}"
+        "$value": "{text.3}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.3}*{leading.loose}"
+        "$value": "{text.3}*{lineHeight.loose}"
       }
     },
     "5": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.none}"
+        "$value": "{text.5}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.tight}"
+        "$value": "{text.5}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.snug}"
+        "$value": "{text.5}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.normal}"
+        "$value": "{text.5}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.relaxed}"
+        "$value": "{text.5}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.5}*{leading.loose}"
+        "$value": "{text.5}*{lineHeight.loose}"
       }
     },
     "6": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.none}"
+        "$value": "{text.6}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.tight}"
+        "$value": "{text.6}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.snug}"
+        "$value": "{text.6}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.normal}"
+        "$value": "{text.6}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.relaxed}"
+        "$value": "{text.6}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.6}*{leading.loose}"
+        "$value": "{text.6}*{lineHeight.loose}"
       }
     },
     "7": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.none}"
+        "$value": "{text.7}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.tight}"
+        "$value": "{text.7}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.snug}"
+        "$value": "{text.7}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.normal}"
+        "$value": "{text.7}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.relaxed}"
+        "$value": "{text.7}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.7}*{leading.loose}"
+        "$value": "{text.7}*{lineHeight.loose}"
       }
     },
     "8": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.none}"
+        "$value": "{text.8}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.tight}"
+        "$value": "{text.8}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.snug}"
+        "$value": "{text.8}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.normal}"
+        "$value": "{text.8}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.relaxed}"
+        "$value": "{text.8}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.8}*{leading.loose}"
+        "$value": "{text.8}*{lineHeight.loose}"
       }
     },
     "9": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.none}"
+        "$value": "{text.9}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.tight}"
+        "$value": "{text.9}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.snug}"
+        "$value": "{text.9}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.normal}"
+        "$value": "{text.9}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.relaxed}"
+        "$value": "{text.9}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.9}*{leading.loose}"
+        "$value": "{text.9}*{lineHeight.loose}"
       }
     },
     "10": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.none}"
+        "$value": "{text.10}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.tight}"
+        "$value": "{text.10}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.snug}"
+        "$value": "{text.10}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.normal}"
+        "$value": "{text.10}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.relaxed}"
+        "$value": "{text.10}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.10}*{leading.loose}"
+        "$value": "{text.10}*{lineHeight.loose}"
       }
     },
     "11": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.none}"
+        "$value": "{text.11}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.tight}"
+        "$value": "{text.11}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.snug}"
+        "$value": "{text.11}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.normal}"
+        "$value": "{text.11}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.relaxed}"
+        "$value": "{text.11}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.11}*{leading.loose}"
+        "$value": "{text.11}*{lineHeight.loose}"
       }
     },
     "12": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.none}"
+        "$value": "{text.12}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.tight}"
+        "$value": "{text.12}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.snug}"
+        "$value": "{text.12}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.normal}"
+        "$value": "{text.12}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.relaxed}"
+        "$value": "{text.12}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.12}*{leading.loose}"
+        "$value": "{text.12}*{lineHeight.loose}"
       }
     },
     "13": {
       "none": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.none}"
+        "$value": "{text.13}*{lineHeight.none}"
       },
       "tight": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.tight}"
+        "$value": "{text.13}*{lineHeight.tight}"
       },
       "snug": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.snug}"
+        "$value": "{text.13}*{lineHeight.snug}"
       },
       "normal": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.normal}"
+        "$value": "{text.13}*{lineHeight.normal}"
       },
       "relaxed": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.relaxed}"
+        "$value": "{text.13}*{lineHeight.relaxed}"
       },
       "loose": {
         "$type": "lineHeights",
-        "$value": "{text.13}*{leading.loose}"
+        "$value": "{text.13}*{lineHeight.loose}"
       }
     },
     "none": {

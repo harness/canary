@@ -14,11 +14,27 @@
       "$type": "color",
       "$value": "{colors.chrome.900}",
       "$description": "Represents elements that sit on top of the middle layer (Level 3) - these are the most prominent elements like emphasized content."
-    },
-    "overlay": {
+    }
+  },
+  "overlay": {
+    "background": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
       "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
+    },
+    "backdrop": {
+      "$extensions": {
+        "studio.tokens": {
+          "modify": {
+            "type": "alpha",
+            "value": "0.5",
+            "space": "p3"
+          }
+        }
+      },
+      "$type": "color",
+      "$value": "{colors.chrome.950}",
+      "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
   "foreground": {
@@ -660,20 +676,6 @@
       "$type": "color",
       "$value": "{colors.chrome.950}",
       "$description": "Muted bg color.\nCommon uses: disabled states."
-    },
-    "overlay-backdrop": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.5",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.950}",
-      "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
   "shadow": {

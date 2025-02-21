@@ -912,6 +912,7 @@
       "background.base": "606b04a318b88217df7b5b2680aade5f0d5aa3b2",
       "background.subtle": "7f9434b3b1e708998d4bef20ca86d1469a66efc8",
       "background.emphasis": "7eb89065e5adff307da4707e75a1f3bed8d9548c",
+      "overlay.background": "973bf6e977f9dba05d697032f9b8abc5f0d779aa",
       "foreground.emphasis": "cf2439e780377bcd2600d9b6fd5e65791c500510",
       "foreground.base": "8121f13c0c9d577a4d7f1624e1c71a4d57ba8c17",
       "foreground.subtle": "810a0b6930496b47c997dcce7232f14a9e653bb1",
@@ -991,6 +992,7 @@
       "state.hover": "6a70951152b8c48de7fe037475669f21ff9dd921",
       "state.selected": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "state.disabled": "9c107c15c62ba5231ca269577c6956d2a84d78c3",
+      "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "shadow-color.none": "ae18c652257aca8604642987d9cbaa37c5149240",
       "shadow-color.sm": "a04b6c81c43bcc592da539aabce3c3b68879fc69",
       "shadow-color.base": "012e9c9375b5af2b2cf8d78ac727ac9877472ce5",
@@ -1049,9 +1051,7 @@
       "components.label.mint.background-subtle": "ffa4050a47e5e3948af2d157fbdbaf15b723bd47",
       "components.label.lime.foreground": "109b0a33a743840c77ec035dd395c573b5dc64c4",
       "components.label.lime.background": "c9b5947737febea771492bf07912d4c6a801998e",
-      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1",
-      "overlay.background": "973bf6e977f9dba05d697032f9b8abc5f0d779aa",
-      "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e"
+      "components.label.lime.background-subtle": "a959ac0b25c8d43e06b041842815790c6b27f0e1"
     },
     "$figmaCollectionId": "VariableCollectionId:426:491162",
     "$figmaModeId": "426:1",

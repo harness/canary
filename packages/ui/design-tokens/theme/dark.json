@@ -3,12 +3,12 @@
     "base": {
       "$type": "color",
       "$value": "{colors.chrome.1000}",
-      "$description": "Represents the lowest layer in the stack (Level 1) - this is the foundation that everything else sits on, like the app's main background."
+      "$description": "Level 1. Represents the lowest layer in the stack. This is the foundation that everything else sits on, like the app's main background."
     },
     "subtle": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
-      "$description": "Represents elements that sit on top of the bottom layer (Level 2) - things like cards and containers that appear to be raised slightly above the background."
+      "$description": "Level 2. Represents elements that sit on top of the bottom layer. Things like cards and containers that appear to be raised slightly above the background."
     },
     "emphasis": {
       "$type": "color",

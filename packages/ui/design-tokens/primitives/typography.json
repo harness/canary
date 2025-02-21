@@ -31,7 +31,7 @@
       "$description": "All caps text"
     }
   },
-  "font-weight": {
+  "fontWeight": {
     "default": {
       "normal": {
         "100": {
@@ -173,7 +173,7 @@
       }
     }
   },
-  "font-family": {
+  "fontFamily": {
     "default": {
       "$type": "fontFamilies",
       "$value": "Inter"
@@ -183,7 +183,7 @@
       "$value": "JetBrains Mono"
     }
   },
-  "text-decoration": {
+  "textDecoration": {
     "none": {
       "$type": "textDecoration",
       "$value": "none"
@@ -197,7 +197,7 @@
       "$value": "line-through"
     }
   },
-  "text-case": {
+  "textCase": {
     "none": {
       "$type": "textCase",
       "$value": "none"
@@ -216,73 +216,411 @@
     }
   },
   "text": {
-    "xs": {
+    "1": {
       "$type": "fontSizes",
       "$value": "0.75rem",
       "$description": "12px"
     },
-    "sm": {
+    "2": {
       "$type": "fontSizes",
       "$value": "0.875rem",
       "$description": "14px"
     },
-    "lg": {
+    "3": {
       "$type": "fontSizes",
       "$value": "1.125rem",
       "$description": "18px"
     },
-    "base": {
+    "4": {
       "$type": "fontSizes",
       "$value": "1rem",
       "$description": "16px"
     },
-    "xl": {
+    "5": {
       "$type": "fontSizes",
       "$value": "1.25rem",
       "$description": "20px"
     },
-    "2xl": {
+    "6": {
       "$type": "fontSizes",
       "$value": "1.5rem",
       "$description": "24px"
     },
-    "3xl": {
+    "7": {
       "$type": "fontSizes",
       "$value": "1.875rem",
       "$description": "30px"
     },
-    "4xl": {
+    "8": {
       "$type": "fontSizes",
       "$value": "2.25rem",
       "$description": "36px"
     },
-    "5xl": {
+    "9": {
       "$type": "fontSizes",
       "$value": "3rem",
       "$description": "48px"
     },
-    "6xl": {
+    "10": {
       "$type": "fontSizes",
       "$value": "3.75rem",
       "$description": "60px"
     },
-    "7xl": {
+    "11": {
       "$type": "fontSizes",
       "$value": "4.5rem",
       "$description": "72px"
     },
-    "8xl": {
+    "12": {
       "$type": "fontSizes",
       "$value": "6rem",
       "$description": "96px"
     },
-    "9xl": {
+    "13": {
       "$type": "fontSizes",
       "$value": "8rem",
       "$description": "128px"
     }
   },
   "leading": {
+    "1": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.1}*{leading.loose}"
+      }
+    },
+    "2": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.2}*{leading.loose}"
+      }
+    },
+    "3": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.4}*{leading.loose}"
+      }
+    },
+    "4": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.3}*{leading.loose}"
+      }
+    },
+    "5": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.5}*{leading.loose}"
+      }
+    },
+    "6": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.6}*{leading.loose}"
+      }
+    },
+    "7": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.7}*{leading.loose}"
+      }
+    },
+    "8": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.8}*{leading.loose}"
+      }
+    },
+    "9": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.9}*{leading.loose}"
+      }
+    },
+    "10": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.10}*{leading.loose}"
+      }
+    },
+    "11": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.11}*{leading.loose}"
+      }
+    },
+    "12": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.12}*{leading.loose}"
+      }
+    },
+    "13": {
+      "none": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.none}"
+      },
+      "tight": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.tight}"
+      },
+      "snug": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.snug}"
+      },
+      "normal": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.normal}"
+      },
+      "relaxed": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.relaxed}"
+      },
+      "loose": {
+        "$type": "lineHeights",
+        "$value": "{text.13}*{leading.loose}"
+      }
+    },
     "none": {
       "$type": "lineHeights",
       "$value": "1"
@@ -306,344 +644,6 @@
     "loose": {
       "$type": "lineHeights",
       "$value": "2"
-    },
-    "xs": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.xs}*{leading.loose}"
-      }
-    },
-    "sm": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.sm}*{leading.loose}"
-      }
-    },
-    "base": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.base}*{leading.loose}"
-      }
-    },
-    "lg": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.lg}*{leading.loose}"
-      }
-    },
-    "xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.xl}*{leading.loose}"
-      }
-    },
-    "2xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.2xl}*{leading.loose}"
-      }
-    },
-    "3xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.3xl}*{leading.loose}"
-      }
-    },
-    "4xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.4xl}*{leading.loose}"
-      }
-    },
-    "5xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.5xl}*{leading.loose}"
-      }
-    },
-    "6xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.6xl}*{leading.loose}"
-      }
-    },
-    "7xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.7xl}*{leading.loose}"
-      }
-    },
-    "8xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.8xl}*{leading.loose}"
-      }
-    },
-    "9xl": {
-      "none": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.none}"
-      },
-      "tight": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.tight}"
-      },
-      "snug": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.snug}"
-      },
-      "normal": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.normal}"
-      },
-      "relaxed": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.relaxed}"
-      },
-      "loose": {
-        "$type": "lineHeights",
-        "$value": "{text.9xl}*{leading.loose}"
-      }
     }
   }
 }

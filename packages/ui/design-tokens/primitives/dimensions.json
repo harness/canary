@@ -177,42 +177,42 @@
     }
   },
   "rounded": {
-    "none": {
+    "0": {
       "$type": "borderRadius",
       "$value": "0px",
       "$description": "No border radius"
     },
-    "sm": {
+    "1": {
       "$type": "borderRadius",
       "$value": "0.125rem",
       "$description": "2px border radius"
     },
-    "rounded": {
+    "2": {
       "$type": "borderRadius",
       "$value": "0.25rem",
       "$description": "4px border radius (default)"
     },
-    "md": {
+    "3": {
       "$type": "borderRadius",
       "$value": "0.375rem",
       "$description": "6px border radius"
     },
-    "lg": {
+    "4": {
       "$type": "borderRadius",
       "$value": "0.5rem",
       "$description": "8px border radius"
     },
-    "xl": {
+    "5": {
       "$type": "borderRadius",
       "$value": "0.75rem",
       "$description": "12px border radius"
     },
-    "2xl": {
+    "6": {
       "$type": "borderRadius",
       "$value": "1rem",
       "$description": "16px border radius"
     },
-    "3xl": {
+    "7": {
       "$type": "borderRadius",
       "$value": "1.5rem",
       "$description": "24px border radius"
@@ -406,6 +406,11 @@
       "$value": "0rem",
       "$description": "No border (border-0)"
     },
+    "1": {
+      "$type": "borderWidth",
+      "$value": "1px",
+      "$description": "Default border width (border)"
+    },
     "2": {
       "$type": "borderWidth",
       "$value": "2px",
@@ -420,11 +425,6 @@
       "$type": "borderWidth",
       "$value": "8px",
       "$description": "Extra thick border width (border-8)"
-    },
-    "default": {
-      "$type": "borderWidth",
-      "$value": "1px",
-      "$description": "Default border width (border)"
     }
   }
 }

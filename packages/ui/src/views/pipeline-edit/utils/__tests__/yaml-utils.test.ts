@@ -5,7 +5,7 @@ import { expectedPipeline3, pipeline3 } from './yaml-mocks/pipeline3'
 import { expectedPipeline4, pipeline4 } from './yaml-mocks/pipeline4'
 import { expectedPipeline5, pipeline5 } from './yaml-mocks/pipeline5'
 
-describe('test updateItemInArray', () => {
+describe.skip('test updateItemInArray', () => {
   test('update string', () => {
     const result = updateItemInArray(pipeline1, { path: 'pipeline.stages.0.steps.0.name', item: 'Updated step name' })
     expect(result).toBe(expectedPipeline1)

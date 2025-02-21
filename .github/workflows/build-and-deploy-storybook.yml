@@ -41,3 +41,13 @@ jobs:
       - run: pnpm deps
       - run: pnpm build
       - run: pnpm typecheck
+
+  Test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: pnpm/action-setup@v4
+      - run: pnpm deps
+      - run: pnpm test

@@ -9,5 +9,6 @@ export default {
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest'
   },
+  testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
   setupFilesAfterEnv: ['./src/setupTests.tsx'] // Ensure setup file exists
 }

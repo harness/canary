@@ -111,55 +111,15 @@
   },
   "action": {
     "primary": {
-      "solid": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.accent.600}",
-            "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.pure.white}",
-            "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
-          }
-        },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.accent.500}",
-            "$description": "Fill color when hovering primary actions.\nCommon uses: button hover state, interactive feedback."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.pure.white}",
-            "$description": "Text/icon color when hovering.\nCommon uses: hover state text, interactive icon color."
-          }
-        },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.accent.700}",
-            "$description": "Background color when action is pressed.\nCommon uses: pressed state, click feedback, active indication."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.pure.white}",
-            "$description": "Text/icon color during press state.\nCommon uses: text color while pressing, active content."
-          }
-        },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.chrome.950}",
-            "$description": "Background for unavailable actions.\nCommon uses: disabled buttons, unavailable actions."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{foreground.muted}",
-            "$description": "Text/icon color for disabled state.\nCommon uses: disabled text, inactive icons."
-          }
-        }
+      "background": {
+        "$type": "color",
+        "$value": "{colors.accent.600}",
+        "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
+      },
+      "foreground": {
+        "$type": "color",
+        "$value": "{colors.pure.white}",
+        "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
       }
     },
     "secondary": {
@@ -249,7 +209,7 @@
           },
           "background": {
             "$type": "color",
-            "$value": "{overlay.hover}",
+            "$value": "{state.hover}",
             "$description": "Background color during hover state.\nCommon uses: hover fill in outlined variant."
           }
         },
@@ -271,7 +231,7 @@
           },
           "background": {
             "$type": "color",
-            "$value": "{overlay.selected}",
+            "$value": "{state.selected}",
             "$description": "Background color during active state.\nCommon uses: active fill in outlined variant."
           }
         },
@@ -1086,7 +1046,7 @@
       }
     }
   },
-  "overlay": {
+  "state": {
     "hover": {
       "$extensions": {
         "studio.tokens": {
@@ -1443,7 +1403,7 @@
         "hover": {
           "background": {
             "$type": "color",
-            "$value": "{overlay.hover}",
+            "$value": "{state.hover}",
             "$description": "Background color for navigation items on hover.\nCommon uses: hovered nav links, hovered tabs, hovered menu items."
           },
           "foreground": {
@@ -1460,7 +1420,7 @@
         "selected": {
           "background": {
             "$type": "color",
-            "$value": "{overlay.selected}",
+            "$value": "{state.selected}",
             "$description": "Background color for selected navigation items.\nCommon uses: active nav links, selected tabs, active menu items."
           },
           "foreground": {

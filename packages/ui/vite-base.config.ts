@@ -5,15 +5,7 @@ import { defineConfig } from 'vite'
 import svgr from 'vite-plugin-svgr'
 import tsConfigPaths from 'vite-tsconfig-paths'
 
-const external = [
-  'react',
-  'react-hook-form',
-  'react-router-dom',
-  'react-router',
-  // 'react/jsx-runtime',
-  'react-i18next',
-  'i18next'
-]
+const external = ['react', 'react-hook-form', 'react-router-dom', 'react-router', 'react-i18next', 'i18next']
 
 export default defineConfig({
   plugins: [react(), svgr({ include: '**/*.svg' }), tsConfigPaths()],

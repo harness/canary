@@ -4,17 +4,6 @@ import viteConfig from './vite.config'
 
 export default mergeConfig(viteConfig, {
   test: {
-    deps: {
-      inline: [
-        /@radix-ui\/react-dialog/,
-        /@radix-ui\/react-slot/,
-        /@radix-ui\/react-context/,
-        /@radix-ui\/react-dismissable-layer/,
-        /@radix-ui\/react-primitive/,
-        /@radix-ui\/react-focus-scope/,
-        /@radix-ui\/react-portal/
-      ]
-    },
     environment: 'jsdom',
     setupFiles: ['./config/vitest-setup.ts'],
     globals: true,

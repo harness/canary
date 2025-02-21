@@ -1,5 +1,6 @@
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
+import { Fragment } from 'react/jsx-runtime'
 
 import { Button, Card, InputOTP, Spacer, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'

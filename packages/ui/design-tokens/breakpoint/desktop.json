@@ -21,24 +21,24 @@
     "large": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "{font-weight.default.normal.500}",
-        "fontSize": "{text.5xl}",
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{text.9}",
         "letterSpacing": "{tracking.tight}",
-        "textCase": "{text-case.none}",
-        "lineHeight": "{leading.5xl.tight}"
+        "textCase": "{textCase.none}",
+        "lineHeight": "{leading.9.tight}"
       },
       "$description": "Large headlines with extra emphasis."
     },
     "base": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "{font-weight.default.normal.400}",
-        "fontSize": "{text.3xl}",
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{text.7}",
         "letterSpacing": "{tracking.tight}",
-        "textCase": "{text-case.none}",
-        "lineHeight": "{leading.3xl.tight}"
+        "textCase": "{textCase.none}",
+        "lineHeight": "{leading.7.tight}"
       },
       "$description": "Large headlines, hero sections."
     }
@@ -47,10 +47,10 @@
     "large": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "{font-weight.default.normal.500}",
-        "fontSize": "{text.2xl}",
-        "lineHeight": "{leading.2xl.tight}",
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{text.6}",
+        "lineHeight": "{leading.6.tight}",
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Emphasized section headers."
@@ -58,10 +58,10 @@
     "base": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{font-family.default}",
-        "fontWeight": "{font-weight.default.normal.500}",
-        "fontSize": "{text.base}",
-        "lineHeight": "{leading.base.tight}",
+        "fontFamily": "{fontFamily.default}",
+        "fontWeight": "{fontWeight.default.normal.500}",
+        "fontSize": "{text.4}",
+        "lineHeight": "{leading.3.tight}",
         "letterSpacing": "{tracking.normal}"
       },
       "$description": "Section headers."
@@ -72,10 +72,10 @@
       "default": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.none}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary text style for UI and content."
@@ -83,10 +83,10 @@
       "accent": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.none}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.none}",
           "letterSpacing": "{tracking.normal}"
         }
       }
@@ -95,10 +95,10 @@
       "default": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.tight}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.tight}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary text style for UI and content."
@@ -106,10 +106,10 @@
       "accent": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.tight}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.tight}",
           "letterSpacing": "{tracking.normal}"
         }
       }
@@ -118,10 +118,10 @@
       "default": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.snug}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.snug}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary text style for UI and content."
@@ -129,10 +129,10 @@
       "accent": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.sm}",
-          "lineHeight": "{leading.sm.snug}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{text.2}",
+          "lineHeight": "{leading.2.snug}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary text style for UI and content."
@@ -144,10 +144,10 @@
       "default": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.xs}",
-          "lineHeight": "{leading.xs.none}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{text.1}",
+          "lineHeight": "{leading.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
@@ -155,10 +155,10 @@
       "subtle": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.xs}",
-          "lineHeight": "{leading.xs.none}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{text.1}",
+          "lineHeight": "{leading.1.none}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Helper text, meta information."
@@ -168,10 +168,10 @@
       "default": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.500}",
-          "fontSize": "{text.xs}",
-          "lineHeight": "{leading.xs.snug}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.500}",
+          "fontSize": "{text.1}",
+          "lineHeight": "{leading.1.snug}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Primary caption style, small but important text."
@@ -179,10 +179,10 @@
       "subtle": {
         "$type": "typography",
         "$value": {
-          "fontFamily": "{font-family.default}",
-          "fontWeight": "{font-weight.default.normal.400}",
-          "fontSize": "{text.xs}",
-          "lineHeight": "{leading.xs.snug}",
+          "fontFamily": "{fontFamily.default}",
+          "fontWeight": "{fontWeight.default.normal.400}",
+          "fontSize": "{text.1}",
+          "lineHeight": "{leading.1.snug}",
           "letterSpacing": "{tracking.normal}"
         },
         "$description": "Helper text, meta information."
@@ -193,10 +193,10 @@
     "base": {
       "$type": "typography",
       "$value": {
-        "fontFamily": "{font-family.mono}",
-        "fontWeight": "{font-weight.default.normal.400}",
-        "fontSize": "{text.sm}",
-        "lineHeight": "{leading.sm.normal}",
+        "fontFamily": "{fontFamily.mono}",
+        "fontWeight": "{fontWeight.default.normal.400}",
+        "fontSize": "{text.2}",
+        "lineHeight": "{leading.2.normal}",
         "letterSpacing": "{tracking.tight}"
       },
       "$description": "Code blocks and larger code snippets."
@@ -208,10 +208,10 @@
         "h1": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.3xl}",
-            "lineHeight": "{leading.3xl.normal}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontSize": "{text.7}",
+            "lineHeight": "{leading.7.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article main heading."
@@ -219,10 +219,10 @@
         "h2": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.2xl}",
-            "lineHeight": "{leading.2xl.normal}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontSize": "{text.6}",
+            "lineHeight": "{leading.6.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article section heading."
@@ -230,10 +230,10 @@
         "h3": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.600}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.normal}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.600}",
+            "fontSize": "{text.4}",
+            "lineHeight": "{leading.3.normal}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article subsection heading."
@@ -243,10 +243,10 @@
         "lead": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{text.xl}",
-            "lineHeight": "{leading.xl.normal}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.400}",
+            "fontSize": "{text.5}",
+            "lineHeight": "{leading.5.normal}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Article introduction paragraph."
@@ -254,10 +254,10 @@
         "paragraph": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.400}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.relaxed}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.400}",
+            "fontSize": "{text.4}",
+            "lineHeight": "{leading.3.relaxed}",
             "letterSpacing": "{tracking.normal}"
           },
           "$description": "Article paragraph text."
@@ -265,10 +265,10 @@
         "emphasized": {
           "$type": "typography",
           "$value": {
-            "fontFamily": "{font-family.default}",
-            "fontWeight": "{font-weight.default.normal.500}",
-            "fontSize": "{text.base}",
-            "lineHeight": "{leading.base.relaxed}",
+            "fontFamily": "{fontFamily.default}",
+            "fontWeight": "{fontWeight.default.normal.500}",
+            "fontSize": "{text.4}",
+            "lineHeight": "{leading.3.relaxed}",
             "letterSpacing": "{tracking.tight}"
           },
           "$description": "Emphasized paragraph text."

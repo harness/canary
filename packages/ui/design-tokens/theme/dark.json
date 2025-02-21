@@ -699,7 +699,7 @@
         "y": "0",
         "blur": "0",
         "spread": "0",
-        "color": "{shadow-color.none}",
+        "color": "{shadow-color.0}",
         "type": "dropShadow"
       },
       "$description": "No shadow. \nCommon uses: Flat designs, disabled states, removing shadows on mobile."
@@ -711,7 +711,7 @@
         "y": "1",
         "blur": "2",
         "spread": "0",
-        "color": "{shadow-color.sm}",
+        "color": "{shadow-color.1}",
         "type": "dropShadow"
       },
       "$description": "Small shadow. \nCommon uses: Buttons in their rest state, form inputs, subtle UI elements."
@@ -724,7 +724,7 @@
           "y": "1",
           "blur": "3",
           "spread": "0",
-          "color": "{shadow-color.base}",
+          "color": "{shadow-color.2}",
           "type": "dropShadow"
         },
         {
@@ -732,7 +732,7 @@
           "y": "1",
           "blur": "2",
           "spread": "-1",
-          "color": "{shadow-color.base}",
+          "color": "{shadow-color.2}",
           "type": "innerShadow"
         }
       ],
@@ -746,7 +746,7 @@
           "y": "4",
           "blur": "6",
           "spread": "-1",
-          "color": "{shadow-color.md}",
+          "color": "{shadow-color.3}",
           "type": "dropShadow"
         },
         {
@@ -754,7 +754,7 @@
           "y": "2",
           "blur": "4",
           "spread": "-2",
-          "color": "{shadow-color.md}",
+          "color": "{shadow-color.3}",
           "type": "innerShadow"
         }
       ],
@@ -768,7 +768,7 @@
           "y": "10",
           "blur": "15",
           "spread": "-3",
-          "color": "{shadow-color.lg}",
+          "color": "{shadow-color.4}",
           "type": "dropShadow"
         },
         {
@@ -790,7 +790,7 @@
           "y": "20",
           "blur": "25",
           "spread": "-5",
-          "color": "{shadow-color.xl}",
+          "color": "{shadow-color.5}",
           "type": "dropShadow"
         },
         {
@@ -798,7 +798,7 @@
           "y": "8",
           "blur": "10",
           "spread": "-6",
-          "color": "{shadow-color.xl}",
+          "color": "{shadow-color.5}",
           "type": "dropShadow"
         }
       ],
@@ -811,7 +811,7 @@
         "y": "25",
         "blur": "50",
         "spread": "-12",
-        "color": "{shadow-color.2xl}",
+        "color": "{shadow-color.6}",
         "type": "dropShadow"
       },
       "$description": "Extra extra large shadow.\nCommon uses: This aggressive shadow is typically used sparingly in UI design, primarily for elements that need maximum visual emphasis and elevation."
@@ -830,7 +830,7 @@
     }
   },
   "shadow-color": {
-    "none": {
+    "0": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -843,7 +843,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "sm": {
+    "1": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -856,7 +856,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "base": {
+    "2": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -869,7 +869,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "md": {
+    "3": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -882,7 +882,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "lg": {
+    "4": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -895,7 +895,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "xl": {
+    "5": {
       "$extensions": {
         "studio.tokens": {
           "modify": {
@@ -908,7 +908,7 @@
       "$type": "color",
       "$value": "{colors.pure.black}"
     },
-    "2xl": {
+    "6": {
       "$extensions": {
         "studio.tokens": {
           "modify": {

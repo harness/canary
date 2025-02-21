@@ -14,7 +14,7 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.sm}"
+      "$value": "{rounded.1}"
     },
     "size": {
       "$type": "sizing",
@@ -36,7 +36,7 @@
     },
     "radius": {
       "$type": "borderRadius",
-      "$value": "{rounded.sm}"
+      "$value": "{rounded.1}"
     },
     "size": {
       "$type": "sizing",

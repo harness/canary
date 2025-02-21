@@ -985,31 +985,31 @@
     "nav": {
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.1000}",
+        "$value": "{background.1}",
         "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
       },
       "item": {
         "unselected": {
           "text": {
             "$type": "color",
-            "$value": "{colors.chrome.200}",
+            "$value": "{text.2}",
             "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
           },
           "icon": {
             "$type": "color",
-            "$value": "{colors.chrome.500}",
+            "$value": "{text.3}",
             "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
           }
         },
         "selected": {
           "text": {
             "$type": "color",
-            "$value": "{colors.pure.white}",
+            "$value": "{text.1}",
             "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
           },
           "icon": {
             "$type": "color",
-            "$value": "{colors.pure.white}",
+            "$value": "{text.1}",
             "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
           }
         }

@@ -1,28 +1,28 @@
 {
   "background": {
-    "bottom": {
+    "base": {
       "$type": "color",
       "$value": "{colors.chrome.1000}",
       "$description": "Represents the lowest layer in the stack (Level 1) - this is the foundation that everything else sits on, like the app's main background."
     },
-    "middle": {
+    "subtle": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
       "$description": "Represents elements that sit on top of the bottom layer (Level 2) - things like cards and containers that appear to be raised slightly above the background."
     },
-    "top": {
+    "emphasis": {
       "$type": "color",
       "$value": "{colors.chrome.900}",
       "$description": "Represents elements that sit on top of the middle layer (Level 3) - these are the most prominent elements like emphasized content."
     },
-    "float": {
+    "overlay": {
       "$type": "color",
       "$value": "{colors.chrome.950}",
       "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
     }
   },
   "foreground": {
-    "highlight": {
+    "emphasis": {
       "$type": "color",
       "$value": "{colors.pure.white}",
       "$description": "Highest contrast text color for important content.\nCommon uses: headings, labels, emphasized text."
@@ -37,7 +37,7 @@
       "$value": "{colors.chrome.400}",
       "$description": "Reduced emphasis text color.\nCommon uses: supporting text, metadata, secondary information."
     },
-    "muted": {
+    "disabled": {
       "$type": "color",
       "$value": "{colors.chrome.700}",
       "$description": "Lowest emphasis text color.\nCommon uses: disabled text, placeholders, helper text."
@@ -64,15 +64,15 @@
     }
   },
   "border": {
+    "emphasis": {
+      "$type": "color",
+      "$value": "{colors.chrome.400}",
+      "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
+    },
     "base": {
       "$type": "color",
       "$value": "{colors.chrome.850}",
       "$description": "Standard border color for general use.\nCommon uses: containers, dividers, separators."
-    },
-    "interactive": {
-      "$type": "color",
-      "$value": "{colors.chrome.400}",
-      "$description": "Enhanced border color for interactive states.\nCommon uses: hover states, focus indicators."
     },
     "subtle": {
       "$extensions": {
@@ -88,7 +88,7 @@
       "$value": "{colors.chrome.850}",
       "$description": "Softer border color for minimal separation.\nCommon uses: subtle dividers, grouped content."
     },
-    "ring": {
+    "focus": {
       "$type": "color",
       "$value": "{colors.accent.200}",
       "$description": "Focus state indicator color.\nCommon uses: focus rings, keyboard navigation, selection indicators."
@@ -168,7 +168,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled state.\nCommon uses: disabled secondary text, inactive labels."
           }
         }
@@ -194,17 +194,17 @@
         "hover": {
           "border": {
             "$type": "color",
-            "$value": "{border.interactive}",
+            "$value": "{border.emphasis}",
             "$description": "Border color during hover.\nCommon uses: hover state outline, interactive border."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.emphasis}",
             "$description": "Text color for outlined / ghost variants during hover state.\nCommon uses: hover text in outlined variant."
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.emphasis}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: hover text in outlined variant."
           },
           "background": {
@@ -216,17 +216,17 @@
         "active": {
           "border": {
             "$type": "color",
-            "$value": "{border.interactive}",
+            "$value": "{border.emphasis}",
             "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.emphasis}",
             "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.highlight}",
+            "$value": "{foreground.emphasis}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
           },
           "background": {
@@ -243,12 +243,12 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for outlined / ghost variants when disabled.\nCommon uses: disabled text in outlined variant."
           },
           "icon": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Icon color for outlined / ghost variants.\nCommon uses: disabled text in outlined variant."
           }
         }
@@ -292,7 +292,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.interactive}",
+          "$value": "{border.emphasis}",
           "$description": "Border color during hover.\nCommon uses: hover state boundaries."
         },
         "icon": {
@@ -314,7 +314,7 @@
         },
         "border": {
           "$type": "color",
-          "$value": "{border.interactive}",
+          "$value": "{border.emphasis}",
           "$description": "Border color for focused state.\nCommon uses: focus indication, active boundary."
         },
         "icon": {
@@ -331,7 +331,7 @@
         },
         "foreground": {
           "$type": "color",
-          "$value": "{foreground.muted}",
+          "$value": "{foreground.disabled}",
           "$description": "Text color for disabled inputs.\nCommon uses: disabled input content."
         },
         "border": {
@@ -341,7 +341,7 @@
         },
         "icon": {
           "$type": "color",
-          "$value": "{foreground.muted}",
+          "$value": "{foreground.disabled}",
           "$description": "Icon color when disabled.\nCommon uses: disabled state indicators."
         }
       }
@@ -493,7 +493,7 @@
       }
     }
   },
-  "feedback": {
+  "status": {
     "success": {
       "intense": {
         "foreground": {
@@ -594,7 +594,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled success content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
@@ -704,7 +704,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled error content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
@@ -814,7 +814,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled warning content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
@@ -924,7 +924,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled info content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
@@ -1034,7 +1034,7 @@
           },
           "foreground": {
             "$type": "color",
-            "$value": "{foreground.muted}",
+            "$value": "{foreground.disabled}",
             "$description": "Text color for disabled info content.\nCommon uses: non-interactive text, disabled content."
           },
           "border": {
@@ -1348,7 +1348,7 @@
           "y": "0",
           "blur": "0",
           "spread": "2",
-          "color": "{background.bottom}",
+          "color": "{background.base}",
           "type": "dropShadow"
         },
         {
@@ -1356,7 +1356,7 @@
           "y": "0",
           "blur": "0",
           "spread": "4",
-          "color": "{border.ring}",
+          "color": "{border.focus}",
           "type": "dropShadow"
         }
       ],

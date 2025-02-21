@@ -1100,7 +1100,6 @@
       "body.leading-tight.default": "S:f71157dc760badae2dccddcbb6ddf10845829d12,",
       "body.leading-tight.accent": "S:52a2d72cc357b0c9022b57097574199056da150c,",
       "body.leading-none.accent": "S:ea9576022f90d1911eafcfd874b82b88b723efda,",
-      "code.base": "S:139d3efcd49762116c6ea61d5873c732b22b0edf,",
       "caption.leading-snug.default": "S:b06ba893c7e798994f77d110cb73ef363caa6d97,",
       "caption.leading-snug.subtle": "S:d2fba795d67be80e6afa991e6cb45f3ecc592a3f,",
       "component.markdown-editor.title.h1": "S:f1b57a327f5b8b6ee1a5c2c358366b73a2f6f8ab,",
@@ -1131,7 +1130,8 @@
       "body.strong": "S:c7794facb0f55a076c33fe712eeaff18f6bf7213,",
       "caption.normal": "S:039a4e9f18bd4d7df4aa1984ca555caa5e419719,",
       "caption.soft": "S:edc15bf0b6c428a1740572d90ce79a56ab643fca,",
-      "heading.small": "S:909859796082ae7c587a43382a91e1af48da109f,"
+      "heading.small": "S:909859796082ae7c587a43382a91e1af48da109f,",
+      "body.code": "S:139d3efcd49762116c6ea61d5873c732b22b0edf,"
     },
     "selectedTokenSets": {
       "breakpoint/desktop": "enabled",

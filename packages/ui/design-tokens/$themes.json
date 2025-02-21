@@ -932,6 +932,7 @@
       "overlay.backdrop": "8c97a52420b718dded3c4bba19c9f1f12e935b2e",
       "state.selected": "7af27ad7e84f33cca27107699cab676d409bd66b",
       "state.disabled.bg": "9c107c15c62ba5231ca269577c6956d2a84d78c3",
+      "state.disabled.border": "2a9a65afe8953ae4d3d7b860cd2e8ab891de8217",
       "primary.background": "c60ca07649c2414c8a21027ea629cc9c23e2754a",
       "primary.text": "a6890931ef63ef518b93986dc8507977f4fad84a",
       "secondary.solid.background": "ba8b276ba8373929f197827f0339ec25f210690b",

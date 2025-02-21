@@ -3,7 +3,7 @@ import * as React from 'react'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
 import { cn } from '@utils/cn'
 
-import { Icon } from './icon'
+import { Icon } from '../icon'
 
 type AccordionRootProps = React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Root> & {
   onValueChange?: (value: string | string[]) => void

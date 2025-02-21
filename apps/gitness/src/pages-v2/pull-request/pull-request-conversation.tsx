@@ -36,6 +36,7 @@ import CommitSuggestionsDialog from '../../components-v2/commit-suggestions-dial
 import { useAppContext } from '../../framework/context/AppContext'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import {
@@ -88,6 +89,9 @@ export default function PullRequestConversationPage() {
   const [showRestoreBranchButton, setShowRestoreBranchButton] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
   const { spaceId, repoId } = useParams<PathParams>()
+  const {
+    scope: { accountId }
+  } = useMFEContext()
   const [comment, setComment] = useState<string>('')
   const [commentId] = useQueryState('commentId')
   const [isScrolledToComment, setIsScrolledToComment] = useState(false)
@@ -101,7 +105,7 @@ export default function PullRequestConversationPage() {
 
   const { data: { body: principals } = {} } = useListPrincipalsQuery({
     // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers }
+    queryParams: { page: 1, limit: 100, type: 'user', query: searchReviewers, accountIdentifier: accountId }
   })
 
   const { data: { body: reviewers } = {}, refetch: refetchReviewers } = useReviewerListPullReqQuery({

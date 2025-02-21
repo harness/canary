@@ -4,11 +4,11 @@
       "$type": "number",
       "$value": "1440"
     },
-    "viewport-min": {
+    "viewportMin": {
       "$type": "number",
       "$value": "1080"
     },
-    "viewport-max": {
+    "viewportMax": {
       "$type": "number",
       "$value": "1919"
     },
@@ -68,7 +68,7 @@
     }
   },
   "body": {
-    "leading-none": {
+    "none": {
       "default": {
         "$type": "typography",
         "$value": {
@@ -91,7 +91,7 @@
         }
       }
     },
-    "leading-tight": {
+    "tight": {
       "default": {
         "$type": "typography",
         "$value": {
@@ -114,7 +114,7 @@
         }
       }
     },
-    "leading-snug": {
+    "snug": {
       "default": {
         "$type": "typography",
         "$value": {
@@ -140,7 +140,7 @@
     }
   },
   "caption": {
-    "leading-none": {
+    "none": {
       "default": {
         "$type": "typography",
         "$value": {
@@ -164,7 +164,7 @@
         "$description": "Helper text, meta information."
       }
     },
-    "leading-snug": {
+    "snug": {
       "default": {
         "$type": "typography",
         "$value": {

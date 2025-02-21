@@ -10,7 +10,7 @@ const external = [
   'react-hook-form',
   'react-router-dom',
   'react-router',
-  'react/jsx-runtime',
+  // 'react/jsx-runtime',
   'react-i18next',
   'i18next'
 ]

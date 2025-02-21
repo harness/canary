@@ -1,6 +1,5 @@
-import { FC, useMemo } from 'react'
+import { FC, Fragment, useMemo } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { Fragment } from 'react/jsx-runtime'
 
 import {
   Button,

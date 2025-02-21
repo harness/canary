@@ -28,9 +28,12 @@ export const Floating1ColumnLayout = ({
   as: Tag = 'div',
   highlightTheme
 }: Floating1ColumnLayoutProps) => {
-  const verticalCenterClass = verticalCenter ? 'flex items-center justify-center min-h-screen' : ''
-
-  const computedClassName = cn('px-5 pb-8 mx-auto md:px-8', widthClass[maxWidth], verticalCenterClass, className)
+  const computedClassName = cn(
+    'px-5 pb-8 mx-auto md:px-8',
+    widthClass[maxWidth],
+    { 'flex items-center justify-center min-h-screen': verticalCenter },
+    className
+  )
 
   if (highlightTheme) {
     return (
@@ -101,9 +104,10 @@ const HighlightedFloatingLayout = ({ children, className, theme = 'blue' }: High
         />
       </div>
       <span
-        className="pointer-events-none absolute inset-0 bg-[size:100px_100px] bg-repeat opacity-70 mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 bg-[url('/assets/images/noise.webp')] opacity-70 mix-blend-overlay"
         aria-hidden
       />
+
       {children}
     </Floating1ColumnLayout>
   )

@@ -10,12 +10,14 @@ import ExecutionListWrapper from '@subjects/views/execution-list/execution-list'
 import { LabelsForm } from '@subjects/views/labels/labels-form'
 import { ProjectLabelsList } from '@subjects/views/labels/project-labels-list'
 import { RepoLabelsList } from '@subjects/views/labels/repo-labels-list'
+import { LandingPagePreview } from '@subjects/views/landing-page/landing-page-view'
 import PipelineStudioWrapper from '@subjects/views/pipeline-edit/pipeline-edit'
 import PipelineGraphWrapper from '@subjects/views/pipeline-graph/pipeline-graph'
 import PipelineGraphMinimalWrapper from '@subjects/views/pipeline-graph/pipeline-graph-minimal'
 import PipelineListWrapper from '@subjects/views/pipeline-list/pipeline-list'
 import { ProfileSettingsView } from '@subjects/views/profile-settings'
 import { ProfileSettingsKeysView } from '@subjects/views/profile-settings-keys'
+import { CreateProjectView } from '@subjects/views/project-create/project-create-view'
 import { ProjectSettingsView } from '@subjects/views/project-settings/project-settings'
 import PullRequestCompareWrapper from '@subjects/views/pull-request-compare/pull-request-compare'
 import PullRequestChangesWrapper from '@subjects/views/pull-request-conversation/pull-request-changes-wrapper'
@@ -46,6 +48,7 @@ import { useTranslationStore } from '@utils/viewUtils'
 import { ChatEmptyPreviewWrapper, ChatPreviewWrapper } from '@harnessio/ui/components'
 import { NotFoundPage } from '@harnessio/ui/views'
 
+import { AppViewWrapper } from './app-view-wrapper'
 import { CommitDetailsDiffViewWrapper } from './commit-details-diff-view-wrapper'
 import CommitDetailsViewWrapper from './commit-details-view-wrapper'
 import { ExecutionGraphViewWrapper } from './execution-graph-view-wrapper'
@@ -60,6 +63,8 @@ import ViewSettings from './view-settings'
 export const viewPreviews: Record<string, ReactNode> = {
   signin: <SignInView />,
   signup: <SignUpView />,
+  'project-create': <CreateProjectView />,
+  'project-create-additional': <CreateProjectView isAdditional />,
   'repo-create': (
     <RootViewWrapper>
       <CreateRepoView />
@@ -286,6 +291,11 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RootViewWrapper>
       <ExecutionGraphViewWrapper />
     </RootViewWrapper>
+  ),
+  'landing-page': (
+    <AppViewWrapper>
+      <LandingPagePreview />
+    </AppViewWrapper>
   )
 }
 

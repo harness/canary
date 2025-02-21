@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Link } from 'react-router-dom'
 
-import { Button, Card, Input, Spacer, Text } from '@/components'
+import { Button, Card, Input, Spacer, StyledLink, Text } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
@@ -122,12 +121,9 @@ export function SignInPage({ handleSignIn, isLoading, error }: SignInPageProps) 
           <Spacer size={4} />
           <Text className="block" size={2} color="foreground-5" weight="normal" align="center" as="p">
             Don’t have an account?{' '}
-            <Link
-              className="text-foreground-accent underline decoration-transparent decoration-1 underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
-              to="/signup"
-            >
+            <StyledLink variant="accent" to="/signup">
               Sign up
-            </Link>
+            </StyledLink>
           </Text>
         </Card.Content>
       </Card.Root>

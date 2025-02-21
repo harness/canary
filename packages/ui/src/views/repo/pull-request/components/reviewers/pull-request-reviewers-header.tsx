@@ -66,7 +66,13 @@ const ReviewersHeader = ({
             )}
             <div className="max-h-[360px] overflow-y-auto">
               {usersList?.map(({ display_name, id, uid }) => {
-                if (uid === currentUserId) return null
+                if (uid === currentUserId) {
+                  return (
+                    <div className="px-5 py-4 text-center">
+                      <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.noUsers')}</span>
+                    </div>
+                  )
+                }
                 const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
                 return (
                   <DropdownMenu.Item

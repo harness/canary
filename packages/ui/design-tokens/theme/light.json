@@ -286,73 +286,30 @@
         }
       },
       "subtle": {
-        "default": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.green.50}",
-            "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "{colors.green.800}",
-            "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{colors.green.100}",
-            "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
-          }
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.50}",
+          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
         },
-        "hover": {
-          "background": {
-            "$type": "color",
-            "$value": "{colors.green.100}",
-            "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for hoverable success content.\nCommon uses: interactive success text, hover state content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for hover state.\nCommon uses: interactive success borders, hover boundaries."
-          }
+        "foreground": {
+          "$type": "color",
+          "$value": "{colors.green.800}",
+          "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
         },
-        "active": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for active success content.\nCommon uses: pressed state text, active content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for active state.\nCommon uses: active success borders, pressed state."
-          }
+        "border": {
+          "$type": "color",
+          "$value": "{colors.green.100}",
+          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
         },
-        "disabled": {
-          "background": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Background for non-interactive success elements.\nCommon uses: disabled success messages, inactive states."
-          },
-          "foreground": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Text color for disabled success content.\nCommon uses: non-interactive text, disabled content."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "#fff",
-            "$description": "Border color for disabled state.\nCommon uses: disabled success borders, inactive boundaries."
-          }
+        "background-hover": {
+          "$type": "color",
+          "$value": "{colors.green.100}",
+          "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
+        },
+        "background-active": {
+          "$type": "color",
+          "$value": "#fff",
+          "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
         }
       }
     },

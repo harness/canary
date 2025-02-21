@@ -48,16 +48,10 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 }) => {
   const { t } = useTranslationStore()
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const filterHandlers = useFilters()
-
-  const isDirtyList = page !== 1 || !!filterHandlers.activeFilters.length
+  const isDirtyList = page !== 1
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
-    filterHandlers.handleResetFilters()
   }
 
   return (
@@ -75,16 +69,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-          <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} t={t} />
         </div>
-
-        <FiltersBar
-          filterOptions={FILTER_OPTIONS}
-          sortOptions={SORT_OPTIONS}
-          sortDirections={SORT_DIRECTIONS}
-          filterHandlers={filterHandlers}
-          t={t}
-        />
 
         <Spacer size={5} />
 

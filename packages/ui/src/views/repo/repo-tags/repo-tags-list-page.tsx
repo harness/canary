@@ -2,11 +2,8 @@ import { FC, useMemo } from 'react'
 
 import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonTable, Spacer, StackedList } from '@/components'
 import { RepoTagsStore, SandboxLayout, TranslationStore } from '@/views'
-import { Filters, FiltersBar } from '@components/filters'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
-import { useFilters } from '@views/repo/hooks'
 
 import { RepoTagsList } from './components/repo-tags-list'
 
@@ -42,26 +39,20 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
     searchValue: searchQuery || ''
   })
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const filterHandlers = useFilters()
-
   const handleResetFiltersAndPages = () => {
     setPage(1)
     setSearchQuery(null)
-    filterHandlers.handleResetFilters()
   }
 
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
-  }, [page, filterHandlers.activeFilters, searchQuery])
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   const renderListContent = () => {
     if (isLoading) {
       return <SkeletonTable countRows={10} countColumns={4} />
     } else if (noData) {
-      return filterHandlers.activeFilters.length > 0 || searchQuery ? (
+      return searchQuery ? (
         <StackedList.Root>
           <div className="flex min-h-[50vh] items-center justify-center py-20">
             <NoData
@@ -74,10 +65,6 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
               primaryButton={{
                 label: t('views:noData.clearSearch', 'Clear search'),
                 onClick: handleResetFiltersAndPages
-              }}
-              secondaryButton={{
-                label: t('views:noData.clearFilters', 'Clear filters'),
-                onClick: filterHandlers.handleResetFilters
               }}
             />
           </div>
@@ -130,25 +117,12 @@ export const RepoTagsListView: FC<RepoTagsListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  t={t}
-                />
                 <Button variant="default" onClick={openCreateTagDialog}>
                   {t('views:repos.newTag', 'New tag')}
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
 
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              t={t}
-            />
             <Spacer size={5} />
           </>
         )}

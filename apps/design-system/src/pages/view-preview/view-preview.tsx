@@ -35,6 +35,7 @@ import { RepoGeneralSettings } from '@subjects/views/repo-general-settings/repo-
 import { ImportRepoView } from '@subjects/views/repo-import'
 import RepoListWrapper from '@subjects/views/repo-list/repo-list'
 import RepoSummaryViewWrapper from '@subjects/views/repo-summary/repo-summary'
+import { RepoTagsList } from '@subjects/views/repo-tags/repo-tags-list'
 import { RepoWebhooksCreate } from '@subjects/views/repo-webhooks-create/repo-webhooks-list'
 import { RepoWebhooksList } from '@subjects/views/repo-webhooks-list/repo-webhooks-list'
 import { SignInView } from '@subjects/views/signin'
@@ -83,6 +84,11 @@ export const viewPreviews: Record<string, ReactNode> = {
     <RootViewWrapper>
       <RepoListWrapper />
     </RootViewWrapper>
+  ),
+  'repo-tags': (
+    <RepoViewWrapper>
+      <RepoTagsList />
+    </RepoViewWrapper>
   ),
   'pull-request-list': (
     <RepoViewWrapper>

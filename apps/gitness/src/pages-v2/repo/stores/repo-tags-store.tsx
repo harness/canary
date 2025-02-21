@@ -4,7 +4,6 @@ import { RepoTagsStore } from '@harnessio/ui/views'
 
 export const useRepoTagsStore = create<RepoTagsStore>(set => ({
   tags: [],
-  branches: [],
   page: 1,
   xNextPage: 0,
   xPrevPage: 0,

@@ -1,15 +1,16 @@
 import { FC } from 'react'
 
-import { Button, DropdownMenu, Icon, Text } from '@/components'
+import { Button, DropdownMenu, Icon } from '@/components'
 import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, TranslationStore } from '@/views'
 
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
 interface BranchSelectorProps {
-  useRepoBranchesStore: () => IBranchSelectorStore
+  branchesStoreNamespace?: string
+  useRepoBranchesStore: (namespace?: string) => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
-  buttonSize?: 'default' | 'sm'
+  buttonSize?: 'default' | 'sm' | 'md'
   selectedBranch?: BranchSelectorListItem
   onSelectBranch: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   isBranchOnly?: boolean
@@ -18,6 +19,7 @@ interface BranchSelectorProps {
   dynamicWidth?: boolean
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
+  branchesStoreNamespace,
   useRepoBranchesStore,
   useTranslationStore,
   branchPrefix,
@@ -29,7 +31,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   setSearchQuery,
   dynamicWidth = false
 }) => {
-  const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
+  const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore(branchesStoreNamespace)
 
   const isTag = selectedBranchTag
     ? tagList?.some(tag => tag.name === selectedBranchTag.name && tag.sha === selectedBranchTag.sha)
@@ -46,12 +48,12 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
           {!branchPrefix && (
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
-          <Text className="w-full text-foreground-8" truncate align="left">
+          <span className="w-full truncate text-left text-foreground-8">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchTag.name}`
               : selectedBranch?.name || selectedBranchTag.name}
-          </Text>
-          <Icon name="chevron-down" className="chevron-down text-icons-2" size={20} />
+          </span>
+          <Icon name="chevron-down" className="chevron-down shrink-0 text-icons-2" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

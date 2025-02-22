@@ -34,11 +34,11 @@ const Badge: React.FC<ExecutionStatusProps & BadgeProps> = props => {
     case ExecutionState.RUNNING:
       return minimal ? (
         <div className="flex items-center gap-1">
-          <div className="size-2 rounded-full bg-studio-3" />
+          <div className="bg-studio-3 size-2 rounded-full" />
           <span className="text-studio-3">Running</span>
         </div>
       ) : (
-        <div className="flex items-center gap-1 rounded-md border border-solid border-studio-3/[0.12] bg-studio-3/10 px-1 py-0.5">
+        <div className="border-studio-3/[0.12] bg-studio-3/10 flex items-center gap-1 rounded-md border border-solid px-1 py-0.5">
           <div className="flex items-center gap-1">
             <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
             <span className="text-studio-3">Running</span>

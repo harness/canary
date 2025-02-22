@@ -1,5 +1,4 @@
 export default {
-  preset: 'ts-jest',
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {
@@ -7,8 +6,20 @@ export default {
     '\\.svg$': 'identity-obj-proxy'
   },
   transform: {
-    '^.+\\.(ts|tsx)$': 'ts-jest'
+    '^.+\\.(t|j)sx?$': [
+      '@swc/jest',
+      {
+        jsc: {
+          transform: {
+            react: {
+              runtime: 'automatic'
+            }
+          }
+        }
+      }
+    ]
   },
+  transformIgnorePatterns: ['/node_modules/(?!yaml)/'],
   testMatch: ['**/?(*.)+(test).[jt]s?(x)'],
-  setupFilesAfterEnv: ['./src/setupTests.tsx'] // Ensure setup file exists
+  setupFilesAfterEnv: ['./src/setupTests.tsx']
 }

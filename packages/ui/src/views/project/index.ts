@@ -12,3 +12,4 @@ export * from '@views/project/project.types'
 export * from '@views/project/project-import'
 
 export * from '@views/project/project-settings-page'
+export * from '@views/project/create-project-page'

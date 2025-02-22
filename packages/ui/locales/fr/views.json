@@ -217,14 +217,6 @@
     "noLabels": "No labels yet",
     "noLabelsDescription": "Use labels to organize, prioritize, and categorize tasks efficiently."
   },
-  "createProject": {
-    "newProject": "Créez votre nouveau projet",
-    "description": "Organisez vos dépôts, pipelines et plus encore.",
-    "projectName": "Nom du projet",
-    "projectNamePlaceholder": "Entrez le nom de votre projet",
-    "creating": "Création du projet...",
-    "create": "Créer un projet"
-  },
   "labelData": {
     "form": {
       "colorValuePlaceholder": "Enter value name",
@@ -413,6 +405,29 @@
     "saving": "Enregistrement...",
     "generalTab": "Général",
     "keysTab": "Clés et Jetons"
+  },
+  "createProject": {
+    "validation": {
+      "nameNoEmpty": "The field can’t be blank",
+      "nameMinLength": "The project name should be at least 4 characters"
+    },
+    "backButton": "Back",
+    "title": "Create your new project",
+    "description": "Organize your repositories, pipelines and more.",
+    "form": {
+      "name": "Project name",
+      "namePlaceholder": "Enter your project name",
+      "description": "Description",
+      "descriptionPlaceholder": "Enter a description (optional)"
+    },
+    "create": {
+      "projectCreation": "Creating project...",
+      "createProject": "Create project"
+    },
+    "logout": {
+      "question": "Want to use a different account?",
+      "link": "Log out"
+    }
   },
   "forms": {
     "selectMember": "",

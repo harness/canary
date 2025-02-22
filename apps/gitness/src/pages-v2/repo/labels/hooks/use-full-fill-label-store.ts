@@ -13,14 +13,16 @@ export interface UseFullFillLabelStoreProps {
 export const useFullFillLabelStore = ({ queryPage, query, enabled = true }: UseFullFillLabelStoreProps) => {
   const repoId = useGetRepoId()
 
-  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, getParentScopeLabels } = useLabelsStore()
+  const { setLabels, setValues, setRepoSpaceRef, resetLabelsAndValues, setIsLoading, getParentScopeLabels } =
+    useLabelsStore()
 
-  const { isLoading, space_ref, repo_ref, labels, values } = useGetRepoLabelAndValuesData({
-    queryPage,
-    query,
-    enabled,
-    inherited: getParentScopeLabels
-  })
+  const {
+    isLoading: isDataLoading,
+    space_ref,
+    repo_ref,
+    labels,
+    values
+  } = useGetRepoLabelAndValuesData({ queryPage, query, enabled, inherited: getParentScopeLabels })
 
   /**
    * Resetting the store state for labels and values
@@ -57,9 +59,16 @@ export const useFullFillLabelStore = ({ queryPage, query, enabled = true }: UseF
     setValues(values)
   }, [values, setValues])
 
-  return {
-    isLoading,
-    space_ref,
-    repo_ref
-  }
+  /**
+   * Set loading state to store
+   */
+  useEffect(() => {
+    if (enabled) {
+      return setIsLoading(isDataLoading)
+    }
+
+    setIsLoading(false)
+  }, [isDataLoading, setIsLoading, query, enabled])
+
+  return { space_ref, repo_ref }
 }

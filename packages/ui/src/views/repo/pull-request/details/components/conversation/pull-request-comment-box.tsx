@@ -14,6 +14,7 @@ interface ToolbarItem {
 }
 
 export interface PullRequestCommentBoxProps {
+  className?: string
   onSaveComment: (comment: string) => void
   comment: string
   setComment: (comment: string) => void
@@ -35,7 +36,8 @@ const TABS_KEYS = {
 }
 
 //  TODO: will have to eventually implement a commenting and reply system similiar to gitness
-const PullRequestCommentBox = ({
+export const PullRequestCommentBox = ({
+  className,
   onSaveComment,
   currentUser,
   inReplyMode = false,
@@ -138,7 +140,7 @@ const PullRequestCommentBox = ({
   }
 
   return (
-    <div className="flex items-start gap-x-3 font-sans" data-comment-editor-shown="true">
+    <div className={cn('flex items-start gap-x-3 font-sans', className)} data-comment-editor-shown="true">
       {!inReplyMode && !isEditMode && avatar}
       <div
         className={cn('pb-4 pt-1.5 px-4 flex-1 bg-background-2 border-border-1 overflow-auto', {
@@ -241,5 +243,3 @@ const PullRequestCommentBox = ({
     </div>
   )
 }
-
-export { PullRequestCommentBox }

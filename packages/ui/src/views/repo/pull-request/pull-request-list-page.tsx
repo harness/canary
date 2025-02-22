@@ -129,13 +129,14 @@ const PullRequestList: FC<PullRequestPageProps> = ({
   }
 
   return (
-    <SandboxLayout.Main className="max-w-[1040px]">
-      <SandboxLayout.Content>
+    <SandboxLayout.Main className="max-w-[1040px] place-items-center">
+      <SandboxLayout.Content className="w-full max-w-[812px]">
         {showTopBar && (
           <>
-            <Spacer size={2} />
-            <p className="text-24 font-medium leading-snug tracking-tight text-foreground-1">Pull Requests</p>
-            <Spacer size={6} />
+            <h1 className="mb-6 mt-2 text-24 font-medium leading-snug tracking-tight text-foreground-1">
+              Pull Requests
+            </h1>
+
             <ListActions.Root>
               <ListActions.Left>
                 <SearchBox.Root

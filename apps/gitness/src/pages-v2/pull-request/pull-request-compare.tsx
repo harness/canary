@@ -495,6 +495,8 @@ export const CreatePullRequest = () => {
     setReviewers(newReviewers)
   }
 
+  const handleEditLabels = () => navigate(routes.toRepoLabels({ spaceId, repoId }))
+
   const handleAddLabel = (labelToAdd: HandleAddLabelType) => {
     const findLabel = labelsList.find(label => label.id === labelToAdd.label_id)
     if (!findLabel) return
@@ -601,6 +603,7 @@ export const CreatePullRequest = () => {
         PRLabels={labels}
         addLabel={handleAddLabel}
         removeLabel={handleDeleteLabel}
+        editLabels={handleEditLabels}
         searchLabelQuery={searchLabel}
         setSearchLabelQuery={setSearchLabel}
       />

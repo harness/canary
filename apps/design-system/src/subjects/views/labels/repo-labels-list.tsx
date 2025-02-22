@@ -12,15 +12,14 @@ export const RepoLabelsList = () => {
   return (
     <>
       <LabelsListPage
+        className="max-w-[570px] px-0"
         useTranslationStore={useTranslationStore}
         useLabelsStore={LabelsListStore.useLabelsStore}
         createdIn={''}
-        handleEditLabel={() => {}}
-        handleDeleteLabel={() => setOpenAlertDeleteDialog(true)}
         searchQuery={''}
-        setSearchQuery={() => {}}
-        isLoading={false}
+        setSearchQuery={noop}
         isRepository
+        labelsListViewProps={{ handleEditLabel: noop, handleDeleteLabel: () => setOpenAlertDeleteDialog(true) }}
       />
       <DeleteAlertDialog
         open={openAlertDeleteDialog}

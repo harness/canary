@@ -94,11 +94,13 @@ export interface ILabelsStore {
   totalPages: number
 
   values: LabelValuesType
+  isLoading: boolean
 
   repo_ref: string | null
   space_ref: string | null
   getParentScopeLabels: boolean
 
+  setIsLoading: (isLoading: boolean) => void
   setLabels: (labels: ILabelType[]) => void
   addLabel: (label: ILabelType) => void
   deleteLabel: (key: string) => void

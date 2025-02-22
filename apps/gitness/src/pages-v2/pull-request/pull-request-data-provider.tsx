@@ -10,6 +10,7 @@ import {
   useListCommitsQuery,
   useListPullReqActivitiesQuery
 } from '@harnessio/code-service-client'
+import { RepoRepositoryOutput } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
@@ -92,7 +93,7 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
   })
   useEffect(() => {
     if (repoMetadata) {
-      setRepoMetadata(repoMetadata)
+      setRepoMetadata(repoMetadata as RepoRepositoryOutput)
     }
   }, [repoMetadata, setRepoMetadata])
   useEffect(() => {
@@ -119,7 +120,7 @@ const PullRequestDataProvider: React.FC<PropsWithChildren<React.HTMLAttributes<H
     if (hasChanges) {
       setResolvedCommentArr(undefined)
       store.updateState({
-        repoMetadata,
+        repoMetadata: repoMetadata as RepoRepositoryOutput,
         setPullReqMetadata,
         pullReqMetadata: pullReqData ? pullReqData : undefined,
         pullReqCommits: commits,

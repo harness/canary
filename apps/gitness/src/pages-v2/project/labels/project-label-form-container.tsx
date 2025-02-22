@@ -14,25 +14,7 @@ export const ProjectLabelFormContainer = () => {
   const { spaceId, labelId } = useParams<PathParams>()
   const navigate = useNavigate()
 
-  const { isLoading: isDataLoading, space_ref } = useGetProjectLabelAndValuesData({
-    query: labelId,
-    enabled: !!labelId
-  })
-
-  const {
-    mutate,
-    isLoading,
-    error: createError
-  } = useSaveSpaceLabelMutation(
-    {
-      space_ref: space_ref ?? ''
-    },
-    {
-      onSuccess: () => {
-        onFormCancel()
-      }
-    }
-  )
+  const { space_ref } = useGetProjectLabelAndValuesData({ query: labelId, enabled: !!labelId })
 
   const onFormCancel = () => {
     if (window.history.length > 1) {
@@ -42,28 +24,27 @@ export const ProjectLabelFormContainer = () => {
     }
   }
 
+  const {
+    mutate,
+    isLoading: isSaving,
+    error: createError
+  } = useSaveSpaceLabelMutation({ space_ref: space_ref ?? '' }, { onSuccess: onFormCancel })
+
   const onSubmit = (data: CreateLabelFormFields) => {
     const { values, ...rest } = data
 
-    mutate({
-      body: {
-        label: {
-          ...rest
-        },
-        values
-      }
-    })
+    mutate({ body: { label: { ...rest }, values } })
   }
 
   return (
     <LabelFormPage
+      className="mx-auto"
       useLabelsStore={useLabelsStore}
       useTranslationStore={useTranslationStore}
-      isLoading={isLoading}
+      isSaving={isSaving}
       onSubmit={onSubmit}
       onFormCancel={onFormCancel}
       error={createError?.message}
-      isDataLoading={isDataLoading}
       labelId={labelId}
     />
   )

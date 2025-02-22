@@ -56,7 +56,7 @@ export interface BranchListPageProps extends Partial<RoutingProps> {
 
 export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   isLoading: boolean
-  useRepoBranchesStore: () => IBranchSelectorStore
+  useRepoBranchesStore: (namespace?: string) => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   isCreateBranchDialogOpen: boolean
   setCreateBranchDialogOpen: (isOpen: boolean) => void
@@ -66,12 +66,8 @@ export interface RepoBranchListViewProps extends Partial<RoutingProps> {
   searchQuery: string | null
   setSearchQuery: (query: string | null) => void
   onDeleteBranch: (branchName: string) => void
-  searchBranches: Branch[]
+  createBranchSearchQuery: string | null
   setCreateBranchSearchQuery: Dispatch<SetStateAction<string>>
-}
-
-interface Branch {
-  name?: string
 }
 
 export interface CreateBranchDialogProps {
@@ -82,6 +78,7 @@ export interface CreateBranchDialogProps {
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
   defaultBranch?: string
-  handleChangeSearchValue: Dispatch<SetStateAction<string>>
-  useRepoBranchesStore: () => IBranchSelectorStore
+  searchQuery: string | null
+  setSearchQuery: Dispatch<SetStateAction<string>>
+  useRepoBranchesStore: (namespace?: string) => IBranchSelectorStore
 }

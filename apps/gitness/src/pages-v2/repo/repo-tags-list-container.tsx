@@ -180,7 +180,8 @@ export const RepoTagsListContainer = () => {
         useRepoBranchesStore={useRepoBranchesStore}
         onSubmit={handleCreateBranch}
         useTranslationStore={useTranslationStore}
-        handleChangeSearchValue={setBranchQuery}
+        searchQuery={branchQuery}
+        setSearchQuery={setBranchQuery}
         error={createBranchError?.message}
       />
       <DeleteAlertDialog

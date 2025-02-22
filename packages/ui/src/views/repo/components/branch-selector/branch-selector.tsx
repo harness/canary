@@ -48,12 +48,12 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
           {!branchPrefix && (
             <Icon className="shrink-0 fill-transparent text-icons-9" name={isTag ? 'tag' : 'branch'} size={14} />
           )}
-          <span className="w-full text-foreground-8 truncate text-left">
+          <span className="w-full truncate text-left text-foreground-8">
             {branchPrefix
               ? `${branchPrefix}: ${selectedBranch?.name || selectedBranchTag.name}`
               : selectedBranch?.name || selectedBranchTag.name}
           </span>
-          <Icon name="chevron-down" className="chevron-down text-icons-2 flex-shrink-0" size={12} />
+          <Icon name="chevron-down" className="chevron-down shrink-0 text-icons-2" size={12} />
         </Button>
       </DropdownMenu.Trigger>
       <BranchSelectorDropdown

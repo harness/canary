@@ -21,6 +21,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
+  createBranchSearchQuery,
   setCreateBranchSearchQuery,
   ...routingProps
 }) => {
@@ -100,7 +101,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         useTranslationStore={useTranslationStore}
         error={createBranchError}
         defaultBranch={defaultBranch}
-        handleChangeSearchValue={setCreateBranchSearchQuery}
+        searchQuery={createBranchSearchQuery}
+        setSearchQuery={setCreateBranchSearchQuery}
       />
     </SandboxLayout.Main>
   )

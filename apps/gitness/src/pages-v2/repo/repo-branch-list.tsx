@@ -40,6 +40,13 @@ export function RepoBranchesListPage() {
     branchList
   } = useRepoBranchesStore()
 
+  const {
+    branchList: branchListCreateBranchModal,
+    setBranchList: setBranchListCreateBranchModal,
+    setDefaultBranch: setDefaultBranchCreateBranchModal,
+    setSelectedBranchTag: setSelectedBranchTagCreateBranchModal
+  } = useRepoBranchesStore('create-branch-modal')
+
   const [query, setQuery] = useQueryState('query')
   const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -84,6 +91,12 @@ export function RepoBranchesListPage() {
       }
     }
   )
+
+  useEffect(() => {
+    if (!searchBranches) return
+
+    setBranchListCreateBranchModal(transformBranchList(searchBranches, repoMetadata?.default_branch))
+  }, [searchBranches, repoMetadata?.default_branch])
 
   const handleInvalidateBranchList = () => {
     queryClient.invalidateQueries({ queryKey: ['listBranches'] })
@@ -151,19 +164,29 @@ export function RepoBranchesListPage() {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
   }, [spaceId, repoId, setSpaceIdAndRepoId])
 
-  // useEffect(() => {
-  //   setDefaultBranch(repoMetadata?.default_branch || '')
-  // }, [repoMetadata, setDefaultBranch])
-
   useEffect(() => {
     const defaultBranch = branchList?.find(branch => branch.default)
+
     setSelectedBranchTag({
       name: defaultBranch?.name || repoMetadata?.default_branch || '',
       sha: defaultBranch?.sha || '',
       default: true
     })
+
     setDefaultBranch(repoMetadata?.default_branch ?? '')
   }, [branchList, repoMetadata?.default_branch])
+
+  useEffect(() => {
+    const defaultBranchCreateBranchModal = branchListCreateBranchModal?.find(branch => branch.default)
+
+    setSelectedBranchTagCreateBranchModal({
+      name: defaultBranchCreateBranchModal?.name || repoMetadata?.default_branch || '',
+      sha: defaultBranchCreateBranchModal?.sha || '',
+      default: true
+    })
+
+    setDefaultBranchCreateBranchModal(repoMetadata?.default_branch ?? '')
+  }, [branchListCreateBranchModal, repoMetadata?.default_branch])
 
   return (
     <>
@@ -187,7 +210,7 @@ export function RepoBranchesListPage() {
         }
         toCode={({ branchName }: { branchName: string }) => `${routes.toRepoFiles({ spaceId, repoId })}/${branchName}`}
         onDeleteBranch={handleSetDeleteBranch}
-        searchBranches={searchBranches || []}
+        createBranchSearchQuery={createBranchSearchQuery}
         setCreateBranchSearchQuery={setCreateBranchSearchQuery}
       />
 

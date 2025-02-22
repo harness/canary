@@ -21,10 +21,11 @@ export function CreateBranchDialog({
   error,
   useTranslationStore,
   useRepoBranchesStore,
-  handleChangeSearchValue
+  searchQuery,
+  setSearchQuery
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
-  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore()
+  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore('create-branch-modal')
 
   const {
     register,
@@ -53,12 +54,13 @@ export function CreateBranchDialog({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSubmitSuccessful, open, onClose])
+
   const handleClose = () => {
     clearErrors()
     setValue('name', '', { shouldValidate: false })
     setValue('target', defaultBranch || '', { shouldValidate: false })
     setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
-    handleChangeSearchValue('')
+    setSearchQuery('')
     onClose()
   }
 
@@ -95,48 +97,18 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              {/* <Select.Root
-                name="target"
-                value={targetValue || defaultBranch}
-                onValueChange={value => handleSelectChange('target', value)}
-                placeholder={t('views:forms.select', 'Select')}
-                label={t('views:forms.baseBranch', 'Base branch')}
-                error={
-                  errors.target?.message
-                    ? t('views:forms.selectBranchError', errors.target?.message?.toString())
-                    : undefined
-                }
-                disabled={isLoadingBranches || !branches?.length}
-              >
-                <Select.Content
-                  withSearch
-                  searchProps={{
-                    placeholder: t('views:repos.search', 'Search'),
-                    searchValue: '',
-                    handleChangeSearchValue
-                  }}
-                >
-                  {processedBranches?.map(
-                    branch =>
-                      branch?.name && (
-                        <Select.Item key={branch.name} value={branch.name as string}>
-                          <span className="flex items-center gap-1.5">
-                            <Icon name="branch" size={14} />
-                            {branch.name}
-                          </span>
-                        </Select.Item>
-                      )
-                  )}
-                </Select.Content>
-              </Select.Root> */}
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
+                branchesStoreNamespace="create-branch-modal"
                 useTranslationStore={useTranslationStore}
                 onSelectBranch={value => {
                   handleSelectChange('target', value.name)
                   setSelectedBranchTag(value)
                 }}
-                setSearchQuery={handleChangeSearchValue}
+                searchQuery={searchQuery || ''}
+                setSearchQuery={setSearchQuery}
+                buttonSize="md"
+                isBranchOnly
                 dynamicWidth
               />
             </ControlGroup>
@@ -154,18 +126,7 @@ export function CreateBranchDialog({
             <Button
               variant="outline"
               type="button"
-              onClick={() => {
-                clearErrors()
-                // handleClose()
-                // reset({
-                //   name: '',
-                //   target: defaultBranch || ''
-                // })
-                onClose()
-                setValue('target', defaultBranch || '')
-                setValue('name', '')
-                setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
-              }}
+              onClick={handleClose}
               loading={isCreatingBranch}
               disabled={isCreatingBranch}
             >

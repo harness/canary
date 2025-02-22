@@ -2,7 +2,12 @@ import { useCallback, useState } from 'react'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { BranchSelectorTab, IBranchSelectorStore, RepoCommitsView as RepoCommitsUiView } from '@harnessio/ui/views'
+import {
+  BranchSelectorTab,
+  IBranchSelectorStore,
+  IBranchStateStore,
+  RepoCommitsView as RepoCommitsUiView
+} from '@harnessio/ui/views'
 
 import { repoFilesStore } from '../repo-files/components/repo-files-store'
 import { repoCommitsStore } from './repo-commits-store'
@@ -26,7 +31,21 @@ export const RepoCommitsView = () => {
       setSpaceIdAndRepoId: noop,
       setBranchList: noop,
       setDefaultBranch: noop,
-      setPaginationFromHeaders: noop
+      setPaginationFromHeaders: noop,
+      states: {},
+      getState: (_namespace: string): IBranchStateStore => ({
+        selectedBranchTag: { name: '', sha: '' },
+        selectedRefType: BranchSelectorTab.BRANCHES,
+        tagList: [],
+        branchList: [],
+        spaceId: '',
+        repoId: '',
+        defaultBranch: '',
+        page: 1,
+        xNextPage: 0,
+        xPrevPage: 0
+      }),
+      setState: noop
     }),
     []
   )

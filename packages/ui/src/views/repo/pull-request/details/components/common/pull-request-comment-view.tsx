@@ -1,5 +1,7 @@
 // SuggestionCommentContent.tsx
 
+import { FC } from 'react'
+
 import { Button, MarkdownViewer } from '@/components'
 import { CommitSuggestion } from '@views/repo/pull-request/pull-request.types'
 import { get } from 'lodash-es'
@@ -7,7 +9,7 @@ import { get } from 'lodash-es'
 import { CommentItem, TypesPullReqActivity } from '../../pull-request-details-types'
 import { activitiesToDiffCommentItems } from '../../pull-request-utils'
 
-interface PRCommentViewProps {
+export interface PRCommentViewProps {
   commentItem: CommentItem<TypesPullReqActivity>
   filenameToLanguage?: (fileName: string) => string | undefined
   suggestionsBatch?: CommitSuggestion[]
@@ -16,7 +18,7 @@ interface PRCommentViewProps {
   removeSuggestionFromBatch?: (commentId: number) => void
 }
 
-const PRCommentView: React.FC<PRCommentViewProps> = ({
+const PRCommentView: FC<PRCommentViewProps> = ({
   commentItem,
   filenameToLanguage,
   suggestionsBatch,
@@ -37,7 +39,8 @@ const PRCommentView: React.FC<PRCommentViewProps> = ({
   return (
     <>
       <MarkdownViewer
-        source={commentItem?.payload?.payload?.text || ''}
+        markdownClassName="comment"
+        source={commentItem?.payload?.text || ''}
         suggestionBlock={{
           source: diffCommentItem.codeBlockContent || '',
           lang: fileLang,

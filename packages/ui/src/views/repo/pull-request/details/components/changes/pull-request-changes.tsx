@@ -9,6 +9,7 @@ import {
   DiffViewerState,
   FileViewedState,
   getFileViewedState,
+  HandleUploadType,
   InViewDiffRenderer,
   jumpToFile,
   TranslationStore,
@@ -80,7 +81,7 @@ interface DataProps {
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
@@ -192,7 +193,7 @@ const PullRequestAccordion: React.FC<{
   removeSuggestionFromBatch: (commentId: number) => void
   filenameToLanguage: (fileName: string) => string | undefined
   toggleConversationStatus: (status: string, parentId?: number) => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: DataProps['handleUpload']
   onGetFullDiff: (path?: string) => Promise<string | void>
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void

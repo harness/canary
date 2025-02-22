@@ -46,10 +46,11 @@ const useGetPullRequestTab = ({
 
   useEffect(() => {
     const matchedRoute = routeTabMapping.find(route => route.match)
-    if (matchedRoute) {
-      setPullRequestTab(matchedRoute.tab)
-    }
-  }, [routeTabMapping, spaceId, repoId, pullRequestId])
+    if (!matchedRoute) return
+
+    setPullRequestTab(matchedRoute.tab)
+    // TODO: The routeTabMapping dependency, which gets recreated on every render, causes the useEffect to be triggered continuously.
+  }, [spaceId, repoId, pullRequestId, routeTabMapping])
 
   return pullRequestTab
 }

@@ -104,121 +104,119 @@ export const RepoSettingsGeneralRules: FC<RepoSettingsGeneralRulesProps> = ({
         )}
       </div>
 
-      {isLoading ? (
+      {isShowRulesContent && (
         <>
           <Spacer size={7} />
-          <SkeletonList />
-        </>
-      ) : (
-        isShowRulesContent && (
-          <>
-            <Spacer size={7} />
 
-            <ListActions.Root>
-              <ListActions.Left>
-                <SearchBox.Root
-                  className="max-w-xs"
-                  placeholder={t('views:repos.search', 'Search')}
-                  width="full"
-                  value={search}
-                  handleChange={handleInputChange}
-                />
-              </ListActions.Left>
-              <ListActions.Right>
-                <NavLink to="../rules/create">
-                  <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
-                </NavLink>
-              </ListActions.Right>
-            </ListActions.Root>
-
-            <Spacer size={4.5} />
-
-            {rules?.length ? (
-              <StackedList.Root>
-                {rules.map((rule, idx) =>
-                  rule?.identifier ? (
-                    <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
-                      <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
-                        <StackedList.Field
-                          className="gap-1.5"
-                          title={
-                            <div className="flex items-center gap-2">
-                              {rule.state === 'active' ? (
-                                <Icon className="text-icons-success" name="tick-circle" />
-                              ) : (
-                                <Icon className="text-icons-9" name="cancel-grey" />
-                              )}
-                              <span className="text-16 font-medium leading-snug">{rule.identifier}</span>
-                            </div>
-                          }
-                          description={
-                            <Description
-                              targetPatternsCount={rule.targetPatternsCount ?? 0}
-                              rulesAppliedCount={rule.rulesAppliedCount ?? 0}
-                              bypassAllowed={rule.bypassAllowed ?? false}
-                              t={t}
-                            />
-                          }
-                        />
-                        <StackedList.Field
-                          title={
-                            <MoreActionsTooltip
-                              actions={[
-                                {
-                                  title: t('views:rules.edit', 'Edit rule'),
-                                  onClick: () => handleRuleClick(rule.identifier!)
-                                },
-                                {
-                                  isDanger: true,
-                                  title: t('views:rules.delete', 'Delete rule'),
-                                  onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
-                                }
-                              ]}
-                            />
-                          }
-                          right
-                          label
-                          secondary
-                        />
-                      </StackedList.Item>
-                    </Link>
-                  ) : (
-                    <Fragment key={idx} />
-                  )
-                )}
-              </StackedList.Root>
-            ) : (
-              <NoData
-                className="min-h-0 py-10"
-                withBorder
-                textWrapperClassName="max-w-[312px]"
-                title={t('views:noData.noResults', 'No search results')}
-                description={[
-                  t(
-                    'views:noData.noResultsDescription',
-                    'No rules match your search. Try adjusting your keywords or filters.',
-                    {
-                      type: 'rules'
-                    }
-                  )
-                ]}
-                primaryButton={{
-                  label: t('views:noData.clearSearch', 'Clear search'),
-                  onClick: resetSearch
-                }}
+          <ListActions.Root>
+            <ListActions.Left>
+              <SearchBox.Root
+                className="max-w-xs"
+                placeholder={t('views:repos.search', 'Search')}
+                width="full"
+                value={search}
+                handleChange={handleInputChange}
               />
-            )}
+            </ListActions.Left>
+            <ListActions.Right>
+              <NavLink to="../rules/create">
+                <Button variant="outline">{t('views:repos.newRule', 'New branch rule')}</Button>
+              </NavLink>
+            </ListActions.Right>
+          </ListActions.Root>
 
-            {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
-              <>
-                <Spacer size={2} />
-                <Text size={1} className="text-destructive">
-                  {apiError.message}
-                </Text>
-              </>
-            )}
-          </>
-        )
+          <Spacer size={4.5} />
+
+          {isLoading ? (
+            <>
+              <Spacer size={7} />
+              <SkeletonList />
+            </>
+          ) : rules?.length ? (
+            <StackedList.Root>
+              {rules.map((rule, idx) =>
+                rule?.identifier ? (
+                  <Link to={`../rules/${rule.identifier}`} key={rule.identifier}>
+                    <StackedList.Item key={rule.identifier} className="cursor-pointer py-3 pr-1.5">
+                      <StackedList.Field
+                        className="gap-1.5"
+                        title={
+                          <div className="flex items-center gap-2">
+                            {rule.state === 'active' ? (
+                              <Icon className="text-icons-success" name="tick-circle" />
+                            ) : (
+                              <Icon className="text-icons-9" name="cancel-grey" />
+                            )}
+                            <span className="text-16 font-medium leading-snug">{rule.identifier}</span>
+                          </div>
+                        }
+                        description={
+                          <Description
+                            targetPatternsCount={rule.targetPatternsCount ?? 0}
+                            rulesAppliedCount={rule.rulesAppliedCount ?? 0}
+                            bypassAllowed={rule.bypassAllowed ?? false}
+                            t={t}
+                          />
+                        }
+                      />
+                      <StackedList.Field
+                        title={
+                          <MoreActionsTooltip
+                            actions={[
+                              {
+                                title: t('views:rules.edit', 'Edit rule'),
+                                onClick: () => handleRuleClick(rule.identifier!)
+                              },
+                              {
+                                isDanger: true,
+                                title: t('views:rules.delete', 'Delete rule'),
+                                onClick: () => openRulesAlertDeleteDialog(rule.identifier!)
+                              }
+                            ]}
+                          />
+                        }
+                        right
+                        label
+                        secondary
+                      />
+                    </StackedList.Item>
+                  </Link>
+                ) : (
+                  <Fragment key={idx} />
+                )
+              )}
+            </StackedList.Root>
+          ) : (
+            <NoData
+              className="min-h-0 py-10"
+              withBorder
+              textWrapperClassName="max-w-[312px]"
+              title={t('views:noData.noResults', 'No search results')}
+              description={[
+                t(
+                  'views:noData.noResultsDescription',
+                  'No rules match your search. Try adjusting your keywords or filters.',
+                  {
+                    type: 'rules'
+                  }
+                )
+              ]}
+              primaryButton={{
+                label: t('views:noData.clearSearch', 'Clear search'),
+                onClick: resetSearch
+              }}
+            />
+          )}
+
+          {apiError && (apiError.type === ErrorTypes.FETCH_RULES || apiError.type === ErrorTypes.DELETE_RULE) && (
+            <>
+              <Spacer size={2} />
+              <Text size={1} className="text-destructive">
+                {apiError.message}
+              </Text>
+            </>
+          )}
+        </>
       )}
     </>
   )

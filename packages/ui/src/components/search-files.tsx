@@ -67,7 +67,7 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
           if (matchIndex > -1) {
             acc.push({
               file,
-              element: getMarkedFileElement(lowerCaseFile, lowerCaseQuery, matchIndex)
+              element: getMarkedFileElement(file, lowerCaseQuery, matchIndex)
             })
           }
 
@@ -110,8 +110,7 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
       >
         <Command.Root>
           <Command.List heightClassName="max-h-60">
-            <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
-            {!!filteredFiles.length && (
+            {filteredFiles.length ? (
               <Command.Group>
                 {filteredFiles?.map(({ file, element }) => (
                   <Command.Item
@@ -127,6 +126,8 @@ export const SearchFiles = ({ navigateToFile, filesList, useTranslationStore }: 
                   </Command.Item>
                 ))}
               </Command.Group>
+            ) : (
+              <Command.Empty>{t('component:searchFile.noFile', 'No file found.')}</Command.Empty>
             )}
           </Command.List>
         </Command.Root>

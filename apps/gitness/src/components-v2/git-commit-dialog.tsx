@@ -100,7 +100,7 @@ export default function GitCommitDialog({
       body: { ...data }
     })
       .then(response => {
-        if ([GitCommitAction.MOVE, GitCommitAction.CREATE].includes(commitAction)) {
+        if ([GitCommitAction.MOVE, GitCommitAction.CREATE, GitCommitAction.DELETE].includes(commitAction)) {
           queryClient.invalidateQueries(['folderContents', repoRef, gitRef])
         }
         onSuccess(response.body, commitToGitRef === CommitToGitRefOption.NEW_BRANCH, newBranchName || '', fileName)

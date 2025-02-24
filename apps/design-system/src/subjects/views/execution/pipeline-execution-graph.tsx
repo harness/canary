@@ -18,9 +18,9 @@ import { Button, Drawer, Icon, PipelineNodes } from '@harnessio/ui/components'
 
 import '@harnessio/pipeline-graph/dist/index.css'
 
-import { ExecutionInfo, LivelogLine, StageProps } from '@harnessio/ui/views'
+import { ExecutionHeader, ExecutionInfo, ExecutionState, LivelogLine } from '@harnessio/ui/views'
 
-import { logs, stages } from './mocks/mock-data'
+import { logs } from './mocks/mock-data'
 
 // *****************************************************
 // 2. Define content nodes types
@@ -52,7 +52,6 @@ interface NodeProps {
 }
 
 interface DataProps {
-  stage?: StageProps
   logs?: LivelogLine[]
 }
 
@@ -69,7 +68,7 @@ export function StepNodeComponent({
 }: {
   node: LeafNodeInternalType<StepNodeDataType>
 } & NodeProps) {
-  const { name, icon, logs, stage } = node.data
+  const { name, icon, logs } = node.data
   const stepNode = <PipelineNodes.StepNode name={name} icon={icon} onEllipsisClick={() => undefined} mode={mode} />
 
   if (mode === 'Edit') {
@@ -79,26 +78,28 @@ export function StepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{stepNode}</Drawer.Trigger>
-      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+      <Drawer.Content className="bg-background-1 border-borders-5 size-full max-w-2xl rounded-none border-l p-0 ">
         <Drawer.Header>
-          <Drawer.Title>Logs</Drawer.Title>
-          <Drawer.Description>{`View ${name} execution logs`}</Drawer.Description>
+          <ExecutionHeader
+            commitName="8fbru3ix"
+            branchName="master"
+            title={{ title: 'npm_build' }}
+            status={ExecutionState.RUNNING}
+            buildTime="1h 30m"
+            startedTime="10 mins ago"
+            delegateType="cloud"
+            pipelineName="npm_build"
+          />
         </Drawer.Header>
-        <div>
+        <div className="border-borders-4 mt-1 border-t pt-3">
           <ExecutionInfo
-            logs={logs || []}
+            isDrawer
+            useLogsStore={() => ({ logs })}
             onCopy={() => {}}
             onDownload={() => {}}
             onEdit={() => {}}
-            selectedStepIdx={0}
-            stage={stage || {}}
           />
         </div>
-        <Drawer.Footer>
-          <Drawer.Close>
-            <Button variant="outline">Close</Button>
-          </Drawer.Close>
-        </Drawer.Footer>
       </Drawer.Content>
     </Drawer.Root>
   )
@@ -132,13 +133,13 @@ export function ApprovalStepNodeComponent({
   return (
     <Drawer.Root direction="right">
       <Drawer.Trigger asChild>{approvalNode}</Drawer.Trigger>
-      <Drawer.Content className="w-1/2 h-full flex flex-col justify-between">
+      <Drawer.Content className="flex h-full w-1/2 flex-col justify-between">
         <div className="flex flex-col gap-4">
           <Drawer.Header>
             <Drawer.Title>Approval</Drawer.Title>
             <Drawer.Description>Approve/Reject step execution</Drawer.Description>
           </Drawer.Header>
-          <div className="flex gap-2 justify-center">
+          <div className="flex justify-center gap-2">
             <Button type="submit">Approve</Button>
             <Button variant="secondary">Cancel</Button>
           </div>
@@ -269,8 +270,7 @@ const data: AnyContainerNodeType[] = [
     data: {
       name: 'Step 1',
       icon: <Icon name="harness-plugin" className="m-2 size-8" />,
-      logs: logs,
-      stage: stages[0]
+      logs: logs
     } satisfies StepNodeDataType,
     config: {
       width: 160,
@@ -370,7 +370,7 @@ const data: AnyContainerNodeType[] = [
 const PipelineExecutionGraph = () => {
   return (
     <CanvasProvider>
-      <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2', mode: 'Execution' }} />
+      <PipelineGraph data={data} nodes={nodes} config={{ mode: 'Execution' }} />
     </CanvasProvider>
   )
 }

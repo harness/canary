@@ -2,13 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 
 import { parse } from 'yaml'
 
-import { AnyContainerNodeType, CanvasProvider, PipelineGraph } from '@harnessio/pipeline-graph'
+import { AnyContainerNodeType, CanvasProvider, PipelineGraph, PipelineGraphProps } from '@harnessio/pipeline-graph'
 
 import { ContentNodeFactory, YamlRevision } from '../pipeline-studio'
 import { CanvasControls } from './graph-implementation/canvas/canvas-controls'
 import { yaml2Nodes } from './graph-implementation/utils/yaml-to-pipeline-graph'
 
 import '@harnessio/pipeline-graph/dist/index.css'
+
+import { ParallelContainerConfig, SerialContainerConfig } from '@harnessio/pipeline-graph/src/types/container-node'
 
 import { ContentNodeType } from './graph-implementation/types/content-node-type'
 
@@ -36,15 +38,31 @@ const endNode = {
   data: {}
 } satisfies AnyContainerNodeType
 
-export interface PipelineStudioGraphViewProps {
+export interface PipelineStudioGraphViewProps
+  extends Pick<
+    PipelineGraphProps,
+    'edgesConfig' | 'portComponent' | 'customCreateSVGPath' | 'collapseButtonComponent'
+  > {
   contentNodeFactory: ContentNodeFactory
   yamlRevision: YamlRevision
   onYamlRevisionChange: (YamlRevision: YamlRevision) => void
   getStepIcon?: (step: Record<string, any>) => JSX.Element
+  serialContainerConfig?: Partial<SerialContainerConfig>
+  parallelContainerConfig?: Partial<ParallelContainerConfig>
 }
 
 export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): React.ReactElement => {
-  const { yamlRevision, contentNodeFactory, getStepIcon } = props
+  const {
+    yamlRevision,
+    contentNodeFactory,
+    getStepIcon,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent,
+    collapseButtonComponent
+  } = props
 
   const [data, setData] = useState<AnyContainerNodeType[]>([])
 
@@ -73,7 +91,16 @@ export const PipelineStudioGraphView = (props: PipelineStudioGraphViewProps): Re
   return (
     <div className="relative flex grow">
       <CanvasProvider>
-        <PipelineGraph data={data} nodes={nodes} config={{ edgeClassName: 'stroke-borders-2' }} />
+        <PipelineGraph
+          customCreateSVGPath={customCreateSVGPath}
+          edgesConfig={edgesConfig}
+          portComponent={portComponent}
+          collapseButtonComponent={collapseButtonComponent}
+          data={data}
+          nodes={nodes}
+          serialContainerConfig={serialContainerConfig}
+          parallelContainerConfig={parallelContainerConfig}
+        />
         <CanvasControls />
       </CanvasProvider>
     </div>

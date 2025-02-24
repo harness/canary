@@ -1,0 +1,42 @@
+{
+  "iconSize": {
+    "xs": {
+      "$type": "sizing",
+      "$value": "{size.3-half}",
+      "$description": "14px"
+    },
+    "sm": {
+      "$type": "sizing",
+      "$value": "{size.4}",
+      "$description": "16px"
+    },
+    "md": {
+      "$type": "sizing",
+      "$value": "{size.5}",
+      "$description": "20px\n"
+    },
+    "lg": {
+      "$type": "sizing",
+      "$value": "{size.8}",
+      "$description": "32px\n"
+    }
+  },
+  "iconStrokeWidth": {
+    "xs": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "sm": {
+      "$type": "borderWidth",
+      "$value": "1"
+    },
+    "md": {
+      "$type": "borderWidth",
+      "$value": "1.4"
+    },
+    "lg": {
+      "$type": "borderWidth",
+      "$value": "2"
+    }
+  }
+}

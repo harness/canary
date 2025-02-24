@@ -40,6 +40,7 @@ import CircleArrowTopRight from '../icons/circle-arrow-top-right.svg'
 import CircleArrowTop from '../icons/circle-arrow-top.svg'
 import CircleArrowsUpDown from '../icons/circle-arrows-updown.svg'
 import CirclePlus from '../icons/circle-plus.svg'
+import CircleWithSector from '../icons/circle-with-sector.svg'
 import Circle from '../icons/circle.svg'
 import ClockIcon from '../icons/clock-icon.svg'
 import Clock from '../icons/clock.svg'
@@ -52,10 +53,14 @@ import Code from '../icons/code.svg'
 import Cog6 from '../icons/cog-6.svg'
 import CollapseComment from '../icons/collapse-comment.svg'
 import CollapseDiff from '../icons/collapse-diff.svg'
+import CollapseIn from '../icons/collapse-in.svg'
+import CollapseOut from '../icons/collapse-out.svg'
+import CommandSymbol from '../icons/command-symbol.svg'
 import Comments from '../icons/comments.svg'
 import Compare from '../icons/compare.svg'
 import Connectors from '../icons/connectors-icon.svg'
 import CreateWorkspace from '../icons/create-workspace.svg'
+import CrossCircle from '../icons/cross-circle.svg'
 import Cross from '../icons/cross.svg'
 import DashboardsGradient from '../icons/dashboards-gradient.svg'
 import Dashboards from '../icons/dashboards-icon.svg'
@@ -67,6 +72,7 @@ import DevInsightsGradient from '../icons/dev-insights-gradient.svg'
 import DevInsights from '../icons/dev-insights-icon.svg'
 import DevPortalGradient from '../icons/dev-portal-gradient.svg'
 import DevPortal from '../icons/dev-portal-icon.svg'
+import Docker from '../icons/docker.svg'
 import MoreDotsFill from '../icons/dots-icon.svg'
 import DoubleTick from '../icons/double-tick.svg'
 import Download from '../icons/download-icon.svg'
@@ -112,6 +118,7 @@ import NoDataFolder from '../icons/lists-data-icons/no-data-folder.svg'
 import NoDataMembers from '../icons/lists-data-icons/no-data-members.svg'
 import NoDataMerge from '../icons/lists-data-icons/no-data-merge.svg'
 import NoRepository from '../icons/lists-data-icons/no-data-repository.svg'
+import noDataTags from '../icons/lists-data-icons/no-data-tags.svg'
 import NoDataWebhooks from '../icons/lists-data-icons/no-data-webhooks.svg'
 import NoSearchMagnifyingGlass from '../icons/lists-data-icons/no-search-magnifying-glass.svg'
 import Lock from '../icons/lock.svg'
@@ -163,11 +170,17 @@ import SidebarIcon from '../icons/sidebar-icon.svg'
 import SidebarLeft from '../icons/sidebar-left.svg'
 import SidebarRight from '../icons/sidebar-right.svg'
 import Signpost from '../icons/signpost.svg'
+import Slack from '../icons/slack.svg'
 import Snow from '../icons/snow-icon.svg'
+import SparksGradientDark from '../icons/sparks-gradient-dark.svg'
+import SparksGradientLight from '../icons/sparks-gradient-light.svg'
+import SparksGradient from '../icons/sparks-gradient.svg'
 import Sparks from '../icons/sparks.svg'
+import SquareDashed from '../icons/square-dashed.svg'
 import SshKey from '../icons/ssh-key.svg'
 import Stack from '../icons/stack-icon.svg'
 import Star from '../icons/star-icon.svg'
+import Stop from '../icons/stop-icon.svg'
 import SubMenuEllipse from '../icons/sub-menu-ellipse.svg'
 import Success from '../icons/success.svg'
 import Suggestion from '../icons/suggestion.svg'
@@ -188,6 +201,7 @@ import User from '../icons/user-icon.svg'
 import Users from '../icons/users-icon.svg'
 import Variable from '../icons/variable-icon.svg'
 import VerticalEllipsis from '../icons/vertical-ellipsis.svg'
+import WarningTriangleOutline from '../icons/warning-triangle-outline.svg'
 import Webhook from '../icons/webhook-icon.svg'
 import Wrench from '../icons/wrench-icon.svg'
 import XMark from '../icons/x-mark.svg'
@@ -234,6 +248,7 @@ const IconNameMap = {
   'no-data-members': NoDataMembers,
   'no-data-error': NoDataError,
   'no-data-pr': NoDataPR,
+  'no-data-tags': noDataTags,
   changes: Changes,
   checks: Checks,
   'vertical-ellipsis': VerticalEllipsis,
@@ -262,6 +277,9 @@ const IconNameMap = {
   'python-and-node-logo': PythonAndNodeLogo,
   'ai-sparks': AISparks,
   sparks: Sparks,
+  'sparks-gradient': SparksGradient,
+  'sparks-gradient-dark': SparksGradientDark,
+  'sparks-gradient-light': SparksGradientLight,
   'pr-open': PrOpen,
   'pr-review': PrReview,
   'pr-closed': PrClosed,
@@ -383,7 +401,17 @@ const IconNameMap = {
   arrow: Arrow,
   'arrow-short': ArrowShort,
   'bold-plus': BoldPlus,
-  'checkbox-circle': CheckboxCircle
+  'checkbox-circle': CheckboxCircle,
+  'circle-with-sector': CircleWithSector,
+  'command-symbol': CommandSymbol,
+  'cross-circle': CrossCircle,
+  'warning-triangle-outline': WarningTriangleOutline,
+  slack: Slack,
+  docker: Docker,
+  stop: Stop,
+  'collapse-out': CollapseOut,
+  'collapse-in': CollapseIn,
+  'square-dashed': SquareDashed
 } satisfies Record<string, React.FunctionComponent<React.SVGProps<SVGSVGElement>>>
 
 export interface IconProps {

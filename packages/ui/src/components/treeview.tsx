@@ -1,12 +1,10 @@
 import * as React from 'react'
 import { createContext, forwardRef, useCallback, useContext, useEffect, useState } from 'react'
 
+import { Icon as CanaryIcon, ScrollArea } from '@/components'
 import * as AccordionPrimitive from '@radix-ui/react-accordion'
-import { ScrollArea } from '@radix-ui/react-scroll-area'
 import { cn } from '@utils/cn'
 import { ExecutionState } from '@views/repo/pull-request'
-
-import { Icon as CanaryIcon } from '../components/icon'
 
 type ExecutionDetail = {
   status: ExecutionState
@@ -17,14 +15,18 @@ type ExecutionDetail = {
 const getStatusIcon = (status: ExecutionState): React.ReactElement => {
   switch (status) {
     case ExecutionState.RUNNING:
-      return <CanaryIcon size={16} name="running" className="animate-spin text-warning" />
+      return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
     case ExecutionState.SUCCESS:
-      return <CanaryIcon name="success" size={16} />
+      return <CanaryIcon name="success" size={16} className="text-foreground-success" />
     case ExecutionState.FAILURE:
       return <CanaryIcon name="fail" size={16} />
     case ExecutionState.WAITING_ON_DEPENDENCIES:
     case ExecutionState.PENDING:
-      return <CanaryIcon name="pending-clock" size={16} />
+      return (
+        <div className="flex size-5 items-center justify-center">
+          <span className="size-4 rounded-full border border-icons-7" />
+        </div>
+      )
     case ExecutionState.SKIPPED:
     case ExecutionState.UNKNOWN:
     default:
@@ -46,8 +48,6 @@ type TreeContextProps = {
   handleExpand: (id: string) => void
   selectItem: (id: string) => void
   setExpendedItems?: React.Dispatch<React.SetStateAction<string[] | undefined>>
-  openIcon?: React.ReactNode
-  closeIcon?: React.ReactNode
   direction: 'rtl' | 'ltr'
 }
 
@@ -73,21 +73,7 @@ type TreeViewProps = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
-  (
-    {
-      className,
-      elements,
-      initialSelectedId,
-      initialExpendedItems,
-      children,
-      indicator = true,
-      openIcon,
-      closeIcon,
-      dir,
-      ...props
-    },
-    ref
-  ) => {
+  ({ className, elements, initialSelectedId, initialExpendedItems, children, indicator = true, dir, ...props }) => {
     const [selectedId, setSelectedId] = useState<string | undefined>(initialSelectedId)
     const [expendedItems, setExpendedItems] = useState<string[] | undefined>(initialExpendedItems)
 
@@ -149,26 +135,24 @@ const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
           selectItem,
           setExpendedItems,
           indicator,
-          openIcon,
-          closeIcon,
           direction
         }}
       >
-        <div className={cn('size-full', className)}>
-          <ScrollArea ref={ref} className="relative h-full px-2" dir={dir as Direction}>
+        <ScrollArea className="pt-4" dir={dir as Direction}>
+          <div className={cn('size-full', className)}>
             <AccordionPrimitive.Root
               {...props}
               type="multiple"
               defaultValue={expendedItems}
               value={expendedItems}
-              className="flex flex-col gap-1"
+              className="flex flex-col gap-3"
               onValueChange={value => setExpendedItems(prev => [...(prev ?? []), value[0]])}
               dir={dir as Direction}
             >
               {children}
             </AccordionPrimitive.Root>
-          </ScrollArea>
-        </div>
+          </div>
+        </ScrollArea>
       </TreeContext.Provider>
     )
   }
@@ -201,45 +185,51 @@ type FolderProps = {
   element: string
   isSelectable?: boolean
   isSelect?: boolean
+  level: number
 } & React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item> &
   ExecutionDetail
 
 const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, element, value, isSelectable = true, isSelect, children, status, duration, ...props }) => {
-    const { direction, handleExpand, expendedItems, indicator, setExpendedItems, openIcon, closeIcon } = useTree()
+  ({ className, element, value, isSelectable = true, isSelect, children, status, duration, level, ...props }) => {
+    const { direction, handleExpand, expendedItems, setExpendedItems } = useTree()
 
     return (
-      <AccordionPrimitive.Item {...props} value={value} className="relative size-full overflow-hidden">
+      <AccordionPrimitive.Item {...props} value={value} className="relative -mb-3 size-full overflow-hidden pb-3">
         <AccordionPrimitive.Trigger
-          className={cn(`flex w-full items-center gap-1 rounded-md pb-1.5 text-sm`, className, {
-            'rounded-md': isSelect && isSelectable,
-            'cursor-pointer': isSelectable,
-            'cursor-not-allowed opacity-50': !isSelectable
-          })}
+          className={cn(
+            `flex w-full gap-1 rounded-md text-sm px-5`,
+            className,
+            {
+              'rounded-md': isSelect && isSelectable,
+              'cursor-pointer': isSelectable,
+              'cursor-not-allowed opacity-50': !isSelectable
+            },
+            level >= 2 && 'pl-14',
+            level === 1 && 'pl-7'
+          )}
           disabled={!isSelectable}
           onClick={() => handleExpand(value)}
         >
-          <div className="mt-1 pt-1">
-            {expendedItems?.includes(value)
-              ? (openIcon ?? <CanaryIcon name="chevron-down" className="size-4" height={12} />)
-              : (closeIcon ?? <CanaryIcon name="chevron-right" className="size-4" height={12} />)}
-          </div>
-          <div className="mr-1 mt-1 flex w-full items-baseline justify-between">
-            <div className="flex items-baseline">
-              <div className="mr-1 flex self-center">{getStatusIcon(status)}</div>
-              <span className="ml-1 text-sm font-normal">
-                {element}&nbsp;<span className="text-muted-foreground">({React.Children.count(children)})</span>
+          <CanaryIcon
+            name="chevron-right"
+            className={cn('text-icons-1 mt-1', expendedItems?.includes(value) && 'rotate-90')}
+            size={12}
+          />
+          <div className="flex w-full justify-between gap-x-2">
+            <div className="flex gap-x-2">
+              <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">
+                {element}&nbsp;<span className="text-foreground-5">({React.Children.count(children)})</span>
               </span>
             </div>
-            <span className="text-muted-foreground">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
-        <AccordionPrimitive.Content className="relative h-full overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-          {element && indicator && <TreeIndicator aria-hidden="true" />}
+        <AccordionPrimitive.Content className="relative h-full overflow-visible px-5 text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
           <AccordionPrimitive.Root
             dir={direction}
             type="multiple"
-            className="flex flex-col gap-1 pl-5 rtl:mr-5"
+            className="mt-3 flex flex-col gap-3 rtl:mr-5"
             defaultValue={expendedItems}
             value={expendedItems}
             onValueChange={value => {
@@ -264,6 +254,7 @@ const File = forwardRef<
     isSelectable?: boolean
     isSelect?: boolean
     fileIcon?: React.ReactNode
+    level: number
   } & React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger> &
     ExecutionDetail
 >(
@@ -278,6 +269,7 @@ const File = forwardRef<
       children,
       status,
       duration,
+      level,
       ...props
     },
     ref
@@ -293,9 +285,14 @@ const File = forwardRef<
           disabled={!isSelectable}
           aria-label="File"
           className={cn(
-            'flex w-full cursor-pointer items-center gap-1 rounded-md px-1 py-1 text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
-            { ['bg-[#18181B] px-2']: isSelected },
+            'flex relative w-full cursor-pointer items-center gap-1 rounded-md text-sm duration-200 ease-in-out rtl:pl-1 rtl:pr-0',
+            {
+              ['after:absolute after:bg-background-4 after:-inset-x-1 after:-inset-y-1.5 after:-z-10 after:rounded']:
+                isSelected
+            },
             isSelectable ? 'cursor-pointer' : 'cursor-not-allowed opacity-50',
+            level >= 2 && 'pl-14',
+            level === 1 && 'pl-7',
             className
           )}
           onClick={() => {
@@ -303,12 +300,12 @@ const File = forwardRef<
             selectItem(value)
           }}
         >
-          <div className="flex w-full items-baseline justify-between">
-            <div className="flex items-baseline">
-              <div className="mr-1 flex size-4 self-center">{getStatusIcon(status)}</div>
-              <span className="ml-1 text-sm font-normal">{children}</span>
+          <div className="relative flex w-full justify-between gap-x-2 pl-4">
+            <div className="flex gap-x-2">
+              <div className="flex size-5 flex-none items-center justify-center">{getStatusIcon(status)}</div>
+              <span className="mt-0.5 text-left leading-tight text-foreground-8">{children}</span>
             </div>
-            <span className="text-muted-foreground">{duration ?? '--'}</span>
+            <span className="flex-none text-foreground-4">{duration ?? '--'}</span>
           </div>
         </AccordionPrimitive.Trigger>
       </AccordionPrimitive.Item>

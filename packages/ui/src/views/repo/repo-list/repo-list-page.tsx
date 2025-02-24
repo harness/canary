@@ -1,20 +1,10 @@
-import { FC, useMemo, useState } from 'react'
+import { FC, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  ButtonWithOptions,
-  Filters,
-  FiltersBar,
-  ListActions,
-  NoData,
-  PaginationComponent,
-  SearchBox,
-  Spacer
-} from '@/components'
+import { ButtonWithOptions, ListActions, NoData, Pagination, SearchBox, Spacer } from '@/components'
 import { useDebounceSearch } from '@/hooks'
+import { SandboxLayout } from '@/views'
 
-import { SandboxLayout } from '../../index'
-import { getFilterOptions, getLayoutOptions, getSortDirections, getSortOptions } from '../constants/filter-options'
 import { useFilters, useViewManagement } from '../hooks'
 import { filterRepositories } from '../utils/filtering/repos'
 import { formatRepositories } from '../utils/formatting/repos'
@@ -37,11 +27,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   const { t } = useTranslationStore()
   const navigate = useNavigate()
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const LAYOUT_OPTIONS = getLayoutOptions(t)
-
   const {
     search: searchInput,
     handleSearchChange: handleInputChange,
@@ -54,8 +39,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
   // State for storing saved filters and sorts
   // null means no saved state exists
   const { repositories, totalPages, page, setPage } = useRepoStore()
-
-  const [currentLayout, setCurrentLayout] = useState(LAYOUT_OPTIONS[1].value)
 
   /**
    * Initialize filters hook with handlers for managing filter state
@@ -116,12 +99,12 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           <>
             <Spacer size={8} />
             <div className="flex items-end">
-              <h1 className="text-foreground-1 text-2xl font-medium">
+              <h1 className="text-2xl font-medium text-foreground-1">
                 {t('views:repos.repositories', 'Repositories')}
               </h1>
               {viewManagement.currentView && (
                 <>
-                  <span className="bg-borders-1 mx-2.5 inline-flex h-[18px] w-px" />
+                  <span className="mx-2.5 inline-flex h-[18px] w-px bg-borders-1" />
                   <span className="text-14 text-foreground-3">{viewManagement.currentView.name}</span>
                 </>
               )}
@@ -138,16 +121,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  viewManagement={viewManagement}
-                  layoutOptions={LAYOUT_OPTIONS}
-                  currentLayout={currentLayout}
-                  onLayoutChange={setCurrentLayout}
-                  t={t}
-                />
                 <ButtonWithOptions<string>
                   id="repository"
                   dropdownContentClassName="mt-0 min-w-[170px]"
@@ -174,14 +147,6 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
                 </ButtonWithOptions>
               </ListActions.Right>
             </ListActions.Root>
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              viewManagement={viewManagement}
-              t={t}
-            />
           </>
         )}
         <Spacer size={5} />
@@ -196,7 +161,7 @@ const SandboxRepoListPage: FC<RepoListProps> = ({
           {...routingProps}
         />
         {!!reposWithFormattedDates.length && (
-          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={page => setPage(page)} t={t} />
+          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
     </SandboxLayout.Main>

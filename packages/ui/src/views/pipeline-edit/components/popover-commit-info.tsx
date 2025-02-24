@@ -1,4 +1,4 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components'
+import { Avatar } from '@/components'
 
 export const PopoverCommitInfo = {
   Root: function Root({ children }: { children: React.ReactNode }) {
@@ -19,10 +19,10 @@ export const PopoverCommitInfo = {
     return (
       <div className="flex items-center justify-between p-3">
         <div className="flex items-center gap-x-3">
-          <Avatar size="8" className="inline-flex">
-            <AvatarImage src={avatarUrl} alt="@shadcn" />
-            <AvatarFallback>{initials}</AvatarFallback>
-          </Avatar>
+          <Avatar.Root size="8" className="inline-flex">
+            {!!avatarUrl && <Avatar.Image src={avatarUrl} />}
+            <Avatar.Fallback>{initials}</Avatar.Fallback>
+          </Avatar.Root>
           <span>{authorName}</span>
         </div>
         <div className="text-primary-muted">{commit}</div>

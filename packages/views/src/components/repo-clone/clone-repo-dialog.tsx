@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 
-import { Button, Popover, PopoverContent, PopoverTrigger, Tabs, TabsList, TabsTrigger, Text } from '@harnessio/canary'
+import { Button, Popover, PopoverContent, PopoverTrigger, Text } from '@harnessio/canary'
+import { Tabs } from '@harnessio/ui/components'
 
 import { CloneRepoForm } from './clone-repo-form'
 
@@ -10,7 +11,7 @@ export interface CloneRepoDialogProps {
   handleCreateToken: () => void
 }
 
-export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({ httpsUrl, sshUrl, handleCreateToken }) => {
+export const CloneRepoDialog: FC<CloneRepoDialogProps> = ({ httpsUrl, sshUrl, handleCreateToken }) => {
   const [currentTab, setCurrentTab] = useState('https')
 
   return (
@@ -20,16 +21,16 @@ export const CloneRepoDialog: React.FC<CloneRepoDialogProps> = ({ httpsUrl, sshU
       </PopoverTrigger>
       <PopoverContent className="min-w-[400px] border-border bg-primary-background" side="bottom" align="end">
         <Text className="mb-2 text-left text-lg">Git clone URL</Text>
-        <Tabs variant="underline" value={currentTab} onValueChange={setCurrentTab} className="mb-2">
-          <TabsList>
-            <TabsTrigger value="https" className="h-6">
+        <Tabs.Root variant="underline" value={currentTab} onValueChange={setCurrentTab} className="mb-2">
+          <Tabs.List>
+            <Tabs.Trigger value="https" className="h-6">
               HTTPS
-            </TabsTrigger>
-            <TabsTrigger value="ssh" className="h-6">
+            </Tabs.Trigger>
+            <Tabs.Trigger value="ssh" className="h-6">
               SSH
-            </TabsTrigger>
-          </TabsList>
-        </Tabs>
+            </Tabs.Trigger>
+          </Tabs.List>
+        </Tabs.Root>
         <CloneRepoForm
           sshUrl={sshUrl}
           httpsUrl={httpsUrl}

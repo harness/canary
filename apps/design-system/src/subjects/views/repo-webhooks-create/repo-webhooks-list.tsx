@@ -1,4 +1,4 @@
-import { useTranslationsStore } from '@utils/viewUtils.ts'
+import { useTranslationStore } from '@utils/viewUtils.ts'
 
 import { RepoWebhooksCreatePage } from '@harnessio/ui/views'
 
@@ -12,7 +12,7 @@ export const RepoWebhooksCreate = () => {
       apiError={null}
       isLoading={false}
       useWebhookStore={repoWebhooksListStore.useWebhookStore}
-      useTranslationStore={useTranslationsStore}
+      useTranslationStore={useTranslationStore}
     />
   )
 }

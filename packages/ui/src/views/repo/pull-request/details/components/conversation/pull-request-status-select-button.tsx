@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Select, SelectContent, SelectItem } from '@components/index'
+import { Select } from '@/components'
 import { useEmitCodeCommentStatus } from '@views/repo/pull-request/hooks/useEmitCodeCommentStatus'
 import { TypesPullReq } from '@views/repo/pull-request/pull-request.types'
 
@@ -19,12 +19,12 @@ interface StatusButtonProps {
 }
 
 const StatusButton = ({ codeCommentStatus, onChange }: StatusButtonProps) => (
-  <Select placeholder={codeCommentStatus} onValueChange={onChange}>
-    <SelectContent>
-      <SelectItem value={CodeCommentState.ACTIVE}>Active</SelectItem>
-      <SelectItem value={CodeCommentState.RESOLVED}>Resolved</SelectItem>
-    </SelectContent>
-  </Select>
+  <Select.Root placeholder={codeCommentStatus} onValueChange={onChange}>
+    <Select.Content>
+      <Select.Item value={CodeCommentState.ACTIVE}>Active</Select.Item>
+      <Select.Item value={CodeCommentState.RESOLVED}>Resolved</Select.Item>
+    </Select.Content>
+  </Select.Root>
 )
 StatusButton.displayName = 'StatusButton'
 

@@ -30,6 +30,7 @@ export interface WebhookStore {
   webhooks: WebhookType[] | null
   // onDelete: (id: number) => void
   totalWebhookExecutionPages: number
+  executionId: number | null
   webhookExecutionPage: number
   preSetWebhookData: CreateWebhookFormFields | null
   executions: WebhookExecutionType[] | null
@@ -46,6 +47,8 @@ export interface WebhookStore {
   setPage: (page: number) => void
   setWebhooks: (data: ListRepoWebhooksOkResponse) => void
   setTotalPages: (headers: Headers | undefined) => void
+  setExecutionId: (id: number | null) => void
+  updateExecution: (updatedExecution: WebhookExecutionType) => void
 }
 export declare type ListRepoWebhooksOkResponse = OpenapiWebhookType[]
 

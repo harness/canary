@@ -1,4 +1,5 @@
-import { Icon, Popover, PopoverContent, PopoverTrigger, Select, SelectContent, SelectItem } from '@/components'
+import { Icon, Popover, Select } from '@/components'
+import { cn } from '@utils/cn'
 
 import { PopoverCommitInfo } from './popover-commit-info'
 
@@ -34,7 +35,7 @@ export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props:
   return (
     <footer
       className={
-        'bg-grey-6 text-grey-60 flex h-10 shrink-0 items-center justify-between border-t border-[#1d1d20] px-4 text-[12px] font-normal not-italic leading-[15px]'
+        'bg-grey-6 text-grey-60 flex h-10 shrink-0 items-center justify-between border-t border-borders-5 px-4 text-[12px] font-normal not-italic leading-[15px]'
       }
     >
       <div className="flex items-center gap-2">
@@ -44,54 +45,60 @@ export const PipelineStudioFooter: React.FC<PipelineStudioFooterProps> = (props:
           onClick={() => {
             props.togglePane?.()
           }}
-          className="flex h-full cursor-pointer gap-2 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
+          className="flex h-full cursor-pointer gap-2.5 rounded-md px-2 py-1.5 duration-150 ease-in-out hover:bg-primary/10"
         >
           <div className="flex items-center gap-1.5">
-            <Icon name="fail" className="text-tertiary-background" />
-            <span className="text-[12px] text-primary">{props.problems.error}</span>
+            <Icon
+              size={14}
+              name="cross-circle"
+              className={props.problems.error > 0 ? 'text-destructive' : 'text-tertiary-background'}
+            />
+            <span className={cn('text-[12px]', props.problems.error > 0 ? 'text-destructive' : 'text-primary')}>
+              {props.problems.error}
+            </span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon name="triangle-warning" className="text-tertiary-background" />
+            <Icon size={14} name="warning-triangle-outline" className="text-tertiary-background" />
             <span className="text-[12px] text-primary">{props.problems.warning}</span>
           </div>
           <div className="flex items-center gap-1.5">
-            <Icon name="info-circle" className="text-tertiary-background" />
+            <Icon size={14} name="info-circle" className="text-tertiary-background" />
             <span className="text-[12px] text-primary">{props.problems.info}</span>
           </div>
         </div>
         {branchesLoading || branches || currentBranch ? (
           <div className={'flex gap-2'}>
             <div className={'flex items-center'}>
-              <span className="mr-1 text-[12px] text-tertiary-background">Branch:</span>
-              <Select value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
-                <SelectContent>
+              <span className="text-[12px] text-tertiary-background">Branch:</span>
+              <Select.Root value={currentBranch} disabled={branchesLoading} onValueChange={onBranchChange}>
+                <Select.Content>
                   {branches?.map(branch => (
-                    <SelectItem key={branch} value={branch}>
+                    <Select.Item key={branch} value={branch}>
                       {branch}
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </div>
           </div>
         ) : null}
       </div>
       {committedTimeAgo && authorName && (
-        <Popover>
-          <PopoverTrigger>
+        <Popover.Root>
+          <Popover.Trigger>
             <div className="flex text-[12px] text-tertiary-background">
               Last edited
               <span className="text-primary">&nbsp;{committedTimeAgo}&nbsp;</span> by
               <span className="text-primary">&nbsp;{authorName}&nbsp;</span>
             </div>
-          </PopoverTrigger>
-          <PopoverContent side={'top'} className="mb-4 mr-4 w-80 p-0">
+          </Popover.Trigger>
+          <Popover.Content side={'top'} className="mb-4 mr-4 w-80 p-0">
             <PopoverCommitInfo.Root>
               <PopoverCommitInfo.CommitInfo authorName={authorName} initials={authorInitials} commit={commitSha} />
               <PopoverCommitInfo.CommitMessage>{commitMessage}</PopoverCommitInfo.CommitMessage>
             </PopoverCommitInfo.Root>
-          </PopoverContent>
-        </Popover>
+          </Popover.Content>
+        </Popover.Root>
       )}
     </footer>
   )

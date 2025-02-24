@@ -1,3 +1,5 @@
+import { PipelineStudioGraphViewProps } from '@views/pipeline-edit/components/pipeline-studio-graph-view'
+
 import { ContainerNode } from '@harnessio/pipeline-graph'
 
 import { PipelineStudioNodeContextProvider } from './components/graph-implementation/context/PipelineStudioNodeContext'
@@ -16,7 +18,17 @@ import { PipelineStudioNodeContextMenu } from './components/pipeline-studio-node
 import { ErrorDataType } from './components/pipeline-studio-yaml-view'
 import { ContentNodeFactory, PipelineStudio, PipelineStudioProps, YamlRevision } from './pipeline-studio'
 
-export interface PipelineEditProps {
+export interface PipelineEditProps
+  extends Pick<PipelineStudioGraphViewProps, 'serialContainerConfig' | 'parallelContainerConfig'>,
+    Pick<
+      PipelineStudioProps,
+      | 'yamlEditorConfig'
+      | 'getStepIcon'
+      | 'customCreateSVGPath'
+      | 'edgesConfig'
+      | 'portComponent'
+      | 'collapseButtonComponent'
+    > {
   /** pipeline view */
   view: 'yaml' | 'graph'
   /** yaml state */
@@ -34,9 +46,7 @@ export interface PipelineEditProps {
   onEditIntention: (nodeData: CommonNodeDataType) => undefined
   onDeleteIntention: (nodeData: CommonNodeDataType) => undefined
   onRevealInYaml: (_path: string | undefined) => undefined
-  yamlEditorConfig?: PipelineStudioProps['yamlEditorConfig']
   onErrorChange?: (data: ErrorDataType) => void
-  getStepIcon?: PipelineStudioProps['getStepIcon']
   contentNodeFactory?: ContentNodeFactory
   animateYamlOnUpdate?: boolean
   onYamlAnimateEnd?: () => void
@@ -58,7 +68,13 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
     getStepIcon,
     contentNodeFactory,
     animateYamlOnUpdate,
-    onYamlAnimateEnd
+    onYamlAnimateEnd,
+    serialContainerConfig,
+    parallelContainerConfig,
+    customCreateSVGPath,
+    edgesConfig,
+    portComponent,
+    collapseButtonComponent
   } = props
 
   const defaultContentNodeFactory = new ContentNodeFactory()
@@ -147,6 +163,12 @@ export const PipelineEdit = (props: PipelineEditProps): JSX.Element => {
         getStepIcon={getStepIcon}
         animateYamlOnUpdate={animateYamlOnUpdate}
         onYamlAnimateEnd={onYamlAnimateEnd}
+        serialContainerConfig={serialContainerConfig}
+        parallelContainerConfig={parallelContainerConfig}
+        customCreateSVGPath={customCreateSVGPath}
+        edgesConfig={edgesConfig}
+        portComponent={portComponent}
+        collapseButtonComponent={collapseButtonComponent}
       />
       <PipelineStudioNodeContextMenu />
     </PipelineStudioNodeContextProvider>

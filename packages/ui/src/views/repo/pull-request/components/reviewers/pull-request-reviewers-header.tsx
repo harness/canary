@@ -1,12 +1,13 @@
-import { Avatar, AvatarFallback, DropdownMenu, Icon, SearchBox } from '@/components'
+import { Avatar, DropdownMenu, Icon, SearchBox } from '@/components'
+import { PrincipalType } from '@/types'
 import { TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
 
-import { PRReviewer, PRReviewUsers } from '../../pull-request.types'
+import { PRReviewer } from '../../pull-request.types'
 
 interface ReviewersHeaderProps {
-  usersList?: PRReviewUsers[]
+  usersList?: PrincipalType[]
   reviewers: PRReviewer[]
   addReviewers?: (id?: number) => void
   handleDelete: (id: number) => void
@@ -83,11 +84,9 @@ const ReviewersHeader = ({
                   >
                     <div className="flex w-full min-w-0 items-center gap-x-2">
                       {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <Avatar className="size-6 rounded-full">
-                        <AvatarFallback>
-                          <span className="text-12 text-foreground-1">{getInitials(display_name || '')}</span>
-                        </AvatarFallback>
-                      </Avatar>
+                      <Avatar.Root>
+                        <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
+                      </Avatar.Root>
                       <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
                     </div>
                   </DropdownMenu.Item>

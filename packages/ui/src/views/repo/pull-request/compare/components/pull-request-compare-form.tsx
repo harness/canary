@@ -1,18 +1,7 @@
 import { forwardRef, useRef, useState } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import {
-  Button,
-  Fieldset,
-  Icon,
-  Input,
-  MarkdownViewer,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-  Textarea
-} from '@/components'
+import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
 import { handleFileDrop, handlePaste, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
@@ -132,17 +121,22 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
               // 'border-t': inReplyMode
             })}
           >
-            <Tabs variant="tabnav" defaultValue={TABS_KEYS.WRITE} value={activeTab} onValueChange={handleTabChange}>
-              <TabsList className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
-                <TabsTrigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.WRITE}>
+            <Tabs.Root
+              variant="tabnav"
+              defaultValue={TABS_KEYS.WRITE}
+              value={activeTab}
+              onValueChange={handleTabChange}
+            >
+              <Tabs.List className="relative left-1/2 w-[calc(100%+var(--tab-width))] -translate-x-1/2 px-4">
+                <Tabs.Trigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.WRITE}>
                   Write
-                </TabsTrigger>
-                <TabsTrigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.PREVIEW}>
+                </Tabs.Trigger>
+                <Tabs.Trigger className="data-[state=active]:bg-background-1" value={TABS_KEYS.PREVIEW}>
                   Preview
-                </TabsTrigger>
-              </TabsList>
+                </Tabs.Trigger>
+              </Tabs.List>
 
-              <TabsContent className="mt-4" value={TABS_KEYS.WRITE}>
+              <Tabs.Content className="mt-4" value={TABS_KEYS.WRITE}>
                 <div
                   className="relative"
                   onDrop={handleDrop}
@@ -174,8 +168,8 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                     <div className="absolute inset-1 cursor-copy rounded-sm border border-dashed border-borders-2" />
                   )}
                 </div>
-              </TabsContent>
-              <TabsContent className="mt-4" value={TABS_KEYS.PREVIEW}>
+              </Tabs.Content>
+              <Tabs.Content className="mt-4" value={TABS_KEYS.PREVIEW}>
                 <div className="min-h-24">
                   {desc ? (
                     <MarkdownViewer markdownClassName="!bg-background-2" source={desc} />
@@ -183,8 +177,8 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                     <span>Nothing to preview</span>
                   )}
                 </div>
-              </TabsContent>
-            </Tabs>
+              </Tabs.Content>
+            </Tabs.Root>
 
             <div className="mt-4 flex items-center justify-between">
               {activeTab === TABS_KEYS.WRITE && (

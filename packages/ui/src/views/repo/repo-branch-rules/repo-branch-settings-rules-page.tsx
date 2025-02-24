@@ -37,6 +37,7 @@ interface RepoBranchSettingsRulesPageProps {
   handleInitialRules: (presetRuleData: RepoBranchSettingsFormFields | null) => void
   setPrincipalsSearchQuery: (val: string) => void
   principalsSearchQuery: string
+  isSubmitSuccess?: boolean
 }
 
 export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> = ({
@@ -52,7 +53,8 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   handleInputChange,
   handleInitialRules,
   setPrincipalsSearchQuery,
-  principalsSearchQuery
+  principalsSearchQuery,
+  isSubmitSuccess
 }) => {
   const { t } = useTranslationStore()
   const { presetRuleData, principals, recentStatusChecks } = useRepoRulesStore()
@@ -62,6 +64,7 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
     setValue,
     watch,
     reset,
+    clearErrors,
     formState: { errors }
   } = useForm<RepoBranchSettingsFormFields>({
     resolver: zodResolver(repoBranchSettingsFormSchema),
@@ -84,7 +87,6 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
   const onSubmit: SubmitHandler<RepoBranchSettingsFormFields> = data => {
     const formData = { ...data, rules }
     handleRuleUpdate(formData)
-    reset()
   }
 
   useEffect(() => {
@@ -106,6 +108,13 @@ export const RepoBranchSettingsRulesPage: FC<RepoBranchSettingsRulesPageProps> =
       handleInitialRules(null)
     }
   }, [handleInitialRules, presetRuleData, reset])
+
+  useEffect(() => {
+    if (isSubmitSuccess) {
+      reset()
+      clearErrors()
+    }
+  }, [isSubmitSuccess])
 
   const apiErrorsValue =
     apiErrors?.principals || apiErrors?.statusChecks || apiErrors?.addRule || apiErrors?.updateRule || null

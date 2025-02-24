@@ -3,20 +3,28 @@ title: Avatar
 description: Avatar component
 ---
 
-An image element with a fallback for representing the image
+The Avatar component provides a way to represent an image with a fallback for when the image can not be loaded.
 
-import { DocsPage } from "@/components/docs-page";
-import { Avatar, AvatarImage, AvatarFallback } from "@harnessio/ui/components";
-import { Badge } from "@harnessio/ui/components";
+import { DocsPage } from "../../../components/docs-page";
 
 <DocsPage.ComponentExample
   client:only
-  code={`<div className="flex w-full justify-center">
-    <Avatar size={11}>
-      <AvatarImage src="https://github.com/shadcn.png" alt="Avatar image" />
-      <AvatarFallback>JD</AvatarFallback>
-    </Avatar>
-  </div>`}
+  code={`<div className="flex flex-col gap-8">
+    <div className="flex flex-col items-center gap-4">
+        <h5>With image</h5>
+        <Avatar.Root size={8}>
+            <Avatar.Image src="https://github.com/shadcn.png" alt="Avatar image" />
+            <Avatar.Fallback>JD</Avatar.Fallback>
+        </Avatar.Root>
+    </div>
+    <hr />
+    <div className="flex flex-col items-center gap-4">
+        <h5>With fallback</h5>
+        <Avatar.Root size={8}>
+            <Avatar.Fallback>JD</Avatar.Fallback>
+        </Avatar.Root>
+    </div>
+</div>`}
 />
 
 ## Usage
@@ -27,24 +35,118 @@ import { Avatar } from '@harnessio/ui/components'
 //...
 
 return (
-  <Avatar size={11}>
-    <AvatarImage src="https://github.com/shadcn.png" alt="Avatar image" />
-    <AvatarFallback>JD</AvatarFallback>
-  </Avatar>
+  <Avatar.Root>
+    <Avatar.Image src="avatarurl.jpg" alt="Avatar image" />
+    <Avatar.Fallback>JD</Avatar.Fallback>
+  </Avatar.Root>
 )
 ```
 
 ## Anatomy
 
-Coming soon.
+All parts of the Avatar component can be imported and composed as required.
 
 ```typescript jsx
-<Avatar>
-  <AvatarImage/>
-  <AvatarFallback />
-</Avatar>
+<Avatar.Root>
+  <Avatar.Image />
+  <Avatar.Fallback />
+</Avatar.Root>
 ```
 
 ## API Reference
 
-<Badge theme="emphasis">Coming soon</Badge>
+### `Root`
+
+The `Root` component serves as the main container for all avatar elements.
+
+```typescript jsx
+<Avatar.Root
+  size={6}          // [OPTIONAL] Size of the avatar, can be one of "4.5", "6", "8", or "20"
+  className="class" // [OPTIONAL] Class name to be applied to the outermost element
+>
+  {/* Image and Fallback components */}
+</Avatar.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "size",
+      description:
+        "The size of the avatar. Can be one of '4.5', '6', '8', or '20'",
+      required: false,
+      value: "string",
+      defaultValue: "'6'",
+    },
+    {
+      name: "className",
+      description: "The class name to be applied to the outermost element",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Image`
+
+The `Image` component is used to display an image within the avatar. If the image can not be loaded, the `Fallback` component will be displayed instead.
+
+```typescript jsx
+<Avatar.Image
+  src="avatarurl.jpg" // source URL of the image
+  alt="Avatar image"  // [OPTIONAL] alt text of the image
+  className="class"   // [OPTIONAL] Class name to be applied to the image element
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "src",
+      description: "The source URL of the image",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "alt",
+      description: "The alt text of the image",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "The class name to be applied to the image element",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Fallback`
+
+The `Fallback` component is displayed when the image can not be loaded.
+
+```typescript jsx
+<Avatar.Fallback
+  className="class" // [OPTIONAL] Class name to be applied to the fallback element
+>
+  JD
+</Avatar.Fallback>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "children",
+      description: "The content of the fallback element",
+      required: true,
+      value: "ReactNode",
+    },
+    {
+      name: "className",
+      description: "The class name to be applied to the fallback element",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

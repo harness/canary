@@ -9,9 +9,9 @@ import {
   useRepoRuleUpdateMutation
 } from '@harnessio/code-service-client'
 import { SkeletonForm } from '@harnessio/ui/components'
+import { PrincipalType } from '@harnessio/ui/types'
 import {
   BranchRulesActionType,
-  BypassUsersList,
   getBranchRules,
   MergeStrategy,
   NotFoundPage,
@@ -40,6 +40,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
   const { setPresetRuleData, setPrincipals, setRecentStatusChecks } = useRepoRulesStore()
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const { dispatch } = useBranchRulesStore()
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState<boolean>()
 
   const branchRules = useMemo(() => {
     return getBranchRules(t)
@@ -75,6 +76,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef },
     {
       onSuccess: () => {
+        setIsSubmitSuccess(true)
         navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
@@ -98,6 +100,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
     { repo_ref: repoRef, rule_identifier: identifier! },
     {
       onSuccess: () => {
+        setIsSubmitSuccess(true)
         navigate(routes.toRepoGeneralSettings({ spaceId, repoId: repoName }))
       }
     }
@@ -173,7 +176,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
 
   useEffect(() => {
     if (principals) {
-      setPrincipals(principals as BypassUsersList[])
+      setPrincipals(principals as PrincipalType[])
     }
   }, [principals, setPrincipals])
 
@@ -213,6 +216,7 @@ export const RepoBranchSettingsRulesPageContainer = () => {
       useTranslationStore={useTranslationStore}
       setPrincipalsSearchQuery={setPrincipalsSearchQuery}
       principalsSearchQuery={principalsSearchQuery}
+      isSubmitSuccess={isSubmitSuccess}
     />
   )
 }

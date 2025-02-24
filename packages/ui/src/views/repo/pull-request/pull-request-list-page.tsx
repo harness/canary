@@ -1,16 +1,7 @@
 import { FC, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-import {
-  Button,
-  ListActions,
-  NoData,
-  PaginationComponent,
-  SearchBox,
-  SkeletonList,
-  Spacer,
-  StackedList
-} from '@/components'
+import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Spacer, StackedList } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
@@ -276,7 +267,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
             </>
           )}
           {renderListContent()}
-          <PaginationComponent totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
+          <Pagination totalPages={totalPages} currentPage={page} goToPage={setPage} t={t} />
         </SandboxLayout.Content>
       </SandboxLayout.Main>
     </PRListFilterHandler>

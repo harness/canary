@@ -120,16 +120,16 @@ export function easyPluralize(count: number, singular: string, plural: string, i
 }
 // check if activity item is a system comment
 export function isSystemComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
-  return commentItems[0]?.payload?.payload?.kind === 'system'
+  return commentItems[0]?.payload?.kind === 'system'
 }
 
 //  check if comment item is a code comment
 export function isCodeComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
-  return commentItems[0]?.payload?.payload?.type === 'code-comment'
+  return commentItems[0]?.payload?.type === 'code-comment'
 }
 // check if activity item is a comment
 export function isComment(commentItems: CommentItem<TypesPullReqActivity>[]) {
-  return commentItems[0]?.payload?.payload?.type === 'comment'
+  return commentItems[0]?.payload?.type === 'comment'
 }
 
 export function removeLastPlus(str: string) {

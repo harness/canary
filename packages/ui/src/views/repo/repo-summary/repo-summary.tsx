@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
-import { Link, Outlet } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import {
   Button,
@@ -32,7 +30,7 @@ import { RepoEmptyView } from './repo-empty-view'
 interface RoutingProps {
   toRepoFiles: () => string
   toCommitDetails?: ({ sha }: { sha: string }) => string
-  toProfileKeys: () => string
+  navigateToProfileKeys: () => void
 }
 
 export interface RepoSummaryViewProps extends Partial<RoutingProps> {
@@ -80,6 +78,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   searchQuery: string
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
+  isRepoEmpty?: boolean
 }
 
 export function RepoSummaryView({
@@ -87,7 +86,6 @@ export function RepoSummaryView({
   filesList,
   navigateToFile,
   repository,
-  repoEntryPathToFileTypeMap,
   files,
   decodedReadmeContent,
   summaryDetails: { default_branch_commit_count = 0, branch_count = 0, tag_count = 0, pull_req_summary },
@@ -106,8 +104,9 @@ export function RepoSummaryView({
   handleCreateToken,
   toRepoFiles,
   toCommitDetails,
-  toProfileKeys,
-  renderSidebarComponent
+  navigateToProfileKeys,
+  renderSidebarComponent,
+  isRepoEmpty
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -122,7 +121,7 @@ export function RepoSummaryView({
     )
   }
 
-  if (!repoEntryPathToFileTypeMap.size) {
+  if (isRepoEmpty) {
     return (
       <RepoEmptyView
         sshUrl={repository?.git_ssh_url ?? 'could not fetch url'}
@@ -131,7 +130,7 @@ export function RepoSummaryView({
         projName={spaceId}
         gitRef={gitRef || selectedBranchTag?.name || ''}
         handleCreateToken={handleCreateToken}
-        toProfileKeys={toProfileKeys}
+        navigateToProfileKeys={navigateToProfileKeys}
       />
     )
   }
@@ -248,7 +247,7 @@ export function RepoSummaryView({
                   right
                   title={
                     <Button
-                      className="border-borders-1 hover:bg-background-3 flex border"
+                      className="flex border border-borders-1 hover:bg-background-3"
                       variant="ghost"
                       size="icon"
                       asChild

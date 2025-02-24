@@ -91,7 +91,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@testing-library/react": "^13.4.0",
+    "@testing-library/react": "^12.1.5",
     "@types/jest": "^27.5.2",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^20.14.9",

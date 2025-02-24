@@ -5,6 +5,7 @@ import { CommonNodeDataType, usePipelineStudioNodeContext } from '@harnessio/ui/
 
 import { StageNodeContextMenu } from '../context-menu/stage-node-context-menu'
 import { PipelineNodes } from '../pipeline-nodes'
+import { GlobalData } from '../types/common'
 
 export interface CustomStageContentNodeDataType extends CommonNodeDataType {
   icon?: React.ReactElement
@@ -21,7 +22,10 @@ export function CustomStageContentNode(props: {
   const { node, children, collapsed, isFirst, parentNodeType } = props
   const data = node.data as CustomStageContentNodeDataType
 
-  const { selectionPath, showContextMenu, onAddIntention, onSelectIntention } = usePipelineStudioNodeContext()
+  const { selectionPath, showContextMenu, onAddIntention, onSelectIntention, globalData } =
+    usePipelineStudioNodeContext<GlobalData>()
+
+  const { hideContextMenu, hideFloatingButtons } = globalData ?? {}
 
   const selected = useMemo(() => selectionPath === data.yamlPath, [selectionPath])
 
@@ -34,6 +38,8 @@ export function CustomStageContentNode(props: {
       isFirst={isFirst}
       parentNodeType={parentNodeType}
       node={node}
+      hideContextMenu={hideContextMenu}
+      hideFloatingButtons={hideFloatingButtons}
       onAddInClick={() => {
         onAddIntention(data, 'in')
       }}

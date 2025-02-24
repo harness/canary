@@ -14,13 +14,13 @@
     "pretty:fix": "prettier --write ./src"
   },
   "dependencies": {
-    "@astrojs/react": "^4.1.5",
-    "@astrojs/starlight": "^0.31.0",
+    "@astrojs/react": "^4.2.0",
+    "@astrojs/starlight": "^0.31.1",
     "@astrojs/starlight-tailwind": "^3.0.0",
-    "@astrojs/tailwind": "^5.1.4",
+    "@astrojs/tailwind": "^6.0.0",
     "@harnessio/ui": "workspace:*",
     "@radix-ui/react-navigation-menu": "^1.2.3",
-    "astro": "^5.1.5",
+    "astro": "^5.2.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.407.0",

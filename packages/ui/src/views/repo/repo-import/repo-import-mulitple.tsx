@@ -11,8 +11,6 @@ import {
   Input,
   Option,
   Select,
-  SelectContent,
-  SelectItem,
   Spacer,
   Text
 } from '@/components'
@@ -163,24 +161,24 @@ export function RepoImportMultiplePage({
           {/* provider */}
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="provider"
                 value={providerValue}
                 onValueChange={value => handleSelectChange('provider', value)}
                 placeholder="Select"
                 label="Git provider"
               >
-                <SelectContent>
+                <Select.Content>
                   {ProviderOptionsEnum &&
                     Object.values(ProviderOptionsEnum)?.map(option => {
                       return (
-                        <SelectItem key={option} value={option}>
+                        <Select.Item key={option} value={option}>
                           {option}
-                        </SelectItem>
+                        </Select.Item>
                       )
                     })}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

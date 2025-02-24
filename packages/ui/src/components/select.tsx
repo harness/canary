@@ -1,4 +1,13 @@
-import { Children, ComponentPropsWithoutRef, ElementRef, FC, forwardRef, PropsWithChildren, ReactNode } from 'react'
+import {
+  Children,
+  ComponentPropsWithoutRef,
+  ElementRef,
+  FC,
+  forwardRef,
+  HTMLAttributes,
+  PropsWithChildren,
+  ReactNode
+} from 'react'
 
 import { Caption, Icon, Label, Message, MessageTheme, SearchBox } from '@/components'
 import { usePortal } from '@/context'
@@ -6,8 +15,8 @@ import { useDebounceSearch } from '@hooks/use-debounce-search'
 import * as SelectPrimitive from '@radix-ui/react-select'
 import { cn } from '@utils/cn'
 
-interface SelectProps
-  extends Omit<Omit<PropsWithChildren<React.HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
+interface SelectRootProps
+  extends Omit<Omit<PropsWithChildren<HTMLAttributes<HTMLElement>>, 'defaultValue'>, 'dir'>,
     SelectPrimitive.SelectProps {
   label?: string
   error?: string
@@ -20,12 +29,14 @@ interface SelectProps
 /**
  * A customizable select component that supports labels, error states, and captions
  * @example
- * <Select name="select" label="Select an option" placeholder="Select an option">
- *   <SelectItem value="option1">Option 1</SelectItem>
- *   <SelectItem value="option2">Option 2</SelectItem>
- * </Select>
+ * <Select.Root name="select" label="Select an option" placeholder="Select an option">
+ *   <Select.Content>
+ *     <Select.Item val`ue="option1">Option 1</Select.Item>
+ *     <Select.Item val`ue="option2">Option 2</Select.Item>
+ *   </Select.Content>
+ * </Select.Root>
  */
-const Select: FC<SelectProps> = ({
+const SelectRoot: FC<SelectRootProps> = ({
   name,
   label,
   error,
@@ -60,7 +71,7 @@ const Select: FC<SelectProps> = ({
     {caption && <Caption>{caption}</Caption>}
   </SelectPrimitive.Root>
 )
-Select.displayName = SelectPrimitive.Root.displayName
+SelectRoot.displayName = SelectPrimitive.Root.displayName
 
 const SelectGroup = SelectPrimitive.Group
 
@@ -209,4 +220,13 @@ const SelectSeparator = forwardRef<
 ))
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName
 
-export { Select, SelectGroup, SelectValue, SelectTrigger, SelectContent, SelectLabel, SelectItem, SelectSeparator }
+const Select = {
+  Root: SelectRoot,
+  Group: SelectGroup,
+  Content: SelectContent,
+  Label: SelectLabel,
+  Item: SelectItem,
+  Separator: SelectSeparator
+}
+
+export { Select }

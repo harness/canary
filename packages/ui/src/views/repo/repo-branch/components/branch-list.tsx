@@ -1,10 +1,8 @@
 import { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {
   Avatar,
-  AvatarFallback,
-  AvatarImage,
   Badge,
   Button,
   CopyButton,
@@ -13,12 +11,7 @@ import {
   MoreActionsTooltip,
   NoData,
   SkeletonTable,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
+  Table
 } from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/stringUtils'
@@ -38,9 +31,11 @@ export const BranchesList: FC<BranchListPageProps> = ({
   toBranchRules,
   toPullRequestCompare,
   toPullRequest,
+  toCode,
   onDeleteBranch
 }) => {
   const { t } = useTranslationStore()
+  const navigate = useNavigate()
 
   if (!branches?.length && !isLoading) {
     return (
@@ -86,39 +81,41 @@ export const BranchesList: FC<BranchListPageProps> = ({
   }
 
   return (
-    <Table
+    <Table.Root
       className={isLoading ? '[mask-image:linear-gradient(to_bottom,black_30%,transparent_100%)]' : ''}
       variant="asStackedList"
     >
-      <TableHeader>
-        <TableRow>
-          <TableHead className="w-96">{t('views:repos.branch', 'Branch')}</TableHead>
-          <TableHead className="w-44">{t('views:repos.update', 'Updated')}</TableHead>
-          <TableHead>{t('views:repos.checkStatus', 'Check status')}</TableHead>
-          <TableHead className="w-40">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head className="w-96">{t('views:repos.branch', 'Branch')}</Table.Head>
+          <Table.Head className="w-44">{t('views:repos.update', 'Updated')}</Table.Head>
+          <Table.Head>{t('views:repos.checkStatus', 'Check status')}</Table.Head>
+          <Table.Head className="w-40">
             <div className="mx-auto grid w-28 grid-flow-col grid-cols-[1fr_auto_1fr] items-center justify-center gap-x-1.5">
               <span className="text-right leading-none">{t('views:repos.behind', 'Behind')}</span>
               <div className="h-3 w-px bg-borders-2" aria-hidden />
               <span className="leading-none">{t('views:repos.ahead', 'Ahead')}</span>
             </div>
-          </TableHead>
-          <TableHead className="w-40 whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</TableHead>
-          <TableHead className="w-16">
-            <></>
-          </TableHead>
-        </TableRow>
-      </TableHeader>
+          </Table.Head>
+          <Table.Head className="w-40 whitespace-nowrap">{t('views:repos.pullRequest', 'Pull Request')}</Table.Head>
+          <Table.Head className="w-16" />
+        </Table.Row>
+      </Table.Header>
       {isLoading ? (
         <SkeletonTable countRows={12} countColumns={5} />
       ) : (
-        <TableBody>
+        <Table.Body>
           {branches.map(branch => {
             const checkState = branch?.checks?.status ? getChecksState(branch?.checks?.status) : null
 
             return (
-              <TableRow key={branch.id}>
+              <Table.Row
+                key={branch.id}
+                className="cursor-pointer"
+                onClick={() => navigate(`${toCode?.({ branchName: branch.name })}`)}
+              >
                 {/* branch name */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex h-6 items-center">
                     <div className="inline-flex h-6 max-w-80 items-center truncate rounded bg-background-8 px-2.5 text-14 text-foreground-8">
                       {defaultBranch === branch?.name && (
@@ -128,21 +125,21 @@ export const BranchesList: FC<BranchListPageProps> = ({
                     </div>
                     <CopyButton color="gray" name={branch?.name} />
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* user avatar and timestamp */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex items-center gap-2">
-                    <Avatar className="size-[1.125rem]">
-                      {branch?.user?.avatarUrl && <AvatarImage src={branch?.user?.avatarUrl} />}
-                      <AvatarFallback className="text-center text-10">
-                        {getInitials(branch?.user?.name ?? '', 2)}
-                      </AvatarFallback>
-                    </Avatar>
+                    <Avatar.Root size="4.5">
+                      {!!branch?.user?.avatarUrl && <Avatar.Image src={branch?.user?.avatarUrl} />}
+                      <Avatar.Fallback className="text-center text-10">
+                        {getInitials(branch?.user?.name ?? '')}
+                      </Avatar.Fallback>
+                    </Avatar.Root>
                     <span className="truncate text-foreground-1">{branch?.timestamp}</span>
                   </div>
-                </TableCell>
+                </Table.Cell>
                 {/* checkstatus: show in the playground, hide the check status column if the checks are null in the gitness without data */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   {branch?.checks && (
                     <div className="flex items-center">
                       {checkState === 'running' ? (
@@ -167,9 +164,9 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       <span className="truncate text-foreground-3">{branch?.checks?.total}</span>
                     </div>
                   )}
-                </TableCell>
+                </Table.Cell>
                 {/* calculated divergence bar & default branch */}
-                <TableCell className="content-center">
+                <Table.Cell className="content-center">
                   <div className="flex items-center justify-center gap-1.5 align-middle">
                     {branch?.behindAhead?.default ? (
                       <Badge
@@ -186,10 +183,10 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       />
                     )}
                   </div>
-                </TableCell>
+                </Table.Cell>
 
                 {/* PR link */}
-                <TableCell className="max-w-20 content-center">
+                <Table.Cell className="max-w-20 content-center">
                   {branch.pullRequests && branch.pullRequests.length > 0 && branch.pullRequests[0].number && (
                     <Button
                       className="flex w-fit items-center gap-1 bg-background-8 px-2.5 text-sm text-foreground-8 hover:bg-background-9 hover:text-foreground-1"
@@ -219,8 +216,8 @@ export const BranchesList: FC<BranchListPageProps> = ({
                       </Link>
                     </Button>
                   )}
-                </TableCell>
-                <TableCell className="text-right">
+                </Table.Cell>
+                <Table.Cell className="text-right">
                   <MoreActionsTooltip
                     isInTable
                     actions={[
@@ -233,18 +230,22 @@ export const BranchesList: FC<BranchListPageProps> = ({
                         to: toBranchRules?.()
                       },
                       {
+                        title: t('views:repos.browse', 'Browse'),
+                        to: toCode?.({ branchName: branch.name }) || ''
+                      },
+                      {
                         isDanger: true,
                         title: t('views:repos.deleteBranch', 'Delete Branch'),
                         onClick: () => onDeleteBranch(branch.name)
                       }
                     ]}
                   />
-                </TableCell>
-              </TableRow>
+                </Table.Cell>
+              </Table.Row>
             )
           })}
-        </TableBody>
+        </Table.Body>
       )}
-    </Table>
+    </Table.Root>
   )
 }

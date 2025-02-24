@@ -1,18 +1,20 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, AvatarFallback, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
+import { Avatar, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/utils'
 
 import { PullRequestCommentBox } from './pull-request-comment-box'
 
-interface TimelineItemProps {
-  header: {
-    avatar?: ReactNode
-    name?: string
-    description?: ReactNode
-    selectStatus?: ReactNode
-  }[]
+interface TimelineItemPropsHeaderType {
+  avatar?: ReactNode
+  name?: string
+  description?: ReactNode
+  selectStatus?: ReactNode
+}
+
+export interface TimelineItemProps {
+  header: TimelineItemPropsHeaderType[]
   parentCommentId?: number
   commentId?: number
   currentUser?: string
@@ -93,7 +95,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
           </DropdownMenu.Trigger>
           <DropdownMenu.Content className="w-[216px]" align="end">
             <DropdownMenu.Group>
-              {!hideEditDelete ? <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item> : null}
+              {!hideEditDelete && <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item>}
               <DropdownMenu.Item
                 onClick={() => {
                   onQuoteReply?.()
@@ -104,7 +106,7 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
               <DropdownMenu.Item onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
                 Copy link to comment
               </DropdownMenu.Item>
-              {!hideEditDelete ? (
+              {!hideEditDelete && (
                 <DropdownMenu.Item
                   className="text-foreground-danger hover:text-foreground-danger"
                   onClick={ev => {
@@ -114,20 +116,21 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
                 >
                   Delete comment
                 </DropdownMenu.Item>
-              ) : null}
+              )}
             </DropdownMenu.Group>
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       )
     }
+
     return (
       <div className="inline-flex w-full items-center justify-between gap-1.5">
         <div className="inline-flex items-center gap-1.5">
-          {avatar && <div>{avatar}</div>}
-          {name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
-          {description && <span className="text-14 text-foreground-4">{description}</span>}
+          {!!avatar && <div className="mr-0.5">{avatar}</div>}
+          {!!name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
+          {!!description && <span className="text-14 text-foreground-4">{description}</span>}
         </div>
-        {selectStatus && (
+        {!!selectStatus && (
           <div className="justify-end">
             <Text size={2} color="tertiaryBackground">
               {selectStatus}
@@ -216,10 +219,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   return (
     <div id={id}>
       <NodeGroup.Root className={cn('pb-7 font-sans', wrapperClassName)}>
-        {icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
+        {!!icon && <NodeGroup.Icon className={cn({ 'border-transparent': hideIconBorder })}>{icon}</NodeGroup.Icon>}
         <NodeGroup.Title className={titleClassName}>
           {/* Ensure that header has at least one item */}
-          {header.length > 0 && (
+          {!!header.length && (
             <div className="flex w-full items-center justify-between gap-x-2">
               <ItemHeader
                 isDeleted={isDeleted}
@@ -308,14 +311,13 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     />
                   ) : (
                     <div className={cn('flex items-center gap-3 border-t bg-background-2', replyBoxClassName)}>
-                      {currentUser ? (
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <span className="text-12 text-foreground-1">{getInitials(currentUser ?? '', 2)}</span>
-                          </AvatarFallback>
-                        </Avatar>
-                      ) : null}
+                      {!!currentUser && (
+                        <Avatar.Root>
+                          <Avatar.Fallback>{getInitials(currentUser)}</Avatar.Fallback>
+                        </Avatar.Root>
+                      )}
                       <Input
+                        className="bg-background-2"
                         placeholder="Reply here"
                         size="md"
                         onClick={() => {
@@ -327,7 +329,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                       />
                     </div>
                   )}
-                  <div className={cn('flex gap-3 border-t', replyBoxClassName)}>
+                  <div className={cn('flex items-center gap-x-4 border-t', replyBoxClassName)}>
                     <Button
                       variant="outline"
                       onClick={() => {
@@ -336,6 +338,14 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
                     >
                       {isResolved ? 'Unresolve conversation' : 'Resolve conversation'}
                     </Button>
+
+                    {isResolved && (
+                      <span className="text-14 text-foreground-4">
+                        {/* TODO: need to identify the author who resolved the conversation */}
+                        <span className="font-medium text-foreground-1">{currentUser}</span> marked this conversation as
+                        resolved.
+                      </span>
+                    )}
                   </div>
                 </>
               )}

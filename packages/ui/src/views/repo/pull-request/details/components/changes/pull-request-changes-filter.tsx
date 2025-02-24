@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import { Badge, Button, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
+import { Button, Checkbox, DropdownMenu, Icon, RadioGroup, Text } from '@/components'
 import { TypesUser } from '@/types'
 import { DiffModeOptions, TranslationStore, TypesCommit } from '@/views'
 import { DiffModeEnum } from '@git-diff-view/react'
@@ -187,7 +187,7 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
           className="flex cursor-pointer items-center"
         >
           <Checkbox checked={isSelected} />
-          <Text size={1} className="pl-3 text-primary truncate">
+          <Text size={1} className="truncate pl-3 text-primary">
             {item.name}
           </Text>
         </DropdownMenu.Item>
@@ -284,32 +284,35 @@ export const PullRequestChangesFilter: React.FC<PullRequestChangesFilterProps> =
             {t('views:commits.commitDetailsDiffAdditionsAnd', 'additions and')}{' '}
             {formatNumber(pullReqStats?.deletions || 0)} {t('views:commits.commitDetailsDiffDeletions', 'deletions')}
           </p>
-          <DropdownMenu.Content align="start">
-            <div className="max-h-[360px] overflow-y-auto px-1">
-              {diffData?.map(diff => (
-                <DropdownMenu.Item
-                  key={diff.filePath}
-                  onClick={() => {
-                    setJumpToDiff(diff.filePath)
-                  }}
-                  className="flex w-80 cursor-pointer items-center justify-between px-3 py-2"
-                >
-                  <span className="flex-1 overflow-hidden truncate text-12 text-primary">{diff.filePath}</span>
-                  <div className="ml-4 flex items-center space-x-2">
-                    {diff.addedLines != null && diff.addedLines > 0 && (
-                      <Badge variant="outline" size="sm" theme="success">
-                        +{diff.addedLines}
-                      </Badge>
-                    )}
-                    {diff.deletedLines != null && diff.deletedLines > 0 && (
-                      <Badge variant="outline" size="sm" theme="destructive">
-                        -{diff.deletedLines}
-                      </Badge>
-                    )}
-                  </div>
-                </DropdownMenu.Item>
-              ))}
-            </div>
+          <DropdownMenu.Content className="max-h-[360px] max-w-[396px] overflow-y-auto" align="start">
+            {diffData?.map(diff => (
+              <DropdownMenu.Item
+                key={diff.filePath}
+                onClick={() => {
+                  setJumpToDiff(diff.filePath)
+                }}
+                className="flex w-full items-center justify-between gap-x-5 py-1.5"
+              >
+                <div className="flex min-w-0 flex-1 items-center justify-start gap-x-1.5">
+                  <Icon name="file" size={16} className="shrink-0 text-icons-1" />
+                  <span className="overflow-hidden truncate text-14 text-foreground-8 [direction:rtl]">
+                    {diff.filePath}
+                  </span>
+                </div>
+                <div className="flex shrink-0 items-center text-13">
+                  {diff.addedLines != null && diff.addedLines > 0 && (
+                    <span className="text-foreground-success">+{diff.addedLines}</span>
+                  )}
+                  {diff.addedLines != null &&
+                    diff.addedLines > 0 &&
+                    diff.deletedLines != null &&
+                    diff.deletedLines > 0 && <span className="mx-1.5 h-3 w-px bg-borders-2" />}
+                  {diff.deletedLines != null && diff.deletedLines > 0 && (
+                    <span className="text-foreground-danger">-{diff.deletedLines}</span>
+                  )}
+                </div>
+              </DropdownMenu.Item>
+            ))}
           </DropdownMenu.Content>
         </DropdownMenu.Root>
       </div>

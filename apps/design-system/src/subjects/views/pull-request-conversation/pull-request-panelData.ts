@@ -1,13 +1,14 @@
 import { noop } from '@utils/viewUtils'
 
+import { EnumPrincipalType } from '@harnessio/ui/types'
 import {
   ColorsEnum,
   EnumCheckPayloadKind,
   EnumCheckStatus,
-  EnumPrincipalType,
   EnumPullReqActivityKind,
   EnumPullReqActivityType,
   EnumPullReqReviewDecision,
+  EnumRuleState,
   ILabelType,
   LabelAssignmentType,
   LabelType,
@@ -24,7 +25,7 @@ export const prPanelInfo = {
             repo_path: 'test666/new',
             identifier: 'test',
             type: 'branch',
-            state: 'active',
+            state: 'active' as EnumRuleState,
             uid: 'test'
           },
           bypassable: false,

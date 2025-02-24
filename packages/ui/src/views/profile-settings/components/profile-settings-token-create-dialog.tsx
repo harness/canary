@@ -1,18 +1,7 @@
 import { FC, useEffect } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  CopyButton,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
+import { Alert, Button, CopyButton, Dialog, Fieldset, FormWrapper, Input, Select } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { TranslationStore } from '@views/repo'
 import { z } from 'zod'
@@ -170,23 +159,23 @@ export const ProfileSettingsTokenCreateDialog: FC<ProfileSettingsTokenCreateDial
           ) : (
             <>
               <Fieldset className="gap-y-0">
-                <Select
+                <Select.Root
                   value={expirationValue}
                   onValueChange={value => handleSelectChange('lifetime', value)}
                   label={t('views:profileSettings.expiration', 'Expiration')}
                   placeholder={t('views:profileSettings.select', 'Select')}
                   error={errors.lifetime?.message?.toString()}
                 >
-                  <SelectContent>
+                  <Select.Content>
                     {expirationOptions.map(expirationOption => {
                       return (
-                        <SelectItem key={expirationOption.value} value={expirationOption.value}>
+                        <Select.Item key={expirationOption.value} value={expirationOption.value}>
                           <span className="text-foreground-1">{expirationOption.label}</span>
-                        </SelectItem>
+                        </Select.Item>
                       )
                     })}
-                  </SelectContent>
-                </Select>
+                  </Select.Content>
+                </Select.Root>
                 {isValid && (
                   <span className="mt-1.5 text-14 text-foreground-3">
                     {watch('lifetime') === 'never' ? (

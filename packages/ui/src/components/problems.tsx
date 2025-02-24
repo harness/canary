@@ -35,13 +35,12 @@ const ProblemsComponent = {
   },
 
   Row: function Root({ onClick, children }: { onClick?: () => void; children: React.ReactNode }) {
-    const rowClasses = 'bg-neutral-800 text-neutral-200'
     return (
       <div
         role="button"
         tabIndex={0}
         onClick={onClick}
-        className={`width-100 flex flex-1 cursor-pointer items-center gap-2 text-nowrap py-0.5 justify-between px-4 ${rowClasses}`}
+        className="width-100 flex flex-1 cursor-pointer items-center justify-between gap-2 text-nowrap bg-neutral-800 px-4 py-0.5 text-neutral-200"
       >
         {children}
       </div>

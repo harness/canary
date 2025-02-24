@@ -1,0 +1,378 @@
+---
+title: Select
+description: Select component
+---
+
+The `Select` component provides a way to create dropdown selections with various sub-components for customization.
+
+import { DocsPage } from "../../../components/docs-page";
+
+<DocsPage.ComponentExample
+  client:only
+  code={`() => {
+    const [color, setColor] = React.useState()
+    const [randomItem, setRandomItem] = React.useState()
+    const [searchRandomItems, setSearchRandomItems] = React.useState('')
+
+    const allRandomItems = React.useMemo(
+      () => [...new Array(300)].map((_, index) => ({value: index+1, label: \`Item \${index+1}\`})),
+      []
+    )
+
+    const filteredRandomItems = React.useMemo(
+      () => searchRandomItems.trim() ? allRandomItems.filter(item => item.label.toLowerCase().includes(searchRandomItems.toLowerCase())) : allRandomItems,
+    )
+
+    return (
+        <div className="flex flex-col gap-8">
+            <div>
+                <h5>With group</h5>
+                <Select.Root
+                    name="color"
+                    placeholder="Select..."
+                    label="Color theme"
+                    value={color}
+                    onValueChange={setColor}
+                >
+                    <Select.Content defaultValue={color}>
+                        <Select.Item value="standard">Standard</Select.Item>
+                        <Select.Item value="accessible">Accessible</Select.Item>
+                        <Select.Item value="vivid">Vivid</Select.Item>
+
+                        <Select.Separator />
+
+                        <Select.Group>
+                            <Select.Label>Custom label</Select.Label>
+                            <Select.Item value="custom">Custom</Select.Item>
+                        </Select.Group>
+                    </Select.Content>
+                </Select.Root>
+            </div>
+
+            <hr />
+
+            <div>
+                <h5>With search</h5>
+                <Select.Root
+                    name="random"
+                    placeholder="Select..."
+                    label="Random item"
+                    value={randomItem}
+                    onValueChange={setRandomItem}
+                >
+                    <Select.Content
+                        withSearch
+                        searchProps={{
+                            searchValue: searchRandomItems,
+                            handleChangeSearchValue: setSearchRandomItems
+                        }}
+                    >
+                        {filteredRandomItems.map(item => (
+                            <Select.Item
+                                key={item.value}
+                                value={item.value}
+                            >
+                                {item.label}
+                            </Select.Item>
+                        ))}
+                    </Select.Content>
+                </Select.Root>
+            </div>
+        </div>
+    )
+
+}`}
+/>
+
+## Usage
+
+```typescript jsx
+import { Select } from '@harnessio/ui/components'
+
+//...
+
+const [color, setColor] = useState()
+
+return (
+  <Select.Root
+    name="color"
+    placeholder="Select..."
+    label="Color theme"
+    value={color}
+    onValueChange={setColor}
+  >
+    <Select.Content>
+      <Select.Item value="standard">Standard</Select.Item>
+      <Select.Item value="accessible">Accessible</Select.Item>
+      <Select.Item value="vivid">Vivid</Select.Item>
+
+      <Select.Separator />
+
+      <Select.Group>
+        <Select.Label>Custom label</Select.Label>
+        <Select.Item value="custom">Custom</Select.Item>
+      </Select.Group>
+    </Select.Content>
+  </Select.Root>
+)
+```
+
+## Anatomy
+
+All parts of the `Select` component can be imported and composed as required.
+
+```typescript jsx
+<Select.Root>
+  <Select.Content>
+    <Select.Item />
+    <Select.Separator />
+    <Select.Group>
+      <Select.Label />
+      <Select.Item />
+    </Select.Group>
+  </Select.Content>
+</Select.Root>
+```
+
+## API Reference
+
+### `Root`
+
+The `Root` component for the Select can be either controlled or uncontrolled. A controlled Select component takes a `value`
+and an `onValueChange` handler as props, and will only update the value when the user makes a selection. An uncontrolled
+Select component will update the value whenever a user makes a selection, and will not re-render when the value is
+changed from outside the component.
+
+```typescript jsx
+<Select.Root
+  name="color"                        // [OPTIONAL] Name of the select
+  label="Color theme"                 // [OPTIONAL] Label text
+  placeholder="Select a color theme"  // [OPTIONAL] Placeholder text
+  value={color}                       // [OPTIONAL] Current value
+  onValueChange={setColor}            // [OPTIONAL] Value change handler
+>
+  {/* Select content */}
+</Select.Root>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "name",
+      description: "Name of the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "label",
+      description: "Label text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "placeholder",
+      description: "Placeholder text",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "value",
+      description: "Current value of the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "onValueChange",
+      description: "Handler called when the value changes",
+      required: false,
+      value: "(value: string) => void",
+    },
+  ]}
+/>
+
+### `Content`
+
+The content of the select dropdown. This is a required element. The `defaultValue` prop sets the default value of the
+select. The `withSearch` prop enables search support in the dropdown. This is optional and can be used to search the
+available options. The `searchProps` prop is used to pass additional props to the search input when `withSearch` is
+true. This can be used to customize the search input, such as changing the placeholder text.
+
+```typescript jsx
+<Select.Content
+  defaultValue={color}                 // [OPTIONAL] Default value
+  className="custom-class"             // [OPTIONAL] Custom class name
+  position="popper"                    // [OPTIONAL] Position of the content, either 'item-aligned' or 'popper'
+  withSearch                           // [OPTIONAL] Enable search
+  searchProps={{                       // [OPTIONAL] Search props
+    placeholder: 'Search...',          // [OPTIONAL] Placeholder text
+    searchValue: search,               // [OPTIONAL] Current search value
+    handleChangeSearchValue: setSearch // [OPTIONAL] Search value change handler
+  }}
+>
+  {/* SelectItem components */}
+</Select.Content>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "defaultValue",
+      description: "Default value for the select",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "position",
+      description: "Position of the content",
+      required: false,
+      value: "'item-aligned' | 'popper'",
+      defaultValue: "popper",
+    },
+    {
+      name: "withSearch",
+      description: "Enable search",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "searchProps",
+      description: "Props for the search",
+      required: false,
+      value:
+        "{ placeholder?: string, searchValue: string, handleChangeSearchValue: (searchValue: string) => void }",
+    },
+  ]}
+/>
+
+### `Item`
+
+The `Item` component is used to create an individual item in the select dropdown. Each item requires a `value` prop
+which is the value of the item. If the value is not suitable for typeahead search, you can use the `textValue` prop to
+provide a searchable text string for typeahead search. For example, if the value is JSON-encoded object, `textValue` can
+be used to provide a searchable label for the object.
+
+```typescript jsx
+<Select.Item
+  value="value"     // Value of the item
+  textValue="text"  // [OPTIONAL] Text value of the item to be used for when value suitable for typeahead search
+  disabled          // [OPTIONAL] Disable the item
+  asChild           // [OPTIONAL] Render the item as a child
+  isItemTextAsChild // [OPTIONAL] Render the item text as a child
+>
+  Name
+</Select.Item>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "value",
+      description: "Value of the item",
+      required: true,
+      value: "string",
+    },
+    {
+      name: "textValue",
+      description:
+        "Text value of the item to be used for search when value is not suitable for typeahead search",
+      required: false,
+      value: "string",
+    },
+    {
+      name: "disabled",
+      description: "Disable the item",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "asChild",
+      description: "Render the item as a child",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+    {
+      name: "isItemTextAsChild",
+      description: "Render the item text as a child",
+      required: false,
+      value: "boolean",
+      defaultValue: "false",
+    },
+  ]}
+/>
+
+### `Separator`
+
+The `Separator` component is used to create a separator in the select dropdown.
+
+```typescript jsx
+<Select.Separator
+  className="custom-class" // [OPTIONAL] Custom class name
+/>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Group`
+
+The `Group` component is used to create a group of items in the select dropdown.
+
+```typescript jsx
+<Select.Group
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  <Select.Label>Custom label</Select.Label>
+  <Select.Item value="custom">Custom</Select.Item>
+</Select.Group>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>
+
+### `Label`
+
+The `Label` component is used to create a label for a group of items in the select dropdown.
+
+```typescript jsx
+<Select.Label
+  className="custom-class" // [OPTIONAL] Custom class name
+>
+  Custom label
+</Select.Label>
+```
+
+<DocsPage.PropsTable
+  props={[
+    {
+      name: "className",
+      description: "Custom class name",
+      required: false,
+      value: "string",
+    },
+  ]}
+/>

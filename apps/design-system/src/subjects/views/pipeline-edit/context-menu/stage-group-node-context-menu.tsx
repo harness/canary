@@ -33,7 +33,7 @@ export const StageGroupNodeContextMenu = () => {
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key={`add-${YamlEntityType.SerialStageGroup}-before`}
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.SerialStageGroup)
@@ -43,7 +43,7 @@ export const StageGroupNodeContextMenu = () => {
           <Text wrap="nowrap">Add Serial Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key={`add-${YamlEntityType.SerialStageGroup}-after`}
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.SerialStageGroup)
@@ -54,7 +54,7 @@ export const StageGroupNodeContextMenu = () => {
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key={`add-${YamlEntityType.ParallelStageGroup}-before`}
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.ParallelStageGroup)
@@ -64,7 +64,7 @@ export const StageGroupNodeContextMenu = () => {
           <Text wrap="nowrap">Add Parallel Stages Group before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key={`add-${YamlEntityType.ParallelStageGroup}-after`}
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.ParallelStageGroup)

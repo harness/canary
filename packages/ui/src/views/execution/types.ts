@@ -13,11 +13,12 @@ export interface StepProps {
 }
 
 export interface StepExecutionProps {
-  step: StepProps
-  logs: LivelogLine[]
+  isDrawer?: boolean
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
+  step?: StepProps
+  logs?: LivelogLine[]
   query?: string
   handleInputChange?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -28,18 +29,27 @@ export interface StageProps {
   steps?: StepProps[]
 }
 
+export interface ILogsStore {
+  logs?: LivelogLine[]
+}
+
 export interface ExecutionInfoProps {
-  stage: StageProps
-  selectedStepIdx: number
-  logs: LivelogLine[]
+  isDrawer?: boolean
+  useLogsStore: () => ILogsStore
   onEdit: () => void
   onDownload: () => void
   onCopy: () => void
 }
 
 export interface ConsoleLogsProps {
-  logs: LivelogLine[]
+  logs?: LivelogLine[]
   query?: string
+}
+
+export enum LivelogLineType {
+  ERROR = 'error',
+  WARNING = 'warning',
+  INFO = 'info'
 }
 
 export interface LivelogLine {
@@ -47,12 +57,18 @@ export interface LivelogLine {
   pos?: number
   time?: number
   duration?: number
+  type?: LivelogLineType
+}
+
+export interface NodeSelectionProps {
+  parentNode?: TreeViewElement | null
+  childNode?: TreeViewElement | null
 }
 
 export interface ExecutionTreeProps {
   defaultSelectedId: string
   elements: TreeViewElement[]
-  onSelectNode: ({ parentId, childId }: { parentId: string; childId: string }) => void
+  onSelectNode: ({ parentNode, childNode }: NodeSelectionProps) => void
 }
 
 export type KeyValuePair = {
@@ -96,5 +112,3 @@ export interface Stage {
 export interface Execution {
   stages?: Stage[]
 }
-
-export interface ExecutionHeaderProps {}

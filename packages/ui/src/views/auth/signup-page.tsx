@@ -40,7 +40,6 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
     trigger
   } = useForm({
@@ -49,7 +48,6 @@ export function SignUpPage({ isLoading, handleSignUp, error }: SignUpPageProps) 
 
   const onSubmit = (data: SignUpData) => {
     handleSignUp(data)
-    reset()
   }
 
   const handleInputChange = async () => {

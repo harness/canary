@@ -7,12 +7,12 @@ import { createBrowserRouter, matchPath, RouterProvider, useLocation, useNavigat
 import { QueryClientProvider } from '@tanstack/react-query'
 
 import { CodeServiceAPIClient } from '@harnessio/code-service-client'
-import { TooltipProvider } from '@harnessio/ui/components'
+import { ToastProvider, TooltipProvider } from '@harnessio/ui/components'
 import { PortalProvider } from '@harnessio/ui/context'
 
 import ShadowRootWrapper from './components-v2/shadow-root-wrapper'
 import { ExitConfirmProvider } from './framework/context/ExitConfirmContext'
-import { MFEContext } from './framework/context/MFEContext'
+import { MFEContext, Unknown } from './framework/context/MFEContext'
 import { NavigationProvider } from './framework/context/NavigationContext'
 import { ThemeProvider, useThemeStore } from './framework/context/ThemeContext'
 import { queryClient } from './framework/queryClient'
@@ -80,6 +80,12 @@ interface AppMFEProps {
   useMFEThemeContext: () => { theme: string }
   parentLocationPath: string
   onRouteChange: (updatedLocationPathname: string) => void
+  customHooks: Partial<{
+    useGenerateToken: Unknown
+  }>
+  customUtils: Partial<{
+    navigateToUserProfile: Unknown
+  }>
 }
 
 function decode<T = unknown>(arg: string): T {
@@ -92,7 +98,9 @@ export default function AppMFE({
   on401,
   useMFEThemeContext,
   parentLocationPath,
-  onRouteChange
+  onRouteChange,
+  customHooks,
+  customUtils
 }: AppMFEProps) {
   new CodeServiceAPIClient({
     urlInterceptor: (url: string) =>
@@ -149,17 +157,26 @@ export default function AppMFE({
             <ShadowRootLoader theme={theme} />
           ) : (
             <PortalProvider portalContainer={portalContainer}>
-              <MFEContext.Provider value={{ scope, renderUrl }}>
+              <MFEContext.Provider
+                value={{
+                  scope,
+                  renderUrl,
+                  customHooks,
+                  customUtils
+                }}
+              >
                 <I18nextProvider i18n={i18n}>
                   <ThemeProvider defaultTheme={theme === 'Light' ? 'light-std-std' : 'dark-std-std'}>
                     <QueryClientProvider client={queryClient}>
-                      <TooltipProvider>
-                        <ExitConfirmProvider>
-                          <NavigationProvider routes={routesToRender}>
-                            <RouterProvider router={router} />
-                          </NavigationProvider>
-                        </ExitConfirmProvider>
-                      </TooltipProvider>
+                      <ToastProvider>
+                        <TooltipProvider>
+                          <ExitConfirmProvider>
+                            <NavigationProvider routes={routesToRender}>
+                              <RouterProvider router={router} />
+                            </NavigationProvider>
+                          </ExitConfirmProvider>
+                        </TooltipProvider>
+                      </ToastProvider>
                     </QueryClientProvider>
                   </ThemeProvider>
                 </I18nextProvider>

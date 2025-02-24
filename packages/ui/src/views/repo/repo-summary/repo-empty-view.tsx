@@ -9,7 +9,6 @@ import {
   MarkdownViewer,
   NoData,
   Spacer,
-  StyledLink,
   Text
 } from '@/components'
 import { SandboxLayout } from '@/views'
@@ -21,7 +20,7 @@ interface RepoEmptyViewProps {
   sshUrl: string
   gitRef: string
   handleCreateToken: () => void
-  toProfileKeys?: () => string
+  navigateToProfileKeys?: () => void
 }
 
 export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
@@ -31,7 +30,7 @@ export const RepoEmptyView: React.FC<RepoEmptyViewProps> = ({
   sshUrl,
   gitRef,
   handleCreateToken,
-  toProfileKeys
+  navigateToProfileKeys
 }) => {
   const getInitialCommitMarkdown = () => {
     return `
@@ -89,9 +88,20 @@ git push -u origin main
             </ButtonGroup>
             <p className="mt-2">
               You can also manage your git credential{' '}
-              <StyledLink to={toProfileKeys?.() ?? ''} relative="path">
+              <span
+                role="button"
+                tabIndex={0}
+                className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
+                onClick={() => navigateToProfileKeys?.()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }
+                }}
+              >
                 here
-              </StyledLink>
+              </span>
             </p>
           </ControlGroup>
 
@@ -107,9 +117,20 @@ git push -u origin main
             <MarkdownViewer source={getExistingRepoMarkdown()} />
             <p>
               You might need to{' '}
-              <StyledLink to={toProfileKeys?.() ?? ''} relative="path">
+              <span
+                role="button"
+                tabIndex={0}
+                className="text-foreground-accent underline decoration-transparent underline-offset-4 transition-colors duration-200 hover:decoration-foreground-accent"
+                onClick={() => navigateToProfileKeys?.()}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault()
+                    e.stopPropagation()
+                  }
+                }}
+              >
                 create an API token
-              </StyledLink>{' '}
+              </span>
               In order to pull from or push into this repository.
             </p>
           </ControlGroup>

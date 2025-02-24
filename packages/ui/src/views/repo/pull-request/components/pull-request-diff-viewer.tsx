@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { Avatar, Layout } from '@/components'
 import {
   CommentItem,
   CommitSuggestion,
@@ -8,7 +9,6 @@ import {
   TranslationStore,
   TypesPullReqActivity
 } from '@/views'
-import { Avatar, AvatarFallback, Layout } from '@components/index'
 import { DiffFile, DiffModeEnum, DiffView, DiffViewProps, SplitSide } from '@git-diff-view/react'
 import { useCustomEventListener } from '@hooks/use-event-listener'
 import { useMemoryCleanup } from '@hooks/use-memory-cleanup'
@@ -408,7 +408,7 @@ const PullRequestDiffViewer = ({
                 contentHeader={
                   !!parent.payload?.resolved && (
                     <div className="flex items-center gap-x-1">
-                      <span className="font-medium text-foreground-8">{parent.payload?.resolver?.display_name}</span>
+                      <span className="font-medium text-foreground-1">{parent.payload?.resolver?.display_name}</span>
                       <span className="text-foreground-4">marked this conversation as resolved</span>
                     </div>
                   )
@@ -432,11 +432,9 @@ const PullRequestDiffViewer = ({
                       setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                       onQuoteReply={handleQuoteReply}
                       icon={
-                        <Avatar className="size-6 rounded-full p-0">
-                          <AvatarFallback>
-                            <span className="text-12 text-foreground-1">{parentInitials}</span>
-                          </AvatarFallback>
-                        </Avatar>
+                        <Avatar.Root>
+                          <Avatar.Fallback>{parentInitials}</Avatar.Fallback>
+                        </Avatar.Root>
                       }
                       header={[
                         {
@@ -515,11 +513,9 @@ const PullRequestDiffViewer = ({
                               setHideReplyHere={state => toggleReplyBox(state, parent?.id)}
                               onQuoteReply={handleQuoteReply}
                               icon={
-                                <Avatar className="size-6 rounded-full p-0">
-                                  <AvatarFallback>
-                                    <span className="text-12 text-foreground-1">{replyInitials}</span>
-                                  </AvatarFallback>
-                                </Avatar>
+                                <Avatar.Root>
+                                  <Avatar.Fallback>{replyInitials}</Avatar.Fallback>
+                                </Avatar.Root>
                               }
                               header={[
                                 {

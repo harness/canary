@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 
-import { noop, useTranslationsStore } from '@utils/viewUtils.ts'
+import { noop, useTranslationStore } from '@utils/viewUtils.ts'
 
 import { DeleteAlertDialog } from '@harnessio/ui/components'
 import { RepoWebhookListPage } from '@harnessio/ui/views'
@@ -25,7 +25,7 @@ export const RepoWebhooksList = () => {
     <>
       <RepoWebhookListPage
         useWebhookStore={repoWebhooksListStore.useWebhookStore}
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
         openDeleteWebhookDialog={openDeleteWebhookDialog}
         setSearchQuery={noop}
         searchQuery={null}
@@ -37,7 +37,7 @@ export const RepoWebhooksList = () => {
         onClose={closeDeleteWebhookDialog}
         deleteFn={() => closeDeleteWebhookDialog()}
         type="webhook"
-        useTranslationStore={useTranslationsStore}
+        useTranslationStore={useTranslationStore}
       />
     </>
   )

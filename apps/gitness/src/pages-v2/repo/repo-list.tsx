@@ -1,17 +1,17 @@
-import { useCallback, useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
-import { ListReposOkResponse, useListReposQuery } from '@harnessio/code-service-client'
+import { useDeleteRepositoryMutation, useListReposQuery } from '@harnessio/code-service-client'
+import { ToastAction, useToast } from '@harnessio/ui/components'
 import { RepositoryType, SandboxRepoListPage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useQueryState } from '../../framework/hooks/useQueryState'
-import useSpaceSSE from '../../framework/hooks/useSpaceSSE'
 import usePaginationQueryStateWithStore from '../../hooks/use-pagination-query-state-with-store'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
-import { PageResponseHeader, SSEEvent } from '../../types'
+import { PageResponseHeader } from '../../types'
 import { useRepoStore } from './stores/repo-list-store'
 import { transformRepoList } from './transform-utils/repo-list-transform'
 
@@ -19,14 +19,23 @@ export default function ReposListPage() {
   const routes = useRoutes()
   const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam() ?? ''
-  const { setRepositories, page, setPage } = useRepoStore()
+  const {
+    setRepositories,
+    page,
+    setPage,
+    importRepoIdentifier,
+    setImportRepoIdentifier,
+    importToastId,
+    setImportToastId
+  } = useRepoStore()
+  const { toast, dismiss } = useToast()
 
   const [query, setQuery] = useQueryState('query')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
 
   const {
     data: { body: repoData, headers } = {},
-    refetch,
+    refetch: refetchListRepos,
     isFetching,
     isError,
     error
@@ -43,6 +52,18 @@ export default function ReposListPage() {
     }
   )
 
+  const { mutate: deleteRepository, isLoading: isCancellingImport } = useDeleteRepositoryMutation(
+    {},
+    {
+      onSuccess: () => {
+        dismiss(importToastId ?? '')
+        setImportToastId(null)
+        setImportRepoIdentifier(null)
+        refetchListRepos()
+      }
+    }
+  )
+
   useEffect(() => {
     const totalPages = parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0')
     if (repoData) {
@@ -53,27 +74,34 @@ export default function ReposListPage() {
     }
   }, [repoData, headers, setRepositories])
 
-  const isRepoStillImporting: boolean = useMemo(() => {
-    return repoData?.some(repository => repository.importing) ?? false
-  }, [repoData])
+  // const isRepoImporting: boolean = useMemo(() => {
+  //   return repoData?.some(repository => repository.importing) ?? false
+  // }, [repoData])
 
-  const onEvent = useCallback(
-    (_eventRepos: ListReposOkResponse) => {
-      if (repoData?.some(repository => repository.importing)) {
-        refetch()
-      }
-    },
-    [repoData, refetch]
-  )
+  useEffect(() => {
+    if (importRepoIdentifier && !importToastId) {
+      const { id } = toast({
+        title: `Import in progress`,
+        description: importRepoIdentifier,
+        duration: Infinity,
+        action: (
+          <ToastAction
+            onClick={() => {
+              deleteRepository({
+                queryParams: {},
+                repo_ref: `${spaceURL}/${importRepoIdentifier}/+`
+              })
+            }}
+            altText="Cancel import"
+          >
+            {isCancellingImport ? 'Canceling...' : 'Cancel'}
+          </ToastAction>
+        )
+      })
 
-  const events = useMemo(() => [SSEEvent.REPO_IMPORTED], [])
-
-  useSpaceSSE({
-    space: spaceURL,
-    events,
-    onEvent,
-    shouldRun: isRepoStillImporting
-  })
+      setImportToastId(id)
+    }
+  }, [importRepoIdentifier, setImportRepoIdentifier])
 
   return (
     <>

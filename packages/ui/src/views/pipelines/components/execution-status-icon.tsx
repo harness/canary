@@ -17,7 +17,7 @@ export const ExecutionStatusIcon: React.FC<IExecutionStatusIconProps> = props =>
     case PipelineExecutionStatus.ERROR:
       return <CanaryIcon size={16} name="fail" />
     case PipelineExecutionStatus.SUCCESS:
-      return <CanaryIcon size={16} name="success" />
+      return <CanaryIcon size={16} name="success" className="text-foreground-success" />
     case PipelineExecutionStatus.RUNNING:
       return <CanaryIcon size={20} name="running" className="animate-spin text-warning" />
     case PipelineExecutionStatus.SKIPPED:

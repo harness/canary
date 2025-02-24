@@ -169,7 +169,10 @@ export const usePullRequestProviderStore = create<PullRequestDataState>((set, ge
             })
           )
         })
-    } else if (pullReqMetadata?.state === PullRequestState.MERGED) {
+    } else if (
+      pullReqMetadata?.state === PullRequestState.MERGED ||
+      pullReqMetadata?.state === PullRequestState.CLOSED
+    ) {
       set(
         produce(draft => {
           draft.prPanelData.PRStateLoading = false

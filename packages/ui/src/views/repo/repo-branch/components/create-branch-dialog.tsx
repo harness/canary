@@ -1,20 +1,9 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Icon,
-  Input,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
+import { Alert, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Input } from '@/components'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { BranchSelector } from '@views/repo/components'
 import { z } from 'zod'
 
 import { CreateBranchDialogProps, CreateBranchFormFields } from '../types'
@@ -28,22 +17,22 @@ export function CreateBranchDialog({
   open,
   onClose,
   onSubmit,
-  branches,
-  isLoadingBranches,
   isCreatingBranch,
   error,
   useTranslationStore,
-  defaultBranch,
+  useRepoBranchesStore,
   handleChangeSearchValue
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
+  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore()
+
   const {
     register,
     handleSubmit,
     setValue,
-    watch,
-    resetField,
-    formState: { errors, isValid }
+    reset,
+    clearErrors,
+    formState: { errors, isValid, isSubmitSuccessful }
   } = useForm<CreateBranchFormFields>({
     resolver: zodResolver(createBranchFormSchema),
     mode: 'onChange',
@@ -53,24 +42,25 @@ export function CreateBranchDialog({
     }
   })
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      clearErrors()
+      reset()
+      setValue('name', '', { shouldValidate: false })
+      setValue('target', defaultBranch || '', { shouldValidate: false })
+      setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
+      onClose()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitSuccessful, open, onClose])
   const handleClose = () => {
-    resetField('name')
-    resetField('target', { defaultValue: defaultBranch })
+    clearErrors()
+    setValue('name', '', { shouldValidate: false })
+    setValue('target', defaultBranch || '', { shouldValidate: false })
+    setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
     handleChangeSearchValue('')
     onClose()
   }
-
-  const processedBranches = useMemo(
-    () =>
-      defaultBranch
-        ? branches?.some(branch => branch.name === defaultBranch)
-          ? branches
-          : [{ name: defaultBranch }, ...(branches || [])]
-        : branches,
-    [branches, defaultBranch]
-  )
-
-  const targetValue = watch('target')
 
   const handleSelectChange = (fieldName: keyof CreateBranchFormFields, value: string) => {
     setValue(fieldName, value, { shouldValidate: true })
@@ -79,6 +69,7 @@ export function CreateBranchDialog({
   useEffect(() => {
     if (defaultBranch) {
       setValue('target', defaultBranch, { shouldValidate: true })
+      setSelectedBranchTag({ name: defaultBranch, sha: '' })
     }
   }, [defaultBranch, setValue])
 
@@ -104,7 +95,7 @@ export function CreateBranchDialog({
 
           <Fieldset>
             <ControlGroup>
-              <Select
+              {/* <Select.Root
                 name="target"
                 value={targetValue || defaultBranch}
                 onValueChange={value => handleSelectChange('target', value)}
@@ -117,7 +108,7 @@ export function CreateBranchDialog({
                 }
                 disabled={isLoadingBranches || !branches?.length}
               >
-                <SelectContent
+                <Select.Content
                   withSearch
                   searchProps={{
                     placeholder: t('views:repos.search', 'Search'),
@@ -128,16 +119,26 @@ export function CreateBranchDialog({
                   {processedBranches?.map(
                     branch =>
                       branch?.name && (
-                        <SelectItem key={branch.name} value={branch.name as string}>
+                        <Select.Item key={branch.name} value={branch.name as string}>
                           <span className="flex items-center gap-1.5">
                             <Icon name="branch" size={14} />
                             {branch.name}
                           </span>
-                        </SelectItem>
+                        </Select.Item>
                       )
                   )}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root> */}
+              <BranchSelector
+                useRepoBranchesStore={useRepoBranchesStore}
+                useTranslationStore={useTranslationStore}
+                onSelectBranch={value => {
+                  handleSelectChange('target', value.name)
+                  setSelectedBranchTag(value)
+                }}
+                setSearchQuery={handleChangeSearchValue}
+                dynamicWidth
+              />
             </ControlGroup>
           </Fieldset>
 
@@ -150,7 +151,24 @@ export function CreateBranchDialog({
           ) : null}
 
           <Dialog.Footer className="-mx-5 -mb-5">
-            <Button variant="outline" onClick={onClose} loading={isCreatingBranch} disabled={isCreatingBranch}>
+            <Button
+              variant="outline"
+              type="button"
+              onClick={() => {
+                clearErrors()
+                // handleClose()
+                // reset({
+                //   name: '',
+                //   target: defaultBranch || ''
+                // })
+                onClose()
+                setValue('target', defaultBranch || '')
+                setValue('name', '')
+                setSelectedBranchTag({ name: defaultBranch || '', sha: '' })
+              }}
+              loading={isCreatingBranch}
+              disabled={isCreatingBranch}
+            >
               {t('views:repos.cancel', 'Cancel')}
             </Button>
             <Button type="submit" disabled={isCreatingBranch || !isValid}>

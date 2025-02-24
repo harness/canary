@@ -1,4 +1,5 @@
-import { Icon, Table, TableBody, TableCell, TableHead, TableHeader, TableRow, Text } from '@harnessio/canary'
+import { Icon, Text } from '@harnessio/canary'
+import { Table } from '@harnessio/ui/components'
 
 import { timeAgo } from '../../utils/utils'
 import { KeysList } from './types'
@@ -10,20 +11,20 @@ interface PageProps {
 
 export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDeleteDialog }) => {
   return (
-    <Table variant="asStackedList">
-      <TableHeader>
-        <TableRow>
-          <TableHead>Name</TableHead>
-          <TableHead>Added</TableHead>
-          <TableHead>Last used date</TableHead>
-          <TableHead></TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
+    <Table.Root variant="asStackedList">
+      <Table.Header>
+        <Table.Row>
+          <Table.Head>Name</Table.Head>
+          <Table.Head>Added</Table.Head>
+          <Table.Head>Last used date</Table.Head>
+          <Table.Head></Table.Head>
+        </Table.Row>
+      </Table.Header>
+      <Table.Body>
         {publicKeys && publicKeys.length > 0 ? (
           publicKeys.map((key: KeysList) => (
-            <TableRow key={key.identifier}>
-              <TableCell>
+            <Table.Row key={key.identifier}>
+              <Table.Cell>
                 <div className="inline-flex gap-2">
                   <Icon name="ssh-key" size={42} />
                   <div className="flex flex-col">
@@ -33,16 +34,16 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDele
                     </Text>
                   </div>
                 </div>
-              </TableCell>
-              <TableCell className="h-1">
+              </Table.Cell>
+              <Table.Cell className="h-1">
                 <div className="flex h-full items-center">{timeAgo(new Date(key.created!).getTime())}</div>
-              </TableCell>
-              <TableCell className="h-1">
+              </Table.Cell>
+              <Table.Cell className="h-1">
                 {/* <div className="h-full flex items-center">
                   {key.last_used ? new Date(key.last_used).toLocaleString() : 'Never used'}
                 </div> */}
-              </TableCell>
-              <TableCell className="content-center">
+              </Table.Cell>
+              <Table.Cell className="content-center">
                 <div
                   role="button"
                   tabIndex={0}
@@ -53,19 +54,19 @@ export const ProfileKeysList: React.FC<PageProps> = ({ publicKeys, openAlertDele
                 >
                   <Icon name="trash" size={14} className="text-tertiary-background" />
                 </div>
-              </TableCell>
-            </TableRow>
+              </Table.Cell>
+            </Table.Row>
           ))
         ) : (
-          <TableRow>
-            <TableCell colSpan={4}>
+          <Table.Row>
+            <Table.Cell colSpan={4}>
               <Text as="p" size={2} align="center" color={'tertiaryBackground'} className="w-full text-center">
                 There are no SSH keys associated with this account.
               </Text>
-            </TableCell>
-          </TableRow>
+            </Table.Cell>
+          </Table.Row>
         )}
-      </TableBody>
-    </Table>
+      </Table.Body>
+    </Table.Root>
   )
 }

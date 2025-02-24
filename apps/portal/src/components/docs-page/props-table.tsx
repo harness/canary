@@ -1,13 +1,6 @@
 import type { FC } from "react";
 
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@harnessio/ui/components";
+import { Table } from "@harnessio/ui/components";
 
 interface PropDescription {
   name: string;
@@ -22,26 +15,26 @@ export interface PropsTableProps {
 }
 
 const PropsTable: FC<PropsTableProps> = ({ props }) => (
-  <Table>
-    <TableHeader>
-      <TableRow>
-        <TableHead>Prop</TableHead>
-        <TableHead>Required</TableHead>
-        <TableHead>Default</TableHead>
-        <TableHead>Type</TableHead>
-      </TableRow>
-    </TableHeader>
-    <TableBody>
+  <Table.Root>
+    <Table.Header>
+      <Table.Row>
+        <Table.Head>Prop</Table.Head>
+        <Table.Head>Required</Table.Head>
+        <Table.Head>Default</Table.Head>
+        <Table.Head>Type</Table.Head>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
       {props.map(({ name, required, defaultValue, description, value }) => (
-        <TableRow key={name}>
-          <TableCell title={description}>{name}</TableCell>
-          <TableCell>{required ? "true" : "false"}</TableCell>
-          <TableCell>{defaultValue}</TableCell>
-          <TableCell>{value}</TableCell>
-        </TableRow>
+        <Table.Row key={name}>
+          <Table.Cell title={description}>{name}</Table.Cell>
+          <Table.Cell>{required ? "true" : "false"}</Table.Cell>
+          <Table.Cell>{defaultValue}</Table.Cell>
+          <Table.Cell>{value}</Table.Cell>
+        </Table.Row>
       ))}
-    </TableBody>
-  </Table>
+    </Table.Body>
+  </Table.Root>
 );
 
 export default PropsTable;

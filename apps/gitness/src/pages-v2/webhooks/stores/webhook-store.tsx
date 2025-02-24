@@ -17,6 +17,7 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   setPage: page => set({ page }),
   webhookLoading: false,
   executions: null,
+  executionId: null,
   setWebhookLoading: (webhookLoading: boolean) => set({ webhookLoading }),
   setWebhookExecutionPage: page => set({ webhookExecutionPage: page }),
   setTotalWebhookExecutionPages: headers =>
@@ -40,6 +41,16 @@ export const useWebhookStore = create<WebhookStore>(set => ({
   setExecutions: (data: WebhookExecutionType[]) => {
     set({ executions: data })
   },
+  // if a webhook execution is already in the list, update it, otherwise add it
+  updateExecution: (updatedExecution: WebhookExecutionType) => {
+    set(state => ({
+      executions: state.executions?.some(exec => exec.id === updatedExecution.id)
+        ? state.executions.map(exec => (exec.id === updatedExecution.id ? updatedExecution : exec))
+        : [...(state.executions ?? []), updatedExecution]
+    }))
+  },
+
   setTotalPages: headers => set({ totalPages: parseInt(headers?.get(PageResponseHeader.xTotalPages) || '0') }),
-  setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data })
+  setPreSetWebhookData: (data: CreateWebhookFormFields | null) => set({ preSetWebhookData: data }),
+  setExecutionId: (id: number | null) => set({ executionId: id })
 }))

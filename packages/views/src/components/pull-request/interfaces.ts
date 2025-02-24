@@ -369,7 +369,7 @@ export interface RepoRepositoryOutput {
   updated?: number
 }
 
-export type EnumRepoState = number
+export type EnumRepoState = number | null
 
 export type EnumPullReqActivityType =
   | 'branch-delete'

@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { NoData, PaginationComponent, SkeletonList, Spacer, Text } from '@/components'
+import { NoData, Pagination, SkeletonList, Spacer, Text } from '@/components'
 import {
   BranchSelector,
   BranchSelectorListItem,
@@ -11,9 +11,6 @@ import {
   TranslationStore,
   TypesCommit
 } from '@/views'
-import { Filters, FiltersBar } from '@components/filters'
-import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
-import { useFilters } from '@views/repo/hooks'
 
 export interface RepoCommitsViewProps {
   isFetchingCommits: boolean
@@ -48,16 +45,10 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
 }) => {
   const { t } = useTranslationStore()
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const filterHandlers = useFilters()
-
-  const isDirtyList = page !== 1 || !!filterHandlers.activeFilters.length
+  const isDirtyList = page !== 1
 
   const handleResetFiltersAndPages = () => {
     setPage(1)
-    filterHandlers.handleResetFilters()
   }
 
   return (
@@ -75,16 +66,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
           />
-          <Filters filterOptions={FILTER_OPTIONS} sortOptions={SORT_OPTIONS} filterHandlers={filterHandlers} t={t} />
         </div>
-
-        <FiltersBar
-          filterOptions={FILTER_OPTIONS}
-          sortOptions={SORT_OPTIONS}
-          sortDirections={SORT_DIRECTIONS}
-          filterHandlers={filterHandlers}
-          t={t}
-        />
 
         <Spacer size={5} />
 
@@ -128,7 +110,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
             ) : (
               <>
                 <CommitsList data={commitsList} toCode={toCode} toCommitDetails={toCommitDetails} />
-                <PaginationComponent
+                <Pagination
                   className="pl-[26px]"
                   nextPage={xNextPage}
                   previousPage={xPrevPage}

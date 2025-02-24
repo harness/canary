@@ -1,21 +1,9 @@
 import { FC, forwardRef, useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import {
-  Alert,
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Button,
-  ControlGroup,
-  Dialog,
-  Fieldset,
-  FormWrapper,
-  Select,
-  SelectContent,
-  SelectItem
-} from '@/components'
-import { InviteMemberDialogProps, InviteMemberFormFields, PrincipalData } from '@/views'
+import { Alert, Avatar, Button, ControlGroup, Dialog, Fieldset, FormWrapper, Select } from '@/components'
+import { PrincipalType } from '@/types'
+import { InviteMemberDialogProps, InviteMemberFormFields } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { getInitials } from '@utils/stringUtils'
 import { getRolesData } from '@views/project/project-members/constants'
@@ -27,17 +15,17 @@ export const inviteMemberFormSchema = z.object({
 })
 
 interface PrincipalOptionProps {
-  principal: PrincipalData
+  principal: PrincipalType
   isShortView?: boolean
 }
 
 const PrincipalOption = forwardRef<HTMLDivElement, PrincipalOptionProps>(({ principal, isShortView = false }, ref) => {
   return (
     <div ref={ref} className={`flex w-full ${isShortView ? 'gap-x-2' : 'gap-x-2.5 pl-1'} cursor-pointer items-center`}>
-      <Avatar size={isShortView ? '6' : '8'}>
-        {!!principal.avatar_url && <AvatarImage src={principal.avatar_url} alt={principal.display_name} />}
-        <AvatarFallback>{getInitials(principal.display_name)}</AvatarFallback>
-      </Avatar>
+      <Avatar.Root size={isShortView ? '6' : '8'}>
+        {!!principal.avatar_url && <Avatar.Image src={principal.avatar_url} alt={principal.display_name} />}
+        <Avatar.Fallback>{getInitials(principal.display_name)}</Avatar.Fallback>
+      </Avatar.Root>
       <span className="flex flex-col overflow-hidden leading-tight">
         <span className={`truncate ${isShortView ? 'text-foreground-1' : 'text-foreground-8'}`}>
           {principal.display_name}
@@ -66,7 +54,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
    * Since the select component works only with strings,
    * we need to construct the full data model based on the selected item.
    */
-  const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalData | null>(null)
+  const [invitedMemberFullModel, setInvitedMemberFullModel] = useState<PrincipalType | null>(null)
 
   const roleOptions = useMemo(() => getRolesData(t), [t])
 
@@ -123,7 +111,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
         <FormWrapper className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           <Fieldset>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="member"
                 value={invitedMember}
                 onValueChange={handleMemberChange}
@@ -134,7 +122,7 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   !!invitedMemberFullModel && <PrincipalOption isShortView principal={invitedMemberFullModel} />
                 }
               >
-                <SelectContent
+                <Select.Content
                   withSearch
                   searchProps={{
                     placeholder: t('views:repos.search', 'Search'),
@@ -143,15 +131,15 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   }}
                 >
                   {principals.map(principal => (
-                    <SelectItem key={principal.uid} value={principal.uid} isItemTextAsChild>
+                    <Select.Item key={principal.uid} value={principal.uid} isItemTextAsChild>
                       <PrincipalOption principal={principal} />
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
             <ControlGroup>
-              <Select
+              <Select.Root
                 name="role"
                 value={memberRole}
                 onValueChange={value => handleSelectChange('role', value)}
@@ -162,17 +150,17 @@ export const InviteMemberDialog: FC<InviteMemberDialogProps> = ({
                   !!selectedRoleFullModel && <span className="text-foreground-1">{selectedRoleFullModel.label}</span>
                 }
               >
-                <SelectContent>
+                <Select.Content>
                   {roleOptions.map(option => (
-                    <SelectItem key={option.uid} value={option.uid} isItemTextAsChild>
+                    <Select.Item key={option.uid} value={option.uid} isItemTextAsChild>
                       <div className="flex cursor-pointer flex-col gap-y-1.5">
                         <span className="leading-none text-foreground-8">{option.label}</span>
                         <span className="leading-tight text-foreground-4">{option.description}</span>
                       </div>
-                    </SelectItem>
+                    </Select.Item>
                   ))}
-                </SelectContent>
-              </Select>
+                </Select.Content>
+              </Select.Root>
             </ControlGroup>
           </Fieldset>
 

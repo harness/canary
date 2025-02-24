@@ -1,12 +1,9 @@
 import { FC, useMemo } from 'react'
 
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer } from '@/components'
 import { SandboxLayout } from '@/views'
-import { Filters, FiltersBar } from '@components/filters'
 import { useDebounceSearch } from '@hooks/use-debounce-search'
 import { cn } from '@utils/cn'
-import { getFilterOptions, getSortDirections, getSortOptions } from '@views/repo/constants/filter-options'
-import { useFilters } from '@views/repo/hooks'
 
 import { BranchesList } from './components/branch-list'
 import { CreateBranchDialog } from './components/create-branch-dialog'
@@ -24,7 +21,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
   searchQuery,
   setSearchQuery,
   onDeleteBranch,
-  searchBranches,
   setCreateBranchSearchQuery,
   ...routingProps
 }) => {
@@ -36,20 +32,14 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
     searchValue: searchQuery || ''
   })
 
-  const FILTER_OPTIONS = getFilterOptions(t)
-  const SORT_OPTIONS = getSortOptions(t)
-  const SORT_DIRECTIONS = getSortDirections(t)
-  const filterHandlers = useFilters()
-
   const handleResetFiltersAndPages = () => {
     setPage(1)
     setSearchQuery(null)
-    filterHandlers.handleResetFilters()
   }
 
   const isDirtyList = useMemo(() => {
-    return page !== 1 || !!filterHandlers.activeFilters.length || !!searchQuery
-  }, [page, filterHandlers.activeFilters, searchQuery])
+    return page !== 1 || !!searchQuery
+  }, [page, searchQuery])
 
   return (
     <SandboxLayout.Main className="max-w-[1132px]">
@@ -70,12 +60,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 />
               </ListActions.Left>
               <ListActions.Right>
-                <Filters
-                  filterOptions={FILTER_OPTIONS}
-                  sortOptions={SORT_OPTIONS}
-                  filterHandlers={filterHandlers}
-                  t={t}
-                />
                 <Button
                   variant="default"
                   onClick={() => {
@@ -86,14 +70,6 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
                 </Button>
               </ListActions.Right>
             </ListActions.Root>
-
-            <FiltersBar
-              filterOptions={FILTER_OPTIONS}
-              sortOptions={SORT_OPTIONS}
-              sortDirections={SORT_DIRECTIONS}
-              filterHandlers={filterHandlers}
-              t={t}
-            />
 
             <Spacer size={5} />
           </>
@@ -110,13 +86,7 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
           {...routingProps}
         />
         {!isLoading && (
-          <PaginationComponent
-            nextPage={xNextPage}
-            previousPage={xPrevPage}
-            currentPage={page}
-            goToPage={(pageNum: number) => setPage(pageNum)}
-            t={t}
-          />
+          <Pagination nextPage={xNextPage} previousPage={xPrevPage} currentPage={page} goToPage={setPage} t={t} />
         )}
       </SandboxLayout.Content>
       <CreateBranchDialog
@@ -124,9 +94,8 @@ export const RepoBranchListView: FC<RepoBranchListViewProps> = ({
         onClose={() => {
           setCreateBranchDialogOpen(false)
         }}
+        useRepoBranchesStore={useRepoBranchesStore}
         onSubmit={onSubmit}
-        branches={searchBranches}
-        isLoadingBranches={isLoading}
         isCreatingBranch={isCreatingBranch}
         useTranslationStore={useTranslationStore}
         error={createBranchError}

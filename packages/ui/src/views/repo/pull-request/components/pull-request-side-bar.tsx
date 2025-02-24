@@ -1,5 +1,6 @@
 import { FC } from 'react'
 
+import { PrincipalType } from '@/types'
 import {
   EnumPullReqReviewDecision,
   HandleAddLabelType,
@@ -14,7 +15,7 @@ import {
 import { LabelsHeader, LabelsList } from './labels'
 import { ReviewersHeader, ReviewersList } from './reviewers'
 
-interface PullRequestSideBarProps {
+export interface PullRequestSideBarProps {
   reviewers?: PRReviewer[]
   processReviewDecision: (
     review_decision: EnumPullReqReviewDecision,
@@ -27,7 +28,7 @@ interface PullRequestSideBarProps {
   addReviewers?: (id?: number) => void
   addReviewerError?: string
   removeReviewerError?: string
-  usersList?: { display_name?: string; id?: number; uid?: string }[]
+  usersList?: PrincipalType[]
   currentUserId?: string
   searchQuery: string
   setSearchQuery: (query: string) => void

@@ -1,19 +1,20 @@
 import { useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { ImportSpaceRequestBody } from '@harnessio/code-service-client'
 import { ImportMultipleReposFormFields, RepoImportMultiplePage } from '@harnessio/ui/views'
 
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
-import { PathParams } from '../../RouteDefinitions'
+import { useAPIPath } from '../../hooks/useAPIPath'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
 
 export const ImportMultipleRepos = () => {
   const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
+  const apiPath = useAPIPath()
+  const multiRepoImportPath = apiPath(`/api/v1/spaces/${spaceURL}/+/import?space_path=${spaceURL}`)
   const [apiError, setApiError] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -35,7 +36,7 @@ export const ImportMultipleRepos = () => {
 
     try {
       setLoading(true)
-      const response = await fetch(`/api/v1/spaces/${spaceId}/+/import`, {
+      const response = await fetch(multiRepoImportPath, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -58,7 +59,7 @@ export const ImportMultipleRepos = () => {
         return
       }
       setLoading(false)
-      navigate(routes.toRepositories({ spaceId }))
+      navigate(routes.toRepositories({ spaceId: spaceURL }))
     } catch (error) {
       setLoading(false)
       setApiError((error as Error).message || 'An unexpected error occurred')
@@ -67,7 +68,7 @@ export const ImportMultipleRepos = () => {
 
   const onCancel = () => {
     setLoading(false)
-    navigate(routes.toRepositories({ spaceId }))
+    navigate(routes.toRepositories({ spaceId: spaceURL }))
   }
 
   return (

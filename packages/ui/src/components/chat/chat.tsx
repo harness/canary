@@ -4,22 +4,23 @@ import { Button, Icon, Input } from '@/components'
 import ChatAvatarIcon from '@/icons/chat-avatar.svg'
 import { cn } from '@utils/cn'
 
-const Root: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Root: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+  return <div className="flex size-full max-w-[460px] flex-col bg-background-1">{children}</div>
+}
+
+const Header: FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="bg-background-1 flex size-full max-w-[460px] flex-col">
-      <div className="bg-background-1 sticky top-0 flex items-center justify-between px-6 py-4">
-        <p className="text-foreground-1 text-16 font-medium">AI Assistant</p>
-        <Button size="icon" variant="custom" className="text-icons-4 hover:text-icons-2 -mr-2">
-          <Icon name="close" size={16} />
-          <span className="sr-only">Close</span>
-        </Button>
-      </div>
-      {children}
+    <div className="sticky top-0 flex items-center justify-between bg-background-1 px-6 py-4">
+      <p className="text-16 font-medium text-foreground-1">AI Assistant</p>
+      <Button size="icon" variant="custom" className="-mr-2 text-icons-4 hover:text-icons-2" onClick={onClose}>
+        <Icon name="close" size={16} />
+        <span className="sr-only">Close</span>
+      </Button>
     </div>
   )
 }
 
-const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
+const Body: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
   return (
     <div className="scrollbar-hidden flex flex-1 flex-col gap-y-7 overflow-y-auto overflow-x-hidden px-6 py-2">
       {children}
@@ -27,8 +28,8 @@ const Body: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) 
   )
 }
 
-const Footer: FC = ({ children }: PropsWithChildren<HTMLAttributes<HTMLElement>>) => {
-  return <div className="bg-background-1 sticky bottom-0 py-3 px-6">{children}</div>
+const Footer: FC<PropsWithChildren<HTMLAttributes<HTMLElement>>> = ({ children }) => {
+  return <div className="sticky bottom-0 bg-background-1 px-6 py-3">{children}</div>
 }
 
 interface MessageProps extends PropsWithChildren<HTMLAttributes<HTMLElement>> {
@@ -64,6 +65,19 @@ const Message: FC<MessageProps> = ({ self, avatar, actions, children }) => {
   )
 }
 
+const CodeBlock: FC<PropsWithChildren<{ className?: string }>> = ({ children, className }) => {
+  return (
+    <code
+      className={cn(
+        'inline-block rounded-[3px] border border-borders-2 bg-background-8 px-1.5 text-13 leading-[18px]',
+        className
+      )}
+    >
+      {children}
+    </code>
+  )
+}
+
 interface TypingProps {
   avatar?: ReactNode
 }
@@ -72,7 +86,7 @@ const Typing: FC<TypingProps> = ({ avatar }) => {
   return (
     <div className="mt-3 flex items-center gap-x-3.5">
       {avatar || <ChatAvatarIcon />}
-      <span className="bg-foreground-2 size-2.5 rounded-full" aria-hidden />
+      <span className="size-2.5 rounded-full bg-foreground-2" aria-hidden />
     </div>
   )
 }
@@ -102,20 +116,20 @@ const emptyStateButtons = [
 
 const EmptyState: FC = () => {
   return (
-    <div className="flex flex-col gap-5 mt-auto">
+    <div className="mt-auto flex flex-col gap-5">
       <div>
-        <span className="text-foreground-4 text-20 block font-semibold leading-none">Hello Steven,</span>
-        <span className="text-foreground-1 text-20 mt-[3px] block font-semibold leading-none">how can I help?</span>
+        <span className="block text-20 font-semibold leading-none text-foreground-4">Hello Steven,</span>
+        <span className="mt-[3px] block text-20 font-semibold leading-none text-foreground-1">how can I help?</span>
       </div>
       <div>
-        <span className="text-foreground-2 text-14 leading-relaxed">
+        <span className="text-14 leading-relaxed text-foreground-2">
           Here are some suggestions to enhance your CI/CD pipeline:
         </span>
         <ul className="mt-3 flex flex-col gap-y-1.5">
           {emptyStateButtons.map(({ text }, index) => (
             <li key={index}>
               <Button
-                className="bg-background-3 text-foreground-1 hover:bg-background-12 w-full justify-start rounded-lg px-3.5"
+                className="w-full justify-start rounded-lg bg-background-3 px-3.5 text-foreground-1 hover:bg-background-12"
                 size="lg"
               >
                 {text}
@@ -156,7 +170,12 @@ const InputField: FC<InputFieldProps> = ({
         className="h-11 flex-1 rounded-lg pl-3 pr-12 focus:ring-0 focus-visible:h-16 focus-visible:rounded-lg focus-visible:pb-8"
         value={value}
         onChange={onChange}
-        onKeyDown={onKeyDown}
+        onKeyDown={event => {
+          onKeyDown(event)
+          if (event.code === 'Enter') {
+            onSend()
+          }
+        }}
         placeholder={placeholder}
         aria-label="Chat input"
       />
@@ -176,9 +195,11 @@ const InputField: FC<InputFieldProps> = ({
 export const Chat = {
   Root,
   Body,
+  Header,
   Footer,
   Message,
   Typing,
+  CodeBlock,
   Separator,
   EmptyState,
   Input: InputField

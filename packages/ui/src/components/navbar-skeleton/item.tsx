@@ -19,7 +19,6 @@ export function Item({ icon, text, description, active, submenuItem, className }
       <div
         className={cn(
           'group relative grid cursor-pointer select-none grid-cols-[auto_1fr] items-center gap-3 pb-[0.6875rem] pt-[0.5625rem] py-2 px-3 rounded-md',
-          // { 'bg-background-4': active },
           { 'gap-0': !icon },
           className
         )}
@@ -68,7 +67,7 @@ export function Item({ icon, text, description, active, submenuItem, className }
   return (
     <div
       className={cn(
-        'group flex cursor-pointer select-none gap-2 py-1.5 px-4 rounded-md',
+        'group flex cursor-pointer select-none gap-2 py-1.5 px-3 rounded-md',
         { 'bg-background-4': active },
         { 'gap-0': !icon },
         className

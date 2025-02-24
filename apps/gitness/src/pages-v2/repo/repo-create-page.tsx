@@ -7,9 +7,10 @@ import {
   useListGitignoreQuery,
   useListLicensesQuery
 } from '@harnessio/code-service-client'
-import { toast, Toaster } from '@harnessio/ui/components'
+import { toast } from '@harnessio/ui/components'
 import { FormFields, RepoCreatePage as RepoCreatePageView } from '@harnessio/ui/views'
 
+import { Toaster } from '../../components-v2/toaster'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'

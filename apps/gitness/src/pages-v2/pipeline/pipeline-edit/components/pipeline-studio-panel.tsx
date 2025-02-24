@@ -1,4 +1,4 @@
-import { Badge, Button, Icon, Tabs, TabsContent, TabsList, TabsTrigger } from '@harnessio/canary'
+import { Badge, Button, Icon, Tabs } from '@harnessio/ui/components'
 
 import { usePipelineDataContext } from '../context/PipelineStudioDataProvider'
 import { usePipelineViewContext } from '../context/PipelineStudioViewProvider'
@@ -11,19 +11,19 @@ export const PipelineStudioPanel = (): JSX.Element => {
   const { setPanelOpen } = usePipelineViewContext()
 
   return (
-    <Tabs defaultValue="problems" variant="underline" className="h-full">
+    <Tabs.Root defaultValue="problems" variant="underline" className="h-full">
       <div className="flex flex-row justify-between border-b">
-        <TabsList className="ml-4 bg-transparent">
-          <TabsTrigger value="problems">
+        <Tabs.List className="ml-4 bg-transparent">
+          <Tabs.Trigger value="problems">
             Problems
             {problemsCount.all > 0 && (
               <Badge className="ml-2 h-5 rounded-full bg-red-950 p-2 text-xs font-normal text-red-400">
                 {problemsCount.all}
               </Badge>
             )}
-          </TabsTrigger>
-          {/* <TabsTrigger value="suggestions">Suggestions</TabsTrigger> */}
-        </TabsList>
+          </Tabs.Trigger>
+          {/* <Tabs.Trigger value="suggestions">Suggestions</Tabs.Trigger> */}
+        </Tabs.List>
         <div className="flex items-center">
           <Button
             onClick={() => {
@@ -37,10 +37,10 @@ export const PipelineStudioPanel = (): JSX.Element => {
           </Button>
         </div>
       </div>
-      <TabsContent value="problems" className="h-full overflow-scroll py-2">
+      <Tabs.Content value="problems" className="h-full overflow-scroll py-2">
         <PipelineStudioProblemsPanel />
-      </TabsContent>
-      {/* <TabsContent value="suggestions">Suggestions placeholder</TabsContent> */}
-    </Tabs>
+      </Tabs.Content>
+      {/* <Tabs.Content value="suggestions">Suggestions placeholder</Tabs.Content> */}
+    </Tabs.Root>
   )
 }

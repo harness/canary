@@ -33,7 +33,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
         </DropdownMenu.Item>
         <DropdownMenu.Separator />
         <DropdownMenu.Item
-          key="add"
+          key="add-before"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'before', YamlEntityType.Stage) // TODO what to add
@@ -43,7 +43,7 @@ export const StageNodeContextMenu = (): (() => React.ReactNode)[] | null | any =
           <Text wrap="nowrap">Add stage before</Text>
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          key="add"
+          key="add-after"
           className="flex items-center gap-1.5"
           onSelect={() => {
             onAddIntention(contextMenuData.nodeData, 'after', YamlEntityType.Stage) // TODO what to add

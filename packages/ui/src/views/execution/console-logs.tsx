@@ -1,9 +1,9 @@
-import { FC, useCallback } from 'react'
+import { FC, useCallback, useEffect, useRef } from 'react'
 
-import { Text } from '@/components'
+import { cn } from '@utils/cn'
 
-import { formatDuration, formatTimestamp } from '../../utils/TimeUtils'
-import { ConsoleLogsProps, LivelogLine } from './types'
+import { formatTimestamp } from '../../utils/TimeUtils'
+import { ConsoleLogsProps, LivelogLine, LivelogLineType } from './types'
 
 export const createStreamedLogLineElement = (log: LivelogLine) => {
   const lineElement = document.createElement('div')
@@ -34,48 +34,59 @@ export const createStreamedLogLineElement = (log: LivelogLine) => {
 }
 
 const ConsoleLogs: FC<ConsoleLogsProps> = ({ logs, query }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollTop = containerRef.current.scrollHeight
+    }
+  }, [logs])
+
   const logText = useCallback(
     (log: string) => {
-      const match = log.match(new RegExp(query || ''))
-      if (!match || !query?.length) {
-        return <Text className="ml-2 flex gap-1 font-mono text-sm font-normal text-ring">{log}</Text>
+      if (!query?.length) {
+        return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
       }
-      const matchIndex = match?.index || 0
-      const startText = log.slice(0, matchIndex)
-      const matchedText = log.slice(matchIndex, matchIndex + query?.length)
-      const endText = log.slice(matchIndex + query?.length)
+
+      const match = log.match(new RegExp(query, 'i'))
+      if (!match) return <span className="ml-2 flex gap-1 font-mono text-sm font-normal">{log}</span>
+
+      const matchIndex = match.index ?? 0
       return (
-        <Text className="flex gap-1 font-mono text-sm font-normal text-ring">
-          {startText ? <span>{startText}</span> : null}
-          {matchedText ? <mark>{matchedText}</mark> : null}
-          {endText ? <span>{endText}</span> : null}
-        </Text>
+        <span className="flex gap-1 font-mono text-sm font-normal">
+          {log.slice(0, matchIndex)}
+          <mark>{log.slice(matchIndex, matchIndex + query.length)}</mark>
+          {log.slice(matchIndex + query.length)}
+        </span>
       )
     },
     [query]
   )
 
+  if (!logs || !logs.length) return null
+
   return (
-    <>
-      {logs
-        .filter(item => item !== null)
-        .map(({ pos, out, time, duration }, index) => (
-          <div className="mb-2 flex items-baseline justify-between leading-[21px]" key={index}>
-            <div className="flex items-baseline gap-2">
-              {pos !== undefined && !isNaN(pos) && pos >= 0 && (
-                <Text className="text-log flex min-w-5 justify-end">{pos}</Text>
+    <div ref={containerRef} className="overflow-y-auto pl-5">
+      {logs.filter(Boolean).map(({ pos, out, time, type = LivelogLineType.INFO }, index) => (
+        <div className="w-full" key={index}>
+          <div className="flex w-full items-baseline gap-5 font-mono text-15">
+            {pos !== undefined && pos >= 0 ? (
+              <span className="text-log flex min-w-5 justify-end text-foreground-7">{pos}</span>
+            ) : null}
+            <span
+              className={cn(
+                'text-log flex shrink-0 grow font-normal',
+                type === LivelogLineType.ERROR && 'text-foreground-danger bg-tag-background-red-2',
+                type === LivelogLineType.WARNING && 'text-foreground-alert bg-tag-background-amber-2'
               )}
-              {time ? (
-                <Text className="text-log flex text-sm font-normal">[{formatTimestamp(time * 1_000)}]</Text>
-              ) : null}
+            >
+              {time ? `[${formatTimestamp(time * 1_000)}]` : null}
               {out ? logText(out) : null}
-            </div>
-            <Text className="text-log mr-2 text-sm font-normal">
-              {formatDuration(duration && duration > 0 ? duration * 1_000 : 0)}
-            </Text>
+            </span>
           </div>
-        ))}
-    </>
+        </div>
+      ))}
+    </div>
   )
 }
 

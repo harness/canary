@@ -1,3 +1,5 @@
+import { parse } from 'yaml'
+
 import {
   AnyContainerNodeType,
   LeafContainerNodeType,
@@ -16,6 +18,34 @@ import { YamlEntityType } from '../types/yaml-entity-type'
 import { getIconBasedOnStep } from './step-icon-utils'
 import { getNameBasedOnStep } from './step-name-utils'
 
+export const yamlString2Nodes = (
+  yaml: string,
+  options: {
+    selectedPath?: string
+    getStepIcon?: (step: Record<string, any>) => JSX.Element
+  } = {}
+) => {
+  const yamlJson = parse(yaml)
+  return yaml2Nodes(yamlJson, options)
+}
+
+export const processGithubJobsToStages = (yamlJson: Record<string, any>) => {
+  if (yamlJson.jobs) {
+    yamlJson.pipeline = yamlJson.pipeline || {}
+    yamlJson.pipeline.stages = yamlJson.pipeline.stages || []
+
+    Object.entries(yamlJson.jobs).forEach(([key, value]) => {
+      if (typeof value === 'object' && value !== null) {
+        yamlJson.pipeline.stages.push({ ...value, id: key, name: key })
+      }
+    })
+
+    delete yamlJson.jobs
+    return yamlJson
+  }
+  return yamlJson
+}
+
 export const yaml2Nodes = (
   yamlObject: Record<string, any>,
   options: {
@@ -24,8 +54,8 @@ export const yaml2Nodes = (
   } = {}
 ): AnyContainerNodeType[] => {
   const nodes: AnyContainerNodeType[] = []
-
-  const stages = yamlObject?.pipeline?.stages ?? []
+  const processedYamlObject = processGithubJobsToStages(yamlObject)
+  const stages = processedYamlObject?.pipeline?.stages ?? []
 
   if (stages) {
     const stagesNodes = processStages(stages, 'pipeline.stages', options)
@@ -60,8 +90,8 @@ const processStages = (
       return {
         type: ContentNodeType.SerialStageGroup,
         config: {
-          minWidth: 192,
-          minHeight: 40,
+          maxWidth: 200,
+          minHeight: 50,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
@@ -82,8 +112,8 @@ const processStages = (
       return {
         type: ContentNodeType.ParallelStageGroup,
         config: {
-          minWidth: 192,
-          minHeight: 40,
+          maxWidth: 200,
+          minHeight: 50,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
@@ -106,8 +136,8 @@ const processStages = (
       return {
         type: ContentNodeType.Stage,
         config: {
-          minWidth: 192,
-          minHeight: 40,
+          minWidth: 200,
+          minHeight: 50,
           hideDeleteButton: true,
           hideBeforeAdd: true,
           hideAfterAdd: true
@@ -143,8 +173,8 @@ const processSteps = (
       return {
         type: ContentNodeType.SerialStepGroup,
         config: {
-          minWidth: 192,
-          minHeight: 40,
+          maxWidth: 200,
+          minHeight: 50,
           hideDeleteButton: true,
           hideCollapseButton: false
         },
@@ -164,8 +194,8 @@ const processSteps = (
       return {
         type: ContentNodeType.ParallelStepGroup,
         config: {
-          minWidth: 192,
-          minHeight: 40,
+          maxWidth: 200,
+          minHeight: 50,
           hideDeleteButton: true
         },
         data: {
@@ -185,8 +215,9 @@ const processSteps = (
       return {
         type: ContentNodeType.Step,
         config: {
-          maxWidth: 140,
-          width: 140,
+          maxWidth: 200,
+          minHeight: 50,
+          width: 200,
           hideDeleteButton: false,
           selectable: true
         },

@@ -19,11 +19,6 @@ export interface TypesSpace {
   updated?: number
 }
 
-export interface ISpaceStore {
-  space: TypesSpace | null
-  setSpace: (space: TypesSpace | null) => void
-}
-
 export interface IMemberListStore {
   memberList: MemberData[]
   spaceId: string

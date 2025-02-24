@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import { ImportRepositoryRequestBody, useImportRepositoryMutation } from '@harnessio/code-service-client'
 import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@harnessio/ui/views'
@@ -6,17 +6,18 @@ import { ImportRepoFormFields, RepoImportPage as RepoImportPageView } from '@har
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetSpaceURLParam } from '../../framework/hooks/useGetSpaceParam'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
-import { PathParams } from '../../RouteDefinitions'
 import { getRepoProviderConfig, PROVIDER_TYPE_MAP } from './constants/import-providers-map'
+import { useRepoStore } from './stores/repo-list-store'
 
 export const ImportRepo = () => {
   const routes = useRoutes()
-  const { spaceId } = useParams<PathParams>()
   const spaceURL = useGetSpaceURLParam()
   const navigate = useNavigate()
   const { mutate: importRepoMutation, error, isLoading } = useImportRepositoryMutation({})
+  const { setImportRepoIdentifier } = useRepoStore()
 
   const onSubmit = async (data: ImportRepoFormFields) => {
+    setImportRepoIdentifier(data.identifier)
     const providerRepo = getRepoProviderConfig(data)
     const body: ImportRepositoryRequestBody = {
       identifier: data.identifier,
@@ -33,19 +34,21 @@ export const ImportRepo = () => {
     }
     importRepoMutation(
       {
-        queryParams: {},
+        queryParams: {
+          space_path: spaceURL
+        },
         body: body
       },
       {
         onSuccess: () => {
-          navigate(routes.toRepositories({ spaceId }))
+          navigate(routes.toRepositories({ spaceId: spaceURL }))
         }
       }
     )
   }
 
   const onCancel = () => {
-    navigate(routes.toRepositories({ spaceId }))
+    navigate(routes.toRepositories({ spaceId: spaceURL }))
   }
 
   return (

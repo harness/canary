@@ -15,6 +15,7 @@ interface BranchSelectorProps {
   isBranchOnly?: boolean
   searchQuery?: string
   setSearchQuery: (query: string) => void
+  dynamicWidth?: boolean
 }
 export const BranchSelector: FC<BranchSelectorProps> = ({
   useRepoBranchesStore,
@@ -25,7 +26,8 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
   onSelectBranch,
   isBranchOnly = false,
   searchQuery = '',
-  setSearchQuery
+  setSearchQuery,
+  dynamicWidth = false
 }) => {
   const { selectedBranchTag, branchList, tagList, repoId, spaceId } = useRepoBranchesStore()
 
@@ -37,7 +39,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <Button
-          className="flex items-center gap-1.5 overflow-hidden px-3 data-[state=open]:border-borders-9 bg-input-background"
+          className="flex items-center gap-1.5 overflow-hidden bg-input-background px-3 data-[state=open]:border-borders-9"
           variant="outline"
           size={buttonSize}
         >
@@ -63,6 +65,7 @@ export const BranchSelector: FC<BranchSelectorProps> = ({
         useTranslationStore={useTranslationStore}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
+        dynamicWidth={dynamicWidth}
       />
     </DropdownMenu.Root>
   )

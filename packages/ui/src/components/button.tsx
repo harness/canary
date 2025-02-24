@@ -6,7 +6,7 @@ import { cn } from '@utils/cn'
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:pointer-events-none disabled:cursor-not-allowed',
+  'inline-flex items-center justify-center whitespace-nowrap rounded text-14 font-medium transition-colors disabled:cursor-not-allowed',
   {
     variants: {
       variant: {
@@ -45,9 +45,9 @@ const buttonVariants = cva(
       },
       theme: {
         default: '',
-        error: 'border-borders-danger/30 bg-button-background-danger-1 hover:bg-button-background-danger-2 text-error',
+        error: 'border-borders-danger/30 bg-button-background-danger-1 text-error hover:bg-button-background-danger-2',
         warning:
-          'border-borders-danger/30 bg-button-background-danger-1 hover:bg-button-background-danger-2 text-warning',
+          'border-borders-danger/30 bg-button-background-danger-1 text-warning hover:bg-button-background-danger-2',
         success:
           'border-button-border-success-1 bg-button-background-success-1 text-button-foreground-success-1 hover:bg-button-background-success-2',
         muted: 'border-tertiary-background/20 bg-tertiary-background/10 text-tertiary-background',

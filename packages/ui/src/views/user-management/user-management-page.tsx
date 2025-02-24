@@ -1,4 +1,4 @@
-import { Button, ListActions, PaginationComponent, SearchBox, Spacer, Text } from '@/components'
+import { Button, ListActions, Pagination, SearchBox, Spacer, Text } from '@/components'
 import { SandboxLayout } from '@/views'
 
 import { UsersList } from './components/users-list'
@@ -41,12 +41,7 @@ export const UserManagementPage: React.FC<IUserManagementPageProps> = ({
         <Spacer size={5} />
         {renderUserListContent()}
         <Spacer size={8} />
-        <PaginationComponent
-          totalPages={totalPages}
-          currentPage={currentPage}
-          goToPage={(pageNum: number) => setPage(pageNum)}
-          t={t}
-        />
+        <Pagination totalPages={totalPages} currentPage={currentPage} goToPage={setPage} t={t} />
       </SandboxLayout.Content>
     </SandboxLayout.Main>
   )

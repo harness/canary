@@ -15,7 +15,7 @@ const LabelsList: FC<LabelsListProps> = ({ labels, className }) => {
   }
 
   return (
-    <div className={cn('flex flex-wrap gap-1.5', className)}>
+    <div className={cn('flex flex-wrap gap-1.5 pl-[22px]', className)}>
       {labels.map(label => (
         <LabelMarker key={label.key} color={label.color} label={label.key} value={label?.value} />
       ))}

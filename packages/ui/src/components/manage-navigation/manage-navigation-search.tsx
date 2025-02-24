@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 
-import { Button, Popover, PopoverContent, PopoverTrigger, ScrollArea, SearchBox, Text } from '@/components'
+import { Button, Popover, ScrollArea, SearchBox, Text } from '@/components'
 import { useDebounceSearch } from '@/hooks'
 import { MenuGroupType, NavbarItemType } from '@components/navbar/types'
 import { cn } from '@utils/cn'
@@ -84,8 +84,8 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
     filteredItems.length + filteredItems.reduce((acc, category) => acc + category.items.length, 0)
 
   return (
-    <Popover open={isSearchDialogOpen} onOpenChange={setSearchDialogOpen}>
-      <PopoverTrigger asChild>
+    <Popover.Root open={isSearchDialogOpen} onOpenChange={setSearchDialogOpen}>
+      <Popover.Trigger asChild>
         <SearchBox.Root
           className="w-full"
           inputClassName="h-9 placeholder:text-foreground-5"
@@ -96,8 +96,8 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
           hasSearchIcon={false}
           onFocus={handleInputFocus}
         />
-      </PopoverTrigger>
-      <PopoverContent
+      </Popover.Trigger>
+      <Popover.Content
         className="w-[368px] overflow-hidden !rounded border-borders-1 bg-background-2 !p-0"
         ref={popoverRef}
         align="start"
@@ -145,7 +145,7 @@ export const ManageNavigationSearch = ({ navbarMenuData, addToPinnedItems }: Man
             )}
           </div>
         </ScrollArea>
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   )
 }

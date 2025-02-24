@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 
-import { useTranslationsStore } from '@utils/viewUtils'
+import { useTranslationStore } from '@utils/viewUtils'
 
 import { ICommitDetailsStore, RepoCommitDetailsView } from '@harnessio/ui/views'
 
@@ -10,6 +10,6 @@ export const CommitDetailsView = () => {
   const useCommitDetailsStore = useCallback((): ICommitDetailsStore => commitDetailsStore, [])
 
   return (
-    <RepoCommitDetailsView useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationsStore} />
+    <RepoCommitDetailsView useCommitDetailsStore={useCommitDetailsStore} useTranslationStore={useTranslationStore} />
   )
 }

@@ -82,7 +82,7 @@ export interface BranchData {
     name: string
     avatarUrl: string
   }
-  behindAhead: {
+  behindAhead?: {
     behind: number
     ahead: number
     default: boolean

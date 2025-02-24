@@ -28,7 +28,7 @@ export interface BranchProps {
       error: number
     }
   }
-  behindAhead: {
+  behindAhead?: {
     behind?: number
     ahead?: number
     default?: boolean
@@ -40,6 +40,7 @@ interface RoutingProps {
   toBranchRules: () => string
   toPullRequestCompare: ({ diffRefs }: { diffRefs: string }) => string
   toPullRequest: ({ pullRequestId }: { pullRequestId: number }) => string
+  toCode: ({ branchName }: { branchName: string }) => string
 }
 
 export interface BranchListPageProps extends Partial<RoutingProps> {
@@ -77,11 +78,10 @@ export interface CreateBranchDialogProps {
   open: boolean
   onClose: () => void
   onSubmit: (formValues: CreateBranchFormFields) => void
-  isLoadingBranches: boolean
-  branches?: Branch[]
   error?: string
   isCreatingBranch?: boolean
   useTranslationStore: () => TranslationStore
   defaultBranch?: string
   handleChangeSearchValue: Dispatch<SetStateAction<string>>
+  useRepoBranchesStore: () => IBranchSelectorStore
 }

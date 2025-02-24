@@ -1,1 +1,10 @@
-{}
+{
+  "default": {
+    "$type": "sizing",
+    "$value": "{btn.size.default}"
+  },
+  "compact": {
+    "$type": "sizing",
+    "$value": "{btn.size.sm}"
+  }
+}

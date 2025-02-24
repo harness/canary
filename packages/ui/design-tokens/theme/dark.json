@@ -167,64 +167,66 @@
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
-  "primary": {
-    "text": {
-      "$type": "color",
-      "$value": "{colors.pure.white}",
-      "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
-    },
-    "background": {
-      "$type": "color",
-      "$value": "{colors.accent.600}",
-      "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
-    }
-  },
-  "secondary": {
-    "solid": {
+  "action": {
+    "primary": {
       "text": {
         "$type": "color",
-        "$value": "{text.2}",
-        "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
+        "$value": "{colors.pure.white}",
+        "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
       },
       "background": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
+        "$value": "{colors.accent.600}",
+        "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
       }
     },
-    "soft": {
-      "unselected": {
+    "secondary": {
+      "solid": {
         "text": {
           "$type": "color",
           "$value": "{text.2}",
-          "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
         },
-        "icon": {
+        "background": {
           "$type": "color",
-          "$value": "{text.3}",
-          "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.2}",
-          "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
+          "$value": "{colors.chrome.850}",
+          "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
         }
       },
-      "selected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
+      "soft": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.2}",
+            "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
+          }
         },
-        "icon": {
-          "$type": "color",
-          "$value": "{text.1}",
-          "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.1}",
-          "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.1}",
+            "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
+          }
         }
       }
     }

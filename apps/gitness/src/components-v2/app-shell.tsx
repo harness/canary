@@ -218,12 +218,15 @@ export const AppShellMFE = () => {
 }
 
 function BreadcrumbsAndOutlet({ className }: { className?: string }) {
+  useRepoImportEvents()
+
   return (
     <div className={cn('flex flex-col', className)}>
       <div className="layer-high sticky top-0 bg-background-1">
         <Breadcrumbs />
       </div>
       <Outlet />
+      <Toaster />
     </div>
   )
 }

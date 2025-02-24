@@ -10,6 +10,7 @@ import {
 import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
+import { useMFEContext } from '../../framework/hooks/useMFEContext'
 import { parseAsInteger, useQueryState } from '../../framework/hooks/useQueryState'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
 import { PathParams } from '../../RouteDefinitions'
@@ -26,6 +27,7 @@ export default function PullRequestListPage() {
   const [filterValues, setFilterValues] = useState<ListPullReqQueryQueryParams>({})
   const [principalsSearchQuery, setPrincipalsSearchQuery] = useState('')
   const [principalData, setPrincipalData] = useState<TypesPrincipalInfo[]>()
+  const mfeContext = useMFEContext()
 
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
@@ -36,8 +38,14 @@ export default function PullRequestListPage() {
   )
 
   const { data: { body: principalDataList } = {} } = useListPrincipalsQuery({
-    // @ts-expect-error : BE issue - not implemnted
-    queryParams: { page: 1, limit: 100, type: 'user', query: principalsSearchQuery }
+    queryParams: {
+      page: 1,
+      limit: 100,
+      // @ts-expect-error : BE issue - not implemnted
+      type: 'user',
+      query: principalsSearchQuery,
+      accountIdentifier: mfeContext?.scope?.accountId
+    }
   })
 
   useEffect(() => {

@@ -1,10 +1,26 @@
 {
   "default": {
     "$type": "sizing",
-    "$value": "{btn.size.default}"
+    "$value": "{size.9}",
+    "$description": "36px\n"
   },
   "compact": {
     "$type": "sizing",
-    "$value": "{btn.size.sm}"
+    "$value": "{size.8}",
+    "$description": "32px"
+  },
+  "input text": {
+    "$type": "fontSizes",
+    "$value": "{fontSize.2}",
+    "$description": "14px"
+  },
+  "input": {
+    "Radius": {
+      "default": {
+        "$type": "borderRadius",
+        "$value": "{rounded.3}",
+        "$description": "6px"
+      }
+    }
   }
 }

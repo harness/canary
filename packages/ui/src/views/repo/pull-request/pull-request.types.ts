@@ -227,7 +227,7 @@ export interface PullRequestPageProps {
   usePullRequestListStore: () => PullRequestListStore
   repoId?: string
   spaceId?: string
-  principalData?: TypesPrincipalInfo[]
+  principalData?: Partial<PrincipalType>[]
   setPrincipalsSearchQuery?: (query: string) => void
   onFilterChange?: (filterValues: PRListFilters) => void
   useTranslationStore: () => TranslationStore

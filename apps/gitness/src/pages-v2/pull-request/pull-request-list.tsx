@@ -3,9 +3,9 @@ import { useParams } from 'react-router-dom'
 
 import {
   ListPullReqQueryQueryParams,
-  TypesPrincipalInfo,
   useListPrincipalsQuery,
-  useListPullReqQuery
+  useListPullReqQuery,
+  type TypesPrincipalInfo
 } from '@harnessio/code-service-client'
 import { PullRequestList as SandboxPullRequestListPage, type PRListFilters } from '@harnessio/ui/views'
 

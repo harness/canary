@@ -24,9 +24,13 @@ import { SandboxLayout, TranslationStore } from '@/views'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 
+const NAMESCHEMA = /^[a-zA-Z_][0-9a-zA-Z-_.$]*$/
+
 // Define the form schema with optional fields for gitignore and license
 const formSchema = z.object({
-  name: z.string().min(1, { message: 'Please provide a name' }),
+  name: z.string().min(1, { message: 'Please provide a name' }).regex(NAMESCHEMA, {
+    message: 'Name must start with a letter or _ and only contain [a-zA-Z0-9-_.]'
+  }),
   description: z.string(),
   gitignore: z.string().optional(),
   license: z.string().optional(),

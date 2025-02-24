@@ -288,7 +288,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRuleClick = (identifier: string) => {
-    navigate(routes.toRepoBranchRules({ spaceId, repoId: repoName, identifier }))
+    navigate(routes.toRepoBranchRule({ spaceId, repoId: repoName, identifier }))
   }
 
   const handleDeleteRule = (identifier: string) => {

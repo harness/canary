@@ -86,7 +86,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   const { data: { body: branches } = {} } = useListBranchesQuery(
     {
       repo_ref: repoRef,
-      queryParams: { order: 'asc', page: 1, limit: 100, query: branchQuery }
+      queryParams: { order: 'asc', page: 1, limit: 30, query: branchQuery }
     },
     {
       onError: (error: ListBranchesErrorResponse) => {
@@ -111,7 +111,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   )
 
   const {
-    mutate: updateDescription,
+    mutateAsync: updateDescription,
     isLoading: updatingDescription,
     isSuccess: updateDescriptionSuccess
   } = useUpdateRepositoryMutation(
@@ -149,7 +149,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   )
 
   const {
-    mutate: updateBranch,
+    mutateAsync: updateBranch,
     isLoading: updatingBranch,
     isSuccess: updateBranchSuccess
   } = useUpdateDefaultBranchMutation(
@@ -170,7 +170,7 @@ export const RepoSettingsGeneralPageContainer = () => {
   )
 
   const {
-    mutate: updatePublicAccess,
+    mutateAsync: updatePublicAccess,
     isLoading: updatingPublicAccess,
     isSuccess: updatePublicAccessSuccess
   } = useUpdatePublicAccessMutation(
@@ -236,10 +236,12 @@ export const RepoSettingsGeneralPageContainer = () => {
     deleteRepository({ repo_ref: identifier })
   }
 
-  const handleRepoUpdate = (data: RepoUpdateData) => {
-    updateDescription({ body: { description: data.description } })
-    updateBranch({ body: { name: data.branch } })
-    updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
+  const handleRepoUpdate = async (data: RepoUpdateData) => {
+    await updateDescription({ body: { description: data.description } })
+    await updateBranch({ body: { name: data.branch } })
+    await updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
+    queryClient.invalidateQueries({ queryKey: ['listBranches', repoRef] })
+    queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
   }
 
   const selectBranchOrTag = useCallback(
@@ -257,24 +259,28 @@ export const RepoSettingsGeneralPageContainer = () => {
   )
 
   useEffect(() => {
+    console.log('updating branch list', branches, repoData?.default_branch)
+    if (branches) {
+      setBranchList(transformBranchList(branches, repoData?.default_branch))
+      setApiError(null)
+    }
+  }, [branches, setBranchList, repoData?.default_branch])
+
+  useEffect(() => {
     if (!repoData) return
+    console.log('repoData?.default_branch', repoData?.default_branch)
+    // console.log(branchList)
 
     setRepoData(repoData)
     setApiError(null)
     const defaultBranch = branchList.find(branch => branch.default)
+    console.log('defaultBranch', defaultBranch)
     setSelectedBranchTag({
       name: defaultBranch?.name || repoData?.default_branch || '',
       sha: defaultBranch?.sha || '',
       default: true
     })
-  }, [repoData, setRepoData])
-
-  useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, ''))
-      setApiError(null)
-    }
-  }, [branches, setBranchList])
+  }, [repoData?.default_branch, repoData, setRepoData, branchList])
 
   useEffect(() => {
     if (rulesData) {

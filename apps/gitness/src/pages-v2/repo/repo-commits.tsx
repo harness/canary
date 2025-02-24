@@ -113,7 +113,7 @@ export default function RepoCommitsPage() {
   )
 
   useEffect(() => {
-    if (repository) {
+    if (repository && selectedBranchTag.name === '') {
       const defaultBranchSha = branches?.find(branch => branch.name === repository?.default_branch)?.sha || ''
       setSelectedBranchTag({ name: repository.default_branch || '', sha: defaultBranchSha })
     }

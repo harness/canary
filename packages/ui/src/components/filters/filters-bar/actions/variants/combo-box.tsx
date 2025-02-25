@@ -32,7 +32,7 @@ export default function ComboBox({
   const debouncedSearch = onSearch ? debounce(onSearch, 400) : undefined
 
   const renderConent = () => {
-    if (!isLoading) {
+    if (isLoading) {
       return <Command.Loading className="text-foreground-5 px-2 py-4 text-sm">Loading Authors...</Command.Loading>
     }
 

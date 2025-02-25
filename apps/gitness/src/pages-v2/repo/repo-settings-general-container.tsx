@@ -255,11 +255,10 @@ export const RepoSettingsGeneralPageContainer = () => {
       setSelectedBranchTag(branch)
       setSelectedRefType(type)
     },
-    [spaceId, branchList]
+    [branchList, setSelectedBranchTag, setSelectedRefType]
   )
 
   useEffect(() => {
-    console.log('updating branch list', branches, repoData?.default_branch)
     if (branches) {
       setBranchList(transformBranchList(branches, repoData?.default_branch))
       setApiError(null)
@@ -268,19 +267,16 @@ export const RepoSettingsGeneralPageContainer = () => {
 
   useEffect(() => {
     if (!repoData) return
-    console.log('repoData?.default_branch', repoData?.default_branch)
-    // console.log(branchList)
 
     setRepoData(repoData)
     setApiError(null)
     const defaultBranch = branchList.find(branch => branch.default)
-    console.log('defaultBranch', defaultBranch)
     setSelectedBranchTag({
       name: defaultBranch?.name || repoData?.default_branch || '',
       sha: defaultBranch?.sha || '',
       default: true
     })
-  }, [repoData?.default_branch, repoData, setRepoData, branchList])
+  }, [repoData?.default_branch, repoData, setRepoData, branchList, setSelectedBranchTag])
 
   useEffect(() => {
     if (rulesData) {

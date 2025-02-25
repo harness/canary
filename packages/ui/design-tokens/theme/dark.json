@@ -449,7 +449,7 @@
         }
       }
     },
-    "progress": {
+    "slider": {
       "track": {
         "base": {
           "$type": "color",

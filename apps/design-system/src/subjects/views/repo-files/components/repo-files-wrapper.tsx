@@ -2,7 +2,7 @@ import { FC, useCallback, useMemo } from 'react'
 
 import { noop, useTranslationStore } from '@utils/viewUtils'
 
-import { BranchSelectorTab, CodeModes, IBranchSelectorStore, IBranchStateStore, RepoFiles } from '@harnessio/ui/views'
+import { BranchSelectorTab, CodeModes, IBranchSelectorStore, RepoFiles } from '@harnessio/ui/views'
 
 import { RepoFileContentViewer } from './repo-file-content-viewer'
 import { RepoFileEdit } from './repo-file-edit'
@@ -32,20 +32,6 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       setBranchList: noop,
       setDefaultBranch: noop,
       setPaginationFromHeaders: noop,
-      states: {},
-      getState: (_namespace: string): IBranchStateStore => ({
-        selectedBranchTag: { name: '', sha: '' },
-        selectedRefType: BranchSelectorTab.BRANCHES,
-        tagList: [],
-        branchList: [],
-        spaceId: '',
-        repoId: '',
-        defaultBranch: '',
-        page: 1,
-        xNextPage: 0,
-        xPrevPage: 0
-      }),
-      setState: noop
     }),
     []
   )

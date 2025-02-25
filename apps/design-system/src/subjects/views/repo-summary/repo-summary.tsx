@@ -5,7 +5,6 @@ import { useTranslationStore } from '@utils/viewUtils'
 import {
   BranchSelectorTab,
   IBranchSelectorStore,
-  IBranchStateStore,
   RepoSummaryView,
   RepoSummaryViewProps
 } from '@harnessio/ui/views'
@@ -36,20 +35,6 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       setBranchList: noop,
       setDefaultBranch: noop,
       setPaginationFromHeaders: noop,
-      states: {},
-      getState: (_namespace: string): IBranchStateStore => ({
-        selectedBranchTag: { name: '', sha: '' },
-        selectedRefType: BranchSelectorTab.BRANCHES,
-        tagList: [],
-        branchList: [],
-        spaceId: '',
-        repoId: '',
-        defaultBranch: '',
-        page: 1,
-        xNextPage: 0,
-        xPrevPage: 0
-      }),
-      setState: noop
     }),
     []
   )

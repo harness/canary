@@ -25,7 +25,7 @@ export function CreateBranchDialog({
   setSearchQuery
 }: CreateBranchDialogProps) {
   const { t } = useTranslationStore()
-  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore('create-branch-modal')
+  const { setSelectedBranchTag, defaultBranch } = useRepoBranchesStore()
 
   const {
     register,
@@ -99,7 +99,6 @@ export function CreateBranchDialog({
             <ControlGroup>
               <BranchSelector
                 useRepoBranchesStore={useRepoBranchesStore}
-                branchesStoreNamespace="create-branch-modal"
                 useTranslationStore={useTranslationStore}
                 onSelectBranch={value => {
                   handleSelectChange('target', value.name)

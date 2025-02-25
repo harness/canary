@@ -5,7 +5,6 @@ import { noop, useTranslationStore } from '@utils/viewUtils'
 import {
   BranchSelectorTab,
   IBranchSelectorStore,
-  IBranchStateStore,
   RepoCommitsView as RepoCommitsUiView
 } from '@harnessio/ui/views'
 
@@ -32,20 +31,6 @@ export const RepoCommitsView = () => {
       setBranchList: noop,
       setDefaultBranch: noop,
       setPaginationFromHeaders: noop,
-      states: {},
-      getState: (_namespace: string): IBranchStateStore => ({
-        selectedBranchTag: { name: '', sha: '' },
-        selectedRefType: BranchSelectorTab.BRANCHES,
-        tagList: [],
-        branchList: [],
-        spaceId: '',
-        repoId: '',
-        defaultBranch: '',
-        page: 1,
-        xNextPage: 0,
-        xPrevPage: 0
-      }),
-      setState: noop
     }),
     []
   )

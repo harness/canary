@@ -40,13 +40,6 @@ export function RepoBranchesListPage() {
     branchList
   } = useRepoBranchesStore()
 
-  const {
-    branchList: branchListCreateBranchModal,
-    setBranchList: setBranchListCreateBranchModal,
-    setDefaultBranch: setDefaultBranchCreateBranchModal,
-    setSelectedBranchTag: setSelectedBranchTagCreateBranchModal
-  } = useRepoBranchesStore('create-branch-modal')
-
   const [query, setQuery] = useQueryState('query')
   const [createBranchSearchQuery, setCreateBranchSearchQuery] = useState('')
   const { queryPage } = usePaginationQueryStateWithStore({ page, setPage })
@@ -68,15 +61,6 @@ export function RepoBranchesListPage() {
     repo_ref: repoRef
   })
 
-  const { data: { body: searchBranches } = {} } = useListBranchesQuery({
-    queryParams: {
-      query: createBranchSearchQuery,
-      limit: 10,
-      order: orderSortDate.DESC
-    },
-    repo_ref: repoRef
-  })
-
   const {
     isLoading: isLoadingDivergence,
     data: { body: _branchDivergence = [] } = {},
@@ -91,12 +75,6 @@ export function RepoBranchesListPage() {
       }
     }
   )
-
-  useEffect(() => {
-    if (!searchBranches) return
-
-    setBranchListCreateBranchModal(transformBranchList(searchBranches, repoMetadata?.default_branch))
-  }, [searchBranches, repoMetadata?.default_branch])
 
   const handleInvalidateBranchList = () => {
     queryClient.invalidateQueries({ queryKey: ['listBranches'] })
@@ -175,18 +153,6 @@ export function RepoBranchesListPage() {
 
     setDefaultBranch(repoMetadata?.default_branch ?? '')
   }, [branchList, repoMetadata?.default_branch])
-
-  useEffect(() => {
-    const defaultBranchCreateBranchModal = branchListCreateBranchModal?.find(branch => branch.default)
-
-    setSelectedBranchTagCreateBranchModal({
-      name: defaultBranchCreateBranchModal?.name || repoMetadata?.default_branch || '',
-      sha: defaultBranchCreateBranchModal?.sha || '',
-      default: true
-    })
-
-    setDefaultBranchCreateBranchModal(repoMetadata?.default_branch ?? '')
-  }, [branchListCreateBranchModal, repoMetadata?.default_branch])
 
   return (
     <>

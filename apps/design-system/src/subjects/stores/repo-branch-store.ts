@@ -1,6 +1,6 @@
 import { noop } from '@utils/viewUtils.ts'
 
-import { BranchSelectorTab, IBranchSelectorStore, IBranchStateStore } from '@harnessio/ui/views'
+import { BranchSelectorTab, IBranchSelectorStore } from '@harnessio/ui/views'
 
 export const repoBranchListStore = {
   selectedBranchTag: { name: 'main', sha: '1d0e5a9461b340ebb3d7e092a2d35ff6d0d5c952', default: true },
@@ -47,18 +47,4 @@ export const repoBranchListStore = {
   setDefaultBranch: noop,
   setPage: noop,
   setPaginationFromHeaders: noop,
-  states: {},
-  getState: (_namespace: string): IBranchStateStore => ({
-    selectedBranchTag: { name: '', sha: '' },
-    selectedRefType: BranchSelectorTab.BRANCHES,
-    tagList: [],
-    branchList: [],
-    spaceId: '',
-    repoId: '',
-    defaultBranch: '',
-    page: 1,
-    xNextPage: 0,
-    xPrevPage: 0
-  }),
-  setState: noop
 } as IBranchSelectorStore

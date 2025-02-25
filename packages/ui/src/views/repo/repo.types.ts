@@ -108,7 +108,9 @@ export type CommitDivergenceType = {
   behind?: number
 }
 
-export interface IBranchStateStore {
+
+export interface IBranchSelectorStore {
+  // States
   spaceId: string
   repoId: string
   defaultBranch: string
@@ -119,14 +121,6 @@ export interface IBranchStateStore {
   page: number
   xNextPage: number
   xPrevPage: number
-}
-
-export interface IBranchSelectorStore extends IBranchStateStore {
-  // Namespaced state management
-  states: Record<string, IBranchStateStore>
-  getState: (namespace: string) => IBranchStateStore
-  setState: (namespace: string, updates: Partial<IBranchStateStore>) => void
-
   // Methods
   setSelectedBranchTag: (selectedBranchTag: BranchSelectorListItem) => void
   setSelectedRefType: (selectedRefType: BranchSelectorTab) => void

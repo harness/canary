@@ -1,16 +1,14 @@
 {
   "dropdown-item": {
-    "py": {
+    "horizontalpadding": {
       "$type": "spacing",
-      "$value": "{spacing.2-half}"
-    },
-    "px": {
-      "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.1-half}",
+      "$description": "6px\n"
     },
     "gap": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.2}",
+      "$description": "8px"
     },
     "radius": {
       "$type": "borderRadius",
@@ -22,13 +20,15 @@
     }
   },
   "dropdown-sub-item": {
-    "py": {
+    "horizontalpadding": {
       "$type": "spacing",
-      "$value": "{spacing.1-half}"
+      "$value": "{spacing.2-half}",
+      "$description": "10px"
     },
-    "px": {
+    "verticalpadding": {
       "$type": "spacing",
-      "$value": "{spacing.2}"
+      "$value": "{spacing.2}",
+      "$description": "8px"
     },
     "gap": {
       "$type": "spacing",
@@ -41,6 +41,13 @@
     "size": {
       "$type": "sizing",
       "$value": "{size.8}"
+    }
+  },
+  "container": {
+    "verticalpadding": {
+      "$type": "spacing",
+      "$value": "{spacing.1}",
+      "$description": "4px\n"
     }
   }
 }

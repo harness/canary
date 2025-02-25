@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { orderSortDate, PRCommentFilterType } from './types'
 
@@ -40,12 +40,15 @@ export const usePrFilters = () => {
   const [dateOrderSort, setDateOrderSort] = useState<{ label: string; value: string }>(dateFilters[0])
   const [activityFilter, setActivityFilter] = useState<{ label: string; value: string }>(activityFilters[0])
 
-  return {
-    activityFilters,
-    dateFilters,
-    dateOrderSort,
-    setDateOrderSort,
-    activityFilter,
-    setActivityFilter
-  }
+  return useMemo(
+    () => ({
+      activityFilters,
+      dateFilters,
+      dateOrderSort,
+      setDateOrderSort,
+      activityFilter,
+      setActivityFilter
+    }),
+    [dateOrderSort, activityFilter]
+  )
 }

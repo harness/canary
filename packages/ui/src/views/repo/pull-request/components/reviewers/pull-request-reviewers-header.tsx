@@ -65,33 +65,39 @@ const ReviewersHeader = ({
               </div>
             )}
             <div className="max-h-[360px] overflow-y-auto">
-              {usersList?.map(({ display_name, id, uid }) => {
-                if (uid === currentUserId) return null
-                const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
-                return (
-                  <DropdownMenu.Item
-                    className={cn('py-2', {
-                      'pl-7': !isSelected
-                    })}
-                    key={uid}
-                    onClick={() => {
-                      if (isSelected) {
-                        handleDelete(id as number)
-                      } else {
-                        addReviewers?.(id)
-                      }
-                    }}
-                  >
-                    <div className="flex w-full min-w-0 items-center gap-x-2">
-                      {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
-                      <Avatar.Root>
-                        <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
-                      </Avatar.Root>
-                      <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
-                    </div>
-                  </DropdownMenu.Item>
-                )
-              })}
+              {usersList?.length === 1 && usersList[0].uid === currentUserId ? (
+                <div className="px-5 py-4 text-center">
+                  <span className="text-14 leading-tight text-foreground-2">{t('views:pullRequests.noUsers')}</span>
+                </div>
+              ) : (
+                usersList?.map(({ display_name, id, uid }) => {
+                  if (uid === currentUserId) return null
+                  const isSelected = reviewers.find(reviewer => reviewer?.reviewer?.id === id)
+                  return (
+                    <DropdownMenu.Item
+                      className={cn('py-2', {
+                        'pl-7': !isSelected
+                      })}
+                      key={uid}
+                      onClick={() => {
+                        if (isSelected) {
+                          handleDelete(id as number)
+                        } else {
+                          addReviewers?.(id)
+                        }
+                      }}
+                    >
+                      <div className="flex w-full min-w-0 items-center gap-x-2">
+                        {isSelected && <Icon name="tick" size={12} className="shrink-0 text-icons-2" />}
+                        <Avatar.Root>
+                          <Avatar.Fallback>{getInitials(display_name || '')}</Avatar.Fallback>
+                        </Avatar.Root>
+                        <span className="truncate text-14 font-medium text-foreground-8">{display_name}</span>
+                      </div>
+                    </DropdownMenu.Item>
+                  )
+                })
+              )}
             </div>
           </div>
         </DropdownMenu.Content>

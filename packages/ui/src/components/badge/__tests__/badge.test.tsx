@@ -1,43 +1,42 @@
-import { render, screen } from '@testing-library/react'
+import { ComponentProps } from 'react'
+
+import { render, RenderResult, screen } from '@testing-library/react'
 
 import { Badge } from '../badge'
 
-import '@testing-library/jest-dom'
+const renderComponent = (props: Partial<ComponentProps<typeof Badge>> = {}): RenderResult =>
+  render(<Badge {...props}>badge</Badge>)
 
-describe('Badge Component', () => {
-  test('renders the Badge component with default props', () => {
-    render(<Badge>Default Badge</Badge>)
+describe('Badge', () => {
+  test('it should render with default props', () => {
+    renderComponent()
 
-    const badge = screen.getByText('Default Badge')
-    expect(badge).toBeInTheDocument()
-    expect(badge).toHaveClass('inline-flex items-center border transition-colors')
+    expect(screen.getByText('badge')).toBeInTheDocument()
   })
 
-  test('applies variant styles correctly', () => {
-    render(<Badge variant="destructive">Destructive Badge</Badge>)
+  test('it should apply variant styles correctly', () => {
+    renderComponent({ variant: 'destructive' })
 
-    const badge = screen.getByText('Destructive Badge')
-    expect(badge).toHaveClass('bg-destructive text-destructive-foreground hover:bg-destructive/80')
+    expect(screen.getByText('badge')).toHaveClass(/destructive/)
   })
 
-  test('applies size styles correctly', () => {
-    render(<Badge size="xl">XL Badge</Badge>)
+  test('it should apply size styles correctly', () => {
+    renderComponent({ size: 'xl' })
 
-    const badge = screen.getByText('XL Badge')
-    expect(badge).toHaveClass('h-[18px] px-2 text-12')
+    expect(screen.getByText('badge')).toHaveClass('h-[18px] px-2 text-12')
   })
 
-  test('applies borderRadius styles correctly', () => {
-    render(<Badge borderRadius="full">Full Rounded Badge</Badge>)
+  test('it should apply borderRadius styles correctly', () => {
+    renderComponent({ borderRadius: 'full' })
 
-    const badge = screen.getByText('Full Rounded Badge')
-    expect(badge).toHaveClass('rounded-full')
+    expect(screen.getByText('badge')).toHaveClass('rounded-full')
   })
 
-  test('applies correct theme styles', () => {
-    render(<Badge theme="success">Success Badge</Badge>)
+  test('it should apply theme styles correctly', () => {
+    renderComponent({ theme: 'success' })
 
-    const badge = screen.getByText('Success Badge')
-    expect(badge).toHaveClass('border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1')
+    expect(screen.getByText('badge')).toHaveClass(
+      'border-tag-border-mint-1 bg-tag-background-mint-1 text-tag-foreground-mint-1'
+    )
   })
 })

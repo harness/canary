@@ -10,6 +10,7 @@ import {
   BranchSelectorTab,
   CommitSelectorListItem,
   CommitsList,
+  HandleUploadType,
   IBranchSelectorStore,
   ILabelType,
   LabelValuesType,
@@ -88,7 +89,7 @@ export interface PullRequestComparePageProps extends Partial<RoutingProps> {
   reviewers?: PRReviewer[]
   handleAddReviewer: (id?: number) => void
   handleDeleteReviewer: (id?: number) => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
   isFetchingCommits?: boolean

@@ -1,53 +1,9 @@
 import { Children, FC, memo, ReactElement, ReactNode, useEffect, useState } from 'react'
 
-import { Avatar, Button, Card, DropdownMenu, Icon, Input, NodeGroup, Text } from '@/components'
+import { Avatar, Button, Card, Icon, Input, MoreActionsTooltip, NodeGroup } from '@/components'
+import { HandleUploadType, PullRequestCommentBox } from '@/views'
 import { cn } from '@utils/cn'
 import { getInitials } from '@utils/utils'
-
-import { PullRequestCommentBox } from './pull-request-comment-box'
-
-interface TimelineItemPropsHeaderType {
-  avatar?: ReactNode
-  name?: string
-  description?: ReactNode
-  selectStatus?: ReactNode
-}
-
-export interface TimelineItemProps {
-  header: TimelineItemPropsHeaderType[]
-  parentCommentId?: number
-  commentId?: number
-  currentUser?: string
-  contentHeader?: ReactNode
-  content?: ReactNode
-  icon?: ReactNode
-  isLast: boolean
-  isComment?: boolean
-  hideIconBorder?: boolean
-  hideReplySection?: boolean
-  contentWrapperClassName?: string
-  contentClassName?: string
-  replyBoxClassName?: string
-  wrapperClassName?: string
-  titleClassName?: string
-  handleSaveComment?: (comment: string, parentId?: number) => void
-  onEditClick?: () => void
-  onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
-  isEditMode?: boolean
-  handleDeleteComment?: () => void
-  isDeleted?: boolean
-  isNotCodeComment?: boolean
-  hideReplyHere?: boolean
-  setHideReplyHere?: (state: boolean) => void
-  id?: string
-  isResolved?: boolean
-  toggleConversationStatus?: (status: string, parentId?: number) => void
-  data?: string
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
-  onQuoteReply?: (parentId: number, rawText: string) => void
-  quoteReplyText?: string
-  hideEditDelete?: boolean
-}
 
 interface ItemHeaderProps {
   avatar?: ReactNode
@@ -81,75 +37,106 @@ const ItemHeader: FC<ItemHeaderProps> = memo(
     onQuoteReply,
     hideEditDelete
   }) => {
-    const renderMenu = () => {
-      // We only show the menu if it's an actual comment and not deleted
-      if (!isComment || isDeleted) return null
-      return (
-        <DropdownMenu.Root>
-          <DropdownMenu.Trigger className="group flex h-6 items-center px-2">
-            <Icon
-              className="text-icons-1 transition-colors duration-200 group-hover:text-icons-2"
-              name="more-dots-fill"
-              size={12}
-            />
-          </DropdownMenu.Trigger>
-          <DropdownMenu.Content className="w-[216px]" align="end">
-            <DropdownMenu.Group>
-              {!hideEditDelete && <DropdownMenu.Item onClick={onEditClick}>Edit</DropdownMenu.Item>}
-              <DropdownMenu.Item
-                onClick={() => {
-                  onQuoteReply?.()
-                }}
-              >
-                Quote reply
-              </DropdownMenu.Item>
-              <DropdownMenu.Item onClick={() => onCopyClick?.(commentId, isNotCodeComment)}>
-                Copy link to comment
-              </DropdownMenu.Item>
-              {!hideEditDelete && (
-                <DropdownMenu.Item
-                  className="text-foreground-danger hover:text-foreground-danger"
-                  onClick={ev => {
-                    ev.stopPropagation()
-                    handleDeleteComment?.()
-                  }}
-                >
-                  Delete comment
-                </DropdownMenu.Item>
-              )}
-            </DropdownMenu.Group>
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
-      )
-    }
+    const actions = [
+      ...(!hideEditDelete
+        ? [
+            {
+              title: 'Edit',
+              onClick: () => onEditClick?.()
+            }
+          ]
+        : []),
+      {
+        title: 'Quote reply',
+        onClick: () => onQuoteReply?.()
+      },
+      {
+        title: 'Copy link to comment',
+        onClick: () => onCopyClick?.(commentId, isNotCodeComment)
+      },
+      ...(!hideEditDelete
+        ? [
+            {
+              title: 'Delete comment',
+              onClick: () => handleDeleteComment?.(),
+              isDanger: true
+            }
+          ]
+        : [])
+    ]
 
     return (
       <div className="inline-flex w-full items-center justify-between gap-1.5">
-        <div className="inline-flex items-center gap-1.5">
+        <div className="inline-flex items-baseline gap-1.5">
           {!!avatar && <div className="mr-0.5">{avatar}</div>}
           {!!name && <span className="text-14 font-medium text-foreground-8">{name}</span>}
           {!!description && <span className="text-14 text-foreground-4">{description}</span>}
         </div>
-        {!!selectStatus && (
-          <div className="justify-end">
-            <Text size={2} color="tertiaryBackground">
-              {selectStatus}
-            </Text>
-          </div>
+        {!!selectStatus && <span className="justify-end text-14 text-foreground-3">{selectStatus}</span>}
+        {isComment && !isDeleted && (
+          <MoreActionsTooltip
+            className="w-[200px]"
+            iconName="more-dots-fill"
+            sideOffset={-8}
+            alignOffset={2}
+            actions={actions}
+          />
         )}
-        {renderMenu()}
       </div>
     )
   }
 )
 ItemHeader.displayName = 'ItemHeader'
 
+interface TimelineItemPropsHeaderType {
+  avatar?: ReactNode
+  name?: string
+  description?: ReactNode
+  selectStatus?: ReactNode
+}
+
+export interface TimelineItemProps {
+  header: TimelineItemPropsHeaderType[]
+  parentCommentId?: number
+  commentId?: number
+  currentUser?: string
+  contentHeader?: ReactNode
+  content?: ReactNode
+  icon?: ReactNode
+  isLast?: boolean
+  isComment?: boolean
+  hideIconBorder?: boolean
+  hideReplySection?: boolean
+  contentWrapperClassName?: string
+  contentClassName?: string
+  replyBoxClassName?: string
+  wrapperClassName?: string
+  titleClassName?: string
+  handleSaveComment?: (comment: string, parentId?: number) => void
+  onEditClick?: () => void
+  onCopyClick?: (commentId?: number, isNotCodeComment?: boolean) => void
+  isEditMode?: boolean
+  handleDeleteComment?: () => void
+  isDeleted?: boolean
+  isNotCodeComment?: boolean
+  hideReplyHere?: boolean
+  setHideReplyHere?: (state: boolean) => void
+  id?: string
+  isResolved?: boolean
+  toggleConversationStatus?: (status: string, parentId?: number) => void
+  data?: string
+  handleUpload?: HandleUploadType
+  onQuoteReply?: (parentId: number, rawText: string) => void
+  quoteReplyText?: string
+  hideEditDelete?: boolean
+}
+
 const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   header,
   contentHeader,
   content,
   icon,
-  isLast,
+  isLast = false,
   hideIconBorder,
   hideReplySection = false,
   contentWrapperClassName,
@@ -201,9 +188,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     }
 
     // For resolved comments with contentHeader, hide all content when collapsed
-    if (contentHeader) {
-      return null
-    }
+    if (contentHeader) return null
 
     // For resolved comments without contentHeader, show only the first comment
     const contentElement = content as ReactElement
@@ -212,6 +197,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
       const [firstComment] = Children.toArray(contentElement.props.children)
       return <div className="px-4 pt-4 [&_[data-connector]]:hidden">{firstComment}</div>
     }
+
     // If content is a single element, return as is
     return content
   }
@@ -252,10 +238,10 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
             </div>
           )}
         </NodeGroup.Title>
-        {content && (
+        {!!content && (
           <NodeGroup.Content className={contentWrapperClassName}>
             <Card.Root className={cn('rounded-md bg-transparent overflow-hidden shadow-none', contentClassName)}>
-              {contentHeader && (
+              {!!contentHeader && (
                 <div
                   className={cn('flex w-full items-center justify-between p-4 py-3.5 bg-background-2', {
                     'pr-1.5': isResolved
@@ -293,6 +279,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
               ) : (
                 renderContent()
               )}
+
               {!hideReplySection && (!isResolved || isExpanded) && (
                 <>
                   {hideReplyHere ? (

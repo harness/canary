@@ -244,3 +244,5 @@ export type PRListFilters = {
   created_lt?: Date
   created_gt?: Date
 }
+
+export type HandleUploadType = (blob: File, setMarkdownContent: (data: string) => void) => void

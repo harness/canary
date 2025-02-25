@@ -3,6 +3,8 @@ import { useEffect, useRef, useState } from 'react'
 import { EventSourcePolyfill } from 'event-source-polyfill'
 import { isEqual } from 'lodash-es'
 
+import { useAPIPath } from '../../hooks/useAPIPath'
+
 type UseSpaceSSEProps = {
   space: string
   events: string[]
@@ -14,6 +16,8 @@ type UseSpaceSSEProps = {
 
 const useSpaceSSE = ({ space, events: _events, onEvent, onError, shouldRun = true }: UseSpaceSSEProps) => {
   //   const { standalone, routingId, hooks } = useAppContext()
+  const apiPath = useAPIPath()
+
   const [events, setEvents] = useState(_events)
   const eventSourceRef = useRef<EventSource | null>(null)
   useEffect(() => {
@@ -26,7 +30,7 @@ const useSpaceSSE = ({ space, events: _events, onEvent, onError, shouldRun = tru
     // Conditionally establish the event stream - don't want to open on a finished execution
     if (shouldRun && events.length > 0) {
       if (!eventSourceRef.current) {
-        const pathAndQuery = `/api/v1/spaces/${space}/+/events`
+        const pathAndQuery = apiPath(`/api/v1/spaces/${space}/+/events`)
 
         const options: { heartbeatTimeout: number; headers?: { Authorization?: string } } = {
           heartbeatTimeout: 999999999

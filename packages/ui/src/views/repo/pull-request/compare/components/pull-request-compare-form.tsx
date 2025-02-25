@@ -1,8 +1,8 @@
-import { forwardRef, useRef, useState } from 'react'
+import { forwardRef, MouseEvent, useRef, useState } from 'react'
 import { FieldErrors, SubmitHandler, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
 import { Button, Fieldset, Icon, Input, MarkdownViewer, Tabs, Textarea } from '@/components'
-import { handleFileDrop, handlePaste, TranslationStore } from '@/views'
+import { handleFileDrop, handlePaste, HandleUploadType, TranslationStore } from '@/views'
 import { cn } from '@utils/cn'
 import { z } from 'zod'
 
@@ -28,7 +28,7 @@ interface PullRequestFormProps {
   handleSubmit: UseFormHandleSubmit<FormFields>
   register: UseFormRegister<FormFields>
   useTranslationStore: () => TranslationStore
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   desc?: string
   setDesc: (desc: string) => void
 }
@@ -55,8 +55,10 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
       handleUpload?.(file, setDesc)
     }
 
-    const handleFileSelect = () => {
+    const handleFileSelect = (e: MouseEvent<HTMLButtonElement>) => {
       fileInputRef.current?.click()
+      e.stopPropagation()
+      e.preventDefault()
     }
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,7 +189,7 @@ const PullRequestCompareForm = forwardRef<HTMLFormElement, PullRequestFormProps>
                   <Button
                     className="gap-x-2 px-2.5 font-normal text-foreground-3 hover:bg-background-8"
                     variant="custom"
-                    onClick={handleFileSelect}
+                    onClick={e => handleFileSelect(e)}
                   >
                     <Icon size={16} name="attachment-image" />
                     <span>Drag & drop, select, or paste to attach files</span>

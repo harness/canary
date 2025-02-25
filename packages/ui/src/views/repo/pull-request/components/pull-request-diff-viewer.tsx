@@ -5,6 +5,7 @@ import {
   CommentItem,
   CommitSuggestion,
   CreateCommentPullReqRequest,
+  HandleUploadType,
   PullRequestCommentBox,
   TranslationStore,
   TypesPullReqActivity
@@ -65,7 +66,7 @@ interface PullRequestDiffviewerProps {
   removeSuggestionFromBatch?: (commentId: number) => void
   filenameToLanguage?: (fileName: string) => string | undefined
   toggleConversationStatus?: (status: string, parentId?: number) => void
-  handleUpload?: (blob: File, setMarkdownContent: (data: string) => void) => void
+  handleUpload?: HandleUploadType
   scrolledToComment?: boolean
   setScrolledToComment?: (val: boolean) => void
   collapseDiff?: () => void

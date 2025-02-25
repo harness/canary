@@ -57,251 +57,434 @@ import RepoViewWrapper from './repo-view-wrapper'
 import RootViewWrapper from './root-view-wrapper'
 import ViewSettings from './view-settings'
 
-export const viewPreviews: Record<string, ReactNode> = {
-  signin: <SignInView />,
-  signup: <SignUpView />,
-  'repo-create': (
-    <RootViewWrapper>
-      <CreateRepoView />
-    </RootViewWrapper>
-  ),
-  'repo-import': (
-    <RootViewWrapper>
-      <ImportRepoView />
-    </RootViewWrapper>
-  ),
-  'repo-summary': (
-    <RepoViewWrapper>
-      <RepoSummaryViewWrapper />
-    </RepoViewWrapper>
-  ),
-  'repo-empty': (
-    <RepoViewWrapper>
-      <RepoEmpty />
-    </RepoViewWrapper>
-  ),
-  'repo-list': (
-    <RootViewWrapper>
-      <RepoListWrapper />
-    </RootViewWrapper>
-  ),
-  'repo-tags': (
-    <RepoViewWrapper>
-      <RepoTagsList />
-    </RepoViewWrapper>
-  ),
-  'pull-request-list': (
-    <RepoViewWrapper>
-      <PullRequestListWrapper />
-    </RepoViewWrapper>
-  ),
-  'pull-request-compare': (
-    <RepoViewWrapper>
-      <PullRequestCompareWrapper />
-    </RepoViewWrapper>
-  ),
-  'pull-request-conversation': (
-    <PullRequestLayoutWrapper>
-      <PullRequestConversationWrapper state={'simple'} />
-    </PullRequestLayoutWrapper>
-  ),
-  'pull-request-conversation-1': (
-    <PullRequestLayoutWrapper>
-      <PullRequestConversationWrapper state={'complex-1'} />
-    </PullRequestLayoutWrapper>
-  ),
-  'pull-request-commits': (
-    <PullRequestLayoutWrapper>
-      <PullRequestCommits />
-    </PullRequestLayoutWrapper>
-  ),
-  'pull-request-changes': (
-    <PullRequestLayoutWrapper>
-      <PullRequestChangesWrapper state={'simple'} />
-    </PullRequestLayoutWrapper>
-  ),
-  'pull-request-changes-1': (
-    <PullRequestLayoutWrapper>
-      <PullRequestChangesWrapper state={'complex-1'} />
-    </PullRequestLayoutWrapper>
-  ),
-  'repo-files-list': (
-    <RepoViewWrapper>
-      <RepoFilesViewWrapper>
-        <RepoFilesList />
-      </RepoFilesViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'repo-files-json-view': (
-    <RepoViewWrapper>
-      <RepoFilesViewWrapper>
-        <RepoFilesJsonView />
-      </RepoFilesViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'repo-files-markdown-view': (
-    <RepoViewWrapper>
-      <RepoFilesViewWrapper>
-        <RepoFilesMarkdownView />
-      </RepoFilesViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'repo-files-edit-view': (
-    <RepoViewWrapper>
-      <RepoFilesViewWrapper>
-        <RepoFilesEditView />
-      </RepoFilesViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'commit-details': (
-    <RepoViewWrapper>
-      <CommitDetailsViewWrapper>
-        <CommitDetailsDiffViewWrapper />
-      </CommitDetailsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'pipeline-list': (
-    <RepoViewWrapper>
-      <PipelineListWrapper />
-    </RepoViewWrapper>
-  ),
-  'pipeline-studio': <PipelineStudioWrapper />,
-  'pipeline-graph': (
-    <RepoViewWrapper>
-      <PipelineGraphWrapper />
-    </RepoViewWrapper>
-  ),
-  'chat-preview': (
-    <RepoViewWrapper>
-      <ChatPreviewWrapper />
-    </RepoViewWrapper>
-  ),
-  'chat-empty-preview': (
-    <RepoViewWrapper>
-      <ChatEmptyPreviewWrapper />
-    </RepoViewWrapper>
-  ),
-  'pipeline-graph-minimal': (
-    <RepoViewWrapper>
-      <PipelineGraphMinimalWrapper />
-    </RepoViewWrapper>
-  ),
-  'execution-list': (
-    <RepoViewWrapper>
-      <ExecutionListWrapper />
-    </RepoViewWrapper>
-  ),
-  'repo-commits-list': (
-    <RepoViewWrapper>
-      <RepoCommitsView />
-    </RepoViewWrapper>
-  ),
-  'webhooks-list': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <RepoWebhooksList />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'webhooks-create': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <RepoWebhooksCreate />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'repo-branches': (
-    <RepoViewWrapper>
-      <RepoBranchesView />
-    </RepoViewWrapper>
-  ),
-  'general-settings': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <RepoGeneralSettings />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'create-rule': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <RepoCreateRule />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'rule-not-found': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'repo-labels-list': (
-    <RepoViewWrapper>
-      <RepoSettingsViewWrapper>
-        <RepoLabelsList />
-      </RepoSettingsViewWrapper>
-    </RepoViewWrapper>
-  ),
-  'space-settings-labels': (
-    <ProjectSettingsWrapper>
-      <ProjectLabelsList />
-    </ProjectSettingsWrapper>
-  ),
-  'space-settings-members': (
-    <ProjectSettingsWrapper>
-      <SpaceSettingsMembers />
-    </ProjectSettingsWrapper>
-  ),
-  'project-settings': (
-    <ProjectSettingsWrapper>
-      <ProjectSettingsView />
-    </ProjectSettingsWrapper>
-  ),
-  'profile-settings': (
-    <RootViewWrapper>
-      <ProfileSettingsViewWrapper>
-        <ProfileSettingsView />
-      </ProfileSettingsViewWrapper>
-    </RootViewWrapper>
-  ),
-  'profile-settings-keys': (
-    <RootViewWrapper>
-      <ProfileSettingsViewWrapper>
-        <ProfileSettingsKeysView />
-      </ProfileSettingsViewWrapper>
-    </RootViewWrapper>
-  ),
-  'label-form': (
-    <ProjectSettingsWrapper>
-      <LabelsForm />
-    </ProjectSettingsWrapper>
-  ),
-  'execution-details/logs': (
-    <RootViewWrapper>
-      <ExecutionLogsViewWrapper />
-    </RootViewWrapper>
-  ),
-  'execution-details/graph': (
-    <RootViewWrapper>
-      <ExecutionGraphViewWrapper />
-    </RootViewWrapper>
-  )
+export interface ViewPreviewGroup {
+  label: string
+  items: Record<
+    string,
+    {
+      label: string
+      element: ReactNode
+    }
+  >
 }
 
-const routeEntries = Object.entries(viewPreviews)
-const routeKeys = Object.keys(viewPreviews)
+export const viewPreviews: Record<string, ViewPreviewGroup> = {
+  auth: {
+    label: 'Auth',
+    items: {
+      signin: { label: 'Sign In', element: <SignInView /> },
+      signup: { label: 'Sign Up', element: <SignUpView /> }
+    }
+  },
+  repository: {
+    label: 'Repository',
+    items: {
+      'repo-create': {
+        label: 'Create Repository',
+        element: (
+          <RootViewWrapper>
+            <CreateRepoView />
+          </RootViewWrapper>
+        )
+      },
+      'repo-import': {
+        label: 'Import Repository',
+        element: (
+          <RootViewWrapper>
+            <ImportRepoView />
+          </RootViewWrapper>
+        )
+      },
+      'repo-summary': {
+        label: 'Repository Summary',
+        element: (
+          <RepoViewWrapper>
+            <RepoSummaryViewWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'repo-empty': {
+        label: 'Empty Repository',
+        element: (
+          <RepoViewWrapper>
+            <RepoEmpty />
+          </RepoViewWrapper>
+        )
+      },
+      'repo-list': {
+        label: 'Repository List',
+        element: (
+          <RootViewWrapper>
+            <RepoListWrapper />
+          </RootViewWrapper>
+        )
+      },
+      'repo-commits-list': {
+        label: 'Repository Commits',
+        element: (
+          <RepoViewWrapper>
+            <RepoCommitsView />
+          </RepoViewWrapper>
+        )
+      },
+      'repo-branches': {
+        label: 'Repository Branches',
+        element: (
+          <RepoViewWrapper>
+            <RepoBranchesView />
+          </RepoViewWrapper>
+        )
+      },
+      'repo-tags': {
+        label: 'Repository Tags',
+        element: (
+          <RepoViewWrapper>
+            <RepoTagsList />
+          </RepoViewWrapper>
+        )
+      },
+      'commit-details': {
+        label: 'Commit Details',
+        element: (
+          <RepoViewWrapper>
+            <CommitDetailsViewWrapper>
+              <CommitDetailsDiffViewWrapper />
+            </CommitDetailsViewWrapper>
+          </RepoViewWrapper>
+        )
+      }
+    }
+  },
+  files: {
+    label: 'Files',
+    items: {
+      'repo-files-list': {
+        label: 'Files List',
+        element: (
+          <RepoViewWrapper>
+            <RepoFilesViewWrapper>
+              <RepoFilesList />
+            </RepoFilesViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'repo-files-json-view': {
+        label: 'JSON View',
+        element: (
+          <RepoViewWrapper>
+            <RepoFilesViewWrapper>
+              <RepoFilesJsonView />
+            </RepoFilesViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'repo-files-markdown-view': {
+        label: 'Markdown View',
+        element: (
+          <RepoViewWrapper>
+            <RepoFilesViewWrapper>
+              <RepoFilesMarkdownView />
+            </RepoFilesViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'repo-files-edit-view': {
+        label: 'Edit View',
+        element: (
+          <RepoViewWrapper>
+            <RepoFilesViewWrapper>
+              <RepoFilesEditView />
+            </RepoFilesViewWrapper>
+          </RepoViewWrapper>
+        )
+      }
+    }
+  },
+  settings: {
+    label: 'Settings',
+    items: {
+      'general-settings': {
+        label: 'General Settings',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <RepoGeneralSettings />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'webhooks-list': {
+        label: 'Webhooks List',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <RepoWebhooksList />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'webhooks-create': {
+        label: 'Create Webhook',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <RepoWebhooksCreate />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'create-rule': {
+        label: 'Create Rule',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <RepoCreateRule />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'repo-labels-list': {
+        label: 'Labels List',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <RepoLabelsList />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      },
+      'rule-not-found': {
+        label: 'Rule Not Found',
+        element: (
+          <RepoViewWrapper>
+            <RepoSettingsViewWrapper>
+              <NotFoundPage useTranslationStore={useTranslationStore} pageTypeText="rules" />
+            </RepoSettingsViewWrapper>
+          </RepoViewWrapper>
+        )
+      }
+    }
+  },
+  pipeline: {
+    label: 'Pipeline',
+    items: {
+      'pipeline-list': {
+        label: 'Pipeline List',
+        element: (
+          <RepoViewWrapper>
+            <PipelineListWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'pipeline-studio': {
+        label: 'Pipeline Studio',
+        element: <PipelineStudioWrapper />
+      },
+      'pipeline-graph': {
+        label: 'Pipeline Graph',
+        element: (
+          <RepoViewWrapper>
+            <PipelineGraphWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'pipeline-graph-minimal': {
+        label: 'Pipeline Graph Minimal',
+        element: (
+          <RepoViewWrapper>
+            <PipelineGraphMinimalWrapper />
+          </RepoViewWrapper>
+        )
+      }
+    }
+  },
+  execution: {
+    label: 'Execution',
+    items: {
+      'execution-list': {
+        label: 'Execution List',
+        element: (
+          <RepoViewWrapper>
+            <ExecutionListWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'execution-details/logs': {
+        label: 'Execution Logs',
+        element: (
+          <RootViewWrapper>
+            <ExecutionLogsViewWrapper />
+          </RootViewWrapper>
+        )
+      },
+      'execution-details/graph': {
+        label: 'Execution Graph',
+        element: (
+          <RootViewWrapper>
+            <ExecutionGraphViewWrapper />
+          </RootViewWrapper>
+        )
+      }
+    }
+  },
+  pullRequest: {
+    label: 'Pull Request',
+    items: {
+      'pull-request-list': {
+        label: 'Pull Request List',
+        element: (
+          <RepoViewWrapper>
+            <PullRequestListWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'pull-request-compare': {
+        label: 'Pull Request Compare',
+        element: (
+          <RepoViewWrapper>
+            <PullRequestCompareWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'pull-request-conversation': {
+        label: 'Pull Request Conversation',
+        element: (
+          <PullRequestLayoutWrapper>
+            <PullRequestConversationWrapper state={'simple'} />
+          </PullRequestLayoutWrapper>
+        )
+      },
+      'pull-request-conversation-1': {
+        label: 'Pull Request Conversation Complex',
+        element: (
+          <PullRequestLayoutWrapper>
+            <PullRequestConversationWrapper state={'complex-1'} />
+          </PullRequestLayoutWrapper>
+        )
+      },
+      'pull-request-changes': {
+        label: 'Pull Request Changes',
+        element: (
+          <PullRequestLayoutWrapper>
+            <PullRequestChangesWrapper state={'simple'} />
+          </PullRequestLayoutWrapper>
+        )
+      },
+      'pull-request-changes-1': {
+        label: 'Pull Request Changes Complex',
+        element: (
+          <PullRequestLayoutWrapper>
+            <PullRequestChangesWrapper state={'complex-1'} />
+          </PullRequestLayoutWrapper>
+        )
+      },
+      'pull-request-commits': {
+        label: 'Pull Request Commits',
+        element: (
+          <PullRequestLayoutWrapper>
+            <PullRequestCommits />
+          </PullRequestLayoutWrapper>
+        )
+      }
+    }
+  },
+  profile: {
+    label: 'Profile',
+    items: {
+      'profile-settings': {
+        label: 'Profile Settings',
+        element: (
+          <RootViewWrapper>
+            <ProfileSettingsViewWrapper>
+              <ProfileSettingsView />
+            </ProfileSettingsViewWrapper>
+          </RootViewWrapper>
+        )
+      },
+      'profile-settings-keys': {
+        label: 'Profile Settings Keys',
+        element: (
+          <RootViewWrapper>
+            <ProfileSettingsViewWrapper>
+              <ProfileSettingsKeysView />
+            </ProfileSettingsViewWrapper>
+          </RootViewWrapper>
+        )
+      }
+    }
+  },
+  space: {
+    label: 'Space',
+    items: {
+      'space-settings-labels': {
+        label: 'Space Labels',
+        element: (
+          <ProjectSettingsWrapper>
+            <ProjectLabelsList />
+          </ProjectSettingsWrapper>
+        )
+      },
+      'space-settings-members': {
+        label: 'Space Members',
+        element: (
+          <ProjectSettingsWrapper>
+            <SpaceSettingsMembers />
+          </ProjectSettingsWrapper>
+        )
+      },
+      'project-settings': {
+        label: 'Project Settings',
+        element: (
+          <ProjectSettingsWrapper>
+            <ProjectSettingsView />
+          </ProjectSettingsWrapper>
+        )
+      },
+      'label-form': {
+        label: 'Label Form',
+        element: (
+          <ProjectSettingsWrapper>
+            <LabelsForm />
+          </ProjectSettingsWrapper>
+        )
+      }
+    }
+  },
+  chat: {
+    label: 'Chat',
+    items: {
+      'chat-empty-preview': {
+        label: 'Chat Empty Preview',
+        element: (
+          <RepoViewWrapper>
+            <ChatEmptyPreviewWrapper />
+          </RepoViewWrapper>
+        )
+      },
+      'chat-preview': {
+        label: 'Chat Preview',
+        element: (
+          <RepoViewWrapper>
+            <ChatPreviewWrapper />
+          </RepoViewWrapper>
+        )
+      }
+    }
+  }
+}
 
 const ViewPreview: FC = () => {
   return (
     <>
       <Routes>
-        {routeEntries.map(([route, node]) => {
-          return <Route key={route} path={`${route}/*`} element={node} />
-        })}
-        <Route path="/" element={<Navigate to={routeKeys[0]} />} />
+        {Object.entries(viewPreviews).map(([_, group]) =>
+          Object.entries(group.items).map(([route, { element }]) => (
+            <Route key={route} path={`${route}/*`} element={element} />
+          ))
+        )}
+        <Route path="/" element={<Navigate to={Object.keys(viewPreviews)[0]} />} />
       </Routes>
-      <ViewSettings routes={routeKeys} />
+      <ViewSettings routes={Object.keys(viewPreviews)} />
     </>
   )
 }

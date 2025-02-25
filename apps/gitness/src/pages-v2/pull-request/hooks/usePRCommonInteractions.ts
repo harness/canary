@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useMemo, useRef, useState } from 'react'
 
 import {
   commentCreatePullReq,
@@ -13,8 +13,6 @@ import { generateAlphaNumericHash } from '@harnessio/views'
 
 import { useAPIPath } from '../../../hooks/useAPIPath'
 import { getErrorMessage } from '../pull-request-utils'
-
-let count = generateAlphaNumericHash(5)
 
 interface usePRCommonInteractionsProps {
   repoRef: string
@@ -35,6 +33,7 @@ export function usePRCommonInteractions({
   setActivities,
   dryMerge
 }: usePRCommonInteractionsProps) {
+  const count = useRef(generateAlphaNumericHash(5))
   const apiPath = useAPIPath()
   const uploadsURL = useMemo(() => `/api/v1/repos/${repoRef}/uploads`, [repoRef])
 
@@ -115,7 +114,7 @@ export function usePRCommonInteractions({
           message: text,
           parent_id: parentId,
           author: { display_name: currentUserName ?? '' },
-          id: count, // ephemeral ID
+          id: count.current, // ephemeral ID
           created: Date.now(),
           edited: Date.now(),
           updated: Date.now(),
@@ -125,7 +124,7 @@ export function usePRCommonInteractions({
         }
       }
 
-      count += 1 // increment ephemeral ID
+      count.current += 1 // increment ephemeral ID
 
       if (setActivities) {
         setActivities(prev => {

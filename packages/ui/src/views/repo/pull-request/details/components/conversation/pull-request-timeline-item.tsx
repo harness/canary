@@ -180,7 +180,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
   }, [isResolved])
 
   const renderContent = () => {
-    if (!content) return <></>
+    if (!content) return null
 
     // Show full content if not resolved or expanded
     if (!isResolved || isExpanded) {
@@ -188,9 +188,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
     }
 
     // For resolved comments with contentHeader, hide all content when collapsed
-    if (contentHeader) {
-      return <></>
-    }
+    if (contentHeader) return null
 
     // For resolved comments without contentHeader, show only the first comment
     const contentElement = content as ReactElement
@@ -199,6 +197,7 @@ const PullRequestTimelineItem: FC<TimelineItemProps> = ({
       const [firstComment] = Children.toArray(contentElement.props.children)
       return <div className="px-4 pt-4 [&_[data-connector]]:hidden">{firstComment}</div>
     }
+
     // If content is a single element, return as is
     return content
   }

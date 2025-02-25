@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useState } from 'react'
+import { FC, memo, useCallback, useState } from 'react'
 
 import { Avatar, Icon, Layout } from '@/components'
 import {
@@ -30,6 +30,96 @@ const getAvatar = (name?: string) => {
   )
 }
 
+const getPayloadDependentData = (payload: TypesPullReqActivity | undefined) => {
+  const headerData: TimelineItemProps['header'][number] = {
+    avatar: getAvatar(payload?.author?.display_name),
+    name: payload?.author?.display_name
+  }
+
+  if (!payload)
+    return {
+      codeDiffSnapshot: '',
+      startingLine: null,
+      headerData
+    }
+
+  const codeDiffSnapshot = [
+    `diff --git a/src b/dest`,
+    `new file mode 100644`,
+    'index 0000000..0000000',
+    `--- a/src/${get(payload, 'code_comment.path')}`,
+    `+++ b/dest/${get(payload, 'code_comment.path')}`,
+    `${get(payload, 'payload.title', '')} ttttt`,
+    ...(get(payload, 'payload.lines', []) as string[])
+  ].join('\n')
+
+  return {
+    codeDiffSnapshot,
+    startingLine: parseStartingLineIfOne(codeDiffSnapshot),
+    headerData
+  }
+}
+
+interface CreateBaseCompProps
+  extends Pick<PullRequestRegularAndCodeCommentProps, 'handleUpload' | 'currentUser' | 'toggleConversationStatus'> {
+  payload: TypesPullReqActivity | undefined
+  hideReplyHeres: Record<string, boolean>
+  toggleReplyBox: (state: boolean, id?: number) => void
+  quoteReplies: Record<number, { text: string }>
+  handleQuoteReply: (commentId: number, originalText: string) => void
+  headerData: TimelineItemProps['header'][number]
+}
+
+const createBaseComp = ({
+  payload,
+  handleUpload,
+  hideReplyHeres,
+  toggleReplyBox,
+  quoteReplies,
+  handleQuoteReply,
+  currentUser,
+  toggleConversationStatus,
+  headerData
+}: CreateBaseCompProps) => {
+  const Component = ({
+    customProps,
+    customHeaderData
+  }: {
+    customProps: Partial<Omit<TimelineItemProps, 'header'>>
+    customHeaderData: TimelineItemProps['header'][number]
+  }) => {
+    if (!payload?.id) return <></>
+
+    return (
+      <PullRequestTimelineItem
+        replyBoxClassName="p-4"
+        id={`comment-${payload?.id}`}
+        handleUpload={handleUpload}
+        data={payload?.text}
+        hideReplyHere={hideReplyHeres[payload?.id]}
+        setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
+        quoteReplyText={quoteReplies[payload?.id]?.text || ''}
+        onQuoteReply={handleQuoteReply}
+        currentUser={currentUser?.display_name}
+        toggleConversationStatus={toggleConversationStatus}
+        parentCommentId={payload?.id}
+        hideEditDelete={payload?.author?.uid !== currentUser?.uid}
+        header={[
+          {
+            ...headerData,
+            ...customHeaderData
+          }
+        ]}
+        {...customProps}
+      />
+    )
+  }
+
+  Component.displayName = 'PullRequestTimelineItemBase'
+
+  return Component
+}
+
 export interface PullRequestRegularAndCodeCommentProps
   extends Pick<
     PullRequestOverviewProps,
@@ -47,7 +137,7 @@ export interface PullRequestRegularAndCodeCommentProps
   componentViewBase: FC<{ commentItem: PRCommentViewProps['commentItem'] }>
 }
 
-export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeCommentProps> = ({
+const PullRequestRegularAndCodeCommentInternal: FC<PullRequestRegularAndCodeCommentProps> = ({
   commentItems,
   handleUpload,
   currentUser,
@@ -63,47 +153,16 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
   const { t } = useTranslationStore()
   const { highlight, wrap, fontsize } = useDiffConfig()
 
-  const [hideReplyHeres, setHideReplyHeres] = useState<{ [key: string]: boolean }>({})
+  const [hideReplyHeres, setHideReplyHeres] = useState<Record<string, boolean>>({})
   const [quoteReplies, setQuoteReplies] = useState<Record<number, { text: string }>>({})
-  const [editModes, setEditModes] = useState<{ [key: string]: boolean }>({})
-  const [editComments, setEditComments] = useState<{ [key: string]: string }>({})
+  const [editModes, setEditModes] = useState<Record<string, boolean>>({})
+  const [editComments, setEditComments] = useState<Record<string, string>>({})
 
-  const payload = useMemo(() => {
-    return commentItems[0]?.payload
-  }, [commentItems])
+  const payload = commentItems[0]?.payload
 
-  const isCode = useMemo(() => isCodeComment(commentItems), [commentItems])
+  const isCode = isCodeComment(commentItems)
 
-  const headerData: TimelineItemProps['header'][number] = useMemo(
-    () => ({
-      avatar: getAvatar(payload?.author?.display_name),
-      name: payload?.author?.display_name
-    }),
-    [payload?.author]
-  )
-
-  const { codeDiffSnapshot, startingLine } = useMemo(() => {
-    if (!payload)
-      return {
-        codeDiffSnapshot: '',
-        startingLine: null
-      }
-
-    const codeDiffSnapshot = [
-      `diff --git a/src b/dest`,
-      `new file mode 100644`,
-      'index 0000000..0000000',
-      `--- a/src/${get(payload, 'code_comment.path')}`,
-      `+++ b/dest/${get(payload, 'code_comment.path')}`,
-      `${get(payload, 'payload.title', '')} ttttt`,
-      ...(get(payload, 'payload.lines', []) as string[])
-    ].join('\n')
-
-    return {
-      codeDiffSnapshot,
-      startingLine: parseStartingLineIfOne(codeDiffSnapshot)
-    }
-  }, [payload])
+  const { codeDiffSnapshot, startingLine, headerData } = getPayloadDependentData(payload)
 
   const toggleEditMode = useCallback(
     (id: string, initialText: string) => {
@@ -136,45 +195,7 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
   /**
    * PullRequestTimelineItem component with basic common props
    */
-  const BaseComp = useMemo(() => {
-    const Component = ({
-      customProps,
-      customHeaderData
-    }: {
-      customProps: Partial<Omit<TimelineItemProps, 'header'>>
-      customHeaderData: TimelineItemProps['header'][number]
-    }) => {
-      if (!payload?.id) return <></>
-
-      return (
-        <PullRequestTimelineItem
-          replyBoxClassName="p-4"
-          id={`comment-${payload?.id}`}
-          handleUpload={handleUpload}
-          data={payload?.text}
-          hideReplyHere={hideReplyHeres[payload?.id]}
-          setHideReplyHere={state => toggleReplyBox(state, payload?.id)}
-          quoteReplyText={quoteReplies[payload?.id]?.text || ''}
-          onQuoteReply={handleQuoteReply}
-          currentUser={currentUser?.display_name}
-          toggleConversationStatus={toggleConversationStatus}
-          parentCommentId={payload?.id}
-          hideEditDelete={payload?.author?.uid !== currentUser?.uid}
-          header={[
-            {
-              ...headerData,
-              ...customHeaderData
-            }
-          ]}
-          {...customProps}
-        />
-      )
-    }
-
-    Component.displayName = 'PullRequestTimelineItemBase'
-
-    return Component
-  }, [
+  const BaseComp = createBaseComp({
     payload,
     handleUpload,
     hideReplyHeres,
@@ -184,96 +205,79 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
     currentUser,
     toggleConversationStatus,
     headerData
-  ])
+  })
 
   /**
    * Common items' comments section
    */
-  const contentItemsBlock = useMemo(
-    () => (
-      <div className="px-4 pt-4">
-        {commentItems?.map((commentItem, idx) => {
-          const componentId = `activity-comment-${commentItem?.id}`
-          const commentIdAttr = `comment-${commentItem?.id}`
-          const name = commentItem?.payload?.author?.display_name
-          const avatar = getAvatar(name)
+  const renderContentItemsBlock = () => (
+    <div className="px-4 pt-4">
+      {commentItems?.map((commentItem, idx) => {
+        const componentId = `activity-comment-${commentItem?.id}`
+        const commentIdAttr = `comment-${commentItem?.id}`
+        const name = commentItem?.payload?.author?.display_name
+        const avatar = getAvatar(name)
 
-          return (
-            <BaseComp
-              key={`${commentItem.id}-${commentItem.author}-pr-comment`}
-              customProps={{
-                titleClassName: '!flex max-w-full',
-                isNotCodeComment: isCode,
-                id: commentIdAttr,
-                data: commentItem.payload?.text,
-                hideReplySection: true,
-                isComment: true,
-                isLast: commentItems.length - 1 === idx,
-                onCopyClick,
-                commentId: commentItem.id,
-                isDeleted: !!commentItem?.deleted,
-                handleDeleteComment: () => handleDeleteComment(commentItem?.id),
-                onEditClick: () => toggleEditMode(componentId, commentItem?.payload?.text || ''),
-                contentClassName: 'border-0 pb-0 rounded-none',
-                icon: avatar,
-                content: commentItem?.deleted ? (
-                  <div className="rounded-md border bg-primary-background p-1">
-                    {t('views:pullRequests.deletedComment')}
-                  </div>
-                ) : editModes[componentId] ? (
-                  <PullRequestCommentBox
-                    handleUpload={handleUpload}
-                    isEditMode
-                    onSaveComment={() => {
-                      if (commentItem?.id) {
-                        handleUpdateComment?.(commentItem?.id, editComments[componentId])
-                        toggleEditMode(componentId, '')
-                      }
-                    }}
-                    currentUser={currentUser?.display_name}
-                    onCancelClick={() => toggleEditMode(componentId, '')}
-                    comment={editComments[componentId]}
-                    setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
-                  />
-                ) : (
-                  <ComponentViewBase commentItem={commentItem} />
-                )
-              }}
-              customHeaderData={{
-                name,
-                avatar: undefined,
-                description: (
-                  <Layout.Horizontal className="text-foreground-4">
-                    <span>{timeAgo(commentItem?.created ? Number(commentItem.created) : undefined)}</span>
-                    {!!commentItem?.deleted && (
-                      <>
-                        <span>&nbsp;|&nbsp;</span>
-                        <span>{t('views:pullRequests.deleted')}</span>
-                      </>
-                    )}
-                  </Layout.Horizontal>
-                )
-              }}
-            />
-          )
-        })}
-      </div>
-    ),
-    [
-      commentItems,
-      onCopyClick,
-      handleDeleteComment,
-      toggleEditMode,
-      t,
-      editModes,
-      handleUpload,
-      editComments,
-      ComponentViewBase,
-      isCode,
-      BaseComp,
-      currentUser?.display_name,
-      handleUpdateComment
-    ]
+        return (
+          <BaseComp
+            key={`${commentItem.id}-${commentItem.author}-pr-comment`}
+            customProps={{
+              titleClassName: '!flex max-w-full',
+              isNotCodeComment: isCode,
+              id: commentIdAttr,
+              data: commentItem.payload?.text,
+              hideReplySection: true,
+              isComment: true,
+              isLast: commentItems.length - 1 === idx,
+              onCopyClick,
+              commentId: commentItem.id,
+              isDeleted: !!commentItem?.deleted,
+              handleDeleteComment: () => handleDeleteComment(commentItem?.id),
+              onEditClick: () => toggleEditMode(componentId, commentItem?.payload?.text || ''),
+              contentClassName: 'border-0 pb-0 rounded-none',
+              icon: avatar,
+              content: commentItem?.deleted ? (
+                <div className="rounded-md border bg-primary-background p-1">
+                  {t('views:pullRequests.deletedComment')}
+                </div>
+              ) : editModes[componentId] ? (
+                <PullRequestCommentBox
+                  handleUpload={handleUpload}
+                  isEditMode
+                  onSaveComment={() => {
+                    if (commentItem?.id) {
+                      handleUpdateComment?.(commentItem?.id, editComments[componentId])
+                      toggleEditMode(componentId, '')
+                    }
+                  }}
+                  currentUser={currentUser?.display_name}
+                  onCancelClick={() => toggleEditMode(componentId, '')}
+                  comment={editComments[componentId]}
+                  setComment={text => setEditComments(prev => ({ ...prev, [componentId]: text }))}
+                />
+              ) : (
+                <ComponentViewBase commentItem={commentItem} />
+              )
+            }}
+            customHeaderData={{
+              name,
+              avatar: undefined,
+              description: (
+                <Layout.Horizontal className="text-foreground-4">
+                  <span>{timeAgo(commentItem?.created ? Number(commentItem.created) : undefined)}</span>
+                  {!!commentItem?.deleted && (
+                    <>
+                      <span>&nbsp;|&nbsp;</span>
+                      <span>{t('views:pullRequests.deleted')}</span>
+                    </>
+                  )}
+                </Layout.Horizontal>
+              )
+            }}
+          />
+        )
+      })}
+    </div>
   )
 
   return isCode ? (
@@ -313,7 +317,7 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
               useTranslationStore={useTranslationStore}
             />
 
-            {contentItemsBlock}
+            {renderContentItemsBlock()}
           </div>
         )
       }}
@@ -333,8 +337,10 @@ export const PullRequestRegularAndCodeComment: FC<PullRequestRegularAndCodeComme
         icon: <Icon name="pr-comment" size={12} />,
         isLast,
         handleSaveComment,
-        content: contentItemsBlock
+        content: renderContentItemsBlock()
       }}
     />
   )
 }
+
+export const PullRequestRegularAndCodeComment = memo(PullRequestRegularAndCodeCommentInternal)

@@ -30,6 +30,36 @@ export default function ComboBox({
 }: ComboBoxProps) {
   const selectedFilterValue = filterValue?.value
   const debouncedSearch = onSearch ? debounce(onSearch, 400) : undefined
+
+  const renderConent = () => {
+    if (!isLoading) {
+      return <Command.Loading className="text-foreground-5 px-2 py-4 text-sm">Loading Authors...</Command.Loading>
+    }
+
+    if (options.length === 0) {
+      return <Command.Empty>{noResultsMessage}</Command.Empty>
+    }
+
+    return options.map(option => {
+      const { label, value } = option
+      return (
+        <Command.Item
+          className="flex h-9"
+          key={value}
+          value={value}
+          onSelect={currentValue => {
+            onUpdateFilter(currentValue === selectedFilterValue ? undefined : option)
+          }}
+        >
+          <div className="mx-2 flex size-4 items-center">
+            {value === selectedFilterValue && <Icon name="tick" size={12} className="text-foreground-8" />}
+          </div>
+          {label}
+        </Command.Item>
+      )
+    })
+  }
+
   return (
     <Command.Root shouldFilter={false}>
       <Command.Input
@@ -38,32 +68,7 @@ export default function ComboBox({
         autoFocus
         onInput={e => debouncedSearch?.(e.currentTarget.value)}
       />
-      <Command.List>
-        {!isLoading && options.length === 0 && <Command.Empty>{noResultsMessage}</Command.Empty>}
-        {isLoading && (
-          <Command.Loading>
-            <span>Loading Authors...</span>
-          </Command.Loading>
-        )}
-        {options.map(option => {
-          const { label, value } = option
-          return (
-            <Command.Item
-              className="flex h-9"
-              key={value}
-              value={value}
-              onSelect={currentValue => {
-                onUpdateFilter(currentValue === selectedFilterValue ? undefined : option)
-              }}
-            >
-              <div className="mx-2 flex size-4 items-center">
-                {value === selectedFilterValue && <Icon name="tick" size={12} className="text-foreground-8" />}
-              </div>
-              {label}
-            </Command.Item>
-          )
-        })}
-      </Command.List>
+      <Command.List>{renderConent()}</Command.List>
     </Command.Root>
   )
 }

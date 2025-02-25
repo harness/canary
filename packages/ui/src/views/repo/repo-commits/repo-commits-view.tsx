@@ -19,7 +19,7 @@ export interface RepoCommitsViewProps {
   xPrevPage: number
   page: number
   setPage: (page: number) => void
-  selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
+  // selectBranchOrTag: (branchTag: BranchSelectorListItem, type: BranchSelectorTab) => void
   useTranslationStore: () => TranslationStore
   useRepoBranchesStore: () => IBranchSelectorStore
   searchQuery: string
@@ -36,7 +36,7 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   xPrevPage,
   page,
   setPage,
-  selectBranchOrTag,
+  // selectBranchOrTag,
   useTranslationStore,
   useRepoBranchesStore,
   searchQuery,

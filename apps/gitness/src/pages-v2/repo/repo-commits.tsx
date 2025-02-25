@@ -10,6 +10,7 @@ import {
 import { BranchSelectorListItem, BranchSelectorTab, RepoCommitsView } from '@harnessio/ui/views'
 
 import { BranchSelectorContainer } from '../../components-v2/branch-selector-container'
+import { useBranchSelectorStore } from '../../components-v2/stores/branch-selector-store'
 import { useRoutes } from '../../framework/context/NavigationContext'
 import { useGetRepoRef } from '../../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../../i18n/stores/i18n-store'
@@ -28,44 +29,34 @@ export default function RepoCommitsPage() {
   const queryPage = parseInt(searchParams.get('page') || '1', 10)
 
   const {
-    branchList,
-    tagList,
+    //   branchList,
+    //   tagList,
     selectedRefType,
-    setBranchList,
-    setTagList,
-    selectedBranchTag,
-    setSelectedBranchTag,
-    setSelectedRefType,
+    //   setBranchList,
+    //   setTagList,
+    //   selectedBranchTag,
+    //   setSelectedBranchTag,
+    //   setSelectedRefType,
     setSpaceIdAndRepoId
   } = useRepoBranchesStore()
 
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
-  const { data: { body: branches } = {} } = useListBranchesQuery({
-    repo_ref: repoRef,
-    queryParams: { query: branchTagQuery }
-  })
-  const { data: { body: tags } = {} } = useListTagsQuery({
-    repo_ref: repoRef,
-    queryParams: { query: branchTagQuery }
-  })
+  const { selectedBranchOrTag } = useBranchSelectorStore()
 
-  useEffect(() => {
-    if (branches) {
-      setBranchList(transformBranchList(branches, repository?.default_branch))
-    }
-  }, [branches, repository?.default_branch])
+  // const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
+  // const { data: { body: branches } = {} } = useListBranchesQuery({
+  //   repo_ref: repoRef,
+  //   queryParams: { query: branchTagQuery }
+  // })
+  // const { data: { body: tags } = {} } = useListTagsQuery({
+  //   repo_ref: repoRef,
+  //   queryParams: { query: branchTagQuery }
+  // })
 
-  useEffect(() => {
-    if (tags) {
-      setTagList(
-        tags.map(item => ({
-          name: item?.name || '',
-          sha: item?.sha || '',
-          default: false
-        }))
-      )
-    }
-  }, [tags])
+  // useEffect(() => {
+  //   if (branches) {
+  //     setBranchList(transformBranchList(branches, repository?.default_branch))
+  //   }
+  // }, [branches, repository?.default_branch])
 
   useEffect(() => {
     setSpaceIdAndRepoId(spaceId || '', repoId || '')
@@ -81,8 +72,8 @@ export default function RepoCommitsPage() {
       page: queryPage,
       git_ref: normalizeGitRef(
         selectedRefType === BranchSelectorTab.TAGS
-          ? REFS_TAGS_PREFIX + selectedBranchTag?.name
-          : selectedBranchTag?.name
+          ? REFS_TAGS_PREFIX + selectedBranchOrTag?.name
+          : selectedBranchOrTag?.name
       ),
       include_stats: true
     }
@@ -92,33 +83,26 @@ export default function RepoCommitsPage() {
 
   const [_page, setPage] = useState(queryPage)
 
-  const selectBranchOrTag = useCallback(
-    (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
-      if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          setPage(1)
-          setSelectedBranchTag(branch)
-          setSelectedRefType(type)
-        }
-      } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagList.find(tag => tag.name === branchTagName.name)
-        if (tag) {
-          setPage(1)
-          setSelectedBranchTag(tag)
-          setSelectedRefType(type)
-        }
-      }
-    },
-    [repoId, spaceId, branchList, tagList]
-  )
-
-  useEffect(() => {
-    if (repository) {
-      const defaultBranchSha = branches?.find(branch => branch.name === repository?.default_branch)?.sha || ''
-      setSelectedBranchTag({ name: repository.default_branch || '', sha: defaultBranchSha })
-    }
-  }, [repository])
+  // const selectBranchOrTag = useCallback(
+  //   (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
+  //     if (type === BranchSelectorTab.BRANCHES) {
+  //       const branch = branchList.find(branch => branch.name === branchTagName.name)
+  //       if (branch) {
+  //         setPage(1)
+  //         setSelectedBranchTag(branch)
+  //         setSelectedRefType(type)
+  //       }
+  //     } else if (type === BranchSelectorTab.TAGS) {
+  //       const tag = tagList.find(tag => tag.name === branchTagName.name)
+  //       if (tag) {
+  //         setPage(1)
+  //         setSelectedBranchTag(tag)
+  //         setSelectedRefType(type)
+  //       }
+  //     }
+  //   },
+  //   [repoId, spaceId, branchList, tagList]
+  // )
 
   return (
     <RepoCommitsView
@@ -130,7 +114,7 @@ export default function RepoCommitsPage() {
       setPage={setPage}
       xNextPage={xNextPage}
       xPrevPage={xPrevPage}
-      selectBranchOrTag={selectBranchOrTag}
+      // selectBranchOrTag={selectBranchOrTag}
       useRepoBranchesStore={useRepoBranchesStore}
       useTranslationStore={useTranslationStore}
       searchQuery={branchTagQuery}

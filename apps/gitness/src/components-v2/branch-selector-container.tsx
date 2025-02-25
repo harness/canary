@@ -2,10 +2,11 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { useFindRepositoryQuery, useListBranchesQuery, useListTagsQuery } from '@harnessio/code-service-client'
-import { BranchSelectorListItem, BranchSelectorV2 } from '@harnessio/ui/views'
+import { BranchData, BranchSelectorListItem, BranchSelectorV2 } from '@harnessio/ui/views'
 
 import { useGetRepoRef } from '../framework/hooks/useGetRepoPath'
 import { useTranslationStore } from '../i18n/stores/i18n-store'
+import { transformBranchList } from '../pages-v2/repo/transform-utils/branch-transform'
 import { PathParams } from '../RouteDefinitions'
 import { orderSortDate } from '../types'
 
@@ -13,7 +14,9 @@ export const BranchSelectorContainer = () => {
   const repoRef = useGetRepoRef()
   const { spaceId, repoId } = useParams<PathParams>()
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
-  const [selectedBranchorTag, setSelectedBranchorTag] = useState<BranchSelectorListItem | null>(null)
+  const [selectedBranchorTag, setSelectedBranchorTag] = useState<BranchSelectorListItem>()
+  const [branchList, setBranchList] = useState<BranchData[]>([])
+  const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
 
   const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
@@ -51,12 +54,30 @@ export const BranchSelectorContainer = () => {
     }
   }, [branches, repository])
 
+  useEffect(() => {
+    if (branches) {
+      setBranchList(transformBranchList(branches, repository?.default_branch))
+    }
+  }, [branches, repository?.default_branch])
+
+  useEffect(() => {
+    if (tags) {
+      setTagList(
+        tags.map(item => ({
+          name: item?.name || '',
+          sha: item?.sha || '',
+          default: false
+        }))
+      )
+    }
+  }, [tags])
+
   return (
     <BranchSelectorV2
       useTranslationStore={useTranslationStore}
-      branchList={branches}
-      tagList={tags}
-      selectedBranchorTag={selectedBranchorTag}
+      branchList={branchList}
+      tagList={tagList}
+      selectedBranchorTag={selectedBranchorTag ?? { name: '', sha: '', default: false }}
       repoId={repoId ?? ''}
       spaceId={spaceId ?? ''}
       searchQuery={branchTagQuery ?? ''}

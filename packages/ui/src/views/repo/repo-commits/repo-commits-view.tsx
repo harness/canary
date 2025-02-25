@@ -26,6 +26,7 @@ export interface RepoCommitsViewProps {
   setSearchQuery: (query: string) => void
   toCommitDetails?: ({ sha }: { sha: string }) => string
   toCode?: ({ sha }: { sha: string }) => string
+  renderProp: FC
 }
 
 export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
@@ -41,7 +42,8 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
   searchQuery,
   setSearchQuery,
   toCommitDetails,
-  toCode
+  toCode,
+  renderProp: BranchSelectorContainer
 }) => {
   const { t } = useTranslationStore()
 
@@ -59,13 +61,14 @@ export const RepoCommitsView: FC<RepoCommitsViewProps> = ({
         </Text>
         <Spacer size={6} />
         <div className="flex justify-between gap-5">
-          <BranchSelector
+          {/* <BranchSelector
             onSelectBranch={selectBranchOrTag}
             useRepoBranchesStore={useRepoBranchesStore}
             useTranslationStore={useTranslationStore}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-          />
+          /> */}
+          <BranchSelectorContainer />
         </div>
 
         <Spacer size={5} />

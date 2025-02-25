@@ -6,7 +6,7 @@ import { BranchSelectorListItem, BranchSelectorTab, IBranchSelectorStore, Transl
 import { BranchSelectorDropdown } from './branch-selector-dropdown'
 
 interface BranchSelectorProps {
-  useRepoBranchesStore: (namespace?: string) => IBranchSelectorStore
+  useRepoBranchesStore: () => IBranchSelectorStore
   useTranslationStore: () => TranslationStore
   branchPrefix?: string
   buttonSize?: 'default' | 'sm' | 'md'

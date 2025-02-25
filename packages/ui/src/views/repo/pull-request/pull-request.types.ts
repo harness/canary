@@ -2,6 +2,7 @@ import { PrincipalType } from '@/types'
 import { ColorsEnum, LabelType } from '@/views'
 
 import { TranslationStore } from '../repo-list/types'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 
 export interface CommitSelectorListItem {
   title: string
@@ -239,7 +240,7 @@ export interface PullRequestPageProps {
 }
 
 export type PRListFilters = {
-  created_by?: string
+  created_by?: ComboBoxOptions
   created_lt?: Date
   created_gt?: Date
 }

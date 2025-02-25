@@ -5,6 +5,7 @@ import { Button, ListActions, NoData, Pagination, SearchBox, SkeletonList, Space
 import { useDebounceSearch } from '@/hooks'
 import { SandboxLayout } from '@/views'
 import FilterSelect, { FilterSelectLabel } from '@components/filters/filter-select'
+import { ComboBoxOptions } from '@components/filters/filters-bar/actions/variants/combo-box'
 import FilterTrigger from '@components/filters/triggers/filter-trigger'
 import { noop } from 'lodash-es'
 
@@ -165,7 +166,7 @@ const PullRequestList: FC<PullRequestPageProps> = ({
     const _filterValues = Object.entries(filterValues).reduce((acc, [key, value]) => {
       // TODO Need to address the type issue here
       if (value !== undefined) {
-        acc[key as PRListFiltersKeys] = value as string & Date
+        acc[key as PRListFiltersKeys] = value as ComboBoxOptions & Date
       }
       return acc
     }, {} as PRListFilters)

@@ -31,9 +31,18 @@ export default function PullRequestListPage() {
   const [searchParams] = useSearchParams()
   const mfeContext = useMFEContext()
 
+  const pullReqFilterValues = Object.entries(filterValues).reduce((acc: Record<string, string>, [key, value]) => {
+    if (key === 'created_by') {
+      acc[key] = value?.value
+    } else {
+      acc[key] = value
+    }
+    return acc
+  }, {})
+
   const { data: { body: pullRequestData, headers } = {}, isFetching: fetchingPullReqData } = useListPullReqQuery(
     {
-      queryParams: { page, query: query ?? '', ...filterValues },
+      queryParams: { page, query: query ?? '', ...pullReqFilterValues },
       repo_ref: repoRef
     },
     { retry: false }

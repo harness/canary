@@ -237,9 +237,11 @@ export const RepoSettingsGeneralPageContainer = () => {
   }
 
   const handleRepoUpdate = async (data: RepoUpdateData) => {
-    await updateDescription({ body: { description: data.description } })
-    await updateBranch({ body: { name: data.branch } })
-    await updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
+    await Promise.all([
+      updateDescription({ body: { description: data.description } }),
+      updateBranch({ body: { name: data.branch } }),
+      updatePublicAccess({ body: { is_public: data.access === AccessLevel.PUBLIC } })
+    ])
     queryClient.invalidateQueries({ queryKey: ['listBranches', repoRef] })
     queryClient.invalidateQueries({ queryKey: ['findRepository', repoRef] })
   }

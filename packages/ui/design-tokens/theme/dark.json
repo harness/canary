@@ -147,617 +147,89 @@
     }
   },
   "component": {
-    "dialog": {
-      "background": {
+    "accordion": {
+      "trigger": {
         "$type": "color",
-        "$value": "{colors.chrome.950}",
-        "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
+        "$value": "{text.1}",
+        "$description": "Text color for accordion triggers/headers. Used for the clickable area that expands/collapses content."
       },
-      "backdrop": {
-        "$extensions": {
-          "studio.tokens": {
-            "modify": {
-              "type": "alpha",
-              "value": "0.5",
-              "space": "p3"
-            }
-          }
-        },
-        "$type": "color",
-        "$value": "{colors.chrome.950}",
-        "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
-      }
-    },
-    "btn": {
-      "primary": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pure.white}",
-          "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.accent.600}",
-          "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.btn.primary.background}",
-          "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
-        }
-      },
-      "secondary": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.2}",
-          "$description": "Text and icon color for secondary actions.\nCommon uses: secondary button text, supporting action labels."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{component.btn.secondary.background}",
-          "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
-        }
-      },
-      "outline": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.2}",
-            "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
-          },
-          "border": {
-            "$type": "color",
-            "$value": "{border.1}",
-            "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
-          }
-        }
-      },
-      "ghost": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
-          }
-        }
-      },
-      "success": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.green.200}",
-          "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.500}",
-          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.green.300}",
-          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
-        },
-        "state": {
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.15",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.green.500}",
-            "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
-          },
-          "active": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.green.500}",
-            "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
-          }
-        }
-      },
-      "danger": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.red.200}",
-          "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
-        },
-        "background": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.1",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.500}",
-          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
-        },
-        "border": {
-          "$extensions": {
-            "studio.tokens": {
-              "modify": {
-                "type": "alpha",
-                "value": "0.2",
-                "space": "p3"
-              }
-            }
-          },
-          "$type": "color",
-          "$value": "{colors.red.300}",
-          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
-        },
-        "state": {
-          "hover": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.15",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.red.500}",
-            "$description": "Hover state for interactive success elements.\nCommon uses: clickable success messages, interactive feedback."
-          },
-          "active": {
-            "$extensions": {
-              "studio.tokens": {
-                "modify": {
-                  "type": "alpha",
-                  "value": "0.25",
-                  "space": "p3"
-                }
-              }
-            },
-            "$type": "color",
-            "$value": "{colors.red.500}",
-            "$description": "Active state for interactive success elements.\nCommon uses: pressed state, active success indicators."
-          }
-        }
-      }
-    },
-    "input": {
-      "text": {
+      "content": {
         "$type": "color",
         "$value": "{text.2}",
-        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
+        "$description": "Text color for accordion content. Applied to the expandable text within accordion panels."
       },
-      "placeholder": {
+      "chevron": {
         "$type": "color",
         "$value": "{text.3}",
-        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
-      },
-      "icon": {
-        "$type": "color",
-        "$value": "{text.3}",
-        "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
-      },
-      "background": {
-        "$type": "color",
-        "$value": "{background.2}",
-        "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
+        "$description": "Color for the accordion expansion indicator icon. Visually signals the collapsed/expanded state."
       },
       "border": {
         "$type": "color",
         "$value": "{border.2}",
-        "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
+        "$description": "Border color for accordion items. Provides visual separation between accordion panels."
       }
     },
-    "selection": {
-      "unselected": {
-        "text": {
+    "alert": {
+      "info": {
+        "title": {
           "$type": "color",
-          "$value": "{text.3}",
-          "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
+          "$value": "{text.1}",
+          "$description": "Title text color for informational alerts. Ensures high visibility for the alert heading."
+        },
+        "description": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Description text color for informational alerts. Provides readable contrast for alert content."
         },
         "background": {
           "$type": "color",
-          "$value": "{background.1}",
-          "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
+          "$value": "{colors.chrome.900}",
+          "$description": "Background color for informational alerts. Creates visual distinction from surrounding content."
         },
         "border": {
           "$type": "color",
-          "$value": "{border.1}",
-          "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
+          "$value": "{border.3}",
+          "$description": "Border color for informational alerts. Subtly defines the alert's boundaries."
         }
       },
-      "selected": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.950}",
-          "$description": "Text color for selected items.\nCommon uses: selected item labels."
-        },
-        "background": {
+      "danger": {
+        "title": {
           "$type": "color",
           "$value": "{colors.pure.white}",
-          "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
+          "$description": "Title text color for danger alerts. Provides maximum contrast against the error background."
         },
-        "border": {
+        "description": {
           "$type": "color",
           "$value": "{colors.pure.white}",
-          "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
-        }
-      }
-    },
-    "slider": {
-      "track": {
-        "base": {
-          "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
+          "$description": "Description text color for danger alerts. Ensures readability of critical information."
         },
-        "progress": {
-          "$type": "color",
-          "$value": "{colors.accent.300}",
-          "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
-        }
-      },
-      "track-segments": {
-        "base": {
-          "$type": "color",
-          "$value": "{colors.chrome.600}",
-          "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
-        },
-        "progress": {
-          "$type": "color",
-          "$value": "{colors.accent.800}",
-          "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
-        }
-      },
-      "handle": {
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.100}",
-          "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
+          "$value": "{colors.red.400}",
+          "$description": "Background color for danger alerts. Creates high-visibility indication of errors or warnings."
         },
         "border": {
           "$type": "color",
-          "$value": "{colors.chrome.850}",
-          "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
+          "$value": "{colors.red.400}",
+          "$description": "Border color for danger alerts. Reinforces the critical nature of the alert message."
         }
       }
     },
-    "nav": {
+    "avatar": {
       "background": {
         "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
+        "$value": "{colors.chrome.900}",
+        "$description": "Background color for avatar components. Provides contrast for text or image content."
       },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
-          }
-        }
-      }
-    },
-    "link": {
-      "default": {
-        "$type": "color",
-        "$value": "{text.accent}"
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{colors.accent.100}"
-      },
-      "visited": {
-        "$type": "color",
-        "$value": "{colors.purple.300}"
-      }
-    },
-    "tag": {
-      "red": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "green": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.green.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.green.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.green.950}"
-        }
-      },
-      "yellow": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.yellow.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.yellow.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.yellow.950}"
-        }
-      },
-      "blue": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.accent.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.accent.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.accent.950}"
-        }
-      },
-      "pink": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pink.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.pink.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.pink.950}"
-        }
-      },
-      "purple": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.purple.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.purple.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.purple.950}"
-        }
-      },
-      "violet": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.violet.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.violet.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.violet.950}"
-        }
-      },
-      "indigo": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.indigo.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.indigo.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.indigo.950}"
-        }
-      },
-      "cyan": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.cyan.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.cyan.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.cyan.950}"
-        }
-      },
-      "orange": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.orange.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.orange.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.orange.950}"
-        }
-      },
-      "brown": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.brown.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.brown.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.brown.950}"
-        }
-      },
-      "mint": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.mint.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.mint.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.mint.950}"
-        }
-      },
-      "lime": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.lime.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.lime.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.lime.950}"
-        }
-      }
-    },
-    "switch": {
-      "unselected": {
-        "text": {
-          "$type": "color",
-          "$value": "{text.3}",
-          "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{background.2}",
-          "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
-        }
-      },
-      "selected": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.chrome.950}",
-          "$description": "Text color for selected items.\nCommon uses: selected item labels."
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.pure.white}",
-          "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
-        }
-      }
-    },
-    "label": {
       "text": {
         "$type": "color",
-        "$value": "{text.1}"
+        "$value": "{text.2}",
+        "$description": "Text color for avatar initials or text. Ensures visibility against the avatar background."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.3}",
+        "$description": "Border color for avatars. Creates subtle definition around the avatar element."
       }
     },
     "badge": {
@@ -765,7 +237,7 @@
         "text": {
           "$type": "color",
           "$value": "{colors.green.200}",
-          "$description": "Text color for success subtle surface.\nCommon uses: supporting text, success icons."
+          "$description": "Text color for success badges. Communicates positive status through readable green text."
         },
         "border": {
           "$extensions": {
@@ -779,7 +251,7 @@
           },
           "$type": "color",
           "$value": "{colors.green.300}",
-          "$description": "Subtle border for success states.\nCommon uses: soft success boundaries, subtle indicators."
+          "$description": "Border color for success badges. Provides subtle definition for success state indicators."
         },
         "background": {
           "$extensions": {
@@ -793,14 +265,14 @@
           },
           "$type": "color",
           "$value": "{colors.green.500}",
-          "$description": "Softer success background for lower emphasis.\nCommon uses: inline success indicators, subtle confirmations."
+          "$description": "Background color for success badges. Creates a subtle but recognizable success indicator."
         }
       },
       "danger": {
         "text": {
           "$type": "color",
           "$value": "{colors.red.200}",
-          "$description": "Secondary text color for error content.\nCommon uses: supporting error text, error icons."
+          "$description": "Text color for danger badges. Communicates error or warning status with high visibility."
         },
         "border": {
           "$extensions": {
@@ -814,7 +286,7 @@
           },
           "$type": "color",
           "$value": "{colors.red.300}",
-          "$description": "Subtle border for error states.\nCommon uses: soft error boundaries, form field errors."
+          "$description": "Border color for danger badges. Creates definition for error or warning indicators."
         },
         "background": {
           "$extensions": {
@@ -828,14 +300,14 @@
           },
           "$type": "color",
           "$value": "{colors.red.500}",
-          "$description": "Softer error background for lower emphasis.\nCommon uses: inline error indicators, form validation."
+          "$description": "Background color for danger badges. Provides subtle visual indication of error states."
         }
       },
       "warning": {
         "text": {
           "$type": "color",
           "$value": "{colors.amber.200}",
-          "$description": "Secondary text color for warning content.\nCommon uses: supporting warning text, alert icons."
+          "$description": "Text color for warning badges. Signals caution states with readable amber text."
         },
         "border": {
           "$extensions": {
@@ -849,7 +321,7 @@
           },
           "$type": "color",
           "$value": "{colors.amber.300}",
-          "$description": "Subtle border for warning states.\nCommon uses: soft warning boundaries, notice indicators."
+          "$description": "Border color for warning badges. Defines the boundary of caution status indicators."
         },
         "background": {
           "$extensions": {
@@ -863,14 +335,14 @@
           },
           "$type": "color",
           "$value": "{colors.amber.500}",
-          "$description": "Softer warning background for lower emphasis.\nCommon uses: inline warning indicators, notifications."
+          "$description": "Background color for warning badges. Creates subtle but recognizable caution indicators."
         }
       },
       "merged": {
         "text": {
           "$type": "color",
           "$value": "{colors.purple.200}",
-          "$description": "Secondary text color for info content.\nCommon uses: supporting info text, help icons."
+          "$description": "Text color for merged state badges. Indicates completed merge actions in version control contexts."
         },
         "border": {
           "$extensions": {
@@ -884,7 +356,7 @@
           },
           "$type": "color",
           "$value": "{colors.purple.300}",
-          "$description": "Subtle border for info states.\nCommon uses: soft info boundaries, hint indicators."
+          "$description": "Border color for merged state badges. Defines the boundary of merge status indicators."
         },
         "background": {
           "$extensions": {
@@ -898,142 +370,737 @@
           },
           "$type": "color",
           "$value": "{colors.purple.500}",
-          "$description": "Softer info background for lower emphasis.\nCommon uses: inline help indicators, hints."
+          "$description": "Background color for merged state badges. Creates subtle but recognizable merge indicators."
         }
       },
       "default": {
         "text": {
           "$type": "color",
-          "$value": "{colors.pure.white}"
+          "$value": "{colors.pure.white}",
+          "$description": "Text color for default badges. Ensures high contrast against the default badge background."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.accent.600}"
+          "$value": "{colors.accent.600}",
+          "$description": "Background color for default badges. Creates standard, recognizable badge styling."
         },
         "border": {
           "$type": "color",
-          "$value": "{component.badge.default.background}"
+          "$value": "{component.badge.default.background}",
+          "$description": "Border color for default badges. Matches background for clean, cohesive appearance."
         }
       },
       "secondary": {
         "text": {
           "$type": "color",
-          "$value": "{text.2}"
+          "$value": "{text.2}",
+          "$description": "Text color for secondary badges. Provides readable contrast on secondary badge styling."
         },
         "background": {
           "$type": "color",
-          "$value": "{colors.chrome.900}"
+          "$value": "{colors.chrome.900}",
+          "$description": "Background color for secondary badges. Creates less prominent badge styling for secondary information."
         },
         "border": {
           "$type": "color",
-          "$value": "{component.badge.secondary.background}"
+          "$value": "{component.badge.secondary.background}",
+          "$description": "Border color for secondary badges. Matches background for clean, cohesive appearance."
         }
       },
       "outline": {
         "text": {
           "$type": "color",
-          "$value": "{text.2}"
+          "$value": "{text.2}",
+          "$description": "Text color for outline badges. Ensures readability for badges with transparent backgrounds."
         },
         "border": {
           "$type": "color",
-          "$value": "{border.2}"
+          "$value": "{border.2}",
+          "$description": "Border color for outline badges. Creates definition for badges without background fill."
         }
       }
     },
-    "accordion": {
-      "trigger": {
-        "$type": "color",
-        "$value": "{text.1}",
-        "$description": "Text color for accordion triggers/headers."
+    "btn": {
+      "primary": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Text and icon color for primary action buttons. Ensures maximum contrast and visibility for primary CTA elements."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.600}",
+          "$description": "Background color for primary action buttons. Creates emphasis for the most important action in a given context."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.btn.primary.background}",
+          "$description": "Border color for primary action buttons. Matches background for clean, cohesive appearance."
+        }
       },
-      "content": {
+      "secondary": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.2}",
+          "$description": "Text and icon color for secondary action buttons. Provides readable contrast for supporting actions."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background color for secondary action buttons. Creates visual hierarchy between primary and secondary actions."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{component.btn.secondary.background}",
+          "$description": "Border color for secondary action buttons. Matches background for clean, cohesive appearance."
+        }
+      },
+      "outline": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for unselected outline buttons. Provides readable contrast against transparent backgrounds."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for unselected outline buttons. Creates subtle emphasis for button icons."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.2}",
+            "$description": "Border color for unselected outline buttons. Defines the clickable area with a visible boundary."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for selected outline buttons. Increases contrast for active button states."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for selected outline buttons. Increases visibility for active button states."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.1}",
+            "$description": "Border color for selected outline buttons. Creates stronger visual indication of the active state."
+          }
+        }
+      },
+      "ghost": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for unselected ghost buttons. Provides readable contrast for minimal styling."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for unselected ghost buttons. Creates subtle emphasis for button icons."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for selected ghost buttons. Increases contrast for active button states."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for selected ghost buttons. Increases visibility for active button states."
+          }
+        }
+      },
+      "success": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.200}",
+          "$description": "Text color for success buttons. Communicates positive actions through readable green text."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.500}",
+          "$description": "Background color for success buttons. Creates subtle but recognizable positive action styling."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.green.300}",
+          "$description": "Border color for success buttons. Provides definition for positive action buttons."
+        },
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{colors.green.500}",
+            "$description": "Hover state background color for success buttons. Creates subtle feedback for user interaction."
+          },
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{colors.green.500}",
+            "$description": "Active state background color for success buttons. Provides stronger visual feedback for clicks/presses."
+          }
+        }
+      },
+      "danger": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.200}",
+          "$description": "Text color for danger buttons. Communicates destructive or warning actions through high-contrast red text."
+        },
+        "background": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.1",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.red.500}",
+          "$description": "Background color for danger buttons. Creates subtle but recognizable destructive action styling."
+        },
+        "border": {
+          "$extensions": {
+            "studio.tokens": {
+              "modify": {
+                "type": "alpha",
+                "value": "0.2",
+                "space": "p3"
+              }
+            }
+          },
+          "$type": "color",
+          "$value": "{colors.red.300}",
+          "$description": "Border color for danger buttons. Provides definition for destructive action buttons."
+        },
+        "state": {
+          "hover": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.15",
+                  "space": "p3"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{colors.red.500}",
+            "$description": "Hover state background color for danger buttons. Creates subtle feedback for user interaction."
+          },
+          "active": {
+            "$extensions": {
+              "studio.tokens": {
+                "modify": {
+                  "type": "alpha",
+                  "value": "0.25",
+                  "space": "p3"
+                }
+              }
+            },
+            "$type": "color",
+            "$value": "{colors.red.500}",
+            "$description": "Active state background color for danger buttons. Provides stronger visual feedback for clicks/presses."
+          }
+        }
+      }
+    },
+    "dialog": {
+      "background": {
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Background color for dialog components. Creates a distinct surface for modal content that appears above the main UI."
+      },
+      "backdrop": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.5",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Overlay color behind dialog components. Creates focus on the dialog by dimming content underneath."
+      }
+    },
+    "input": {
+      "text": {
         "$type": "color",
         "$value": "{text.2}",
-        "$description": "Text color for accordion content."
+        "$description": "Text color for input field content. Ensures readability of user-entered information."
       },
-      "chevron": {
+      "placeholder": {
         "$type": "color",
         "$value": "{text.3}",
-        "$description": "Color for the accordion expansion indicator icon."
+        "$description": "Text color for input field placeholders. Provides lower-contrast guidance text that doesn't compete with entered content."
+      },
+      "icon": {
+        "$type": "color",
+        "$value": "{text.3}",
+        "$description": "Color for icons within input components. Creates visual harmony with placeholder text and decorative elements."
+      },
+      "background": {
+        "$type": "color",
+        "$value": "{background.2}",
+        "$description": "Background color for input fields. Creates a distinct surface for user interaction and data entry."
       },
       "border": {
         "$type": "color",
         "$value": "{border.2}",
-        "$description": "Border color for accordion items."
+        "$description": "Border color for input fields. Defines the input area with a visible boundary for improved usability."
       }
     },
-    "alert": {
-      "info": {
-        "title": {
-          "$type": "color",
-          "$value": "{text.1}"
-        },
-        "description": {
-          "$type": "color",
-          "$value": "{text.2}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.chrome.900}"
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.3}"
-        }
-      },
-      "danger": {
-        "title": {
-          "$type": "color",
-          "$value": "{colors.pure.white}"
-        },
-        "description": {
-          "$type": "color",
-          "$value": "{colors.pure.white}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.400}"
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.red.400}"
-        }
-      }
-    },
-    "avatar": {
-      "background": {
-        "$type": "color",
-        "$value": "{colors.chrome.900}"
-      },
+    "label": {
       "text": {
         "$type": "color",
-        "$value": "{text.2}"
-      },
-      "border": {
-        "$type": "color",
-        "$value": "{border.3}"
+        "$value": "{text.1}",
+        "$description": "Text color for form labels and field identifiers. Ensures high contrast for important contextual information."
       }
     },
-    "status-indicaror": {
+    "link": {
+      "default": {
+        "$type": "color",
+        "$value": "{text.accent}",
+        "$description": "Default color for text links. Creates distinct visual identification of interactive text elements."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{colors.accent.100}",
+        "$description": "Hover state color for text links. Provides visual feedback for user interaction."
+      },
+      "visited": {
+        "$type": "color",
+        "$value": "{colors.purple.300}",
+        "$description": "Visited state color for text links. Differentiates links the user has already activated."
+      }
+    },
+    "nav": {
+      "background": {
+        "$type": "color",
+        "$value": "{background.1}",
+        "$description": "Background color for navigation components. Creates a consistent foundation for navigation elements."
+      },
+      "item": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for unselected navigation items. Provides readable but less emphasized styling for available options."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for unselected navigation items. Creates subtle visual indicators for navigation options."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for selected navigation items. Increases contrast to highlight the current location."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for selected navigation items. Creates stronger visual indication of the current selection."
+          }
+        }
+      }
+    },
+    "selection": {
+      "unselected": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Text color for unselected items in selection controls. Provides readable but less emphasized styling for available options."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{background.1}",
+          "$description": "Background color for unselected state in selection controls. Creates visual distinction from selected items."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}",
+          "$description": "Border color for unselected elements in selection controls. Defines the clickable area with a visible boundary."
+        }
+      },
+      "selected": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.950}",
+          "$description": "Text color for selected items in selection controls. Creates high contrast against selected background state."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Background color for selected state in selection controls. Creates strong visual indication of active selection."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Border color for selected elements in selection controls. Reinforces the selected state with consistent styling."
+        }
+      }
+    },
+    "slider": {
+      "track": {
+        "base": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background color for slider tracks. Represents the full range of available values in an unselected state."
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{colors.accent.300}",
+          "$description": "Filled portion color for slider tracks. Visually represents the selected value or range within the track."
+        }
+      },
+      "track-segments": {
+        "base": {
+          "$type": "color",
+          "$value": "{colors.chrome.600}",
+          "$description": "Color for segment markers on the unfilled track portion. Creates visual indicators for specific values or intervals."
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{colors.accent.800}",
+          "$description": "Color for segment markers on the filled track portion. Maintains visibility of markers within the selected range."
+        }
+      },
+      "handle": {
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.100}",
+          "$description": "Background color for slider handles. Creates a distinct, interactive element for adjusting values."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Border color for slider handles. Provides definition and contrast for the interactive control."
+        }
+      }
+    },
+    "status-indicator": {
       "success": {
         "$type": "color",
-        "$value": "{colors.green.300}"
+        "$value": "{colors.green.300}",
+        "$description": "Color for success status indicators. Communicates completed or positive states."
       },
       "danger": {
         "$type": "color",
-        "$value": "{colors.red.300}"
+        "$value": "{colors.red.300}",
+        "$description": "Color for danger status indicators. Communicates error or critical warning states."
       },
       "warning": {
         "$type": "color",
-        "$value": "{colors.amber.300}"
+        "$value": "{colors.amber.300}",
+        "$description": "Color for warning status indicators. Communicates caution or potential issue states."
       },
       "merged": {
         "$type": "color",
-        "$value": "{colors.purple.300}"
+        "$value": "{colors.purple.300}",
+        "$description": "Color for merged status indicators. Communicates successful integration or completion in version control contexts."
       },
       "pending": {
         "$type": "color",
-        "$value": "{colors.chrome.400}"
+        "$value": "{colors.chrome.400}",
+        "$description": "Color for pending status indicators. Communicates in-progress or waiting states."
+      }
+    },
+    "switch": {
+      "unselected": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Text color for labels of unselected switch controls. Provides readable but less emphasized styling."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{background.2}",
+          "$description": "Background color for the unselected state of switch controls. Creates visual distinction from the selected state."
+        }
+      },
+      "selected": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.950}",
+          "$description": "Text color for labels of selected switch controls. Creates high contrast against selected background state."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Background color for the selected state of switch controls. Creates strong visual indication of active state."
+        }
+      }
+    },
+    "tag": {
+      "red": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.300}",
+          "$description": "Text color for red tags. Ensures readability while maintaining the red color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}",
+          "$description": "Background color for red tags. Creates a distinct surface with red theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}",
+          "$description": "Subtle background variation for red tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "green": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.300}",
+          "$description": "Text color for green tags. Ensures readability while maintaining the green color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.900}",
+          "$description": "Background color for green tags. Creates a distinct surface with green theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.green.950}",
+          "$description": "Subtle background variation for green tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "yellow": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.300}",
+          "$description": "Text color for yellow tags. Ensures readability while maintaining the yellow color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.yellow.900}",
+          "$description": "Background color for yellow tags. Creates a distinct surface with yellow theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.yellow.950}",
+          "$description": "Subtle background variation for yellow tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "blue": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.accent.300}",
+          "$description": "Text color for blue tags. Ensures readability while maintaining the blue color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.900}",
+          "$description": "Background color for blue tags. Creates a distinct surface with blue theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.accent.950}",
+          "$description": "Subtle background variation for blue tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "pink": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pink.300}",
+          "$description": "Text color for pink tags. Ensures readability while maintaining the pink color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pink.900}",
+          "$description": "Background color for pink tags. Creates a distinct surface with pink theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.pink.950}",
+          "$description": "Subtle background variation for pink tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "purple": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.300}",
+          "$description": "Text color for purple tags. Ensures readability while maintaining the purple color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.900}",
+          "$description": "Background color for purple tags. Creates a distinct surface with purple theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.purple.950}",
+          "$description": "Subtle background variation for purple tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "violet": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.violet.300}",
+          "$description": "Text color for violet tags. Ensures readability while maintaining the violet color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.violet.900}",
+          "$description": "Background color for violet tags. Creates a distinct surface with violet theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.violet.950}",
+          "$description": "Subtle background variation for violet tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "indigo": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.indigo.300}",
+          "$description": "Text color for indigo tags. Ensures readability while maintaining the indigo color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.indigo.900}",
+          "$description": "Background color for indigo tags. Creates a distinct surface with indigo theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.indigo.950}",
+          "$description": "Subtle background variation for indigo tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "cyan": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.cyan.300}",
+          "$description": "Text color for cyan tags. Ensures readability while maintaining the cyan color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.cyan.900}",
+          "$description": "Background color for cyan tags. Creates a distinct surface with cyan theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.cyan.950}",
+          "$description": "Subtle background variation for cyan tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "orange": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.orange.300}",
+          "$description": "Text color for orange tags. Ensures readability while maintaining the orange color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.orange.900}",
+          "$description": "Background color for orange tags. Creates a distinct surface with orange theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.orange.950}",
+          "$description": "Subtle background variation for orange tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "brown": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.brown.300}",
+          "$description": "Text color for brown tags. Ensures readability while maintaining the brown color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.brown.900}",
+          "$description": "Background color for brown tags. Creates a distinct surface with brown theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.brown.950}",
+          "$description": "Subtle background variation for brown tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "mint": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.mint.300}",
+          "$description": "Text color for mint tags. Ensures readability while maintaining the mint color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.mint.900}",
+          "$description": "Background color for mint tags. Creates a distinct surface with mint theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.mint.950}",
+          "$description": "Subtle background variation for mint tags. Provides a softer alternative for less emphasis."
+        }
+      },
+      "lime": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.lime.300}",
+          "$description": "Text color for lime tags. Ensures readability while maintaining the lime color theme."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.lime.900}",
+          "$description": "Background color for lime tags. Creates a distinct surface with lime theme styling."
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.lime.950}",
+          "$description": "Subtle background variation for lime tags. Provides a softer alternative for less emphasis."
+        }
       }
     }
   },

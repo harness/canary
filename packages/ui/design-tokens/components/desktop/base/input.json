@@ -22,5 +22,9 @@
         "$description": "6px"
       }
     }
+  },
+  "gap": {
+    "$type": "spacing",
+    "$value": "{spacing.1-half}"
   }
 }

@@ -170,7 +170,7 @@
       }
     },
     "alert": {
-      "info": {
+      "default": {
         "title": {
           "$type": "color",
           "$value": "{text.1}",

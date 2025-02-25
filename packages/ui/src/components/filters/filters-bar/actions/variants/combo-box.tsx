@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-import { SkeletonList } from '@/components'
 import { Command } from '@components/command'
 import { Icon } from '@components/icon'
 import { debounce } from 'lodash-es'

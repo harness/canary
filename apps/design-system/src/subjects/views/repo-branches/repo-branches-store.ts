@@ -399,5 +399,5 @@ export const repoBranchesStore: IBranchSelectorStore = {
   },
   xNextPage: 2,
   xPrevPage: 0,
-  page: 1,
+  page: 1
 }

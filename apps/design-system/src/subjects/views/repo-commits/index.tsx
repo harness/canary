@@ -30,7 +30,7 @@ export const RepoCommitsView = () => {
       setSpaceIdAndRepoId: noop,
       setBranchList: noop,
       setDefaultBranch: noop,
-      setPaginationFromHeaders: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )

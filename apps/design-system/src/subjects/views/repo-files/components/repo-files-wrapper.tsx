@@ -31,7 +31,7 @@ export const RepoFilesWrapper: FC<RepoFilesWrapperProps> = ({ codeMode, isDir, i
       setSpaceIdAndRepoId: noop,
       setBranchList: noop,
       setDefaultBranch: noop,
-      setPaginationFromHeaders: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )

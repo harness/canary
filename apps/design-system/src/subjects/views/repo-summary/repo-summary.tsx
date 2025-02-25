@@ -34,7 +34,7 @@ const RepoSummaryViewWrapper: FC<Partial<RepoSummaryViewProps>> = props => {
       setSpaceIdAndRepoId: noop,
       setBranchList: noop,
       setDefaultBranch: noop,
-      setPaginationFromHeaders: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )

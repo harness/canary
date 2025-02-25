@@ -28,7 +28,7 @@ export const RepoFilesViewWrapper: FC<PropsWithChildren<React.HTMLAttributes<HTM
       setSpaceIdAndRepoId: noop,
       setBranchList: noop,
       setDefaultBranch: noop,
-      setPaginationFromHeaders: noop,
+      setPaginationFromHeaders: noop
     }),
     []
   )

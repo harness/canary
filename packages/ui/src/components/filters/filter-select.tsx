@@ -103,10 +103,10 @@ const FilterSelectLabel = ({
 }) => {
   return (
     <>
-      <Button size="xs" variant="ghost" className="hover:text-foreground-1 hover:bg-transparent">
+      <Button size="xs" variant="ghost" className="hover:text-foreground-1 gap-x-1 px-0 hover:bg-transparent">
         {displayLabel}
         {selectedFilters > 0 && (
-          <span className="flex h-[18px] min-w-[17px] items-center justify-center rounded border border-tag-border-blue-1 bg-tag-background-blue-1 px-1 text-11 text-tag-foreground-blue-1">
+          <span className="border-tag-border-blue-1 bg-tag-background-blue-1 text-11 text-tag-foreground-blue-1 flex h-[18px] min-w-[17px] items-center justify-center rounded border px-1">
             {selectedFilters}
           </span>
         )}

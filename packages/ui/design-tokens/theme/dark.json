@@ -146,42 +146,42 @@
       }
     }
   },
-  "overlay": {
-    "background": {
-      "$type": "color",
-      "$value": "{colors.chrome.950}",
-      "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
-    },
-    "backdrop": {
-      "$extensions": {
-        "studio.tokens": {
-          "modify": {
-            "type": "alpha",
-            "value": "0.5",
-            "space": "p3"
-          }
-        }
-      },
-      "$type": "color",
-      "$value": "{colors.chrome.950}",
-      "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
-    }
-  },
-  "btn": {
-    "primary": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.pure.white}",
-        "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
-      },
+  "component": {
+    "dialog": {
       "background": {
         "$type": "color",
-        "$value": "{colors.accent.600}",
-        "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
+        "$value": "{colors.chrome.950}",
+        "$description": "Surface color for floating elements.\nCommon uses: popovers, dropdown menus, modal backgrounds."
+      },
+      "backdrop": {
+        "$extensions": {
+          "studio.tokens": {
+            "modify": {
+              "type": "alpha",
+              "value": "0.5",
+              "space": "p3"
+            }
+          }
+        },
+        "$type": "color",
+        "$value": "{colors.chrome.950}",
+        "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
       }
     },
-    "secondary": {
-      "solid": {
+    "btn": {
+      "primary": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Text and icon color for primary actions.\nCommon uses: button labels, action icons, CTA text."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.600}",
+          "$description": "Main fill color for primary actions.\nCommon uses: default button background, main CTA base state."
+        }
+      },
+      "secondary": {
         "text": {
           "$type": "color",
           "$value": "{text.2}",
@@ -193,7 +193,43 @@
           "$description": "Base background for secondary actions.\nCommon uses: secondary buttons, alternative actions."
         }
       },
-      "soft": {
+      "outline": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Text color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: outlined button text, bordered control labels."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.2}",
+            "$description": "Border color for outlined secondary actions.\nCommon uses: button outlines, bordered controls."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for outlined / ghost variants during press state.\nCommon uses: active text in outlined variant."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for outlined / ghost variants.\nCommon uses: active text in outlined variant."
+          },
+          "border": {
+            "$type": "color",
+            "$value": "{border.1}",
+            "$description": "Border color during press.\nCommon uses: active state border, pressed outline."
+          }
+        }
+      },
+      "ghost": {
         "unselected": {
           "text": {
             "$type": "color",
@@ -229,101 +265,332 @@
           }
         }
       }
-    }
-  },
-  "form": {
-    "text": {
-      "$type": "color",
-      "$value": "{text.2}",
-      "$description": "Default text color for input content.\nCommon uses: input text, entered content."
     },
-    "icon": {
-      "$type": "color",
-      "$value": "{text.3}",
-      "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
-    },
-    "background": {
-      "$type": "color",
-      "$value": "{background.2}",
-      "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
-    },
-    "border": {
-      "$type": "color",
-      "$value": "{border.2}",
-      "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
-    }
-  },
-  "selection": {
-    "unselected": {
+    "input": {
       "text": {
         "$type": "color",
+        "$value": "{text.2}",
+        "$description": "Default text color for input content.\nCommon uses: input text, entered content."
+      },
+      "icon": {
+        "$type": "color",
         "$value": "{text.3}",
-        "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
+        "$description": "Color for input-related icons.\nCommon uses: input decorators, field icons, indicators."
       },
       "background": {
         "$type": "color",
         "$value": "{background.2}",
-        "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
+        "$description": "Base background for form input elements.\nCommon uses: input fields, select boxes, search fields."
       },
       "border": {
         "$type": "color",
-        "$value": "{border.1}",
-        "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
+        "$value": "{border.2}",
+        "$description": "Default border for input containers.\nCommon uses: input boundaries, field outlines."
       }
     },
-    "selected": {
-      "text": {
-        "$type": "color",
-        "$value": "{colors.chrome.950}",
-        "$description": "Text color for selected items.\nCommon uses: selected item labels."
+    "selection": {
+      "unselected": {
+        "text": {
+          "$type": "color",
+          "$value": "{text.3}",
+          "$description": "Text color for unselected items.\nCommon uses: unselected labels, option text."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{background.2}",
+          "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.1}",
+          "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
+        }
       },
+      "selected": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.chrome.950}",
+          "$description": "Text color for selected items.\nCommon uses: selected item labels."
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.pure.white}",
+          "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
+        }
+      }
+    },
+    "progress": {
+      "track": {
+        "base": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{colors.accent.300}",
+          "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
+        }
+      },
+      "track-segments": {
+        "base": {
+          "$type": "color",
+          "$value": "{colors.chrome.600}",
+          "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
+        },
+        "progress": {
+          "$type": "color",
+          "$value": "{colors.accent.800}",
+          "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
+        }
+      },
+      "handle": {
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.100}",
+          "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{colors.chrome.850}",
+          "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
+        }
+      }
+    },
+    "nav": {
       "background": {
         "$type": "color",
-        "$value": "{colors.pure.white}",
-        "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
+        "$value": "{background.1}",
+        "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
       },
-      "border": {
-        "$type": "color",
-        "$value": "{colors.pure.white}",
-        "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
-      }
-    }
-  },
-  "progress": {
-    "track": {
-      "base": {
-        "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Background track representing full value range.\nCommon uses: slider track, progress bar background."
-      },
-      "progress": {
-        "$type": "color",
-        "$value": "{colors.accent.300}",
-        "$description": "Filled portion showing current value.\nCommon uses: slider fill, progress indication."
-      }
-    },
-    "track-segments": {
-      "base": {
-        "$type": "color",
-        "$value": "{colors.chrome.600}",
-        "$description": "Markers on the unfilled track portion.\nCommon uses: step indicators, value markers."
-      },
-      "progress": {
-        "$type": "color",
-        "$value": "{colors.accent.800}",
-        "$description": "Markers on the filled track portion.\nCommon uses: completed steps, active segments."
+      "item": {
+        "unselected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.2}",
+            "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.3}",
+            "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
+          }
+        },
+        "selected": {
+          "text": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
+          },
+          "icon": {
+            "$type": "color",
+            "$value": "{text.1}",
+            "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
+          }
+        }
       }
     },
-    "handle": {
-      "background": {
+    "link": {
+      "default": {
         "$type": "color",
-        "$value": "{colors.chrome.100}",
-        "$description": "Handle surface in default state.\nCommon uses: slider thumb, drag handle."
+        "$value": "{text.accent}"
       },
-      "border": {
+      "hover": {
         "$type": "color",
-        "$value": "{colors.chrome.850}",
-        "$description": "Handle outline in default state.\nCommon uses: thumb border, handle outline."
+        "$value": "{colors.accent.100}"
+      },
+      "visited": {
+        "$type": "color",
+        "$value": "{colors.purple.300}"
+      }
+    },
+    "label": {
+      "red": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.red.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.red.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.red.950}"
+        }
+      },
+      "green": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.green.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.green.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.green.950}"
+        }
+      },
+      "yellow": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.yellow.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.yellow.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.yellow.950}"
+        }
+      },
+      "blue": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.accent.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.accent.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.accent.950}"
+        }
+      },
+      "pink": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.pink.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.pink.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.pink.950}"
+        }
+      },
+      "purple": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.purple.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.purple.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.purple.950}"
+        }
+      },
+      "violet": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.violet.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.violet.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.violet.950}"
+        }
+      },
+      "indigo": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.indigo.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.indigo.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.indigo.950}"
+        }
+      },
+      "cyan": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.cyan.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.cyan.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.cyan.950}"
+        }
+      },
+      "orange": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.orange.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.orange.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.orange.950}"
+        }
+      },
+      "brown": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.brown.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.brown.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.brown.950}"
+        }
+      },
+      "mint": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.mint.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.mint.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.mint.950}"
+        }
+      },
+      "lime": {
+        "text": {
+          "$type": "color",
+          "$value": "{colors.lime.300}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.lime.900}"
+        },
+        "background-subtle": {
+          "$type": "color",
+          "$value": "{colors.lime.950}"
+        }
       }
     }
   },
@@ -981,239 +1248,6 @@
     "gradient-stop-4": {
       "$type": "color",
       "$value": "{colors.cyan.200}"
-    }
-  },
-  "components": {
-    "nav": {
-      "background": {
-        "$type": "color",
-        "$value": "{background.1}",
-        "$description": "Background for navigation elements.\nCommon uses: navigation bars, menus, tabs, sidebars."
-      },
-      "item": {
-        "unselected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.2}",
-            "$description": "Default text color for navigation items.\nCommon uses: nav link text, tab text, menu item labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.3}",
-            "$description": "Default icon color for navigation items.\nCommon uses: nav item icons, tab icons, menu icons."
-          }
-        },
-        "selected": {
-          "text": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Text color for selected navigation items.\nCommon uses: active nav link text, selected tab text, active menu labels."
-          },
-          "icon": {
-            "$type": "color",
-            "$value": "{text.1}",
-            "$description": "Icon color for selected navigation items.\nCommon uses: active nav icons, selected tab icons, active menu icons."
-          }
-        }
-      }
-    },
-    "link": {
-      "default": {
-        "$type": "color",
-        "$value": "{text.accent}"
-      },
-      "hover": {
-        "$type": "color",
-        "$value": "{colors.accent.100}"
-      },
-      "visited": {
-        "$type": "color",
-        "$value": "{colors.purple.300}"
-      }
-    },
-    "label": {
-      "red": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.red.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.red.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.red.950}"
-        }
-      },
-      "green": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.green.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.green.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.green.950}"
-        }
-      },
-      "yellow": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.yellow.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.yellow.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.yellow.950}"
-        }
-      },
-      "blue": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.accent.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.accent.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.accent.950}"
-        }
-      },
-      "pink": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.pink.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.pink.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.pink.950}"
-        }
-      },
-      "purple": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.purple.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.purple.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.purple.950}"
-        }
-      },
-      "violet": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.violet.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.violet.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.violet.950}"
-        }
-      },
-      "indigo": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.indigo.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.indigo.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.indigo.950}"
-        }
-      },
-      "cyan": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.cyan.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.cyan.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.cyan.950}"
-        }
-      },
-      "orange": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.orange.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.orange.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.orange.950}"
-        }
-      },
-      "brown": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.brown.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.brown.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.brown.950}"
-        }
-      },
-      "mint": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.mint.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.mint.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.mint.950}"
-        }
-      },
-      "lime": {
-        "text": {
-          "$type": "color",
-          "$value": "{colors.lime.300}"
-        },
-        "background": {
-          "$type": "color",
-          "$value": "{colors.lime.900}"
-        },
-        "background-subtle": {
-          "$type": "color",
-          "$value": "{colors.lime.950}"
-        }
-      }
     }
   }
 }

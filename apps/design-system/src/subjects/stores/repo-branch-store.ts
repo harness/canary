@@ -46,5 +46,5 @@ export const repoBranchListStore = {
   setBranchList: noop,
   setDefaultBranch: noop,
   setPage: noop,
-  setPaginationFromHeaders: noop,
+  setPaginationFromHeaders: noop
 } as IBranchSelectorStore

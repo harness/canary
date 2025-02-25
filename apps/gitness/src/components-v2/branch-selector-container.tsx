@@ -15,7 +15,7 @@ export const BranchSelectorContainer = () => {
   const [branchTagQuery, setBranchTagQuery] = useState<string | null>(null)
   const [selectedBranchorTag, setSelectedBranchorTag] = useState<BranchSelectorListItem | null>(null)
 
-  const { data: { body: repository } = {}, refetch: refetchRepo } = useFindRepositoryQuery({ repo_ref: repoRef })
+  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,

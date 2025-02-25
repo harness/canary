@@ -167,7 +167,7 @@
       "$description": "Dark overlay for modal backgrounds.\nCommon uses: modal, dialog, drawer backdrops."
     }
   },
-  "action": {
+  "btn": {
     "primary": {
       "text": {
         "$type": "color",

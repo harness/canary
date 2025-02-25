@@ -1,6 +1,6 @@
 {
   "dropdown-item": {
-    "horizontalpadding": {
+    "px": {
       "$type": "spacing",
       "$value": "{spacing.1-half}",
       "$description": "6px\n"
@@ -20,12 +20,12 @@
     }
   },
   "dropdown-sub-item": {
-    "horizontalpadding": {
+    "px": {
       "$type": "spacing",
       "$value": "{spacing.2-half}",
       "$description": "10px"
     },
-    "verticalpadding": {
+    "py": {
       "$type": "spacing",
       "$value": "{spacing.2}",
       "$description": "8px"
@@ -44,7 +44,7 @@
     }
   },
   "container": {
-    "verticalpadding": {
+    "py": {
       "$type": "spacing",
       "$value": "{spacing.1}",
       "$description": "4px\n"

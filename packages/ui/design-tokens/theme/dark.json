@@ -534,7 +534,7 @@
         "$value": "{colors.purple.300}"
       }
     },
-    "label": {
+    "tag": {
       "red": {
         "text": {
           "$type": "color",
@@ -754,11 +754,6 @@
           "$type": "color",
           "$value": "{background.2}",
           "$description": "Background for unselected state.\nCommon uses: unchecked boxes, unselected options."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{border.1}",
-          "$description": "Border for unselected elements.\nCommon uses: checkbox/radio outlines."
         }
       },
       "selected": {
@@ -771,18 +766,73 @@
           "$type": "color",
           "$value": "{colors.pure.white}",
           "$description": "Background for selected state.\nCommon uses: checked boxes, selected options."
-        },
-        "border": {
-          "$type": "color",
-          "$value": "{colors.pure.white}",
-          "$description": "Border for selected elements.\nCommon uses: selected item boundaries."
         }
       }
     },
-    "fieldLabel": {
+    "label": {
       "text": {
         "$type": "color",
         "$value": "{text.1}"
+      }
+    },
+    "accordion": {
+      "trigger": {
+        "$type": "color",
+        "$value": "{text.1}",
+        "$description": "Text color for accordion triggers/headers."
+      },
+      "content": {
+        "$type": "color",
+        "$value": "{text.2}",
+        "$description": "Text color for accordion content."
+      },
+      "chevron": {
+        "$type": "color",
+        "$value": "{text.3}",
+        "$description": "Color for the accordion expansion indicator icon."
+      },
+      "border": {
+        "$type": "color",
+        "$value": "{border.2}",
+        "$description": "Border color for accordion items."
+      }
+    },
+    "alert": {
+      "info": {
+        "title": {
+          "$type": "color",
+          "$value": "{text.1}"
+        },
+        "description": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.3}"
+        }
+      },
+      "danger": {
+        "title": {
+          "$type": "color",
+          "$value": "{text.1}"
+        },
+        "description": {
+          "$type": "color",
+          "$value": "{text.2}"
+        },
+        "background": {
+          "$type": "color",
+          "$value": "{colors.chrome.900}"
+        },
+        "border": {
+          "$type": "color",
+          "$value": "{border.3}"
+        }
       }
     }
   },

@@ -1021,9 +1021,7 @@
       "component.status-indicator.warning": "b636d9443383f09be483cd7c2dac0a7f50a1ecbf",
       "component.status-indicator.merged": "327d6b24f8a5bbe42d2acc189fbf261be70adc63",
       "component.status-indicator.pending": "bf92bebc001ef52274939dbc5b6907303e91df1b",
-      "component.switch.unselected.text": "e776e7b3b2e8b4389cf23c447ac23eca92832a0d",
       "component.switch.unselected.background": "62db9642be3d4f160ff2fcd007cefef61991254b",
-      "component.switch.selected.text": "b8e1cf21163e54f64cdee145c63b73fa7cd5c263",
       "component.switch.selected.background": "2f6e88b08c533159b1f748eecb705f9cb4904a7f",
       "component.tag.red.text": "81a47e8a43dee9e3c3743b98f9f2be9ddd4b01eb",
       "component.tag.red.background": "9fc6c97e6112c26a56b05879634dd32726ed0d69",
@@ -1079,7 +1077,9 @@
       "component.alert.default.title": "557cf751fa2ef4f63d39f7536df2509e5bcb0e25",
       "component.alert.default.description": "3e5d4dfd851aa0eed96868da0df461520a75b919",
       "component.alert.default.background": "d5f93fa14a2bc67ab6eade1af3a4054b2c2e6cea",
-      "component.alert.default.border": "a4e300cc3bc2d44bdd5e16d9a7209f7f9572a90f"
+      "component.alert.default.border": "a4e300cc3bc2d44bdd5e16d9a7209f7f9572a90f",
+      "component.switch.unselected.thumb": "e776e7b3b2e8b4389cf23c447ac23eca92832a0d",
+      "component.switch.selected.thumb": "b8e1cf21163e54f64cdee145c63b73fa7cd5c263"
     },
     "$figmaCollectionId": "VariableCollectionId:1239:1141471",
     "$figmaModeId": "1239:0",

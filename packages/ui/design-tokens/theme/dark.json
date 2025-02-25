@@ -856,10 +856,10 @@
     },
     "switch": {
       "unselected": {
-        "text": {
+        "thumb": {
           "$type": "color",
           "$value": "{text.3}",
-          "$description": "Text color for labels of unselected switch controls. Provides readable but less emphasized styling."
+          "$description": "Color for the movable thumb element in unselected switch controls. Creates visual contrast against the track."
         },
         "background": {
           "$type": "color",
@@ -868,10 +868,10 @@
         }
       },
       "selected": {
-        "text": {
+        "thumb": {
           "$type": "color",
           "$value": "{colors.chrome.950}",
-          "$description": "Text color for labels of selected switch controls. Creates high contrast against selected background state."
+          "$description": "Color for the movable thumb element in selected switch controls. Provides clear contrast against the active track."
         },
         "background": {
           "$type": "color",

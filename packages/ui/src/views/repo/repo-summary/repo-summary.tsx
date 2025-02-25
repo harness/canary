@@ -20,7 +20,7 @@ import {
   SandboxLayout,
   TranslationStore
 } from '@/views'
-import { BranchInfoBar, BranchSelector, BranchSelectorTab, Summary } from '@/views/repo/components'
+import { BranchInfoBar, BranchSelectorTab, Summary } from '@/views/repo/components'
 import { formatDate } from '@utils/utils'
 
 import { CloneRepoDialog } from './components/clone-repo-dialog'
@@ -79,6 +79,7 @@ export interface RepoSummaryViewProps extends Partial<RoutingProps> {
   setSearchQuery: (query: string) => void
   renderSidebarComponent?: React.ReactNode
   isRepoEmpty?: boolean
+  renderProp: React.FC
 }
 
 export function RepoSummaryView({
@@ -106,7 +107,8 @@ export function RepoSummaryView({
   toCommitDetails,
   navigateToProfileKeys,
   renderSidebarComponent,
-  isRepoEmpty
+  isRepoEmpty,
+  renderProp: BranchSelector
 }: RepoSummaryViewProps) {
   const { t } = useTranslationStore()
   const { repoId, spaceId, selectedBranchTag } = useRepoBranchesStore()
@@ -177,13 +179,14 @@ export function RepoSummaryView({
             <ListActions.Root>
               <ListActions.Left>
                 <ButtonGroup className="gap-2.5">
-                  <BranchSelector
+                  {/* <BranchSelector
                     onSelectBranch={selectBranchOrTag}
                     useRepoBranchesStore={useRepoBranchesStore}
                     useTranslationStore={useTranslationStore}
                     searchQuery={searchQuery}
                     setSearchQuery={setSearchQuery}
-                  />
+                  /> */}
+                  <BranchSelector />
                   <SearchFiles
                     navigateToFile={navigateToFile}
                     filesList={filesList}

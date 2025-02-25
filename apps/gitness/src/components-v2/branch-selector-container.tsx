@@ -18,8 +18,6 @@ export const BranchSelectorContainer = () => {
   // const [selectedBranchorTag, setSelectedBranchorTag] = useState<BranchSelectorListItem>()
   // const [branchList, setBranchList] = useState<BranchData[]>([])
   // const [tagList, setTagList] = useState<BranchSelectorListItem[]>([])
-
-  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
   const {
     branchList,
     setBranchList,
@@ -27,9 +25,11 @@ export const BranchSelectorContainer = () => {
     setTagList,
     selectedBranchOrTag,
     setSelectedBranchOrTag,
-    setRefType,
-    selectedRefType
+    setRefType
+    // selectedRefType
   } = useBranchSelectorStore()
+
+  const { data: { body: repository } = {} } = useFindRepositoryQuery({ repo_ref: repoRef })
 
   const { data: { body: branches } = {} } = useListBranchesQuery({
     repo_ref: repoRef,
@@ -55,7 +55,9 @@ export const BranchSelectorContainer = () => {
   })
 
   useEffect(() => {
-    if (repository) {
+    // console.log(selectedBranchOrTag)
+    if (repository && !selectedBranchOrTag.name) {
+      console.log('yeah this right here')
       const defaultBranch = branches?.find(branch => branch.name === repository.default_branch)
       setSelectedBranchOrTag({
         name: defaultBranch?.name ?? repository.default_branch ?? '',
@@ -64,7 +66,7 @@ export const BranchSelectorContainer = () => {
       })
     }
     setRefType(BranchSelectorTab.BRANCHES)
-  }, [branches, repository, setSelectedBranchOrTag])
+  }, [branches, repository, setRefType, setSelectedBranchOrTag])
 
   useEffect(() => {
     if (branches) {
@@ -87,21 +89,23 @@ export const BranchSelectorContainer = () => {
   const selectBranchOrTag = useCallback(
     (branchTagName: BranchSelectorListItem, type: BranchSelectorTab) => {
       if (type === BranchSelectorTab.BRANCHES) {
-        const branch = branchList.find(branch => branch.name === branchTagName.name)
-        if (branch) {
-          // setPage(1)
-          setSelectedBranchOrTag(branch)
-          setRefType(type)
-        }
+        // const branch = branchList.find(branch => branch.name === branchTagName.name)
+        // if (branch) {
+        // setPage(1)
+        // console.log('selectBranchOrTag', branchTagName, type)
+
+        setSelectedBranchOrTag(branchTagName)
+        setRefType(type)
+        // }
       } else if (type === BranchSelectorTab.TAGS) {
-        const tag = tagList.find(tag => tag.name === branchTagName.name)
-        if (tag) {
-          setSelectedBranchOrTag(tag)
-          setRefType(type)
-        }
+        // const tag = tagList.find(tag => tag.name === branchTagName.name)
+        // if (tag) {
+        setSelectedBranchOrTag(branchTagName)
+        setRefType(type)
+        // }
       }
     },
-    [repoId, spaceId, branchList, tagList]
+    [repoId, spaceId, setRefType, setSelectedBranchOrTag, branchList, tagList]
   )
 
   return (
